@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2240" height="1680" viewBox="0 0 2240 1680" role="img" aria-labelledby="title desc">
+<title id="title">经典进程沙箱与 Aster 沙箱设计对比</title>
+<desc id="desc">左侧为经典进程级沙箱（Seatbelt / Restricted Token + DACL + Job）。右侧为 Aster 统一策略与平台后端：Linux bwrap+seccomp、Windows AppContainer+DACL+Job、macOS 拒绝未资格化 Seatbelt 后升格每命令 MicroVM。金色虚线表示生命周期与 fail-closed 合同。底部列出多维优势与诚实代价。</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#52647e"/></marker>
+  <marker id="policyArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#af7a32"/></marker>
+  <linearGradient id="coordinator" x1="0" x2="1"><stop stop-color="#353277"/><stop offset="1" stop-color="#5144ce"/></linearGradient>
+  <linearGradient id="classicHead" x1="0" x2="1"><stop stop-color="#5a6a82"/><stop offset="1" stop-color="#7a8aa3"/></linearGradient>
+</defs>
+<style>
+  text{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans CJK SC','Microsoft YaHei',sans-serif;fill:#17263d}
+  .title{font-size:36px;font-weight:750;letter-spacing:-.5px}
+  .section{font-size:25px;font-weight:700}
+  .heading{font-size:22px;font-weight:700}
+  .body{font-size:18px;fill:#42536c}
+  .small{font-size:16px;fill:#52647e}
+  .white{fill:#fff}
+  .link{fill:none;stroke:#52647e;stroke-width:2.4;marker-end:url(#arrow);stroke-linejoin:round}
+  .policy{fill:none;stroke:#af7a32;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#policyArrow);stroke-linejoin:round}
+</style>
+<rect width="2240" height="1680" fill="#f5f7fc"/>
+<text x="60" y="62" class="title">经典进程沙箱  x  Aster 沙箱设计对比</text>
+<text x="60" y="100" class="small">实线：调用与依赖　金色虚线：生命周期 / fail-closed 合同　｜　对齐 coding agent 威胁模型</text>
+
+<rect x="60" y="130" width="2120" height="88" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="84" y="166" class="heading">共同问题：如何执行不受信的 Agent shell？</text>
+<text x="84" y="198" class="body">命令字符串 · 工作区内容 · 网络与凭证 · 取消 / 超时后是否还能晚写</text>
+
+<path d="M560 218V260" class="link"/>
+<path d="M1680 218V260" class="link"/>
+
+<rect x="45" y="260" width="1040" height="980" rx="24" fill="#fbfcff" stroke="#9baac1" stroke-width="1.6" stroke-dasharray="7 6"/>
+<rect x="1155" y="260" width="1040" height="980" rx="24" fill="#fbfcff" stroke="#9baac1" stroke-width="1.6" stroke-dasharray="7 6"/>
+
+<rect x="70" y="285" width="990" height="92" rx="16" fill="url(#classicHead)" stroke="#5a6a82" stroke-width="1.6"/>
+<text x="94" y="323" class="heading white">A · 经典进程级沙箱</text>
+<text x="94" y="355" class="body white">共享宿主内核 · OS 原语围栏单条命令</text>
+
+<rect x="1180" y="285" width="990" height="92" rx="16" fill="url(#coordinator)" stroke="#454099" stroke-width="1.6"/>
+<text x="1204" y="323" class="heading white">B · Aster 产品默认</text>
+<text x="1204" y="355" class="body white">统一 Bash 策略 · 按平台资格化后端 · fail closed</text>
+
+<text x="70" y="420" class="section">平台后端</text>
+<rect x="70" y="440" width="990" height="150" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="94" y="478" class="heading">macOS · Seatbelt（sandbox-exec）</text>
+<text x="94" y="512" class="body">文件 / 网络策略可跨 fork</text>
+<text x="94" y="544" class="body">杀树多依赖原 process group</text>
+<path d="M565 590V620" class="link"/>
+<rect x="70" y="620" width="990" height="120" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="94" y="658" class="heading">Windows · Restricted Token + DACL + Job</text>
+<text x="94" y="692" class="body">削弱父 token · NTFS 收权 · Job 限额 / 杀树</text>
+<path d="M565 740V770" class="link"/>
+<rect x="70" y="770" width="990" height="100" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="94" y="808" class="heading">Linux · 命名空间 / 视实现</text>
+<text x="94" y="842" class="body">深度与默认 deny 因产品而异</text>
+
+<text x="70" y="920" class="section">结构性缺口</text>
+<rect x="70" y="940" width="990" height="130" rx="16" fill="#fff6eb" stroke="#e6a957" stroke-width="1.6"/>
+<text x="94" y="978" class="heading">后代可 setsid / setpgid 逃组</text>
+<text x="94" y="1012" class="body">Run 已结算 · 超时已返回 · 仍可能晚写工作区</text>
+<text x="94" y="1044" class="body">易静默弱隔离 · 跨平台策略叙事分裂</text>
+
+<path d="M565 1070V1110" class="policy"/>
+<rect x="70" y="1110" width="990" height="100" rx="16" fill="#edf0f5" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="94" y="1148" class="heading">合同重心：资源访问策略</text>
+<text x="94" y="1182" class="body">「这条进程少碰不该碰的」· 生命周期常次级</text>
+
+<text x="1180" y="420" class="section">统一入口</text>
+<rect x="1180" y="440" width="990" height="100" rx="16" fill="#eef1ff" stroke="#b9b5ed" stroke-width="1.6"/>
+<text x="1204" y="478" class="heading">Core BashSandbox</text>
+<text x="1204" y="512" class="body">会话策略快照 · 取消 / 收束 · 输出边界</text>
+<path d="M1675 540V570" class="link"/>
+
+<text x="1180" y="600" class="section">平台后端（资格化）</text>
+<rect x="1180" y="620" width="990" height="72" rx="14" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="1204" y="665" class="heading">Linux · Bubblewrap + seccomp</text>
+<path d="M1675 692V712" class="link"/>
+<rect x="1180" y="712" width="990" height="72" rx="14" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="1204" y="757" class="heading">Windows · AppContainer + DACL + Job</text>
+<path d="M1675 784V804" class="link"/>
+<rect x="1180" y="804" width="990" height="130" rx="16" fill="#edf5f2" stroke="#a8c9bc" stroke-width="1.6"/>
+<text x="1204" y="842" class="heading">macOS · 拒绝未资格化 Seatbelt</text>
+<text x="1204" y="876" class="body">native_process_lifetime_unqualified</text>
+<text x="1204" y="908" class="body">ARM64 deny → 每命令 OCI / HVF MicroVM</text>
+
+<path d="M1675 934V964" class="policy"/>
+<rect x="1180" y="964" width="990" height="120" rx="16" fill="#fff6eb" stroke="#e6a957" stroke-width="1.6"/>
+<text x="1204" y="1002" class="heading">生命周期合同（与策略同级）</text>
+<text x="1204" y="1036" class="body">逃组挡不住 → 拆掉整台 guest 收尸</text>
+<text x="1204" y="1068" class="body">缺同伴 / 能力 → 拒跑，不静默降级</text>
+
+<path d="M1675 1084V1110" class="link"/>
+<rect x="1180" y="1110" width="990" height="100" rx="16" fill="#edf5f2" stroke="#a8c9bc" stroke-width="1.6"/>
+<text x="1204" y="1148" class="heading">合同重心：可信任的工具调用结算</text>
+<text x="1204" y="1182" class="body">策略 + 收尸 + 跨平台叙事 + 发布冒烟</text>
+
+<text x="60" y="1290" class="section">多维结论（相对 coding agent 默认执行）</text>
+<rect x="60" y="1310" width="690" height="150" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="84" y="1348" class="heading">Aster 明显更强</text>
+<text x="84" y="1382" class="body">威胁模型 · 生命周期 · fail-closed</text>
+<text x="84" y="1414" class="body">跨平台策略 · 发布可验证性</text>
+<text x="84" y="1446" class="body">macOS deny 内核边界（VM）</text>
+
+<rect x="780" y="1310" width="690" height="150" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
+<text x="804" y="1348" class="heading">Aster 偏好 / 持平</text>
+<text x="804" y="1382" class="body">Windows：AppContainer 优于 Restricted Token</text>
+<text x="804" y="1414" class="body">Job Object 能力保留</text>
+<text x="804" y="1446" class="body">Linux：bwrap+seccomp 深度扎实</text>
+
+<rect x="1500" y="1310" width="680" height="150" rx="16" fill="#fff6eb" stroke="#e6a957" stroke-width="1.6"/>
+<text x="1524" y="1348" class="heading">诚实代价</text>
+<text x="1524" y="1382" class="body">macOS VM 更重 · 同伴与冷启动</text>
+<text x="1524" y="1414" class="body">guest 无宿主工具链自动注入</text>
+<text x="1524" y="1446" class="body">共享内核路径仍有剩余风险</text>
+
+<text x="60" y="1520" class="small">一句话：经典优化「进程少碰资源」；Aster 优化「这次 Agent 调用在策略、收尸、缺能力与发版上是否仍可被信任」。</text>
+<text x="60" y="1555" class="small">详文：sandbox-design-comparison.md　｜　同系风格：harness-gateway.svg · sandbox-control.svg</text>
+<text x="60" y="1620" class="small">源码核对：crates/code/core/src/sandbox/native.rs · crates/sandbox/SECURITY.md · docs/architecture/sandbox-control.md</text>
+</svg>

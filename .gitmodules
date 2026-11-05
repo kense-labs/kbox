@@ -1,0 +1,6 @@
+[submodule "libkrun"]
+	path = libkrun
+	url = git@github.com:kense-labs/libkrun.git
+[submodule "libkrunfw"]
+	path = libkrunfw
+	url = git@github.com:kense-labs/libkrunfw.git

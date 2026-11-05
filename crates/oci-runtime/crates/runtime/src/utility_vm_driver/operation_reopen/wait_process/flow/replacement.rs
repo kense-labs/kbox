@@ -1,10 +1,10 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::AgentWaitProcessRequest;
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{ErrorCode, ListRequest, OciRuntimeService, ProcessTarget, WaitProcessRequest};
+use krun_oci_agent_protocol::AgentWaitProcessRequest;
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{ErrorCode, ListRequest, OciRuntimeService, ProcessTarget, WaitProcessRequest};
 use tokio::time::timeout;
 
 use super::super::super::driver::{QualificationKvmOperationDriver, WaitProcessRecovery};

@@ -1,57 +1,17 @@
-<div align="center">
-  <a href="https://docs.rs/async-openai">
-  <img width="50px" src="https://raw.githubusercontent.com/64bit/async-openai/assets/create-image-b64-json/img-1.png" />
-  </a>
-</div>
-<h1 align="center"> async-openai </h1>
-<p align="center"> Async Rust library for OpenAI </p>
-<div align="center">
-    <a href="https://crates.io/crates/async-openai">
-    <img src="https://img.shields.io/crates/v/async-openai.svg" />
-    </a>
-    <a href="https://docs.rs/async-openai">
-    <img src="https://docs.rs/async-openai/badge.svg" />
-    </a>
-</div>
-<div align="center">
-<sub>Logo created by this <a href="https://github.com/64bit/async-openai/tree/main/examples/image-generate-b64-json">repo itself</a></sub>
-</div>
+# async-openai
 
-## Overview
+## 概述
 
-`async-openai` is an unofficial Rust library for OpenAI, based on [OpenAI OpenAPI spec](https://github.com/openai/openai-openapi). It implements all APIs from the spec:
+Rust library for OpenAI
 
-| What | APIs | Crate Feature Flags |
-|---|---|---|
-| **Responses API** | Responses, Conversations, Streaming events | `responses` |
-| **Webhooks** | Webhook Events | `webhook` |
-| **Platform APIs** | Audio, Audio Streaming, Videos, Images, Image Streaming, Embeddings, Evals, Fine-tuning, Graders, Batch, Files, Uploads, Models, Moderations | `audio`, `video`, `image`, `embedding`, `evals`, `finetuning`, `grader`, `batch`, `file`, `upload`, `model`, `moderation` |
-| **Vector stores** | Vector stores, Vector store files, Vector store file batches | `vectorstore` |
-| **ChatKit** <sub>(Beta)</sub> | ChatKit | `chatkit` |
-| **Containers** | Containers, Container Files | `container` |
-| **Skills** | Skills | `skill` |
-| **Realtime** | Realtime Calls, Client secrets, Client events, Server events | `realtime` |
-| **Chat Completions** | Chat Completions, Streaming | `chat-completion` |
-| **Assistants** <sub>(Beta)</sub> | Assistants, Threads, Messages, Runs, Run steps, Streaming | `assistant` |
-| **Administration** | Admin API Keys, Invites, Users, Groups, Roles, Role assignments, Projects, Project users, Project groups, Project service accounts, Project API keys, Project rate limits, Audit logs, Usage, Certificates | `administration` |
-| **Legacy** | Completions | `completions` |
+## 构建与验证
 
-Features that makes `async-openai` unique:
-- Bring your own custom types for Request or Response objects.
-- SSE streaming on available APIs.
-- Customize path, query and headers per request; customize path and headers globally (for all requests).
-- Requests (except SSE streaming) including form submissions are retried with exponential backoff when [rate limited](https://platform.openai.com/docs/guides/rate-limits).
-- Ergonomic builder pattern for all request objects.
-- Granular feature flags to enable any types or apis: good for faster compilation and crate reuse.
-- Microsoft Azure OpenAI Service (only for APIs matching OpenAI spec).
-- WASM (doesn't include streaming and retry support yet)
-
-## Usage
-
-The library reads [API key](https://platform.openai.com/account/api-keys) from the environment variable `OPENAI_API_KEY`.
+在仓库根目录执行：
 
 ```bash
-# On macOS/Linux
+cargo check --locked
+```
+
 export OPENAI_API_KEY='sk-...'
 ```
 

@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "aster-libkrun-sys"
+name = "krun-libkrun-sys"
 version = "3.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "beaf6186b5791f42dc720aba0ec9f24af8d2703ec0a92d08bf3ad2c9adb5ed4f"
@@ -16,11 +16,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-agent"
+name = "krun-oci-agent"
 version = "0.3.6"
 dependencies = [
- "aster-oci-agent-protocol",
- "aster-oci-sdk",
+ "krun-oci-agent-protocol",
+ "krun-oci-sdk",
  "base64",
  "libc",
  "nix 0.29.0",
@@ -35,10 +35,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-agent-protocol"
+name = "krun-oci-agent-protocol"
 version = "0.1.0"
 dependencies = [
- "aster-oci-sdk",
+ "krun-oci-sdk",
  "async-trait",
  "base64",
  "getrandom 0.3.4",
@@ -50,12 +50,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-cli"
+name = "krun-oci-cli"
 version = "0.1.0"
 dependencies = [
- "aster-oci-core",
- "aster-oci-runtime",
- "aster-oci-sdk",
+ "krun-oci-core",
+ "krun-oci-runtime",
+ "krun-oci-sdk",
  "async-trait",
  "clap",
  "fs2",
@@ -69,10 +69,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-containerd-shim"
+name = "krun-oci-containerd-shim"
 version = "0.1.0"
 dependencies = [
- "aster-oci-sdk",
+ "krun-oci-sdk",
  "async-trait",
  "containerd-shim",
  "containerd-shim-protos",
@@ -94,7 +94,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-core"
+name = "krun-oci-core"
 version = "0.3.2"
 dependencies = [
  "serde",
@@ -103,13 +103,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-krun"
+name = "krun-oci-krun"
 version = "0.1.0"
 dependencies = [
- "aster-libkrun-sys",
- "aster-oci-agent-protocol",
- "aster-oci-core",
- "aster-oci-sdk",
+ "krun-libkrun-sys",
+ "krun-oci-agent-protocol",
+ "krun-oci-core",
+ "krun-oci-sdk",
  "clap",
  "libc",
  "libloading",
@@ -124,13 +124,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-runtime"
+name = "krun-oci-runtime"
 version = "0.1.0"
 dependencies = [
- "aster-oci-agent",
- "aster-oci-agent-protocol",
- "aster-oci-core",
- "aster-oci-sdk",
+ "krun-oci-agent",
+ "krun-oci-agent-protocol",
+ "krun-oci-core",
+ "krun-oci-sdk",
  "base64",
  "cap-fs-ext",
  "cap-std",
@@ -147,10 +147,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-sdk"
+name = "krun-oci-sdk"
 version = "0.3.2"
 dependencies = [
- "aster-oci-core",
+ "krun-oci-core",
  "async-trait",
  "base64",
  "cap-fs-ext",

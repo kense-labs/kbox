@@ -3,8 +3,8 @@ use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
-use aster_oci_sdk::oci_spec::runtime::Process;
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::Process;
+use krun_oci_sdk::{
     async_trait, ContainerRecord, CreateRequest, DeleteRequest, Error as RuntimeError, ErrorCode,
     ExecRequest, ExitStatus, IsolationRequest, KillRequest, OciRuntimeService, OperationId,
     ProcessRecord, ProcessTarget, ProcessesRequest, ResizeRequest, RuntimeClient, StartRequest,
@@ -84,15 +84,15 @@ impl ResizeRuntime {
 
 #[async_trait]
 impl OciRuntimeService for ResizeRuntime {
-    async fn features(&self) -> aster_oci_sdk::Result<aster_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, _request: CreateRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, request: StateRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         if request.target.generation != Some(self.record.generation)
             || request.target.id.as_str() != self.record.state.id()
         {
@@ -104,23 +104,23 @@ impl OciRuntimeService for ResizeRuntime {
         Ok(self.record.clone())
     }
 
-    async fn start(&self, _request: StartRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: StartRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, _request: KillRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, _request: KillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: DeleteRequest) -> aster_oci_sdk::Result<()> {
+    async fn delete(&self, _request: DeleteRequest) -> krun_oci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn exec(&self, _request: ExecRequest) -> aster_oci_sdk::Result<ProcessRecord> {
+    async fn exec(&self, _request: ExecRequest) -> krun_oci_sdk::Result<ProcessRecord> {
         Err(RuntimeError::unsupported("test-exec"))
     }
 
-    async fn resize(&self, request: ResizeRequest) -> aster_oci_sdk::Result<()> {
+    async fn resize(&self, request: ResizeRequest) -> krun_oci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("resize calls")
@@ -172,7 +172,7 @@ impl OciRuntimeService for ResizeRuntime {
     async fn processes(
         &self,
         _request: ProcessesRequest,
-    ) -> aster_oci_sdk::Result<Vec<ProcessRecord>> {
+    ) -> krun_oci_sdk::Result<Vec<ProcessRecord>> {
         if self.process_exited.load(Ordering::SeqCst) {
             return Ok(Vec::new());
         }
@@ -191,11 +191,11 @@ impl OciRuntimeService for ResizeRuntime {
             .collect())
     }
 
-    async fn wait(&self, _request: WaitRequest) -> aster_oci_sdk::Result<ExitStatus> {
+    async fn wait(&self, _request: WaitRequest) -> krun_oci_sdk::Result<ExitStatus> {
         std::future::pending().await
     }
 
-    async fn wait_process(&self, _request: WaitProcessRequest) -> aster_oci_sdk::Result<ExitStatus> {
+    async fn wait_process(&self, _request: WaitProcessRequest) -> krun_oci_sdk::Result<ExitStatus> {
         std::future::pending().await
     }
 }

@@ -3,10 +3,10 @@
 version = 3
 
 [[package]]
-name = "aster-use-bge"
+name = "krun-use-bge"
 version = "0.1.0"
 dependencies = [
- "aster-use-core",
+ "krun-use-core",
  "clap",
  "fs2",
  "ort",
@@ -20,7 +20,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-core"
+name = "krun-use-core"
 version = "0.2.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f87fb53addcfecc5e5110c46f1b531889089cae382359139e31df0f651613d7"

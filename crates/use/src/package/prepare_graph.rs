@@ -1,12 +1,12 @@
 use std::sync::{Arc, Mutex};
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     PlanAuthority, PluginOperationAction, PluginOperationPlan, PluginOperationPlanBinding,
     PluginOperationPlanDraft, PluginOperationPlanEnvelope, PluginReleaseChannel, PluginSurfaceRef,
     PluginWorkspaceGrantChangeSet, UseError, UseResult,
 };
-use aster_use_extension::TrustedRegistry;
-use async_trait::async_trait;
+use krun_use_extension::TrustedRegistry;
 
 use super::grant::{PackageAuthorizationEvidence, PackageAuthorizationProvider};
 use super::registry_access::RegistryAccess;
@@ -412,7 +412,7 @@ impl PackageManager {
             .envelope
             .package_lock
             .as_ref()
-            .map(aster_use_core::PluginPackageLock::descriptor_digest)
+            .map(krun_use_core::PluginPackageLock::descriptor_digest)
             .transpose()?
             .ok_or_else(|| plan_error("The stored package graph plan omitted its exact lock."))?;
         if lock_digest != expected_package_lock_digest {

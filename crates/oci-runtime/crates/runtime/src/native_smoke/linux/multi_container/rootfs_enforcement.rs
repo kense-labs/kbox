@@ -1,4 +1,4 @@
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ExitStatus, RuntimeClient, StartRequest,
 };
 

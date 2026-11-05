@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::{AgentTransportFaultStage, AgentTransportOperationStage};
-use aster_oci_core::HostPlatform;
+use krun_oci_agent_protocol::{AgentTransportFaultStage, AgentTransportOperationStage};
+use krun_oci_core::HostPlatform;
 
 use crate::report::OciVmSmokeReport;
 use crate::{

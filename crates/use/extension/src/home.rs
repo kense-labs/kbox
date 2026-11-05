@@ -1,7 +1,7 @@
 //! Home-shelf cards. A package contributes tiles; the host owns the shelf layout.
 
-use aster_acl::Block;
-use aster_use_core::UseResult;
+use krun_acl::Block;
+use krun_use_core::UseResult;
 use serde::{Deserialize, Serialize};
 
 use super::{

@@ -39,7 +39,7 @@ T004–T014 继续未勾选。详见 [实施记录](../../docs/evidence/cli/2026
 | --- | --- | --- | --- |
 | M0 / T012–T013 | 展开 24 类全部必需叶能力；49 项领域、许可证、目标、来源、消费者与发布状态逐项对账；归属全局 gate 与原生 runner 前提 | [能力矩阵](contracts/capability-matrix.md)、[状态台账](contracts/convergence-status.json)、[49 项清单](contracts/legacy-plugin-inventory.json) | 每个必需项有明确 owner、固定输入、预期效果/退出、执行命令、证据和阻塞；不改变冻结基线 |
 | M1 / T008 | 普通插件更新及权限链路、内置组件中断恢复、原生 GUI 全流程 | `apps/studio` 私有子模块中的 capabilities registry/runtime components 与插件页面；`crates/use/extension` | 实际安装/使用/更新/移除；断网、重启、摘要漂移与缓存不足不误报 ready；租户/工作区数据保留 |
-| M2 / T004 | 完整引用/别名、多版本与配置变体、宽限期清理、锁迁移/自动更新、回滚、Windows dispatch、stubs/sync | `crates/use/tool-acquire`、`aster-pager/src/env_manager_cmd` | 固定对照逐项匹配；坏包保留原安装；prune 保留所有实际使用者；preview 零删除；offline 零网络；完整 CLI 套件通过 |
+| M2 / T004 | 完整引用/别名、多版本与配置变体、宽限期清理、锁迁移/自动更新、回滚、Windows dispatch、stubs/sync | `crates/use/tool-acquire`、`krun-pager/src/env_manager_cmd` | 固定对照逐项匹配；坏包保留原安装；prune 保留所有实际使用者；preview 零删除；offline 零网络；完整 CLI 套件通过 |
 | M3 / T008 | 所有基线语言 runtime、release/language/custom 后端与注册表；源构建、选项、布局、签名与 legacy ABI | `crates/use/tool-acquire`、`crates/use/extension` 与官方 `plugins` 子模块 | 每个适用目标实际获取并执行功能；标准库、包管理器、多入口、companions 完整；名称解析和版本输出不足以关闭 |
 | M4 / T005 | profiles/层叠、环境值指令与文件、模板、secrets、alias/hook、virtualenv、动态目录切换 | 环境配置与 shell owner；[原任务](tasks.md) | 实际进入/离开嵌套与兄弟目录并准确恢复；路径含空格/非 ASCII；PATH 不累积、secret 不泄露、不执行不受信脚本 |
 | M5 / T006–T007 | named/file tasks、参数/发现、DAG、共享依赖、并发/取消、增量、本地/远程 cache、watch 与 monorepo 图 | 后续任务 owner 及既有进程/缓存适配器 | 文件效果和执行日志证明顺序、去重、并发边界、取消与缓存恢复；循环/坏缓存拒绝；cache hit 不执行任务 |
@@ -51,7 +51,7 @@ T004–T014 继续未勾选。详见 [实施记录](../../docs/evidence/cli/2026
 
 - 全局 web 类型检查保留 286 项本批插件页面之外的错误；不扩大 allowlist。
 - 本批 Rust 格式/空白检查通过；最后全仓格式检查在并行修改的
-  `apps/aster/tests/tui_913_real_llm.rs` 失败。按实际最终源树重跑并归属修复。
+  `apps/krun/tests/tui_913_real_llm.rs` 失败。按实际最终源树重跑并归属修复。
 - 原生 GUI 连接不可用；Windows 交叉检查缺 Windows CRT/compiler 环境；
   Linux/Windows 及其他架构需要原生 runner。交叉编译或单台 Mac 不作为原生通过。
 - release 模式冷/热分布、资源/网络/子进程数量尚未完成；debug 时间不关闭效率门槛。

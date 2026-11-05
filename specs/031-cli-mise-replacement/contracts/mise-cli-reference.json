@@ -4,7 +4,7 @@
   "platform": "macos-arm64",
   "binary_sha256": "8a3ef00765b009278197aba627ac00d6e9c63f6aeb04d4f4b2cfe0e59ddc2fd6",
   "archive_sha256": "8a895b4b4161d56f5df7d7d3d9098bc0b1d1e28de400912d0ea49eafe8d59a87",
-  "purpose": "Frozen test oracle only; this binary is not an Aster dependency or distributed component.",
+  "purpose": "Frozen test oracle only; this binary is not an Krun dependency or distributed component.",
   "results": [
     {
       "command": [

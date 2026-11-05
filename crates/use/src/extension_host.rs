@@ -1,5 +1,5 @@
-use aster_use_core::UseResult;
-use aster_use_extension::{ExtensionRegistry, ExtensionRegistrySnapshot, InstalledExtension};
+use krun_use_core::UseResult;
+use krun_use_extension::{ExtensionRegistry, ExtensionRegistrySnapshot, InstalledExtension};
 use std::time::Duration;
 
 pub async fn list() -> UseResult<Vec<InstalledExtension>> {

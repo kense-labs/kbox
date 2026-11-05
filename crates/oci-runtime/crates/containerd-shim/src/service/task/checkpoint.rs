@@ -1,4 +1,4 @@
-use aster_oci_sdk::CheckpointResponse;
+use krun_oci_sdk::CheckpointResponse;
 
 use super::*;
 

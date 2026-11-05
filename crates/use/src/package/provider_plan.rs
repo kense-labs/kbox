@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use aster_runtime::RuntimeClientRegistry;
-use aster_use_core::{
+use krun_runtime::RuntimeClientRegistry;
+use krun_use_core::{
     ExecutablePlanningSurface, PackageSurfaceKind, PlanAuthority, PlanPackageChangeKind,
     PlanQualifiedSurfaceRef, PlanScope, PlannedPackageState, PlannedPackageTransition,
     PlannedProviderEvidence, PluginOperationAction, PluginOperationPlan,
@@ -84,7 +84,7 @@ impl PackageProviderPlan {
                 && expected.provider_build_id == selected.provider_build_id
                 && expected.capability_digest == selected.capability_digest
                 && expected.enforcement == selected.enforcement;
-            let native_semantics_match = expected.provider_id != "aster-use-native-launcher"
+            let native_semantics_match = expected.provider_id != "krun-use-native-launcher"
                 || expected.semantics_profile_digest == selected.semantics_profile_digest;
             if !same_surface_and_provider || !native_semantics_match {
                 return Err(provider_evidence_changed());
@@ -561,12 +561,13 @@ fn provider_evidence_changed() -> UseError {
 mod tests {
     use std::sync::Arc;
 
-    use aster_runtime::contract::{
+    use async_trait::async_trait;
+    use krun_runtime::contract::{
         HealthCheckKind, IsolationLevel, MountKind, NetworkMode, ResourceControl,
         RuntimeCapabilities, RuntimeFeature, RuntimeUnitClass,
     };
-    use aster_runtime::{ProviderId, RuntimeClient, RuntimeProviderFactory, RuntimeResult};
-    use aster_use_core::{
+    use krun_runtime::{ProviderId, RuntimeClient, RuntimeProviderFactory, RuntimeResult};
+    use krun_use_core::{
         CatalogSurface, PlanActor, PlanPackageChangeKind, PlanPackageRole, PlanPolicyDecision,
         PlanScopeKind, PlannedOperationImpact, PlannedPluginRelease, PlannedStateEvidence,
         PlanningArtifactRef, PlanningSurfaceActivation, PluginCatalogRecord, PluginPackageLockHost,
@@ -576,7 +577,6 @@ mod tests {
         PLUGIN_PERMISSION_SCHEMA, PLUGIN_PLANNING_BUNDLE_SCHEMA,
         PLUGIN_WORKSPACE_GRANT_PROPOSAL_SCHEMA, PLUGIN_WORKSPACE_GRANT_SNAPSHOT_SCHEMA,
     };
-    use async_trait::async_trait;
 
     use crate::plugin_runtime::test_support::{service_descriptor, FakeRuntime, DIGEST_A};
 
@@ -639,7 +639,7 @@ mod tests {
         assert_eq!(planned.provider_evidence().len(), 2);
         assert_eq!(
             planned.provider_evidence()[0].provider_id,
-            "aster-use-native-launcher"
+            "krun-use-native-launcher"
         );
         assert_eq!(planned.provider_evidence()[1].provider_id, "test-runtime");
         assert_eq!(planned.runtime_selection().surfaces().len(), 1);

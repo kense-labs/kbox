@@ -1,4 +1,4 @@
-//! Async, strongly typed API used by Aster Box and other runtime callers.
+//! Async, strongly typed API used by Krun Box and other runtime callers.
 //!
 //! The SDK owns the public contract. Runtime drivers, WHPX, libkrun, and
 //! durable-state implementation details remain behind [`OciRuntimeService`].
@@ -35,10 +35,6 @@ mod transport;
 mod validation;
 mod workspace_path;
 
-pub use aster_oci_core::{
-    hardware_vm, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
-    RuntimeFeatures,
-};
 pub use async_trait::async_trait;
 pub use attachment::{
     AttachmentCapabilities, AttachmentSource, ConfigurationAttachment, CreateAttachments,
@@ -89,6 +85,10 @@ pub use id::{
 };
 pub use image_annotation::{
     OCI_IMAGE_SPEC_COMMIT, OCI_IMAGE_SPEC_VERSION, OCI_IMAGE_STOP_SIGNAL_ANNOTATION,
+};
+pub use krun_oci_core::{
+    hardware_vm, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
+    RuntimeFeatures,
 };
 pub use linux_capability::{oci_linux_capability_number, OCI_LINUX_CAPABILITY_NAMES};
 pub use linux_cgroup_path::{

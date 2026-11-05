@@ -1,4 +1,4 @@
-//! Pure contracts shared by Aster OCI Runtime host components.
+//! Pure contracts shared by Krun OCI Runtime host components.
 
 mod capability;
 pub mod hardware_vm;

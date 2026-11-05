@@ -2,11 +2,11 @@ use std::ffi::OsString;
 use std::io::{BufRead, BufReader, Read};
 use std::path::{Path, PathBuf};
 
-use aster_box_core::log::{LogDriver, LogEntry};
-use aster_box_core::{
+use flate2::read::GzDecoder;
+use krun_box_core::log::{LogDriver, LogEntry};
+use krun_box_core::{
     ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
 };
-use flate2::read::GzDecoder;
 
 use super::support::require_generation;
 use super::LocalExecutionManager;

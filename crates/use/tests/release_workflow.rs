@@ -16,12 +16,12 @@ fn crate_recovery_publication_is_source_bound_ordered_and_idempotent() {
     assert!(workflow.contains("main:refs/remotes/origin/main"));
     assert!(workflow.contains("cargo metadata --locked --no-deps"));
     assert!(workflow.contains("if [ \"$extension_version\" != \"$facade_version\" ]"));
-    assert!(workflow.contains("for package in aster-use-core aster-use-extension aster-use; do"));
+    assert!(workflow.contains("for package in krun-use-core krun-use-extension krun-use; do"));
     assert!(workflow.contains("cargo publish --locked -p \"$package\""));
     assert!(workflow.contains("already exists; skipping upload"));
     assert!(workflow.contains("wait_until_visible \"$package\" \"$version\""));
-    assert!(!workflow.contains("cargo publish --locked -p aster-use-browser"));
-    assert!(!workflow.contains("cargo publish --locked -p aster-use-ocr"));
+    assert!(!workflow.contains("cargo publish --locked -p krun-use-browser"));
+    assert!(!workflow.contains("cargo publish --locked -p krun-use-ocr"));
 
     for action in workflow.lines().filter_map(|line| {
         line.trim()
@@ -42,12 +42,12 @@ fn crate_recovery_publication_is_source_bound_ordered_and_idempotent() {
 fn release_publishes_only_use_owned_crates_in_dependency_order() {
     let workflow = include_str!("../.github/workflows/release.yml").replace("\r\n", "\n");
     let workflow = workflow.as_str();
-    let core = position(workflow, "publish_once aster-use-core");
-    let core_visible = position(workflow, "wait_until_visible aster-use-core");
-    let extension = position(workflow, "publish_once aster-use-extension");
-    let extension_visible = position(workflow, "wait_until_visible aster-use-extension");
-    let facade = position(workflow, "\n          publish_once aster-use\n");
-    let facade_visible = position(workflow, "\n          wait_until_visible aster-use\n");
+    let core = position(workflow, "publish_once krun-use-core");
+    let core_visible = position(workflow, "wait_until_visible krun-use-core");
+    let extension = position(workflow, "publish_once krun-use-extension");
+    let extension_visible = position(workflow, "wait_until_visible krun-use-extension");
+    let facade = position(workflow, "\n          publish_once krun-use\n");
+    let facade_visible = position(workflow, "\n          wait_until_visible krun-use\n");
 
     assert!(
         core < core_visible
@@ -62,11 +62,11 @@ fn release_publishes_only_use_owned_crates_in_dependency_order() {
         "each crate must be checked and awaited using its own package version"
     );
     assert!(
-        !workflow.contains("publish_once aster-use-browser"),
+        !workflow.contains("publish_once krun-use-browser"),
         "the release must not publish the removed Browser crate"
     );
     assert!(
-        !workflow.contains("publish_once aster-use-ocr"),
+        !workflow.contains("publish_once krun-use-ocr"),
         "the release must not publish the removed OCR crate"
     );
 }
@@ -78,23 +78,23 @@ fn release_does_not_fetch_or_package_removed_builtins() {
     let lock = include_str!("../Cargo.lock");
 
     for removed in [
-        "ASTER_BROWSER_",
-        "ASTER_OCR_",
-        "aster-ai-lab/Browser",
-        "aster-ai-lab/OCR",
+        "KRUN_BROWSER_",
+        "KRUN_OCR_",
+        "kense-labs/Browser",
+        "kense-labs/OCR",
         "external/browser",
         "external/ocr",
-        "aster-use-science",
-        "aster-flow",
-        "wait_until_visible aster-use-browser",
-        "wait_until_visible aster-use-ocr",
+        "krun-use-science",
+        "krun-flow",
+        "wait_until_visible krun-use-browser",
+        "wait_until_visible krun-use-ocr",
         "component install ocr",
         "browser skills list",
         "ocr doctor",
         "ocr extract",
         "mcp serve browser",
-        "aster-use-browser-driver\" --version",
-        "aster-use-browser-driver.exe\" --version",
+        "krun-use-browser-driver\" --version",
+        "krun-use-browser-driver.exe\" --version",
     ] {
         assert!(
             !workflow.contains(removed),
@@ -102,13 +102,13 @@ fn release_does_not_fetch_or_package_removed_builtins() {
         );
     }
     assert!(workflow.contains("use.builtin_removed"));
-    assert!(workflow.contains("test ! -e \"${install_root}/aster-use-browser-driver\""));
+    assert!(workflow.contains("test ! -e \"${install_root}/krun-use-browser-driver\""));
     assert!(workflow.contains("test ! -e \"${install_root}/ocr-models\""));
     for removed in [
-        "aster-use-browser",
-        "aster-use-ocr",
-        "aster-use-science",
-        "aster-flow",
+        "krun-use-browser",
+        "krun-use-ocr",
+        "krun-use-science",
+        "krun-flow",
     ] {
         assert!(
             !manifest.contains(removed),
@@ -172,7 +172,7 @@ fn assert_normalized_tar_gz(path: &Path) {
         assert_eq!(header.gid().unwrap(), 0);
         assert_eq!(
             header.mode().unwrap(),
-            if name == "bin/aster-use.exe" || header.entry_type().is_dir() {
+            if name == "bin/krun-use.exe" || header.entry_type().is_dir() {
                 0o755
             } else {
                 0o644
@@ -206,7 +206,7 @@ fn assert_normalized_zip(path: &Path) {
         );
         assert_eq!(
             entry.unix_mode().unwrap() & 0o777,
-            if name == "bin/aster-use.exe" || entry.is_dir() {
+            if name == "bin/krun-use.exe" || entry.is_dir() {
                 0o755
             } else {
                 0o644
@@ -291,8 +291,8 @@ fn release_rebuild_verifier_accepts_exact_binaries_and_rejects_drift() {
     let stage = temp.path().join("primary stage");
     let rebuilt = temp.path().join("independent rebuild");
     let subjects = [
-        ("aster-use", b"use binary\n".as_slice()),
-        ("aster-use-browser-driver", b"browser driver\n".as_slice()),
+        ("krun-use", b"use binary\n".as_slice()),
+        ("krun-use-browser-driver", b"browser driver\n".as_slice()),
     ];
     for (archive_path, contents) in subjects {
         let primary = stage.join(archive_path);
@@ -317,7 +317,7 @@ fn release_rebuild_verifier_accepts_exact_binaries_and_rejects_drift() {
         );
         let value: serde_json::Value =
             serde_json::from_slice(&fs::read(&first_evidence).unwrap()).unwrap();
-        assert_eq!(value["schema"], "aster.use.release-rebuild.v1");
+        assert_eq!(value["schema"], "krun.use.release-rebuild.v1");
         assert_eq!(value["platform"], "test-x86_64");
         assert_eq!(
             value["sourceRevision"],
@@ -333,7 +333,7 @@ fn release_rebuild_verifier_accepts_exact_binaries_and_rejects_drift() {
             "rebuild evidence is not deterministic"
         );
 
-        let drifted = rebuilt.join("aster-use");
+        let drifted = rebuilt.join("krun-use");
         fs::write(&drifted, b"drifted rebuild\n").unwrap();
         let rejected_evidence = temp.path().join(format!("rejected-{format}.json"));
         let rejected = run_rebuild_verifier(&archive, &rebuilt, &rejected_evidence);
@@ -357,7 +357,7 @@ fn release_portability_verifier_rejects_repository_local_paths() {
     let checkout = temp.path().join("checkout");
     fs::create_dir_all(release_root.join("dashboard")).unwrap();
     fs::create_dir_all(&checkout).unwrap();
-    fs::write(release_root.join("aster-use"), b"portable executable\n").unwrap();
+    fs::write(release_root.join("krun-use"), b"portable executable\n").unwrap();
 
     let clean = run_portability_verifier(&release_root, &checkout);
     assert!(
@@ -438,7 +438,7 @@ fn ci_builds_and_validates_the_website_on_every_change() {
         "run: npm run lint",
         "run: npm run build",
         "DOCS_BASE: /Use/",
-        "DOCS_ORIGIN: https://aster-lab.github.io",
+        "DOCS_ORIGIN: https://krun-lab.github.io",
         "run: npm run check:site",
     ] {
         assert!(
@@ -488,7 +488,7 @@ fn release_supply_chain_is_pinned_attested_and_keyless_signed() {
     assert!(workflow.contains("test \"${GITHUB_REF_NAME}\" = \"main\""));
     assert!(workflow.contains("git merge-base --is-ancestor"));
     assert!(workflow.contains("test \"${remote_revision}\" = \"${RELEASE_REVISION}\""));
-    assert!(!workflow.contains("aster-use-science"));
+    assert!(!workflow.contains("krun-use-science"));
     assert!(!workflow.contains("release-bundle-sha256"));
     assert_eq!(
         workflow
@@ -512,8 +512,8 @@ fn release_supply_chain_is_pinned_attested_and_keyless_signed() {
     assert!(rebuild_job.contains("without a build cache"));
     assert!(rebuild_job.contains("test ! -e target"));
     assert!(!rebuild_job.contains("external/browser"));
-    assert!(!rebuild_job.contains("aster-use-browser-driver"));
-    assert!(ci.contains("cargo test -p aster-use --test release_workflow --locked"));
+    assert!(!rebuild_job.contains("krun-use-browser-driver"));
+    assert!(ci.contains("cargo test -p krun-use --test release_workflow --locked"));
     assert!(!workflow.contains("tar czf"));
     assert!(!workflow.contains("Compress-Archive"));
     assert!(workflow.contains(".spdx.json"));
@@ -632,26 +632,26 @@ fn installed_release_smoke_is_checkout_independent() {
     assert!(unix.contains("scripts/verify-release-portability.py"));
     assert!(unix.contains("--release-root \"${install_root}\""));
     assert!(unix.contains("--forbid-path \"${GITHUB_WORKSPACE}\""));
-    assert!(unix.contains("export ASTER_USE_HOME=\"${RUNNER_TEMP}/release-smoke-home-"));
+    assert!(unix.contains("export KRUN_USE_HOME=\"${RUNNER_TEMP}/release-smoke-home-"));
     assert!(unix.contains("cd \"${smoke_cwd}\""));
-    assert!(unix.contains("\"${install_root}/aster-use\" --version"));
+    assert!(unix.contains("\"${install_root}/krun-use\" --version"));
     assert!(unix.contains("use.builtin_removed"));
-    assert!(unix.contains("test ! -e \"${install_root}/aster-use-browser-driver\""));
+    assert!(unix.contains("test ! -e \"${install_root}/krun-use-browser-driver\""));
 
     assert!(windows.contains("scripts/verify-release-portability.py"));
     assert!(windows.contains("--release-root $root"));
     assert!(windows.contains("--forbid-path $env:GITHUB_WORKSPACE"));
-    assert!(windows.contains("$env:ASTER_USE_HOME = Join-Path $env:RUNNER_TEMP"));
+    assert!(windows.contains("$env:KRUN_USE_HOME = Join-Path $env:RUNNER_TEMP"));
     assert!(windows.contains("Set-Location $smokeCwd"));
-    assert!(windows.contains("& \"$root/aster-use.exe\" --version"));
+    assert!(windows.contains("& \"$root/krun-use.exe\" --version"));
     assert!(windows.contains("use.builtin_removed"));
-    assert!(windows.contains("\"$root/aster-use-browser-driver.exe\""));
+    assert!(windows.contains("\"$root/krun-use-browser-driver.exe\""));
 }
 
 fn write_release_fixture(root: &Path, reverse: bool) {
     let mut files = vec![
         ("README.md", b"release fixture\n".as_slice()),
-        ("bin/aster-use.exe", b"fixture executable\n".as_slice()),
+        ("bin/krun-use.exe", b"fixture executable\n".as_slice()),
         ("skills/core/SKILL.md", b"# Core\n".as_slice()),
     ];
     if reverse {
@@ -662,7 +662,7 @@ fn write_release_fixture(root: &Path, reverse: bool) {
         fs::create_dir_all(path.parent().unwrap()).unwrap();
         fs::write(&path, contents).unwrap();
         #[cfg(unix)]
-        if relative == "bin/aster-use.exe" {
+        if relative == "bin/krun-use.exe" {
             use std::os::unix::fs::PermissionsExt;
             fs::set_permissions(path, fs::Permissions::from_mode(0o755)).unwrap();
         }
@@ -705,8 +705,8 @@ fn run_rebuild_verifier(archive: &Path, rebuilt: &Path, output_path: &Path) -> O
         .arg("--output")
         .arg(output_path);
     for (archive_path, rebuilt_name) in [
-        ("aster-use", "aster-use"),
-        ("aster-use-browser-driver", "aster-use-browser-driver"),
+        ("krun-use", "krun-use"),
+        ("krun-use-browser-driver", "krun-use-browser-driver"),
     ] {
         command
             .arg("--binary")

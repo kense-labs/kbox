@@ -4,9 +4,9 @@ use std::io;
 use std::os::unix::ffi::OsStrExt;
 use std::path::{Path, PathBuf};
 
-use aster_oci_agent_protocol::{AgentCreateRequest, AgentState};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{async_trait, Error, ErrorCode, IoMode, Result};
+use krun_oci_agent_protocol::{AgentCreateRequest, AgentState};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{async_trait, Error, ErrorCode, IoMode, Result};
 use tokio::process::{Child, Command};
 
 use super::cgroup::{self, CgroupManager};
@@ -348,7 +348,7 @@ impl LinuxExecutor {
     /// retain its driver outcome.
     pub async fn rollback_restore(
         &self,
-        target: &aster_oci_sdk::ContainerTarget,
+        target: &krun_oci_sdk::ContainerTarget,
         config_digest: &str,
     ) -> Result<()> {
         let key = ContainerKey::from_target(target)?;
@@ -459,7 +459,7 @@ impl Drop for RestoreRootfsMount {
     }
 }
 
-fn require_null_io(io: &aster_oci_sdk::ProcessIo) -> Result<()> {
+fn require_null_io(io: &krun_oci_sdk::ProcessIo) -> Result<()> {
     if io.stdin == IoMode::Null
         && io.stdout == IoMode::Null
         && io.stderr == IoMode::Null
@@ -504,7 +504,7 @@ fn restore_error(code: ErrorCode, message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_sdk::{ErrorCode, IoMode, OciBundle, ProcessIo};
+    use krun_oci_sdk::{ErrorCode, IoMode, OciBundle, ProcessIo};
 
     use super::{require_restore_v1_plan, InitPlan};
 
@@ -526,10 +526,10 @@ mod tests {
                 "noNewPrivileges": true
             },
             "annotations": {
-                "dev.aster.oci.cgroup.layout": "control-workload-v1",
-                "dev.aster.oci.cgroup.control-memory-headroom-bytes": "67108864",
-                "dev.aster.oci.cgroup.control-cpu-headroom-micros": "25000",
-                "dev.aster.oci.cgroup.control-pids-headroom": "16"
+                "dev.krun.oci.cgroup.layout": "control-workload-v1",
+                "dev.krun.oci.cgroup.control-memory-headroom-bytes": "67108864",
+                "dev.krun.oci.cgroup.control-cpu-headroom-micros": "25000",
+                "dev.krun.oci.cgroup.control-pids-headroom": "16"
             },
             "linux": {
                 "cgroupsPath": "restore-profile-test",

@@ -1,7 +1,7 @@
 use super::*;
 
 pub(super) fn project_sources(
-    plan: &aster_use_core::PluginOperationPlan,
+    plan: &krun_use_core::PluginOperationPlan,
 ) -> UseResult<Vec<PluginOperationSourceDiagnostic>> {
     plan.packages
         .iter()
@@ -46,7 +46,7 @@ pub(super) fn project_sources(
 
 pub(super) fn project_installed_source(
     package_id: &str,
-    catalog: &aster_use_core::VerifiedPluginCatalogRecord,
+    catalog: &krun_use_core::VerifiedPluginCatalogRecord,
 ) -> UseResult<Vec<PluginOperationSourceDiagnostic>> {
     catalog.validate().map_err(|_| diagnostic_state_error())?;
     if catalog.record.package_id != package_id {
@@ -66,7 +66,7 @@ pub(super) fn project_installed_source(
 
 pub(super) async fn project_downloads(
     manager: &PackageManager,
-    envelope: &aster_use_core::PluginOperationPlanEnvelope,
+    envelope: &krun_use_core::PluginOperationPlanEnvelope,
 ) -> UseResult<DownloadProjection> {
     let plan = &envelope.plan;
     if !matches!(
@@ -176,14 +176,14 @@ pub(super) async fn project_download_attempt(
 
 struct ExpectedDownloadTarget<'a> {
     package_id: &'a str,
-    provenance: &'a aster_use_core::VerifiedCatalogProvenance,
-    archive: &'a aster_use_core::CatalogArchive,
+    provenance: &'a krun_use_core::VerifiedCatalogProvenance,
+    archive: &'a krun_use_core::CatalogArchive,
 }
 
 struct ExpectedPlanningTarget<'a> {
     package_id: &'a str,
-    provenance: &'a aster_use_core::VerifiedCatalogProvenance,
-    planning: &'a aster_use_core::CatalogPlanningTarget,
+    provenance: &'a krun_use_core::VerifiedCatalogProvenance,
+    planning: &'a krun_use_core::CatalogPlanningTarget,
 }
 
 struct PlanningProjection {
@@ -229,13 +229,13 @@ async fn observe_expected_downloads(
             .checked_add(observed.retained_bytes)
             .ok_or_else(diagnostic_state_error)?;
         let status = match observed.status {
-            aster_use_extension::VerifiedTargetObservationStatus::Missing => {
+            krun_use_extension::VerifiedTargetObservationStatus::Missing => {
                 PluginDownloadTargetDiagnosticStatus::Missing
             }
-            aster_use_extension::VerifiedTargetObservationStatus::Partial => {
+            krun_use_extension::VerifiedTargetObservationStatus::Partial => {
                 PluginDownloadTargetDiagnosticStatus::Partial
             }
-            aster_use_extension::VerifiedTargetObservationStatus::Complete => {
+            krun_use_extension::VerifiedTargetObservationStatus::Complete => {
                 PluginDownloadTargetDiagnosticStatus::Complete
             }
         };
@@ -316,13 +316,13 @@ async fn observe_expected_planning(
             .checked_add(observed.retained_bytes)
             .ok_or_else(diagnostic_state_error)?;
         let status = match observed.status {
-            aster_use_extension::VerifiedTargetObservationStatus::Missing => {
+            krun_use_extension::VerifiedTargetObservationStatus::Missing => {
                 PluginDownloadTargetDiagnosticStatus::Missing
             }
-            aster_use_extension::VerifiedTargetObservationStatus::Partial => {
+            krun_use_extension::VerifiedTargetObservationStatus::Partial => {
                 PluginDownloadTargetDiagnosticStatus::Partial
             }
-            aster_use_extension::VerifiedTargetObservationStatus::Complete => {
+            krun_use_extension::VerifiedTargetObservationStatus::Complete => {
                 PluginDownloadTargetDiagnosticStatus::Complete
             }
         };
@@ -494,7 +494,7 @@ pub(super) fn enablement_intent_cutover_key(
 }
 
 fn expected_lifecycle_unit(
-    transition: &aster_use_core::PlannedPackageTransition,
+    transition: &krun_use_core::PlannedPackageTransition,
     action: PluginLifecycleAction,
     state: Option<&PlannedPackageState>,
     generation: Option<u64>,
@@ -679,7 +679,7 @@ fn exact_checkpoint(
 }
 
 pub(super) fn project_providers(
-    plan: &aster_use_core::PluginOperationPlan,
+    plan: &krun_use_core::PluginOperationPlan,
     lifecycle: &[ObservedLifecycleUnit],
 ) -> UseResult<Vec<PluginProviderOperationDiagnostic>> {
     plan.providers
@@ -739,7 +739,7 @@ pub(super) fn project_providers(
 
 pub(super) async fn observe_grant(
     manager: &PackageManager,
-    envelope: &aster_use_core::PluginOperationPlanEnvelope,
+    envelope: &krun_use_core::PluginOperationPlanEnvelope,
     authorization: &crate::package::grant::PackageGraphAuthorization,
     phase: PluginOperationDiagnosticPhase,
 ) -> UseResult<PluginGrantOperationDiagnostic> {
@@ -845,7 +845,7 @@ pub(super) async fn observe_grant(
 }
 
 fn validate_grant_journal(
-    envelope: &aster_use_core::PluginOperationPlanEnvelope,
+    envelope: &krun_use_core::PluginOperationPlanEnvelope,
     authorization: &crate::package::grant::PackageGraphAuthorization,
     journal: &WorkspaceGrantOperationJournal,
 ) -> UseResult<()> {
@@ -909,7 +909,7 @@ fn grant_status(phase: WorkspaceGrantLifecyclePhase) -> PluginGrantDiagnosticSta
 }
 
 pub(super) fn project_registry_cutover(
-    envelope: &aster_use_core::PluginOperationPlanEnvelope,
+    envelope: &krun_use_core::PluginOperationPlanEnvelope,
     phase: PluginOperationDiagnosticPhase,
     cutover_key: &str,
     records: &[ExtensionRegistryCutoverRecord],
@@ -1018,7 +1018,7 @@ pub(super) fn project_registry_cutover(
 }
 
 pub(super) fn confirmation_status(
-    envelope: &aster_use_core::PluginOperationPlanEnvelope,
+    envelope: &krun_use_core::PluginOperationPlanEnvelope,
     authorization: &crate::package::grant::PackageGraphAuthorization,
     phase: PluginOperationDiagnosticPhase,
 ) -> PluginOperationConfirmationDiagnosticStatus {

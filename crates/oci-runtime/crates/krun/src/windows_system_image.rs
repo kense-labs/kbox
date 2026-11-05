@@ -7,7 +7,7 @@ use std::os::windows::fs::{MetadataExt, OpenOptionsExt};
 use std::os::windows::io::AsRawHandle;
 use std::path::{Component, Path, PathBuf};
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 use windows_sys::Win32::Storage::FileSystem::{
@@ -18,14 +18,14 @@ use windows_sys::Win32::System::LibraryLoader::{GetModuleFileNameW, GetModuleHan
 
 use crate::WindowsBootAssetsEvidence;
 
-const SCHEMA_VERSION: &str = "aster.oci.windows-system-image.v1";
-const COMPATIBILITY_LEVEL: &str = "aster-oci-runtime-0.2.0-agent-protocol-v10";
+const SCHEMA_VERSION: &str = "krun.oci.windows-system-image.v1";
+const COMPATIBILITY_LEVEL: &str = "krun-oci-runtime-0.2.0-agent-protocol-v10";
 const ARCHITECTURE: &str = "x86_64";
-const IMAGE_NAME: &str = "aster-oci-system.ext4";
+const IMAGE_NAME: &str = "krun-oci-system.ext4";
 const IMAGE_SIZE: u64 = 67_108_864;
 const FILESYSTEM: &str = "ext4";
 const FILESYSTEM_UUID: &str = "a3a30c1a-2026-4000-8000-000000000011";
-const FILESYSTEM_LABEL: &str = "aster-oci-system";
+const FILESYSTEM_LABEL: &str = "krun-oci-system";
 const DIRECTORY_HASH_SEED: &str = "a3a30c1a-2026-4000-8000-000000000012";
 const ALPINE_VERSION: &str = "3.22.5";
 const ALPINE_URL: &str =
@@ -390,7 +390,7 @@ impl Image {
         require_equal(
             "image.archive_name",
             &self.archive_name,
-            "aster-oci-system.ext4.xz",
+            "krun-oci-system.ext4.xz",
         )?;
         if self.archive_size == 0 {
             return Err(image_error(

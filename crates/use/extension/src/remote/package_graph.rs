@@ -1,11 +1,11 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     CatalogAvailability, PluginPackageLock, PluginPackageLockHost, PluginPackageResolver,
     PluginReleaseChannel, UseError, UseResult, VerifiedPluginCatalogRecord,
     MAX_PLUGIN_RESOLUTION_CANDIDATES, PLUGIN_CATALOG_SCHEMA_V3,
 };
-use async_trait::async_trait;
 use semver::{Version, VersionReq};
 
 use super::catalog::{load_cached_plugin_candidates, load_refreshed_plugin_candidates};
@@ -530,7 +530,7 @@ fn package_graph_error(code: &'static str, message: impl Into<String>) -> UseErr
 
 #[cfg(test)]
 mod tests {
-    use aster_use_core::{
+    use krun_use_core::{
         PluginCatalogRecord, VerifiedCatalogProvenance, VerifiedPluginCatalogRecord,
     };
 

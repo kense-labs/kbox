@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use aster_use_core::{UseError, UseResult};
-use aster_use_extension::ExtensionPaths;
+use krun_use_core::{UseError, UseResult};
+use krun_use_extension::ExtensionPaths;
 
 use super::CommandOutput;
 use crate::state_backup::{

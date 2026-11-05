@@ -1,22 +1,34 @@
-# Aster OCR
+# krun-use-ocr
+
+## 概述
+
+Provider-oriented optical character recognition interfaces for Krun
+
+## 构建与验证
+
+在仓库根目录执行：
+
+```bash
+cargo check --locked
+```
 
 Provider-oriented Rust OCR interfaces and the native executable shipped in
-[`aster/aster-ocr`](https://github.com/aster-ai-lab/plugins/tree/main/plugins/operations/aster/aster-ocr).
+[`krun/krun-ocr`](https://github.com/kense-labs/krun/tree/main/plugins/operations/krun/krun-ocr).
 The official distribution is one self-contained `.aix` containing the executable,
-ONNX Runtime, PP-OCRv6 models, licenses, stdio MCP entry and `aster-use-ocr` Skill.
+ONNX Runtime, PP-OCRv6 models, licenses, stdio MCP entry and `krun-use-ocr` Skill.
 The desktop base uses the provider-neutral API and calls the plugin through MCP.
 
 ```text
-aster-use-ocr doctor --json
-aster-use-ocr extract "/local/发票 1.png" --json
-aster-use-ocr serve --mcp --profile document
+krun-use-ocr doctor --json
+krun-use-ocr extract "/local/发票 1.png" --json
+krun-use-ocr serve --mcp --profile document
 ```
 
 Use the executable from the verified installed package's `payload/` directory;
-Windows uses `aster-use-ocr.exe`. MCP exposes `ocr_doctor` and `ocr_extract`, with
+Windows uses `krun-use-ocr.exe`. MCP exposes `ocr_doctor` and `ocr_extract`, with
 `{"path":"/exact/local/image.png"}`. Structured results contain provider, engine,
 model, original source evidence, text, blocks and warnings. Qualified tool names
-come from host discovery. The retired built-in `aster use ocr` route is unavailable.
+come from host discovery. The retired built-in `krun use ocr` route is unavailable.
 
 The packaged executable binds its own adjacent library and models, ahead of any
 old user cache. General detection is bounded to 4000 pixels; the document profile
@@ -33,12 +45,12 @@ native extension lifecycle. They no longer download a separate model archive.
 Unchanged verified releases reuse their installed generation. A small local
 reference locates models in the canonical installed package; it does not copy them.
 For normal AI use, install and authorize through the host plugin manager described
-in the [plugins Skill](https://github.com/aster-ai-lab/plugins/tree/main/skills/aster-plugins).
+in the [plugins Skill](https://github.com/kense-labs/krun/tree/main/skills/krun-plugins).
 
 Source and Skill live here. Release source metadata and signed catalogs live in
-the plugins repository. Build `aster-use-ocr` with the pinned workspace toolchain,
+the plugins repository. Build `krun-use-ocr` with the pinned workspace toolchain,
 then run `scripts/package_plugin.py` with explicit native executable, runtime,
-model directory, notices directory, output directory and `aster-use` builder.
+model directory, notices directory, output directory and `krun-use` builder.
 It checks the four pinned model digests and invokes native `registry package
 build/check/prepare`; do not create ZIP files and rename them to `.aix`.
 

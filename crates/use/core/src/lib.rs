@@ -205,7 +205,7 @@ impl FirstUseInstallBlock {
     pub const fn reason(self) -> &'static str {
         match self {
             Self::Offline => "offline mode",
-            Self::Disabled => "ASTER_NO_AUTO_INSTALL",
+            Self::Disabled => "KRUN_NO_AUTO_INSTALL",
         }
     }
 }
@@ -223,8 +223,8 @@ impl FirstUseInstallPolicy {
 
     pub fn from_env() -> UseResult<Self> {
         Self::from_values(
-            std::env::var_os("ASTER_OFFLINE"),
-            std::env::var_os("ASTER_NO_AUTO_INSTALL"),
+            std::env::var_os("KRUN_OFFLINE"),
+            std::env::var_os("KRUN_NO_AUTO_INSTALL"),
         )
     }
 
@@ -244,8 +244,8 @@ impl FirstUseInstallPolicy {
 
     fn from_values(offline: Option<OsString>, disabled: Option<OsString>) -> UseResult<Self> {
         Ok(Self {
-            offline: parse_environment_boolean("ASTER_OFFLINE", offline)?,
-            disabled: parse_environment_boolean("ASTER_NO_AUTO_INSTALL", disabled)?,
+            offline: parse_environment_boolean("KRUN_OFFLINE", offline)?,
+            disabled: parse_environment_boolean("KRUN_NO_AUTO_INSTALL", disabled)?,
         })
     }
 }
@@ -290,17 +290,17 @@ mod tests {
     #[test]
     fn stable_error_has_machine_code_and_suggestion() {
         let error = UseError::new("use.runtime.missing", "Runtime is missing.")
-            .with_suggestion("Run aster install use/browser.");
+            .with_suggestion("Run krun install use/browser.");
         let value = serde_json::to_value(error).unwrap();
         assert_eq!(value["code"], "use.runtime.missing");
         assert!(value["suggestion"]
             .as_str()
             .unwrap()
-            .contains("aster install"));
+            .contains("krun install"));
     }
 
     #[test]
-    fn first_use_policy_uses_aster_boolean_conventions() {
+    fn first_use_policy_uses_krun_boolean_conventions() {
         for value in [None, Some("0"), Some("false"), Some("no"), Some("off")] {
             let policy = FirstUseInstallPolicy::from_values(value.map(Into::into), None).unwrap();
             assert!(policy.allows_install());
@@ -322,6 +322,6 @@ mod tests {
     fn invalid_first_use_policy_is_typed() {
         let error = FirstUseInstallPolicy::from_values(Some("sometimes".into()), None).unwrap_err();
         assert_eq!(error.code, "use.first_use.policy_invalid");
-        assert_eq!(error.details["variable"], "ASTER_OFFLINE");
+        assert_eq!(error.details["variable"], "KRUN_OFFLINE");
     }
 }

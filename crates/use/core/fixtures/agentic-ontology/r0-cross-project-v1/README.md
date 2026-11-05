@@ -1,16 +1,24 @@
 # R0 cross-project contract fixtures
 
-This data-only package freezes the first Agentic Ontology -> Aster Use -> Aster
-Code -> Aster Cloud integration boundary. It does not grant package lifecycle,
+## 概述
+
+本目录保存 crates/use/core/fixtures/agentic-ontology/r0-cross-project-v1 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
+This data-only package freezes the first Agentic Ontology -> Krun Use -> Krun
+Code -> Krun Cloud integration boundary. It does not grant package lifecycle,
 Knowledge, Agent, tenant, publication, or authorization authority.
 
 ## Ownership
 
 - Agentic Ontology owns the candidate handoff and this integration projection.
-- Aster Use owns the reviewed lock, Registry generation, installed receipt,
+- Krun Use owns the reviewed lock, Registry generation, installed receipt,
   Knowledge capability projection, and exact-generation search/read behavior.
-- Aster Code owns the Agent release, session, run, events, result, and task proof.
-- Aster Cloud owns organization, Workspace, immutable release, execution, and
+- Krun Code owns the Agent release, session, run, events, result, and task proof.
+- Krun Cloud owns organization, Workspace, immutable release, execution, and
   audit identities.
 
 Every runtime must resolve and revalidate the referenced state from its own
@@ -20,10 +28,10 @@ with local `latest` state.
 
 ## Canonical fixtures
 
-- `aster-use-handoff.valid.json` is a real, revision-bound compiler handoff.
+- `krun-use-handoff.valid.json` is a real, revision-bound compiler handoff.
 - `plugin-package-lock.json`, `registry-snapshot.json`,
-  `extension-receipt.json`, and `aster-use-generation-receipt.json` freeze the
-  exact reviewed Aster Use generation evidence.
+  `extension-receipt.json`, and `krun-use-generation-receipt.json` freeze the
+  exact reviewed Krun Use generation evidence.
 - `knowledge-lease-binding.json`, `capability-snapshot.json`, and
   `knowledge-citation.json` freeze the minimum Agent-facing OKF search/read and
   citation projection. They expose no internal `GraphProjection` or source
@@ -48,7 +56,7 @@ Agentic Ontology canonical digests use SHA-256 over:
 3. the big-endian `u64` byte length of compact deterministic JSON and those
    JSON bytes.
 
-Aster Use lock, Registry snapshot, and extension receipt digests use the owning
+Krun Use lock, Registry snapshot, and extension receipt digests use the owning
 Use contract's canonical JSON rules. `manifest.json` records the raw SHA-256
 and byte length of every other package file. Its `packageDigest` uses the
 Agentic Ontology canonical algorithm with domain

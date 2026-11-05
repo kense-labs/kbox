@@ -1,8 +1,6 @@
 use std::collections::BTreeMap;
 
-use aster_use_core::{
-    McpReleaseDescriptor, ReleaseKind, ReleaseResolution, SkillReleaseDescriptor,
-};
+use krun_use_core::{McpReleaseDescriptor, ReleaseKind, ReleaseResolution, SkillReleaseDescriptor};
 
 const MCP_FIXTURE: &[u8] = include_bytes!("../fixtures/releases/mcp-release-v1.json");
 const SKILL_FIXTURE: &[u8] = include_bytes!("../fixtures/releases/skill-release-v1.json");
@@ -74,7 +72,7 @@ fn mutable_or_orchestration_fields_fail_closed() {
 #[test]
 fn descriptors_reject_noncanonical_identity_and_set_values() {
     let mut mcp = McpReleaseDescriptor::from_json(MCP_FIXTURE).unwrap();
-    mcp.provenance.source_repository = "https://token@example.com/aster/private.git".to_string();
+    mcp.provenance.source_repository = "https://token@example.com/krun/private.git".to_string();
     assert_eq!(
         mcp.canonical_bytes().unwrap_err().code,
         "use.release.descriptor_invalid"
@@ -143,21 +141,21 @@ fn compatibility_and_dependency_resolution_fail_before_deployment() {
     let mcp = McpReleaseDescriptor::from_json(MCP_FIXTURE).unwrap();
     let mut resolution = ReleaseResolution {
         components: BTreeMap::from([
-            ("aster-runtime".to_string(), "0.2.0".to_string()),
-            ("aster-use".to_string(), "0.1.2".to_string()),
+            ("krun-runtime".to_string(), "0.2.0".to_string()),
+            ("krun-use".to_string(), "0.1.2".to_string()),
         ]),
         dependencies: mcp.dependencies.clone(),
     };
     mcp.verify_resolution(&resolution).unwrap();
 
-    resolution.components.remove("aster-runtime");
+    resolution.components.remove("krun-runtime");
     assert_eq!(
         mcp.verify_resolution(&resolution).unwrap_err().code,
         "use.release.compatibility_missing"
     );
     resolution
         .components
-        .insert("aster-runtime".to_string(), "0.1.9".to_string());
+        .insert("krun-runtime".to_string(), "0.1.9".to_string());
     assert_eq!(
         mcp.verify_resolution(&resolution).unwrap_err().code,
         "use.release.incompatible"
@@ -165,7 +163,7 @@ fn compatibility_and_dependency_resolution_fail_before_deployment() {
 
     resolution
         .components
-        .insert("aster-runtime".to_string(), "0.2.0".to_string());
+        .insert("krun-runtime".to_string(), "0.2.0".to_string());
     resolution.dependencies.clear();
     assert_eq!(
         mcp.verify_resolution(&resolution).unwrap_err().code,

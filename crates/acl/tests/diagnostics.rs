@@ -1,4 +1,4 @@
-use aster_acl::{
+use krun_acl::{
     collect_diagnostics, collect_diagnostics_with_limits, parse_with_limits, DiagnosticCode,
     ParseError, ParseLimits,
 };
@@ -130,7 +130,7 @@ fn shared_diagnostics_have_stable_codes_spans_and_redacted_messages() {
     );
 
     fn assert_send_sync<T: Send + Sync>() {}
-    assert_send_sync::<aster_acl::ParseError>();
+    assert_send_sync::<krun_acl::ParseError>();
 }
 
 #[test]
@@ -190,5 +190,5 @@ fn shared_multi_diagnostics_are_bounded_and_stable() {
     assert!(collect_diagnostics("valid = true").is_empty());
 
     fn assert_send_sync<T: Send + Sync>() {}
-    assert_send_sync::<aster_acl::DiagnosticReport>();
+    assert_send_sync::<krun_acl::DiagnosticReport>();
 }

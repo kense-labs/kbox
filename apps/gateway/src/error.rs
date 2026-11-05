@@ -1,4 +1,4 @@
-//! Centralized error types for Aster Gateway
+//! Centralized error types for Krun Gateway
 
 use thiserror::Error;
 

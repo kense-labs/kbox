@@ -1,8 +1,8 @@
-use aster_use_core::{
+use krun_use_core::{
     PlanActor, PlanPolicyDecision, PluginPermissionCeiling, PluginWorkspaceGrant,
     WorkspaceGrantAuthority, WorkspaceGrantEvidence, PLUGIN_WORKSPACE_GRANT_SCHEMA,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     StoredWorkspaceGrant, WorkspaceGrantReceipt, WorkspaceGrantRevocation, WorkspaceGrantStore,
 };
 use sha2::{Digest, Sha256};

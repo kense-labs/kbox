@@ -1,5 +1,5 @@
-use aster_use_core::{OkfCapabilityProjection, PlanScope, UseError, UseResult};
-use aster_use_extension::{ExtensionLifecycleIdentity, ExtensionRegistry, ExtensionRouteLease};
+use krun_use_core::{OkfCapabilityProjection, PlanScope, UseError, UseResult};
+use krun_use_extension::{ExtensionLifecycleIdentity, ExtensionRegistry, ExtensionRouteLease};
 
 use super::{
     OkfKnowledgeCitation, OkfKnowledgeClient, OkfKnowledgeReadResponse, OkfKnowledgeSearchRequest,
@@ -168,11 +168,11 @@ mod tests {
     use std::sync::Arc;
     use std::time::Duration;
 
-    use aster_use_core::{
+    use krun_use_core::{
         OkfCapabilityProjection, PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope,
         PlanScopeKind, PluginSurfaceRef,
     };
-    use aster_use_extension::{
+    use krun_use_extension::{
         load_okf_bundle_files, ExtensionLifecycleIdentity, ExtensionLifecyclePackage,
         ExtensionPaths,
     };

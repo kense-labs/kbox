@@ -3,16 +3,16 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 Set-Location $Root
 
-$Bin = if ($args.Count -ge 1) { $args[0] } else { ".\target\debug\aster-gateway.exe" }
+$Bin = if ($args.Count -ge 1) { $args[0] } else { ".\target\debug\krun-gateway.exe" }
 if (-not (Test-Path $Bin)) {
-  Write-Host "building aster-gateway..."
-  cargo build --bin aster-gateway
-  $Bin = ".\target\debug\aster-gateway.exe"
+  Write-Host "building krun-gateway..."
+  cargo build --bin krun-gateway
+  $Bin = ".\target\debug\krun-gateway.exe"
 }
 
-$Dur = if ($env:ASTER_GATEWAY_SOAK_DURATION) { $env:ASTER_GATEWAY_SOAK_DURATION } else { "30" }
-$HttpC = if ($env:ASTER_GATEWAY_SOAK_CONCURRENCY_HTTP) { $env:ASTER_GATEWAY_SOAK_CONCURRENCY_HTTP } else { "16" }
-$SseC = if ($env:ASTER_GATEWAY_SOAK_CONCURRENCY_SSE) { $env:ASTER_GATEWAY_SOAK_CONCURRENCY_SSE } else { "8" }
+$Dur = if ($env:KRUN_GATEWAY_SOAK_DURATION) { $env:KRUN_GATEWAY_SOAK_DURATION } else { "30" }
+$HttpC = if ($env:KRUN_GATEWAY_SOAK_CONCURRENCY_HTTP) { $env:KRUN_GATEWAY_SOAK_CONCURRENCY_HTTP } else { "16" }
+$SseC = if ($env:KRUN_GATEWAY_SOAK_CONCURRENCY_SSE) { $env:KRUN_GATEWAY_SOAK_CONCURRENCY_SSE } else { "8" }
 
 function Invoke-Python {
   param([string[]]$PythonArgs)

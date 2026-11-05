@@ -12,7 +12,7 @@
 //!
 //! ## Prerequisites
 //!
-//! - `aster-box` binary built (`cargo build -p aster-box-cli`)
+//! - `krun-box` binary built (`cargo build -p krun-box-cli`)
 //! - macOS with Apple HVF or Linux with KVM
 //! - Internet access (to pull images on first run)
 //! - `DYLD_LIBRARY_PATH` set to include libkrun/libkrunfw build dirs
@@ -26,7 +26,7 @@
 //! export DYLD_LIBRARY_PATH="$(ls -td target/debug/build/libkrun-sys-*/out/libkrun/lib | head -1):$(ls -td target/debug/build/libkrun-sys-*/out/libkrunfw/lib | head -1)"
 //!
 //! # Run TEE integration tests
-//! cargo test -p aster-box-cli --test tee_integration -- --ignored --nocapture --test-threads=1
+//! cargo test -p krun-box-cli --test tee_integration -- --ignored --nocapture --test-threads=1
 //! ```
 //!
 //! Tests are `#[ignore]` by default because they require a built binary,
@@ -35,7 +35,7 @@
 use std::process::Command;
 use std::time::Duration;
 
-/// Find the aster-box binary in the target directory.
+/// Find the krun-box binary in the target directory.
 fn find_binary() -> String {
     let manifest_dir = env!("CARGO_MANIFEST_DIR");
     let workspace_root = std::path::Path::new(manifest_dir)
@@ -43,52 +43,49 @@ fn find_binary() -> String {
         .expect("cli crate should be inside workspace");
 
     for profile in ["debug", "release"] {
-        let bin = workspace_root
-            .join("target")
-            .join(profile)
-            .join("aster-box");
+        let bin = workspace_root.join("target").join(profile).join("krun-box");
         if bin.exists() {
             return bin.to_string_lossy().to_string();
         }
     }
 
-    "aster-box".to_string()
+    "krun-box".to_string()
 }
 
-/// Run an aster-box command with inherited output, assert success.
+/// Run an krun-box command with inherited output, assert success.
 fn run_ok(args: &[&str]) -> String {
     let bin = find_binary();
-    eprintln!("    $ aster-box {}", args.join(" "));
+    eprintln!("    $ krun-box {}", args.join(" "));
 
     let status = Command::new(&bin)
         .args(args)
         .stdout(std::process::Stdio::inherit())
         .stderr(std::process::Stdio::inherit())
         .status()
-        .unwrap_or_else(|e| panic!("Failed to run `aster-box {}`: {}", args.join(" "), e));
+        .unwrap_or_else(|e| panic!("Failed to run `krun-box {}`: {}", args.join(" "), e));
 
     assert!(
         status.success(),
-        "Command `aster-box {}` failed",
+        "Command `krun-box {}` failed",
         args.join(" "),
     );
     String::new()
 }
 
-/// Run an aster-box command, capture stdout, assert success, return stdout.
+/// Run an krun-box command, capture stdout, assert success, return stdout.
 fn run_ok_capture(args: &[&str]) -> String {
     let bin = find_binary();
-    eprintln!("    $ aster-box {}", args.join(" "));
+    eprintln!("    $ krun-box {}", args.join(" "));
     let output = Command::new(&bin)
         .args(args)
         .output()
-        .unwrap_or_else(|e| panic!("Failed to run `aster-box {}`: {}", args.join(" "), e));
+        .unwrap_or_else(|e| panic!("Failed to run `krun-box {}`: {}", args.join(" "), e));
 
     let stdout = String::from_utf8_lossy(&output.stdout).to_string();
     let stderr = String::from_utf8_lossy(&output.stderr).to_string();
     assert!(
         output.status.success(),
-        "Command `aster-box {}` failed.\nstdout: {}\nstderr: {}",
+        "Command `krun-box {}` failed.\nstdout: {}\nstderr: {}",
         args.join(" "),
         stdout,
         stderr,
@@ -96,13 +93,13 @@ fn run_ok_capture(args: &[&str]) -> String {
     stdout
 }
 
-/// Run an aster-box command quietly (capture, no assert).
+/// Run an krun-box command quietly (capture, no assert).
 fn run_cmd_quiet(args: &[&str]) -> (String, String, bool) {
     let bin = find_binary();
     let output = Command::new(&bin)
         .args(args)
         .output()
-        .unwrap_or_else(|e| panic!("Failed to run `aster-box {}`: {}", args.join(" "), e));
+        .unwrap_or_else(|e| panic!("Failed to run `krun-box {}`: {}", args.join(" "), e));
 
     let stdout = String::from_utf8_lossy(&output.stdout).to_string();
     let stderr = String::from_utf8_lossy(&output.stderr).to_string();

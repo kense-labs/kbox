@@ -2,8 +2,8 @@
 
 use std::os::unix::fs::{symlink, MetadataExt, PermissionsExt};
 
-use aster_oci_agent_protocol::{AgentVmAttachmentManifest, GuestPath};
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::{AgentVmAttachmentManifest, GuestPath};
+use krun_oci_sdk::{
     oci_spec::runtime::Spec, ContainerId, ContainerTarget, CreateAttachments, Generation,
     OciBundle, ProcessIo, StorageAccessMode, StorageAttachmentId, StorageCleanup, StorageOwnership,
 };
@@ -49,7 +49,7 @@ impl Fixture {
             bundle,
             attachments,
             target: ContainerTarget::exact(ContainerId::new("directories").unwrap(), Generation(1)),
-            guest_bundle: GuestPath::new("/run/aster-oci-runtime/bundle").unwrap(),
+            guest_bundle: GuestPath::new("/run/krun-oci-runtime/bundle").unwrap(),
         }
     }
 
@@ -107,18 +107,18 @@ async fn transport_retains_exact_identity_access_and_caller_permissions() {
 #[tokio::test]
 async fn restricted_directory_requires_a_declared_extension_and_enforcement_digest() {
     let mut fixture = Fixture::new();
-    let restrictions = aster_oci_sdk::StoragePathRestrictions::new(vec![
-        aster_oci_sdk::StoragePathRestriction::new(
+    let restrictions = krun_oci_sdk::StoragePathRestrictions::new(vec![
+        krun_oci_sdk::StoragePathRestriction::new(
             StorageAttachmentId::new("caller-1").unwrap(),
             vec![".env".into()],
-            vec![".aster".into()],
-            vec![".aster/loops".into()],
+            vec![".krun".into()],
+            vec![".krun/loops".into()],
         )
         .unwrap(),
     ])
     .unwrap();
     let mut config: serde_json::Value = serde_json::from_str(fixture.bundle.config_json()).unwrap();
-    config["annotations"] = json!({aster_oci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION: restrictions.to_annotation_value().unwrap()});
+    config["annotations"] = json!({krun_oci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION: restrictions.to_annotation_value().unwrap()});
     fixture.bundle = OciBundle::from_json(fixture.bundle.directory(), config.to_string()).unwrap();
     fixture.attachments = Fixture::grants(&fixture.bundle);
     assert_eq!(

@@ -1,4 +1,4 @@
-//! Shared types for the Aster ecosystem.
+//! Shared types for the Krun ecosystem.
 //!
 //! This crate provides:
 //! - [`privacy`] — PII classification, regex-based redaction, keyword matching

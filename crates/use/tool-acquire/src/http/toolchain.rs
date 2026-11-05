@@ -3,7 +3,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-use aster_acl::{parse_acl, Block, Value};
+use krun_acl::{parse_acl, Block, Value};
 
 use super::{debug_origin, official_asset_url, HttpSource, MAX_BYTES};
 use crate::archive::{portable_path, validate_layout, MAX_ARCHIVE_BYTES};

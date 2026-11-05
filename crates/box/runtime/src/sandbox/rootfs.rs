@@ -9,17 +9,17 @@ use std::io::Write;
 use std::path::Component;
 use std::path::{Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
-#[cfg(target_os = "linux")]
-use aster_box_core::rootfs_metadata::runtime_managed_rootfs_mode;
 #[cfg(any(target_os = "linux", test))]
-use aster_box_core::rootfs_metadata::{RootfsEntryKind, RootfsMetadataEntry};
-use aster_box_core::rootfs_metadata::{
+use base64::Engine;
+use krun_box_core::error::{BoxError, Result};
+#[cfg(target_os = "linux")]
+use krun_box_core::rootfs_metadata::runtime_managed_rootfs_mode;
+#[cfg(any(target_os = "linux", test))]
+use krun_box_core::rootfs_metadata::{RootfsEntryKind, RootfsMetadataEntry};
+use krun_box_core::rootfs_metadata::{
     RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH, PREVIOUS_ROOTFS_METADATA_PATH,
     ROOTFS_METADATA_PATH,
 };
-#[cfg(any(target_os = "linux", test))]
-use base64::Engine;
 
 #[cfg(target_os = "linux")]
 use super::capability::validate_id_mapping_plan;
@@ -177,7 +177,7 @@ pub fn mapped_root_ids(plan: &SandboxIdMappingPlan) -> Result<(u32, u32)> {
     ))
 }
 
-/// Make an Aster-owned workspace or anonymous volume accessible as container
+/// Make an Krun-owned workspace or anonymous volume accessible as container
 /// root without ever changing an arbitrary caller-provided host tree.
 #[cfg(target_os = "linux")]
 pub fn prepare_managed_mount_source(path: &Path, plan: &SandboxIdMappingPlan) -> Result<()> {
@@ -258,7 +258,7 @@ pub(crate) fn validate_external_mount_root_metadata(
     };
     if permission_bits & required != required {
         return Err(BoxError::ConfigError(format!(
-            "External Sandbox mount {} is not {} by mapped container root {uid}:{gid}; adjust host ownership/permissions or use an Aster-managed volume",
+            "External Sandbox mount {} is not {} by mapped container root {uid}:{gid}; adjust host ownership/permissions or use an Krun-managed volume",
             path.display(),
             if read_only { "readable" } else { "writable" }
         )));
@@ -615,7 +615,7 @@ fn collect_snapshot_rootfs_metadata(
     let relative = source
         .strip_prefix(root)
         .map_err(|_| BoxError::OciImageError("Sandbox Snapshot walk escaped its root".into()))?;
-    if aster_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
+    if krun_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
         return Ok(());
     }
 
@@ -846,7 +846,7 @@ fn open_regular_file_no_follow(path: &Path) -> std::io::Result<std::fs::File> {
 
 #[cfg(windows)]
 fn open_regular_file_no_follow(path: &Path) -> std::io::Result<std::fs::File> {
-    aster_box_core::windows_file::open_regular_file(path, None).map(|(file, _)| file)
+    krun_box_core::windows_file::open_regular_file(path, None).map(|(file, _)| file)
 }
 
 #[cfg(not(any(unix, windows)))]
@@ -879,7 +879,7 @@ fn decode_and_validate_entries(
         // SAFETY: See the enclosing function's safety documentation.
         let encoded = unsafe { std::ffi::OsString::from_encoded_bytes_unchecked(raw) };
         let relative = safe_relative_path(Path::new(&encoded))?;
-        if aster_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(&relative)
+        if krun_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(&relative)
             || !unique.insert(relative.clone())
         {
             return Err(BoxError::OciImageError(
@@ -1161,7 +1161,7 @@ fn lchown_if_needed(path: &Path, uid: u32, gid: u32) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use aster_box_core::rootfs_metadata::ROOTFS_METADATA_SCHEMA;
+    use krun_box_core::rootfs_metadata::ROOTFS_METADATA_SCHEMA;
 
     fn test_manifest(uid: u64, gid: u64) -> RootfsMetadataManifest {
         RootfsMetadataManifest {
@@ -1372,7 +1372,7 @@ mod tests {
         assert_eq!(requirements.maximum_gid, 43);
         assert!(requirements
             .manifest_path
-            .ends_with(".aster_rootfs_metadata_v1.json"));
+            .ends_with(".krun_rootfs_metadata_v1.json"));
     }
 
     #[test]
@@ -1398,7 +1398,7 @@ mod tests {
         assert_eq!(requirements.maximum_gid, 43);
         assert!(requirements
             .manifest_path
-            .ends_with(".aster_rootfs_metadata_v1.previous.json"));
+            .ends_with(".krun_rootfs_metadata_v1.previous.json"));
     }
 
     #[test]
@@ -1432,7 +1432,7 @@ mod tests {
         assert_eq!(requirements.maximum_gid, 8);
         assert!(requirements
             .manifest_path
-            .ends_with(".aster_image_metadata_v1.json"));
+            .ends_with(".krun_image_metadata_v1.json"));
     }
 
     #[cfg(unix)]
@@ -1490,7 +1490,7 @@ mod tests {
         assert_eq!(requirements.maximum_gid, 8);
         assert!(requirements
             .manifest_path
-            .ends_with(".aster_image_metadata_v1.json"));
+            .ends_with(".krun_image_metadata_v1.json"));
     }
 
     #[test]

@@ -214,7 +214,7 @@ fn probe_k8s_scale_sync(
             })
         }
         Ok(_) | Err(_) => std::thread::Builder::new()
-            .name("aster-k8s-scale-activation-probe".into())
+            .name("krun-k8s-scale-activation-probe".into())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_current_thread()
                     .enable_all()

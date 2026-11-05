@@ -161,13 +161,13 @@ services "model-service" {{
 }}
 
 inference {{
-  tokenizer_revision = "aster.gateway.tokenizer.v1"
+  tokenizer_revision = "krun.gateway.tokenizer.v1"
   expires_at = "2099-01-01T00:00:00Z"
 
   credentials "{CREDENTIAL_ID}" {{
     environment_id = "{ENVIRONMENT_ID}"
     audience = "cloud-inference"
-    prefix = "aster_inf_abc12345"
+    prefix = "krun_inf_abc12345"
     verifier_hash = "{VERIFIER_HASH}"
     generation = 7
     expires_at = "2098-12-31T23:00:00Z"
@@ -359,7 +359,7 @@ fn distributed_acl() -> String {
         queue_timeout_ms = 500
         prompt_cache_affinity = true
         distributed_serving {
-          api_key_env = "ASTER_POWER_API_KEY"
+          api_key_env = "KRUN_POWER_API_KEY"
           execution_timeout_ms = 30000
         }
       }
@@ -376,7 +376,7 @@ fn parses_and_validates_a_complete_inference_policy() {
     let credential_id = Uuid::parse_str(CREDENTIAL_ID).unwrap();
     let route_id = Uuid::parse_str(ROUTE_ID).unwrap();
     let credential = &inference.credentials[&credential_id];
-    assert_eq!(credential.prefix, "aster_inf_abc12345");
+    assert_eq!(credential.prefix, "krun_inf_abc12345");
     assert_eq!(credential.verifier_hash(), VERIFIER_HASH);
     assert_eq!(credential.generation, 7);
 
@@ -705,15 +705,15 @@ fn parses_and_validates_prefill_decode_scheduling_projection() {
         .distributed_serving
         .as_ref()
         .unwrap();
-    assert_eq!(distributed.api_key_env, "ASTER_POWER_API_KEY");
+    assert_eq!(distributed.api_key_env, "KRUN_POWER_API_KEY");
     assert_eq!(distributed.execution_timeout_ms, 30_000);
 }
 
 #[test]
 fn validate_activation_fails_closed_when_distributed_serving_api_key_env_unset() {
-    let environment = format!("ASTER_POWER_VALIDATE_UNSET_{}", Uuid::new_v4().simple());
+    let environment = format!("KRUN_POWER_VALIDATE_UNSET_{}", Uuid::new_v4().simple());
     std::env::remove_var(&environment);
-    let acl = distributed_acl().replace("ASTER_POWER_API_KEY", &environment);
+    let acl = distributed_acl().replace("KRUN_POWER_API_KEY", &environment);
     let config = GatewayConfig::from_acl(&acl).unwrap();
     config.validate().unwrap();
     // Cloud-managed ACL with gateway_id + inline inference is a composed runtime
@@ -733,10 +733,10 @@ fn validate_activation_fails_closed_when_distributed_serving_api_key_env_unset()
 
 #[test]
 fn validate_activation_fails_closed_when_distributed_serving_api_key_invalid() {
-    let environment = format!("ASTER_POWER_VALIDATE_INVALID_{}", Uuid::new_v4().simple());
+    let environment = format!("KRUN_POWER_VALIDATE_INVALID_{}", Uuid::new_v4().simple());
     // Non-graphic bytes fail PowerApiKey::parse — same surface as build_runtime.
     std::env::set_var(&environment, "bad key with spaces");
-    let acl = distributed_acl().replace("ASTER_POWER_API_KEY", &environment);
+    let acl = distributed_acl().replace("KRUN_POWER_API_KEY", &environment);
     let config = GatewayConfig::from_acl(&acl).unwrap();
     config.validate().unwrap();
     let error = crate::validate_runtime_activation_with_custom_middlewares(
@@ -826,7 +826,7 @@ fn distributed_scheduling_rejects_missing_or_unsafe_runtime_configuration() {
 
     for (needle, replacement, expected) in [
         (
-            "api_key_env = \"ASTER_POWER_API_KEY\"",
+            "api_key_env = \"KRUN_POWER_API_KEY\"",
             "api_key_env = \"not-valid\"",
             "api_key_env",
         ),
@@ -1297,10 +1297,7 @@ fn inference_policy_requires_managed_mode_and_an_unexpired_window() {
 
 #[test]
 fn inference_policy_requires_supported_tokenizer_revision() {
-    let missing = valid_acl().replace(
-        "  tokenizer_revision = \"aster.gateway.tokenizer.v1\"\n",
-        "",
-    );
+    let missing = valid_acl().replace("  tokenizer_revision = \"krun.gateway.tokenizer.v1\"\n", "");
     let error = GatewayConfig::from_acl(&missing).unwrap_err();
     assert!(
         error.to_string().contains("tokenizer_revision"),
@@ -1308,15 +1305,15 @@ fn inference_policy_requires_supported_tokenizer_revision() {
     );
 
     let wrong = valid_acl().replace(
-        "tokenizer_revision = \"aster.gateway.tokenizer.v1\"",
-        "tokenizer_revision = \"aster.gateway.tokenizer.v0\"",
+        "tokenizer_revision = \"krun.gateway.tokenizer.v1\"",
+        "tokenizer_revision = \"krun.gateway.tokenizer.v0\"",
     );
     let error = GatewayConfig::from_acl(&wrong).unwrap_err();
     assert!(
         error.to_string().contains("not supported"),
         "unknown tokenizer_revision must fail closed: {error}"
     );
-    assert!(error.to_string().contains("aster.gateway.tokenizer.v1"));
+    assert!(error.to_string().contains("krun.gateway.tokenizer.v1"));
 }
 
 fn principal_acl() -> String {
@@ -1335,7 +1332,7 @@ services "provider" {{
 }}
 
 inference {{
-  tokenizer_revision = "aster.gateway.tokenizer.v1"
+  tokenizer_revision = "krun.gateway.tokenizer.v1"
   expires_at = "2099-01-01T00:00:00Z"
 
   routes "{ROUTE_ID}" {{
@@ -1346,7 +1343,7 @@ inference {{
 
     principal {{
       verify_url = "http://127.0.0.1:7641/auth/verify"
-      org_header = "x-aster-org"
+      org_header = "x-krun-org"
       models = ["*"]
       endpoints = ["models", "chat-completions", "embeddings", "messages"]
       limits {{
@@ -1381,8 +1378,8 @@ fn parses_a_standalone_principal_route_on_the_native_wire() {
     let route = &config.inference.as_ref().unwrap().routes[&Uuid::parse_str(ROUTE_ID).unwrap()];
     assert_eq!(route.wire, InferenceWire::Openai);
     let principal = route.principal.as_ref().unwrap();
-    assert_eq!(principal.subject_header, "x-aster-subject");
-    assert_eq!(principal.org_header.as_deref(), Some("x-aster-org"));
+    assert_eq!(principal.subject_header, "x-krun-subject");
+    assert_eq!(principal.org_header.as_deref(), Some("x-krun-org"));
     assert_eq!(principal.cache_ttl_secs, 60);
     assert!(principal.allows_model("qwen"));
     let target = &route.models["qwen"].targets[0];

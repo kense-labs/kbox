@@ -2,7 +2,6 @@
 
 use std::{net::SocketAddr, sync::Arc};
 
-use aster_box_core::scale::{ScaleObservation, ScaleOperationConflict, ScaleOperationRequest};
 use axum::{
     extract::{DefaultBodyLimit, Path, State},
     http::StatusCode,
@@ -10,6 +9,7 @@ use axum::{
     routing::get,
     Json, Router,
 };
+use krun_box_core::scale::{ScaleObservation, ScaleOperationConflict, ScaleOperationRequest};
 use tokio::sync::Mutex;
 
 use super::{
@@ -245,13 +245,13 @@ mod tests {
     };
 
     use super::*;
-    use aster_box_core::{
+    use async_trait::async_trait;
+    use chrono::Utc;
+    use krun_box_core::{
         scale::{ScaleDirection, ScaleOperationResponse, SCALE_OPERATION_SCHEMA_VERSION},
         ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
         KillOutcome,
     };
-    use async_trait::async_trait;
-    use chrono::Utc;
 
     use crate::{
         BoxRecord, LocalExecutionBackend, LocalExecutionHandle, LocalExecutionManager,

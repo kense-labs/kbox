@@ -1,15 +1,15 @@
-//! A tiny CI pipeline driven from Rust. Needs `aster-box` + /dev/kvm.
+//! A tiny CI pipeline driven from Rust. Needs `krun-box` + /dev/kvm.
 //!
-//! Run: `ASTER_BOX=/path/to/aster-box cargo run -p aster-box-sdk --example pipeline`
+//! Run: `KRUN_BOX=/path/to/krun-box cargo run -p krun-box-sdk --example pipeline`
 //! (set `DEMO_IMAGE` to override the alpine default).
 
-use aster_box_sdk::pipeline::{warm_base, FileCache, Step, WarmBase};
+use krun_box_sdk::pipeline::{warm_base, FileCache, Step, WarmBase};
 
-fn main() -> Result<(), aster_box_sdk::pipeline::PipelineError> {
+fn main() -> Result<(), krun_box_sdk::pipeline::PipelineError> {
     let image = std::env::var("DEMO_IMAGE")
         .unwrap_or_else(|_| "docker.m.daocloud.io/library/alpine:latest".to_string());
-    let _ = std::fs::remove_dir_all("/tmp/.aster-ci-demo"); // fresh cache for the demo (before create)
-    let cache = FileCache::new("/tmp/.aster-ci-demo")?;
+    let _ = std::fs::remove_dir_all("/tmp/.krun-ci-demo"); // fresh cache for the demo (before create)
+    let cache = FileCache::new("/tmp/.krun-ci-demo")?;
 
     // Warm the base once (here: write a marker = "deps installed"), snapshot it.
     let base = warm_base(WarmBase::new(image, "echo DEPS-INSTALLED > /warmed").cache(&cache))?;

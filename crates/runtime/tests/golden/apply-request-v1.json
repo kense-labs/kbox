@@ -1,14 +1,14 @@
 {
-  "schema": "aster.runtime.apply-request.v1",
+  "schema": "krun.runtime.apply-request.v1",
   "request_id": "golden-apply",
   "deadline_at_ms": 200000,
   "spec": {
-    "schema": "aster.runtime.unit-spec.v4",
+    "schema": "krun.runtime.unit-spec.v4",
     "unit_id": "golden-task",
     "generation": 7,
     "class": "task",
     "artifact": {
-      "uri": "oci://registry.example/aster/golden@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "uri": "oci://registry.example/krun/golden@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "media_type": "application/vnd.oci.image.manifest.v1+json"
     },

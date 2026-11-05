@@ -1,4 +1,4 @@
-use aster_oci_sdk::OperationId;
+use krun_oci_sdk::OperationId;
 
 use super::JournaledLifecycleGuest;
 

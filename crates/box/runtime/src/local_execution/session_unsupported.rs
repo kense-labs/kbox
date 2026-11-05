@@ -1,12 +1,12 @@
 //! OCI SDK sessions plus fail-closed legacy handling on hosts without Unix sockets.
 
-use aster_box_core::pty::PtyRequest;
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::pty::PtyRequest;
+use krun_box_core::{
     ExecOutput, ExecRequest, ExecutionGeneration, ExecutionId, ExecutionManagerError,
     ExecutionManagerResult, ExecutionProcess, ExecutionSessionManager, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse,
 };
-use async_trait::async_trait;
 
 use super::session_support::{
     debug_session_environment, has_oci_runtime, inherit_container_environment,

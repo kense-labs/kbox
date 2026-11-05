@@ -1,10 +1,10 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportOperationStage, AgentTransportQualificationRequest,
 };
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::{
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::{
     CreateAttachments, CreateRequest, ExecRequest, IoMode, IsolationRequest, OciBundle,
     OperationContext, ProcessIo, ProcessTarget, ResizeRequest, StartRequest, TerminalSize,
 };
@@ -213,7 +213,7 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
     report.exec_terminal = Some(true);
     report.resize_size = Some(resize.size);
 
-    let state_root = console_directory.join(format!("aster-oci-resize-reopen-{nonce}-state"));
+    let state_root = console_directory.join(format!("krun-oci-resize-reopen-{nonce}-state"));
     if let Err(reason) = super::super::create_qualification_state_root(&state_root).await {
         return failed(report, reason);
     }
@@ -222,15 +222,15 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
         vm_rootfs,
         system_image_manifest: system_image_manifest.to_path_buf(),
         state_root: state_root.clone(),
-        first_console: console_directory.join(format!("aster-oci-resize-reopen-{nonce}-first.log")),
+        first_console: console_directory.join(format!("krun-oci-resize-reopen-{nonce}-first.log")),
         replacement_console: console_directory
-            .join(format!("aster-oci-resize-reopen-{nonce}-replacement.log")),
+            .join(format!("krun-oci-resize-reopen-{nonce}-replacement.log")),
         init_marker,
         exec_marker,
         resize_marker,
-        init_marker_contents: format!("aster-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("aster-oci-exec-process-{nonce}\n").into_bytes(),
-        resize_marker_contents: format!("aster-oci-resize-{nonce}:40 120\n").into_bytes(),
+        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("krun-oci-exec-process-{nonce}\n").into_bytes(),
+        resize_marker_contents: format!("krun-oci-resize-{nonce}:40 120\n").into_bytes(),
         create,
         start,
         exec,

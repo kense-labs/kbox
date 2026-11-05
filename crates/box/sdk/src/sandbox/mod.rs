@@ -1,4 +1,4 @@
-//! Native local Sandbox API backed directly by the Aster Box runtime.
+//! Native local Sandbox API backed directly by the Krun Box runtime.
 //!
 //! This module never reads endpoint or API-key environment variables. The
 //! default constructor opens the installed local runtime state directly.
@@ -13,7 +13,7 @@ mod script;
 
 use std::sync::{Arc, RwLock};
 
-use aster_box_core::{
+use krun_box_core::{
     ExecutionEventBatch, ExecutionEventsRequest, ExecutionGeneration, ExecutionId,
     ExecutionIsolation, ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionSnapshot,
     ExecutionSnapshotId, ExecutionState, ExecutionStats, ExecutionStatus, OperationId,
@@ -36,7 +36,7 @@ pub use options::{
 };
 pub use script::ScriptBuilder;
 
-use crate::{AsterBoxClient, ClientError, Result};
+use crate::{ClientError, KrunBoxClient, Result};
 
 #[derive(Debug, Clone, Copy)]
 struct SandboxState {
@@ -46,7 +46,7 @@ struct SandboxState {
 }
 
 pub(crate) struct SandboxInner {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     execution_id: ExecutionId,
     isolation: ExecutionIsolation,
     state: RwLock<SandboxState>,
@@ -116,7 +116,7 @@ pub struct SandboxInfo {
     pub isolation: ExecutionIsolation,
 }
 
-/// A zero-configuration local Aster Box handle.
+/// A zero-configuration local Krun Box handle.
 ///
 /// `Sandbox::create` uses MicroVM isolation by default. Pass
 /// [`ExecutionIsolation::Sandbox`] through [`SandboxCreateOptions`] to opt into
@@ -145,12 +145,12 @@ impl Sandbox {
 
     /// Create a local Sandbox with explicit runtime and isolation options.
     pub async fn create_with_options(options: SandboxCreateOptions) -> Result<Self> {
-        Self::create_with_client(AsterBoxClient::new(), options).await
+        Self::create_with_client(KrunBoxClient::new(), options).await
     }
 
     /// Create a local Sandbox through an explicitly supplied typed client.
     pub async fn create_with_client(
-        client: AsterBoxClient,
+        client: KrunBoxClient,
         options: SandboxCreateOptions,
     ) -> Result<Self> {
         let isolation = options.isolation;
@@ -167,12 +167,12 @@ impl Sandbox {
 
     /// Reconnect to an existing local Sandbox without credentials.
     pub async fn connect(sandbox_id: impl Into<String>) -> Result<Self> {
-        Self::connect_with_client(AsterBoxClient::new(), sandbox_id).await
+        Self::connect_with_client(KrunBoxClient::new(), sandbox_id).await
     }
 
     /// Reconnect through an explicitly supplied typed client.
     pub async fn connect_with_client(
-        client: AsterBoxClient,
+        client: KrunBoxClient,
         sandbox_id: impl Into<String>,
     ) -> Result<Self> {
         let execution_id = ExecutionId::new(sandbox_id.into())
@@ -181,7 +181,7 @@ impl Sandbox {
         Ok(Self::from_status(client, status))
     }
 
-    fn from_status(client: AsterBoxClient, status: ExecutionStatus) -> Self {
+    fn from_status(client: KrunBoxClient, status: ExecutionStatus) -> Self {
         Self::from_known_state(
             client,
             status.execution_id,
@@ -192,7 +192,7 @@ impl Sandbox {
     }
 
     pub(crate) fn from_known_state(
-        client: AsterBoxClient,
+        client: KrunBoxClient,
         execution_id: ExecutionId,
         generation: ExecutionGeneration,
         state: ExecutionState,
@@ -312,7 +312,7 @@ impl Sandbox {
                 self.inner.update(status.generation, status.state);
                 Ok(status.state == ExecutionState::Running)
             }
-            Err(ClientError::Execution(aster_box_core::ExecutionManagerError::NotFound(_)))
+            Err(ClientError::Execution(krun_box_core::ExecutionManagerError::NotFound(_)))
             | Err(ClientError::BoxNotFound(_)) => Ok(false),
             Err(error) => Err(error),
         }

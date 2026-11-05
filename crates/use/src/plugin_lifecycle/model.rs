@@ -1,11 +1,11 @@
-use aster_use_core::{
+use krun_use_core::{
     PackageSurfaceKind, PlanScope, PluginPackageId, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::SurfaceActivation;
+use krun_use_extension::SurfaceActivation;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-pub const PLUGIN_LIFECYCLE_INTENT_SCHEMA: &str = "aster.use.plugin-lifecycle-intent.v3";
+pub const PLUGIN_LIFECYCLE_INTENT_SCHEMA: &str = "krun.use.plugin-lifecycle-intent.v3";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]

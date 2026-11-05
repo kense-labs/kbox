@@ -11,12 +11,12 @@ use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::{
     any_escalate, gate_answer, gate_response, CheckpointId, CheckpointRegistry, Criteria,
     DecisionEngine, DecisionKind, DeviceRequest, GateAction, GatePolicy, LexicalEngine,
     NeuralEngine, Question, Router, State, SystemOneRequest, SystemOneResponse,
 };
-use indexmap::IndexMap;
 use serde_json::{json, Value};
 
 fn main() -> ExitCode {
@@ -45,7 +45,7 @@ fn run(argv: Vec<String>) -> Result<ExitCode, String> {
     logger.log(format!(
         "device_request={:?} version={}",
         opts.device,
-        aster_apofasi::VERSION
+        krun_apofasi::VERSION
     ));
     logger.log(format!("log_file={}", log_path.display()));
 
@@ -535,7 +535,7 @@ fn run_case(
                 ));
             }
             match response.answers.get("department") {
-                Some(aster_apofasi::Answer::Choice { choice, .. })
+                Some(krun_apofasi::Answer::Choice { choice, .. })
                     if choice == "billing" || choice == "other" => {}
                 Some(other) => failures.push(format!("unexpected department {other:?}")),
                 None => failures.push("missing department".into()),
@@ -635,21 +635,21 @@ fn compact_answers(response: &SystemOneResponse) -> Value {
     let mut map = serde_json::Map::new();
     for (id, answer) in &response.answers {
         let slim = match answer {
-            aster_apofasi::Answer::Choice {
+            krun_apofasi::Answer::Choice {
                 choice, confidence, ..
             } => json!({
                 "type": "choice",
                 "choice": choice,
                 "confidence": confidence,
             }),
-            aster_apofasi::Answer::Score {
+            krun_apofasi::Answer::Score {
                 score, confidence, ..
             } => json!({
                 "type": "score",
                 "score": score,
                 "confidence": confidence,
             }),
-            aster_apofasi::Answer::Noul { noul } => json!({
+            krun_apofasi::Answer::Noul { noul } => json!({
                 "type": "noul",
                 "noul": noul,
             }),
@@ -855,18 +855,18 @@ fn latency_request() -> SystemOneRequest {
 fn check_billing(response: &SystemOneResponse, require_churn: bool) -> Vec<String> {
     let mut failures = Vec::new();
     match response.answers.get("department") {
-        Some(aster_apofasi::Answer::Choice { choice, .. }) if choice == "billing" => {}
+        Some(krun_apofasi::Answer::Choice { choice, .. }) if choice == "billing" => {}
         Some(other) => failures.push(format!("expected department=billing, got {other:?}")),
         None => failures.push("missing department".into()),
     }
     match response.answers.get("refund_requested") {
-        Some(aster_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
+        Some(krun_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
         Some(other) => failures.push(format!("expected refund_requested > 0.5, got {other:?}")),
         None => failures.push("missing refund_requested".into()),
     }
     if require_churn {
         match response.answers.get("churn_risk") {
-            Some(aster_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
+            Some(krun_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
             Some(other) => failures.push(format!("expected churn_risk > 0.5, got {other:?}")),
             None => failures.push("missing churn_risk".into()),
         }
@@ -882,7 +882,7 @@ fn check_three_primitives(response: &SystemOneResponse) -> Vec<String> {
         }
     }
     match response.answers.get("refund_requested") {
-        Some(aster_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
+        Some(krun_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
         Some(other) => failures.push(format!("expected refund_requested > 0.5, got {other:?}")),
         None => {}
     }
@@ -892,7 +892,7 @@ fn check_three_primitives(response: &SystemOneResponse) -> Vec<String> {
 fn check_ambiguous(response: &SystemOneResponse) -> Vec<String> {
     let mut failures = Vec::new();
     match response.answers.get("department") {
-        Some(answer @ aster_apofasi::Answer::Choice { choice, .. }) => {
+        Some(answer @ krun_apofasi::Answer::Choice { choice, .. }) => {
             if choice != "sales" && choice != "other" {
                 failures.push(format!(
                     "expected department in {{sales, other}}, got {choice}"
@@ -943,7 +943,7 @@ fn check_latency(response: &SystemOneResponse, latency_ms: f64) -> Vec<String> {
         failures.push(format!("expected infer_ms < {budget}, got {latency_ms:.1}"));
     }
     match response.answers.get("refund_requested") {
-        Some(aster_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
+        Some(krun_apofasi::Answer::Noul { noul }) if *noul > 0.5 => {}
         Some(other) => failures.push(format!("expected refund_requested > 0.5, got {other:?}")),
         None => failures.push("missing refund_requested".into()),
     }

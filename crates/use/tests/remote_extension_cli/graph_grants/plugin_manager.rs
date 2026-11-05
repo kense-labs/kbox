@@ -1,7 +1,7 @@
 use super::*;
 
-use aster_use::plugin_manager::PluginManagerService;
-use aster_use_core::{
+use krun_use::plugin_manager::PluginManagerService;
+use krun_use_core::{
     PluginHostEnablementPlanStatus, PluginManagerApplyPlanInput, PluginManagerInstallPlanInput,
     PluginManagerListInstalledInput, PluginManagerPackageScopeInput,
 };

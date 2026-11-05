@@ -1,6 +1,6 @@
-//! Install/uninstall the `aster-box monitor` as a supervised per-user service.
+//! Install/uninstall the `krun-box monitor` as a supervised per-user service.
 //!
-//! The monitor (`aster-box monitor`) restarts dead/unhealthy detached boxes per
+//! The monitor (`krun-box monitor`) restarts dead/unhealthy detached boxes per
 //! their restart policy. On its own it is just a foreground process: if the
 //! operator's shell or the process dies, every detached box silently loses
 //! restart + health supervision. This module installs it as a **per-user**
@@ -12,18 +12,18 @@ use std::path::{Path, PathBuf};
 
 /// systemd unit name.
 #[cfg(any(target_os = "linux", test))]
-const SYSTEMD_UNIT: &str = "aster-box-monitor.service";
+const SYSTEMD_UNIT: &str = "krun-box-monitor.service";
 /// launchd label.
 #[cfg(any(target_os = "macos", test))]
-const LAUNCHD_LABEL: &str = "com.aster-box.monitor";
+const LAUNCHD_LABEL: &str = "com.krun-box.monitor";
 
-/// Render the systemd **user** unit that supervises `aster-box monitor`.
+/// Render the systemd **user** unit that supervises `krun-box monitor`.
 #[cfg(any(target_os = "linux", test))]
 pub fn systemd_unit(exe: &Path, interval: u64) -> String {
     format!(
         "[Unit]\n\
-         Description=aster-box monitor — restarts dead/unhealthy detached boxes\n\
-         Documentation=https://github.com/aster-ai-lab/Box\n\
+         Description=krun-box monitor — restarts dead/unhealthy detached boxes\n\
+         Documentation=https://github.com/kense-labs/krun\n\
          After=network.target\n\
          \n\
          [Service]\n\
@@ -38,7 +38,7 @@ pub fn systemd_unit(exe: &Path, interval: u64) -> String {
     )
 }
 
-/// Render the launchd LaunchAgent plist that supervises `aster-box monitor`.
+/// Render the launchd LaunchAgent plist that supervises `krun-box monitor`.
 #[cfg(any(target_os = "macos", test))]
 pub fn launchd_plist(exe: &Path, interval: u64, log_path: &Path) -> String {
     format!(
@@ -143,7 +143,7 @@ fn install_impl(interval: u64) -> Result<(), Box<dyn std::error::Error>> {
     if let Some(parent) = path.parent() {
         std::fs::create_dir_all(parent)?;
     }
-    let log = aster_box_core::dirs_home().join("monitor.log");
+    let log = krun_box_core::dirs_home().join("monitor.log");
     if let Some(parent) = log.parent() {
         std::fs::create_dir_all(parent)?;
     }
@@ -217,8 +217,8 @@ mod tests {
 
     #[test]
     fn systemd_unit_has_execstart_and_restart() {
-        let unit = systemd_unit(Path::new("/usr/local/bin/aster-box"), 5);
-        assert!(unit.contains("ExecStart=/usr/local/bin/aster-box monitor --interval 5"));
+        let unit = systemd_unit(Path::new("/usr/local/bin/krun-box"), 5);
+        assert!(unit.contains("ExecStart=/usr/local/bin/krun-box monitor --interval 5"));
         assert!(unit.contains("Restart=always"));
         assert!(unit.contains("WantedBy=default.target"));
     }
@@ -226,15 +226,15 @@ mod tests {
     #[test]
     fn launchd_plist_has_keepalive_and_program() {
         let plist = launchd_plist(
-            Path::new("/usr/local/bin/aster-box"),
+            Path::new("/usr/local/bin/krun-box"),
             7,
-            Path::new("/home/u/.aster/monitor.log"),
+            Path::new("/home/u/.krun/monitor.log"),
         );
-        assert!(plist.contains("<key>Label</key><string>com.aster-box.monitor</string>"));
-        assert!(plist.contains("<string>/usr/local/bin/aster-box</string>"));
+        assert!(plist.contains("<key>Label</key><string>com.krun-box.monitor</string>"));
+        assert!(plist.contains("<string>/usr/local/bin/krun-box</string>"));
         assert!(plist.contains("<string>7</string>"));
         assert!(plist.contains("<key>KeepAlive</key><true/>"));
-        assert!(plist.contains("/home/u/.aster/monitor.log"));
+        assert!(plist.contains("/home/u/.krun/monitor.log"));
     }
 
     #[test]
@@ -242,23 +242,23 @@ mod tests {
         assert!(systemd_unit_path().ends_with(
             Path::new("systemd")
                 .join("user")
-                .join("aster-box-monitor.service")
+                .join("krun-box-monitor.service")
         ));
         assert!(launchd_plist_path()
-            .ends_with(Path::new("LaunchAgents").join("com.aster-box.monitor.plist")));
+            .ends_with(Path::new("LaunchAgents").join("com.krun-box.monitor.plist")));
     }
 
     #[test]
     fn launchd_plist_escapes_xml_specials_in_paths() {
-        // A path with `&`/`<`/`>` (e.g. a quirky ASTER_HOME) must not produce a
+        // A path with `&`/`<`/`>` (e.g. a quirky KRUN_HOME) must not produce a
         // malformed plist that launchctl rejects.
         let plist = launchd_plist(
-            Path::new("/opt/a&b/<bin>/aster-box"),
+            Path::new("/opt/a&b/<bin>/krun-box"),
             5,
-            Path::new("/home/a&b/.aster/monitor.log"),
+            Path::new("/home/a&b/.krun/monitor.log"),
         );
-        assert!(plist.contains("/opt/a&amp;b/&lt;bin&gt;/aster-box"));
-        assert!(plist.contains("/home/a&amp;b/.aster/monitor.log"));
+        assert!(plist.contains("/opt/a&amp;b/&lt;bin&gt;/krun-box"));
+        assert!(plist.contains("/home/a&amp;b/.krun/monitor.log"));
         // The raw, unescaped forms must NOT appear.
         assert!(!plist.contains("a&b"));
         assert!(!plist.contains("<bin>"));

@@ -11,13 +11,13 @@
   "commands": [
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "plugins",
         "link",
         "fixture",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/plugin"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/plugin"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/empty",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/empty",
       "status": "returned",
       "exit": 0,
       "stdout": "",
@@ -25,12 +25,12 @@
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "install",
         "fixture@1.0.0",
         "fixture@2.0.0"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/empty",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/empty",
       "status": "returned",
       "exit": 0,
       "stdout": "",
@@ -38,48 +38,48 @@
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "trust",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one/mise.toml"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one/mise.toml"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one",
       "status": "returned",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one/mise.toml\n"
+      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one/mise.toml\n"
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "trust",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/two/mise.toml"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/two/mise.toml"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/two",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/two",
       "status": "returned",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/two/mise.toml\n"
+      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/two/mise.toml\n"
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "trust",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/missing/mise.toml"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/missing/mise.toml"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/missing",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/missing",
       "status": "returned",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/missing/mise.toml\n"
+      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/missing/mise.toml\n"
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture",
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture",
         "space $value",
         "quote'\"",
         "中文"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one",
       "status": "returned",
       "exit": 0,
       "stdout": "1.0.0\nspace $value\nquote'\"\n中文\n",
@@ -87,9 +87,9 @@
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/two",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/two",
       "status": "returned",
       "exit": 0,
       "stdout": "2.0.0\n\n",
@@ -97,9 +97,9 @@
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture-extra"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture-extra"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one",
       "status": "returned",
       "exit": 0,
       "stdout": "extra:2.0.0\n",
@@ -107,9 +107,9 @@
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/missing",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/missing",
       "status": "returned",
       "exit": 0,
       "stdout": "3.0.0\n\n",
@@ -117,9 +117,9 @@
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/empty",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/empty",
       "status": "returned",
       "exit": 1,
       "stdout": "",
@@ -127,10 +127,10 @@
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "reshim"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/one",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/one",
       "status": "returned",
       "exit": 0,
       "stdout": "",
@@ -138,9 +138,9 @@
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/data/shims/fixture"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/data/shims/fixture"
       ],
-      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster shim mise 中文 rwnez_xo/two",
+      "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun shim mise 中文 rwnez_xo/two",
       "status": "returned",
       "exit": 0,
       "stdout": "2.0.0\n\n",

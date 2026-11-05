@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
-use aster_runtime::{ProviderId, RuntimeClientRegistry};
-use aster_use_core::{PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, PluginSurfaceRef};
-use aster_use_extension::{
+use krun_runtime::{ProviderId, RuntimeClientRegistry};
+use krun_use_core::{PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, PluginSurfaceRef};
+use krun_use_extension::{
     ExtensionLifecycleIdentity, ExtensionRegistry, ToolTaskSource, ToolWorkload,
 };
 
@@ -13,7 +13,7 @@ use super::model::{
 use super::{
     RuntimeBindingReceipt, RuntimeBindingStore, RuntimePreparedTaskBinding, RuntimeTaskExecution,
 };
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RuntimeTaskDispatchRequest {
@@ -172,7 +172,7 @@ impl RuntimeTaskDispatcher {
 }
 
 fn validate_manifest_surface(
-    extension: &aster_use_extension::InstalledExtension,
+    extension: &krun_use_extension::InstalledExtension,
     surface_id: &str,
 ) -> UseResult<()> {
     let matches = extension.manifest.tools.iter().any(|surface| {

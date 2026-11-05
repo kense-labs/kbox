@@ -2,9 +2,9 @@ use std::ffi::OsString;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use aster_oci_sdk::{ErrorCode, Result};
 use cap_fs_ext::{FollowSymlinks, OpenOptionsFollowExt};
 use cap_std::fs::{Dir, OpenOptions};
+use krun_oci_sdk::{ErrorCode, Result};
 use serde::Serialize;
 use tokio::io::AsyncWriteExt;
 

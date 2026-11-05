@@ -2,7 +2,7 @@ use std::ffi::OsString;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use sha2::{Digest, Sha256};
 use tokio::fs;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -346,10 +346,7 @@ async fn activate_file(source: &Path, destination: &Path) -> UseResult<()> {
     let destination_path = destination.to_path_buf();
     let error_destination = destination_path.clone();
     tokio::task::spawn_blocking(move || {
-        aster_use_extension::rename_path_with_windows_retry_blocking(
-            &source_path,
-            &destination_path,
-        )
+        krun_use_extension::rename_path_with_windows_retry_blocking(&source_path, &destination_path)
     })
     .await
     .map_err(|error| {
@@ -381,7 +378,7 @@ async fn optional_evidence(path: &Path) -> UseResult<Option<RestoreFileEvidence>
         Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(None),
         Err(error) => return Err(filesystem_io("inspect Knowledge restore file", path, error)),
     };
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata)
         || !metadata.is_file()
         || metadata.len() > MAX_RESTORE_FILE_BYTES
     {

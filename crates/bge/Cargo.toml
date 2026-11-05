@@ -1,21 +1,21 @@
 [package]
-name = "aster-use-bge"
+name = "krun-use-bge"
 version = "0.1.0"
 edition = "2021"
 publish = false
 license = "MIT"
-authors = ["Aster"]
+authors = ["Krun"]
 rust-version = "1.82"
-description = "Local BGE embedding and reranker engines for Aster Use"
-keywords = ["embeddings", "rerank", "onnx", "bge", "aster"]
+description = "Local BGE embedding and reranker engines for Krun Use"
+keywords = ["embeddings", "rerank", "onnx", "bge", "krun"]
 categories = ["science", "text-processing"]
 
 [lib]
-name = "aster_use_bge"
+name = "krun_use_bge"
 path = "src/lib.rs"
 
 [[bin]]
-name = "aster-use-bge"
+name = "krun-use-bge"
 path = "src/main.rs"
 required-features = ["cli"]
 
@@ -26,7 +26,7 @@ bge-reranker-v2-m3 = ["dep:ort", "dep:tokenizers"]
 cli = ["dep:clap"]
 
 [dependencies]
-aster-use-core = { path = "../use/core" }
+krun-use-core = { path = "../use/core" }
 clap = { version = "4", features = ["derive"], optional = true }
 fs2 = "0.4"
 ort = { version = "=2.0.0-rc.10", default-features = false, features = ["copy-dylibs", "download-binaries", "ndarray", "std"], optional = true }

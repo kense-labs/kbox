@@ -1,6 +1,6 @@
-use aster_runtime::contract::RuntimeUnitClass;
-use aster_runtime::ProviderId;
-use aster_use_core::{PackageSurfaceKind, PlannedProviderEvidence, UseResult};
+use krun_runtime::contract::RuntimeUnitClass;
+use krun_runtime::ProviderId;
+use krun_use_core::{PackageSurfaceKind, PlannedProviderEvidence, UseResult};
 
 use super::client::enforcement_profile;
 use super::model::{

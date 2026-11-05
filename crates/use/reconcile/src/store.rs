@@ -2,8 +2,8 @@ use std::fs::{self, File, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::metadata_is_link_or_reparse_point;
 use fs2::FileExt;
+use krun_use_core::metadata_is_link_or_reparse_point;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -78,7 +78,7 @@ pub(crate) struct Snapshot {
     owned_digest: Option<String>,
 }
 
-const OWNED_SCHEMA: &str = "aster.use.package-reconcile.v3";
+const OWNED_SCHEMA: &str = "krun.use.package-reconcile.v3";
 
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]

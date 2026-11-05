@@ -9,8 +9,8 @@ use std::fs::OpenOptions;
 use std::path::{Component, Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use aster_use_core::{UseError, UseResult};
 use fs2::FileExt;
+use krun_use_core::{UseError, UseResult};
 use serde::{Deserialize, Serialize};
 use tokio::io::AsyncWriteExt;
 
@@ -48,7 +48,7 @@ pub struct InstallManifest {
     pub family: String,
     /// The model supply model id the files were imported under.
     pub model_id: String,
-    /// Base URL of the aster-api that produced the presigned URLs.
+    /// Base URL of the krun-api that produced the presigned URLs.
     pub source_api: String,
     /// Manifest path serving as the ONNX weight (must be listed in `files`).
     pub model_file: String,

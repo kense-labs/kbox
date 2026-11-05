@@ -172,7 +172,7 @@ def validate_benchmark_data(errors: list[str]) -> None:
 
     run_url = payload.get("run_url")
     if not isinstance(run_url, str) or not run_url.startswith(
-        "https://github.com/kense-labs/gateway/actions/runs/"
+        "https://github.com/kense-labs/krun/actions/runs/"
     ):
         errors.append("performance-data.json has an invalid benchmark run URL")
 
@@ -227,7 +227,7 @@ def validate_proxy_results(
     if not isinstance(proxies, dict):
         errors.append(f"{context} proxies must be an object")
         return
-    for proxy in ("aster-gateway", "nginx"):
+    for proxy in ("krun-gateway", "nginx"):
         result = proxies.get(proxy)
         if not isinstance(result, dict):
             errors.append(f"{context} is missing {proxy}")
@@ -258,21 +258,21 @@ def validate_positions(
         errors.append(f"{context} is missing positions")
         return
     if schema_version == 2:
-        allowed = {"aster_leads", "within_threshold", "nginx_leads"}
+        allowed = {"krun_leads", "within_threshold", "nginx_leads"}
         for metric in ("throughput", "p50_latency", "p90_latency", "p99_latency"):
             if positions.get(metric) not in allowed:
                 errors.append(f"{context} has an invalid {metric} position")
         return
 
     if positions.get("throughput") not in {
-        "aster_higher",
+        "krun_higher",
         "within_threshold",
         "nginx_higher",
     }:
         errors.append(f"{context} has an invalid throughput position")
     for metric in ("p50_latency", "p90_latency", "p99_latency"):
         if positions.get(metric) not in {
-            "aster_lower",
+            "krun_lower",
             "within_threshold",
             "nginx_lower",
         }:
@@ -300,7 +300,7 @@ def validate_proxy_comparison(errors: list[str]) -> None:
         errors.append("performance-comparison.json has an invalid commit SHA")
     run_url = payload.get("run_url")
     if not isinstance(run_url, str) or not run_url.startswith(
-        "https://github.com/kense-labs/gateway/actions/runs/"
+        "https://github.com/kense-labs/krun/actions/runs/"
     ):
         errors.append("performance-comparison.json has an invalid run URL")
 
@@ -444,7 +444,7 @@ def validate_ai_comparison(errors: list[str]) -> None:
         errors.append("ai-gateway-comparison.json has an invalid commit SHA")
     run_url = payload.get("run_url")
     if not isinstance(run_url, str) or not run_url.startswith(
-        "https://github.com/kense-labs/gateway/actions/runs/"
+        "https://github.com/kense-labs/krun/actions/runs/"
     ):
         errors.append("ai-gateway-comparison.json has an invalid run URL")
 
@@ -505,7 +505,7 @@ def validate_ai_comparison(errors: list[str]) -> None:
         if not isinstance(products, dict):
             errors.append(f"{context} is missing products")
             continue
-        for product in ("aster-gateway", "nginx"):
+        for product in ("krun-gateway", "nginx"):
             result = products.get(product)
             product_context = f"{context} {product}"
             if not isinstance(result, dict):
@@ -571,16 +571,16 @@ def validate_ai_comparison(errors: list[str]) -> None:
             errors.append(f"{context} is missing comparison ratios")
             continue
         ratio_fields = (
-            "aster_to_nginx_token_goodput_ratio",
-            "aster_to_nginx_stream_rate_ratio",
-            "aster_to_nginx_ttft_p50_ratio",
-            "aster_to_nginx_ttft_p99_ratio",
-            "aster_to_nginx_inter_token_latency_p50_ratio",
-            "aster_to_nginx_inter_token_latency_p99_ratio",
-            "aster_to_nginx_time_per_output_token_p50_ratio",
-            "aster_to_nginx_time_per_output_token_p99_ratio",
-            "aster_to_nginx_end_to_end_p50_ratio",
-            "aster_to_nginx_end_to_end_p99_ratio",
+            "krun_to_nginx_token_goodput_ratio",
+            "krun_to_nginx_stream_rate_ratio",
+            "krun_to_nginx_ttft_p50_ratio",
+            "krun_to_nginx_ttft_p99_ratio",
+            "krun_to_nginx_inter_token_latency_p50_ratio",
+            "krun_to_nginx_inter_token_latency_p99_ratio",
+            "krun_to_nginx_time_per_output_token_p50_ratio",
+            "krun_to_nginx_time_per_output_token_p99_ratio",
+            "krun_to_nginx_end_to_end_p50_ratio",
+            "krun_to_nginx_end_to_end_p99_ratio",
         )
         for field in ratio_fields:
             value = comparison.get(field)
@@ -810,7 +810,7 @@ def main() -> int:
             'id="performance"',
             "RATE / P50 / P90 / P99",
             "all ten traffic profiles",
-            "Aster Cloud",
+            "Krun Cloud",
             "Current posture: Production Candidate",
             "Enterprise GA",
         ):
@@ -821,7 +821,7 @@ def main() -> int:
         html = page_html.get(SITE_ROOT / relative_path)
         if html is None:
             continue
-        for obsolete_brand in ("Aster OS Docs", "Aster OS Gateway home"):
+        for obsolete_brand in ("Krun OS Docs", "Krun OS Gateway home"):
             if obsolete_brand in html:
                 errors.append(
                     f"{relative_path} exposes obsolete product branding: "

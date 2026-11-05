@@ -1,19 +1,19 @@
 use std::path::PathBuf;
 
-use aster_box_core::{ExecutionIsolation, ExecutionSnapshotId, PortMapping};
+use krun_box_core::{ExecutionIsolation, ExecutionSnapshotId, PortMapping};
 
 use super::{Sandbox, SandboxCreateOptions, SandboxNetwork, TmpfsMount, VolumeMount};
-use crate::{AsterBoxClient, Result};
+use crate::{KrunBoxClient, Result};
 
 /// Fluent builder for a local Sandbox.
 #[derive(Debug, Clone)]
 pub struct SandboxBuilder {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     options: SandboxCreateOptions,
 }
 
 impl SandboxBuilder {
-    pub(crate) fn new(client: AsterBoxClient, image: impl Into<String>) -> Self {
+    pub(crate) fn new(client: KrunBoxClient, image: impl Into<String>) -> Self {
         Self {
             client,
             options: SandboxCreateOptions::new(image),
@@ -132,7 +132,7 @@ impl SandboxBuilder {
         self.options.ports.push(PortMapping {
             host_port,
             guest_port,
-            protocol: aster_box_core::PortProtocol::Tcp,
+            protocol: krun_box_core::PortProtocol::Tcp,
         });
         self
     }
@@ -172,7 +172,7 @@ impl SandboxBuilder {
     }
 }
 
-impl AsterBoxClient {
+impl KrunBoxClient {
     /// Start a fluent builder for a local Sandbox.
     pub fn sandbox(&self, image: impl Into<String>) -> SandboxBuilder {
         SandboxBuilder::new(self.clone(), image)

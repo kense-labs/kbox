@@ -5,8 +5,8 @@ use std::os::fd::AsRawFd;
 use std::os::unix::fs::{DirBuilderExt, FileTypeExt, MetadataExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 
-use aster_oci_agent_protocol::AgentVsockEndpoint;
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_agent_protocol::AgentVsockEndpoint;
+use krun_oci_sdk::{Error, ErrorCode, Result};
 use tokio::net::{UnixListener, UnixStream};
 
 #[cfg(target_os = "macos")]

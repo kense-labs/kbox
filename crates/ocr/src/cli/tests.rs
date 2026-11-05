@@ -3,7 +3,7 @@ use super::*;
 #[test]
 fn document_profile_is_an_explicit_mcp_argument() {
     let cli =
-        Cli::try_parse_from(["aster-use-ocr", "serve", "--mcp", "--profile", "document"]).unwrap();
+        Cli::try_parse_from(["krun-use-ocr", "serve", "--mcp", "--profile", "document"]).unwrap();
     assert_eq!(cli.profile, PpOcrV6Profile::Document);
     assert!(matches!(cli.command, Command::Serve { mcp: true }));
 }
@@ -14,7 +14,7 @@ fn extraction_arguments_preserve_non_utf8_paths() {
     use std::os::unix::ffi::OsStringExt;
     let path = OsString::from_vec(b"image-\xff.png".to_vec());
     let cli = Cli::try_parse_from([
-        OsString::from("aster-use-ocr"),
+        OsString::from("krun-use-ocr"),
         OsString::from("extract"),
         path.clone(),
     ])

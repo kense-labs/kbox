@@ -1,4 +1,4 @@
-//! Immutable MCP, Skill, and Tool release descriptors shared with Aster Cloud.
+//! Immutable MCP, Skill, and Tool release descriptors shared with Krun Cloud.
 //!
 //! Descriptors are versioned machine-owned JSON. Their identity is the
 //! SHA-256 of OLPC canonical JSON, so whitespace and object-key order never
@@ -16,14 +16,14 @@ use self::validation::{descriptor_error, validate_common, verify_resolution};
 
 mod validation;
 
-pub const MCP_RELEASE_SCHEMA: &str = "aster.use.mcp-release.v1";
-pub const SKILL_RELEASE_SCHEMA: &str = "aster.use.skill-release.v1";
-pub const TOOL_RELEASE_SCHEMA: &str = "aster.use.tool-release.v1";
+pub const MCP_RELEASE_SCHEMA: &str = "krun.use.mcp-release.v1";
+pub const SKILL_RELEASE_SCHEMA: &str = "krun.use.skill-release.v1";
+pub const TOOL_RELEASE_SCHEMA: &str = "krun.use.tool-release.v1";
 pub const MAX_RELEASE_DESCRIPTOR_BYTES: usize = 256 * 1024;
 
 const OCI_IMAGE_MANIFEST: &str = "application/vnd.oci.image.manifest.v1+json";
 const OCI_IMAGE_INDEX: &str = "application/vnd.oci.image.index.v1+json";
-const SKILL_BUNDLE: &str = "application/vnd.aster.skill.bundle.v1+tar+gzip";
+const SKILL_BUNDLE: &str = "application/vnd.krun.skill.bundle.v1+tar+gzip";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -282,7 +282,7 @@ impl SkillReleaseDescriptor {
         )?;
         if self.artifact.media_type != SKILL_BUNDLE {
             return Err(descriptor_error(
-                "A Skill release must reference an Aster Skill bundle.",
+                "A Skill release must reference an Krun Skill bundle.",
             ));
         }
         self.skill.validate()

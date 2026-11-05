@@ -1,4 +1,4 @@
-//! `aster-box image-inspect` command — display detailed image metadata as JSON.
+//! `krun-box image-inspect` command — display detailed image metadata as JSON.
 
 use clap::Args;
 
@@ -33,10 +33,10 @@ pub(crate) async fn try_image_inspect_json(
 
 /// Build the JSON inspection document for a stored image.
 fn build_image_inspect_json(
-    stored: &aster_box_runtime::StoredImage,
+    stored: &krun_box_runtime::StoredImage,
 ) -> Result<String, Box<dyn std::error::Error>> {
     // Load OCI image to get full config
-    let oci = aster_box_runtime::OciImage::from_path(&stored.path)?;
+    let oci = krun_box_runtime::OciImage::from_path(&stored.path)?;
     let config = oci.config();
 
     let env_map: serde_json::Map<String, serde_json::Value> = config
@@ -83,8 +83,8 @@ fn build_image_inspect_json(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use aster_box_runtime::StoredImage;
     use chrono::Utc;
+    use krun_box_runtime::StoredImage;
     use std::path::PathBuf;
 
     #[test]

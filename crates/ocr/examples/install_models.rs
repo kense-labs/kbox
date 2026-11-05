@@ -1,4 +1,4 @@
-use aster_use_ocr::install_ppocr_v6;
+use krun_use_ocr::install_ppocr_v6;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

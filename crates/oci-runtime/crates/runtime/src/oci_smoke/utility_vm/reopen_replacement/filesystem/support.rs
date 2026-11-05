@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::AgentTransportOperationStage;
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentTransportOperationStage;
+use krun_oci_sdk::{
     ContainerTarget, Error, ErrorCode, FilesystemEntryKind, FilesystemRequest, FilesystemResponse,
 };
 

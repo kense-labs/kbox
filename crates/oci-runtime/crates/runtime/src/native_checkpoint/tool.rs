@@ -7,10 +7,10 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use aster_oci_agent::{
+use krun_oci_agent::{
     LinuxExecutorCheckpointSource, LinuxRestoreSpawnRequest, LinuxRestoreSpawner,
 };
-use aster_oci_sdk::{async_trait, CheckpointDigest, ErrorCode, OperationContext, Result};
+use krun_oci_sdk::{async_trait, CheckpointDigest, ErrorCode, OperationContext, Result};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use tokio::io::AsyncReadExt;
@@ -138,7 +138,7 @@ impl CriuTool {
             .collect::<Vec<_>>();
         options.extend([
             "--external".to_string(),
-            "mnt[<oci-device-mountpoint>]:<aster-device-cookie>".to_string(),
+            "mnt[<oci-device-mountpoint>]:<krun-device-cookie>".to_string(),
             "--freeze-cgroup".to_string(),
             "<source-cgroup>".to_string(),
             "--cgroup-root".to_string(),
@@ -154,7 +154,7 @@ impl CriuTool {
             .collect::<Vec<_>>();
         options.extend([
             "--external".to_string(),
-            "mnt[<aster-device-cookie>]:<target-device-source>".to_string(),
+            "mnt[<krun-device-cookie>]:<target-device-source>".to_string(),
             "--root".to_string(),
             "<target-rootfs>".to_string(),
             "--pidfile".to_string(),
@@ -694,7 +694,7 @@ mod tests {
     use std::path::Path;
 
     use super::{dump_timeout, parse_version_output, CriuTool, OperationContext};
-    use aster_oci_sdk::OperationId;
+    use krun_oci_sdk::OperationId;
 
     #[test]
     fn parses_bounded_criu_identity() {
@@ -717,26 +717,26 @@ mod tests {
     fn dump_identity_binds_the_dynamic_freezer_boundary() {
         let identity = CriuTool::dump_option_identity();
         let options = CriuTool::dump_options(
-            "/sys/fs/cgroup/aster/workload",
-            [("aster-oci-device-0000", Path::new("/dev/null"))],
+            "/sys/fs/cgroup/krun/workload",
+            [("krun-oci-device-0000", Path::new("/dev/null"))],
         )
         .expect("valid source cgroup path");
         let mut expected = identity.clone();
         let external = expected
             .iter()
-            .position(|value| value == "mnt[<oci-device-mountpoint>]:<aster-device-cookie>")
+            .position(|value| value == "mnt[<oci-device-mountpoint>]:<krun-device-cookie>")
             .expect("external mount placeholder");
-        expected[external] = "mnt[/dev/null]:aster-oci-device-0000".to_string();
+        expected[external] = "mnt[/dev/null]:krun-oci-device-0000".to_string();
         let source = expected
             .iter()
             .position(|value| value == "<source-cgroup>")
             .expect("source cgroup placeholder");
-        expected[source] = "/sys/fs/cgroup/aster/workload".to_string();
+        expected[source] = "/sys/fs/cgroup/krun/workload".to_string();
         let root = expected
             .iter()
             .position(|value| value == "<source-cgroup-root>")
             .expect("source cgroup root placeholder");
-        expected[root] = "/aster".to_string();
+        expected[root] = "/krun".to_string();
         assert_eq!(expected, options);
         assert!(options
             .windows(2)

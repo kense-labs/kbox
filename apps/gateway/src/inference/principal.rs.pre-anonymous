@@ -246,20 +246,20 @@ mod tests {
     #[test]
     fn token_accepts_bearer_or_x_api_key() {
         assert_eq!(
-            principal_token(&headers(&[("authorization", "Bearer aster_sk_one")])).unwrap(),
-            "aster_sk_one"
+            principal_token(&headers(&[("authorization", "Bearer krun_sk_one")])).unwrap(),
+            "krun_sk_one"
         );
         assert_eq!(
-            principal_token(&headers(&[("x-api-key", "aster_sk_two")])).unwrap(),
-            "aster_sk_two"
+            principal_token(&headers(&[("x-api-key", "krun_sk_two")])).unwrap(),
+            "krun_sk_two"
         );
         assert_eq!(
             principal_token(&headers(&[
-                ("authorization", "Bearer aster_sk_same"),
-                ("x-api-key", "aster_sk_same"),
+                ("authorization", "Bearer krun_sk_same"),
+                ("x-api-key", "krun_sk_same"),
             ]))
             .unwrap(),
-            "aster_sk_same"
+            "krun_sk_same"
         );
     }
 

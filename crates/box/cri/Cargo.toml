@@ -1,20 +1,20 @@
 [package]
-name = "aster-box-cri"
+name = "krun-box-cri"
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
 
 [[bin]]
-name = "aster-box-cri"
+name = "krun-box-cri"
 path = "src/main.rs"
 
 [lib]
-name = "aster_box_cri"
+name = "krun_box_cri"
 path = "src/lib.rs"
 
 [dependencies]
-aster-box-core = { path = "../core" }
-aster-box-runtime = { path = "../runtime" }
+krun-box-core = { path = "../core" }
+krun-box-runtime = { path = "../runtime" }
 
 # Async runtime
 tokio = { workspace = true }
@@ -62,5 +62,5 @@ tonic-build = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
-aster-transport = { workspace = true }
+krun-transport = { workspace = true }
 sha2 = { workspace = true }

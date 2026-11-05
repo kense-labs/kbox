@@ -6,7 +6,7 @@ use crate::contract::{
 use crate::{RuntimeError, RuntimeResult};
 use async_trait::async_trait;
 
-/// Stable provider-neutral lifecycle implemented by every Aster Runtime.
+/// Stable provider-neutral lifecycle implemented by every Krun Runtime.
 #[async_trait]
 pub trait RuntimeClient: Send + Sync {
     async fn capabilities(&self) -> RuntimeResult<RuntimeCapabilities>;

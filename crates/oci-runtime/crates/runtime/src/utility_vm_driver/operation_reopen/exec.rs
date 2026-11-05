@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use aster_oci_agent_protocol::AgentTransportOperationStage;
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentTransportOperationStage;
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::{
     CreateRequest, IsolationRequest, OciBundle, OperationContext, ProcessId, ProcessIo,
 };
 
@@ -32,13 +32,13 @@ pub struct LinuxKvmExecReopenConfig {
 
 pub(super) struct Qualification {
     create: CreateRequest,
-    start_operation_id: aster_oci_sdk::OperationId,
-    exec_operation_id: aster_oci_sdk::OperationId,
-    delete_operation_id: aster_oci_sdk::OperationId,
-    stale_guest_operation_id: aster_oci_sdk::OperationId,
-    stale_host_operation_id: aster_oci_sdk::OperationId,
+    start_operation_id: krun_oci_sdk::OperationId,
+    exec_operation_id: krun_oci_sdk::OperationId,
+    delete_operation_id: krun_oci_sdk::OperationId,
+    stale_guest_operation_id: krun_oci_sdk::OperationId,
+    stale_host_operation_id: krun_oci_sdk::OperationId,
     process_id: ProcessId,
-    process: aster_oci_sdk::oci_spec::runtime::Process,
+    process: krun_oci_sdk::oci_spec::runtime::Process,
     io: ProcessIo,
     init_marker_contents: Vec<u8>,
     exec_marker_contents: Vec<u8>,
@@ -75,7 +75,7 @@ pub async fn linux_kvm_exec_reopen_replacement(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let container_id = match aster_oci_sdk::ContainerId::new(format!("kvm-exec-reopen-{nonce}")) {
+    let container_id = match krun_oci_sdk::ContainerId::new(format!("kvm-exec-reopen-{nonce}")) {
         Ok(id) => id,
         Err(error) => return failed(report, format!("failed to construct container ID: {error}")),
     };
@@ -175,8 +175,8 @@ pub async fn linux_kvm_exec_reopen_replacement(
         process_id,
         process,
         io,
-        init_marker_contents: format!("aster-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("aster-oci-exec-process-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("krun-oci-exec-process-{nonce}\n").into_bytes(),
         stage: config.stage,
     };
     let state_root = prepared.runtime_root.join("operation-reopen-state");

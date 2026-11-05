@@ -1,4 +1,4 @@
-//! Configuration types for Aster Gateway
+//! Configuration types for Krun Gateway
 //!
 //! Defines the configuration model following Traefik's
 //! entrypoint → router → middleware → service architecture.
@@ -988,7 +988,7 @@ impl Default for GatewayConfig {
 /// configurations remain valid. The managed snapshot endpoint requires it.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ManagedConfig {
-    /// Logical Gateway identity assigned by Aster Cloud.
+    /// Logical Gateway identity assigned by Krun Cloud.
     #[serde(default)]
     pub gateway_id: Option<uuid::Uuid>,
 
@@ -1111,7 +1111,7 @@ fn default_management_path_prefix() -> String {
 }
 
 fn default_management_auth_token_env() -> Option<String> {
-    Some("ASTER_GATEWAY_ADMIN_TOKEN".to_string())
+    Some("KRUN_GATEWAY_ADMIN_TOKEN".to_string())
 }
 
 fn default_management_allowed_ips() -> Vec<String> {
@@ -1163,14 +1163,14 @@ pub struct ProviderConfig {
 /// # Label Format
 ///
 /// ```text
-/// aster.enable=true
-/// aster.router.rule=PathPrefix(`/api`)
-/// aster.router.entrypoints=web
-/// aster.router.middlewares=rate-limit
-/// aster.router.priority=10
-/// aster.service.port=8080
-/// aster.service.strategy=round-robin
-/// aster.service.weight=1
+/// krun.enable=true
+/// krun.router.rule=PathPrefix(`/api`)
+/// krun.router.entrypoints=web
+/// krun.router.middlewares=rate-limit
+/// krun.router.priority=10
+/// krun.service.port=8080
+/// krun.service.strategy=round-robin
+/// krun.service.weight=1
 /// ```
 ///
 /// # Example
@@ -1191,7 +1191,7 @@ pub struct DockerProviderConfig {
     #[serde(default = "default_docker_host")]
     pub host: String,
 
-    /// Label prefix used to identify Aster routing labels (default: `aster`)
+    /// Label prefix used to identify Krun routing labels (default: `krun`)
     #[serde(default = "default_label_prefix")]
     pub label_prefix: String,
 
@@ -1205,7 +1205,7 @@ fn default_docker_host() -> String {
 }
 
 fn default_label_prefix() -> String {
-    "aster".to_string()
+    "krun".to_string()
 }
 
 fn default_docker_poll() -> u64 {
@@ -1274,7 +1274,7 @@ impl Default for KubernetesProviderConfig {
 
 /// Health-based service discovery configuration
 ///
-/// Polls backend seed URLs for `/.well-known/aster-service.json` metadata
+/// Polls backend seed URLs for `/.well-known/krun-service.json` metadata
 /// and health endpoints to auto-register services.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct DiscoveryConfig {

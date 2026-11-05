@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AGENT_PROTOCOL_VERSION_MAX,
 };
-use aster_oci_core::IsolationClass;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{ListRequest, OciRuntimeService, StateRequest};
+use krun_oci_core::IsolationClass;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{ListRequest, OciRuntimeService, StateRequest};
 use tokio::time::timeout;
 
 use super::super::super::transport_fault_cleanup::{
@@ -293,7 +293,7 @@ pub(super) async fn run(
     }
 
     let response_delivered = qualification.stage
-        == aster_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let mut first_failure = None;
     match timeout(
         QUALIFICATION_TIMEOUT,

@@ -6,7 +6,7 @@ use crate::ExtensionLifecyclePackage;
 #[tokio::test]
 #[ignore = "requires the exact prepared toolchain AIX candidate list"]
 async fn acquisition_candidates_require_the_implementing_host_before_admission() {
-    let input = std::env::var_os("ASTER_TEST_HOST_FLOOR_CANDIDATES").unwrap();
+    let input = std::env::var_os("KRUN_TEST_HOST_FLOOR_CANDIDATES").unwrap();
     let paths: Vec<PathBuf> = serde_json::from_slice(&std::fs::read(input).unwrap()).unwrap();
     assert!(!paths.is_empty());
     for path in paths {

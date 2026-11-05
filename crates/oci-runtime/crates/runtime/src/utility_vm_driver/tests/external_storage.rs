@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     AttachmentCapabilities, StorageAccessMode, StorageAttachmentId, StorageCleanup,
     StorageOwnership, RUNTIME_BUNDLE_HANDOFF_EXTERNAL_STORAGE_VERSION,
     RUNTIME_BUNDLE_HANDOFF_MOVE_V2,

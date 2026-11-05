@@ -1,10 +1,10 @@
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentCloseStdinRequest, AgentContainerOperationRequest, AgentExecRequest, AgentProcess,
     AgentProcessesRequest, AgentReadOutputRequest, AgentResizeRequest, AgentSignalProcessRequest,
     AgentStatsRequest, AgentUpdateRequest, AgentWaitProcessRequest, AgentWaitRequest,
     AgentWriteStdinRequest,
 };
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerStats, ContainerTarget, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OutputChunk, ProcessRecord, Result,
 };
@@ -78,7 +78,7 @@ impl QualificationKvmOperationDriver {
     pub(in crate::utility_vm_driver::operation_reopen) async fn guest_pause(
         &self,
         request: AgentContainerOperationRequest,
-    ) -> Result<aster_oci_agent_protocol::AgentState> {
+    ) -> Result<krun_oci_agent_protocol::AgentState> {
         self.live_session(&request.target)
             .await?
             .owner
@@ -90,7 +90,7 @@ impl QualificationKvmOperationDriver {
     pub(in crate::utility_vm_driver::operation_reopen) async fn guest_resume(
         &self,
         request: AgentContainerOperationRequest,
-    ) -> Result<aster_oci_agent_protocol::AgentState> {
+    ) -> Result<krun_oci_agent_protocol::AgentState> {
         self.live_session(&request.target)
             .await?
             .owner
@@ -114,7 +114,7 @@ impl QualificationKvmOperationDriver {
     pub(in crate::utility_vm_driver::operation_reopen) async fn guest_update(
         &self,
         request: AgentUpdateRequest,
-    ) -> Result<aster_oci_agent_protocol::AgentState> {
+    ) -> Result<krun_oci_agent_protocol::AgentState> {
         self.live_session(&request.target)
             .await?
             .owner

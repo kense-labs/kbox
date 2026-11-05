@@ -1,9 +1,9 @@
-//! Aster Box CLI entry point.
+//! Krun Box CLI entry point.
 
 use clap::Parser;
 use tracing_subscriber::EnvFilter;
 
-use aster_box_cli::commands::{dispatch, Cli};
+use krun_box_cli::commands::{dispatch, Cli};
 
 #[tokio::main]
 async fn main() {

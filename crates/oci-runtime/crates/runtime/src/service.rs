@@ -3,9 +3,10 @@ use std::fmt;
 use std::path::Path;
 use std::sync::{Arc, Weak};
 
-use aster_oci_core::{DriverKind, HostPlatform, RuntimeFeatures};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_core::{DriverKind, HostPlatform, RuntimeFeatures};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     async_trait, AttachmentCapabilities, CheckpointReference, CheckpointRequest,
     CheckpointResponse, CloseStdinRequest, ContainerId, ContainerOperationRequest, ContainerRecord,
     ContainerStats, ContainerTarget, CreateRequest, DeleteRequest, Error, ErrorCode, EventBatch,
@@ -18,7 +19,6 @@ use aster_oci_sdk::{
     TeeAttestationResponse, TeeSha256Digest, UpdateRequest, ValidateRequest, WaitProcessRequest,
     WaitRequest, WriteStdinRequest, MAX_FILE_TRANSFER_BYTES,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 use tokio::sync::{Mutex, OwnedMutexGuard};
 
 use crate::driver::{
@@ -45,7 +45,7 @@ mod feature_report;
 
 use driver_registry::{DriverRegistration, DriverRegistry, RegisteredDriver};
 
-/// In-process host implementation used by the CLI and Aster Box adapter.
+/// In-process host implementation used by the CLI and Krun Box adapter.
 #[derive(Clone, Default)]
 pub struct HostRuntimeService {
     lifecycle: Option<Arc<LifecycleHost>>,
@@ -144,7 +144,7 @@ impl HostRuntimeService {
     }
 
     /// Open one native Linux service whose normal SDK `create` operation
-    /// carries the Aster Box control descriptors for exactly one container ID.
+    /// carries the Krun Box control descriptors for exactly one container ID.
     ///
     /// This binding lets an out-of-process runtime owner expose only the
     /// transport-neutral [`OciRuntimeService`] API while retaining the
@@ -292,7 +292,7 @@ impl HostRuntimeService {
         features
     }
 
-    /// Create a native Linux container with the Aster Box control listeners and
+    /// Create a native Linux container with the Krun Box control listeners and
     /// dedicated init log inherited as descriptors 3, 4, and 5.
     #[cfg(target_os = "linux")]
     pub async fn create_with_native_control_descriptors(
@@ -513,7 +513,7 @@ impl LifecycleHost {
 
     async fn fail_driver_operation<T>(
         &self,
-        operation_id: &aster_oci_sdk::OperationId,
+        operation_id: &krun_oci_sdk::OperationId,
         error: Error,
     ) -> Result<T> {
         if error.retryable {
@@ -534,7 +534,7 @@ impl LifecycleHost {
     /// settle and retain the ordinary error path.
     async fn settle_existing_driver_operation<T>(
         &self,
-        operation_id: &aster_oci_sdk::OperationId,
+        operation_id: &krun_oci_sdk::OperationId,
         operation_exists: bool,
         error: Error,
     ) -> Result<T> {
@@ -545,13 +545,13 @@ impl LifecycleHost {
         }
     }
 
-    async fn acknowledge_operation(&self, operation_id: &aster_oci_sdk::OperationId) -> Result<()> {
+    async fn acknowledge_operation(&self, operation_id: &krun_oci_sdk::OperationId) -> Result<()> {
         self.drivers.acknowledge_operation(operation_id).await
     }
 
     async fn acknowledge_result<T>(
         &self,
-        operation_id: &aster_oci_sdk::OperationId,
+        operation_id: &krun_oci_sdk::OperationId,
         result: Result<T>,
     ) -> Result<T> {
         let value = result?;
@@ -2090,7 +2090,7 @@ impl OciRuntimeService for HostRuntimeService {
         registered.ensure_operation(RuntimeOperation::Attest, "attest")?;
         if !registered.attachment_capabilities().supports_extension(
             preview.launch.technology().extension_name(),
-            aster_oci_sdk::TEE_LAUNCH_EXTENSION_VERSION,
+            krun_oci_sdk::TEE_LAUNCH_EXTENSION_VERSION,
         ) {
             return Err(Error::unsupported("attest"));
         }

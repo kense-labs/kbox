@@ -1,7 +1,7 @@
-use aster_use_core::{
+use krun_use_core::{
     PluginGrantConfirmation, PluginPermissionCeiling, PluginWorkspaceGrantProposal,
 };
-use aster_use_extension::{WorkspaceGrantReceipt, WorkspaceGrantStore};
+use krun_use_extension::{WorkspaceGrantReceipt, WorkspaceGrantStore};
 use tempfile::TempDir;
 
 const PLAN_DIGEST: &str = "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";

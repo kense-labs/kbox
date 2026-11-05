@@ -1,11 +1,11 @@
 use std::path::Path;
 
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::{ContainerTarget, ExitStatus};
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::{ContainerTarget, ExitStatus};
 use serde::{Deserialize, Serialize};
 
 /// Versioned evidence emitted by the direct WHPX driver qualification path.
-pub const WHPX_DRIVER_SMOKE_SCHEMA_VERSION: &str = "aster.oci.whpx-driver-smoke.v1";
+pub const WHPX_DRIVER_SMOKE_SCHEMA_VERSION: &str = "krun.oci.whpx-driver-smoke.v1";
 
 /// Machine-readable evidence for one exact-generation WHPX driver lifecycle.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -210,13 +210,13 @@ mod windows {
     use std::path::{Path, PathBuf};
     use std::time::Duration;
 
-    use aster_oci_agent_protocol::{
+    use krun_oci_agent_protocol::{
         AGENT_RECOVERY_REPORT_DIRECTORY_PREFIX, AGENT_RECOVERY_REPORT_PENDING_SUFFIX,
         AGENT_SESSION_TOKEN_DIRECTORY_PREFIX,
     };
-    use aster_oci_core::{CapabilityStatus, DriverReadiness, HostPlatform};
-    use aster_oci_sdk::oci_spec::runtime::ContainerState;
-    use aster_oci_sdk::{
+    use krun_oci_core::{CapabilityStatus, DriverReadiness, HostPlatform};
+    use krun_oci_sdk::oci_spec::runtime::ContainerState;
+    use krun_oci_sdk::{
         ContainerTarget, CreateAttachments, DeleteMode, ErrorCode, ExitStatus, IsolationRequest,
         OciBundle, OperationContext, OperationId, ProcessIo, Signal,
     };
@@ -235,8 +235,8 @@ mod windows {
     const RUNNING_WAIT_TIMEOUT_MS: u64 = 100;
     const LINUX_SIGTERM: i32 = 15;
     const LINUX_SIGKILL: i32 = 9;
-    const MARKER_NAME: &str = ".aster-oci-create-start-smoke";
-    const MARKER_CONTENTS: &[u8] = b"aster-oci-create-start-user-time-v1\n";
+    const MARKER_NAME: &str = ".krun-oci-create-start-smoke";
+    const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
     const MAX_MARKER_BYTES: u64 = 1_024;
 
     pub(super) async fn run(
@@ -348,10 +348,9 @@ mod windows {
         let capability = driver.capability();
         report.readiness_remained_probe_only = capability.status == CapabilityStatus::Available
             && capability.readiness == DriverReadiness::ProbeOnly;
-        let expected_share = aster_oci_core::hardware_vm::virtiofs_share_mode(
-            aster_oci_core::DriverKind::LibkrunWhpx,
-        )
-        .unwrap_or("");
+        let expected_share =
+            krun_oci_core::hardware_vm::virtiofs_share_mode(krun_oci_core::DriverKind::LibkrunWhpx)
+                .unwrap_or("");
         report.runtime_share_capability_verified = capability
             .evidence
             .get("runtime_share")
@@ -856,7 +855,7 @@ mod windows {
 
     #[cfg(test)]
     mod tests {
-        use aster_oci_agent_protocol::{
+        use krun_oci_agent_protocol::{
             AGENT_RECOVERY_REPORT_DIRECTORY_PREFIX, AGENT_SESSION_TOKEN_DIRECTORY_PREFIX,
         };
 
@@ -890,8 +889,8 @@ mod windows {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_core::{CapabilityStatus, HostPlatform};
-    use aster_oci_sdk::{ContainerId, ContainerTarget, Generation};
+    use krun_oci_core::{CapabilityStatus, HostPlatform};
+    use krun_oci_sdk::{ContainerId, ContainerTarget, Generation};
 
     use super::WhpxDriverSmokeReport;
 

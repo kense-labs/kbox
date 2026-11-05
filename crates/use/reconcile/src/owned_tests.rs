@@ -11,7 +11,7 @@ fn spec() -> PackageSpec {
         bytes: b"source declaration".to_vec(),
     }];
     PackageSpec {
-        package_id: "aster/toolchain-fixture".into(),
+        package_id: "krun/toolchain-fixture".into(),
         surfaces: vec![SurfaceSpec {
             kind: SurfaceKind::Plugin,
             id: "toolchain".into(),
@@ -51,7 +51,7 @@ fn failed_owned_preparation_keeps_the_previous_runtime_and_cleans_the_candidate(
     );
     assert_eq!(
         store
-            .current_sync("aster/toolchain-fixture")
+            .current_sync("krun/toolchain-fixture")
             .unwrap()
             .unwrap(),
         first
@@ -87,13 +87,13 @@ fn runtime_receipt_and_lifetime_follow_the_exact_publication_lease() {
     );
     assert_eq!(
         store
-            .current_sync("aster/toolchain-fixture")
+            .current_sync("krun/toolchain-fixture")
             .unwrap()
             .unwrap()
             .owned_digest(),
         Some(format!("sha256:{}", "b".repeat(64)).as_str())
     );
-    store.withdraw_sync("aster/toolchain-fixture").unwrap();
+    store.withdraw_sync("krun/toolchain-fixture").unwrap();
     assert!(!second.owned_directory().exists());
     assert_eq!(
         fs::read(first.owned_directory().join("runtime")).unwrap(),
@@ -117,7 +117,7 @@ fn ordinary_publications_keep_their_existing_schema_and_cursor_reuse() {
     ));
     assert_eq!(
         store
-            .current_sync("aster/toolchain-fixture")
+            .current_sync("krun/toolchain-fixture")
             .unwrap()
             .unwrap()
             .cursor(),

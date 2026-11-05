@@ -30,13 +30,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -44,13 +44,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -58,13 +58,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -72,11 +72,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -84,58 +84,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.0.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 4ms\n"
+          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.0.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 4ms\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -143,9 +143,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -153,9 +153,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/0/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/0/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -199,13 +199,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -213,13 +213,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -227,13 +227,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -241,11 +241,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -253,58 +253,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\nmise fixture@2.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\nmise by @jdx – removing 2 tools\nmise ✓ fixture@1.0.0  4ms\nmise ✓ fixture@2.0.0  3ms\nmise ████████████████ 2/2 · removed 2 tools in 8ms\n"
+          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\nmise fixture@2.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/mise.toml\nmise by @jdx – removing 2 tools\nmise ✓ fixture@1.0.0  4ms\nmise ✓ fixture@2.0.0  3ms\nmise ████████████████ 2/2 · removed 2 tools in 8ms\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -312,9 +312,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/1/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/1/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -354,13 +354,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -368,13 +368,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -382,13 +382,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -396,11 +396,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -408,58 +408,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise fixture@1.5.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.5.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 4ms\n"
+          "stderr": "mise fixture@1.5.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.5.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 4ms\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -467,9 +467,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -477,9 +477,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/2/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/2/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -521,13 +521,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -535,13 +535,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -549,13 +549,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -563,11 +563,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -575,58 +575,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise no installed tools are requested by the config in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
+          "stderr": "mise no installed tools are requested by the config in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -634,9 +634,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -644,9 +644,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -654,9 +654,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/3/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/3/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -696,13 +696,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -710,13 +710,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -724,13 +724,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -738,11 +738,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -750,58 +750,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise no installed tools are requested by the config in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project\n"
+          "stderr": "mise no installed tools are requested by the config in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -809,9 +809,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -819,9 +819,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -829,9 +829,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/4/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/4/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -871,13 +871,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -885,13 +885,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -899,13 +899,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -913,11 +913,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -925,34 +925,34 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise ERROR no config file found in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested or a parent directory\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
+          "stderr": "mise ERROR no config file found in /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested or a parent directory\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -960,9 +960,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -970,9 +970,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -980,9 +980,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/5/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/5/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -1022,13 +1022,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1036,13 +1036,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1050,13 +1050,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1064,11 +1064,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1076,57 +1076,57 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/mise.toml\nmise ERROR mise uninstall --project requires confirmation but there was nobody to ask; pass --yes to uninstall non-interactively\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
+          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/mise.toml\nmise ERROR mise uninstall --project requires confirmation but there was nobody to ask; pass --yes to uninstall non-interactively\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1134,9 +1134,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -1144,9 +1144,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1154,9 +1154,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/6/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/6/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",
@@ -1201,13 +1201,13 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1215,13 +1215,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1229,13 +1229,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/plugin other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/plugin other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1243,11 +1243,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@9.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1255,58 +1255,58 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--project",
             "--dry-run-code"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\nmise fixture@2.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\nmise fixture@1.0.0   uninstall\nmise fixture@1.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/cache/fixture/1.0.0\nmise fixture@1.0.0 ✓ uninstalled (dry-run)\nmise fixture@2.0.0   uninstall\nmise fixture@2.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/cache/fixture/2.0.0\nmise fixture@2.0.0 ✓ uninstalled (dry-run)\n"
+          "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\nmise fixture@2.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/mise.toml\nmise fixture@1.0.0   uninstall\nmise fixture@1.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/cache/fixture/1.0.0\nmise fixture@1.0.0 ✓ uninstalled (dry-run)\nmise fixture@2.0.0   uninstall\nmise fixture@2.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/cache/fixture/2.0.0\nmise fixture@2.0.0 ✓ uninstalled (dry-run)\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1314,9 +1314,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -1324,9 +1324,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1334,9 +1334,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/data/installs/other/9.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/data/installs/other/9.0.0/bin/other"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster project uninstall 中文 lk9thlfg/7/parent/project/nested",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun project uninstall 中文 lk9thlfg/7/parent/project/nested",
           "status": "returned",
           "exit": 0,
           "stdout": "9.0.0\n",

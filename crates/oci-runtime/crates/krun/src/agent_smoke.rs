@@ -1,17 +1,17 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentTransportQualificationRequest, AgentVsockEndpoint, SessionToken,
 };
 #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AGENT_RECOVERY_REPORT_ENV, AGENT_RUNTIME_SHARE_ENV, AGENT_RUNTIME_SHARE_SECURITY_ENV,
     AGENT_RUNTIME_SHARE_SECURITY_WINDOWS_VIRTIOFS, AGENT_RUNTIME_SHARE_TAG,
     AGENT_SESSION_TOKEN_FILE_ENV,
 };
 #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
-use aster_oci_core::CapabilityStatus;
-use aster_oci_core::HostPlatform;
+use krun_oci_core::CapabilityStatus;
+use krun_oci_core::HostPlatform;
 
 #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
 use crate::windows_handle_baseline::initialize_windows_handle_baseline;
@@ -438,19 +438,19 @@ fn agent_vm_smoke_windows(
             }
         };
         environment.push((
-            aster_oci_agent_protocol::AGENT_TRANSPORT_QUALIFICATION_ENV.to_string(),
+            krun_oci_agent_protocol::AGENT_TRANSPORT_QUALIFICATION_ENV.to_string(),
             encoded,
         ));
     }
     // Durable Live: Host-control EOF must not shut down the Guest (same contract
     // as linux_agent_smoke). Session-owner keeps the host-side pipe; guest
     // reconnect covers any transient vsock reset.
-    if let Ok(value) = std::env::var("ASTER_OCI_GUEST_HOST_RECONNECT") {
+    if let Ok(value) = std::env::var("KRUN_OCI_GUEST_HOST_RECONNECT") {
         if !value.is_empty() {
-            environment.push(("ASTER_OCI_GUEST_HOST_RECONNECT".to_string(), value));
+            environment.push(("KRUN_OCI_GUEST_HOST_RECONNECT".to_string(), value));
         }
     }
-    if let Err(error) = context.set_exec("/usr/bin/aster-oci-agent", &[], &environment) {
+    if let Err(error) = context.set_exec("/usr/bin/krun-oci-agent", &[], &environment) {
         report.reason = Some(error.to_string());
         return report;
     }

@@ -1,6 +1,6 @@
 use std::io::{self, Write};
 
-use aster_use_core::UseResult;
+use krun_use_core::UseResult;
 
 use super::CommandOutput;
 
@@ -28,7 +28,7 @@ pub fn write_result(
                 let text = serde_json::to_string_pretty(&output).map_err(io::Error::other)?;
                 writeln!(stdout, "{text}")?;
             } else {
-                writeln!(stderr, "aster-use: {error}")?;
+                writeln!(stderr, "krun-use: {error}")?;
                 if let Some(suggestion) = &error.suggestion {
                     writeln!(stderr, "suggestion: {suggestion}")?;
                 }

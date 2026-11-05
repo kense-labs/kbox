@@ -1,7 +1,7 @@
 use std::path::Path;
 use std::time::Duration;
 
-use aster_oci_sdk::ProcessRecord;
+use krun_oci_sdk::ProcessRecord;
 use serde::Deserialize;
 
 use crate::support::{qualification_error, TestResult};
@@ -94,7 +94,7 @@ fn matches(evidence: &MetadataEvidence, stage: &str, record: Option<&ProcessReco
 }
 
 async fn read(bundle: &Path, exec_id: &str) -> TestResult<MetadataEvidence> {
-    let path = bundle.join("aster-oci-shim-v1.json");
+    let path = bundle.join("krun-oci-shim-v1.json");
     let document: MetadataDocument = serde_json::from_slice(
         &tokio::fs::read(&path)
             .await

@@ -1,11 +1,12 @@
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
-use aster_runtime::contract::{NetworkMode, RuntimeLogStream, RuntimeUnitClass};
-use aster_runtime::{
+use async_trait::async_trait;
+use krun_runtime::contract::{NetworkMode, RuntimeLogStream, RuntimeUnitClass};
+use krun_runtime::{
     ProviderId, RuntimeClient, RuntimeClientRegistry, RuntimeProviderFactory, RuntimeResult,
 };
-use aster_use_core::{
+use krun_use_core::{
     CatalogSurface, ExecutablePlanningSurface, NetworkEgressPermission, PackageSurfaceKind,
     PlanActor, PlanPolicyDecision, PlanScope, PlanScopeKind, PlannedPackageState,
     PlannedPluginRelease, PlanningArtifactRef, PlanningSurfaceActivation, PluginPermissionCeiling,
@@ -14,7 +15,6 @@ use aster_use_core::{
     WorkspaceGrantProposalAuthority, PLUGIN_PERMISSION_SCHEMA, PLUGIN_PLANNING_BUNDLE_SCHEMA,
     PLUGIN_WORKSPACE_GRANT_PROPOSAL_SCHEMA,
 };
-use async_trait::async_trait;
 
 use super::test_support::*;
 use super::*;
@@ -393,7 +393,7 @@ async fn task_binding_rejects_obsolete_or_tampered_durable_templates() {
     let binding = client.prepare_task(&plan, &provider).await.unwrap();
 
     let mut obsolete = binding.clone();
-    obsolete.schema = "aster.use.runtime-task-binding.v3".to_string();
+    obsolete.schema = "krun.use.runtime-task-binding.v3".to_string();
     assert_eq!(
         obsolete.validate().unwrap_err().code,
         "use.plugin.runtime.input_invalid"

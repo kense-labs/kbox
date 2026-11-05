@@ -1,7 +1,11 @@
-# aster-libkrun-sys
+# krun-libkrun-sys
 
-[![Crates.io](https://img.shields.io/crates/v/aster-libkrun-sys.svg)](https://crates.io/crates/aster-libkrun-sys)
-[![Documentation](https://docs.rs/aster-libkrun-sys/badge.svg)](https://docs.rs/aster-libkrun-sys)
+## 概述
+
+FFI bindings to libkrun with Windows WHPX backend support
+
+[![Crates.io](https://img.shields.io/crates/v/krun-libkrun-sys.svg)](https://crates.io/crates/krun-libkrun-sys)
+[![Documentation](https://docs.rs/krun-libkrun-sys/badge.svg)](https://docs.rs/krun-libkrun-sys)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 FFI bindings to [libkrun](https://github.com/containers/libkrun) with **Windows WHPX backend support**.
@@ -31,7 +35,7 @@ Add to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-aster-libkrun-sys = "3"
+krun-libkrun-sys = "3"
 ```
 
 ### Windows Requirements
@@ -55,7 +59,7 @@ Get-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform
 ## Usage
 
 ```rust
-use aster_libkrun_sys::*;
+use krun_libkrun_sys::*;
 use std::ffi::CString;
 
 unsafe {
@@ -180,7 +184,7 @@ deadlock the nested build.
 
 ```powershell
 # Clone with submodules
-git clone --recursive https://github.com/kense-labs/krun.git
+git clone --recursive https://github.com/kense-labs/krun
 cd krun/libkrun
 
 # Build libkrun
@@ -207,7 +211,7 @@ Windows build-time download.
 The native files have additional license and source-delivery obligations; see
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) and
 [`SOURCE-PROVENANCE.md`](SOURCE-PROVENANCE.md). The crate's MIT metadata covers
-the Aster Rust wrapper and does not relicense the bundled native components.
+the Krun Rust wrapper and does not relicense the bundled native components.
 The Windows build script always creates a real stripped Linux `init/init`
 payload first and remaps host source/profile paths out of the Rust release
 artifacts; the generated payload remains ignored by Git.
@@ -215,7 +219,7 @@ artifacts; the generated payload remains ignored by Git.
 Windows virtiofs retains guest-created and guest-updated POSIX mode, UID, and
 GID values for the VM lifetime. A runtime that needs cross-generation
 persistence must capture these values before shutdown and replay them after
-boot; Aster Box performs that handoff with its rootfs metadata manifests.
+boot; Krun Box performs that handoff with its rootfs metadata manifests.
 
 ## Architecture
 
@@ -245,12 +249,12 @@ cargo test --target x86_64-pc-windows-msvc --lib test_krun_create_ctx -- --test-
 ## Documentation
 
 - [Windows Integration Guide](../../WINDOWS_INTEGRATION_TEST.md)
-- [API Documentation](https://docs.rs/aster-libkrun-sys)
+- [API Documentation](https://docs.rs/krun-libkrun-sys)
 - [libkrun Documentation](https://github.com/containers/libkrun)
 
 ## License
 
-The Aster Rust wrapper is MIT licensed; see [LICENSE](LICENSE). Bundled native
+The Krun Rust wrapper is MIT licensed; see [LICENSE](LICENSE). Bundled native
 components retain their own licenses and notices as documented in
 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
@@ -261,4 +265,4 @@ Contributions welcome! Please see [CONTRIBUTING.md](../../CONTRIBUTING.md).
 ## Credits
 
 - Based on [libkrun](https://github.com/containers/libkrun) by Red Hat
-- Windows WHPX backend by Aster Team
+- Windows WHPX backend by Krun Team

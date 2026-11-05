@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     CatalogArchive, CatalogAvailability, CatalogPackage, CatalogPlanningTarget, CatalogSurface,
     ExecutablePlanningSurface, InstalledPluginPlanEvidence, McpReleaseDescriptor,
     OkfBundleContract, PackageSurfaceKind, PlanPackageRole, PlanningArtifactRef,
@@ -41,10 +41,10 @@ fn native_aix_catalog_targets_are_admitted_without_accepting_foreign_package_for
     let digest = format!("sha256:{:x}", Sha256::digest(b"native archive fixture"));
     let mut catalog = PluginCatalogRecord {
         schema: PLUGIN_CATALOG_SCHEMA_V3.into(),
-        package_id: "aster/native".into(),
+        package_id: "krun/native".into(),
         display_name: "Native AIX".into(),
         description: "Native package target admission.".into(),
-        publisher: "aster".into(),
+        publisher: "krun".into(),
         keywords: vec!["native".into()],
         categories: vec!["development".into()],
         version: "2.0.0".into(),
@@ -66,7 +66,7 @@ fn native_aix_catalog_targets_are_admitted_without_accepting_foreign_package_for
         permission_ceiling: ceiling,
         planning: None,
         archive: CatalogArchive {
-            target_name: "extensions/aster/native/2.0.0/stable/linux-x86_64/native.aix".into(),
+            target_name: "extensions/krun/native/2.0.0/stable/linux-x86_64/native.aix".into(),
             length: 22,
             sha256: digest.clone(),
         },
@@ -77,7 +77,7 @@ fn native_aix_catalog_targets_are_admitted_without_accepting_foreign_package_for
             manifest_sha256: Some(digest),
         },
         license: "MIT".into(),
-        repository: "https://github.com/aster-ai-lab/plugins".into(),
+        repository: "https://github.com/kense-labs/krun".into(),
         availability: CatalogAvailability::Available,
     };
     let bytes = catalog.canonical_bytes().unwrap();
@@ -298,7 +298,7 @@ fn current_catalog_resolves_only_the_surface_dependency_closure() {
 #[test]
 fn catalog_rejects_retired_schemas_and_incomplete_current_evidence() {
     let mut retired: serde_json::Value = serde_json::from_slice(CATALOG_RECORD).unwrap();
-    retired["schema"] = serde_json::json!("aster.use.plugin-catalog.v2");
+    retired["schema"] = serde_json::json!("krun.use.plugin-catalog.v2");
     assert!(PluginCatalogRecord::from_json(&serde_json::to_vec(&retired).unwrap()).is_err());
 
     let mut missing_manifest: serde_json::Value = serde_json::from_slice(CATALOG_RECORD).unwrap();
@@ -370,7 +370,7 @@ fn catalog_v3_binds_one_small_deterministic_planning_target() {
     oversized["planning"]["length"] = serde_json::json!(512 * 1024 + 1);
     assert!(PluginCatalogRecord::from_json(&serde_json::to_vec(&oversized).unwrap()).is_err());
 
-    value["schema"] = serde_json::json!("aster.use.plugin-catalog.v2");
+    value["schema"] = serde_json::json!("krun.use.plugin-catalog.v2");
     assert!(PluginCatalogRecord::from_json(&serde_json::to_vec(&value).unwrap()).is_err());
 }
 
@@ -422,7 +422,7 @@ fn catalog_v3_binds_okf_and_skill_dependency_closure_without_runtime_authority()
     }));
 
     let mut retired = record.clone();
-    retired.schema = "aster.use.plugin-catalog.v2".to_owned();
+    retired.schema = "krun.use.plugin-catalog.v2".to_owned();
     retired.planning = None;
     assert!(retired.validate().is_err());
 
@@ -528,7 +528,7 @@ fn okf_only_catalog_v3_does_not_invent_an_executable_planning_target() {
         record.clone(),
         VerifiedCatalogProvenance {
             registry_name: "official".to_owned(),
-            registry_url: "https://plugins.aster.dev/catalog".to_owned(),
+            registry_url: "https://plugins.krun.dev/catalog".to_owned(),
             root_sha256: format!("sha256:{}", "f".repeat(64)),
             root_version: 7,
             timestamp_version: 42,
@@ -587,7 +587,7 @@ fn planning_bundle_rejects_mutable_artifacts_and_unsupported_catalog_surfaces() 
     let mut bundle = planning_bundle();
     let initial_bytes = bundle.canonical_bytes().unwrap();
     let mut catalog = catalog_v3_for_planning_target(&initial_bytes);
-    catalog.record.surfaces[0].mcp_transport = Some(aster_use_core::CatalogMcpTransport::Stdio);
+    catalog.record.surfaces[0].mcp_transport = Some(krun_use_core::CatalogMcpTransport::Stdio);
     catalog.record.permission_ceiling.surfaces[0].native_execution = true;
     catalog.record.permission_ceiling.surfaces[0].private_service = false;
     catalog.record.permission_ceiling_digest = catalog
@@ -612,7 +612,7 @@ fn planning_bundle_binds_package_native_tool_and_stdio_mcp_launchers() {
         (surface.kind == PackageSurfaceKind::Mcp && surface.id == "library")
             || (surface.kind == PackageSurfaceKind::Tool && surface.id == "convert")
     });
-    catalog.record.surfaces[0].mcp_transport = Some(aster_use_core::CatalogMcpTransport::Stdio);
+    catalog.record.surfaces[0].mcp_transport = Some(krun_use_core::CatalogMcpTransport::Stdio);
     catalog
         .record
         .permission_ceiling
@@ -933,7 +933,7 @@ fn plan_ready_catalog() -> VerifiedPluginCatalogRecord {
     let record = PluginCatalogRecord::from_json(&serde_json::to_vec(&value).unwrap()).unwrap();
     let provenance = VerifiedCatalogProvenance {
         registry_name: "official".to_owned(),
-        registry_url: "https://plugins.aster.dev/catalog".to_owned(),
+        registry_url: "https://plugins.krun.dev/catalog".to_owned(),
         root_sha256: "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
             .to_owned(),
         root_version: 7,
@@ -949,7 +949,7 @@ fn okf_only_catalog() -> PluginCatalogRecord {
     let mut record = plan_ready_catalog().record;
     record.schema = PLUGIN_CATALOG_SCHEMA_V3.to_owned();
     record.package_id = "acme/knowledge".to_owned();
-    record.display_name = "Aster Knowledge Pack".to_owned();
+    record.display_name = "Krun Knowledge Pack".to_owned();
     record.description =
         "Cited package knowledge with an exact promoted OKF generation.".to_owned();
     record.keywords = vec!["knowledge".to_owned(), "okf".to_owned()];
@@ -1026,7 +1026,7 @@ fn verified_catalog_provenance_binds_outer_tuf_evidence_to_the_record() {
     let record = PluginCatalogRecord::from_json(CATALOG_RECORD).unwrap();
     let provenance = VerifiedCatalogProvenance {
         registry_name: "official".to_owned(),
-        registry_url: "https://plugins.aster.dev/catalog".to_owned(),
+        registry_url: "https://plugins.krun.dev/catalog".to_owned(),
         root_sha256: "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
             .to_owned(),
         root_version: 7,

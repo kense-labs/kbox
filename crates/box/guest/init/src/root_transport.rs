@@ -2,14 +2,14 @@
 //!
 //! libkrun boots directory roots directly through virtio-fs. Block roots are
 //! different: `init.krun` starts from a private, empty virtio-fs bootstrap,
-//! mounts the configured block device, and switches to it before executing Aster
+//! mounts the configured block device, and switches to it before executing Krun
 //! guest-init. The bootstrap share still uses the `/dev/root` virtio-fs tag, so
 //! probing that tag after a block-root switch would incorrectly pivot back into
 //! the empty bootstrap filesystem.
 
 use std::ffi::OsString;
 
-use aster_box_core::vmm::GUEST_EXT4_ROOT_DEVICE;
+use krun_box_core::vmm::GUEST_EXT4_ROOT_DEVICE;
 
 /// Kernel-command-line environment imported by libkrun's `init.krun` when a
 /// block device owns the guest root filesystem.
@@ -259,7 +259,7 @@ fn pivot_to_rootfs(new_root: &str) -> Result<(), Box<dyn std::error::Error>> {
     use nix::unistd::chdir;
     use std::ffi::CString;
 
-    let put_old = format!("{new_root}/.aster-old-root");
+    let put_old = format!("{new_root}/.krun-old-root");
     std::fs::create_dir_all(&put_old)?;
 
     mount(
@@ -288,10 +288,10 @@ fn pivot_to_rootfs(new_root: &str) -> Result<(), Box<dyn std::error::Error>> {
     }
 
     chdir("/")?;
-    if let Err(error) = umount2("/.aster-old-root", MntFlags::MNT_DETACH) {
+    if let Err(error) = umount2("/.krun-old-root", MntFlags::MNT_DETACH) {
         tracing::warn!(%error, "Failed to detach old root after pivot_root");
     }
-    if let Err(error) = std::fs::remove_dir("/.aster-old-root") {
+    if let Err(error) = std::fs::remove_dir("/.krun-old-root") {
         tracing::warn!(%error, "Failed to remove old root mount point after pivot_root");
     }
     Ok(())

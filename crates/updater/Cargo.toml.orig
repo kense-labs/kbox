@@ -1,11 +1,11 @@
 [package]
-name = "aster-updater"
+name = "krun-updater"
 version = "0.3.0"
 edition = "2021"
-authors = ["Aster"]
+authors = ["Krun"]
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/aster"
-description = "Self-update library for Aster CLI binaries via GitHub Releases"
+repository = "https://github.com/kense-labs/krun"
+description = "Self-update library for Krun CLI binaries via GitHub Releases"
 
 [dependencies]
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }

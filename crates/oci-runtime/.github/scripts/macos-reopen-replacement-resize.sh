@@ -6,9 +6,9 @@ run_resize_stage() {
   mkdir "$stage_console_dir"
   set +e
   output="$(
-    target/debug/aster-oci oci-vm-reopen-replacement \
+    target/debug/krun-oci oci-vm-reopen-replacement \
       --operation resize \
-      --shim "$signed_dir/aster-oci-krun-shim" \
+      --shim "$signed_dir/krun-oci-krun-shim" \
       --vm-rootfs "$rootfs_dir" \
       --system-image-manifest "$system_image_manifest" \
       --bundle "$bundle_dir" \
@@ -23,7 +23,7 @@ run_resize_stage() {
     test "$gate_exit_code" -eq 0
     jq --exit-status --arg stage "$fault_stage" \
       '.schema_version
-           == "aster.oci.oci-vm-operation-reopen-replacement.v17"
+           == "krun.oci.oci-vm-operation-reopen-replacement.v17"
        and .platform == "macos" and .status == "available"
        and .bundle_loaded
        and .requested_operation == "resize"
@@ -167,7 +167,7 @@ run_resize_stage() {
     test "$gate_exit_code" -eq 2
     jq --exit-status --arg stage "$fault_stage" \
       '.schema_version
-           == "aster.oci.oci-vm-operation-reopen-replacement.v17"
+           == "krun.oci.oci-vm-operation-reopen-replacement.v17"
        and .platform == "macos"
        and .status != "available"
        and .requested_operation == "resize"

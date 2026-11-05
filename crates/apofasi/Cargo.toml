@@ -1,16 +1,16 @@
 [package]
-name = "aster-apofasi"
+name = "krun-apofasi"
 version = "0.1.1"
 edition = "2021"
 rust-version = "1.75"
 license = "MIT"
-authors = ["Aster"]
-repository = "https://github.com/aster-ai-lab/Apofasi"
-homepage = "https://github.com/aster-ai-lab/Apofasi"
-documentation = "https://docs.rs/aster-apofasi"
+authors = ["Krun"]
+repository = "https://github.com/kense-labs/krun"
+homepage = "https://github.com/kense-labs/krun"
+documentation = "https://docs.rs/krun-apofasi"
 readme = "README.md"
-description = "Typed System-1 decision engine for Aster hosts"
-keywords = ["aster", "decision", "routing", "calibration", "system-one"]
+description = "Typed System-1 decision engine for Krun hosts"
+keywords = ["krun", "decision", "routing", "calibration", "system-one"]
 categories = ["science", "algorithms"]
 publish = false
 
@@ -26,7 +26,7 @@ mlx = ["infer"]
 cuda = ["infer", "candle-core/cuda", "candle-nn/cuda"]
 # RLCD train helpers + publish layout (pulls infer for checkpoint IO).
 train = ["infer"]
-# CLI binary `aster-apofasi` (smoke / bench).
+# CLI binary `krun-apofasi` (smoke / bench).
 cli = ["infer"]
 
 [dependencies]
@@ -44,7 +44,7 @@ cc = "1"
 [dev-dependencies]
 
 [[bin]]
-name = "aster-apofasi"
+name = "krun-apofasi"
 path = "src/bin/apofasi.rs"
 required-features = ["cli"]
 

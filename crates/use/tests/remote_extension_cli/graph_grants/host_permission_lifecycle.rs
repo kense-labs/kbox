@@ -304,10 +304,10 @@ async fn plan_operation(
     version: &str,
     selected_surfaces: Vec<PluginSurfaceRef>,
     label: &str,
-    prior_lock: Option<aster_use_core::PluginPackageLock>,
+    prior_lock: Option<krun_use_core::PluginPackageLock>,
 ) -> (
     PluginHostPlanRequest,
-    aster_use_core::PluginHostPlanResult,
+    krun_use_core::PluginHostPlanResult,
     PluginHostApplyRequest,
 ) {
     let (candidate, package_lock) = if action == PluginOperationAction::Uninstall {
@@ -380,7 +380,7 @@ async fn assert_grant(
     home: &std::path::Path,
     scope: &PluginManagedScope,
     package_digest: &str,
-    ceiling: &aster_use_core::PluginPermissionCeiling,
+    ceiling: &krun_use_core::PluginPermissionCeiling,
 ) {
     let record = WorkspaceGrantStore::new(home.join("state"))
         .observe(&scope.scope_id, PACKAGE_ID, package_digest)
@@ -413,7 +413,7 @@ async fn assert_operation_completed(
     scope: &PluginManagedScope,
     capabilities_digest: &str,
     package_id: &PluginPackageId,
-    planned: &aster_use_core::PluginHostPlanResult,
+    planned: &krun_use_core::PluginHostPlanResult,
     request_id: &str,
     result_digest: &str,
 ) {

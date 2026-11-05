@@ -8,7 +8,7 @@
   2026-10-31T22:02:42Z. This is context, not a substitute for the release pin.
 - Official feature source: <https://mise.jdx.dev/cli/> and the domain pages
   linked by `contracts/capability-matrix.md`.
-- Functional parity preserves Aster namespaces and ACL; no mise subprocess,
+- Functional parity preserves Krun namespaces and ACL; no mise subprocess,
   binary bundle, or service may provide the implementation.
 
 ## Existing implementation
@@ -26,8 +26,8 @@ exposes a `ConfigFile` trait, but discovery, mutation, settings, global config,
 and bootstrap still depend directly on `MiseToml`. Calling its CLI unchanged
 would retain another product configuration language and the upstream updater.
 Therefore a whole-CLI delegate is not a compliant replacement. Reuse reviewed
-algorithms and backend contracts inside Aster's owners where appropriate,
-retaining provenance and licenses, while keeping ACL and Aster's updater.
+algorithms and backend contracts inside Krun's owners where appropriate,
+retaining provenance and licenses, while keeping ACL and Krun's updater.
 
 Reviewed source at release commit `3c78bbb2d58c0b668fe8d5bebf4a8cb66194e1aa`:
 `src/lib.rs`, `src/config/config_file/mod.rs`, `src/config/mod.rs`,
@@ -84,15 +84,15 @@ selection with a managed shim earlier in PATH, missing paths, and global
 relative paths with an explicit global config root. The original ten-case
 version reference is unchanged. The first comparison uses equivalent ACL
 declarations. The updated CLI comparison also uses explicit temporary arguments.
-`aster exec --tool TOOL@REQUEST` selects overrides without changing declarations;
+`krun exec --tool TOOL@REQUEST` selects overrides without changing declarations;
 all 18 updated CLI cases pass with the original deadlines. Refreshed pager tests
 (15 cases) and the CLI/ACP paired build pass too.
 
 Pinned review of `src/toolset/tool_request.rs` and
 `src/config/config_file/mod.rs` establishes that relative paths use the declaring
-workspace or explicit global root, while command arguments use cwd. Aster keeps
+workspace or explicit global root, while command arguments use cwd. Krun keeps
 these origins while merging ACL layers; its user root is the native user home,
-independent of ASTER_HOME. External/system selections create no managed receipts
+independent of KRUN_HOME. External/system selections create no managed receipts
 and do not fetch. System PATH excludes the store's emitted shim/install roots.
 
 Default layout discovery adapts `src/backend/github.rs`, `src/backend/npm.rs`
@@ -113,26 +113,26 @@ it does not establish the cause of the initial timeout or release efficiency.
 
 `tests/cli_mise_context_benchmark.py` measures five fresh-state/repeated-state
 pairs for native path selection with identical external programs and unchanged
-20/25-second command deadlines. The first debug Aster medians are 573.354 ms
+20/25-second command deadlines. The first debug Krun medians are 573.354 ms
 with fresh owned state and 152.608 ms repeated; the optimized reference medians
 are 443.656 ms and 16.361 ms. Host load and OS caches are uncontrolled, and the
 build profiles differ. This is diagnostic evidence, not release acceptance.
 The standard release workflow's paired build passed for a comparable profile.
-Its Aster medians are 627.316 ms fresh and 210.642 ms repeated; mise medians
+Its Krun medians are 627.316 ms fresh and 210.642 ms repeated; mise medians
 are 393.927 ms and 15.197 ms. This does not meet efficiency acceptance.
 Before changing startup, an isolated native probe also verified that
 one environment command writes 27 agent guide files. Environment commands now
 skip this extraction and agent HTTP prewarming, retaining policy/sandbox
-admission. Its 18 actual CLI cases, debug/release paired builds and owning Aster
+admission. Its 18 actual CLI cases, debug/release paired builds and owning Krun
 Clippy pass. Guide-file output falls from 27 to zero. The first recapture hit
 the unchanged mise deadline and is retained; the complete retry and release
 measurements do not demonstrate a speedup.
 
-The release archive contract ships `aster` and `aster-acp`, but the old default
-package command required a separate `aster-use` executable. A sanitized-PATH
+The release archive contract ships `krun` and `krun-acp`, but the old default
+package command required a separate `krun-use` executable. A sanitized-PATH
 release probe reproduced this failure. The CLI now reuses the existing local
 SDK parser and shared fallible output writer in process, retaining an explicit
-`ASTER_USE_BIN` override. Six SDK tests and all 20 isolated actual CLI cases
+`KRUN_USE_BIN` override. Six SDK tests and all 20 isolated actual CLI cases
 pass. A copied CLI without an SDK sibling also checks the unchanged 14-file,
 6262-byte publication archive. These checks precede the latest runtime-pool
 optimization; current CLI/pair/owning-Clippy processes remain pending.
@@ -196,14 +196,14 @@ upstream notices for adapted algorithms and keep configuration native ACL.
 
 ## Confirmed starting failures
 
-- Existing debug `aster tool install hermes` panics (exit 101): blocking
+- Existing debug `krun tool install hermes` panics (exit 101): blocking
   reqwest client construction runs inside Tokio before `spawn_blocking`.
-- An installed CLI at `~/.local/bin/aster` lacks the new environment commands;
+- An installed CLI at `~/.local/bin/krun` lacks the new environment commands;
   help output is not evidence that the final product has shipped them.
 - Nested project execution does not load ancestor `env.acl`.
 - Shims select a global current pointer; activation exports one static snapshot.
 - The existing catalog lacks most core language runtimes.
-- `cargo test --locked -p aster-use-tool-acquire` initially refuses because the
+- `cargo test --locked -p krun-use-tool-acquire` initially refuses because the
   root lockfile does not include current manifest changes. Let Cargo update
   the root lockfile offline, inspect the exact delta, then restore locked checks.
 
@@ -240,6 +240,6 @@ deadlines did not change to make the running-version case pass.
 
 Existing configuration loaders explicitly promise no writes. Tracking belongs
 in an explicit CLI/store operation after a successful load; it must not change
-those published read-only APIs. Aster's current `ToolStore::prune` removes all
+those published read-only APIs. Krun's current `ToolStore::prune` removes all
 non-current version directories, and the actual CLI does not admit `tool prune`.
 Neither behavior satisfies the frozen lifecycle contract.

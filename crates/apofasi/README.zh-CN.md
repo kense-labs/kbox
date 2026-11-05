@@ -22,11 +22,11 @@
 ## 使用
 
 ```rust
-use aster_apofasi::{Client, Criteria, DecisionKind, Question, State, SystemOneRequest};
+use krun_apofasi::{Client, Criteria, DecisionKind, Question, State, SystemOneRequest};
 use indexmap::IndexMap;
 use serde_json::json;
 
-fn main() -> aster_apofasi::Result<()> {
+fn main() -> krun_apofasi::Result<()> {
     let mut opts = IndexMap::new();
     opts.insert("billing".into(), Some(json!("refunds")));
     opts.insert("other".into(), Some(json!("else")));
@@ -53,7 +53,7 @@ fn main() -> aster_apofasi::Result<()> {
 
 ```bash
 cargo build --release
-cargo build --release --features cli,metal,mlx --bin aster-apofasi
+cargo build --release --features cli,metal,mlx --bin krun-apofasi
 ```
 
 ## 相对 Jev
@@ -102,11 +102,11 @@ checkpoint/
 
 | 项 | 值 |
 | --- | --- |
-| 包名 | `aster-apofasi` |
+| 包名 | `krun-apofasi` |
 | 版本 | 0.1.1 |
-| 仓库 | [aster-ai-lab/Apofasi](https://github.com/aster-ai-lab/Apofasi) |
+| 仓库 | [kense-labs/Apofasi](https://github.com/kense-labs/krun) |
 | 许可证 | MIT |
 
 ## 许可证
 
-MIT © Aster
+MIT © Krun

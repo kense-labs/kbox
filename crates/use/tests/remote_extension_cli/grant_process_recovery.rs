@@ -5,26 +5,26 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use std::sync::Arc;
 
-use aster_use::package::{
+use async_trait::async_trait;
+use krun_use::package::{
     PackageAuthorizationEvidence, PackageAuthorizationProvider, StandalonePackageLifecycleFactory,
 };
-use aster_use_core::{
+use krun_use_core::{
     PlanActor, PlanAuthority, PlanPolicyDecision, PlanScope, PlanScopeKind, PluginOperationPlan,
     PluginOperationPlanDraft, PluginOperationPlanEnvelope, PluginWorkspaceGrantChangeSet, UseError,
     UseResult,
 };
-use aster_use_extension::{StoredWorkspaceGrant, WorkspaceGrantStore};
-use async_trait::async_trait;
+use krun_use_extension::{StoredWorkspaceGrant, WorkspaceGrantStore};
 use tokio::io::AsyncWriteExt;
 
-const CHILD_HOME_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_HOME";
-const CHILD_REGISTRY_URL_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_REGISTRY_URL";
-const CHILD_ROOT_SHA256_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_ROOT_SHA256";
-const CHILD_AUTHORIZATION_MARKER_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_AUTH_MARKER";
-const CHILD_ALLOW_AUTHORIZATION_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_ALLOW_AUTH";
-const CHILD_OFFLINE_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_OFFLINE";
-const CHILD_ACTION_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_ACTION";
-const CHILD_VERSION_ENV: &str = "ASTER_USE_TEST_GRANT_PROCESS_VERSION";
+const CHILD_HOME_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_HOME";
+const CHILD_REGISTRY_URL_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_REGISTRY_URL";
+const CHILD_ROOT_SHA256_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_ROOT_SHA256";
+const CHILD_AUTHORIZATION_MARKER_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_AUTH_MARKER";
+const CHILD_ALLOW_AUTHORIZATION_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_ALLOW_AUTH";
+const CHILD_OFFLINE_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_OFFLINE";
+const CHILD_ACTION_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_ACTION";
+const CHILD_VERSION_ENV: &str = "KRUN_USE_TEST_GRANT_PROCESS_VERSION";
 const MANAGED_SCOPE_ID: &str = "workspace:grant-process-recovery";
 const PACKAGE_ID: &str = "acme/worker";
 const DEPENDENCY_COUNT: usize = 4;

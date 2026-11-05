@@ -1,17 +1,17 @@
 use std::collections::BTreeMap;
 
-use aster_runtime::contract::{
+use krun_runtime::contract::{
     IsolationLevel, RuntimeHostService, RuntimeMount, RuntimeObservation, RuntimeServiceLifecycle,
     RuntimeUnitSpec, SecretReference,
 };
-use aster_use_core::{
+use krun_use_core::{
     PackageSurfaceKind, PlanEnforcementProfile, PlanQualifiedSurfaceRef, PlanScope,
     PlannedProviderEvidence, PluginSurfaceRef, UseError, UseResult,
 };
 use serde::{Deserialize, Serialize};
 
-pub const RUNTIME_SERVICE_BINDING_SCHEMA: &str = "aster.use.runtime-service-binding.v3";
-pub const RUNTIME_TASK_BINDING_SCHEMA: &str = "aster.use.runtime-task-binding.v4";
+pub const RUNTIME_SERVICE_BINDING_SCHEMA: &str = "krun.use.runtime-service-binding.v3";
+pub const RUNTIME_TASK_BINDING_SCHEMA: &str = "krun.use.runtime-task-binding.v4";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RuntimeSurfaceContext {
@@ -103,7 +103,7 @@ impl RuntimeSurfaceContext {
         ) || !valid_surface_segment(&self.surface.id)
         {
             return Err(runtime_input_error(
-                "Only named Tool and MCP surfaces can be mapped to Aster Runtime.",
+                "Only named Tool and MCP surfaces can be mapped to Krun Runtime.",
             ));
         }
         if self.generation == 0 {

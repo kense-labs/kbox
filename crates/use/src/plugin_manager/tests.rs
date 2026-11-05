@@ -1,9 +1,7 @@
 use std::sync::Arc;
 
-use aster_use_core::{
-    PlanScope, PlanScopeKind, PluginManagedScope, PLUGIN_MANAGED_SCOPE_SCHEMA_V2,
-};
-use aster_use_extension::{ExtensionPaths, ExtensionRegistry};
+use krun_use_core::{PlanScope, PlanScopeKind, PluginManagedScope, PLUGIN_MANAGED_SCOPE_SCHEMA_V2};
+use krun_use_extension::{ExtensionPaths, ExtensionRegistry};
 
 use crate::package::{
     PackageHostManager, StandalonePackageAuthorizationProvider, StandalonePackageLifecycleFactory,

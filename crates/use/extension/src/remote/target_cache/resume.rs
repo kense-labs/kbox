@@ -1,7 +1,7 @@
 use std::io::SeekFrom;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::UseResult;
+use krun_use_core::UseResult;
 use tokio::fs;
 use tokio::io::{AsyncSeekExt, AsyncWriteExt};
 
@@ -437,7 +437,7 @@ async fn open_existing_partial(path: &Path) -> UseResult<Option<fs::File>> {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
         Err(error) => {
             if let Ok(metadata) = fs::symlink_metadata(path).await {
-                if aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                if krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                     || !metadata.is_file()
                 {
                     return Err(target_cache_error(
@@ -485,7 +485,7 @@ fn validate_partial_metadata(
     metadata: &std::fs::Metadata,
     expected_length: u64,
 ) -> UseResult<()> {
-    if aster_use_core::metadata_is_link_or_reparse_point(metadata)
+    if krun_use_core::metadata_is_link_or_reparse_point(metadata)
         || !metadata.is_file()
         || metadata.len() > expected_length
     {

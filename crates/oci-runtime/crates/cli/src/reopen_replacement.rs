@@ -8,7 +8,7 @@ pub(crate) struct Args {
     /// Isolated, entitlement-signed libkrun shim executable.
     #[arg(long, value_name = "FILE")]
     shim: PathBuf,
-    /// Extracted Linux root filesystem containing /usr/bin/aster-oci-agent.
+    /// Extracted Linux root filesystem containing /usr/bin/krun-oci-agent.
     #[arg(long, value_name = "DIR")]
     vm_rootfs: PathBuf,
     /// Immutable system-image manifest bound to both macOS HVF owners.
@@ -78,51 +78,51 @@ pub(crate) enum FaultStageArg {
     HostAfterShutdown,
 }
 
-impl From<FaultStageArg> for aster_oci_runtime::AgentTransportFaultStage {
+impl From<FaultStageArg> for krun_oci_runtime::AgentTransportFaultStage {
     fn from(value: FaultStageArg) -> Self {
         match value {
             FaultStageArg::BeforeRequestWrite => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite,
+                krun_oci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite,
             ),
             FaultStageArg::AfterRequestWrite => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::HostAfterRequestWrite,
+                krun_oci_runtime::AgentTransportOperationStage::HostAfterRequestWrite,
             ),
             FaultStageArg::BeforeResponseRead => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::HostBeforeResponseRead,
+                krun_oci_runtime::AgentTransportOperationStage::HostBeforeResponseRead,
             ),
             FaultStageArg::AfterResponseRead => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::HostAfterResponseRead,
+                krun_oci_runtime::AgentTransportOperationStage::HostAfterResponseRead,
             ),
             FaultStageArg::GuestAfterRequestRead => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::GuestAfterRequestRead,
+                krun_oci_runtime::AgentTransportOperationStage::GuestAfterRequestRead,
             ),
-            FaultStageArg::GuestBeforeDispatch => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::GuestBeforeDispatch,
-            ),
+            FaultStageArg::GuestBeforeDispatch => {
+                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestBeforeDispatch)
+            }
             FaultStageArg::GuestAfterDispatch => {
-                Self::Operation(aster_oci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
+                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
             }
             FaultStageArg::GuestBeforeResponseWrite => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
+                krun_oci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
             ),
             FaultStageArg::GuestAfterResponseWrite => Self::Operation(
-                aster_oci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite,
+                krun_oci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite,
             ),
             FaultStageArg::HostBeforeShutdown => {
-                Self::Shutdown(aster_oci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
+                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
             }
             FaultStageArg::HostAfterShutdown => {
-                Self::Shutdown(aster_oci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
+                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
             }
         }
     }
 }
 
-impl TryFrom<FaultStageArg> for aster_oci_runtime::AgentTransportOperationStage {
+impl TryFrom<FaultStageArg> for krun_oci_runtime::AgentTransportOperationStage {
     type Error = String;
 
     fn try_from(value: FaultStageArg) -> Result<Self, Self::Error> {
-        let fault_stage = aster_oci_runtime::AgentTransportFaultStage::from(value);
+        let fault_stage = krun_oci_runtime::AgentTransportFaultStage::from(value);
         match fault_stage.operation() {
             Some(stage) => Ok(stage),
             None => Err(format!(
@@ -136,8 +136,8 @@ impl TryFrom<FaultStageArg> for aster_oci_runtime::AgentTransportOperationStage 
 pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
     let succeeded = match arguments.operation {
         OperationArg::Create => {
-            let fault_stage = aster_oci_runtime::AgentTransportFaultStage::from(arguments.fault_at);
-            let report = aster_oci_runtime::oci_vm_reopen_replacement_at(
+            let fault_stage = krun_oci_runtime::AgentTransportFaultStage::from(arguments.fault_at);
+            let report = krun_oci_runtime::oci_vm_reopen_replacement_at(
                 &arguments.shim,
                 &arguments.vm_rootfs,
                 &arguments.system_image_manifest,
@@ -152,12 +152,12 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
         }
         operation => {
             let stage =
-                aster_oci_runtime::AgentTransportOperationStage::try_from(arguments.fault_at)
+                krun_oci_runtime::AgentTransportOperationStage::try_from(arguments.fault_at)
                     .map_err(super::CliError::Message)?;
             match operation {
                 OperationArg::Create => unreachable!("Create handled above"),
                 OperationArg::CloseStdin => {
-                    let report = aster_oci_runtime::oci_vm_close_stdin_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_close_stdin_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -171,7 +171,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Delete => {
-                    let report = aster_oci_runtime::oci_vm_delete_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_delete_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -185,7 +185,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Exec => {
-                    let report = aster_oci_runtime::oci_vm_exec_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_exec_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -199,7 +199,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::File => {
-                    let report = aster_oci_runtime::oci_vm_file_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_file_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -213,7 +213,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Filesystem => {
-                    let report = aster_oci_runtime::oci_vm_filesystem_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_filesystem_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -227,7 +227,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Kill => {
-                    let report = aster_oci_runtime::oci_vm_kill_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_kill_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -241,7 +241,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Pause => {
-                    let report = aster_oci_runtime::oci_vm_pause_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_pause_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -255,7 +255,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Processes => {
-                    let report = aster_oci_runtime::oci_vm_processes_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_processes_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -269,7 +269,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::ReadOutput => {
-                    let report = aster_oci_runtime::oci_vm_read_output_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_read_output_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -283,7 +283,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Resize => {
-                    let report = aster_oci_runtime::oci_vm_resize_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_resize_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -297,7 +297,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Resume => {
-                    let report = aster_oci_runtime::oci_vm_resume_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_resume_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -311,7 +311,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::SignalProcess => {
-                    let report = aster_oci_runtime::oci_vm_signal_process_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_signal_process_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -325,7 +325,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::State => {
-                    let report = aster_oci_runtime::oci_vm_state_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_state_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -339,7 +339,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Start => {
-                    let report = aster_oci_runtime::oci_vm_start_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_start_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -353,7 +353,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Stats => {
-                    let report = aster_oci_runtime::oci_vm_stats_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_stats_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -367,7 +367,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Update => {
-                    let report = aster_oci_runtime::oci_vm_update_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_update_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -381,7 +381,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Wait => {
-                    let report = aster_oci_runtime::oci_vm_wait_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_wait_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -395,7 +395,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::WaitProcess => {
-                    let report = aster_oci_runtime::oci_vm_wait_process_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_wait_process_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -409,7 +409,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::WriteStdin => {
-                    let report = aster_oci_runtime::oci_vm_write_stdin_reopen_replacement_at(
+                    let report = krun_oci_runtime::oci_vm_write_stdin_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,

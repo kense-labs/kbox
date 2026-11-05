@@ -1,15 +1,15 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportOperationStage, AgentTransportQualificationRequest,
 };
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::{
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::{
     ContainerTarget, CreateAttachments, CreateRequest, FileOp, FileRequest, FilesystemOp,
     FilesystemRequest, IoMode, IsolationRequest, OciBundle, OperationContext, ProcessIo,
     StartRequest,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 
 use super::super::super::{
     canonical_directory, fixed_rootfs, path_exists, runtime_entries, target, unique_nonce,
@@ -159,8 +159,8 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
         context: OperationContext::new(start_operation_id.clone()),
         target: exact_target.clone(),
     };
-    let path = format!("/tmp/.aster-oci-file-reopen-{nonce}.bin");
-    let expected_payload = format!("aster-oci-file-reopen-{nonce}\0binary\n").into_bytes();
+    let path = format!("/tmp/.krun-oci-file-reopen-{nonce}.bin");
+    let expected_payload = format!("krun-oci-file-reopen-{nonce}\0binary\n").into_bytes();
     let encoded_payload = STANDARD.encode(&expected_payload);
     let current_target = ContainerTarget::current(exact_target.id.clone());
     let file = FileRequest {
@@ -214,7 +214,7 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
     report.file_data = Some(encoded_payload);
     report.file_user = None;
 
-    let state_root = console_directory.join(format!("aster-oci-file-reopen-{nonce}-state"));
+    let state_root = console_directory.join(format!("krun-oci-file-reopen-{nonce}-state"));
     if let Err(reason) = super::super::create_qualification_state_root(&state_root).await {
         return failed(report, reason);
     }
@@ -223,11 +223,11 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
         vm_rootfs,
         system_image_manifest: system_image_manifest.to_path_buf(),
         state_root: state_root.clone(),
-        first_console: console_directory.join(format!("aster-oci-file-reopen-{nonce}-first.log")),
+        first_console: console_directory.join(format!("krun-oci-file-reopen-{nonce}-first.log")),
         replacement_console: console_directory
-            .join(format!("aster-oci-file-reopen-{nonce}-replacement.log")),
+            .join(format!("krun-oci-file-reopen-{nonce}-replacement.log")),
         init_marker,
-        init_marker_contents: format!("aster-oci-exec-init-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
         create,
         start,
         file,

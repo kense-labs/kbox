@@ -1,7 +1,7 @@
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 
-use aster_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_core::{CapabilityStatus, HostPlatform};
 
 use super::{canonical_directory, multi_container};
 use crate::{MacosHvfSoakConfig, MacosHvfSoakReport, OciVmMultiContainerSmokeReport};

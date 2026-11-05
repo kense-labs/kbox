@@ -11,7 +11,7 @@
 ## Reporting a vulnerability
 
 Please report security issues privately to the Kense Labs maintainers via GitHub
-Security Advisories for [kense-labs/gateway](https://github.com/kense-labs/gateway)
+Security Advisories for [kense-labs/gateway](https://github.com/kense-labs/krun)
 when available, or by contacting the maintainers through the organization
 security channel. Do not open a public issue for undisclosed vulnerabilities.
 

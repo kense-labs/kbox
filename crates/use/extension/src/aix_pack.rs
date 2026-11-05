@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{self, Read};
 use std::path::Path;
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use tempfile::NamedTempFile;
 use tokio::fs;
 use zip::write::SimpleFileOptions;

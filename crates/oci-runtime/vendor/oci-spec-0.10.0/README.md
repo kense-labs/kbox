@@ -1,4 +1,16 @@
-# oci-spec-rs
+# oci-spec
+
+## 概述
+
+Open Container Initiative Specifications in Rust
+
+## 构建与验证
+
+在仓库根目录执行：
+
+```bash
+cargo check --locked
+```
 
 [![ci](https://github.com/containers/oci-spec-rs/workflows/ci/badge.svg)](https://github.com/containers/oci-spec-rs/actions)
 [![gh-pages](https://github.com/containers/oci-spec-rs/workflows/gh-pages/badge.svg)](https://github.com/containers/oci-spec-rs/actions)

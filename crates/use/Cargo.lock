@@ -3,13 +3,13 @@
 version = 3
 
 [[package]]
-name = "aster-acl"
+name = "krun-acl"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d2dc4eb3b0dd1b11efa0ad9bf397c97fd1d16e3eb4f9ca43872df069560d0b69"
 
 [[package]]
-name = "aster-runtime"
+name = "krun-runtime"
 version = "0.8.0"
 dependencies = [
  "async-trait",
@@ -24,14 +24,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use"
+name = "krun-use"
 version = "0.3.3"
 dependencies = [
- "aster-runtime",
- "aster-use-core",
- "aster-use-extension",
- "aster-use-reconcile",
- "aster-use-tool-acquire",
+ "krun-runtime",
+ "krun-use-core",
+ "krun-use-extension",
+ "krun-use-reconcile",
+ "krun-use-tool-acquire",
  "async-trait",
  "axum",
  "base64",
@@ -59,7 +59,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-core"
+name = "krun-use-core"
 version = "0.2.4"
 dependencies = [
  "async-trait",
@@ -77,11 +77,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-extension"
+name = "krun-use-extension"
 version = "0.3.3"
 dependencies = [
- "aster-acl",
- "aster-use-core",
+ "krun-acl",
+ "krun-use-core",
  "async-trait",
  "flate2",
  "fs2",
@@ -103,10 +103,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-mcp-release-fixture"
+name = "krun-use-mcp-release-fixture"
 version = "0.2.4"
 dependencies = [
- "aster-use-core",
+ "krun-use-core",
  "anyhow",
  "axum",
  "reqwest 0.12.28",
@@ -120,10 +120,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-reconcile"
+name = "krun-use-reconcile"
 version = "0.2.10"
 dependencies = [
- "aster-use-core",
+ "krun-use-core",
  "fs2",
  "serde",
  "serde_json",
@@ -135,10 +135,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-tool-acquire"
+name = "krun-use-tool-acquire"
 version = "0.2.4"
 dependencies = [
- "aster-use-core",
+ "krun-use-core",
  "base64",
  "flate2",
  "fs2",

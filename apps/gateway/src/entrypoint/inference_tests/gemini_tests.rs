@@ -118,7 +118,7 @@ async fn gemini_counter_has_an_independent_grant_and_never_creates_generation_sp
     let response = client.post(format!("http://{address}/v1beta/models/provider%2Fallowed-model:countTokens"))
         .header("x-goog-api-key", &key).json(&json!({"contents":[{"parts":[{"text":"long enough to exceed generation token quota"}]}]})).send().await.unwrap();
     assert_eq!(response.status(), 200);
-    assert_eq!(response.headers()["x-aster-token-count-source"], "upstream");
+    assert_eq!(response.headers()["x-krun-token-count-source"], "upstream");
     assert_eq!(response.json::<Value>().await.unwrap(), poison);
     let raw = String::from_utf8(captured.await.unwrap()).unwrap();
     assert!(raw.starts_with("POST /v1beta/models/internal-allowed-model:countTokens HTTP/1.1\r\n"));

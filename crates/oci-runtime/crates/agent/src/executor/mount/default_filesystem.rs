@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use aster_oci_sdk::Result;
+use krun_oci_sdk::Result;
 
 use super::{BindSourceResolver, DetachedMountSources, MountPlan};
 

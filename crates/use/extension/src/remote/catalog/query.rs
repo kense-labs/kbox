@@ -1,7 +1,7 @@
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 
-use aster_use_core::{
+use krun_use_core::{
     CatalogAvailability, PackageSurfaceKind, PluginReleaseChannel, UseError, UseResult,
     VerifiedPluginCatalogRecord,
 };
@@ -127,7 +127,7 @@ pub(super) fn inspect_catalog(
         return Err(UseError::new(
             "use.extension.catalog_package_incompatible",
             format!(
-                "The verified catalog has no '{package_id}' release compatible with Aster Use {} on '{}'.",
+                "The verified catalog has no '{package_id}' release compatible with Krun Use {} on '{}'.",
                 host.use_version, host.target
             ),
         ));
@@ -162,7 +162,7 @@ fn compatible_entries(
         let record = &entry.plugin.record;
         let requirement = VersionReq::parse(&record.requires_use).map_err(|error| {
             registry_target_error(format!(
-                "Catalog record '{}' has an invalid Aster Use requirement: {error}",
+                "Catalog record '{}' has an invalid Krun Use requirement: {error}",
                 record.package_id
             ))
         })?;

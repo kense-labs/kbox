@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     oci_spec::runtime::Spec, ContainerId, CreateAttachments, Generation, ProcessIo,
     StorageAccessMode, StorageAttachmentId, StorageCleanup, StorageOwnership,
 };
@@ -15,7 +15,7 @@ fn fixture() -> (OciBundle, AgentVmAttachmentManifest) {
         {"destination":"/cache", "type":"none", "source":"/srv/cache", "options":["bind","rw"]}
     ]);
     let bundle = OciBundle::from_json(
-        std::env::temp_dir().join("aster-directory-manifest-fixture"),
+        std::env::temp_dir().join("krun-directory-manifest-fixture"),
         serde_json::to_string(&configuration).unwrap(),
     )
     .unwrap();
@@ -55,7 +55,7 @@ fn fixture() -> (OciBundle, AgentVmAttachmentManifest) {
             ContainerId::new("directory-fixture").unwrap(),
             Generation(3),
         ),
-        GuestPath::new("/run/aster-oci-runtime/bundle").unwrap(),
+        GuestPath::new("/run/krun-oci-runtime/bundle").unwrap(),
         bundle.config_digest(),
         digest,
         Vec::new(),
@@ -90,18 +90,18 @@ fn directory_transport_binds_public_access_source_and_guest_mapping() {
 #[test]
 fn restricted_directories_cannot_downgrade_or_drop_the_host_enforcement_binding() {
     let (bundle, mut manifest) = fixture();
-    let restrictions = aster_oci_sdk::StoragePathRestrictions::new(vec![
-        aster_oci_sdk::StoragePathRestriction::new(
+    let restrictions = krun_oci_sdk::StoragePathRestrictions::new(vec![
+        krun_oci_sdk::StoragePathRestriction::new(
             StorageAttachmentId::new("directory-1").unwrap(),
             vec![".env".into()],
-            vec![".aster".into()],
-            vec![".aster/loops".into()],
+            vec![".krun".into()],
+            vec![".krun/loops".into()],
         )
         .unwrap(),
     ])
     .unwrap();
     let mut config: Value = serde_json::from_str(bundle.config_json()).unwrap();
-    config["annotations"] = json!({aster_oci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION: restrictions.to_annotation_value().unwrap()});
+    config["annotations"] = json!({krun_oci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION: restrictions.to_annotation_value().unwrap()});
     let restricted_bundle = OciBundle::from_json(bundle.directory(), config.to_string()).unwrap();
     manifest.config_digest = restricted_bundle.config_digest().into();
     assert!(manifest.validate_bundle(&restricted_bundle).is_err());

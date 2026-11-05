@@ -4,7 +4,7 @@ use std::process::ExitCode;
 async fn main() -> ExitCode {
     let args = std::env::args_os().skip(1).collect::<Vec<_>>();
     let json = args.iter().any(|argument| argument == "--json");
-    match aster_use_ocr::cli::run_os(args).await {
+    match krun_use_ocr::cli::run_os(args).await {
         Ok(output) => {
             if output.should_print && json {
                 println!(
@@ -28,7 +28,7 @@ async fn main() -> ExitCode {
                     serde_json::to_string_pretty(&output).unwrap_or_default()
                 );
             } else {
-                eprintln!("aster-use-ocr: {error}");
+                eprintln!("krun-use-ocr: {error}");
                 if let Some(suggestion) = &error.suggestion {
                     eprintln!("suggestion: {suggestion}");
                 }

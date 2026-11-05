@@ -1,13 +1,13 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use aster_use_core::{PackageSurfaceKind, PluginSurfaceRef, UseError, UseResult};
-use aster_use_extension::{
+use async_trait::async_trait;
+use krun_use_core::{PackageSurfaceKind, PluginSurfaceRef, UseError, UseResult};
+use krun_use_extension::{
     inspect_agent_surface_file, inspect_plugin_surface_file, inspect_skill_surface_file,
     inspect_ui_surface_files, PackagePluginSurface, PluginAgentSurface, PluginSkillSurface,
     PluginUiSurface,
 };
-use async_trait::async_trait;
 use sha2::{Digest, Sha256};
 
 use super::{
@@ -26,7 +26,7 @@ pub struct StaticPluginSurfaceLifecycleHost {
     package_root: PathBuf,
 }
 
-/// Default UI composition for standalone Aster Use hosts.
+/// Default UI composition for standalone Krun Use hosts.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct StaticPluginSurfaceLifecycleHostFactory;
 

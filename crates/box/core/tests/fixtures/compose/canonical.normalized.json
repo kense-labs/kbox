@@ -1,7 +1,7 @@
 {
   "services": {
     "api": {
-      "image": "ghcr.io/aster/api:latest",
+      "image": "ghcr.io/krun/api:latest",
       "entrypoint": [
         "/bin/api"
       ],

@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use aster_use_core::OkfFormatVersion;
+use krun_use_core::OkfFormatVersion;
 
 use super::{
     ExtensionManifest, PluginFlowEngine, PluginFlowRuntime, PluginMcpLaunch, SurfaceActivation,
@@ -20,9 +20,9 @@ const OKF_MANIFEST: &str = include_str!("../fixtures/manifests/plugin-v3-okf.acl
 const OKF_MANIFEST_DIGEST: &str =
     include_str!("../fixtures/manifests/plugin-v3-okf.sha256").trim_ascii_end();
 const PACKAGE_MANIFEST: &str =
-    include_str!("../fixtures/packages/plugin-v3-package/package/aster-use-extension.acl");
+    include_str!("../fixtures/packages/plugin-v3-package/package/krun-use-extension.acl");
 const MHS_BRIDGE_MANIFEST: &str =
-    include_str!("../fixtures/packages/plugin-v3-mhs-bridge/package/aster-use-extension.acl");
+    include_str!("../fixtures/packages/plugin-v3-mhs-bridge/package/krun-use-extension.acl");
 
 #[test]
 fn schema_v3_acl_fixture_has_a_stable_digest() {
@@ -115,7 +115,7 @@ fn parses_schema_v3_named_multi_surfaces() {
 }
 
 #[test]
-fn schema_v3_parses_aster_flow_surfaces_and_typed_consumers() {
+fn schema_v3_parses_krun_flow_surfaces_and_typed_consumers() {
     let manifest = ExtensionManifest::parse_acl(PACKAGE_MANIFEST).unwrap();
     assert_eq!(
         manifest.surface_kinds(),
@@ -123,7 +123,7 @@ fn schema_v3_parses_aster_flow_surfaces_and_typed_consumers() {
     );
     let flow = &manifest.flows[0];
     assert_eq!(flow.id, "reason");
-    assert_eq!(flow.engine, PluginFlowEngine::AsterFlow);
+    assert_eq!(flow.engine, PluginFlowEngine::KrunFlow);
     assert_eq!(flow.runtime, PluginFlowRuntime::NativeTs);
     assert_eq!(flow.source, PathBuf::from("flows/reason.ts"));
     assert_eq!(flow.export_name, "run");
@@ -134,14 +134,14 @@ fn schema_v3_parses_aster_flow_surfaces_and_typed_consumers() {
     assert_eq!(manifest.ui[0].bind_flows, ["reason"]);
 
     let graph = manifest.plugin_surfaces().unwrap();
-    let flow_ref = aster_use_core::PluginSurfaceRef {
-        kind: aster_use_core::PackageSurfaceKind::Flow,
+    let flow_ref = krun_use_core::PluginSurfaceRef {
+        kind: krun_use_core::PackageSurfaceKind::Flow,
         id: "reason".to_string(),
     };
     assert!(graph.iter().any(|surface| surface.surface == flow_ref));
     assert!(graph
         .iter()
-        .find(|surface| surface.surface.kind == aster_use_core::PackageSurfaceKind::Skill)
+        .find(|surface| surface.surface.kind == krun_use_core::PackageSurfaceKind::Skill)
         .unwrap()
         .dependencies
         .contains(&flow_ref));
@@ -171,16 +171,16 @@ fn mhs_bridge_reuses_standard_mcp_flow_skill_and_ui_surfaces() {
 
     let graph = manifest.plugin_surfaces().unwrap();
     assert_eq!(graph.len(), 4);
-    let fleet = aster_use_core::PluginSurfaceRef {
-        kind: aster_use_core::PackageSurfaceKind::Mcp,
+    let fleet = krun_use_core::PluginSurfaceRef {
+        kind: krun_use_core::PackageSurfaceKind::Mcp,
         id: "fleet".to_string(),
     };
-    let monitor = aster_use_core::PluginSurfaceRef {
-        kind: aster_use_core::PackageSurfaceKind::Flow,
+    let monitor = krun_use_core::PluginSurfaceRef {
+        kind: krun_use_core::PackageSurfaceKind::Flow,
         id: "monitor".to_string(),
     };
-    let operator = aster_use_core::PluginSurfaceRef {
-        kind: aster_use_core::PackageSurfaceKind::Skill,
+    let operator = krun_use_core::PluginSurfaceRef {
+        kind: krun_use_core::PackageSurfaceKind::Skill,
         id: "operator".to_string(),
     };
     let dependencies = |kind, id: &str| {
@@ -190,24 +190,24 @@ fn mhs_bridge_reuses_standard_mcp_flow_skill_and_ui_surfaces() {
             .unwrap()
             .dependencies
     };
-    assert!(dependencies(aster_use_core::PackageSurfaceKind::Mcp, "fleet").is_empty());
+    assert!(dependencies(krun_use_core::PackageSurfaceKind::Mcp, "fleet").is_empty());
     assert_eq!(
-        dependencies(aster_use_core::PackageSurfaceKind::Flow, "monitor"),
+        dependencies(krun_use_core::PackageSurfaceKind::Flow, "monitor"),
         std::slice::from_ref(&fleet)
     );
     assert_eq!(
-        dependencies(aster_use_core::PackageSurfaceKind::Skill, "operator"),
+        dependencies(krun_use_core::PackageSurfaceKind::Skill, "operator"),
         &[monitor.clone(), fleet.clone()]
     );
     assert_eq!(
-        dependencies(aster_use_core::PackageSurfaceKind::Ui, "devices"),
+        dependencies(krun_use_core::PackageSurfaceKind::Ui, "devices"),
         &[monitor, fleet, operator]
     );
 }
 
 #[test]
 fn schema_v3_rejects_invalid_flow_runtime_source_export_and_dependencies() {
-    let unsupported_engine = PACKAGE_MANIFEST.replace("aster-flow", "other-flow");
+    let unsupported_engine = PACKAGE_MANIFEST.replace("krun-flow", "other-flow");
     assert!(ExtensionManifest::parse_acl(&unsupported_engine)
         .unwrap_err()
         .message
@@ -330,7 +330,7 @@ fn schema_v3_requires_an_explicit_v3_host_compatibility_gate() {
     let error = ExtensionManifest::parse_acl(&current_host).unwrap_err();
     assert!(error
         .message
-        .contains("Schema version 3 must require Aster Use 0.3"));
+        .contains("Schema version 3 must require Krun Use 0.3"));
 }
 
 #[test]
@@ -515,7 +515,7 @@ fn schema_v3_rejects_unsafe_package_dependency_declarations() {
 #[test]
 fn an_agent_package_declares_one_required_agent_surface() {
     let manifest = r#"
-extension "aster/legal-expert" {
+extension "krun/legal-expert" {
   schema_version = 3
   version        = "1.0.0"
   route          = "legal-expert"
@@ -523,7 +523,7 @@ extension "aster/legal-expert" {
   actions        = ["read"]
 
   repository {
-    url      = "https://github.com/aster/legal-expert"
+    url      = "https://github.com/krun/legal-expert"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
 
@@ -654,7 +654,7 @@ extension "aster/legal-expert" {
         .message
         .contains("cannot set card"));
     let external = r#"
-extension "aster/counsel" {
+extension "krun/counsel" {
   schema_version = 3
   version        = "1.0.0"
   route          = "counsel"
@@ -662,7 +662,7 @@ extension "aster/counsel" {
   actions        = ["read"]
 
   repository {
-    url      = "https://github.com/aster/counsel"
+    url      = "https://github.com/krun/counsel"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
 
@@ -708,7 +708,7 @@ extension "aster/counsel" {
 #[test]
 fn a_skill_host_is_the_closed_set_docx_review_and_paperloom() {
     let base = r#"
-extension "aster/review" {
+extension "krun/review" {
   schema_version = 3
   version        = "1.0.0"
   route          = "review"
@@ -716,7 +716,7 @@ extension "aster/review" {
   actions        = ["read"]
 
   repository {
-    url      = "https://github.com/aster/review"
+    url      = "https://github.com/krun/review"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
 
@@ -766,7 +766,7 @@ extension "aster/review" {
 #[test]
 fn a_plugin_surface_is_a_package_type() {
     let manifest = r#"
-extension "aster/notifier" {
+extension "krun/notifier" {
   schema_version = 3
   version        = "1.0.0"
   route          = "notifier"
@@ -774,7 +774,7 @@ extension "aster/notifier" {
   actions        = ["read"]
 
   repository {
-    url      = "https://github.com/aster/notifier"
+    url      = "https://github.com/krun/notifier"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
 
@@ -790,7 +790,7 @@ extension "aster/notifier" {
     let graph = parsed.plugin_surfaces().unwrap();
     assert_eq!(
         graph[0].surface.kind,
-        aster_use_core::PackageSurfaceKind::Plugin
+        krun_use_core::PackageSurfaceKind::Plugin
     );
 }
 
@@ -814,7 +814,7 @@ fn an_agent_or_plugin_package_depends_on_many_surfaces_and_pages() {
 "#;
     let flow = r#"
   flow "draft" {
-    engine        = "aster-flow"
+    engine        = "krun-flow"
     runtime       = "native-ts"
     source        = "flows/draft.ts"
     export        = "draft"
@@ -858,8 +858,8 @@ fn an_agent_or_plugin_package_depends_on_many_surfaces_and_pages() {
             .find(|surface| {
                 matches!(
                     surface.surface.kind,
-                    aster_use_core::PackageSurfaceKind::Agent
-                        | aster_use_core::PackageSurfaceKind::Plugin
+                    krun_use_core::PackageSurfaceKind::Agent
+                        | krun_use_core::PackageSurfaceKind::Plugin
                 )
             })
             .expect("owner");
@@ -891,10 +891,10 @@ fn an_agent_or_plugin_package_depends_on_many_surfaces_and_pages() {
 #[test]
 fn the_vercel_weather_sample_declares_a_city_parameter() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR")).join("fixtures/vercel-weather");
-    let manifest = std::fs::read_to_string(root.join("aster-use-extension.acl")).unwrap();
+    let manifest = std::fs::read_to_string(root.join("krun-use-extension.acl")).unwrap();
     let parsed = ExtensionManifest::parse_acl(&manifest).unwrap();
     assert_eq!(parsed.agents.len(), 1);
-    assert_eq!(parsed.agents[0].id, "aster-vercel-weather");
+    assert_eq!(parsed.agents[0].id, "krun-vercel-weather");
     assert_eq!(parsed.agents[0].runtime, crate::AgentRuntimePlace::Cloud);
     assert!(parsed.mcp_servers.is_empty());
     assert!(parsed.agents[0]

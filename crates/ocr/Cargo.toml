@@ -1,24 +1,24 @@
 [package]
-name = "aster-use-ocr"
+name = "krun-use-ocr"
 version = "0.3.2"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/aster"
-homepage = "https://github.com/aster-ai-lab/plugins"
-authors = ["Aster"]
+repository = "https://github.com/kense-labs/krun"
+homepage = "https://github.com/kense-labs/krun"
+authors = ["Krun"]
 rust-version = "1.82"
-description = "Provider-oriented optical character recognition interfaces for Aster"
+description = "Provider-oriented optical character recognition interfaces for Krun"
 readme = "README.md"
-keywords = ["ocr", "onnx", "pp-ocrv6", "aster"]
+keywords = ["ocr", "onnx", "pp-ocrv6", "krun"]
 categories = ["computer-vision", "multimedia::images"]
 publish = false
 
 [lib]
-name = "aster_use_ocr"
+name = "krun_use_ocr"
 path = "src/lib.rs"
 
 [[bin]]
-name = "aster-use-ocr"
+name = "krun-use-ocr"
 path = "src/main.rs"
 required-features = ["cli"]
 
@@ -31,7 +31,7 @@ required-features = ["ppocr-v6"]
 default = ["ppocr-v6", "mcp", "cli"]
 ppocr-v6 = [
     "dep:clipper2",
-    "dep:aster-use-extension",
+    "dep:krun-use-extension",
     "dep:tempfile",
     "dep:image",
     "dep:imageproc",
@@ -46,7 +46,7 @@ cli = ["ppocr-v6", "mcp", "dep:clap"]
 async-trait = "0.1"
 clap = {version = "4", features = ["derive"], optional = true}
 clipper2 = {version = "=0.5.3", default-features = false, optional = true}
-aster-use-extension = {path = "../use/extension", optional = true}
+krun-use-extension = {path = "../use/extension", optional = true}
 image = {version = "0.25.10", default-features = false, features = ["bmp", "gif", "jpeg", "png", "tiff", "webp"], optional = true}
 imageproc = {version = "=0.25.0", default-features = false, optional = true}
 ort = {version = "=2.0.0-rc.10", default-features = false, features = ["load-dynamic", "ndarray", "std"], optional = true}
@@ -58,7 +58,7 @@ serde_yaml = {version = "0.9", optional = true}
 sha2 = "0.10"
 tempfile = {version = "3", optional = true}
 tokio = {version = "1", features = ["fs", "io-util", "macros", "rt-multi-thread", "sync"]}
-aster-use-core = {path = "../use/core"}
+krun-use-core = {path = "../use/core"}
 
 [dev-dependencies]
 tempfile = "3"

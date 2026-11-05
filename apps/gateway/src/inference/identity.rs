@@ -5,7 +5,7 @@ use http::{HeaderMap, HeaderValue, Response};
 use uuid::Uuid;
 
 pub(crate) const REQUEST_ID_HEADER: &str = "x-request-id";
-pub(crate) const ATTEMPT_ID_HEADER: &str = "x-aster-attempt-id";
+pub(crate) const ATTEMPT_ID_HEADER: &str = "x-krun-attempt-id";
 
 /// Stable identity and correlation context for one managed inference request.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -68,7 +68,7 @@ impl InferenceRequestIdentity {
     pub(crate) fn prepare_request_headers(&self, headers: &mut HeaderMap) {
         insert_uuid_header(headers, REQUEST_ID_HEADER, self.request_id);
         headers.remove(ATTEMPT_ID_HEADER);
-        headers.remove("x-aster-gateway-client");
+        headers.remove("x-krun-gateway-client");
     }
 
     pub(crate) fn attach_response_header<B>(&self, response: &mut Response<B>) {
@@ -115,7 +115,7 @@ impl InferenceAttemptIdentity {
         self.request.prepare_request_headers(headers);
         insert_uuid_header(headers, ATTEMPT_ID_HEADER, self.attempt_id);
         if let Some(client) = self.gateway_client {
-            insert_uuid_header(headers, "x-aster-gateway-client", client);
+            insert_uuid_header(headers, "x-krun-gateway-client", client);
         }
     }
 

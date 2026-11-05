@@ -1,4 +1,8 @@
-# H2
+# h2
+
+## 概述
+
+An HTTP/2 client and server
 
 A Tokio aware, HTTP/2 client & server implementation for Rust.
 

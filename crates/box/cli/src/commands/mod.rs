@@ -74,11 +74,11 @@ use clap::{Parser, Subcommand};
 /// Environment variable to override the image cache size limit.
 ///
 /// Accepts human-readable sizes: `500m`, `10g`, `1t`, etc.
-const IMAGE_CACHE_SIZE_ENV: &str = "ASTER_IMAGE_CACHE_SIZE";
+const IMAGE_CACHE_SIZE_ENV: &str = "KRUN_IMAGE_CACHE_SIZE";
 
-/// Aster Box — Docker-like MicroVM runtime.
+/// Krun Box — Docker-like MicroVM runtime.
 #[derive(Parser)]
-#[command(name = "aster-box", version, about)]
+#[command(name = "krun-box", version, about)]
 pub struct Cli {
     #[command(subcommand)]
     pub command: Command,
@@ -210,19 +210,19 @@ pub enum Command {
     SdkBridge(sdk_bridge::SdkBridgeArgs),
 }
 
-/// Return the path to the image store directory (~/.aster/images).
+/// Return the path to the image store directory (~/.krun/images).
 pub(crate) fn images_dir() -> PathBuf {
-    aster_box_core::dirs_home().join("images")
+    krun_box_core::dirs_home().join("images")
 }
 
 /// Construct the canonical local lifecycle facade. On Linux, an absent
-/// `ASTER_BOX_OCI_MIGRATION` defaults to SandboxViaOci; explicit `off` keeps the
+/// `KRUN_BOX_OCI_MIGRATION` defaults to SandboxViaOci; explicit `off` keeps the
 /// VM-only backend.
 pub(crate) async fn configured_local_execution_manager(
     home: &Path,
-) -> Result<aster_box_runtime::LocalExecutionManager, Box<dyn std::error::Error>> {
+) -> Result<krun_box_runtime::LocalExecutionManager, Box<dyn std::error::Error>> {
     Ok(
-        aster_box_runtime::LocalExecutionManager::with_configured_backend(
+        krun_box_runtime::LocalExecutionManager::with_configured_backend(
             home.join("boxes.json"),
             home,
         )
@@ -232,18 +232,18 @@ pub(crate) async fn configured_local_execution_manager(
 
 /// Open the shared image store.
 ///
-/// The cache size limit can be configured via the `ASTER_IMAGE_CACHE_SIZE`
+/// The cache size limit can be configured via the `KRUN_IMAGE_CACHE_SIZE`
 /// environment variable (e.g., `500m`, `20g`). Defaults to 10 GB.
-pub(crate) fn open_image_store() -> Result<aster_box_runtime::ImageStore, Box<dyn std::error::Error>>
+pub(crate) fn open_image_store() -> Result<krun_box_runtime::ImageStore, Box<dyn std::error::Error>>
 {
     let dir = images_dir();
     let max_size = match std::env::var(IMAGE_CACHE_SIZE_ENV) {
         Ok(val) => crate::output::parse_size_bytes(&val).map_err(|e| {
             format!("Invalid {IMAGE_CACHE_SIZE_ENV}={val:?}: {e} (examples: 500m, 10g, 1t)")
         })?,
-        Err(_) => aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+        Err(_) => krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
     };
-    let store = aster_box_runtime::ImageStore::new(&dir, max_size)?;
+    let store = krun_box_runtime::ImageStore::new(&dir, max_size)?;
     Ok(store)
 }
 
@@ -266,7 +266,7 @@ pub(crate) fn resolve_box_rootfs(box_dir: &std::path::Path) -> Option<PathBuf> {
         return Some(merged);
     }
     let rootfs = box_dir.join("rootfs");
-    let apfs_data = rootfs.join(".aster-rootfs");
+    let apfs_data = rootfs.join(".krun-rootfs");
     if is_populated(&apfs_data) {
         return Some(apfs_data);
     }
@@ -283,7 +283,7 @@ pub(crate) async fn tail_file_stream_positioned(
     to_stderr: bool,
     position: Option<std::sync::Arc<std::sync::atomic::AtomicU64>>,
     stop: Option<std::sync::Arc<std::sync::atomic::AtomicBool>>,
-    runtime_filter: Option<std::sync::Arc<aster_box_core::log::RuntimeConsoleFilter>>,
+    runtime_filter: Option<std::sync::Arc<krun_box_core::log::RuntimeConsoleFilter>>,
 ) {
     use std::sync::atomic::Ordering;
     use tokio::io::{AsyncReadExt, AsyncSeekExt};
@@ -314,7 +314,7 @@ pub(crate) async fn tail_file_stream_positioned(
 
     #[cfg(target_os = "windows")]
     let (mut file, windows_identity) = {
-        let Ok((file, identity)) = aster_box_core::windows_file::open_regular_file(path, None)
+        let Ok((file, identity)) = krun_box_core::windows_file::open_regular_file(path, None)
         else {
             return;
         };
@@ -346,10 +346,9 @@ pub(crate) async fn tail_file_stream_positioned(
                     // updates stay invisible to a reader already at EOF. Open
                     // a fresh handle and resume from the consumed byte offset.
                     tokio::time::sleep(eof_poll).await;
-                    if let Ok((replacement, _)) = aster_box_core::windows_file::open_regular_file(
-                        path,
-                        Some(windows_identity),
-                    ) {
+                    if let Ok((replacement, _)) =
+                        krun_box_core::windows_file::open_regular_file(path, Some(windows_identity))
+                    {
                         let mut replacement = tokio::fs::File::from_std(replacement);
                         let visible_len = replacement
                             .metadata()
@@ -419,7 +418,7 @@ fn write_terminal_bytes(bytes: &[u8], to_stderr: bool) {
 }
 
 struct RuntimeNoiseLineFilter {
-    runtime_filter: Option<std::sync::Arc<aster_box_core::log::RuntimeConsoleFilter>>,
+    runtime_filter: Option<std::sync::Arc<krun_box_core::log::RuntimeConsoleFilter>>,
     state: RuntimeNoiseLineState,
 }
 
@@ -439,7 +438,7 @@ impl RuntimeNoiseLineFilter {
     const MAX_CANDIDATE_LEN: usize = 64 * 1024;
 
     fn new(
-        runtime_filter: Option<std::sync::Arc<aster_box_core::log::RuntimeConsoleFilter>>,
+        runtime_filter: Option<std::sync::Arc<krun_box_core::log::RuntimeConsoleFilter>>,
     ) -> Self {
         Self {
             runtime_filter,
@@ -560,7 +559,7 @@ impl RuntimeNoiseLineFilter {
 #[cfg(test)]
 mod console_tail_tests {
     use super::RuntimeNoiseLineFilter;
-    use aster_box_core::log::RuntimeConsoleFilter;
+    use krun_box_core::log::RuntimeConsoleFilter;
     use std::sync::Arc;
 
     fn runtime_filter() -> Arc<RuntimeConsoleFilter> {
@@ -747,14 +746,9 @@ mod isolation_cli_tests {
 
     #[test]
     fn run_accepts_explicit_sandbox_isolation() {
-        let cli = Cli::try_parse_from([
-            "aster-box",
-            "run",
-            "--isolation",
-            "sandbox",
-            "alpine:latest",
-        ])
-        .unwrap();
+        let cli =
+            Cli::try_parse_from(["krun-box", "run", "--isolation", "sandbox", "alpine:latest"])
+                .unwrap();
 
         let Command::Run(args) = cli.command else {
             panic!("expected run command");
@@ -764,28 +758,23 @@ mod isolation_cli_tests {
 
     #[test]
     fn run_omission_preserves_microvm_default() {
-        let cli = Cli::try_parse_from(["aster-box", "run", "alpine:latest"]).unwrap();
+        let cli = Cli::try_parse_from(["krun-box", "run", "alpine:latest"]).unwrap();
 
         let Command::Run(args) = cli.command else {
             panic!("expected run command");
         };
         assert_eq!(
             common::execution_isolation(&args.common),
-            aster_box_core::ExecutionIsolation::Microvm
+            krun_box_core::ExecutionIsolation::Microvm
         );
     }
 
     #[test]
     fn cli_rejects_explicit_microvm_spelling() {
-        let error = Cli::try_parse_from([
-            "aster-box",
-            "run",
-            "--isolation",
-            "microvm",
-            "alpine:latest",
-        ])
-        .err()
-        .expect("explicit microvm spelling must be rejected");
+        let error =
+            Cli::try_parse_from(["krun-box", "run", "--isolation", "microvm", "alpine:latest"])
+                .err()
+                .expect("explicit microvm spelling must be rejected");
 
         assert!(error.to_string().contains("invalid value 'microvm'"));
     }
@@ -793,7 +782,7 @@ mod isolation_cli_tests {
     #[test]
     fn compose_up_accepts_sandbox_isolation() {
         let cli =
-            Cli::try_parse_from(["aster-box", "compose", "up", "--isolation", "sandbox"]).unwrap();
+            Cli::try_parse_from(["krun-box", "compose", "up", "--isolation", "sandbox"]).unwrap();
 
         let Command::Compose(args) = cli.command else {
             panic!("expected compose command");

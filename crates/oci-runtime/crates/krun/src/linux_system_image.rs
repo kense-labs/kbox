@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 
 use std::os::unix::fs::MetadataExt;
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use crate::runtime_assets::{RuntimeBundle, RuntimeFileRole};
 use crate::LinuxBootAssetsEvidence;
@@ -14,12 +14,12 @@ mod pinned_file;
 use manifest::strict_json;
 use pinned_file::{resolve_sibling, PinnedFile};
 
-const SCHEMA_VERSION: &str = "aster.oci.linux-kvm-system-image.v1";
-const COMPATIBILITY_LEVEL: &str = "aster-oci-runtime-0.2.0-agent-protocol-v10";
-const IMAGE_NAME: &str = "aster-oci-system.ext4";
+const SCHEMA_VERSION: &str = "krun.oci.linux-kvm-system-image.v1";
+const COMPATIBILITY_LEVEL: &str = "krun-oci-runtime-0.2.0-agent-protocol-v10";
+const IMAGE_NAME: &str = "krun-oci-system.ext4";
 const IMAGE_SIZE: u64 = 67_108_864;
 const FILESYSTEM: &str = "ext4";
-const FILESYSTEM_LABEL: &str = "aster-oci-system";
+const FILESYSTEM_LABEL: &str = "krun-oci-system";
 const ALPINE_VERSION: &str = "3.22.5";
 const AGENT_VERSION: &str = env!("CARGO_PKG_VERSION");
 const SOURCE_DATE_EPOCH: u64 = 1_735_689_600;
@@ -155,14 +155,14 @@ impl LinuxSystemImage {
 
     pub(crate) fn conflicts_with_storage(
         &self,
-        identity: aster_oci_agent_protocol::AgentVmStorageSourceIdentity,
+        identity: krun_oci_agent_protocol::AgentVmStorageSourceIdentity,
     ) -> Result<bool> {
         let metadata = self.image.file.metadata().map_err(|error| {
             image_error(format!(
                 "failed to inspect pinned Linux system image for storage separation: {error}"
             ))
         })?;
-        let serial = aster_oci_agent_protocol::AgentVmStorageSourceIdentity::virtio_serial_for(
+        let serial = krun_oci_agent_protocol::AgentVmStorageSourceIdentity::virtio_serial_for(
             metadata.dev(),
             metadata.rdev(),
             metadata.ino(),

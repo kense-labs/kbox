@@ -1,4 +1,4 @@
-impl AsterBoxClient {
+impl KrunBoxClient {
     /// Persist an unstarted execution through the canonical lifecycle facade.
     pub async fn create_box(
         &self,
@@ -84,7 +84,7 @@ impl AsterBoxClient {
         &self,
         execution_id: &ExecutionId,
         generation: ExecutionGeneration,
-    ) -> Result<Vec<aster_box_core::log::LogEntry>> {
+    ) -> Result<Vec<krun_box_core::log::LogEntry>> {
         Ok(self
             .execution_manager
             .read_logs(execution_id, generation)

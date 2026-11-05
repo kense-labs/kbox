@@ -1,12 +1,12 @@
 use std::future::Future;
 use std::time::Duration;
 
-use aster_oci_core::{CapabilityStatus, DriverKind, DriverReadiness};
-use aster_oci_sdk::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_core::{CapabilityStatus, DriverKind, DriverReadiness};
+use krun_oci_sdk::{
     ContainerTarget, Error, ErrorCode, FileOp, FileRequest, OperationContext, OperationId,
     RuntimeClient,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 use tokio::time::{sleep, timeout, Instant};
 
 use super::host;
@@ -15,8 +15,8 @@ use super::report::LinuxProcessIdentity;
 const CALL_TIMEOUT: Duration = Duration::from_secs(20);
 const QUALIFICATION_TIMEOUT: Duration = Duration::from_secs(25);
 const POLL_INTERVAL: Duration = Duration::from_millis(25);
-const MARKER_PATH: &str = "/.aster-oci-create-start-smoke";
-const MARKER_CONTENTS: &[u8] = b"aster-oci-create-start-user-time-v1\n";
+const MARKER_PATH: &str = "/.krun-oci-create-start-smoke";
+const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
 
 pub(crate) async fn verify_qualification_scope(
     client: &RuntimeClient,
@@ -118,7 +118,7 @@ pub(crate) fn operation(
 
 pub(crate) async fn call<T>(
     label: &str,
-    future: impl Future<Output = aster_oci_sdk::Result<T>>,
+    future: impl Future<Output = krun_oci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),

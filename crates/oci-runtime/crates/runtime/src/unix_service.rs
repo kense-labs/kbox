@@ -9,7 +9,7 @@ use std::sync::Arc;
 ))]
 use std::time::Duration;
 
-use aster_oci_sdk::{serve_transport_connection, Error, ErrorCode, OciRuntimeService, Result};
+use krun_oci_sdk::{serve_transport_connection, Error, ErrorCode, OciRuntimeService, Result};
 use tokio::net::{UnixListener, UnixStream};
 use tokio::task::JoinSet;
 
@@ -529,41 +529,41 @@ mod tests {
     #[derive(Default)]
     struct UnsupportedService;
 
-    #[aster_oci_sdk::async_trait]
+    #[krun_oci_sdk::async_trait]
     impl OciRuntimeService for UnsupportedService {
-        async fn features(&self) -> Result<aster_oci_sdk::RuntimeInfo> {
+        async fn features(&self) -> Result<krun_oci_sdk::RuntimeInfo> {
             Err(Error::unsupported("features-test"))
         }
 
         async fn create(
             &self,
-            _request: aster_oci_sdk::CreateRequest,
-        ) -> Result<aster_oci_sdk::ContainerRecord> {
+            _request: krun_oci_sdk::CreateRequest,
+        ) -> Result<krun_oci_sdk::ContainerRecord> {
             Err(Error::unsupported("create-test"))
         }
 
         async fn state(
             &self,
-            _request: aster_oci_sdk::StateRequest,
-        ) -> Result<aster_oci_sdk::ContainerRecord> {
+            _request: krun_oci_sdk::StateRequest,
+        ) -> Result<krun_oci_sdk::ContainerRecord> {
             Err(Error::unsupported("state-test"))
         }
 
         async fn start(
             &self,
-            _request: aster_oci_sdk::StartRequest,
-        ) -> Result<aster_oci_sdk::ContainerRecord> {
+            _request: krun_oci_sdk::StartRequest,
+        ) -> Result<krun_oci_sdk::ContainerRecord> {
             Err(Error::unsupported("start-test"))
         }
 
         async fn kill(
             &self,
-            _request: aster_oci_sdk::KillRequest,
-        ) -> Result<aster_oci_sdk::ContainerRecord> {
+            _request: krun_oci_sdk::KillRequest,
+        ) -> Result<krun_oci_sdk::ContainerRecord> {
             Err(Error::unsupported("kill-test"))
         }
 
-        async fn delete(&self, _request: aster_oci_sdk::DeleteRequest) -> Result<()> {
+        async fn delete(&self, _request: krun_oci_sdk::DeleteRequest) -> Result<()> {
             Err(Error::unsupported("delete-test"))
         }
     }
@@ -734,7 +734,7 @@ mod tests {
             .await
             .expect("private socket");
         let sdk_endpoint =
-            aster_oci_sdk::LocalIpcEndpoint::unix_socket(&socket_path).expect("local SDK endpoint");
+            krun_oci_sdk::LocalIpcEndpoint::unix_socket(&socket_path).expect("local SDK endpoint");
         let service: Arc<dyn OciRuntimeService> = Arc::new(UnsupportedService);
         let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel();
         let server = tokio::spawn(async move {
@@ -747,14 +747,14 @@ mod tests {
 
         let first = tokio::time::timeout(
             std::time::Duration::from_secs(2),
-            aster_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
+            krun_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
         )
         .await
         .expect("first SDK client negotiation timed out")
         .expect("first SDK client");
         let second = tokio::time::timeout(
             std::time::Duration::from_secs(2),
-            aster_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
+            krun_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
         )
         .await
         .expect("second SDK client negotiation timed out while first remained live")
@@ -799,7 +799,7 @@ mod tests {
             .await
             .expect("private socket");
         let sdk_endpoint =
-            aster_oci_sdk::LocalIpcEndpoint::unix_socket(&socket_path).expect("local SDK endpoint");
+            krun_oci_sdk::LocalIpcEndpoint::unix_socket(&socket_path).expect("local SDK endpoint");
         let service: Arc<dyn OciRuntimeService> = Arc::new(UnsupportedService);
         let (shutdown_tx, shutdown_rx) = tokio::sync::oneshot::channel();
         let server = tokio::spawn(async move {
@@ -817,7 +817,7 @@ mod tests {
 
         let client = tokio::time::timeout(
             std::time::Duration::from_secs(2),
-            aster_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
+            krun_oci_sdk::RuntimeClient::connect(&sdk_endpoint),
         )
         .await
         .expect("replacement SDK client negotiation timed out")

@@ -2,11 +2,11 @@ use std::path::Path;
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::{
     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, OperationId,
 };
-use async_trait::async_trait;
 
 use super::record::build_managed_record;
 use super::{

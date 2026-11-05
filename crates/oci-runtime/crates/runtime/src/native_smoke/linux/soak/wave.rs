@@ -4,8 +4,8 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
 
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, Process};
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, Process};
+use krun_oci_sdk::{
     ContainerId, ContainerTarget, CreateAttachments, CreateRequest, DeleteMode, DeleteRequest,
     Error, ErrorCode, ExecRequest, ExitStatus, IoMode, IsolationRequest, KillRequest, ListRequest,
     OciBundle, OperationContext, OperationId, OutputStream, ProcessId, ProcessIo, ProcessTarget,
@@ -522,8 +522,8 @@ async fn exercise_exec(
     slot: usize,
     timeout_duration: Duration,
 ) -> Result<u64, String> {
-    let expected = format!("aster-oci-soak-{iteration}-{slot}\n").into_bytes();
-    let command = format!("printf 'aster-oci-soak-{iteration}-{slot}\\n'");
+    let expected = format!("krun-oci-soak-{iteration}-{slot}\n").into_bytes();
+    let command = format!("printf 'krun-oci-soak-{iteration}-{slot}\\n'");
     let process: Process = serde_json::from_value(serde_json::json!({
         "terminal": false,
         "user": {"uid": 0, "gid": 0, "umask": 18},
@@ -681,7 +681,7 @@ pub(super) fn operation(
 pub(super) async fn soak_call<T>(
     timeout_duration: Duration,
     operation: impl AsRef<str>,
-    future: impl Future<Output = aster_oci_sdk::Result<T>>,
+    future: impl Future<Output = krun_oci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(timeout_duration, future).await {
         Ok(Ok(value)) => Ok(value),

@@ -52,7 +52,7 @@
       "implementation": "partial",
       "verification": "incomplete",
       "publication": "not_qualified",
-      "existingWitness": "Ten frozen mise executions agree with actual Aster CLI bare/prefix/subtraction selection; npm dist-tag install/cache/lock tests pass. Native path/system selection and temporary overrides pass actual CLI comparisons against seven more pinned cases; 108 library/15 pager/18 CLI cases and the paired build pass. Reference execution, user aliases and other request modes remain incomplete",
+      "existingWitness": "Ten frozen mise executions agree with actual Krun CLI bare/prefix/subtraction selection; npm dist-tag install/cache/lock tests pass. Native path/system selection and temporary overrides pass actual CLI comparisons against seven more pinned cases; 108 library/15 pager/18 CLI cases and the paired build pass. Reference execution, user aliases and other request modes remain incomplete",
       "required": true
     },
     {
@@ -152,7 +152,7 @@
       "baselineDocumentation": "https://mise.jdx.dev/shell-setup.html",
       "task": "T005",
       "milestone": "M4",
-      "sourceOwner": "crates/terminal/crates/codegen/aster-pager/src/env_manager_cmd.rs",
+      "sourceOwner": "crates/terminal/crates/codegen/krun-pager/src/env_manager_cmd.rs",
       "implementation": "partial",
       "verification": "incomplete",
       "publication": "not_qualified",
@@ -295,11 +295,11 @@
       "baselineDocumentation": "https://mise.jdx.dev/cli/",
       "task": "T011",
       "milestone": "M8",
-      "sourceOwner": "crates/terminal/crates/codegen/aster-pager/src",
+      "sourceOwner": "crates/terminal/crates/codegen/krun-pager/src",
       "implementation": "partial",
       "verification": "incomplete",
       "publication": "not_qualified",
-      "existingWitness": "Aster-only surfaces exist; parity unverified",
+      "existingWitness": "Krun-only surfaces exist; parity unverified",
       "required": true
     },
     {
@@ -312,7 +312,7 @@
       "implementation": "partial",
       "verification": "incomplete",
       "publication": "not_qualified",
-      "existingWitness": "Existing Aster MCP client is not this server",
+      "existingWitness": "Existing Krun MCP client is not this server",
       "required": true
     },
     {
@@ -397,25 +397,25 @@
     {
       "product": "cli/acp",
       "platform": "macos",
-      "workflow": ".github/workflows/release-aster-cli.yml",
+      "workflow": ".github/workflows/release-krun-cli.yml",
       "acceptance": "native_execution_pending"
     },
     {
       "product": "cli/acp",
       "platform": "linux",
-      "workflow": ".github/workflows/release-aster-cli.yml",
+      "workflow": ".github/workflows/release-krun-cli.yml",
       "acceptance": "native_execution_pending"
     },
     {
       "product": "cli/acp",
       "platform": "windows",
-      "workflow": ".github/workflows/release-aster-cli.yml",
+      "workflow": ".github/workflows/release-krun-cli.yml",
       "acceptance": "native_execution_pending"
     },
     {
       "product": "desktop",
       "platform": "darwin-aarch64",
-      "workflow": ".github/workflows/release-aster-desktop.yml",
+      "workflow": ".github/workflows/release-krun-desktop.yml",
       "acceptance": "signed_final_archive_and_native_gui_pending"
     }
   ],

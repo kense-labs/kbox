@@ -1,14 +1,14 @@
 [package]
-name = "aster-box-core"
+name = "krun-box-core"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
-description = "Core types, config, and error handling for Aster Box MicroVM runtime"
+description = "Core types, config, and error handling for Krun Box MicroVM runtime"
 
 [dependencies]
-aster-acl = { workspace = true }
-aster-transport = { workspace = true }
+krun-acl = { workspace = true }
+krun-transport = { workspace = true }
 async-trait = { workspace = true }
 tokio = { workspace = true }
 serde = { workspace = true }
@@ -30,7 +30,7 @@ windows-sys = { version = "0.48", features = [
 ] }
 
 [lib]
-name = "aster_box_core"
+name = "krun_box_core"
 path = "src/lib.rs"
 
 [dev-dependencies]

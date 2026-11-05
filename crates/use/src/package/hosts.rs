@@ -1,16 +1,16 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use aster_runtime::contract::{RuntimeObservation, RuntimeServiceEndpoint};
-use aster_runtime::RuntimeClientRegistry;
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_runtime::contract::{RuntimeObservation, RuntimeServiceEndpoint};
+use krun_runtime::RuntimeClientRegistry;
+use krun_use_core::{
     PackageSurfaceKind, PlanQualifiedSurfaceRef, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     ExtensionLifecyclePackage, ExtensionManifest, ExtensionRegistry, PluginFlowSurface,
     PluginMcpLaunch, PluginMcpSurface, ToolSurface, ToolTaskSource, ToolWorkload,
 };
-use async_trait::async_trait;
 
 use crate::okf_knowledge::{
     OkfKnowledgeBindingStore, OkfKnowledgeClient, SqliteOkfKnowledgeAdapter,
@@ -68,8 +68,8 @@ impl std::fmt::Debug for ManagedPackageLifecycleFactory {
 }
 
 /// Cross-host environment variable selecting the reviewed native TypeScript
-/// compiler used by standalone Aster Flow package lifecycle operations.
-pub const ASTER_FLOW_NATIVE_TS_COMPILER_ENV: &str = "ASTER_FLOW_NATIVE_TS_COMPILER";
+/// compiler used by standalone Krun Flow package lifecycle operations.
+pub const KRUN_FLOW_NATIVE_TS_COMPILER_ENV: &str = "KRUN_FLOW_NATIVE_TS_COMPILER";
 
 #[derive(Clone)]
 struct RuntimeLifecycleComposition {
@@ -84,7 +84,7 @@ impl StandalonePackageLifecycleFactory {
         Self::default()
     }
 
-    /// Refuse a Flow compiler. The Flow runtime is no longer built into aster-use.
+    /// Refuse a Flow compiler. The Flow runtime is no longer built into krun-use.
     pub fn with_flow_compiler(_compiler_binary: impl Into<PathBuf>) -> UseResult<Self> {
         Err(flow_runtime_removed())
     }
@@ -301,7 +301,7 @@ pub(super) fn validate_available_hosts(
         .with_detail("toolSurfaces", serde_json::json!(runtime_tools))
         .with_detail("mcpSurfaces", serde_json::json!(runtime_mcp))
         .with_suggestion(
-            "Install through an Aster host that injects exact Runtime provider selections and service readiness evidence.",
+            "Install through an Krun host that injects exact Runtime provider selections and service readiness evidence.",
         ));
     }
     Ok(())
@@ -525,7 +525,7 @@ fn coordinator(
     registry: ExtensionRegistry,
     package: Arc<dyn crate::plugin_lifecycle::PluginPackageLifecycleHost>,
     package_root: impl Into<std::path::PathBuf>,
-    paths: &aster_use_extension::ExtensionPaths,
+    paths: &krun_use_extension::ExtensionPaths,
     runtime: RuntimeLifecycleComposition,
     ui_factory: Arc<dyn PluginUiLifecycleHostFactory>,
     flow_compiler_binary: Option<&Path>,
@@ -668,7 +668,7 @@ fn flow_unavailable() -> UseError {
 fn flow_runtime_removed() -> UseError {
     provider_error(
         "use.flow_runtime_removed",
-        "The Flow runtime is no longer built into aster-use.",
+        "The Flow runtime is no longer built into krun-use.",
     )
 }
 
@@ -801,7 +801,7 @@ mod tests {
             Arc::new(UnavailableRuntimeServiceReadinessHost),
         )
         .with_ui_lifecycle_factory(Arc::new(RecordingUiFactory(created.clone())));
-        let registry = ExtensionRegistry::new(aster_use_extension::ExtensionPaths::new(
+        let registry = ExtensionRegistry::new(krun_use_extension::ExtensionPaths::new(
             temp.path().join("data"),
             temp.path().join("state"),
         ));
@@ -814,7 +814,7 @@ mod tests {
     }
 
     #[test]
-    fn flow_surfaces_fail_before_lifecycle_composition_without_aster_flow() {
+    fn flow_surfaces_fail_before_lifecycle_composition_without_krun_flow() {
         let manifest = flow_manifest();
         let factory = StandalonePackageLifecycleFactory::default();
         let error = factory.validate_manifest(&manifest).unwrap_err();
@@ -825,16 +825,16 @@ mod tests {
     fn explicit_flow_compiler_is_refused() {
         let temp = tempfile::tempdir().unwrap();
         let error = StandalonePackageLifecycleFactory::with_flow_compiler(
-            temp.path().join("aster-flow-native-compiler"),
+            temp.path().join("krun-flow-native-compiler"),
         )
         .unwrap_err();
         assert_eq!(error.code, "use.flow_runtime_removed");
     }
 
     #[test]
-    fn relative_aster_flow_compiler_is_rejected_before_composition() {
+    fn relative_krun_flow_compiler_is_rejected_before_composition() {
         let error =
-            StandalonePackageLifecycleFactory::with_flow_compiler("bin/aster-flow-native-compiler")
+            StandalonePackageLifecycleFactory::with_flow_compiler("bin/krun-flow-native-compiler")
                 .unwrap_err();
 
         assert_eq!(error.code, "use.flow_runtime_removed");
@@ -856,7 +856,7 @@ extension "acme/flow" {
   }
 
   flow "review" {
-    engine        = "aster-flow"
+    engine        = "krun-flow"
     runtime       = "native-ts"
     source        = "flows/review.ts"
     export        = "run"
@@ -874,7 +874,7 @@ extension "acme/flow" {
     #[test]
     fn embedding_hosts_can_replace_the_standalone_lifecycle_factory() {
         let temp = tempfile::tempdir().unwrap();
-        let registry = ExtensionRegistry::new(aster_use_extension::ExtensionPaths::new(
+        let registry = ExtensionRegistry::new(krun_use_extension::ExtensionPaths::new(
             temp.path().join("data"),
             temp.path().join("state"),
         ));

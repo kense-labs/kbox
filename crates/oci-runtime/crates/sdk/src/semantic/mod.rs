@@ -45,7 +45,7 @@ impl fmt::Display for OciSemanticPhase {
 pub enum OciSemanticViolationKind {
     /// A field value or cross-field combination violates OCI semantics.
     Invalid,
-    /// The configuration selects a native workload platform Aster does not run.
+    /// The configuration selects a native workload platform Krun does not run.
     UnsupportedPlatform,
 }
 
@@ -67,7 +67,7 @@ pub struct OciSemanticValidationReport {
     pub truncated: bool,
 }
 
-/// Semantic validator for the Linux workload contract used by Aster.
+/// Semantic validator for the Linux workload contract used by Krun.
 ///
 /// Windows, macOS, and Linux utility-VM hosts still execute a Linux OCI
 /// workload. Native Windows, Solaris, FreeBSD, and z/OS workload sections are

@@ -1,8 +1,8 @@
-use aster_runtime::contract::{
+use krun_runtime::contract::{
     RuntimeActionRequest, RuntimeApplyRequest, RuntimeInspection, RuntimeLogQuery,
     RuntimeLogStream, RuntimeRemoval, RuntimeUnitState,
 };
-use aster_use_core::{PlannedProviderEvidence, UseError, UseResult};
+use krun_use_core::{PlannedProviderEvidence, UseError, UseResult};
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 
@@ -18,7 +18,7 @@ const MAX_LOG_QUERY_ROUNDS: usize = 1_024;
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RuntimeTaskExecution {
-    pub observation: aster_runtime::contract::RuntimeObservation,
+    pub observation: krun_runtime::contract::RuntimeObservation,
     pub exit_code: i32,
     pub stdout: String,
     pub stderr: String,

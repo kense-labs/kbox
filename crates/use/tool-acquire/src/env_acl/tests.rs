@@ -197,7 +197,7 @@ fn invalid_variable_name_does_not_replace_an_existing_declaration() {
 #[test]
 fn ancestor_layers_apply_before_the_nearest_project() {
     let temporary = tempdir().unwrap();
-    let home = temporary.path().join("aster-home");
+    let home = temporary.path().join("krun-home");
     let project = temporary.path().join("项目 with spaces");
     let nested = project.join("nested");
     fs::create_dir_all(&nested).unwrap();
@@ -249,7 +249,7 @@ fn unknown_top_level_blocks_are_refused_alongside_env() {
 fn oversized_acl_is_refused_in_memory_and_on_disk() {
     let temporary = tempdir().unwrap();
     let project = temporary.path().join("project");
-    let home = temporary.path().join("aster-home");
+    let home = temporary.path().join("krun-home");
     let path = project_env_path(&project);
     fs::create_dir_all(path.parent().unwrap()).unwrap();
     let oversized = format!("// {}\nenv {{}}\n", "x".repeat(1024 * 1024));
@@ -271,7 +271,7 @@ fn a_directory_at_the_config_path_is_an_io_error() {
     let project = temporary.path().join("project");
     fs::create_dir_all(project_env_path(&project)).unwrap();
 
-    let error = load_env_config(&project, temporary.path().join("aster-home")).unwrap_err();
+    let error = load_env_config(&project, temporary.path().join("krun-home")).unwrap_err();
     assert!(matches!(error, ToolAcquireError::Io { .. }));
 }
 
@@ -284,7 +284,7 @@ env {
 tool "uv" {
   version = "latest"
 }
-tool "aster-sandbox" {
+tool "krun-sandbox" {
   version = "0.1.10"
 }
   }
@@ -299,7 +299,7 @@ var "NODE_ENV" {
     .unwrap();
     assert_eq!(config.tools.get("uv").map(String::as_str), Some("latest"));
     assert_eq!(
-        config.tools.get("aster-sandbox").map(String::as_str),
+        config.tools.get("krun-sandbox").map(String::as_str),
         Some("0.1.10")
     );
     assert_eq!(
@@ -342,13 +342,13 @@ tool "not-a-real-tool" {
 #[test]
 fn round_trip_write_and_load_merges_layers() {
     let temporary = tempdir().unwrap();
-    let aster_home = temporary.path().join("aster-home");
+    let krun_home = temporary.path().join("krun-home");
     let project = temporary.path().join("project");
-    fs::create_dir_all(&aster_home).unwrap();
-    fs::create_dir_all(project.join(".aster")).unwrap();
+    fs::create_dir_all(&krun_home).unwrap();
+    fs::create_dir_all(project.join(".krun")).unwrap();
 
     write_env_acl(
-        user_env_path(&aster_home),
+        user_env_path(&krun_home),
         &EnvConfig {
             tools: BTreeMap::from([("uv".into(), "0.1.0".into())]),
             vars: BTreeMap::from([("A".into(), "user".into()), ("B".into(), "keep".into())]),
@@ -364,7 +364,7 @@ fn round_trip_write_and_load_merges_layers() {
     )
     .unwrap();
 
-    let merged = load_env_config(&project, &aster_home).unwrap();
+    let merged = load_env_config(&project, &krun_home).unwrap();
     assert_eq!(merged.tools.get("uv").map(String::as_str), Some("0.1.0"));
     assert_eq!(merged.tools.get("gh").map(String::as_str), Some("latest"));
     assert_eq!(merged.vars.get("A").map(String::as_str), Some("project"));
@@ -376,7 +376,7 @@ fn resolve_maps_catalog_and_latest() {
     let config = EnvConfig {
         tools: BTreeMap::from([
             ("uv".into(), "latest".into()),
-            ("aster-sandbox".into(), "0.1.10".into()),
+            ("krun-sandbox".into(), "0.1.10".into()),
         ]),
         vars: BTreeMap::new(),
     };
@@ -387,7 +387,7 @@ fn resolve_maps_catalog_and_latest() {
     assert_eq!(uv.spec, "github:astral-sh/uv");
     let sandbox = resolved
         .iter()
-        .find(|entry| entry.name == "aster-sandbox")
+        .find(|entry| entry.name == "krun-sandbox")
         .unwrap();
     assert_eq!(sandbox.version.as_deref(), Some("0.1.10"));
 }

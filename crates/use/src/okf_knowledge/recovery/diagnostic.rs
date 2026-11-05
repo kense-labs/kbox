@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use aster_use_core::{PlanScope, UseError, UseResult};
+use krun_use_core::{PlanScope, UseError, UseResult};
 use serde::{Deserialize, Serialize};
 
 use super::journal::{
@@ -10,7 +10,7 @@ use super::journal::{
 use super::{valid_sha256, OkfKnowledgeRecoveryManager};
 
 pub const OKF_KNOWLEDGE_RESTORE_DIAGNOSTIC_SCHEMA: &str =
-    "aster.use.okf-knowledge-restore-diagnostic.v2";
+    "krun.use.okf-knowledge-restore-diagnostic.v2";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]

@@ -1,11 +1,11 @@
 //! End-to-end graceful-drain and forced-cancellation evidence.
 
-use aster_gateway::config::{
+use futures_util::StreamExt;
+use krun_gateway::config::{
     EntrypointConfig, GatewayConfig, LoadBalancerConfig, Protocol, RouterConfig, ServerConfig,
     ServiceConfig, Strategy,
 };
-use aster_gateway::{Gateway, GatewayState};
-use futures_util::StreamExt;
+use krun_gateway::{Gateway, GatewayState};
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::sync::Arc;

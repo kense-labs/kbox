@@ -2,7 +2,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerTarget, Error, ErrorCode, EventBatch, EventsRequest, OperationId, ProcessId, Result,
     RuntimeEvent, RuntimeEventKind, ValidateRequest,
 };

@@ -7,7 +7,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 
 use super::layout::GuestLayout;
 

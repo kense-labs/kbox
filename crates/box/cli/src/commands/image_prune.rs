@@ -1,4 +1,4 @@
-//! `aster-box image-prune` command — remove dangling or unused images.
+//! `krun-box image-prune` command — remove dangling or unused images.
 
 use clap::Args;
 

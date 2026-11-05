@@ -11,23 +11,23 @@
 
 [package]
 edition = "2021"
-name = "aster-updater"
+name = "krun-updater"
 version = "0.3.0"
 publish = false
-authors = ["Aster"]
+authors = ["Krun"]
 build = false
 autolib = false
 autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Self-update library for Aster CLI binaries via GitHub Releases"
+description = "Self-update library for Krun CLI binaries via GitHub Releases"
 readme = false
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/aster"
+repository = "https://github.com/kense-labs/krun"
 
 [lib]
-name = "aster_updater"
+name = "krun_updater"
 path = "src/lib.rs"
 
 [dependencies.anyhow]

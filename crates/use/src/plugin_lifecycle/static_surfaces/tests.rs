@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use aster_use_core::PackageSurfaceKind;
-use aster_use_extension::ExtensionManifest;
+use krun_use_core::PackageSurfaceKind;
+use krun_use_extension::ExtensionManifest;
 use sha2::{Digest, Sha256};
 
 use crate::plugin_lifecycle::{
@@ -11,7 +11,7 @@ use crate::plugin_lifecycle::{
 use super::*;
 
 const MANIFEST: &str =
-    include_str!("../../../extension//fixtures/packages/plugin-v3/package/aster-use-extension.acl");
+    include_str!("../../../extension//fixtures/packages/plugin-v3/package/krun-use-extension.acl");
 const PACKAGE_DIGEST: &str =
     include_str!("../../../extension//fixtures/packages/plugin-v3/package.sha256");
 
@@ -66,8 +66,8 @@ fn intent(manifest: &ExtensionManifest) -> PluginLifecycleIntent {
         PluginLifecycleIntentSpec {
             operation_id: "static-install".to_string(),
             plan_digest: format!("sha256:{}", "1".repeat(64)),
-            scope: aster_use_core::PlanScope {
-                kind: aster_use_core::PlanScopeKind::Workspace,
+            scope: krun_use_core::PlanScope {
+                kind: krun_use_core::PlanScopeKind::Workspace,
                 id: "research".to_string(),
             },
             package_id: manifest.package_id.clone(),

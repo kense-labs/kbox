@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportOperationStage, AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
 };
-use aster_oci_core::{CapabilityStatus, HostPlatform, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{CapabilityStatus, HostPlatform, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerTarget, CreateAttachments, CreateRequest, DeleteMode, DeleteRequest, IoMode,
     IsolationRequest, KillRequest, ListRequest, OciBundle, OciRuntimeService, OperationContext,
     OperationId, ProcessIo, Signal, StartRequest,
@@ -168,14 +168,13 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
     report.setup_create_operation_id = Some(create_operation_id);
     report.container_id = Some(exact_target.id.clone());
 
-    let state_root = console_directory.join(format!("aster-oci-delete-reopen-{nonce}-state"));
+    let state_root = console_directory.join(format!("krun-oci-delete-reopen-{nonce}-state"));
     if let Err(reason) = create_qualification_state_root(&state_root).await {
         return failed(report, reason);
     }
-    let first_console =
-        console_directory.join(format!("aster-oci-delete-reopen-{nonce}-first.log"));
+    let first_console = console_directory.join(format!("krun-oci-delete-reopen-{nonce}-first.log"));
     let replacement_console =
-        console_directory.join(format!("aster-oci-delete-reopen-{nonce}-replacement.log"));
+        console_directory.join(format!("krun-oci-delete-reopen-{nonce}-replacement.log"));
 
     let exercise = exercise(
         shim,

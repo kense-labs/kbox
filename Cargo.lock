@@ -351,715 +351,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-acl"
-version = "0.3.0"
-dependencies = [
- "ryu-js",
- "serde",
- "serde_json",
- "sha2",
-]
-
-[[package]]
-name = "aster-apofasi"
-version = "0.1.1"
-dependencies = [
- "candle-core",
- "candle-nn",
- "cc",
- "indexmap 2.13.1",
- "serde",
- "serde_json",
- "thiserror 2.0.20",
- "tokenizers",
-]
-
-[[package]]
-name = "aster-box-cli"
-version = "3.2.7"
-dependencies = [
- "aster-box-core",
- "aster-box-runtime",
- "aster-box-sdk",
- "aster-common",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "clap",
- "comfy-table",
- "dirs 5.0.1",
- "flate2",
- "futures",
- "hex",
- "libc 0.2.189",
- "oci-spec",
- "rand 0.9.5",
- "serde",
- "serde_json",
- "sha2",
- "sysinfo",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "uuid",
- "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "aster-box-core"
-version = "3.2.7"
-dependencies = [
- "aster-acl",
- "aster-common",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "dirs 5.0.1",
- "flate2",
- "serde",
- "serde_json",
- "serde_yaml",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "tracing",
- "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "aster-box-guest-init"
-version = "3.2.7"
-dependencies = [
- "aster-box-core",
- "aster-common",
- "aster-oci-sdk",
- "base64 0.22.1",
- "clap",
- "libc 0.2.189",
- "nix 0.29.0",
- "rcgen",
- "ring",
- "rustls",
- "serde",
- "serde_json",
- "serial_test 3.3.1",
- "sha2",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tracing",
- "tracing-subscriber",
- "zeroize",
-]
-
-[[package]]
-name = "aster-box-mkext4"
-version = "3.2.7"
-dependencies = [
- "crc32c",
- "proptest",
-]
-
-[[package]]
-name = "aster-box-netproxy"
-version = "3.2.7"
-dependencies = [
- "aster-box-core",
- "libc 0.2.189",
- "serde_json",
- "smoltcp",
- "tempfile",
- "tracing",
-]
-
-[[package]]
-name = "aster-box-runtime"
-version = "3.2.7"
-dependencies = [
- "aster-acl",
- "aster-box-core",
- "aster-box-mkext4",
- "aster-box-netproxy",
- "aster-common",
- "aster-oci-core",
- "aster-oci-sdk",
- "aster-runtime",
- "aster-use",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "bytes",
- "bzip2 0.5.2",
- "chrono",
- "dashmap 6.2.1",
- "der",
- "dirs 5.0.1",
- "ecdsa",
- "filetime",
- "flate2",
- "futures",
- "hex",
- "libc 0.2.189",
- "oci-distribution",
- "oci-spec",
- "p256",
- "p384",
- "parking_lot",
- "prometheus",
- "rand 0.8.8",
- "rand 0.9.5",
- "rcgen",
- "reqwest 0.12.28",
- "ring",
- "rustls",
- "rustls-pki-types",
- "serde",
- "serde_json",
- "sha2",
- "spki",
- "sysinfo",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "tokio-rustls",
- "tokio-stream",
- "tracing",
- "url",
- "uuid",
- "windows-sys 0.48.0",
- "x509-cert",
- "xattr",
- "xz2",
- "zeroize",
- "zstd",
-]
-
-[[package]]
-name = "aster-box-sdk"
-version = "3.2.7"
-dependencies = [
- "aster-box-core",
- "aster-box-runtime",
- "async-trait",
- "base64 0.22.1",
- "chrono",
- "futures",
- "libc 0.2.189",
- "serde",
- "serde_json",
- "sha2",
- "sysinfo",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "uuid",
-]
-
-[[package]]
-name = "aster-box-shim"
-version = "3.2.7"
-dependencies = [
- "aster-box-core",
- "aster-box-netproxy",
- "aster-libkrun-sys",
- "aster-oci-sdk",
- "clap",
- "libc 0.2.189",
- "serde",
- "serde_json",
- "tempfile",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "aster-common"
-version = "0.1.1"
-dependencies = [
- "async-trait",
- "bytes",
- "chrono",
- "regex",
- "serde",
- "serde_json",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aster-config"
-version = "0.1.0"
-dependencies = [
- "aster-dirs",
- "aster-env",
- "aster-tty-utils",
- "aster-version",
- "base64 0.22.1",
- "blake3",
- "core-foundation 0.10.0",
- "dunce",
- "prod-mc-cli-chat-proxy-types",
- "ring",
- "semver",
- "serde",
- "serde_json",
- "shellexpand",
- "strum 0.27.2",
- "tempfile",
- "thiserror 2.0.20",
- "toml",
- "tracing",
- "urlencoding",
- "which",
-]
-
-[[package]]
-name = "aster-dirs"
-version = "0.1.0"
-dependencies = [
- "dunce",
- "pretty_assertions",
- "tempfile",
- "tracing",
-]
-
-[[package]]
-name = "aster-env"
-version = "0.1.0"
-dependencies = [
- "tracing",
- "url",
-]
-
-[[package]]
-name = "aster-gateway"
-version = "1.1.1"
-dependencies = [
- "ab_glyph",
- "arc-swap",
- "argon2",
- "aster-acl",
- "aster-apofasi",
- "aster-sentry",
- "aster-updater",
- "aster-use-bge",
- "aster-use-ocr",
- "async-trait",
- "base64 0.22.1",
- "brotli",
- "bytes",
- "chrono",
- "clap",
- "criterion",
- "flate2",
- "fs2",
- "futures-util",
- "http",
- "http-body-util",
- "hyper",
- "hyper-rustls",
- "hyper-util",
- "image",
- "imageproc",
- "indexmap 2.13.1",
- "ipnet",
- "jsonwebtoken",
- "k8s-openapi",
- "kube",
- "notify",
- "object_store",
- "pin-project-lite",
- "redis",
- "reqwest 0.12.28",
- "ring",
- "rustls",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 1.0.69",
- "tokio",
- "tokio-rustls",
- "tokio-test",
- "tokio-tungstenite",
- "tracing",
- "tracing-subscriber",
- "url",
- "uuid",
-]
-
-[[package]]
-name = "aster-libkrun-sys"
-version = "3.2.7"
-dependencies = [
- "libc 0.2.189",
- "num_cpus",
- "pkg-config",
- "sha2",
- "tempfile",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "aster-oci-agent"
-version = "0.3.6"
-dependencies = [
- "aster-oci-agent-protocol",
- "aster-oci-sdk",
- "base64 0.22.1",
- "libc 0.2.189",
- "nix 0.29.0",
- "seccompiler",
- "serde",
- "serde_json",
- "sha2",
- "syscalls",
- "tempfile",
- "tokio",
- "zeroize",
-]
-
-[[package]]
-name = "aster-oci-agent-protocol"
-version = "0.3.6"
-dependencies = [
- "aster-oci-sdk",
- "async-trait",
- "base64 0.22.1",
- "getrandom 0.3.4",
- "serde",
- "serde_json",
- "sha2",
- "tokio",
- "zeroize",
-]
-
-[[package]]
-name = "aster-oci-cli"
-version = "0.3.6"
-dependencies = [
- "aster-oci-core",
- "aster-oci-runtime",
- "aster-oci-sdk",
- "async-trait",
- "clap",
- "fs2",
- "libc 0.2.189",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
-]
-
-[[package]]
-name = "aster-oci-core"
-version = "0.3.2"
-dependencies = [
- "serde",
- "sha2",
- "thiserror 2.0.20",
-]
-
-[[package]]
-name = "aster-oci-krun"
-version = "0.3.6"
-dependencies = [
- "aster-libkrun-sys",
- "aster-oci-agent-protocol",
- "aster-oci-core",
- "aster-oci-sdk",
- "clap",
- "libc 0.2.189",
- "libloading 0.8.9",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "windows-sys 0.59.0",
- "xz2",
- "zeroize",
-]
-
-[[package]]
-name = "aster-oci-runtime"
-version = "0.3.6"
-dependencies = [
- "aster-oci-agent",
- "aster-oci-agent-protocol",
- "aster-oci-core",
- "aster-oci-sdk",
- "base64 0.22.1",
- "cap-fs-ext",
- "cap-std",
- "fs2",
- "getrandom 0.3.4",
- "libc 0.2.189",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "aster-oci-sdk"
-version = "0.3.2"
-dependencies = [
- "aster-oci-core",
- "async-trait",
- "base64 0.22.1",
- "cap-fs-ext",
- "cap-std",
- "jsonschema",
- "oci-spec",
- "semver",
- "serde",
- "serde_ignored",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "aster-runtime"
-version = "0.8.0"
-dependencies = [
- "async-trait",
- "fs2",
- "libc 0.2.189",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
-]
-
-[[package]]
-name = "aster-sentry"
-version = "0.7.0"
-dependencies = [
- "anyhow",
- "hcl-rs",
- "libc 0.2.189",
- "regex",
- "serde",
- "serde_json",
- "ureq 2.10.1",
-]
-
-[[package]]
-name = "aster-tty-utils"
-version = "0.1.0"
-dependencies = [
- "libc 0.2.189",
- "nix 0.30.1",
- "tokio",
- "windows 0.61.3",
-]
-
-[[package]]
-name = "aster-updater"
-version = "0.3.0"
-dependencies = [
- "anyhow",
- "flate2",
- "reqwest 0.12.28",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "tokio",
- "zip 2.6.1",
-]
-
-[[package]]
-name = "aster-use"
-version = "0.3.4"
-dependencies = [
- "aster-runtime",
- "aster-use-core",
- "aster-use-extension",
- "aster-use-reconcile",
- "aster-use-tool-acquire",
- "async-trait",
- "axum",
- "base64 0.22.1",
- "flate2",
- "fs2",
- "getrandom 0.3.4",
- "olpc-cjson",
- "pulldown-cmark",
- "reqwest 0.12.28",
- "ring",
- "rmcp",
- "rusqlite",
- "schemars",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "tokio",
- "tokio-util",
- "url",
- "windows-sys 0.52.0",
- "zip 2.6.1",
-]
-
-[[package]]
-name = "aster-use-bge"
-version = "0.1.0"
-dependencies = [
- "aster-use-core",
- "clap",
- "fs2",
- "ort",
- "reqwest 0.12.28",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "tokenizers",
- "tokio",
-]
-
-[[package]]
-name = "aster-use-core"
-version = "0.2.4"
-dependencies = [
- "async-trait",
- "olpc-cjson",
- "percent-encoding",
- "pulldown-cmark",
- "semver",
- "serde",
- "serde_json",
- "serde_yaml_ng",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "url",
-]
-
-[[package]]
-name = "aster-use-extension"
-version = "0.3.4"
-dependencies = [
- "aster-acl",
- "aster-use-core",
- "async-trait",
- "flate2",
- "fs2",
- "futures-util",
- "libc 0.2.189",
- "olpc-cjson",
- "reqwest 0.12.28",
- "ring",
- "semver",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "tokio",
- "tough",
- "url",
- "zip 2.6.1",
-]
-
-[[package]]
-name = "aster-use-ocr"
-version = "0.3.2"
-dependencies = [
- "aster-use-core",
- "aster-use-extension",
- "async-trait",
- "clap",
- "clipper2",
- "image",
- "imageproc",
- "ort",
- "rmcp",
- "schemars",
- "serde",
- "serde_json",
- "serde_yaml",
- "sha2",
- "tempfile",
- "tokio",
-]
-
-[[package]]
-name = "aster-use-reconcile"
-version = "0.2.10"
-dependencies = [
- "aster-use-core",
- "fs2",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "zip 2.6.1",
-]
-
-[[package]]
-name = "aster-use-tool-acquire"
-version = "0.2.4"
-dependencies = [
- "aster-acl",
- "aster-config",
- "aster-use-core",
- "base64 0.22.1",
- "flate2",
- "fs2",
- "libc 0.2.189",
- "pgp",
- "reqwest 0.12.28",
- "serde",
- "serde_json",
- "sha2",
- "sysinfo",
- "tar",
- "tempfile",
- "thiserror 2.0.20",
- "tokio",
- "versions",
- "which",
- "windows-sys 0.59.0",
- "zip 2.6.1",
-]
-
-[[package]]
-name = "aster-version"
-version = "9.1.4"
-dependencies = [
- "semver",
-]
-
-[[package]]
 name = "async-broadcast"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4980,6 +4271,715 @@ checksum = "285efcf12ef41bec907b3000d5ffaeb54191d4d9d83c0d6157e6cbc2db255e64"
 dependencies = [
  "bitflags 2.13.2",
  "libc 0.2.189",
+]
+
+[[package]]
+name = "krun-acl"
+version = "0.3.0"
+dependencies = [
+ "ryu-js",
+ "serde",
+ "serde_json",
+ "sha2",
+]
+
+[[package]]
+name = "krun-apofasi"
+version = "0.1.1"
+dependencies = [
+ "candle-core",
+ "candle-nn",
+ "cc",
+ "indexmap 2.13.1",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.20",
+ "tokenizers",
+]
+
+[[package]]
+name = "krun-box-cli"
+version = "3.2.7"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "clap",
+ "comfy-table",
+ "dirs 5.0.1",
+ "flate2",
+ "futures",
+ "hex",
+ "krun-box-core",
+ "krun-box-runtime",
+ "krun-box-sdk",
+ "krun-common",
+ "libc 0.2.189",
+ "oci-spec",
+ "rand 0.9.5",
+ "serde",
+ "serde_json",
+ "sha2",
+ "sysinfo",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "uuid",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "krun-box-core"
+version = "3.2.7"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "dirs 5.0.1",
+ "flate2",
+ "krun-acl",
+ "krun-common",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "tracing",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "krun-box-guest-init"
+version = "3.2.7"
+dependencies = [
+ "base64 0.22.1",
+ "clap",
+ "krun-box-core",
+ "krun-common",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "nix 0.29.0",
+ "rcgen",
+ "ring",
+ "rustls",
+ "serde",
+ "serde_json",
+ "serial_test 3.3.1",
+ "sha2",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tracing",
+ "tracing-subscriber",
+ "zeroize",
+]
+
+[[package]]
+name = "krun-box-mkext4"
+version = "3.2.7"
+dependencies = [
+ "crc32c",
+ "proptest",
+]
+
+[[package]]
+name = "krun-box-netproxy"
+version = "3.2.7"
+dependencies = [
+ "krun-box-core",
+ "libc 0.2.189",
+ "serde_json",
+ "smoltcp",
+ "tempfile",
+ "tracing",
+]
+
+[[package]]
+name = "krun-box-runtime"
+version = "3.2.7"
+dependencies = [
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "bytes",
+ "bzip2 0.5.2",
+ "chrono",
+ "dashmap 6.2.1",
+ "der",
+ "dirs 5.0.1",
+ "ecdsa",
+ "filetime",
+ "flate2",
+ "futures",
+ "hex",
+ "krun-acl",
+ "krun-box-core",
+ "krun-box-mkext4",
+ "krun-box-netproxy",
+ "krun-common",
+ "krun-oci-core",
+ "krun-oci-sdk",
+ "krun-runtime",
+ "krun-use",
+ "libc 0.2.189",
+ "oci-distribution",
+ "oci-spec",
+ "p256",
+ "p384",
+ "parking_lot",
+ "prometheus",
+ "rand 0.8.8",
+ "rand 0.9.5",
+ "rcgen",
+ "reqwest 0.12.28",
+ "ring",
+ "rustls",
+ "rustls-pki-types",
+ "serde",
+ "serde_json",
+ "sha2",
+ "spki",
+ "sysinfo",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "tokio-rustls",
+ "tokio-stream",
+ "tracing",
+ "url",
+ "uuid",
+ "windows-sys 0.48.0",
+ "x509-cert",
+ "xattr",
+ "xz2",
+ "zeroize",
+ "zstd",
+]
+
+[[package]]
+name = "krun-box-sdk"
+version = "3.2.7"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "chrono",
+ "futures",
+ "krun-box-core",
+ "krun-box-runtime",
+ "libc 0.2.189",
+ "serde",
+ "serde_json",
+ "sha2",
+ "sysinfo",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "uuid",
+]
+
+[[package]]
+name = "krun-box-shim"
+version = "3.2.7"
+dependencies = [
+ "clap",
+ "krun-box-core",
+ "krun-box-netproxy",
+ "krun-libkrun-sys",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "krun-common"
+version = "0.1.1"
+dependencies = [
+ "async-trait",
+ "bytes",
+ "chrono",
+ "regex",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "krun-config"
+version = "0.1.0"
+dependencies = [
+ "base64 0.22.1",
+ "blake3",
+ "core-foundation 0.10.0",
+ "dunce",
+ "krun-dirs",
+ "krun-env",
+ "krun-tty-utils",
+ "krun-version",
+ "prod-mc-cli-chat-proxy-types",
+ "ring",
+ "semver",
+ "serde",
+ "serde_json",
+ "shellexpand",
+ "strum 0.27.2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "toml",
+ "tracing",
+ "urlencoding",
+ "which",
+]
+
+[[package]]
+name = "krun-dirs"
+version = "0.1.0"
+dependencies = [
+ "dunce",
+ "pretty_assertions",
+ "tempfile",
+ "tracing",
+]
+
+[[package]]
+name = "krun-env"
+version = "0.1.0"
+dependencies = [
+ "tracing",
+ "url",
+]
+
+[[package]]
+name = "krun-gateway"
+version = "1.1.1"
+dependencies = [
+ "ab_glyph",
+ "arc-swap",
+ "argon2",
+ "async-trait",
+ "base64 0.22.1",
+ "brotli",
+ "bytes",
+ "chrono",
+ "clap",
+ "criterion",
+ "flate2",
+ "fs2",
+ "futures-util",
+ "http",
+ "http-body-util",
+ "hyper",
+ "hyper-rustls",
+ "hyper-util",
+ "image",
+ "imageproc",
+ "indexmap 2.13.1",
+ "ipnet",
+ "jsonwebtoken",
+ "k8s-openapi",
+ "krun-acl",
+ "krun-apofasi",
+ "krun-sentry",
+ "krun-updater",
+ "krun-use-bge",
+ "krun-use-ocr",
+ "kube",
+ "notify",
+ "object_store",
+ "pin-project-lite",
+ "redis",
+ "reqwest 0.12.28",
+ "ring",
+ "rustls",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 1.0.69",
+ "tokio",
+ "tokio-rustls",
+ "tokio-test",
+ "tokio-tungstenite",
+ "tracing",
+ "tracing-subscriber",
+ "url",
+ "uuid",
+]
+
+[[package]]
+name = "krun-libkrun-sys"
+version = "3.2.7"
+dependencies = [
+ "libc 0.2.189",
+ "num_cpus",
+ "pkg-config",
+ "sha2",
+ "tempfile",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "krun-oci-agent"
+version = "0.3.6"
+dependencies = [
+ "base64 0.22.1",
+ "krun-oci-agent-protocol",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "nix 0.29.0",
+ "seccompiler",
+ "serde",
+ "serde_json",
+ "sha2",
+ "syscalls",
+ "tempfile",
+ "tokio",
+ "zeroize",
+]
+
+[[package]]
+name = "krun-oci-agent-protocol"
+version = "0.3.6"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "getrandom 0.3.4",
+ "krun-oci-sdk",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tokio",
+ "zeroize",
+]
+
+[[package]]
+name = "krun-oci-cli"
+version = "0.3.6"
+dependencies = [
+ "async-trait",
+ "clap",
+ "fs2",
+ "krun-oci-core",
+ "krun-oci-runtime",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+]
+
+[[package]]
+name = "krun-oci-core"
+version = "0.3.2"
+dependencies = [
+ "serde",
+ "sha2",
+ "thiserror 2.0.20",
+]
+
+[[package]]
+name = "krun-oci-krun"
+version = "0.3.6"
+dependencies = [
+ "clap",
+ "krun-libkrun-sys",
+ "krun-oci-agent-protocol",
+ "krun-oci-core",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "libloading 0.8.9",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "windows-sys 0.59.0",
+ "xz2",
+ "zeroize",
+]
+
+[[package]]
+name = "krun-oci-runtime"
+version = "0.3.6"
+dependencies = [
+ "base64 0.22.1",
+ "cap-fs-ext",
+ "cap-std",
+ "fs2",
+ "getrandom 0.3.4",
+ "krun-oci-agent",
+ "krun-oci-agent-protocol",
+ "krun-oci-core",
+ "krun-oci-sdk",
+ "libc 0.2.189",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "krun-oci-sdk"
+version = "0.3.2"
+dependencies = [
+ "async-trait",
+ "base64 0.22.1",
+ "cap-fs-ext",
+ "cap-std",
+ "jsonschema",
+ "krun-oci-core",
+ "oci-spec",
+ "semver",
+ "serde",
+ "serde_ignored",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "krun-runtime"
+version = "0.8.0"
+dependencies = [
+ "async-trait",
+ "fs2",
+ "libc 0.2.189",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+]
+
+[[package]]
+name = "krun-sentry"
+version = "0.7.0"
+dependencies = [
+ "anyhow",
+ "hcl-rs",
+ "libc 0.2.189",
+ "regex",
+ "serde",
+ "serde_json",
+ "ureq 2.10.1",
+]
+
+[[package]]
+name = "krun-tty-utils"
+version = "0.1.0"
+dependencies = [
+ "libc 0.2.189",
+ "nix 0.30.1",
+ "tokio",
+ "windows 0.61.3",
+]
+
+[[package]]
+name = "krun-updater"
+version = "0.3.0"
+dependencies = [
+ "anyhow",
+ "flate2",
+ "reqwest 0.12.28",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "tokio",
+ "zip 2.6.1",
+]
+
+[[package]]
+name = "krun-use"
+version = "0.3.4"
+dependencies = [
+ "async-trait",
+ "axum",
+ "base64 0.22.1",
+ "flate2",
+ "fs2",
+ "getrandom 0.3.4",
+ "krun-runtime",
+ "krun-use-core",
+ "krun-use-extension",
+ "krun-use-reconcile",
+ "krun-use-tool-acquire",
+ "olpc-cjson",
+ "pulldown-cmark",
+ "reqwest 0.12.28",
+ "ring",
+ "rmcp",
+ "rusqlite",
+ "schemars",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "tokio",
+ "tokio-util",
+ "url",
+ "windows-sys 0.52.0",
+ "zip 2.6.1",
+]
+
+[[package]]
+name = "krun-use-bge"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "fs2",
+ "krun-use-core",
+ "ort",
+ "reqwest 0.12.28",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "tokenizers",
+ "tokio",
+]
+
+[[package]]
+name = "krun-use-core"
+version = "0.2.4"
+dependencies = [
+ "async-trait",
+ "olpc-cjson",
+ "percent-encoding",
+ "pulldown-cmark",
+ "semver",
+ "serde",
+ "serde_json",
+ "serde_yaml_ng",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "url",
+]
+
+[[package]]
+name = "krun-use-extension"
+version = "0.3.4"
+dependencies = [
+ "async-trait",
+ "flate2",
+ "fs2",
+ "futures-util",
+ "krun-acl",
+ "krun-use-core",
+ "libc 0.2.189",
+ "olpc-cjson",
+ "reqwest 0.12.28",
+ "ring",
+ "semver",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "tokio",
+ "tough",
+ "url",
+ "zip 2.6.1",
+]
+
+[[package]]
+name = "krun-use-ocr"
+version = "0.3.2"
+dependencies = [
+ "async-trait",
+ "clap",
+ "clipper2",
+ "image",
+ "imageproc",
+ "krun-use-core",
+ "krun-use-extension",
+ "ort",
+ "rmcp",
+ "schemars",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "sha2",
+ "tempfile",
+ "tokio",
+]
+
+[[package]]
+name = "krun-use-reconcile"
+version = "0.2.10"
+dependencies = [
+ "fs2",
+ "krun-use-core",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "zip 2.6.1",
+]
+
+[[package]]
+name = "krun-use-tool-acquire"
+version = "0.2.4"
+dependencies = [
+ "base64 0.22.1",
+ "flate2",
+ "fs2",
+ "krun-acl",
+ "krun-config",
+ "krun-use-core",
+ "libc 0.2.189",
+ "pgp",
+ "reqwest 0.12.28",
+ "serde",
+ "serde_json",
+ "sha2",
+ "sysinfo",
+ "tar",
+ "tempfile",
+ "thiserror 2.0.20",
+ "tokio",
+ "versions",
+ "which",
+ "windows-sys 0.59.0",
+ "zip 2.6.1",
+]
+
+[[package]]
+name = "krun-version"
+version = "9.1.4"
+dependencies = [
+ "semver",
 ]
 
 [[package]]

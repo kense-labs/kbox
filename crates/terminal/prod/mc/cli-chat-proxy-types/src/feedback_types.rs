@@ -1,7 +1,7 @@
 //! Feedback API request and response types.
 //!
-//! These types support the feedback collection system for Aster Code sessions.
-//! The agent (aster-shell) uses heuristics to determine when to request feedback,
+//! These types support the feedback collection system for Krun Code sessions.
+//! The agent (krun-shell) uses heuristics to determine when to request feedback,
 //! and clients submit feedback through these types to the feedback backend.
 
 use chrono::{DateTime, Utc};
@@ -489,7 +489,7 @@ pub struct FeedbackSubmission {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub client_version: Option<String>,
 
-    /// Shell (aster-shell) version
+    /// Shell (krun-shell) version
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shell_version: Option<String>,
 
@@ -1639,7 +1639,7 @@ fn default_feedback_mode_stars_text() -> String {
     "stars_text".to_string()
 }
 fn default_tier1_prompt() -> String {
-    "You've been using Aster Code Code productively! Would you mind sharing quick feedback?"
+    "You've been using Krun Code Code productively! Would you mind sharing quick feedback?"
         .to_string()
 }
 fn default_tier2_prompt() -> String {

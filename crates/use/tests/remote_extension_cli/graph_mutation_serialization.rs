@@ -4,16 +4,16 @@ use std::process::Stdio;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
-use aster_use::package::{
+use async_trait::async_trait;
+use krun_use::package::{
     PackageAuthorizationEvidence, PackageAuthorizationProvider,
     ReviewedPackageAuthorizationProvider, StandalonePackageAuthorizationProvider,
 };
-use aster_use_core::{
+use krun_use_core::{
     PlanAuthority, PlanPolicyDecision, PluginOperationConfirmation, PluginOperationPlan,
     PluginOperationPlanBinding, PluginOperationPlanDraft, PluginOperationPlanEnvelope,
     PluginWorkspaceGrantChangeSet, UseError, UseResult, PLUGIN_OPERATION_CONFIRMATION_SCHEMA,
 };
-use async_trait::async_trait;
 use tokio::sync::{mpsc, Notify};
 
 #[derive(Debug)]
@@ -279,7 +279,7 @@ async fn separate_cli_processes_leave_a_linearizable_shared_dependency_graph() {
             "1.0.0",
             "--json",
         ])
-        .env("ASTER_USE_HOME", &home)
+        .env("KRUN_USE_HOME", &home)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .kill_on_drop(true)
@@ -296,7 +296,7 @@ async fn separate_cli_processes_leave_a_linearizable_shared_dependency_graph() {
             "--yes",
             "--json",
         ])
-        .env("ASTER_USE_HOME", &home)
+        .env("KRUN_USE_HOME", &home)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .kill_on_drop(true)

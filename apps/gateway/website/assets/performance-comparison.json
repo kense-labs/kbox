@@ -1,7 +1,7 @@
 {
   "schema_version": 3,
   "commit": "fbb8ae0ef490ea793f5baf9c205f93f6818f9eb9",
-  "run_url": "https://github.com/kense-labs/gateway/actions/runs/31070380529",
+  "run_url": "https://github.com/kense-labs/krun/actions/runs/31070380529",
   "generated_at": "2026-08-06T04:10:59Z",
   "environment": {
     "runner_image": "ubuntu24-20260720.247.2",
@@ -11,11 +11,11 @@
     "kernel": "Linux 6.17.0-1020-azure x86_64 GNU/Linux"
   },
   "versions": {
-    "aster_gateway": "aster-gateway 1.0.12",
+    "krun_gateway": "krun-gateway 1.0.12",
     "nginx": "nginx version: nginx/1.24.0 (Ubuntu)",
     "load_generators": {
       "oha": "oha 1.15.0",
-      "protocol_load": "aster-gateway fbb8ae0e"
+      "protocol_load": "krun-gateway fbb8ae0e"
     }
   },
   "methodology": {
@@ -41,7 +41,7 @@
       "capability_alignment": "equivalent",
       "workload": "GET, keep-alive, 42-byte JSON response",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -115,10 +115,10 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.7961989246644742,
-        "aster_to_nginx_p50_latency_ratio": 1.2630489745221118,
-        "aster_to_nginx_p90_latency_ratio": 1.1880545249233747,
-        "aster_to_nginx_p99_latency_ratio": 1.0649097585449077,
+        "krun_to_nginx_throughput_ratio": 0.7961989246644742,
+        "krun_to_nginx_p50_latency_ratio": 1.2630489745221118,
+        "krun_to_nginx_p90_latency_ratio": 1.1880545249233747,
+        "krun_to_nginx_p99_latency_ratio": 1.0649097585449077,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
@@ -135,7 +135,7 @@
       "capability_alignment": "equivalent",
       "workload": "GET, downstream TLS termination, keep-alive",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -209,10 +209,10 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.9047829296177208,
-        "aster_to_nginx_p50_latency_ratio": 1.1141634692401106,
-        "aster_to_nginx_p90_latency_ratio": 1.0659296170452297,
-        "aster_to_nginx_p99_latency_ratio": 1.0473290636962367,
+        "krun_to_nginx_throughput_ratio": 0.9047829296177208,
+        "krun_to_nginx_p50_latency_ratio": 1.1141634692401106,
+        "krun_to_nginx_p90_latency_ratio": 1.0659296170452297,
+        "krun_to_nginx_p99_latency_ratio": 1.0473290636962367,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
@@ -229,7 +229,7 @@
       "capability_alignment": "equivalent",
       "workload": "GET, downstream TLS termination, 4 connections \u00d7 16 streams",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -303,15 +303,15 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 1.8317956078578452,
-        "aster_to_nginx_p50_latency_ratio": 0.51824069836165,
-        "aster_to_nginx_p90_latency_ratio": 0.723232857890973,
-        "aster_to_nginx_p99_latency_ratio": 0.8933740002279891,
+        "krun_to_nginx_throughput_ratio": 1.8317956078578452,
+        "krun_to_nginx_p50_latency_ratio": 0.51824069836165,
+        "krun_to_nginx_p90_latency_ratio": 0.723232857890973,
+        "krun_to_nginx_p99_latency_ratio": 0.8933740002279891,
         "positions": {
-          "throughput": "aster_higher",
-          "p50_latency": "aster_lower",
-          "p90_latency": "aster_lower",
-          "p99_latency": "aster_lower"
+          "throughput": "krun_higher",
+          "p50_latency": "krun_lower",
+          "p90_latency": "krun_lower",
+          "p99_latency": "krun_lower"
         }
       }
     },
@@ -323,7 +323,7 @@
       "capability_alignment": "equivalent",
       "workload": "Empty unary message, downstream HTTP/2 TLS, h2c upstream",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -397,12 +397,12 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 1.9916866393508241,
-        "aster_to_nginx_p50_latency_ratio": 1.5364357856794948,
-        "aster_to_nginx_p90_latency_ratio": 1.0049896915084593,
-        "aster_to_nginx_p99_latency_ratio": 1.8462659312120842,
+        "krun_to_nginx_throughput_ratio": 1.9916866393508241,
+        "krun_to_nginx_p50_latency_ratio": 1.5364357856794948,
+        "krun_to_nginx_p90_latency_ratio": 1.0049896915084593,
+        "krun_to_nginx_p99_latency_ratio": 1.8462659312120842,
         "positions": {
-          "throughput": "aster_higher",
+          "throughput": "krun_higher",
           "p50_latency": "nginx_lower",
           "p90_latency": "within_threshold",
           "p99_latency": "nginx_lower"
@@ -417,7 +417,7 @@
       "capability_alignment": "equivalent",
       "workload": "Finite three-event stream, HTTP/1.1, buffering disabled",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -491,10 +491,10 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.8042765532804735,
-        "aster_to_nginx_p50_latency_ratio": 1.2481677571721708,
-        "aster_to_nginx_p90_latency_ratio": 1.1507966728578074,
-        "aster_to_nginx_p99_latency_ratio": 1.0500598438043276,
+        "krun_to_nginx_throughput_ratio": 0.8042765532804735,
+        "krun_to_nginx_p50_latency_ratio": 1.2481677571721708,
+        "krun_to_nginx_p90_latency_ratio": 1.1507966728578074,
+        "krun_to_nginx_p99_latency_ratio": 1.0500598438043276,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
@@ -511,7 +511,7 @@
       "capability_alignment": "equivalent",
       "workload": "64 persistent connections, 32-byte binary echo",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -585,15 +585,15 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.8344951602352936,
-        "aster_to_nginx_p50_latency_ratio": 1.390749601275917,
-        "aster_to_nginx_p90_latency_ratio": 1.0915371329879102,
-        "aster_to_nginx_p99_latency_ratio": 0.5308208240178857,
+        "krun_to_nginx_throughput_ratio": 0.8344951602352936,
+        "krun_to_nginx_p50_latency_ratio": 1.390749601275917,
+        "krun_to_nginx_p90_latency_ratio": 1.0915371329879102,
+        "krun_to_nginx_p99_latency_ratio": 0.5308208240178857,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
           "p90_latency": "nginx_lower",
-          "p99_latency": "aster_lower"
+          "p99_latency": "krun_lower"
         }
       }
     },
@@ -605,7 +605,7 @@
       "capability_alignment": "equivalent",
       "workload": "64 persistent connections, 32-byte echo",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -679,15 +679,15 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.9085091029396958,
-        "aster_to_nginx_p50_latency_ratio": 1.3006430868167203,
-        "aster_to_nginx_p90_latency_ratio": 0.9553571428571429,
-        "aster_to_nginx_p99_latency_ratio": 0.4961759082217973,
+        "krun_to_nginx_throughput_ratio": 0.9085091029396958,
+        "krun_to_nginx_p50_latency_ratio": 1.3006430868167203,
+        "krun_to_nginx_p90_latency_ratio": 0.9553571428571429,
+        "krun_to_nginx_p99_latency_ratio": 0.4961759082217973,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
-          "p90_latency": "aster_lower",
-          "p99_latency": "aster_lower"
+          "p90_latency": "krun_lower",
+          "p99_latency": "krun_lower"
         }
       }
     },
@@ -699,7 +699,7 @@
       "capability_alignment": "equivalent",
       "workload": "64 connected sockets, 32-byte datagram echo",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -773,15 +773,15 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 1.3911187498079782,
-        "aster_to_nginx_p50_latency_ratio": 0.665158371040724,
-        "aster_to_nginx_p90_latency_ratio": 0.7138810198300283,
-        "aster_to_nginx_p99_latency_ratio": 0.6955865711052434,
+        "krun_to_nginx_throughput_ratio": 1.3911187498079782,
+        "krun_to_nginx_p50_latency_ratio": 0.665158371040724,
+        "krun_to_nginx_p90_latency_ratio": 0.7138810198300283,
+        "krun_to_nginx_p99_latency_ratio": 0.6955865711052434,
         "positions": {
-          "throughput": "aster_higher",
-          "p50_latency": "aster_lower",
-          "p90_latency": "aster_lower",
-          "p99_latency": "aster_lower"
+          "throughput": "krun_higher",
+          "p50_latency": "krun_lower",
+          "p90_latency": "krun_lower",
+          "p99_latency": "krun_lower"
         }
       }
     },
@@ -790,10 +790,10 @@
       "traffic": "ai-request",
       "unit": "requests/s",
       "load_generator": "oha",
-      "capability_alignment": "aster_feature_enabled_vs_nginx_transport",
+      "capability_alignment": "krun_feature_enabled_vs_nginx_transport",
       "workload": "Chat Completions JSON validation and forwarding",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -867,10 +867,10 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.7742825684726381,
-        "aster_to_nginx_p50_latency_ratio": 1.2888507448554771,
-        "aster_to_nginx_p90_latency_ratio": 1.2145868619708957,
-        "aster_to_nginx_p99_latency_ratio": 1.1180618949993872,
+        "krun_to_nginx_throughput_ratio": 0.7742825684726381,
+        "krun_to_nginx_p50_latency_ratio": 1.2888507448554771,
+        "krun_to_nginx_p90_latency_ratio": 1.2145868619708957,
+        "krun_to_nginx_p99_latency_ratio": 1.1180618949993872,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
@@ -884,10 +884,10 @@
       "traffic": "ai-streaming",
       "unit": "streams/s",
       "load_generator": "oha",
-      "capability_alignment": "aster_feature_enabled_vs_nginx_transport",
+      "capability_alignment": "krun_feature_enabled_vs_nginx_transport",
       "workload": "Completions JSON stream detection and finite SSE forwarding",
       "proxies": {
-        "aster-gateway": {
+        "krun-gateway": {
           "trials": [
             {
               "success_rate": 1.0,
@@ -961,10 +961,10 @@
         }
       },
       "comparison": {
-        "aster_to_nginx_throughput_ratio": 0.7801365428869811,
-        "aster_to_nginx_p50_latency_ratio": 1.2908353680788869,
-        "aster_to_nginx_p90_latency_ratio": 1.1764459959224944,
-        "aster_to_nginx_p99_latency_ratio": 1.101385004046799,
+        "krun_to_nginx_throughput_ratio": 0.7801365428869811,
+        "krun_to_nginx_p50_latency_ratio": 1.2908353680788869,
+        "krun_to_nginx_p90_latency_ratio": 1.1764459959224944,
+        "krun_to_nginx_p99_latency_ratio": 1.101385004046799,
         "positions": {
           "throughput": "nginx_higher",
           "p50_latency": "nginx_lower",
@@ -975,7 +975,7 @@
     }
   },
   "proxies": {
-    "aster-gateway": {
+    "krun-gateway": {
       "trials": [
         {
           "success_rate": 1.0,
@@ -1049,10 +1049,10 @@
     }
   },
   "comparison": {
-    "aster_to_nginx_throughput_ratio": 0.7961989246644742,
-    "aster_to_nginx_p50_latency_ratio": 1.2630489745221118,
-    "aster_to_nginx_p90_latency_ratio": 1.1880545249233747,
-    "aster_to_nginx_p99_latency_ratio": 1.0649097585449077,
+    "krun_to_nginx_throughput_ratio": 0.7961989246644742,
+    "krun_to_nginx_p50_latency_ratio": 1.2630489745221118,
+    "krun_to_nginx_p90_latency_ratio": 1.1880545249233747,
+    "krun_to_nginx_p99_latency_ratio": 1.0649097585449077,
     "positions": {
       "throughput": "nginx_higher",
       "p50_latency": "nginx_lower",
@@ -1064,6 +1064,6 @@
     "GitHub-hosted runners are shared infrastructure, not a controlled bare-metal lab.",
     "Each fixture is a small synthetic same-host workload; absolute rates do not predict an upstream-dominated production deployment.",
     "OpenAI profiles enable Gateway JSON and stream detection while NGINX remains a transport-only baseline, so those rows measure feature cost rather than equivalent policy capability.",
-    "The matrix compares the checked-in Aster release profile with the Ubuntu-packaged NGINX build; it is not a universal product ranking."
+    "The matrix compares the checked-in Krun release profile with the Ubuntu-packaged NGINX build; it is not a universal product ranking."
   ]
 }

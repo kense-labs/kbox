@@ -2,7 +2,7 @@
 //! process launches.
 //!
 //! The Box runtime keeps Secret bytes outside the OCI bundle and passes only a
-//! manifest plus read-only files mounted below `/.aster-box-secrets`. Guest-init
+//! manifest plus read-only files mounted below `/.krun-box-secrets`. Guest-init
 //! consumes this protocol for MicroVM launches. Native Sandbox launches are
 //! owned directly by this executor, so it performs the same projection after
 //! entering the container root and before dropping to the workload identity.
@@ -14,12 +14,12 @@ use std::os::unix::ffi::OsStrExt;
 use std::os::unix::fs::{MetadataExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Component, Path, PathBuf};
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 use serde::Deserialize;
 use zeroize::{Zeroize, Zeroizing};
 
-const SECRET_ENVIRONMENT_MANIFEST: &str = "ASTER_BOX_SECRET_ENV_V1";
-const SECRET_GUEST_ROOT: &str = "/.aster-box-secrets";
+const SECRET_ENVIRONMENT_MANIFEST: &str = "KRUN_BOX_SECRET_ENV_V1";
+const SECRET_GUEST_ROOT: &str = "/.krun-box-secrets";
 const MAX_BINDINGS: usize = 128;
 const MAX_SECRET_BYTES: u64 = 1024 * 1024;
 

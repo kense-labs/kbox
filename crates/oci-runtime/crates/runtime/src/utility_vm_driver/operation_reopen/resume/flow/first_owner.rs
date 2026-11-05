@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportOperationStage, AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
 };
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerOperationRequest, ContainerTarget, ListRequest, OciRuntimeService, OperationContext,
     StartRequest,
 };

@@ -1,4 +1,4 @@
-//! Shared transport abstraction for the Aster ecosystem.
+//! Shared transport abstraction for the Krun ecosystem.
 //!
 //! This module provides:
 //! - [`Transport`] trait — async send/recv abstraction over any byte stream
@@ -33,7 +33,7 @@ pub mod ports {
     pub const EXEC_SERVER: u32 = 4089;
     /// PTY server (interactive terminal)
     pub const PTY_SERVER: u32 = 4090;
-    /// TEE secure channel (SafeClaw <-> aster)
+    /// TEE secure channel (SafeClaw <-> krun)
     pub const TEE_CHANNEL: u32 = 4091;
 }
 

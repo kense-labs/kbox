@@ -662,14 +662,14 @@ async fn correlation_failure_permanently_poisoned_the_client_connection() {
 fn secrets_are_redacted_and_guest_paths_are_normalized() {
     assert_eq!(format!("{:?}", token(12)), "SessionToken([REDACTED])");
     for path in [
-        "run/aster",
-        "/run//aster",
-        "/run/../aster",
-        "/run/./aster",
-        "/run/aster/",
-        r"/run\aster",
+        "run/krun",
+        "/run//krun",
+        "/run/../krun",
+        "/run/./krun",
+        "/run/krun/",
+        r"/run\krun",
     ] {
         assert!(GuestPath::new(path).is_err(), "{path:?} must be rejected");
     }
-    assert!(GuestPath::new("/run/aster").is_ok());
+    assert!(GuestPath::new("/run/krun").is_ok());
 }

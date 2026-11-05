@@ -1,6 +1,6 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     canonical_json_bytes, ContainerId, ErrorCode, OperationContext, OperationId, Result,
 };
 use serde::Serialize;
@@ -132,7 +132,7 @@ pub(super) fn validate_retry(
 mod tests {
     use std::collections::HashMap;
 
-    use aster_oci_sdk::{ContainerId, Generation, OperationId};
+    use krun_oci_sdk::{ContainerId, Generation, OperationId};
     use serde::Serialize;
 
     use super::{request_digest, validate_retry};

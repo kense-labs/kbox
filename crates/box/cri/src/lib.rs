@@ -1,6 +1,6 @@
-//! Aster Box CRI - Kubernetes Container Runtime Interface implementation.
+//! Krun Box CRI - Kubernetes Container Runtime Interface implementation.
 //!
-//! Maps CRI concepts to Aster Box primitives:
+//! Maps CRI concepts to Krun Box primitives:
 //! - Pod Sandbox → Box instance (one microVM per pod)
 //! - Container → Session within Box
 

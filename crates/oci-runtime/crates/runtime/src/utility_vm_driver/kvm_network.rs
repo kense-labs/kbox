@@ -1,11 +1,11 @@
 use std::ffi::CString;
 use std::path::Path;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentVmAttachmentManifest, AgentVmMacAddress, AgentVmNetworkAttachment,
     AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME,
 };
-use aster_oci_sdk::{Error, ErrorCode, NetworkAttachment, Result};
+use krun_oci_sdk::{Error, ErrorCode, NetworkAttachment, Result};
 use serde_json::Value;
 
 use super::UtilityVmLaunchRequest;

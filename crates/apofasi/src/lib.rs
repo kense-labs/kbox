@@ -1,4 +1,4 @@
-//! Aster Apofasi — typed System-1 decisions for Aster hosts.
+//! Krun Apofasi — typed System-1 decisions for Krun hosts.
 //!
 //! *Apófasi* (απόφαση) means **decision**. This crate owns fast, non-generative
 //! typed decisions (`choice`, `score`, `noul`) that hosts can route, gate, and
@@ -11,7 +11,7 @@
 //! # Quick start
 //!
 //! ```
-//! use aster_apofasi::{Client, Criteria, DecisionKind, Question, State, SystemOneRequest};
+//! use krun_apofasi::{Client, Criteria, DecisionKind, Question, State, SystemOneRequest};
 //! use indexmap::IndexMap;
 //! use serde_json::json;
 //!

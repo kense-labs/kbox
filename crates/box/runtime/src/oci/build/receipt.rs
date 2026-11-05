@@ -7,9 +7,9 @@
 //! retained as compatible states in this same journal rather than introducing
 //! a second supervisor store.
 
-use aster_box_core::platform::Platform;
-use aster_box_core::OperationId;
 use chrono::{DateTime, Utc};
+use krun_box_core::platform::Platform;
+use krun_box_core::OperationId;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
@@ -67,7 +67,7 @@ impl BuildOperationIdentity {
         Ok(Self {
             operation_id,
             source_digest,
-            output_reference: format!("aster-box/build-operation:{operation_key}"),
+            output_reference: format!("krun-box/build-operation:{operation_key}"),
         })
     }
 
@@ -103,7 +103,7 @@ pub(super) struct PendingBuildOperation {
 }
 
 impl PendingBuildOperation {
-    const SCHEMA: &'static str = "aster.box.build-output-intent.v1";
+    const SCHEMA: &'static str = "krun.box.build-output-intent.v1";
 
     #[cfg_attr(not(test), allow(dead_code))]
     pub(super) fn new(
@@ -128,7 +128,7 @@ impl PendingBuildOperation {
             || canonical_sha256_digest_hex(&self.plan_digest).is_err()
             || self.output_reference
                 != format!(
-                    "aster-box/build-operation:{}",
+                    "krun-box/build-operation:{}",
                     operation_key(&self.operation_id)
                 )
         {
@@ -230,8 +230,8 @@ pub(super) struct SupervisedBuildOperation {
 }
 
 impl SupervisedBuildOperation {
-    pub(super) const SCHEMA: &'static str = "aster.box.build-operation.v2";
-    const LEGACY_SCHEMA: &'static str = "aster.box.build-operation.v1";
+    pub(super) const SCHEMA: &'static str = "krun.box.build-operation.v2";
+    const LEGACY_SCHEMA: &'static str = "krun.box.build-operation.v1";
 
     pub(super) fn new(
         identity: &BuildOperationIdentity,
@@ -277,7 +277,7 @@ impl SupervisedBuildOperation {
             || canonical_sha256_digest_hex(&self.plan_digest).is_err()
             || self.output_reference
                 != format!(
-                    "aster-box/build-operation:{}",
+                    "krun-box/build-operation:{}",
                     operation_key(&self.operation_id)
                 )
             || self.updated_at < self.started_at
@@ -457,7 +457,7 @@ pub struct BuildOutputReceipt {
     pub operation_id: OperationId,
     /// Immutable source Artifact content identity.
     pub source_digest: String,
-    /// Canonical Aster ACL build-plan identity.
+    /// Canonical Krun ACL build-plan identity.
     pub plan_digest: String,
     /// Path-independent native OCI output evidence.
     pub output: BuildReceiptOutput,
@@ -468,8 +468,8 @@ pub struct BuildOutputReceipt {
 
 impl BuildOutputReceipt {
     /// Current closed receipt schema.
-    pub const SCHEMA: &'static str = "aster.box.build-output-receipt.v2";
-    const LEGACY_SCHEMA: &'static str = "aster.box.build-output-receipt.v1";
+    pub const SCHEMA: &'static str = "krun.box.build-output-receipt.v2";
+    const LEGACY_SCHEMA: &'static str = "krun.box.build-output-receipt.v1";
 
     pub(super) fn from_result(
         identity: &BuildOperationIdentity,
@@ -564,7 +564,7 @@ impl BuildOutputReceipt {
         }
         if self.output.reference
             != format!(
-                "aster-box/build-operation:{}",
+                "krun-box/build-operation:{}",
                 operation_key(&self.operation_id)
             )
         {

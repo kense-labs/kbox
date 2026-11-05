@@ -1,4 +1,4 @@
-use aster_acl::{generate, parse, Value};
+use krun_acl::{generate, parse, Value};
 
 const STRING_VALUES: &str = include_str!("../fixtures/canonical/string-values.acl");
 

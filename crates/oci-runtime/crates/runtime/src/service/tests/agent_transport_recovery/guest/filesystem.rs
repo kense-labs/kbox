@@ -1,11 +1,11 @@
 use std::collections::BTreeMap;
 
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     Error, ErrorCode, FileOp, FileRequest, FileResponse, FilesystemEntry, FilesystemEntryKind,
     FilesystemOp, FilesystemRequest, FilesystemResponse, Result,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 
 use super::super::guest_journal::changed_request;
 use super::JournaledLifecycleGuest;

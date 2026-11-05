@@ -29,7 +29,7 @@ use std::pin::Pin;
 /// # Example YAML
 ///
 /// ```yaml
-/// apiVersion: aster-gateway.io/v1alpha1
+/// apiVersion: krun-gateway.io/v1alpha1
 /// kind: IngressRoute
 /// metadata:
 ///   name: my-app
@@ -124,7 +124,7 @@ fn default_weight() -> u32 {
 
 /// Parse one labeled IngressRoute ConfigMap `data.spec` JSON payload.
 ///
-/// Labeled ConfigMaps (`aster-gateway.io/type=ingressroute`) must carry a
+/// Labeled ConfigMaps (`krun-gateway.io/type=ingressroute`) must carry a
 /// parseable `spec`; warn-and-skip would soft-open a Running provider with a
 /// silently incomplete route overlay while `validate_activation` still passed.
 pub(crate) fn parse_ingress_route_configmap_spec(
@@ -432,14 +432,14 @@ async fn poll_ingress_routes(
     use k8s_openapi::api::core::v1::ConfigMap;
     use kube::api::{Api, ListParams};
 
-    // Look for ConfigMaps with label "aster-gateway.io/type=ingressroute"
+    // Look for ConfigMaps with label "krun-gateway.io/type=ingressroute"
     let api: Api<ConfigMap> = if config.namespace.is_empty() {
         Api::all(client.clone())
     } else {
         Api::namespaced(client.clone(), &config.namespace)
     };
 
-    let lp = ListParams::default().labels("aster-gateway.io/type=ingressroute");
+    let lp = ListParams::default().labels("krun-gateway.io/type=ingressroute");
     let list = api.list(&lp).await.map_err(|e| {
         crate::error::GatewayError::Other(format!("Failed to list IngressRoute ConfigMaps: {}", e))
     })?;

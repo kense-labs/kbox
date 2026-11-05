@@ -1,15 +1,15 @@
-//! Comprehensive Windows API test for aster-libkrun-sys
+//! Comprehensive Windows API test for krun-libkrun-sys
 //!
 //! Tests all Windows-specific functions without requiring a kernel.
 
 #[cfg(windows)]
-use aster_libkrun_sys::*;
+use krun_libkrun_sys::*;
 #[cfg(windows)]
 use std::ffi::CString;
 
 #[cfg(windows)]
 fn main() {
-    println!("=== aster-libkrun-sys Windows API Test ===\n");
+    println!("=== krun-libkrun-sys Windows API Test ===\n");
 
     unsafe {
         // Test 1: Logging

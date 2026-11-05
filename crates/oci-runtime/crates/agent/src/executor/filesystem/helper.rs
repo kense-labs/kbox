@@ -7,7 +7,7 @@ use std::path::Path;
 use std::process::Stdio;
 use std::time::Duration;
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     Error, ErrorCode, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, Result,
     ValidateRequest, MAX_FILE_TRANSFER_BYTES,
 };
@@ -483,11 +483,11 @@ fn helper_error(code: ErrorCode, message: impl Into<String>) -> Error {
 mod tests {
     use std::ffi::OsString;
 
-    use aster_oci_sdk::ErrorCode;
+    use krun_oci_sdk::ErrorCode;
 
     use super::parse_helper_arguments;
 
-    fn parse(values: &[&str]) -> aster_oci_sdk::Result<super::HelperArguments> {
+    fn parse(values: &[&str]) -> krun_oci_sdk::Result<super::HelperArguments> {
         parse_helper_arguments(values.iter().map(OsString::from))
     }
 

@@ -1,4 +1,4 @@
-//! `aster-box history` command — Show image layer history.
+//! `krun-box history` command — Show image layer history.
 
 use clap::Args;
 use oci_spec::image::{History, ImageConfiguration};
@@ -144,8 +144,8 @@ fn format_timestamp(ts: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use aster_box_runtime::StoredImage;
     use chrono::Utc;
+    use krun_box_runtime::StoredImage;
     use std::path::PathBuf;
 
     #[test]

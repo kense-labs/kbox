@@ -119,7 +119,7 @@ async fn missing_payloads_remain_candidates_but_invalid_declarations_stop_planni
 fn tracking_preserves_native_path_units_and_refuses_invalid_metadata() {
     let temporary = tempfile::tempdir().unwrap();
     let store = ToolStore::open(temporary.path().join("tools")).unwrap();
-    let path = temporary.path().join("项目 with spaces/.aster/env.acl");
+    let path = temporary.path().join("项目 with spaces/.krun/env.acl");
     let mut sources = BTreeSet::from([path]);
     #[cfg(target_os = "linux")]
     {
@@ -128,7 +128,7 @@ fn tracking_preserves_native_path_units_and_refuses_invalid_metadata() {
             temporary
                 .path()
                 .join(OsString::from_vec(b"native-\xff".to_vec()))
-                .join(".aster/env.acl"),
+                .join(".krun/env.acl"),
         );
     }
     #[cfg(not(target_os = "linux"))]

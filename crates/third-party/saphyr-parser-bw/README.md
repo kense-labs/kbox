@@ -1,4 +1,8 @@
-# This crate is a fork of saphyr-parser intended to work with serde-saphyr.
+# saphyr-parser-bw
+
+## 概述
+
+Saphyr-parser with changes from Bourumir Wyngs to be used in serde-saphyr
 
 This crate is a fork of [saphyr-parser](https://crates.io/crates/saphyr-parser), for work with [serde-saphyr](https://crates.io/crates/serde-saphyr).
 

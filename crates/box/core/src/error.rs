@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-/// Aster Box error types
+/// Krun Box error types
 #[derive(Error, Debug)]
 pub enum BoxError {
     /// VM failed to start
@@ -95,7 +95,7 @@ impl From<serde_yaml::Error> for BoxError {
     }
 }
 
-/// Result type alias for Aster Box operations
+/// Result type alias for Krun Box operations
 pub type Result<T> = std::result::Result<T, BoxError>;
 
 #[cfg(test)]

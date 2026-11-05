@@ -62,7 +62,7 @@ pub(super) fn record_interruption(
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_sdk::{ContainerId, ContainerTarget, ExitStatus, Generation};
+    use krun_oci_sdk::{ContainerId, ContainerTarget, ExitStatus, Generation};
     use serde_json::json;
 
     use super::init_exit_cache;
@@ -81,7 +81,7 @@ mod tests {
         tokio::fs::write(
             &record_path,
             serde_json::to_vec(&json!({
-                "schemaVersion": "aster.oci.container-record.v1",
+                "schemaVersion": "krun.oci.container-record.v1",
                 "id": id.as_str(),
                 "record": { "generation": 7 },
                 "initExitStatus": expected,
@@ -100,7 +100,7 @@ mod tests {
         tokio::fs::write(
             &record_path,
             serde_json::to_vec(&json!({
-                "schemaVersion": "aster.oci.container-record.v1",
+                "schemaVersion": "krun.oci.container-record.v1",
                 "id": target.id.as_str(),
                 "record": { "generation": 7 },
             }))

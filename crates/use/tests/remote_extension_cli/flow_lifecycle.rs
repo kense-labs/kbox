@@ -42,8 +42,8 @@ fn flow_registry_command(
             version,
             "--json",
         ])
-        .env("ASTER_USE_HOME", home)
-        .env("ASTER_FLOW_NATIVE_TS_COMPILER", compiler)
+        .env("KRUN_USE_HOME", home)
+        .env("KRUN_FLOW_NATIVE_TS_COMPILER", compiler)
         .output()
         .unwrap()
 }
@@ -84,7 +84,7 @@ fn flow_capability(home: &Path) -> Option<serde_json::Value> {
 fn capability_registry(home: &Path) -> serde_json::Value {
     let snapshot = Command::new(binary())
         .args(["capability", "snapshot", "--json"])
-        .env("ASTER_USE_HOME", home)
+        .env("KRUN_USE_HOME", home)
         .output()
         .unwrap();
     assert!(snapshot.status.success(), "{snapshot:?}");

@@ -22,7 +22,7 @@
 //! let client_config = create_client_config(policy, allow_simulated)?;
 //! ```
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 use sha2::{Digest, Sha256};
 
 use super::attestation::{AttestationReport, CertificateChain};
@@ -68,8 +68,8 @@ pub fn generate_ratls_certificate(report: &AttestationReport) -> Result<(Vec<u8>
 
     // Set subject
     let mut dn = DistinguishedName::new();
-    dn.push(DnType::CommonName, "Aster Box RA-TLS");
-    dn.push(DnType::OrganizationName, "Aster");
+    dn.push(DnType::CommonName, "Krun Box RA-TLS");
+    dn.push(DnType::OrganizationName, "Krun");
     params.distinguished_name = dn;
 
     // Add SNP report as custom extension (non-critical)
@@ -497,8 +497,8 @@ mod tests {
         // Build certificate with report embedded
         let mut params = CertificateParams::default();
         let mut dn = DistinguishedName::new();
-        dn.push(DnType::CommonName, "Aster Box RA-TLS");
-        dn.push(DnType::OrganizationName, "Aster");
+        dn.push(DnType::CommonName, "Krun Box RA-TLS");
+        dn.push(DnType::OrganizationName, "Krun");
         params.distinguished_name = dn;
 
         let report_ext =
@@ -541,7 +541,7 @@ mod tests {
 
         let mut params = CertificateParams::default();
         let mut dn = DistinguishedName::new();
-        dn.push(DnType::CommonName, "Aster Box RA-TLS");
+        dn.push(DnType::CommonName, "Krun Box RA-TLS");
         params.distinguished_name = dn;
 
         let report_ext =

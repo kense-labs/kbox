@@ -31,11 +31,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -44,7 +44,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -56,18 +56,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "fixture@1.0.0",
             "fixture@2.0.0",
@@ -78,8 +78,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "1.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/0/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "1.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/0/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -109,11 +109,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -122,7 +122,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -134,18 +134,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "fixture@2.0.0",
             "fixture@1.0.0",
@@ -156,8 +156,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "2.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/1/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "2.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/1/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -187,11 +187,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -200,7 +200,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -212,18 +212,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "fixture@1.0.0",
             "fixture@2.0.0",
@@ -234,8 +234,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "extra:2.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/2/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "extra:2.0.0\nliteral value\n/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/data/installs/fixture/1.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/data/installs/fixture/2.0.0/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for fixture (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/2/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -265,18 +265,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@path:./one",
             "node@path:./two",
@@ -287,8 +287,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/3/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/3/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -314,18 +314,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@path:./two",
             "node@path:./one",
@@ -336,8 +336,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/project/two/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/project/one/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/4/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/project/two/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/project/one/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/4/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -363,18 +363,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@path:./one",
             "node@path:./two",
@@ -385,8 +385,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "extra:two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/5/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "extra:two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/5/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -413,18 +413,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@path:./one",
             "node@path:./one",
@@ -436,8 +436,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/6/project/mise.toml); use a concrete version or version prefix\n"
+          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/project/one/bin:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/6/project/mise.toml); use a concrete version or version prefix\n"
         }
       ],
       "status": "passed",
@@ -463,18 +463,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/7/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/7/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/7/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/7/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@system",
             "node@path:./two",
@@ -485,8 +485,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/7/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/7/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/7/project/mise.toml); use a concrete version or version prefix\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
+          "stdout": "two\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/7/project/two/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/7/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/7/project/mise.toml); use a concrete version or version prefix\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
         }
       ],
       "status": "passed",
@@ -511,18 +511,18 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/8/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/8/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/8/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/8/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "node@path:./one",
             "node@system",
@@ -533,8 +533,8 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/8/project/one/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/8/system-bin:/usr/bin:/bin\n",
-          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 临时多版本 mise x1qjejsr/8/project/mise.toml); use a concrete version or version prefix\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
+          "stdout": "one\nliteral value\n/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/8/project/one/bin:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/8/system-bin:/usr/bin:/bin\n",
+          "stderr": "mise WARN  semver range \"path:./overridden missing directory\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 临时多版本 mise x1qjejsr/8/project/mise.toml); use a concrete version or version prefix\nmise WARN  deprecated [system_tool_version]: @system is deprecated, use MISE_DISABLE_TOOLS instead\n"
         }
       ],
       "status": "passed",

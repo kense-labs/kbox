@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use aster_runtime::{ProviderId, RuntimeClientRegistry};
-use aster_use_core::{PlanQualifiedSurfaceRef, PlannedProviderEvidence, UseError, UseResult};
+use krun_runtime::{ProviderId, RuntimeClientRegistry};
+use krun_use_core::{PlanQualifiedSurfaceRef, PlannedProviderEvidence, UseError, UseResult};
 
 use super::client::{
     enforcement_profile, runtime_capabilities_digest, runtime_error,

@@ -3,9 +3,9 @@
 #[cfg(target_os = "linux")]
 use std::time::Duration;
 
-use aster_box_core::error::{BoxError, Result as BoxResult};
-use aster_box_core::OperationId;
 use async_trait::async_trait;
+use krun_box_core::error::{BoxError, Result as BoxResult};
+use krun_box_core::OperationId;
 
 use crate::oci::build::cache::RecordedBuildCache;
 use crate::oci::build::engine::{BuildExecutionObserver, BuildImageCommitPermit};

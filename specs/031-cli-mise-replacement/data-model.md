@@ -29,7 +29,7 @@ wire format remains the existing receipt schema. New installations also write
 by the source. Legacy installs without this metadata cannot create a lock by
 inferring membership from whatever remains on disk.
 
-`.aster/env.lock.acl` binds the current platform (OS, architecture and ABI),
+`.krun/env.lock.acl` binds the current platform (OS, architecture and ABI),
 the effective tool requests, exact distribution identities, and SHA-256 of
 every source-declared installed file. Lock generation checks the expected
 manifest against disk; locked acquisition checks downloaded membership and
@@ -56,12 +56,12 @@ actual CLI comparisons against seven context references pass.
 
 `LoadedEnvConfig` retains the logical root of each merged tool declaration.
 Project paths use the declaring workspace; user declarations use the native
-user home rather than ASTER_HOME. Argument-relative paths use cwd. A
+user home rather than KRUN_HOME. Argument-relative paths use cwd. A
 `ResolvedEnvTool` holds either a managed selection, a system selection, or a
 canonical existing external directory with native executable search paths.
 External/system selections create no receipts or current pointers and need no
 HTTP client. Native lookup reuses platform executable/PATHEXT handling; system
-selection excludes emitted Aster shim/install directories from inherited PATH.
+selection excludes emitted Krun shim/install directories from inherited PATH.
 External GitHub discovery is bounded to the existing 8192-entry budget. Aqua
 layouts needing registry metadata refuse explicitly. Temporary overrides replace
 declarations before inspecting external paths, resolve relative to cwd and retain
@@ -120,7 +120,7 @@ pre-resolved download locations and backend-specific budgets remain required.
 The official AIX source uses the existing signed plugin catalog and TUF trust
 model. A package target whose suffix is
 `oci-ghcr-v1/<domain>/<manifest-sha256>/<name>.aix` selects the exact OCI manifest
-under `ghcr.io/aster-ai-lab/plugins/<domain>/<publisher>/<name>`. The domain is
+under `ghcr.io/kense-labs/plugins/<domain>/<publisher>/<name>`. The domain is
 explicit signed category data. The existing catalog/lock target name seals the
 manifest identity; archive SHA-256 and length seal its one native AIX blob.
 No public catalog fields or frozen fixture digests are rewritten. The existing
@@ -136,11 +136,11 @@ package inventory, compressed archive identity and exact OCI manifest bytes.
 The archive must match the current complete source fingerprint. This value
 does not grant GitHub authority, sign metadata or establish a trusted root.
 
-The `aster use` composition root reuses the local SDK's parser and fallible
-output writer. Standalone `aster-use` keeps its public parser API and wire
+The `krun use` composition root reuses the local SDK's parser and fallible
+output writer. Standalone `krun-use` keeps its public parser API and wire
 envelope. Native arguments cross one UTF-8 admission boundary for SDK parsing;
 invalid-byte filesystem operands remain unsupported. An explicit
-`ASTER_USE_BIN` retains the existing native subprocess contract. SDK tasks run
+`KRUN_USE_BIN` retains the existing native subprocess contract. SDK tasks run
 on workers with the standalone command's 8 MiB stack requirement. Environment
 commands default to one async worker and prewarm one blocking worker under the
 existing pool capacity; explicit worker configuration remains authoritative.
@@ -177,7 +177,7 @@ late-I/O rollback remain open.
   entries, recomputes the active project on the shell's supported hooks, and
   restores values when declarations stop applying.
 - External ecosystem metadata and directive inputs are admitted through their
-  declared ACL directive. They do not introduce another Aster configuration
+  declared ACL directive. They do not introduce another Krun configuration
   language or widen workspace permissions.
 - Secret-bearing values and command arguments have redacted Debug output,
   including containing configuration and command types. Explicitly requested

@@ -1,7 +1,7 @@
 use std::os::unix::fs::symlink;
 
-use aster_oci_core::DriverKind;
-use aster_oci_sdk::ErrorCode;
+use krun_oci_core::DriverKind;
+use krun_oci_sdk::ErrorCode;
 
 use super::{create_request, state_root, DurableStateStore};
 
@@ -121,7 +121,7 @@ async fn bind_mount_replacement_fails_closed_when_qualification_is_enabled() {
     use std::ffi::CString;
     use std::os::unix::ffi::OsStrExt as _;
 
-    const QUALIFICATION_ENV: &str = "ASTER_OCI_DURABLE_STATE_MOUNT_QUALIFICATION";
+    const QUALIFICATION_ENV: &str = "KRUN_OCI_DURABLE_STATE_MOUNT_QUALIFICATION";
     if std::env::var_os(QUALIFICATION_ENV).as_deref() != Some(std::ffi::OsStr::new("1")) {
         return;
     }

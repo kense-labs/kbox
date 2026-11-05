@@ -749,9 +749,9 @@ fn validate_limits(
 }
 
 fn validate_credential_prefix(prefix: &str) -> Result<()> {
-    let Some(suffix) = prefix.strip_prefix("aster_inf_") else {
+    let Some(suffix) = prefix.strip_prefix("krun_inf_") else {
         return Err(config_error(
-            "inference credential prefix must start with 'aster_inf_'",
+            "inference credential prefix must start with 'krun_inf_'",
         ));
     };
     if suffix.len() < 8

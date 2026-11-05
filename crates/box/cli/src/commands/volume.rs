@@ -1,11 +1,11 @@
-//! `aster-box volume` subcommands — Manage named volumes.
+//! `krun-box volume` subcommands — Manage named volumes.
 //!
 //! Provides create/ls/rm/inspect/prune for persistent named volumes
 //! that can be shared across box instances.
 
-use aster_box_core::volume::VolumeConfig;
-use aster_box_runtime::VolumeStore;
 use clap::{Args, Subcommand};
+use krun_box_core::volume::VolumeConfig;
+use krun_box_runtime::VolumeStore;
 
 /// Manage volumes.
 #[derive(Args)]
@@ -332,7 +332,7 @@ pub(crate) fn attach_volumes_with_store(
 ///
 /// Missing volumes are success (`modify` → `Ok(false)`). Store open / lock /
 /// write failures fail closed so `in_use_by` cannot stay stale after stop/rm.
-pub fn detach_volumes(volume_names: &[String], box_id: &str) -> aster_box_core::error::Result<()> {
+pub fn detach_volumes(volume_names: &[String], box_id: &str) -> krun_box_core::error::Result<()> {
     if volume_names.is_empty() {
         return Ok(());
     }

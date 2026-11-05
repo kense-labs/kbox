@@ -28,11 +28,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -41,7 +41,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -55,7 +55,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture@1.2"
           ],
@@ -66,7 +66,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/0/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/0/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -75,7 +75,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/0/data/installs/fixture/1.2.9/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/0/data/installs/fixture/1.2.9/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -84,7 +84,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/0/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/0/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -127,11 +127,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -140,7 +140,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -154,7 +154,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture@1"
           ],
@@ -165,7 +165,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/1/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/1/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -174,7 +174,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/1/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/1/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -183,7 +183,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/1/data/installs/fixture/1.2.9/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/1/data/installs/fixture/1.2.9/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -192,7 +192,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall bsio9zk7/1/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall bsio9zk7/1/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -236,11 +236,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall p70q91zf/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall p70q91zf/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -249,7 +249,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -263,7 +263,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture"
           ],
@@ -274,7 +274,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall p70q91zf/2/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall p70q91zf/2/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -283,7 +283,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall p70q91zf/2/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall p70q91zf/2/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -292,7 +292,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall p70q91zf/2/data/installs/fixture/1.2.9/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall p70q91zf/2/data/installs/fixture/1.2.9/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -301,7 +301,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall p70q91zf/2/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall p70q91zf/2/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -345,11 +345,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -358,7 +358,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -372,7 +372,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture@prefix:1.2"
           ],
@@ -383,7 +383,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/3/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/3/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -392,7 +392,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/3/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/3/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -401,7 +401,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/3/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/3/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -442,11 +442,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -455,7 +455,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -469,7 +469,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--all",
             "fixture@prefix:1.2"
@@ -481,7 +481,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/4/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/4/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -490,7 +490,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/4/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/4/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -499,7 +499,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/4/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/4/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -540,11 +540,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -553,7 +553,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -567,7 +567,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--all",
             "fixture"
@@ -594,11 +594,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -607,7 +607,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -621,7 +621,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--dry-run",
             "fixture@1.2.3"
@@ -629,11 +629,11 @@
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n"
+          "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -642,7 +642,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -651,7 +651,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.2.9/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.2.9/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -660,7 +660,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -671,7 +671,7 @@
       "status": "passed",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/6/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n",
+      "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/6/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n",
       "retained_versions": [
         "1.2",
         "1.2.3",
@@ -706,11 +706,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/owned plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/owned plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -719,7 +719,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.2",
             "fixture@1.2.3",
@@ -733,7 +733,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--dry-run-code",
             "fixture@1.2.3"
@@ -741,11 +741,11 @@
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n"
+          "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.2/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.2/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -754,7 +754,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -763,7 +763,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.2.9/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.2.9/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -772,7 +772,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.20.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.20.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -783,7 +783,7 @@
       "status": "passed",
       "exit": 1,
       "stdout": "",
-      "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise uninstall lss_3dk5/7/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n",
+      "stderr": "mise fixture@1.2.3   uninstall\nmise fixture@1.2.3   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/data/installs/fixture/1.2.3, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise uninstall lss_3dk5/7/cache/fixture/1.2.3\nmise fixture@1.2.3 ✓ uninstalled (dry-run)\n",
       "retained_versions": [
         "1.2",
         "1.2.3",

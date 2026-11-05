@@ -1,7 +1,7 @@
-//! `aster-box save` command — Save an image to a tar archive.
+//! `krun-box save` command — Save an image to a tar archive.
 //!
 //! Creates a tar archive of the OCI image layout directory, suitable for
-//! transferring to another machine and loading with `aster-box load`.
+//! transferring to another machine and loading with `krun-box load`.
 
 use clap::Args;
 
@@ -123,8 +123,8 @@ fn create_tar_archive(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use aster_box_runtime::StoredImage;
     use chrono::Utc;
+    use krun_box_runtime::StoredImage;
     use std::fs;
     use std::path::PathBuf;
     use tempfile::TempDir;

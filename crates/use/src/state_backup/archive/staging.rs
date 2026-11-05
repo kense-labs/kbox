@@ -3,7 +3,7 @@ use std::fs::{File, OpenOptions};
 use std::io::{self, Read};
 use std::path::{Path, PathBuf};
 
-use aster_use_core::UseResult;
+use krun_use_core::UseResult;
 use sha2::{Digest, Sha256};
 
 use super::{sync_parent, COPY_BUFFER_BYTES};
@@ -76,7 +76,7 @@ pub(super) fn ensure_candidate_root(root: &Path) -> UseResult<()> {
             "A restore candidate parent cannot be inspected: {error}"
         ))
     })?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&parent_metadata)
+    if krun_use_core::metadata_is_link_or_reparse_point(&parent_metadata)
         || !parent_metadata.is_dir()
     {
         return Err(state_backup_invalid(
@@ -85,7 +85,7 @@ pub(super) fn ensure_candidate_root(root: &Path) -> UseResult<()> {
     }
     match std::fs::symlink_metadata(root) {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_dir() =>
         {
             Ok(())
@@ -118,7 +118,7 @@ fn ensure_candidate_directory_chain(root: &Path, directory: &Path) -> UseResult<
         current.push(component.as_os_str());
         match std::fs::symlink_metadata(&current) {
             Ok(metadata)
-                if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                     && metadata.is_dir() => {}
             Ok(_) => {
                 return Err(state_backup_invalid(
@@ -155,7 +155,7 @@ fn partial_candidate_path(destination: &Path) -> UseResult<PathBuf> {
 fn remove_stale_candidate(path: &Path) -> UseResult<()> {
     match std::fs::symlink_metadata(path) {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file()
                 && metadata.len() <= MAX_STATE_BACKUP_FILE_BYTES =>
         {
@@ -183,7 +183,7 @@ pub(super) fn set_candidate_permissions(path: &Path, entry: &StateBackupEntry) -
             "A staged restore candidate cannot be inspected: {error}"
         ))
     })?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
         return Err(state_backup_invalid(
             "A staged restore candidate is not an owned regular file.",
         ));
@@ -234,7 +234,7 @@ pub(super) fn file_matches_entry(path: &Path, entry: &StateBackupEntry) -> UseRe
             )))
         }
     };
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata)
         || !metadata.is_file()
         || metadata.len() != entry.length
         || metadata.permissions().readonly() != entry.read_only
@@ -290,7 +290,7 @@ pub(super) fn validate_candidate_tree(
         }
     };
     if expected_count == 0
-        || aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+        || krun_use_core::metadata_is_link_or_reparse_point(&metadata)
         || !metadata.is_dir()
     {
         return Err(state_backup_invalid(
@@ -336,7 +336,7 @@ pub(super) fn validate_candidate_tree(
             let metadata = std::fs::symlink_metadata(&path).map_err(|error| {
                 state_backup_io(format!("A restore candidate cannot be inspected: {error}"))
             })?;
-            if aster_use_core::metadata_is_link_or_reparse_point(&metadata) {
+            if krun_use_core::metadata_is_link_or_reparse_point(&metadata) {
                 return Err(state_backup_invalid(
                     "A restore candidate tree contains a link or reparse point.",
                 ));

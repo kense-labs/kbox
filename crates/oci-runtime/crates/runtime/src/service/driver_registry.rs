@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::sync::Arc;
 
-use aster_oci_core::{DriverCapability, DriverKind, HostPlatform, IsolationClass};
-use aster_oci_sdk::{
+use krun_oci_core::{DriverCapability, DriverKind, HostPlatform, IsolationClass};
+use krun_oci_sdk::{
     AttachmentCapabilities, ContainerRecord, CreateAttachments, Error, ErrorCode, OciLinuxSupport,
     OperationId, Result, RuntimeArtifact, RuntimeDriverCapabilities, RuntimeExtensions,
     RuntimeOperation, RuntimeOperationCapability, AMD_SEV_SNP_LAUNCH_EXTENSION,
@@ -401,7 +401,7 @@ impl DriverRegistry {
 
 fn validate_capability(capability: &DriverCapability) -> Result<()> {
     if !capability.can_launch() {
-        let code = if capability.status == aster_oci_core::CapabilityStatus::Unavailable {
+        let code = if capability.status == krun_oci_core::CapabilityStatus::Unavailable {
             ErrorCode::Unavailable
         } else {
             ErrorCode::Unsupported
@@ -527,7 +527,7 @@ const fn driver_platform(driver: DriverKind) -> HostPlatform {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_sdk::RuntimeOperation;
+    use krun_oci_sdk::RuntimeOperation;
 
     use super::validate_driver_operations;
 

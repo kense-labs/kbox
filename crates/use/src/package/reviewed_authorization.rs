@@ -1,10 +1,10 @@
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     PlanActor, PlanAuthority, PluginGrantConfirmation, PluginOperationConfirmation,
     PluginOperationPlan, PluginOperationPlanBinding, PluginOperationPlanDraft,
     PluginOperationPlanEnvelope, PluginWorkspaceGrantChangeSet, UseError, UseResult,
     PLUGIN_GRANT_CONFIRMATION_SCHEMA,
 };
-use async_trait::async_trait;
 
 use super::grant::{PackageAuthorizationEvidence, PackageAuthorizationProvider};
 

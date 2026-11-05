@@ -1,10 +1,10 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::AgentWaitRequest;
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentWaitRequest;
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerTarget, CreateRequest, ErrorCode, Generation, ListRequest, OciRuntimeService,
     WaitRequest,
 };

@@ -280,17 +280,17 @@ impl OpenAiJsonRequest {
             .get("prompt_cache_key")
             .and_then(serde_json::Value::as_str)?;
         let mut digest = Sha256::new();
-        hash_part(&mut digest, b"aster.gateway.prompt-cache-key.v1");
+        hash_part(&mut digest, b"krun.gateway.prompt-cache-key.v1");
         hash_part(&mut digest, credential_id.as_bytes());
         hash_part(&mut digest, model_id.as_bytes());
         hash_part(&mut digest, endpoint.as_str().as_bytes());
         hash_part(&mut digest, caller_key.as_bytes());
-        Some(format!("aster-gw-pcache-v1:{:x}", digest.finalize()))
+        Some(format!("krun-gw-pcache-v1:{:x}", digest.finalize()))
     }
 
     /// Fail-closed local token-budget reservation until trusted usage lands.
     ///
-    /// Uses [`super::tokenizer`] (`aster.gateway.tokenizer.v1`) for input text
+    /// Uses [`super::tokenizer`] (`krun.gateway.tokenizer.v1`) for input text
     /// plus the request's completion budget (`max_completion_tokens` or
     /// `max_tokens`). This is not a Cloud billing tokenizer and must be
     /// reconciled when upstream `usage` is available.
@@ -555,7 +555,7 @@ pub(crate) fn models_response(
                 "id": model,
                 "object": "model",
                 "created": 0,
-                "owned_by": "aster"
+                "owned_by": "krun"
             })
         })
         .collect::<Vec<_>>();
@@ -1217,7 +1217,7 @@ mod tests {
                 crate::config::InferenceEndpoint::ChatCompletions,
             )
         );
-        assert!(scoped.starts_with("aster-gw-pcache-v1:"));
+        assert!(scoped.starts_with("krun-gw-pcache-v1:"));
         assert!(!scoped.contains("private-session"));
 
         let routed = request.routed_body("internal", Some(&scoped)).unwrap();

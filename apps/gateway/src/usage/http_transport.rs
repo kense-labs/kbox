@@ -76,7 +76,7 @@ impl HttpUsageCloudTransport {
         }
         let mut builder = reqwest::Client::builder()
             .timeout(Duration::from_secs(30))
-            .user_agent(concat!("aster-gateway/", env!("CARGO_PKG_VERSION")))
+            .user_agent(concat!("krun-gateway/", env!("CARGO_PKG_VERSION")))
             .redirect(reqwest::redirect::Policy::none())
             .referer(false);
         match &auth {
@@ -332,7 +332,7 @@ mod tests {
         let gateway_id = Uuid::new_v4();
         let batch_id = Uuid::new_v4();
         let wrong_schema = serde_json::json!({
-            "schema": "aster.cloud.usage-ingest-ack.v1",
+            "schema": "krun.cloud.usage-ingest-ack.v1",
             "gateway_id": gateway_id,
             "batch_id": batch_id,
         })

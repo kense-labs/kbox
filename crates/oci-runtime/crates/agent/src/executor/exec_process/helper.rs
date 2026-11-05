@@ -8,7 +8,7 @@ use std::os::unix::ffi::OsStrExt;
 use std::os::unix::net::{SocketAddr as StdSocketAddr, UnixStream as StdUnixStream};
 use std::path::{Path, PathBuf};
 
-use aster_oci_sdk::{Error, ErrorCode, Result, MAX_CONFIG_BYTES};
+use krun_oci_sdk::{Error, ErrorCode, Result, MAX_CONFIG_BYTES};
 
 use super::{exec_error, EXEC_MODE};
 use crate::executor::control::{
@@ -648,11 +648,11 @@ fn cgroup_join_error_code(source: &io::Error) -> ErrorCode {
 mod tests {
     use std::ffi::OsString;
 
-    use aster_oci_sdk::ErrorCode;
+    use krun_oci_sdk::ErrorCode;
 
     use super::parse_helper_arguments;
 
-    fn parse(values: &[&str]) -> aster_oci_sdk::Result<super::HelperArguments> {
+    fn parse(values: &[&str]) -> krun_oci_sdk::Result<super::HelperArguments> {
         parse_helper_arguments(values.iter().map(OsString::from))
     }
 

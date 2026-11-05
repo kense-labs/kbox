@@ -1,13 +1,13 @@
 use std::pin::Pin;
 
-use aster_box_core::{
+use futures::{stream, Stream};
+use krun_box_core::{
     ExecutionEventsRequest, ExecutionGeneration, ExecutionId, ExecutionRuntimeEvent,
     MAX_EXECUTION_EVENT_BATCH_ITEMS,
 };
-use futures::{stream, Stream};
 
 use super::Sandbox;
-use crate::{AsterBoxClient, ClientError, Result};
+use crate::{ClientError, KrunBoxClient, Result};
 
 /// Default number of runtime events fetched by each streaming poll.
 pub const DEFAULT_EVENT_STREAM_BATCH_ITEMS: u32 = 256;
@@ -72,7 +72,7 @@ pub type SandboxEventStream =
     Pin<Box<dyn Stream<Item = Result<ExecutionRuntimeEvent>> + Send + 'static>>;
 
 struct EventStreamState {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     execution_id: ExecutionId,
     generation: ExecutionGeneration,
     cursor: u64,

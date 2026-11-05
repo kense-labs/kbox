@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use aster_use_core::{PackageSurfaceKind, UseResult};
-use aster_use_extension::{ExtensionPaths, ExtensionReceipt, ExtensionRegistry};
+use krun_use_core::{PackageSurfaceKind, UseResult};
+use krun_use_extension::{ExtensionPaths, ExtensionReceipt, ExtensionRegistry};
 
 use super::{authority_mismatch, digest_entries, restore_io};
 use crate::state_backup::{
@@ -82,7 +82,7 @@ async fn read_receipt_authority(
 }
 
 async fn validate_snapshot_receipts(
-    routes: &[aster_use_extension::ExtensionRouteBinding],
+    routes: &[krun_use_extension::ExtensionRouteBinding],
     paths: &ExtensionPaths,
     live: &[StateBackupEntry],
 ) -> UseResult<()> {
@@ -142,7 +142,7 @@ fn receipt_path(path: &str) -> Option<String> {
         return None;
     };
     let package = file.strip_suffix(".json")?;
-    aster_use_core::PluginPackageId::parse(format!("{publisher}/{package}"))
+    krun_use_core::PluginPackageId::parse(format!("{publisher}/{package}"))
         .ok()
         .map(|id| id.to_string())
 }

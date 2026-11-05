@@ -1,8 +1,8 @@
-use aster_runtime::contract::{
+use krun_runtime::contract::{
     RuntimeActionRequest, RuntimeFeature, RuntimeHealthState, RuntimeInspection,
     RuntimeObservation, RuntimeRemoval, RuntimeUnitClass, RuntimeUnitState,
 };
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde::Serialize;
 
 use super::client::{runtime_capabilities_digest, runtime_error, PluginRuntimeClient};

@@ -8,8 +8,7 @@ use std::path::{Path, PathBuf};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use uuid::Uuid;
 
-pub(super) const MANAGED_SNAPSHOT_JOURNAL_SCHEMA: &str =
-    "aster.gateway.managed-snapshot-journal.v1";
+pub(super) const MANAGED_SNAPSHOT_JOURNAL_SCHEMA: &str = "krun.gateway.managed-snapshot-journal.v1";
 
 const MAX_JOURNAL_BYTES: u64 = super::MAX_ACL_BYTES as u64 * 6 + 64 * 1024;
 
@@ -194,7 +193,7 @@ impl ManagedSnapshotPersistence {
         std::fs::create_dir_all(parent)
             .map_err(|error| PersistenceError::before("create journal directory", error))?;
         let probe = parent.join(format!(
-            ".aster-managed-snapshot-activation-probe.{}",
+            ".krun-managed-snapshot-activation-probe.{}",
             Uuid::new_v4()
         ));
         std::fs::write(&probe, b"ok")

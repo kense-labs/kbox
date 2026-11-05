@@ -347,7 +347,7 @@ fn default_sample_rate() -> f64 {
 }
 
 fn default_service_name() -> String {
-    "aster-gateway".to_string()
+    "krun-gateway".to_string()
 }
 
 impl Default for TracingConfig {
@@ -700,7 +700,7 @@ mod tests {
         assert!(config.otlp_endpoint.is_none());
         assert_eq!(config.propagation, "w3c");
         assert_eq!(config.sample_rate, 1.0);
-        assert_eq!(config.service_name, "aster-gateway");
+        assert_eq!(config.service_name, "krun-gateway");
         assert!(!config.is_export_enabled());
     }
 

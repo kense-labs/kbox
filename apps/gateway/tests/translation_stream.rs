@@ -1,6 +1,6 @@
-use aster_gateway::translation::ResponseTranslation;
 use bytes::Bytes;
 use futures_util::{stream, StreamExt};
+use krun_gateway::translation::ResponseTranslation;
 use std::io;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;

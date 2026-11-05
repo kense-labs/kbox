@@ -2,13 +2,13 @@
 //!
 //! Handles extraction of OCI image layers (gzip, zstd, or uncompressed tar).
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::rootfs_metadata::{
+use base64::Engine;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::rootfs_metadata::{
     RootfsEntryKind, RootfsMetadataEntry, RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH,
     IMAGE_ROOTFS_METADATA_TEMP_PATH, PREVIOUS_ROOTFS_METADATA_PATH, ROOTFS_METADATA_PATH,
     ROOTFS_METADATA_TEMP_PATH,
 };
-use base64::Engine;
 use std::collections::BTreeMap;
 #[cfg(test)]
 use std::fs::File;
@@ -33,9 +33,9 @@ use tar::Archive;
 pub fn extract_layer(layer_path: &Path, target_dir: &Path) -> Result<()> {
     // Bound total decompressed output so a compression-bomb layer (a few MB that
     // expands to hundreds of GB of zeros) cannot fill the host disk during pull.
-    // Generous default; tune with ASTER_BOX_MAX_LAYER_BYTES.
+    // Generous default; tune with KRUN_BOX_MAX_LAYER_BYTES.
     let max_layer_bytes =
-        super::limited_reader::cap_from_env("ASTER_BOX_MAX_LAYER_BYTES", 16 * 1024 * 1024 * 1024);
+        super::limited_reader::cap_from_env("KRUN_BOX_MAX_LAYER_BYTES", 16 * 1024 * 1024 * 1024);
     extract_layer_with_cap(layer_path, target_dir, max_layer_bytes, false)
 }
 
@@ -46,7 +46,7 @@ pub fn extract_layer(layer_path: &Path, target_dir: &Path) -> Result<()> {
 /// nested filesystems are mounted.
 pub(crate) fn extract_layer_with_metadata(layer_path: &Path, target_dir: &Path) -> Result<()> {
     let max_layer_bytes =
-        super::limited_reader::cap_from_env("ASTER_BOX_MAX_LAYER_BYTES", 16 * 1024 * 1024 * 1024);
+        super::limited_reader::cap_from_env("KRUN_BOX_MAX_LAYER_BYTES", 16 * 1024 * 1024 * 1024);
     extract_layer_with_cap(layer_path, target_dir, max_layer_bytes, true)
 }
 
@@ -118,7 +118,7 @@ fn extract_layer_with_cap(
     // works when the token does not contain the privilege.
     #[cfg(windows)]
     let windows_symlink_guard =
-        aster_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
+        krun_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
     #[cfg(windows)]
     let windows_symlink_privilege_enabled = windows_symlink_guard.assigned_privilege_enabled();
 
@@ -265,7 +265,7 @@ fn extract_layer_with_cap(
         .map_err(|e| {
             #[cfg(windows)]
             if entry_is_symlink && windows_symlink_creation_was_denied(&e) {
-                let diagnostic = aster_box_core::windows_symlink::denial_diagnostic(
+                let diagnostic = krun_box_core::windows_symlink::denial_diagnostic(
                     windows_symlink_privilege_enabled,
                 );
                 return BoxError::OciImageError(format!(
@@ -608,7 +608,7 @@ pub(crate) fn admit_unprivileged_same_uid_directory_rootfs(rootfs: &Path) -> Res
     Err(BoxError::BoxBootError {
         message: "unprivileged MicroVM rejected: Linux directory rootfs is same-UID virtio-fs only; this image declares UIDs outside {0, host euid}".into(),
         hint: Some(
-            "Guest chown to those UIDs returns EPERM, and unprivileged extract cannot restore layer ownership. Re-run as root (e.g. sudo aster-box run), use a same-UID image, or a transport that stores Linux ownership (macOS guest-native ext4 / Windows WHPX portable metadata). Foreign gids with uid 0 (for example alpine shadow) are admitted; guest-init skips virtio-fs lchown EPERM during metadata replay.".into(),
+            "Guest chown to those UIDs returns EPERM, and unprivileged extract cannot restore layer ownership. Re-run as root (e.g. sudo krun-box run), use a same-UID image, or a transport that stores Linux ownership (macOS guest-native ext4 / Windows WHPX portable metadata). Foreign gids with uid 0 (for example alpine shadow) are admitted; guest-init skips virtio-fs lchown EPERM during metadata replay.".into(),
         ),
     })
 }
@@ -725,7 +725,7 @@ fn finalize_image_metadata_with_mode_overrides(
     )?;
     let manifest = RootfsMetadataManifest::new(final_entries.into_values().collect());
     let destination_relative = IMAGE_ROOTFS_METADATA_PATH.trim_start_matches('/');
-    let temporary_relative = ".aster_image_metadata_v1.json.tmp";
+    let temporary_relative = ".krun_image_metadata_v1.json.tmp";
     let bytes = serde_json::to_vec(&manifest).map_err(|error| {
         BoxError::OciImageError(format!("Failed to encode image metadata: {error}"))
     })?;
@@ -784,9 +784,9 @@ fn collect_final_metadata(
     output: &mut BTreeMap<PathBuf, RootfsMetadataEntry>,
 ) -> Result<()> {
     if reserved_metadata_path(logical_relative).is_some()
-        || logical_relative == Path::new(".aster_image_metadata_v1.json.tmp")
-        || logical_relative == Path::new(".aster_rootfs_metadata_v1.json.tmp")
-        || logical_relative == Path::new(".aster_rootfs_metadata_v1.previous.json")
+        || logical_relative == Path::new(".krun_image_metadata_v1.json.tmp")
+        || logical_relative == Path::new(".krun_rootfs_metadata_v1.json.tmp")
+        || logical_relative == Path::new(".krun_rootfs_metadata_v1.previous.json")
     {
         return Ok(());
     }
@@ -1173,7 +1173,7 @@ impl LayerParentWriteGuards {
                 // `prepare` opens a path's parent. A synthetic child therefore
                 // asks it to open the directory represented by this manifest
                 // entry without ever touching or creating the child itself.
-                self.prepare(target_dir, &staging.join(".aster-metadata-access"))?;
+                self.prepare(target_dir, &staging.join(".krun-metadata-access"))?;
             }
         }
         Ok(())
@@ -1829,16 +1829,16 @@ mod tests {
     #[test]
     fn every_extraction_mode_rejects_reserved_internal_paths() {
         for (index, reserved) in [
-            ".aster_image_metadata_v1.json",
-            ".aster_image_metadata_v1.json/child",
-            ".aster_image_metadata_v1.json.tmp",
-            ".aster_image_metadata_v1.json.tmp/child",
-            ".aster_rootfs_metadata_v1.json",
-            ".aster_rootfs_metadata_v1.json/child",
-            ".aster_rootfs_metadata_v1.json.tmp",
-            ".aster_rootfs_metadata_v1.json.tmp/child",
-            ".aster_rootfs_metadata_v1.previous.json",
-            ".aster_rootfs_metadata_v1.previous.json/child",
+            ".krun_image_metadata_v1.json",
+            ".krun_image_metadata_v1.json/child",
+            ".krun_image_metadata_v1.json.tmp",
+            ".krun_image_metadata_v1.json.tmp/child",
+            ".krun_rootfs_metadata_v1.json",
+            ".krun_rootfs_metadata_v1.json/child",
+            ".krun_rootfs_metadata_v1.json.tmp",
+            ".krun_rootfs_metadata_v1.json.tmp/child",
+            ".krun_rootfs_metadata_v1.previous.json",
+            ".krun_rootfs_metadata_v1.previous.json/child",
         ]
         .into_iter()
         .enumerate()
@@ -1865,8 +1865,8 @@ mod tests {
     #[test]
     fn untracked_extraction_rejects_reserved_whiteouts() {
         for victim in [
-            ".aster_rootfs_metadata_v1.previous.json",
-            ".aster_rootfs_metadata_v1.json.tmp",
+            ".krun_rootfs_metadata_v1.previous.json",
+            ".krun_rootfs_metadata_v1.json.tmp",
         ] {
             let temp_dir = TempDir::new().unwrap();
             let layer = temp_dir.path().join("reserved-whiteout.tar.gz");
@@ -1888,14 +1888,14 @@ mod tests {
         let target = temp_dir.path().join("rootfs");
         create_layer_with_symlink(
             &layer,
-            ".aster_rootfs_metadata_v1.json",
+            ".krun_rootfs_metadata_v1.json",
             Path::new("/dev/zero"),
             &[],
         );
 
         let error = extract_layer_with_metadata(&layer, &target).unwrap_err();
         assert!(error.to_string().contains("reserved internal path"));
-        assert!(std::fs::symlink_metadata(target.join(".aster_rootfs_metadata_v1.json")).is_err());
+        assert!(std::fs::symlink_metadata(target.join(".krun_rootfs_metadata_v1.json")).is_err());
     }
 
     #[cfg(unix)]
@@ -1908,7 +1908,7 @@ mod tests {
         std::fs::write(&outside, b"host-secret").unwrap();
         std::os::unix::fs::symlink(
             "../outside",
-            target.join(".aster_image_metadata_v1.json.tmp"),
+            target.join(".krun_image_metadata_v1.json.tmp"),
         )
         .unwrap();
 
@@ -1916,7 +1916,7 @@ mod tests {
 
         assert_eq!(std::fs::read(&outside).unwrap(), b"host-secret");
         assert!(target.join(image_metadata_relative_path()).is_file());
-        assert!(!target.join(".aster_image_metadata_v1.json.tmp").exists());
+        assert!(!target.join(".krun_image_metadata_v1.json.tmp").exists());
     }
 
     #[cfg(unix)]

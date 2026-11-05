@@ -1,13 +1,13 @@
 //! End-to-end WebSocket handshake and forwarding coverage.
 
-use aster_gateway::config::{
-    EntrypointConfig, GatewayConfig, LoadBalancerConfig, MiddlewareConfig, Protocol, RouterConfig,
-    ServerConfig, ServiceConfig, Strategy,
-};
-use aster_gateway::Gateway;
 use futures_util::{SinkExt, StreamExt};
 use http::header::{AUTHORIZATION, COOKIE, ORIGIN, SEC_WEBSOCKET_PROTOCOL};
 use http::HeaderValue;
+use krun_gateway::config::{
+    EntrypointConfig, GatewayConfig, LoadBalancerConfig, MiddlewareConfig, Protocol, RouterConfig,
+    ServerConfig, ServiceConfig, Strategy,
+};
+use krun_gateway::Gateway;
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -415,7 +415,7 @@ async fn websocket_forwards_headers_and_negotiated_subprotocol() {
                 authorization: header_value(request.headers(), "authorization"),
                 cookie: header_value(request.headers(), "cookie"),
                 origin: header_value(request.headers(), "origin"),
-                custom: header_value(request.headers(), "x-aster-test"),
+                custom: header_value(request.headers(), "x-krun-test"),
                 middleware: header_value(request.headers(), "x-from-middleware"),
                 forwarded_for: header_value(request.headers(), "x-forwarded-for"),
                 forwarded_host: header_value(request.headers(), "x-forwarded-host"),
@@ -458,7 +458,7 @@ async fn websocket_forwards_headers_and_negotiated_subprotocol() {
     );
     request
         .headers_mut()
-        .insert("x-aster-test", HeaderValue::from_static("forward-me"));
+        .insert("x-krun-test", HeaderValue::from_static("forward-me"));
     request.headers_mut().insert(
         SEC_WEBSOCKET_PROTOCOL,
         HeaderValue::from_static("chat,superchat"),

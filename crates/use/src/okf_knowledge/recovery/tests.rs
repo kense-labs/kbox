@@ -1,10 +1,8 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use aster_use_core::{
-    PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScopeKind, PluginSurfaceRef,
-};
-use aster_use_extension::{
+use krun_use_core::{PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScopeKind, PluginSurfaceRef};
+use krun_use_extension::{
     load_okf_bundle_files, ExtensionLifecycleIdentity, ExtensionLifecyclePackage,
 };
 
@@ -15,15 +13,15 @@ use crate::plugin_lifecycle::{
     PluginLifecycleIntentSpec,
 };
 
-const RESTORE_CHILD_ROOT_ENV: &str = "ASTER_USE_TEST_OKF_RESTORE_ROOT";
-const RESTORE_CHILD_BACKUP_ENV: &str = "ASTER_USE_TEST_OKF_RESTORE_BACKUP";
-const RESTORE_CHILD_PLAN_DIGEST_ENV: &str = "ASTER_USE_TEST_OKF_RESTORE_PLAN_DIGEST";
+const RESTORE_CHILD_ROOT_ENV: &str = "KRUN_USE_TEST_OKF_RESTORE_ROOT";
+const RESTORE_CHILD_BACKUP_ENV: &str = "KRUN_USE_TEST_OKF_RESTORE_BACKUP";
+const RESTORE_CHILD_PLAN_DIGEST_ENV: &str = "KRUN_USE_TEST_OKF_RESTORE_PLAN_DIGEST";
 const RESTORE_CRASH_EXIT_CODE: i32 = 86;
 
 #[tokio::test]
 async fn restore_plan_binds_backup_live_database_and_complete_authority() {
     let fixture = RestoreFixture::complete().await;
-    let backup = fixture.root.join("knowledge.aster-okf-backup");
+    let backup = fixture.root.join("knowledge.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -50,9 +48,7 @@ async fn restore_plan_binds_backup_live_database_and_complete_authority() {
 #[tokio::test]
 async fn restore_plan_recovers_missing_binding_from_independent_authority() {
     let missing_binding = RestoreFixture::without_binding().await;
-    let backup = missing_binding
-        .root
-        .join("missing-binding.aster-okf-backup");
+    let backup = missing_binding.root.join("missing-binding.krun-okf-backup");
     missing_binding
         .adapter
         .backup(&missing_binding.scope, &backup)
@@ -92,7 +88,7 @@ async fn restore_plan_recovers_missing_binding_from_independent_authority() {
 #[tokio::test]
 async fn restore_plan_rejects_nonterminal_or_missing_independent_authority() {
     let applying = RestoreFixture::without_binding_applying().await;
-    let backup = applying.root.join("applying.aster-okf-backup");
+    let backup = applying.root.join("applying.krun-okf-backup");
     applying
         .adapter
         .backup(&applying.scope, &backup)
@@ -107,7 +103,7 @@ async fn restore_plan_rejects_nonterminal_or_missing_independent_authority() {
     let unpublished = RestoreFixture::without_binding_without_publication().await;
     let backup = unpublished
         .root
-        .join("missing-binding-unpublished.aster-okf-backup");
+        .join("missing-binding-unpublished.krun-okf-backup");
     unpublished
         .adapter
         .backup(&unpublished.scope, &backup)
@@ -123,7 +119,7 @@ async fn restore_plan_rejects_nonterminal_or_missing_independent_authority() {
 #[tokio::test]
 async fn restore_plan_rejects_staged_or_unpublished_projection_authority() {
     let staged = RestoreFixture::staged().await;
-    let backup = staged.root.join("staged.aster-okf-backup");
+    let backup = staged.root.join("staged.krun-okf-backup");
     staged.adapter.backup(&staged.scope, &backup).await.unwrap();
     let error = OkfKnowledgeRecoveryManager::from_extension_paths(&staged.paths)
         .plan_restore(&staged.scope, &backup)
@@ -132,7 +128,7 @@ async fn restore_plan_rejects_staged_or_unpublished_projection_authority() {
     assert_eq!(error.code, "use.okf.knowledge_restore_nonterminal");
 
     let unpublished = RestoreFixture::complete_without_publication().await;
-    let backup = unpublished.root.join("unpublished.aster-okf-backup");
+    let backup = unpublished.root.join("unpublished.krun-okf-backup");
     unpublished
         .adapter
         .backup(&unpublished.scope, &backup)
@@ -148,7 +144,7 @@ async fn restore_plan_rejects_staged_or_unpublished_projection_authority() {
 #[tokio::test]
 async fn restore_plan_rejects_a_conflicting_current_binding() {
     let fixture = RestoreFixture::complete().await;
-    let backup = fixture.root.join("conflicting-binding.aster-okf-backup");
+    let backup = fixture.root.join("conflicting-binding.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -185,7 +181,7 @@ async fn restore_plan_rejects_a_conflicting_current_binding() {
 #[tokio::test]
 async fn restore_apply_publishes_verified_database_and_terminal_replay_is_read_only() {
     let fixture = RestoreFixture::complete().await;
-    let backup = fixture.root.join("apply.aster-okf-backup");
+    let backup = fixture.root.join("apply.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -207,7 +203,7 @@ async fn restore_apply_publishes_verified_database_and_terminal_replay_is_read_o
     assert_eq!(result.database_after.sha256, plan.backup.database_sha256);
     fixture.adapter.audit(&fixture.scope).await.unwrap();
 
-    let same_id_other_kind = aster_use_core::PlanScope {
+    let same_id_other_kind = krun_use_core::PlanScope {
         kind: PlanScopeKind::User,
         id: fixture.scope.id.clone(),
     };
@@ -240,7 +236,7 @@ async fn restore_apply_publishes_verified_database_and_terminal_replay_is_read_o
     assert!(!fixture
         .paths
         .state_root()
-        .join(aster_use_extension::ACTIVE_STATE_RESTORE_MARKER)
+        .join(krun_use_extension::ACTIVE_STATE_RESTORE_MARKER)
         .exists());
     let database = scope_database_path(&fixture.adapter, &fixture.scope);
     let before_replay = [
@@ -266,7 +262,7 @@ async fn restore_apply_publishes_verified_database_and_terminal_replay_is_read_o
 #[tokio::test]
 async fn restore_apply_requires_exact_review_and_revalidates_authority() {
     let fixture = RestoreFixture::complete().await;
-    let backup = fixture.root.join("reviewed.aster-okf-backup");
+    let backup = fixture.root.join("reviewed.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -289,7 +285,7 @@ async fn restore_apply_requires_exact_review_and_revalidates_authority() {
     assert!(!fixture
         .paths
         .state_root()
-        .join(aster_use_extension::ACTIVE_STATE_RESTORE_MARKER)
+        .join(krun_use_extension::ACTIVE_STATE_RESTORE_MARKER)
         .exists());
 
     let scope_digest = format!("{:x}", Sha256::digest(fixture.scope.id.as_bytes()));
@@ -310,14 +306,14 @@ async fn restore_apply_requires_exact_review_and_revalidates_authority() {
     assert!(!fixture
         .paths
         .state_root()
-        .join(aster_use_extension::ACTIVE_STATE_RESTORE_MARKER)
+        .join(krun_use_extension::ACTIVE_STATE_RESTORE_MARKER)
         .exists());
 }
 
 #[tokio::test]
 async fn restore_apply_recreates_a_missing_scope_database_from_exact_authority() {
     let fixture = RestoreFixture::complete().await;
-    let backup = fixture.root.join("missing-database.aster-okf-backup");
+    let backup = fixture.root.join("missing-database.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -366,7 +362,7 @@ async fn every_restore_checkpoint_recovers_after_process_exit() {
         let fixture = RestoreFixture::complete().await;
         let backup = fixture
             .root
-            .join(format!("checkpoint-{checkpoint}.aster-okf-backup"));
+            .join(format!("checkpoint-{checkpoint}.krun-okf-backup"));
         fixture
             .adapter
             .backup(&fixture.scope, &backup)
@@ -546,7 +542,7 @@ async fn every_restore_checkpoint_recovers_after_process_exit() {
         assert!(!fixture
             .paths
             .state_root()
-            .join(aster_use_extension::ACTIVE_STATE_RESTORE_MARKER)
+            .join(krun_use_extension::ACTIVE_STATE_RESTORE_MARKER)
             .exists());
 
         let operation = manager
@@ -572,7 +568,7 @@ async fn every_restore_checkpoint_recovers_after_process_exit() {
 #[tokio::test]
 async fn missing_binding_restore_recovers_after_binding_file_process_exit() {
     let fixture = RestoreFixture::without_binding().await;
-    let backup = fixture.root.join("binding-file-exit.aster-okf-backup");
+    let backup = fixture.root.join("binding-file-exit.krun-okf-backup");
     fixture
         .adapter
         .backup(&fixture.scope, &backup)
@@ -631,7 +627,7 @@ async fn missing_binding_restore_recovers_after_binding_file_process_exit() {
     assert!(!fixture
         .paths
         .state_root()
-        .join(aster_use_extension::ACTIVE_STATE_RESTORE_MARKER)
+        .join(krun_use_extension::ACTIVE_STATE_RESTORE_MARKER)
         .exists());
 }
 
@@ -647,8 +643,8 @@ async fn restore_checkpoint_crash_child() {
     );
     let plan_digest = std::env::var(RESTORE_CHILD_PLAN_DIGEST_ENV)
         .expect("restore checkpoint child plan digest is missing");
-    let paths = aster_use_extension::ExtensionPaths::new(root.join("data"), root.join("state"));
-    let scope = aster_use_core::PlanScope {
+    let paths = krun_use_extension::ExtensionPaths::new(root.join("data"), root.join("state"));
+    let scope = krun_use_core::PlanScope {
         kind: PlanScopeKind::Workspace,
         id: "restore-workspace".to_owned(),
     };
@@ -661,8 +657,8 @@ async fn restore_checkpoint_crash_child() {
 struct RestoreFixture {
     _temporary: tempfile::TempDir,
     root: PathBuf,
-    paths: aster_use_extension::ExtensionPaths,
-    scope: aster_use_core::PlanScope,
+    paths: krun_use_extension::ExtensionPaths,
+    scope: krun_use_core::PlanScope,
     adapter: Arc<SqliteOkfKnowledgeAdapter>,
 }
 
@@ -699,8 +695,8 @@ impl RestoreFixture {
     ) -> Self {
         let temporary = tempfile::tempdir().unwrap();
         let root = temporary.path().to_path_buf();
-        let paths = aster_use_extension::ExtensionPaths::new(root.join("data"), root.join("state"));
-        let registry = aster_use_extension::ExtensionRegistry::new(paths.clone());
+        let paths = krun_use_extension::ExtensionPaths::new(root.join("data"), root.join("state"));
+        let registry = krun_use_extension::ExtensionRegistry::new(paths.clone());
         let package_root = fixture_package_root();
         let candidate =
             ExtensionLifecyclePackage::prepare_local("acme/knowledge", &package_root, true)
@@ -714,7 +710,7 @@ impl RestoreFixture {
             generation,
         )
         .unwrap();
-        let scope = aster_use_core::PlanScope {
+        let scope = krun_use_core::PlanScope {
             kind: PlanScopeKind::Workspace,
             id: "restore-workspace".to_owned(),
         };
@@ -838,7 +834,7 @@ impl RestoreFixture {
 
 fn scope_database_path(
     adapter: &SqliteOkfKnowledgeAdapter,
-    scope: &aster_use_core::PlanScope,
+    scope: &krun_use_core::PlanScope,
 ) -> PathBuf {
     adapter
         .scope_directory(scope)

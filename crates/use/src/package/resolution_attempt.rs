@@ -1,15 +1,15 @@
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     PlanScope, PluginOperationAction, PluginPackageId, PluginPackageLock, PluginReleaseChannel,
     UseResult, MAX_PLUGIN_PLAN_ITEMS,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     PackageRegistryResolutionObserver, TrustedRegistry, VerifiedRegistryMetadata,
     MAX_CONFIGURED_REGISTRY_SOURCES,
 };
-use async_trait::async_trait;
 use semver::{Version, VersionReq};
 use serde::{Deserialize, Serialize};
 
@@ -22,7 +22,7 @@ use super::planning_attempt_io::{
     validate_existing_directory_chain, write_json, PackagePlanningLock, PlanningAttemptKind,
 };
 
-const RESOLUTION_ATTEMPT_SCHEMA: &str = "aster.use.plugin-resolution-attempt.v1";
+const RESOLUTION_ATTEMPT_SCHEMA: &str = "krun.use.plugin-resolution-attempt.v1";
 const MAX_RESOLUTION_ATTEMPT_BYTES: u64 = 256 * 1024;
 const MAX_REGISTRY_PACKAGE_TARGETS: u64 = 10_000;
 
@@ -764,6 +764,6 @@ fn valid_sha256(value: &str) -> bool {
     })
 }
 
-fn store_invalid() -> aster_use_core::UseError {
+fn store_invalid() -> krun_use_core::UseError {
     super::planning_attempt_io::store_invalid(PlanningAttemptKind::Resolution)
 }

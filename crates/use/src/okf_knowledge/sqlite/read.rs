@@ -12,7 +12,7 @@ use super::search::validate_active_projection;
 pub(super) fn read(
     connection: &Connection,
     request: &OkfKnowledgeReadRequest,
-) -> aster_use_core::UseResult<OkfKnowledgeReadResponse> {
+) -> krun_use_core::UseResult<OkfKnowledgeReadResponse> {
     request.validate()?;
     validate_active_projection(connection, &request.projection)?;
 
@@ -83,6 +83,6 @@ pub(super) fn read(
     OkfKnowledgeReadResponse::new(request, content)
 }
 
-fn read_error(message: impl Into<String>) -> aster_use_core::UseError {
-    aster_use_core::UseError::new("use.okf.knowledge_read_failed", message)
+fn read_error(message: impl Into<String>) -> krun_use_core::UseError {
+    krun_use_core::UseError::new("use.okf.knowledge_read_failed", message)
 }

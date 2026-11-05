@@ -2,20 +2,20 @@
 
 //! Opt-in CRI smoke test driven through `crictl`.
 //!
-//! Run manually on a Linux/macOS host that can start Aster Box microVMs.
+//! Run manually on a Linux/macOS host that can start Krun Box microVMs.
 //! The smoke flow starts one pod sandbox with two containers:
 //!
 //! ```ignore
-//! ASTER_BOX_CRI_SMOKE=1 \
-//! cargo test -p aster-box-cri --test crictl_smoke -- --ignored --nocapture
+//! KRUN_BOX_CRI_SMOKE=1 \
+//! cargo test -p krun-box-cri --test crictl_smoke -- --ignored --nocapture
 //! ```
 //!
 //! Optional environment:
-//! - `ASTER_BOX_CRI_CRICTL`: path to `crictl` (default: `crictl` from PATH)
-//! - `ASTER_BOX_CRI_SMOKE_IMAGE`: container workload image (default: `busybox:latest`)
-//! - `ASTER_BOX_CRI_SMOKE_AGENT_IMAGE`: sandbox agent image
-//! - `ASTER_BOX_CRI_SMOKE_IMAGE_DIR`: reusable Aster image store directory
-//! - `ASTER_BOX_CRI_SMOKE_SKIP_PULL=1`: use an image already present in the store
+//! - `KRUN_BOX_CRI_CRICTL`: path to `crictl` (default: `crictl` from PATH)
+//! - `KRUN_BOX_CRI_SMOKE_IMAGE`: container workload image (default: `busybox:latest`)
+//! - `KRUN_BOX_CRI_SMOKE_AGENT_IMAGE`: sandbox agent image
+//! - `KRUN_BOX_CRI_SMOKE_IMAGE_DIR`: reusable Krun image store directory
+//! - `KRUN_BOX_CRI_SMOKE_SKIP_PULL=1`: use an image already present in the store
 
 use std::error::Error;
 use std::ffi::OsStr;
@@ -24,17 +24,17 @@ use std::process::{Child, Command, Stdio};
 use std::thread;
 use std::time::{Duration, Instant};
 
-const SMOKE_ENABLED_ENV: &str = "ASTER_BOX_CRI_SMOKE";
-const CRICTL_ENV: &str = "ASTER_BOX_CRI_CRICTL";
-const WORKLOAD_IMAGE_ENV: &str = "ASTER_BOX_CRI_SMOKE_IMAGE";
-const AGENT_IMAGE_ENV: &str = "ASTER_BOX_CRI_SMOKE_AGENT_IMAGE";
-const IMAGE_DIR_ENV: &str = "ASTER_BOX_CRI_SMOKE_IMAGE_DIR";
-const SKIP_PULL_ENV: &str = "ASTER_BOX_CRI_SMOKE_SKIP_PULL";
+const SMOKE_ENABLED_ENV: &str = "KRUN_BOX_CRI_SMOKE";
+const CRICTL_ENV: &str = "KRUN_BOX_CRI_CRICTL";
+const WORKLOAD_IMAGE_ENV: &str = "KRUN_BOX_CRI_SMOKE_IMAGE";
+const AGENT_IMAGE_ENV: &str = "KRUN_BOX_CRI_SMOKE_AGENT_IMAGE";
+const IMAGE_DIR_ENV: &str = "KRUN_BOX_CRI_SMOKE_IMAGE_DIR";
+const SKIP_PULL_ENV: &str = "KRUN_BOX_CRI_SMOKE_SKIP_PULL";
 const DEFAULT_WORKLOAD_IMAGE: &str = "busybox:latest";
 const DEFAULT_AGENT_IMAGE: &str = "docker.io/library/alpine:latest";
 const RUN_POD_SANDBOX_CANCEL_TIMEOUT: &str = "120s";
-const LOG_MARKER_ONE: &str = "aster-cri-smoke-one-ready";
-const LOG_MARKER_TWO: &str = "aster-cri-smoke-two-ready";
+const LOG_MARKER_ONE: &str = "krun-cri-smoke-one-ready";
+const LOG_MARKER_TWO: &str = "krun-cri-smoke-two-ready";
 
 #[test]
 #[ignore = "requires crictl, a CRI-capable host, network/image availability, and microVM support"]
@@ -48,8 +48,8 @@ fn test_crictl_multi_container_pod_smoke() -> Result<(), Box<dyn Error>> {
     require_crictl(&crictl)?;
 
     let cri_bin = cri_binary_path();
-    let tmp = tempfile::Builder::new().prefix("aster-cri-smoke").tempdir()?;
-    let socket_path = tmp.path().join("aster-box.sock");
+    let tmp = tempfile::Builder::new().prefix("krun-cri-smoke").tempdir()?;
+    let socket_path = tmp.path().join("krun-box.sock");
     let image_dir = std::env::var_os(IMAGE_DIR_ENV)
         .map(PathBuf::from)
         .unwrap_or_else(|| tmp.path().join("images"));
@@ -81,14 +81,14 @@ fn test_crictl_multi_container_pod_smoke() -> Result<(), Box<dyn Error>> {
     write_container_config(
         &first_container_config,
         &workload_image,
-        "aster-cri-smoke-container-one",
+        "krun-cri-smoke-container-one",
         "container-one.log",
         LOG_MARKER_ONE,
     )?;
     write_container_config(
         &second_container_config,
         &workload_image,
-        "aster-cri-smoke-container-two",
+        "krun-cri-smoke-container-two",
         "container-two.log",
         LOG_MARKER_TWO,
     )?;
@@ -163,7 +163,7 @@ fn test_crictl_multi_container_pod_smoke() -> Result<(), Box<dyn Error>> {
 
         let pod_status = run_crictl(&crictl, &socket_path, &["inspectp", sandbox_id.as_str()])?;
         assert!(
-            pod_status.contains("aster-cri-smoke-pod"),
+            pod_status.contains("krun-cri-smoke-pod"),
             "inspectp output did not include smoke pod metadata; output:\n{pod_status}"
         );
 
@@ -208,7 +208,7 @@ impl Drop for ChildGuard {
 }
 
 fn cri_binary_path() -> PathBuf {
-    if let Some(path) = option_env!("CARGO_BIN_EXE_aster-box-cri") {
+    if let Some(path) = option_env!("CARGO_BIN_EXE_krun-box-cri") {
         return PathBuf::from(path);
     }
 
@@ -216,7 +216,7 @@ fn cri_binary_path() -> PathBuf {
     path.pop();
     path.push("target");
     path.push("debug");
-    path.push("aster-box-cri");
+    path.push("krun-box-cri");
     path
 }
 
@@ -327,14 +327,14 @@ fn write_pod_config(path: &Path, log_dir: &Path) -> Result<(), Box<dyn Error>> {
     let content = format!(
         r#"{{
   "metadata": {{
-    "name": "aster-cri-smoke-pod",
+    "name": "krun-cri-smoke-pod",
     "namespace": "default",
-    "uid": "aster-cri-smoke-pod-uid",
+    "uid": "krun-cri-smoke-pod-uid",
     "attempt": 0
   }},
   "log_directory": "{}",
   "labels": {{
-    "aster.box/smoke": "true"
+    "krun.box/smoke": "true"
   }},
   "annotations": {{}},
   "linux": {{}}
@@ -365,7 +365,7 @@ fn write_container_config(
   "command": ["/bin/sh", "-c", "printf '{}\\n'"],
   "log_path": "{}",
   "labels": {{
-    "aster.box/smoke": "true"
+    "krun.box/smoke": "true"
   }},
   "annotations": {{}},
   "linux": {{}}

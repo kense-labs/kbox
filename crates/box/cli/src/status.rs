@@ -42,8 +42,8 @@ pub fn require_active(record: &BoxRecord, action: &str) -> Result<(), String> {
         return Ok(());
     }
 
-    let hint = status_hint(record)
-        .unwrap_or_else(|| "Use `aster-box ps -a` to inspect state.".to_string());
+    let hint =
+        status_hint(record).unwrap_or_else(|| "Use `krun-box ps -a` to inspect state.".to_string());
     Err(format!(
         "Cannot {action} box {} because it is {}. {hint}",
         record.name, record.status
@@ -109,23 +109,23 @@ pub fn status_details(record: &BoxRecord) -> StatusDetails {
 fn status_hint(record: &BoxRecord) -> Option<String> {
     match record.status.as_str() {
         "created" => Some(format!(
-            "Use `aster-box start {}` to start it or `aster-box rm {}` to remove it.",
+            "Use `krun-box start {}` to start it or `krun-box rm {}` to remove it.",
             record.name, record.name
         )),
         "paused" => Some(format!(
-            "Use `aster-box unpause {}` to resume it or `aster-box stop {}` to stop it.",
+            "Use `krun-box unpause {}` to resume it or `krun-box stop {}` to stop it.",
             record.name, record.name
         )),
         "stopped" => Some(format!(
-            "Use `aster-box start {}` to start it again or `aster-box rm {}` to remove it.",
+            "Use `krun-box start {}` to start it again or `krun-box rm {}` to remove it.",
             record.name, record.name
         )),
         "dead" if record.exit_code == Some(0) => Some(format!(
-            "The box exited successfully. Run `aster-box logs {}` to review output, then `aster-box restart {}` or `aster-box rm {}`.",
+            "The box exited successfully. Run `krun-box logs {}` to review output, then `krun-box restart {}` or `krun-box rm {}`.",
             record.name, record.name, record.name
         )),
         "dead" => Some(format!(
-            "Run `aster-box logs {}` to inspect failure output, then `aster-box restart {}` or `aster-box rm {}`.",
+            "Run `krun-box logs {}` to inspect failure output, then `krun-box restart {}` or `krun-box rm {}`.",
             record.name, record.name, record.name
         )),
         _ => None,
@@ -222,7 +222,7 @@ mod tests {
 
         assert_eq!(details.summary, "paused");
         assert!(details.active);
-        assert!(details.hint.unwrap().contains("aster-box unpause box"));
+        assert!(details.hint.unwrap().contains("krun-box unpause box"));
     }
 
     #[test]
@@ -251,6 +251,6 @@ mod tests {
         let error = require_active(&record, "show stats for").unwrap_err();
 
         assert!(error.contains("Cannot show stats for box box because it is stopped"));
-        assert!(error.contains("aster-box start box"));
+        assert!(error.contains("krun-box start box"));
     }
 }

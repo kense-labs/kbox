@@ -4,8 +4,8 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Arc;
 
-use aster_use::package::{PackageHostManager, PackageRegistryAccess};
-use aster_use_core::{
+use krun_use::package::{PackageHostManager, PackageRegistryAccess};
+use krun_use_core::{
     PackageSurfaceKind, PlanScopeKind, PluginHostApplyRequest, PluginHostEnablementPlanRequest,
     PluginHostEnablementPlanStatus, PluginHostManager, PluginHostPlanRequest, PluginHostPlanResult,
     PluginManagedScope, PluginOperationAction, PluginOperationConfirmation, PluginPackageId,
@@ -13,13 +13,13 @@ use aster_use_core::{
     PLUGIN_HOST_ENABLEMENT_PLAN_REQUEST_SCHEMA, PLUGIN_HOST_PLAN_REQUEST_SCHEMA,
     PLUGIN_MANAGED_SCOPE_SCHEMA_V2, PLUGIN_OPERATION_CONFIRMATION_SCHEMA,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     PluginCatalogSearch, RegistrySourceInput, RegistrySourceStore, VerifiedTargetCachePolicy,
 };
 
-const HOST_CHILD_HOME_ENV: &str = "ASTER_USE_TEST_HOST_GRANT_PROCESS_HOME";
-const HOST_CHILD_APPLY_REQUEST_ENV: &str = "ASTER_USE_TEST_HOST_GRANT_PROCESS_APPLY_REQUEST";
-const HOST_CHILD_AUTHORIZATION_MARKER_ENV: &str = "ASTER_USE_TEST_HOST_GRANT_PROCESS_AUTH_MARKER";
+const HOST_CHILD_HOME_ENV: &str = "KRUN_USE_TEST_HOST_GRANT_PROCESS_HOME";
+const HOST_CHILD_APPLY_REQUEST_ENV: &str = "KRUN_USE_TEST_HOST_GRANT_PROCESS_APPLY_REQUEST";
+const HOST_CHILD_AUTHORIZATION_MARKER_ENV: &str = "KRUN_USE_TEST_HOST_GRANT_PROCESS_AUTH_MARKER";
 const HOST_BUILD_ID: &str = "use:grant-process-host";
 const HOST_ASSIGNMENT_GENERATION: u64 = 19;
 

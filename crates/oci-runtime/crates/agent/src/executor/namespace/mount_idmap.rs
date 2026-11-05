@@ -5,7 +5,7 @@ use std::os::fd::AsRawFd;
 use std::os::unix::net::UnixStream;
 use std::path::Path;
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use super::join::validate_namespace_type;
 use super::user::install_idmap_user_mappings;
@@ -325,7 +325,7 @@ fn idmap_error(code: ErrorCode, message: impl Into<String>) -> Error {
 mod tests {
     use super::{deduplicated_mappings, error_code, IdmapPlan};
     use crate::executor::namespace::IdMapping;
-    use aster_oci_sdk::ErrorCode;
+    use krun_oci_sdk::ErrorCode;
 
     fn mapping(container_id: u32, host_id: u32) -> IdMapping {
         IdMapping {

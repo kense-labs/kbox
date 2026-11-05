@@ -1,11 +1,11 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentInheritedDescriptorSchema, AgentProcess, AgentRecoveryRecord, AgentState,
 };
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use krun_oci_sdk::{
     canonical_json_bytes, ContainerStats, ErrorCode, ExitStatus, FileResponse, FilesystemResponse,
     OperationId, ProcessId, ProcessRecord, ProcessTarget, Result,
 };
@@ -388,7 +388,7 @@ pub(super) struct ContainerKey {
 }
 
 impl ContainerKey {
-    pub(super) fn from_target(target: &aster_oci_sdk::ContainerTarget) -> Result<Self> {
+    pub(super) fn from_target(target: &krun_oci_sdk::ContainerTarget) -> Result<Self> {
         let generation = target.generation.ok_or_else(|| {
             executor_error(
                 ErrorCode::InvalidArgument,
@@ -410,7 +410,7 @@ impl ContainerKey {
 
 #[derive(Debug)]
 pub(super) struct ContainerRecord {
-    pub(super) target: aster_oci_sdk::ContainerTarget,
+    pub(super) target: krun_oci_sdk::ContainerTarget,
     pub(super) config_digest: String,
     pub(super) status: ContainerState,
     pub(super) paused: bool,
@@ -729,7 +729,7 @@ pub(super) enum RecordedOutcome {
 }
 
 impl PendingOperationKind {
-    fn error_outcome(self, error: aster_oci_sdk::Error) -> RecordedOutcome {
+    fn error_outcome(self, error: krun_oci_sdk::Error) -> RecordedOutcome {
         match self {
             Self::State => RecordedOutcome::State(Err(error)),
             Self::Unit => RecordedOutcome::Unit(Err(error)),
@@ -752,7 +752,7 @@ impl RecordedOutcome {
     }
 }
 
-fn reused_operation(operation_id: &OperationId) -> aster_oci_sdk::Error {
+fn reused_operation(operation_id: &OperationId) -> krun_oci_sdk::Error {
     executor_error(
         ErrorCode::Conflict,
         format!("guest operation ID {operation_id} was reused across operation kinds"),
@@ -760,7 +760,7 @@ fn reused_operation(operation_id: &OperationId) -> aster_oci_sdk::Error {
 }
 
 fn process_record(
-    container: &aster_oci_sdk::ContainerTarget,
+    container: &krun_oci_sdk::ContainerTarget,
     process_id: ProcessId,
     pid: i32,
     terminal: bool,
@@ -789,9 +789,9 @@ fn process_record(
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_agent_protocol::{AgentInheritedDescriptorSchema, AgentProcess, AgentState};
-    use aster_oci_sdk::oci_spec::runtime::LinuxResources;
-    use aster_oci_sdk::{
+    use krun_oci_agent_protocol::{AgentInheritedDescriptorSchema, AgentProcess, AgentState};
+    use krun_oci_sdk::oci_spec::runtime::LinuxResources;
+    use krun_oci_sdk::{
         ContainerId, ContainerTarget, ErrorCode, FileResponse, FilesystemResponse, Generation,
         OperationId, ProcessId, ProcessTarget,
     };
@@ -959,7 +959,7 @@ mod tests {
         );
         let result = AgentState::new(
             target,
-            aster_oci_sdk::oci_spec::runtime::ContainerState::Running,
+            krun_oci_sdk::oci_spec::runtime::ContainerState::Running,
             Some(1234),
             format!("sha256:{}", "a".repeat(64)),
         )
@@ -1268,8 +1268,8 @@ mod tests {
     #[test]
     fn create_fingerprint_includes_only_the_stable_descriptor_schema() {
         let request = json!({"target": "container-1"});
-        let first_schema = AgentInheritedDescriptorSchema::aster_box_control_v1();
-        let reopened_equivalent = AgentInheritedDescriptorSchema::aster_box_control_v1();
+        let first_schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+        let reopened_equivalent = AgentInheritedDescriptorSchema::krun_box_control_v1();
         let first = RecordedRequest::create(&request, Some(&first_schema))
             .expect("fingerprint descriptor create");
         let retry = RecordedRequest::create(&request, Some(&reopened_equivalent))

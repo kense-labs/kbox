@@ -11,7 +11,7 @@
 
 [package]
 edition = "2021"
-name = "aster-sentry"
+name = "krun-sentry"
 version = "0.7.0"
 publish = false
 build = false
@@ -20,13 +20,13 @@ autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Tiered (L1 rules / L2 LLM / L3 agent) runtime security control for AI agents, built on aster-observer."
+description = "Tiered (L1 rules / L2 LLM / L3 agent) runtime security control for AI agents, built on krun-observer."
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/Sentry"
+repository = "https://github.com/kense-labs/krun"
 
 [lib]
-name = "aster_sentry"
+name = "krun_sentry"
 path = "src/lib.rs"
 
 [[bin]]

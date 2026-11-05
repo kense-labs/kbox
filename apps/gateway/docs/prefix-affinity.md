@@ -8,7 +8,7 @@ existing selection behavior.
 
 ```acl
 console_catalog "published" {
-  api_service = "aster-api"
+  api_service = "krun-api"
   poll_interval = 30
   prefix_affinity = true
   prefix_parallelism = 2

@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{BufReader, Read};
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use sha2::{Digest, Sha256};
 
 use super::package::{io_error, MAX_PACKAGE_BYTES, MAX_PACKAGE_FILES};
@@ -43,7 +43,7 @@ fn hash_package(root: &Path) -> UseResult<PackageFingerprint> {
     let bytes = files.iter().map(|file| file.size).sum();
 
     let mut digest = Sha256::new();
-    digest.update(b"aster-use-expanded-package-v1\0");
+    digest.update(b"krun-use-expanded-package-v1\0");
     let file_count = u64::try_from(files.len()).map_err(|_| package_limit_error())?;
     for package_file in files {
         let path_bytes = package_file.normalized.as_bytes();
@@ -98,7 +98,7 @@ fn collect_files(
 ) -> UseResult<()> {
     let directory_metadata = std::fs::symlink_metadata(directory)
         .map_err(|error| io_error("inspect extension package directory", directory, error))?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&directory_metadata) {
+    if krun_use_core::metadata_is_link_or_reparse_point(&directory_metadata) {
         return Err(UseError::new(
             "use.extension.package_symlink",
             format!(
@@ -128,7 +128,7 @@ fn collect_files(
         let path = child.path();
         let metadata = std::fs::symlink_metadata(&path)
             .map_err(|error| io_error("inspect extension package entry", &path, error))?;
-        if aster_use_core::metadata_is_link_or_reparse_point(&metadata) {
+        if krun_use_core::metadata_is_link_or_reparse_point(&metadata) {
             return Err(UseError::new(
                 "use.extension.package_symlink",
                 format!(

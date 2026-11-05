@@ -41,7 +41,7 @@ refusal were resolved without granting blanket host filesystem access.
 ## Remaining
 
 This is an upstream execution-boundary improvement. Workspaces still need their
-versioned directory transport and Core/Aster integration. Default macOS Bash,
+versioned directory transport and Core/Krun integration. Default macOS Bash,
 mediated networking, release readiness, Windows qualification, and the complete
 product objective are not claimed complete.
 
@@ -67,4 +67,4 @@ digests. The public Host Service gate exited zero with status `available`:
 `public-host-service.json` is the unmodified gate report. `public-invocation.json`
 binds the invocation, source, artifact digests, exit code, and environment
 probe. This establishes the tested SDK/runtime boundary; it does not establish
-default Aster Bash availability or production/release readiness.
+default Krun Bash availability or production/release readiness.

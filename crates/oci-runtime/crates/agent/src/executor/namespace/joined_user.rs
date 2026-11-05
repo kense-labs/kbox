@@ -6,7 +6,7 @@ use std::os::unix::net::UnixStream;
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_sdk::{ErrorCode, Result};
+use krun_oci_sdk::{ErrorCode, Result};
 
 use super::join::validate_namespace_type;
 use super::user::parse_mapping_file;
@@ -377,7 +377,7 @@ fn terminate_and_reap(pid: libc::pid_t) {
     }
 }
 
-fn last_joined_error(operation: &str) -> aster_oci_sdk::Error {
+fn last_joined_error(operation: &str) -> krun_oci_sdk::Error {
     let error = io::Error::last_os_error();
     joined_error(error_code(&error), format!("{operation} failed: {error}"))
 }
@@ -392,7 +392,7 @@ fn error_code(error: &io::Error) -> ErrorCode {
     }
 }
 
-fn joined_error(code: ErrorCode, message: impl Into<String>) -> aster_oci_sdk::Error {
+fn joined_error(code: ErrorCode, message: impl Into<String>) -> krun_oci_sdk::Error {
     namespace_error(code, message)
 }
 

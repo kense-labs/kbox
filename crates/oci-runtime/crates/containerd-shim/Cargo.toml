@@ -1,16 +1,16 @@
 [package]
-name = "aster-oci-containerd-shim"
+name = "krun-oci-containerd-shim"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "containerd runtime-v2 shim backed exclusively by the Aster OCI SDK"
+description = "containerd runtime-v2 shim backed exclusively by the Krun OCI SDK"
 
 [[bin]]
-name = "containerd-shim-aster-oci-v2"
+name = "containerd-shim-krun-oci-v2"
 path = "src/main.rs"
 
 [dependencies]
-aster-oci-sdk = { path = "../sdk" }
+krun-oci-sdk = { path = "../sdk" }
 async-trait.workspace = true
 getrandom.workspace = true
 log = "0.4"

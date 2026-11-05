@@ -1,6 +1,6 @@
 use std::io;
 
-use aster_use_core::{PlanScope, UseResult};
+use krun_use_core::{PlanScope, UseResult};
 use tokio::fs;
 
 use super::{
@@ -34,7 +34,7 @@ impl RestoreOperationStore {
                 ));
             }
         };
-        if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
+        if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
             return Err(operation_invalid(
                 "The Knowledge restore scope path is not an owned directory.",
             ));
@@ -60,7 +60,7 @@ impl RestoreOperationStore {
                 operation_io("inspect Knowledge restore operation", &entry.path(), error)
             })?;
             if !valid_digest_segment(&name)
-                || aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                || krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 || !metadata.is_dir()
             {
                 return Err(operation_invalid(

@@ -1,4 +1,4 @@
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportFaultPoint, AgentTransportOperationStage,
     AGENT_PROTOCOL_VERSION_MAX,
 };
@@ -6,9 +6,9 @@ use aster_oci_agent_protocol::{
     all(target_os = "macos", target_arch = "aarch64"),
     all(target_os = "windows", target_arch = "x86_64")
 )))]
-use aster_oci_core::CapabilityStatus;
-use aster_oci_core::HostPlatform;
-use aster_oci_sdk::FilesystemOp;
+use krun_oci_core::CapabilityStatus;
+use krun_oci_core::HostPlatform;
+use krun_oci_sdk::FilesystemOp;
 
 use super::{
     OciVmOperationReopenReplacementReport,
@@ -106,7 +106,7 @@ impl OciVmOperationReopenReplacementReport {
             && self
                 .filesystem_path
                 .as_deref()
-                .is_some_and(|path| path.starts_with("/tmp/.aster-oci-filesystem-reopen-"))
+                .is_some_and(|path| path.starts_with("/tmp/.krun-oci-filesystem-reopen-"))
             && self.filesystem_destination.is_none()
             && self.filesystem_depth == Some(0)
             && self.filesystem_user.is_none()
@@ -118,7 +118,7 @@ impl OciVmOperationReopenReplacementReport {
             && self.negotiated_protocol == Some(AGENT_PROTOCOL_VERSION_MAX)
             && self.injected_point.as_deref() == Some(expected_point.as_str())
             && self.fault_crossings == 1
-            && self.first_operation_error_code == Some(aster_oci_sdk::ErrorCode::Unavailable)
+            && self.first_operation_error_code == Some(krun_oci_sdk::ErrorCode::Unavailable)
             && expected_error_operation
             && self.first_operation_error_retryable
             && !self.first_operation_response_received
@@ -188,11 +188,11 @@ impl OciVmOperationReopenReplacementReport {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_agent_protocol::{
+    use krun_oci_agent_protocol::{
         AgentOperation, AgentTransportOperationStage, AGENT_PROTOCOL_VERSION_MAX,
     };
-    use aster_oci_core::{CapabilityStatus, HostPlatform};
-    use aster_oci_sdk::{ContainerId, ErrorCode, Generation, OperationId};
+    use krun_oci_core::{CapabilityStatus, HostPlatform};
+    use krun_oci_sdk::{ContainerId, ErrorCode, Generation, OperationId};
     use serde_json::json;
 
     use super::OciVmOperationReopenReplacementReport;
@@ -206,7 +206,7 @@ mod tests {
         );
         report.status = CapabilityStatus::Available;
         report.bundle_loaded = true;
-        report.filesystem_path = Some("/tmp/.aster-oci-filesystem-reopen-test".to_string());
+        report.filesystem_path = Some("/tmp/.krun-oci-filesystem-reopen-test".to_string());
         report.qualification_operation_id =
             Some(OperationId::new("filesystem").expect("Filesystem ID"));
         report.setup_create_operation_id =
@@ -287,7 +287,7 @@ mod tests {
         let mut report = AgentVmSmokeReport::initial(HostPlatform::Macos);
         report.status = CapabilityStatus::Available;
         report.endpoint_bound = true;
-        report.endpoint_name = Some(format!("aster-oci-agent-{name}"));
+        report.endpoint_name = Some(format!("krun-oci-agent-{name}"));
         report.shim_spawned = true;
         report.shim_process_id = Some(shim);
         report.bridge_process_id = Some(bridge);

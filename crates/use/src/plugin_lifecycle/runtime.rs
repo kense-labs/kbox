@@ -1,18 +1,18 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use aster_runtime::contract::{
+use async_trait::async_trait;
+use krun_runtime::contract::{
     RuntimeObservation, RuntimeServiceEndpoint, RuntimeUnitClass, RuntimeUnitState,
 };
-use aster_runtime::{ProviderId, RuntimeClientRegistry};
-use aster_use_core::{
+use krun_runtime::{ProviderId, RuntimeClientRegistry};
+use krun_use_core::{
     PackageSurfaceKind, PlanQualifiedSurfaceRef, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     inspect_mcp_surface_files, inspect_tool_surface_files, PluginMcpLaunch, PluginMcpSurface,
     ToolSurface, ToolTaskSource, ToolWorkload,
 };
-use async_trait::async_trait;
 use sha2::{Digest, Sha256};
 
 use crate::plugin_runtime::{

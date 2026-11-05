@@ -2,12 +2,12 @@ use super::decision::{
     DecisionDefinition, DecisionError, DecisionRequest, DecisionResponse, DecisionResult,
     DecisionService, OrdinalResult,
 };
-use aster_apofasi::infer::{DeviceRequest, NeuralEngine};
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::infer::{DeviceRequest, NeuralEngine};
+use krun_apofasi::{
     Answer, Criteria, DecisionKind, Question, State, StateTruncation, SystemOneRequest,
     SystemOneResponse,
 };
-use indexmap::IndexMap;
 use serde_json::json;
 use std::collections::BTreeMap;
 use std::sync::Arc;

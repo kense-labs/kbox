@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="2240" height="1840" viewBox="0 0 2240 1840" role="img" aria-labelledby="title desc">
-<title id="title">Aster 沙箱、观测与干预架构</title>
+<title id="title">Krun 沙箱、观测与干预架构</title>
 <desc id="desc">客户端进入 Core 命令管理、Box 环境管理与 Gateway 通信检测。进程命令沙箱和代码隔离执行沙箱按管理粒度分组，底层分别绑定共享宿主内核或独立内核虚拟机。外部 Linux Observer、执行审计、Gateway 和可选 Power SAE 提供观测。Sentry 分级判定后经 Gateway 门控或 Enforcer 和外部 Guard 落实干预。日志指标与人工策略、生命周期控制分别核对结果。活动执行的自动撤权集成尚未实现，图中生命周期控制为人工入口。</desc>
 <defs>
 <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#52647e"/></marker>
@@ -12,7 +12,7 @@ text{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Noto Sans CJK S
 .link{fill:none;stroke:#52647e;stroke-width:2.4;marker-end:url(#arrow);stroke-linejoin:round}.policy{fill:none;stroke:#af7a32;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#policyArrow);stroke-linejoin:round}
 </style>
 <rect width="2240" height="1840" fill="#f5f7fc"/>
-<text x="60" y="68" class="title">Aster 沙箱、观测与干预架构</text>
+<text x="60" y="68" class="title">Krun 沙箱、观测与干预架构</text>
 <g id="ingress" data-node="true"><rect x="60" y="140" width="2120" height="90" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
 <text x="84" y="176" class="heading">接入层</text>
 <text x="84" y="212" class="body">Studio · CLI · SDK · Agent / Harness</text>

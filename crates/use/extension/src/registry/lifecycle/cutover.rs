@@ -1,4 +1,4 @@
-use aster_use_core::{PluginPackageLock, UseError, UseResult};
+use krun_use_core::{PluginPackageLock, UseError, UseResult};
 use sha2::{Digest, Sha256};
 
 use super::model::{

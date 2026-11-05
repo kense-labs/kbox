@@ -22,7 +22,7 @@ fn unused_address() -> SocketAddr {
 
 fn spawn_server(address: SocketAddr, state: &Path) -> Server {
     Server(
-        Command::new(env!("CARGO_BIN_EXE_aster-box"))
+        Command::new(env!("CARGO_BIN_EXE_krun-box"))
             .args([
                 "scale-api",
                 "--address",

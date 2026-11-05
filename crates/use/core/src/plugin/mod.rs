@@ -118,29 +118,29 @@ pub use planning_bundle::{
 };
 pub use resolved_grant_changes::{ResolvedWorkspaceGrant, ResolvedWorkspaceGrantChangeSet};
 
-pub const PLUGIN_CATALOG_SCHEMA_V3: &str = "aster.use.plugin-catalog.v3";
+pub const PLUGIN_CATALOG_SCHEMA_V3: &str = "krun.use.plugin-catalog.v3";
 pub const INSTALLED_PLUGIN_PLAN_EVIDENCE_SCHEMA: &str =
-    "aster.use.installed-plugin-plan-evidence.v1";
-pub const PLUGIN_MANAGER_TOOLSET_SCHEMA_V4: &str = "aster.use.plugin-manager-tools.v4";
-pub const PLUGIN_OPERATION_CONFIRMATION_SCHEMA: &str = "aster.use.plugin-operation-confirmation.v1";
+    "krun.use.installed-plugin-plan-evidence.v1";
+pub const PLUGIN_MANAGER_TOOLSET_SCHEMA_V4: &str = "krun.use.plugin-manager-tools.v4";
+pub const PLUGIN_OPERATION_CONFIRMATION_SCHEMA: &str = "krun.use.plugin-operation-confirmation.v1";
 /// Current draft schema for every package lifecycle operation.
-pub const PLUGIN_OPERATION_PLAN_DRAFT_SCHEMA_V3: &str = "aster.use.plugin-operation-plan-draft.v3";
+pub const PLUGIN_OPERATION_PLAN_DRAFT_SCHEMA_V3: &str = "krun.use.plugin-operation-plan-draft.v3";
 /// Current plan schema for install, upgrade, uninstall, enable, and disable.
-pub const PLUGIN_OPERATION_PLAN_SCHEMA_V4: &str = "aster.use.plugin-operation-plan.v4";
-pub const PLUGIN_PLANNING_BUNDLE_SCHEMA: &str = "aster.use.plugin-planning-bundle.v1";
-pub const PLUGIN_PERMISSION_SCHEMA: &str = "aster.use.plugin-permissions.v1";
-pub const PLUGIN_GRANT_CONFIRMATION_SCHEMA: &str = "aster.use.plugin-grant-confirmation.v1";
+pub const PLUGIN_OPERATION_PLAN_SCHEMA_V4: &str = "krun.use.plugin-operation-plan.v4";
+pub const PLUGIN_PLANNING_BUNDLE_SCHEMA: &str = "krun.use.plugin-planning-bundle.v1";
+pub const PLUGIN_PERMISSION_SCHEMA: &str = "krun.use.plugin-permissions.v1";
+pub const PLUGIN_GRANT_CONFIRMATION_SCHEMA: &str = "krun.use.plugin-grant-confirmation.v1";
 pub const PLUGIN_WORKSPACE_GRANT_CHANGE_SET_SCHEMA: &str =
-    "aster.use.plugin-workspace-grant-changes.v1";
+    "krun.use.plugin-workspace-grant-changes.v1";
 pub const PLUGIN_WORKSPACE_GRANT_PROPOSAL_SCHEMA: &str =
-    "aster.use.plugin-workspace-grant-proposal.v1";
+    "krun.use.plugin-workspace-grant-proposal.v1";
 pub const PLUGIN_WORKSPACE_GRANT_SNAPSHOT_SCHEMA: &str =
-    "aster.use.plugin-workspace-grant-snapshot.v1";
-pub const PLUGIN_WORKSPACE_GRANT_SCHEMA: &str = "aster.use.plugin-workspace-grant.v1";
+    "krun.use.plugin-workspace-grant-snapshot.v1";
+pub const PLUGIN_WORKSPACE_GRANT_SCHEMA: &str = "krun.use.plugin-workspace-grant.v1";
 pub const MAX_PLUGIN_CONTRACT_BYTES: usize = 512 * 1024;
 pub const MAX_PLUGIN_PLAN_ITEMS: usize = 512;
 
-/// One contribution kind inside an aster package.
+/// One contribution kind inside an krun package.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum PackageSurfaceKind {

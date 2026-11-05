@@ -1,4 +1,4 @@
-//! `aster-box push` command — Push a local image to a registry.
+//! `krun-box push` command — Push a local image to a registry.
 //!
 //! Optionally signs the image after push using a cosign-compatible
 //! ECDSA P-256 private key (`--sign-key`).
@@ -41,16 +41,16 @@ pub async fn execute(args: PushArgs) -> Result<(), Box<dyn std::error::Error>> {
         )
     })?;
     let push_reference = push_reference_for_query(&args.image, &stored.reference)?;
-    let reference = aster_box_runtime::ImageReference::parse(&push_reference)?;
+    let reference = krun_box_runtime::ImageReference::parse(&push_reference)?;
 
     if !args.quiet {
         println!("Pushing {push_reference}...");
     }
 
     // Load auth from credential store (falls back to env vars, then anonymous)
-    let auth = aster_box_runtime::RegistryAuth::from_credential_store(&reference.registry);
+    let auth = krun_box_runtime::RegistryAuth::from_credential_store(&reference.registry);
     let protocol = registry_protocol_from_args(args.plain_http, args.tls_verify);
-    let pusher = aster_box_runtime::RegistryPusher::with_auth_and_protocol(auth, protocol);
+    let pusher = krun_box_runtime::RegistryPusher::with_auth_and_protocol(auth, protocol);
 
     let result = pusher.push(&reference, &stored.path).await?;
 
@@ -66,7 +66,7 @@ pub async fn execute(args: PushArgs) -> Result<(), Box<dyn std::error::Error>> {
             println!("Signing {push_reference}...");
         }
 
-        let sign_result = aster_box_runtime::oci::signing::sign_image(
+        let sign_result = krun_box_runtime::oci::signing::sign_image(
             key_path,
             &reference.registry,
             &reference.repository,
@@ -89,7 +89,7 @@ fn push_reference_for_query(query: &str, resolved_reference: &str) -> Result<Str
     if image_usage::is_dangling_reference(query) {
         if image_usage::is_dangling_reference(resolved_reference) {
             return Err(
-                "Cannot push a digest-only image reference. Tag it first with `aster-box tag`."
+                "Cannot push a digest-only image reference. Tag it first with `krun-box tag`."
                     .to_string(),
             );
         }
@@ -102,11 +102,11 @@ fn push_reference_for_query(query: &str, resolved_reference: &str) -> Result<Str
 fn registry_protocol_from_args(
     plain_http: bool,
     tls_verify: bool,
-) -> aster_box_runtime::RegistryProtocol {
+) -> krun_box_runtime::RegistryProtocol {
     if plain_http || !tls_verify {
-        aster_box_runtime::RegistryProtocol::Http
+        krun_box_runtime::RegistryProtocol::Http
     } else {
-        aster_box_runtime::RegistryProtocol::Https
+        krun_box_runtime::RegistryProtocol::Https
     }
 }
 
@@ -168,7 +168,7 @@ mod tests {
     fn test_registry_protocol_from_args_defaults_to_https() {
         assert_eq!(
             registry_protocol_from_args(false, true),
-            aster_box_runtime::RegistryProtocol::Https
+            krun_box_runtime::RegistryProtocol::Https
         );
     }
 
@@ -176,7 +176,7 @@ mod tests {
     fn test_registry_protocol_from_plain_http_flag() {
         assert_eq!(
             registry_protocol_from_args(true, true),
-            aster_box_runtime::RegistryProtocol::Http
+            krun_box_runtime::RegistryProtocol::Http
         );
     }
 
@@ -184,7 +184,7 @@ mod tests {
     fn test_registry_protocol_from_tls_verify_false() {
         assert_eq!(
             registry_protocol_from_args(false, false),
-            aster_box_runtime::RegistryProtocol::Http
+            krun_box_runtime::RegistryProtocol::Http
         );
     }
 }

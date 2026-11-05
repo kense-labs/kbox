@@ -1,15 +1,15 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use aster_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use krun_oci_sdk::{
     ContainerTarget, CreateRequest, ExecRequest, OperationId, StartRequest, WriteStdinRequest,
 };
 
 use super::QualificationHvfDriver;
 use crate::{DriverExecRequest, DriverWriteStdinRequest, OciVmOperationReopenReplacementReport};
 
-pub(super) const WRITE_MARKER_NAME: &str = ".aster-oci-write-stdin-reopen-smoke";
+pub(super) const WRITE_MARKER_NAME: &str = ".krun-oci-write-stdin-reopen-smoke";
 
 struct Qualification {
     shim: PathBuf,

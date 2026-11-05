@@ -6,7 +6,7 @@
 //! # Usage
 //!
 //! ```text
-//! aster-box build -t myimage:latest .
+//! krun-box build -t myimage:latest .
 //! ```
 //!
 //! # Supported Instructions

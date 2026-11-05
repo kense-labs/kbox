@@ -1,4 +1,4 @@
-//! `aster-box version` command.
+//! `krun-box version` command.
 
 use clap::Args;
 
@@ -11,7 +11,7 @@ pub async fn execute(_args: VersionArgs) -> Result<(), Box<dyn std::error::Error
 }
 
 fn version_line() -> String {
-    format!("aster-box version {}", aster_box_core::VERSION)
+    format!("krun-box version {}", krun_box_core::VERSION)
 }
 
 #[cfg(test)]
@@ -22,7 +22,7 @@ mod tests {
     fn version_line_uses_core_package_version() {
         assert_eq!(
             version_line(),
-            format!("aster-box version {}", aster_box_core::VERSION)
+            format!("krun-box version {}", krun_box_core::VERSION)
         );
     }
 }

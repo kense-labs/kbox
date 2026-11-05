@@ -1,4 +1,4 @@
-use aster_use_core::{FirstUseInstallPolicy, UseError, UseResult};
+use krun_use_core::{FirstUseInstallPolicy, UseError, UseResult};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum AutoInstallAction {

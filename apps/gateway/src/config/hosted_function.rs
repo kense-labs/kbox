@@ -14,10 +14,10 @@ use super::{
 };
 use crate::error::{GatewayError, Result};
 use crate::hosted_function_activation::{HostedFunctionActivation, DEFAULT_RETRY_AFTER_SECS};
-use aster_acl::{Block, Value};
+use krun_acl::{Block, Value};
 use std::collections::BTreeMap;
 
-pub(crate) const FUNCTION_ENTRYPOINT: &str = "aster-cloud-function";
+pub(crate) const FUNCTION_ENTRYPOINT: &str = "krun-cloud-function";
 const FAIL_CLOSED_UPSTREAM: &str = "http://127.0.0.1:9/";
 
 struct HostedFunctionIntent {
@@ -95,7 +95,7 @@ fn materialize_hosted_function_routes(
     }
     if !config.entrypoints.contains_key(FUNCTION_ENTRYPOINT) {
         return Err(config_error(
-            "hosted Function traffic requires entrypoint aster-cloud-function",
+            "hosted Function traffic requires entrypoint krun-cloud-function",
         ));
     }
     let mut ordered = intents.iter().collect::<Vec<_>>();
@@ -644,7 +644,7 @@ mod tests {
             "#,
         ))
         .expect_err("missing entrypoint");
-        assert!(error.to_string().contains("aster-cloud-function"));
+        assert!(error.to_string().contains("krun-cloud-function"));
     }
 
     #[test]

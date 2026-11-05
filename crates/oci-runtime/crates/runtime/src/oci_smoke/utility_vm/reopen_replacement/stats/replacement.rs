@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::AgentStatsRequest;
-use aster_oci_core::IsolationClass;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentStatsRequest;
+use krun_oci_core::IsolationClass;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, ListRequest, OciRuntimeService, OperationContext,
     StatsRequest,
 };

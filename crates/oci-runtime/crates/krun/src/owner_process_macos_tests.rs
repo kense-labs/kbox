@@ -22,7 +22,7 @@ fn guest_monitors_pin_the_exact_parent_in_a_private_process_group() {
             "--exact",
             "owner_process::macos_tests::guest_monitor_child",
         ])
-        .env("ASTER_TEST_GUEST_OWNER", std::process::id().to_string())
+        .env("KRUN_TEST_GUEST_OWNER", std::process::id().to_string())
         .process_group(0)
         .output()
         .unwrap();
@@ -36,7 +36,7 @@ fn guest_monitors_pin_the_exact_parent_in_a_private_process_group() {
 #[test]
 #[ignore = "run only by the parent in an isolated process group"]
 fn guest_monitor_child() {
-    let owner = std::env::var("ASTER_TEST_GUEST_OWNER")
+    let owner = std::env::var("KRUN_TEST_GUEST_OWNER")
         .unwrap()
         .parse::<u32>()
         .unwrap();
@@ -77,8 +77,8 @@ fn owner_death_kills_the_private_worker_group_and_preserves_a_neighbor() {
                 "owner_process::macos_tests::owner_family_parent",
                 "--nocapture",
             ])
-            .env("ASTER_TEST_GUEST_READY", &ready)
-            .env("ASTER_TEST_GUEST_MONITOR_KIND", kind)
+            .env("KRUN_TEST_GUEST_READY", &ready)
+            .env("KRUN_TEST_GUEST_MONITOR_KIND", kind)
             .stdin(Stdio::piped())
             .stdout(Stdio::null())
             .stderr(Stdio::inherit())
@@ -183,7 +183,7 @@ fn owner_family_parent() {
             "owner_process::macos_tests::owner_family_worker",
             "--nocapture",
         ])
-        .env("ASTER_TEST_GUEST_OWNER", std::process::id().to_string())
+        .env("KRUN_TEST_GUEST_OWNER", std::process::id().to_string())
         .stdin(Stdio::inherit())
         .process_group(0)
         .spawn()
@@ -194,12 +194,12 @@ fn owner_family_parent() {
 #[test]
 #[ignore = "spawned only by the owner-death oracle"]
 fn owner_family_worker() {
-    let owner = std::env::var("ASTER_TEST_GUEST_OWNER")
+    let owner = std::env::var("KRUN_TEST_GUEST_OWNER")
         .unwrap()
         .parse()
         .unwrap();
     let owner = NonZeroU32::new(owner).unwrap();
-    match std::env::var("ASTER_TEST_GUEST_MONITOR_KIND")
+    match std::env::var("KRUN_TEST_GUEST_MONITOR_KIND")
         .unwrap()
         .as_str()
     {
@@ -208,7 +208,7 @@ fn owner_family_worker() {
         _ => panic!("unknown test monitor"),
     }
     let mut child = Command::new("/bin/sleep").arg("30").spawn().unwrap();
-    let ready = std::env::var_os("ASTER_TEST_GUEST_READY").unwrap();
+    let ready = std::env::var_os("KRUN_TEST_GUEST_READY").unwrap();
     std::fs::write(
         ready,
         serde_json::to_vec(&[std::process::id(), child.id()]).unwrap(),

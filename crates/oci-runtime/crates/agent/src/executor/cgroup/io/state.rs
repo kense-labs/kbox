@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::io;
 use std::path::Path;
 
-use aster_oci_sdk::{ErrorCode, Result};
+use krun_oci_sdk::{ErrorCode, Result};
 
 use super::{operation_error, BlockDevice, IoLimit, IoMaxField, WeightBackend, MAX_FILE};
 

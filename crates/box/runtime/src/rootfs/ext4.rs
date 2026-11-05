@@ -2,7 +2,7 @@
 //!
 //! This adapter deliberately owns the policy around `mkext4`: capacity
 //! limits, OCI metadata replay, host-only xattr filtering, validation, and
-//! atomic publication are Aster contracts rather than properties delegated to
+//! atomic publication are Krun contracts rather than properties delegated to
 //! a third-party tree-walking example.
 
 use std::collections::{BTreeMap, HashMap};
@@ -14,11 +14,11 @@ use std::os::unix::ffi::{OsStrExt, OsStringExt};
 use std::os::unix::fs::{FileTypeExt, MetadataExt};
 use std::path::{Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::rootfs_metadata::{
+use base64::Engine as _;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::rootfs_metadata::{
     RootfsEntryKind, RootfsMetadataEntry, RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH,
 };
-use base64::Engine as _;
 use mkext4::sink::FileSink;
 use mkext4::{FsBuilder, InodeHandle, Meta, Options, SparseSeg, SpecialKind, ROOT};
 use serde::{Deserialize, Serialize};
@@ -28,20 +28,20 @@ pub(super) mod sparse;
 
 use sparse::{sparse_layout, FileFill, SourceSegment};
 
-/// Versioned Aster wrapper contract for a published ext4 artifact directory.
-pub const EXT4_ARTIFACT_SCHEMA: &str = "aster.box.rootfs-ext4.v1";
+/// Versioned Krun wrapper contract for a published ext4 artifact directory.
+pub const EXT4_ARTIFACT_SCHEMA: &str = "krun.box.rootfs-ext4.v1";
 /// Exact writer identity included in cache keys and artifact manifests.
-pub const EXT4_BUILDER_ID: &str = "mkext4/0.0.3+aster-adapter-v3";
+pub const EXT4_BUILDER_ID: &str = "mkext4/0.0.3+krun-adapter-v3";
 /// Builder identities that remain safe to resume as already-published disks.
 #[cfg(any(target_os = "macos", all(unix, test)))]
 pub(super) const LEGACY_EXT4_BUILDER_IDS: &[&str] = &[
-    "mkext4/0.0.3+aster-adapter-v1",
-    "mkext4/0.0.3+aster-adapter-v2",
+    "mkext4/0.0.3+krun-adapter-v1",
+    "mkext4/0.0.3+krun-adapter-v2",
 ];
 
 pub(super) const DISK_FILE_NAME: &str = "rootfs.ext4";
 pub(super) const MANIFEST_FILE_NAME: &str = "artifact.json";
-pub(super) const STAGING_DIRECTORY_PREFIX: &str = ".aster-rootfs-ext4-";
+pub(super) const STAGING_DIRECTORY_PREFIX: &str = ".krun-rootfs-ext4-";
 const MIN_CAPACITY_BYTES: u64 = 16 * 1024 * 1024;
 const MAX_CAPACITY_BYTES: u64 = 64 * 1024 * 1024 * 1024;
 const MAX_IMAGE_METADATA_BYTES: u64 = 64 * 1024 * 1024;
@@ -261,7 +261,7 @@ pub(super) fn publish_ext4_build_plan(
 pub(super) fn new_ext4_fs_builder(options: Ext4ArtifactOptions) -> Result<FsBuilder> {
     options.validate()?;
     let mut mkfs_options = Options::new(options.capacity_bytes, options.fs_uuid, options.epoch);
-    mkfs_options.label = Some("aster-rootfs".to_string());
+    mkfs_options.label = Some("krun-rootfs".to_string());
     mkfs_options.reserved_percent = 0;
     FsBuilder::new(mkfs_options).map_err(mkext4_build_error)
 }
@@ -505,7 +505,7 @@ fn node_meta(
     filesystem: &std::fs::Metadata,
     image_metadata: &ImageMetadata,
 ) -> Result<Meta> {
-    let runtime_mode = aster_box_core::rootfs_metadata::runtime_managed_rootfs_mode(relative)
+    let runtime_mode = krun_box_core::rootfs_metadata::runtime_managed_rootfs_mode(relative)
         .or_else(|| {
             (relative == Path::new(IMAGE_ROOTFS_METADATA_PATH.trim_start_matches('/')))
                 .then_some(0o600)
@@ -794,7 +794,7 @@ pub(super) fn validate_ext4_image(path: &Path, expected_length: u64) -> Result<(
 /// immutable cache entry. After a host crash, ext4 sets only the dynamic
 /// `RECOVER` incompatibility bit. In that state the home metadata can lag the
 /// journal, so a host-side tree reader is the wrong recovery mechanism. We
-/// instead validate the exact Aster superblock envelope and let the isolated
+/// instead validate the exact Krun superblock envelope and let the isolated
 /// guest kernel replay its own journal on the next read-write mount.
 #[cfg(any(target_os = "macos", all(unix, test)))]
 pub(super) fn validate_ext4_image_for_resume(
@@ -866,7 +866,7 @@ fn validate_recovery_superblock(
         || superblock.inode_size != mkext4::spec::INODE_SIZE as u16
         || superblock.first_data_block != 0
     {
-        return Err("filesystem geometry no longer matches the Aster ext4 contract".to_string());
+        return Err("filesystem geometry no longer matches the Krun ext4 contract".to_string());
     }
     let filesystem_length = superblock
         .blocks_count
@@ -881,7 +881,7 @@ fn validate_recovery_superblock(
         || superblock.journal_dev != 0
         || superblock.journal_uuid != [0; 16]
     {
-        return Err("journal identity no longer matches the Aster ext4 contract".to_string());
+        return Err("journal identity no longer matches the Krun ext4 contract".to_string());
     }
     if mkext4::csum::superblock(bytes) != superblock.checksum {
         return Err("primary superblock checksum is invalid".to_string());

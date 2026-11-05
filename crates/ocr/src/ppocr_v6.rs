@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
-use aster_use_core::{Readiness, UseError, UseResult};
 use async_trait::async_trait;
+use krun_use_core::{Readiness, UseError, UseResult};
 
 use crate::assets::{ocr_status, resolve_model_assets, OcrInstallSource};
 use crate::config::MODEL_FAMILY;
@@ -24,7 +24,7 @@ pub enum PpOcrV6Profile {
     Document,
 }
 
-/// Local PP-OCRv6 provider shipped as the default Aster Use integration.
+/// Local PP-OCRv6 provider shipped as the default Krun Use integration.
 #[derive(Clone)]
 pub struct PpOcrV6Provider {
     descriptor: OcrProviderDescriptor,
@@ -74,7 +74,7 @@ impl PpOcrV6Provider {
             )
         })?;
         ort::init_from(runtime_text)
-            .with_name("aster-local-ocr")
+            .with_name("krun-local-ocr")
             .commit()
             .map_err(|error| UseError::new("use.ocr.runtime_failed", error.to_string()))?;
         Ok(Self {
@@ -144,7 +144,7 @@ impl PpOcrV6Provider {
                 )
             })?;
             ort::init_from(path)
-                .with_name("aster-local-ocr")
+                .with_name("krun-local-ocr")
                 .commit()
                 .map_err(|error| UseError::new("use.ocr.runtime_failed", error.to_string()))?;
         }
@@ -175,7 +175,7 @@ impl OcrProvider for PpOcrV6Provider {
             (
                 Readiness::Missing,
                 vec![
-                    "Install the official 'aster/aster-ocr' AIX plugin through the host plugin manager."
+                    "Install the official 'krun/krun-ocr' AIX plugin through the host plugin manager."
                         .to_string(),
                 ],
             )
@@ -183,7 +183,7 @@ impl OcrProvider for PpOcrV6Provider {
             (
                 Readiness::Broken,
                 vec![
-                    "Repair the complete 'aster/aster-ocr' AIX plugin through the host plugin manager."
+                    "Repair the complete 'krun/krun-ocr' AIX plugin through the host plugin manager."
                         .to_string(),
                 ],
             )

@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use aster_use_core::{UseError, UseResult};
-use aster_use_extension::{
+use krun_use_core::{UseError, UseResult};
+use krun_use_extension::{
     build_aix_package, inspect_aix_package, inspect_verified_target_cache, prepare_aix_publication,
     prepare_aix_publication_with_catalog, prune_verified_target_cache, GitHubRegistryRepository,
     RegistrySourceInput, RegistrySourceStore, TrustedRegistry, VerifiedTargetCachePolicy,
@@ -601,7 +601,7 @@ mod tests {
             "add".to_owned(),
             "official".to_owned(),
             "--github".to_owned(),
-            "aster-ai-lab/Use-Registry".to_owned(),
+            "kense-labs/Use-Registry".to_owned(),
             "--github-ref".to_owned(),
             "main".to_owned(),
             "--github-path".to_owned(),
@@ -615,7 +615,7 @@ mod tests {
 
         assert_eq!(
             input.registry_url,
-            "https://raw.githubusercontent.com/aster-ai-lab/Use-Registry/main/registry/"
+            "https://raw.githubusercontent.com/kense-labs/Use-Registry/main/registry/"
         );
         assert_eq!(input.root_sha256, format!("sha256:{}", "a".repeat(64)));
     }
@@ -629,7 +629,7 @@ mod tests {
             "--url".to_owned(),
             "https://packages.example/".to_owned(),
             "--github".to_owned(),
-            "aster-ai-lab/Use-Registry".to_owned(),
+            "kense-labs/Use-Registry".to_owned(),
             "--trust-root".to_owned(),
             "a".repeat(64),
         ];

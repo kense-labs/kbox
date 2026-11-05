@@ -4,15 +4,15 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-BIN="${1:-./target/debug/aster-gateway}"
+BIN="${1:-./target/debug/krun-gateway}"
 if [[ ! -x "$BIN" && ! -f "$BIN" ]]; then
-  echo "building aster-gateway..."
-  cargo build --bin aster-gateway
-  BIN=./target/debug/aster-gateway
+  echo "building krun-gateway..."
+  cargo build --bin krun-gateway
+  BIN=./target/debug/krun-gateway
 fi
 
-DUR="${ASTER_GATEWAY_SOAK_DURATION:-120}"
-C="${ASTER_GATEWAY_SOAK_CONCURRENCY:-8}"
+DUR="${KRUN_GATEWAY_SOAK_DURATION:-120}"
+C="${KRUN_GATEWAY_SOAK_CONCURRENCY:-8}"
 
 for profile in http-json sse-finite openai-json openai-sse; do
   python3 scripts/soak-gateway.py \

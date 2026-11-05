@@ -1,9 +1,9 @@
 use std::ffi::OsString;
 use std::path::PathBuf;
 
-use aster_use_core::{UseError, UseResult};
 use clap::error::ErrorKind;
 use clap::{Parser, Subcommand};
+use krun_use_core::{UseError, UseResult};
 use serde::Serialize;
 
 use crate::{OcrClient, OcrMcpServer, OcrRequest, PpOcrV6Profile, PpOcrV6Provider};
@@ -60,9 +60,9 @@ impl CommandOutput {
 
 #[derive(Debug, Parser)]
 #[command(
-    name = "aster-use-ocr",
+    name = "krun-use-ocr",
     version,
-    about = "Provider-oriented OCR for Aster (PP-OCRv6 is the default provider)",
+    about = "Provider-oriented OCR for Krun (PP-OCRv6 is the default provider)",
     arg_required_else_help = true
 )]
 struct Cli {
@@ -98,7 +98,7 @@ pub async fn run(args: Vec<String>) -> UseResult<CommandOutput> {
 
 /// Parse native process arguments without normalizing filesystem values.
 pub async fn run_os(args: Vec<OsString>) -> UseResult<CommandOutput> {
-    let mut argv = vec![OsString::from("aster-use-ocr")];
+    let mut argv = vec![OsString::from("krun-use-ocr")];
     argv.extend(args);
     let cli = match Cli::try_parse_from(argv) {
         Ok(cli) => cli,
@@ -192,7 +192,7 @@ fn output_error(error: serde_json::Error) -> UseError {
 }
 
 fn usage_error(message: impl Into<String>) -> UseError {
-    UseError::new("use.ocr.usage_invalid", message).with_suggestion("Run 'aster-use-ocr --help'.")
+    UseError::new("use.ocr.usage_invalid", message).with_suggestion("Run 'krun-use-ocr --help'.")
 }
 
 #[cfg(test)]

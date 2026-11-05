@@ -4,8 +4,8 @@ use std::os::fd::{AsRawFd, FromRawFd, OwnedFd, RawFd};
 use std::os::unix::fs::{FileTypeExt, MetadataExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 
-use aster_oci_sdk::oci_spec::runtime::{LinuxDevice, LinuxDeviceType};
-use aster_oci_sdk::{ErrorCode, Result};
+use krun_oci_sdk::oci_spec::runtime::{LinuxDevice, LinuxDeviceType};
+use krun_oci_sdk::{ErrorCode, Result};
 
 use crate::executor::namespace::NamespacePlan;
 use crate::OCI_LINUX_DEFAULT_DEVICE_NODES;
@@ -129,7 +129,7 @@ impl DeviceNode {
         if !is_rootless_safe_device(self) {
             return Err(unsupported(
                 &format!("linux.devices[{index}].path"),
-                "rootless device profiles support only the fixed Aster Box safe-device set",
+                "rootless device profiles support only the fixed Krun Box safe-device set",
             ));
         }
         if descriptor < 0 {

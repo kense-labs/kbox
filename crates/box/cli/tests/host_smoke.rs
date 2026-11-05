@@ -1,6 +1,6 @@
 #![cfg(test)]
 
-//! Ignored host-dependent smoke coverage for the aster-box command surface.
+//! Ignored host-dependent smoke coverage for the krun-box command surface.
 //!
 //! These tests require one or more host capabilities such as root-capable Linux
 //! chroot builds, registry credentials/network access, or a working HVF/KVM
@@ -8,9 +8,9 @@
 //! command coverage never depends on those capabilities.
 //!
 //! Useful environment:
-//! - `ASTER_BOX_TEST_ALPINE_TAR`: load an offline Alpine OCI archive instead of pulling.
-//! - `ASTER_BOX_HOST_SMOKE_IMAGE`: override the runnable Linux image reference.
-//! - `ASTER_BOX_HOST_SMOKE_TIMEOUT_SECS`: override host VM wait timeouts.
+//! - `KRUN_BOX_TEST_ALPINE_TAR`: load an offline Alpine OCI archive instead of pulling.
+//! - `KRUN_BOX_HOST_SMOKE_IMAGE`: override the runnable Linux image reference.
+//! - `KRUN_BOX_HOST_SMOKE_TIMEOUT_SECS`: override host VM wait timeouts.
 
 use std::path::Path;
 use std::time::Duration;
@@ -103,18 +103,18 @@ fn test_linux_build_run_chroot_smoke() {
 #[test]
 #[ignore]
 fn test_real_packages_service_push() {
-    let target_template = match std::env::var("ASTER_BOX_PUSH_TEST_REF") {
+    let target_template = match std::env::var("KRUN_BOX_PUSH_TEST_REF") {
         Ok(value) => value,
         Err(_) => {
             eprintln!(
-                "skipping packages push test: set ASTER_BOX_PUSH_TEST_REF like registry.example/aster/box-push-test:{{tag}}"
+                "skipping packages push test: set KRUN_BOX_PUSH_TEST_REF like registry.example/krun/box-push-test:{{tag}}"
             );
             return;
         }
     };
     assert!(
         target_template.contains("{tag}"),
-        "ASTER_BOX_PUSH_TEST_REF must contain {{tag}} to avoid overwriting a stable tag"
+        "KRUN_BOX_PUSH_TEST_REF must contain {{tag}} to avoid overwriting a stable tag"
     );
 
     let cli = CliTest::new();
@@ -129,13 +129,13 @@ fn test_real_packages_service_push() {
     cli.ok(&["tag", &local_tag, &target_ref]);
 
     let mut push_env = Vec::new();
-    if let Ok(protocol) = std::env::var("ASTER_BOX_PUSH_PROTOCOL") {
-        push_env.push(("ASTER_REGISTRY_PROTOCOL", protocol));
+    if let Ok(protocol) = std::env::var("KRUN_BOX_PUSH_PROTOCOL") {
+        push_env.push(("KRUN_REGISTRY_PROTOCOL", protocol));
     }
-    if let Ok(username) = std::env::var("ASTER_BOX_PUSH_USERNAME") {
+    if let Ok(username) = std::env::var("KRUN_BOX_PUSH_USERNAME") {
         push_env.push(("REGISTRY_USERNAME", username));
     }
-    if let Ok(password) = std::env::var("ASTER_BOX_PUSH_PASSWORD") {
+    if let Ok(password) = std::env::var("KRUN_BOX_PUSH_PASSWORD") {
         push_env.push(("REGISTRY_PASSWORD", password));
     }
     let push_env_refs: Vec<(&str, &str)> = push_env
@@ -210,8 +210,7 @@ fn test_real_vm_stop_reaps_inherited_stdio_workers() {
 
         let (stdout, stderr, stopped) = cli.output(&["stop", "--timeout", "2", name]);
         let after = inspect_box(&cli, name);
-        let process_remains =
-            aster_box_runtime::process::is_process_alive_with_identity(pid, start);
+        let process_remains = krun_box_runtime::process::is_process_alive_with_identity(pid, start);
         assert!(stopped && after["status"] == "stopped" && after["exit_code"] == 0 && !process_remains,
             "stop must reap workers and the original shim without replacing the main exit: {after}\n{stdout}\n{stderr}");
         cli.ok(&["rm", name]);
@@ -237,7 +236,7 @@ fn test_real_vm_stop_reaps_inherited_stdio_workers() {
     assert_eq!(cli.ok(&["wait", "--timeout", "15", boxes[2]]).trim(), "7");
     let after = inspect_box(&cli, boxes[2]);
     assert_eq!(after["exit_code"], 7);
-    assert!(!aster_box_runtime::process::is_process_alive_with_identity(
+    assert!(!krun_box_runtime::process::is_process_alive_with_identity(
         pid, start
     ));
     assert!(cli.ok(&["logs", boxes[2]]).contains("final-output"));
@@ -307,7 +306,7 @@ fn test_real_vm_command_matrix() {
     std::fs::write(
         build_dir.join("Dockerfile"),
         format!(
-            "FROM {image}\nCOPY message.txt /message.txt\nENV ASTER_BUILD_COVERAGE=1\nCMD [\"cat\", \"/message.txt\"]\n"
+            "FROM {image}\nCOPY message.txt /message.txt\nENV KRUN_BUILD_COVERAGE=1\nCMD [\"cat\", \"/message.txt\"]\n"
         ),
     )
     .expect("write Dockerfile");
@@ -336,11 +335,11 @@ fn test_real_vm_command_matrix() {
     );
 
     let registry = ErrorRegistry::start();
-    let push_ref = format!("{}/aster/coverage-built:latest", registry.addr());
+    let push_ref = format!("{}/krun/coverage-built:latest", registry.addr());
     cli.ok(&["tag", built_image, &push_ref]);
     cli.fails_with_env(
         &["push", &push_ref, "--quiet"],
-        &[("ASTER_REGISTRY_PROTOCOL", "http")],
+        &[("KRUN_REGISTRY_PROTOCOL", "http")],
         "Failed to push image",
     );
 
@@ -382,7 +381,7 @@ fn test_real_vm_command_matrix() {
         "-p",
         "18081:81",
         "-e",
-        "ASTER_COVERAGE=1",
+        "KRUN_COVERAGE=1",
         "--label",
         "purpose=coverage",
         &image,
@@ -570,7 +569,7 @@ fn test_real_compose_acl_smoke() {
             r#"service "worker" {{
   image = "{image}"
   command = ["sleep", "3600"]
-  environment = {{ ASTER_COMPOSE_COVERAGE = "1" }}
+  environment = {{ KRUN_COMPOSE_COVERAGE = "1" }}
   labels = {{ purpose = "coverage" }}
   ports = ["{host_port}:8080"]
   volumes = ["data:/data"]
@@ -690,7 +689,7 @@ volume "data" {{
         "--",
         "sh",
         "-c",
-        "echo $ASTER_COMPOSE_COVERAGE",
+        "echo $KRUN_COMPOSE_COVERAGE",
     ]);
     assert_eq!(env_value.trim(), "1");
     cli.ok(&[
@@ -961,7 +960,7 @@ fn test_real_pool_warm_run() {
             "echo",
             "env-pool-e2e-ok",
         ],
-        &[("ASTER_BOX_RUN_POOL_SOCKET", socket.as_str())],
+        &[("KRUN_BOX_RUN_POOL_SOCKET", socket.as_str())],
     );
     assert!(
         env_pool_out.contains("env-pool-e2e-ok"),
@@ -1175,8 +1174,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod 0755 /entrypoint.sh
 FROM {image}
 COPY --from=executable /entrypoint.sh /entrypoint.sh
-RUN printf 'aster-reader:x:10001:10001:Reader:/tmp:/bin/sh\n' >> /etc/passwd && printf 'aster-reader:x:10001:\n' >> /etc/group && chown 10001:10001 /entrypoint.sh
-USER aster-reader:aster-reader
+RUN printf 'krun-reader:x:10001:10001:Reader:/tmp:/bin/sh\n' >> /etc/passwd && printf 'krun-reader:x:10001:\n' >> /etc/group && chown 10001:10001 /entrypoint.sh
+USER krun-reader:krun-reader
 ENTRYPOINT ["/entrypoint.sh"]
 "#
         ),

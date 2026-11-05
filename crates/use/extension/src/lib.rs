@@ -1,14 +1,14 @@
 use std::collections::BTreeSet;
 use std::path::{Component, Path};
 
-use aster_acl::{Block, Value};
-use aster_use_core::{
+use krun_acl::{Block, Value};
+use krun_use_core::{
     PackageSurfaceKind, PluginPackageDependency, PluginSurfaceRef, RiskClass, UseError, UseResult,
 };
 use serde::{Deserialize, Serialize};
 
 #[cfg(test)]
-extern crate self as aster_use_extension;
+extern crate self as krun_use_extension;
 
 #[cfg(all(test, any(unix, windows)))]
 mod test_filesystem;
@@ -256,7 +256,7 @@ pub struct ExtensionRepository {
 
 impl ExtensionManifest {
     pub fn parse_acl(input: &str) -> UseResult<Self> {
-        let document = aster_acl::parse_acl(input).map_err(|error| {
+        let document = krun_acl::parse_acl(input).map_err(|error| {
             UseError::new(
                 "use.extension.manifest_invalid",
                 format!("Failed to parse extension ACL: {error}"),
@@ -574,7 +574,7 @@ impl ExtensionManifest {
     pub fn supports_use_version(&self, version: &str) -> UseResult<bool> {
         let version = semver::Version::parse(version).map_err(|error| {
             manifest_error(format!(
-                "Invalid Aster Use host version '{version}': {error}"
+                "Invalid Krun Use host version '{version}': {error}"
             ))
         })?;
         let Some(requirement) = &self.requires_use else {
@@ -582,7 +582,7 @@ impl ExtensionManifest {
         };
         let requirement = semver::VersionReq::parse(requirement).map_err(|error| {
             manifest_error(format!(
-                "Invalid Aster Use compatibility requirement '{requirement}': {error}"
+                "Invalid Krun Use compatibility requirement '{requirement}': {error}"
             ))
         })?;
         Ok(requirement.matches(&version))
@@ -595,7 +595,7 @@ impl ExtensionManifest {
             return Err(UseError::new(
                 "use.extension.host_incompatible",
                 format!(
-                    "Package '{}' is incompatible with Aster Use {host}.",
+                    "Package '{}' is incompatible with Krun Use {host}.",
                     self.package_id
                 ),
             ));
@@ -837,7 +837,7 @@ fn parse_extension_block(block: &Block) -> UseResult<ExtensionManifest> {
         .ok_or_else(|| manifest_error("Package manifests require 'requires_use'."))?;
     let requirement = semver::VersionReq::parse(requirement).map_err(|error| {
         manifest_error(format!(
-            "Invalid Aster Use compatibility requirement '{requirement}': {error}"
+            "Invalid Krun Use compatibility requirement '{requirement}': {error}"
         ))
     })?;
     if repository.is_none() {
@@ -890,7 +890,7 @@ fn validate_schema_v3_host_requirement(requirement: &semver::VersionReq) -> UseR
         || requirement.matches(&obsolete_host)
     {
         return Err(manifest_error(
-            "Schema version 3 must require Aster Use 0.3 and exclude pre-0.3 hosts.",
+            "Schema version 3 must require Krun Use 0.3 and exclude pre-0.3 hosts.",
         ));
     }
     Ok(())
@@ -1128,9 +1128,9 @@ mod review_package_manifest {
     use super::ExtensionManifest;
 
     #[test]
-    fn aster_review_declares_skill_and_picker_together() {
+    fn krun_review_declares_skill_and_picker_together() {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .join("../../../../apps/use-registry/packages/review/aster-use-extension.acl");
+            .join("../../../../apps/use-registry/packages/review/krun-use-extension.acl");
         // Use can be built outside the OS monorepo, where this package source is absent.
         if !path.is_file() {
             return;
@@ -1138,7 +1138,7 @@ mod review_package_manifest {
         let manifest =
             ExtensionManifest::parse_acl(&std::fs::read_to_string(&path).expect("review manifest"))
                 .expect("review manifest");
-        assert_eq!(manifest.package_id, "aster/review");
+        assert_eq!(manifest.package_id, "krun/review");
         assert_eq!(manifest.version, "1.0.0");
         assert_eq!(manifest.skills.len(), 1);
         assert_eq!(manifest.skills[0].id, "review");
@@ -1151,10 +1151,10 @@ mod review_package_manifest {
     }
 
     #[test]
-    fn aster_robot_workbenches_declare_the_workbench_and_skill() {
+    fn krun_robot_workbenches_declare_the_workbench_and_skill() {
         for name in ["cobot-arm", "g1-arm"] {
             let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!(
-                "../../../../apps/use-registry/packages/{name}/aster-use-extension.acl"
+                "../../../../apps/use-registry/packages/{name}/krun-use-extension.acl"
             ));
             // Use can be built outside the OS monorepo, where this package source is absent.
             if !path.is_file() {
@@ -1164,7 +1164,7 @@ mod review_package_manifest {
                 &std::fs::read_to_string(&path).expect("workbench manifest"),
             )
             .expect("workbench manifest");
-            assert_eq!(manifest.package_id, format!("aster/{name}"));
+            assert_eq!(manifest.package_id, format!("krun/{name}"));
             assert_eq!(manifest.version, "1.0.0");
             assert_eq!(manifest.skills.len(), 1);
             assert_eq!(manifest.skills[0].id, name);

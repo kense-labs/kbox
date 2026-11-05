@@ -137,28 +137,28 @@ pub struct IngressServicePort {
 // -----------------------------------------------------------------------
 
 /// Comma-separated list of entrypoint names
-pub(crate) const ANN_ENTRYPOINTS: &str = "aster-gateway.io/entrypoints";
+pub(crate) const ANN_ENTRYPOINTS: &str = "krun-gateway.io/entrypoints";
 
 /// Comma-separated list of middleware names
-pub(crate) const ANN_MIDDLEWARES: &str = "aster-gateway.io/middlewares";
+pub(crate) const ANN_MIDDLEWARES: &str = "krun-gateway.io/middlewares";
 
 /// Load balancing strategy override
-pub(crate) const ANN_STRATEGY: &str = "aster-gateway.io/strategy";
+pub(crate) const ANN_STRATEGY: &str = "krun-gateway.io/strategy";
 
 /// Router priority override
-pub(crate) const ANN_PRIORITY: &str = "aster-gateway.io/priority";
+pub(crate) const ANN_PRIORITY: &str = "krun-gateway.io/priority";
 
 /// Annotation: protocol override (tcp, udp; default: http)
-pub(crate) const ANN_PROTOCOL: &str = "aster-gateway.io/protocol";
+pub(crate) const ANN_PROTOCOL: &str = "krun-gateway.io/protocol";
 
 /// Annotation: listen address for TCP/UDP entrypoints
-pub(crate) const ANN_LISTEN: &str = "aster-gateway.io/listen";
+pub(crate) const ANN_LISTEN: &str = "krun-gateway.io/listen";
 
 /// Annotation: per-route upstream request timeout (humantime, e.g. "600s").
 /// Default "30s". Lets long requests (OCI image-tar uploads, large git/pipeline
 /// bodies, long streams) exceed the 30s default on specific routes without
 /// loosening fail-fast everywhere.
-pub(crate) const ANN_REQUEST_TIMEOUT: &str = "aster-gateway.io/request-timeout";
+pub(crate) const ANN_REQUEST_TIMEOUT: &str = "krun-gateway.io/request-timeout";
 
 // -----------------------------------------------------------------------
 // Conversion: Ingress → GatewayConfig
@@ -587,7 +587,7 @@ pub(crate) fn validate_kubernetes_provider_activation(
             })
         }
         Ok(_) | Err(_) => std::thread::Builder::new()
-            .name("aster-k8s-provider-activation-probe".into())
+            .name("krun-k8s-provider-activation-probe".into())
             .spawn(move || {
                 let runtime = tokio::runtime::Builder::new_current_thread()
                     .enable_all()

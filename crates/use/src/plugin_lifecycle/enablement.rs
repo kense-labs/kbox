@@ -1,7 +1,7 @@
-use aster_use_core::{
+use krun_use_core::{
     PlanPackageChangeKind, PluginOperationAction, PluginOperationPlanEnvelope, UseResult,
 };
-use aster_use_extension::ExtensionManifest;
+use krun_use_extension::ExtensionManifest;
 
 use super::coordinator::{
     coordinator_error, validate_manifest_binding, PluginLifecycleCoordinator,

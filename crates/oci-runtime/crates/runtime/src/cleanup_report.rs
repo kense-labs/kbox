@@ -1,16 +1,16 @@
 use std::fmt;
 
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::RuntimeOperation;
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::RuntimeOperation;
 use serde::{Deserialize, Serialize};
 
 use crate::report::AgentVmSmokeReport;
 
 /// Schema emitted by the native Linux fault-cleanup diagnostic.
 pub const NATIVE_LINUX_FAULT_CLEANUP_SCHEMA_VERSION: &str =
-    "aster.oci.native-linux-fault-cleanup.v6";
+    "krun.oci.native-linux-fault-cleanup.v6";
 /// Schema emitted by the utility-VM fault-cleanup diagnostic.
-pub const OCI_VM_FAULT_CLEANUP_SCHEMA_VERSION: &str = "aster.oci.oci-vm-fault-cleanup.v4";
+pub const OCI_VM_FAULT_CLEANUP_SCHEMA_VERSION: &str = "krun.oci.oci-vm-fault-cleanup.v4";
 
 /// Lifecycle boundary after which the cleanup diagnostic interrupts normal flow.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -280,9 +280,9 @@ impl OciVmFaultCleanupReport {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_agent_protocol::{AgentOperation, AGENT_PROTOCOL_VERSION_MAX};
-    use aster_oci_core::{CapabilityStatus, HostPlatform};
-    use aster_oci_sdk::RuntimeOperation;
+    use krun_oci_agent_protocol::{AgentOperation, AGENT_PROTOCOL_VERSION_MAX};
+    use krun_oci_core::{CapabilityStatus, HostPlatform};
+    use krun_oci_sdk::RuntimeOperation;
     use serde_json::json;
 
     use super::{
@@ -402,7 +402,7 @@ mod tests {
         let mut report = AgentVmSmokeReport::initial(HostPlatform::Macos);
         report.status = CapabilityStatus::Available;
         report.endpoint_bound = true;
-        report.endpoint_name = Some("aster-oci-agent-00000000000000000000000000000000".into());
+        report.endpoint_name = Some("krun-oci-agent-00000000000000000000000000000000".into());
         report.shim_spawned = true;
         report.shim_process_id = Some(41);
         report.bridge_process_id = Some(42);

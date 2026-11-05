@@ -1,9 +1,13 @@
-# aster-box-sdk
+# krun-box-sdk
 
-The Rust SDK for **aster-box** direct runtime APIs.
+## 概述
 
-By default, the SDK does not spawn the `aster-box` CLI. `AsterBoxClient` calls
-`aster-box-runtime` stores and socket clients directly, returning typed Rust data
+Rust SDK for krun-box direct runtime-backed management APIs.
+
+The Rust SDK for **krun-box** direct runtime APIs.
+
+By default, the SDK does not spawn the `krun-box` CLI. `KrunBoxClient` calls
+`krun-box-runtime` stores and socket clients directly, returning typed Rust data
 for management apps, automation, and tests.
 
 ## Native Local Sandbox
@@ -11,9 +15,9 @@ for management apps, automation, and tests.
 The high-level `Sandbox` API is local and zero-configuration:
 
 ```rust
-use aster_box_sdk::Sandbox;
+use krun_box_sdk::Sandbox;
 
-# async fn example() -> Result<(), aster_box_sdk::ClientError> {
+# async fn example() -> Result<(), krun_box_sdk::ClientError> {
 let sandbox = Sandbox::create("python:3.12-alpine").await?;
 let result = sandbox
     .commands
@@ -33,9 +37,9 @@ sandbox.kill().await?;
 Export a build or test artifact without an unbounded guest read:
 
 ```rust
-use aster_box_sdk::{ArtifactExportOptions, Sandbox};
+use krun_box_sdk::{ArtifactExportOptions, Sandbox};
 
-# async fn export_artifact(sandbox: &Sandbox) -> Result<(), aster_box_sdk::ClientError> {
+# async fn export_artifact(sandbox: &Sandbox) -> Result<(), krun_box_sdk::ClientError> {
 let artifact = sandbox
     .files
     .export_with_options(
@@ -62,9 +66,9 @@ MicroVM isolation is the default. Shared-kernel Sandbox isolation is an
 explicit opt-in and requires a certified Linux host:
 
 ```rust
-use aster_box_sdk::{ExecutionIsolation, Sandbox, SandboxCreateOptions};
+use krun_box_sdk::{ExecutionIsolation, Sandbox, SandboxCreateOptions};
 
-# async fn example() -> Result<(), aster_box_sdk::ClientError> {
+# async fn example() -> Result<(), krun_box_sdk::ClientError> {
 let sandbox = Sandbox::create_with_options(
     SandboxCreateOptions::new("python:3.12-alpine")
         .isolation(ExecutionIsolation::Sandbox)
@@ -81,9 +85,9 @@ initial OCI process explicitly when the workload must start at boot, including
 on Windows/WHPX where post-boot command execution is unavailable:
 
 ```rust
-use aster_box_sdk::{Sandbox, SandboxCreateOptions};
+use krun_box_sdk::{Sandbox, SandboxCreateOptions};
 
-# async fn example() -> Result<(), aster_box_sdk::ClientError> {
+# async fn example() -> Result<(), krun_box_sdk::ClientError> {
 let sandbox = Sandbox::create_with_options(
     SandboxCreateOptions::new("alpine:3.20")
         .entrypoint(["/bin/sh", "-c"])
@@ -98,17 +102,17 @@ The facade also provides `connect`, `pause`, `resume`, generation-fenced
 `stop`, idempotent `restart`, explicit terminal `remove`, `is_running`, bounded
 structured logs, current stats, command environment/working-directory/stdin
 options, and file metadata and mutation operations. `kill` is the convenient
-stop-and-remove composition. `AsterBoxClient` remains available for lower-level
+stop-and-remove composition. `KrunBoxClient` remains available for lower-level
 management APIs.
 
 ```rust
-use aster_box_sdk::{
+use krun_box_sdk::{
     ExecutionEventsRequest, ExecutionResourceUpdate, OperationId,
     SandboxEventStreamOptions, SandboxLogOptions, SandboxRestartOptions,
 };
 use futures::StreamExt;
 
-# async fn lifecycle(sandbox: &aster_box_sdk::Sandbox) -> Result<(), aster_box_sdk::ClientError> {
+# async fn lifecycle(sandbox: &krun_box_sdk::Sandbox) -> Result<(), krun_box_sdk::ClientError> {
 let logs = sandbox.logs(SandboxLogOptions::tail(100)).await?;
 let stats = sandbox.stats().await?;
 println!("{} log entries; active stats: {}", logs.len(), stats.is_some());
@@ -175,10 +179,10 @@ The direct `Sandbox` facade and the fluent builders are two entry styles over
 the same typed client and lifecycle implementation:
 
 ```rust
-use aster_box_sdk::{AsterBoxClient, SandboxNetwork};
+use krun_box_sdk::{KrunBoxClient, SandboxNetwork};
 
-# async fn example() -> Result<(), aster_box_sdk::ClientError> {
-let client = AsterBoxClient::new();
+# async fn example() -> Result<(), krun_box_sdk::ClientError> {
+let client = KrunBoxClient::new();
 let image = client
     .image("./ci")
     .dockerfile("Dockerfile")
@@ -215,7 +219,7 @@ let result = sandbox
     .await?;
 sandbox.kill().await?;
 if result.exit_code != 0 {
-    return Err(aster_box_sdk::ClientError::Guest(result.stderr));
+    return Err(krun_box_sdk::ClientError::Guest(result.stderr));
 }
 # Ok(()) }
 ```
@@ -244,13 +248,13 @@ applications can fail closed before using a newer API.
 ## Runtime-Backed Client
 
 ```rust
-use aster_box_sdk::{
-    AsterBoxClient, BuildImage, CreateNetwork, CreateSnapshot, CreateVolume, ListBoxesOptions,
+use krun_box_sdk::{
+    KrunBoxClient, BuildImage, CreateNetwork, CreateSnapshot, CreateVolume, ListBoxesOptions,
     PullImage, ReadBoxLogsOptions, RemoveBox, RestoreSnapshot, StopBox,
 };
 
-# async fn example() -> Result<(), aster_box_sdk::ClientError> {
-let client = AsterBoxClient::new();
+# async fn example() -> Result<(), krun_box_sdk::ClientError> {
+let client = KrunBoxClient::new();
 
 let boxes = client.list_boxes(ListBoxesOptions::all())?;
 let disk = client.runtime_disk_usage()?;
@@ -268,7 +272,7 @@ let built = client
     .build_image(BuildImage::new(".").tag("local/app:dev").quiet(true))
     .await?;
 let tagged = client
-    .tag_image(aster_box_sdk::TagImage::new("local/app:dev", "local/app:latest"))
+    .tag_image(krun_box_sdk::TagImage::new("local/app:dev", "local/app:latest"))
     .await?;
 
 let volume = client.create_volume(CreateVolume::new("cache").label("role", "build"))?;
@@ -295,27 +299,27 @@ println!(
 # Ok(()) }
 ```
 
-Use `AsterBoxClient::from_home(path)` for tests or tools that should operate on a
-non-default aster-box state directory.
+Use `KrunBoxClient::from_home(path)` for tests or tools that should operate on a
+non-default krun-box state directory.
 
 On Linux, applications participating in the opt-in long-lived OCI owner
 migration should use the async configured constructor:
 
 ```rust
-use aster_box_sdk::{AsterBoxClient, AsterBoxPaths};
+use krun_box_sdk::{KrunBoxClient, KrunBoxPaths};
 
-# async fn configured() -> Result<(), aster_box_sdk::ClientError> {
-let paths = AsterBoxPaths::from_home("/var/lib/aster-box");
-let client = AsterBoxClient::with_configured_paths(paths).await?;
+# async fn configured() -> Result<(), krun_box_sdk::ClientError> {
+let paths = KrunBoxPaths::from_home("/var/lib/krun-box");
+let client = KrunBoxClient::with_configured_paths(paths).await?;
 # let _ = client;
 # Ok(()) }
 ```
 
 On Linux it defaults new Sandbox records to `SandboxViaOci` when
-`ASTER_BOX_OCI_MIGRATION` is absent, and honors explicit `sandbox`/`off` plus the
-paired `ASTER_BOX_OCI_RUNTIME_PATH`/`ASTER_BOX_OCI_AGENT_PATH` overrides. For an
+`KRUN_BOX_OCI_MIGRATION` is absent, and honors explicit `sandbox`/`off` plus the
+paired `KRUN_BOX_OCI_RUNTIME_PATH`/`KRUN_BOX_OCI_AGENT_PATH` overrides. For an
 environment-independent embedding, construct `NativeLinuxOciMigrationConfig`
-and pass it to `AsterBoxClient::with_native_linux_oci_migration`. Synchronous
+and pass it to `KrunBoxClient::with_native_linux_oci_migration`. Synchronous
 constructors intentionally retain the legacy backend.
 
 ## Managed Lifecycle
@@ -327,13 +331,13 @@ parallel box record.
 ```rust
 use std::collections::BTreeMap;
 
-use aster_box_sdk::{
-    AsterBoxClient, BoxConfig, CreateExecutionRequest, ExecutionIsolation,
+use krun_box_sdk::{
+    KrunBoxClient, BoxConfig, CreateExecutionRequest, ExecutionIsolation,
     ExecutionRecordPolicy, OperationId,
 };
 
-# async fn lifecycle() -> Result<(), aster_box_sdk::ClientError> {
-let client = AsterBoxClient::new();
+# async fn lifecycle() -> Result<(), krun_box_sdk::ClientError> {
+let client = KrunBoxClient::new();
 let operation = OperationId::new("example-create")?;
 let request = CreateExecutionRequest {
     external_sandbox_id: "example-sandbox".to_string(),
@@ -363,7 +367,7 @@ client
 
 `run_box` provides the idempotent create-and-start composition. Typed methods
 also expose inspect, structured logs, pause, resume, restart, kill, terminal
-removal, and operation reconciliation. `AsterBoxClient::with_execution_manager`
+removal, and operation reconciliation. `KrunBoxClient::with_execution_manager`
 accepts an explicit typed manager for embedding or tests without changing
 request semantics.
 
@@ -380,7 +384,7 @@ request semantics.
   boxes, and prune.
 - Snapshots: list, get, create from a box rootfs, restore into a new created box
   record, remove, and prune.
-- Diagnostics: aster-box/core/runtime/SDK versions, home path, host
+- Diagnostics: krun-box/core/runtime/SDK versions, home path, host
   virtualization availability, and runtime disk usage grouped by boxes, images,
   volumes, snapshots, state files, and other local data.
 - Running boxes on Unix: exec, file transfer, heartbeat, main-process signal,
@@ -396,7 +400,7 @@ request semantics.
 
 The client reads the shared `boxes.json` state format through an SDK-local model
 so it does not depend on the CLI crate. Image, volume, network, snapshot, build,
-registry, exec, PTY, and attestation operations use `aster-box-runtime` directly.
+registry, exec, PTY, and attestation operations use `krun-box-runtime` directly.
 
 Managed lifecycle methods preserve the complete typed `BoxConfig` and
 `ExecutionRecordPolicy` request and call the canonical runtime facade. Pause,
@@ -421,10 +425,10 @@ The historical programmable CI runner is still available behind an explicit
 feature:
 
 ```bash
-cargo test -p aster-box-sdk --features pipeline-cli
-ASTER_BOX=/path/to/aster-box cargo run -p aster-box-sdk --features pipeline-cli --bin aster-box-ci
+cargo test -p krun-box-sdk --features pipeline-cli
+KRUN_BOX=/path/to/krun-box cargo run -p krun-box-sdk --features pipeline-cli --bin krun-box-ci
 ```
 
 This optional runner drives lifecycle-heavy commands through the installed
-`aster-box` binary because those flows are not yet exposed as stable runtime client
+`krun-box` binary because those flows are not yet exposed as stable runtime client
 APIs. It is not part of the default SDK surface.

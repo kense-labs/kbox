@@ -34,11 +34,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/0/owned fixture plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/0/owned fixture plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -47,7 +47,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -59,11 +59,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/0/owned other plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/0/owned other plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -72,7 +72,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@1.0.0"
           ],
@@ -83,7 +83,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture@1.0.0",
             "other@1.0.0"
@@ -95,7 +95,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/0/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/0/data/installs/fixture/2.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -131,11 +131,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/1/owned fixture plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/1/owned fixture plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -144,7 +144,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -156,11 +156,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/1/owned other plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/1/owned other plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -169,7 +169,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@1.0.0"
           ],
@@ -180,7 +180,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "other",
             "fixture"
@@ -192,7 +192,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/1/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/1/data/installs/fixture/1.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -201,7 +201,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/1/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/1/data/installs/fixture/2.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -210,7 +210,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/1/data/installs/other/1.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/1/data/installs/other/1.0.0/bin/other"
           ],
           "status": "returned",
           "exit": 0,
@@ -248,11 +248,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/2/owned fixture plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/2/owned fixture plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -261,7 +261,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -273,11 +273,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/2/owned other plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/2/owned other plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -286,7 +286,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@1.0.0"
           ],
@@ -297,7 +297,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--all"
           ],
@@ -333,11 +333,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/owned fixture plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/owned fixture plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -346,7 +346,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -358,11 +358,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/owned other plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/owned other plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -371,7 +371,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@1.0.0"
           ],
@@ -382,7 +382,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "--all",
             "--dry-run-code"
@@ -390,11 +390,11 @@
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise fixture@1.0.0   uninstall\nmise fixture@1.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/fixture/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/cache/fixture/1.0.0\nmise fixture@1.0.0 ✓ uninstalled (dry-run)\nmise fixture@2.0.0   uninstall\nmise fixture@2.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/cache/fixture/2.0.0\nmise fixture@2.0.0 ✓ uninstalled (dry-run)\nmise other@1.0.0     uninstall\nmise other@1.0.0     remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/other/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/cache/other/1.0.0\nmise other@1.0.0   ✓ uninstalled (dry-run)\n"
+          "stderr": "mise fixture@1.0.0   uninstall\nmise fixture@1.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/fixture/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/cache/fixture/1.0.0\nmise fixture@1.0.0 ✓ uninstalled (dry-run)\nmise fixture@2.0.0   uninstall\nmise fixture@2.0.0   remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/cache/fixture/2.0.0\nmise fixture@2.0.0 ✓ uninstalled (dry-run)\nmise other@1.0.0     uninstall\nmise other@1.0.0     remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/other/1.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/cache/other/1.0.0\nmise other@1.0.0   ✓ uninstalled (dry-run)\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/fixture/1.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -403,7 +403,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/fixture/2.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -412,7 +412,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/3/data/installs/other/1.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/3/data/installs/other/1.0.0/bin/other"
           ],
           "status": "returned",
           "exit": 0,
@@ -451,11 +451,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/4/owned fixture plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/4/owned fixture plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -464,7 +464,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@2.0.0"
@@ -476,11 +476,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "other",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/4/owned other plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/4/owned other plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -489,7 +489,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "other@1.0.0"
           ],
@@ -500,7 +500,7 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "uninstall",
             "fixture@1.0.0",
             "fixture@1.0.0"
@@ -512,7 +512,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/4/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/4/data/installs/fixture/2.0.0/bin/fixture"
           ],
           "status": "returned",
           "exit": 0,
@@ -521,7 +521,7 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster mise multi uninstall z4kskmue/4/data/installs/other/1.0.0/bin/other"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun mise multi uninstall z4kskmue/4/data/installs/other/1.0.0/bin/other"
           ],
           "status": "returned",
           "exit": 0,

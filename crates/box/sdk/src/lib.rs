@@ -1,4 +1,4 @@
-//! aster-box SDK — drive aster-box from Rust.
+//! krun-box SDK — drive krun-box from Rust.
 //!
 //! Provides [`client`]: typed, runtime-backed local management APIs for boxes,
 //! pause/unpause/stop/remove/prune lifecycle transitions, images, volumes,
@@ -15,9 +15,9 @@ pub mod sandbox;
 pub mod pipeline;
 
 pub use client::{
-    AsterBoxClient, AsterBoxPaths, BoxLogLine, BoxStatsSummary, BoxSummary, BuildImage,
-    BuildImageSummary, ClientError, CreateNetwork, CreateSnapshot, CreateVolume, ImageBuilder,
-    ImageHealthCheckSummary, ImageHistoryEntry, ImageInspectSummary, ImageSummary,
+    BoxLogLine, BoxStatsSummary, BoxSummary, BuildImage, BuildImageSummary, ClientError,
+    CreateNetwork, CreateSnapshot, CreateVolume, ImageBuilder, ImageHealthCheckSummary,
+    ImageHistoryEntry, ImageInspectSummary, ImageSummary, KrunBoxClient, KrunBoxPaths,
     ListBoxesOptions, NetworkBuilder, NetworkEndpointSummary, NetworkSummary, PullImage, PushImage,
     PushImageSummary, ReadBoxLogsOptions, RegistryCredentials, RemoveBox, RemoveBoxSummary,
     RestoreSnapshot, Result, RuntimeDiagnostics, RuntimeDiskUsage, RuntimeVirtualizationSummary,
@@ -32,7 +32,7 @@ pub use sandbox::{
     DEFAULT_SANDBOX_TIMEOUT_SECONDS, MAX_ARTIFACT_BYTES,
 };
 
-pub use aster_box_core::{
+pub use krun_box_core::{
     BoxConfig, CreateExecutionRequest, ExecOutput, ExecRequest, ExecutionCpuStats,
     ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
     ExecutionHealthCheck, ExecutionId, ExecutionIsolation, ExecutionLease, ExecutionManager,
@@ -44,12 +44,12 @@ pub use aster_box_core::{
     PortMapping, PortProtocol, ReconcileOutcome, RestartExecutionOptions,
     MAX_EXECUTION_EVENT_BATCH_ITEMS,
 };
-pub use aster_box_runtime::{
+pub use krun_box_runtime::{
     NativeLinuxOciMigrationConfig, RegistryAuth, RegistryProtocol, SignaturePolicy,
 };
 
 #[cfg(unix)]
-pub use aster_box_runtime::{
+pub use krun_box_runtime::{
     AttestationPolicy, AttestationReport, AttestationRequest, ExecClient, PtyClient,
     RaTlsAttestationClient, StreamingExec, StreamingExecInput, StreamingPty, StreamingPtyInput,
     VerificationResult,

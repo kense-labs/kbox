@@ -205,11 +205,11 @@ async fn lifecycle_graph_transition_atomically_publishes_candidates_and_hides_re
     let candidate_root_catalog =
         verified_knowledge_catalog(&candidate_root_source, "acme/root", &[], 'c').await;
     let lock_host =
-        aster_use_core::PluginPackageLockHost::new("linux-x86_64", host_version).unwrap();
-    let prior_lock = aster_use_core::PluginPackageResolver::new(lock_host.clone())
+        krun_use_core::PluginPackageLockHost::new("linux-x86_64", host_version).unwrap();
+    let prior_lock = krun_use_core::PluginPackageResolver::new(lock_host.clone())
         .resolve(prior_root_catalog.clone(), vec![base_catalog.clone()])
         .unwrap();
-    let candidate_lock = aster_use_core::PluginPackageResolver::new(lock_host)
+    let candidate_lock = krun_use_core::PluginPackageResolver::new(lock_host)
         .resolve(candidate_root_catalog.clone(), Vec::new())
         .unwrap();
 
@@ -444,8 +444,8 @@ async fn lifecycle_graph_hide_revalidates_dependents_outside_the_reviewed_remova
         'f',
     )
     .await;
-    let reviewed_removal_lock = aster_use_core::PluginPackageResolver::new(
-        aster_use_core::PluginPackageLockHost::new("linux-x86_64", host_version).unwrap(),
+    let reviewed_removal_lock = krun_use_core::PluginPackageResolver::new(
+        krun_use_core::PluginPackageLockHost::new("linux-x86_64", host_version).unwrap(),
     )
     .resolve(first_catalog.clone(), vec![dependency_catalog.clone()])
     .unwrap();

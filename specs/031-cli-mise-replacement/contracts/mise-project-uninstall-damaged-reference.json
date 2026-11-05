@@ -11,11 +11,11 @@
   "commands": [
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "plugins",
         "link",
         "fixture",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster damaged project 中文 z1gjf0ic/plugin"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun damaged project 中文 z1gjf0ic/plugin"
       ],
       "status": "returned",
       "exit": 0,
@@ -24,7 +24,7 @@
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "install",
         "fixture@1.0.0",
         "fixture@2.0.0"
@@ -36,18 +36,18 @@
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "trust",
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster damaged project 中文 z1gjf0ic/project/mise.toml"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun damaged project 中文 z1gjf0ic/project/mise.toml"
       ],
       "status": "returned",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster damaged project 中文 z1gjf0ic/project/mise.toml\n"
+      "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun damaged project 中文 z1gjf0ic/project/mise.toml\n"
     },
     {
       "argv": [
-        "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+        "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
         "uninstall",
         "--project",
         "--yes"
@@ -55,11 +55,11 @@
       "status": "returned",
       "exit": 0,
       "stdout": "",
-      "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster damaged project 中文 z1gjf0ic/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.0.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 5ms\n"
+      "stderr": "mise fixture@1.0.0 is requested by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun damaged project 中文 z1gjf0ic/project/mise.toml\nmise by @jdx – removing 1 tool\nmise ✓ fixture@1.0.0  4ms\nmise ████████████████ 1/1 · removed 1 tool in 5ms\n"
     },
     {
       "argv": [
-        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster damaged project 中文 z1gjf0ic/data/installs/fixture/2.0.0/bin/fixture"
+        "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun damaged project 中文 z1gjf0ic/data/installs/fixture/2.0.0/bin/fixture"
       ],
       "status": "returned",
       "exit": 0,

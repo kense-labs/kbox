@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::AgentWriteStdinRequest;
-use aster_oci_core::IsolationClass;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentWriteStdinRequest;
+use krun_oci_core::IsolationClass;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, ListRequest, OciRuntimeService, OperationContext,
     ProcessTarget, WriteStdinRequest,
 };
@@ -28,7 +28,7 @@ pub(super) async fn run(
     report: &mut OciVmOperationReopenReplacementReport,
 ) -> std::result::Result<(), String> {
     let response_delivered = qualification.stage
-        == aster_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let cleanup = MacosHostCleanupTracker::capture();
     let session = match super::super::connect_replacement_qualification_session(
         &qualification.shim,

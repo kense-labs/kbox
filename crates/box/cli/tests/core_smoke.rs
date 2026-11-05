@@ -1,25 +1,25 @@
-//! Real core lifecycle smoke test for the aster-box CLI.
+//! Real core lifecycle smoke test for the krun-box CLI.
 //!
 //! This test is ignored by default because it needs registry access, a built
-//! `aster-box` binary, libkrun/HVF or KVM, and a runnable Linux image.
+//! `krun-box` binary, libkrun/HVF or KVM, and a runnable Linux image.
 //!
 //! Run it from `crates/box/src`:
 //!
 //! ```bash
-//! cargo test -p aster-box-cli --test core_smoke -- --ignored --nocapture --test-threads=1
+//! cargo test -p krun-box-cli --test core_smoke -- --ignored --nocapture --test-threads=1
 //! ```
 //!
 //! Optional environment:
 //!
-//! - `ASTER_BOX_SMOKE_IMAGE`: image to use (default: `docker.io/library/alpine:latest`)
-//! - `ASTER_BOX_SMOKE_IMAGE_TAR`: load this OCI archive into the isolated `ASTER_HOME`
+//! - `KRUN_BOX_SMOKE_IMAGE`: image to use (default: `docker.io/library/alpine:latest`)
+//! - `KRUN_BOX_SMOKE_IMAGE_TAR`: load this OCI archive into the isolated `KRUN_HOME`
 //!   before running, useful for offline HVF/KVM smoke tests
-//! - `ASTER_BOX_TEST_ALPINE_TAR`: fallback OCI archive path shared with host smoke coverage
-//! - `ASTER_BOX_SMOKE_SKIP_PULL=1`: skip the explicit `pull` step for cached images
-//! - `ASTER_BOX_SMOKE_TIMEOUT_SECS`: command and polling timeout (default: 300)
-//! - `ASTER_BOX_VIRTIOFS_TAR_TIMEOUT_SECS`: Windows timeout for the high-intensity
+//! - `KRUN_BOX_TEST_ALPINE_TAR`: fallback OCI archive path shared with host smoke coverage
+//! - `KRUN_BOX_SMOKE_SKIP_PULL=1`: skip the explicit `pull` step for cached images
+//! - `KRUN_BOX_SMOKE_TIMEOUT_SECS`: command and polling timeout (default: 300)
+//! - `KRUN_BOX_VIRTIOFS_TAR_TIMEOUT_SECS`: Windows timeout for the high-intensity
 //!   virtio-fs tar test (default: 900; never shorter than the general timeout)
-//! - `ASTER_BOX_HVF_POSTGRES_IMAGE`: digest-pinned PostgreSQL image for the macOS
+//! - `KRUN_BOX_HVF_POSTGRES_IMAGE`: digest-pinned PostgreSQL image for the macOS
 //!   published-port/SCRAM regression
 
 #[path = "core_smoke/postgres_wire.rs"]
@@ -55,16 +55,16 @@ impl BackgroundCommand {
             let child = self.child.as_mut().expect("background command child");
             child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `aster-box {}`: {e}", self.args))
+                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", self.args))
         };
 
         if let Some(status) = status {
             let child = self.child.take().expect("background command child");
             let output = child.wait_with_output().unwrap_or_else(|e| {
-                panic!("failed to collect `aster-box {}` output: {e}", self.args)
+                panic!("failed to collect `krun-box {}` output: {e}", self.args)
             });
             panic!(
-                "`aster-box {}` exited unexpectedly with status {}\nstdout:\n{}\nstderr:\n{}",
+                "`krun-box {}` exited unexpectedly with status {}\nstdout:\n{}\nstderr:\n{}",
                 self.args,
                 status,
                 String::from_utf8_lossy(&output.stdout),
@@ -78,7 +78,7 @@ impl BackgroundCommand {
         let _ = child.kill();
         let output = child
             .wait_with_output()
-            .unwrap_or_else(|e| panic!("failed to collect `aster-box {}` output: {e}", self.args));
+            .unwrap_or_else(|e| panic!("failed to collect `krun-box {}` output: {e}", self.args));
 
         CommandResult {
             stdout: String::from_utf8_lossy(&output.stdout).to_string(),
@@ -98,7 +98,7 @@ impl BackgroundCommand {
                 Ok(Some(_)) => {
                     let output = child.wait_with_output().unwrap_or_else(|error| {
                         panic!(
-                            "failed to collect signalled `aster-box {}` output: {error}",
+                            "failed to collect signalled `krun-box {}` output: {error}",
                             self.args
                         )
                     });
@@ -115,13 +115,10 @@ impl BackgroundCommand {
                 Ok(None) => {
                     let _ = child.kill();
                     let output = child.wait_with_output().unwrap_or_else(|error| {
-                        panic!(
-                            "failed to reap timed-out `aster-box {}`: {error}",
-                            self.args
-                        )
+                        panic!("failed to reap timed-out `krun-box {}`: {error}", self.args)
                     });
                     panic!(
-                        "`aster-box {}` did not exit after signal {signal}\nstdout:\n{}\nstderr:\n{}",
+                        "`krun-box {}` did not exit after signal {signal}\nstdout:\n{}\nstderr:\n{}",
                         self.args,
                         String::from_utf8_lossy(&output.stdout),
                         String::from_utf8_lossy(&output.stderr)
@@ -130,10 +127,7 @@ impl BackgroundCommand {
                 Err(error) => {
                     let _ = child.kill();
                     let _ = child.wait();
-                    panic!(
-                        "failed to poll signalled `aster-box {}`: {error}",
-                        self.args
-                    );
+                    panic!("failed to poll signalled `krun-box {}`: {error}", self.args);
                 }
             }
         }
@@ -161,7 +155,7 @@ impl CoreSmoke {
     fn new() -> Self {
         Self {
             bin: find_binary(),
-            home: tempfile::tempdir().expect("temp ASTER_HOME"),
+            home: tempfile::tempdir().expect("temp KRUN_HOME"),
             name: unique_name(),
             timeout: smoke_timeout(),
         }
@@ -173,12 +167,12 @@ impl CoreSmoke {
 
     fn command(&self, args: &[&str]) -> Command {
         let mut cmd = Command::new(&self.bin);
-        cmd.args(args).env("ASTER_HOME", self.home_path());
+        cmd.args(args).env("KRUN_HOME", self.home_path());
         cmd
     }
 
     fn try_output(&self, args: &[&str], timeout: Duration) -> Result<CommandResult, String> {
-        eprintln!("    $ aster-box {}", args.join(" "));
+        eprintln!("    $ krun-box {}", args.join(" "));
 
         let capture_id = unique_capture_id();
         let stdout_path = self.home_path().join(format!("{capture_id}.stdout"));
@@ -198,13 +192,13 @@ impl CoreSmoke {
             .stdout(Stdio::from(stdout))
             .stderr(Stdio::from(stderr))
             .spawn()
-            .map_err(|e| format!("failed to run `aster-box {}`: {e}", args.join(" ")))?;
+            .map_err(|e| format!("failed to run `krun-box {}`: {e}", args.join(" ")))?;
 
         let start = Instant::now();
         loop {
             if let Some(status) = child
                 .try_wait()
-                .map_err(|e| format!("failed to poll `aster-box {}`: {e}", args.join(" ")))?
+                .map_err(|e| format!("failed to poll `krun-box {}`: {e}", args.join(" ")))?
             {
                 let (stdout, stderr) = read_command_output(&stdout_path, &stderr_path)?;
                 return Ok(CommandResult {
@@ -219,13 +213,13 @@ impl CoreSmoke {
                 let _ = child.kill();
                 let _ = child.wait().map_err(|e| {
                     format!(
-                        "timed out and failed to reap `aster-box {}`: {e}",
+                        "timed out and failed to reap `krun-box {}`: {e}",
                         args.join(" ")
                     )
                 })?;
                 let (stdout, stderr) = read_command_output(&stdout_path, &stderr_path)?;
                 return Err(format!(
-                    "`aster-box {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
+                    "`krun-box {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     timeout,
                     stdout,
@@ -244,14 +238,14 @@ impl CoreSmoke {
 
     #[cfg(unix)]
     fn spawn_background(&self, args: &[&str]) -> BackgroundCommand {
-        eprintln!("    $ aster-box {}  # background", args.join(" "));
+        eprintln!("    $ krun-box {}  # background", args.join(" "));
 
         let child = self
             .command(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `aster-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
 
         BackgroundCommand {
             child: Some(child),
@@ -269,7 +263,7 @@ impl CoreSmoke {
             .unwrap_or_else(|error| panic!("{error}"));
         assert!(
             result.success,
-            "`aster-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             result.stdout,
             result.stderr
@@ -282,7 +276,7 @@ impl CoreSmoke {
         let result = self.output(args);
         assert!(
             !result.success,
-            "`aster-box {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
+            "`krun-box {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             result.stdout,
             result.stderr
@@ -313,7 +307,7 @@ impl CoreSmoke {
         use std::io::{Read, Write};
         use std::os::fd::{AsRawFd, FromRawFd, RawFd};
 
-        eprintln!("    $ [pty] aster-box {}", args.join(" "));
+        eprintln!("    $ [pty] krun-box {}", args.join(" "));
 
         let (master_fd, slave_fd) = open_pty()?;
         let stdout_fd = duplicate_fd(slave_fd).inspect_err(|_| {
@@ -337,12 +331,7 @@ impl CoreSmoke {
             .stdout(Stdio::from(slave_stdout))
             .stderr(Stdio::from(slave_stderr))
             .spawn()
-            .map_err(|e| {
-                format!(
-                    "failed to run `aster-box {}` under PTY: {e}",
-                    args.join(" ")
-                )
-            })?;
+            .map_err(|e| format!("failed to run `krun-box {}` under PTY: {e}", args.join(" ")))?;
 
         if !input.is_empty() {
             master
@@ -362,7 +351,7 @@ impl CoreSmoke {
 
             if let Some(status) = child.try_wait().map_err(|e| {
                 format!(
-                    "failed to poll PTY command `aster-box {}`: {e}",
+                    "failed to poll PTY command `krun-box {}`: {e}",
                     args.join(" ")
                 )
             })? {
@@ -388,7 +377,7 @@ impl CoreSmoke {
                 let _ = child.wait();
                 drain_pty_output(&mut master, &mut buf, &mut output)?;
                 return Err(format!(
-                    "`aster-box {}` timed out after {:?}\npty output:\n{}",
+                    "`krun-box {}` timed out after {:?}\npty output:\n{}",
                     args.join(" "),
                     timeout,
                     String::from_utf8_lossy(&output)
@@ -546,7 +535,7 @@ impl CoreSmoke {
         let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap_or_else(|e| {
             panic!("failed to parse inspect JSON for {name}: {e}\nstdout:\n{stdout}")
         });
-        // `aster-box inspect` returns a Docker-shaped array `[{...}]`. Every caller
+        // `krun-box inspect` returns a Docker-shaped array `[{...}]`. Every caller
         // here wants the single object, so unwrap it (pass through if it is
         // already an object, for robustness).
         match parsed {
@@ -799,7 +788,7 @@ impl Drop for CoreSmoke {
 }
 
 fn find_binary() -> PathBuf {
-    if let Some(path) = option_env!("CARGO_BIN_EXE_aster-box") {
+    if let Some(path) = option_env!("CARGO_BIN_EXE_krun-box") {
         let bin = PathBuf::from(path);
         if bin.exists() {
             return bin;
@@ -812,20 +801,17 @@ fn find_binary() -> PathBuf {
         .expect("cli crate should be inside workspace");
 
     for profile in ["debug", "release"] {
-        let bin = workspace_root
-            .join("target")
-            .join(profile)
-            .join("aster-box");
+        let bin = workspace_root.join("target").join(profile).join("krun-box");
         if bin.exists() {
             return bin;
         }
     }
 
-    PathBuf::from("aster-box")
+    PathBuf::from("krun-box")
 }
 
 fn smoke_timeout() -> Duration {
-    let seconds = std::env::var("ASTER_BOX_SMOKE_TIMEOUT_SECS")
+    let seconds = std::env::var("KRUN_BOX_SMOKE_TIMEOUT_SECS")
         .ok()
         .and_then(|value| value.parse::<u64>().ok())
         .filter(|value| *value > 0)
@@ -834,24 +820,24 @@ fn smoke_timeout() -> Duration {
 }
 
 fn smoke_image() -> String {
-    std::env::var("ASTER_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string())
+    std::env::var("KRUN_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string())
 }
 
 fn postgres_image() -> String {
-    std::env::var("ASTER_BOX_HVF_POSTGRES_IMAGE")
+    std::env::var("KRUN_BOX_HVF_POSTGRES_IMAGE")
         .unwrap_or_else(|_| DEFAULT_POSTGRES_IMAGE.to_string())
 }
 
 fn smoke_image_tar() -> Option<String> {
-    std::env::var("ASTER_BOX_SMOKE_IMAGE_TAR")
+    std::env::var("KRUN_BOX_SMOKE_IMAGE_TAR")
         .ok()
-        .or_else(|| std::env::var("ASTER_BOX_TEST_ALPINE_TAR").ok())
+        .or_else(|| std::env::var("KRUN_BOX_TEST_ALPINE_TAR").ok())
         .filter(|path| !path.trim().is_empty())
 }
 
 fn skip_pull() -> bool {
     matches!(
-        std::env::var("ASTER_BOX_SMOKE_SKIP_PULL").as_deref(),
+        std::env::var("KRUN_BOX_SMOKE_SKIP_PULL").as_deref(),
         Ok("1" | "true" | "TRUE" | "yes" | "YES")
     )
 }
@@ -999,7 +985,7 @@ fn kill_host_pid(pid: u64, signal: libc::c_int) {
 fn passt_pid_for_box(smoke: &CoreSmoke, name: &str) -> u32 {
     let inspect = smoke.inspect_json(name);
     let id = json_string_field(&inspect, "id");
-    let pid_path = PathBuf::from("/tmp/aster-box-sockets")
+    let pid_path = PathBuf::from("/tmp/krun-box-sockets")
         .join(id)
         .join("passt.pid");
     let pid = std::fs::read_to_string(&pid_path)
@@ -1052,7 +1038,7 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
     let env_file = smoke.home_path().join("smoke.env");
     std::fs::write(
         &env_file,
-        "ASTER_SMOKE_FROM_FILE=file\nASTER_SMOKE_OVERRIDE=file\n",
+        "KRUN_SMOKE_FROM_FILE=file\nASTER_SMOKE_OVERRIDE=file\n",
     )
     .expect("write smoke env file");
     let env_file_arg = env_file.to_string_lossy().to_string();
@@ -1065,9 +1051,9 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "--env-file",
         &env_file_arg,
         "--env",
-        "ASTER_SMOKE_OVERRIDE=cli",
+        "KRUN_SMOKE_OVERRIDE=cli",
         "--env",
-        "ASTER_SMOKE_INLINE=inline",
+        "KRUN_SMOKE_INLINE=inline",
         "--hostname",
         "smoke-box",
         "--add-host",
@@ -1076,7 +1062,7 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "--",
         "/bin/sh",
         "-c",
-        "hostname_value=$(cat /etc/hostname); hosts_value=$(grep -q '^127\\.0\\.0\\.2[[:space:]].*db\\.local' /etc/hosts && printf hosts-ok || printf hosts-missing); printf 'core-smoke-booted:%s:%s:%s:%s:%s\\n' \"$ASTER_SMOKE_FROM_FILE\" \"$ASTER_SMOKE_OVERRIDE\" \"$ASTER_SMOKE_INLINE\" \"$hostname_value\" \"$hosts_value\"; sleep 3600",
+        "hostname_value=$(cat /etc/hostname); hosts_value=$(grep -q '^127\\.0\\.0\\.2[[:space:]].*db\\.local' /etc/hosts && printf hosts-ok || printf hosts-missing); printf 'core-smoke-booted:%s:%s:%s:%s:%s\\n' \"$KRUN_SMOKE_FROM_FILE\" \"$KRUN_SMOKE_OVERRIDE\" \"$KRUN_SMOKE_INLINE\" \"$hostname_value\" \"$hosts_value\"; sleep 3600",
     ]);
 
     smoke.wait_for_running();
@@ -1085,11 +1071,11 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "exec",
         &smoke.name,
         "--env",
-        "ASTER_EXEC_SMOKE=ok",
+        "KRUN_EXEC_SMOKE=ok",
         "--",
         "/bin/sh",
         "-c",
-        "printf '%s' \"$ASTER_EXEC_SMOKE\"",
+        "printf '%s' \"$KRUN_EXEC_SMOKE\"",
     ]);
     assert_eq!(exec_env.trim(), "ok");
 
@@ -1266,7 +1252,7 @@ fn real_core_long_argument_avoids_kernel_cmdline_overflow() {
         "/bin/sh",
         "-c",
         "test \"${#1}\" -eq 4096; case \"$1\" in *[!x]*) exit 41;; esac; printf 'core-smoke-long-argv-ok:%s\\n' \"${#1}\"",
-        "aster-long-argv",
+        "krun-long-argv",
         &long_argument,
     ]);
 
@@ -1309,7 +1295,7 @@ fn real_core_utility_commands_cp_top_stats() {
     let host_src = smoke.home_path().join("host-to-box.txt");
     std::fs::write(&host_src, "cp-smoke-ok\n").expect("write host source file");
     let host_src_arg = host_src.to_string_lossy().to_string();
-    let box_path = format!("{}:/tmp/aster-box-cp-smoke.txt", smoke.name);
+    let box_path = format!("{}:/tmp/krun-box-cp-smoke.txt", smoke.name);
     smoke.ok(&["cp", &host_src_arg, &box_path]);
 
     let copied_in_box = smoke.ok(&[
@@ -1318,7 +1304,7 @@ fn real_core_utility_commands_cp_top_stats() {
         "--",
         "/bin/sh",
         "-c",
-        "cat /tmp/aster-box-cp-smoke.txt",
+        "cat /tmp/krun-box-cp-smoke.txt",
     ]);
     assert_eq!(copied_in_box, "cp-smoke-ok\n");
 
@@ -1405,14 +1391,14 @@ fn real_core_tsi_published_tcp_nonblocking_accept_and_exec() {
         "--",
         "/bin/sh",
         "-c",
-        r#"cat >/tmp/aster-pong <<'EOF'
+        r#"cat >/tmp/krun-pong <<'EOF'
 #!/bin/sh
 dd bs=1 count=14 of=/dev/null 2>/dev/null
 printf '+PONG\r\n'
 EOF
-chmod +x /tmp/aster-pong
+chmod +x /tmp/krun-pong
 echo TSI_ACCEPT_READY
-exec nc -ll -p 6379 -e /tmp/aster-pong"#,
+exec nc -ll -p 6379 -e /tmp/krun-pong"#,
     ]);
     smoke.wait_for_running();
     smoke.wait_for_logs("TSI_ACCEPT_READY");
@@ -1479,11 +1465,11 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
         "-p",
         &publish,
         "--env",
-        "POSTGRES_DB=aster_cloud",
+        "POSTGRES_DB=krun_cloud",
         "--env",
-        "POSTGRES_USER=aster_cloud",
+        "POSTGRES_USER=krun_cloud",
         "--env",
-        "POSTGRES_PASSWORD=aster_cloud",
+        "POSTGRES_PASSWORD=krun_cloud",
         &image,
     ]);
     smoke.wait_for_running();
@@ -1498,9 +1484,9 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
             let nonce = format!("asterboxhvf{}{}{}", std::process::id(), connection, attempt);
             match postgres_wire::query_text(
                 address,
-                "aster_cloud",
-                "aster_cloud",
-                "aster_cloud",
+                "krun_cloud",
+                "krun_cloud",
+                "krun_cloud",
                 &nonce,
             ) {
                 Ok(row) => break row,
@@ -1516,7 +1502,7 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
             }
         };
         assert_eq!(
-            row, "aster-box-hvf-aster_cloud",
+            row, "krun-box-hvf-krun_cloud",
             "PostgreSQL query result for connection {connection}"
         );
     }
@@ -1527,7 +1513,7 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
         "--",
         "/bin/sh",
         "-c",
-        "pg_isready -U aster_cloud -d aster_cloud",
+        "pg_isready -U krun_cloud -d krun_cloud",
     ]);
     assert_contains(&exec, "accepting connections", "pg_isready after SCRAM");
     smoke.assert_shim_log_excludes(
@@ -1561,7 +1547,7 @@ fn real_core_virtiofs_tar_closes_every_source_file_cleanly() {
     seed_smoke_image(&smoke, &image);
     #[cfg(target_os = "windows")]
     let tar_timeout = smoke.timeout.max(Duration::from_secs(
-        std::env::var("ASTER_BOX_VIRTIOFS_TAR_TIMEOUT_SECS")
+        std::env::var("KRUN_BOX_VIRTIOFS_TAR_TIMEOUT_SECS")
             .ok()
             .and_then(|value| value.parse().ok())
             .filter(|seconds| *seconds > 0)
@@ -1603,7 +1589,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
 
     seed_smoke_image(&smoke, &image);
 
-    let directory_mount = format!("{}:/mnt/aster-bind:ro", host_dir.path().display());
+    let directory_mount = format!("{}:/mnt/krun-bind:ro", host_dir.path().display());
     let directory_result = smoke.ok(&[
         "run",
         "--rm",
@@ -1615,7 +1601,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "--",
         "/bin/sh",
         "-c",
-        "test \"$(cat /mnt/aster-bind/directory.txt)\" = directory-bind-ok || exit 31; if printf changed >/mnt/aster-bind/directory.txt 2>/dev/null; then exit 32; fi; printf directory-bind-ro-ok",
+        "test \"$(cat /mnt/krun-bind/directory.txt)\" = directory-bind-ok || exit 31; if printf changed >/mnt/krun-bind/directory.txt 2>/dev/null; then exit 32; fi; printf directory-bind-ro-ok",
     ]);
     assert_contains(
         &directory_result,
@@ -1623,7 +1609,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "directory bind output",
     );
 
-    let single_file_mount = format!("{}:/etc/aster-bind-test.txt:ro", single_file.display());
+    let single_file_mount = format!("{}:/etc/krun-bind-test.txt:ro", single_file.display());
     let single_file_result = smoke.ok(&[
         "run",
         "--rm",
@@ -1635,7 +1621,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "--",
         "/bin/sh",
         "-c",
-        "test \"$(cat /etc/aster-bind-test.txt)\" = single-file-bind-ok || exit 41; if printf changed >/etc/aster-bind-test.txt 2>/dev/null; then exit 42; fi; printf single-file-bind-ro-ok",
+        "test \"$(cat /etc/krun-bind-test.txt)\" = single-file-bind-ok || exit 41; if printf changed >/etc/krun-bind-test.txt 2>/dev/null; then exit 42; fi; printf single-file-bind-ro-ok",
     ]);
     assert_contains(
         &single_file_result,
@@ -1758,7 +1744,7 @@ fn real_core_volume_backed_init_script_success_and_failure() {
     let init_config = init_source.path().join("init.conf");
     let volume = format!("{}-init-state", smoke.name);
     let state_mount = format!("{volume}:/state");
-    let init_mount = format!("{}:/opt/aster-init:ro", init_source.path().display());
+    let init_mount = format!("{}:/opt/krun-init:ro", init_source.path().display());
     let _volume_cleanup = NamedVolumeCleanup {
         smoke: &smoke,
         name: volume.clone(),
@@ -1769,12 +1755,12 @@ fn real_core_volume_backed_init_script_success_and_failure() {
         r#"#!/bin/sh
 set -eu
 
-test "$(cat /opt/aster-init/init.conf)" = profile=windows-whpx
-if printf tamper >>/opt/aster-init/init.conf 2>/dev/null; then
+test "$(cat /opt/krun-init/init.conf)" = profile=windows-whpx
+if printf tamper >>/opt/krun-init/init.conf 2>/dev/null; then
     exit 31
 fi
 
-case "${ASTER_INIT_MODE:-}" in
+case "${KRUN_INIT_MODE:-}" in
     success)
         printf success >/state/success
         printf 'box-init-success\n'
@@ -1802,7 +1788,7 @@ esac
         "--name",
         &format!("{}-init-success", smoke.name),
         "-e",
-        "ASTER_INIT_MODE=success",
+        "KRUN_INIT_MODE=success",
         "-v",
         &state_mount,
         "-v",
@@ -1810,7 +1796,7 @@ esac
         &image,
         "--",
         "/bin/sh",
-        "/opt/aster-init/init.sh",
+        "/opt/krun-init/init.sh",
     ]);
     assert_contains(&success, "box-init-success", "successful init output");
 
@@ -1820,7 +1806,7 @@ esac
         "--name",
         &format!("{}-init-failure", smoke.name),
         "-e",
-        "ASTER_INIT_MODE=failure",
+        "KRUN_INIT_MODE=failure",
         "-v",
         &state_mount,
         "-v",
@@ -1828,7 +1814,7 @@ esac
         &image,
         "--",
         "/bin/sh",
-        "/opt/aster-init/init.sh",
+        "/opt/krun-init/init.sh",
     ]);
     assert_eq!(
         failure.code,
@@ -2408,7 +2394,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
         "snapshot id: {snapshot_id}"
     );
     snapshot_cleanup.id = Some(snapshot_id.clone());
-    let store = aster_box_runtime::SnapshotStore::new(&smoke.home_path().join("snapshots"))
+    let store = krun_box_runtime::SnapshotStore::new(&smoke.home_path().join("snapshots"))
         .expect("open snapshot store");
     let rootfs_format = store
         .rootfs_format(&snapshot_id)
@@ -2459,7 +2445,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
     );
 
     match rootfs_format {
-        aster_box_runtime::SnapshotRootfsFormat::Directory => {
+        krun_box_runtime::SnapshotRootfsFormat::Directory => {
             let guarded = smoke.output(&["snapshot", "rm", &snapshot_id]);
             assert!(
                 !guarded.success,
@@ -2469,7 +2455,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
             assert_contains(&guarded.stderr, "still used", "rm guard message");
             smoke.ok(&["snapshot", "inspect", &snapshot_id]);
         }
-        aster_box_runtime::SnapshotRootfsFormat::GuestNativeExt4 => {
+        krun_box_runtime::SnapshotRootfsFormat::GuestNativeExt4 => {
             smoke.ok(&["snapshot", "rm", &snapshot_id]);
             snapshot_cleanup.id = None;
             assert!(
@@ -2552,7 +2538,7 @@ fn real_core_restart_policy_monitor_recovers_dead_box() {
     let combined_monitor_output = format!("{}\n{}", monitor_output.stdout, monitor_output.stderr);
     assert_contains(
         &combined_monitor_output,
-        "aster-box monitor started",
+        "krun-box monitor started",
         "monitor output",
     );
 
@@ -2719,9 +2705,9 @@ fn real_core_compose_single_service_lifecycle() {
             r#"services:
   {service}:
     image: {image}
-    command: ["/bin/sh", "-c", "printf 'core-smoke-compose:%s\n' \"$$ASTER_COMPOSE_SMOKE\"; sleep 3600"]
+    command: ["/bin/sh", "-c", "printf 'core-smoke-compose:%s\n' \"$$KRUN_COMPOSE_SMOKE\"; sleep 3600"]
     environment:
-      ASTER_COMPOSE_SMOKE: "ok"
+      KRUN_COMPOSE_SMOKE: "ok"
     labels:
       purpose: core-smoke
 "#,
@@ -2788,7 +2774,7 @@ fn real_core_compose_single_service_lifecycle() {
         "--",
         "/bin/sh",
         "-c",
-        "printf '%s' \"$ASTER_COMPOSE_SMOKE\"",
+        "printf '%s' \"$KRUN_COMPOSE_SMOKE\"",
     ]);
     assert_eq!(env_value, "ok");
 
@@ -2971,12 +2957,12 @@ fn real_core_interactive_pty_commands() {
             "--name",
             &run_box,
             "--env",
-            "ASTER_TTY_SMOKE=run",
+            "KRUN_TTY_SMOKE=run",
             &image,
             "--",
             "/bin/sh",
             "-c",
-            "printf 'core-smoke-run-pty:%s\\n' \"$ASTER_TTY_SMOKE\"",
+            "printf 'core-smoke-run-pty:%s\\n' \"$KRUN_TTY_SMOKE\"",
         ],
         b"",
     );
@@ -2993,7 +2979,7 @@ fn real_core_interactive_pty_commands() {
         "--name",
         &smoke.name,
         "--env",
-        "ASTER_TTY_SMOKE=detached",
+        "KRUN_TTY_SMOKE=detached",
         &image,
         "--",
         "/bin/sh",
@@ -3008,11 +2994,11 @@ fn real_core_interactive_pty_commands() {
             "-it",
             &smoke.name,
             "--env",
-            "ASTER_EXEC_TTY=ok",
+            "KRUN_EXEC_TTY=ok",
             "--",
             "/bin/sh",
             "-c",
-            "printf 'core-smoke-exec-pty:%s:%s\\n' \"$ASTER_TTY_SMOKE\" \"$ASTER_EXEC_TTY\"",
+            "printf 'core-smoke-exec-pty:%s:%s\\n' \"$KRUN_TTY_SMOKE\" \"$KRUN_EXEC_TTY\"",
         ],
         b"",
     );
@@ -3029,7 +3015,7 @@ fn real_core_interactive_pty_commands() {
 
     let attach = smoke.tty_output(
         &["attach", "-it", &smoke.name],
-        b"printf 'core-smoke-attach-pty:%s\\n' \"$ASTER_TTY_SMOKE\"; exit\n",
+        b"printf 'core-smoke-attach-pty:%s\\n' \"$KRUN_TTY_SMOKE\"; exit\n",
     );
     assert!(
         attach.success,

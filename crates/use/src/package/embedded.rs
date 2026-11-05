@@ -1,10 +1,10 @@
 use std::collections::BTreeMap;
 
-use aster_use_core::{
+use krun_use_core::{
     OkfCapabilityProjection, PackageSurfaceKind, PlanScope, PluginPackageLock,
     PluginPackageLockHost, PluginSurfaceRef, UseError, UseResult, VerifiedPluginCatalogRecord,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     inspect_cached_plugin, inspect_remote_plugin, resolve_cached_remote_package_lock,
     resolve_remote_package_lock, search_cached_plugins, search_remote_plugins, PluginCatalogHost,
     PluginCatalogInspection, PluginCatalogPage, PluginCatalogSearch, PluginCatalogSnapshot,
@@ -20,8 +20,8 @@ use crate::okf_knowledge::{
 
 use super::{current_host_target, PackageManager};
 
-const GENERATION_DIGEST_DOMAIN: &str = "aster.use.package-generation.v1";
-const CAPABILITY_SNAPSHOT_DIGEST_DOMAIN: &str = "aster.use.capability-snapshot.v1";
+const GENERATION_DIGEST_DOMAIN: &str = "krun.use.package-generation.v1";
+const CAPABILITY_SNAPSHOT_DIGEST_DOMAIN: &str = "krun.use.capability-snapshot.v1";
 const CANONICAL_DIGEST_PREFIX: &[u8] = b"agentic-ontology-canonical-v1\0";
 
 fn assert_send_sync<T: Send + Sync>() {}
@@ -64,7 +64,7 @@ pub struct PackageCatalogPageCursor {
     pub cursor: String,
 }
 
-/// Exact Aster Use evidence needed to construct a Code package binding.
+/// Exact Krun Use evidence needed to construct a Code package binding.
 ///
 /// This value deliberately contains no Code-owned schema. It binds one
 /// promoted OKF projection to its managed scope, immutable package generation,
@@ -251,11 +251,11 @@ pub(super) async fn acquire_capability_lease(
         ));
     }
     let state = manager.observe_package(package_id).await?;
-    if state.desired != aster_use_core::PluginDesiredState::Enabled
+    if state.desired != krun_use_core::PluginDesiredState::Enabled
         || !matches!(
             state.observed,
-            aster_use_core::PluginObservedState::Ready
-                | aster_use_core::PluginObservedState::Degraded
+            krun_use_core::PluginObservedState::Ready
+                | krun_use_core::PluginObservedState::Degraded
         )
     {
         return Ok(None);
@@ -325,7 +325,7 @@ pub(super) async fn acquire_capability_lease(
         ));
     }
 
-    let qualified = aster_use_core::PlanQualifiedSurfaceRef {
+    let qualified = krun_use_core::PlanQualifiedSurfaceRef {
         package_id: package_id.to_owned(),
         surface,
     };
@@ -575,7 +575,7 @@ mod tests {
     #[test]
     fn capability_digest_uses_the_code_owned_canonical_domain_and_field_order() {
         let projection: OkfCapabilityProjection = serde_json::from_value(serde_json::json!({
-            "schema": "aster.use.okf-capability-projection.v2",
+            "schema": "krun.use.okf-capability-projection.v2",
             "scope": { "kind": "workspace", "id": "workspace:test" },
             "surface": {
                 "packageId": "acme/knowledge",
@@ -585,7 +585,7 @@ mod tests {
             "packageDigest": format!("sha256:{}", "1".repeat(64)),
             "manifestDigest": format!("sha256:{}", "2".repeat(64)),
             "bundle": {
-                "schema": "aster.use.okf-bundle.v1",
+                "schema": "krun.use.okf-bundle.v1",
                 "formatVersion": "0.2",
                 "root": "domain-knowledge",
                 "contentDigest": format!("sha256:{}", "3".repeat(64)),

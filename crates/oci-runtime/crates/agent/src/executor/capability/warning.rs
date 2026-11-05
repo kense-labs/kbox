@@ -1,4 +1,4 @@
-use aster_oci_sdk::{Result, OCI_LINUX_CAPABILITY_NAMES};
+use krun_oci_sdk::{Result, OCI_LINUX_CAPABILITY_NAMES};
 use serde::{Deserialize, Serialize};
 
 use super::{invalid, CapabilityPlan};
@@ -94,7 +94,7 @@ impl CapabilityWarning {
 
 pub(in crate::executor) fn report_capability_warnings(warnings: &[CapabilityWarning]) {
     for warning in warnings {
-        eprintln!("aster-oci-agent: capability warning: {}", warning.message());
+        eprintln!("krun-oci-agent: capability warning: {}", warning.message());
     }
 }
 

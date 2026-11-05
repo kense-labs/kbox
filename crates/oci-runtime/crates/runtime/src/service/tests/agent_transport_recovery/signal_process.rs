@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentClient, AgentOperation, AgentSignalProcessRequest, AgentTransportFaultPoint,
     AgentTransportOperationStage,
 };
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerTarget, ErrorCode, OciRuntimeService, OperationContext, ProcessTarget, Signal,
     SignalProcessRequest, StartRequest,
 };
@@ -39,7 +39,7 @@ async fn exercise_signal_process_reopen(index: usize, stage: AgentTransportOpera
     let guest = Arc::new(JournaledLifecycleGuest::new());
     let metrics = Arc::new(DriverMetrics::default());
     let fault_point = AgentTransportFaultPoint::Operation {
-        protocol_version: aster_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
+        protocol_version: krun_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
         operation: AgentOperation::SignalProcess,
         stage,
     };

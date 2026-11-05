@@ -3,15 +3,15 @@ use std::num::NonZeroU16;
 use std::path::Path;
 use std::time::Duration;
 
+use async_trait::async_trait;
 #[cfg(unix)]
-use aster_box_core::ExecutionBackend;
+use krun_box_core::ExecutionBackend;
 #[cfg(unix)]
-use aster_box_core::ExecutionUdpPortIo;
-use aster_box_core::{
+use krun_box_core::ExecutionUdpPortIo;
+use krun_box_core::{
     ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
     ExecutionPortConnector, ExecutionPortStream, ExecutionUdpPort,
 };
-use async_trait::async_trait;
 #[cfg(unix)]
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 #[cfg(unix)]
@@ -414,7 +414,7 @@ async fn connect_in_network_namespace(
 ) -> ExecutionManagerResult<tokio::net::TcpStream> {
     let (sender, receiver) = tokio::sync::oneshot::channel();
     std::thread::Builder::new()
-        .name(format!("aster-port-{pid}-{}", port.get()))
+        .name(format!("krun-port-{pid}-{}", port.get()))
         .spawn(move || {
             let result = connect_in_network_namespace_blocking(
                 &execution_id,
@@ -522,7 +522,7 @@ async fn connect_udp_in_network_namespace(
 ) -> ExecutionManagerResult<NamespaceUdpPort> {
     let (sender, receiver) = tokio::sync::oneshot::channel();
     std::thread::Builder::new()
-        .name(format!("aster-udp-{pid}-{}", port.get()))
+        .name(format!("krun-udp-{pid}-{}", port.get()))
         .spawn(move || {
             let result = connect_udp_in_network_namespace_blocking(
                 &execution_id,

@@ -132,12 +132,12 @@ fn windows_executable_extensions() -> Vec<OsString> {
 fn builtin_profiles() -> Vec<AgentProfile> {
     vec![
         AgentProfile::new(
-            "aster",
-            "Aster Code",
-            "aster",
+            "krun",
+            "Krun Code",
+            "krun",
             ["code"],
             ["exec"],
-            [".aster/skills"],
+            [".krun/skills"],
         ),
         AgentProfile::new(
             "claude",
@@ -189,7 +189,7 @@ mod tests {
                 .profiles()
                 .map(AgentProfile::id)
                 .collect::<Vec<_>>(),
-            ["aster", "claude", "codex", "gemini", "opencode"]
+            ["krun", "claude", "codex", "gemini", "opencode"]
         );
     }
 

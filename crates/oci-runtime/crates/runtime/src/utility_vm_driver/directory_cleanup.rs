@@ -8,10 +8,10 @@
 use std::io;
 use std::path::Path;
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
 use cap_fs_ext::{DirExt, OsMetadataExt};
 use cap_std::ambient_authority;
 use cap_std::fs::Dir;
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use super::layout::{
     is_private_directory, path_metadata, validate_absolute_normalized_path, PRIVATE_DIRECTORY_MODE,

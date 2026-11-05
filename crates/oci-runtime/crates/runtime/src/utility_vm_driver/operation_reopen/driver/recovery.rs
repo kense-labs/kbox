@@ -1,8 +1,8 @@
 use std::sync::atomic::Ordering;
 
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerRecord, ContainerTarget, ErrorCode, FileRequest, FilesystemRequest, OciBundle,
     ProcessRecord, ProcessTarget, ResizeRequest, Result,
 };

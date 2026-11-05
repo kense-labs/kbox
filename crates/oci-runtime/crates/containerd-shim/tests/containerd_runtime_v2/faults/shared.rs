@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use aster_oci_sdk::{LocalIpcEndpoint, OperationId, ProcessId, RuntimeClient};
+use krun_oci_sdk::{LocalIpcEndpoint, OperationId, ProcessId, RuntimeClient};
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
 
@@ -41,13 +41,13 @@ pub(crate) async fn runtime_client(config: &QualificationConfig) -> TestResult<R
     let endpoint =
         LocalIpcEndpoint::unix_socket(config.runtime_endpoint.clone()).map_err(|error| {
             qualification_error(format!(
-                "validate Aster OCI runtime endpoint {}: {error}",
+                "validate Krun OCI runtime endpoint {}: {error}",
                 config.runtime_endpoint.display()
             ))
         })?;
     RuntimeClient::connect(&endpoint).await.map_err(|error| {
         qualification_error(format!(
-            "connect Aster OCI runtime endpoint {}: {error}",
+            "connect Krun OCI runtime endpoint {}: {error}",
             config.runtime_endpoint.display()
         ))
         .into()

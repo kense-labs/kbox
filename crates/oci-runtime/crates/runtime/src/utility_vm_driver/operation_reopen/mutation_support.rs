@@ -1,11 +1,11 @@
 use std::path::Path;
 
-use aster_oci_agent_protocol::AgentTransportOperationStage;
-use aster_oci_sdk::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_agent_protocol::AgentTransportOperationStage;
+use krun_oci_sdk::{
     ContainerTarget, Error, ErrorCode, FileRequest, FileResponse, FilesystemEntryKind,
     FilesystemRequest, FilesystemResponse, OciBundle,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 
 use super::QUALIFICATION_FAULT_OPERATION;
 use crate::operation_reopen_replacement_report::OciVmOperationReopenReplacementReport;

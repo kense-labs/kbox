@@ -1,10 +1,10 @@
-//! The `aster-use-bge` binary: manifest-driven install against the platform
+//! The `krun-use-bge` binary: manifest-driven install against the platform
 //! model supply, plus status and uninstall.
 
 use std::time::Duration;
 
-use aster_use_core::{UseError, UseResult};
 use clap::{Parser, Subcommand};
+use krun_use_core::{UseError, UseResult};
 use serde::{Deserialize, Serialize};
 
 use crate::assets::{bge_status, Family};
@@ -40,9 +40,9 @@ impl CommandOutput {
 
 #[derive(Debug, Parser)]
 #[command(
-    name = "aster-use-bge",
+    name = "krun-use-bge",
     version,
-    about = "Local BGE embedding and reranker engines for Aster",
+    about = "Local BGE embedding and reranker engines for Krun",
     arg_required_else_help = true
 )]
 struct Cli {
@@ -60,7 +60,7 @@ enum Command {
     Install {
         /// bge-m3 or bge-reranker-v2-m3.
         family: String,
-        /// aster-api origin, e.g. http://127.0.0.1:3000.
+        /// krun-api origin, e.g. http://127.0.0.1:3000.
         #[arg(long)]
         api: String,
         /// The model supply model id (uuid) holding the imported files.
@@ -72,7 +72,7 @@ enum Command {
         /// Manifest path of the tokenizer file.
         #[arg(long, default_value = "tokenizer.json")]
         tokenizer_file: String,
-        /// Bearer token for the admin API; defaults to ASTER_MODEL_SUPPLY_TOKEN.
+        /// Bearer token for the admin API; defaults to KRUN_MODEL_SUPPLY_TOKEN.
         #[arg(long)]
         token: Option<String>,
         /// Replace a usable install instead of skipping it.
@@ -119,12 +119,12 @@ async fn run_install(
 ) -> UseResult<CommandOutput> {
     let family = Family::parse(&family)?;
     let token = token
-        .or_else(|| std::env::var("ASTER_MODEL_SUPPLY_TOKEN").ok())
+        .or_else(|| std::env::var("KRUN_MODEL_SUPPLY_TOKEN").ok())
         .filter(|value| !value.trim().is_empty())
         .ok_or_else(|| {
             UseError::new(
                 "use.bge.token_missing",
-                "Pass --token or set ASTER_MODEL_SUPPLY_TOKEN for the admin API.",
+                "Pass --token or set KRUN_MODEL_SUPPLY_TOKEN for the admin API.",
             )
         })?;
     let client = reqwest::Client::builder()
@@ -173,7 +173,7 @@ struct ApiEnvelope<T> {
 }
 
 impl<T> ApiEnvelope<T> {
-    /// Unwraps the aster-api envelope, refusing an explicit failure.
+    /// Unwraps the krun-api envelope, refusing an explicit failure.
     fn into_data(self, what: &str) -> UseResult<T> {
         if !self.success {
             return Err(UseError::new(

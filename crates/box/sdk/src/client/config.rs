@@ -1,44 +1,44 @@
-/// Runtime-backed SDK client for local aster-box state.
+/// Runtime-backed SDK client for local krun-box state.
 #[derive(Clone)]
-pub struct AsterBoxClient {
-    paths: AsterBoxPaths,
+pub struct KrunBoxClient {
+    paths: KrunBoxPaths,
     image_cache_size: u64,
     execution_manager: Arc<dyn ExecutionManager>,
     execution_session_manager: Option<Arc<dyn ExecutionSessionManager>>,
 }
 
-impl std::fmt::Debug for AsterBoxClient {
+impl std::fmt::Debug for KrunBoxClient {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         formatter
-            .debug_struct("AsterBoxClient")
+            .debug_struct("KrunBoxClient")
             .field("paths", &self.paths)
             .field("image_cache_size", &self.image_cache_size)
             .finish_non_exhaustive()
     }
 }
 
-impl AsterBoxClient {
-    /// Create a client for the default aster-box home.
+impl KrunBoxClient {
+    /// Create a client for the default krun-box home.
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Create a client rooted at a custom aster-box home directory.
+    /// Create a client rooted at a custom krun-box home directory.
     pub fn from_home(home: impl Into<PathBuf>) -> Self {
-        Self::with_paths(AsterBoxPaths::from_home(home))
+        Self::with_paths(KrunBoxPaths::from_home(home))
     }
 
     /// Create a client using explicit state paths.
-    pub fn with_paths(paths: AsterBoxPaths) -> Self {
+    pub fn with_paths(paths: KrunBoxPaths) -> Self {
         let local_execution_manager = Arc::new(
-            aster_box_runtime::LocalExecutionManager::with_vm_backend(
+            krun_box_runtime::LocalExecutionManager::with_vm_backend(
                 paths.boxes_file.clone(),
                 paths.home.clone(),
             ),
         );
         Self {
             paths,
-            image_cache_size: aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+            image_cache_size: krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
             execution_manager: local_execution_manager.clone(),
             execution_session_manager: Some(local_execution_manager),
         }
@@ -46,9 +46,9 @@ impl AsterBoxClient {
 
     /// Create a client that honors the explicit process-wide OCI migration
     /// setting. With no opt-in this is equivalent to [`Self::with_paths`].
-    pub async fn with_configured_paths(paths: AsterBoxPaths) -> Result<Self> {
+    pub async fn with_configured_paths(paths: KrunBoxPaths) -> Result<Self> {
         let local_execution_manager = Arc::new(
-            aster_box_runtime::LocalExecutionManager::with_configured_backend(
+            krun_box_runtime::LocalExecutionManager::with_configured_backend(
                 paths.boxes_file.clone(),
                 paths.home.clone(),
             )
@@ -56,7 +56,7 @@ impl AsterBoxClient {
         );
         Ok(Self {
             paths,
-            image_cache_size: aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+            image_cache_size: krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
             execution_manager: local_execution_manager.clone(),
             execution_session_manager: Some(local_execution_manager),
         })
@@ -65,11 +65,11 @@ impl AsterBoxClient {
     /// Create a client with a programmatic native-Linux Sandbox migration
     /// configuration, independent of process environment parsing.
     pub async fn with_native_linux_oci_migration(
-        paths: AsterBoxPaths,
-        config: aster_box_runtime::NativeLinuxOciMigrationConfig,
+        paths: KrunBoxPaths,
+        config: krun_box_runtime::NativeLinuxOciMigrationConfig,
     ) -> Result<Self> {
         let local_execution_manager = Arc::new(
-            aster_box_runtime::LocalExecutionManager::with_native_linux_oci_migration(
+            krun_box_runtime::LocalExecutionManager::with_native_linux_oci_migration(
                 paths.boxes_file.clone(),
                 paths.home.clone(),
                 config,
@@ -78,7 +78,7 @@ impl AsterBoxClient {
         );
         Ok(Self {
             paths,
-            image_cache_size: aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+            image_cache_size: krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
             execution_manager: local_execution_manager.clone(),
             execution_session_manager: Some(local_execution_manager),
         })
@@ -89,12 +89,12 @@ impl AsterBoxClient {
     /// This keeps lifecycle calls on the canonical facade while allowing an
     /// embedding application to inject its own manager implementation.
     pub fn with_execution_manager(
-        paths: AsterBoxPaths,
+        paths: KrunBoxPaths,
         execution_manager: Arc<dyn ExecutionManager>,
     ) -> Self {
         Self {
             paths,
-            image_cache_size: aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+            image_cache_size: krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
             execution_manager,
             execution_session_manager: None,
         }
@@ -105,13 +105,13 @@ impl AsterBoxClient {
     /// This is useful for embedding the local [`crate::Sandbox`] facade in
     /// another local process without selecting backends by string.
     pub fn with_execution_services(
-        paths: AsterBoxPaths,
+        paths: KrunBoxPaths,
         execution_manager: Arc<dyn ExecutionManager>,
         execution_session_manager: Arc<dyn ExecutionSessionManager>,
     ) -> Self {
         Self {
             paths,
-            image_cache_size: aster_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
+            image_cache_size: krun_box_runtime::DEFAULT_IMAGE_CACHE_SIZE,
             execution_manager,
             execution_session_manager: Some(execution_session_manager),
         }
@@ -124,7 +124,7 @@ impl AsterBoxClient {
     }
 
     /// Return the state paths used by this client.
-    pub fn paths(&self) -> &AsterBoxPaths {
+    pub fn paths(&self) -> &KrunBoxPaths {
         &self.paths
     }
 
@@ -139,8 +139,8 @@ impl AsterBoxClient {
     }
 }
 
-impl Default for AsterBoxClient {
+impl Default for KrunBoxClient {
     fn default() -> Self {
-        Self::with_paths(AsterBoxPaths::default())
+        Self::with_paths(KrunBoxPaths::default())
     }
 }

@@ -90,7 +90,7 @@ PROFILE_SPECS = (
         "traffic": "ai-request",
         "unit": "requests/s",
         "generator": "oha",
-        "alignment": "aster_feature_enabled_vs_nginx_transport",
+        "alignment": "krun_feature_enabled_vs_nginx_transport",
         "workload": "Chat Completions JSON validation and forwarding",
     },
     {
@@ -99,7 +99,7 @@ PROFILE_SPECS = (
         "traffic": "ai-streaming",
         "unit": "streams/s",
         "generator": "oha",
-        "alignment": "aster_feature_enabled_vs_nginx_transport",
+        "alignment": "krun_feature_enabled_vs_nginx_transport",
         "workload": "Completions JSON stream detection and finite SSE forwarding",
     },
 )
@@ -159,43 +159,43 @@ def median_metrics(
     return trials, medians
 
 
-def relative_position(aster: float, nginx: float, lower_is_preferred: bool) -> str:
-    ratio = aster / nginx
+def relative_position(krun: float, nginx: float, lower_is_preferred: bool) -> str:
+    ratio = krun / nginx
     if 0.97 < ratio < 1.03:
         return "within_threshold"
     if lower_is_preferred:
-        return "aster_lower" if ratio < 1 else "nginx_lower"
-    return "aster_higher" if ratio > 1 else "nginx_higher"
+        return "krun_lower" if ratio < 1 else "nginx_lower"
+    return "krun_higher" if ratio > 1 else "nginx_higher"
 
 
-def comparison(aster: dict[str, float], nginx: dict[str, float]) -> dict[str, object]:
+def comparison(krun: dict[str, float], nginx: dict[str, float]) -> dict[str, object]:
     return {
-        "aster_to_nginx_throughput_ratio": (
-            aster["operations_per_second"] / nginx["operations_per_second"]
+        "krun_to_nginx_throughput_ratio": (
+            krun["operations_per_second"] / nginx["operations_per_second"]
         ),
-        "aster_to_nginx_p50_latency_ratio": (
-            aster["p50_latency_us"] / nginx["p50_latency_us"]
+        "krun_to_nginx_p50_latency_ratio": (
+            krun["p50_latency_us"] / nginx["p50_latency_us"]
         ),
-        "aster_to_nginx_p90_latency_ratio": (
-            aster["p90_latency_us"] / nginx["p90_latency_us"]
+        "krun_to_nginx_p90_latency_ratio": (
+            krun["p90_latency_us"] / nginx["p90_latency_us"]
         ),
-        "aster_to_nginx_p99_latency_ratio": (
-            aster["p99_latency_us"] / nginx["p99_latency_us"]
+        "krun_to_nginx_p99_latency_ratio": (
+            krun["p99_latency_us"] / nginx["p99_latency_us"]
         ),
         "positions": {
             "throughput": relative_position(
-                aster["operations_per_second"],
+                krun["operations_per_second"],
                 nginx["operations_per_second"],
                 False,
             ),
             "p50_latency": relative_position(
-                aster["p50_latency_us"], nginx["p50_latency_us"], True
+                krun["p50_latency_us"], nginx["p50_latency_us"], True
             ),
             "p90_latency": relative_position(
-                aster["p90_latency_us"], nginx["p90_latency_us"], True
+                krun["p90_latency_us"], nginx["p90_latency_us"], True
             ),
             "p99_latency": relative_position(
-                aster["p99_latency_us"], nginx["p99_latency_us"], True
+                krun["p99_latency_us"], nginx["p99_latency_us"], True
             ),
         },
     }
@@ -225,7 +225,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--logical-cpus", type=int, required=True)
     parser.add_argument("--memory-mib", type=int, required=True)
     parser.add_argument("--kernel", required=True)
-    parser.add_argument("--aster-version", required=True)
+    parser.add_argument("--krun-version", required=True)
     parser.add_argument("--nginx-version", required=True)
     parser.add_argument("--oha-version", required=True)
     parser.add_argument("--trials", type=int, required=True)
@@ -243,7 +243,7 @@ def main() -> int:
 
     for spec in PROFILE_SPECS:
         proxies: dict[str, dict[str, object]] = {}
-        for proxy in ("aster-gateway", "nginx"):
+        for proxy in ("krun-gateway", "nginx"):
             paths = [
                 args.input / f"{spec['id']}-{proxy}-{index}.json"
                 for index in range(1, args.trials + 1)
@@ -254,9 +254,9 @@ def main() -> int:
             trials, medians = median_metrics(paths, str(spec["generator"]))
             proxies[proxy] = {"trials": trials, "median": medians}
 
-        aster = proxies["aster-gateway"]["median"]
+        krun = proxies["krun-gateway"]["median"]
         nginx = proxies["nginx"]["median"]
-        assert isinstance(aster, dict) and isinstance(nginx, dict)
+        assert isinstance(krun, dict) and isinstance(nginx, dict)
         profiles[str(spec["id"])] = {
             "label": spec["label"],
             "traffic": spec["traffic"],
@@ -265,7 +265,7 @@ def main() -> int:
             "capability_alignment": spec["alignment"],
             "workload": spec["workload"],
             "proxies": proxies,
-            "comparison": comparison(aster, nginx),
+            "comparison": comparison(krun, nginx),
         }
 
     http1 = profiles["http1-small"]
@@ -295,11 +295,11 @@ def main() -> int:
             "kernel": args.kernel,
         },
         "versions": {
-            "aster_gateway": args.aster_version,
+            "krun_gateway": args.krun_version,
             "nginx": args.nginx_version,
             "load_generators": {
                 "oha": args.oha_version,
-                "protocol_load": f"aster-gateway {args.commit[:8]}",
+                "protocol_load": f"krun-gateway {args.commit[:8]}",
             },
         },
         "methodology": {
@@ -338,7 +338,7 @@ def main() -> int:
             "GitHub-hosted runners are shared infrastructure, not a controlled bare-metal lab.",
             "Each fixture is a small synthetic same-host workload; absolute rates do not predict an upstream-dominated production deployment.",
             "OpenAI profiles enable Gateway JSON and stream detection while NGINX remains a transport-only baseline, so those rows measure feature cost rather than equivalent policy capability.",
-            "The matrix compares the checked-in Aster release profile with the Ubuntu-packaged NGINX build; it is not a universal product ranking.",
+            "The matrix compares the checked-in Krun release profile with the Ubuntu-packaged NGINX build; it is not a universal product ranking.",
         ],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -346,7 +346,7 @@ def main() -> int:
 
     summary = {
         profile_id: {
-            "aster": profile["proxies"]["aster-gateway"]["median"],
+            "krun": profile["proxies"]["krun-gateway"]["median"],
             "nginx": profile["proxies"]["nginx"]["median"],
             "ratios": profile["comparison"],
         }

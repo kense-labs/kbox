@@ -1,5 +1,5 @@
-use aster_oci_agent_protocol::AgentTransportOperationStage;
-use aster_oci_sdk::{ContainerTarget, OciRuntimeService, StateRequest};
+use krun_oci_agent_protocol::AgentTransportOperationStage;
+use krun_oci_sdk::{ContainerTarget, OciRuntimeService, StateRequest};
 use tokio::time::timeout;
 
 use super::super::super::driver::QualificationKvmOperationDriver;

@@ -1,4 +1,4 @@
-use aster_box_core::{
+use krun_box_core::{
     ExecutionLease, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
 };
 
@@ -255,7 +255,7 @@ impl LocalExecutionManager {
 }
 
 fn startup_reconciliation_error(
-    execution_id: &aster_box_core::ExecutionId,
+    execution_id: &krun_box_core::ExecutionId,
     start_error: &ExecutionManagerError,
     action: &str,
     reconciliation_error: ExecutionManagerError,

@@ -20,7 +20,7 @@ const MANIFEST: &str = r#"extension "acme/guide" {
   requires_use = ">=0.3.0, <0.4.0"
   actions = ["read"]
   repository {
-    url = "https://github.com/aster-ai-lab/plugins"
+    url = "https://github.com/kense-labs/krun"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
   skill "guide" {
@@ -47,7 +47,7 @@ fn fixture() -> Fixture {
     let archive = root.join("guide.aix");
     let mut zip = zip::ZipWriter::new(std::fs::File::create(&archive).unwrap());
     for (path, bytes) in [
-        ("aster-use-extension.acl", MANIFEST),
+        ("krun-use-extension.acl", MANIFEST),
         ("README.md", "# Guide\nA native package.\n"),
         ("LICENSE", "MIT\nSynthetic fixture license.\n"),
         ("skills/guide/SKILL.md", "# Guide\nUse the native source.\n"),
@@ -77,7 +77,7 @@ async fn publication_binds_explicit_domain_source_archive_and_exact_oci_bytes() 
     assert_eq!(prepared.owners, ["fixture-maintainer"]);
     assert_eq!(
         prepared.oci_repository,
-        "ghcr.io/aster-ai-lab/plugins/acme/guide"
+        "ghcr.io/kense-labs/plugins/acme/guide"
     );
     let archive = std::fs::read(&fixture.archive).unwrap();
     assert_eq!(
@@ -225,7 +225,7 @@ async fn catalog_generation_binds_native_package_and_distinct_manifest_digests()
         record.package.sha256,
         Some(format!("sha256:{}", prepared.package().package_sha256))
     );
-    let manifest = std::fs::read(fixture.source.join("aster-use-extension.acl")).unwrap();
+    let manifest = std::fs::read(fixture.source.join("krun-use-extension.acl")).unwrap();
     assert_eq!(
         record.package.manifest_sha256,
         Some(format!("sha256:{:x}", Sha256::digest(manifest)))
@@ -251,7 +251,7 @@ async fn mcp_publication_generates_native_planning_without_executing_the_package
     .unwrap();
     let record = prepared.catalog().unwrap();
     let planning =
-        aster_use_core::PluginPlanningBundle::from_json(prepared.planning_bytes()).unwrap();
+        krun_use_core::PluginPlanningBundle::from_json(prepared.planning_bytes()).unwrap();
     assert_eq!(
         record.planning.as_ref().unwrap().length,
         prepared.planning_bytes().len() as u64
@@ -266,7 +266,7 @@ async fn mcp_publication_generates_native_planning_without_executing_the_package
         .unwrap()
         .target_name
         .ends_with("/planning-v1.json"));
-    let [aster_use_core::ExecutablePlanningSurface::McpStdio {
+    let [krun_use_core::ExecutablePlanningSurface::McpStdio {
         id,
         executable,
         args,
@@ -297,7 +297,7 @@ async fn mcp_publication_generates_native_planning_without_executing_the_package
 
 #[tokio::test]
 async fn application_publication_preserves_the_graph_and_native_tool_planning() {
-    use aster_use_core::{ExecutablePlanningSurface, PackageSurfaceKind, ToolWorkloadClass};
+    use krun_use_core::{ExecutablePlanningSurface, PackageSurfaceKind, ToolWorkloadClass};
 
     let fixture = application_fixture().await;
     let mut metadata: serde_json::Value = serde_json::from_slice(&catalog_metadata(true)).unwrap();
@@ -339,7 +339,7 @@ async fn application_publication_preserves_the_graph_and_native_tool_planning() 
     assert_eq!(record.surfaces[5].requires[0].id, "view");
     assert_eq!(record.surfaces[6].requires[0].id, "view");
     let planning =
-        aster_use_core::PluginPlanningBundle::from_json(prepared.planning_bytes()).unwrap();
+        krun_use_core::PluginPlanningBundle::from_json(prepared.planning_bytes()).unwrap();
     assert_eq!(planning.surfaces.len(), 2);
     assert!(matches!(
         planning.surfaces[0],
@@ -349,7 +349,7 @@ async fn application_publication_preserves_the_graph_and_native_tool_planning() 
         planning.surfaces[1],
         ExecutablePlanningSurface::ToolTaskNative {
             id: "probe".into(),
-            activation: aster_use_core::PlanningSurfaceActivation::Eager,
+            activation: krun_use_core::PlanningSurfaceActivation::Eager,
             executable: "bin/probe".into(),
             command: "guide-probe".into(),
             json_output: true,
@@ -373,7 +373,7 @@ async fn application_publication_preserves_the_graph_and_native_tool_planning() 
 
 #[tokio::test]
 async fn okf_publication_preserves_the_native_bundle_contract() {
-    use aster_use_core::{
+    use krun_use_core::{
         inspect_okf_bundle_files, OkfBundleFile, OkfBundleLimits, OkfFormatVersion,
     };
 
@@ -413,7 +413,7 @@ async fn okf_publication_preserves_the_native_bundle_contract() {
 "#,
         inspected.content_digest, inspected.expanded_bytes
     );
-    std::fs::write(fixture.source.join("aster-use-extension.acl"), &manifest).unwrap();
+    std::fs::write(fixture.source.join("krun-use-extension.acl"), &manifest).unwrap();
     fixture.archive = fixture.root.join("okf.aix");
     crate::build_aix_package(&fixture.source, &fixture.archive)
         .await
@@ -430,7 +430,7 @@ async fn okf_publication_preserves_the_native_bundle_contract() {
     let parsed = crate::ExtensionManifest::parse_acl(&manifest).unwrap();
     assert_eq!(
         record.surfaces[0].kind,
-        aster_use_core::PackageSurfaceKind::Okf
+        krun_use_core::PackageSurfaceKind::Okf
     );
     assert_eq!(
         record.surfaces[0].okf_bundle.as_ref(),
@@ -466,7 +466,7 @@ fn catalog_metadata(mcp: bool) -> Vec<u8> {
     });
     if mcp {
         metadata["permissionCeiling"] = serde_json::json!({
-            "schema": "aster.use.plugin-permissions.v1", "surfaces": [{
+            "schema": "krun.use.plugin-permissions.v1", "surfaces": [{
                 "surface": {"kind": "mcp", "id": "ocr"}, "nativeExecution": true,
                 "childProcess": false, "filesystem": [], "networkEgress": [],
                 "privateService": false, "secrets": [], "uiHttp": [],
@@ -484,7 +484,7 @@ async fn mcp_fixture() -> Fixture {
         .strip_suffix('}')
         .unwrap()
         .replace("requires_mcp = []", "requires_mcp = [\"ocr\"]");
-    std::fs::write(fixture.source.join("aster-use-extension.acl"), format!(
+    std::fs::write(fixture.source.join("krun-use-extension.acl"), format!(
         "{manifest}\n mcp \"ocr\" {{ transport = \"stdio\"\n executable = \"bin/ocr\"\n args = [\"serve\", \"--mcp\"]\n activation = \"lazy\"\n optional = false\n }}\n}}\n"
     )).unwrap();
     std::fs::create_dir(fixture.source.join("bin")).unwrap();
@@ -504,10 +504,10 @@ async fn mcp_fixture() -> Fixture {
 
 async fn application_fixture() -> Fixture {
     let mut fixture = mcp_fixture().await;
-    let manifest = std::fs::read_to_string(fixture.source.join("aster-use-extension.acl")).unwrap();
+    let manifest = std::fs::read_to_string(fixture.source.join("krun-use-extension.acl")).unwrap();
     let body = manifest.trim_end().strip_suffix('}').unwrap();
     std::fs::write(
-        fixture.source.join("aster-use-extension.acl"),
+        fixture.source.join("krun-use-extension.acl"),
         format!(
             r#"{body}
   tool "probe" {{
@@ -520,7 +520,7 @@ async fn application_fixture() -> Fixture {
     activation = "eager"
   }}
   flow "draft" {{
-    engine = "aster-flow"
+    engine = "krun-flow"
     runtime = "native-ts"
     source = "flows/draft.ts"
     export = "draft"

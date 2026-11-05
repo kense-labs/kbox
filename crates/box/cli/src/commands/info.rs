@@ -1,4 +1,4 @@
-//! `aster-box info` command.
+//! `krun-box info` command.
 
 use clap::Args;
 use std::path::Path;
@@ -10,26 +10,26 @@ use crate::status;
 
 use super::images_dir;
 
-const PNPM_CACHE_VOLUME_NAME: &str = "aster-cache-pnpm";
-const NPM_CACHE_VOLUME_NAME: &str = "aster-cache-npm";
-const PACKAGE_CACHE_SIZE_ENV: &str = "ASTER_BOX_INFO_CACHE_SIZE";
+const PNPM_CACHE_VOLUME_NAME: &str = "krun-cache-pnpm";
+const NPM_CACHE_VOLUME_NAME: &str = "krun-cache-npm";
+const PACKAGE_CACHE_SIZE_ENV: &str = "KRUN_BOX_INFO_CACHE_SIZE";
 const PACKAGE_CACHE_SIZE_BUDGET: Duration = Duration::from_millis(500);
 #[cfg(not(windows))]
-const DEFAULT_POOL_SOCKET: &str = "/tmp/aster-box-pool.sock";
+const DEFAULT_POOL_SOCKET: &str = "/tmp/krun-box-pool.sock";
 #[cfg(not(windows))]
-const RUN_POOL_SOCKET_ENV: &str = "ASTER_BOX_RUN_POOL_SOCKET";
+const RUN_POOL_SOCKET_ENV: &str = "KRUN_BOX_RUN_POOL_SOCKET";
 #[cfg(not(windows))]
-const BUILD_RUN_POOL_SOCKET_ENV: &str = "ASTER_BOX_BUILD_RUN_POOL_SOCKET";
+const BUILD_RUN_POOL_SOCKET_ENV: &str = "KRUN_BOX_BUILD_RUN_POOL_SOCKET";
 
 #[derive(Args)]
 pub struct InfoArgs;
 
 pub async fn execute(_args: InfoArgs) -> Result<(), Box<dyn std::error::Error>> {
-    println!("aster-box version {}", aster_box_core::VERSION);
-    let capabilities = aster_box_core::PlatformCapabilities::current();
+    println!("krun-box version {}", krun_box_core::VERSION);
+    let capabilities = krun_box_core::PlatformCapabilities::current();
 
     // Virtualization support
-    match aster_box_runtime::check_virtualization_support() {
+    match krun_box_runtime::check_virtualization_support() {
         Ok(support) => {
             println!("Virtualization: {} ({})", support.backend, support.details);
         }
@@ -39,7 +39,7 @@ pub async fn execute(_args: InfoArgs) -> Result<(), Box<dyn std::error::Error>> 
     }
 
     // Home directory
-    let home = aster_box_core::dirs_home();
+    let home = krun_box_core::dirs_home();
     println!("Home directory: {}", home.display());
     print_capabilities(&capabilities);
 
@@ -88,7 +88,7 @@ pub async fn execute(_args: InfoArgs) -> Result<(), Box<dyn std::error::Error>> 
     Ok(())
 }
 
-fn print_capabilities(capabilities: &aster_box_core::PlatformCapabilities) {
+fn print_capabilities(capabilities: &krun_box_core::PlatformCapabilities) {
     println!(
         "Host platform: {}/{}",
         capabilities.os, capabilities.architecture
@@ -123,7 +123,7 @@ fn availability(value: bool) -> &'static str {
 }
 
 fn print_package_cache_info() {
-    let Ok(store) = aster_box_runtime::VolumeStore::default_path() else {
+    let Ok(store) = krun_box_runtime::VolumeStore::default_path() else {
         println!("Package cache (pnpm): unavailable");
         println!("Package cache (npm): unavailable");
         return;
@@ -134,7 +134,7 @@ fn print_package_cache_info() {
 }
 
 fn print_named_package_cache(
-    store: &aster_box_runtime::VolumeStore,
+    store: &krun_box_runtime::VolumeStore,
     label: &str,
     volume_name: &str,
 ) {
@@ -180,7 +180,7 @@ fn scan_package_cache_size_enabled() -> bool {
 }
 
 fn print_host_mount_info() {
-    let cache_mode = std::env::var("ASTER_VIRTIOFS_CACHE")
+    let cache_mode = std::env::var("KRUN_VIRTIOFS_CACHE")
         .ok()
         .filter(|value| !value.is_empty())
         .unwrap_or_else(|| "none".to_string());
@@ -195,7 +195,7 @@ fn print_rootfs_symlink_info(home: &Path) {
             assigned_privilege_enabled,
         } => println!(
             "OCI symlink support: unavailable ({})",
-            aster_box_core::windows_symlink::denial_diagnostic(assigned_privilege_enabled)
+            krun_box_core::windows_symlink::denial_diagnostic(assigned_privilege_enabled)
         ),
         WindowsSymlinkProbe::Failed(error) => {
             println!("OCI symlink support: unavailable (probe failed: {error})")
@@ -226,7 +226,7 @@ fn probe_windows_symlink_support(home: &Path) -> WindowsSymlinkProbe {
         return WindowsSymlinkProbe::Failed(error);
     }
 
-    let guard = aster_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
+    let guard = krun_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
     let assigned_privilege_enabled = guard.assigned_privilege_enabled();
     match std::os::windows::fs::symlink_file("target", directory.path().join("link")) {
         Ok(()) => WindowsSymlinkProbe::Available,
@@ -248,7 +248,7 @@ fn print_rootfs_symlink_info(_home: &Path) {
 async fn print_warm_pool_info() {
     let sockets = warm_pool_info_sockets();
     for socket in &sockets {
-        match aster_box_runtime::pool::client::status_client(socket).await {
+        match krun_box_runtime::pool::client::status_client(socket).await {
             Ok(status) => {
                 print_warm_pool_status(socket, &status.images);
                 return;
@@ -297,7 +297,7 @@ fn warm_pool_info_sockets_from(
 }
 
 #[cfg(not(windows))]
-fn print_warm_pool_status(socket: &str, images: &[aster_box_runtime::pool::PoolImageStat]) {
+fn print_warm_pool_status(socket: &str, images: &[krun_box_runtime::pool::PoolImageStat]) {
     if images.is_empty() {
         println!("Warm pool daemon: running at {socket} (no warm pools yet)");
         return;

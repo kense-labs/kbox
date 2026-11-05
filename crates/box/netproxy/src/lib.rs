@@ -241,7 +241,7 @@ struct ProxyEngine {
     last_stats_write: std::time::Instant,
     networks_json: Option<PathBuf>,
     network_name: Option<String>,
-    egress_rules: Vec<aster_box_core::EgressMatchRule>,
+    egress_rules: Vec<krun_box_core::EgressMatchRule>,
 }
 
 impl ProxyEngine {
@@ -390,7 +390,7 @@ impl ProxyEngine {
             self.cleanup();
             self.cleanup_udp_associations();
 
-            // 9. Publish resource counters for `aster-box stats`.
+            // 9. Publish resource counters for `krun-box stats`.
             self.maybe_write_stats_snapshot();
 
             // 10. Sleep until the next smoltcp event or at most 5 ms.
@@ -1229,7 +1229,7 @@ fn spawn_outbound_connect(
     connector_count.fetch_add(1, Ordering::Relaxed);
     let thread_count = Arc::clone(&connector_count);
     let spawn = std::thread::Builder::new()
-        .name("aster-netproxy-connect".to_string())
+        .name("krun-netproxy-connect".to_string())
         .spawn(move || {
             let address = SocketAddr::V4(SocketAddrV4::new(flow.remote_ip, flow.remote_port));
             let result =

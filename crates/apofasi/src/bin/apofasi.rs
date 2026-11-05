@@ -1,6 +1,6 @@
-//! `aster-apofasi` CLI — smoke, latency bench, and batch suite.
+//! `krun-apofasi` CLI — smoke, latency bench, and batch suite.
 //!
-//! Build: `cargo run --features cli --bin aster-apofasi -- smoke`
+//! Build: `cargo run --features cli --bin krun-apofasi -- smoke`
 
 #[path = "apofasi/suite.rs"]
 mod suite;
@@ -10,11 +10,11 @@ use std::path::PathBuf;
 use std::process::ExitCode;
 use std::time::Instant;
 
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::{
     gate_response, Answer, Criteria, DecisionEngine, DecisionKind, DeviceRequest, GatePolicy,
     LexicalEngine, NeuralEngine, Question, State, SystemOneRequest, SystemOneResponse,
 };
-use indexmap::IndexMap;
 use serde_json::{json, Value};
 
 fn main() -> ExitCode {
@@ -60,7 +60,7 @@ fn main() -> ExitCode {
 
 fn print_help() {
     eprintln!(
-        "Usage:\n  aster-apofasi smoke [--lexical] [--json] [--checkpoint DIR] [--device auto|metal|cuda|cpu]\n  aster-apofasi bench [--checkpoint DIR] [--device auto|metal|cuda|cpu] [--iters N] [--warmup N] [--case smoke|triage]\n  aster-apofasi suite --cases FILE [--checkpoint DIR] [--device auto|metal|cuda|cpu] [--warmup N] [--iters N]\n"
+        "Usage:\n  krun-apofasi smoke [--lexical] [--json] [--checkpoint DIR] [--device auto|metal|cuda|cpu]\n  krun-apofasi bench [--checkpoint DIR] [--device auto|metal|cuda|cpu] [--iters N] [--warmup N] [--case smoke|triage]\n  krun-apofasi suite --cases FILE [--checkpoint DIR] [--device auto|metal|cuda|cpu] [--warmup N] [--iters N]\n"
     );
 }
 
@@ -260,7 +260,7 @@ fn compact_answers(res: &SystemOneResponse) -> Value {
     Value::Object(out)
 }
 
-fn gates_json(gates: &std::collections::BTreeMap<String, aster_apofasi::GateAction>) -> Value {
+fn gates_json(gates: &std::collections::BTreeMap<String, krun_apofasi::GateAction>) -> Value {
     let mut out = serde_json::Map::new();
     for (k, v) in gates {
         out.insert(k.clone(), json!(format!("{v:?}")));

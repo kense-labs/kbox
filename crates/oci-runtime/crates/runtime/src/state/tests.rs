@@ -1,9 +1,9 @@
 use std::path::{Path, PathBuf};
 
-use aster_oci_agent_protocol::AgentInheritedDescriptorSchema;
-use aster_oci_core::DriverKind;
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::AgentInheritedDescriptorSchema;
+use krun_oci_core::DriverKind;
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
+use krun_oci_sdk::{
     CloseStdinRequest, ContainerId, ContainerOperationRequest, ContainerTarget, CreateAttachments,
     CreateRequest, DeleteMode, DeleteRequest, Error, ErrorCode, ExecRequest, ExitStatus,
     Generation, GuestSessionCapacity, GuestSessionGeneration, GuestSessionId, GuestSessionReset,
@@ -44,11 +44,11 @@ const TEST_CONFIG: &str = concat!(
     "    \"cwd\": \"/\"\n",
     "  },\n",
     "  \"root\": {\"path\": \"rootfs\", \"readonly\": true},\n",
-    "  \"annotations\": {\"dev.aster.test\": \"durable-state\"}\n",
+    "  \"annotations\": {\"dev.krun.test\": \"durable-state\"}\n",
     "}\n",
 );
 
-fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> aster_oci_sdk::Result<T>) -> T {
+fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> krun_oci_sdk::Result<T>) -> T {
     constructor(value.to_string()).unwrap_or_else(|error| panic!("valid test identifier: {error}"))
 }
 
@@ -483,7 +483,7 @@ async fn network_enforcement_evidence_is_durable_and_tamper_evident_after_reopen
     configuration["linux"] = serde_json::json!({
         "namespaces": [{
             "type": "network",
-            "path": "/run/aster/network/durable-network-namespace-41"
+            "path": "/run/krun/network/durable-network-namespace-41"
         }],
         "netDevices": {"tap0": {"name": "eth0"}}
     });
@@ -573,7 +573,7 @@ async fn descriptor_bearing_create_is_durable_and_replays_after_reopen() {
         "descriptor-container",
         "descriptor-create",
     );
-    let schema = AgentInheritedDescriptorSchema::aster_box_control_v1();
+    let schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
     let store = DurableStateStore::open(&root)
         .await
         .expect("initialize state root");
@@ -591,7 +591,7 @@ async fn descriptor_bearing_create_is_durable_and_replays_after_reopen() {
     let reopened = DurableStateStore::open(&root)
         .await
         .expect("reopen state root");
-    let equivalent_schema = AgentInheritedDescriptorSchema::aster_box_control_v1();
+    let equivalent_schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
     assert_eq!(
         reopened
             .prepare_create_with_inherited_descriptors(

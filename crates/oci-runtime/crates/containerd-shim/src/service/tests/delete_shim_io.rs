@@ -18,15 +18,15 @@ struct CommittedIoCleanupService {
 
 #[async_trait]
 impl OciRuntimeService for CommittedIoCleanupService {
-    async fn features(&self) -> aster_oci_sdk::Result<aster_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, _request: CreateRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, request: StateRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         if request.target.id.as_str() != self.record.state.id()
             || request.target.generation != Some(self.record.generation)
         {
@@ -46,12 +46,12 @@ impl OciRuntimeService for CommittedIoCleanupService {
 
     async fn start(
         &self,
-        _request: aster_oci_sdk::StartRequest,
-    ) -> aster_oci_sdk::Result<ContainerRecord> {
+        _request: krun_oci_sdk::StartRequest,
+    ) -> krun_oci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, request: RuntimeKillRequest) -> aster_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, request: RuntimeKillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -60,7 +60,7 @@ impl OciRuntimeService for CommittedIoCleanupService {
         Ok(self.record.clone())
     }
 
-    async fn delete(&self, request: RuntimeDeleteRequest) -> aster_oci_sdk::Result<()> {
+    async fn delete(&self, request: RuntimeDeleteRequest) -> krun_oci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -69,14 +69,14 @@ impl OciRuntimeService for CommittedIoCleanupService {
         Ok(())
     }
 
-    async fn wait(&self, _request: WaitRequest) -> aster_oci_sdk::Result<ExitStatus> {
+    async fn wait(&self, _request: WaitRequest) -> krun_oci_sdk::Result<ExitStatus> {
         ExitStatus::signaled(9, false)
     }
 
     async fn write_stdin(
         &self,
-        _request: aster_oci_sdk::WriteStdinRequest,
-    ) -> aster_oci_sdk::Result<()> {
+        _request: krun_oci_sdk::WriteStdinRequest,
+    ) -> krun_oci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -86,8 +86,8 @@ impl OciRuntimeService for CommittedIoCleanupService {
 
     async fn close_stdin(
         &self,
-        _request: aster_oci_sdk::CloseStdinRequest,
-    ) -> aster_oci_sdk::Result<()> {
+        _request: krun_oci_sdk::CloseStdinRequest,
+    ) -> krun_oci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -95,7 +95,7 @@ impl OciRuntimeService for CommittedIoCleanupService {
         Ok(())
     }
 
-    async fn resize(&self, _request: aster_oci_sdk::ResizeRequest) -> aster_oci_sdk::Result<()> {
+    async fn resize(&self, _request: krun_oci_sdk::ResizeRequest) -> krun_oci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -123,7 +123,7 @@ async fn delete_shim_does_not_replay_a_committed_pending_stdin_write() {
         ..CommittedIoCleanupCalls::default()
     }));
     let adapter = RuntimeAdapter::from_client(
-        aster_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
+        krun_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
             record: task.record.clone(),
             calls: calls.clone(),
         }),
@@ -169,7 +169,7 @@ async fn delete_shim_does_not_replay_a_committed_pending_stdin_close() {
         ..CommittedIoCleanupCalls::default()
     }));
     let adapter = RuntimeAdapter::from_client(
-        aster_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
+        krun_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
             record: task.record.clone(),
             calls: calls.clone(),
         }),
@@ -225,7 +225,7 @@ async fn delete_shim_does_not_replay_a_committed_pending_resize() {
         ..CommittedIoCleanupCalls::default()
     }));
     let adapter = RuntimeAdapter::from_client(
-        aster_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
+        krun_oci_sdk::RuntimeClient::new(CommittedIoCleanupService {
             record: task.record.clone(),
             calls: calls.clone(),
         }),

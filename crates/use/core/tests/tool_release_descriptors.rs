@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use aster_use_core::{
+use krun_use_core::{
     ReleaseDependency, ReleaseKind, ReleaseResolution, ToolReleaseDescriptor, ToolServiceInterface,
     ToolServiceNetwork, ToolTaskInterface, ToolWorkloadContract,
 };
@@ -66,7 +66,7 @@ fn canonical_tool_fixtures_have_cross_sdk_digest_goldens() {
     let mut with_tool_dependency = task;
     with_tool_dependency.dependencies.push(ReleaseDependency {
         kind: ReleaseKind::Tool,
-        name: "aster/helper-tool".to_string(),
+        name: "krun/helper-tool".to_string(),
         version: "1.0.0".to_string(),
         descriptor_digest:
             "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc".to_string(),
@@ -143,7 +143,7 @@ fn tool_workload_contracts_fail_closed() {
     );
 
     let mut service = ToolReleaseDescriptor::from_json(SERVICE_FIXTURE).unwrap();
-    service.artifact.media_type = "application/vnd.aster.skill.bundle.v1+tar+gzip".to_string();
+    service.artifact.media_type = "application/vnd.krun.skill.bundle.v1+tar+gzip".to_string();
     assert_eq!(
         service.canonical_bytes().unwrap_err().code,
         "use.release.descriptor_invalid"
@@ -155,14 +155,14 @@ fn tool_resolution_is_verified_before_runtime_mapping() {
     let service = ToolReleaseDescriptor::from_json(SERVICE_FIXTURE).unwrap();
     let mut resolution = ReleaseResolution {
         components: BTreeMap::from([
-            ("aster-runtime".to_string(), "0.2.0".to_string()),
-            ("aster-use".to_string(), "0.3.0".to_string()),
+            ("krun-runtime".to_string(), "0.2.0".to_string()),
+            ("krun-use".to_string(), "0.3.0".to_string()),
         ]),
         dependencies: Vec::new(),
     };
     service.verify_resolution(&resolution).unwrap();
 
-    resolution.components.remove("aster-runtime");
+    resolution.components.remove("krun-runtime");
     assert_eq!(
         service.verify_resolution(&resolution).unwrap_err().code,
         "use.release.compatibility_missing"

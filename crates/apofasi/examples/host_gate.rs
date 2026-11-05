@@ -11,11 +11,11 @@
 use std::env;
 use std::process::ExitCode;
 
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::{
     any_escalate, gate_response, Criteria, DecisionEngine, DecisionKind, GateAction, GatePolicy,
     LexicalEngine, Question, State, SystemOneRequest,
 };
-use indexmap::IndexMap;
 use serde_json::json;
 
 fn main() -> ExitCode {
@@ -53,7 +53,7 @@ fn run() -> Result<(), String> {
     let response = if let Some(root) = checkpoint {
         #[cfg(feature = "infer")]
         {
-            use aster_apofasi::{DeviceRequest, NeuralEngine};
+            use krun_apofasi::{DeviceRequest, NeuralEngine};
             let engine =
                 NeuralEngine::load_with(&root, DeviceRequest::Auto).map_err(|e| e.to_string())?;
             engine.decide(&req).map_err(|e| e.to_string())?

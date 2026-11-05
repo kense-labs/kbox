@@ -1,11 +1,11 @@
 use std::path::PathBuf;
 
-use aster_oci_runtime::{
+use krun_oci_runtime::{
     NativeControlDescriptors, NativeLinuxHostService, NativeLinuxHostServiceConfig,
     NativeLinuxService, NativeLinuxServiceConfig, RootlessDevicePolicyBootstrap, EXEC_LISTENER_FD,
     INIT_LOG_FD, PTY_LISTENER_FD,
 };
-use aster_oci_sdk::{ContainerId, Error, ErrorCode, Result};
+use krun_oci_sdk::{ContainerId, Error, ErrorCode, Result};
 use tokio::signal::unix::{signal, SignalKind};
 
 pub(crate) async fn run(

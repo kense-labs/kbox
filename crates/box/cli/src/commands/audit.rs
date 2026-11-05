@@ -1,10 +1,10 @@
-//! `aster-box audit` command — View the audit log.
+//! `krun-box audit` command — View the audit log.
 //!
 //! Reads persistent audit events with optional filters.
 
-use aster_box_core::audit::{AuditAction, AuditOutcome};
-use aster_box_runtime::{read_audit_log, AuditLog, AuditQuery};
 use clap::Args;
+use krun_box_core::audit::{AuditAction, AuditOutcome};
+use krun_box_runtime::{read_audit_log, AuditLog, AuditQuery};
 
 #[derive(Args)]
 pub struct AuditArgs {

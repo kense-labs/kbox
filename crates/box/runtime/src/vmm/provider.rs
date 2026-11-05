@@ -1,3 +1,3 @@
-//! VmmProvider re-exported from `aster-box-core`.
+//! VmmProvider re-exported from `krun-box-core`.
 
-pub use aster_box_core::vmm::VmmProvider;
+pub use krun_box_core::vmm::VmmProvider;

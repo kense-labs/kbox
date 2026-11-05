@@ -4,7 +4,7 @@ use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 
-pub(crate) const SANDBOX_RUNTIME_RECORD_SCHEMA: &str = "aster.box.sandbox-runtime.v2";
+pub(crate) const SANDBOX_RUNTIME_RECORD_SCHEMA: &str = "krun.box.sandbox-runtime.v2";
 
 /// Runtime-owned paths and process identities needed for detached recovery.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -37,7 +37,7 @@ pub(crate) struct SandboxRuntimeRecord {
 
 impl SandboxRuntimeRecord {
     #[allow(clippy::too_many_arguments)]
-    pub(crate) fn aster_oci(
+    pub(crate) fn krun_oci(
         container_id: String,
         runtime_path: PathBuf,
         runtime_sha256: String,
@@ -79,14 +79,14 @@ mod tests {
 
     #[test]
     fn current_record_serializes_without_a_backend_selector() {
-        let record = SandboxRuntimeRecord::aster_oci(
+        let record = SandboxRuntimeRecord::krun_oci(
             "box-id".to_string(),
             PathBuf::from("/runtime"),
             "a".repeat(64),
             PathBuf::from("/agent"),
             "b".repeat(64),
-            PathBuf::from("/run/aster-oci/box-id"),
-            PathBuf::from("/run/aster-oci/box-id/runtime.sock"),
+            PathBuf::from("/run/krun-oci/box-id"),
+            PathBuf::from("/run/krun-oci/box-id/runtime.sock"),
             PathBuf::from("/boxes/box-id/sandbox/bundle"),
             10,
             11,

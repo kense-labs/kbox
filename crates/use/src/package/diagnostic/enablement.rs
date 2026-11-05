@@ -36,7 +36,7 @@ pub(super) async fn diagnose_reviewed_enablement_operation(
         .plan
         .enablement_parts()
         .ok_or_else(diagnostic_state_error)?;
-    if result.status != aster_use_core::PluginHostEnablementPlanStatus::Planned
+    if result.status != krun_use_core::PluginHostEnablementPlanStatus::Planned
         || request.scope.plan_scope() != manager.scope
         || request.package_id != *package_id
         || result.package_id != *package_id
@@ -128,9 +128,9 @@ pub(super) async fn diagnose_reviewed_enablement_operation(
         .selected_surfaces()
         .map_err(|_| diagnostic_state_error())?;
     let expected_desired = if current.enabled {
-        aster_use_core::PluginDesiredState::Enabled
+        krun_use_core::PluginDesiredState::Enabled
     } else {
-        aster_use_core::PluginDesiredState::InstalledDisabled
+        krun_use_core::PluginDesiredState::InstalledDisabled
     };
     if extension.receipt.enabled != current.enabled
         || artifact.version != extension.receipt.version

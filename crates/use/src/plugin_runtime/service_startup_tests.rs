@@ -2,9 +2,9 @@
 
 use super::test_support::*;
 use super::*;
-use aster_runtime::contract::{RuntimeInspection, RuntimeUnitState};
-use aster_runtime::{RuntimeClock, SystemRuntimeClock};
-use aster_use_core::{PackageSurfaceKind, ToolWorkloadContract};
+use krun_runtime::contract::{RuntimeInspection, RuntimeUnitState};
+use krun_runtime::{RuntimeClock, SystemRuntimeClock};
+use krun_use_core::{PackageSurfaceKind, ToolWorkloadContract};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 

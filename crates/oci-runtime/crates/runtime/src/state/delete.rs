@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ErrorCode, OperationId, Result, RuntimeEventKind,
     ValidateRequest,
 };
@@ -303,7 +303,7 @@ impl DurableStateStore {
     }
 }
 
-fn invalid_state(target: &ContainerTarget, status: ContainerState) -> aster_oci_sdk::Error {
+fn invalid_state(target: &ContainerTarget, status: ContainerState) -> krun_oci_sdk::Error {
     state_error(
         ErrorCode::FailedPrecondition,
         "prepare-delete",

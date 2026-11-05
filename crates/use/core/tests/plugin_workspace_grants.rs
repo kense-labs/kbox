@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     PlanActor, PlanPolicyDecision, PluginPermissionCeiling, PluginWorkspaceGrant,
     WorkspaceGrantAuthority, PLUGIN_WORKSPACE_GRANT_SCHEMA,
 };

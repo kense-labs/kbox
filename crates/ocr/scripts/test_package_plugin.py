@@ -12,7 +12,7 @@ class OcrPackageTest(unittest.TestCase):
     def test_complete_inputs_have_stable_versions_and_changed_models_are_refused(self):
         with tempfile.TemporaryDirectory(prefix="OCR 插件 ") as temporary:
             root = Path(temporary)
-            binary, runtime = root / "aster-use-ocr", root / "runtime"
+            binary, runtime = root / "krun-use-ocr", root / "runtime"
             binary.write_bytes(b"native fixture")
             runtime.write_bytes(b"library fixture")
             notices = root / "notices"
@@ -30,8 +30,8 @@ class OcrPackageTest(unittest.TestCase):
                             for name in ("first", "second")]
                 self.assertEqual(versions[0], versions[1])
                 self.assertLessEqual(len(versions[0]), 64)
-                self.assertTrue((root / "first/skills/aster-use-ocr/SKILL.md").is_file())
-                self.assertIn('requires_mcp = ["ocr"]', (root / "first/aster-use-extension.acl").read_text())
+                self.assertTrue((root / "first/skills/krun-use-ocr/SKILL.md").is_file())
+                self.assertIn('requires_mcp = ["ocr"]', (root / "first/krun-use-extension.acl").read_text())
                 (models / "det/inference.onnx").write_bytes(b"changed")
                 with self.assertRaisesRegex(ValueError, "checksum"):
                     package.stage_plugin(root / "changed", binary, runtime, models, notices, "darwin-arm64")

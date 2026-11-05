@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     AttachmentCapabilities, CreateAttachments, CreateRequest, ErrorCode, IsolationRequest,
     LocalNetworkRedirectAttachment, NetworkAttachmentIdentity, NetworkCleanup, NetworkCleanupId,
     NetworkEnforcementAttachment, NetworkEnforcementId, NetworkInterfaceId, NetworkMechanismDigest,
@@ -73,7 +73,7 @@ fn enforcement_bundle(
         "linux": {
             "namespaces": [{
                 "type": "network",
-                "path": "/run/aster/network/authorized-network-namespace-31"
+                "path": "/run/krun/network/authorized-network-namespace-31"
             }],
             "netDevices": {"tap0": {"name": "eth0"}}
         },

@@ -2,7 +2,7 @@
 //!
 //! This module provides hardware detection for AMD SEV-SNP capability.
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 use std::path::Path;
 
 /// SEV-SNP hardware support status.

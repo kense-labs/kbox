@@ -8,7 +8,7 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 #[tokio::test]
 async fn private_http_cli_authenticates_without_tcp_listener_and_cleans_up_on_sigterm() {
     let directory = tempfile::Builder::new()
-        .prefix("aster-gw-")
+        .prefix("krun-gw-")
         .tempdir_in("/tmp")
         .unwrap();
     let directory = directory.path().canonicalize().unwrap();
@@ -45,7 +45,7 @@ shutdown_timeout_secs {{ shutdown_timeout_secs = 2 }}
         ),
     )
     .unwrap();
-    let binary = env!("CARGO_BIN_EXE_aster-gateway");
+    let binary = env!("CARGO_BIN_EXE_krun-gateway");
     let validation = tokio::process::Command::new(binary)
         .arg("validate")
         .arg("--config")

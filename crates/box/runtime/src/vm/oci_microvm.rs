@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use aster_box_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
+use krun_box_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
 
 use super::VmManager;
 use crate::sandbox::{compile_portable_microvm_oci_spec, SandboxRuntimeProcess};

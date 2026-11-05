@@ -3,9 +3,9 @@
 //! Used by `start`, `restart`, and `monitor` commands to avoid duplicating
 //! the "reconstruct BoxConfig from BoxRecord → VmManager::boot()" pattern.
 
-use aster_box_core::config::{BoxConfig, ResourceConfig};
-use aster_box_core::event::EventEmitter;
-use aster_box_runtime::{prom::RuntimeMetrics, NetworkStore, VmManager, VolumeStore};
+use krun_box_core::config::{BoxConfig, ResourceConfig};
+use krun_box_core::event::EventEmitter;
+use krun_box_runtime::{prom::RuntimeMetrics, NetworkStore, VmManager, VolumeStore};
 use std::path::PathBuf;
 
 use crate::commands::common;
@@ -84,7 +84,7 @@ fn boot_network_name(record: &BoxRecord) -> Option<&str> {
         .network_name
         .as_deref()
         .or(match &record.network_mode {
-            aster_box_core::NetworkMode::Bridge { network } => Some(network.as_str()),
+            krun_box_core::NetworkMode::Bridge { network } => Some(network.as_str()),
             _ => None,
         })
 }
@@ -291,7 +291,7 @@ pub async fn boot_from_record(
 ) -> Result<BootResult, Box<dyn std::error::Error>> {
     let config =
         config_from_record(record).map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-    aster_box_core::resolve_execution(&config)?;
+    krun_box_core::resolve_execution(&config)?;
     let emitter = EventEmitter::new(256);
     let mut vm = VmManager::with_box_id(config, emitter, record.id.clone());
     vm.set_healthcheck_disabled(record.healthcheck_disabled);
@@ -363,12 +363,12 @@ pub(crate) fn config_from_record(record: &BoxRecord) -> Result<BoxConfig, String
     common::validate_workdir_option(record.workdir.as_deref())?;
     let port_map = common::normalize_port_maps(&record.port_map)?;
     if let Some(hostname) = record.hostname.as_deref() {
-        aster_box_core::dns::validate_hostname(hostname)
+        krun_box_core::dns::validate_hostname(hostname)
             .map_err(|e| format!("Invalid persisted hostname: {e}"))?;
     }
-    aster_box_core::dns::parse_add_host_entries(&record.add_host)
+    krun_box_core::dns::parse_add_host_entries(&record.add_host)
         .map_err(|e| format!("Invalid persisted add-host entry: {e}"))?;
-    let disk_mb = aster_box_runtime::rootfs::guest_native_ext4_disk_mib(&record.box_dir)
+    let disk_mb = krun_box_runtime::rootfs::guest_native_ext4_disk_mib(&record.box_dir)
         .map_err(|error| format!("Invalid retained rootfs capacity: {error}"))?
         .unwrap_or_else(|| ResourceConfig::default().disk_mb);
 
@@ -465,13 +465,13 @@ mod tests {
             health_status: "none".to_string(),
             health_retries: 0,
             health_last_check: None,
-            network_mode: aster_box_core::NetworkMode::default(),
+            network_mode: krun_box_core::NetworkMode::default(),
             network_name: None,
             volume_names: vec![],
             tmpfs: vec!["/tmp".to_string()],
             anonymous_volumes: vec![],
-            resource_limits: aster_box_core::config::ResourceLimits::default(),
-            log_config: aster_box_core::log::LogConfig::default(),
+            resource_limits: krun_box_core::config::ResourceLimits::default(),
+            log_config: krun_box_core::log::LogConfig::default(),
             add_host: vec![],
             platform: None,
             init: false,
@@ -545,18 +545,15 @@ mod tests {
     #[test]
     fn test_config_from_record_preserves_sandbox_isolation() {
         let mut record = sample_record();
-        record.isolation = aster_box_core::ExecutionIsolation::Sandbox;
+        record.isolation = krun_box_core::ExecutionIsolation::Sandbox;
         record.port_map.clear();
 
         let config = config_from_record(&record).unwrap();
 
+        assert_eq!(config.isolation, krun_box_core::ExecutionIsolation::Sandbox);
         assert_eq!(
-            config.isolation,
-            aster_box_core::ExecutionIsolation::Sandbox
-        );
-        assert_eq!(
-            aster_box_core::resolve_execution(&config).unwrap().backend,
-            aster_box_core::ExecutionBackend::AsterOci
+            krun_box_core::resolve_execution(&config).unwrap().backend,
+            krun_box_core::ExecutionBackend::KrunOci
         );
     }
 
@@ -729,7 +726,7 @@ mod tests {
         let record = sample_record();
         let config = config_from_record(&record).unwrap();
 
-        assert_eq!(config.network, aster_box_core::NetworkMode::Tsi);
+        assert_eq!(config.network, krun_box_core::NetworkMode::Tsi);
     }
 
     #[cfg(target_os = "macos")]
@@ -741,10 +738,10 @@ mod tests {
         let logical = temporary.path().join("logical");
         std::fs::create_dir(&logical).unwrap();
         std::fs::write(logical.join("state"), b"custom-capacity").unwrap();
-        aster_box_runtime::rootfs::publish_ext4_artifact(
+        krun_box_runtime::rootfs::publish_ext4_artifact(
             &logical,
             &record.box_dir.join("rootfs-ext4-v1"),
-            aster_box_runtime::rootfs::Ext4ArtifactOptions::from_disk_mib(16, [5; 16]).unwrap(),
+            krun_box_runtime::rootfs::Ext4ArtifactOptions::from_disk_mib(16, [5; 16]).unwrap(),
         )
         .unwrap();
 
@@ -756,7 +753,7 @@ mod tests {
     #[test]
     fn test_boot_network_name_falls_back_to_network_mode() {
         let mut record = sample_record();
-        record.network_mode = aster_box_core::NetworkMode::Bridge {
+        record.network_mode = krun_box_core::NetworkMode::Bridge {
             network: "dev".to_string(),
         };
         record.network_name = None;
@@ -769,10 +766,10 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let network_store = NetworkStore::new(dir.path().join("networks.json"));
         network_store
-            .create(aster_box_core::network::NetworkConfig::new("dev", "10.88.0.0/24").unwrap())
+            .create(krun_box_core::network::NetworkConfig::new("dev", "10.88.0.0/24").unwrap())
             .unwrap();
         let mut record = sample_record();
-        record.network_mode = aster_box_core::NetworkMode::Bridge {
+        record.network_mode = krun_box_core::NetworkMode::Bridge {
             network: "dev".to_string(),
         };
 

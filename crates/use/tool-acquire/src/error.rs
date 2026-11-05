@@ -17,7 +17,7 @@ pub enum ToolAcquireError {
     VersionAliasCycle { name: String },
     #[error("cannot subtract from non-numeric version: {version}")]
     InvalidSubtraction { version: String },
-    #[error("cached version metadata missing for {spec}; refresh with `aster tool ls-remote` while online")]
+    #[error("cached version metadata missing for {spec}; refresh with `krun tool ls-remote` while online")]
     VersionMetadataMissing { spec: String },
     #[error("version cache exceeds 8 MiB")]
     VersionMetadataLimit,
@@ -94,7 +94,7 @@ pub enum ToolAcquireError {
     InvalidEnvLock(String),
     #[error("env lock platform is {expected}; this binary targets {actual}")]
     LockPlatformMismatch { expected: String, actual: String },
-    #[error("env lock does not match tool declarations; run `aster tool lock` to update it")]
+    #[error("env lock does not match tool declarations; run `krun tool lock` to update it")]
     LockDeclarationMismatch,
     #[error("installed or downloaded files do not match env lock for {name}")]
     LockContentMismatch { name: String },

@@ -4,7 +4,7 @@ use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use aster_use_core::metadata_is_link_or_reparse_point;
+use krun_use_core::metadata_is_link_or_reparse_point;
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -24,9 +24,9 @@ use crate::version::{
     VersionRequestKind, MAX_VERSIONS,
 };
 
-const VERSION_CACHE_SCHEMA: &str = "aster.use.tool-acquire.versions.v1";
+const VERSION_CACHE_SCHEMA: &str = "krun.use.tool-acquire.versions.v1";
 const MAX_VERSION_CACHE_BYTES: u64 = 8 * 1024 * 1024;
-const DISPATCH_SHIM_HEADER: &[u8] = b"#!/bin/sh\n# Aster project dispatch shim v1\n";
+const DISPATCH_SHIM_HEADER: &[u8] = b"#!/bin/sh\n# Krun project dispatch shim v1\n";
 
 #[derive(Serialize)]
 struct VersionCache<'a> {

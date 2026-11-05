@@ -57,7 +57,7 @@ mod tests {
     fn admits_a_literal_backslash_and_rejects_nul_empty_and_dotdot() {
         let relative = r#"嵌套/凭据 "alpha"\beta"#;
         assert_eq!(admit_workspace_path(relative, false), Ok(()));
-        let absolute = r#"/private/var/tmp/aster-中文-"-\-work"#;
+        let absolute = r#"/private/var/tmp/krun-中文-"-\-work"#;
         assert_eq!(admit_workspace_path(absolute, true), Ok(()));
         // `\` is not a separator, so this is one component rather than traversal.
         assert_eq!(admit_workspace_path(r"leaf\..\name", false), Ok(()));

@@ -1,5 +1,5 @@
-use aster_use_core::{PlanScope, PlanScopeKind};
-use aster_use_extension::ExtensionManifest;
+use krun_use_core::{PlanScope, PlanScopeKind};
+use krun_use_extension::ExtensionManifest;
 use sha2::{Digest, Sha256};
 
 use super::*;

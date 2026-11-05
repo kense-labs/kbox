@@ -4,7 +4,7 @@ Architecture source of truth: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## M0 — Core contracts + lean System One path
 
-- [x] Crate scaffold (`aster-apofasi`)
+- [x] Crate scaffold (`krun-apofasi`)
 - [x] Architecture document (pure Rust)
 - [x] `DecisionKind` / Jev-aligned `SystemOneRequest` / `SystemOneResponse`
 - [x] Sequence builder with marker positions
@@ -42,7 +42,7 @@ Architecture source of truth: [`ARCHITECTURE.md`](ARCHITECTURE.md).
 
 ## M4 — Host tooling
 
-- [x] `aster-apofasi` CLI smoke / latency bench (`cli` feature; `just ap-smoke` / `just ap-bench`)
+- [x] `krun-apofasi` CLI smoke / latency bench (`cli` feature; `just ap-smoke` / `just ap-bench`)
 - [x] Example glue for Code / Desktop decision gates (`examples/host_gate.rs`)
 - [x] Monorepo weight default: `scripts/ap/resolve_checkpoint.sh` + `just ap-checkpoint` / `ap-parity` (hub layout; crate stays brand-free)
 

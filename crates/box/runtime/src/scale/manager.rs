@@ -2,12 +2,12 @@
 
 use std::collections::{HashMap, VecDeque};
 
-use aster_box_core::scale::{
+use chrono::Utc;
+use krun_box_core::scale::{
     InstanceEvent, InstanceHealth, InstanceInfo, InstanceState, ScaleDirection, ScaleObservation,
     ScaleOperationConflict, ScaleOperationRequest, ScaleOperationResponse, ScaleRequest,
     ScaleResponse, SCALE_OPERATION_SCHEMA_VERSION,
 };
-use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
 use super::{ServiceHealth, ServiceInstances, TrackedInstance};

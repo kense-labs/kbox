@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::OciBundle;
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::OciBundle;
 
 use super::{
     canonical_directory, fixed_rootfs, guest_path, path_exists, remove_marker, runtime_entries,

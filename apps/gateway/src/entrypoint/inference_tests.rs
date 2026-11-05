@@ -28,14 +28,14 @@ mod messages_tests;
 mod prefix_affinity_tests;
 mod responses_tests;
 
-const KEY_PREFIX: &str = "aster_inf_abc12345";
+const KEY_PREFIX: &str = "krun_inf_abc12345";
 
 pub(super) fn inference_key(character: char) -> String {
     format!("{KEY_PREFIX}{}", character.to_string().repeat(64))
 }
 
 fn verifier(secret: &str) -> String {
-    let salt = SaltString::encode_b64(b"aster-entrypoint-test").unwrap();
+    let salt = SaltString::encode_b64(b"krun-entrypoint-test").unwrap();
     Argon2::default()
         .hash_password(secret.as_bytes(), &salt)
         .unwrap()
@@ -740,7 +740,7 @@ async fn managed_inference_authenticates_before_body_and_strips_authorization() 
     assert_eq!(response.status(), 401);
     assert_eq!(
         response.headers()["www-authenticate"],
-        r#"Bearer realm="aster-inference""#
+        r#"Bearer realm="krun-inference""#
     );
 
     let request_body = r#"{"model":"allowed-model","messages":[]}"#;
@@ -1627,7 +1627,7 @@ async fn managed_snapshot_apply_unknown_tokenizer_successor_retains_prior_routin
 
     let mut bad_tokenizer = first.clone();
     bad_tokenizer.inference.as_mut().unwrap().tokenizer_revision =
-        "aster.gateway.tokenizer.v0".into();
+        "krun.gateway.tokenizer.v0".into();
     let bad_expires = Utc::now() + ChronoDuration::hours(1);
     bad_tokenizer.inference.as_mut().unwrap().expires_at = bad_expires;
     let rejected = store

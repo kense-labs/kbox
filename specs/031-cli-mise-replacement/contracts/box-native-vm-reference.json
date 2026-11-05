@@ -12,8 +12,8 @@
   "loadTimeoutSeconds": 30,
   "versionTimeoutSeconds": 10,
   "expectedGuestStdoutBlocks": [
-    "aster-box-plugin-vm-ok\nLinux\naarch64\n",
-    "aster-box-plugin-exit-17\n"
+    "krun-box-plugin-vm-ok\nLinux\naarch64\n",
+    "krun-box-plugin-exit-17\n"
   ],
   "expectedExitCodes": [
     0,

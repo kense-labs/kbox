@@ -1,5 +1,5 @@
-use aster_oci_agent_protocol::AgentReadOutputRequest;
-use aster_oci_sdk::{ErrorCode, OciRuntimeService, ProcessTarget, ReadOutputRequest};
+use krun_oci_agent_protocol::AgentReadOutputRequest;
+use krun_oci_sdk::{ErrorCode, OciRuntimeService, ProcessTarget, ReadOutputRequest};
 use tokio::time::timeout;
 
 use super::super::super::driver::QualificationKvmOperationDriver;

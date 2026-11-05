@@ -1,12 +1,12 @@
-//! Durable filesystem baseline used by `aster-box diff`.
+//! Durable filesystem baseline used by `krun-box diff`.
 
 use std::collections::HashMap;
 use std::io::Read;
 use std::path::{Component, Path};
 
-use aster_box_core::error::{BoxError, Result};
-pub use aster_box_core::rootfs_baseline::RootfsFileInfo;
-use aster_box_core::rootfs_baseline::{
+use krun_box_core::error::{BoxError, Result};
+pub use krun_box_core::rootfs_baseline::RootfsFileInfo;
+use krun_box_core::rootfs_baseline::{
     GuestDiffBaseline, GUEST_DIFF_BASELINE_FILE_NAME, MAX_GUEST_DIFF_BASELINE_BYTES,
 };
 
@@ -48,17 +48,17 @@ pub fn create_diff_baseline_if_absent(box_dir: &Path, rootfs: &Path) -> Result<(
     install_baseline_bytes_if_absent(box_dir, &encoded)
 }
 
-/// Convert OCI rootfs metadata into the `HashMap` shape consumed by `aster-box diff`.
+/// Convert OCI rootfs metadata into the `HashMap` shape consumed by `krun-box diff`.
 ///
 /// Mode bits match `walk_tar_archive`: POSIX type flags OR permission bits from
 /// the manifest (`mode & 0o7777`). Skips the synthetic root (`.`) entry and
 /// runtime-internal paths.
 #[cfg(unix)]
 pub fn rootfs_file_info_map_from_metadata(
-    manifest: &aster_box_core::rootfs_metadata::RootfsMetadataManifest,
+    manifest: &krun_box_core::rootfs_metadata::RootfsMetadataManifest,
 ) -> Result<HashMap<String, RootfsFileInfo>> {
-    use aster_box_core::rootfs_metadata::RootfsEntryKind;
     use base64::Engine;
+    use krun_box_core::rootfs_metadata::RootfsEntryKind;
     use std::ffi::OsStr;
     use std::os::unix::ffi::OsStrExt;
 
@@ -84,7 +84,7 @@ pub fn rootfs_file_info_map_from_metadata(
         {
             continue;
         }
-        if aster_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
+        if krun_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
             continue;
         }
         let key = rootfs_path_string(relative);
@@ -114,12 +114,12 @@ pub fn rootfs_file_info_map_from_metadata(
 /// Install a diff baseline from OCI-mapped rootfs metadata (SandboxViaOci).
 ///
 /// Converts the manifest with the same mode/size contract as
-/// `aster-box diff`'s tar walk of commit/snapshot capture, so baseline and
+/// `krun-box diff`'s tar walk of commit/snapshot capture, so baseline and
 /// current sides compare the same semantics. First-writer-wins; never replaces.
 #[cfg(unix)]
 pub fn create_diff_baseline_from_metadata_if_absent(
     box_dir: &Path,
-    manifest: &aster_box_core::rootfs_metadata::RootfsMetadataManifest,
+    manifest: &krun_box_core::rootfs_metadata::RootfsMetadataManifest,
 ) -> Result<()> {
     if existing_baseline_is_regular(&box_dir.join(DIFF_BASELINE_FILE))? {
         return Ok(());
@@ -136,7 +136,7 @@ pub fn create_diff_baseline_from_metadata_if_absent(
 ///
 /// The guest writes only to a private pre-opened control file. The host treats
 /// that payload as untrusted, enforces its schema and bounds, then atomically
-/// installs the legacy map representation consumed by `aster-box diff`.
+/// installs the legacy map representation consumed by `krun-box diff`.
 pub fn publish_guest_diff_baseline(box_dir: &Path) -> Result<()> {
     let destination = box_dir.join(DIFF_BASELINE_FILE);
     if existing_baseline_is_regular(&destination)? {
@@ -300,7 +300,7 @@ fn walk_recursive(
             Ok(relative) => relative,
             Err(_) => continue,
         };
-        if aster_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
+        if krun_box_core::rootfs_metadata::is_runtime_internal_rootfs_path(relative) {
             continue;
         }
 
@@ -358,7 +358,7 @@ mod tests {
         let rootfs = box_dir.join("rootfs");
         std::fs::create_dir_all(rootfs.join("root")).unwrap();
         std::fs::write(rootfs.join("root/original.txt"), b"original").unwrap();
-        std::fs::write(rootfs.join(".aster-box-exec.json"), b"runtime").unwrap();
+        std::fs::write(rootfs.join(".krun-box-exec.json"), b"runtime").unwrap();
 
         create_diff_baseline_if_absent(&box_dir, &rootfs).unwrap();
         std::fs::write(rootfs.join("root/later.txt"), b"later").unwrap();
@@ -368,16 +368,16 @@ mod tests {
         let baseline: HashMap<String, RootfsFileInfo> = serde_json::from_slice(&encoded).unwrap();
         assert!(baseline.contains_key("/root/original.txt"));
         assert!(!baseline.contains_key("/root/later.txt"));
-        assert!(!baseline.contains_key("/.aster-box-exec.json"));
+        assert!(!baseline.contains_key("/.krun-box-exec.json"));
     }
 
     #[cfg(unix)]
     #[test]
     fn metadata_baseline_matches_tar_walk_mode_contract() {
-        use aster_box_core::rootfs_metadata::{
+        use base64::Engine;
+        use krun_box_core::rootfs_metadata::{
             RootfsEntryKind, RootfsMetadataEntry, RootfsMetadataManifest,
         };
-        use base64::Engine;
 
         let path = base64::engine::general_purpose::STANDARD.encode(b"bin/tool");
         let link = base64::engine::general_purpose::STANDARD.encode(b"target");
@@ -528,7 +528,7 @@ mod tests {
         std::fs::create_dir_all(&control_dir).unwrap();
         std::fs::write(
             control_dir.join(GUEST_DIFF_BASELINE_FILE_NAME),
-            br#"{"schema":"aster.box.guest-diff-baseline.v2","entries":{}}"#,
+            br#"{"schema":"krun.box.guest-diff-baseline.v2","entries":{}}"#,
         )
         .unwrap();
 

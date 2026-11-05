@@ -6,10 +6,10 @@
 
 use std::time::Instant;
 
-use aster_box_core::operator::{
+use chrono::Utc;
+use krun_box_core::operator::{
     AutoscalerCondition, BoxAutoscalerSpec, BoxAutoscalerStatus, MetricType, MetricValue,
 };
-use chrono::Utc;
 use serde::{Deserialize, Serialize};
 
 /// Input metrics for the reconciler.
@@ -279,7 +279,7 @@ fn compute_desired_replicas(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use aster_box_core::operator::{
+    use krun_box_core::operator::{
         BoxAutoscalerSpec, MetricSpec, MetricType, ScalingBehavior, ScalingRules, TargetRef,
     };
 

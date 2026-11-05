@@ -3,7 +3,7 @@ use std::fs::File;
 use std::io::{self, Read};
 use std::os::fd::{AsRawFd, FromRawFd};
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use super::namespace::RetainedExecutionContext;
 use super::plan::InitPlan;
@@ -487,7 +487,7 @@ mod tests {
             "PPid:\t407\nNSpid:\t\n",
         ] {
             let error = parse_pid_identity(status).expect_err("invalid PID identity must fail");
-            assert_eq!(error.code, aster_oci_sdk::ErrorCode::FailedPrecondition);
+            assert_eq!(error.code, krun_oci_sdk::ErrorCode::FailedPrecondition);
         }
     }
 
@@ -555,7 +555,7 @@ mod tests {
         ] {
             let error = validate_new_pid_identity_chain(407, 413, 419, &namespace_init, &payload)
                 .expect_err("broken PID supervision chain must fail");
-            assert_eq!(error.code, aster_oci_sdk::ErrorCode::PermissionDenied);
+            assert_eq!(error.code, krun_oci_sdk::ErrorCode::PermissionDenied);
         }
     }
 

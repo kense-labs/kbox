@@ -1,16 +1,16 @@
-//! Durable dispatch between the retained Box backend and the Aster OCI SDK.
+//! Durable dispatch between the retained Box backend and the Krun OCI SDK.
 
 use std::sync::Arc;
 
 use super::store::{FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleRequest};
-use aster_box_core::vmm::OwnedCloseBudget;
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::vmm::OwnedCloseBudget;
+use krun_box_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
     ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
     ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
 };
-use async_trait::async_trait;
 
 use super::{
     LocalExecutionBackend, LocalExecutionHandle, LocalExecutionObservation,

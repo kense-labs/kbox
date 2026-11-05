@@ -5,7 +5,7 @@ use std::os::unix::net::{SocketAddr, UnixStream};
 use std::os::unix::process::ExitStatusExt;
 use std::process::ExitStatus as ProcessExitStatus;
 
-use aster_oci_sdk::{IoMode, ProcessIo};
+use krun_oci_sdk::{IoMode, ProcessIo};
 use tokio::io::AsyncReadExt;
 
 use super::launch::{
@@ -43,22 +43,22 @@ async fn abstract_control_listener_reports_the_kernel_peer_pid() {
 fn converts_normal_and_signal_process_results() {
     assert_eq!(
         convert_exit_status(ProcessExitStatus::from_raw(42 << 8)).expect("normal result"),
-        aster_oci_sdk::ExitStatus::exited(42).expect("normal SDK result")
+        krun_oci_sdk::ExitStatus::exited(42).expect("normal SDK result")
     );
     assert_eq!(
         convert_exit_status(ProcessExitStatus::from_raw(libc::SIGKILL)).expect("signal result"),
-        aster_oci_sdk::ExitStatus::signaled(libc::SIGKILL, false).expect("signal SDK result")
+        krun_oci_sdk::ExitStatus::signaled(libc::SIGKILL, false).expect("signal SDK result")
     );
 }
 
 #[test]
 fn failed_create_cleanup_is_returned_without_hiding_the_primary_rejection() {
     let mut primary = process_error(
-        aster_oci_sdk::ErrorCode::PermissionDenied,
+        krun_oci_sdk::ErrorCode::PermissionDenied,
         "hostile create rejected",
     );
-    let cleanup = aster_oci_sdk::Error::new(
-        aster_oci_sdk::ErrorCode::Internal,
+    let cleanup = krun_oci_sdk::Error::new(
+        krun_oci_sdk::ErrorCode::Internal,
         "cgroup remained populated",
     )
     .for_operation("configure-container-cgroup")
@@ -66,7 +66,7 @@ fn failed_create_cleanup_is_returned_without_hiding_the_primary_rejection() {
 
     append_cleanup_error(&mut primary, "remove the container cgroup", &cleanup);
 
-    assert_eq!(primary.code, aster_oci_sdk::ErrorCode::PermissionDenied);
+    assert_eq!(primary.code, krun_oci_sdk::ErrorCode::PermissionDenied);
     assert_eq!(primary.operation.as_deref(), Some("run-container-init"));
     assert!(primary.message.contains("hostile create rejected"));
     assert!(primary.message.contains("cgroup remained populated"));
@@ -75,7 +75,7 @@ fn failed_create_cleanup_is_returned_without_hiding_the_primary_rejection() {
 
 #[test]
 fn supervised_create_allows_box_control_and_keeps_other_gates() {
-    use aster_oci_agent_protocol::AgentInheritedDescriptorSchema;
+    use krun_oci_agent_protocol::AgentInheritedDescriptorSchema;
 
     let pipe_io = ProcessIo {
         stdin: IoMode::Pipe,
@@ -90,11 +90,11 @@ fn supervised_create_allows_box_control_and_keeps_other_gates() {
     assert!(
         supervised_create_unsupported_reason(
             false,
-            Some(&AgentInheritedDescriptorSchema::aster_box_control_v1()),
+            Some(&AgentInheritedDescriptorSchema::krun_box_control_v1()),
             &pipe_io
         )
         .is_none(),
-        "aster_box_control_v1 must be allowed on supervised create"
+        "krun_box_control_v1 must be allowed on supervised create"
     );
 
     let box_live_io = ProcessIo {
@@ -106,11 +106,11 @@ fn supervised_create_allows_box_control_and_keeps_other_gates() {
     assert!(
         supervised_create_unsupported_reason(
             false,
-            Some(&AgentInheritedDescriptorSchema::aster_box_control_v1()),
+            Some(&AgentInheritedDescriptorSchema::krun_box_control_v1()),
             &box_live_io
         )
         .is_none(),
-        "Box Live Null+Inherit+Inherit with aster_box_control_v1 must pass the supervised create gate"
+        "Box Live Null+Inherit+Inherit with krun_box_control_v1 must pass the supervised create gate"
     );
 
     let terminal_io = ProcessIo {
@@ -128,7 +128,7 @@ fn supervised_create_allows_box_control_and_keeps_other_gates() {
         .expect("pinned bundle remains unsupported")
         .contains("utility-VM"));
 
-    let mut unknown = AgentInheritedDescriptorSchema::aster_box_control_v1();
+    let mut unknown = AgentInheritedDescriptorSchema::krun_box_control_v1();
     unknown.profile = "unknown-inherited-schema".into();
     assert!(
         supervised_create_unsupported_reason(false, Some(&unknown), &pipe_io)

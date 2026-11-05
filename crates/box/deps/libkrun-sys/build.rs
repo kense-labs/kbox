@@ -86,21 +86,21 @@ fn main() {
     println!("cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.dll");
     println!("cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.lib");
     println!("cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/libkrunfw.dll");
-    println!("cargo:rerun-if-env-changed=ASTER_DEPS_STUB");
+    println!("cargo:rerun-if-env-changed=KRUN_DEPS_STUB");
     // Re-evaluate the system-vs-vendored decision when the toggle changes.
-    println!("cargo:rerun-if-env-changed=ASTER_BUILD_LIBKRUN");
-    println!("cargo:rerun-if-env-changed=ASTER_USE_SYSTEM_LIBKRUN");
-    println!("cargo:rerun-if-env-changed=ASTER_LIBKRUNFW_DYLIB");
+    println!("cargo:rerun-if-env-changed=KRUN_BUILD_LIBKRUN");
+    println!("cargo:rerun-if-env-changed=KRUN_USE_SYSTEM_LIBKRUN");
+    println!("cargo:rerun-if-env-changed=KRUN_LIBKRUNFW_DYLIB");
     #[cfg(target_os = "macos")]
     println!("cargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET");
 
     // Check for stub mode (for CI linting without building)
-    // Set ASTER_DEPS_STUB=1 to skip building and emit stub link directives
-    if env::var("ASTER_DEPS_STUB").is_ok() {
-        println!("cargo:warning=ASTER_DEPS_STUB mode: skipping libkrun build");
+    // Set KRUN_DEPS_STUB=1 to skip building and emit stub link directives
+    if env::var("KRUN_DEPS_STUB").is_ok() {
+        println!("cargo:warning=KRUN_DEPS_STUB mode: skipping libkrun build");
         println!("cargo:rustc-link-lib=dylib=krun");
-        println!("cargo:LIBKRUN_ASTER_DEP=/nonexistent");
-        println!("cargo:LIBKRUNFW_ASTER_DEP=/nonexistent");
+        println!("cargo:LIBKRUN_KRUN_DEP=/nonexistent");
+        println!("cargo:LIBKRUNFW_KRUN_DEP=/nonexistent");
         return;
     }
 
@@ -113,16 +113,16 @@ fn main() {
     {
         // The vendored macOS libkrun carries required TSI flow-control and
         // reverse-proxy fixes newer than the 1.17.0 library shipped by older
-        // Aster Box formulae. Silently preferring that system dylib produces TCP
+        // Krun Box formulae. Silently preferring that system dylib produces TCP
         // listeners that accept connections but never move application data.
         // Keep system linking as an explicit developer escape hatch only.
         #[cfg(target_os = "macos")]
-        let force_vendored = env::var("ASTER_USE_SYSTEM_LIBKRUN").is_err();
+        let force_vendored = env::var("KRUN_USE_SYSTEM_LIBKRUN").is_err();
         #[cfg(not(target_os = "macos"))]
         let force_vendored = false;
 
-        // Try to find system-installed libkrun first (unless ASTER_BUILD_LIBKRUN is set)
-        if env::var("ASTER_BUILD_LIBKRUN").is_err() && !force_vendored {
+        // Try to find system-installed libkrun first (unless KRUN_BUILD_LIBKRUN is set)
+        if env::var("KRUN_BUILD_LIBKRUN").is_err() && !force_vendored {
             if let Ok(lib_dir) = find_system_libkrun() {
                 println!(
                     "cargo:warning=Using system-installed libkrun from {}",
@@ -141,7 +141,7 @@ fn main() {
                 return;
             }
         } else {
-            println!("cargo:warning=ASTER_BUILD_LIBKRUN set: forcing build from source");
+            println!("cargo:warning=KRUN_BUILD_LIBKRUN set: forcing build from source");
         }
 
         // Fall back to building from source (with prebuilt libkrunfw)
@@ -471,7 +471,7 @@ fn make_command(
         .arg("MAKEFLAGS=")
         // libkrun's Makefile invokes a nested Cargo build. Do not leak the
         // outer workspace's clippy wrapper or lint flags into that independent
-        // vendored workspace: `cargo clippy -- -D warnings` must lint Aster code,
+        // vendored workspace: `cargo clippy -- -D warnings` must lint Krun code,
         // not turn upstream warnings into a build-script failure.
         .env_remove("RUSTC_WRAPPER")
         .env_remove("RUSTC_WORKSPACE_WRAPPER")
@@ -553,8 +553,8 @@ fn configure_linking(libkrun_dir: &Path, libkrunfw_dir: &Path) {
         stage_macos_runtime_libraries(libkrun_dir, libkrunfw_dir);
     }
 
-    println!("cargo:LIBKRUN_ASTER_DEP={}", libkrun_dir.display());
-    println!("cargo:LIBKRUNFW_ASTER_DEP={}", libkrunfw_dir.display());
+    println!("cargo:LIBKRUN_KRUN_DEP={}", libkrun_dir.display());
+    println!("cargo:LIBKRUNFW_KRUN_DEP={}", libkrunfw_dir.display());
 }
 
 #[cfg(target_os = "macos")]
@@ -949,7 +949,7 @@ fn build() {
         fs::read_to_string(&deployment_marker).is_ok_and(|value| value == deployment);
 
     // Skip build if outputs already exist (incremental build optimization)
-    if env::var("ASTER_BUILD_LIBKRUN").is_err()
+    if env::var("KRUN_BUILD_LIBKRUN").is_err()
         && firmware_current
         && deployment_current
         && has_library(&libkrunfw_lib, "libkrunfw")
@@ -990,11 +990,11 @@ fn build() {
     // build the checksum-verified upstream prebuilt source bundle. The override
     // is path-only and opt-in so release builds cannot silently consume ambient
     // firmware. `firmware/build-patched-darwin-arm64.sh` produces this artifact.
-    if let Ok(override_path) = env::var("ASTER_LIBKRUNFW_DYLIB") {
+    if let Ok(override_path) = env::var("KRUN_LIBKRUNFW_DYLIB") {
         let override_path = PathBuf::from(override_path);
         if !override_path.is_file() {
             panic!(
-                "ASTER_LIBKRUNFW_DYLIB is not a file: {}",
+                "KRUN_LIBKRUNFW_DYLIB is not a file: {}",
                 override_path.display()
             );
         }
@@ -1199,8 +1199,8 @@ fn build_windows() {
     println!("cargo:rustc-link-search=native={}", lib_dir.display());
     println!("cargo:rustc-link-lib=dylib=krun");
     println!("cargo:rustc-link-lib=WinHvPlatform");
-    println!("cargo:LIBKRUN_ASTER_DEP={}", lib_dir.display());
-    println!("cargo:LIBKRUNFW_ASTER_DEP={}", lib_dir.display());
+    println!("cargo:LIBKRUN_KRUN_DEP={}", lib_dir.display());
+    println!("cargo:LIBKRUNFW_KRUN_DEP={}", lib_dir.display());
     println!("cargo:rerun-if-env-changed=LIBKRUN_DIR");
 }
 
@@ -1218,7 +1218,7 @@ fn build() {
         .is_ok_and(|value| value == LIBKRUNFW_SHA256);
 
     // Skip build if outputs already exist (incremental build optimization)
-    if env::var("ASTER_BUILD_LIBKRUN").is_err()
+    if env::var("KRUN_BUILD_LIBKRUN").is_err()
         && firmware_current
         && has_library(&libkrunfw_lib_dir, "libkrunfw")
         && has_library(&libkrun_lib_dir, "libkrun")

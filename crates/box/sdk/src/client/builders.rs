@@ -1,12 +1,12 @@
 /// Fluent OCI image builder backed by the local runtime build engine.
 #[derive(Debug, Clone)]
 pub struct ImageBuilder {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     request: BuildImage,
 }
 
 impl ImageBuilder {
-    fn new(client: AsterBoxClient, context_dir: impl Into<PathBuf>) -> Self {
+    fn new(client: KrunBoxClient, context_dir: impl Into<PathBuf>) -> Self {
         Self {
             client,
             request: BuildImage::new(context_dir),
@@ -66,12 +66,12 @@ impl ImageBuilder {
 /// Fluent named-volume builder.
 #[derive(Debug, Clone)]
 pub struct VolumeBuilder {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     request: CreateVolume,
 }
 
 impl VolumeBuilder {
-    fn new(client: AsterBoxClient, name: impl Into<String>) -> Self {
+    fn new(client: KrunBoxClient, name: impl Into<String>) -> Self {
         Self {
             client,
             request: CreateVolume::new(name),
@@ -100,12 +100,12 @@ impl VolumeBuilder {
 /// Fluent bridge-network builder.
 #[derive(Debug, Clone)]
 pub struct NetworkBuilder {
-    client: AsterBoxClient,
+    client: KrunBoxClient,
     request: CreateNetwork,
 }
 
 impl NetworkBuilder {
-    fn new(client: AsterBoxClient, name: impl Into<String>) -> Self {
+    fn new(client: KrunBoxClient, name: impl Into<String>) -> Self {
         Self {
             client,
             request: CreateNetwork::new(name),
@@ -136,7 +136,7 @@ impl NetworkBuilder {
     }
 }
 
-impl AsterBoxClient {
+impl KrunBoxClient {
     /// Start a fluent local OCI image build.
     pub fn image(&self, context_dir: impl Into<PathBuf>) -> ImageBuilder {
         ImageBuilder::new(self.clone(), context_dir)

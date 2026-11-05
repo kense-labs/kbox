@@ -8,16 +8,16 @@ use std::os::unix::fs::{MetadataExt, OpenOptionsExt};
 use std::path::Path;
 
 #[cfg(any(target_os = "linux", test))]
-use aster_oci_agent_protocol::AgentCreateRequest;
-use aster_oci_agent_protocol::AgentVmAttachmentManifest;
+use krun_oci_agent_protocol::AgentCreateRequest;
+use krun_oci_agent_protocol::AgentVmAttachmentManifest;
 #[cfg(target_os = "linux")]
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AGENT_RUNTIME_SHARE_GUEST_ROOT, AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME,
     AGENT_VM_ATTACHMENT_MANIFEST_MAX_BYTES, AGENT_VM_ATTACHMENT_MANIFEST_SHA256_ENV,
 };
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 #[cfg(target_os = "linux")]
-use aster_oci_sdk::{OciBundle, CONFIG_FILE_NAME, MAX_CONFIG_BYTES};
+use krun_oci_sdk::{OciBundle, CONFIG_FILE_NAME, MAX_CONFIG_BYTES};
 #[cfg(target_os = "linux")]
 use sha2::{Digest, Sha256};
 
@@ -76,7 +76,7 @@ pub fn take_vm_attachment_manifest(
     runtime_parent: Option<&Path>,
 ) -> Result<Option<UtilityVmAttachmentBinding>> {
     let host_restrictions =
-        std::env::var(aster_oci_agent_protocol::AGENT_HOST_STORAGE_PATH_RESTRICTIONS_SHA256_ENV)
+        std::env::var(krun_oci_agent_protocol::AGENT_HOST_STORAGE_PATH_RESTRICTIONS_SHA256_ENV)
             .map(Some)
             .or_else(|error| {
                 if error == std::env::VarError::NotPresent {
@@ -87,7 +87,7 @@ pub fn take_vm_attachment_manifest(
                     ))
                 }
             })?;
-    std::env::remove_var(aster_oci_agent_protocol::AGENT_HOST_STORAGE_PATH_RESTRICTIONS_SHA256_ENV);
+    std::env::remove_var(krun_oci_agent_protocol::AGENT_HOST_STORAGE_PATH_RESTRICTIONS_SHA256_ENV);
     let expected_digest = std::env::var_os(AGENT_VM_ATTACHMENT_MANIFEST_SHA256_ENV);
     std::env::remove_var(AGENT_VM_ATTACHMENT_MANIFEST_SHA256_ENV);
     let manifest_path =
@@ -352,11 +352,11 @@ mod tests {
 
     use std::collections::BTreeMap;
 
-    use aster_oci_agent_protocol::{
+    use krun_oci_agent_protocol::{
         AgentBundle, AgentCreateRequest, AgentVmAttachmentManifest, AgentVmMacAddress,
         AgentVmNetworkAttachment, GuestPath,
     };
-    use aster_oci_sdk::{
+    use krun_oci_sdk::{
         oci_spec::runtime::Spec, ContainerId, ContainerTarget, CreateAttachments, Generation,
         NetworkAttachmentIdentity, NetworkCleanup, NetworkCleanupId, NetworkInterfaceId,
         NetworkNamespaceId, OciBundle, OperationContext, OperationId, ProcessIo,
@@ -401,7 +401,7 @@ mod tests {
                 .collect::<serde_json::Map<_, _>>()
         });
         let bundle = OciBundle::from_json(
-            std::env::temp_dir().join("aster-agent-rename-plan"),
+            std::env::temp_dir().join("krun-agent-rename-plan"),
             serde_json::to_string(&value).expect("fixture JSON"),
         )
         .expect("bundle");
@@ -448,7 +448,7 @@ mod tests {
             ContainerId::new("networked").expect("container ID"),
             Generation(1),
         );
-        let guest_bundle = GuestPath::new("/run/aster-oci-runtime/bundle").expect("guest bundle");
+        let guest_bundle = GuestPath::new("/run/krun-oci-runtime/bundle").expect("guest bundle");
         let manifest = AgentVmAttachmentManifest::new(
             target.clone(),
             guest_bundle.clone(),
@@ -522,12 +522,12 @@ mod tests {
         let mut wrong_directory = request.clone();
         wrong_directory.bundle = AgentBundle::new(
             &bundle,
-            GuestPath::new("/run/aster-oci-runtime/other").expect("guest bundle"),
+            GuestPath::new("/run/krun-oci-runtime/other").expect("guest bundle"),
         );
         assert!(binding.validate_create(&wrong_directory).is_err());
 
         let different_bundle = OciBundle::from_json(
-            std::env::temp_dir().join("aster-agent-binding-drift"),
+            std::env::temp_dir().join("krun-agent-binding-drift"),
             serde_json::to_string(&Spec::default()).expect("fixture JSON"),
         )
         .expect("different bundle");

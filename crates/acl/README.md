@@ -1,10 +1,14 @@
-# ACL - Agent Configuration Language
+# krun-acl
+
+## 概述
+
+Parser and generator for the Krun Agent Configuration Language
 
 A lightweight, typed configuration language for agent configurations. ACL is designed for defining structured agent behaviors with blocks, attributes, and function calls.
 
 ## Features
 
-- **ACL Block Syntax**: Labeled blocks, attributes, nested blocks, and function calls defined by the Aster ACL grammar
+- **ACL Block Syntax**: Labeled blocks, attributes, nested blocks, and function calls defined by the Krun ACL grammar
 - **Typed Values**: Strings, numbers, booleans, lists, objects, null, and function calls
 - **Function Calls**: Built-in support for `env()`, `concat()`, and custom functions
 - **Bidirectional**: Parse ACL text to AST, generate AST back to text
@@ -48,11 +52,11 @@ nested "label" {
 
 ```toml
 [dependencies]
-aster-acl = "0.3.0"
+krun-acl = "0.3.0"
 ```
 
 ```rust
-use aster_acl::{parse, generate, string, number, boolean, BlockBuilder, DocumentBuilder};
+use krun_acl::{parse, generate, string, number, boolean, BlockBuilder, DocumentBuilder};
 
 let doc = parse(r#"
     name = "test"
@@ -65,11 +69,11 @@ let output = generate(&doc);
 ### Node.js / TypeScript
 
 ```bash
-npm install @aster-ai-lab/acl
+npm install @kense-labs/acl
 ```
 
 ```typescript
-import { parse, generate, string, number, boolean, BlockBuilder } from '@aster-ai-lab/acl';
+import { parse, generate, string, number, boolean, BlockBuilder } from '@kense-labs/acl';
 
 const doc = parse(`
     providers "openai" {
@@ -106,7 +110,7 @@ untrusted input. Defaults are identical in Rust and Node.js:
 Use explicit limits at API admission boundaries:
 
 ```rust
-use aster_acl::{parse_with_limits, ParseLimits};
+use krun_acl::{parse_with_limits, ParseLimits};
 
 let doc = parse_with_limits(
     input,
@@ -156,7 +160,7 @@ The compatibility `line` and `column` fields equal `span.start.line` and
 `span.start.column`.
 
 ```rust
-use aster_acl::{parse, DiagnosticCode};
+use krun_acl::{parse, DiagnosticCode};
 
 let error = parse(r#""private-value""#).unwrap_err();
 assert_eq!(error.code, DiagnosticCode::UnexpectedToken);
@@ -165,7 +169,7 @@ assert_eq!(error.span.start.offset, 0);
 ```
 
 ```typescript
-import { parse, ParseError } from '@aster-ai-lab/acl';
+import { parse, ParseError } from '@kense-labs/acl';
 
 try {
   parse('"private-value"');
@@ -184,7 +188,7 @@ The `parse` APIs remain fail-fast. CLI and editor integrations can collect
 multiple errors without constructing a partial AST:
 
 ```rust
-use aster_acl::{collect_diagnostics_with_limits, ParseLimits};
+use krun_acl::{collect_diagnostics_with_limits, ParseLimits};
 
 let report = collect_diagnostics_with_limits(
     "first = ]\nsecond = ]",
@@ -196,7 +200,7 @@ let report = collect_diagnostics_with_limits(
 ```
 
 ```typescript
-import {collectDiagnostics} from '@aster-ai-lab/acl';
+import {collectDiagnostics} from '@kense-labs/acl';
 
 const report = collectDiagnostics('first = ]\nsecond = ]', {
   maxDiagnostics: 20,
@@ -215,7 +219,7 @@ Parse untrusted input with explicit limits, then validate the resulting
 document before activation:
 
 ```rust
-use aster_acl::{
+use krun_acl::{
     parse_with_limits, validate_document_with_limits, AttributeSchema,
     ParseLimits, Schema, ValueSchema,
 };
@@ -234,7 +238,7 @@ assert!(report.is_empty());
 ```
 
 ```typescript
-import {parse, validateDocument} from '@aster-ai-lab/acl';
+import {parse, validateDocument} from '@kense-labs/acl';
 
 const schema = {
   attributes: {
@@ -281,7 +285,7 @@ Use the canonical APIs when ACL bytes are signed, stored, or compared across
 SDKs:
 
 ```rust
-use aster_acl::{canonical_bytes, canonical_digest, parse};
+use krun_acl::{canonical_bytes, canonical_digest, parse};
 
 let document = parse("limits { memory = 128000000 }")?;
 let bytes = canonical_bytes(&document)?;
@@ -290,7 +294,7 @@ assert!(digest.starts_with("sha256:"));
 ```
 
 ```typescript
-import {canonicalBytes, canonicalDigest, parse} from '@aster-ai-lab/acl';
+import {canonicalBytes, canonicalDigest, parse} from '@kense-labs/acl';
 
 const document = parse('limits { memory = 128000000 }');
 const bytes = canonicalBytes(document);
@@ -311,7 +315,7 @@ After schema admission, use the schema-aware APIs to normalize repeatable block
 types that the trusted schema marks as unordered:
 
 ```rust
-use aster_acl::{canonical_digest_with_schema, BlockSchema, Schema};
+use krun_acl::{canonical_digest_with_schema, BlockSchema, Schema};
 
 let schema = Schema::new().block(
     "provider",
@@ -321,7 +325,7 @@ let digest = canonical_digest_with_schema(&document, &schema)?;
 ```
 
 ```typescript
-import {canonicalDigestWithSchema} from '@aster-ai-lab/acl';
+import {canonicalDigestWithSchema} from '@kense-labs/acl';
 
 const schema = {
   blocks: {

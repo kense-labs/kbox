@@ -157,7 +157,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-acl"
+name = "krun-acl"
 version = "0.3.0"
 dependencies = [
  "ryu-js",
@@ -165,13 +165,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-cli"
+name = "krun-box-cli"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
- "aster-box-runtime",
- "aster-box-sdk",
- "aster-common",
+ "krun-box-core",
+ "krun-box-runtime",
+ "krun-box-sdk",
+ "krun-common",
  "async-trait",
  "base64 0.22.1",
  "chrono",
@@ -199,11 +199,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-core"
+name = "krun-box-core"
 version = "3.2.7"
 dependencies = [
- "aster-acl",
- "aster-common",
+ "krun-acl",
+ "krun-common",
  "async-trait",
  "base64 0.22.1",
  "chrono",
@@ -220,12 +220,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-cri"
+name = "krun-box-cri"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
- "aster-box-runtime",
- "aster-common",
+ "krun-box-core",
+ "krun-box-runtime",
+ "krun-common",
  "async-trait",
  "base64 0.22.1",
  "chrono",
@@ -251,12 +251,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-guest-init"
+name = "krun-box-guest-init"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
- "aster-common",
- "aster-oci-sdk",
+ "krun-box-core",
+ "krun-common",
+ "krun-oci-sdk",
  "base64 0.22.1",
  "clap",
  "libc",
@@ -277,7 +277,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-mkext4"
+name = "krun-box-mkext4"
 version = "3.2.7"
 dependencies = [
  "crc32c",
@@ -285,10 +285,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-netproxy"
+name = "krun-box-netproxy"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
+ "krun-box-core",
  "libc",
  "serde_json",
  "smoltcp",
@@ -297,18 +297,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-runtime"
+name = "krun-box-runtime"
 version = "3.2.7"
 dependencies = [
- "aster-acl",
- "aster-box-core",
- "aster-box-mkext4",
- "aster-box-netproxy",
- "aster-common",
- "aster-oci-core",
- "aster-oci-sdk",
- "aster-runtime",
- "aster-use",
+ "krun-acl",
+ "krun-box-core",
+ "krun-box-mkext4",
+ "krun-box-netproxy",
+ "krun-common",
+ "krun-oci-core",
+ "krun-oci-sdk",
+ "krun-runtime",
+ "krun-use",
  "async-trait",
  "axum",
  "base64 0.22.1",
@@ -359,11 +359,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-sdk"
+name = "krun-box-sdk"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
- "aster-box-runtime",
+ "krun-box-core",
+ "krun-box-runtime",
  "async-trait",
  "base64 0.22.1",
  "chrono",
@@ -380,13 +380,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-box-shim"
+name = "krun-box-shim"
 version = "3.2.7"
 dependencies = [
- "aster-box-core",
- "aster-box-netproxy",
- "aster-libkrun-sys",
- "aster-oci-sdk",
+ "krun-box-core",
+ "krun-box-netproxy",
+ "krun-libkrun-sys",
+ "krun-oci-sdk",
  "clap",
  "libc",
  "serde",
@@ -399,7 +399,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-common"
+name = "krun-common"
 version = "0.1.1"
 dependencies = [
  "async-trait",
@@ -415,7 +415,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-libkrun-sys"
+name = "krun-libkrun-sys"
 version = "3.2.7"
 dependencies = [
  "libc",
@@ -427,7 +427,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-core"
+name = "krun-oci-core"
 version = "0.3.2"
 dependencies = [
  "serde",
@@ -435,10 +435,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-oci-sdk"
+name = "krun-oci-sdk"
 version = "0.3.2"
 dependencies = [
- "aster-oci-core",
+ "krun-oci-core",
  "async-trait",
  "base64 0.22.1",
  "cap-fs-ext",
@@ -456,7 +456,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-runtime"
+name = "krun-runtime"
 version = "0.8.0"
 dependencies = [
  "async-trait",
@@ -471,12 +471,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use"
+name = "krun-use"
 version = "0.3.3"
 dependencies = [
- "aster-runtime",
- "aster-use-core",
- "aster-use-extension",
+ "krun-runtime",
+ "krun-use-core",
+ "krun-use-extension",
  "async-trait",
  "fs2",
  "olpc-cjson",
@@ -492,7 +492,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-core"
+name = "krun-use-core"
 version = "0.2.4"
 dependencies = [
  "async-trait",
@@ -509,11 +509,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aster-use-extension"
+name = "krun-use-extension"
 version = "0.3.3"
 dependencies = [
- "aster-acl",
- "aster-use-core",
+ "krun-acl",
+ "krun-use-core",
  "async-trait",
  "flate2",
  "fs2",

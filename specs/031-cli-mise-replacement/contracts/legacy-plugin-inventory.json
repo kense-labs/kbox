@@ -14,7 +14,7 @@
       "ordinal": 1,
       "kind": "application",
       "originalId": "applet-demo",
-      "packageId": "aster/applet-demo",
+      "packageId": "krun/applet-demo",
       "source": "apps/use-registry/packages/applet-demo",
       "sourceFiles": [
         {
@@ -22,7 +22,7 @@
           "sha256": "9ba7d942fcae48710427917d3bfa0d54fcd1e440dbd9bd5711cf7d222cfd2e08"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "a340983470b73efb784a03e6269d5c3f194f44423d788524111596460ef52700"
         },
         {
@@ -57,9 +57,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 7275,
-        "componentId": "use/aster/applet-demo",
+        "componentId": "use/krun/applet-demo",
         "fileCount": 9,
-        "packageId": "aster/applet-demo",
+        "packageId": "krun/applet-demo",
         "packageSha256": "548816f34182a6cd3fa75899854196c9cb22b9fe3e8e54083c7f3396db1d0b97",
         "route": "applet-demo",
         "schemaVersion": 1,
@@ -92,7 +92,7 @@
       "ordinal": 2,
       "kind": "application",
       "originalId": "approval",
-      "packageId": "aster/approval",
+      "packageId": "krun/approval",
       "source": "apps/use-registry/packages/approval",
       "sourceFiles": [
         {
@@ -100,11 +100,11 @@
           "sha256": "da80da3fc3b3090dd24188b491c4d3dafdd3f3ecf5ae856454cd556a56c56793"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "613d6a5c6b9dc4ca96e5ef7274fb0436b5e221ec622b4008877485f3c653e3c5"
         },
         {
@@ -115,9 +115,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 673,
-        "componentId": "use/aster/approval",
+        "componentId": "use/krun/approval",
         "fileCount": 4,
-        "packageId": "aster/approval",
+        "packageId": "krun/approval",
         "packageSha256": "8d05c4daf1869e9cf780d5e34cc05cab522501e9b2b44dd5557be429d704d979",
         "route": "approval",
         "schemaVersion": 1,
@@ -147,7 +147,7 @@
       "ordinal": 3,
       "kind": "application",
       "originalId": "cobot-arm",
-      "packageId": "aster/cobot-arm",
+      "packageId": "krun/cobot-arm",
       "source": "apps/use-registry/packages/cobot-arm",
       "sourceFiles": [
         {
@@ -167,7 +167,7 @@
           "sha256": "cf0bf41661dd4240d9cb904f64977cff06d24fd50e66b1aa0c0ca2aa61191937"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "da0253104f649f5c4ba2c40a8399261a5ae0012ae6762a6796681088228e203b"
         },
         {
@@ -426,9 +426,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 14091571,
-        "componentId": "use/aster/cobot-arm",
+        "componentId": "use/krun/cobot-arm",
         "fileCount": 68,
-        "packageId": "aster/cobot-arm",
+        "packageId": "krun/cobot-arm",
         "packageSha256": "ec7da2ffe95681ea637a10c2789e6cfd6af7b326db8bb55c4a71e5c06b07d263",
         "route": "cobot-arm",
         "schemaVersion": 1,
@@ -460,7 +460,7 @@
       "ordinal": 4,
       "kind": "application",
       "originalId": "data",
-      "packageId": "aster/data",
+      "packageId": "krun/data",
       "source": "apps/use-registry/packages/data",
       "sourceFiles": [
         {
@@ -472,7 +472,7 @@
           "sha256": "c8a353c972ea8b42d0c40e4eeb5cc766b95bac38419aa7a5a9a32d78dce63da4"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "89caa466a30d55d792c41164b986e4fd3dec9416ce401b72da355c7bf5c39175"
         },
         {
@@ -523,9 +523,9 @@
       "nativePackage": {
         "activityCount": 2,
         "byteCount": 43997,
-        "componentId": "use/aster/data",
+        "componentId": "use/krun/data",
         "fileCount": 14,
-        "packageId": "aster/data",
+        "packageId": "krun/data",
         "packageSha256": "1fd3c70ec9f4cccfeef1faf9758f9dec617490c114fd7160595ec0d666790187",
         "route": "data",
         "schemaVersion": 1,
@@ -556,7 +556,7 @@
       "ordinal": 5,
       "kind": "application",
       "originalId": "digital-twin",
-      "packageId": "aster/digital-twin",
+      "packageId": "krun/digital-twin",
       "source": "apps/use-registry/packages/digital-twin",
       "sourceFiles": [
         {
@@ -572,7 +572,7 @@
           "sha256": "2661b4e8200bb4ace112f68bb9c1ce7f03ad12528c90198999a6b8af1962b564"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "1fa92f4cb3a992e9330b92f1c242928547bebf7b2a883026e6e5a016bd39e0f0"
         },
         {
@@ -767,9 +767,9 @@
       "nativePackage": {
         "activityCount": 2,
         "byteCount": 3124393,
-        "componentId": "use/aster/digital-twin",
+        "componentId": "use/krun/digital-twin",
         "fileCount": 51,
-        "packageId": "aster/digital-twin",
+        "packageId": "krun/digital-twin",
         "packageSha256": "1d476a6c02f4467c99c931347c327d79142dc6d1652eb8f44cf27ba11ae32401",
         "route": "digital-twin",
         "schemaVersion": 1,
@@ -801,7 +801,7 @@
       "ordinal": 6,
       "kind": "application",
       "originalId": "expense",
-      "packageId": "aster/expense",
+      "packageId": "krun/expense",
       "source": "apps/use-registry/packages/expense",
       "sourceFiles": [
         {
@@ -809,11 +809,11 @@
           "sha256": "345d71b383b79600899bf6127cde9f1f540e1590fa4fd820fb70bff76eff24d4"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "e9b5707853fc7e760c92d3a4a6d952cc5bfd095b80aeeb639215fb24177eeec0"
         },
         {
@@ -824,9 +824,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 669,
-        "componentId": "use/aster/expense",
+        "componentId": "use/krun/expense",
         "fileCount": 4,
-        "packageId": "aster/expense",
+        "packageId": "krun/expense",
         "packageSha256": "5cafe499098fe4272d8ed37286b9d8eb77e7e62adc254f33475f387f3027dc01",
         "route": "expense",
         "schemaVersion": 1,
@@ -856,7 +856,7 @@
       "ordinal": 7,
       "kind": "application",
       "originalId": "finance",
-      "packageId": "aster/finance",
+      "packageId": "krun/finance",
       "source": "apps/use-registry/packages/finance",
       "sourceFiles": [
         {
@@ -864,7 +864,7 @@
           "sha256": "1d0b289b9ea6694001fdaa44d791105945070556a0a3d20e2cc745c4ddf3db39"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "ab2e334cc2969088250ff63ecff9d793b3162e4ea275532f1fac4829bc713ded"
         },
         {
@@ -895,9 +895,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1119727,
-        "componentId": "use/aster/finance",
+        "componentId": "use/krun/finance",
         "fileCount": 8,
-        "packageId": "aster/finance",
+        "packageId": "krun/finance",
         "packageSha256": "ab310f8c1b371320b9871c9a90372e1e50092c9457e08e20ad5cf7b63b0b9bc8",
         "route": "finance",
         "schemaVersion": 1,
@@ -927,7 +927,7 @@
       "ordinal": 8,
       "kind": "application",
       "originalId": "g1-arm",
-      "packageId": "aster/g1-arm",
+      "packageId": "krun/g1-arm",
       "source": "apps/use-registry/packages/g1-arm",
       "sourceFiles": [
         {
@@ -947,7 +947,7 @@
           "sha256": "642211e5ce8243d7a732228a4a69afbea212e883fa51513cc8bceb96bdc9d845"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "2ed8b0a750f70465dbd158ca386171e17e845a1d2bb2f13dc802bfb2348c5d8d"
         },
         {
@@ -1142,9 +1142,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 6528400,
-        "componentId": "use/aster/g1-arm",
+        "componentId": "use/krun/g1-arm",
         "fileCount": 52,
-        "packageId": "aster/g1-arm",
+        "packageId": "krun/g1-arm",
         "packageSha256": "1b31f2e465e227db26e0a4ab47b55d58adb027bfde418f3d30b0eb7937ce87e5",
         "route": "g1-arm",
         "schemaVersion": 1,
@@ -1176,7 +1176,7 @@
       "ordinal": 9,
       "kind": "application",
       "originalId": "home-create",
-      "packageId": "aster/home-create",
+      "packageId": "krun/home-create",
       "source": "apps/use-registry/packages/home-create",
       "sourceFiles": [
         {
@@ -1184,7 +1184,7 @@
           "sha256": "dbccef54d4efbf3a653604146ea0aa844961be063690a6005649d0b0f80aeeb5"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "be870c543d505792fe0f1c775b408199973a84c1e307bcb1b2f848eddfdf719f"
         },
         {
@@ -1199,9 +1199,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 134456,
-        "componentId": "use/aster/home-create",
+        "componentId": "use/krun/home-create",
         "fileCount": 4,
-        "packageId": "aster/home-create",
+        "packageId": "krun/home-create",
         "packageSha256": "b93085fc11cf6f5c693b32fa191b020d6f58d97f3af1fab27375406ba07d44ed",
         "route": "home-create",
         "schemaVersion": 1,
@@ -1231,7 +1231,7 @@
       "ordinal": 10,
       "kind": "application",
       "originalId": "home-process",
-      "packageId": "aster/home-process",
+      "packageId": "krun/home-process",
       "source": "apps/use-registry/packages/home-process",
       "sourceFiles": [
         {
@@ -1239,7 +1239,7 @@
           "sha256": "6171f4df0e48c015acc5ca3c33527dfd0bcd3ddb5868cd860e58f464b52536c2"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "7d75090b584bb730d77b8fab0c294d98e3f3d0b8f277d396894774abe0f61def"
         },
         {
@@ -1254,9 +1254,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 86179,
-        "componentId": "use/aster/home-process",
+        "componentId": "use/krun/home-process",
         "fileCount": 4,
-        "packageId": "aster/home-process",
+        "packageId": "krun/home-process",
         "packageSha256": "28c021f15e2d13be060bb5689b278c3d1d77d05f2ac92197acbe4006045e767c",
         "route": "home-process",
         "schemaVersion": 1,
@@ -1286,7 +1286,7 @@
       "ordinal": 11,
       "kind": "application",
       "originalId": "home-writing",
-      "packageId": "aster/home-writing",
+      "packageId": "krun/home-writing",
       "source": "apps/use-registry/packages/home-writing",
       "sourceFiles": [
         {
@@ -1294,7 +1294,7 @@
           "sha256": "903fe67da87e4ad6f5a47c3c1187d9bad8b7bf6e14d1ddcfcf2a1102d0ff8473"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "41cd5020754b4efb9735c679b1e4f9b514eb601757ee243780492ae95c286b8e"
         },
         {
@@ -1309,9 +1309,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 103162,
-        "componentId": "use/aster/home-writing",
+        "componentId": "use/krun/home-writing",
         "fileCount": 4,
-        "packageId": "aster/home-writing",
+        "packageId": "krun/home-writing",
         "packageSha256": "20ea99ff2f99b29990659efbed5cdd9e910de84e2d9f05b587043743867576a6",
         "route": "home-writing",
         "schemaVersion": 1,
@@ -1341,7 +1341,7 @@
       "ordinal": 12,
       "kind": "application",
       "originalId": "iris",
-      "packageId": "aster/iris",
+      "packageId": "krun/iris",
       "source": "apps/use-registry/packages/iris",
       "sourceFiles": [
         {
@@ -1361,7 +1361,7 @@
           "sha256": "6f519cdf243dceec3670b5e93832a4ef5da179c5ad84841c0dafe919b7a5e915"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "dd9519019346350d72c0b8866fcbea7f65d36354d484ec8faaac5ce12abc57d6"
         },
         {
@@ -1508,9 +1508,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 5518525,
-        "componentId": "use/aster/iris",
+        "componentId": "use/krun/iris",
         "fileCount": 40,
-        "packageId": "aster/iris",
+        "packageId": "krun/iris",
         "packageSha256": "5d4743d03c79eac5a55886d9af5b8ad1ec71151a21e41127a5341bbf12b036b1",
         "route": "iris",
         "schemaVersion": 1,
@@ -1542,7 +1542,7 @@
       "ordinal": 13,
       "kind": "application",
       "originalId": "langchain-rate",
-      "packageId": "aster/langchain-rate",
+      "packageId": "krun/langchain-rate",
       "source": "apps/use-registry/packages/langchain-rate",
       "sourceFiles": [
         {
@@ -1550,7 +1550,7 @@
           "sha256": "dab9dbe82fc844086379b6a18b57ba09d333480a097214efe715c62c903e27b0"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "4a5ec3d612114aed3dfad9708ced509399c5f8654f986955e7cc2bc1a10f1f0c"
         },
         {
@@ -1569,9 +1569,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 5200,
-        "componentId": "use/aster/langchain-rate",
+        "componentId": "use/krun/langchain-rate",
         "fileCount": 5,
-        "packageId": "aster/langchain-rate",
+        "packageId": "krun/langchain-rate",
         "packageSha256": "e8068c6ddcb4cd4f288f635461dbeb82056743aeba7efcac9ca56c52aaf90f0e",
         "route": "langchain-rate",
         "schemaVersion": 1,
@@ -1602,7 +1602,7 @@
       "ordinal": 14,
       "kind": "application",
       "originalId": "leave",
-      "packageId": "aster/leave",
+      "packageId": "krun/leave",
       "source": "apps/use-registry/packages/leave",
       "sourceFiles": [
         {
@@ -1610,11 +1610,11 @@
           "sha256": "97ad5d0e061257550fa98feec990eeb563c474e8123596b87ed02d0fdfcdafd6"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "fbaa37e2134631a38bdb5969f41e0941be571b2d3cc1a3c872de41afd1543924"
         },
         {
@@ -1625,9 +1625,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 661,
-        "componentId": "use/aster/leave",
+        "componentId": "use/krun/leave",
         "fileCount": 4,
-        "packageId": "aster/leave",
+        "packageId": "krun/leave",
         "packageSha256": "b251f5bd36b2d8f82be344378fb9000f43696882be2b494c2569f34a59292db0",
         "route": "leave",
         "schemaVersion": 1,
@@ -1657,7 +1657,7 @@
       "ordinal": 15,
       "kind": "application",
       "originalId": "meeting",
-      "packageId": "aster/meeting",
+      "packageId": "krun/meeting",
       "source": "apps/use-registry/packages/meeting",
       "sourceFiles": [
         {
@@ -1665,11 +1665,11 @@
           "sha256": "3de9194a818d8088756e54454dd59b017b378c7c22a240e96bcf5f85a8283f2f"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "501aed76e2134d343e46c4384b3058574e962766a069fc9a7ba8ab81f3c56a29"
         },
         {
@@ -1680,9 +1680,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 669,
-        "componentId": "use/aster/meeting",
+        "componentId": "use/krun/meeting",
         "fileCount": 4,
-        "packageId": "aster/meeting",
+        "packageId": "krun/meeting",
         "packageSha256": "4d88527f02f9d47e033bad31c031871f4ab24dccc9b9bdac3baa8abca777e30c",
         "route": "meeting",
         "schemaVersion": 1,
@@ -1712,7 +1712,7 @@
       "ordinal": 16,
       "kind": "application",
       "originalId": "paperloom",
-      "packageId": "aster/paperloom",
+      "packageId": "krun/paperloom",
       "source": "apps/use-registry/packages/paperloom",
       "sourceFiles": [
         {
@@ -1728,7 +1728,7 @@
           "sha256": "06b4c7fd53f04d1a20e885150639a060fefd02284dc885a830b22748b0fd86cd"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "063205d0b6166889f790c266e0c3950207cf025ed10638b56cecde6282be81e7"
         },
         {
@@ -1739,9 +1739,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 4721,
-        "componentId": "use/aster/paperloom",
+        "componentId": "use/krun/paperloom",
         "fileCount": 5,
-        "packageId": "aster/paperloom",
+        "packageId": "krun/paperloom",
         "packageSha256": "610473fca6d66454d928ed4760d20c7f400e42900a54eaace2e1415cd559e2b3",
         "route": "paperloom",
         "schemaVersion": 1,
@@ -1772,7 +1772,7 @@
       "ordinal": 17,
       "kind": "application",
       "originalId": "presenton",
-      "packageId": "aster/presenton",
+      "packageId": "krun/presenton",
       "source": "apps/use-registry/packages/presenton",
       "sourceFiles": [
         {
@@ -1804,7 +1804,7 @@
           "sha256": "cde76f6cb0efa1be9dcf4865493b8faaa669fe9921129bb6ab9595969e92a315"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "9c43fc489ae0c6eb78aeb5d1908ac7f7b16f5110ea17c96db8ac2d756c1f8b68"
         },
         {
@@ -2439,9 +2439,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 10949730,
-        "componentId": "use/aster/presenton",
+        "componentId": "use/krun/presenton",
         "fileCount": 165,
-        "packageId": "aster/presenton",
+        "packageId": "krun/presenton",
         "packageSha256": "596dde1adc115db2c604b0d7331ef2ccc342cddf7d9992ba1a6e0dfa849f4566",
         "route": "presenton",
         "schemaVersion": 1,
@@ -2473,7 +2473,7 @@
       "ordinal": 18,
       "kind": "application",
       "originalId": "probe-activitybar",
-      "packageId": "aster/probe-activitybar",
+      "packageId": "krun/probe-activitybar",
       "source": "apps/use-registry/packages/probe-activitybar",
       "sourceFiles": [
         {
@@ -2481,7 +2481,7 @@
           "sha256": "d53851521e70385d0fe3459989ba912267e2ae5d09d5b9ba744c9ea4269b04ca"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "bf544cc226bd0c36a7cecbc7d57c066d63242cc87b81bfef90c4f1fe4cffab61"
         },
         {
@@ -2492,9 +2492,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1254,
-        "componentId": "use/aster/probe-activitybar",
+        "componentId": "use/krun/probe-activitybar",
         "fileCount": 3,
-        "packageId": "aster/probe-activitybar",
+        "packageId": "krun/probe-activitybar",
         "packageSha256": "58183c57e61fd0c21479ea1cb1ed5410e1f648dd36a9b99964a0d1538c8537e6",
         "route": "probe-activitybar",
         "schemaVersion": 1,
@@ -2524,7 +2524,7 @@
       "ordinal": 19,
       "kind": "application",
       "originalId": "probe-applets",
-      "packageId": "aster/probe-applets",
+      "packageId": "krun/probe-applets",
       "source": "apps/use-registry/packages/probe-applets",
       "sourceFiles": [
         {
@@ -2532,7 +2532,7 @@
           "sha256": "4aee5aec70977a129cac3ea1770337dd3dc7c8e1255500896c1a32be83b8a332"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "5cb864b31fcd9bc92b794c45d40d2c5f51724e4826e5ac1cd20d90a0edde3db2"
         },
         {
@@ -2543,9 +2543,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1106,
-        "componentId": "use/aster/probe-applets",
+        "componentId": "use/krun/probe-applets",
         "fileCount": 3,
-        "packageId": "aster/probe-applets",
+        "packageId": "krun/probe-applets",
         "packageSha256": "ab08f7fe2b836f1cd3cdf5fa8f203883b788938274ba48462e4c004ff535b697",
         "route": "probe-applets",
         "schemaVersion": 1,
@@ -2575,7 +2575,7 @@
       "ordinal": 20,
       "kind": "application",
       "originalId": "probe-commands",
-      "packageId": "aster/probe-commands",
+      "packageId": "krun/probe-commands",
       "source": "apps/use-registry/packages/probe-commands",
       "sourceFiles": [
         {
@@ -2583,7 +2583,7 @@
           "sha256": "18d1329d9b91bca645c0e1dac592a51bc99452e870bd5503e0d572892b542fbc"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "c8b23a15caeaff606172f03c1d15bf2df389f687ded95df2949b6da21a7759ab"
         },
         {
@@ -2594,9 +2594,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 606,
-        "componentId": "use/aster/probe-commands",
+        "componentId": "use/krun/probe-commands",
         "fileCount": 3,
-        "packageId": "aster/probe-commands",
+        "packageId": "krun/probe-commands",
         "packageSha256": "2e8b640172242a79f775569ea3595062d1042f3152c7daf3c46ebe39f0eb3cb2",
         "route": "probe-commands",
         "schemaVersion": 1,
@@ -2626,7 +2626,7 @@
       "ordinal": 21,
       "kind": "application",
       "originalId": "probe-composer",
-      "packageId": "aster/probe-composer",
+      "packageId": "krun/probe-composer",
       "source": "apps/use-registry/packages/probe-composer",
       "sourceFiles": [
         {
@@ -2634,7 +2634,7 @@
           "sha256": "688f3aca81d90e28a76020abb1739b09189155aaaa0b68c957c42bc84a793e10"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "370d92f01b1406edce92a3deb36cf6bcf93a610898c10b842400d95d2560a319"
         },
         {
@@ -2645,9 +2645,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1115,
-        "componentId": "use/aster/probe-composer",
+        "componentId": "use/krun/probe-composer",
         "fileCount": 3,
-        "packageId": "aster/probe-composer",
+        "packageId": "krun/probe-composer",
         "packageSha256": "67f45bf21965e216d560a30a436d7fd0a1efc1fc218c9a1ee8e92ef41379d6d0",
         "route": "probe-composer",
         "schemaVersion": 1,
@@ -2677,7 +2677,7 @@
       "ordinal": 22,
       "kind": "application",
       "originalId": "probe-composer-mode",
-      "packageId": "aster/probe-composer-mode",
+      "packageId": "krun/probe-composer-mode",
       "source": "apps/use-registry/packages/probe-composer-mode",
       "sourceFiles": [
         {
@@ -2689,7 +2689,7 @@
           "sha256": "38ef16244fcdcb01065a653f9e86d32d116db3a854237f5f533024848cf71b74"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "73ad953e9a7863549ca1498f5960af2cdea99607c36ae538ef14b4740ce06a14"
         },
         {
@@ -2700,9 +2700,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 2562,
-        "componentId": "use/aster/probe-composer-mode",
+        "componentId": "use/krun/probe-composer-mode",
         "fileCount": 4,
-        "packageId": "aster/probe-composer-mode",
+        "packageId": "krun/probe-composer-mode",
         "packageSha256": "708e937a85f8c7388848c8d9730bfd13f8fd3f3a13607f78044bca838a89b8ae",
         "route": "probe-composer-mode",
         "schemaVersion": 1,
@@ -2733,7 +2733,7 @@
       "ordinal": 23,
       "kind": "application",
       "originalId": "probe-custom-editor",
-      "packageId": "aster/probe-custom-editor",
+      "packageId": "krun/probe-custom-editor",
       "source": "apps/use-registry/packages/probe-custom-editor",
       "sourceFiles": [
         {
@@ -2741,7 +2741,7 @@
           "sha256": "83f459e98b5384c22bda26bf1e83cf3c571a44a1a6dd6ffef10e36349988c735"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "0bdca093f63f9d8de16f1662d58acf6837ecbb4fcd0996e08e6d550d26bff12c"
         },
         {
@@ -2752,9 +2752,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1300,
-        "componentId": "use/aster/probe-custom-editor",
+        "componentId": "use/krun/probe-custom-editor",
         "fileCount": 3,
-        "packageId": "aster/probe-custom-editor",
+        "packageId": "krun/probe-custom-editor",
         "packageSha256": "9b7cd4644392e86188f5849234f072ebd377aeb39b48ced315899af71be31719",
         "route": "probe-custom-editor",
         "schemaVersion": 1,
@@ -2784,7 +2784,7 @@
       "ordinal": 24,
       "kind": "application",
       "originalId": "probe-editor",
-      "packageId": "aster/probe-editor",
+      "packageId": "krun/probe-editor",
       "source": "apps/use-registry/packages/probe-editor",
       "sourceFiles": [
         {
@@ -2792,7 +2792,7 @@
           "sha256": "a033bcd10bd154d40563e00fe21870dc1382fd2e8933d824e7a4eae5b2e3dcbc"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "1ac57a557fa12b3da81d272d35ec00de8c4b35af4311e135a4f2e8394ffa8ea6"
         },
         {
@@ -2803,9 +2803,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1121,
-        "componentId": "use/aster/probe-editor",
+        "componentId": "use/krun/probe-editor",
         "fileCount": 3,
-        "packageId": "aster/probe-editor",
+        "packageId": "krun/probe-editor",
         "packageSha256": "eb47625392182c89fa76894bbab7bda2e1ec7c0c94eca801df3bf69654de5198",
         "route": "probe-editor",
         "schemaVersion": 1,
@@ -2835,7 +2835,7 @@
       "ordinal": 25,
       "kind": "application",
       "originalId": "probe-harness",
-      "packageId": "aster/probe-harness",
+      "packageId": "krun/probe-harness",
       "source": "apps/use-registry/packages/probe-harness",
       "sourceFiles": [
         {
@@ -2843,7 +2843,7 @@
           "sha256": "55ad3b1fe6ec87a808cbd04b38d0cf9024c479c605fd273a95ed4761fef059e0"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "a778ce1ded1cba773bd704bfb7b437b343cc8dd84da9580be971e503921685b4"
         },
         {
@@ -2854,9 +2854,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 573,
-        "componentId": "use/aster/probe-harness",
+        "componentId": "use/krun/probe-harness",
         "fileCount": 3,
-        "packageId": "aster/probe-harness",
+        "packageId": "krun/probe-harness",
         "packageSha256": "20c64b8d63a2419fa25fd5442f5aa275f93f89caa509a836b35903c30323e6dd",
         "route": "probe-harness",
         "schemaVersion": 1,
@@ -2886,7 +2886,7 @@
       "ordinal": 26,
       "kind": "application",
       "originalId": "probe-keybindings",
-      "packageId": "aster/probe-keybindings",
+      "packageId": "krun/probe-keybindings",
       "source": "apps/use-registry/packages/probe-keybindings",
       "sourceFiles": [
         {
@@ -2894,7 +2894,7 @@
           "sha256": "690513771c629af474ef8a9f2d40fa30261d3ef265059f7d26d96b1667c40226"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "14c96dc32434b41dfa13356cd18c6448827377ba9d36f749ac2f7428ef77e12e"
         },
         {
@@ -2905,9 +2905,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 721,
-        "componentId": "use/aster/probe-keybindings",
+        "componentId": "use/krun/probe-keybindings",
         "fileCount": 3,
-        "packageId": "aster/probe-keybindings",
+        "packageId": "krun/probe-keybindings",
         "packageSha256": "0b04bb927f6d5595bb5aaf46c9bd20759a4fcb0ae6cec50bbedf181981e5758d",
         "route": "probe-keybindings",
         "schemaVersion": 1,
@@ -2937,7 +2937,7 @@
       "ordinal": 27,
       "kind": "application",
       "originalId": "probe-menus",
-      "packageId": "aster/probe-menus",
+      "packageId": "krun/probe-menus",
       "source": "apps/use-registry/packages/probe-menus",
       "sourceFiles": [
         {
@@ -2945,7 +2945,7 @@
           "sha256": "586479298cd0e6a8af1e5d2ef69a6f172636ba908e83c0b8881157da5d5ae8e3"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "b4c53c3511e046332a6f92915da65d266765746c825a0878206fca22196b24a3"
         },
         {
@@ -2956,9 +2956,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 838,
-        "componentId": "use/aster/probe-menus",
+        "componentId": "use/krun/probe-menus",
         "fileCount": 3,
-        "packageId": "aster/probe-menus",
+        "packageId": "krun/probe-menus",
         "packageSha256": "a60186a60c5f160a4ce95f360cdea603a764d58d9c64f486df1ff086a0b1af21",
         "route": "probe-menus",
         "schemaVersion": 1,
@@ -2988,7 +2988,7 @@
       "ordinal": 28,
       "kind": "application",
       "originalId": "probe-panel",
-      "packageId": "aster/probe-panel",
+      "packageId": "krun/probe-panel",
       "source": "apps/use-registry/packages/probe-panel",
       "sourceFiles": [
         {
@@ -2996,7 +2996,7 @@
           "sha256": "f50c9147c2098973a5d4f06ca8e878f62bd092c24e18911d9c0a47ae594c7836"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "1a168e26fbd3aa263e04942045823ee8c3e820db2cf26ff710b28ed5143cb27e"
         },
         {
@@ -3007,9 +3007,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1161,
-        "componentId": "use/aster/probe-panel",
+        "componentId": "use/krun/probe-panel",
         "fileCount": 3,
-        "packageId": "aster/probe-panel",
+        "packageId": "krun/probe-panel",
         "packageSha256": "41c5a7f1b91b8a6de7e75d01da4d99b5b913bb58ba94edf4840625356b44dad6",
         "route": "probe-panel",
         "schemaVersion": 1,
@@ -3039,7 +3039,7 @@
       "ordinal": 29,
       "kind": "application",
       "originalId": "probe-sidebar",
-      "packageId": "aster/probe-sidebar",
+      "packageId": "krun/probe-sidebar",
       "source": "apps/use-registry/packages/probe-sidebar",
       "sourceFiles": [
         {
@@ -3047,7 +3047,7 @@
           "sha256": "3a49b54350848bf8037c31706e70743498fb5dca9922b68a4b573c85378df35b"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "aa5f758a5f500fe9c937c0ccb39b3322d99fbf05fc6b8f7a0f157fb01f4b724c"
         },
         {
@@ -3058,9 +3058,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1233,
-        "componentId": "use/aster/probe-sidebar",
+        "componentId": "use/krun/probe-sidebar",
         "fileCount": 3,
-        "packageId": "aster/probe-sidebar",
+        "packageId": "krun/probe-sidebar",
         "packageSha256": "7b9ba9844abc24fcbdde950558e6c90a276cc0aa8088b65cec0ca215a7cf93ba",
         "route": "probe-sidebar",
         "schemaVersion": 1,
@@ -3090,7 +3090,7 @@
       "ordinal": 30,
       "kind": "application",
       "originalId": "probe-workspace",
-      "packageId": "aster/probe-workspace",
+      "packageId": "krun/probe-workspace",
       "source": "apps/use-registry/packages/probe-workspace",
       "sourceFiles": [
         {
@@ -3098,7 +3098,7 @@
           "sha256": "31686b9244ffaae9a426d95387c7d4bbac58959bb96e1a258c02198014e5fa1e"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "d5fe83725fd8cfb08304aada56393e96376131ae660418dedacfeb87fa121934"
         },
         {
@@ -3109,9 +3109,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 1115,
-        "componentId": "use/aster/probe-workspace",
+        "componentId": "use/krun/probe-workspace",
         "fileCount": 3,
-        "packageId": "aster/probe-workspace",
+        "packageId": "krun/probe-workspace",
         "packageSha256": "85606e02458eac7530e7e0bf208889ec250facdc8c5c469a3c1601572482a355",
         "route": "probe-workspace",
         "schemaVersion": 1,
@@ -3141,7 +3141,7 @@
       "ordinal": 31,
       "kind": "application",
       "originalId": "registry-selftest",
-      "packageId": "aster/registry-selftest",
+      "packageId": "krun/registry-selftest",
       "source": "apps/use-registry/packages/registry-selftest",
       "sourceFiles": [
         {
@@ -3149,7 +3149,7 @@
           "sha256": "a28d61ceb1493b3505846e8e6f964acc8160cde5ce2402ec4f39d6615281e70a"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "69dd1a85369b84157d7587659dfb8dab9ad6cf1dac9bdb4f87dd96c1317e12fa"
         },
         {
@@ -3160,9 +3160,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 3141,
-        "componentId": "use/aster/registry-selftest",
+        "componentId": "use/krun/registry-selftest",
         "fileCount": 3,
-        "packageId": "aster/registry-selftest",
+        "packageId": "krun/registry-selftest",
         "packageSha256": "78bf10fc1f7be98c04f1e7541d801f71163e51645af591479da4a456a85e8ddf",
         "route": "registry-selftest",
         "schemaVersion": 1,
@@ -3192,7 +3192,7 @@
       "ordinal": 32,
       "kind": "application",
       "originalId": "review",
-      "packageId": "aster/review",
+      "packageId": "krun/review",
       "source": "apps/use-registry/packages/review",
       "sourceFiles": [
         {
@@ -3204,7 +3204,7 @@
           "sha256": "97690e6fe3cd7952da1209fe661c77e69f4b391f7845d0361ed8642c488d1ec9"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "8367cae1653f47603254a0a1d50aac4324b13aa2fc04b28d0f621da2f69ecbd0"
         },
         {
@@ -3227,9 +3227,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 219935,
-        "componentId": "use/aster/review",
+        "componentId": "use/krun/review",
         "fileCount": 7,
-        "packageId": "aster/review",
+        "packageId": "krun/review",
         "packageSha256": "8c1162795d872dcc6f823144e19a1c66da26824f1a8aa051c1f576214f496169",
         "route": "review",
         "schemaVersion": 1,
@@ -3260,7 +3260,7 @@
       "ordinal": 33,
       "kind": "application",
       "originalId": "seal",
-      "packageId": "aster/seal",
+      "packageId": "krun/seal",
       "source": "apps/use-registry/packages/seal",
       "sourceFiles": [
         {
@@ -3268,11 +3268,11 @@
           "sha256": "3cb1a69f78ec0ae42aba3a5dbd06e54e9a75b0d183778028f6c2f0f082baa653"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "11e55b7f5e227c2a0fe904bfc3793323eae0b2178fb350c7a867f83d72b246a0"
         },
         {
@@ -3283,9 +3283,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 657,
-        "componentId": "use/aster/seal",
+        "componentId": "use/krun/seal",
         "fileCount": 4,
-        "packageId": "aster/seal",
+        "packageId": "krun/seal",
         "packageSha256": "6d9979ac11ad1e6d1d22c0e38b765d56e62d51f1c86f5ffd2f4154efd335468c",
         "route": "seal",
         "schemaVersion": 1,
@@ -3315,7 +3315,7 @@
       "ordinal": 34,
       "kind": "application",
       "originalId": "travel",
-      "packageId": "aster/travel",
+      "packageId": "krun/travel",
       "source": "apps/use-registry/packages/travel",
       "sourceFiles": [
         {
@@ -3323,11 +3323,11 @@
           "sha256": "25c9a4b92abf68969c1ba0d3caf0daac3837dbe6d8b14e2e76b206ac8a524770"
         },
         {
-          "path": "aster-plugin.acl",
+          "path": "krun-plugin.acl",
           "sha256": "da56ba189ec17ef3a6aa491687b79b93ca1007bac9229dc531251e4e4150dd7c"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "f435f3cf23739f151ee92e8d3ffd00fbd098b0b627c861da59b984cdfc6f8afc"
         },
         {
@@ -3338,9 +3338,9 @@
       "nativePackage": {
         "activityCount": 1,
         "byteCount": 665,
-        "componentId": "use/aster/travel",
+        "componentId": "use/krun/travel",
         "fileCount": 4,
-        "packageId": "aster/travel",
+        "packageId": "krun/travel",
         "packageSha256": "3685235cbbaa16674ec438f6a9f0fa8d4a1a3669588f94f9f0276a9c9ad0194c",
         "route": "travel",
         "schemaVersion": 1,
@@ -3370,7 +3370,7 @@
       "ordinal": 35,
       "kind": "application",
       "originalId": "vercel-weather",
-      "packageId": "aster/vercel-weather",
+      "packageId": "krun/vercel-weather",
       "source": "apps/use-registry/packages/vercel-weather",
       "sourceFiles": [
         {
@@ -3402,11 +3402,11 @@
           "sha256": "0e3192d888ff897c0c437ac26b1ef93fa59a5f6e57f6d0ae27d47166f002f5b9"
         },
         {
-          "path": "agents/aster-vercel-weather/INSTRUCTIONS.md",
+          "path": "agents/krun-vercel-weather/INSTRUCTIONS.md",
           "sha256": "72bc917649bbdcbdb6f0dcd37044c68263cb3325151887122edd910924b90ed3"
         },
         {
-          "path": "aster-use-extension.acl",
+          "path": "krun-use-extension.acl",
           "sha256": "db47d4133067a34393cbcb7250dd1fb7d30c017cdac7ac991347f17a03cef7e9"
         },
         {
@@ -3417,9 +3417,9 @@
       "nativePackage": {
         "activityCount": 0,
         "byteCount": 8482,
-        "componentId": "use/aster/vercel-weather",
+        "componentId": "use/krun/vercel-weather",
         "fileCount": 10,
-        "packageId": "aster/vercel-weather",
+        "packageId": "krun/vercel-weather",
         "packageSha256": "967874215afe9911c96dffea6c668431a4eca6c4f606d54ef50c8142cd43dbb7",
         "route": "vercel-weather",
         "schemaVersion": 1,
@@ -3448,10 +3448,10 @@
     {
       "ordinal": 36,
       "kind": "dependency",
-      "originalId": "aster-box",
-      "packageId": "aster/aster-box",
-      "originalName": "Aster Box",
-      "source": "plugins/plugins/operations/aster/aster-box",
+      "originalId": "krun-box",
+      "packageId": "krun/krun-box",
+      "originalName": "Krun Box",
+      "source": "plugins/plugins/operations/krun/krun-box",
       "sourceKind": "native_manifest",
       "manifestSha256": "baecb53453444f2e2a1e4ad185195b8969cb6e4c54e80ea014e97d658202e18f",
       "recipeSha256": "126499b87c1a414dc2d30780b8f6238072330099cbba6e34ae7a1c021b55e192",
@@ -3472,9 +3472,9 @@
       "ordinal": 37,
       "kind": "dependency",
       "originalId": "cua",
-      "packageId": "aster/cua",
+      "packageId": "krun/cua",
       "originalName": "CUA",
-      "source": "plugins/plugins/operations/aster/cua",
+      "source": "plugins/plugins/operations/krun/cua",
       "sourceKind": "native_manifest",
       "manifestSha256": "df41ec7f9dd19f9f46e70b96d619962b0889d408d816c694429aef5fa7631748",
       "recipeSha256": null,
@@ -3495,9 +3495,9 @@
       "ordinal": 38,
       "kind": "dependency",
       "originalId": "uv",
-      "packageId": "aster/uv",
+      "packageId": "krun/uv",
       "originalName": "uv",
-      "source": "plugins/plugins/development/aster/uv",
+      "source": "plugins/plugins/development/krun/uv",
       "sourceKind": "native_manifest",
       "manifestSha256": "7b0a8acd06d85310765be0884e15d67b3b63db61b98085429452e0081d8bd877",
       "recipeSha256": null,
@@ -3518,9 +3518,9 @@
       "ordinal": 39,
       "kind": "dependency",
       "originalId": "bun",
-      "packageId": "aster/bun",
+      "packageId": "krun/bun",
       "originalName": "Bun",
-      "source": "plugins/plugins/development/aster/bun",
+      "source": "plugins/plugins/development/krun/bun",
       "sourceKind": "native_manifest",
       "manifestSha256": "15044d504d7085fd23f3454e4a5bde2a4dbd10b24067a3c6d60340f51c8aa8c7",
       "recipeSha256": null,
@@ -3541,9 +3541,9 @@
       "ordinal": 40,
       "kind": "dependency",
       "originalId": "fd",
-      "packageId": "aster/fd",
+      "packageId": "krun/fd",
       "originalName": "fd",
-      "source": "plugins/plugins/development/aster/fd",
+      "source": "plugins/plugins/development/krun/fd",
       "sourceKind": "native_manifest",
       "manifestSha256": "c5e94816e3eb6605eeab50dff87f3e0aec4973f8513968b1469bae0685b6db7e",
       "recipeSha256": null,
@@ -3564,9 +3564,9 @@
       "ordinal": 41,
       "kind": "dependency",
       "originalId": "rg",
-      "packageId": "aster/rg",
+      "packageId": "krun/rg",
       "originalName": "ripgrep",
-      "source": "plugins/plugins/development/aster/rg",
+      "source": "plugins/plugins/development/krun/rg",
       "sourceKind": "native_manifest",
       "manifestSha256": "60f1ea91f31ca92c521a9e99f048ecd26259ea83a1812ac90cd5b39926c353da",
       "recipeSha256": null,
@@ -3587,9 +3587,9 @@
       "ordinal": 42,
       "kind": "dependency",
       "originalId": "rtk",
-      "packageId": "aster/rtk",
+      "packageId": "krun/rtk",
       "originalName": "RTK",
-      "source": "plugins/plugins/development/aster/rtk",
+      "source": "plugins/plugins/development/krun/rtk",
       "sourceKind": "native_manifest",
       "manifestSha256": "66219300309bef2e2033f5644af1043ddc7d822e6790df4d7781de63018be33c",
       "recipeSha256": null,
@@ -3610,9 +3610,9 @@
       "ordinal": 43,
       "kind": "dependency",
       "originalId": "lark-cli",
-      "packageId": "aster/lark-cli",
+      "packageId": "krun/lark-cli",
       "originalName": "Lark CLI",
-      "source": "plugins/plugins/productivity/aster/lark-cli",
+      "source": "plugins/plugins/productivity/krun/lark-cli",
       "sourceKind": "native_manifest",
       "manifestSha256": "1a5dbf809aa2fce47c6732727df6018f9b4edfc4d02b7db867ad5bad60f0ad20",
       "recipeSha256": null,
@@ -3633,9 +3633,9 @@
       "ordinal": 44,
       "kind": "dependency",
       "originalId": "gh",
-      "packageId": "aster/gh",
+      "packageId": "krun/gh",
       "originalName": "GitHub CLI",
-      "source": "plugins/plugins/development/aster/gh",
+      "source": "plugins/plugins/development/krun/gh",
       "sourceKind": "native_manifest",
       "manifestSha256": "74747fc14c8f2d9ebacd63bcdbe90b688c889fb318b31ead970705dd180404d7",
       "recipeSha256": null,
@@ -3656,9 +3656,9 @@
       "ordinal": 45,
       "kind": "dependency",
       "originalId": "ntn",
-      "packageId": "aster/ntn",
+      "packageId": "krun/ntn",
       "originalName": "Notion CLI",
-      "source": "plugins/plugins/productivity/aster/ntn",
+      "source": "plugins/plugins/productivity/krun/ntn",
       "sourceKind": "native_manifest",
       "manifestSha256": "decc285f041894ab867bf0513f8697fbe17aec84f02eec8232abf6c01575c01f",
       "recipeSha256": null,
@@ -3679,9 +3679,9 @@
       "ordinal": 46,
       "kind": "dependency",
       "originalId": "babeldoc-stream",
-      "packageId": "aster/babeldoc-stream",
+      "packageId": "krun/babeldoc-stream",
       "originalName": "BabelDOC Stream",
-      "source": "plugins/plugins/knowledge/aster/babeldoc-stream",
+      "source": "plugins/plugins/knowledge/krun/babeldoc-stream",
       "sourceKind": "native_manifest",
       "manifestSha256": "694f24738850d0f690d350081ef7f3bbc61a228a5752ba698cae2a46fb8a812b",
       "recipeSha256": null,
@@ -3701,9 +3701,9 @@
     {
       "ordinal": 47,
       "kind": "dependency",
-      "originalId": "aster-sandbox",
-      "packageId": "aster/aster-sandbox",
-      "originalName": "aster-sandbox",
+      "originalId": "krun-sandbox",
+      "packageId": "krun/krun-sandbox",
+      "originalName": "krun-sandbox",
       "source": "plugins/recipes/runtime/darwin-arm64.py",
       "sourceKind": "native_recipe",
       "manifestSha256": null,
@@ -3721,7 +3721,7 @@
           "version": "0.1.0+9203e78ecfff6b7b8e64a684266a26d8186b310a",
           "requiresUse": ">=0.3.0, <0.4.0",
           "archive": {
-            "targetName": "extensions/aster/aster-sandbox/0.1.0+9203e78ecfff6b7b8e64a684266a26d8186b310a/stable/darwin-arm64/oci-ghcr-v1/1aa03b2381d8bfe0938fc4a888c525b2864ac727518b8e00acb0619105b580f3/aster-sandbox.aix",
+            "targetName": "extensions/krun/krun-sandbox/0.1.0+9203e78ecfff6b7b8e64a684266a26d8186b310a/stable/darwin-arm64/oci-ghcr-v1/1aa03b2381d8bfe0938fc4a888c525b2864ac727518b8e00acb0619105b580f3/krun-sandbox.aix",
             "length": 50188055,
             "sha256": "sha256:92dbe5b6b87b0fc9c2c452802f2d080477e39796d7207f852557bcb02f6bc522"
           },
@@ -3741,9 +3741,9 @@
     {
       "ordinal": 48,
       "kind": "dependency",
-      "originalId": "aster-document",
-      "packageId": "aster/aster-document",
-      "originalName": "aster-document",
+      "originalId": "krun-document",
+      "packageId": "krun/krun-document",
+      "originalName": "krun-document",
       "source": "plugins/recipes/runtime/darwin-arm64.py",
       "sourceKind": "native_recipe",
       "manifestSha256": null,
@@ -3763,7 +3763,7 @@
           "archive": {
             "length": 10684126,
             "sha256": "sha256:249a90ed185d2b4c3536cd9a1ff040b500b7d17e3d6dd0c2c45c5c80958d69da",
-            "targetName": "extensions/aster/aster-document/0.1.0+b3d7cb1b7dac42a0a3e21ab5d0c900e3921d0472/stable/darwin-arm64/oci-ghcr-v1/56408c745165e563e3aa42dcb6402db6c9ad8f3decf92e0aaabdf8a90e505623/aster-document.aix"
+            "targetName": "extensions/krun/krun-document/0.1.0+b3d7cb1b7dac42a0a3e21ab5d0c900e3921d0472/stable/darwin-arm64/oci-ghcr-v1/56408c745165e563e3aa42dcb6402db6c9ad8f3decf92e0aaabdf8a90e505623/krun-document.aix"
           },
           "package": {
             "expandedBytes": 16187884,
@@ -3781,9 +3781,9 @@
     {
       "ordinal": 49,
       "kind": "dependency",
-      "originalId": "aster-office",
-      "packageId": "aster/aster-office",
-      "originalName": "aster-office",
+      "originalId": "krun-office",
+      "packageId": "krun/krun-office",
+      "originalName": "krun-office",
       "source": "plugins/recipes/runtime/darwin-arm64.py",
       "sourceKind": "native_recipe",
       "manifestSha256": null,
@@ -3801,7 +3801,7 @@
           "version": "0.1.0+0d393914cc9ecd6460c33b8c6cb63006c55c2613",
           "requiresUse": ">=0.3.0, <0.4.0",
           "archive": {
-            "targetName": "extensions/aster/aster-office/0.1.0+0d393914cc9ecd6460c33b8c6cb63006c55c2613/stable/darwin-arm64/oci-ghcr-v1/cdfdcd69a964d7927f1eb35256f3cc7f14ffbbf2eca5a460142a1da65a56d176/aster-office.aix",
+            "targetName": "extensions/krun/krun-office/0.1.0+0d393914cc9ecd6460c33b8c6cb63006c55c2613/stable/darwin-arm64/oci-ghcr-v1/cdfdcd69a964d7927f1eb35256f3cc7f14ffbbf2eca5a460142a1da65a56d176/krun-office.aix",
             "length": 8272636,
             "sha256": "sha256:a35f661c218745bf0df79df1b51a63756e13c38be873b0933b3ab347fd3c0838"
           },

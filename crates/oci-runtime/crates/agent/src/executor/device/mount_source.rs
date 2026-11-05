@@ -7,7 +7,7 @@ use std::os::unix::fs::MetadataExt;
 use std::path::{Path, PathBuf};
 
 use crate::executor::mount::{MOVE_MOUNT_F_EMPTY_PATH, MOVE_MOUNT_T_EMPTY_PATH};
-use aster_oci_sdk::{ErrorCode, Result};
+use krun_oci_sdk::{ErrorCode, Result};
 
 use super::types::TargetMetadata;
 use super::{device_error, invalid, last_os_error};

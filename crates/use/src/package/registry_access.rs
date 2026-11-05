@@ -1,9 +1,9 @@
 use std::collections::BTreeSet;
 
-use aster_use_core::{
+use krun_use_core::{
     PluginPackageLock, PluginPackageLockHost, PluginReleaseChannel, PluginSurfaceRef, UseResult,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     download_selected_locked_cached_remote_packages, download_selected_locked_remote_packages,
     resolve_cached_remote_package_lock_with_observer, resolve_remote_package_lock_with_observer,
     DownloadedRemotePackage, PackageRegistryResolutionObserver, TrustedRegistry,

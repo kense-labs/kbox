@@ -1,4 +1,4 @@
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde::Serialize;
 
 pub const VERIFIED_TARGET_CACHE_SCHEMA_VERSION: u32 = 2;

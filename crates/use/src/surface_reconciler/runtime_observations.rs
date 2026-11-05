@@ -1,7 +1,7 @@
-use aster_use_core::{
+use krun_use_core::{
     OkfKnowledgeObservation, OkfKnowledgeObservedState, OkfProjectionReceipt, UseResult,
 };
-use aster_use_extension::ExtensionManifest;
+use krun_use_extension::ExtensionManifest;
 
 use crate::plugin_runtime::{RuntimeSurfaceObservationSnapshot, RuntimeSurfaceObservedState};
 

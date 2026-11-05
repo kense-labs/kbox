@@ -1,4 +1,4 @@
-//! Core types and traits for Aster tool system
+//! Core types and traits for Krun tool system
 
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};

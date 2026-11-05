@@ -7,30 +7,30 @@ use std::os::unix::ffi::{OsStrExt, OsStringExt};
 use std::os::unix::fs::{MetadataExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Component, Path, PathBuf};
 
-use aster_oci_sdk::{
+use base64::Engine;
+use krun_oci_sdk::{
     Error, ErrorCode, PortableRootfsEntryKind, PortableRootfsMetadataEntry,
     PortableRootfsMetadataManifest, Result, PORTABLE_ROOTFS_METADATA_ANNOTATION,
     PORTABLE_ROOTFS_METADATA_FILE, PORTABLE_ROOTFS_METADATA_MAX_BYTES,
     PORTABLE_ROOTFS_METADATA_SCHEMA_V1,
 };
-use base64::Engine;
 
 const MAX_ENCODED_PATH_BYTES: usize = 16 * 1024;
 const MAX_DECODED_PATH_BYTES: usize = 4_096;
 
 const RUNTIME_INTERNAL_ROOT_ENTRIES: &[&str] = &[
-    ".aster-box-env",
-    ".aster-box-exec.json",
-    ".aster_exit_code",
-    ".aster_host_live_logs_drained",
-    ".aster_host_result_collected",
-    ".aster_image_metadata_v1.json",
-    ".aster_image_metadata_v1.json.tmp",
-    ".aster_rootfs_metadata_v1.json",
-    ".aster_rootfs_metadata_v1.json.tmp",
-    ".aster_rootfs_metadata_v1.previous.json",
-    ".aster-oci-rootfs-metadata.v1.json",
-    ".aster-oci-rootfs-metadata.v1.json.tmp",
+    ".krun-box-env",
+    ".krun-box-exec.json",
+    ".krun_exit_code",
+    ".krun_host_live_logs_drained",
+    ".krun_host_result_collected",
+    ".krun_image_metadata_v1.json",
+    ".krun_image_metadata_v1.json.tmp",
+    ".krun_rootfs_metadata_v1.json",
+    ".krun_rootfs_metadata_v1.json.tmp",
+    ".krun_rootfs_metadata_v1.previous.json",
+    ".krun-oci-rootfs-metadata.v1.json",
+    ".krun-oci-rootfs-metadata.v1.json.tmp",
     "guest-init.stderr.log",
     "guest-init.stdout.log",
     "init-rust.log",
@@ -491,7 +491,7 @@ fn runtime_managed_mode(path: &Path) -> Option<u32> {
     match path.to_str() {
         Some("etc/hostname" | "etc/hosts" | "etc/resolv.conf") => Some(0o644),
         Some("sbin/init" | "usr/sbin/init") => Some(0o755),
-        Some(".aster-box-env" | ".aster-box-exec.json") => Some(0o600),
+        Some(".krun-box-env" | ".krun-box-exec.json") => Some(0o600),
         _ => None,
     }
 }

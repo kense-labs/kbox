@@ -1,4 +1,4 @@
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde::{Deserialize, Serialize};
 
 use crate::{PluginUiPresentation, PluginUiScope};

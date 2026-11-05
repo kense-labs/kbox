@@ -16,15 +16,15 @@
       "command": [
         "mise",
         "exec",
-        "node@path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/0/project/nested/external node",
+        "node@path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/0/project/nested/external node",
         "--",
         "node"
       ],
-      "request": "path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/0/project/nested/external node",
+      "request": "path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/0/project/nested/external node",
       "managed_shim_in_path": false,
       "exit": 0,
       "stdout": "external-node\n",
-      "stderr": "mise WARN  semver range \"path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/0/project/nested/external node\" is not supported for node (source: command argument); use a concrete version or version prefix\n"
+      "stderr": "mise WARN  semver range \"path:/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/0/project/nested/external node\" is not supported for node (source: command argument); use a concrete version or version prefix\n"
     },
     {
       "name": "relative-argument",
@@ -57,7 +57,7 @@
       "managed_shim_in_path": false,
       "exit": 0,
       "stdout": "external-node\n",
-      "stderr": "mise WARN  semver range \"path:./external node\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/2/project/.mise/config.toml); use a concrete version or version prefix\n"
+      "stderr": "mise WARN  semver range \"path:./external node\" is not supported for node (source: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/2/project/.mise/config.toml); use a concrete version or version prefix\n"
     },
     {
       "name": "home-path",
@@ -108,7 +108,7 @@
       "managed_shim_in_path": false,
       "exit": 1,
       "stdout": "",
-      "stderr": "mise WARN  semver range \"path:./missing node\" is not supported for node (source: command argument); use a concrete version or version prefix\nmise by @jdx – installing 1 tool\nmise ✗ node@path:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing node  34ms · failed: builder error for url (vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing%20node/node-vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing%20node-darwin-arm64.tar.gz)\nmise ████████████████ 1/1 · installed 0 tools · 1 failed in 35ms\nmise ERROR Failed to install core:node@path:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing node: builder error for url (vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing%20node/node-vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/5/project/nested/missing%20node-darwin-arm64.tar.gz): URL scheme is not allowed\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
+      "stderr": "mise WARN  semver range \"path:./missing node\" is not supported for node (source: command argument); use a concrete version or version prefix\nmise by @jdx – installing 1 tool\nmise ✗ node@path:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing node  34ms · failed: builder error for url (vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing%20node/node-vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing%20node-darwin-arm64.tar.gz)\nmise ████████████████ 1/1 · installed 0 tools · 1 failed in 35ms\nmise ERROR Failed to install core:node@path:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing node: builder error for url (vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing%20node/node-vpath:/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/5/project/nested/missing%20node-darwin-arm64.tar.gz): URL scheme is not allowed\nmise ERROR Version: 2026.10.25 macos-arm64 (2026-10-31)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n"
     },
     {
       "name": "global-relative-path",
@@ -124,7 +124,7 @@
       "managed_shim_in_path": false,
       "exit": 0,
       "stdout": "external-node\n",
-      "stderr": "mise WARN  semver range \"path:./SDK node\" is not supported for node (source: /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster-mise-context-reference-94auz8ry/6/config/global.toml); use a concrete version or version prefix\n"
+      "stderr": "mise WARN  semver range \"path:./SDK node\" is not supported for node (source: /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun-mise-context-reference-94auz8ry/6/config/global.toml); use a concrete version or version prefix\n"
     }
   ]
 }

@@ -1,8 +1,8 @@
 #![cfg(test)]
 
 mod support;
-use aster_runtime::contract::{NetworkMode, RuntimeFeature, RuntimeHostService, RuntimeUnitSpec};
-use aster_runtime::RuntimeDriver;
+use krun_runtime::contract::{NetworkMode, RuntimeFeature, RuntimeHostService, RuntimeUnitSpec};
+use krun_runtime::RuntimeDriver;
 use support::fault_driver::DeterministicFaultDriver;
 use support::fixtures::service_spec;
 

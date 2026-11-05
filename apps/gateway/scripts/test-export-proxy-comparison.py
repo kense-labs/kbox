@@ -74,7 +74,7 @@ class ExporterTests(unittest.TestCase):
         )
         self.assertEqual(
             EXPORTER.relative_position(110.0, 100.0, False),
-            "aster_higher",
+            "krun_higher",
         )
         self.assertEqual(
             EXPORTER.relative_position(110.0, 100.0, True),
@@ -107,7 +107,7 @@ class ExporterTests(unittest.TestCase):
             root = Path(directory)
             for spec in EXPORTER.PROFILE_SPECS:
                 payload = oha if spec["generator"] == "oha" else protocol
-                for proxy in ("aster-gateway", "nginx"):
+                for proxy in ("krun-gateway", "nginx"):
                     for trial in (1, 2):
                         path = root / f"{spec['id']}-{proxy}-{trial}.json"
                         path.write_text(json.dumps(payload), encoding="utf-8")
@@ -121,7 +121,7 @@ class ExporterTests(unittest.TestCase):
                 "--commit",
                 "a" * 40,
                 "--run-url",
-                "https://github.com/kense-labs/gateway/actions/runs/1",
+                "https://github.com/kense-labs/krun/actions/runs/1",
                 "--generated-at",
                 "2026-08-05T00:00:00Z",
                 "--runner-image",
@@ -134,8 +134,8 @@ class ExporterTests(unittest.TestCase):
                 "16000",
                 "--kernel",
                 "Linux",
-                "--aster-version",
-                "aster-gateway 1.0.12",
+                "--krun-version",
+                "krun-gateway 1.0.12",
                 "--nginx-version",
                 "nginx/1.24.0",
                 "--oha-version",

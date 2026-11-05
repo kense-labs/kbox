@@ -1,9 +1,9 @@
 use std::path::Path;
 
-use aster_use_core::{UseError, UseResult};
 use image::{imageops, ImageBuffer, Rgb, RgbImage};
 use imageproc::geometric_transformations::{warp_into, Interpolation, Projection};
 use imageproc::point::Point;
+use krun_use_core::{UseError, UseResult};
 use ort::session::builder::GraphOptimizationLevel;
 use ort::session::Session;
 use ort::value::TensorRef;

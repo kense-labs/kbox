@@ -69,7 +69,7 @@ fn gemini_wire_and_endpoint_grants_roundtrip_without_aliasing_generation_to_coun
 }
 
 #[test]
-fn google_errors_keep_http_and_canonical_codes_and_stable_aster_facts() {
+fn google_errors_keep_http_and_canonical_codes_and_stable_krun_facts() {
     for (code, status) in [
         (400, "INVALID_ARGUMENT"),
         (401, "UNAUTHENTICATED"),
@@ -93,7 +93,7 @@ fn google_errors_keep_http_and_canonical_codes_and_stable_aster_facts() {
         assert_eq!(body["error"]["code"], code);
         assert_eq!(body["error"]["status"], status);
         assert_eq!(body["error"]["message"], "safe message");
-        assert_eq!(body["error"]["aster_error_code"], "stable.code");
+        assert_eq!(body["error"]["krun_error_code"], "stable.code");
     }
 }
 

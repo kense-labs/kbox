@@ -6,7 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 use sha2::{Digest, Sha256};
 
 #[cfg(all(test, target_os = "macos"))]

@@ -1,26 +1,26 @@
 //! Versioned JSON bridge used by the pure Python and TypeScript SDKs.
 //!
 //! The bridge is a machine-only boundary. Language clients send one request to
-//! `aster-box sdk-bridge` on stdin and receive one response on stdout. It calls
+//! `krun-box sdk-bridge` on stdin and receive one response on stdout. It calls
 //! the direct Rust SDK and never parses human-facing CLI output.
 
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 use std::time::Duration;
 
-use aster_box_core::{
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine;
+use krun_box_core::{
     error::BoxError, ExecutionEventBatch, ExecutionEventsRequest, ExecutionGeneration, ExecutionId,
     ExecutionIsolation, ExecutionSnapshot, ExecutionSnapshotId, ExecutionState, ExecutionStats,
     FilesystemEntry, FilesystemEntryKind, OperationId, Platform, PortMapping,
 };
-use base64::engine::general_purpose::STANDARD;
-use base64::Engine;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
 use crate::{
-    AsterBoxClient, BuildImage, ClientError, CommandRunOptions, CreateNetwork, CreateVolume,
-    FilesystemOptions, ListBoxesOptions, PullImage, PushImage, Sandbox, SandboxCommand,
+    BuildImage, ClientError, CommandRunOptions, CreateNetwork, CreateVolume, FilesystemOptions,
+    KrunBoxClient, ListBoxesOptions, PullImage, PushImage, Sandbox, SandboxCommand,
     SandboxCreateOptions, SandboxLogOptions, SandboxNetwork, SandboxRestartOptions, TagImage,
     TmpfsMount, VolumeMount, DEFAULT_SANDBOX_IMAGE, DEFAULT_SANDBOX_TIMEOUT_SECONDS,
 };
@@ -220,8 +220,7 @@ pub async fn dispatch_json(input: &str) -> BridgeResponse {
             })
         }
     };
-    let client = match AsterBoxClient::with_configured_paths(crate::AsterBoxPaths::default()).await
-    {
+    let client = match KrunBoxClient::with_configured_paths(crate::KrunBoxPaths::default()).await {
         Ok(client) => client,
         Err(error) => {
             return BridgeResponse::failure(BridgeFailure {
@@ -234,7 +233,7 @@ pub async fn dispatch_json(input: &str) -> BridgeResponse {
     handle_request(&client, request).await
 }
 
-pub async fn handle_request(client: &AsterBoxClient, request: BridgeRequest) -> BridgeResponse {
+pub async fn handle_request(client: &KrunBoxClient, request: BridgeRequest) -> BridgeResponse {
     match execute_request(client, request).await {
         Ok(result) => BridgeResponse::success(result),
         Err(error) => BridgeResponse::failure(error),
@@ -242,7 +241,7 @@ pub async fn handle_request(client: &AsterBoxClient, request: BridgeRequest) -> 
 }
 
 async fn execute_request(
-    client: &AsterBoxClient,
+    client: &KrunBoxClient,
     request: BridgeRequest,
 ) -> Result<Value, BridgeFailure> {
     match request {
@@ -824,7 +823,7 @@ async fn execute_request(
 }
 
 async fn connected_sandbox(
-    client: &AsterBoxClient,
+    client: &KrunBoxClient,
     sandbox_id: String,
     generation: u64,
 ) -> Result<Sandbox, BridgeFailure> {
@@ -1034,16 +1033,16 @@ impl From<ClientError> for BridgeFailure {
                     ClientError::AmbiguousBoxQuery { .. } | ClientError::Validation(_) => {
                         "invalid_request"
                     }
-                    ClientError::Execution(aster_box_core::ExecutionManagerError::NotFound(_)) => {
+                    ClientError::Execution(krun_box_core::ExecutionManagerError::NotFound(_)) => {
                         "not_found"
                     }
                     ClientError::Execution(
-                        aster_box_core::ExecutionManagerError::InvalidRequest(_),
+                        krun_box_core::ExecutionManagerError::InvalidRequest(_),
                     ) => "invalid_request",
-                    ClientError::Execution(aster_box_core::ExecutionManagerError::Conflict {
+                    ClientError::Execution(krun_box_core::ExecutionManagerError::Conflict {
                         ..
                     }) => "conflict",
-                    ClientError::Execution(aster_box_core::ExecutionManagerError::Unavailable(
+                    ClientError::Execution(krun_box_core::ExecutionManagerError::Unavailable(
                         _,
                     )) => "unavailable",
                     ClientError::Runtime(BoxError::ConfigError(_) | BoxError::TeeConfig(_)) => {
@@ -1059,7 +1058,7 @@ impl From<ClientError> for BridgeFailure {
                     }
                     ClientError::State(_)
                     | ClientError::Runtime(_)
-                    | ClientError::Execution(aster_box_core::ExecutionManagerError::Internal(_)) => {
+                    | ClientError::Execution(krun_box_core::ExecutionManagerError::Internal(_)) => {
                         "runtime_error"
                     }
                     ClientError::CommandUnavailable { .. } => unreachable!(),

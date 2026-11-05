@@ -5,8 +5,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex as StdMutex;
 use std::time::Instant;
 
-use aster_box_core::vmm::OwnedCloseBudget;
-use aster_box_core::{
+use krun_box_core::vmm::OwnedCloseBudget;
+use krun_box_core::{
     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode,
     OperationId,
 };

@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{PluginCatalogRecord, UseError, UseResult};
+use krun_use_core::{PluginCatalogRecord, UseError, UseResult};
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 use tokio::fs;
@@ -196,7 +196,7 @@ async fn prepare(
         domain: domain.into(),
         owners,
         source_path,
-        oci_repository: format!("ghcr.io/aster-ai-lab/plugins/{}", package.package_id),
+        oci_repository: format!("ghcr.io/kense-labs/plugins/{}", package.package_id),
         package,
         archive_sha256,
         archive_length,

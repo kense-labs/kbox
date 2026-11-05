@@ -95,7 +95,7 @@ impl Rule {
     /// # Examples
     ///
     /// ```rust,ignore
-    /// use aster_gateway::router::Rule;
+    /// use krun_gateway::router::Rule;
     ///
     /// let rule = Rule::parse("Host(`example.com`) && PathPrefix(`/api`)").unwrap();
     /// ```

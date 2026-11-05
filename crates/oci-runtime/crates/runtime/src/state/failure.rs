@@ -1,4 +1,4 @@
-use aster_oci_sdk::{Error, ErrorCode, OperationId, Result};
+use krun_oci_sdk::{Error, ErrorCode, OperationId, Result};
 
 use crate::fault::DurableMutation;
 

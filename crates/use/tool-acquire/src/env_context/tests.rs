@@ -12,7 +12,7 @@ fn config(request: &str) -> EnvConfig {
 fn ordered_layers_keep_each_versions_logical_root_and_replace_whole_tool_lists() {
     let temporary = tempfile::tempdir().unwrap();
     let home = temporary.path().join("home");
-    let aster_home = temporary.path().join("aster-home");
+    let krun_home = temporary.path().join("krun-home");
     let parent = temporary.path().join("项目 with spaces");
     let nested = parent.join("nested");
     for root in [&home, &parent, &nested] {
@@ -27,8 +27,8 @@ fn ordered_layers_keep_each_versions_logical_root_and_replace_whole_tool_lists()
         )]),
         vars: BTreeMap::from([("TOKEN".into(), "synthetic-ordered-context-secret".into())]),
     };
-    crate::write_env_declarations(user_env_path(&aster_home), &declarations).unwrap();
-    let loaded = load_env_declarations_with_sources(&nested, &aster_home).unwrap();
+    crate::write_env_declarations(user_env_path(&krun_home), &declarations).unwrap();
+    let loaded = load_env_declarations_with_sources(&nested, &krun_home).unwrap();
     let selected = loaded.resolve_tools(Some(&home)).unwrap();
     let roots = selected
         .iter()
@@ -45,7 +45,7 @@ fn ordered_layers_keep_each_versions_logical_root_and_replace_whole_tool_lists()
         ]
     );
     crate::write_env_declarations(project_env_path(&parent), &declarations).unwrap();
-    let loaded = load_env_declarations_with_sources(&nested, &aster_home).unwrap();
+    let loaded = load_env_declarations_with_sources(&nested, &krun_home).unwrap();
     let selected = loaded
         .resolve_tool_versions("node", Some(&home))
         .unwrap()
@@ -57,7 +57,7 @@ fn ordered_layers_keep_each_versions_logical_root_and_replace_whole_tool_lists()
         assert_eq!(paths.root(), parent.join(name).canonicalize().unwrap());
     }
     write_env_acl(project_env_path(&nested), &config("system")).unwrap();
-    let loaded = load_env_declarations_with_sources(&nested, &aster_home).unwrap();
+    let loaded = load_env_declarations_with_sources(&nested, &krun_home).unwrap();
     assert_eq!(loaded.config().tools.get("node").unwrap(), &["system"]);
     assert!(matches!(
         loaded
@@ -69,14 +69,14 @@ fn ordered_layers_keep_each_versions_logical_root_and_replace_whole_tool_lists()
         EnvToolOrigin::System
     ));
     assert!(!format!("{loaded:?}").contains("synthetic-context-secret"));
-    assert!(load_env_config_with_sources(&parent, &aster_home).is_err());
+    assert!(load_env_config_with_sources(&parent, &krun_home).is_err());
 }
 
 #[test]
 fn layered_paths_keep_declaring_roots_overrides_and_secret_redaction() {
     let temporary = tempfile::tempdir().unwrap();
     let home = temporary.path().join("home");
-    let aster_home = temporary.path().join("aster-home");
+    let krun_home = temporary.path().join("krun-home");
     let parent = temporary.path().join("项目 with spaces");
     let nested = parent.join("nested/work");
     let home_tool = home.join("SDK node");
@@ -85,11 +85,11 @@ fn layered_paths_keep_declaring_roots_overrides_and_secret_redaction() {
     for directory in [&home_tool, &parent_tool, &local_tool] {
         std::fs::create_dir_all(directory.join("bin")).unwrap();
     }
-    write_env_acl(user_env_path(&aster_home), &config("path:./SDK node")).unwrap();
-    let loaded = load_env_config_with_sources(&nested, &aster_home).unwrap();
+    write_env_acl(user_env_path(&krun_home), &config("path:./SDK node")).unwrap();
+    let loaded = load_env_config_with_sources(&nested, &krun_home).unwrap();
     assert_eq!(
         loaded.config(),
-        &crate::load_env_config(&nested, &aster_home).unwrap()
+        &crate::load_env_config(&nested, &krun_home).unwrap()
     );
     assert!(!format!("{loaded:?}").contains("synthetic-context-secret"));
     let selected = loaded.resolve_tool("node", Some(&home)).unwrap().unwrap();
@@ -98,14 +98,14 @@ fn layered_paths_keep_declaring_roots_overrides_and_secret_redaction() {
     };
     assert_eq!(paths.root(), home_tool.canonicalize().unwrap());
     write_env_acl(project_env_path(&parent), &config("path:./SDK node")).unwrap();
-    let loaded = load_env_config_with_sources(&nested, &aster_home).unwrap();
+    let loaded = load_env_config_with_sources(&nested, &krun_home).unwrap();
     let selected = loaded.resolve_tools(Some(&home)).unwrap().remove(0);
     let EnvToolOrigin::Path(paths) = selected.origin() else {
         panic!("expected an external path")
     };
     assert_eq!(paths.root(), parent_tool.canonicalize().unwrap());
     write_env_acl(project_env_path(&nested), &config("path:./local node")).unwrap();
-    let loaded = load_env_config_with_sources(&nested, &aster_home).unwrap();
+    let loaded = load_env_config_with_sources(&nested, &krun_home).unwrap();
     let selected = loaded.resolve_tools(Some(&home)).unwrap().remove(0);
     let EnvToolOrigin::Path(paths) = selected.origin() else {
         panic!("expected an external path")
@@ -228,7 +228,7 @@ fn ordered_temporary_versions_replace_a_tool_and_preserve_other_declaration_root
     let temporary = tempfile::tempdir().unwrap();
     let project = temporary.path().join("项目 with spaces");
     let cwd = project.join("nested");
-    let aster_home = temporary.path().join("aster-home");
+    let krun_home = temporary.path().join("krun-home");
     for (path, word) in [
         (cwd.join("one/bin/node"), "first-node"),
         (cwd.join("two/bin/node"), "second-node"),
@@ -253,7 +253,7 @@ fn ordered_temporary_versions_replace_a_tool_and_preserve_other_declaration_root
     )
     .unwrap();
     let before = std::fs::read(&declaration).unwrap();
-    let loaded = load_env_declarations_with_sources(&cwd, &aster_home).unwrap();
+    let loaded = load_env_declarations_with_sources(&cwd, &krun_home).unwrap();
     let overrides = BTreeMap::from([
         ("bun".into(), vec!["system".into()]),
         (
@@ -270,7 +270,7 @@ fn ordered_temporary_versions_replace_a_tool_and_preserve_other_declaration_root
         .unwrap();
     assert_eq!(selected.len(), 5);
     assert!(matches!(selected[0].origin(), EnvToolOrigin::System));
-    let store = ToolStore::open(aster_home.join("tools")).unwrap();
+    let store = ToolStore::open(krun_home.join("tools")).unwrap();
     for (tool, (root, word)) in selected[1..].iter().zip([
         (cwd.join("two"), "second-node"),
         (cwd.join("one"), "first-node"),
@@ -312,9 +312,9 @@ fn ordered_temporary_versions_replace_a_tool_and_preserve_other_declaration_root
 fn temporary_version_lists_refuse_empty_or_oversized_inputs_before_path_lookup() {
     let temporary = tempfile::tempdir().unwrap();
     let project = temporary.path().join("project");
-    let aster_home = temporary.path().join("aster-home");
+    let krun_home = temporary.path().join("krun-home");
     write_env_acl(project_env_path(&project), &config("path:./missing node")).unwrap();
-    let loaded = load_env_declarations_with_sources(&project, &aster_home).unwrap();
+    let loaded = load_env_declarations_with_sources(&project, &krun_home).unwrap();
     for requests in [
         Vec::new(),
         vec!["system".to_owned(); crate::version::MAX_VERSIONS + 1],
@@ -328,7 +328,7 @@ fn temporary_version_lists_refuse_empty_or_oversized_inputs_before_path_lookup()
             Err(ToolAcquireError::InvalidEnvAcl(_))
         ));
     }
-    assert!(!aster_home.join("tools").exists());
+    assert!(!krun_home.join("tools").exists());
 }
 
 #[cfg(unix)]
@@ -345,8 +345,8 @@ fn temporary_selections_replace_declarations_before_path_resolution_without_writ
     declared.tools.insert("uv".into(), "path:./SDK uv".into());
     write_env_acl(&declaration, &declared).unwrap();
     let before = std::fs::read(&declaration).unwrap();
-    let aster_home = temporary.path().join("aster-home");
-    let loaded = load_env_config_with_sources(&cwd, &aster_home).unwrap();
+    let krun_home = temporary.path().join("krun-home");
+    let loaded = load_env_config_with_sources(&cwd, &krun_home).unwrap();
     assert!(matches!(
         loaded.resolve_tools(None),
         Err(ToolAcquireError::Io { .. })
@@ -359,7 +359,7 @@ fn temporary_selections_replace_declarations_before_path_resolution_without_writ
         .resolve_tools_with_overrides(&overrides, &cwd, None)
         .unwrap();
     assert_eq!(selections.len(), 3);
-    let store = ToolStore::open(aster_home.join("tools")).unwrap();
+    let store = ToolStore::open(krun_home.join("tools")).unwrap();
     for selected in &selections {
         match selected.tool().name.as_str() {
             "bun" => assert!(matches!(selected.origin(), EnvToolOrigin::System)),
@@ -470,7 +470,7 @@ fn relative_declarations_keep_non_utf8_native_parent_paths() {
         .path()
         .join(std::ffi::OsString::from_vec(b"native-\xff".to_vec()));
     executable(&parent.join("SDK/bin/node"), "native-bytes");
-    let loaded_home = temporary.path().join("aster-home");
+    let loaded_home = temporary.path().join("krun-home");
     write_env_acl(project_env_path(&parent), &config("path:./SDK")).unwrap();
     let context = load_env_config_with_sources(&parent, &loaded_home).unwrap();
     let selected = context.resolve_tool("node", None).unwrap().unwrap();

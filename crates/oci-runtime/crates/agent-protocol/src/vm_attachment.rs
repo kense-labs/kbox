@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ConfigurationAttachment, ContainerTarget, Error, ErrorCode, NetworkAttachmentIdentity,
     NetworkCleanup, OciBundle, Result, StoragePathRestrictions,
 };
@@ -20,35 +20,34 @@ pub use directory::{AgentVmDirectoryAttachment, AgentVmDirectorySourceIdentity};
 pub use storage::{AgentVmStorageAttachment, AgentVmStorageSourceIdentity};
 
 /// Immutable raw-storage Host-to-shim-to-Guest transport schema.
-pub const AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION: &str = "aster.oci.agent-vm-attachments.v2";
+pub const AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION: &str = "krun.oci.agent-vm-attachments.v2";
 /// Cumulative transport schema that binds independent Host directories.
-pub const AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION: &str = "aster.oci.agent-vm-attachments.v3";
+pub const AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION: &str = "krun.oci.agent-vm-attachments.v3";
 /// Directory transport requiring positive Host path-restriction enforcement.
 pub const AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION: &str =
-    "aster.oci.agent-vm-attachments.v4";
+    "krun.oci.agent-vm-attachments.v4";
 /// Private Guest bootstrap binding emitted by the confined Host worker.
 pub const AGENT_HOST_STORAGE_PATH_RESTRICTIONS_SHA256_ENV: &str =
-    "ASTER_OCI_HOST_STORAGE_PATH_RESTRICTIONS_SHA256";
+    "KRUN_OCI_HOST_STORAGE_PATH_RESTRICTIONS_SHA256";
 /// Protected Guest directory beneath the private runtime share.
 pub const AGENT_VM_DIRECTORY_GUEST_ROOT: &str =
-    "/run/aster-oci-runtime/bundle/.aster-oci-directories";
+    "/run/krun-oci-runtime/bundle/.krun-oci-directories";
 /// Directory transport sources stay inside the existing bundle-only boundary.
-pub const AGENT_VM_DIRECTORY_RELATIVE_ROOT: &str = ".aster-oci-directories";
+pub const AGENT_VM_DIRECTORY_RELATIVE_ROOT: &str = ".krun-oci-directories";
 /// Network-only transport schema emitted before raw storage transport existed.
-pub const AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1: &str =
-    "aster.oci.agent-vm-attachments.v1";
+pub const AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1: &str = "krun.oci.agent-vm-attachments.v1";
 /// Fixed file name inside one exact utility-VM runtime share.
-pub const AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME: &str = ".aster-oci-agent-vm-attachments.json";
+pub const AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME: &str = ".krun-oci-agent-vm-attachments.json";
 /// Guest environment key carrying the exact encoded-manifest SHA-256 digest.
 pub const AGENT_VM_ATTACHMENT_MANIFEST_SHA256_ENV: &str =
-    "ASTER_OCI_AGENT_VM_ATTACHMENT_MANIFEST_SHA256";
+    "KRUN_OCI_AGENT_VM_ATTACHMENT_MANIFEST_SHA256";
 /// Maximum encoded attachment transport manifest size.
 pub const AGENT_VM_ATTACHMENT_MANIFEST_MAX_BYTES: usize = 64 * 1024;
 
 const MAX_NETWORK_ATTACHMENTS: usize = 256;
 const MAX_STORAGE_ATTACHMENTS: usize = 128;
 const LINUX_INTERFACE_NAME_BYTES: usize = 15;
-const TRANSPORT_MAC_DOMAIN: &[u8] = b"aster.oci.agent-vm-network-mac.v1\0";
+const TRANSPORT_MAC_DOMAIN: &[u8] = b"krun.oci.agent-vm-network-mac.v1\0";
 
 /// Exact locally administered unicast MAC assigned to one Guest virtio NIC.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
@@ -444,8 +443,7 @@ impl AgentVmAttachmentManifest {
                     .ok_or_else(|| {
                         manifest_error("directory restriction references an ungranted identity")
                     })?;
-                if directory.attachment().access_mode()
-                    == aster_oci_sdk::StorageAccessMode::ReadOnly
+                if directory.attachment().access_mode() == krun_oci_sdk::StorageAccessMode::ReadOnly
                     && !entry.write_exceptions().is_empty()
                 {
                     return Err(manifest_error(
@@ -709,7 +707,7 @@ fn manifest_error(message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_sdk::{
+    use krun_oci_sdk::{
         oci_spec::runtime::Spec, ContainerTarget, CreateAttachments, Generation,
         NetworkAttachmentIdentity, NetworkCleanup, NetworkCleanupId, NetworkInterfaceId,
         NetworkNamespaceId, OciBundle, ProcessIo, StorageAccessMode, StorageAttachmentId,
@@ -731,7 +729,7 @@ mod tests {
             "netDevices": {"tap0": {"name": "eth0"}}
         });
         let bundle = OciBundle::from_json(
-            std::env::temp_dir().join("aster-agent-vm-manifest-fixture"),
+            std::env::temp_dir().join("krun-agent-vm-manifest-fixture"),
             serde_json::to_string(&value).expect("fixture JSON"),
         )
         .expect("valid OCI bundle");
@@ -765,10 +763,10 @@ mod tests {
         .expect("network transport");
         let manifest = AgentVmAttachmentManifest::new(
             ContainerTarget::exact(
-                aster_oci_sdk::ContainerId::new("networked").expect("container ID"),
+                krun_oci_sdk::ContainerId::new("networked").expect("container ID"),
                 Generation(1),
             ),
-            GuestPath::new("/run/aster-oci-runtime/bundle").expect("guest bundle"),
+            GuestPath::new("/run/krun-oci-runtime/bundle").expect("guest bundle"),
             bundle.config_digest(),
             digest,
             vec![network],
@@ -783,11 +781,11 @@ mod tests {
         value["mounts"] = json!([{
             "destination": "/data",
             "type": "ext4",
-            "source": "/var/lib/aster/authorized-volume.raw",
+            "source": "/var/lib/krun/authorized-volume.raw",
             "options": ["ro", "nodev"]
         }]);
         let bundle = OciBundle::from_json(
-            std::env::temp_dir().join("aster-agent-vm-storage-manifest"),
+            std::env::temp_dir().join("krun-agent-vm-storage-manifest"),
             serde_json::to_string(&value).expect("fixture JSON"),
         )
         .expect("valid storage bundle");
@@ -810,7 +808,7 @@ mod tests {
             public.access_mode(),
             public.ownership(),
             public.cleanup(),
-            "/var/lib/aster/authorized-volume.raw",
+            "/var/lib/krun/authorized-volume.raw",
             AgentVmStorageSourceIdentity::new(17, 0, 4_203, 8 * 1024 * 1024)
                 .expect("source identity"),
             &digest,
@@ -818,10 +816,10 @@ mod tests {
         .expect("storage transport");
         let manifest = AgentVmAttachmentManifest::new(
             ContainerTarget::exact(
-                aster_oci_sdk::ContainerId::new("stored").expect("container ID"),
+                krun_oci_sdk::ContainerId::new("stored").expect("container ID"),
                 Generation(3),
             ),
-            GuestPath::new("/run/aster-oci-runtime/bundle").expect("guest bundle"),
+            GuestPath::new("/run/krun-oci-runtime/bundle").expect("guest bundle"),
             bundle.config_digest(),
             digest,
             Vec::new(),
@@ -887,7 +885,7 @@ mod tests {
         assert_eq!(decoded.storage()[0].virtio_serial(), "1704203");
         assert!(decoded.storage()[0]
             .block_id()
-            .starts_with("aster-oci-storage-"));
+            .starts_with("krun-oci-storage-"));
     }
 
     #[test]
@@ -898,7 +896,7 @@ mod tests {
         for (field, replacement) in [
             ("hostSource", json!("relative.raw")),
             ("accessMode", json!("read-write")),
-            ("blockId", json!("aster-oci-storage-unbound")),
+            ("blockId", json!("krun-oci-storage-unbound")),
         ] {
             let mut encoded: Value = serde_json::from_slice(&bytes).expect("manifest JSON");
             encoded["storage"][0][field] = replacement;
@@ -925,7 +923,7 @@ mod tests {
         let mut joined: Value = serde_json::from_str(bundle.config_json()).expect("fixture JSON");
         joined["linux"]["namespaces"][0]["path"] = json!("/proc/1/ns/net");
         let joined = OciBundle::from_json(
-            std::env::temp_dir().join("aster-agent-vm-joined-fixture"),
+            std::env::temp_dir().join("krun-agent-vm-joined-fixture"),
             serde_json::to_string(&joined).expect("joined JSON"),
         )
         .expect("joined OCI bundle");

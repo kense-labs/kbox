@@ -1,5 +1,5 @@
-use aster_oci_agent_protocol::{AgentClient, AgentDeleteRequest, AgentWaitRequest, GuestPath};
-use aster_oci_sdk::{DeleteMode, ExitStatus};
+use krun_oci_agent_protocol::{AgentClient, AgentDeleteRequest, AgentWaitRequest, GuestPath};
+use krun_oci_sdk::{DeleteMode, ExitStatus};
 
 use super::lifecycle::{
     create_request, guest_call, operation, require, require_created, require_running,

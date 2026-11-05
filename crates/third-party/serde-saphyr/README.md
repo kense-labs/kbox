@@ -1,5 +1,9 @@
 # serde-saphyr
 
+## 概述
+
+YAML (de)serializer for Serde, built on top of Saphyr, emphasizing panic-free parsing.
+
 [![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
 [![Miri](https://github.com/bourumir-wyngs/serde-saphyr/actions/workflows/miri.yml/badge.svg)](https://github.com/bourumir-wyngs/serde-saphyr/actions/workflows/miri.yml)
 ![panic-free](https://img.shields.io/badge/panic--free-%E2%9C%94%EF%B8%8F-brightgreen)

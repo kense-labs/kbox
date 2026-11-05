@@ -2,13 +2,13 @@ use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use aster_oci_sdk::{OciBundle, RUNTIME_BUNDLE_HANDOFF_BUNDLE_DIRECTORY};
+use krun_oci_sdk::{OciBundle, RUNTIME_BUNDLE_HANDOFF_BUNDLE_DIRECTORY};
 use tokio::time::{sleep, Instant};
 
 use super::{bundle_marker, QUALIFICATION_TIMEOUT};
 use crate::marker::{exact_marker_state, ExactMarkerState};
 
-const MARKER_CONTENTS: &[u8] = b"aster-oci-create-start-user-time-v1\n";
+const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
 const MARKER_POLL_INTERVAL: Duration = Duration::from_millis(25);
 const MAX_MARKER_BYTES: u64 = 1_024;
 

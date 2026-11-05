@@ -843,7 +843,7 @@ fn acquire_lock_sync(directory: &Path) -> Result<std::fs::File, UsageSpoolError>
 /// Same create_new write surface as boot-epoch allocation in [`open`].
 fn probe_directory_writability_sync(directory: &Path) -> Result<(), UsageSpoolError> {
     let probe = directory.join(format!(
-        ".aster-usage-spool-activation-probe.{}",
+        ".krun-usage-spool-activation-probe.{}",
         Uuid::new_v4()
     ));
     let mut options = std::fs::OpenOptions::new();

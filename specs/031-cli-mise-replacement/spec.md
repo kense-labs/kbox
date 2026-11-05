@@ -1,4 +1,4 @@
-# Feature Specification: Aster CLI replaces mise
+# Feature Specification: Krun CLI replaces mise
 
 **Feature Branch**: current checkout (no new branch requested)
 
@@ -6,9 +6,9 @@
 
 **Status**: Implementing; full replacement is not yet achieved
 
-**Input**: User description: "实现aster cli 完全替代 mise"
+**Input**: User description: "实现krun cli 完全替代 mise"
 
-**Gate context**: `apps/aster`, its existing pager CLI, and
+**Gate context**: `apps/krun`, its existing pager CLI, and
 `crates/use/tool-acquire` own this feature. This user-requested capability
 extends the CLI without adding another application or workspace.
 
@@ -75,7 +75,7 @@ cancellation, cache restoration, watcher reruns, and project-specific contexts.
 ### User Story 4 - Provision and operate the development environment (Priority: P2)
 
 A developer manages host packages, machine modules, services, dotfiles, remote
-hosts, and development daemons through Aster with the baseline mise behavior.
+hosts, and development daemons through Krun with the baseline mise behavior.
 
 **Why this priority**: these are part of the full requested replacement.
 
@@ -96,13 +96,13 @@ also require native isolated execution on the affected operating systems.
 - Malformed declarations, unknown fields, unsupported backends, incompatible
   locks, missing companions, and unverifiable artifacts fail closed.
 - Environment values and provider credentials do not enter Debug or diagnostics.
-- Existing Aster command names and its ACP pair remain usable.
+- Existing Krun command names and its ACP pair remain usable.
 
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
 
-- **FR-001**: Aster MUST install, list, locate, upgrade, uninstall, prune, and
+- **FR-001**: Krun MUST install, list, locate, upgrade, uninstall, prune, and
   execute baseline tools and core language runtimes without a mise executable.
   Unsupported platforms, unknown identifiers, and invalid artifacts MUST refuse.
 - **FR-002**: Version requests MUST cover exact versions, prefixes, aliases,
@@ -132,7 +132,7 @@ also require native isolated execution on the affected operating systems.
   and development daemons MUST have baseline-equivalent behavior and refusals.
 - **FR-010**: Diagnostics, completion, tool documentation/skills, verification
   policies, and MCP access MUST expose the implemented environment capabilities
-  without changing Aster's existing agent and package-manager contracts.
+  without changing Krun's existing agent and package-manager contracts.
 - **FR-011**: The acceptance inventory MUST retain all features of the frozen
   mise baseline, including experimental features and their status. Each item
   MUST link implementation and behavioral evidence before completion.
@@ -143,17 +143,17 @@ also require native isolated execution on the affected operating systems.
   latency, resource use and request/process counts with OS, toolchain, features
   and build profile. Profile measured hot paths before changing their ownership
   or cache layout; debug timings are not release-performance acceptance.
-- **FR-013**: The official trusted plugin source MUST use the Aster organization
-  repository `aster-ai-lab/plugins`, organize native AIX plugins by explicitly
+- **FR-013**: The official trusted plugin source MUST use the Krun organization
+  repository `kense-labs/plugins`, organize native AIX plugins by explicitly
   declared domains, and distribute `.aix` artifacts through associated GitHub
   Packages/GHCR packages. Signed catalog evidence MUST bind immutable OCI and
   AIX identities. Native package checks, installation/update/offline behavior
   and publication evidence are required; repository ownership alone is not
   sufficient trust evidence.
-- **FR-014**: Aster Desktop MUST expose Plugins in its ActivityBar without an
+- **FR-014**: Krun Desktop MUST expose Plugins in its ActivityBar without an
   account, remove Environment Dependencies from local settings, and redirect
   legacy dependency links to Plugins. Plugin discovery MUST read the official
-  `aster-ai-lab/plugins` Registry through the native verifier. Preserve install,
+  `kense-labs/plugins` Registry through the native verifier. Preserve install,
   update, removal, status and progress workflows, including required runtime
   component protection. Convert all eleven preset dependencies and three runtime
   components into domain-organized native AIX packages. External native tool
@@ -163,7 +163,7 @@ also require native isolated execution on the affected operating systems.
 
 ### Key Entities
 
-- **Environment declaration**: ACL owned by `aster-use-tool-acquire`.
+- **Environment declaration**: ACL owned by `krun-use-tool-acquire`.
 - **Version request / resolved tool / project lock**: tool-owner typed data.
 - **Task definition / invocation / result / cache record**: task-owner data.
 - **Provisioning plan / daemon state / dotfile generation**: owning module data.
@@ -175,8 +175,8 @@ also require native isolated execution on the affected operating systems.
 - [ ] New behavior has a small hermetic test in the owning package (T001–T011).
 - [ ] Closed sets have explicit parsing and formatting (T002–T011).
 - [ ] Production fallible paths do not panic (all implementation tasks).
-- [ ] Internal Aster dependencies remain local (T012).
-- [ ] Product configuration is ACL parsed by `aster-acl` (T002–T011).
+- [ ] Internal Krun dependencies remain local (T012).
+- [ ] Product configuration is ACL parsed by `krun-acl` (T002–T011).
 - [ ] Evidence target is `docs/evidence/cli/2026-11-01-mise-replacement/OUTCOME.md`
       (T013).
 
@@ -184,7 +184,7 @@ also require native isolated execution on the affected operating systems.
 
 ### Measurable Outcomes
 
-- **SC-001**: Every feature in the frozen upstream inventory has an Aster
+- **SC-001**: Every feature in the frozen upstream inventory has an Krun
   implementation and passing behavioral witness; no required item is deferred.
 - **SC-002**: Owning-package tests, Clippy, format, dependency checks, and native
   platform acceptance pass with the pinned toolchain and recorded features.
@@ -200,8 +200,8 @@ also require native isolated execution on the affected operating systems.
 - The comparison baseline is mise `v2026.10.25`, its source, and the official
   feature inventory captured on 2026-11-01. Later upstream additions are not a
   moving completion target.
-- Functional equivalence uses Aster command namespaces and ACL configuration.
-  Existing `aster use` and `aster mcp` meanings are preserved.
+- Functional equivalence uses Krun command namespaces and ACL configuration.
+  Existing `krun use` and `krun mcp` meanings are preserved.
 - Existing platform tools used by upstream backends remain legitimate runtime
   prerequisites; none may be silently assumed or downloaded without policy.
 

@@ -1,11 +1,11 @@
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::{
     CreateExecutionRequest, ExecutionEventBatch, ExecutionEventsRequest, ExecutionGeneration,
     ExecutionId, ExecutionLease, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
     ExecutionProcessInventory, ExecutionReservation, ExecutionResourceUpdate, ExecutionSnapshot,
     ExecutionSnapshotId, ExecutionState, ExecutionStats, ExecutionStatus, KillExecutionOptions,
     KillOutcome, OperationId, ReconcileOutcome, RestartExecutionOptions,
 };
-use async_trait::async_trait;
 
 use super::support::{managed_state, outcome_from_record, require_generation, state_conflict};
 use super::{
@@ -95,7 +95,7 @@ impl ExecutionManager for LocalExecutionManager {
         &self,
         execution_id: &ExecutionId,
         expected_generation: ExecutionGeneration,
-    ) -> ExecutionManagerResult<Vec<aster_box_core::log::LogEntry>> {
+    ) -> ExecutionManagerResult<Vec<krun_box_core::log::LogEntry>> {
         self.read_structured_logs(execution_id, expected_generation)
             .await
     }

@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 
-use aster_acl::Block;
-use aster_use_core::{
+use krun_acl::Block;
+use krun_use_core::{
     OkfBundleContract, OkfBundleLimits, OkfFormatVersion, UseResult, OKF_BUNDLE_CONTRACT_SCHEMA,
 };
 use serde::{Deserialize, Serialize};
@@ -122,7 +122,7 @@ pub enum PluginMcpLaunch {
 
 /// Who runs the agent loop. The closed set is `builtin` and `package`.
 ///
-/// `builtin` is the host Aster Code harness. `package` is a process shipped in
+/// `builtin` is the host Krun Code harness. `package` is a process shipped in
 /// the package. LangChain, the Vercel AI SDK, and Codex stay inside that process.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -150,7 +150,7 @@ impl AgentHarness {
 
 /// Where a submitted agent form runs. The closed set is `edge`, `cloud`, and `remote`.
 ///
-/// `edge` and `cloud` start an Aster OS Agent Runtime in that place. `remote`
+/// `edge` and `cloud` start an Krun OS Agent Runtime in that place. `remote`
 /// sends the same parameter values to an external A2A agent card.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -241,7 +241,7 @@ impl PluginAgentSurface {
     }
 }
 
-/// A `plugin` contribution inside an aster package. `entry` is a file in the package.
+/// A `plugin` contribution inside an krun package. `entry` is a file in the package.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PackagePluginSurface {
@@ -315,7 +315,7 @@ pub struct PluginOkfSurface {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum PluginFlowEngine {
-    AsterFlow,
+    KrunFlow,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -916,7 +916,7 @@ pub(crate) fn parse_flow(block: &Block) -> UseResult<PluginFlowSurface> {
         ],
     )?;
     let engine = match string_attribute(block, "engine")?.as_str() {
-        "aster-flow" => PluginFlowEngine::AsterFlow,
+        "krun-flow" => PluginFlowEngine::KrunFlow,
         value => {
             return Err(manifest_error(format!(
                 "Flow surface '{id}' engine '{value}' is unsupported."

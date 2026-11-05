@@ -1,4 +1,4 @@
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     Result, StorageAccessMode, StorageAttachment, StorageCleanup, StorageOwnership,
 };
 use serde::{Deserialize, Serialize};
@@ -11,7 +11,7 @@ use super::{
     AGENT_VM_DIRECTORY_GUEST_ROOT, AGENT_VM_DIRECTORY_RELATIVE_ROOT,
 };
 
-const TAG_DOMAIN: &[u8] = b"aster.oci.agent-vm-directory-tag.v1\0";
+const TAG_DOMAIN: &[u8] = b"krun.oci.agent-vm-directory-tag.v1\0";
 
 /// Exact Host directory identity retained across the VMM handoff.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
@@ -212,7 +212,7 @@ fn derive_tag(attachment_digest: &str, identity: &str) -> Result<String> {
         hasher.update(value.as_bytes());
     }
     Ok(format!(
-        "aster-dir-{}",
+        "krun-dir-{}",
         &format!("{:x}", hasher.finalize())[..24]
     ))
 }

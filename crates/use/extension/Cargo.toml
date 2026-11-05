@@ -1,18 +1,18 @@
 [package]
-name = "aster-use-extension"
+name = "krun-use-extension"
 version = "0.3.4"
-description = "ACL manifest and native surface contracts for Aster Use extensions"
+description = "ACL manifest and native surface contracts for Krun Use extensions"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/Use"
-authors = ["Aster"]
+repository = "https://github.com/kense-labs/krun"
+authors = ["Krun"]
 rust-version = "1.82"
 publish = false
 
 [dependencies]
 olpc-cjson = "0.1"
-aster-use-core = {path = "../core"}
-aster-acl = {path = "../../acl"}
+krun-use-core = {path = "../core"}
+krun-acl = {path = "../../acl"}
 zip = {version = "2", default-features = false, features = ["deflate"]}
 url = {version = "2"}
 tough = {version = "0.24", default-features = false, features = ["http"]}

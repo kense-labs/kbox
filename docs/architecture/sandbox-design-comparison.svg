@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="2240" height="1680" viewBox="0 0 2240 1680" role="img" aria-labelledby="title desc">
-<title id="title">经典进程沙箱与 Aster 沙箱设计对比</title>
-<desc id="desc">左侧为经典进程级沙箱（Seatbelt / Restricted Token + DACL + Job）。右侧为 Aster 统一策略与平台后端：Linux bwrap+seccomp、Windows AppContainer+DACL+Job、macOS 拒绝未资格化 Seatbelt 后升格每命令 MicroVM。金色虚线表示生命周期与 fail-closed 合同。底部列出多维优势与诚实代价。</desc>
+<title id="title">经典进程沙箱与 Krun 沙箱设计对比</title>
+<desc id="desc">左侧为经典进程级沙箱（Seatbelt / Restricted Token + DACL + Job）。右侧为 Krun 统一策略与平台后端：Linux bwrap+seccomp、Windows AppContainer+DACL+Job、macOS 拒绝未资格化 Seatbelt 后升格每命令 MicroVM。金色虚线表示生命周期与 fail-closed 合同。底部列出多维优势与诚实代价。</desc>
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#52647e"/></marker>
   <marker id="policyArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#af7a32"/></marker>
@@ -20,7 +20,7 @@
   .policy{fill:none;stroke:#af7a32;stroke-width:2;stroke-dasharray:6 5;marker-end:url(#policyArrow);stroke-linejoin:round}
 </style>
 <rect width="2240" height="1680" fill="#f5f7fc"/>
-<text x="60" y="62" class="title">经典进程沙箱  x  Aster 沙箱设计对比</text>
+<text x="60" y="62" class="title">经典进程沙箱  x  Krun 沙箱设计对比</text>
 <text x="60" y="100" class="small">实线：调用与依赖　金色虚线：生命周期 / fail-closed 合同　｜　对齐 coding agent 威胁模型</text>
 
 <rect x="60" y="130" width="2120" height="88" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
@@ -38,7 +38,7 @@
 <text x="94" y="355" class="body white">共享宿主内核 · OS 原语围栏单条命令</text>
 
 <rect x="1180" y="285" width="990" height="92" rx="16" fill="url(#coordinator)" stroke="#454099" stroke-width="1.6"/>
-<text x="1204" y="323" class="heading white">B · Aster 产品默认</text>
+<text x="1204" y="323" class="heading white">B · Krun 产品默认</text>
 <text x="1204" y="355" class="body white">统一 Bash 策略 · 按平台资格化后端 · fail closed</text>
 
 <text x="70" y="420" class="section">平台后端</text>
@@ -97,13 +97,13 @@
 
 <text x="60" y="1290" class="section">多维结论（相对 coding agent 默认执行）</text>
 <rect x="60" y="1310" width="690" height="150" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
-<text x="84" y="1348" class="heading">Aster 明显更强</text>
+<text x="84" y="1348" class="heading">Krun 明显更强</text>
 <text x="84" y="1382" class="body">威胁模型 · 生命周期 · fail-closed</text>
 <text x="84" y="1414" class="body">跨平台策略 · 发布可验证性</text>
 <text x="84" y="1446" class="body">macOS deny 内核边界（VM）</text>
 
 <rect x="780" y="1310" width="690" height="150" rx="16" fill="#fff" stroke="#c8d2e2" stroke-width="1.6"/>
-<text x="804" y="1348" class="heading">Aster 偏好 / 持平</text>
+<text x="804" y="1348" class="heading">Krun 偏好 / 持平</text>
 <text x="804" y="1382" class="body">Windows：AppContainer 优于 Restricted Token</text>
 <text x="804" y="1414" class="body">Job Object 能力保留</text>
 <text x="804" y="1446" class="body">Linux：bwrap+seccomp 深度扎实</text>
@@ -114,7 +114,7 @@
 <text x="1524" y="1414" class="body">guest 无宿主工具链自动注入</text>
 <text x="1524" y="1446" class="body">共享内核路径仍有剩余风险</text>
 
-<text x="60" y="1520" class="small">一句话：经典优化「进程少碰资源」；Aster 优化「这次 Agent 调用在策略、收尸、缺能力与发版上是否仍可被信任」。</text>
+<text x="60" y="1520" class="small">一句话：经典优化「进程少碰资源」；Krun 优化「这次 Agent 调用在策略、收尸、缺能力与发版上是否仍可被信任」。</text>
 <text x="60" y="1555" class="small">详文：sandbox-design-comparison.md　｜　同系风格：harness-gateway.svg · sandbox-control.svg</text>
 <text x="60" y="1620" class="small">源码核对：crates/code/core/src/sandbox/native.rs · crates/sandbox/SECURITY.md · docs/architecture/sandbox-control.md</text>
 </svg>

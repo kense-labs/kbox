@@ -1,8 +1,8 @@
-use aster_gateway::managed_snapshot::{
+use chrono::{Duration, Utc};
+use krun_gateway::managed_snapshot::{
     ManagedSnapshot, ManagedSnapshotState, ManagedSnapshotStatus,
 };
-use aster_gateway::{config::GatewayConfig, Gateway};
-use chrono::{Duration, Utc};
+use krun_gateway::{config::GatewayConfig, Gateway};
 use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -117,7 +117,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -150,7 +150,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#

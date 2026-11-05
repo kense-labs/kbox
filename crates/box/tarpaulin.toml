@@ -1,4 +1,4 @@
-# Tarpaulin configuration for aster-box
+# Tarpaulin configuration for krun-box
 # Excludes vendor/third-party dependencies from coverage
 
 [tarpaulin]

@@ -1,10 +1,10 @@
 use std::collections::BTreeMap;
 
-use aster_runtime::{ProviderId, RuntimeClientRegistry};
-use aster_use_core::{
+use krun_runtime::{ProviderId, RuntimeClientRegistry};
+use krun_use_core::{
     PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::{ExtensionManifest, PluginMcpLaunch, ToolTaskSource, ToolWorkload};
+use krun_use_extension::{ExtensionManifest, PluginMcpLaunch, ToolTaskSource, ToolWorkload};
 use serde::Serialize;
 
 use super::client::{runtime_error, PluginRuntimeClient};

@@ -1,10 +1,10 @@
-use aster_use_core::{
+use krun_use_core::{
     PlanActor, PlanPolicyDecision, PluginPermissionCeiling, PluginWorkspaceGrant,
     PluginWorkspaceGrantSnapshot, ResolvedWorkspaceGrant, ResolvedWorkspaceGrantChangeSet,
     WorkspaceGrantAuthority, WorkspaceGrantEvidence, PLUGIN_WORKSPACE_GRANT_SCHEMA,
     PLUGIN_WORKSPACE_GRANT_SNAPSHOT_SCHEMA,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     WorkspaceGrantCandidateCeiling, WorkspaceGrantCutoverEvidence, WorkspaceGrantReceipt,
     WORKSPACE_GRANT_CUTOVER_SCHEMA,
 };

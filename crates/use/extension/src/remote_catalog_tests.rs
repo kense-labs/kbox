@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
 
-use aster_use_core::{
+use krun_use_core::{
     CatalogAvailability, CatalogSurface, PackageSurfaceKind, PluginCatalogRecord,
     PluginPackageLockHost, PluginReleaseChannel,
 };
@@ -188,7 +188,7 @@ async fn signed_presentation_descriptor_and_media_are_verified_and_cached() {
                 "package/presentation-index-v1.json",
                 index,
                 serde_json::json!({
-                    "asterPackagePresentationIndex": {
+                    "krunPackagePresentationIndex": {
                         "schema": PACKAGE_PRESENTATION_INDEX_SCHEMA
                     }
                 }),
@@ -275,7 +275,7 @@ async fn presentation_index_rejects_a_digest_not_bound_to_the_catalog_record() {
                 "package/presentation-index-v1.json",
                 serde_json::to_vec(&index).unwrap(),
                 serde_json::json!({
-                    "asterPackagePresentationIndex": {
+                    "krunPackagePresentationIndex": {
                         "schema": PACKAGE_PRESENTATION_INDEX_SCHEMA
                     }
                 }),
@@ -609,7 +609,7 @@ async fn consistent_snapshot_catalog_keeps_offline_pagination_and_rejects_damage
             let metadata: serde_json::Value =
                 serde_json::from_slice(&package.routes["/metadata/targets.json"]).unwrap();
             let custom =
-                metadata["signed"]["targets"][&package.target_name]["custom"]["aster"].clone();
+                metadata["signed"]["targets"][&package.target_name]["custom"]["krun"].clone();
             TestTarget {
                 archive,
                 target_name: package.target_name,
@@ -702,7 +702,7 @@ async fn cached_search_reverifies_the_last_snapshot_without_network() {
 
 #[tokio::test]
 async fn later_patch_host_floor_filters_the_signed_catalog_before_archive_download() {
-    use aster_use_core::{
+    use krun_use_core::{
         CatalogArchive, CatalogPackage, PluginPermissionCeiling, PLUGIN_CATALOG_SCHEMA_V3,
         PLUGIN_PERMISSION_SCHEMA,
     };

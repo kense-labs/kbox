@@ -1,8 +1,8 @@
 {
-  "schema": "aster.runtime.exec-result.v1",
+  "schema": "krun.runtime.exec-result.v1",
   "request_id": "golden-exec",
   "observation": {
-    "schema": "aster.runtime.observation.v4",
+    "schema": "krun.runtime.observation.v4",
     "unit_id": "golden-service",
     "generation": 3,
     "spec_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",

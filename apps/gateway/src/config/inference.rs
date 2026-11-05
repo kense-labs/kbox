@@ -16,24 +16,24 @@ use uuid::Uuid;
 pub const INFERENCE_CREDENTIAL_AUDIENCE: &str = "cloud-inference";
 
 /// Power worker observation schema accepted by this Gateway revision.
-pub const POWER_WORKER_OBSERVATION_SCHEMA: &str = "aster.power.worker-observation.v1";
+pub const POWER_WORKER_OBSERVATION_SCHEMA: &str = "krun.power.worker-observation.v1";
 
 /// Frozen provisional tokenizer revision this Gateway accepts on managed policy.
 ///
 /// Cloud's policy compiler must emit this exact string. It identifies the local
-/// grant-reservation estimator (`aster.gateway.tokenizer.v1`), not a billing
+/// grant-reservation estimator (`krun.gateway.tokenizer.v1`), not a billing
 /// tokenizer.
-pub const INFERENCE_TOKENIZER_REVISION: &str = "aster.gateway.tokenizer.v1";
+pub const INFERENCE_TOKENIZER_REVISION: &str = "krun.gateway.tokenizer.v1";
 
-/// Complete, expiring inference policy projected by Aster Cloud.
-/// One named guardrails policy: an inline aster-sentry ACL source. The
+/// Complete, expiring inference policy projected by Krun Cloud.
+/// One named guardrails policy: an inline krun-sentry ACL source. The
 /// gateway compiles it into a wire gate at activation; bodies over
 /// grants referencing this policy pass the gate before dispatch and the
 /// buffered response passes it again before release.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct InferenceGuardrailsConfig {
-    /// Inline aster-sentry ACL source (empty is the rules-only posture:
+    /// Inline krun-sentry ACL source (empty is the rules-only posture:
     /// masking with fail-open escalation).
     pub sentry_acl: String,
 }
@@ -54,7 +54,7 @@ pub struct InferenceConfig {
     /// Inference routes keyed by stable route ID.
     #[serde(default)]
     pub routes: HashMap<Uuid, InferenceRouteConfig>,
-    /// Named guardrails policies (inline aster-sentry ACL sources) that
+    /// Named guardrails policies (inline krun-sentry ACL sources) that
     /// grants reference by name. Gated on the `wire` cargo feature;
     /// without it, parsing a guardrails block fails closed.
     #[serde(default, skip_serializing_if = "HashMap::is_empty")]
@@ -172,7 +172,7 @@ pub struct InferenceRouteConfig {
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum InferenceWire {
-    /// Aster work envelope (`{success, code, data, ...}`).
+    /// Krun work envelope (`{success, code, data, ...}`).
     #[default]
     Envelope,
     /// Native OpenAI / Anthropic wire bodies, as SDKs expect.
@@ -978,7 +978,7 @@ impl fmt::Display for FailoverPolicy {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct ConsoleCatalogConfig {
-    /// Gateway service whose URL reaches aster-api (the console).
+    /// Gateway service whose URL reaches krun-api (the console).
     pub api_service: String,
     /// Poll interval in seconds; the default matches the spec's 30 s.
     #[serde(default = "default_catalog_poll_interval")]

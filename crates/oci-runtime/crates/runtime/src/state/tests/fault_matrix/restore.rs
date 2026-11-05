@@ -1,6 +1,6 @@
-use aster_oci_core::{DriverKind, HostPlatform};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{DriverKind, HostPlatform};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest, CheckpointFormat,
     CheckpointReference, ContainerRecord, OperationContext, RestoreRequest, RestoreResponse,
     RuntimeArtifact,
@@ -92,7 +92,7 @@ async fn exercise_restored_pid_rebind(point: FaultPoint) {
     drive_success(&setup, &request)
         .await
         .expect("complete original restore");
-    let target = ContainerTarget::exact(request.id().clone(), aster_oci_sdk::Generation(1));
+    let target = ContainerTarget::exact(request.id().clone(), krun_oci_sdk::Generation(1));
     setup
         .observe_recreated_paused_running_process(
             &target,
@@ -224,7 +224,7 @@ fn digest(symbol: char) -> CheckpointDigest {
 async fn drive_success(
     store: &DurableStateStore,
     request: &RestoreRequest,
-) -> aster_oci_sdk::Result<RestoreResponse> {
+) -> krun_oci_sdk::Result<RestoreResponse> {
     match store.lookup_restore(request).await? {
         RestoreOperationLookup::Replayed(response) => Ok(*response),
         RestoreOperationLookup::Pending => {
@@ -248,7 +248,7 @@ async fn drive_failure(
     store: &DurableStateStore,
     request: &RestoreRequest,
     failure: &Error,
-) -> aster_oci_sdk::Result<()> {
+) -> krun_oci_sdk::Result<()> {
     match store.lookup_restore(request).await {
         Ok(RestoreOperationLookup::Pending) => {}
         Ok(RestoreOperationLookup::Replayed(_)) => {

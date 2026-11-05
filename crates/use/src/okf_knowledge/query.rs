@@ -1,14 +1,14 @@
 use std::collections::BTreeSet;
 
-use aster_use_core::{
+use krun_use_core::{
     OkfCapabilityProjection, PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope,
     PluginPackageId, UseError, UseResult,
 };
 use serde::{Deserialize, Serialize};
 
-pub const OKF_KNOWLEDGE_SEARCH_REQUEST_SCHEMA: &str = "aster.use.okf-knowledge-search-request.v1";
-pub const OKF_KNOWLEDGE_SEARCH_RESPONSE_SCHEMA: &str = "aster.use.okf-knowledge-search-response.v1";
-pub const OKF_KNOWLEDGE_CITATION_SCHEMA: &str = "aster.use.okf-knowledge-citation.v1";
+pub const OKF_KNOWLEDGE_SEARCH_REQUEST_SCHEMA: &str = "krun.use.okf-knowledge-search-request.v1";
+pub const OKF_KNOWLEDGE_SEARCH_RESPONSE_SCHEMA: &str = "krun.use.okf-knowledge-search-response.v1";
+pub const OKF_KNOWLEDGE_CITATION_SCHEMA: &str = "krun.use.okf-knowledge-citation.v1";
 
 const MAX_QUERY_BYTES: usize = 4 * 1024;
 const MAX_QUERY_PROJECTIONS: usize = 256;

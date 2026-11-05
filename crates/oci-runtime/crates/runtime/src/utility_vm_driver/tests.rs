@@ -12,18 +12,18 @@ use super::{
     UtilityVmFactory, UtilityVmLaunchRequest, UtilityVmOwner, UtilityVmRuntimeDriver,
 };
 use crate::DriverCreateAttachments;
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentCapabilities, AgentCloseStdinRequest, AgentContainerOperationRequest, AgentCreateRequest,
     AgentDeleteRequest, AgentExecRequest, AgentKillRequest, AgentProcess, AgentProcessesRequest,
     AgentReadOutputRequest, AgentResizeRequest, AgentSignalProcessRequest, AgentStartRequest,
     AgentState, AgentStateRequest, AgentStatsRequest, AgentUpdateRequest, AgentWaitProcessRequest,
     AgentWaitRequest, AgentWriteStdinRequest, GuestAgentService, AGENT_RUNTIME_SHARE_GUEST_ROOT,
 };
-use aster_oci_core::{
+use krun_oci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
 };
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+use krun_oci_sdk::{
     async_trait, runtime_bundle_handoff_directory, ContainerId, ContainerRecord, ContainerStats,
     ContainerTarget, CpuStats, CreateAttachments, DeleteMode, Error, ErrorCode, ExitStatus, FileOp,
     FileRequest, FileResponse, FilesystemOp, FilesystemRequest, FilesystemResponse, Generation,
@@ -431,16 +431,16 @@ impl Fixture {
             .isolation_classes
             .contains(&IsolationClass::SharedGuestKernel)
         {
-            aster_oci_sdk::AttachmentCapabilities::base_v4()
+            krun_oci_sdk::AttachmentCapabilities::base_v4()
         } else {
-            aster_oci_sdk::AttachmentCapabilities::base_v1()
+            krun_oci_sdk::AttachmentCapabilities::base_v1()
         };
         Self::with_profile(capability, attachment_capabilities)
     }
 
     fn with_profile(
         capability: DriverCapability,
-        attachment_capabilities: aster_oci_sdk::AttachmentCapabilities,
+        attachment_capabilities: krun_oci_sdk::AttachmentCapabilities,
     ) -> Self {
         let temporary = tempfile::tempdir().expect("temporary utility-VM fixture");
         set_private_directory(temporary.path());
@@ -628,7 +628,7 @@ pub(crate) async fn shutdown_fixture(
     let factory_dyn: Arc<dyn UtilityVmFactory> = factory;
     let driver = UtilityVmRuntimeDriver::new(
         candidate_capability(),
-        aster_oci_sdk::AttachmentCapabilities::base_v1(),
+        krun_oci_sdk::AttachmentCapabilities::base_v1(),
         "test utility VM",
         runtime_root.clone(),
         runtime_share_root.clone(),

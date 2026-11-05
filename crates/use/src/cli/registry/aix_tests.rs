@@ -1,14 +1,14 @@
 use super::*;
 use std::io::Write;
 
-const MANIFEST: &str = r#"extension "aster/sample" {
+const MANIFEST: &str = r#"extension "krun/sample" {
   schema_version = 3
   version = "1.2.3"
   route = "sample"
   requires_use = ">=0.3.0, <0.4.0"
   actions = ["read"]
   repository {
-    url = "https://github.com/aster-ai-lab/plugins"
+    url = "https://github.com/kense-labs/krun"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
   skill "guide" {
@@ -23,18 +23,18 @@ const MANIFEST: &str = r#"extension "aster/sample" {
 async fn registry_package_build_produces_a_checkable_archive_and_preserves_existing_output() {
     let temporary = tempfile::tempdir().unwrap();
     let repository = temporary.path().join("源码 repository");
-    let source = repository.join("plugins/knowledge/aster/sample");
+    let source = repository.join("plugins/knowledge/krun/sample");
     std::fs::create_dir_all(source.join("skills/guide")).unwrap();
     std::fs::write(
         repository.join("domains.acl"),
         r#"plugin_domains {
       schema_version = 1
-      domain "knowledge" { owners = ["fixture-owner"] publishers = ["aster"] }
+      domain "knowledge" { owners = ["fixture-owner"] publishers = ["krun"] }
     }"#,
     )
     .unwrap();
     for (name, bytes) in [
-        ("aster-use-extension.acl", MANIFEST),
+        ("krun-use-extension.acl", MANIFEST),
         ("README.md", "# Build fixture\nNative archive.\n"),
         ("LICENSE", "MIT\nSynthetic fixture license.\n"),
         ("skills/guide/SKILL.md", "# Guide\nUse this fixture.\n"),
@@ -54,7 +54,7 @@ async fn registry_package_build_produces_a_checkable_archive_and_preserves_exist
     assert_eq!(result.exit_code, 0);
     assert_eq!(
         result.json["data"]["aixPackage"]["packageId"],
-        "aster/sample"
+        "krun/sample"
     );
     let check = run(&[
         "package".into(),
@@ -111,7 +111,7 @@ async fn registry_package_check_validates_a_native_archive_without_installing_it
     let path = temporary.path().join("插件 sample.aix");
     let mut archive = zip::ZipWriter::new(std::fs::File::create(&path).unwrap());
     for (name, content) in [
-        ("aster-use-extension.acl", MANIFEST),
+        ("krun-use-extension.acl", MANIFEST),
         (
             "README.md",
             "# Sample plugin\nA native inspection fixture.\n",
@@ -137,7 +137,7 @@ async fn registry_package_check_validates_a_native_archive_without_installing_it
     assert_eq!(result.exit_code, 0);
     assert_eq!(
         result.json.pointer("/data/aixPackage/packageId"),
-        Some(&serde_json::json!("aster/sample"))
+        Some(&serde_json::json!("krun/sample"))
     );
     assert_eq!(
         result.json.pointer("/data/aixPackage/version"),
@@ -166,20 +166,20 @@ async fn registry_package_check_validates_a_native_archive_without_installing_it
 async fn registry_package_prepare_writes_exact_oci_bytes_and_preserves_existing_outputs() {
     let temporary = tempfile::tempdir().unwrap();
     let root = temporary.path().join("中文 repository");
-    let source = root.join("plugins/knowledge/aster/sample");
+    let source = root.join("plugins/knowledge/krun/sample");
     std::fs::create_dir_all(source.join("skills/guide")).unwrap();
     std::fs::write(
         root.join("domains.acl"),
         r#"plugin_domains {
  schema_version = 1
- domain "knowledge" { owners = ["fixture-owner"] publishers = ["aster"] }
+ domain "knowledge" { owners = ["fixture-owner"] publishers = ["krun"] }
 }"#,
     )
     .unwrap();
     let archive_path = temporary.path().join("sample.aix");
     let mut zip = zip::ZipWriter::new(std::fs::File::create(&archive_path).unwrap());
     for (name, content) in [
-        ("aster-use-extension.acl", MANIFEST),
+        ("krun-use-extension.acl", MANIFEST),
         ("README.md", "# Sample\nNative source.\n"),
         ("LICENSE", "MIT\nSynthetic fixture.\n"),
         ("skills/guide/SKILL.md", "# Guide\nUse this fixture.\n"),
@@ -213,7 +213,7 @@ async fn registry_package_prepare_writes_exact_oci_bytes_and_preserves_existing_
     );
     assert_eq!(
         result.json["data"]["aixPublication"]["ociRepository"],
-        "ghcr.io/aster-ai-lab/plugins/aster/sample"
+        "ghcr.io/kense-labs/plugins/krun/sample"
     );
     let manifest: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
     assert_eq!(

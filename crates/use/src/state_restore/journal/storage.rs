@@ -1,7 +1,7 @@
 use std::io;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::UseResult;
+use krun_use_core::UseResult;
 use serde::Serialize;
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
@@ -12,7 +12,7 @@ pub(super) async fn discard_unpublished_temporary_json(path: &Path, maximum: u64
     let temporary = temporary_json_path(path)?;
     match fs::symlink_metadata(&temporary).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file()
                 && metadata.len() <= maximum =>
         {
@@ -40,7 +40,7 @@ pub(super) async fn discard_unpublished_temporary_json(path: &Path, maximum: u64
 pub(super) async fn ensure_owned_directory(path: &Path) -> UseResult<()> {
     match fs::symlink_metadata(path).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_dir() =>
         {
             Ok(())
@@ -70,7 +70,7 @@ pub(super) async fn validate_directory_chain(root: &Path, directory: &Path) -> U
         let metadata = fs::symlink_metadata(&current)
             .await
             .map_err(|error| operation_io("inspect restore directory chain", &current, error))?;
-        if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
+        if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
             return Err(operation_invalid(
                 "A whole-installation restore directory chain is not owned.",
             ));
@@ -89,7 +89,7 @@ pub(super) async fn read_optional_json<T: serde::de::DeserializeOwned>(
         Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(None),
         Err(error) => return Err(operation_io(&format!("inspect {label}"), path, error)),
     };
-    if aster_use_core::metadata_is_link_or_reparse_point(&before)
+    if krun_use_core::metadata_is_link_or_reparse_point(&before)
         || !before.is_file()
         || before.len() == 0
         || before.len() > maximum
@@ -105,7 +105,7 @@ pub(super) async fn read_optional_json<T: serde::de::DeserializeOwned>(
         .await
         .map_err(|error| operation_io(&format!("reinspect {label}"), path, error))?;
     if after.len() != before.len()
-        || aster_use_core::metadata_is_link_or_reparse_point(&after)
+        || krun_use_core::metadata_is_link_or_reparse_point(&after)
         || !after.is_file()
         || bytes.len() as u64 != before.len()
     {
@@ -155,7 +155,7 @@ pub(super) async fn write_json<T: Serialize>(
     let target = path.to_path_buf();
     let error_target = target.clone();
     tokio::task::spawn_blocking(move || {
-        aster_use_extension::persist_temporary_replace_blocking(source, &target)
+        krun_use_extension::persist_temporary_replace_blocking(source, &target)
     })
     .await
     .map_err(|error| {
@@ -180,7 +180,7 @@ pub(super) async fn recover_temporary_json(path: &Path, maximum: u64) -> UseResu
             ))
         }
     };
-    if aster_use_core::metadata_is_link_or_reparse_point(&temp_metadata)
+    if krun_use_core::metadata_is_link_or_reparse_point(&temp_metadata)
         || !temp_metadata.is_file()
         || temp_metadata.len() == 0
         || temp_metadata.len() > maximum
@@ -191,7 +191,7 @@ pub(super) async fn recover_temporary_json(path: &Path, maximum: u64) -> UseResu
     }
     match fs::symlink_metadata(path).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file() =>
         {
             fs::remove_file(&temporary).await.map_err(|error| {
@@ -212,7 +212,7 @@ pub(super) async fn recover_temporary_json(path: &Path, maximum: u64) -> UseResu
             let target = path.to_path_buf();
             let error_target = target.clone();
             tokio::task::spawn_blocking(move || {
-                aster_use_extension::rename_path_with_windows_retry_blocking(&source, &target)
+                krun_use_extension::rename_path_with_windows_retry_blocking(&source, &target)
             })
             .await
             .map_err(|error| {
@@ -232,7 +232,7 @@ pub(super) async fn recover_temporary_json(path: &Path, maximum: u64) -> UseResu
 async fn remove_temporary(path: &Path, maximum: u64) -> UseResult<()> {
     match fs::symlink_metadata(path).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file()
                 && metadata.len() <= maximum =>
         {

@@ -1,11 +1,11 @@
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde::Serialize;
 use url::Url;
 
 pub const DEFAULT_GITHUB_REGISTRY_REF: &str = "main";
 pub const DEFAULT_GITHUB_REGISTRY_PATH: &str = "registry";
 
-/// A GitHub repository location that publishes an Aster Use Registry tree.
+/// A GitHub repository location that publishes an Krun Use Registry tree.
 ///
 /// GitHub is an authoring and static-distribution convenience only. The
 /// resulting URL is still consumed through the ordinary caller-pinned TUF
@@ -138,19 +138,19 @@ mod tests {
 
     #[test]
     fn repository_slug_maps_to_the_default_registry_tree() {
-        let repository = GitHubRegistryRepository::parse("aster-ai-lab/Use-Registry").unwrap();
+        let repository = GitHubRegistryRepository::parse("kense-labs/Use-Registry").unwrap();
 
         assert_eq!(repository.git_ref(), "main");
         assert_eq!(repository.registry_path(), "registry");
         assert_eq!(
             repository.registry_url().unwrap(),
-            "https://raw.githubusercontent.com/aster-ai-lab/Use-Registry/main/registry/"
+            "https://raw.githubusercontent.com/kense-labs/Use-Registry/main/registry/"
         );
     }
 
     #[test]
     fn explicit_ref_and_nested_registry_path_remain_canonical() {
-        let repository = GitHubRegistryRepository::parse("aster-lab/packages")
+        let repository = GitHubRegistryRepository::parse("krun-lab/packages")
             .unwrap()
             .with_git_ref("v1.2.3")
             .unwrap()
@@ -159,7 +159,7 @@ mod tests {
 
         assert_eq!(
             repository.registry_url().unwrap(),
-            "https://raw.githubusercontent.com/aster-lab/packages/v1.2.3/public/stable/"
+            "https://raw.githubusercontent.com/krun-lab/packages/v1.2.3/public/stable/"
         );
     }
 
@@ -167,9 +167,9 @@ mod tests {
     fn ambiguous_slugs_refs_and_paths_fail_closed() {
         for slug in [
             "packages",
-            "aster/packages/extra",
-            "aster/../packages",
-            "aster/packages.git",
+            "krun/packages/extra",
+            "krun/../packages",
+            "krun/packages.git",
         ] {
             assert_eq!(
                 GitHubRegistryRepository::parse(slug).unwrap_err().code,
@@ -177,7 +177,7 @@ mod tests {
             );
         }
 
-        let repository = GitHubRegistryRepository::parse("aster/packages").unwrap();
+        let repository = GitHubRegistryRepository::parse("krun/packages").unwrap();
         assert_eq!(
             repository
                 .clone()

@@ -1,4 +1,4 @@
-use aster_use_core::{DomainDiagnostic, Readiness, UseError, UseResult};
+use krun_use_core::{DomainDiagnostic, Readiness, UseError, UseResult};
 
 use crate::capability_registry::{
     snapshot as capability_registry_snapshot, wait_for_change as wait_for_capability_change,
@@ -24,7 +24,7 @@ mod knowledge;
 mod plugin;
 #[cfg(not(feature = "extensions"))]
 mod plugin {
-    use aster_use_core::{UseError, UseResult};
+    use krun_use_core::{UseError, UseResult};
 
     use super::CommandOutput;
 
@@ -41,7 +41,7 @@ mod registry;
 mod state;
 #[cfg(not(feature = "extensions"))]
 mod registry {
-    use aster_use_core::{UseError, UseResult};
+    use krun_use_core::{UseError, UseResult};
 
     use super::CommandOutput;
 
@@ -54,7 +54,7 @@ mod registry {
 }
 #[cfg(not(feature = "extensions"))]
 mod state {
-    use aster_use_core::{UseError, UseResult};
+    use krun_use_core::{UseError, UseResult};
 
     use super::CommandOutput;
 
@@ -96,10 +96,10 @@ pub async fn run_os(args: Vec<OsString>) -> UseResult<CommandOutput> {
     run(decode_args(args)?).await
 }
 
-/// Run the package CLI under the `aster use` host command, using its usage text.
+/// Run the package CLI under the `krun use` host command, using its usage text.
 /// Argument admission, worker stack, effects and cancellation follow [`run_os`].
 pub async fn run_embedded_os(args: Vec<OsString>) -> UseResult<CommandOutput> {
-    dispatch(decode_args(args)?, "aster use").await
+    dispatch(decode_args(args)?, "krun use").await
 }
 
 fn decode_args(args: Vec<OsString>) -> UseResult<Vec<String>> {
@@ -117,7 +117,7 @@ fn decode_args(args: Vec<OsString>) -> UseResult<Vec<String>> {
 }
 
 pub async fn run(args: Vec<String>) -> UseResult<CommandOutput> {
-    dispatch(args, "aster-use").await
+    dispatch(args, "krun-use").await
 }
 
 async fn dispatch(args: Vec<String>, invocation: &'static str) -> UseResult<CommandOutput> {
@@ -143,14 +143,14 @@ async fn dispatch(args: Vec<String>, invocation: &'static str) -> UseResult<Comm
         "mcp" => mcp(&args[1..]).await,
         route => Err(
             UseError::new("use.route_unknown", format!("Unknown Use route '{route}'."))
-                .with_suggestion("Run 'aster use capabilities --json'."),
+                .with_suggestion("Run 'krun use capabilities --json'."),
         ),
     }
 }
 
 fn version() -> CommandOutput {
     CommandOutput {
-        human: format!("aster-use {}", env!("CARGO_PKG_VERSION")),
+        human: format!("krun-use {}", env!("CARGO_PKG_VERSION")),
         json: serde_json::json!({
             "schemaVersion": 1,
             "ok": true,
@@ -167,51 +167,51 @@ fn version() -> CommandOutput {
 fn help(invocation: &str) -> CommandOutput {
     CommandOutput::success(
         concat!(
-            "aster-use — AI Native Package Manager\n\n",
+            "krun-use — AI Native Package Manager\n\n",
             "usage:\n",
-            "  aster-use capabilities [--json]\n",
-            "  aster-use capability snapshot [--json]\n",
-            "  aster-use capability watch [--after-generation <n>] [--after-revision <sha256>] [--timeout-ms <ms>] [--json]\n",
-            "  aster-use doctor [--json]\n",
-            "  aster-use registry package build <source-directory> --output <package.aix> [--json]\n",
-            "  aster-use registry package check <package.aix> [--json]\n",
-            "  aster-use registry package prepare <package.aix> --repository <path> --domain <domain> --output <manifest.json> [--json]\n",
-            "  aster-use install <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--registry-name <name>] [--offline] [--json]\n",
-            "  aster-use upgrade <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--registry-name <name>] [--offline] [--json]\n",
-            "  aster-use uninstall <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
-            "  aster-use component list|status|install|upgrade|uninstall [args] [--json]\n",
-            "  aster-use plugin search|inspect [args] [--json]\n",
-            "  aster-use plugin list-installed|status --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
-            "  aster-use plugin plan-install|plan-upgrade|plan-uninstall --scope-id <id> [--scope-kind <user|workspace>] [args] [--json]\n",
-            "  aster-use plugin plan-enable|plan-disable <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
-            "  aster-use plugin apply-plan --operation-id <id> --plan-digest <sha256> --scope-id <id> [--scope-kind <user|workspace>] --yes [--json]\n",
-            "  aster-use knowledge search <query> [--limit <n>] [--json]\n",
-            "  aster-use knowledge usage [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge audit [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge backup <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge verify-backup <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge backup-retention <directory> [--max-backups <n>] [--max-bytes <n>] [--plan-digest <sha256> --yes] [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge plan-restore <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge restore <path> --plan-digest <sha256> --yes [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge restore-status [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use knowledge repair-search-index --yes [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
-            "  aster-use registry source list [--json]\n",
-            "  aster-use registry source add <name> (--url <https-url> | --github <owner/repository>) --trust-root <sha256> [source options] [--json]\n",
-            "  aster-use registry source replace <name> (--url <https-url> | --github <owner/repository>) --trust-root <sha256> --expected-revision <sha256> --yes [source options] [--json]\n",
-            "  aster-use registry source default|enable|disable|remove <name> --expected-revision <sha256> --yes [--json]\n",
-            "  aster-use registry cache usage [--registry-name <name>] [--json]\n",
-            "  aster-use registry cache prune [--registry-name <name>] [cache options] --yes [--json]\n",
-            "  aster-use state backup <path> [--json]\n",
-            "  aster-use state verify-backup <path> [--json]\n",
-            "  aster-use state backup-retention <directory> [--max-backups <n>] [--max-bytes <n>] [--plan-digest <sha256> --yes] [--json]\n",
-            "  aster-use state plan-restore <backup> [--json]\n",
-            "  aster-use state restore <backup> --rollback-backup <external-path> --plan-digest <sha256> --yes [--json]\n",
-            "  aster-use state restore-status [--json]\n",
-            "  aster-use extension list|inspect|doctor [args] [--json]\n",
-            "  aster-use extension diagnose <publisher/name> [--history] --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
-            "  aster-use extension planning-evidence <publisher/name> [--json]\n",
-            "  aster-use extension snapshot|watch [--after-generation <n>] [--timeout-ms <ms>] [--json]\n",
-        ).replace("aster-use", invocation),
+            "  krun-use capabilities [--json]\n",
+            "  krun-use capability snapshot [--json]\n",
+            "  krun-use capability watch [--after-generation <n>] [--after-revision <sha256>] [--timeout-ms <ms>] [--json]\n",
+            "  krun-use doctor [--json]\n",
+            "  krun-use registry package build <source-directory> --output <package.aix> [--json]\n",
+            "  krun-use registry package check <package.aix> [--json]\n",
+            "  krun-use registry package prepare <package.aix> --repository <path> --domain <domain> --output <manifest.json> [--json]\n",
+            "  krun-use install <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--registry-name <name>] [--offline] [--json]\n",
+            "  krun-use upgrade <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--registry-name <name>] [--offline] [--json]\n",
+            "  krun-use uninstall <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
+            "  krun-use component list|status|install|upgrade|uninstall [args] [--json]\n",
+            "  krun-use plugin search|inspect [args] [--json]\n",
+            "  krun-use plugin list-installed|status --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
+            "  krun-use plugin plan-install|plan-upgrade|plan-uninstall --scope-id <id> [--scope-kind <user|workspace>] [args] [--json]\n",
+            "  krun-use plugin plan-enable|plan-disable <publisher/name> --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
+            "  krun-use plugin apply-plan --operation-id <id> --plan-digest <sha256> --scope-id <id> [--scope-kind <user|workspace>] --yes [--json]\n",
+            "  krun-use knowledge search <query> [--limit <n>] [--json]\n",
+            "  krun-use knowledge usage [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge audit [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge backup <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge verify-backup <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge backup-retention <directory> [--max-backups <n>] [--max-bytes <n>] [--plan-digest <sha256> --yes] [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge plan-restore <path> [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge restore <path> --plan-digest <sha256> --yes [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge restore-status [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use knowledge repair-search-index --yes [--scope-kind <user|workspace>] [--scope-id <id>] [--json]\n",
+            "  krun-use registry source list [--json]\n",
+            "  krun-use registry source add <name> (--url <https-url> | --github <owner/repository>) --trust-root <sha256> [source options] [--json]\n",
+            "  krun-use registry source replace <name> (--url <https-url> | --github <owner/repository>) --trust-root <sha256> --expected-revision <sha256> --yes [source options] [--json]\n",
+            "  krun-use registry source default|enable|disable|remove <name> --expected-revision <sha256> --yes [--json]\n",
+            "  krun-use registry cache usage [--registry-name <name>] [--json]\n",
+            "  krun-use registry cache prune [--registry-name <name>] [cache options] --yes [--json]\n",
+            "  krun-use state backup <path> [--json]\n",
+            "  krun-use state verify-backup <path> [--json]\n",
+            "  krun-use state backup-retention <directory> [--max-backups <n>] [--max-bytes <n>] [--plan-digest <sha256> --yes] [--json]\n",
+            "  krun-use state plan-restore <backup> [--json]\n",
+            "  krun-use state restore <backup> --rollback-backup <external-path> --plan-digest <sha256> --yes [--json]\n",
+            "  krun-use state restore-status [--json]\n",
+            "  krun-use extension list|inspect|doctor [args] [--json]\n",
+            "  krun-use extension diagnose <publisher/name> [--history] --scope-id <id> [--scope-kind <user|workspace>] [--json]\n",
+            "  krun-use extension planning-evidence <publisher/name> [--json]\n",
+            "  krun-use extension snapshot|watch [--after-generation <n>] [--timeout-ms <ms>] [--json]\n",
+        ).replace("krun-use", invocation),
         serde_json::json!({
             "commands": [
                 "capabilities",
@@ -310,7 +310,7 @@ async fn doctor(domain: Option<&str>) -> UseResult<CommandOutput> {
                     format!("Unknown domain '{value}'."),
                 )
                 .with_suggestion(
-                    "Install the external capability or run 'aster use capabilities --json'.",
+                    "Install the external capability or run 'krun use capabilities --json'.",
                 ))
             }
         },
@@ -404,12 +404,12 @@ fn extension_diagnostic(extension: &crate::extension_cli::ExtensionView) -> Doma
         (
             Readiness::Broken,
             format!(
-                "Extension '{}' {} is incompatible with Aster Use {}.",
+                "Extension '{}' {} is incompatible with Krun Use {}.",
                 extension.package_id,
                 extension.version,
                 env!("CARGO_PKG_VERSION")
             ),
-            vec!["Install a compatible extension version or update Aster Use.".to_string()],
+            vec!["Install a compatible extension version or update Krun Use.".to_string()],
         )
     } else if extension.enabled {
         (
@@ -451,7 +451,7 @@ fn builtin_presence(_id: &str) -> &'static str {
 fn removed_builtin(id: &str) -> UseError {
     UseError::new(
         "use.builtin_removed",
-        format!("Built-in route '{id}' has been removed from aster-use."),
+        format!("Built-in route '{id}' has been removed from krun-use."),
     )
 }
 
@@ -621,10 +621,10 @@ fn validate_extension_diagnostic_options(args: &[String]) -> UseResult<()> {
     Ok(())
 }
 
-fn managed_scope_argument(args: &[String]) -> UseResult<aster_use_core::PlanScope> {
+fn managed_scope_argument(args: &[String]) -> UseResult<krun_use_core::PlanScope> {
     let kind = match option_argument(args, "--scope-kind")?.unwrap_or("user") {
-        "user" => aster_use_core::PlanScopeKind::User,
-        "workspace" => aster_use_core::PlanScopeKind::Workspace,
+        "user" => krun_use_core::PlanScopeKind::User,
+        "workspace" => krun_use_core::PlanScopeKind::Workspace,
         value => {
             return Err(usage_error(format!(
                 "--scope-kind must be 'user' or 'workspace', received '{value}'"
@@ -633,7 +633,7 @@ fn managed_scope_argument(args: &[String]) -> UseResult<aster_use_core::PlanScop
     };
     let scope_id = option_argument(args, "--scope-id")?
         .ok_or_else(|| usage_error("--scope-id is required"))?;
-    Ok(aster_use_core::PlanScope {
+    Ok(krun_use_core::PlanScope {
         kind,
         id: scope_id.to_owned(),
     })

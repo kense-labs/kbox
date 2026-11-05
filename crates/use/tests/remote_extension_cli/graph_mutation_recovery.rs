@@ -3,8 +3,8 @@ use super::*;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
-use aster_use::package::ReviewedPackageAuthorizationProvider;
-use aster_use_core::{
+use krun_use::package::ReviewedPackageAuthorizationProvider;
+use krun_use_core::{
     PlanPolicyDecision, PluginOperationConfirmation, PLUGIN_OPERATION_CONFIRMATION_SCHEMA,
 };
 

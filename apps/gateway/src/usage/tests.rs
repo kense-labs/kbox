@@ -286,7 +286,7 @@ async fn probe_activation_write_probe_leaves_no_untracked_artifact() {
             entry
                 .file_name()
                 .to_string_lossy()
-                .starts_with(".aster-usage-spool-activation-probe.")
+                .starts_with(".krun-usage-spool-activation-probe.")
         });
     assert!(
         !leftover,

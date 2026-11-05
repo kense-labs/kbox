@@ -85,13 +85,13 @@ services "model-service" {{
 }}
 
 inference {{
-  tokenizer_revision = "aster.gateway.tokenizer.v1"
+  tokenizer_revision = "krun.gateway.tokenizer.v1"
   expires_at = "2099-01-01T00:00:00Z"
 
   credentials "{CREDENTIAL_ID}" {{
     environment_id = "{ENVIRONMENT_ID}"
     audience = "cloud-inference"
-    prefix = "aster_inf_abc12345"
+    prefix = "krun_inf_abc12345"
     verifier_hash = "{VERIFIER_HASH}"
     generation = 7
     expires_at = "2098-12-31T23:00:00Z"

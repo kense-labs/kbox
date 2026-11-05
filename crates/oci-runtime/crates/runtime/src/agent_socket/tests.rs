@@ -2,19 +2,19 @@ use std::path::Path;
 use std::process::Stdio;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     serve_agent_connection, AgentCapabilities, AgentClient, AgentCreateRequest, AgentDeleteRequest,
     AgentKillRequest, AgentOperation, AgentStartRequest, AgentState, AgentStateRequest,
     AgentVsockEndpoint, GuestAgentService, SessionToken, AGENT_PROTOCOL_VERSION_MAX,
 };
-use aster_oci_sdk::{async_trait, Error, ErrorCode, Result};
+use krun_oci_sdk::{async_trait, Error, ErrorCode, Result};
 use tokio::process::{Child, Command};
 
 use super::{UnixAgentSocketListener, PRIVATE_DIRECTORY_MODE, PRIVATE_SOCKET_MODE};
 
-const CHILD_SOCKET_ENV: &str = "ASTER_OCI_TEST_AGENT_SOCKET";
-const CHILD_TOKEN_ENV: &str = "ASTER_OCI_TEST_AGENT_TOKEN";
-const CHILD_EXPECT_REJECTION_ENV: &str = "ASTER_OCI_TEST_EXPECT_REJECTION";
+const CHILD_SOCKET_ENV: &str = "KRUN_OCI_TEST_AGENT_SOCKET";
+const CHILD_TOKEN_ENV: &str = "KRUN_OCI_TEST_AGENT_TOKEN";
+const CHILD_EXPECT_REJECTION_ENV: &str = "KRUN_OCI_TEST_EXPECT_REJECTION";
 const CHILD_TEST_NAME: &str = "agent_socket::tests::agent_socket_child";
 
 #[derive(Debug)]

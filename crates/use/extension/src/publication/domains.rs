@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::Path;
 
-use aster_acl::{Block, Value};
-use aster_use_core::UseResult;
+use krun_acl::{Block, Value};
+use krun_use_core::UseResult;
 use tokio::fs;
 use tokio::io::AsyncReadExt;
 
@@ -16,7 +16,7 @@ pub(super) async fn admit(root: &Path, selected: &str, publisher: &str) -> UseRe
     let metadata = fs::symlink_metadata(&path)
         .await
         .map_err(|error| io_error("inspect plugin domain policy", &path, error))?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
         return Err(invalid("Plugin domain policy must be a regular file."));
     }
     let mut input = Vec::new();
@@ -38,7 +38,7 @@ pub(super) async fn admit(root: &Path, selected: &str, publisher: &str) -> UseRe
 }
 
 fn parse(text: &str, selected: &str, publisher: &str) -> UseResult<Vec<String>> {
-    let document = aster_acl::parse_acl(text)
+    let document = krun_acl::parse_acl(text)
         .map_err(|error| invalid(format!("Invalid plugin domain ACL: {error}")))?;
     let [root] = document.blocks.as_slice() else {
         return Err(invalid("Domain policy requires one plugin_domains block."));

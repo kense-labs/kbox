@@ -2,7 +2,7 @@
 
 use std::{collections::BTreeMap, path::Path};
 
-use aster_box_core::{
+use krun_box_core::{
     compose::ComposeConfig, CreateExecutionRequest, ExecutionIsolation, ExecutionRecordPolicy,
 };
 use sha2::{Digest, Sha256};
@@ -10,11 +10,11 @@ use thiserror::Error;
 
 use crate::ComposeRuntimePlan;
 
-pub const SCALE_MANAGED_LABEL: &str = "com.aster.scale.managed";
-pub const SCALE_SERVICE_LABEL: &str = "com.aster.scale.service";
-pub const SCALE_SLOT_LABEL: &str = "com.aster.scale.slot";
-pub const SCALE_TEMPLATE_DIGEST_LABEL: &str = "com.aster.scale.template-digest";
-pub const SCALE_GUEST_PORT_LABEL: &str = "com.aster.scale.guest-port";
+pub const SCALE_MANAGED_LABEL: &str = "com.krun.scale.managed";
+pub const SCALE_SERVICE_LABEL: &str = "com.krun.scale.service";
+pub const SCALE_SLOT_LABEL: &str = "com.krun.scale.slot";
+pub const SCALE_TEMPLATE_DIGEST_LABEL: &str = "com.krun.scale.template-digest";
+pub const SCALE_GUEST_PORT_LABEL: &str = "com.krun.scale.guest-port";
 
 #[derive(Debug, Error)]
 pub enum ScaleCatalogError {
@@ -166,7 +166,7 @@ fn validate_stateless_templates(config: &ComposeConfig) -> Result<(), ScaleCatal
 
 fn service_guest_port(
     name: &str,
-    service: &aster_box_core::compose::ServiceConfig,
+    service: &krun_box_core::compose::ServiceConfig,
 ) -> Result<Option<u16>, ScaleCatalogError> {
     let [entry] = service.ports.as_slice() else {
         return if service.ports.is_empty() {
@@ -177,7 +177,7 @@ fn service_guest_port(
             )))
         };
     };
-    let mapping = aster_box_core::parse_port_mapping(entry).map_err(ScaleCatalogError::Invalid)?;
+    let mapping = krun_box_core::parse_port_mapping(entry).map_err(ScaleCatalogError::Invalid)?;
     if mapping.host_port != 0 {
         return Err(ScaleCatalogError::Invalid(format!(
             "service {name:?} publishes fixed host port {}; use 0:{} for a runtime-discovered endpoint",
@@ -193,14 +193,14 @@ mod tests {
 
     const CATALOG: &str = r#"
         service "worker" {
-            image       = "ghcr.io/aster-lab/worker:v1"
+            image       = "ghcr.io/krun-lab/worker:v1"
             command     = ["serve", "--port", "8080"]
             environment = { MODE = "production" }
             cpus        = 2
             mem_limit   = "768m"
         }
         service "api" {
-            image = "ghcr.io/aster-lab/api:v2"
+            image = "ghcr.io/krun-lab/api:v2"
         }
     "#;
 

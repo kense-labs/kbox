@@ -6,7 +6,7 @@
 
 use std::time::{Duration, Instant};
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// Configuration for periodic re-attestation.

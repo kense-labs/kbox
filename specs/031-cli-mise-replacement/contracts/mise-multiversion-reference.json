@@ -28,11 +28,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/0/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/0/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -41,18 +41,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/0/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/0/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/0/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/0/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "use",
             "--pin",
             "fixture@1.0.0",
@@ -60,23 +60,23 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/0/project/mise.toml tools: fixture@1.0.0, fixture@2.0.0\n",
+          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/0/project/mise.toml tools: fixture@1.0.0, fixture@2.0.0\n",
           "stderr": "mise by @jdx – installing 2 tools\nmise ✓ fixture@1.0.0  825ms\nmise ✓ fixture@2.0.0  848ms\nmise ████████████████ 2/2 · installed 2 tools in 849ms\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "which",
             "fixture"
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/0/data/installs/fixture/1.0.0/bin/fixture\n",
+          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/0/data/installs/fixture/1.0.0/bin/fixture\n",
           "stderr": ""
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
@@ -123,11 +123,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/1/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/1/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -136,18 +136,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/1/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/1/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/1/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/1/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "use",
             "--pin",
             "fixture@2.0.0",
@@ -155,23 +155,23 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/1/project/mise.toml tools: fixture@2.0.0, fixture@1.0.0\n",
+          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/1/project/mise.toml tools: fixture@2.0.0, fixture@1.0.0\n",
           "stderr": "mise by @jdx – installing 2 tools\nmise ✓ fixture@1.0.0  1.6s\nmise ✓ fixture@2.0.0  1.6s\nmise ████████████████ 2/2 · installed 2 tools in 1.6s\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "which",
             "fixture"
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/1/data/installs/fixture/2.0.0/bin/fixture\n",
+          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/1/data/installs/fixture/2.0.0/bin/fixture\n",
           "stderr": ""
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
@@ -219,11 +219,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/2/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/2/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -232,18 +232,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/2/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/2/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/2/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/2/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture"
           ],
@@ -254,18 +254,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "which",
             "fixture"
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/2/data/installs/fixture/1.0.0/bin/fixture\n",
+          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/2/data/installs/fixture/1.0.0/bin/fixture\n",
           "stderr": ""
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
@@ -312,11 +312,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/3/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/3/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -325,18 +325,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/3/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/3/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/3/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/3/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "use",
             "--pin",
             "fixture@1.0.0",
@@ -344,23 +344,23 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/3/project/mise.toml tools: fixture@1.0.0\n",
+          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/3/project/mise.toml tools: fixture@1.0.0\n",
           "stderr": "mise by @jdx – installing 1 tool\nmise ✓ fixture@1.0.0  897ms\nmise ████████████████ 1/1 · installed 1 tool in 902ms\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "which",
             "fixture"
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/3/data/installs/fixture/1.0.0/bin/fixture\n",
+          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/3/data/installs/fixture/1.0.0/bin/fixture\n",
           "stderr": ""
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
@@ -403,11 +403,11 @@
       "commands": [
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/4/plugin"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/4/plugin"
           ],
           "status": "returned",
           "exit": 0,
@@ -416,18 +416,18 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/4/project/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/4/project/mise.toml"
           ],
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/4/project/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/4/project/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "use",
             "--pin",
             "fixture@1.0.0",
@@ -435,23 +435,23 @@
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/4/project/mise.toml tools: fixture@1.0.0, fixture@2.0.0\n",
+          "stdout": "mise /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/4/project/mise.toml tools: fixture@1.0.0, fixture@2.0.0\n",
           "stderr": "mise by @jdx – installing 2 tools\nmise ✓ fixture@1.0.0  707ms\nmise ✓ fixture@2.0.0  724ms\nmise ████████████████ 2/2 · installed 2 tools in 725ms\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "which",
             "fixture-extra"
           ],
           "status": "returned",
           "exit": 0,
-          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster 多版本 mise whk15dqs/4/data/installs/fixture/2.0.0/bin/fixture-extra\n",
+          "stdout": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun 多版本 mise whk15dqs/4/data/installs/fixture/2.0.0/bin/fixture-extra\n",
           "stderr": ""
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture-extra"

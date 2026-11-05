@@ -1,12 +1,12 @@
-# Aster Cloud complete Gateway snapshot regression fixture.
-entrypoints "aster-cloud-http" {
+# Krun Cloud complete Gateway snapshot regression fixture.
+entrypoints "krun-cloud-http" {
   address = "127.0.0.1:18080"
 }
 
 routers "route-018f0f847dc77000a000000000000001" {
   rule = "Host(`api.example.com`) && PathPrefix(`/v1`)"
   service = "route-018f0f847dc77000a000000000000001"
-  entrypoints = ["aster-cloud-http"]
+  entrypoints = ["krun-cloud-http"]
 }
 
 services "route-018f0f847dc77000a000000000000001" {
@@ -21,6 +21,6 @@ management {
   enabled = true
   address = "127.0.0.1:19090"
   path_prefix = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_ADMIN_TOKEN"
   allowed_ips = ["127.0.0.1", "::1"]
 }

@@ -573,7 +573,7 @@ impl TokenBudgetBody {
         if let Some(attribution) = self.attribution.take() {
             let usage = usage.unwrap_or_default();
             tracing::info!(
-                target: "aster_gateway::usage",
+                target: "krun_gateway::usage",
                 subject = %attribution.subject.subject,
                 org = attribution.subject.org.as_deref().unwrap_or(""),
                 model = %attribution.model,

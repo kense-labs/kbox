@@ -1,11 +1,11 @@
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::ErrorCode;
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::ErrorCode;
 use serde::{Deserialize, Serialize};
 
 use crate::AgentVmSmokeReport;
 
 /// Schema emitted by the real utility-VM Guest isolation diagnostic.
-pub const OCI_VM_GUEST_ISOLATION_SMOKE_SCHEMA_VERSION: &str = "aster.oci.oci-vm-guest-isolation.v1";
+pub const OCI_VM_GUEST_ISOLATION_SMOKE_SCHEMA_VERSION: &str = "krun.oci.oci-vm-guest-isolation.v1";
 /// Exact number of negative isolation boundaries qualified by one run.
 pub const OCI_VM_GUEST_ISOLATION_CASE_COUNT: usize = 10;
 
@@ -170,7 +170,7 @@ impl OciVmGuestIsolationSmokeReport {
 
 #[cfg(test)]
 mod tests {
-    use aster_oci_sdk::ErrorCode;
+    use krun_oci_sdk::ErrorCode;
 
     use super::OciVmGuestIsolationCaseEvidence;
 

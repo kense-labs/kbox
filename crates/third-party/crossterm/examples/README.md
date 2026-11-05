@@ -1,6 +1,12 @@
-![Lines of Code][s7] [![MIT][s2]][l2] [![Join us on Discord][s5]][l5]
-
 # Crossterm Examples
+
+## 概述
+
+本目录保存 crates/third-party/crossterm/examples 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
 
 The examples are compatible with the latest release.  
 

@@ -8,17 +8,17 @@ use std::path::Path;
 
 use tonic::Status;
 
-use aster_box_core::config::ResourceLimits;
-use aster_box_runtime::oci::OciImageConfig;
-use aster_box_runtime::resize::ResourceUpdate;
-use aster_box_runtime::vm::VmManager;
+use krun_box_core::config::ResourceLimits;
+use krun_box_runtime::oci::OciImageConfig;
+use krun_box_runtime::resize::ResourceUpdate;
+use krun_box_runtime::vm::VmManager;
 
 use crate::container::{Container, ContainerMount, ContainerState};
 use crate::cri_api::*;
 use crate::sandbox::{PodSandbox, SandboxState};
 
-pub(super) const ANN_POD_IP: &str = "aster.box/pod-ip";
-pub(super) const ANN_ADDITIONAL_POD_IPS: &str = "aster.box/additional-pod-ips";
+pub(super) const ANN_POD_IP: &str = "krun.box/pod-ip";
+pub(super) const ANN_ADDITIONAL_POD_IPS: &str = "krun.box/additional-pod-ips";
 const DEFAULT_STOP_CONTAINER_WAIT_SECS: u64 = 10;
 
 pub(super) struct ResolvedContainerImage {
@@ -310,7 +310,7 @@ pub(super) fn resource_update_from_cri(
         update.limits.cpuset_cpus = Some(linux.cpuset_cpus.clone());
     }
 
-    aster_box_runtime::resize::validate_update_values(&update)
+    krun_box_runtime::resize::validate_update_values(&update)
         .map_err(|error| Status::invalid_argument(error.to_string()))?;
     Ok(update)
 }
@@ -524,7 +524,7 @@ pub(super) fn stop_container_timeout_ms(timeout_seconds: i64) -> Result<Option<u
 /// release and could schedule a much shorter kill than the caller asked for.
 pub(super) fn exec_sync_timeout_ns(timeout_seconds: i64) -> Result<u64, Status> {
     if timeout_seconds <= 0 {
-        return Ok(aster_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS);
+        return Ok(krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS);
     }
     (timeout_seconds as u64)
         .checked_mul(1_000_000_000)
@@ -634,7 +634,7 @@ mod tests {
             labels: HashMap::from([("tier".to_string(), "backend".to_string())]),
             annotations: HashMap::from([("owner".to_string(), "tests".to_string())]),
             log_directory: "/var/log/pods".to_string(),
-            runtime_handler: "aster".to_string(),
+            runtime_handler: "krun".to_string(),
             network_ip: "10.0.0.2".to_string(),
             additional_ips: vec![],
             dns: Default::default(),
@@ -849,7 +849,7 @@ mod tests {
         let mut file_image_path = test_container("file-image", ContainerState::Created);
         file_image_path.resolved_image_path = image_file.to_string_lossy().to_string();
         file_image_path.rootfs_path = tmp.path().join("rootfs").to_string_lossy().to_string();
-        file_image_path.rootfs_guest_path = "/run/aster/rootfs".to_string();
+        file_image_path.rootfs_guest_path = "/run/krun/rootfs".to_string();
         let err = ensure_container_image_available(&file_image_path)
             .await
             .unwrap_err();
@@ -861,7 +861,7 @@ mod tests {
         let mut missing_rootfs = test_container("missing-rootfs", ContainerState::Created);
         missing_rootfs.resolved_image_path = image_dir.to_string_lossy().to_string();
         missing_rootfs.rootfs_path.clear();
-        missing_rootfs.rootfs_guest_path = "/run/aster/rootfs".to_string();
+        missing_rootfs.rootfs_guest_path = "/run/krun/rootfs".to_string();
         let err = ensure_container_image_available(&missing_rootfs)
             .await
             .unwrap_err();
@@ -873,7 +873,7 @@ mod tests {
         let mut available = test_container("available", ContainerState::Created);
         available.resolved_image_path = image_dir.to_string_lossy().to_string();
         available.rootfs_path = rootfs_dir.to_string_lossy().to_string();
-        available.rootfs_guest_path = "/run/aster/rootfs".to_string();
+        available.rootfs_guest_path = "/run/krun/rootfs".to_string();
         assert!(ensure_container_image_available(&available).await.is_ok());
     }
 
@@ -927,7 +927,7 @@ mod tests {
             PodSandboxState::try_from(ready.state).unwrap(),
             PodSandboxState::SandboxReady
         );
-        assert_eq!(ready.runtime_handler, "aster");
+        assert_eq!(ready.runtime_handler, "krun");
         assert_eq!(ready.labels.get("tier"), Some(&"backend".to_string()));
         assert_eq!(ready.annotations.get("owner"), Some(&"tests".to_string()));
 
@@ -955,11 +955,11 @@ mod tests {
 
         assert_eq!(
             exec_sync_timeout_ns(0).unwrap(),
-            aster_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
+            krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
         );
         assert_eq!(
             exec_sync_timeout_ns(-1).unwrap(),
-            aster_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
+            krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
         );
         assert_eq!(exec_sync_timeout_ns(5).unwrap(), 5_000_000_000);
         let overflow = exec_sync_timeout_ns(i64::MAX).unwrap_err();

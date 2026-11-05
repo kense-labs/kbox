@@ -3,8 +3,8 @@
 use std::io::Write;
 use std::time::Duration;
 
-use aster_use_core::{UseError, UseResult};
-use aster_use_extension::{
+use krun_use_core::{UseError, UseResult};
+use krun_use_extension::{
     prepare_remote_package, ExtensionLifecycleIdentity, ExtensionLifecyclePackage, ExtensionPaths,
     ExtensionRegistry, GitHubRegistryRepository, TrustedRegistry,
 };
@@ -14,7 +14,7 @@ use crate::assets::{
 };
 use crate::config::MODEL_FAMILY;
 
-const PACKAGE: &str = "aster/aster-ocr";
+const PACKAGE: &str = "krun/krun-ocr";
 const OFFICIAL_ROOT: &str = "e1cf8be656c072939721b765eef12a597c668fe9c33cc0de2379370d3879ae9b";
 
 /// Install the complete official OCR AIX plugin, including its engine and models.
@@ -24,8 +24,8 @@ pub async fn install_ppocr_v6(force: bool) -> UseResult<OcrRuntimeStatus> {
     let paths = ExtensionPaths::from_env()?;
     let registry = ExtensionRegistry::new(paths);
     let source = TrustedRegistry::new(
-        "aster-official",
-        GitHubRegistryRepository::parse("aster-ai-lab/plugins")?.registry_url()?,
+        "krun-official",
+        GitHubRegistryRepository::parse("kense-labs/plugins")?.registry_url()?,
         OFFICIAL_ROOT,
         None,
         managed_root()?.join("registry"),
@@ -49,7 +49,7 @@ pub async fn install_ppocr_v6(force: bool) -> UseResult<OcrRuntimeStatus> {
                     .map(|s| s.trim_start_matches("sha256:"))
                     == Some(current.receipt.manifest_sha256.as_str())
         }) {
-            if let Some(lease) = registry.acquire_published_route("aster-ocr").await? {
+            if let Some(lease) = registry.acquire_published_route("krun-ocr").await? {
                 if lease.extension().receipt == current.receipt {
                     return register_models(
                         current
@@ -140,7 +140,7 @@ async fn register_models(models: std::path::PathBuf) -> UseResult<OcrRuntimeStat
             .write_all(&serde_json::to_vec(&models).map_err(install_error)?)
             .map_err(install_error)?;
         temporary.as_file().sync_all().map_err(install_error)?;
-        aster_use_extension::persist_temporary_replace_blocking(
+        krun_use_extension::persist_temporary_replace_blocking(
             temporary.into_temp_path().keep().map_err(install_error)?,
             &root.join(RECEIPT_FILE),
         )

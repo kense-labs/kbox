@@ -10,7 +10,7 @@ extension "acme/spa" {
   actions        = ["read"]
 
   repository {
-    url = "https://github.com/aster-ai-lab/Use-Registry"
+    url = "https://github.com/kense-labs/krun"
   }
 
   ui "panel" {
@@ -36,7 +36,7 @@ fn write_spa(root: &std::path::Path) {
 async fn complete_ui_inventory_retains_notices_without_advertising_them_as_web_assets() {
     let temp = tempfile::tempdir().unwrap();
     write_spa(temp.path());
-    std::fs::write(temp.path().join("aster-use-extension.acl"), SPA).unwrap();
+    std::fs::write(temp.path().join("krun-use-extension.acl"), SPA).unwrap();
     for (path, bytes) in [
         (
             "ui/panel/THIRD_PARTY_NOTICES.md",

@@ -176,7 +176,7 @@ pub mod windows_security;
 mod windows_service;
 
 #[cfg(target_os = "linux")]
-pub use aster_oci_agent::RootlessDevicePolicyBootstrap;
+pub use krun_oci_agent::RootlessDevicePolicyBootstrap;
 #[cfg(not(target_os = "linux"))]
 #[derive(Debug)]
 pub struct RootlessDevicePolicyBootstrap {
@@ -204,9 +204,6 @@ pub use agent_smoke::qualify_kvm_post_probe_failure;
 pub use agent_socket::LinuxAgentSocketListener;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 pub use agent_socket::MacosAgentSocketListener;
-pub use aster_oci_agent_protocol::{
-    AgentTransportFaultStage, AgentTransportOperationStage, AgentTransportShutdownStage,
-};
 pub use box_whpx_service::{
     serve_box_whpx_qualification, BoxWhpxServiceConfig, BOX_WHPX_SERVICE_READY_SCHEMA_VERSION,
 };
@@ -229,6 +226,9 @@ pub use guest_isolation_report::{
 };
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 pub use hvf_driver::{HvfRuntimeDriver, HvfRuntimeDriverConfig};
+pub use krun_oci_agent_protocol::{
+    AgentTransportFaultStage, AgentTransportOperationStage, AgentTransportShutdownStage,
+};
 #[cfg(all(
     target_os = "linux",
     any(target_arch = "x86_64", target_arch = "aarch64")
@@ -441,7 +441,7 @@ pub use whpx_recovery_smoke::{
 #[cfg(windows)]
 pub use windows_service::WindowsHostService;
 
-use aster_oci_core::RuntimeFeatures;
+use krun_oci_core::RuntimeFeatures;
 
 /// Inspect runtime drivers without claiming unsupported workload capability.
 #[must_use]

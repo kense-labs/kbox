@@ -3,8 +3,8 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::ExecutionProcessSignal;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::ExecutionProcessSignal;
 use tokio::io::AsyncWriteExt;
 use tokio::sync::Mutex;
 
@@ -75,8 +75,8 @@ enum SpawnMainAttempt {
     Rejected(String),
 }
 
-type ExecFrameReader = aster_transport::FrameReader<tokio::io::ReadHalf<ExecStream>>;
-type ExecFrameWriter = aster_transport::FrameWriter<tokio::io::WriteHalf<ExecStream>>;
+type ExecFrameReader = krun_transport::FrameReader<tokio::io::ReadHalf<ExecStream>>;
+type ExecFrameWriter = krun_transport::FrameWriter<tokio::io::WriteHalf<ExecStream>>;
 
 async fn connect_exec_stream(path: &Path) -> std::io::Result<ExecStream> {
     #[cfg(unix)]
@@ -132,23 +132,23 @@ fn is_ambiguous_filesystem_transport(error: &BoxError) -> bool {
         || message.contains("connection failed")
 }
 
-fn is_idempotent_filesystem_op(op: &aster_box_core::FilesystemOp) -> bool {
+fn is_idempotent_filesystem_op(op: &krun_box_core::FilesystemOp) -> bool {
     matches!(
         op,
-        aster_box_core::FilesystemOp::Stat | aster_box_core::FilesystemOp::ListDir
+        krun_box_core::FilesystemOp::Stat | krun_box_core::FilesystemOp::ListDir
     )
 }
 
-fn is_mutating_filesystem_op(op: &aster_box_core::FilesystemOp) -> bool {
+fn is_mutating_filesystem_op(op: &krun_box_core::FilesystemOp) -> bool {
     matches!(
         op,
-        aster_box_core::FilesystemOp::MakeDir
-            | aster_box_core::FilesystemOp::Move
-            | aster_box_core::FilesystemOp::Remove
+        krun_box_core::FilesystemOp::MakeDir
+            | krun_box_core::FilesystemOp::Move
+            | krun_box_core::FilesystemOp::Remove
     )
 }
 
-fn has_filesystem_request_id(request: &aster_box_core::FilesystemRequest) -> bool {
+fn has_filesystem_request_id(request: &krun_box_core::FilesystemRequest) -> bool {
     request
         .request_id
         .as_ref()
@@ -158,7 +158,7 @@ fn has_filesystem_request_id(request: &aster_box_core::FilesystemRequest) -> boo
 /// Guest filesystem calls that are safe to retry once after ambiguous transport
 /// loss: read-only ops (naturally idempotent) or keyed mutating ops (guest journal).
 pub(crate) fn should_retry_guest_filesystem(
-    request: &aster_box_core::FilesystemRequest,
+    request: &krun_box_core::FilesystemRequest,
     error: &BoxError,
 ) -> bool {
     let retryable_op = is_idempotent_filesystem_op(&request.op)
@@ -168,10 +168,10 @@ pub(crate) fn should_retry_guest_filesystem(
 
 /// Keyed uploads can replay the guest journal with the same `request_id`.
 pub(crate) fn should_retry_guest_file_upload(
-    request: &aster_box_core::exec::FileRequest,
+    request: &krun_box_core::exec::FileRequest,
     error: &BoxError,
 ) -> bool {
-    matches!(request.op, aster_box_core::FileOp::Upload)
+    matches!(request.op, krun_box_core::FileOp::Upload)
         && request
             .request_id
             .as_ref()
@@ -182,16 +182,16 @@ pub(crate) fn should_retry_guest_file_upload(
 /// Downloads are side-effect-free reads: one fresh-stream retry is safe after
 /// ambiguous transport loss (parity with `Stat` / `ListDir`).
 pub(crate) fn should_retry_guest_file_download(
-    request: &aster_box_core::exec::FileRequest,
+    request: &krun_box_core::exec::FileRequest,
     error: &BoxError,
 ) -> bool {
-    matches!(request.op, aster_box_core::FileOp::Download)
+    matches!(request.op, krun_box_core::FileOp::Download)
         && is_ambiguous_filesystem_transport(error)
 }
 
 /// Combined guest file-transfer retry policy for ExecClient and MicroVM session.
 pub(crate) fn should_retry_guest_file_transfer(
-    request: &aster_box_core::exec::FileRequest,
+    request: &krun_box_core::exec::FileRequest,
     error: &BoxError,
 ) -> bool {
     should_retry_guest_file_upload(request, error)
@@ -200,7 +200,7 @@ pub(crate) fn should_retry_guest_file_transfer(
 
 /// Keyed one-shot exec can replay the guest journal with the same `request_id`.
 pub(crate) fn should_retry_keyed_guest_exec(
-    request: &aster_box_core::exec::ExecRequest,
+    request: &krun_box_core::exec::ExecRequest,
     error: &BoxError,
 ) -> bool {
     request
@@ -257,8 +257,8 @@ impl ExecClient {
     /// with a fresh stream so the guest replay cache can reconcile a lost reply.
     pub async fn exec_command(
         &self,
-        request: &aster_box_core::exec::ExecRequest,
-    ) -> Result<aster_box_core::exec::ExecOutput> {
+        request: &krun_box_core::exec::ExecRequest,
+    ) -> Result<krun_box_core::exec::ExecOutput> {
         let stream = self.open_stream().await?;
         match self.exec_command_on_stream(stream, request).await {
             Ok(output) => Ok(output),
@@ -273,13 +273,13 @@ impl ExecClient {
     pub(crate) async fn exec_command_on_stream(
         &self,
         mut stream: ExecStream,
-        request: &aster_box_core::exec::ExecRequest,
-    ) -> Result<aster_box_core::exec::ExecOutput> {
+        request: &krun_box_core::exec::ExecRequest,
+    ) -> Result<krun_box_core::exec::ExecOutput> {
         let payload = serde_json::to_vec(request)
             .map_err(|e| BoxError::ExecError(format!("Failed to serialize exec request: {}", e)))?;
 
         // Send request as Data frame
-        let request_frame = aster_transport::Frame::data(payload);
+        let request_frame = krun_transport::Frame::data(payload);
         let encoded = request_frame.encode().map_err(|e| {
             BoxError::ExecError(format!("Failed to encode exec request frame: {}", e))
         })?;
@@ -295,7 +295,7 @@ impl ExecClient {
         // block this read forever and stall every caller (health probes, the
         // monitor poll loop, CLI exec).
         let (r, _w) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(r);
+        let mut reader = krun_transport::FrameReader::new(r);
         let host_deadline = std::time::Duration::from_nanos(request.timeout_ns)
             .saturating_add(std::time::Duration::from_secs(EXEC_HOST_SLACK_SECS));
         let frame = tokio::time::timeout(host_deadline, reader.read_frame())
@@ -311,14 +311,14 @@ impl ExecClient {
             })?;
 
         match frame.frame_type {
-            aster_transport::FrameType::Data => {
-                let output: aster_box_core::exec::ExecOutput =
+            krun_transport::FrameType::Data => {
+                let output: krun_box_core::exec::ExecOutput =
                     serde_json::from_slice(&frame.payload).map_err(|e| {
                         BoxError::ExecError(format!("Failed to parse exec response: {}", e))
                     })?;
                 Ok(output)
             }
-            aster_transport::FrameType::Error => {
+            krun_transport::FrameType::Error => {
                 let msg = String::from_utf8_lossy(&frame.payload);
                 Err(BoxError::ExecError(format!("Exec server error: {}", msg)))
             }
@@ -338,7 +338,7 @@ impl ExecClient {
     /// Returns a `StreamingExec` handle for reading events.
     pub async fn exec_stream(
         &self,
-        request: &aster_box_core::exec::ExecRequest,
+        request: &krun_box_core::exec::ExecRequest,
     ) -> Result<StreamingExec> {
         let stream = self.open_stream().await?;
         self.exec_stream_on_stream(stream, request).await
@@ -347,7 +347,7 @@ impl ExecClient {
     pub(crate) async fn exec_stream_on_stream(
         &self,
         stream: ExecStream,
-        request: &aster_box_core::exec::ExecRequest,
+        request: &krun_box_core::exec::ExecRequest,
     ) -> Result<StreamingExec> {
         let mut req = request.clone();
         req.streaming = true;
@@ -356,13 +356,13 @@ impl ExecClient {
             .map_err(|e| BoxError::ExecError(format!("Failed to serialize exec request: {}", e)))?;
 
         let (r, w) = tokio::io::split(stream);
-        let mut writer = aster_transport::FrameWriter::new(w);
+        let mut writer = krun_transport::FrameWriter::new(w);
         writer
             .write_data(&payload)
             .await
             .map_err(|e| BoxError::ExecError(format!("Exec request write failed: {}", e)))?;
 
-        let reader = aster_transport::FrameReader::new(r);
+        let reader = krun_transport::FrameReader::new(r);
         let started = std::time::Instant::now();
 
         Ok(StreamingExec {
@@ -398,7 +398,7 @@ impl ExecClient {
         } else {
             EXEC_CONTROL_ARCHIVE_ROOTFS
         };
-        let request = aster_transport::Frame::control(control.to_vec());
+        let request = krun_transport::Frame::control(control.to_vec());
         stream
             .write_all(&request.encode().map_err(|error| {
                 BoxError::ExecError(format!("Rootfs archive request encode failed: {error}"))
@@ -409,7 +409,7 @@ impl ExecClient {
             })?;
 
         let (reader, _writer) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(reader);
+        let mut reader = krun_transport::FrameReader::new(reader);
         let mut written = 0u64;
         loop {
             let frame = reader
@@ -425,21 +425,19 @@ impl ExecClient {
                 })?;
 
             match frame.frame_type {
-                aster_transport::FrameType::Data => {
+                krun_transport::FrameType::Data => {
                     output.write_all(&frame.payload).await.map_err(|error| {
                         BoxError::ExecError(format!("Rootfs archive output write failed: {error}"))
                     })?;
                     written = written.saturating_add(frame.payload.len() as u64);
                 }
-                aster_transport::FrameType::Control
-                    if frame.payload == EXEC_ARCHIVE_ROOTFS_DONE =>
-                {
+                krun_transport::FrameType::Control if frame.payload == EXEC_ARCHIVE_ROOTFS_DONE => {
                     output.flush().await.map_err(|error| {
                         BoxError::ExecError(format!("Rootfs archive output flush failed: {error}"))
                     })?;
                     return Ok(written);
                 }
-                aster_transport::FrameType::Error => {
+                krun_transport::FrameType::Error => {
                     return Err(BoxError::ExecError(format!(
                         "Guest rootfs archive failed: {}",
                         String::from_utf8_lossy(&frame.payload)
@@ -462,8 +460,8 @@ impl ExecClient {
     /// (parity with `Stat` / `ListDir`). Unkeyed uploads stay single-shot.
     pub async fn file_transfer(
         &self,
-        request: &aster_box_core::exec::FileRequest,
-    ) -> Result<aster_box_core::exec::FileResponse> {
+        request: &krun_box_core::exec::FileRequest,
+    ) -> Result<krun_box_core::exec::FileResponse> {
         match self.file_transfer_once(request).await {
             Ok(response) => Ok(response),
             Err(error) if should_retry_guest_file_transfer(request, &error) => {
@@ -475,8 +473,8 @@ impl ExecClient {
 
     async fn file_transfer_once(
         &self,
-        request: &aster_box_core::exec::FileRequest,
-    ) -> Result<aster_box_core::exec::FileResponse> {
+        request: &krun_box_core::exec::FileRequest,
+    ) -> Result<krun_box_core::exec::FileResponse> {
         let stream = self.open_stream().await?;
         self.file_transfer_on_stream(stream, request).await
     }
@@ -484,15 +482,15 @@ impl ExecClient {
     pub(crate) async fn file_transfer_on_stream(
         &self,
         mut stream: ExecStream,
-        request: &aster_box_core::exec::FileRequest,
-    ) -> Result<aster_box_core::exec::FileResponse> {
+        request: &krun_box_core::exec::FileRequest,
+    ) -> Result<krun_box_core::exec::FileResponse> {
         let payload =
-            serde_json::to_vec(&aster_box_core::GuestSessionRequest::File(request.clone()))
+            serde_json::to_vec(&krun_box_core::GuestSessionRequest::File(request.clone()))
                 .map_err(|e| {
                     BoxError::ExecError(format!("Failed to serialize file request: {}", e))
                 })?;
 
-        let request_frame = aster_transport::Frame::data(payload);
+        let request_frame = krun_transport::Frame::data(payload);
         let encoded = request_frame.encode().map_err(|e| {
             BoxError::ExecError(format!("Failed to encode file request frame: {}", e))
         })?;
@@ -502,7 +500,7 @@ impl ExecClient {
             .map_err(|e| BoxError::ExecError(format!("File request write failed: {}", e)))?;
 
         let (r, _w) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(r);
+        let mut reader = krun_transport::FrameReader::new(r);
         let frame = reader
             .read_frame()
             .await
@@ -512,14 +510,14 @@ impl ExecClient {
             })?;
 
         match frame.frame_type {
-            aster_transport::FrameType::Data => {
-                let response: aster_box_core::exec::FileResponse =
+            krun_transport::FrameType::Data => {
+                let response: krun_box_core::exec::FileResponse =
                     serde_json::from_slice(&frame.payload).map_err(|e| {
                         BoxError::ExecError(format!("Failed to parse file response: {}", e))
                     })?;
                 Ok(response)
             }
-            aster_transport::FrameType::Error => {
+            krun_transport::FrameType::Error => {
                 let msg = String::from_utf8_lossy(&frame.payload);
                 Err(BoxError::ExecError(format!("File transfer error: {}", msg)))
             }
@@ -539,8 +537,8 @@ impl ExecClient {
     /// Unkeyed mutating ops stay single-shot.
     pub async fn filesystem(
         &self,
-        request: &aster_box_core::FilesystemRequest,
-    ) -> Result<aster_box_core::FilesystemResponse> {
+        request: &krun_box_core::FilesystemRequest,
+    ) -> Result<krun_box_core::FilesystemResponse> {
         match self.filesystem_once(request).await {
             Ok(response) => Ok(response),
             Err(error) if should_retry_guest_filesystem(request, &error) => {
@@ -552,8 +550,8 @@ impl ExecClient {
 
     async fn filesystem_once(
         &self,
-        request: &aster_box_core::FilesystemRequest,
-    ) -> Result<aster_box_core::FilesystemResponse> {
+        request: &krun_box_core::FilesystemRequest,
+    ) -> Result<krun_box_core::FilesystemResponse> {
         let stream = self.open_stream().await?;
         self.filesystem_on_stream(stream, request).await
     }
@@ -561,15 +559,15 @@ impl ExecClient {
     pub(crate) async fn filesystem_on_stream(
         &self,
         mut stream: ExecStream,
-        request: &aster_box_core::FilesystemRequest,
-    ) -> Result<aster_box_core::FilesystemResponse> {
-        let payload = serde_json::to_vec(&aster_box_core::GuestSessionRequest::Filesystem(
+        request: &krun_box_core::FilesystemRequest,
+    ) -> Result<krun_box_core::FilesystemResponse> {
+        let payload = serde_json::to_vec(&krun_box_core::GuestSessionRequest::Filesystem(
             request.clone(),
         ))
         .map_err(|error| {
             BoxError::ExecError(format!("Failed to serialize filesystem request: {error}"))
         })?;
-        let encoded = aster_transport::Frame::data(payload)
+        let encoded = krun_transport::Frame::data(payload)
             .encode()
             .map_err(|error| {
                 BoxError::ExecError(format!("Failed to encode filesystem request: {error}"))
@@ -579,7 +577,7 @@ impl ExecClient {
         })?;
 
         let (read, _write) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(read);
+        let mut reader = krun_transport::FrameReader::new(read);
         let frame = reader
             .read_frame()
             .await
@@ -590,12 +588,12 @@ impl ExecClient {
                 BoxError::ExecError("Exec server closed without filesystem response".to_string())
             })?;
         match frame.frame_type {
-            aster_transport::FrameType::Data => {
+            krun_transport::FrameType::Data => {
                 serde_json::from_slice(&frame.payload).map_err(|error| {
                     BoxError::ExecError(format!("Failed to parse filesystem response: {error}"))
                 })
             }
-            aster_transport::FrameType::Error => Err(BoxError::ExecError(format!(
+            krun_transport::FrameType::Error => Err(BoxError::ExecError(format!(
                 "Filesystem operation failed: {}",
                 String::from_utf8_lossy(&frame.payload)
             ))),
@@ -614,7 +612,7 @@ impl ExecClient {
             Err(_) => return Ok(false),
         };
 
-        let frame = aster_transport::Frame::heartbeat();
+        let frame = krun_transport::Frame::heartbeat();
         let encoded = match frame.encode() {
             Ok(e) => e,
             Err(_) => return Ok(false),
@@ -625,9 +623,9 @@ impl ExecClient {
         }
 
         let (r, _w) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(r);
+        let mut reader = krun_transport::FrameReader::new(r);
         match reader.read_frame().await {
-            Ok(Some(f)) if f.frame_type == aster_transport::FrameType::Heartbeat => Ok(true),
+            Ok(Some(f)) if f.frame_type == krun_transport::FrameType::Heartbeat => Ok(true),
             _ => Ok(false),
         }
     }
@@ -699,7 +697,7 @@ impl ExecClient {
             Err(_) => return Ok(ControlAckAttempt::NotReached),
         };
 
-        let frame = aster_transport::Frame::control(control_payload.to_vec());
+        let frame = krun_transport::Frame::control(control_payload.to_vec());
         let encoded = frame
             .encode()
             .map_err(|e| BoxError::ExecError(format!("{label} frame encode failed: {e}")))?;
@@ -714,7 +712,7 @@ impl ExecClient {
         // forever — and stop/restart deliver these controls BEFORE their
         // force-kill / shim fallback, so the fallback would never run.
         let (r, _w) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(r);
+        let mut reader = krun_transport::FrameReader::new(r);
         let read = tokio::time::timeout(
             std::time::Duration::from_secs(SIGNAL_MAIN_ACK_TIMEOUT_SECS),
             reader.read_frame(),
@@ -722,7 +720,7 @@ impl ExecClient {
         .await;
         match read {
             Ok(Ok(Some(f)))
-                if f.frame_type == aster_transport::FrameType::Control
+                if f.frame_type == krun_transport::FrameType::Control
                     && f.payload == ack_payload =>
             {
                 Ok(ControlAckAttempt::Acked)
@@ -769,7 +767,7 @@ impl ExecClient {
         if let Some(json) = spec_json {
             payload.extend_from_slice(json);
         }
-        let frame = aster_transport::Frame::control(payload);
+        let frame = krun_transport::Frame::control(payload);
         let encoded = frame
             .encode()
             .map_err(|e| BoxError::ExecError(format!("spawn-main frame encode failed: {}", e)))?;
@@ -779,7 +777,7 @@ impl ExecClient {
         }
 
         let (r, _w) = tokio::io::split(stream);
-        let mut reader = aster_transport::FrameReader::new(r);
+        let mut reader = krun_transport::FrameReader::new(r);
         let read = tokio::time::timeout(
             std::time::Duration::from_secs(SIGNAL_MAIN_ACK_TIMEOUT_SECS),
             reader.read_frame(),
@@ -787,13 +785,13 @@ impl ExecClient {
         .await;
         match read {
             Ok(Ok(Some(f)))
-                if f.frame_type == aster_transport::FrameType::Control
+                if f.frame_type == krun_transport::FrameType::Control
                     && f.payload == EXEC_SPAWN_MAIN_ACK =>
             {
                 Ok(SpawnMainAttempt::Acked)
             }
             Ok(Ok(Some(f)))
-                if f.frame_type == aster_transport::FrameType::Control
+                if f.frame_type == krun_transport::FrameType::Control
                     && f.payload.starts_with(EXEC_SPAWN_MAIN_NACK) =>
             {
                 let reason = String::from_utf8_lossy(&f.payload[EXEC_SPAWN_MAIN_NACK.len()..]);
@@ -917,8 +915,8 @@ impl StreamingExec {
     /// Read the next event from the stream.
     ///
     /// Returns `None` when the command has exited and all output has been read.
-    pub async fn next_event(&mut self) -> Result<Option<aster_box_core::exec::ExecEvent>> {
-        use aster_box_core::exec::{ExecChunk, ExecEvent, ExecExit};
+    pub async fn next_event(&mut self) -> Result<Option<krun_box_core::exec::ExecEvent>> {
+        use krun_box_core::exec::{ExecChunk, ExecEvent, ExecExit};
 
         if self.done {
             return Ok(None);
@@ -940,22 +938,22 @@ impl StreamingExec {
         };
 
         match frame.frame_type {
-            aster_transport::FrameType::Data => {
+            krun_transport::FrameType::Data => {
                 // Data frame = ExecChunk (stdout/stderr)
                 let chunk: ExecChunk = serde_json::from_slice(&frame.payload).map_err(|e| {
                     BoxError::ExecError(format!("Failed to parse exec chunk: {}", e))
                 })?;
                 match chunk.stream {
-                    aster_box_core::exec::StreamType::Stdout => {
+                    krun_box_core::exec::StreamType::Stdout => {
                         self.stdout_bytes += chunk.data.len() as u64;
                     }
-                    aster_box_core::exec::StreamType::Stderr => {
+                    krun_box_core::exec::StreamType::Stderr => {
                         self.stderr_bytes += chunk.data.len() as u64;
                     }
                 }
                 Ok(Some(ExecEvent::Chunk(chunk)))
             }
-            aster_transport::FrameType::Control => {
+            krun_transport::FrameType::Control => {
                 // A Control frame is either a flush-ack marker or an ExecExit.
                 if frame.payload == EXEC_FLUSH_ACK {
                     // Boundary marker for log rotation — the stream continues.
@@ -967,7 +965,7 @@ impl StreamingExec {
                 self.done = true;
                 Ok(Some(ExecEvent::Exit(exit)))
             }
-            aster_transport::FrameType::Error => {
+            krun_transport::FrameType::Error => {
                 let msg = String::from_utf8_lossy(&frame.payload);
                 self.done = true;
                 Err(BoxError::ExecError(format!(
@@ -996,10 +994,10 @@ impl StreamingExec {
     pub async fn collect(
         mut self,
     ) -> Result<(
-        aster_box_core::exec::ExecOutput,
-        aster_box_core::exec::ExecMetrics,
+        krun_box_core::exec::ExecOutput,
+        krun_box_core::exec::ExecMetrics,
     )> {
-        use aster_box_core::exec::{ExecEvent, ExecMetrics, ExecOutput};
+        use krun_box_core::exec::{ExecEvent, ExecMetrics, ExecOutput};
 
         let mut stdout = Vec::new();
         let mut stderr = Vec::new();
@@ -1010,11 +1008,11 @@ impl StreamingExec {
             match event {
                 ExecEvent::Chunk(chunk) => {
                     let target = match chunk.stream {
-                        aster_box_core::exec::StreamType::Stdout => &mut stdout,
-                        aster_box_core::exec::StreamType::Stderr => &mut stderr,
+                        krun_box_core::exec::StreamType::Stdout => &mut stdout,
+                        krun_box_core::exec::StreamType::Stderr => &mut stderr,
                     };
                     let remaining =
-                        aster_box_core::exec::MAX_OUTPUT_BYTES.saturating_sub(target.len());
+                        krun_box_core::exec::MAX_OUTPUT_BYTES.saturating_sub(target.len());
                     if chunk.data.len() > remaining {
                         truncated = true;
                     }
@@ -1050,8 +1048,8 @@ impl StreamingExec {
     }
 
     /// Get execution metrics so far.
-    pub fn metrics(&self) -> aster_box_core::exec::ExecMetrics {
-        aster_box_core::exec::ExecMetrics {
+    pub fn metrics(&self) -> krun_box_core::exec::ExecMetrics {
+        krun_box_core::exec::ExecMetrics {
             duration_ms: self.started.elapsed().as_millis() as u64,
             peak_memory_bytes: None,
             stdout_bytes: self.stdout_bytes,
@@ -1093,7 +1091,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_exec_connect_nonexistent_socket() {
-        let result = ExecClient::connect(Path::new("/tmp/nonexistent-aster-exec-test.sock")).await;
+        let result = ExecClient::connect(Path::new("/tmp/nonexistent-krun-exec-test.sock")).await;
         assert!(result.is_err());
         let err = result.unwrap_err();
         assert!(matches!(err, BoxError::ExecError(_)));
@@ -1134,7 +1132,7 @@ mod tests {
                 stream.read_exact(&mut payload).await.unwrap();
             }
             // Respond with Heartbeat frame
-            let response = aster_transport::Frame::heartbeat();
+            let response = krun_transport::Frame::heartbeat();
             let encoded = response.encode().unwrap();
             stream.write_all(&encoded).await.unwrap();
         });
@@ -1196,14 +1194,14 @@ mod tests {
             drop(stream);
             let (stream, _) = listener.accept().await.unwrap();
             let (read, write) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(read);
-            let mut writer = aster_transport::FrameWriter::new(write);
+            let mut reader = krun_transport::FrameReader::new(read);
+            let mut writer = krun_transport::FrameWriter::new(write);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            let request: aster_box_core::GuestSessionRequest =
+            let request: krun_box_core::GuestSessionRequest =
                 serde_json::from_slice(&frame.payload).unwrap();
             match request {
-                aster_box_core::GuestSessionRequest::File(request) => {
-                    assert_eq!(request.op, aster_box_core::FileOp::Upload);
+                krun_box_core::GuestSessionRequest::File(request) => {
+                    assert_eq!(request.op, krun_box_core::FileOp::Upload);
                     assert_eq!(request.guest_path, "~/data.bin");
                     assert_eq!(request.data.as_deref(), Some("AAEC"));
                     assert_eq!(request.user.as_deref(), Some("user"));
@@ -1212,7 +1210,7 @@ mod tests {
             }
             writer
                 .write_data(
-                    &serde_json::to_vec(&aster_box_core::FileResponse {
+                    &serde_json::to_vec(&krun_box_core::FileResponse {
                         success: true,
                         data: None,
                         size: 3,
@@ -1226,8 +1224,8 @@ mod tests {
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .file_transfer(&aster_box_core::FileRequest {
-                op: aster_box_core::FileOp::Upload,
+            .file_transfer(&krun_box_core::FileRequest {
+                op: krun_box_core::FileOp::Upload,
                 guest_path: "~/data.bin".to_string(),
                 data: Some("AAEC".to_string()),
                 user: Some("user".to_string()),
@@ -1253,14 +1251,14 @@ mod tests {
             drop(stream);
             let (stream, _) = listener.accept().await.unwrap();
             let (read, write) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(read);
-            let mut writer = aster_transport::FrameWriter::new(write);
+            let mut reader = krun_transport::FrameReader::new(read);
+            let mut writer = krun_transport::FrameWriter::new(write);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            let request: aster_box_core::GuestSessionRequest =
+            let request: krun_box_core::GuestSessionRequest =
                 serde_json::from_slice(&frame.payload).unwrap();
             match request {
-                aster_box_core::GuestSessionRequest::Filesystem(request) => {
-                    assert_eq!(request.op, aster_box_core::FilesystemOp::ListDir);
+                krun_box_core::GuestSessionRequest::Filesystem(request) => {
+                    assert_eq!(request.op, krun_box_core::FilesystemOp::ListDir);
                     assert_eq!(request.path, "~/data");
                     assert_eq!(request.depth, 2);
                     assert_eq!(request.user.as_deref(), Some("user"));
@@ -1269,7 +1267,7 @@ mod tests {
             }
             writer
                 .write_data(
-                    &serde_json::to_vec(&aster_box_core::FilesystemResponse {
+                    &serde_json::to_vec(&krun_box_core::FilesystemResponse {
                         success: true,
                         entry: None,
                         entries: Vec::new(),
@@ -1283,8 +1281,8 @@ mod tests {
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .filesystem(&aster_box_core::FilesystemRequest {
-                op: aster_box_core::FilesystemOp::ListDir,
+            .filesystem(&krun_box_core::FilesystemRequest {
+                op: krun_box_core::FilesystemOp::ListDir,
                 path: "~/data".to_string(),
                 destination: None,
                 depth: 2,
@@ -1314,7 +1312,7 @@ mod tests {
             // First Stat: read request then drop both halves (lost response).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1323,13 +1321,13 @@ mod tests {
             // Second Stat: respond.
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             writer
                 .write_data(
-                    &serde_json::to_vec(&aster_box_core::FilesystemResponse {
+                    &serde_json::to_vec(&krun_box_core::FilesystemResponse {
                         success: true,
                         entry: None,
                         entries: Vec::new(),
@@ -1344,8 +1342,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .filesystem(&aster_box_core::FilesystemRequest {
-                op: aster_box_core::FilesystemOp::Stat,
+            .filesystem(&krun_box_core::FilesystemRequest {
+                op: krun_box_core::FilesystemOp::Stat,
                 path: "/tmp".to_string(),
                 destination: None,
                 depth: 0,
@@ -1374,7 +1372,7 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1385,8 +1383,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let err = client
-            .filesystem(&aster_box_core::FilesystemRequest {
-                op: aster_box_core::FilesystemOp::MakeDir,
+            .filesystem(&krun_box_core::FilesystemRequest {
+                op: krun_box_core::FilesystemOp::MakeDir,
                 path: "/tmp/new-dir".to_string(),
                 destination: None,
                 depth: 0,
@@ -1419,7 +1417,7 @@ mod tests {
             // First attempt: accept then drop after reading (ambiguous loss).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1428,17 +1426,17 @@ mod tests {
             // Retry: return a successful MakeDir response.
             let (stream, _) = listener.accept().await.unwrap();
             let (r, mut w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            let payload = serde_json::to_vec(&aster_box_core::FilesystemResponse {
+            let payload = serde_json::to_vec(&krun_box_core::FilesystemResponse {
                 success: true,
                 entry: None,
                 entries: Vec::new(),
                 error: None,
             })
             .unwrap();
-            let frame = aster_transport::Frame::data(payload);
+            let frame = krun_transport::Frame::data(payload);
             tokio::io::AsyncWriteExt::write_all(&mut w, &frame.encode().unwrap())
                 .await
                 .unwrap();
@@ -1447,8 +1445,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .filesystem(&aster_box_core::FilesystemRequest {
-                op: aster_box_core::FilesystemOp::MakeDir,
+            .filesystem(&krun_box_core::FilesystemRequest {
+                op: krun_box_core::FilesystemOp::MakeDir,
                 path: "/tmp/new-dir".to_string(),
                 destination: None,
                 depth: 0,
@@ -1477,7 +1475,7 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1487,8 +1485,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let err = client
-            .file_transfer(&aster_box_core::FileRequest {
-                op: aster_box_core::FileOp::Upload,
+            .file_transfer(&krun_box_core::FileRequest {
+                op: krun_box_core::FileOp::Upload,
                 guest_path: "/tmp/x".into(),
                 data: Some("aGVsbG8=".into()),
                 user: None,
@@ -1520,7 +1518,7 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1528,17 +1526,17 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, mut w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            let payload = serde_json::to_vec(&aster_box_core::FileResponse {
+            let payload = serde_json::to_vec(&krun_box_core::FileResponse {
                 success: true,
                 data: None,
                 size: 5,
                 error: None,
             })
             .unwrap();
-            let frame = aster_transport::Frame::data(payload);
+            let frame = krun_transport::Frame::data(payload);
             tokio::io::AsyncWriteExt::write_all(&mut w, &frame.encode().unwrap())
                 .await
                 .unwrap();
@@ -1547,8 +1545,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .file_transfer(&aster_box_core::FileRequest {
-                op: aster_box_core::FileOp::Upload,
+            .file_transfer(&krun_box_core::FileRequest {
+                op: krun_box_core::FileOp::Upload,
                 guest_path: "/tmp/x".into(),
                 data: Some("aGVsbG8=".into()),
                 user: None,
@@ -1578,7 +1576,7 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1586,17 +1584,17 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, mut w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let _ = reader.read_frame().await.unwrap().unwrap();
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
-            let payload = serde_json::to_vec(&aster_box_core::FileResponse {
+            let payload = serde_json::to_vec(&krun_box_core::FileResponse {
                 success: true,
                 data: Some("aGVsbG8=".into()),
                 size: 5,
                 error: None,
             })
             .unwrap();
-            let frame = aster_transport::Frame::data(payload);
+            let frame = krun_transport::Frame::data(payload);
             tokio::io::AsyncWriteExt::write_all(&mut w, &frame.encode().unwrap())
                 .await
                 .unwrap();
@@ -1605,8 +1603,8 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
         let client = ExecClient::connect(&sock_path).await.unwrap();
         let response = client
-            .file_transfer(&aster_box_core::FileRequest {
-                op: aster_box_core::FileOp::Download,
+            .file_transfer(&krun_box_core::FileRequest {
+                op: krun_box_core::FileOp::Download,
                 guest_path: "/tmp/x".into(),
                 data: None,
                 user: None,
@@ -1635,17 +1633,17 @@ mod tests {
             let (mut stream, _) = listener.accept().await.unwrap();
             let mut header = [0u8; 5];
             stream.read_exact(&mut header).await.unwrap();
-            assert_eq!(header[0], aster_transport::FrameType::Control as u8);
+            assert_eq!(header[0], krun_transport::FrameType::Control as u8);
             let length = u32::from_be_bytes(header[1..5].try_into().unwrap()) as usize;
             let mut payload = vec![0u8; length];
             stream.read_exact(&mut payload).await.unwrap();
             assert_eq!(payload, EXEC_CONTROL_ARCHIVE_ROOTFS);
 
             for payload in [b"first".as_slice(), b"-second".as_slice()] {
-                let frame = aster_transport::Frame::data(payload.to_vec());
+                let frame = krun_transport::Frame::data(payload.to_vec());
                 stream.write_all(&frame.encode().unwrap()).await.unwrap();
             }
-            let done = aster_transport::Frame::control(EXEC_ARCHIVE_ROOTFS_DONE.to_vec());
+            let done = krun_transport::Frame::control(EXEC_ARCHIVE_ROOTFS_DONE.to_vec());
             stream.write_all(&done.encode().unwrap()).await.unwrap();
         });
 
@@ -1674,11 +1672,11 @@ mod tests {
             // Accept signal-main connection: read the Control frame, ack it.
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             let frame = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(frame.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(frame.frame_type, krun_transport::FrameType::Control);
             assert_eq!(frame.payload, b"signal-main:2");
 
             writer.write_control(EXEC_SIGNAL_MAIN_ACK).await.unwrap();
@@ -1711,9 +1709,9 @@ mod tests {
             // so the host sees closed-without-ACK (not the 10s ACK timeout).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(frame.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(frame.frame_type, krun_transport::FrameType::Control);
             assert_eq!(frame.payload, b"signal-main:15");
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1722,8 +1720,8 @@ mod tests {
             // Second signal-main: ACK.
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
             let frame = reader.read_frame().await.unwrap().unwrap();
             assert_eq!(frame.payload, b"signal-main:15");
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
@@ -1754,10 +1752,10 @@ mod tests {
             drop(stream);
             let (stream, _) = listener.accept().await.unwrap();
             let (read, write) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(read);
-            let mut writer = aster_transport::FrameWriter::new(write);
+            let mut reader = krun_transport::FrameReader::new(read);
+            let mut writer = krun_transport::FrameWriter::new(write);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(frame.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(frame.frame_type, krun_transport::FrameType::Control);
             assert_eq!(frame.payload, EXEC_CONTROL_SHUTDOWN_MAINTENANCE);
             writer
                 .write_control(EXEC_SHUTDOWN_MAINTENANCE_ACK)
@@ -1786,9 +1784,9 @@ mod tests {
             // First shutdown: guest applies (read frame) then drop both halves.
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(frame.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(frame.frame_type, krun_transport::FrameType::Control);
             assert_eq!(frame.payload, EXEC_CONTROL_SHUTDOWN_MAINTENANCE);
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1797,8 +1795,8 @@ mod tests {
             // Second shutdown: ACK (guest already SHUTTING_DOWN is idempotent).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
             let frame = reader.read_frame().await.unwrap().unwrap();
             assert_eq!(frame.payload, EXEC_CONTROL_SHUTDOWN_MAINTENANCE);
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
@@ -1838,9 +1836,9 @@ mod tests {
             // First spawn-main: guest applies then drops both halves (lost ACK).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
+            let mut reader = krun_transport::FrameReader::new(r);
             let frame = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(frame.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(frame.frame_type, krun_transport::FrameType::Control);
             assert!(frame.payload.starts_with(b"spawn-main:"));
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
             drop(reader);
@@ -1849,8 +1847,8 @@ mod tests {
             // Second spawn-main: ACK (guest published-pid idempotency).
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
             let frame = reader.read_frame().await.unwrap().unwrap();
             assert!(frame.payload.starts_with(b"spawn-main:"));
             frames_server.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
@@ -1879,8 +1877,8 @@ mod tests {
             drop(stream);
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
             let _ = reader.read_frame().await.unwrap().unwrap();
             let mut nack = EXEC_SPAWN_MAIN_NACK.to_vec();
             nack.extend_from_slice(b"container main already spawned");
@@ -1921,14 +1919,14 @@ mod tests {
             // Accept exec request — read Frame, respond with Frame
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             // Read request frame
             let _frame = reader.read_frame().await.unwrap().unwrap();
 
             // Send response as Data frame
-            let output = aster_box_core::exec::ExecOutput {
+            let output = krun_box_core::exec::ExecOutput {
                 stdout: b"hello\n".to_vec(),
                 stderr: vec![],
                 exit_code: 0,
@@ -1941,7 +1939,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["echo".to_string(), "hello".to_string()],
             env: vec![],
@@ -1973,16 +1971,16 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             let frame = reader.read_frame().await.unwrap().unwrap();
-            let request: aster_box_core::exec::ExecRequest =
+            let request: krun_box_core::exec::ExecRequest =
                 serde_json::from_slice(&frame.payload).unwrap();
             assert!(request.streaming);
 
-            let stdout = aster_box_core::exec::ExecChunk {
-                stream: aster_box_core::exec::StreamType::Stdout,
+            let stdout = krun_box_core::exec::ExecChunk {
+                stream: krun_box_core::exec::StreamType::Stdout,
                 data: b"hello ".to_vec(),
             };
             writer
@@ -1990,8 +1988,8 @@ mod tests {
                 .await
                 .unwrap();
 
-            let stderr = aster_box_core::exec::ExecChunk {
-                stream: aster_box_core::exec::StreamType::Stderr,
+            let stderr = krun_box_core::exec::ExecChunk {
+                stream: krun_box_core::exec::StreamType::Stderr,
                 data: b"warn".to_vec(),
             };
             writer
@@ -1999,7 +1997,7 @@ mod tests {
                 .await
                 .unwrap();
 
-            let exit = aster_box_core::exec::ExecExit {
+            let exit = krun_box_core::exec::ExecExit {
                 exit_code: 17,
                 oom_killed: false,
             };
@@ -2012,7 +2010,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["echo".to_string(), "hello".to_string()],
             env: vec![],
@@ -2048,19 +2046,19 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             let frame = reader.read_frame().await.unwrap().unwrap();
-            let request: aster_box_core::exec::ExecRequest =
+            let request: krun_box_core::exec::ExecRequest =
                 serde_json::from_slice(&frame.payload).unwrap();
             assert!(request.streaming);
 
             let cancel = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(cancel.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(cancel.frame_type, krun_transport::FrameType::Control);
             assert_eq!(cancel.payload, b"cancel");
 
-            let exit = aster_box_core::exec::ExecExit {
+            let exit = krun_box_core::exec::ExecExit {
                 exit_code: 137,
                 oom_killed: false,
             };
@@ -2073,7 +2071,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["sleep".to_string(), "60".to_string()],
             env: vec![],
@@ -2090,7 +2088,7 @@ mod tests {
         stream.cancel().await.unwrap();
         let event = stream.next_event().await.unwrap().unwrap();
         match event {
-            aster_box_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 137),
+            krun_box_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 137),
             other => panic!("unexpected event: {other:?}"),
         }
     }
@@ -2109,31 +2107,31 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             let frame = reader.read_frame().await.unwrap().unwrap();
-            let request: aster_box_core::exec::ExecRequest =
+            let request: krun_box_core::exec::ExecRequest =
                 serde_json::from_slice(&frame.payload).unwrap();
             assert!(request.streaming);
 
             let stdin = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(stdin.frame_type, aster_transport::FrameType::Data);
+            assert_eq!(stdin.frame_type, krun_transport::FrameType::Data);
             assert_eq!(stdin.payload, b"hello stdin\n");
 
             let close = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(close.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(close.frame_type, krun_transport::FrameType::Control);
             assert_eq!(close.payload, EXEC_CONTROL_STDIN_CLOSE);
 
             let terminate = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(terminate.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(terminate.frame_type, krun_transport::FrameType::Control);
             assert_eq!(terminate.payload, b"signal:15");
 
             let kill = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(kill.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(kill.frame_type, krun_transport::FrameType::Control);
             assert_eq!(kill.payload, EXEC_CONTROL_CANCEL);
 
-            let exit = aster_box_core::exec::ExecExit {
+            let exit = krun_box_core::exec::ExecExit {
                 exit_code: 0,
                 oom_killed: false,
             };
@@ -2146,7 +2144,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["cat".to_string()],
             env: vec![],
@@ -2173,7 +2171,7 @@ mod tests {
             .unwrap();
         let event = stream.next_event().await.unwrap().unwrap();
         match event {
-            aster_box_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 0),
+            krun_box_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 0),
             other => panic!("unexpected event: {other:?}"),
         }
     }
@@ -2192,18 +2190,18 @@ mod tests {
 
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = aster_transport::FrameReader::new(r);
-            let mut writer = aster_transport::FrameWriter::new(w);
+            let mut reader = krun_transport::FrameReader::new(r);
+            let mut writer = krun_transport::FrameWriter::new(w);
 
             // Consume the streaming request, then the flush control frame.
             let _req = reader.read_frame().await.unwrap().unwrap();
             let flush = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(flush.frame_type, aster_transport::FrameType::Control);
+            assert_eq!(flush.frame_type, krun_transport::FrameType::Control);
             assert_eq!(flush.payload, EXEC_CONTROL_FLUSH);
 
             // Reply: a buffered chunk, the flush-ack marker, then exit.
-            let chunk = aster_box_core::exec::ExecChunk {
-                stream: aster_box_core::exec::StreamType::Stdout,
+            let chunk = krun_box_core::exec::ExecChunk {
+                stream: krun_box_core::exec::StreamType::Stdout,
                 data: b"pre-rotation\n".to_vec(),
             };
             writer
@@ -2211,7 +2209,7 @@ mod tests {
                 .await
                 .unwrap();
             writer.write_control(EXEC_FLUSH_ACK).await.unwrap();
-            let exit = aster_box_core::exec::ExecExit {
+            let exit = krun_box_core::exec::ExecExit {
                 exit_code: 0,
                 oom_killed: false,
             };
@@ -2224,7 +2222,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["sh".to_string()],
             env: vec![],
@@ -2240,7 +2238,7 @@ mod tests {
         let mut stream = client.exec_stream(&req).await.unwrap();
         stream.flush().await.unwrap();
 
-        use aster_box_core::exec::ExecEvent;
+        use krun_box_core::exec::ExecEvent;
         match stream.next_event().await.unwrap().unwrap() {
             ExecEvent::Chunk(c) => assert_eq!(c.data, b"pre-rotation\n"),
             other => panic!("expected chunk, got {other:?}"),
@@ -2279,7 +2277,7 @@ mod tests {
         tokio::time::sleep(tokio::time::Duration::from_millis(10)).await;
 
         let client = ExecClient::connect(&sock_path).await.unwrap();
-        let req = aster_box_core::exec::ExecRequest {
+        let req = krun_box_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["test".to_string()],
             env: vec![],
@@ -2309,7 +2307,7 @@ mod windows_tests {
     #[tokio::test]
     async fn exec_command_round_trips_over_a_real_named_pipe() {
         let pipe_path = format!(
-            r"\\.\pipe\aster-box-exec-client-test-{}-{}",
+            r"\\.\pipe\krun-box-exec-client-test-{}-{}",
             std::process::id(),
             NEXT_PIPE.fetch_add(1, Ordering::Relaxed)
         );
@@ -2335,18 +2333,18 @@ mod windows_tests {
                 .await
                 .expect("accept exec request connection");
             let (read, write) = tokio::io::split(second_server);
-            let mut reader = aster_transport::FrameReader::new(read);
-            let mut writer = aster_transport::FrameWriter::new(write);
+            let mut reader = krun_transport::FrameReader::new(read);
+            let mut writer = krun_transport::FrameWriter::new(write);
             let request = reader
                 .read_frame()
                 .await
                 .expect("read request frame")
                 .expect("request stream stays open");
-            let request: aster_box_core::exec::ExecRequest =
+            let request: krun_box_core::exec::ExecRequest =
                 serde_json::from_slice(&request.payload).expect("decode request");
             assert_eq!(request.cmd, ["echo", "windows"]);
 
-            let output = aster_box_core::exec::ExecOutput {
+            let output = krun_box_core::exec::ExecOutput {
                 stdout: b"windows\n".to_vec(),
                 stderr: Vec::new(),
                 exit_code: 0,
@@ -2362,7 +2360,7 @@ mod windows_tests {
             .await
             .expect("connect exec client");
         let output = client
-            .exec_command(&aster_box_core::exec::ExecRequest {
+            .exec_command(&krun_box_core::exec::ExecRequest {
                 request_id: None,
                 cmd: vec!["echo".to_string(), "windows".to_string()],
                 timeout_ns: 5_000_000_000,
@@ -2405,7 +2403,7 @@ mod keyed_exec_tests {
 
     #[test]
     fn keyed_retry_requires_non_empty_request_id() {
-        let keyed = aster_box_core::exec::ExecRequest {
+        let keyed = krun_box_core::exec::ExecRequest {
             request_id: Some("cli-exec-abc".to_string()),
             cmd: vec!["true".to_string()],
             timeout_ns: 1,
@@ -2417,11 +2415,11 @@ mod keyed_exec_tests {
             user: None,
             streaming: false,
         };
-        let unkeyed = aster_box_core::exec::ExecRequest {
+        let unkeyed = krun_box_core::exec::ExecRequest {
             request_id: None,
             ..keyed.clone()
         };
-        let empty = aster_box_core::exec::ExecRequest {
+        let empty = krun_box_core::exec::ExecRequest {
             request_id: Some(String::new()),
             ..keyed.clone()
         };
@@ -2439,20 +2437,20 @@ mod keyed_exec_tests {
     fn guest_filesystem_retry_policy_matches_journal_contract() {
         let lost = BoxError::ExecError("Filesystem response read failed: closed".to_string());
         let policy = BoxError::ExecError("directory already exists".to_string());
-        let keyed_mkdir = aster_box_core::FilesystemRequest {
-            op: aster_box_core::FilesystemOp::MakeDir,
+        let keyed_mkdir = krun_box_core::FilesystemRequest {
+            op: krun_box_core::FilesystemOp::MakeDir,
             path: "/tmp/x".into(),
             destination: None,
             depth: 0,
             user: None,
             request_id: Some("fs-mkdir-1".into()),
         };
-        let unkeyed_mkdir = aster_box_core::FilesystemRequest {
+        let unkeyed_mkdir = krun_box_core::FilesystemRequest {
             request_id: None,
             ..keyed_mkdir.clone()
         };
-        let stat = aster_box_core::FilesystemRequest {
-            op: aster_box_core::FilesystemOp::Stat,
+        let stat = krun_box_core::FilesystemRequest {
+            op: krun_box_core::FilesystemOp::Stat,
             path: "/tmp/x".into(),
             destination: None,
             depth: 0,
@@ -2468,20 +2466,20 @@ mod keyed_exec_tests {
     #[test]
     fn guest_file_upload_retry_requires_keyed_upload() {
         let lost = BoxError::ExecError("File response read failed: closed".to_string());
-        let keyed = aster_box_core::FileRequest {
-            op: aster_box_core::FileOp::Upload,
+        let keyed = krun_box_core::FileRequest {
+            op: krun_box_core::FileOp::Upload,
             guest_path: "/tmp/x".into(),
             data: Some("aGVsbG8=".into()),
             user: None,
             max_bytes: None,
             request_id: Some("file-1".into()),
         };
-        let unkeyed = aster_box_core::FileRequest {
+        let unkeyed = krun_box_core::FileRequest {
             request_id: None,
             ..keyed.clone()
         };
-        let download = aster_box_core::FileRequest {
-            op: aster_box_core::FileOp::Download,
+        let download = krun_box_core::FileRequest {
+            op: krun_box_core::FileOp::Download,
             guest_path: "/tmp/x".into(),
             data: None,
             user: None,

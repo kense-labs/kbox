@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
 };
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ExecRequest, ListRequest, OciRuntimeService,
     OperationContext, ResizeRequest, StartRequest,
 };
@@ -354,7 +354,7 @@ pub(super) async fn run(
         size: qualification.size,
     };
     let response_delivered = qualification.stage
-        == aster_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let mut failure = None;
     match timeout(QUALIFICATION_TIMEOUT, service.resize(resize.clone())).await {
         Ok(Err(error)) => {

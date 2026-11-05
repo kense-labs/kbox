@@ -1,13 +1,13 @@
 use std::sync::Arc;
 
-use aster_use_core::{
+use krun_use_core::{
     PlanPackageChangeKind, PlanPolicyDecision, PlanScope, PluginHostApplyResult,
     PluginHostPlanResult, PluginManagedScope, PluginManagerApplyPlanInput,
     PluginManagerInstallPlanInput, PluginManagerPackageScopeInput, PluginManagerUpgradePlanInput,
     PluginOperationAction, PluginPackageId, PluginPackageLock, PluginReleaseChannel, UseError,
     UseResult, PLUGIN_MANAGED_SCOPE_SCHEMA_V2,
 };
-use aster_use_extension::{ExtensionRegistry, RegistrySourceStore};
+use krun_use_extension::{ExtensionRegistry, RegistrySourceStore};
 
 use crate::package::{
     verify_expected_lock, PackageHostManager, PackageRegistryAccess,
@@ -142,7 +142,7 @@ pub(super) fn standalone_service(scope: &PlanScope) -> UseResult<PluginManagerSe
 fn standalone_scope(scope: &PlanScope) -> UseResult<PluginManagedScope> {
     let managed = PluginManagedScope {
         schema: PLUGIN_MANAGED_SCOPE_SCHEMA_V2.to_owned(),
-        host_id: "host:aster-use-standalone".to_owned(),
+        host_id: "host:krun-use-standalone".to_owned(),
         scope_kind: scope.kind,
         scope_id: scope.id.clone(),
         authority_id: format!("{}:{}", scope.kind.as_str(), scope.id.replace('/', ":")),
@@ -384,7 +384,7 @@ fn root_lock(plan: &PluginHostPlanResult) -> UseResult<&PluginPackageLock> {
 
 fn install_order_for(
     lock: &PluginPackageLock,
-    transitions: &[aster_use_core::PlannedPackageTransition],
+    transitions: &[krun_use_core::PlannedPackageTransition],
     change: Option<PlanPackageChangeKind>,
 ) -> UseResult<Vec<String>> {
     Ok(lock
@@ -397,7 +397,7 @@ fn install_order_for(
 
 fn removal_order_for(
     lock: &PluginPackageLock,
-    transitions: &[aster_use_core::PlannedPackageTransition],
+    transitions: &[krun_use_core::PlannedPackageTransition],
     change: Option<PlanPackageChangeKind>,
 ) -> UseResult<Vec<String>> {
     Ok(lock
@@ -409,7 +409,7 @@ fn removal_order_for(
 }
 
 fn sorted_plan_packages(
-    transitions: &[aster_use_core::PlannedPackageTransition],
+    transitions: &[krun_use_core::PlannedPackageTransition],
     change: Option<PlanPackageChangeKind>,
 ) -> Vec<String> {
     transitions
@@ -420,7 +420,7 @@ fn sorted_plan_packages(
 }
 
 fn transition_matches(
-    transitions: &[aster_use_core::PlannedPackageTransition],
+    transitions: &[krun_use_core::PlannedPackageTransition],
     package_id: &str,
     change: Option<PlanPackageChangeKind>,
 ) -> bool {
@@ -473,7 +473,7 @@ fn manager_error(message: impl Into<String>) -> UseError {
 
 #[cfg(test)]
 mod tests {
-    use aster_use_core::PlanScopeKind;
+    use krun_use_core::PlanScopeKind;
 
     use super::*;
 

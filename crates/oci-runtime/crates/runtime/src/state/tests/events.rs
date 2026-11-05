@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use aster_oci_sdk::{EventsRequest, RuntimeEventKind};
+use krun_oci_sdk::{EventsRequest, RuntimeEventKind};
 use sha2::{Digest, Sha256};
 
 use super::*;

@@ -1,23 +1,23 @@
 [package]
-name = "aster-gateway"
+name = "krun-gateway"
 version = "1.1.1"
 edition = "2021"
 rust-version = "1.88"
 publish = false
 authors = ["Kense Labs"]
 license = "MIT"
-repository = "https://github.com/kense-labs/gateway"
+repository = "https://github.com/kense-labs/krun"
 description = "AI Native Traffic Layer with protocol routing and local policy enforcement"
 readme = "README.md"
 keywords = ["gateway", "api", "proxy", "routing", "load-balancer"]
 categories = ["web-programming::http-server", "network-programming"]
 
 [lib]
-name = "aster_gateway"
+name = "krun_gateway"
 path = "src/lib.rs"
 
 [[bin]]
-name = "aster-gateway"
+name = "krun-gateway"
 path = "src/main.rs"
 
 # Test-only loopback upstream for Managed Runtime Service real-process
@@ -84,7 +84,7 @@ futures-util = "0.3"
 # Serialization
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-aster-acl = { path = "../../crates/acl", version = "=0.3.0" }
+krun-acl = { path = "../../crates/acl", version = "=0.3.0" }
 sha2 = "0.10"
 argon2 = "0.5"
 url = "2"
@@ -149,23 +149,23 @@ kube = { version = "2.0", features = ["client", "runtime"], optional = true }
 k8s-openapi = { version = "0.26", features = ["latest"], optional = true }
 
 # Self-update
-aster-updater = { path = "../../crates/updater", version = "=0.3.0" }
-aster-apofasi = { path = "../../crates/apofasi", default-features = false }
+krun-updater = { path = "../../crates/updater", version = "=0.3.0" }
+krun-apofasi = { path = "../../crates/apofasi", default-features = false }
 indexmap = "2"
 # Platform PP-OCRv6. The weight bundle is installed at runtime, not vendored.
-aster-use-bge = { path = "../../crates/bge", default-features = false, features = ["bge-m3", "bge-reranker-v2-m3"] }
-aster-use-ocr = { path = "../../crates/ocr", default-features = false, features = ["ppocr-v6"] }
+krun-use-bge = { path = "../../crates/bge", default-features = false, features = ["bge-m3", "bge-reranker-v2-m3"] }
+krun-use-ocr = { path = "../../crates/ocr", default-features = false, features = ["ppocr-v6"] }
 
 # Inline LLM/MCP wire firewall (agentfw-style): the detection + masking brain (optional)
-aster-sentry = { path = "../../crates/sentry", version = "=0.7.0", optional = true }
+krun-sentry = { path = "../../crates/sentry", version = "=0.7.0", optional = true }
 
 [features]
 default = []
-neural = ["aster-apofasi/infer", "aster-apofasi/router"]
+neural = ["krun-apofasi/infer", "krun-apofasi/router"]
 redis = ["dep:redis"]
 kube = ["dep:kube", "dep:k8s-openapi"]
 # Inline wire firewall: a local proxy that masks secrets + runs sentry's detectors on the LLM/MCP wire
-wire = ["dep:aster-sentry"]
+wire = ["dep:krun-sentry"]
 
 [dev-dependencies]
 tokio-test = "0.4"

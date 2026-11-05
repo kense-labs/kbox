@@ -1,12 +1,12 @@
 use std::sync::Arc;
 use std::time::Duration;
 
-use aster_runtime::contract::{
+use krun_runtime::contract::{
     IsolationLevel, RuntimeApplyRequest, RuntimeCapabilities, RuntimeFeature, RuntimeHealthState,
     RuntimeInspection, RuntimeUnitClass, RuntimeUnitState,
 };
-use aster_runtime::{RuntimeClient, RuntimeClock, RuntimeError, SystemRuntimeClock};
-use aster_use_core::{PlanEnforcementProfile, PlannedProviderEvidence, UseError, UseResult};
+use krun_runtime::{RuntimeClient, RuntimeClock, RuntimeError, SystemRuntimeClock};
+use krun_use_core::{PlanEnforcementProfile, PlannedProviderEvidence, UseError, UseResult};
 use sha2::{Digest, Sha256};
 
 use super::model::{

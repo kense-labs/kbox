@@ -2,12 +2,12 @@ use std::future::Future;
 use std::path::Path;
 use std::time::Duration;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentBundle, AgentClient, AgentCreateRequest, AgentDeleteRequest, AgentKillRequest,
     AgentStartRequest, AgentState, AgentStateRequest, AgentWaitRequest, GuestPath,
 };
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerId, ContainerTarget, DeleteMode, Error, ErrorCode, ExitStatus, Generation, IoMode,
     OciBundle, OperationContext, OperationId, ProcessIo, Signal,
 };
@@ -22,7 +22,7 @@ const CALL_TIMEOUT: Duration = Duration::from_secs(15);
 const LIFECYCLE_TIMEOUT: Duration = Duration::from_secs(15);
 const POLL_INTERVAL: Duration = Duration::from_millis(25);
 const LINUX_SIGTERM: i32 = 15;
-const MARKER_CONTENTS: &[u8] = b"aster-oci-create-start-user-time-v1\n";
+const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
 
 pub(super) trait AgentStream: AsyncRead + AsyncWrite + Unpin + Send {}
 
@@ -558,7 +558,7 @@ pub(super) async fn state_is_missing<T: AgentStream>(
 }
 
 async fn operation_conflicts<T>(
-    future: impl Future<Output = aster_oci_sdk::Result<T>>,
+    future: impl Future<Output = krun_oci_sdk::Result<T>>,
     description: &str,
 ) -> Result<bool, String> {
     match timeout(CALL_TIMEOUT, future).await {
@@ -578,7 +578,7 @@ async fn operation_conflicts<T>(
 
 pub(super) async fn guest_call<T>(
     operation_name: &str,
-    future: impl Future<Output = aster_oci_sdk::Result<T>>,
+    future: impl Future<Output = krun_oci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),

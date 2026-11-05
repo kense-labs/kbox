@@ -1,23 +1,23 @@
 [package]
-name = "aster-box-cli"
+name = "krun-box-cli"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
 
 [[bin]]
-name = "aster-box"
+name = "krun-box"
 path = "src/main.rs"
 
 [lib]
-name = "aster_box_cli"
+name = "krun_box_cli"
 path = "src/lib.rs"
 
 [dependencies]
-aster-box-core = { path = "../core" }
-aster-box-runtime = { path = "../runtime" }
-aster-box-sdk = { path = "../sdk" }
-aster-transport = { workspace = true }
+krun-box-core = { path = "../core" }
+krun-box-runtime = { path = "../runtime" }
+krun-box-sdk = { path = "../sdk" }
+krun-transport = { workspace = true }
 
 # Async runtime
 tokio = { workspace = true }

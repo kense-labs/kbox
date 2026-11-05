@@ -4,23 +4,23 @@ use std::sync::atomic::{AtomicU64, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use tokio::sync::Notify;
 
-use aster_runtime::contract::{
+use async_trait::async_trait;
+use krun_runtime::contract::{
     ArtifactRef, HealthCheckKind, IsolationLevel, MountKind, NetworkMode, ResourceControl,
     RuntimeActionRequest, RuntimeApplyRequest, RuntimeCapabilities, RuntimeEvidence,
     RuntimeExecRequest, RuntimeExecResult, RuntimeFeature, RuntimeHealthObservation,
     RuntimeHealthState, RuntimeInspection, RuntimeLogChunk, RuntimeLogQuery, RuntimeLogStream,
     RuntimeObservation, RuntimeRemoval, RuntimeServiceEndpoint, RuntimeUnitClass, RuntimeUnitState,
 };
-use aster_runtime::{ProviderId, RuntimeClient, RuntimeError, RuntimeResult};
-use aster_use_core::{
+use krun_runtime::{ProviderId, RuntimeClient, RuntimeError, RuntimeResult};
+use krun_use_core::{
     McpReleaseDescriptor, PackageSurfaceKind, PlanEnforcementProfile, PlanScope, PlanScopeKind,
     PlannedProviderEvidence, PluginSurfaceRef, ToolReleaseDescriptor,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     PluginMcpLaunch, PluginMcpSurface, SurfaceActivation, ToolServiceSurface, ToolTaskSource,
     ToolTaskSurface,
 };
-use async_trait::async_trait;
 
 use super::*;
 
@@ -60,7 +60,7 @@ pub(crate) fn policy() -> RuntimeWorkloadPolicy {
         host_services: Vec::new(),
         service_lifecycle: None,
         non_secret_environment: BTreeMap::from([(
-            "ASTER_PLUGIN_MODE".to_string(),
+            "KRUN_PLUGIN_MODE".to_string(),
             "managed".to_string(),
         )]),
         working_directory: None,

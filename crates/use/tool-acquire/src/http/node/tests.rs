@@ -207,7 +207,7 @@ fn signed_official_node_runs_native_stdlib_and_npm_without_downloading_an_instal
             node.env(name, value);
         }
     }
-    let output = node.args(["-e", "const fs=require('node:fs');const path=require('node:path');const crypto=require('node:crypto');fs.writeFileSync(path.join(process.env.NODE_PROBE_ROOT,'native-effect'),'executed');console.log(JSON.stringify({version:process.version,hash:crypto.createHash('sha256').update('aster-native-node').digest('hex')}));"]).output().unwrap();
+    let output = node.args(["-e", "const fs=require('node:fs');const path=require('node:path');const crypto=require('node:crypto');fs.writeFileSync(path.join(process.env.NODE_PROBE_ROOT,'native-effect'),'executed');console.log(JSON.stringify({version:process.version,hash:crypto.createHash('sha256').update('krun-native-node').digest('hex')}));"]).output().unwrap();
     assert!(
         output.status.success(),
         "{}",
@@ -221,7 +221,7 @@ fn signed_official_node_runs_native_stdlib_and_npm_without_downloading_an_instal
     use sha2::{Digest, Sha256};
     assert_eq!(
         result.get("hash").and_then(|value| value.as_str()),
-        Some(crate::store::hex_encode(&Sha256::digest(b"aster-native-node")).as_str())
+        Some(crate::store::hex_encode(&Sha256::digest(b"krun-native-node")).as_str())
     );
     assert_eq!(
         std::fs::read(temp.path().join("native-effect")).unwrap(),

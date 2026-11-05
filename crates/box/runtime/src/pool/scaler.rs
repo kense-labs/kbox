@@ -6,7 +6,7 @@
 use std::collections::VecDeque;
 use std::time::Instant;
 
-use aster_box_core::config::ScalingPolicy;
+use krun_box_core::config::ScalingPolicy;
 
 /// Result of a scaling evaluation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

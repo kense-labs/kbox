@@ -1,13 +1,25 @@
-# aster-box-mkext4
+# krun-box-mkext4
 
-[![crates.io](https://img.shields.io/crates/v/aster-box-mkext4)](https://crates.io/crates/aster-box-mkext4)
-[![docs.rs](https://img.shields.io/docsrs/aster-box-mkext4)](https://docs.rs/aster-box-mkext4)
-[![CI](https://github.com/aster-ai-lab/Box/actions/workflows/ci.yml/badge.svg)](https://github.com/aster-ai-lab/Box/actions/workflows/ci.yml)
+## 概述
 
-This is the Aster Box release-owned fork of upstream `mkext4` 0.0.3. It keeps
+Krun Box deterministic ext4 image builder with raw Linux path byte support
+
+## 构建与验证
+
+在仓库根目录执行：
+
+```bash
+cargo check --locked
+```
+
+[![crates.io](https://img.shields.io/crates/v/krun-box-mkext4)](https://crates.io/crates/krun-box-mkext4)
+[![docs.rs](https://img.shields.io/docsrs/krun-box-mkext4)](https://docs.rs/krun-box-mkext4)
+[![CI](https://github.com/kense-labs/krun/actions/workflows/ci.yml/badge.svg)](https://github.com/kense-labs/krun/actions/workflows/ci.yml)
+
+This is the Krun Box release-owned fork of upstream `mkext4` 0.0.3. It keeps
 the upstream implementation and adds byte-preserving Linux directory-entry and
 symbolic-link inputs required by Box's guest-native rootfs builder. See
-[`ASTER_PATCHES.md`](ASTER_PATCHES.md) for the exact provenance and patch boundary.
+[`KRUN_PATCHES.md`](KRUN_PATCHES.md) for the exact provenance and patch boundary.
 
 Deterministic, streaming, pure-Rust ext4 image builder — plus a
 verification-grade reader. No C dependencies, no kernel mounts, no clocks,
@@ -149,7 +161,7 @@ mount read-write on any modern Linux kernel.
 ## Installing
 
 ```sh
-cargo add aster-box-mkext4 --rename mkext4
+cargo add krun-box-mkext4 --rename mkext4
 ```
 
 Early release (0.0.x): the API may still move before 0.1.

@@ -70,7 +70,7 @@ async fn parses_done_and_utf8_at_every_transport_split() {
             }
             if newline == "\n" && split == 0 {
                 println!(
-                    "ASTER_RESPONSES_WIRE:{}",
+                    "KRUN_RESPONSES_WIRE:{}",
                     serde_json::json!({"case":"text","wire":text})
                 );
             }
@@ -113,7 +113,7 @@ async fn interleaved_tools_survive_actual_sse_framing() {
         5
     );
     println!(
-        "ASTER_RESPONSES_WIRE:{}",
+        "KRUN_RESPONSES_WIRE:{}",
         serde_json::json!({"case":"tools","wire":text})
     );
 }

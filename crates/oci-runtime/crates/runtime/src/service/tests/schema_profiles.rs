@@ -1,5 +1,5 @@
 use super::*;
-use aster_oci_sdk::OciSchemaDocument;
+use krun_oci_sdk::OciSchemaDocument;
 
 #[derive(Debug, Clone)]
 struct DriverSchemaProfile {

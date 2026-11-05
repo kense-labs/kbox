@@ -12,21 +12,21 @@ function Require-Env([string]$Name) {
   return $v
 }
 
-$dedicated = Require-Env "ASTER_GATEWAY_DEDICATED_RUNNER"
-if ($dedicated -ne "1") { throw "refuse: ASTER_GATEWAY_DEDICATED_RUNNER must be 1" }
-Require-Env "ASTER_GATEWAY_HW_HOST" | Out-Null
-Require-Env "ASTER_GATEWAY_HW_CPU_MODEL" | Out-Null
-Require-Env "ASTER_GATEWAY_HW_MEMORY_GB" | Out-Null
+$dedicated = Require-Env "KRUN_GATEWAY_DEDICATED_RUNNER"
+if ($dedicated -ne "1") { throw "refuse: KRUN_GATEWAY_DEDICATED_RUNNER must be 1" }
+Require-Env "KRUN_GATEWAY_HW_HOST" | Out-Null
+Require-Env "KRUN_GATEWAY_HW_CPU_MODEL" | Out-Null
+Require-Env "KRUN_GATEWAY_HW_MEMORY_GB" | Out-Null
 
-$Bin = if ($args.Count -ge 1) { $args[0] } else { ".\target\release\aster-gateway.exe" }
+$Bin = if ($args.Count -ge 1) { $args[0] } else { ".\target\release\krun-gateway.exe" }
 if (-not (Test-Path $Bin)) {
-  Write-Host "building release aster-gateway..."
-  cargo build --locked --release --bin aster-gateway
-  $Bin = ".\target\release\aster-gateway.exe"
+  Write-Host "building release krun-gateway..."
+  cargo build --locked --release --bin krun-gateway
+  $Bin = ".\target\release\krun-gateway.exe"
 }
 
-$Dur = if ($env:ASTER_GATEWAY_SOAK_DURATION) { $env:ASTER_GATEWAY_SOAK_DURATION } else { "7200" }
-$C = if ($env:ASTER_GATEWAY_SOAK_CONCURRENCY) { $env:ASTER_GATEWAY_SOAK_CONCURRENCY } else { "16" }
+$Dur = if ($env:KRUN_GATEWAY_SOAK_DURATION) { $env:KRUN_GATEWAY_SOAK_DURATION } else { "7200" }
+$C = if ($env:KRUN_GATEWAY_SOAK_CONCURRENCY) { $env:KRUN_GATEWAY_SOAK_CONCURRENCY } else { "16" }
 
 function Invoke-Python {
   param([string[]]$PythonArgs)

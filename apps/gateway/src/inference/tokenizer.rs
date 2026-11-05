@@ -64,7 +64,7 @@ mod tests {
     fn revision_is_stable() {
         assert_eq!(
             crate::config::INFERENCE_TOKENIZER_REVISION,
-            "aster.gateway.tokenizer.v1"
+            "krun.gateway.tokenizer.v1"
         );
     }
 

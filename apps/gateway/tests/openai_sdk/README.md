@@ -1,7 +1,15 @@
 # Official OpenAI SDK conformance
 
+## 概述
+
+本目录保存 apps/gateway/tests/openai_sdk 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 This suite runs the pinned official Python SDK against a real
-`aster-gateway` process. It applies a complete inference policy through the
+`krun-gateway` process. It applies a complete inference policy through the
 native managed snapshot API and uses a controllable HTTP/SSE upstream.
 
 The cases cover:
@@ -17,19 +25,19 @@ The cases cover:
 - graceful completion inside the configured drain deadline; and
 - forced termination at a zero-second drain deadline.
 
-Run it from the Aster repository root:
+Run it from the Krun repository root:
 
 ```bash
-cargo build --locked -p aster-gateway --bin aster-gateway
+cargo build --locked -p krun-gateway --bin krun-gateway
 python -m pip install --requirement apps/gateway/tests/openai_sdk/requirements.txt
 python apps/gateway/tests/openai_sdk/test_conformance.py
 ```
 
 The same commands work on Windows and automatically select
-`target/debug/aster-gateway.exe`. To exercise a binary at another location, set
-`ASTER_GATEWAY_BINARY` first:
+`target/debug/krun-gateway.exe`. To exercise a binary at another location, set
+`KRUN_GATEWAY_BINARY` first:
 
 ```powershell
-$env:ASTER_GATEWAY_BINARY = (Resolve-Path target/debug/aster-gateway.exe).Path
+$env:KRUN_GATEWAY_BINARY = (Resolve-Path target/debug/krun-gateway.exe).Path
 python tests/openai_sdk/test_conformance.py
 ```

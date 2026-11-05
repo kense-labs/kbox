@@ -2,8 +2,8 @@ use std::ffi::OsStr;
 use std::io;
 use std::path::Path;
 
-use aster_oci_sdk::{ErrorCode, Result};
 use cap_std::fs::Dir;
+use krun_oci_sdk::{ErrorCode, Result};
 
 #[cfg(unix)]
 use cap_fs_ext::{DirExt, MetadataExt};

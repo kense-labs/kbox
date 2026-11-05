@@ -11,7 +11,7 @@ use std::net::Ipv4Addr;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use aster_box_core::{
+use krun_box_core::{
     parse_port_mapping, ExecutionManagerError, ExecutionManagerResult, NetworkEndpoint,
     NetworkMode, PortProtocol, OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY_ENV,
 };
@@ -20,7 +20,7 @@ use sha2::{Digest, Sha256};
 
 use crate::NetworkStore;
 
-const LEASE_SCHEMA: &str = "aster.box.sandbox-host-netdevice.v5";
+const LEASE_SCHEMA: &str = "krun.box.sandbox-host-netdevice.v5";
 const GUEST_IFACE_NAME: &str = "eth0";
 
 /// One static TCP host→container publication persisted on the lease.
@@ -978,7 +978,7 @@ mod tests {
 
     #[test]
     fn v4_lease_without_udp_field_still_loads() {
-        let raw = r#"{"schema":"aster.box.sandbox-host-netdevice.v4","network":"dev","subnet":"10.88.0.0/24","bridge_iface":"asterb","container_iface":"bv22222222c","peer_iface":"bv22222222p","guest_name":"eth0","container_ip":"10.88.0.2","published_tcp":[]}"#;
+        let raw = r#"{"schema":"krun.box.sandbox-host-netdevice.v4","network":"dev","subnet":"10.88.0.0/24","bridge_iface":"asterb","container_iface":"bv22222222c","peer_iface":"bv22222222p","guest_name":"eth0","container_ip":"10.88.0.2","published_tcp":[]}"#;
         let loaded: HostNetDeviceLease = serde_json::from_str(raw).unwrap();
         assert!(loaded.published_udp.is_empty());
     }

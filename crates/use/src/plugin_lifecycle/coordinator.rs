@@ -1,12 +1,12 @@
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use aster_use_core::{PackageSurfaceKind, UseError, UseResult};
-use aster_use_extension::{
+use async_trait::async_trait;
+use krun_use_core::{PackageSurfaceKind, UseError, UseResult};
+use krun_use_extension::{
     ExtensionManifest, PackagePluginSurface, PluginAgentSurface, PluginFlowSurface,
     PluginMcpSurface, PluginOkfSurface, PluginSkillSurface, PluginUiSurface, ToolSurface,
 };
-use async_trait::async_trait;
 use sha2::{Digest, Sha256};
 
 use super::model::valid_sha256;
@@ -341,7 +341,7 @@ pub trait PluginUiLifecycleHost: Send + Sync {
 /// Embedding-host composition boundary for package-root-specific UI hosts.
 ///
 /// Static asset validation needs the immutable package root, while products
-/// such as Aster Code also inject host-owned durable state and cleanup policy.
+/// such as Krun Code also inject host-owned durable state and cleanup policy.
 /// The factory is selected by trusted host code and is never package input.
 pub trait PluginUiLifecycleHostFactory: Send + Sync {
     fn create(&self, package_root: PathBuf) -> Arc<dyn PluginUiLifecycleHost>;

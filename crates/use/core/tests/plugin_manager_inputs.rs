@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     PackageSurfaceKind, PlanScopeKind, PluginManagerApplyPlanInput, PluginManagerInspectInput,
     PluginManagerInstallPlanInput, PluginManagerListInstalledInput, PluginManagerPackageScopeInput,
     PluginManagerSearchInput, PluginManagerUpgradePlanInput,

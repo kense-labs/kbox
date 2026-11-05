@@ -1,4 +1,4 @@
-# Tasks: Aster CLI replaces mise
+# Tasks: Krun CLI replaces mise
 
 **Input**: [spec.md](spec.md), [plan.md](plan.md).
 
@@ -72,7 +72,7 @@ full goal. No Git commit or additional worktree is authorized.
   passes that case unchanged in isolation. Pager Clippy repeats the other 42
   errors for lib and lib-test (84 diagnostics); no lint allowance was added.
   Five more native mise cases freeze ordered version arrays and fallback
-  executables in `contracts/mise-multiversion-reference.json`. Aster's earlier
+  executables in `contracts/mise-multiversion-reference.json`. Krun's earlier
   declaration map then admitted one request per tool, so multi-version use and
   declarations were still missing at that capture. They are now implemented
   through an additive `EnvDeclarations` API that preserves the scalar Rust API.
@@ -83,7 +83,7 @@ full goal. No Git commit or additional worktree is authorized.
   cases are unchanged. Temporary overrides now preserve each tool's ordered
   requests through the shared resolver and CLI, with exact duplicate collapse
   and unchanged legacy scalar APIs. Nine additional fixed native mise cases
-  (24 commands) agree with the focused actual Aster CLI comparison in offline
+  (24 commands) agree with the focused actual Krun CLI comparison in offline
   and no-install modes. The tool suite passes 138 cases/five ignored; tool and
   CLI Clippy pass. All 31 sequential CLI cases and 18 pager command
   regressions pass. Rebuilding both binaries resolves the observed post-test
@@ -113,7 +113,7 @@ full goal. No Git commit or additional worktree is authorized.
   executable. The new read-only identity selector preserves execution's
   completeness mode and source/receipt validation. Final-source checks pass
   141 tool tests/five ignored, 18 pager tests, three focused CLI cases and all
-  35 default sequential CLI cases. Two real A3S TUI scenarios validate decline
+  35 default sequential CLI cases. Two real KRUN TUI scenarios validate decline
   and confirmation using uv 0.13.6. The same real uv executable hash reproduces
   the cleanup failure before the fix and successful removal after it, with
   unchanged configuration. Final paired identities and sampled source/artifact
@@ -128,14 +128,14 @@ full goal. No Git commit or additional worktree is authorized.
   `contracts/mise-prune-reference.json`. They cover unused current versions,
   global and multiple tracked projects, prefix/multiple selection, changed and
   deleted declarations, preview/exit behavior, confirmation, config-only cleanup
-  and a real running native executable. The existing Aster CLI rejects `tool
+  and a real running native executable. The existing Krun CLI rejects `tool
   prune` with exit 2; the store primitive only preserves its current pointer.
   Tracking, needed-version selection, running-process protection, the native
-  prune command and corresponding Aster differential checks remain required.
+  prune command and corresponding Krun differential checks remain required.
   The 2026-11-03 increment implements explicit admitted-source tracking and
   `tool prune`, with preview/exit-code/confirmation/configs/tools modes and
   protection for running native and interpreted installations. All twelve
-  unchanged native reference cases pass against the actual Aster CLI; a running
+  unchanged native reference cases pass against the actual Krun CLI; a running
   script also reads its required dependency after actual pruning. Eight focused
   native process/tracking tests pass, including the regression that failed before
   argument-path inspection. Upgrades, rollback, profile/stub tracking, remaining
@@ -179,7 +179,7 @@ full goal. No Git commit or additional worktree is authorized.
   Actual Node 20.11.0 stdlib/npm execution passed on macOS arm64. Directory
   metadata, backend-specific budgets, source builds/flavors/options, complete
   runtime behavior and all other required core providers remain open.
-  User follow-up requires `aster-ai-lab/plugins` as the official trusted AIX
+  User follow-up requires `kense-labs/plugins` as the official trusted AIX
   source, domain-organized authoring and GitHub Packages/GHCR artifacts.
   Integrate native AIX publication checks, signed catalog/OCI digest binding,
   installation/update/cache behavior and real repository publication evidence;
@@ -207,7 +207,7 @@ full goal. No Git commit or additional worktree is authorized.
   required. The source-owned CUA manifest has six CLI rows; downloaded macOS
   arm64 bytes and all four archive members match the producer's exact digest.
   Desktop follow-up additionally requires an account-free Plugins ActivityBar
-  entry, retirement of the Aster dependency-settings entry and deep links, native
+  entry, retirement of the Krun dependency-settings entry and deep links, native
   official Registry discovery, install/update/remove/status/progress controls,
   and conversion of all 14 source-owned dependency/runtime items into AIX.
   Local navigation, catalogue and installation-adapter changes are in progress;
@@ -323,14 +323,14 @@ full goal. No Git commit or additional worktree is authorized.
 
 - [ ] T011 [US1–US4] Wire CLI command discovery, diagnostics, completion, tool
   docs/skills, policy controls, and MCP environment/task access; add isolated
-  `apps/aster/tests/` coverage and preserve existing namespaces and permissions.
-- [ ] T012 [US1–US4] Build the final `aster`/`aster-acp` pair and run every
+  `apps/krun/tests/` coverage and preserve existing namespaces and permissions.
+- [ ] T012 [US1–US4] Build the final `krun`/`krun-acp` pair and run every
   upstream-inventory witness with mise absent. Complete native platform gates
   and the existing dependency/format/lint/test checks. Do not erase failures.
   Final binary notices must include the retained mise MIT notice for the
   adapted version algorithms; validate the owning archive contract.
-  The default `aster use` entry now embeds the existing local Rust SDK rather
-  than requiring an unshipped `aster-use` binary. The explicit executable
+  The default `krun use` entry now embeds the existing local Rust SDK rather
+  than requiring an unshipped `krun-use` binary. The explicit executable
   override remains compatible. Six SDK checks, all 20 isolated actual CLI
   cases and a copied-CLI native AIX check pass. The original parallel timeout
   failure is retained. Current runtime-pool integration checks, final release
@@ -385,7 +385,7 @@ M0 对账、M1 安装作业恢复及 M2 prune 首个切片已推进；各里程�
 - [ ] `cargo fmt --all -- --check` is clean for Rust edits.
 - [ ] `python3 tests/workspace_dependencies.py` passes; dependencies stay local.
 - [ ] No native `<select>` is added on a product surface.
-- [ ] Product configuration is ACL parsed by `aster-acl`.
+- [ ] Product configuration is ACL parsed by `krun-acl`.
 - [ ] CLI/ACP pair passes native platform acceptance without mise.
 - [ ] Release-profile cold/warm efficiency evidence satisfies FR-012/SC-004.
 - [ ] Full completion audit finds no missing, deferred, or unverified capability.

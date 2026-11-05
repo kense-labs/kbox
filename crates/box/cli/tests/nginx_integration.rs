@@ -1,7 +1,7 @@
-//! Integration test: Run containers in aster-box MicroVM.
+//! Integration test: Run containers in krun-box MicroVM.
 //!
 //! This test demonstrates the full lifecycle of running containers
-//! inside aster-box MicroVMs:
+//! inside krun-box MicroVMs:
 //!
 //! 1. Pull an OCI image from Docker Hub
 //! 2. Run a container in detached mode
@@ -11,7 +11,7 @@
 //!
 //! ## Prerequisites
 //!
-//! - `aster-box` binary built (`cargo build -p aster-box-cli`)
+//! - `krun-box` binary built (`cargo build -p krun-box-cli`)
 //! - macOS with Apple HVF or Linux with KVM
 //! - Internet access (to pull images on first run)
 //! - `DYLD_LIBRARY_PATH` set to include libkrun/libkrunfw build dirs
@@ -25,10 +25,10 @@
 //! export DYLD_LIBRARY_PATH="$(ls -td target/debug/build/libkrun-sys-*/out/libkrun/lib | head -1):$(ls -td target/debug/build/libkrun-sys-*/out/libkrunfw/lib | head -1)"
 //!
 //! # Run all integration tests
-//! cargo test -p aster-box-cli --test nginx_integration -- --ignored --nocapture
+//! cargo test -p krun-box-cli --test nginx_integration -- --ignored --nocapture
 //!
 //! # Run a single test
-//! cargo test -p aster-box-cli --test nginx_integration -- --ignored --nocapture test_alpine_full_lifecycle
+//! cargo test -p krun-box-cli --test nginx_integration -- --ignored --nocapture test_alpine_full_lifecycle
 //! ```
 //!
 //! Tests are `#[ignore]` by default because they require a built binary,
@@ -37,7 +37,7 @@
 use std::process::Command;
 use std::time::Duration;
 
-/// Find the aster-box binary in the target directory.
+/// Find the krun-box binary in the target directory.
 fn find_binary() -> String {
     // CARGO_MANIFEST_DIR points to the cli crate: crates/box/src/cli
     // target dir is at: crates/box/src/target/
@@ -47,75 +47,72 @@ fn find_binary() -> String {
         .expect("cli crate should be inside workspace");
 
     for profile in ["debug", "release"] {
-        let bin = workspace_root
-            .join("target")
-            .join(profile)
-            .join("aster-box");
+        let bin = workspace_root.join("target").join(profile).join("krun-box");
         if bin.exists() {
             return bin.to_string_lossy().to_string();
         }
     }
 
     // Fall back to PATH
-    "aster-box".to_string()
+    "krun-box".to_string()
 }
 
-/// Run an aster-box command and return (stdout, stderr, success).
+/// Run an krun-box command and return (stdout, stderr, success).
 /// Both stdout and stderr go directly to terminal for real-time output.
 fn run_cmd(args: &[&str]) -> (String, String, bool) {
     let bin = find_binary();
-    eprintln!("    $ aster-box {}", args.join(" "));
+    eprintln!("    $ krun-box {}", args.join(" "));
 
     let status = Command::new(&bin)
         .args(args)
         .stdout(std::process::Stdio::inherit())
         .stderr(std::process::Stdio::inherit())
         .status()
-        .unwrap_or_else(|e| panic!("Failed to run `aster-box {}`: {}", args.join(" "), e));
+        .unwrap_or_else(|e| panic!("Failed to run `krun-box {}`: {}", args.join(" "), e));
 
     // stdout is inherited (not captured), so return empty
     (String::new(), String::new(), status.success())
 }
 
-/// Run an aster-box command and capture stdout (no real-time output).
+/// Run an krun-box command and capture stdout (no real-time output).
 /// Used when we need the command's output (e.g., box ID, ps, inspect).
 fn run_cmd_capture(args: &[&str]) -> (String, String, bool) {
     let bin = find_binary();
     let output = Command::new(&bin)
         .args(args)
         .output()
-        .unwrap_or_else(|e| panic!("Failed to run `aster-box {}`: {}", args.join(" "), e));
+        .unwrap_or_else(|e| panic!("Failed to run `krun-box {}`: {}", args.join(" "), e));
 
     let stdout = String::from_utf8_lossy(&output.stdout).to_string();
     let stderr = String::from_utf8_lossy(&output.stderr).to_string();
     (stdout, stderr, output.status.success())
 }
 
-/// Run an aster-box command quietly (no output), return (stdout, stderr, success).
+/// Run an krun-box command quietly (no output), return (stdout, stderr, success).
 /// Used for polling commands like `ps` to avoid spamming output.
 fn run_cmd_quiet(args: &[&str]) -> (String, String, bool) {
     run_cmd_capture(args)
 }
 
-/// Run an aster-box command with inherited output, assert success.
+/// Run an krun-box command with inherited output, assert success.
 fn run_ok(args: &[&str]) -> String {
     let (_, stderr, success) = run_cmd(args);
     assert!(
         success,
-        "Command `aster-box {}` failed.\nstderr: {}",
+        "Command `krun-box {}` failed.\nstderr: {}",
         args.join(" "),
         stderr,
     );
     String::new()
 }
 
-/// Run an aster-box command, capture stdout, assert success, return stdout.
+/// Run an krun-box command, capture stdout, assert success, return stdout.
 fn run_ok_capture(args: &[&str]) -> String {
-    eprintln!("    $ aster-box {}", args.join(" "));
+    eprintln!("    $ krun-box {}", args.join(" "));
     let (stdout, stderr, success) = run_cmd_capture(args);
     assert!(
         success,
-        "Command `aster-box {}` failed.\nstdout: {}\nstderr: {}",
+        "Command `krun-box {}` failed.\nstdout: {}\nstderr: {}",
         args.join(" "),
         stdout,
         stderr,
@@ -199,7 +196,7 @@ fn cleanup(name: &str) {
 // Test: Full alpine lifecycle (pull → run → ps → exec → stop → rm)
 // ============================================================================
 
-/// Demonstrates the complete aster-box VM lifecycle using Alpine Linux.
+/// Demonstrates the complete krun-box VM lifecycle using Alpine Linux.
 ///
 /// This is the primary integration test that verifies:
 /// - Image pulling from Docker Hub
@@ -305,7 +302,7 @@ fn test_alpine_full_lifecycle() {
 // Test: Execute multiple commands inside a running box
 // ============================================================================
 
-/// Demonstrates executing various commands inside a running aster-box VM.
+/// Demonstrates executing various commands inside a running krun-box VM.
 #[test]
 #[ignore]
 fn test_exec_commands() {
@@ -355,15 +352,15 @@ fn test_exec_commands() {
         "--",
         "sh",
         "-c",
-        "echo hello-aster > /tmp/test.txt",
+        "echo hello-krun > /tmp/test.txt",
     ]);
     if success {
         let (stdout, _, success) =
             run_cmd_capture(&["exec", box_name, "--", "cat", "/tmp/test.txt"]);
         if success {
             assert!(
-                stdout.trim() == "hello-aster",
-                "Expected 'hello-aster', got '{}'",
+                stdout.trim() == "hello-krun",
+                "Expected 'hello-krun', got '{}'",
                 stdout.trim()
             );
             println!("    ✓ Write + read file inside VM works");
@@ -392,7 +389,7 @@ fn test_env_and_labels() {
         "--name",
         box_name,
         "-e",
-        "MY_APP=aster-test",
+        "MY_APP=krun-test",
         "-e",
         "MY_VERSION=1.0",
         "-l",
@@ -418,8 +415,8 @@ fn test_env_and_labels() {
         run_cmd_capture(&["exec", box_name, "--", "sh", "-c", "echo $MY_APP"]);
     if success {
         assert!(
-            stdout.trim() == "aster-test",
-            "Expected MY_APP=aster-test, got: '{}'",
+            stdout.trim() == "krun-test",
+            "Expected MY_APP=krun-test, got: '{}'",
             stdout.trim()
         );
         println!("    ✓ Environment variable MY_APP set correctly");
@@ -444,7 +441,7 @@ fn test_env_and_labels() {
 // Test: nginx with known limitation
 // ============================================================================
 
-/// Demonstrates running nginx in aster-box.
+/// Demonstrates running nginx in krun-box.
 ///
 /// NOTE: nginx's default `listen ... backlog 511` may fail under libkrun's
 /// TSI networking with `listen() failed (22: Invalid argument)`. This test

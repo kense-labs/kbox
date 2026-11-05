@@ -5,8 +5,8 @@ use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use aster_acl::builder::BlockBuilder;
-use aster_acl::{generate, parse_acl, Block, Document, Value};
+use krun_acl::builder::BlockBuilder;
+use krun_acl::{generate, parse_acl, Block, Document, Value};
 use sha2::{Digest, Sha256};
 
 use crate::archive::{ArchiveLock, ArchiveRecord};
@@ -21,10 +21,10 @@ use crate::{
     VersionRequest, VersionRequestKind,
 };
 
-const SCHEMA: &str = "aster.env-lock.v3";
-const MULTI_SCHEMA: &str = "aster.env-lock.v4";
-const SELECTOR_SCHEMA: &str = "aster.env-lock.v2";
-const LEGACY_SCHEMA: &str = "aster.env-lock.v1";
+const SCHEMA: &str = "krun.env-lock.v3";
+const MULTI_SCHEMA: &str = "krun.env-lock.v4";
+const SELECTOR_SCHEMA: &str = "krun.env-lock.v2";
+const LEGACY_SCHEMA: &str = "krun.env-lock.v1";
 const MAX_LOCK_BYTES: u64 = 1024 * 1024;
 
 /// An admitted lock for this platform. Environment variable values are never stored.
@@ -59,7 +59,7 @@ enum LockedSelector {
 
 /// The lock beside a project's environment declaration.
 pub fn project_env_lock_path(project: impl AsRef<Path>) -> PathBuf {
-    project.as_ref().join(".aster").join("env.lock.acl")
+    project.as_ref().join(".krun").join("env.lock.acl")
 }
 
 impl EnvLock {

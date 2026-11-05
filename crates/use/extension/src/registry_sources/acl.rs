@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, HashMap};
 
-use aster_acl::{Block, Document, Value};
-use aster_use_core::{UseError, UseResult};
+use krun_acl::{Block, Document, Value};
+use krun_use_core::{UseError, UseResult};
 use sha2::{Digest, Sha256};
 
 use super::{
@@ -40,7 +40,7 @@ impl RegistrySourcesDocument {
                 attributes: root_attributes,
             }],
         };
-        let mut encoded = aster_acl::generate_acl(&document);
+        let mut encoded = krun_acl::generate_acl(&document);
         encoded.push('\n');
         encoded
     }
@@ -60,7 +60,7 @@ impl RegistrySourcesDocument {
 }
 
 pub(super) fn decode(input: &str, paths: &ExtensionPaths) -> UseResult<RegistrySourcesDocument> {
-    let parsed = aster_acl::parse_acl(input)
+    let parsed = krun_acl::parse_acl(input)
         .map_err(|error| config_error(format!("Failed to parse Registry source ACL: {error}")))?;
     let [root] = parsed.blocks.as_slice() else {
         return Err(config_error(
@@ -115,7 +115,7 @@ pub(super) fn decode(input: &str, paths: &ExtensionPaths) -> UseResult<RegistryS
     };
     if document.encode() != input {
         return Err(config_error(
-            "Registry source configuration is not in canonical Aster ACL form.",
+            "Registry source configuration is not in canonical Krun ACL form.",
         ));
     }
     Ok(document)

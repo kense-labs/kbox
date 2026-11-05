@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
-use aster_use_core::{Artifact, Readiness, UseError, UseResult};
 use async_trait::async_trait;
+use krun_use_core::{Artifact, Readiness, UseError, UseResult};
 
 use crate::OcrBlock;
 

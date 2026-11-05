@@ -8,8 +8,8 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::platform::Platform;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::platform::Platform;
 
 use super::cache::{
     hash_context_sources, BuildCache, BuildCacheExportIdentity, BuildCacheTrace, CachedLayer,
@@ -1322,7 +1322,7 @@ async fn build_in_workspace(
     let reference = config
         .tag
         .clone()
-        .unwrap_or_else(|| "aster-build:latest".to_string());
+        .unwrap_or_else(|| "krun-build:latest".to_string());
 
     let final_layers_dir = build_dir.join(format!("layers_{}", output_stage_idx));
 
@@ -1610,7 +1610,7 @@ fn validate_instruction_network(
 
 fn run_instruction_cache_repr(instruction: &Instruction, network: BuildNetworkPolicy) -> String {
     format!(
-        "{}\n#aster.box.build.network={}",
+        "{}\n#krun.box.build.network={}",
         instruction_to_string(instruction),
         network.as_acl()
     )

@@ -4,11 +4,11 @@ use serde::Serialize;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum AgentInheritedDescriptorRole {
-    /// Aster Box exec-protocol Unix listener.
+    /// Krun Box exec-protocol Unix listener.
     ExecListener,
-    /// Aster Box PTY-protocol Unix listener.
+    /// Krun Box PTY-protocol Unix listener.
     PtyListener,
-    /// Dedicated Aster Box init diagnostic log.
+    /// Dedicated Krun Box init diagnostic log.
     InitLog,
 }
 
@@ -49,11 +49,11 @@ pub struct AgentInheritedDescriptorSchema {
 }
 
 impl AgentInheritedDescriptorSchema {
-    /// Aster Box host-sandbox control contract: exec, PTY, and init log on 3-5.
+    /// Krun Box host-sandbox control contract: exec, PTY, and init log on 3-5.
     #[must_use]
-    pub fn aster_box_control_v1() -> Self {
+    pub fn krun_box_control_v1() -> Self {
         Self {
-            profile: "aster-box-control-v1".to_string(),
+            profile: "krun-box-control-v1".to_string(),
             slots: vec![
                 AgentInheritedDescriptorSlot {
                     role: AgentInheritedDescriptorRole::ExecListener,
@@ -82,9 +82,9 @@ mod tests {
     };
 
     #[test]
-    fn aster_box_schema_is_stable_and_contains_no_source_identity() {
-        let schema = AgentInheritedDescriptorSchema::aster_box_control_v1();
-        assert_eq!(schema.profile, "aster-box-control-v1");
+    fn krun_box_schema_is_stable_and_contains_no_source_identity() {
+        let schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+        assert_eq!(schema.profile, "krun-box-control-v1");
         assert_eq!(schema.slots.len(), 3);
         assert_eq!(
             schema
@@ -113,7 +113,7 @@ mod tests {
         assert_eq!(
             serde_json::to_value(schema).expect("serialize descriptor schema"),
             serde_json::json!({
-                "profile": "aster-box-control-v1",
+                "profile": "krun-box-control-v1",
                 "slots": [
                     {
                         "role": "exec-listener",

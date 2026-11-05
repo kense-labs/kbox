@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use aster_use_core::{
+use krun_use_core::{
     PlanPackageChangeKind, PlanScope, PluginOperationAction, PluginPackageLock, UseResult,
 };
 

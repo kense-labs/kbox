@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use aster_oci_sdk::Result;
+use krun_oci_sdk::Result;
 
 use super::{audit_error, entry_name, json_stem, transaction_stem};
 use crate::state::DurableStateStore;

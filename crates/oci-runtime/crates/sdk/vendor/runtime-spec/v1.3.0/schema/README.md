@@ -1,5 +1,13 @@
 # JSON schema
 
+## 概述
+
+本目录保存 crates/oci-runtime/crates/sdk/vendor/runtime-spec/v1.3.0/schema 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 ## Overview
 
 This directory contains the [JSON Schema](https://json-schema.org) for validating JSON covered by this specification.

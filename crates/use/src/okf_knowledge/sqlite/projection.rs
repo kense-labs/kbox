@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     OkfKnowledgeObservation, OkfKnowledgeObservedState, OkfProjectionReceipt,
     OkfSelectedGeneration, UseError, UseResult, OKF_KNOWLEDGE_OBSERVATION_SCHEMA,
 };

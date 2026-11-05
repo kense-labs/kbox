@@ -6,11 +6,11 @@
 
 #![cfg(feature = "infer")]
 
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::{
     Criteria, DecisionEngine, DecisionKind, DeviceRequest, NeuralEngine, Question, State,
     SystemOneRequest,
 };
-use indexmap::IndexMap;
 use serde_json::json;
 use std::path::PathBuf;
 
@@ -62,13 +62,13 @@ fn neural_english_smoke_cpu() {
     let res = engine.decide(&refund_request()).expect("decide");
     assert!(res.model.starts_with("apofasi-"), "model id {}", res.model);
     match &res.answers["department"] {
-        aster_apofasi::Answer::Choice { choice, .. } => {
+        krun_apofasi::Answer::Choice { choice, .. } => {
             assert_eq!(choice, "billing", "department={choice}");
         }
         other => panic!("unexpected department answer {other:?}"),
     }
     match &res.answers["refund_requested"] {
-        aster_apofasi::Answer::Noul { noul } => {
+        krun_apofasi::Answer::Noul { noul } => {
             assert!(*noul > 0.5, "noul={noul}");
         }
         other => panic!("unexpected noul answer {other:?}"),
@@ -92,7 +92,7 @@ fn neural_english_smoke_metal() {
     };
     let res = engine.decide(&refund_request()).expect("decide metal");
     match &res.answers["department"] {
-        aster_apofasi::Answer::Choice { choice, .. } => {
+        krun_apofasi::Answer::Choice { choice, .. } => {
             assert_eq!(choice, "billing", "department={choice}");
         }
         other => panic!("unexpected department answer {other:?}"),

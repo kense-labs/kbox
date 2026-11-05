@@ -3,7 +3,7 @@
 use std::collections::BTreeMap;
 use std::time::Duration;
 
-use aster_use_core::{PluginCatalogRecord, UseError, UseResult};
+use krun_use_core::{PluginCatalogRecord, UseError, UseResult};
 use reqwest::header::{HeaderValue, ACCEPT, ACCEPT_ENCODING, AUTHORIZATION};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -14,9 +14,9 @@ use super::target_cache::ResumableTarget;
 use super::{hex_lower, network, resumable_http, RegistryNetworkPolicy};
 
 pub(super) const TARGET_PREFIX: &str = "oci-ghcr-v1/";
-pub(crate) const REPOSITORY: &str = "https://github.com/aster-ai-lab/plugins";
-pub(super) const ARTIFACT_TYPE: &str = "application/vnd.aster.aix.v1";
-pub(super) const PAYLOAD_TYPE: &str = "application/vnd.aster.aix.v1+zip";
+pub(crate) const REPOSITORY: &str = "https://github.com/kense-labs/krun";
+pub(super) const ARTIFACT_TYPE: &str = "application/vnd.krun.aix.v1";
+pub(super) const PAYLOAD_TYPE: &str = "application/vnd.krun.aix.v1+zip";
 const MANIFEST_TYPE: &str = "application/vnd.oci.image.manifest.v1+json";
 const ERROR: &str = "use.extension.registry_oci_invalid";
 const MAX_MANIFEST_BYTES: u64 = 1024 * 1024;
@@ -100,7 +100,7 @@ impl AixOciSource {
             ));
         }
         Ok(Some(Self {
-            repository: format!("aster-ai-lab/plugins/{}", catalog.package_id),
+            repository: format!("kense-labs/plugins/{}", catalog.package_id),
             manifest_sha256: (*manifest_sha256).into(),
             filename: (*filename).into(),
         }))
@@ -190,7 +190,7 @@ impl GhcrClient {
         let client = match policy {
             RegistryNetworkPolicy::Standard => Some(
                 reqwest::Client::builder()
-                    .user_agent("aster-use-extension/0.3")
+                    .user_agent("krun-use-extension/0.3")
                     .connect_timeout(Duration::from_secs(15))
                     .timeout(Duration::from_secs(60))
                     .redirect(reqwest::redirect::Policy::none())

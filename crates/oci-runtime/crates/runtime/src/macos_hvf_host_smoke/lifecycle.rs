@@ -3,9 +3,9 @@ use std::future::Future;
 use std::path::Path;
 use std::time::Duration;
 
-use aster_oci_core::HostPlatform;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::HostPlatform;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerId, ContainerOperationRequest, ContainerTarget, CreateRequest, DeleteMode,
     DeleteRequest, Error, ErrorCode, EventsRequest, ExitStatus, IsolationClass, IsolationRequest,
     KillRequest, ListRequest, OperationContext, OperationId, ProcessTarget, ProcessesRequest,
@@ -21,9 +21,9 @@ use super::report::MacosHvfPublicLifecycleEvidence;
 const CALL_TIMEOUT: Duration = Duration::from_secs(20);
 const LIFECYCLE_TIMEOUT: Duration = Duration::from_secs(30);
 const POLL_INTERVAL: Duration = Duration::from_millis(25);
-const MARKER_CONTENTS: &[u8] = b"aster-oci-create-start-user-time-v1\n";
-const MARKER_PATH: &str = "/.aster-oci-create-start-smoke";
-const PROGRESS_PATH: &str = "/.aster-oci-public-host-progress";
+const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
+const MARKER_PATH: &str = "/.krun-oci-create-start-smoke";
+const PROGRESS_PATH: &str = "/.krun-oci-public-host-progress";
 
 pub(super) struct LifecycleOutcome {
     pub(super) target: ContainerTarget,
@@ -291,7 +291,7 @@ async fn verify_features(
             RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
         )
         && info.drivers.drivers.len() == 1
-        && info.drivers.drivers[0].driver == aster_oci_core::DriverKind::LibkrunHvf
+        && info.drivers.drivers[0].driver == krun_oci_core::DriverKind::LibkrunHvf
         && info.drivers.drivers[0].isolation_classes == [IsolationClass::DedicatedVm];
     if !evidence.features_verified {
         return Err(
@@ -498,9 +498,9 @@ pub(super) async fn wait_for_marker(
             ));
         }
         match client
-            .file(aster_oci_sdk::FileRequest {
+            .file(krun_oci_sdk::FileRequest {
                 target: target.clone(),
-                op: aster_oci_sdk::FileOp::Download,
+                op: krun_oci_sdk::FileOp::Download,
                 path: MARKER_PATH.to_string(),
                 data: None,
                 user: None,
@@ -565,7 +565,7 @@ pub(super) fn operation(nonce: &str, suffix: &str) -> Result<OperationContext, S
 
 pub(super) async fn call<T>(
     label: &str,
-    future: impl Future<Output = aster_oci_sdk::Result<T>>,
+    future: impl Future<Output = krun_oci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),

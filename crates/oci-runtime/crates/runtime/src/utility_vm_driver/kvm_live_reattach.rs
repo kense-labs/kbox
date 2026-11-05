@@ -1,6 +1,6 @@
 //! Opt-in KVM Live Host reattach through the durable session-owner bridge.
 //!
-//! When `ASTER_OCI_KVM_SESSION_OWNER=1` and a live authenticated binding exists
+//! When `KRUN_OCI_KVM_SESSION_OWNER=1` and a live authenticated binding exists
 //! under the container runtime share, a replacement Host reconnects to the
 //! surviving Guest incarnation instead of seeding `RecoveredStopped`.
 //!
@@ -25,8 +25,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
 
-use aster_oci_agent_protocol::{AgentClient, GuestAgentService, SessionToken};
-use aster_oci_sdk::{
+use krun_oci_agent_protocol::{AgentClient, GuestAgentService, SessionToken};
+use krun_oci_sdk::{
     async_trait, ContainerRecord, ContainerTarget, Error, ErrorCode, GuestSessionAttachment, Result,
 };
 use tokio::net::UnixStream;
@@ -378,8 +378,8 @@ mod tests {
             generation: Some(1),
             config_digest: Some("digest".to_string()),
             session_token_hex: "00".repeat(32),
-            host_control_socket: "/tmp/aster-oci-test-host-control.sock".to_string(),
-            pipe_name: "aster-oci-test-pipe".to_string(),
+            host_control_socket: "/tmp/krun-oci-test-host-control.sock".to_string(),
+            pipe_name: "krun-oci-test-pipe".to_string(),
             session_owner: owner,
             shim,
         }
@@ -488,7 +488,7 @@ mod tests {
         let error = io::Error::new(io::ErrorKind::PermissionDenied, "EACCES");
         assert!(host_control_connect_error_is_permanent(&error));
         let remapped = remap_host_control_connect_error(
-            Path::new("/tmp/aster-oci-test-host-control.sock"),
+            Path::new("/tmp/krun-oci-test-host-control.sock"),
             error,
         );
         assert_eq!(remapped.code, ErrorCode::PermissionDenied);

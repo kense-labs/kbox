@@ -32,23 +32,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -56,13 +56,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -70,11 +70,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/0/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/0/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -115,23 +115,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -139,13 +139,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -153,24 +153,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/config/global.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/config/global.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/config",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/config",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/config/global.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/config/global.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/config",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/config",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -178,11 +178,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -190,9 +190,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/1/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/1/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -240,23 +240,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -264,13 +264,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -278,24 +278,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -303,24 +303,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project b 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project b 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project b 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project b 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project b 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project b 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/project b 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/project b 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -328,11 +328,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -340,9 +340,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -350,9 +350,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/2/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/2/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -396,23 +396,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -420,13 +420,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -434,24 +434,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -459,11 +459,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -471,9 +471,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/3/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/3/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -520,23 +520,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -544,13 +544,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -558,24 +558,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -583,11 +583,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -595,9 +595,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -605,9 +605,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/4/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/4/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -651,23 +651,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -675,13 +675,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -689,24 +689,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -714,23 +714,23 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -738,9 +738,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/5/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/5/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -781,23 +781,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -805,13 +805,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -819,24 +819,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -844,11 +844,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/6/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/6/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -891,23 +891,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -915,13 +915,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -929,24 +929,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -954,21 +954,21 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--dry-run"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise pruned configuration links [dryrun]\nmise scanning tracked configs resolving tools for this directory\nmise scanning tracked configs listing installed versions\nmise scanning tracked configs checking running processes\nmise scanning tracked configs ✓ done\nmise fixture@1.5.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文/mise.toml\nmise fixture@1.5.0 [dryrun]  uninstall\nmise fixture@1.5.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/data/installs/fixture/1.5.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/cache/fixture/1.5.0\nmise fixture@1.5.0 [dryrun]  ✓ done\nmise fixture@2.0.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/project a 中文/mise.toml\nmise fixture@2.0.0 [dryrun]  uninstall\nmise fixture@2.0.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/cache/fixture/2.0.0\nmise fixture@2.0.0 [dryrun]  ✓ done\n"
+          "stderr": "mise pruned configuration links [dryrun]\nmise scanning tracked configs resolving tools for this directory\nmise scanning tracked configs listing installed versions\nmise scanning tracked configs checking running processes\nmise scanning tracked configs ✓ done\nmise fixture@1.5.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文/mise.toml\nmise fixture@1.5.0 [dryrun]  uninstall\nmise fixture@1.5.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/data/installs/fixture/1.5.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/cache/fixture/1.5.0\nmise fixture@1.5.0 [dryrun]  ✓ done\nmise fixture@2.0.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/project a 中文/mise.toml\nmise fixture@2.0.0 [dryrun]  uninstall\nmise fixture@2.0.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/cache/fixture/2.0.0\nmise fixture@2.0.0 [dryrun]  ✓ done\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -976,9 +976,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -986,9 +986,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/7/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/7/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1035,23 +1035,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1059,13 +1059,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1073,24 +1073,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1098,21 +1098,21 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--dry-run-code"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 1,
           "stdout": "",
-          "stderr": "mise pruned configuration links [dryrun]\nmise scanning tracked configs resolving tools for this directory\nmise scanning tracked configs listing installed versions\nmise scanning tracked configs checking running processes\nmise scanning tracked configs ✓ done\nmise fixture@1.5.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文/mise.toml\nmise fixture@1.5.0 [dryrun]  uninstall\nmise fixture@1.5.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/data/installs/fixture/1.5.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/cache/fixture/1.5.0\nmise fixture@1.5.0 [dryrun]  ✓ done\nmise fixture@2.0.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/project a 中文/mise.toml\nmise fixture@2.0.0 [dryrun]  uninstall\nmise fixture@2.0.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/cache/fixture/2.0.0\nmise fixture@2.0.0 [dryrun]  ✓ done\n"
+          "stderr": "mise pruned configuration links [dryrun]\nmise scanning tracked configs resolving tools for this directory\nmise scanning tracked configs listing installed versions\nmise scanning tracked configs checking running processes\nmise scanning tracked configs ✓ done\nmise fixture@1.5.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文/mise.toml\nmise fixture@1.5.0 [dryrun]  uninstall\nmise fixture@1.5.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/data/installs/fixture/1.5.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/cache/fixture/1.5.0\nmise fixture@1.5.0 [dryrun]  ✓ done\nmise fixture@2.0.0 is prunable: fixture is required at 1.0.0 by /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/project a 中文/mise.toml\nmise fixture@2.0.0 [dryrun]  uninstall\nmise fixture@2.0.0 [dryrun]  remove /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/data/installs/fixture/2.0.0, /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/cache/fixture/2.0.0\nmise fixture@2.0.0 [dryrun]  ✓ done\n"
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1120,9 +1120,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -1130,9 +1130,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/8/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/8/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1172,23 +1172,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1196,13 +1196,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1210,10 +1210,10 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 1,
           "stdout": "",
@@ -1221,9 +1221,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1231,9 +1231,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -1241,9 +1241,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/9/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/9/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1291,23 +1291,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1315,13 +1315,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1329,24 +1329,24 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "trust",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/project a 中文/mise.toml"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/project a 中文/mise.toml"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/project a 中文/mise.toml\n"
+          "stderr": "mise trusted /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/project a 中文/mise.toml\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "exec",
             "--",
             "fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/project a 中文",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/project a 中文",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1354,12 +1354,12 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--configs",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1367,9 +1367,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",
@@ -1377,9 +1377,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/data/installs/fixture/1.5.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/data/installs/fixture/1.5.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.5.0\n",
@@ -1387,9 +1387,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/data/installs/fixture/2.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/data/installs/fixture/2.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/10/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/10/work",
           "status": "returned",
           "exit": 0,
           "stdout": "2.0.0\n",
@@ -1429,23 +1429,23 @@
             "--force",
             "--sign",
             "-",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/plugin fixture/native-sleep"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/plugin fixture/native-sleep"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
-          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/plugin fixture/native-sleep: replacing existing signature\n"
+          "stderr": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/plugin fixture/native-sleep: replacing existing signature\n"
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "plugins",
             "link",
             "fixture",
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/plugin fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/plugin fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1453,13 +1453,13 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "install",
             "fixture@1.0.0",
             "fixture@1.5.0",
             "fixture@2.0.0"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1467,11 +1467,11 @@
         },
         {
           "argv": [
-            "/Users/roylin/code/aster/.tmp/mise-replacement/reference/mise",
+            "/Users/roylin/code/krun/.tmp/mise-replacement/reference/mise",
             "prune",
             "--yes"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/work",
           "status": "returned",
           "exit": 0,
           "stdout": "",
@@ -1479,9 +1479,9 @@
         },
         {
           "argv": [
-            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/data/installs/fixture/1.0.0/bin/fixture"
+            "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/data/installs/fixture/1.0.0/bin/fixture"
           ],
-          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/aster prune 中文 ifcfvglc/11/work",
+          "cwd": "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/krun prune 中文 ifcfvglc/11/work",
           "status": "returned",
           "exit": 0,
           "stdout": "1.0.0\n",

@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use aster_use_core::{
+use krun_use_core::{
     PackageSurfaceKind, PluginReleaseChannel, UseError, UseResult, VerifiedPluginCatalogRecord,
 };
 use semver::{Version, VersionReq};
@@ -41,7 +41,7 @@ pub const MAX_PLUGIN_CATALOG_PAGE_BYTES: usize = 1024 * 1024;
 /// Canonical JSON Schema fragment for [`PluginCatalogHost`] inputs.
 ///
 /// Presentation adapters should compose this fragment rather than restating
-/// Aster Use's host compatibility contract.
+/// Krun Use's host compatibility contract.
 pub fn plugin_catalog_host_input_schema() -> Value {
     json!({
         "type": "object",
@@ -52,14 +52,14 @@ pub fn plugin_catalog_host_input_schema() -> Value {
                 "type": "string",
                 "minLength": 1,
                 "maxLength": MAX_CATALOG_FILTER_BYTES,
-                "x-aster-max-utf8-bytes": MAX_CATALOG_FILTER_BYTES,
+                "x-krun-max-utf8-bytes": MAX_CATALOG_FILTER_BYTES,
                 "pattern": "^[a-z][a-z0-9_-]*$",
                 "not": { "const": "any" }
             },
             "useVersion": {
                 "type": "string",
                 "minLength": 1,
-                "x-aster-canonical-semver": true
+                "x-krun-canonical-semver": true
             }
         }
     })
@@ -74,7 +74,7 @@ pub fn plugin_catalog_search_input_schema() -> Value {
         "properties": {
             "query": {
                 "type": "string",
-                "x-aster-max-utf8-bytes": MAX_CATALOG_QUERY_BYTES
+                "x-krun-max-utf8-bytes": MAX_CATALOG_QUERY_BYTES
             },
             "kind": {
                 "type": "string",
@@ -103,7 +103,7 @@ pub fn plugin_catalog_search_input_schema() -> Value {
             "cursor": {
                 "type": "string",
                 "minLength": 1,
-                "x-aster-max-utf8-bytes": MAX_CATALOG_CURSOR_BYTES
+                "x-krun-max-utf8-bytes": MAX_CATALOG_CURSOR_BYTES
             },
             "limit": {
                 "type": "integer",
@@ -124,12 +124,12 @@ pub fn plugin_catalog_inspection_input_schema() -> Value {
             "packageId": {
                 "type": "string",
                 "minLength": 3,
-                "x-aster-use-package-id": true
+                "x-krun-use-package-id": true
             },
             "version": {
                 "type": "string",
                 "minLength": 1,
-                "x-aster-canonical-semver": true
+                "x-krun-canonical-semver": true
             },
             "channel": {
                 "type": "string",
@@ -202,7 +202,7 @@ impl PluginCatalogHost {
             Ok(())
         } else {
             Err(catalog_input_error(
-                "The catalog host target or Aster Use version is invalid.",
+                "The catalog host target or Krun Use version is invalid.",
             ))
         }
     }
@@ -592,7 +592,7 @@ fn metadata_is_compatible(
     let record = metadata.catalog_record();
     let requirement = VersionReq::parse(&record.requires_use).map_err(|error| {
         registry_target_error(format!(
-            "Catalog record '{}' has an invalid Aster Use requirement: {error}",
+            "Catalog record '{}' has an invalid Krun Use requirement: {error}",
             record.package_id
         ))
     })?;

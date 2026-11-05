@@ -1,4 +1,4 @@
-use aster_use_core::{PlanScope, UseError, UseResult};
+use krun_use_core::{PlanScope, UseError, UseResult};
 use rusqlite::Connection;
 use serde::Serialize;
 use sha2::{Digest, Sha256};
@@ -11,9 +11,9 @@ use super::projection::{
 use super::storage::{self, OkfKnowledgeStorageUsage};
 
 pub const OKF_KNOWLEDGE_INTEGRITY_REPORT_SCHEMA: &str =
-    "aster.use.okf-knowledge-integrity-report.v1";
+    "krun.use.okf-knowledge-integrity-report.v1";
 pub const OKF_KNOWLEDGE_SEARCH_INDEX_REPAIR_SCHEMA: &str =
-    "aster.use.okf-knowledge-search-index-repair.v1";
+    "krun.use.okf-knowledge-search-index-repair.v1";
 
 /// Non-secret evidence that one complete Knowledge scope is internally sound.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -342,7 +342,6 @@ fn validate_search_index(
 }
 
 fn search_index_error(message: impl Into<String>) -> UseError {
-    UseError::new("use.okf.knowledge_search_index_invalid", message).with_suggestion(
-        "Run 'aster-use knowledge repair-search-index --yes' for this exact scope.",
-    )
+    UseError::new("use.okf.knowledge_search_index_invalid", message)
+        .with_suggestion("Run 'krun-use knowledge repair-search-index --yes' for this exact scope.")
 }

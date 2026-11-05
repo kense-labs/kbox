@@ -5,14 +5,14 @@ use std::fs;
 use std::io::Read;
 use std::path::{Component, Path};
 
-use aster_use_core::metadata_is_link_or_reparse_point;
+use krun_use_core::metadata_is_link_or_reparse_point;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
 use crate::store::{companion_destination, ensure_real_file, hex_encode};
 use crate::{CompanionFile, ToolAcquireError};
 
-pub(crate) const MANIFEST_SCHEMA: &str = "aster.use.tool-acquire.files.v1";
+pub(crate) const MANIFEST_SCHEMA: &str = "krun.use.tool-acquire.files.v1";
 pub(crate) const MAX_TREE_ENTRIES: usize = 8192;
 pub(crate) const MAX_TREE_BYTES: u64 = 4 * 1024 * 1024 * 1024;
 pub(crate) const MAX_MANIFEST_BYTES: u64 = 1024 * 1024;

@@ -1,23 +1,23 @@
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 /// Guest control port reserved by every libkrun host bridge.
 pub const AGENT_VSOCK_PORT: u32 = 4_093;
 /// Environment key that opts the guest agent into the fixed runtime share.
-pub const AGENT_RUNTIME_SHARE_ENV: &str = "ASTER_OCI_AGENT_RUNTIME_SHARE";
+pub const AGENT_RUNTIME_SHARE_ENV: &str = "KRUN_OCI_AGENT_RUNTIME_SHARE";
 /// Environment key selecting the host-backed metadata contract for the
 /// runtime share. The Windows WHPX shim sets this only for a Linux Guest
 /// mounted through the Windows virtio-fs backend.
-pub const AGENT_RUNTIME_SHARE_SECURITY_ENV: &str = "ASTER_OCI_AGENT_RUNTIME_SHARE_SECURITY";
+pub const AGENT_RUNTIME_SHARE_SECURITY_ENV: &str = "KRUN_OCI_AGENT_RUNTIME_SHARE_SECURITY";
 /// Guest-visible metadata contract used by the Windows WHPX virtio-fs
 /// backend. Windows has no persistent POSIX mode bits; the host DACL remains
 /// the authority and the Guest normalizes the backend's synthetic modes.
 pub const AGENT_RUNTIME_SHARE_SECURITY_WINDOWS_VIRTIOFS: &str = "windows-virtiofs-acl-v1";
 /// Fixed virtio-fs tag used for the per-generation runtime share.
-pub const AGENT_RUNTIME_SHARE_TAG: &str = "aster-oci-runtime";
+pub const AGENT_RUNTIME_SHARE_TAG: &str = "krun-oci-runtime";
 /// Fixed guest mount point for the per-generation runtime share.
-pub const AGENT_RUNTIME_SHARE_GUEST_ROOT: &str = "/run/aster-oci-runtime";
+pub const AGENT_RUNTIME_SHARE_GUEST_ROOT: &str = "/run/krun-oci-runtime";
 /// Fixed directory inside the mounted runtime share used for guest executor state.
-pub const AGENT_RUNTIME_SHARE_STATE_GUEST_ROOT: &str = "/run/aster-oci-runtime/run";
+pub const AGENT_RUNTIME_SHARE_STATE_GUEST_ROOT: &str = "/run/krun-oci-runtime/run";
 
 /// Exact endpoint basename mapped to the guest-agent vsock port.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -36,7 +36,7 @@ impl AgentVsockEndpoint {
             )
             .for_operation("generate-agent-endpoint")
         })?;
-        let mut pipe_name = String::from("aster-oci-agent-");
+        let mut pipe_name = String::from("krun-oci-agent-");
         for byte in nonce {
             use std::fmt::Write;
             write!(&mut pipe_name, "{byte:02x}").map_err(|error| {
@@ -100,22 +100,18 @@ mod tests {
 
     #[test]
     fn validates_an_exact_windows_agent_pipe_basename() {
-        let endpoint =
-            AgentVsockEndpoint::new("aster-oci-agent-123").expect("valid agent endpoint");
-        assert_eq!(endpoint.pipe_name(), "aster-oci-agent-123");
+        let endpoint = AgentVsockEndpoint::new("krun-oci-agent-123").expect("valid agent endpoint");
+        assert_eq!(endpoint.pipe_name(), "krun-oci-agent-123");
         assert_eq!(endpoint.port(), AGENT_VSOCK_PORT);
-        assert_eq!(
-            endpoint.windows_pipe_path(),
-            r"\\.\pipe\aster-oci-agent-123"
-        );
+        assert_eq!(endpoint.windows_pipe_path(), r"\\.\pipe\krun-oci-agent-123");
 
         for name in [
             "",
-            "-aster",
-            "aster.agent",
-            r"aster\agent",
-            r"\\.\pipe\aster-agent",
-            "aster agent",
+            "-krun",
+            "krun.agent",
+            r"krun\agent",
+            r"\\.\pipe\krun-agent",
+            "krun agent",
         ] {
             assert!(
                 AgentVsockEndpoint::new(name).is_err(),
@@ -128,8 +124,8 @@ mod tests {
     fn generates_a_valid_unguessable_endpoint_name() {
         let endpoint =
             AgentVsockEndpoint::generate().expect("operating-system random source must work");
-        assert!(endpoint.pipe_name().starts_with("aster-oci-agent-"));
-        assert_eq!(endpoint.pipe_name().len(), "aster-oci-agent-".len() + 32);
+        assert!(endpoint.pipe_name().starts_with("krun-oci-agent-"));
+        assert_eq!(endpoint.pipe_name().len(), "krun-oci-agent-".len() + 32);
         AgentVsockEndpoint::new(endpoint.pipe_name()).expect("generated endpoint must validate");
     }
 

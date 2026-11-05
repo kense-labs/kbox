@@ -3,8 +3,8 @@ use std::collections::{BTreeMap, BTreeSet};
 #[cfg(target_os = "linux")]
 use std::os::fd::{AsRawFd, FromRawFd, OwnedFd};
 
-use aster_oci_agent_protocol::AgentVmAttachmentManifest;
-use aster_oci_sdk::Result;
+use krun_oci_agent_protocol::AgentVmAttachmentManifest;
+use krun_oci_sdk::Result;
 
 use super::attachment_error;
 

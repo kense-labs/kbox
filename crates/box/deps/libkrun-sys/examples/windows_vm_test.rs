@@ -1,9 +1,9 @@
 //! Simple Windows test to create a minimal VM with libkrun
 //!
-//! This demonstrates the basic workflow without requiring the full aster-box CLI.
+//! This demonstrates the basic workflow without requiring the full krun-box CLI.
 
 #[cfg(windows)]
-use aster_libkrun_sys::*;
+use krun_libkrun_sys::*;
 #[cfg(windows)]
 use std::ffi::CString;
 #[cfg(windows)]
@@ -11,7 +11,7 @@ use std::path::Path;
 
 #[cfg(windows)]
 fn main() {
-    println!("=== aster-box Windows Integration Test ===\n");
+    println!("=== krun-box Windows Integration Test ===\n");
 
     // Check prerequisites
     if !Path::new("C:\\temp").exists() {

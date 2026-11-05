@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
 

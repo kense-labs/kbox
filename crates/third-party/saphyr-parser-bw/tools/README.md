@@ -1,4 +1,13 @@
 # `saphyr-parser` tools
+
+## 概述
+
+本目录保存 crates/third-party/saphyr-parser-bw/tools 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 This directory contains tools that are used to develop the crate.
 Due to dependency management, only some of them are available as binaries from the `saphyr-parser` crate.
 

@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::sync::{Arc, Mutex, MutexGuard};
 
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-use aster_oci_sdk::{
+use async_trait::async_trait;
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+use krun_oci_sdk::{
     serve_transport_connection, ContainerId, ContainerRecord, ContainerTarget, CreateRequest,
     DeleteMode, DeleteRequest, DriverKind, Error, ErrorCode, Generation, IsolationClass,
     KillRequest, OciRuntimeService, Result, RuntimeInfo, StartRequest, StateRequest,
 };
-use async_trait::async_trait;
 use tokio::sync::oneshot;
 use tokio::task::{JoinHandle, JoinSet};
 
@@ -211,7 +211,7 @@ fn test_endpoint(_root: &Path) -> String {
         .expect("system clock after epoch")
         .as_nanos();
     format!(
-        r"\\.\pipe\aster-oci-cli-lifecycle-{}-{nonce}",
+        r"\\.\pipe\krun-oci-cli-lifecycle-{}-{nonce}",
         std::process::id()
     )
 }

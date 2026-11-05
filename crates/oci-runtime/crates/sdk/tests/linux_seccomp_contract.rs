@@ -1,4 +1,4 @@
-use aster_oci_sdk::{OciSchemaDocument, OciSchemaValidator};
+use krun_oci_sdk::{OciSchemaDocument, OciSchemaValidator};
 use serde_json::{json, Value};
 
 fn configuration(seccomp: Value) -> Value {

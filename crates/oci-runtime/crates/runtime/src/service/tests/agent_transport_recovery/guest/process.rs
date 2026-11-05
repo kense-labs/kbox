@@ -1,6 +1,6 @@
-use aster_oci_agent_protocol::AgentProcessesRequest;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{Error, ErrorCode, ProcessId, ProcessRecord, ProcessTarget, Result};
+use krun_oci_agent_protocol::AgentProcessesRequest;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{Error, ErrorCode, ProcessId, ProcessRecord, ProcessTarget, Result};
 
 use super::JournaledLifecycleGuest;
 

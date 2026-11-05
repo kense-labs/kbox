@@ -3,13 +3,13 @@
 use std::collections::HashSet;
 use std::path::{Component, Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::event::BoxEvent;
-use aster_box_core::execution::ResolvedExecutionPlan;
-use aster_box_core::guest_exec::{
+use base64::Engine;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::event::BoxEvent;
+use krun_box_core::execution::ResolvedExecutionPlan;
+use krun_box_core::guest_exec::{
     GuestExecConfig, MAX_RUNTIME_EXEC_CONFIG_BYTES, RUNTIME_EXEC_CONFIG_PATH,
 };
-use base64::Engine;
 use sha2::{Digest, Sha256};
 
 use crate::process_path::{
@@ -20,7 +20,7 @@ use crate::sandbox::rootfs::{
 };
 #[cfg(target_os = "linux")]
 use crate::sandbox::rootfs::{persist_rootfs_id_mappings, recover_interrupted_rootfs_metadata};
-use crate::sandbox::AsterOciController;
+use crate::sandbox::KrunOciController;
 use crate::sandbox::{
     compile_oci_spec, compile_runtime_owned_oci_spec, plan_id_mappings,
     prepare_managed_mount_source, prepare_managed_secret_mount_source, prepare_sandbox_path_access,
@@ -31,7 +31,7 @@ use crate::sandbox::{
 
 use super::VmManager;
 
-/// Product-owned bundle ready to be loaded through the public Aster OCI SDK.
+/// Product-owned bundle ready to be loaded through the public Krun OCI SDK.
 #[derive(Debug, Clone)]
 pub(crate) struct RuntimeOwnedSandboxBundle {
     pub bundle_dir: PathBuf,
@@ -46,9 +46,9 @@ impl VmManager {
         boot_span: &tracing::Span,
         boot_start: std::time::Instant,
     ) -> Result<()> {
-        if execution_plan.backend != aster_box_core::ExecutionBackend::AsterOci {
+        if execution_plan.backend != krun_box_core::ExecutionBackend::KrunOci {
             return Err(BoxError::BoxBootError {
-                message: "Aster OCI Runtime is the only supported Sandbox backend".to_string(),
+                message: "Krun OCI Runtime is the only supported Sandbox backend".to_string(),
                 hint: None,
             });
         }
@@ -56,7 +56,7 @@ impl VmManager {
         // for SO_PEERCRED. Restore effective root before overlay mounts and
         // capability probes that require CAP_SYS_ADMIN.
         #[cfg(target_os = "linux")]
-        crate::sandbox::aster_oci_controller::restore_effective_root_if_saved()?;
+        crate::sandbox::krun_oci_controller::restore_effective_root_if_saved()?;
         // This probe is deliberately before image pulls, rootfs mounts, volume
         // creation, or bundle writes. Every mandatory control is fail-closed.
         let capability_start = std::time::Instant::now();
@@ -79,7 +79,7 @@ impl VmManager {
                         .to_string(),
                     hint: None,
                 })?;
-        aster_box_core::lifecycle_profile::record_lifecycle_phase(
+        krun_box_core::lifecycle_profile::record_lifecycle_phase(
             "sandbox.capability",
             capability_start.elapsed(),
         );
@@ -90,15 +90,15 @@ impl VmManager {
         let runtime_root = super::sandbox_runtime_root(&self.home_dir, &self.box_id);
         let runtime_record = sandbox_dir.join("runtime.json");
         let runtime = capabilities
-            .aster_oci
+            .krun_oci
             .clone()
             .ok_or_else(|| BoxError::BoxBootError {
-                message: "Sandbox capability probe returned no Aster OCI artifacts".to_string(),
+                message: "Sandbox capability probe returned no Krun OCI artifacts".to_string(),
                 hint: None,
             })?;
         let runtime_digest =
             combined_runtime_digest(&runtime.runtime_sha256, &runtime.agent_sha256);
-        AsterOciController::new(runtime.clone()).require_absent(&runtime_root, &self.box_id)?;
+        KrunOciController::new(runtime.clone()).require_absent(&runtime_root, &self.box_id)?;
 
         tracing::info!(
             parent: boot_span,
@@ -120,7 +120,7 @@ impl VmManager {
                 return Err(error);
             }
         };
-        aster_box_core::lifecycle_profile::record_lifecycle_phase(
+        krun_box_core::lifecycle_profile::record_lifecycle_phase(
             "sandbox.layout",
             layout_start.elapsed(),
         );
@@ -132,7 +132,7 @@ impl VmManager {
             // Stage through the exact merged root before ownership planning or
             // runtime launch so the terminal completion marker is invalidated in
             // this box's writable upper, never in the shared Snapshot lower.
-            aster_box_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
+            krun_box_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
                 &layout.rootfs_path,
             )?;
             #[cfg(target_os = "linux")]
@@ -146,7 +146,7 @@ impl VmManager {
                 );
             }
             let instance_prepare_start = std::time::Instant::now();
-            let resolv_content = aster_box_core::dns::generate_resolv_conf(&self.config.dns);
+            let resolv_content = krun_box_core::dns::generate_resolv_conf(&self.config.dns);
             crate::oci::rootfs::write_guest_file(
                 &layout.rootfs_path,
                 "etc/resolv.conf",
@@ -154,7 +154,7 @@ impl VmManager {
             )?;
             self.write_hostname_file(&layout)?;
             match &self.config.network {
-                aster_box_core::NetworkMode::Bridge { network } => {
+                krun_box_core::NetworkMode::Bridge { network } => {
                     self.write_hosts_file(&layout, network)?;
                 }
                 _ => {
@@ -172,9 +172,9 @@ impl VmManager {
                 key == "BOX_EXEC_CONFIG_FILE" && value == RUNTIME_EXEC_CONFIG_PATH
             }) {
                 return Err(BoxError::BoxBootError {
-                    message: "Sandbox requires the packaged aster-box guest init as OCI PID 1"
+                    message: "Sandbox requires the packaged krun-box guest init as OCI PID 1"
                         .to_string(),
-                    hint: Some("Install the matching aster-box-guest-init artifact".to_string()),
+                    hint: Some("Install the matching krun-box-guest-init artifact".to_string()),
                 });
             }
 
@@ -191,14 +191,14 @@ impl VmManager {
             let maximum_uid = rootfs_ids.maximum_uid.max(account_uid).max(process_uid);
             let maximum_gid = rootfs_ids.maximum_gid.max(account_gid).max(process_gid);
             let id_mappings = plan_id_mappings(user_namespace, maximum_uid, maximum_gid)?;
-            aster_box_core::lifecycle_profile::record_lifecycle_phase(
+            krun_box_core::lifecycle_profile::record_lifecycle_phase(
                 "sandbox.instance_prepare",
                 instance_prepare_start.elapsed(),
             );
 
             let mount_sources_start = std::time::Instant::now();
             self.prepare_sandbox_mount_sources(&layout, &mut mounts, &id_mappings)?;
-            aster_box_core::lifecycle_profile::record_lifecycle_phase(
+            krun_box_core::lifecycle_profile::record_lifecycle_phase(
                 "sandbox.mount_sources",
                 mount_sources_start.elapsed(),
             );
@@ -210,7 +210,7 @@ impl VmManager {
                 self.config.read_only,
                 layout.prefer_image_rootfs_metadata,
             )?;
-            aster_box_core::lifecycle_profile::record_lifecycle_phase(
+            krun_box_core::lifecycle_profile::record_lifecycle_phase(
                 "sandbox.rootfs_ownership",
                 rootfs_ownership_start.elapsed(),
             );
@@ -236,10 +236,7 @@ impl VmManager {
                 execution_plan_digest,
                 runtime_digest,
                 host_net_device: None,
-                share_host_network: matches!(
-                    self.config.network,
-                    aster_box_core::NetworkMode::Host
-                ),
+                share_host_network: matches!(self.config.network, krun_box_core::NetworkMode::Host),
             };
             let oci_spec = compile_oci_spec(&bundle_spec)?;
             write_bundle(&bundle_dir, &oci_spec, &execution_plan, &capabilities)?;
@@ -253,7 +250,7 @@ impl VmManager {
             )?;
             #[cfg(target_os = "linux")]
             persist_rootfs_id_mappings(&box_dir, &bundle_spec.id_mappings)?;
-            aster_box_core::lifecycle_profile::record_lifecycle_phase(
+            krun_box_core::lifecycle_profile::record_lifecycle_phase(
                 "sandbox.bundle",
                 bundle_start.elapsed(),
             );
@@ -302,7 +299,7 @@ impl VmManager {
             exec_socket_path: layout.exec_socket_path.clone(),
             pty_socket_path: layout.pty_socket_path.clone(),
             stdout_path: console_output.clone(),
-            stderr_path: aster_box_core::log::stderr_console_path(&console_output),
+            stderr_path: krun_box_core::log::stderr_console_path(&console_output),
             init_log_path: box_dir.join("logs").join("sandbox-init.log"),
             log_config: self.log_config.clone(),
             log_worker_path,
@@ -310,19 +307,19 @@ impl VmManager {
             log_worker_ready_path: sandbox_dir.join("bundle").join("log-worker.ready"),
         };
         let launch_start = std::time::Instant::now();
-        let controller = AsterOciController::new(runtime);
+        let controller = KrunOciController::new(runtime);
         let handler_result = {
             let _phase = self.boot_phase_timer("launch");
             controller.start(launch).await
         };
-        let handler: Box<dyn aster_box_core::vmm::VmHandler> = match handler_result {
+        let handler: Box<dyn krun_box_core::vmm::VmHandler> = match handler_result {
             Ok(handler) => Box::new(handler),
             Err(error) => {
                 self.cleanup_boot_failure().await;
                 return Err(error);
             }
         };
-        aster_box_core::lifecycle_profile::record_lifecycle_phase(
+        krun_box_core::lifecycle_profile::record_lifecycle_phase(
             "sandbox.launch",
             launch_start.elapsed(),
         );
@@ -349,7 +346,7 @@ impl VmManager {
             self.cleanup_boot_failure().await;
             return Err(error);
         }
-        aster_box_core::lifecycle_profile::record_lifecycle_phase(
+        krun_box_core::lifecycle_profile::record_lifecycle_phase(
             "sandbox.readiness",
             readiness_start.elapsed(),
         );
@@ -381,7 +378,7 @@ impl VmManager {
             box_id = %self.box_id,
             "Sandbox ready"
         );
-        aster_box_core::lifecycle_profile::record_lifecycle_phase(
+        krun_box_core::lifecycle_profile::record_lifecycle_phase(
             "sandbox.start_total",
             boot_start.elapsed(),
         );
@@ -396,18 +393,18 @@ impl VmManager {
         execution_plan: &ResolvedExecutionPlan,
         capabilities: &SandboxCapabilitySnapshot,
     ) -> Result<RuntimeOwnedSandboxBundle> {
-        if execution_plan.backend != aster_box_core::ExecutionBackend::AsterOci {
+        if execution_plan.backend != krun_box_core::ExecutionBackend::KrunOci {
             return Err(BoxError::BoxBootError {
-                message: "Aster OCI Runtime is the only supported Sandbox backend".to_string(),
+                message: "Krun OCI Runtime is the only supported Sandbox backend".to_string(),
                 hint: None,
             });
         }
         capabilities.require_ready()?;
         let runtime = capabilities
-            .aster_oci
+            .krun_oci
             .as_ref()
             .ok_or_else(|| BoxError::BoxBootError {
-                message: "Sandbox capability probe returned no Aster OCI artifacts".to_string(),
+                message: "Sandbox capability probe returned no Krun OCI artifacts".to_string(),
                 hint: None,
             })?;
         let user_namespace =
@@ -435,7 +432,7 @@ impl VmManager {
         self.image_config = layout.oci_config.clone();
 
         let prepare = (|| -> Result<RuntimeOwnedSandboxBundle> {
-            aster_box_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
+            krun_box_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
                 &layout.rootfs_path,
             )?;
             #[cfg(target_os = "linux")]
@@ -448,7 +445,7 @@ impl VmManager {
                     "Recovered interrupted Sandbox rootfs metadata"
                 );
             }
-            let resolv_content = aster_box_core::dns::generate_resolv_conf(&self.config.dns);
+            let resolv_content = krun_box_core::dns::generate_resolv_conf(&self.config.dns);
             crate::oci::rootfs::write_guest_file(
                 &layout.rootfs_path,
                 "etc/resolv.conf",
@@ -456,7 +453,7 @@ impl VmManager {
             )?;
             self.write_hostname_file(&layout)?;
             match &self.config.network {
-                aster_box_core::NetworkMode::Bridge { network } => {
+                krun_box_core::NetworkMode::Bridge { network } => {
                     self.write_hosts_file(&layout, network)?;
                 }
                 _ => {
@@ -530,10 +527,7 @@ impl VmManager {
                 execution_plan_digest: digest_json(execution_plan)?,
                 runtime_digest,
                 host_net_device,
-                share_host_network: matches!(
-                    self.config.network,
-                    aster_box_core::NetworkMode::Host
-                ),
+                share_host_network: matches!(self.config.network, krun_box_core::NetworkMode::Host),
             };
             let oci_spec = compile_runtime_owned_oci_spec(&bundle_spec, &runtime_process)?;
             write_bundle(&bundle_dir, &oci_spec, execution_plan, capabilities)?;
@@ -748,7 +742,7 @@ impl VmManager {
 
         // Named volumes are resolved to host paths before VmManager boots, so
         // their names are not present in BoxConfig. Match only mount roots that
-        // are registered in Aster's volume store; arbitrary bind mounts remain
+        // are registered in Krun's volume store; arbitrary bind mounts remain
         // external and are never chowned implicitly.
         for volume in volumes.values() {
             let Ok(source) = PathBuf::from(&volume.mount_point).canonicalize() else {
@@ -779,7 +773,7 @@ fn workspace_mount_is_explicitly_configured(
 fn stage_sandbox_host_net_device(
     home_dir: &Path,
     box_id: &str,
-    network: &aster_box_core::NetworkMode,
+    network: &krun_box_core::NetworkMode,
     port_map: &[String],
 ) -> Result<Option<String>> {
     #[cfg(all(feature = "vm", target_os = "linux"))]
@@ -795,7 +789,7 @@ fn stage_sandbox_host_net_device(
     #[cfg(not(all(feature = "vm", target_os = "linux")))]
     {
         let _ = (home_dir, box_id, port_map);
-        if matches!(network, aster_box_core::NetworkMode::Bridge { .. }) {
+        if matches!(network, krun_box_core::NetworkMode::Bridge { .. }) {
             return Err(BoxError::NetworkError(
                 "SandboxViaOci host netdevice staging requires Linux keep-authority".to_string(),
             ));
@@ -826,26 +820,26 @@ fn apply_sandbox_workload_resources(
 ) -> Result<()> {
     set_environment_value(
         environment,
-        "ASTER_SEC_MEM_LIMIT",
+        "KRUN_SEC_MEM_LIMIT",
         resources.memory_limit.to_string(),
     );
     set_environment_value(
         environment,
-        "ASTER_SEC_CPU_QUOTA",
+        "KRUN_SEC_CPU_QUOTA",
         resources.cpu_quota.to_string(),
     );
     set_environment_value(
         environment,
-        "ASTER_SEC_CPU_PERIOD",
+        "KRUN_SEC_CPU_PERIOD",
         resources.cpu_period.to_string(),
     );
     set_environment_value(
         environment,
-        "ASTER_SEC_PIDS_LIMIT",
+        "KRUN_SEC_PIDS_LIMIT",
         resources.pids_limit.to_string(),
     );
     if let Some(reservation) = resources.memory_reservation {
-        set_environment_value(environment, "ASTER_SEC_MEM_LOW", reservation.to_string());
+        set_environment_value(environment, "KRUN_SEC_MEM_LOW", reservation.to_string());
     }
     if let Some(swap) = resources.memory_swap {
         let swap_only = if swap == -1 {
@@ -855,10 +849,10 @@ fn apply_sandbox_workload_resources(
                 BoxError::ConfigError("Sandbox workload swap limit underflows".to_string())
             })?
         };
-        set_environment_value(environment, "ASTER_SEC_MEM_SWAP", swap_only.to_string());
+        set_environment_value(environment, "KRUN_SEC_MEM_SWAP", swap_only.to_string());
     }
     if let Some(shares) = resources.cpu_shares {
-        set_environment_value(environment, "ASTER_SEC_CPU_SHARES", shares.to_string());
+        set_environment_value(environment, "KRUN_SEC_CPU_SHARES", shares.to_string());
     }
     Ok(())
 }
@@ -1393,7 +1387,7 @@ fn combined_runtime_digest(runtime_sha256: &str, agent_sha256: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use aster_box_core::{volume::VolumeConfig, BoxConfig, EventEmitter};
+    use krun_box_core::{volume::VolumeConfig, BoxConfig, EventEmitter};
 
     use super::*;
 
@@ -1503,7 +1497,7 @@ mod tests {
             false,
         );
         std::fs::write(
-            rootfs.path().join(".aster-box-exec.json"),
+            rootfs.path().join(".krun-box-exec.json"),
             serde_json::to_vec(&config).unwrap(),
         )
         .unwrap();
@@ -1520,7 +1514,7 @@ mod tests {
 
     #[test]
     fn sandbox_workload_environment_keeps_exact_limits_in_one_cgroup() {
-        let mut environment = vec![("ASTER_SEC_CPU_QUOTA".to_string(), "stale".to_string())];
+        let mut environment = vec![("KRUN_SEC_CPU_QUOTA".to_string(), "stale".to_string())];
         let resources = SandboxResources {
             memory_limit: 128 * 1024 * 1024,
             memory_reservation: Some(64 * 1024 * 1024),
@@ -1539,17 +1533,17 @@ mod tests {
                 .iter()
                 .find_map(|(name, value)| (name == key).then_some(value.as_str()))
         };
-        assert_eq!(value("ASTER_SEC_MEM_LIMIT"), Some("134217728"));
-        assert_eq!(value("ASTER_SEC_MEM_LOW"), Some("67108864"));
-        assert_eq!(value("ASTER_SEC_MEM_SWAP"), Some("134217728"));
-        assert_eq!(value("ASTER_SEC_CPU_QUOTA"), Some("10000"));
-        assert_eq!(value("ASTER_SEC_CPU_PERIOD"), Some("100000"));
-        assert_eq!(value("ASTER_SEC_CPU_SHARES"), Some("1024"));
-        assert_eq!(value("ASTER_SEC_PIDS_LIMIT"), Some("32"));
+        assert_eq!(value("KRUN_SEC_MEM_LIMIT"), Some("134217728"));
+        assert_eq!(value("KRUN_SEC_MEM_LOW"), Some("67108864"));
+        assert_eq!(value("KRUN_SEC_MEM_SWAP"), Some("134217728"));
+        assert_eq!(value("KRUN_SEC_CPU_QUOTA"), Some("10000"));
+        assert_eq!(value("KRUN_SEC_CPU_PERIOD"), Some("100000"));
+        assert_eq!(value("KRUN_SEC_CPU_SHARES"), Some("1024"));
+        assert_eq!(value("KRUN_SEC_PIDS_LIMIT"), Some("32"));
         assert_eq!(
             environment
                 .iter()
-                .filter(|(name, _)| name == "ASTER_SEC_CPU_QUOTA")
+                .filter(|(name, _)| name == "KRUN_SEC_CPU_QUOTA")
                 .count(),
             1
         );
@@ -1566,7 +1560,7 @@ mod tests {
     }
 
     #[test]
-    fn named_volume_mounts_are_classified_as_aster_managed() {
+    fn named_volume_mounts_are_classified_as_krun_managed() {
         let home = tempfile::tempdir().unwrap();
         let external = tempfile::tempdir().unwrap();
         let store = crate::volume::VolumeStore::new(

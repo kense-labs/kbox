@@ -5,11 +5,11 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use aster_use_core::{PackageSurfaceKind, PluginSurfaceRef, UseError, UseResult};
-use aster_use_extension::{ExtensionManifest, SurfaceActivation};
+use krun_use_core::{PackageSurfaceKind, PluginSurfaceRef, UseError, UseResult};
+use krun_use_extension::{ExtensionManifest, SurfaceActivation};
 use serde::Serialize;
 
-pub(crate) use aster_use_core::{PluginDesiredState, PluginObservedState};
+pub(crate) use krun_use_core::{PluginDesiredState, PluginObservedState};
 
 const RECONCILE_SCHEMA_VERSION: u32 = 1;
 const MAX_RECONCILE_SURFACES: usize = 256;

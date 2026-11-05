@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use aster_box_core::{ExecutionManagerError, ExecutionManagerResult};
+use krun_box_core::{ExecutionManagerError, ExecutionManagerResult};
 
 /// Cross-process lock shared with the CLI's stopped-commit/start lock.
 pub struct ExecutionLifecycleLock {

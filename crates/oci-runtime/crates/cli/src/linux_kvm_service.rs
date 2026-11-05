@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
-use aster_oci_runtime::{
+use krun_oci_runtime::{
     LinuxKvmBoxHostService, LinuxKvmBoxHostServiceConfig, LinuxKvmRecoveryHostService,
     LinuxKvmRecoveryHostServiceConfig, LinuxKvmSoakHostService, LinuxKvmSoakHostServiceConfig,
 };
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 use tokio::signal::unix::{signal, SignalKind};
 
 pub(crate) async fn run(

@@ -1,5 +1,13 @@
 # Performance
 
+## 概述
+
+本目录保存 apps/gateway/benchmarks 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 The repository publishes two complementary datasets:
 
 - Criterion measurements for route matching, middleware execution, and ACL
@@ -72,7 +80,7 @@ HTTP, HTTPS, HTTP/2, gRPC, SSE, WebSocket, TCP, and UDP use comparable
 forwarding capabilities in both products. The two OpenAI profiles deliberately
 measure a different question: Kense Gateway recognizes and validates the OpenAI
 request shape before using its bounded response relay, while NGINX performs
-transport-only forwarding. Those rows quantify the cost of enabled Aster
+transport-only forwarding. Those rows quantify the cost of enabled Krun
 features and are not an equivalent policy-capability comparison.
 
 The result remains a synthetic same-host measurement on shared infrastructure.
@@ -94,7 +102,7 @@ then build the shipped release profile and benchmark fixtures:
 
 ```bash
 cargo build --locked --release \
-  --bin aster-gateway \
+  --bin krun-gateway \
   --example protocol_benchmark_upstream \
   --example protocol_benchmark_load
 bash scripts/run-proxy-comparison.sh

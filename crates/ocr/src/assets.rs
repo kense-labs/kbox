@@ -1,7 +1,7 @@
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde::{Deserialize, Serialize};
 
 use crate::config::{load_detection, load_recognition, MODEL_FAMILY};
@@ -70,7 +70,7 @@ pub fn ocr_status() -> OcrRuntimeStatus {
 }
 
 pub(crate) fn resolve_model_assets() -> UseResult<ModelAssets> {
-    if let Some(path) = std::env::var_os("ASTER_OCR_MODEL_DIR")
+    if let Some(path) = std::env::var_os("KRUN_OCR_MODEL_DIR")
         .filter(|value| !value.is_empty())
         .map(PathBuf::from)
     {
@@ -96,7 +96,7 @@ pub(crate) fn resolve_model_assets() -> UseResult<ModelAssets> {
         format!("The local {MODEL_FAMILY} model bundle is not installed."),
     )
     .with_suggestion(
-        "Install the official 'aster/aster-ocr' AIX plugin through the host plugin manager.",
+        "Install the official 'krun/krun-ocr' AIX plugin through the host plugin manager.",
     )
     .with_detail("source", "missing"))
 }
@@ -131,25 +131,25 @@ pub(crate) fn validate_assets(root: &Path, source: OcrInstallSource) -> UseResul
 }
 
 pub(crate) fn managed_root() -> UseResult<PathBuf> {
-    if let Some(value) = std::env::var_os("ASTER_USE_OCR_HOME") {
+    if let Some(value) = std::env::var_os("KRUN_USE_OCR_HOME") {
         return absolute(PathBuf::from(value));
     }
-    if let Some(value) = std::env::var_os("ASTER_DATA_HOME") {
+    if let Some(value) = std::env::var_os("KRUN_DATA_HOME") {
         return Ok(absolute(PathBuf::from(value))?.join("use/ocr"));
     }
     if let Some(value) = std::env::var_os("XDG_DATA_HOME") {
-        return Ok(absolute(PathBuf::from(value))?.join("aster/use/ocr"));
+        return Ok(absolute(PathBuf::from(value))?.join("krun/use/ocr"));
     }
     if let Some(home) = std::env::var_os("HOME").map(PathBuf::from) {
-        return Ok(absolute(home)?.join(".local/share/aster/use/ocr"));
+        return Ok(absolute(home)?.join(".local/share/krun/use/ocr"));
     }
     #[cfg(windows)]
     if let Some(value) = std::env::var_os("LOCALAPPDATA") {
-        return Ok(absolute(PathBuf::from(value))?.join("aster/use/ocr"));
+        return Ok(absolute(PathBuf::from(value))?.join("krun/use/ocr"));
     }
     Err(UseError::new(
         "use.ocr.data_home_missing",
-        "Cannot determine the Aster Use OCR data directory.",
+        "Cannot determine the Krun Use OCR data directory.",
     ))
 }
 
@@ -264,7 +264,7 @@ fn path_exists(path: &Path) -> UseResult<bool> {
 fn model_error(source: OcrInstallSource, root: &Path, message: impl Into<String>) -> UseError {
     UseError::new("use.ocr.model_invalid", message)
         .with_suggestion(
-            "Repair the complete 'aster/aster-ocr' AIX plugin through the host plugin manager.",
+            "Repair the complete 'krun/krun-ocr' AIX plugin through the host plugin manager.",
         )
         .with_detail("source", source_name(source))
         .with_detail("modelDir", root.display().to_string())

@@ -184,9 +184,9 @@ Skill 声明所需能力，授权域决定实际授予范围。
 
 | 图中组件 | 归属 | 实现映射 |
 | --- | --- | --- |
-| 策略执行引擎 | 授权策略层。编译命令、文件、网络和进程约束，探测后端能力。 | [Aster Sandbox](../../crates/sandbox/src/lib.rs)。 |
-| 统一沙箱 | 执行运行时层。管理隔离环境、工作区、资源、租约和生命周期。 | [Aster Box SDK](../../crates/box/sdk/src/lib.rs)、[沙箱 API](../../crates/box/sdk/README.md)。 |
-| 模型服务接入 | 服务层。处理模型路由、限流、流式传输和用量。 | [Aster Gateway](../../apps/gateway/src/lib.rs)。 |
+| 策略执行引擎 | 授权策略层。编译命令、文件、网络和进程约束，探测后端能力。 | [Krun Sandbox](../../crates/sandbox/src/lib.rs)。 |
+| 统一沙箱 | 执行运行时层。管理隔离环境、工作区、资源、租约和生命周期。 | [Krun Box SDK](../../crates/box/sdk/src/lib.rs)、[沙箱 API](../../crates/box/sdk/README.md)。 |
+| 模型服务接入 | 服务层。处理模型路由、限流、流式传输和用量。 | [Krun Gateway](../../apps/gateway/src/lib.rs)。 |
 
 Sandbox 的策略约束由执行节点和平台后端落实。
 Box 保存环境的实际生命周期与执行代次。

@@ -1,12 +1,12 @@
 [package]
 publish = false
-name = "aster-libkrun-sys"
+name = "krun-libkrun-sys"
 version = "3.2.7"
 edition = "2021"
-authors = ["Aster Team"]
+authors = ["Krun Team"]
 description = "FFI bindings to libkrun with Windows WHPX backend support"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/libkrun"
+repository = "https://github.com/kense-labs/krun"
 keywords = ["libkrun", "microvm", "whpx", "virtualization", "windows"]
 categories = ["api-bindings", "os::windows-apis", "virtualization"]
 readme = "README.md"
@@ -34,7 +34,7 @@ include = [
     "vendor/krun-windows-x64.tar.xz",
 ]
 
-links = "aster_krun"
+links = "krun_krun"
 
 [build-dependencies]
 pkg-config = "0.3"

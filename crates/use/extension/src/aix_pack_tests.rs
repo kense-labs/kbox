@@ -1,14 +1,14 @@
 use super::*;
 use std::path::PathBuf;
 
-const MANIFEST: &str = r#"extension "aster/pack-test" {
+const MANIFEST: &str = r#"extension "krun/pack-test" {
   schema_version = 3
   version = "1.0.0"
   route = "pack-test"
   requires_use = ">=0.3.0, <0.4.0"
   actions = ["read"]
   repository {
-    url = "https://github.com/aster-ai-lab/plugins"
+    url = "https://github.com/kense-labs/krun"
     revision = "0123456789abcdef0123456789abcdef01234567"
   }
   skill "guide" {
@@ -32,7 +32,7 @@ fn source(root: &Path) -> PathBuf {
     let source = root.join("插件 source");
     std::fs::create_dir_all(source.join("skills/guide")).unwrap();
     for (path, bytes) in [
-        ("aster-use-extension.acl", MANIFEST),
+        ("krun-use-extension.acl", MANIFEST),
         (
             "README.md",
             "# Pack fixture\nNative archive construction.\n",
@@ -79,7 +79,7 @@ async fn builds_reproducible_archives_that_match_the_native_source_inventory() {
         [
             "LICENSE",
             "README.md",
-            "aster-use-extension.acl",
+            "krun-use-extension.acl",
             "skills/guide/SKILL.md"
         ]
     );
@@ -152,7 +152,7 @@ async fn preserves_declared_native_executable_modes() {
         "  skill \"guide\" {\n    path = \"skills/guide/SKILL.md\"\n    requires_tool = []\n    requires_mcp = []\n    optional = false\n  }",
         "  tool \"probe\" { workload = \"task\" interface = \"cli\" executable = \"tools/probe\" command = \"pack-test-probe\" json_output = false interactive = false timeout_ms = 1000 activation = \"lazy\" optional = false }"
     );
-    std::fs::write(source.join("aster-use-extension.acl"), manifest).unwrap();
+    std::fs::write(source.join("krun-use-extension.acl"), manifest).unwrap();
     std::fs::create_dir(source.join("tools")).unwrap();
     std::fs::write(source.join("tools/probe"), b"#!/bin/sh\nexit 0\n").unwrap();
     std::fs::set_permissions(

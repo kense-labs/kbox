@@ -3,8 +3,8 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use aster_use_core::{UseError, UseResult};
 use fs2::FileExt;
+use krun_use_core::{UseError, UseResult};
 use sha2::{Digest, Sha256};
 use tokio::fs;
 use tokio::io::AsyncWriteExt;
@@ -13,7 +13,7 @@ use super::registry::ExtensionReceipt;
 use super::state_maintenance::{StateMaintenanceGuard, StateMaintenanceLock};
 use super::{ExtensionManifest, ExtensionPaths};
 
-pub(crate) const MANIFEST_NAME: &str = "aster-use-extension.acl";
+pub(crate) const MANIFEST_NAME: &str = "krun-use-extension.acl";
 pub(crate) const MAX_PACKAGE_FILES: usize = 10_000;
 pub(crate) const MAX_PACKAGE_BYTES: u64 = 1_073_741_824;
 pub(super) const MAX_ACTIVITY_HTML_BYTES: u64 = 2 * 1024 * 1024;
@@ -112,7 +112,7 @@ pub(super) async fn validate_surface_file(
     let metadata = fs::symlink_metadata(path)
         .await
         .map_err(|error| io_error(&format!("inspect {label}"), path, error))?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
         return Err(UseError::new(
             "use.extension.surface_invalid",
             format!(
@@ -158,7 +158,7 @@ pub(crate) async fn copy_package(source: &Path, target: &Path) -> UseResult<()> 
         let source_metadata = fs::symlink_metadata(&source_dir)
             .await
             .map_err(|error| io_error("inspect extension package directory", &source_dir, error))?;
-        if aster_use_core::metadata_is_link_or_reparse_point(&source_metadata) {
+        if krun_use_core::metadata_is_link_or_reparse_point(&source_metadata) {
             return Err(UseError::new(
                 "use.extension.package_symlink",
                 format!(
@@ -192,7 +192,7 @@ pub(crate) async fn copy_package(source: &Path, target: &Path) -> UseResult<()> 
             let metadata = fs::symlink_metadata(&source_path).await.map_err(|error| {
                 io_error("inspect extension package entry", &source_path, error)
             })?;
-            if aster_use_core::metadata_is_link_or_reparse_point(&metadata) {
+            if krun_use_core::metadata_is_link_or_reparse_point(&metadata) {
                 return Err(UseError::new(
                     "use.extension.package_symlink",
                     format!(

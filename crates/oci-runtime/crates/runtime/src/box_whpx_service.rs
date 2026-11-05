@@ -1,13 +1,13 @@
 use std::future::Future;
 use std::path::PathBuf;
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 /// Readiness evidence emitted only after the protected Box qualification
 /// endpoint has been bound around a durable runtime service.
-pub const BOX_WHPX_SERVICE_READY_SCHEMA_VERSION: &str = "aster.oci.box-whpx-service-ready.v2";
+pub const BOX_WHPX_SERVICE_READY_SCHEMA_VERSION: &str = "krun.oci.box-whpx-service-ready.v2";
 
-/// Explicit inputs for the qualification-only Aster Box/WHPX SDK owner.
+/// Explicit inputs for the qualification-only Krun Box/WHPX SDK owner.
 #[derive(Debug, Clone)]
 pub struct BoxWhpxServiceConfig {
     pub shim: PathBuf,
@@ -69,8 +69,8 @@ where
 {
     use std::sync::Arc;
 
-    use aster_oci_core::DriverReadiness;
-    use aster_oci_sdk::LocalIpcEndpoint;
+    use krun_oci_core::DriverReadiness;
+    use krun_oci_sdk::LocalIpcEndpoint;
 
     use crate::{
         owner_mode_from_env, require_durable_spawn_ready, HostRuntimeService, RuntimeDriver as _,
@@ -260,11 +260,11 @@ mod tests {
             "system",
             "system-image.json",
             "state",
-            r"\\.\pipe\aster-oci-box-test",
+            r"\\.\pipe\krun-oci-box-test",
         )
         .with_ready_file("ready.json");
 
-        assert_eq!(config.pipe_name, r"\\.\pipe\aster-oci-box-test");
+        assert_eq!(config.pipe_name, r"\\.\pipe\krun-oci-box-test");
         assert_eq!(config.ready_file, Some(PathBuf::from("ready.json")));
         assert_eq!(
             config.system_image_manifest,
@@ -272,7 +272,7 @@ mod tests {
         );
         assert_eq!(
             BOX_WHPX_SERVICE_READY_SCHEMA_VERSION,
-            "aster.oci.box-whpx-service-ready.v2"
+            "krun.oci.box-whpx-service-ready.v2"
         );
     }
 

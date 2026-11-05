@@ -6,11 +6,11 @@ use std::{
     sync::Arc,
 };
 
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::{
     scale::ScaleEndpoint, CreateExecutionRequest, ExecutionGeneration, ExecutionId, ExecutionLease,
     ExecutionManager, ExecutionPortConnector, ExecutionState, OperationId, ReconcileOutcome,
 };
-use async_trait::async_trait;
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 use tokio::sync::Mutex;
@@ -704,10 +704,10 @@ mod tests {
         },
     };
 
-    use aster_box_core::{
+    use chrono::Utc;
+    use krun_box_core::{
         ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
     };
-    use chrono::Utc;
     use tokio::{
         io::{AsyncReadExt, AsyncWriteExt},
         net::TcpStream,
@@ -766,7 +766,7 @@ mod tests {
             _generation: ExecutionGeneration,
             _port: NonZeroU16,
             _timeout: std::time::Duration,
-        ) -> ExecutionManagerResult<aster_box_core::ExecutionPortStream> {
+        ) -> ExecutionManagerResult<krun_box_core::ExecutionPortStream> {
             let (client, mut server) = tokio::io::duplex(1_024);
             tokio::spawn(async move {
                 let mut buffer = [0_u8; 1_024];
@@ -792,7 +792,7 @@ mod tests {
             _generation: ExecutionGeneration,
             _port: NonZeroU16,
             _timeout: std::time::Duration,
-        ) -> ExecutionManagerResult<aster_box_core::ExecutionPortStream> {
+        ) -> ExecutionManagerResult<krun_box_core::ExecutionPortStream> {
             Err(ExecutionManagerError::Unavailable(
                 "MicroVM port 8080 rejected the connection".to_string(),
             ))

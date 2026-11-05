@@ -14,12 +14,12 @@ resolver = "2"
 [workspace.package]
 version = "0.3.6"
 edition = "2021"
-authors = ["Aster Team"]
+authors = ["Krun Team"]
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/OCI-Runtime"
+repository = "https://github.com/kense-labs/krun"
 
 [workspace.dependencies]
-aster-libkrun-sys = "=3.1.0"
+krun-libkrun-sys = "=3.1.0"
 async-trait = "0.1"
 base64 = "0.22"
 cap-fs-ext = "=4.0.2"

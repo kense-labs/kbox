@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 
-use aster_oci_core::{DriverKind, IsolationClass};
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use krun_oci_core::{DriverKind, IsolationClass};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     ContainerId, ContainerRecord, CreateAttachments, ErrorCode, Generation, OciBundle, OperationId,
     Result,
 };

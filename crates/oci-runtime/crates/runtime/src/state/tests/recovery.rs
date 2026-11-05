@@ -1,6 +1,6 @@
-use aster_oci_core::DriverKind;
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use aster_oci_sdk::{
+use krun_oci_core::DriverKind;
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use krun_oci_sdk::{
     ContainerOperationRequest, ContainerTarget, FileOp, FileRequest, FilesystemOp,
     FilesystemRequest, Generation, OperationContext, StartRequest, UpdateRequest,
 };

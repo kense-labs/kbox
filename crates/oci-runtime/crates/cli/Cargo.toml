@@ -1,18 +1,18 @@
 [package]
 publish = false
-name = "aster-oci-cli"
+name = "krun-oci-cli"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Command-line frontend for Aster OCI Runtime"
+description = "Command-line frontend for Krun OCI Runtime"
 
 [[bin]]
-name = "aster-oci"
+name = "krun-oci"
 path = "src/main.rs"
 
 [dependencies]
-aster-oci-sdk = { path = "../sdk" }
-aster-oci-runtime = { path = "../runtime" }
+krun-oci-sdk = { path = "../sdk" }
+krun-oci-runtime = { path = "../runtime" }
 clap.workspace = true
 fs2.workspace = true
 serde.workspace = true
@@ -25,7 +25,7 @@ tokio.workspace = true
 libc = "0.2"
 
 [dev-dependencies]
-aster-oci-core = { path = "../core" }
+krun-oci-core = { path = "../core" }
 async-trait.workspace = true
 tempfile = "3.20"
 

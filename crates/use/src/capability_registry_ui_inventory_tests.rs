@@ -14,7 +14,7 @@ async fn ui_projection_keeps_non_web_package_files_out_of_the_asset_descriptor()
     ] {
         std::fs::write(root.join("ui").join(name), bytes).unwrap();
     }
-    let manifest = aster_use_extension::ExtensionManifest::parse_acl(
+    let manifest = krun_use_extension::ExtensionManifest::parse_acl(
         r#"
 extension "example/ui-inventory" {
  schema_version = 3 version = "1.0.0" route = "ui-inventory"

@@ -1,4 +1,4 @@
-# Implementation Plan: Aster CLI replaces mise
+# Implementation Plan: Krun CLI replaces mise
 
 **Branch**: current checkout | **Spec**: [spec.md](spec.md)
 
@@ -12,7 +12,7 @@ Extend the existing implementation in place. Repair actual installation first,
 then implement project selection, locks, environments, tasks, backend coverage,
 and host operations. Keep the full baseline inventory open until every feature
 has behavioral evidence. Do not introduce a mise executable dependency.
-The official extension-source follow-up uses `aster-ai-lab/plugins`, explicit
+The official extension-source follow-up uses `kense-labs/plugins`, explicit
 domain directories, native AIX validation and associated GHCR OCI artifacts;
 see [trusted-plugins.md](../../docs/trusted-plugins.md). Integrate its signed
 catalog/immutable digest contract in the existing extension owner.
@@ -54,17 +54,17 @@ Documentation: `spec.md`, `plan.md`, `research.md`, `tasks.md`,
 
 | Layer | Path | Planned changes |
 | --- | --- | --- |
-| CLI | `apps/aster/src/main.rs` | Existing dispatch and utility behavior |
-| CLI commands | `crates/terminal/crates/codegen/aster-pager/src/env_manager_cmd.rs` | Existing tool/environment commands and sibling tests |
+| CLI | `apps/krun/src/main.rs` | Existing dispatch and utility behavior |
+| CLI commands | `crates/terminal/crates/codegen/krun-pager/src/env_manager_cmd.rs` | Existing tool/environment commands and sibling tests |
 | Tool library | `crates/use/tool-acquire/src/` | Declaration loading, selected installations, versions, locks, sources |
 | Tasks and host adapters | existing owning crates under `crates/` | Reuse process, filesystem, HTTP, and scheduling adapters; extend only when needed |
-| Deterministic tasks | `crates/code/core/src/environment_tasks/` (planned module) | Reuse bounded process/cancellation and existing `aster-lane`; provide one Rust API to CLI/ACP/Studio, without requiring a model or durable TS workflow |
+| Deterministic tasks | `crates/code/core/src/environment_tasks/` (planned module) | Reuse bounded process/cancellation and existing `krun-lane`; provide one Rust API to CLI/ACP/Studio, without requiring a model or durable TS workflow |
 | Host operations | `crates/code/core/src/environment_host/` (planned module) | Typed provisioning/dotfile/daemon plan, state, apply and platform adapters; add files only when their slice starts |
 | Plugin lifecycle | `crates/use/src/plugin_manager/`, `extension_cli/`, `plugin_lifecycle/`, `crates/use/extension/src/` | Reuse native AIX, TUF/GHCR, immutable cache, reviewed plans, grants and receipts |
 | Studio host | `apps/studio/src-tauri/src/{capabilities_registry,runtime_components,capabilities_registry_jobs}.rs` | Shared SDK, tenant-owned operations/recovery, required-component protection and window-scoped Tauri permissions |
 | Studio UI | `apps/studio/src/renderer/pages/plugins/`, `components/layout/`, `src/shared/ipc/schemas/` | Registry data, component management, actual stages/bytes, retry/reopen/restart, theme and accessibility |
 | Official sources | `plugins/plugins/<domain>/<publisher>/<name>/`, `domains.acl`, `registry/`, `recipes/` | Existing authorized submodule; native packages in associated GHCR, bound by signed metadata |
-| Integration tests | `apps/aster/tests/` | Isolated CLI fixture execution |
+| Integration tests | `apps/krun/tests/` | Isolated CLI fixture execution |
 | Evidence | `docs/evidence/cli/2026-11-01-mise-replacement/` | Commands, actual outputs, coverage limits |
 
 `crates/terminal/crates/codegen` is the retained imported source layout described
@@ -89,13 +89,13 @@ Actual generated protocol files remain untouched.
 
 ## Verification Plan
 
-- Run focused `aster-use-tool-acquire` tests before and after changes.
+- Run focused `krun-use-tool-acquire` tests before and after changes.
 - Run pager command tests and isolated CLI integration checks for actual
   selection, environment restoration, installation errors, and task effects.
 - Run `cargo clippy --locked -p <owner> --all-targets --no-deps` and supported
   feature checks for each materially changed package.
 - Run `cargo fmt --all -- --check` and `tests/workspace_dependencies.py`.
-- Build `aster` and `aster-acp` together before binary acceptance.
+- Build `krun` and `krun-acp` together before binary acceptance.
 - Retain failures from the starting checkout separately from regressions.
 - Full completion requires affected Windows, Linux, and macOS native checks;
   a local macOS pass does not certify another platform.
@@ -118,7 +118,7 @@ Actual generated protocol files remain untouched.
 - 旧组合 renderer 检查保留 304 通过、2 项原有 TabRouter 失败；修改前组件复现同名失败。
   新增插件恢复/重试及既有安装接口检查为 77 通过。最新全局 web 类型检查仍有
   286 项其他路径错误；7 项依赖检查通过。初批根格式通过；最新根格式在并行修改的
-  `apps/aster/tests/tui_913_real_llm.rs` 失败，本批所属文件格式检查通过。Pager 原有 42 条 Clippy 阻塞
+  `apps/krun/tests/tui_913_real_llm.rs` 失败，本批所属文件格式检查通过。Pager 原有 42 条 Clippy 阻塞
   已在其 owner 修复，tool-acquire/Pager/CLI 全目标 Clippy 已通过。原生 GUI 连接
   仍不可用。所有必需发布 gate 继续保留，不以局部成功豁免。
 - 原 49 项台账与 24 类状态文件已建立；35 原应用 AIX 重新构建通过，690 个冻结
@@ -165,7 +165,7 @@ Actual generated protocol files remain untouched.
   只读 loader 保持只读，preview/prune 自身不伪造一次项目使用。
 - 复用 `all_uninstall_candidates`、`uninstall_candidate_for`、`remove_version_sync` 和现有
   版本解析，不另写匹配器，不用 current 指针决定保留，不因 payload 缺失跳过有效记录。
-- 保留配置实际解析到的版本；真实进程与安装路径映射用于运行保护，不能只看 Aster PID 文件。
+- 保留配置实际解析到的版本；真实进程与安装路径映射用于运行保护，不能只看 Krun PID 文件。
 - `--dry-run` 不改声明/payload/锁/指针，`--dry-run-code` 退出匹配，无人确认不执行删除。
 - 这一个切片通过后再补 upgrade/rollback 和剩余选择模式；新增 help 不关闭 T004。
 
@@ -193,13 +193,13 @@ CUA 按明确的 CLI producer manifest/发布契约选制品，不用仓库 Late
 工具不经未验证安装脚本执行。旧安装仅在来源、版本和完整制品可验证时接管，否则明确
 待处理，不能凭二进制存在伪造受信回执。迁移不复制凭证/用户会话。
 
-产品继续采用 Aster 命名空间和 ACL。现有 agent/use/mcp/plugin 命令含义保留；任务使用
+产品继续采用 Krun 命名空间和 ACL。现有 agent/use/mcp/plugin 命令含义保留；任务使用
 显式 task 命令，环境 MCP 使用独立服务入口，不把现有 MCP 客户端管理冒充为 server。
 外部 registry 数据经受限适配器读取，不进入配置层叠或授权策略。
 
 ## 验收、性能与阻塞规则
 
-- 工具：owner suites、pager sibling tests、`apps/aster/tests/env_manager.rs` 真 CLI 差分。
+- 工具：owner suites、pager sibling tests、`apps/krun/tests/env_manager.rs` 真 CLI 差分。
   固定 reference 二进制、输入、超时和判分器；不硬编码输出或删反例。
 - 插件：既有 SDK/CLI suites + Studio 原生 registry/runtime tests；合法/篡改 AIX、
   TUF/GHCR、外部制品、resume/offline、计划摘要、授权、租户、required、宿主版本兼容。
@@ -215,7 +215,7 @@ CUA 按明确的 CLI producer manifest/发布契约选制品，不用仓库 Late
   M0 先固定基线与允差，不在失败后改输入。不可变安装重复选择不下载、offline 请求数
   为 0、task cache hit 的任务效果执行数为 0；明显回退先 profile 再修，debug 时长不算交付。
 - 子能力具备实现、固定行为见证和适用平台证据才通过；任一必需子项失败，C 行不能关闭。
-  基线支持而 Aster 尚不支持的条目仍是缺口，不能改名 unsupported 后算覆盖。
+  基线支持而 Krun 尚不支持的条目仍是缺口，不能改名 unsupported 后算覆盖。
 - GUI、native runner、签名/公证、发布凭证等前提缺失，登记为对应 gate 的阻塞，不能跳过。
   当前测试/类型/格式失败归属 owner 修共因，不扩 allowlist 或降检查强度。
 - 每个候选绑定父仓库提交、Studio/plugins gitlink、组件锁及制品 SHA。变更只复验受影响
@@ -228,15 +228,15 @@ build 成功不构成发版资格。本计划不执行 commit/tag/upload。
 
 1. M8 门槛全过，形成干净且可定位源码的候选；在既有授权和流程内处理提交与发布。
 2. Core/ACP：版本、平台归档和 `crates/code/manual/RELEASE_X.Y.Z.md` 对齐，发布
-   `aster-acp-vX.Y.Z`，`--latest=false`。
-3. CLI：同提交构建 `aster`/`aster-acp`，归档携共享 BUILD_ID、SHA256SUMS 和完整 sandbox
+   `krun-acp-vX.Y.Z`，`--latest=false`。
+3. CLI：同提交构建 `krun`/`krun-acp`，归档携共享 BUILD_ID、SHA256SUMS 和完整 sandbox
    companions；最终归档安装到隔离 prefix，通过 `tests/cli_sandbox_smoke.py` 的真实
-   Linux 自动模式及 Darwin YOLO 命令执行后才可创建草稿/发布 `aster-cli-vX.Y.Z`。
+   Linux 自动模式及 Darwin YOLO 命令执行后才可创建草稿/发布 `krun-cli-vX.Y.Z`。
 4. 桌面：消费已发布组件锁；轻量包先匿名安装固定 Sandbox/Document/Office。最终归档
    按源契约核对 native libraries、OCR/models、字体、Office/ACP、capture helpers、renderer
    入口，完成签名、公证和原生验收，再生成/发布 channel manifest 与 `vX.Y.Z`。
 5. 只有版本化桌面 Release 可标记仓库 Latest。CLI/ACP/滚动通道均 `--latest=false`；
-   核对 desktop-stable、aster-cli-stable 和桌面 Latest 上旧 CLI 兼容清单，指向版本化制品，
+   核对 desktop-stable、krun-cli-stable 和桌面 Latest 上旧 CLI 兼容清单，指向版本化制品，
    不创建字面 latest tag。
 6. 回读公开下载和摘要，保留当前/上一版可回滚制品；保留仍被底座/锁引用的 OCI digest，
    不覆盖版本化二进制或移动已发布 tag。

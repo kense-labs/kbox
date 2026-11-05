@@ -1,7 +1,7 @@
-use aster_gateway::config::MiddlewareConfig;
-use aster_gateway::middleware::{Pipeline, RequestContext};
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use http::Request;
+use krun_gateway::config::MiddlewareConfig;
+use krun_gateway::middleware::{Pipeline, RequestContext};
 use std::collections::HashMap;
 use std::time::Duration;
 

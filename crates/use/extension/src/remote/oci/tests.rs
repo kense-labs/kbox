@@ -13,7 +13,7 @@ use crate::remote::{
 use crate::VerifiedTargetCachePolicy;
 
 const TOKEN_PATH: &str =
-    "/token?service=ghcr.io&scope=repository%3Aaster-ai-lab%2Fplugins%2Faster%2Fscience%3Apull";
+    "/token?service=ghcr.io&scope=repository%3Akense-labs%2Fplugins%2Faster%2Fscience%3Apull";
 const TOKEN: &str = "synthetic-ghcr-token-never-in-errors";
 
 fn fixture() -> (Vec<u8>, PluginCatalogRecord, Vec<u8>, AixOciSource) {
@@ -31,7 +31,7 @@ fn fixture() -> (Vec<u8>, PluginCatalogRecord, Vec<u8>, AixOciSource) {
                 .values()
                 .next()
                 .unwrap()
-                .pointer("/custom/aster")
+                .pointer("/custom/krun")
                 .unwrap(),
         )
         .unwrap(),
@@ -69,7 +69,7 @@ fn fixture() -> (Vec<u8>, PluginCatalogRecord, Vec<u8>, AixOciSource) {
     catalog.archive.length = bytes.len() as u64;
     catalog.archive.sha256 = format!("sha256:{digest}");
     catalog.archive.target_name = format!(
-        "extensions/aster/science/{PACKAGE_VERSION}/stable/{}/oci-ghcr-v1/{}/science.aix",
+        "extensions/krun/science/{PACKAGE_VERSION}/stable/{}/oci-ghcr-v1/{}/science.aix",
         catalog.target,
         hex_lower(&Sha256::digest(&manifest))
     );
@@ -110,7 +110,7 @@ fn routes(bytes: &[u8], manifest: &[u8], source: &AixOciSource) -> HashMap<Strin
 #[test]
 fn oci_targets_require_a_signed_digest_and_native_aix_identity() {
     let (_, catalog, _, source) = fixture();
-    assert_eq!(source.repository, "aster-ai-lab/plugins/aster/science");
+    assert_eq!(source.repository, "kense-labs/plugins/krun/science");
     let mut recategorized = catalog.clone();
     recategorized.categories = vec!["development".into()];
     let recategorized_source = AixOciSource::from_target(
@@ -150,7 +150,7 @@ fn oci_targets_require_a_signed_digest_and_native_aix_identity() {
         );
     }
     let http = TargetName::new(format!(
-        "extensions/aster/science/{PACKAGE_VERSION}/stable/{}/science.aix",
+        "extensions/krun/science/{PACKAGE_VERSION}/stable/{}/science.aix",
         catalog.target
     ))
     .unwrap();
@@ -161,7 +161,7 @@ fn oci_targets_require_a_signed_digest_and_native_aix_identity() {
 
 #[tokio::test]
 async fn signed_oci_identity_seals_native_aix_bytes_and_survives_cached_offline_preparation() {
-    use aster_use_core::{
+    use krun_use_core::{
         LockedPluginPackage, PluginPackageLock, PluginPackageLockHost, PLUGIN_PACKAGE_LOCK_SCHEMA,
     };
     let (bytes, catalog, manifest, source) = fixture();
@@ -185,12 +185,12 @@ async fn signed_oci_identity_seals_native_aix_bytes_and_survives_cached_offline_
     )
     .unwrap();
     refresh_remote_registry(&trusted).await.unwrap();
-    let prepared = prepare_remote_package(&trusted, "aster/science", None, "stable", None)
+    let prepared = prepare_remote_package(&trusted, "krun/science", None, "stable", None)
         .await
         .unwrap();
     let lock = PluginPackageLock {
         schema: PLUGIN_PACKAGE_LOCK_SCHEMA.into(),
-        root_package_id: "aster/science".into(),
+        root_package_id: "krun/science".into(),
         host: PluginPackageLockHost::new(
             crate::remote::host_target().unwrap(),
             env!("CARGO_PKG_VERSION"),
@@ -241,13 +241,13 @@ async fn signed_oci_identity_seals_native_aix_bytes_and_survives_cached_offline_
     tuf_server.clear_requests();
     let downloaded = prepared.download().await.unwrap();
     assert_eq!(std::fs::read(downloaded.path()).unwrap(), bytes);
-    let package = crate::ExtensionLifecyclePackage::prepare_remote("aster/science", downloaded)
+    let package = crate::ExtensionLifecyclePackage::prepare_remote("krun/science", downloaded)
         .await
         .unwrap();
     assert_eq!(package.manifest().skills[0].id, "science");
     let cached = prepare_cached_remote_package(
         &trusted,
-        "aster/science",
+        "krun/science",
         Some(PACKAGE_VERSION),
         "stable",
         None,

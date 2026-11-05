@@ -2,14 +2,14 @@
 
 use std::sync::Arc;
 
-use aster_box_core::pty::PtyRequest;
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::pty::PtyRequest;
+use krun_box_core::{
     BoxError, ExecEvent, ExecOutput, ExecRequest, ExecutionGeneration, ExecutionId,
     ExecutionManagerError, ExecutionManagerResult, ExecutionProcess, ExecutionProcessInput,
     ExecutionProcessSignal, ExecutionProcessStream, ExecutionSessionManager, FileRequest,
     FileResponse, FilesystemRequest, FilesystemResponse,
 };
-use async_trait::async_trait;
 
 use super::session_support::{
     debug_session_environment, has_oci_runtime, inherit_container_environment,
@@ -374,7 +374,7 @@ fn validate_microvm_exec_request_id(request: &ExecRequest) -> ExecutionManagerRe
                 || request_id.contains('\0') =>
         {
             Err(ExecutionManagerError::InvalidRequest(
-                "Aster MicroVM exec request ID is invalid".to_string(),
+                "Krun MicroVM exec request ID is invalid".to_string(),
             ))
         }
         _ => Ok(()),

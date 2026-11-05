@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use aster_oci_core::IsolationClass;
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{
+use base64::{engine::general_purpose::STANDARD, Engine as _};
+use krun_oci_core::IsolationClass;
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, FileRequest, FilesystemRequest, Generation, ListRequest,
     OciRuntimeService, OperationContext,
 };
-use base64::{engine::general_purpose::STANDARD, Engine as _};
 use tokio::time::timeout;
 
 use super::super::exec::support::{stale_target, wait_for_exact_marker};
@@ -45,7 +45,7 @@ pub(super) async fn run(
         }
     };
     let response_delivered = qualification.stage
-        == aster_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let recovery_file = response_delivered.then(|| qualification.file.clone());
     let recovery_marker = response_delivered.then(|| {
         (

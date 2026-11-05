@@ -1,6 +1,6 @@
 # Apofasi Architecture
 
-Apofasi is Aster's typed **System-1** decision engine. The stack is entirely
+Apofasi is Krun's typed **System-1** decision engine. The stack is entirely
 **Rust** (no Python runtime, no `libtorch`): non-autoregressive typed
 primitives, marker scoring, strictly proper scoring-rule training, and
 script-aware routing before any forward pass.
@@ -21,17 +21,17 @@ script-aware routing before any forward pass.
 What Apofasi is **not**:
 
 - Not a generative LLM wrapper.
-- Not a replacement for Aster Flow (orchestration) or Use (capabilities).
+- Not a replacement for Krun Flow (orchestration) or Use (capabilities).
 - Not a cloud-only service — the library must run in-process on Desktop/CLI/Code hosts.
 
 ## Layered crate shape
 
-Single repository. The root package `aster-apofasi` is the facade hosts depend on.
+Single repository. The root package `krun-apofasi` is the facade hosts depend on.
 Heavy ML stays behind features so Code/CLI can compile the type surface without
 Metal/CUDA toolchains when unused.
 
 ```text
-aster-apofasi/                         # facade: Agent, Router, presets
+krun-apofasi/                         # facade: Agent, Router, presets
 ├── core (in-tree modules)           # ALWAYS pure Rust, no ML framework
 │   ├── primitive                    # Choice / Score / Noul
 │   ├── schema                       # Question, Criteria, State
@@ -211,7 +211,7 @@ encoder LoRA later). Calibration temperatures are fit **after** training per
 Product rule: base checkpoints are a fast specialization base; domain accuracy
 comes from fine-tuning, not zero-shot magic.
 
-## Host integration (Aster)
+## Host integration (Krun)
 
 ```text
 ┌──────────── Desktop / Code / CLI / Cloud ────────────┐
@@ -219,7 +219,7 @@ comes from fine-tuning, not zero-shot magic.
 └─────────────────────┬────────────────────────────────┘
                       │ SystemOneRequest / SystemOneResponse
                       ▼
-               aster-apofasi (facade)
+               krun-apofasi (facade)
                       │
         ┌─────────────┼─────────────┐
         ▼             ▼             ▼
@@ -295,5 +295,5 @@ hosted Jev accuracy and latency.
 
 ## References
 
-- Aster monorepo submodule path: `crates/apofasi`
+- Krun monorepo submodule path: `crates/apofasi`
 - Hugging Face `tokenizers` (Rust) and Candle for Metal/CUDA/CPU inference

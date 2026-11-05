@@ -1,4 +1,4 @@
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     CloseStdinRequest, ProcessTarget, ResizeRequest, TerminalSize, WriteStdinRequest,
 };
 
@@ -113,7 +113,7 @@ async fn drive_success(
     store: &DurableStateStore,
     target: &ContainerTarget,
     kind: ProcessIoKind,
-) -> aster_oci_sdk::Result<()> {
+) -> krun_oci_sdk::Result<()> {
     let process = ProcessTarget {
         container: target.clone(),
         process_id: ProcessId::init(),
@@ -172,7 +172,7 @@ async fn drive_failure(
     target: &ContainerTarget,
     kind: ProcessIoKind,
     failure: &Error,
-) -> aster_oci_sdk::Result<()> {
+) -> krun_oci_sdk::Result<()> {
     let process = ProcessTarget {
         container: target.clone(),
         process_id: ProcessId::init(),
@@ -237,7 +237,7 @@ async fn drive_failure(
     }
 }
 
-fn unexpected_success(kind: ProcessIoKind) -> aster_oci_sdk::Result<()> {
+fn unexpected_success(kind: ProcessIoKind) -> krun_oci_sdk::Result<()> {
     Err(Error::new(
         ErrorCode::Conflict,
         format!(

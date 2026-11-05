@@ -2,8 +2,8 @@ use std::fs::{File, OpenOptions};
 use std::path::Path;
 use std::time::{Duration, Instant};
 
-use aster_use_core::{UseError, UseResult};
 use fs2::FileExt;
+use krun_use_core::{UseError, UseResult};
 
 use super::package::{io_error, lock_is_contended};
 

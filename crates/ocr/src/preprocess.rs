@@ -1,8 +1,8 @@
 use std::io::Cursor;
 
-use aster_use_core::{UseError, UseResult};
 use image::imageops::FilterType;
 use image::{DynamicImage, ImageReader, Limits, RgbImage};
+use krun_use_core::{UseError, UseResult};
 
 use crate::config::{DetectionConfig, RecognitionConfig};
 

@@ -1,5 +1,5 @@
 use super::*;
-use aster_box_runtime::VmLocalExecutionBackend;
+use krun_box_runtime::VmLocalExecutionBackend;
 use std::sync::atomic::AtomicU64;
 
 // --- build_resource_limits tests (using new struct layout) ---

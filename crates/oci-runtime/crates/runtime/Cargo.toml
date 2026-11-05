@@ -1,15 +1,15 @@
 [package]
 publish = false
-name = "aster-oci-runtime"
+name = "krun-oci-runtime"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Cross-platform host runtime for Aster OCI workloads"
+description = "Cross-platform host runtime for Krun OCI workloads"
 
 [dependencies]
-aster-oci-agent-protocol = { path = "../agent-protocol" }
-aster-oci-core = { path = "../core" }
-aster-oci-sdk = { path = "../sdk" }
+krun-oci-agent-protocol = { path = "../agent-protocol" }
+krun-oci-core = { path = "../core" }
+krun-oci-sdk = { path = "../sdk" }
 base64.workspace = true
 cap-fs-ext.workspace = true
 cap-std.workspace = true
@@ -31,7 +31,7 @@ libc = "0.2"
 sha2 = { workspace = true, features = ["asm"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]
-aster-oci-agent = { path = "../agent" }
+krun-oci-agent = { path = "../agent" }
 
 [dev-dependencies]
 tempfile = "3.20"

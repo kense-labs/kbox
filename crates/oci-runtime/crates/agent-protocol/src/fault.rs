@@ -1,6 +1,6 @@
 use std::fmt;
 
-use aster_oci_sdk::{OperationId, Result};
+use krun_oci_sdk::{OperationId, Result};
 use serde::{Deserialize, Serialize};
 
 use crate::AgentOperation;

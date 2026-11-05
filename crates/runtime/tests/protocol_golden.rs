@@ -1,9 +1,9 @@
-use aster_runtime::contract::{
+use krun_runtime::contract::{
     RuntimeActionRequest, RuntimeApplyRequest, RuntimeCapabilities, RuntimeExecRequest,
     RuntimeExecResult, RuntimeInspection, RuntimeLogChunk, RuntimeLogQuery, RuntimeObservation,
     RuntimeRemoval, RuntimeUnitSpec,
 };
-use aster_runtime::{RuntimeRequestReceipt, RuntimeUnitRecord};
+use krun_runtime::{RuntimeRequestReceipt, RuntimeUnitRecord};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{Map, Value};

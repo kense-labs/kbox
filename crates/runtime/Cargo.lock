@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "aster-runtime"
+name = "krun-runtime"
 version = "0.8.0"
 dependencies = [
  "async-trait",

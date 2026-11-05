@@ -2,7 +2,7 @@
 
 ## Repository
 
-This repository owns the provider-oriented `aster-use-ocr` Rust library,
+This repository owns the provider-oriented `krun-use-ocr` Rust library,
 standalone binary, standard MCP server, packaged Skill, and the default
 PP-OCRv6 provider.
 
@@ -18,10 +18,10 @@ PP-OCRv6 provider.
   local through ONNX Runtime and must not add Python or PaddlePaddle.
 - Every provider descriptor must declare whether it sends source bytes off
   device; SDK and MCP surfaces must preserve that policy.
-- Preserve the `aster-use-ocr` crate, binary, MCP, and Skill identities.
-- Distribute the complete OCR capability as `aster/aster-ocr` in native `.aix` format.
+- Preserve the `krun-use-ocr` crate, binary, MCP, and Skill identities.
+- Distribute the complete OCR capability as `krun/krun-ocr` in native `.aix` format.
   Hosts own installation policy; the plugin owns its MCP entry and packaged Skill.
-- `aster-use-core` owns shared machine contracts; depend on the local workspace crate.
+- `krun-use-core` owns shared machine contracts; depend on the local workspace crate.
 
 ## Engineering
 

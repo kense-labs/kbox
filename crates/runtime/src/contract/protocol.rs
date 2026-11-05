@@ -17,7 +17,7 @@ pub struct RuntimeApplyRequest {
 }
 
 impl RuntimeApplyRequest {
-    pub const SCHEMA: &'static str = "aster.runtime.apply-request.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.apply-request.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -52,7 +52,7 @@ pub struct RuntimeActionRequest {
 }
 
 impl RuntimeActionRequest {
-    pub const SCHEMA: &'static str = "aster.runtime.action-request.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.action-request.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -86,7 +86,7 @@ pub struct RuntimeRemoval {
 }
 
 impl RuntimeRemoval {
-    pub const SCHEMA: &'static str = "aster.runtime.removal.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.removal.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -120,7 +120,7 @@ pub struct RuntimeSnapshotRequest {
 }
 
 impl RuntimeSnapshotRequest {
-    pub const SCHEMA: &'static str = "aster.runtime.snapshot-request.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.snapshot-request.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -166,7 +166,7 @@ pub struct RuntimePause {
 }
 
 impl RuntimePause {
-    pub const SCHEMA: &'static str = "aster.runtime.pause.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.pause.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -196,7 +196,7 @@ pub struct RuntimeResume {
 }
 
 impl RuntimeResume {
-    pub const SCHEMA: &'static str = "aster.runtime.resume.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.resume.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -213,7 +213,7 @@ impl RuntimeResume {
 }
 
 impl RuntimeSnapshot {
-    pub const SCHEMA: &'static str = "aster.runtime.snapshot.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.snapshot.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -257,7 +257,7 @@ pub struct RuntimeLogQuery {
 }
 
 impl RuntimeLogQuery {
-    pub const SCHEMA: &'static str = "aster.runtime.log-query.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.log-query.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -293,7 +293,7 @@ pub struct RuntimeLogChunk {
 }
 
 impl RuntimeLogChunk {
-    pub const SCHEMA: &'static str = "aster.runtime.log-chunk.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.log-chunk.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {
@@ -331,7 +331,7 @@ pub struct RuntimeExecRequest {
 pub const EXEC_CONTROL_PLANE_BUDGET_MS: u64 = 5_000;
 
 impl RuntimeExecRequest {
-    pub const SCHEMA: &'static str = "aster.runtime.exec-request.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.exec-request.v1";
 
     /// Absolute deadline persisted on first Exec reservation.
     ///
@@ -428,7 +428,7 @@ pub struct RuntimeExecResult {
 }
 
 impl RuntimeExecResult {
-    pub const SCHEMA: &'static str = "aster.runtime.exec-result.v1";
+    pub const SCHEMA: &'static str = "krun.runtime.exec-result.v1";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {

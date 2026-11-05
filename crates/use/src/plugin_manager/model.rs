@@ -1,5 +1,5 @@
-use aster_use_core::{PlanScope, PluginHostPackageState, VerifiedPluginCatalogRecord};
-use aster_use_extension::PluginCatalogSnapshot;
+use krun_use_core::{PlanScope, PluginHostPackageState, VerifiedPluginCatalogRecord};
+use krun_use_extension::PluginCatalogSnapshot;
 use serde::Serialize;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]

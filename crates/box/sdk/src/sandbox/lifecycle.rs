@@ -1,5 +1,5 @@
-use aster_box_core::log::LogEntry;
-use aster_box_core::{ExecutionState, OperationId, RestartExecutionOptions};
+use krun_box_core::log::LogEntry;
+use krun_box_core::{ExecutionState, OperationId, RestartExecutionOptions};
 
 use super::Sandbox;
 use crate::{BoxStatsSummary, ClientError, Result};

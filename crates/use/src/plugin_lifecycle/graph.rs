@@ -1,12 +1,12 @@
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     PlanPackageChangeKind, PluginOperationAction, PluginOperationPlanEnvelope, PluginPackageId,
     PluginPackageLock, UseError, UseResult,
 };
-use aster_use_extension::ExtensionManifest;
-use async_trait::async_trait;
+use krun_use_extension::ExtensionManifest;
 
 mod recovery;
 mod validation;

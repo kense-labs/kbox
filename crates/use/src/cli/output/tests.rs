@@ -1,5 +1,5 @@
 use super::*;
-use aster_use_core::UseError;
+use krun_use_core::UseError;
 
 #[tokio::test]
 async fn embedded_help_uses_the_host_invocation_and_preserves_result_data() {
@@ -7,12 +7,10 @@ async fn embedded_help_uses_the_host_invocation_and_preserves_result_data() {
         .await
         .unwrap();
     let standalone = crate::cli::run_os(vec!["help".into()]).await.unwrap();
-    assert!(embedded.human.contains("aster use registry package check"));
-    assert!(embedded.human.contains("aster use registry package build"));
-    assert!(!embedded.human.contains("aster-use registry"));
-    assert!(standalone
-        .human
-        .contains("aster-use registry package check"));
+    assert!(embedded.human.contains("krun use registry package check"));
+    assert!(embedded.human.contains("krun use registry package build"));
+    assert!(!embedded.human.contains("krun-use registry"));
+    assert!(standalone.human.contains("krun-use registry package check"));
     assert_eq!(embedded.json, standalone.json);
 }
 
@@ -38,7 +36,7 @@ async fn native_cli_output_uses_the_same_json_and_human_contract() {
     assert!(stdout.is_empty());
     assert_eq!(
         String::from_utf8(stderr).unwrap(),
-        "aster-use: fixture error\nsuggestion: fixture suggestion\n"
+        "krun-use: fixture error\nsuggestion: fixture suggestion\n"
     );
 }
 

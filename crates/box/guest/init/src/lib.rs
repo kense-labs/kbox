@@ -1,4 +1,4 @@
-//! Guest init library for aster-box VM.
+//! Guest init library for krun-box VM.
 //!
 //! Provides namespace isolation utilities for running agent and business code
 //! in isolated environments within the same VM, an exec server for

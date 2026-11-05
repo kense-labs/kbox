@@ -3,7 +3,7 @@ use std::os::unix::fs::{DirBuilderExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use aster_oci_sdk::OciBundle;
+use krun_oci_sdk::OciBundle;
 use serde::Serialize;
 use sha2::{Digest, Sha256};
 

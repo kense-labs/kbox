@@ -2,11 +2,11 @@ use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     OkfKnowledgeObservation, OkfProjectionReceipt, PlanScope, UseError, UseResult,
 };
-use aster_use_extension::ExtensionPaths;
-use async_trait::async_trait;
+use krun_use_extension::ExtensionPaths;
 use sha2::{Digest, Sha256};
 
 use super::{
@@ -53,7 +53,7 @@ pub use policy::{
 };
 pub use storage::OkfKnowledgeStorageUsage;
 
-/// Cross-platform production Knowledge backend for standalone Aster Use.
+/// Cross-platform production Knowledge backend for standalone Krun Use.
 ///
 /// Each complete User/Workspace scope owns a separate SQLite/FTS5 database.
 /// Stage, promotion, selection, and receipt-owned removal are transactional;
@@ -264,7 +264,7 @@ impl SqliteOkfKnowledgeAdapter {
         let guard = self.database_guard(scope, LockMode::Exclusive).await?;
         match tokio::fs::symlink_metadata(&guard.path).await {
             Ok(metadata)
-                if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                     && metadata.is_file() => {}
             Ok(_) => {
                 return Err(UseError::new(
@@ -356,8 +356,8 @@ impl SqliteOkfKnowledgeAdapter {
         self.database_guard(scope, LockMode::Exclusive).await
     }
 
-    fn maintenance_lock(&self) -> aster_use_extension::StateMaintenanceLock {
-        aster_use_extension::StateMaintenanceLock::new(&self.state_root)
+    fn maintenance_lock(&self) -> krun_use_extension::StateMaintenanceLock {
+        krun_use_extension::StateMaintenanceLock::new(&self.state_root)
     }
 }
 
@@ -402,7 +402,7 @@ fn copy_restore_evidence(
 async fn require_database(path: &Path) -> UseResult<()> {
     match tokio::fs::symlink_metadata(path).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file() =>
         {
             Ok(())

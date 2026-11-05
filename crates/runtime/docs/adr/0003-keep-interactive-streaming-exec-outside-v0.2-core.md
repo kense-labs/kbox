@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-19
-- Decision owners: Aster Runtime maintainers
+- Decision owners: Krun Runtime maintainers
 
 ## Context
 

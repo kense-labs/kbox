@@ -1,6 +1,6 @@
 use std::sync::atomic::Ordering;
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerStats, ContainerTarget, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OutputChunk, ProcessRecord, Result,
 };

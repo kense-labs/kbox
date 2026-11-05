@@ -120,17 +120,17 @@ impl Contract {
 
     pub fn validate(&self) -> Result<(), ContractError> {
         if self.schema != "agentic.ontology.r0-cross-project-contract.v1"
-            || self.candidate.handoff_schema != "agentic.ontology.aster-use-handoff.v1"
-            || self.generation.receipt_schema != "agentic.ontology.aster-use-generation-receipt.v1"
-            || self.generation.issuer != "aster-use"
+            || self.candidate.handoff_schema != "agentic.ontology.krun-use-handoff.v1"
+            || self.generation.receipt_schema != "agentic.ontology.krun-use-generation-receipt.v1"
+            || self.generation.issuer != "krun-use"
             || self.knowledge.schema != "agentic.ontology.r0-knowledge-lease-binding.v1"
-            || self.knowledge.search_schema != "aster.use.okf-knowledge-search-request.v1"
-            || self.knowledge.read_schema != "aster.use.okf-knowledge-read-request.v1"
-            || self.knowledge.citation_schema != "aster.use.okf-knowledge-citation.v1"
+            || self.knowledge.search_schema != "krun.use.okf-knowledge-search-request.v1"
+            || self.knowledge.read_schema != "krun.use.okf-knowledge-read-request.v1"
+            || self.knowledge.citation_schema != "krun.use.okf-knowledge-citation.v1"
             || self.knowledge.format_version != "0.2"
             || self.code.schema != "agentic.ontology.r0-code-session-binding.v1"
             || self.code.task_proof_schema != "agentic.ontology.r0-code-task-proof.v1"
-            || self.code.agent_protocol != "aster.code.agent.v1"
+            || self.code.agent_protocol != "krun.code.agent.v1"
             || self.cloud.schema != "agentic.ontology.r0-cloud-audit-link.v1"
             || !matches!(
                 self.candidate.requested_channel.as_str(),
@@ -312,18 +312,18 @@ pub fn verify_fixture_package(root: &Path) -> Result<(), String> {
             .collect::<Vec<_>>()
             != [
                 (
-                    "aster-cloud-contracts",
+                    "krun-cloud-contracts",
                     "0.1.0",
                     "agentic.ontology.r0-cloud-audit-link.v1",
                 ),
-                ("aster-core", "6.8.0", "aster.code.agent.v1"),
+                ("krun-core", "6.8.0", "krun.code.agent.v1"),
                 (
-                    "aster-use",
+                    "krun-use",
                     "0.3.0",
-                    "agentic.ontology.aster-use-generation-receipt.v1",
+                    "agentic.ontology.krun-use-generation-receipt.v1",
                 ),
                 (
-                    "agentic-ontology-aster",
+                    "agentic-ontology-krun",
                     "0.1.0",
                     "agentic.ontology.r0-cross-project-contract.v1",
                 ),

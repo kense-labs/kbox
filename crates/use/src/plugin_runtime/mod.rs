@@ -1,7 +1,7 @@
-//! Typed Aster Runtime binding primitives for schema-v3 plugin surfaces.
+//! Typed Krun Runtime binding primitives for schema-v3 plugin surfaces.
 //!
 //! This module maps immutable Tool and MCP release descriptors to the public
-//! `aster-runtime` contract. It never selects a provider implicitly and it keeps
+//! `krun-runtime` contract. It never selects a provider implicitly and it keeps
 //! provider endpoint discovery outside the Runtime unit contract.
 
 mod bundle_planner;
@@ -20,7 +20,7 @@ mod task;
 mod task_binding;
 mod task_dispatch;
 
-pub use aster_runtime as runtime;
+pub use krun_runtime as runtime;
 
 pub use bundle_planner::plan_runtime_bundle;
 pub use client::{runtime_capabilities_digest, PluginRuntimeClient};

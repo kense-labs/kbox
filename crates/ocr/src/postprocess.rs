@@ -1,9 +1,9 @@
-use aster_use_core::{UseError, UseResult};
 use clipper2::{Centi, EndType, JoinType};
 use image::{GrayImage, Luma};
 use imageproc::contours::find_contours;
 use imageproc::geometry::{contour_area, min_area_rect};
 use imageproc::point::Point;
+use krun_use_core::{UseError, UseResult};
 
 use crate::config::{DetectionConfig, RecognitionConfig};
 

@@ -19,8 +19,8 @@ use tokio::io::AsyncWriteExt;
 use tokio::net::TcpListener;
 use uuid::Uuid;
 
-const SESSION: &str = "aster_us_session-token";
-const PERSONAL_KEY: &str = "aster_sk_personal-key";
+const SESSION: &str = "krun_us_session-token";
+const PERSONAL_KEY: &str = "krun_sk_personal-key";
 
 /// Forward-auth style verifier accepting two credentials for `user-1`.
 async fn spawn_auth_verifier() -> (SocketAddr, Arc<AtomicUsize>) {
@@ -41,7 +41,7 @@ async fn spawn_auth_verifier() -> (SocketAddr, Arc<AtomicUsize>) {
                     .iter()
                     .any(|token| lower.contains(&format!("authorization: bearer {token}")));
                 let response = if accepted {
-                    "HTTP/1.1 200 OK\r\nx-aster-subject: user-1\r\nx-aster-org: org-1\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{}"
+                    "HTTP/1.1 200 OK\r\nx-krun-subject: user-1\r\nx-krun-org: org-1\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{}"
                 } else {
                     "HTTP/1.1 401 Unauthorized\r\nContent-Length: 2\r\nConnection: close\r\n\r\n{}"
                 };
@@ -183,8 +183,8 @@ fn principal_config(
                 wire: InferenceWire::Openai,
                 principal: Some(InferencePrincipalConfig {
                     verify_url: format!("http://{verifier}/auth/verify"),
-                    subject_header: "x-aster-subject".into(),
-                    org_header: Some("x-aster-org".into()),
+                    subject_header: "x-krun-subject".into(),
+                    org_header: Some("x-krun-org".into()),
                     cache_ttl_secs: 60,
                     models: vec!["*".into()],
                     endpoints: vec![
@@ -227,7 +227,7 @@ async fn signed_in_responses_enforce_endpoint_model_and_quota_before_native_disp
     for (grant, quota, expected_status) in
         [(false, false, 404), (true, true, 429), (true, false, 200)]
     {
-        let key_env = format!("ASTER_TEST_RESPONSES_KEY_{}", Uuid::new_v4().simple());
+        let key_env = format!("KRUN_TEST_RESPONSES_KEY_{}", Uuid::new_v4().simple());
         std::env::set_var(&key_env, "synthetic-responses-upstream");
         let (verifier, _) = spawn_auth_verifier().await;
         let (backend, captured) = spawn_capturing_backend().await;
@@ -248,7 +248,7 @@ async fn signed_in_responses_enforce_endpoint_model_and_quota_before_native_disp
         let url = format!("http://{address}/v1/responses");
         let invalid = client
             .post(&url)
-            .bearer_auth("aster_us_forged")
+            .bearer_auth("krun_us_forged")
             .body("not-json")
             .send()
             .await
@@ -271,7 +271,7 @@ async fn signed_in_responses_enforce_endpoint_model_and_quota_before_native_disp
         let response = client
             .post(&url)
             .bearer_auth(SESSION)
-            .header("cookie", "aster_us=browser-session")
+            .header("cookie", "krun_us=browser-session")
             .json(&body)
             .send()
             .await
@@ -305,8 +305,8 @@ async fn signed_in_responses_enforce_endpoint_model_and_quota_before_native_disp
 
 #[tokio::test]
 async fn signed_in_users_reach_providers_on_the_native_wire() {
-    let openai_env = format!("ASTER_TEST_OPENAI_KEY_{}", Uuid::new_v4().simple());
-    let anthropic_env = format!("ASTER_TEST_ANTHROPIC_KEY_{}", Uuid::new_v4().simple());
+    let openai_env = format!("KRUN_TEST_OPENAI_KEY_{}", Uuid::new_v4().simple());
+    let anthropic_env = format!("KRUN_TEST_ANTHROPIC_KEY_{}", Uuid::new_v4().simple());
     std::env::set_var(&openai_env, "sk-upstream-openai");
     std::env::set_var(&anthropic_env, "sk-upstream-anthropic");
     let (verifier, verify_calls) = spawn_auth_verifier().await;
@@ -327,7 +327,7 @@ async fn signed_in_users_reach_providers_on_the_native_wire() {
 
     let response = client
         .get(format!("http://{address}/v1/models"))
-        .bearer_auth("aster_us_forged")
+        .bearer_auth("krun_us_forged")
         .send()
         .await
         .unwrap();
@@ -357,7 +357,7 @@ async fn signed_in_users_reach_providers_on_the_native_wire() {
     let response = client
         .post(format!("http://{address}/v1/chat/completions"))
         .bearer_auth(SESSION)
-        .header("cookie", "aster_us=browser-session")
+        .header("cookie", "krun_us=browser-session")
         .json(&serde_json::json!({"model": "qwen", "stream": true, "messages": []}))
         .send()
         .await
@@ -414,7 +414,7 @@ async fn signed_in_users_reach_providers_on_the_native_wire() {
 #[tokio::test]
 async fn targets_without_their_provider_key_are_never_called() {
     let (verifier, _) = spawn_auth_verifier().await;
-    let unset = format!("ASTER_TEST_UNSET_KEY_{}", Uuid::new_v4().simple());
+    let unset = format!("KRUN_TEST_UNSET_KEY_{}", Uuid::new_v4().simple());
     let blackhole = SocketAddr::from(([127, 0, 0, 1], 9));
     let config = principal_config(verifier, blackhole, blackhole, &unset, &unset);
     config.validate().unwrap();

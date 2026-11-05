@@ -2,11 +2,11 @@
 //! in-flight work on the retired generation while new requests move to the
 //! successor. This is Gateway-local; multi-replica joint gates remain open.
 
-use aster_gateway::managed_snapshot::{
+use chrono::{Duration, Utc};
+use krun_gateway::managed_snapshot::{
     ManagedSnapshot, ManagedSnapshotState, ManagedSnapshotStatus,
 };
-use aster_gateway::{config::GatewayConfig, Gateway};
-use chrono::{Duration, Utc};
+use krun_gateway::{config::GatewayConfig, Gateway};
 use std::net::SocketAddr;
 use std::sync::Arc;
 use std::time::Duration as StdDuration;
@@ -16,7 +16,7 @@ use tokio::sync::oneshot;
 use uuid::Uuid;
 
 const TEST_ADMIN_TOKEN: &str = "managed-drain-test-token";
-const TEST_ADMIN_TOKEN_ENV: &str = "ASTER_GATEWAY_TEST_ADMIN_TOKEN";
+const TEST_ADMIN_TOKEN_ENV: &str = "KRUN_GATEWAY_TEST_ADMIN_TOKEN";
 
 fn ensure_test_admin_token() {
     std::env::set_var(TEST_ADMIN_TOKEN_ENV, TEST_ADMIN_TOKEN);
@@ -71,7 +71,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -118,7 +118,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -739,7 +739,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -786,7 +786,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -966,7 +966,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#
@@ -1015,7 +1015,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 "#

@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{PluginPlanningBundle, UseError, UseResult, VerifiedPluginCatalogRecord};
+use krun_use_core::{PluginPlanningBundle, UseError, UseResult, VerifiedPluginCatalogRecord};
 use tempfile::TempDir;
 use tokio::fs;
 use tough::{Repository, TargetName};

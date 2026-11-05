@@ -1,9 +1,9 @@
 use std::collections::BTreeSet;
 
-use aster_use_core::{
+use krun_use_core::{
     PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::{
+use krun_use_extension::{
     ExtensionLifecycleIdentity, InstalledExtension, ToolTaskSource, ToolWorkload,
 };
 use sha2::{Digest, Sha256};
@@ -146,9 +146,9 @@ fn readable_segment(value: &str) -> String {
 
 #[cfg(test)]
 mod tests {
-    use aster_runtime::contract::NetworkMode;
-    use aster_use_core::{PlanEnforcementProfile, PlanScopeKind, PlannedProviderEvidence};
-    use aster_use_extension::{ExtensionManifest, ExtensionReceipt, ExtensionTrust};
+    use krun_runtime::contract::NetworkMode;
+    use krun_use_core::{PlanEnforcementProfile, PlanScopeKind, PlannedProviderEvidence};
+    use krun_use_extension::{ExtensionManifest, ExtensionReceipt, ExtensionTrust};
 
     use crate::plugin_runtime::{
         plan_tool_task_release, RuntimePreparedTaskBinding, RuntimeSurfaceContext,

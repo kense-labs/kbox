@@ -9,7 +9,7 @@ use std::path::Path;
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use crate::executor::recovery::read_json_record;
 
@@ -23,8 +23,8 @@ use super::types::{
 use super::{device_error, last_os_error};
 
 pub(super) const DEVICE_TARGETS_RECORD_NAME: &str = "device-targets.json";
-pub(super) const DEVICE_TARGETS_SCHEMA_VERSION: &str = "aster.oci.native-linux-device-targets.v2";
-const DEVICE_TARGETS_SCHEMA_VERSION_V1: &str = "aster.oci.native-linux-device-targets.v1";
+pub(super) const DEVICE_TARGETS_SCHEMA_VERSION: &str = "krun.oci.native-linux-device-targets.v2";
+const DEVICE_TARGETS_SCHEMA_VERSION_V1: &str = "krun.oci.native-linux-device-targets.v1";
 const MAX_DEVICE_TARGETS_RECORD_BYTES: u64 = 64 * 1024;
 const DEVICE_TARGET_CLEANUP_TIMEOUT: Duration = Duration::from_secs(5);
 const DEVICE_TARGET_CLEANUP_POLL_INTERVAL: Duration = Duration::from_millis(10);

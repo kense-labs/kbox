@@ -1,4 +1,4 @@
-# Aster 沙箱、观测与干预架构
+# Krun 沙箱、观测与干预架构
 
 沙箱限制工作负载能访问的资源。
 Sentry 根据观测信号判定风险。
@@ -7,7 +7,7 @@ Gateway、Observer Guard 和宿主分别执行干预。
 
 源码核对日期：2026-11-03。
 文字修订日期：2026-11-04。
-文中的 Sentry 专指安全控制引擎 `aster-sentry`。
+文中的 Sentry 专指安全控制引擎 `krun-sentry`。
 
 [架构图 PNG](sandbox-control.png) · [可编辑 SVG](sandbox-control.svg) ·
 [源码与检查记录](sandbox-control.sources.json)
@@ -16,7 +16,7 @@ Gateway、Observer Guard 和宿主分别执行干预。
 实线表示调用、依赖或观测数据。
 金色虚线表示约束与人工控制反馈。
 
-![Aster 沙箱、观测与干预统一架构](sandbox-control.png)
+![Krun 沙箱、观测与干预统一架构](sandbox-control.png)
 
 ## 1. 各层职责
 
@@ -27,7 +27,7 @@ OCI Runtime 是仓库中的容器与虚拟机运行时。
 | --- | --- | --- |
 | 执行面 | Core `BashSandbox`、Box `ExecutionManager`、OCI Runtime | 管理命令和环境，执行隔离、取消与资源释放。 |
 | 观测面 | Observer、Gateway Wire、Power 模型特征、沙箱审计 | 提供进程、文件、网络、正文和模型特征信号。 |
-| 判定面 | `aster-sentry` | 执行分级判定，输出判定结果与控制动作。 |
+| 判定面 | `krun-sentry` | 执行分级判定，输出判定结果与控制动作。 |
 | 干预面 | Gateway、Enforcer、Observer Guard、宿主控制接口 | 拒绝通信、替换敏感正文、写入拒绝规则或停止执行。 |
 | 运维面 | 审计日志、指标、健康端点与人工控制 | 发现故障，修改策略，确认干预结果。 |
 
@@ -77,7 +77,7 @@ Box 支持共享宿主内核或使用 MicroVM。
 
 `BashSandbox` 定义 Core 的命令执行接口。
 调用者提交命令、环境变量、超时和输出观察者。
-`NativeBashSandbox` 把请求交给 `aster-cmd-sandbox`。
+`NativeBashSandbox` 把请求交给 `krun-cmd-sandbox`。
 执行器按本次调用的策略快照准备受限进程。
 操作系统在资源访问时执行限制。
 
@@ -88,7 +88,7 @@ Box 支持共享宿主内核或使用 MicroVM。
 
 Linux 原生路径使用 Bubblewrap 命名空间与系统调用过滤（seccomp）。
 Windows 路径使用 AppContainer、ACL 与 Job Object。
-`aster-cmd-sandbox` 还提供 macOS Seatbelt 后端。
+`krun-cmd-sandbox` 还提供 macOS Seatbelt 后端。
 Core 的 macOS 原生适配器仍拒绝执行命令。
 拒绝原因是后代进程生命周期约束未满足。
 
@@ -206,14 +206,14 @@ Box 独立管理环境与后端路由。
 
 | 路径 | 当前实现 | 主要边界 |
 | --- | --- | --- |
-| Linux Core 命令 | `NativeBashSandbox` → `aster-cmd-sandbox` | Bubblewrap 命名空间与 seccomp。 |
-| Windows Core 命令 | `NativeBashSandbox` → `aster-cmd-sandbox` | AppContainer、ACL、PowerShell 7 与 Job Object。 |
+| Linux Core 命令 | `NativeBashSandbox` → `krun-cmd-sandbox` | Bubblewrap 命名空间与 seccomp。 |
+| Windows Core 命令 | `NativeBashSandbox` → `krun-cmd-sandbox` | AppContainer、ACL、PowerShell 7 与 Job Object。 |
 | macOS ARM64，`deny` | `OciBashSandbox` → OCI SDK | 每次命令使用独立 VM。 |
 | macOS Core 原生适配器 | 拒绝执行 | 后代进程生命周期约束未满足。 |
 | Box 环境 | `ExecutionManager` 与持久后端路由 | 环境、资源、隔离要求与执行代次。 |
-| 终端进程配置 | 终端的 `aster-sandbox` | Unix 内核约束与已接入的子进程入口。 |
+| 终端进程配置 | 终端的 `krun-sandbox` | Unix 内核约束与已接入的子进程入口。 |
 
-终端 `aster-sandbox` 与 `aster-cmd-sandbox` 是不同组件。
+终端 `krun-sandbox` 与 `krun-cmd-sandbox` 是不同组件。
 终端进程配置应用失败时，底层可能记录警告后继续。
 显式 `ProcessHost` 降级依赖宿主提供外层隔离。
 Browser 的启动参数包含 `--no-sandbox`。
@@ -223,7 +223,7 @@ Sentry 观测不能代替执行入口所需的隔离。
 [OCI 适配器](../../crates/code/core/src/sandbox/oci.rs)、
 [原生适配器](../../crates/code/core/src/sandbox/native.rs)、
 [Box 路由](../../crates/box/runtime/src/local_execution/router.rs)、
-[终端进程配置](../../crates/terminal/crates/codegen/aster-sandbox/src/lib.rs)、
+[终端进程配置](../../crates/terminal/crates/codegen/krun-sandbox/src/lib.rs)、
 [Browser](../../crates/browser/src/pool.rs)。
 
 ## 3. 观测信号
@@ -260,7 +260,7 @@ macOS 和 Windows 的等价采集链仍待验证。
 
 ### 3.2 Gateway 正文观测
 
-启用 `wire` 功能特性后，Gateway 引入 `aster-sentry`。
+启用 `wire` 功能特性后，Gateway 引入 `krun-sentry`。
 `WireGate` 检查大语言模型（LLM）的请求与响应正文。
 `WireGate` 也检查模型上下文协议（MCP）的通信正文。
 `inspect_wire()` 把正文转换为 `SslContent` 事件。
@@ -303,7 +303,7 @@ SDK 或宿主必须显式组装包含 SAE 的 Pipeline。
 
 ### 3.4 沙箱审计
 
-`aster-cmd-sandbox` 输出结构化审计记录。
+`krun-cmd-sandbox` 输出结构化审计记录。
 审计对象包括文件、网络、进程、策略编译与环境。
 原因码区分拒绝、能力缺失、超时和授权应用。
 Core 与 Box 还保存输出、退出状态和执行代次。
@@ -461,11 +461,11 @@ Observer Guard 仍是外部依赖。
 跨平台采集和实际拒绝结果仍待验证。
 
 命令行工具的 Sentry SDK 用于错误上报与脱敏。
-错误上报 SDK 与 `aster-sentry` 使用不同接口。
+错误上报 SDK 与 `krun-sentry` 使用不同接口。
 Studio 当前的 `initSentry()` 是空实现。
 错误上报 SDK 不提供本文的安全干预能力。
 
-来源：[命令行 Sentry](../../crates/terminal/crates/codegen/aster-telemetry/src/sentry.rs)、
+来源：[命令行 Sentry](../../crates/terminal/crates/codegen/krun-telemetry/src/sentry.rs)、
 [Studio Sentry](../../apps/studio/src/renderer/services/sentry.ts)。
 
 [多 Harness 设计](harness-gateway.md)中的 Sentry 对应安全判定能力。
@@ -476,7 +476,7 @@ Observer 提供运行时事件，Wire 提供通信检查入口。
 
 ## 8. 本次验证
 
-本次按[简明技术中文规范](https://github.com/A3S-Lab/stc-answer/blob/main/skills/stc-answer/stc/规范.md)改写文字。
+本次按[简明技术中文规范](https://github.com/Kense Labs/stc-answer/blob/main/skills/stc-answer/stc/规范.md)改写文字。
 检查覆盖中文规则、引用、文件摘要与修改差异。
 架构图沿用 2026-11-03 的交付版本。
 图像检查记录与本次文字检查分别保存。
@@ -495,8 +495,8 @@ Observer 提供运行时事件，Wire 提供通信检查入口。
 
 | 术语 | 英文或代码名 | 本文含义 |
 | --- | --- | --- |
-| Core | Aster Core | 管理命令执行、权限与会话的核心组件。 |
-| Box | Aster Box | 管理镜像化执行环境的组件。 |
+| Core | Krun Core | 管理命令执行、权限与会话的核心组件。 |
+| Box | Krun Box | 管理镜像化执行环境的组件。 |
 | OCI | Open Container Initiative | 开放容器倡议。 |
 | Observer | Observer | 提供运行时事件的外部采集组件。 |
 | Guard | Observer Guard | 读取拒绝规则并执行限制的外部组件。 |

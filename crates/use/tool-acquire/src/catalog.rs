@@ -70,29 +70,29 @@ const CATALOG: &[CatalogTool] = &[
         pipx_extras: None,
     },
     CatalogTool {
-        name: "aster-box",
-        spec: "github:aster-ai-lab/Box",
-        executable: "aster-box",
+        name: "krun-box",
+        spec: "github:kense-labs/Box",
+        executable: "krun-box",
         pipx_extras: None,
     },
-    // Desktop runtime packs. Archives ship as aster-<name>-*-<host>.tar.gz on
-    // aster-ai-lab/aster releases; unchanged versions skip reinstall via receipts.
+    // Desktop runtime packs. Archives ship as krun-<name>-*-<host>.tar.gz on
+    // kense-labs/krun releases; unchanged versions skip reinstall via receipts.
     CatalogTool {
-        name: "aster-sandbox",
-        spec: "github:aster-ai-lab/aster",
-        executable: "aster-sandbox",
-        pipx_extras: None,
-    },
-    CatalogTool {
-        name: "aster-document",
-        spec: "github:aster-ai-lab/aster",
-        executable: "aster-document",
+        name: "krun-sandbox",
+        spec: "github:kense-labs/krun",
+        executable: "krun-sandbox",
         pipx_extras: None,
     },
     CatalogTool {
-        name: "aster-office",
-        spec: "github:aster-ai-lab/aster",
-        executable: "aster-office",
+        name: "krun-document",
+        spec: "github:kense-labs/krun",
+        executable: "krun-document",
+        pipx_extras: None,
+    },
+    CatalogTool {
+        name: "krun-office",
+        spec: "github:kense-labs/krun",
+        executable: "krun-office",
         pipx_extras: None,
     },
     CatalogTool {

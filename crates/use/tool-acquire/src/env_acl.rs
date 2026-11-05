@@ -1,8 +1,8 @@
 //! Project and user environment declarations in ACL.
 //!
 //! File layout:
-//! - project: `<cwd>/.aster/env.acl`
-//! - user: `$ASTER_HOME/env.acl` (default `~/.aster/env.acl`)
+//! - project: `<cwd>/.krun/env.acl`
+//! - user: `$KRUN_HOME/env.acl` (default `~/.krun/env.acl`)
 //!
 //! Shape (hyphenated tool ids must be block labels; ACL idents disallow `-`):
 //!
@@ -12,7 +12,7 @@
 //!     tool "uv" {
 //!       version = "latest"
 //!     }
-//!     tool "aster-sandbox" {
+//!     tool "krun-sandbox" {
 //!       version = "0.1.10"
 //!     }
 //!   }
@@ -29,7 +29,7 @@ use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use aster_acl::{generate, parse_acl, Block, Document, Value};
+use krun_acl::{generate, parse_acl, Block, Document, Value};
 
 use crate::catalog::catalog_by_name;
 use crate::error::ToolAcquireError;
@@ -37,7 +37,7 @@ use crate::spec::{parse_tool_name, parse_tool_version};
 use crate::version::{VersionRequest, VersionRequestKind};
 
 const ENV_FILE: &str = "env.acl";
-const PROJECT_DIR: &str = ".aster";
+const PROJECT_DIR: &str = ".krun";
 const MAX_ENV_ACL_BYTES: usize = 1024 * 1024;
 
 /// One closed environment declaration after merge.
@@ -100,14 +100,14 @@ pub struct ResolvedTool {
     pub executable: String,
 }
 
-/// Relative project path: `.aster/env.acl`.
+/// Relative project path: `.krun/env.acl`.
 pub fn project_env_path(project_root: impl AsRef<Path>) -> PathBuf {
     project_root.as_ref().join(PROJECT_DIR).join(ENV_FILE)
 }
 
-/// User path: `<aster_home>/env.acl` (typically `~/.aster/env.acl`).
-pub fn user_env_path(aster_home: impl AsRef<Path>) -> PathBuf {
-    aster_home.as_ref().join(ENV_FILE)
+/// User path: `<krun_home>/env.acl` (typically `~/.krun/env.acl`).
+pub fn user_env_path(krun_home: impl AsRef<Path>) -> PathBuf {
+    krun_home.as_ref().join(ENV_FILE)
 }
 
 /// Read only the nearest project declaration, without merging parent or user files.
@@ -162,10 +162,10 @@ pub fn parse_env_declarations(text: &str) -> Result<EnvDeclarations, ToolAcquire
 /// Missing files are empty; nearer project keys override earlier layers.
 pub fn load_env_config(
     project_root: impl AsRef<Path>,
-    aster_home: impl AsRef<Path>,
+    krun_home: impl AsRef<Path>,
 ) -> Result<EnvConfig, ToolAcquireError> {
     let mut config = EnvConfig::default();
-    visit_env_layers(project_root.as_ref(), aster_home.as_ref(), |layer, _| {
+    visit_env_layers(project_root.as_ref(), krun_home.as_ref(), |layer, _| {
         merge_into(&mut config, layer);
     })?;
     Ok(config)
@@ -179,10 +179,10 @@ pub(crate) enum EnvLayerRoot<'a> {
 
 pub(crate) fn visit_env_layers(
     project_root: &Path,
-    aster_home: &Path,
+    krun_home: &Path,
     mut visit: impl FnMut(EnvConfig, EnvLayerRoot<'_>),
 ) -> Result<(), ToolAcquireError> {
-    visit_env_paths(project_root, aster_home, |path, root| {
+    visit_env_paths(project_root, krun_home, |path, root| {
         if let Some(config) = read_env_acl(path)? {
             visit(config, root);
         }
@@ -192,10 +192,10 @@ pub(crate) fn visit_env_layers(
 
 pub(crate) fn visit_declaration_layers(
     project_root: &Path,
-    aster_home: &Path,
+    krun_home: &Path,
     mut visit: impl FnMut(EnvDeclarations, EnvLayerRoot<'_>),
 ) -> Result<(), ToolAcquireError> {
-    visit_env_paths(project_root, aster_home, |path, root| {
+    visit_env_paths(project_root, krun_home, |path, root| {
         if let Some(config) = read_env_declarations(path)? {
             visit(config, root);
         }
@@ -205,10 +205,10 @@ pub(crate) fn visit_declaration_layers(
 
 fn visit_env_paths(
     project_root: &Path,
-    aster_home: &Path,
+    krun_home: &Path,
     mut visit: impl FnMut(PathBuf, EnvLayerRoot<'_>) -> Result<(), ToolAcquireError>,
 ) -> Result<(), ToolAcquireError> {
-    visit(user_env_path(aster_home), EnvLayerRoot::User)?;
+    visit(user_env_path(krun_home), EnvLayerRoot::User)?;
     let project_root = std::path::absolute(project_root)
         .map_err(|error| ToolAcquireError::io("resolve project directory", project_root, error))?;
     let ancestors: Vec<_> = project_root.ancestors().collect();
@@ -222,10 +222,10 @@ fn visit_env_paths(
 /// Missing files are empty. Bounded read and parse errors retain their sources.
 pub fn load_env_declarations(
     project: impl AsRef<Path>,
-    aster_home: impl AsRef<Path>,
+    krun_home: impl AsRef<Path>,
 ) -> Result<EnvDeclarations, ToolAcquireError> {
     let mut config = EnvDeclarations::default();
-    visit_declaration_layers(project.as_ref(), aster_home.as_ref(), |overlay, _| {
+    visit_declaration_layers(project.as_ref(), krun_home.as_ref(), |overlay, _| {
         config.tools.extend(overlay.tools);
         config.vars.extend(overlay.vars);
     })?;
@@ -257,9 +257,9 @@ pub(crate) fn write_acl_file(path: &Path, text: &str) -> Result<(), ToolAcquireE
         fs::create_dir_all(parent)
             .map_err(|error| ToolAcquireError::io("create env acl directory", parent, error))?;
     }
-    let destination = aster_config::fs_atomic::bind_follow_destination(path)
+    let destination = krun_config::fs_atomic::bind_follow_destination(path)
         .map_err(|error| ToolAcquireError::io("resolve env acl destination", path, error))?;
-    aster_config::fs_atomic::write_atomically_bound(&destination, text, None)
+    krun_config::fs_atomic::write_atomically_bound(&destination, text, None)
         .map_err(|error| ToolAcquireError::io("write env acl", path, error))
 }
 

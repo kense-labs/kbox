@@ -7,9 +7,9 @@ pub enum ClientError {
     #[error("state error: {0}")]
     State(#[from] std::io::Error),
     #[error("runtime error: {0}")]
-    Runtime(#[from] aster_box_core::error::BoxError),
+    Runtime(#[from] krun_box_core::error::BoxError),
     #[error("execution lifecycle error: {0}")]
-    Execution(#[from] aster_box_core::ExecutionManagerError),
+    Execution(#[from] krun_box_core::ExecutionManagerError),
     /// Retryable manager `Unavailable` after a durable guest `request_id` was
     /// claimed (one-shot command, keyed file upload, or keyed filesystem
     /// mutation). Callers must reuse that id on retry.
@@ -25,9 +25,9 @@ pub enum ClientError {
     AmbiguousBoxQuery { query: String, matches: Vec<String> },
 }
 
-/// Filesystem locations used by [`AsterBoxClient`].
+/// Filesystem locations used by [`KrunBoxClient`].
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct AsterBoxPaths {
+pub struct KrunBoxPaths {
     pub home: PathBuf,
     pub boxes_file: PathBuf,
     pub images_dir: PathBuf,
@@ -37,8 +37,8 @@ pub struct AsterBoxPaths {
     pub snapshots_dir: PathBuf,
 }
 
-impl AsterBoxPaths {
-    /// Build paths under an aster-box home directory.
+impl KrunBoxPaths {
+    /// Build paths under an krun-box home directory.
     pub fn from_home(home: impl Into<PathBuf>) -> Self {
         let home = home.into();
         Self {
@@ -53,9 +53,9 @@ impl AsterBoxPaths {
     }
 }
 
-impl Default for AsterBoxPaths {
+impl Default for KrunBoxPaths {
     fn default() -> Self {
-        Self::from_home(aster_box_core::dirs_home())
+        Self::from_home(krun_box_core::dirs_home())
     }
 }
 

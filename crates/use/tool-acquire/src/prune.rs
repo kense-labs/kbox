@@ -20,11 +20,11 @@ const MAX_TRACKING_BYTES: u64 = 4 * 1024 * 1024;
 const MAX_SOURCES: usize = 4096;
 mod process;
 #[cfg(unix)]
-const TRACKING_SCHEMA: &str = "aster.use.env-sources.unix.v1";
+const TRACKING_SCHEMA: &str = "krun.use.env-sources.unix.v1";
 #[cfg(windows)]
-const TRACKING_SCHEMA: &str = "aster.use.env-sources.windows.v1";
+const TRACKING_SCHEMA: &str = "krun.use.env-sources.windows.v1";
 #[cfg(not(any(unix, windows)))]
-const TRACKING_SCHEMA: &str = "aster.use.env-sources.unsupported.v1";
+const TRACKING_SCHEMA: &str = "krun.use.env-sources.unsupported.v1";
 
 #[derive(Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -56,7 +56,7 @@ impl ToolStore {
     /// process inspection refuse the entire plan before any removal.
     pub fn plan_prune(
         &self,
-        aster_home: &Path,
+        krun_home: &Path,
         names: &[String],
     ) -> Result<ToolPrunePlan, ToolAcquireError> {
         for name in names {
@@ -64,7 +64,7 @@ impl ToolStore {
         }
         let tracked = read_sources(self)?;
         let mut paths = tracked.clone();
-        paths.insert(user_env_path(aster_home));
+        paths.insert(user_env_path(krun_home));
         let mut needed = BTreeSet::new();
         let mut stale_configs = Vec::new();
         for path in paths {

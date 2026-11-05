@@ -47,7 +47,7 @@ pub(super) fn enforcement_command(
                END {{ exit !ok }}' /proc/self/mountinfo; \
              printf 'idmap-source-ownership-unchanged\\n' >> \"$evidence\"; \
              test \"$(/bin/busybox cat '{foreign_readonly}')\" = \
-               'aster-oci-foreign-readonly-bind-v1'; \
+               'krun-oci-foreign-readonly-bind-v1'; \
              test \"$(/bin/busybox stat -c '%a' '{foreign_readonly}')\" = '400'; \
              /bin/busybox awk '$5 == \"{foreign_readonly}\" && \
                $6 ~ /(^|,)ro(,|$)/ && $6 ~ /(^|,)nosuid(,|$)/ && \
@@ -113,7 +113,7 @@ pub(super) fn enforcement_command(
          /bin/busybox setsid /bin/busybox setsid /bin/busybox sh -c \
            'set -eu; printf \"%s\\n\" \"$$\" > \"$1\"; \
               exec /bin/busybox sleep 30' \
-           aster-orphan-child \"$orphan_pid_file\"; \
+           krun-orphan-child \"$orphan_pid_file\"; \
          attempt=0; \
          while test ! -s \"$orphan_pid_file\" && test \"$attempt\" -lt 100; do \
            /bin/busybox sleep 0.01; attempt=$((attempt + 1)); \
@@ -173,7 +173,7 @@ pub(super) fn enforcement_command(
            /proc/self/mountinfo; \
          printf 'mount-target-created\\n' >> \"$evidence\"; \
          test -f '{file_target}'; \
-         test \"$(/bin/busybox cat '{file_target}')\" = 'aster-oci-bind-source-v1'; \
+         test \"$(/bin/busybox cat '{file_target}')\" = 'krun-oci-bind-source-v1'; \
          /bin/busybox awk '$5 == \"{file_target}\" {{ ok = 1 }} END {{ exit !ok }}' \
            /proc/self/mountinfo; \
          printf 'mount-file-target-created\\n' >> \"$evidence\"; \

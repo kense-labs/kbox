@@ -1,5 +1,5 @@
-use aster_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use aster_oci_sdk::ContainerRecord;
+use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use krun_oci_sdk::ContainerRecord;
 use containerd_shim::TtrpcResult;
 
 use super::*;

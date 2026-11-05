@@ -3,12 +3,12 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::{
     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, NetworkMode,
     OperationId,
 };
-use async_trait::async_trait;
 use tokio::sync::{oneshot, Semaphore};
 
 use super::{

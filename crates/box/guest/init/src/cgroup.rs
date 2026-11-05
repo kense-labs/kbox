@@ -23,8 +23,8 @@ use std::os::fd::{AsRawFd, FromRawFd, RawFd};
 use std::os::unix::fs::MetadataExt;
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use aster_oci_sdk::{CONTROL_CGROUP_NAME, WORKLOAD_CGROUP_NAME};
-pub use aster_oci_sdk::{
+use krun_oci_sdk::{CONTROL_CGROUP_NAME, WORKLOAD_CGROUP_NAME};
+pub use krun_oci_sdk::{
     CONTROL_CGROUP_PROCS_FD, CONTROL_CGROUP_PROCS_FD_ENV, WORKLOAD_CGROUP_PROCS_FD,
     WORKLOAD_CGROUP_PROCS_FD_ENV,
 };
@@ -275,7 +275,7 @@ impl ContainerCgroup {
     ///
     /// The runtime owns both fixed child cgroups. Guest-init requires the
     /// management envelope to be empty, confirms trusted membership in
-    /// `aster-control`, retains only the `aster-workload` descriptor, and never
+    /// `krun-control`, retains only the `krun-workload` descriptor, and never
     /// re-opens either host-owned `cgroup.procs` path.
     pub fn adopt_runtime_delegation(
         control_descriptor: RawFd,

@@ -1,7 +1,7 @@
 use super::host_support::*;
 use super::*;
 
-use aster_use_core::{
+use krun_use_core::{
     PluginDesiredState, PluginHostManager, PluginObservedState, PluginOperationAction,
 };
 

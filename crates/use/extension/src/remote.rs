@@ -11,8 +11,8 @@ use std::fs::File;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use aster_use_core::{UseError, UseResult, VerifiedCatalogProvenance, VerifiedPluginCatalogRecord};
 use fs2::FileExt;
+use krun_use_core::{UseError, UseResult, VerifiedCatalogProvenance, VerifiedPluginCatalogRecord};
 use semver::{Version, VersionReq};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -77,7 +77,7 @@ pub use target_cache::{VerifiedTargetObservation, VerifiedTargetObservationStatu
 
 const ROOT_NAME: &str = "root.json";
 const ROOT_CACHE_NAME: &str = "bootstrap-root.json";
-const REGISTRY_METADATA_KEY: &str = "aster";
+const REGISTRY_METADATA_KEY: &str = "krun";
 pub const MAX_BOOTSTRAP_ROOT_BYTES: u64 = 1024 * 1024;
 const MAX_REMOTE_ARCHIVE_BYTES: u64 = 512 * 1024 * 1024;
 const MAX_REGISTRY_PACKAGE_TARGETS: u64 = 10_000;
@@ -287,7 +287,7 @@ pub(crate) fn registry_source_identity(
     root_sha256: &str,
 ) -> String {
     let mut hasher = Sha256::new();
-    hasher.update(b"aster.use.registry-source.v1\0");
+    hasher.update(b"krun.use.registry-source.v1\0");
     for value in [name, registry_url, root_sha256] {
         hasher.update((value.len() as u64).to_be_bytes());
         hasher.update(value.as_bytes());
@@ -518,7 +518,7 @@ async fn prepare_remote_package_with_access(
     let host_use_version = Version::parse(env!("CARGO_PKG_VERSION")).map_err(|error| {
         UseError::new(
             "use.extension.registry_target_invalid",
-            format!("The Aster Use package version is invalid: {error}"),
+            format!("The Krun Use package version is invalid: {error}"),
         )
     })?;
     let mut candidates = Vec::new();
@@ -538,7 +538,7 @@ async fn prepare_remote_package_with_access(
         if !identities.insert(identity) {
             return Err(UseError::new(
                 "use.extension.registry_target_invalid",
-                "The TUF repository contains duplicate Aster package targets.",
+                "The TUF repository contains duplicate Krun package targets.",
             ));
         }
         if metadata.package_id() != package_id || metadata.channel() != channel {
@@ -580,7 +580,7 @@ async fn prepare_remote_package_with_access(
             return Err(UseError::new(
                 "use.extension.registry_package_incompatible",
                 format!(
-                    "Registry '{}' has no '{}' package compatible with Aster Use {} on '{}'.",
+                    "Registry '{}' has no '{}' package compatible with Krun Use {} on '{}'.",
                     registry.name, package_id, host_use_version, host_target
                 ),
             ));
@@ -652,7 +652,7 @@ pub async fn prune_verified_target_cache(
 fn verified_catalog_record(
     registry: &TrustedRegistry,
     repository: &Repository,
-    record: aster_use_core::PluginCatalogRecord,
+    record: krun_use_core::PluginCatalogRecord,
 ) -> UseResult<VerifiedPluginCatalogRecord> {
     let provenance = VerifiedCatalogProvenance {
         registry_name: registry.name().to_owned(),
@@ -705,7 +705,7 @@ fn verified_registry_metadata(
         if !identities.insert(identity) {
             return Err(UseError::new(
                 "use.extension.registry_target_invalid",
-                "The TUF repository contains duplicate Aster package targets.",
+                "The TUF repository contains duplicate Krun package targets.",
             ));
         }
         package_targets = package_targets.checked_add(1).ok_or_else(|| {
@@ -800,7 +800,7 @@ async fn ensure_metadata_directory(path: &Path) -> UseResult<()> {
     let metadata = fs::symlink_metadata(path)
         .await
         .map_err(|error| io_error("inspect TUF metadata datastore", path, error))?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
         return Err(UseError::new(
             "use.extension.registry_path_invalid",
             format!(
@@ -929,7 +929,7 @@ async fn read_trusted_root_file(path: &Path) -> UseResult<Option<Vec<u8>>> {
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
         Err(error) => return Err(io_error("inspect trusted TUF root", path, error)),
     };
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
         return Err(UseError::new(
             "use.extension.registry_path_invalid",
             format!(
@@ -948,7 +948,7 @@ async fn download_bootstrap_root(registry: &TrustedRegistry, url: &Url) -> UseRe
     validate_download_url(url)?;
     let client = match registry.network_policy() {
         RegistryNetworkPolicy::Standard => reqwest::Client::builder()
-            .user_agent("aster-use-extension/0.3")
+            .user_agent("krun-use-extension/0.3")
             .connect_timeout(Duration::from_secs(15))
             .timeout(Duration::from_secs(30))
             .redirect(reqwest::redirect::Policy::limited(5))

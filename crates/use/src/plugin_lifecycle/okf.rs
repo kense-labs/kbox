@@ -1,18 +1,18 @@
 use std::path::PathBuf;
 
-use aster_use_core::{
+use async_trait::async_trait;
+use krun_use_core::{
     OkfCapabilityProjection, OkfKnowledgeObservedState, PackageSurfaceKind,
     PlanQualifiedSurfaceRef, PluginSurfaceRef, UseError, UseResult,
 };
-use aster_use_extension::{load_okf_bundle_files, PluginOkfSurface};
-use async_trait::async_trait;
+use krun_use_extension::{load_okf_bundle_files, PluginOkfSurface};
 use sha2::{Digest, Sha256};
 
 use crate::okf_knowledge::{
     OkfKnowledgeBinding, OkfKnowledgeBindingStore, OkfKnowledgeClient, OkfKnowledgeStageRequest,
     OkfKnowledgeStageSpec,
 };
-use aster_use_extension::StateMaintenanceLock;
+use krun_use_extension::StateMaintenanceLock;
 
 use super::{PluginLifecycleEvidence, PluginLifecycleIntent, PluginOkfLifecycleHost};
 
@@ -104,7 +104,7 @@ impl OkfKnowledgeLifecycleHost {
         if staged.observation.state == OkfKnowledgeObservedState::Failed {
             return Err(okf_lifecycle_error(
                 "use.plugin.okf_stage_failed",
-                "Aster Knowledge failed to stage the exact OKF package generation.",
+                "Krun Knowledge failed to stage the exact OKF package generation.",
             ));
         }
         self.promote(intent, surface, idempotency_key, staged).await
@@ -123,7 +123,7 @@ impl OkfKnowledgeLifecycleHost {
         if promoted.observation.state == OkfKnowledgeObservedState::Failed {
             return Err(okf_lifecycle_error(
                 "use.plugin.okf_promotion_failed",
-                "Aster Knowledge failed to promote the exact OKF package generation.",
+                "Krun Knowledge failed to promote the exact OKF package generation.",
             ));
         }
         promoted_evidence(idempotency_key, &promoted)

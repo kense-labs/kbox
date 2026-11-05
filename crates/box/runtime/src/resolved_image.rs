@@ -3,8 +3,8 @@
 use std::io::Write;
 use std::path::Path;
 
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::{SnapshotImageConfig, SnapshotImageHealthCheck, SnapshotMetadata};
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::{SnapshotImageConfig, SnapshotImageHealthCheck, SnapshotMetadata};
 use serde::de::DeserializeOwned;
 
 use crate::oci::{OciHealthCheck, OciImageConfig};

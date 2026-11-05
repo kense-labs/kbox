@@ -32,11 +32,11 @@ members = [
     "crates/ocr",
     "crates/runtime",
     "crates/sentry",
-    "crates/terminal/crates/codegen/aster-config",
-    "crates/terminal/crates/codegen/aster-dirs",
-    "crates/terminal/crates/codegen/aster-env",
-    "crates/terminal/crates/codegen/aster-tty-utils",
-    "crates/terminal/crates/codegen/aster-version",
+    "crates/terminal/crates/codegen/krun-config",
+    "crates/terminal/crates/codegen/krun-dirs",
+    "crates/terminal/crates/codegen/krun-env",
+    "crates/terminal/crates/codegen/krun-tty-utils",
+    "crates/terminal/crates/codegen/krun-version",
     "crates/terminal/prod/mc/cli-chat-proxy-types",
     "crates/third-party/crossterm",
     "crates/third-party/saphyr-parser-bw",
@@ -144,8 +144,8 @@ windows = {features = ["Win32_Security", "Win32_Security_Authorization", "Win32_
 wiremock = {version = "0.6"}
 zstd = {version = "0.13"}
 
-aster-acl = { path = "crates/acl" }
-aster-boot = { path = "crates/boot", features = [
+krun-acl = { path = "crates/acl" }
+krun-boot = { path = "crates/boot", features = [
     "auth",
     "axum",
     "cqrs",
@@ -156,15 +156,15 @@ aster-boot = { path = "crates/boot", features = [
     "queue-postgres",
     "security",
 ], default-features = false }
-aster-box-core = { path = "crates/box/core" }
-aster-box-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
-aster-core = { path = "crates/code/core", default-features = false }
-aster-event = { path = "crates/event", features = ["nats", "iggy"], default-features = false }
-aster-flow = { path = "crates/flow", features = ["boot", "postgres"], default-features = false }
-aster-form-core = { path = "crates/form-core" }
-aster-orm = { path = "crates/orm", features = ["postgres"], default-features = false }
-aster-runtime = { path = "crates/runtime" }
-aster-use-extension = { path = "crates/use/extension" }
+krun-box-core = { path = "crates/box/core" }
+krun-box-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
+krun-core = { path = "crates/code/core", default-features = false }
+krun-event = { path = "crates/event", features = ["nats", "iggy"], default-features = false }
+krun-flow = { path = "crates/flow", features = ["boot", "postgres"], default-features = false }
+krun-form-core = { path = "crates/form-core" }
+krun-orm = { path = "crates/orm", features = ["postgres"], default-features = false }
+krun-runtime = { path = "crates/runtime" }
+krun-use-extension = { path = "crates/use/extension" }
 aes-gcm = "0.10"
 argon2 = "0.5"
 chrono-tz = "=0.10.4"
@@ -202,8 +202,8 @@ zeroize = "1"
 # Cryptography (for TEE attestation verification)
 zip = { version = "2", default-features = false, features = ["deflate"] }
 
-aster-oci-sdk = { path = "crates/oci-runtime/crates/sdk" }
-aster-transport = { version = "0.1.1", package = "aster-common", path = "crates/common" }
+krun-oci-sdk = { path = "crates/oci-runtime/crates/sdk" }
+krun-transport = { version = "0.1.1", package = "krun-common", path = "crates/common" }
 der = { version = "0.7", features = ["std", "alloc"] }
 ecdsa = { version = "0.16", features = ["verifying"] }
 hex = "0.4"
@@ -228,7 +228,7 @@ olpc-cjson = "0.1"
 rmcp = { version = "=0.8.5", default-features = false, features = ["base64", "client", "macros", "server", "transport-io", "transport-streamable-http-client-reqwest", "transport-streamable-http-server"] }
 tonic-build = "0.11"
 
-aster-libkrun-sys = { path = "crates/box/deps/libkrun-sys" }
+krun-libkrun-sys = { path = "crates/box/deps/libkrun-sys" }
 cap-fs-ext = "=4.0.2"
 cap-std = "=4.0.2"
 libloading = "0.8"
@@ -248,13 +248,13 @@ windows-sys = { version = "0.59", features = [
     "Win32_System_Threading",
 ] }
 
-[workspace.dependencies.aster-office-formula-parser]
+[workspace.dependencies.krun-office-formula-parser]
 path = "crates/office/crates/formula-parser"
 
-[workspace.dependencies.aster-use-core]
+[workspace.dependencies.krun-use-core]
 path = "crates/use/core"
 
-[workspace.dependencies.aster-use-browser]
+[workspace.dependencies.krun-use-browser]
 path = "crates/browser"
 [workspace.lints.clippy]
 # prost 0.14 renders proto doc-comment bullet lists in a way that trips this

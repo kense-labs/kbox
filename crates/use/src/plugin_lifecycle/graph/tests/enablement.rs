@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
-use aster_use_core::{
+use krun_use_core::{
     PlannedWorkspaceImpact, ResolvedWorkspaceGrant, ResolvedWorkspaceGrantChangeSet,
 };
-use aster_use_extension::{WorkspaceGrantCandidateCeiling, WorkspaceGrantStore};
+use krun_use_extension::{WorkspaceGrantCandidateCeiling, WorkspaceGrantStore};
 
 use super::grant::{
     authority, candidate_ceiling, provider_evidence, tool_catalog, tool_manifest, workspace_grant,

@@ -2,8 +2,8 @@ use std::collections::BTreeSet;
 use std::fs::{self, File, OpenOptions};
 use std::path::{Component, Path};
 
-use aster_use_core::{PlanScope, UseError, UseResult};
 use fs2::FileExt;
+use krun_use_core::{PlanScope, UseError, UseResult};
 use olpc_cjson::CanonicalFormatter;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -11,16 +11,16 @@ use sha2::{Digest, Sha256};
 use super::backup;
 
 pub const OKF_KNOWLEDGE_BACKUP_RETENTION_PLAN_SCHEMA: &str =
-    "aster.use.okf-knowledge-backup-retention-plan.v1";
+    "krun.use.okf-knowledge-backup-retention-plan.v1";
 pub const OKF_KNOWLEDGE_BACKUP_RETENTION_RESULT_SCHEMA: &str =
-    "aster.use.okf-knowledge-backup-retention-result.v1";
+    "krun.use.okf-knowledge-backup-retention-result.v1";
 pub const DEFAULT_OKF_KNOWLEDGE_BACKUP_RETENTION_MAX_BACKUPS: u64 = 32;
 pub const DEFAULT_OKF_KNOWLEDGE_BACKUP_RETENTION_MAX_BYTES: u64 = 256 * 1024 * 1024 * 1024;
 pub const MAX_OKF_KNOWLEDGE_BACKUP_RETENTION_BACKUPS: u64 = 4_096;
 pub const MAX_OKF_KNOWLEDGE_BACKUP_RETENTION_BYTES: u64 = 256 * 1024 * 1024 * 1024 * 1024;
 
-const BACKUP_SUFFIX: &str = ".aster-okf-backup";
-const DIRECTORY_LOCK_NAME: &str = ".aster-okf-backup-retention.lock";
+const BACKUP_SUFFIX: &str = ".krun-okf-backup";
+const DIRECTORY_LOCK_NAME: &str = ".krun-okf-backup-retention.lock";
 const MAX_DIRECTORY_ENTRIES: usize = 4_096;
 const MAX_BACKUP_FILE_NAME_BYTES: usize = 255;
 
@@ -223,7 +223,7 @@ impl BackupDirectoryLock {
                         lock_path.display()
                     ))
                 })?;
-                if aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                if krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                     || !metadata.is_file()
                 {
                     return Err(retention_error(
@@ -432,7 +432,7 @@ fn inspect_entry(
             path.display()
         ))
     })?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
         return Err(retention_error(
             "use.okf.knowledge_backup_retention_directory_invalid",
             "A managed Knowledge backup candidate is not an owned regular file.",
@@ -589,7 +589,7 @@ fn validate_directory(directory: &Path) -> UseResult<()> {
             directory.display()
         ))
     })?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
         return Err(retention_error(
             "use.okf.knowledge_backup_retention_directory_invalid",
             "The Knowledge backup retention path is not an owned directory.",

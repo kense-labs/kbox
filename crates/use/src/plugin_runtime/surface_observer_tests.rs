@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use aster_runtime::contract::NetworkMode;
-use aster_runtime::{
+use async_trait::async_trait;
+use krun_runtime::contract::NetworkMode;
+use krun_runtime::{
     ProviderId, RuntimeClient, RuntimeClientRegistry, RuntimeProviderFactory, RuntimeResult,
 };
-use aster_use_core::{PackageSurfaceKind, PlanScope, PlanScopeKind, PluginSurfaceRef};
-use aster_use_extension::{ExtensionManifest, ToolWorkload};
-use async_trait::async_trait;
+use krun_use_core::{PackageSurfaceKind, PlanScope, PlanScopeKind, PluginSurfaceRef};
+use krun_use_extension::{ExtensionManifest, ToolWorkload};
 use tempfile::TempDir;
 
 use crate::surface_reconciler::{
@@ -331,7 +331,7 @@ async fn install_mcp_service_binding(
 fn named_capabilities(
     plan: &RuntimeSurfacePlan,
     provider_id: &str,
-) -> aster_runtime::contract::RuntimeCapabilities {
+) -> krun_runtime::contract::RuntimeCapabilities {
     let mut capabilities = capabilities(plan);
     capabilities.provider_id = ProviderId::parse(provider_id).unwrap();
     capabilities

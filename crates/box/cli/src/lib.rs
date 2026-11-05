@@ -1,4 +1,4 @@
-//! Aster Box CLI - Docker-like MicroVM runtime.
+//! Krun Box CLI - Docker-like MicroVM runtime.
 
 pub mod audit;
 pub mod boot;

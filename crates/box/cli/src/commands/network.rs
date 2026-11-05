@@ -1,13 +1,13 @@
-//! `aster-box network` subcommands — Manage custom networks.
+//! `krun-box network` subcommands — Manage custom networks.
 //!
 //! Provides create/ls/rm/inspect/connect/disconnect for user-defined
 //! bridge networks that enable container-to-container communication.
 
-use aster_box_core::network::{
+use clap::{Args, Subcommand};
+use krun_box_core::network::{
     EgressMatchRule, IsolationMode, NetworkConfig, NetworkEndpoint, NetworkMode,
 };
-use aster_box_runtime::NetworkStore;
-use clap::{Args, Subcommand};
+use krun_box_runtime::NetworkStore;
 
 /// Manage networks.
 #[derive(Args)]
@@ -221,7 +221,7 @@ async fn execute_create(args: CreateArgs) -> Result<(), Box<dyn std::error::Erro
         // operators are not left with objects that only fail later at run/connect.
         if args.driver == "bridge" || args.driver.is_empty() {
             return Err(
-                "bridge networking is not supported on Windows; `aster-box network create` cannot create attachable networks on this platform"
+                "bridge networking is not supported on Windows; `krun-box network create` cannot create attachable networks on this platform"
                     .into(),
             );
         }

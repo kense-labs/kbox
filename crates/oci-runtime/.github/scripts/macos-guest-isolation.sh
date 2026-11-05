@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 : "${RUNNER_TEMP:?macOS Guest isolation requires RUNNER_TEMP}"
-: "${ASTER_OCI_MACOS_SYSTEM_IMAGE_MANIFEST:?set the exact macOS system-image manifest}"
+: "${KRUN_OCI_MACOS_SYSTEM_IMAGE_MANIFEST:?set the exact macOS system-image manifest}"
 
 repository_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$repository_root"
@@ -19,15 +19,15 @@ for command in chmod find jq mkdir sort sysctl uname; do
 done
 
 rootfs_archive="$RUNNER_TEMP/alpine-minirootfs-3.22.5-aarch64.tar.gz"
-signed_dir="$RUNNER_TEMP/aster-oci-agent-vm-signed"
-bootstrap="$RUNNER_TEMP/aster-oci-guest-isolation-bootstrap"
-runtime_share="$RUNNER_TEMP/aster-oci-guest-isolation-share"
-bundle="$runtime_share/var/lib/aster-oci-guest-isolation/bundle"
-marker="$bundle/rootfs/.aster-oci-create-start-smoke"
-console="$RUNNER_TEMP/aster-oci-guest-isolation.log"
-system_image_manifest="$ASTER_OCI_MACOS_SYSTEM_IMAGE_MANIFEST"
-cli="target/debug/aster-oci"
-shim="$signed_dir/aster-oci-krun-shim"
+signed_dir="$RUNNER_TEMP/krun-oci-agent-vm-signed"
+bootstrap="$RUNNER_TEMP/krun-oci-guest-isolation-bootstrap"
+runtime_share="$RUNNER_TEMP/krun-oci-guest-isolation-share"
+bundle="$runtime_share/var/lib/krun-oci-guest-isolation/bundle"
+marker="$bundle/rootfs/.krun-oci-create-start-smoke"
+console="$RUNNER_TEMP/krun-oci-guest-isolation.log"
+system_image_manifest="$KRUN_OCI_MACOS_SYSTEM_IMAGE_MANIFEST"
+cli="target/debug/krun-oci"
+shim="$signed_dir/krun-oci-krun-shim"
 
 test -x "$cli"
 test -x "$shim"
@@ -42,10 +42,10 @@ scripts/prepare-utility-vm-bundle.sh \
   --alpine-archive "$rootfs_archive" \
   --config fixtures/utility-vm/config.macos.json \
   --bundle "$bundle" \
-  --cgroups-path aster-oci-macos-guest-isolation
+  --cgroups-path krun-oci-macos-guest-isolation
 
 endpoint_baseline="$(
-  find /private/tmp -maxdepth 1 -name 'aster-oci-agent-*' -print | sort
+  find /private/tmp -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
 )"
 set +e
 output="$(
@@ -65,7 +65,7 @@ support="$(sysctl -n kern.hv_support 2>/dev/null || printf unavailable)"
 if [[ "$support" == "1" ]]; then
   test "$status" -eq 0
   jq --exit-status \
-    '.schema_version == "aster.oci.oci-vm-guest-isolation.v1"
+    '.schema_version == "krun.oci.oci-vm-guest-isolation.v1"
      and .platform == "macos" and .status == "available"
      and .bundle_loaded and .separate_runtime_share
      and .expected_case_count == 10 and (.cases | length) == 10
@@ -109,7 +109,7 @@ if [[ "$support" == "1" ]]; then
 else
   test "$status" -eq 2
   jq --exit-status \
-    '.schema_version == "aster.oci.oci-vm-guest-isolation.v1"
+    '.schema_version == "krun.oci.oci-vm-guest-isolation.v1"
      and .platform == "macos" and .status == "unavailable"
      and .bundle_loaded and .separate_runtime_share
      and .expected_case_count == 10 and .cases == []
@@ -128,12 +128,12 @@ else
 fi
 
 endpoint_after="$(
-  find /private/tmp -maxdepth 1 -name 'aster-oci-agent-*' -print | sort
+  find /private/tmp -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
 )"
 test "$endpoint_after" = "$endpoint_baseline"
 test -z "$(find "$bootstrap" -mindepth 1 -print -quit)"
 test -z "$(find "$runtime_share/run" -mindepth 1 -print -quit)"
 test -z "$(
-  find "$runtime_share" -name '.aster-oci-guest-isolation-*' -print -quit
+  find "$runtime_share" -name '.krun-oci-guest-isolation-*' -print -quit
 )"
 test ! -e "$marker"

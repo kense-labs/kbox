@@ -193,7 +193,7 @@ fn maintained_multi_platform_aix_packages_install_execute_and_remove() {
     use std::io::Read;
 
     let inputs =
-        std::fs::read(std::env::var_os("ASTER_TEST_MULTI_PLATFORM_INPUTS").unwrap()).unwrap();
+        std::fs::read(std::env::var_os("KRUN_TEST_MULTI_PLATFORM_INPUTS").unwrap()).unwrap();
     let cases: Vec<serde_json::Value> = serde_json::from_slice(&inputs).unwrap();
     assert_eq!(cases.len(), 7);
     let runtime = tokio::runtime::Builder::new_current_thread()
@@ -271,7 +271,7 @@ fn maintained_multi_platform_aix_packages_install_execute_and_remove() {
         store.remove_sync(plugin.name()).unwrap();
         results.push(serde_json::json!({"name":plugin.name(),"version":plugin.version(),"selectedPlatform":plugin.platform.as_str(),"commands":commands,"onlineInstallPassed":true,"offlineReinstallPassed":true,"removalPassed":true}));
     }
-    if let Some(path) = std::env::var_os("ASTER_TEST_MULTI_PLATFORM_EVIDENCE") {
+    if let Some(path) = std::env::var_os("KRUN_TEST_MULTI_PLATFORM_EVIDENCE") {
         std::fs::write(path, serde_json::to_vec_pretty(&results).unwrap()).unwrap();
     }
 }
@@ -413,10 +413,10 @@ fn npm_artifact_declarations_preserve_source_policy_and_reject_untrusted_origins
 #[ignore = "requires an explicitly provided Notion archive and AIX declaration"]
 fn actual_notion_artifact_runs_the_declared_native_binary_and_preserves_its_package() {
     let declaration =
-        std::fs::read_to_string(std::env::var_os("ASTER_TEST_NTN_TOOLCHAIN").unwrap()).unwrap();
+        std::fs::read_to_string(std::env::var_os("KRUN_TEST_NTN_TOOLCHAIN").unwrap()).unwrap();
     let plugin = ToolchainPlugin::parse_acl(&declaration).unwrap();
     assert_eq!(plugin.name(), "ntn");
-    let archive_path = std::env::var_os("ASTER_TEST_NTN_ARCHIVE").unwrap();
+    let archive_path = std::env::var_os("KRUN_TEST_NTN_ARCHIVE").unwrap();
     assert!(std::fs::metadata(&archive_path).unwrap().len() <= MAX_BYTES as u64);
     let bytes = std::fs::read(&archive_path).unwrap();
     let temporary = tempfile::Builder::new()
@@ -469,7 +469,7 @@ fn actual_notion_artifact_runs_the_declared_native_binary_and_preserves_its_pack
     assert!(store.which("ntn").unwrap().is_some());
     store.remove_sync("ntn").unwrap();
     assert!(store.installed_receipt("ntn", None).unwrap().is_none());
-    if let Some(path) = std::env::var_os("ASTER_TEST_NTN_EVIDENCE") {
+    if let Some(path) = std::env::var_os("KRUN_TEST_NTN_EVIDENCE") {
         std::fs::write(
             path,
             serde_json::to_vec_pretty(&serde_json::json!({
@@ -739,14 +739,14 @@ fn cached_installation_uses_the_same_verifier_without_constructing_an_http_clien
 
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 #[test]
-#[ignore = "requires the independently downloaded pinned CUA 0.9.0 archive via ASTER_CUA_ARCHIVE"]
+#[ignore = "requires the independently downloaded pinned CUA 0.9.0 archive via KRUN_CUA_ARCHIVE"]
 fn cua_cli_v0_9_0_preserves_the_full_producer_bundle_and_runs_its_native_version_command() {
     use std::os::unix::fs::PermissionsExt;
     use std::process::{Command, Stdio};
     use std::time::{Duration, Instant};
 
-    let path = std::env::var_os("ASTER_CUA_ARCHIVE")
-        .expect("set ASTER_CUA_ARCHIVE to the pinned upstream archive");
+    let path = std::env::var_os("KRUN_CUA_ARCHIVE")
+        .expect("set KRUN_CUA_ARCHIVE to the pinned upstream archive");
     let bytes = std::fs::read(PathBuf::from(path)).unwrap();
     assert_eq!(bytes.len(), 73_285_759);
     assert_eq!(

@@ -2,8 +2,8 @@ use std::fs::{File as StdFile, OpenOptions as StdOpenOptions};
 use std::io;
 use std::path::{Path, PathBuf};
 
-use aster_use_core::{UseError, UseResult};
 use fs2::FileExt;
+use krun_use_core::{UseError, UseResult};
 use tokio::fs;
 
 pub const ACTIVE_STATE_RESTORE_MARKER: &str = ".maintenance.restore.json";
@@ -76,7 +76,7 @@ impl StateMaintenanceLock {
         let lock_path = self.state_root.join(".maintenance.lock");
         match fs::symlink_metadata(&lock_path).await {
             Ok(metadata)
-                if aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+                if krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                     || !metadata.is_file() =>
             {
                 return Err(maintenance_path_invalid());
@@ -136,7 +136,7 @@ impl StateMaintenanceLock {
         let metadata = fs::symlink_metadata(&error_path)
             .await
             .map_err(|error| maintenance_io("reinspect maintenance lock", &error_path, error))?;
-        if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
+        if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_file() {
             return Err(maintenance_path_invalid());
         }
         if matches!(mode, MaintenanceMode::Shared) {
@@ -162,7 +162,7 @@ async fn reject_active_restore(state_root: &Path) -> UseResult<()> {
     let marker = state_root.join(ACTIVE_STATE_RESTORE_MARKER);
     match fs::symlink_metadata(&marker).await {
         Ok(metadata)
-            if !aster_use_core::metadata_is_link_or_reparse_point(&metadata)
+            if !krun_use_core::metadata_is_link_or_reparse_point(&metadata)
                 && metadata.is_file()
                 && metadata.len() > 0 =>
         {
@@ -184,7 +184,7 @@ async fn require_owned_directory(path: &Path) -> UseResult<()> {
     let metadata = fs::symlink_metadata(path)
         .await
         .map_err(|error| maintenance_io("inspect state root", path, error))?;
-    if aster_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
+    if krun_use_core::metadata_is_link_or_reparse_point(&metadata) || !metadata.is_dir() {
         return Err(maintenance_path_invalid());
     }
     Ok(())

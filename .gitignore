@@ -8,14 +8,14 @@
 .env
 .env.*
 !.env.example
-.aster/
-.aster/
-.aster-test/
-.aster-agent-retrievals
-.aster-vec.lock
-.aster-vec.lock.owner
-!crates/**/fixtures/**/.aster/
-!crates/**/fixtures/**/.aster/**
+.krun/
+.krun/
+.krun-test/
+.krun-agent-retrievals
+.krun-vec.lock
+.krun-vec.lock.owner
+!crates/**/fixtures/**/.krun/
+!crates/**/fixtures/**/.krun/**
 *.profraw
 *.profdata
 __pycache__/
@@ -45,8 +45,8 @@ __pycache__/
 # the T01 harness output directory.
 /.workbuddy/
 /tests/T01/output/
-/crates/code/core/.aster-vec.lock
-/crates/code/core/.aster-vec.lock.owner
+/crates/code/core/.krun-vec.lock
+/crates/code/core/.krun-vec.lock.owner
 
 # Swift Package Manager products for the internal Capture engine.
 /crates/capture/.build/
@@ -55,6 +55,6 @@ __pycache__/
 /apps/web/dist/
 /apps/web/.astro/
 
-# Mutable aster-vec index state from package-local development runs.
+# Mutable krun-vec index state from package-local development runs.
 /crates/code/core/manifest.json
 /crates/code/core/segments/

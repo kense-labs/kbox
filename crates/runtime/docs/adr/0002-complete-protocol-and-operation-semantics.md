@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-17
-- Decision owners: Aster Runtime maintainers
+- Decision owners: Krun Runtime maintainers
 
 ## Context
 
@@ -45,14 +45,14 @@ fields:
 
 Nested value objects remain versioned by their enclosing top-level schema.
 Making `ephemeral_storage_bytes` optional changes unit specifications to
-`aster.runtime.unit-spec.v2`; v1 required a numeric quota. An omitted quota is
+`krun.runtime.unit-spec.v2`; v1 required a numeric quota. An omitted quota is
 encoded explicitly as `null` in v2 and requires no ephemeral-storage
 capability. Adding `size_bytes` to output artifacts changes observations to
-`aster.runtime.observation.v2`. Adding typed provider identity and output
-capability changes capabilities to `aster.runtime.capabilities.v3`. The durable
-request-journal layout uses `aster.runtime.unit-record.v2`. Persisting the
+`krun.runtime.observation.v2`. Adding typed provider identity and output
+capability changes capabilities to `krun.runtime.capabilities.v3`. The durable
+request-journal layout uses `krun.runtime.unit-record.v2`. Persisting the
 effective request deadline changes request receipts to
-`aster.runtime.request-receipt.v2`.
+`krun.runtime.request-receipt.v2`.
 
 The Runtime core does not silently reinterpret legacy records or receipts. A
 caller that needs old state owns an explicit archival decoder or migration
@@ -256,6 +256,6 @@ Health, Resources, Logs, Exec, Security, Outputs, and Evidence profiles.
 - Exact replay no longer has an arbitrary embedded-record limit.
 - Docker truthfully rejects requested outputs and exec until those capabilities
   are implemented.
-- Aster Box can implement `IsolationLevel::Sandbox` behind the same contract
+- Krun Box can implement `IsolationLevel::Sandbox` behind the same contract
   without adding Box-specific fields.
 - Tests can now derive a deterministic oracle for every public operation.

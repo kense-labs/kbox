@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     CatalogArchive, CatalogAvailability, CatalogMcpTransport, CatalogPackage,
     CatalogPlanningTarget, CatalogSurface, ExecutablePlanningSurface, PackageSurfaceKind,
     PlanningSurfaceActivation, PluginCatalogRecord, PluginPermissionCeiling, PluginPlanningBundle,
@@ -26,7 +26,7 @@ pub(super) struct CatalogMetadata {
     permission_ceiling: Option<PluginPermissionCeiling>,
 }
 
-pub(super) fn parse(input: &[u8]) -> aster_use_core::UseResult<CatalogMetadata> {
+pub(super) fn parse(input: &[u8]) -> krun_use_core::UseResult<CatalogMetadata> {
     if input.is_empty() || input.len() > 64 * 1024 {
         return Err(invalid(
             "Catalog metadata must contain between 1 byte and 64 KiB.",
@@ -45,7 +45,7 @@ pub(super) async fn prepare(
     manifest: &ExtensionManifest,
     manifest_bytes: &[u8],
     metadata: CatalogMetadata,
-) -> aster_use_core::UseResult<(PluginCatalogRecord, Vec<u8>)> {
+) -> krun_use_core::UseResult<(PluginCatalogRecord, Vec<u8>)> {
     if !metadata.categories.contains(&publication.domain) {
         return Err(invalid(
             "Catalog metadata must include the admitted domain category.",

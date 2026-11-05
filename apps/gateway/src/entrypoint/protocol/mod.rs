@@ -132,7 +132,7 @@ fn observe_translation_usage(
         // A counter result, even an upstream `usage` extension, is not generation spend.
         response
             .headers_mut()
-            .entry("x-aster-token-count-source")
+            .entry("x-krun-token-count-source")
             .or_insert(http::HeaderValue::from_static("upstream"));
         return (
             response,

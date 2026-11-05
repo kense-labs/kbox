@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     ContainerId, ContainerTarget, ExitStatus, Generation, GuestSessionAttachment, GuestSessionId,
 };
 

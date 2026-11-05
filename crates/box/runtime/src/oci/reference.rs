@@ -1,8 +1,8 @@
 //! OCI image reference parsing.
 //!
-//! Parses image references like `ghcr.io/aster-box/code:v0.1.0` into structured components.
+//! Parses image references like `ghcr.io/krun-box/code:v0.1.0` into structured components.
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 
 /// Default registry when none is specified.
 const DEFAULT_REGISTRY: &str = "docker.io";
@@ -15,7 +15,7 @@ const DEFAULT_TAG: &str = "latest";
 pub struct ImageReference {
     /// Registry hostname (e.g., "ghcr.io", "docker.io")
     pub registry: String,
-    /// Repository path (e.g., "library/nginx", "aster-box/code")
+    /// Repository path (e.g., "library/nginx", "krun-box/code")
     pub repository: String,
     /// Tag (e.g., "latest", "v0.1.0")
     pub tag: Option<String>,
@@ -204,28 +204,28 @@ mod tests {
 
     #[test]
     fn test_parse_custom_registry() {
-        let r = ImageReference::parse("ghcr.io/aster-box/code:v0.1.0").unwrap();
+        let r = ImageReference::parse("ghcr.io/krun-box/code:v0.1.0").unwrap();
         assert_eq!(r.registry, "ghcr.io");
-        assert_eq!(r.repository, "aster-box/code");
+        assert_eq!(r.repository, "krun-box/code");
         assert_eq!(r.tag, Some("v0.1.0".to_string()));
     }
 
     #[test]
     fn test_parse_custom_registry_no_tag() {
-        let r = ImageReference::parse("ghcr.io/aster-box/code").unwrap();
+        let r = ImageReference::parse("ghcr.io/krun-box/code").unwrap();
         assert_eq!(r.registry, "ghcr.io");
-        assert_eq!(r.repository, "aster-box/code");
+        assert_eq!(r.repository, "krun-box/code");
         assert_eq!(r.tag, Some("latest".to_string()));
     }
 
     #[test]
     fn test_parse_digest_only() {
         let r = ImageReference::parse(
-            "ghcr.io/aster-box/code@sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
+            "ghcr.io/krun-box/code@sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
         )
         .unwrap();
         assert_eq!(r.registry, "ghcr.io");
-        assert_eq!(r.repository, "aster-box/code");
+        assert_eq!(r.repository, "krun-box/code");
         assert_eq!(r.tag, None);
         assert_eq!(
             r.digest,
@@ -239,9 +239,9 @@ mod tests {
     #[test]
     fn test_parse_tag_and_digest() {
         let r =
-            ImageReference::parse("ghcr.io/aster-box/code:v0.1.0@sha256:abcdef1234567890").unwrap();
+            ImageReference::parse("ghcr.io/krun-box/code:v0.1.0@sha256:abcdef1234567890").unwrap();
         assert_eq!(r.registry, "ghcr.io");
-        assert_eq!(r.repository, "aster-box/code");
+        assert_eq!(r.repository, "krun-box/code");
         assert_eq!(r.tag, Some("v0.1.0".to_string()));
         assert_eq!(r.digest, Some("sha256:abcdef1234567890".to_string()));
     }
@@ -282,21 +282,21 @@ mod tests {
 
     #[test]
     fn test_full_reference() {
-        let r = ImageReference::parse("ghcr.io/aster-box/code:v0.1.0").unwrap();
-        assert_eq!(r.full_reference(), "ghcr.io/aster-box/code:v0.1.0");
+        let r = ImageReference::parse("ghcr.io/krun-box/code:v0.1.0").unwrap();
+        assert_eq!(r.full_reference(), "ghcr.io/krun-box/code:v0.1.0");
     }
 
     #[test]
     fn test_full_reference_with_digest() {
         let r = ImageReference {
             registry: "ghcr.io".to_string(),
-            repository: "aster-box/code".to_string(),
+            repository: "krun-box/code".to_string(),
             tag: Some("v0.1.0".to_string()),
             digest: Some("sha256:abc123".to_string()),
         };
         assert_eq!(
             r.full_reference(),
-            "ghcr.io/aster-box/code:v0.1.0@sha256:abc123"
+            "ghcr.io/krun-box/code:v0.1.0@sha256:abc123"
         );
     }
 

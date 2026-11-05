@@ -1,11 +1,11 @@
 #![cfg(test)]
 
 use super::*;
-use aster_box_core::vmm::{InstanceSpec, OwnedCleanupBudget, OwnedCloseBudget, VmExitEvidenceKind};
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::vmm::{InstanceSpec, OwnedCleanupBudget, OwnedCloseBudget, VmExitEvidenceKind};
+use krun_box_core::{
     CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode, OperationId,
 };
-use async_trait::async_trait;
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex as StdMutex;
 use std::time::{Duration, Instant};
@@ -121,7 +121,7 @@ impl VmHandler for ChildHandler {
         }
         self.inner.stop_with_budget(signal, budget)
     }
-    fn exit_confirmation(&self) -> Option<aster_box_core::vmm::VmExitConfirmation> {
+    fn exit_confirmation(&self) -> Option<krun_box_core::vmm::VmExitConfirmation> {
         self.inner.exit_confirmation()
     }
     fn metrics(&self) -> crate::vmm::VmMetrics {
@@ -431,7 +431,7 @@ async fn finalization_requires_actual_bound_child_and_config_none_plus_actual_no
             )
             .await
             .unwrap();
-        let foreign = aster_box_core::vmm::VmExitConfirmation::owned_reaped(
+        let foreign = krun_box_core::vmm::VmExitConfirmation::owned_reaped(
             proof.pid() + 1,
             proof.pid_start_time(),
             proof.status().unwrap(),

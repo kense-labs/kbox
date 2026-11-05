@@ -2,16 +2,16 @@ use std::sync::atomic::Ordering;
 use std::sync::Arc;
 use std::time::Duration;
 
-use aster_runtime::contract::{NetworkMode, RuntimeLogStream};
-use aster_runtime::{
+use async_trait::async_trait;
+use krun_runtime::contract::{NetworkMode, RuntimeLogStream};
+use krun_runtime::{
     ProviderId, RuntimeClient, RuntimeClientRegistry, RuntimeProviderFactory, RuntimeResult,
 };
-use aster_use_core::{PackageSurfaceKind, PlanScope, PlanScopeKind, PluginSurfaceRef};
-use aster_use_extension::{
+use krun_use_core::{PackageSurfaceKind, PlanScope, PlanScopeKind, PluginSurfaceRef};
+use krun_use_extension::{
     ExtensionLifecycleIdentity, ExtensionLifecyclePackage, ExtensionPaths, ExtensionRegistry,
     ToolWorkload,
 };
-use async_trait::async_trait;
 use tempfile::TempDir;
 use tokio::fs;
 use tokio::sync::Notify;
@@ -287,7 +287,7 @@ async fn write_release_task_package(root: &std::path::Path) {
     .await
     .unwrap();
     fs::write(
-        root.join("aster-use-extension.acl"),
+        root.join("krun-use-extension.acl"),
         r#"extension "acme/research" {
   schema_version = 3
   version        = "2.0.0"

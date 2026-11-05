@@ -1,5 +1,13 @@
 # Gateway operations evidence
 
+## 概述
+
+本目录保存 apps/gateway/docs/ops 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 Operator-facing evidence for Production Candidate → Enterprise GA promotion.
 These documents do **not** claim Enterprise GA by themselves; they close the
 repeatable fault-injection + runbook gate while capacity envelopes, an

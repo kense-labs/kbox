@@ -1,12 +1,12 @@
 [package]
-name = "aster-runtime"
+name = "krun-runtime"
 publish = false
 version = "0.8.0"
 edition = "2021"
 rust-version = "1.85"
-description = "Provider-neutral execution contract and client for Aster runtimes"
+description = "Provider-neutral execution contract and client for Krun runtimes"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/Runtime"
+repository = "https://github.com/kense-labs/krun"
 
 [dependencies]
 async-trait = "0.1"

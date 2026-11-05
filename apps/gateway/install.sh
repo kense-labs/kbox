@@ -3,15 +3,15 @@
 set -eu
 umask 077
 
-PROGRAM="aster-gateway"
+PROGRAM="krun-gateway"
 REPOSITORY="kense-labs/gateway"
-RELEASES_URL="${ASTER_GATEWAY_RELEASES_URL:-https://github.com/${REPOSITORY}/releases/download}"
-LATEST_API_URL="${ASTER_GATEWAY_LATEST_API_URL:-https://api.github.com/repos/${REPOSITORY}/releases/latest}"
-VERSION="${ASTER_GATEWAY_VERSION:-}"
-INSTALL_DIR="${ASTER_GATEWAY_INSTALL_DIR:-}"
-PLATFORM_OVERRIDE="${ASTER_GATEWAY_PLATFORM:-}"
-NO_MODIFY_PATH="${ASTER_GATEWAY_NO_MODIFY_PATH:-0}"
-ALLOW_INSECURE="${ASTER_GATEWAY_ALLOW_INSECURE:-0}"
+RELEASES_URL="${KRUN_GATEWAY_RELEASES_URL:-https://github.com/${REPOSITORY}/releases/download}"
+LATEST_API_URL="${KRUN_GATEWAY_LATEST_API_URL:-https://api.github.com/repos/${REPOSITORY}/releases/latest}"
+VERSION="${KRUN_GATEWAY_VERSION:-}"
+INSTALL_DIR="${KRUN_GATEWAY_INSTALL_DIR:-}"
+PLATFORM_OVERRIDE="${KRUN_GATEWAY_PLATFORM:-}"
+NO_MODIFY_PATH="${KRUN_GATEWAY_NO_MODIFY_PATH:-0}"
+ALLOW_INSECURE="${KRUN_GATEWAY_ALLOW_INSECURE:-0}"
 TEMP_DIR=""
 PENDING_BINARY=""
 
@@ -29,18 +29,18 @@ Options:
   -h, --help              Show this help.
 
 Environment overrides:
-  ASTER_GATEWAY_VERSION
-  ASTER_GATEWAY_INSTALL_DIR
-  ASTER_GATEWAY_NO_MODIFY_PATH=1
+  KRUN_GATEWAY_VERSION
+  KRUN_GATEWAY_INSTALL_DIR
+  KRUN_GATEWAY_NO_MODIFY_PATH=1
 USAGE
 }
 
 log() {
-  printf '%s\n' "aster-gateway installer: $*"
+  printf '%s\n' "krun-gateway installer: $*"
 }
 
 fail() {
-  printf '%s\n' "aster-gateway installer: error: $*" >&2
+  printf '%s\n' "krun-gateway installer: error: $*" >&2
   exit 1
 }
 
@@ -94,7 +94,7 @@ download() {
       curl --proto '=https' --tlsv1.2 --fail --location --silent --show-error \
         --retry 3 --connect-timeout 15 --max-time 300 \
         --header 'Accept: application/vnd.github+json' \
-        --header 'User-Agent: aster-gateway-installer' \
+        --header 'User-Agent: krun-gateway-installer' \
         --output "$destination" "$url"
       ;;
     *)
@@ -206,7 +206,7 @@ if [ -z "$INSTALL_DIR" ]; then
   INSTALL_DIR="${HOME}/.local/bin"
 fi
 
-TEMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/aster-gateway-install.XXXXXX")
+TEMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/krun-gateway-install.XXXXXX")
 
 if [ -z "$VERSION" ]; then
   release_json="${TEMP_DIR}/release.json"

@@ -1,7 +1,7 @@
-use aster_gateway::config::RouterConfig;
-use aster_gateway::router::RouterTable;
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use http::HeaderMap;
+use krun_gateway::config::RouterConfig;
+use krun_gateway::router::RouterTable;
 use std::collections::HashMap;
 use std::time::Duration;
 

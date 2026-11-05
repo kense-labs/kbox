@@ -1,4 +1,4 @@
-use aster_use_core::{
+use krun_use_core::{
     inspect_okf_bundle, OkfBundleContract, OkfBundleFile, OkfBundleLimits, OkfDiagnosticCode,
     OkfFormatVersion, OKF_BUNDLE_CONTRACT_SCHEMA,
 };

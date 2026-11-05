@@ -2,10 +2,10 @@
 
 #![cfg(feature = "infer")]
 
-use aster_apofasi::{
+use indexmap::IndexMap;
+use krun_apofasi::{
     pack_question, Criteria, DecisionKind, HfTokenizer, Question, SequenceConfig, State,
 };
-use indexmap::IndexMap;
 use serde_json::json;
 use std::path::PathBuf;
 

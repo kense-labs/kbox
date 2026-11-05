@@ -1,4 +1,4 @@
-//! `aster-box import` command — create a single-layer image from a rootfs tarball.
+//! `krun-box import` command — create a single-layer image from a rootfs tarball.
 //!
 //! Mirrors `docker import`: wrap a filesystem tarball (`.tar` or `.tar.gz`) as a
 //! single-layer OCI image, optionally applying Dockerfile-style `--change`
@@ -60,8 +60,8 @@ pub async fn execute(args: ImportArgs) -> Result<(), Box<dyn std::error::Error>>
     let reference = args
         .reference
         .clone()
-        .unwrap_or_else(|| "aster-import:latest".to_string());
-    let host_platform = aster_box_core::platform::Platform::host();
+        .unwrap_or_else(|| "krun-import:latest".to_string());
+    let host_platform = krun_box_core::platform::Platform::host();
     let arch = host_platform.oci_arch();
     let now = chrono::Utc::now().to_rfc3339();
 

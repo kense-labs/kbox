@@ -5,7 +5,7 @@ use super::*;
 struct RefusingStop;
 
 impl VmHandler for RefusingStop {
-    fn stop(&mut self, _signal: i32, _timeout_ms: u64) -> aster_box_core::Result<()> {
+    fn stop(&mut self, _signal: i32, _timeout_ms: u64) -> krun_box_core::Result<()> {
         Err(BoxError::StateError("stop identity unavailable".into()))
     }
 

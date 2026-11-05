@@ -1,5 +1,13 @@
 # Soak result schema
 
+## 概述
+
+本目录保存 apps/gateway/benchmarks/soak 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 JSON files under `results/` follow this shape. Smoke artifacts use
 `envelope_status: "smoke-only"`. Published dedicated-hardware envelopes must
 set `envelope_status: "published"` and fill every hardware pin field.
@@ -23,7 +31,7 @@ set `envelope_status: "published"` and fill every hardware pin field.
     "version": null,
     "git_sha": null,
     "features": [],
-    "bin": "target/debug/aster-gateway"
+    "bin": "target/debug/krun-gateway"
   },
   "requests": { "ok": 0, "err": 0 },
   "rss_kb": { "min": null, "max": null, "growth": null, "samples": 0 },

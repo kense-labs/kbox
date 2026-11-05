@@ -1,17 +1,17 @@
 [package]
-name = "aster-box-netproxy"
+name = "krun-box-netproxy"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
-description = "Userspace network proxy and bridge for Aster Box libkrun VMs"
+description = "Userspace network proxy and bridge for Krun Box libkrun VMs"
 
 [lib]
-name = "aster_box_netproxy"
+name = "krun_box_netproxy"
 path = "src/lib.rs"
 
 [target.'cfg(unix)'.dependencies]
-aster-box-core = { version = "3.2", path = "../core" }
+krun-box-core = { version = "3.2", path = "../core" }
 libc = { workspace = true }
 tracing = { workspace = true }
 smoltcp = { version = "0.11", default-features = false, features = [

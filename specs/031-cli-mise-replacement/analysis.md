@@ -7,7 +7,7 @@ implementation; refreshed after the initial fixes.
 | --- | --- | --- | --- |
 | Functional requirements have producing tasks | Note | FR-001–FR-013; T001–T014 | Preserve the mappings recorded in research.md, including release-profile efficiency and the user-requested official AIX source |
 | Full replacement includes experimental and host capabilities | Note | spec.md FR-009/011; matrix C17–C24 | Keep these tasks required and unchecked until evidenced |
-| Wholesale upstream CLI delegation would retain TOML/updater coupling | Warning | plan.md; research.md | Reuse reviewed implementation contracts inside ACL-owning Aster modules |
+| Wholesale upstream CLI delegation would retain TOML/updater coupling | Warning | plan.md; research.md | Reuse reviewed implementation contracts inside ACL-owning Krun modules |
 | Existing global formatting differences prevent a clean workspace-wide gate | Warning | T012; format-final.log | Retain the failure and focused-format result; do not waive the final gate |
 | Available execution host proves macOS only | Warning | T012 | Linux and Windows native checks remain required |
 | New command execution and output-error behavior require final binary checks | Note | T003/T011 | Latest paired build and nine real CLI tests passed in build-revalidated.log / cli-env-tests-revalidated.log |

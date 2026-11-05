@@ -1,7 +1,7 @@
 //! Node API for process-local health, metrics, version, and managed snapshots.
 //!
 //! The API runs on a dedicated listener and never intercepts user traffic.
-//! Human-facing operations belong to Aster Cloud; this module exposes only the
+//! Human-facing operations belong to Krun Cloud; this module exposes only the
 //! bounded machine contract required to operate the Gateway data plane.
 
 mod managed;
@@ -61,7 +61,7 @@ struct VersionInfo {
 impl VersionInfo {
     fn current() -> Self {
         Self {
-            name: "aster-gateway",
+            name: "krun-gateway",
             version: env!("CARGO_PKG_VERSION"),
             api_version: "v1",
         }

@@ -1,8 +1,8 @@
 use std::io::{self, Read};
 use std::path::PathBuf;
 
-use aster_oci_runtime::{MacosHvfHostService, MacosHvfHostServiceConfig};
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_runtime::{MacosHvfHostService, MacosHvfHostServiceConfig};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 use tokio::signal::unix::{signal, SignalKind};
 
 #[cfg(test)]
@@ -46,7 +46,7 @@ async fn wait_for_stdin_eof(input: impl Read + Send + 'static) -> io::Result<()>
     let (closed, receiver) = tokio::sync::oneshot::channel();
     // A signal can cancel this wait; Tokio's blocking pool must still shut down.
     std::thread::Builder::new()
-        .name("aster-oci-owner-stdin".into())
+        .name("krun-oci-owner-stdin".into())
         .spawn(move || {
             let mut input = input;
             let mut bytes = [0_u8; 64];

@@ -1,11 +1,11 @@
 //! Management-endpoint evidence for topology-bounded service telemetry.
 
-use aster_gateway::config::{
+use futures_util::StreamExt;
+use krun_gateway::config::{
     EntrypointConfig, GatewayConfig, LoadBalancerConfig, ObservabilityConfig, RouterConfig,
     ServerConfig, ServiceConfig, Strategy,
 };
-use aster_gateway::Gateway;
-use futures_util::StreamExt;
+use krun_gateway::Gateway;
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -65,11 +65,11 @@ fn config(
     backend_address: SocketAddr,
 ) -> GatewayConfig {
     common::ensure_test_admin_token();
-    let management = aster_gateway::config::ManagementConfig {
+    let management = krun_gateway::config::ManagementConfig {
         enabled: true,
         address: management_address.to_string(),
         auth_token_env: Some(common::TEST_ADMIN_TOKEN_ENV.into()),
-        ..aster_gateway::config::ManagementConfig::default()
+        ..krun_gateway::config::ManagementConfig::default()
     };
 
     GatewayConfig {

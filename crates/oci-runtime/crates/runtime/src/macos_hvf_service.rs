@@ -2,7 +2,7 @@ use std::future::Future;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use aster_oci_sdk::{async_trait, Error, ErrorCode, Result};
+use krun_oci_sdk::{async_trait, Error, ErrorCode, Result};
 
 use crate::unix_service::{
     prepare_private_directory, validate_absolute_normalized_path, validate_unix_socket_path,
@@ -66,7 +66,7 @@ impl MacosHvfHostServiceConfig {
         &self.root
     }
 
-    /// Unix socket consumed by [`aster_oci_sdk::RuntimeClient::connect`].
+    /// Unix socket consumed by [`krun_oci_sdk::RuntimeClient::connect`].
     #[must_use]
     pub fn socket_path(&self) -> PathBuf {
         self.root.join(SERVICE_SOCKET_NAME)
@@ -162,8 +162,8 @@ impl UtilityVmHostDriver for HvfRuntimeDriver {
 mod tests {
     use std::os::unix::fs::{FileTypeExt, MetadataExt, PermissionsExt};
 
-    use aster_oci_core::DriverKind;
-    use aster_oci_sdk::{
+    use krun_oci_core::DriverKind;
+    use krun_oci_sdk::{
         LocalIpcEndpoint, RuntimeClient, RUNTIME_BUNDLE_HANDOFF_EXTENSION,
         RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
     };
@@ -217,35 +217,35 @@ mod tests {
         let root = Path::new("/private/tmp").join("x".repeat(104));
         let error = MacosHvfHostServiceConfig::new(
             root,
-            "/tmp/aster-oci-hvf-shim",
-            "/tmp/aster-oci-hvf-system-image.json",
+            "/tmp/krun-oci-hvf-shim",
+            "/tmp/krun-oci-hvf-system-image.json",
         )
         .expect_err("an unbindable Host Service socket path must fail during configuration");
-        assert_eq!(error.code, aster_oci_sdk::ErrorCode::InvalidArgument);
+        assert_eq!(error.code, krun_oci_sdk::ErrorCode::InvalidArgument);
         assert!(error.message.contains("Unix socket path"), "{error}");
     }
 
     #[test]
     fn config_separates_durable_state_from_driver_runtime() {
         let config = MacosHvfHostServiceConfig::new(
-            "/tmp/aster-oci-hvf-owner",
-            "/tmp/aster-oci-hvf-shim",
-            "/tmp/aster-oci-hvf-system-image.json",
+            "/tmp/krun-oci-hvf-owner",
+            "/tmp/krun-oci-hvf-shim",
+            "/tmp/krun-oci-hvf-system-image.json",
         )
         .expect("valid macOS HVF host config");
 
-        assert_eq!(config.root(), Path::new("/tmp/aster-oci-hvf-owner"));
+        assert_eq!(config.root(), Path::new("/tmp/krun-oci-hvf-owner"));
         assert_eq!(
             config.socket_path(),
-            Path::new("/tmp/aster-oci-hvf-owner/runtime.sock")
+            Path::new("/tmp/krun-oci-hvf-owner/runtime.sock")
         );
         assert_eq!(
             config.state_root(),
-            Path::new("/tmp/aster-oci-hvf-owner/state")
+            Path::new("/tmp/krun-oci-hvf-owner/state")
         );
         assert_eq!(
             config.driver_runtime_root(),
-            Path::new("/tmp/aster-oci-hvf-owner/runtime")
+            Path::new("/tmp/krun-oci-hvf-owner/runtime")
         );
         assert_ne!(config.state_root(), config.driver_runtime_root());
     }
@@ -300,13 +300,13 @@ mod tests {
         }
         assert!(info
             .operations
-            .contains(&aster_oci_sdk::RuntimeOperation::Features));
+            .contains(&krun_oci_sdk::RuntimeOperation::Features));
         assert!(info
             .operations
-            .contains(&aster_oci_sdk::RuntimeOperation::List));
+            .contains(&krun_oci_sdk::RuntimeOperation::List));
         assert!(info
             .operations
-            .contains(&aster_oci_sdk::RuntimeOperation::Events));
+            .contains(&krun_oci_sdk::RuntimeOperation::Events));
         assert_eq!(info.operations.len(), 23);
         assert!(info.attachments.supports_extension(
             RUNTIME_BUNDLE_HANDOFF_EXTENSION,

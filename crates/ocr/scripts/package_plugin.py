@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble the self-contained OCR plugin with the native Aster AIX tools."""
+"""Assemble the self-contained OCR plugin with the native Krun AIX tools."""
 import argparse
 import hashlib
 import json
@@ -34,7 +34,7 @@ def host_token():
 
 def stage_plugin(source, binary, runtime, models, notices, target):
     source.mkdir(parents=True)
-    executable = "aster-use-ocr.exe" if target.startswith("windows-") else "aster-use-ocr"
+    executable = "krun-use-ocr.exe" if target.startswith("windows-") else "krun-use-ocr"
     library = ("onnxruntime.dll" if target.startswith("windows-") else
                "libonnxruntime.dylib" if target.startswith("darwin-") else "libonnxruntime.so")
     payload = source / "payload"
@@ -57,16 +57,16 @@ def stage_plugin(source, binary, runtime, models, notices, target):
 
 
 def finish_source(source, target):
-    template = WORKSPACE / "plugins" / "plugins" / "operations" / "aster" / "aster-ocr"
-    for name in ("README.md", "LICENSE", "aster-use-extension.acl"):
+    template = WORKSPACE / "plugins" / "plugins" / "operations" / "krun" / "krun-ocr"
+    for name in ("README.md", "LICENSE", "krun-use-extension.acl"):
         shutil.copy2(template / name, source / name)
-    executable = "aster-use-ocr.exe" if target.startswith("windows-") else "aster-use-ocr"
-    shutil.copytree(WORKSPACE / "crates/ocr/skills/aster-use-ocr", source / "skills/aster-use-ocr")
-    manifest = source / "aster-use-extension.acl"
-    text = manifest.read_text(encoding="utf-8").replace("payload/aster-use-ocr\"", "payload/" + executable + "\"")
+    executable = "krun-use-ocr.exe" if target.startswith("windows-") else "krun-use-ocr"
+    shutil.copytree(WORKSPACE / "crates/ocr/skills/krun-use-ocr", source / "skills/krun-use-ocr")
+    manifest = source / "krun-use-extension.acl"
+    text = manifest.read_text(encoding="utf-8").replace("payload/krun-use-ocr\"", "payload/" + executable + "\"")
     manifest.write_text(text, encoding="utf-8")
     (source / "runtime.acl").write_text(
-        'runtime_component {\n schema_version = 1\n kind = "aster-ocr"\n target = "' + target + '"\n}\n', encoding="utf-8")
+        'runtime_component {\n schema_version = 1\n kind = "krun-ocr"\n target = "' + target + '"\n}\n', encoding="utf-8")
     content = hashlib.sha256()
     for path in sorted(source.rglob("*")):
         if path.is_symlink():
@@ -80,10 +80,10 @@ def finish_source(source, target):
 
 
 def catalog_metadata(target):
-    return {"schemaVersion": 1, "displayName": "Aster OCR", "description": "Local OCR engine, runtime, models, MCP and Skill.",
+    return {"schemaVersion": 1, "displayName": "Krun OCR", "description": "Local OCR engine, runtime, models, MCP and Skill.",
             "keywords": ["desktop", "images", "local", "ocr"], "categories": ["operations"],
             "target": target, "channel": "stable", "license": "MIT",
-            "permissionCeiling": {"schema": "aster.use.plugin-permissions.v1", "surfaces": [{
+            "permissionCeiling": {"schema": "krun.use.plugin-permissions.v1", "surfaces": [{
                 "surface": {"kind": "mcp", "id": "ocr"}, "nativeExecution": True,
                 "childProcess": False, "filesystem": [{"scope": "temporary", "path": ".", "access": "read-write"},
                                                          {"scope": "workspace", "path": ".", "access": "read"}],
@@ -91,10 +91,10 @@ def catalog_metadata(target):
                 "resources": {"cpuMillis": 1000, "memoryBytes": 2147483648, "pids": 32, "ephemeralStorageBytes": 67108864}}]}}
 
 
-def package(source, out, aster, version, target):
-    archive = out / f"aster-ocr-{version}-{target}.aix"
+def package(source, out, krun, version, target):
+    archive = out / f"krun-ocr-{version}-{target}.aix"
     def run(*arguments):
-        result = subprocess.run([str(aster), "registry", "package", *map(str, arguments), "--json"],
+        result = subprocess.run([str(krun), "registry", "package", *map(str, arguments), "--json"],
                                 capture_output=True, text=True, encoding="utf-8", cwd=WORKSPACE)
         if result.returncode:
             raise RuntimeError(result.stdout + result.stderr)
@@ -112,25 +112,25 @@ def package(source, out, aster, version, target):
         (temporary / "oci.json").replace(out / (archive.stem + ".oci.json"))
         (temporary / "planning.json").replace(out / (archive.stem + ".planning.json"))
     (out / (archive.stem + ".publication.json")).write_text(json.dumps(publication, indent=2) + "\n", encoding="utf-8")
-    return {"packageId": "aster/aster-ocr", "version": version, "required": False, "target": target,
+    return {"packageId": "krun/krun-ocr", "version": version, "required": False, "target": target,
             "archive": archive.name, "sha256": digest(archive), "size": archive.stat().st_size,
-            "packageSha256": evidence["packageSha256"], "manifestSha256": digest(source / "aster-use-extension.acl")}
+            "packageSha256": evidence["packageSha256"], "manifestSha256": digest(source / "krun-use-extension.acl")}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ("binary", "runtime", "models", "notices", "out", "aster-use-bin"):
+    for name in ("binary", "runtime", "models", "notices", "out", "krun-use-bin"):
         parser.add_argument("--" + name, type=Path, required=True)
     args = parser.parse_args()
     out, target = args.out.resolve(), host_token()
     out.mkdir(parents=True, exist_ok=True)
     repository = out / "repository" / target
-    source = repository / "plugins" / "operations" / "aster" / "aster-ocr"
+    source = repository / "plugins" / "operations" / "krun" / "krun-ocr"
     if source.exists():
         shutil.rmtree(source)
     version = stage_plugin(source, args.binary.resolve(), args.runtime.resolve(), args.models.resolve(), args.notices.resolve(), target)
     shutil.copyfile(WORKSPACE / "plugins/domains.acl", repository / "domains.acl")
-    pin = package(source, out, args.aster_use_bin.resolve(), version, target)
+    pin = package(source, out, args.krun_use_bin.resolve(), version, target)
     print(json.dumps(pin, indent=2))
 
 

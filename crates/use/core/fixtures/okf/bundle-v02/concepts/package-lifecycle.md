@@ -3,7 +3,7 @@ type: Project-Specific Decision
 title: Exact-generation package activation
 description: Publish cognitive surfaces only after exact-generation evidence is ready.
 status: stable
-aster_extension:
+krun_extension:
   projection: capability-snapshot
   retain_last_good: true
 ---

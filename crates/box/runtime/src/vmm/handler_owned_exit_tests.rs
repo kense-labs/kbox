@@ -2,7 +2,7 @@
 #![cfg(unix)]
 
 use super::*;
-use aster_box_core::vmm::VmExitEvidenceKind;
+use krun_box_core::vmm::VmExitEvidenceKind;
 use std::ops::{Deref, DerefMut};
 use std::process::Command;
 

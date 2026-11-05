@@ -1,5 +1,13 @@
 # Extracted ext4 test vectors
 
+## 概述
+
+本目录保存 crates/box/third_party/mkext4/testdata/vectors 的说明和使用约束。
+
+## 构建与验证
+
+按所属工程的构建和测试合同使用本目录内容。
+
 Binary structures extracted from real `mke2fs 1.47.4` images, used as golden
 fixtures for mkext4's on-disk encoders and checksum primitives. Every
 checksum inside these blobs has been recomputed and verified by

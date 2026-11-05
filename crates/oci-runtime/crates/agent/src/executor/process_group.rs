@@ -3,7 +3,7 @@ use std::io;
 use std::os::fd::AsRawFd;
 use std::path::Path;
 
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use super::pid_supervisor;
 use super::pidfd::{PidFd, SignalOutcome};

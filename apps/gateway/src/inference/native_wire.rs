@@ -65,7 +65,7 @@ pub(crate) fn render_native_error(wire: NativeWire, error: &EnvelopeError) -> By
                 504 => "DEADLINE_EXCEEDED",
                 _ => "UNAVAILABLE",
             };
-            json!({ "error": { "code": error.status.as_u16(), "status": status, "message": error.message, "aster_error_code": error.error_code } })
+            json!({ "error": { "code": error.status.as_u16(), "status": status, "message": error.message, "krun_error_code": error.error_code } })
         }
         NativeWire::OpenAi => {
             let (kind, code) = match error.status.as_u16() {
@@ -85,7 +85,7 @@ pub(crate) fn render_native_error(wire: NativeWire, error: &EnvelopeError) -> By
                     "type": kind,
                     "param": null,
                     "code": code,
-                    "aster_error_code": error.error_code,
+                    "krun_error_code": error.error_code,
                 }
             })
         }
@@ -118,7 +118,7 @@ pub(crate) fn native_models_body(models: &[String]) -> Bytes {
                 "id": model,
                 "object": "model",
                 "created": 0,
-                "owned_by": "aster"
+                "owned_by": "krun"
             })
         })
         .collect::<Vec<_>>();

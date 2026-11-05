@@ -32,9 +32,9 @@
       "统一沙箱"
     ],
     "implementation_mapping": {
-      "授权策略层 / 策略执行引擎": "aster-sandbox",
-      "执行运行时层 / 统一沙箱": "aster-box",
-      "执行运行时层 / 共享机制": "aster-core"
+      "授权策略层 / 策略执行引擎": "krun-sandbox",
+      "执行运行时层 / 统一沙箱": "krun-box",
+      "执行运行时层 / 共享机制": "krun-core"
     },
     "diagram_labels": "brand-neutral; implementation names are in the design document only",
     "adapter_types": [

@@ -6,7 +6,7 @@ use crate::store::{
 };
 use crate::{AcquireRequest, ToolReceipt, ToolStore};
 
-const SCHEMA: &str = "aster.use.tool-acquire.archive.v1";
+const SCHEMA: &str = "krun.use.tool-acquire.archive.v1";
 
 /// Native executable and PATH directories for an identified installation.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -371,7 +371,7 @@ pub(crate) fn inspect(
                 portable_path(&normalize_link(relative, &target)?)?;
                 resolve_inside(root, relative)?;
                 ArchiveEntry::Symlink { target }
-            } else if aster_use_core::metadata_is_link_or_reparse_point(&metadata) {
+            } else if krun_use_core::metadata_is_link_or_reparse_point(&metadata) {
                 return Err(ToolAcquireError::LinkRefused { path });
             } else if metadata.is_dir() {
                 directories.push(path);

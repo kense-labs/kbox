@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use reqwest::header::{
     HeaderValue, ACCEPT_ENCODING, AUTHORIZATION, CONTENT_LENGTH, CONTENT_RANGE, LOCATION, RANGE,
 };
@@ -60,7 +60,7 @@ pub(super) async fn download(
     let standard_client = match network_policy {
         RegistryNetworkPolicy::Standard => Some(
             reqwest::Client::builder()
-                .user_agent("aster-use-extension/0.3")
+                .user_agent("krun-use-extension/0.3")
                 .connect_timeout(Duration::from_secs(15))
                 .timeout(Duration::from_secs(300))
                 .redirect(reqwest::redirect::Policy::none())

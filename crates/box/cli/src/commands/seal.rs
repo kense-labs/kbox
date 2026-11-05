@@ -1,4 +1,4 @@
-//! `aster-box seal` command — Encrypt data bound to a TEE's identity.
+//! `krun-box seal` command — Encrypt data bound to a TEE's identity.
 //!
 //! Connects to a running box's RA-TLS attestation server, verifies the TEE,
 //! then encrypts data using a key derived from the TEE's measurement and chip_id.
@@ -12,7 +12,7 @@ use crate::resolve;
 use crate::state::StateFile;
 
 #[cfg(not(windows))]
-use aster_box_runtime::{tee::AttestationPolicy, SealClient};
+use krun_box_runtime::{tee::AttestationPolicy, SealClient};
 
 #[derive(Args)]
 pub struct SealArgs {

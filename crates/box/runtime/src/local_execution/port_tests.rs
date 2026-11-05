@@ -3,7 +3,7 @@
 use std::num::NonZeroU16;
 use std::time::Duration;
 
-use aster_box_core::{ExecutionId, ExecutionManagerError};
+use krun_box_core::{ExecutionId, ExecutionManagerError};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixListener;
 

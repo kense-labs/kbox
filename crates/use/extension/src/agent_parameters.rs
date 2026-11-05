@@ -6,7 +6,7 @@
 
 use std::collections::BTreeSet;
 
-use aster_use_core::{UseError, UseResult};
+use krun_use_core::{UseError, UseResult};
 use serde_json::{Map, Value};
 
 pub const MAX_AGENT_PARAMETER_SCHEMA_BYTES: usize = 65_536;

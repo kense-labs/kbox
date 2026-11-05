@@ -73,9 +73,9 @@ impl<C> LoadedEnvConfig<C> {
 
     /// Return the admitted file owning this tool's complete version list.
     /// No filesystem reads or writes occur; undeclared tools return `None`.
-    pub fn declaration_path(&self, name: &str, aster_home: &Path) -> Option<PathBuf> {
+    pub fn declaration_path(&self, name: &str, krun_home: &Path) -> Option<PathBuf> {
         self.roots.get(name).map(|root| match root {
-            DeclarationRoot::User => crate::user_env_path(aster_home),
+            DeclarationRoot::User => crate::user_env_path(krun_home),
             DeclarationRoot::Project(root) => crate::project_env_path(root),
         })
     }
@@ -328,19 +328,19 @@ pub fn find_env_executable(
 /// This performs blocking reads, creates no files, and returns parse/I/O failures.
 pub fn load_env_config_with_sources(
     project: impl AsRef<Path>,
-    aster_home: impl AsRef<Path>,
+    krun_home: impl AsRef<Path>,
 ) -> Result<LoadedEnvConfig, ToolAcquireError> {
-    let aster_home = std::path::absolute(aster_home.as_ref()).map_err(|error| {
-        ToolAcquireError::io("resolve environment home", aster_home.as_ref(), error)
+    let krun_home = std::path::absolute(krun_home.as_ref()).map_err(|error| {
+        ToolAcquireError::io("resolve environment home", krun_home.as_ref(), error)
     })?;
     let mut loaded = LoadedEnvConfig {
         config: EnvConfig::default(),
         roots: BTreeMap::new(),
         sources: BTreeSet::new(),
     };
-    visit_env_layers(project.as_ref(), &aster_home, |config, root| {
+    visit_env_layers(project.as_ref(), &krun_home, |config, root| {
         loaded.sources.insert(match root {
-            EnvLayerRoot::User => crate::user_env_path(&aster_home),
+            EnvLayerRoot::User => crate::user_env_path(&krun_home),
             EnvLayerRoot::Project(path) => crate::project_env_path(path),
         });
         for name in config.tools.keys() {
@@ -359,19 +359,19 @@ pub fn load_env_config_with_sources(
 /// Reads are bounded and blocking; no directories, receipts or pointers are written.
 pub fn load_env_declarations_with_sources(
     project: impl AsRef<Path>,
-    aster_home: impl AsRef<Path>,
+    krun_home: impl AsRef<Path>,
 ) -> Result<LoadedEnvDeclarations, ToolAcquireError> {
-    let aster_home = std::path::absolute(aster_home.as_ref()).map_err(|error| {
-        ToolAcquireError::io("resolve environment home", aster_home.as_ref(), error)
+    let krun_home = std::path::absolute(krun_home.as_ref()).map_err(|error| {
+        ToolAcquireError::io("resolve environment home", krun_home.as_ref(), error)
     })?;
     let mut loaded = LoadedEnvDeclarations {
         config: EnvDeclarations::default(),
         roots: BTreeMap::new(),
         sources: BTreeSet::new(),
     };
-    visit_declaration_layers(project.as_ref(), &aster_home, |config, root| {
+    visit_declaration_layers(project.as_ref(), &krun_home, |config, root| {
         loaded.sources.insert(match root {
-            EnvLayerRoot::User => crate::user_env_path(&aster_home),
+            EnvLayerRoot::User => crate::user_env_path(&krun_home),
             EnvLayerRoot::Project(path) => crate::project_env_path(path),
         });
         for name in config.tools.keys() {
@@ -452,7 +452,7 @@ pub fn resolve_env_tool(
 }
 
 impl ToolStore {
-    /// Remove the native install/shim roots Aster itself puts on PATH, preserving
+    /// Remove the native install/shim roots Krun itself puts on PATH, preserving
     /// every other entry verbatim, including empty and non-UTF-8 entries.
     pub fn unmanaged_path_dirs(&self, inherited: Option<&OsStr>) -> Vec<PathBuf> {
         let shims = self.root_path().join("shims");

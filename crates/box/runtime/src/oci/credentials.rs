@@ -1,13 +1,13 @@
 //! Persistent credential store for container registries.
 //!
-//! Stores per-registry credentials at `~/.aster/auth/credentials.json`.
+//! Stores per-registry credentials at `~/.krun/auth/credentials.json`.
 //! Uses atomic writes (write tmp, rename) for safety.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
 use base64::Engine as _;
+use krun_box_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// Per-registry credential entry.
@@ -47,16 +47,16 @@ struct DockerAuthEntry {
 
 /// Persistent credential store for container registries.
 ///
-/// Stores credentials at `~/.aster/auth/credentials.json`.
+/// Stores credentials at `~/.krun/auth/credentials.json`.
 pub struct CredentialStore {
     path: PathBuf,
 }
 
 impl CredentialStore {
-    /// Create a credential store at the default path (`~/.aster/auth/credentials.json`).
+    /// Create a credential store at the default path (`~/.krun/auth/credentials.json`).
     pub fn default_path() -> Result<Self> {
         Ok(Self {
-            path: aster_box_core::dirs_home()
+            path: krun_box_core::dirs_home()
                 .join("auth")
                 .join("credentials.json"),
         })
@@ -164,7 +164,7 @@ impl CredentialStore {
     /// Run `f` over the credential file under a cross-process advisory lock,
     /// re-loading fresh inside the lock and saving the result.
     ///
-    /// `store`/`remove` funnel through here so two concurrent `aster-box login`
+    /// `store`/`remove` funnel through here so two concurrent `krun-box login`
     /// processes cannot lose each other's entry: the atomic tmp+rename in
     /// `save` only prevents a torn read, and `save` even uses a fixed `.tmp`
     /// name that concurrent writers would collide on. `save` stays lock-free —
@@ -405,7 +405,7 @@ fn normalize_registry(registry: &str) -> String {
     }
 }
 
-impl aster_box_core::traits::CredentialProvider for CredentialStore {
+impl krun_box_core::traits::CredentialProvider for CredentialStore {
     fn get(&self, registry: &str) -> Result<Option<(String, String)>> {
         self.get(registry)
     }

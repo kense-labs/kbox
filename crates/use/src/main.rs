@@ -5,7 +5,7 @@ fn main() -> ExitCode {
     let json = args.iter().any(|argument| argument == "--json");
     let runtime = match tokio::runtime::Builder::new_multi_thread()
         .enable_all()
-        .thread_stack_size(aster_use::cli::CLI_WORKER_STACK_SIZE)
+        .thread_stack_size(krun_use::cli::CLI_WORKER_STACK_SIZE)
         .build()
     {
         Ok(runtime) => runtime,
@@ -17,7 +17,7 @@ fn main() -> ExitCode {
     // Windows gives the process entry thread a smaller stack than Unix. Poll
     // the schema-v3 command graph on an explicitly sized Tokio worker while
     // the entry thread waits only on the small join handle.
-    let command = runtime.spawn(aster_use::cli::run_os(args));
+    let command = runtime.spawn(krun_use::cli::run_os(args));
     match runtime.block_on(command) {
         Ok(result) => render_result(json, result),
         Err(error) => startup_error(json, format!("async command worker failed: {error}")),
@@ -26,9 +26,9 @@ fn main() -> ExitCode {
 
 fn render_result(
     json: bool,
-    result: aster_use_core::UseResult<aster_use::cli::CommandOutput>,
+    result: krun_use_core::UseResult<krun_use::cli::CommandOutput>,
 ) -> ExitCode {
-    match aster_use::cli::write_result(
+    match krun_use::cli::write_result(
         json,
         result,
         &mut std::io::stdout().lock(),
@@ -36,7 +36,7 @@ fn render_result(
     ) {
         Ok(code) => ExitCode::from(code),
         Err(error) => {
-            eprintln!("aster-use: could not write command output: {error}");
+            eprintln!("krun-use: could not write command output: {error}");
             ExitCode::from(1)
         }
     }
@@ -57,7 +57,7 @@ fn startup_error(json: bool, message: String) -> ExitCode {
             serde_json::to_string_pretty(&output).unwrap_or_default()
         );
     } else {
-        eprintln!("aster-use: {message}");
+        eprintln!("krun-use: {message}");
     }
     ExitCode::from(1)
 }

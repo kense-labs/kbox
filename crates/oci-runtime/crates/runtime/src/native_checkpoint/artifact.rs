@@ -4,7 +4,7 @@ use std::io::{Read, Seek, SeekFrom, Write};
 use std::os::unix::fs::OpenOptionsExt;
 use std::path::{Component, Path, PathBuf};
 
-use aster_oci_sdk::{
+use krun_oci_sdk::{
     canonical_json_bytes, CheckpointCompatibility, CheckpointDigest, ContainerTarget, ErrorCode,
     Result,
 };
@@ -18,7 +18,7 @@ use super::{checkpoint_error, io_error};
 // external-device mount contract needed by restore without changing how the
 // length-delimited manifest and image bodies are encoded.
 const ARTIFACT_MAGIC: [u8; 16] = *b"ASTR-OCI-CRIU-V1";
-const ARTIFACT_SCHEMA_V2: &str = "aster.oci.native-criu-checkpoint.v2";
+const ARTIFACT_SCHEMA_V2: &str = "krun.oci.native-criu-checkpoint.v2";
 const INVENTORY_IMAGE: &str = "inventory.img";
 const MAX_IMAGE_FILES: usize = 4_096;
 const MAX_IMAGE_NAME_BYTES: usize = 255;
@@ -216,7 +216,7 @@ impl ExternalMountManifestEntry {
     }
 
     fn validate(&self) -> Result<()> {
-        let Some(index) = self.name.strip_prefix("aster-oci-device-") else {
+        let Some(index) = self.name.strip_prefix("krun-oci-device-") else {
             return Err(invalid_artifact(
                 "native checkpoint external mount has an invalid cookie",
             ));
@@ -863,32 +863,32 @@ pub(super) fn retained_manifest_fixture() -> (CheckpointArtifactManifest, Vec<u8
         schema_version: ARTIFACT_SCHEMA_V2.to_string(),
         publication_token: encode_token(&token),
         source: ContainerTarget::exact(
-            aster_oci_sdk::ContainerId::new("restore-journal-source").unwrap(),
-            aster_oci_sdk::Generation(1),
+            krun_oci_sdk::ContainerId::new("restore-journal-source").unwrap(),
+            krun_oci_sdk::Generation(1),
         ),
         source_config_digest: digest('1'),
         source_attachments_digest: digest('2'),
         compatibility: CheckpointCompatibility::new(
-            aster_oci_core::DriverKind::NativeLinux,
-            aster_oci_core::IsolationClass::SharedHostKernel,
-            aster_oci_core::HostPlatform::Linux,
+            krun_oci_core::DriverKind::NativeLinux,
+            krun_oci_core::IsolationClass::SharedHostKernel,
+            krun_oci_core::HostPlatform::Linux,
             std::env::consts::ARCH,
-            aster_oci_sdk::RuntimeArtifact::new(
-                "aster-oci-runtime",
+            krun_oci_sdk::RuntimeArtifact::new(
+                "krun-oci-runtime",
                 "0.2.0",
                 digest('3').to_string(),
                 None,
             )
             .unwrap(),
             digest('4'),
-            aster_oci_sdk::CheckpointFormat::new("native-linux-criu", 1).unwrap(),
+            krun_oci_sdk::CheckpointFormat::new("native-linux-criu", 1).unwrap(),
         )
         .unwrap(),
         quiesce: "paused".to_string(),
         launcher_pid: 4_241,
         checkpoint_root_pid: 4_242,
         init_pid: 4_242,
-        cgroup_path: "/aster/restore/aster-workload".to_string(),
+        cgroup_path: "/krun/restore/krun-workload".to_string(),
         criu: CriuIdentity {
             executable_digest: digest('5'),
             version: "4.2.1".to_string(),
@@ -896,7 +896,7 @@ pub(super) fn retained_manifest_fixture() -> (CheckpointArtifactManifest, Vec<u8
         },
         dump_options: vec!["--shell-job".to_string()],
         external_mounts: vec![ExternalMountManifestEntry {
-            name: "aster-oci-device-0000".to_string(),
+            name: "krun-oci-device-0000".to_string(),
             mountpoint: PathBuf::from("/dev/null"),
         }],
         images: vec![ImageManifestEntry {
@@ -914,11 +914,11 @@ fn image_io(
     directory: &Path,
     name: &str,
     error: std::io::Error,
-) -> aster_oci_sdk::Error {
+) -> krun_oci_sdk::Error {
     io_error(action, &directory.join(name), error)
 }
 
-fn invalid_artifact(message: impl Into<String>) -> aster_oci_sdk::Error {
+fn invalid_artifact(message: impl Into<String>) -> krun_oci_sdk::Error {
     checkpoint_error(ErrorCode::FailedPrecondition, message)
 }
 
@@ -926,8 +926,8 @@ fn invalid_artifact(message: impl Into<String>) -> aster_oci_sdk::Error {
 mod tests {
     use std::os::unix::fs::OpenOptionsExt;
 
-    use aster_oci_core::{DriverKind, HostPlatform, IsolationClass};
-    use aster_oci_sdk::{CheckpointFormat, ContainerId, Generation, RuntimeArtifact};
+    use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
+    use krun_oci_sdk::{CheckpointFormat, ContainerId, Generation, RuntimeArtifact};
     use tempfile::tempdir;
 
     use super::*;
@@ -935,7 +935,7 @@ mod tests {
     fn metadata() -> ArtifactMetadata {
         let digest = CheckpointDigest::new(format!("sha256:{}", "1".repeat(64))).unwrap();
         let runtime = RuntimeArtifact::new(
-            "aster-oci-runtime",
+            "krun-oci-runtime",
             "0.2.0",
             format!("sha256:{}", "2".repeat(64)),
             None,
@@ -961,7 +961,7 @@ mod tests {
             launcher_pid: 41,
             checkpoint_root_pid: 43,
             init_pid: 43,
-            cgroup_path: "/sys/fs/cgroup/aster-test".to_string(),
+            cgroup_path: "/sys/fs/cgroup/krun-test".to_string(),
             criu: CriuIdentity {
                 executable_digest: digest,
                 version: "4.2.1".to_string(),
@@ -969,7 +969,7 @@ mod tests {
             },
             dump_options: vec!["--leave-running".to_string()],
             external_mounts: vec![ExternalMountManifestEntry::new(
-                "aster-oci-device-0000",
+                "krun-oci-device-0000",
                 Path::new("/dev/null"),
             )
             .expect("external mount")],
@@ -1073,19 +1073,19 @@ mod tests {
     #[test]
     fn validates_exact_external_mount_cookie_and_path_contract() {
         let mount = ExternalMountManifestEntry::new(
-            "aster-oci-device-0255",
+            "krun-oci-device-0255",
             Path::new("/dev/qualified-device"),
         )
         .expect("bounded external device mount");
-        assert_eq!(mount.name(), "aster-oci-device-0255");
+        assert_eq!(mount.name(), "krun-oci-device-0255");
         assert_eq!(mount.mountpoint(), Path::new("/dev/qualified-device"));
 
         for cookie in [
             "device-0000",
-            "aster-oci-device-000",
-            "aster-oci-device-00000",
-            "aster-oci-device-0256",
-            "aster-oci-device-abcd",
+            "krun-oci-device-000",
+            "krun-oci-device-00000",
+            "krun-oci-device-0256",
+            "krun-oci-device-abcd",
         ] {
             assert!(ExternalMountManifestEntry::new(cookie, Path::new("/dev/null")).is_err());
         }
@@ -1097,11 +1097,10 @@ mod tests {
             "/dev/../null",
             "/dev/null/",
         ] {
-            assert!(ExternalMountManifestEntry::new(
-                "aster-oci-device-0000",
-                Path::new(mountpoint),
-            )
-            .is_err());
+            assert!(
+                ExternalMountManifestEntry::new("krun-oci-device-0000", Path::new(mountpoint),)
+                    .is_err()
+            );
         }
     }
 

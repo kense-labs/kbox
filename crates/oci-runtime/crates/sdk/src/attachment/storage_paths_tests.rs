@@ -8,8 +8,8 @@ fn rule() -> StoragePathRestriction {
     StoragePathRestriction::new(
         StorageAttachmentId::new("workspace").unwrap(),
         vec![".env".into(), "嵌套/凭据 \"alpha\"\\beta".into()],
-        vec![".aster".into(), ".env".into()],
-        vec![".aster/loops".into()],
+        vec![".krun".into(), ".env".into()],
+        vec![".krun/loops".into()],
     )
     .unwrap()
 }
@@ -58,11 +58,11 @@ fn rejects_escape_paths_and_writable_exceptions_without_a_denied_ancestor() {
             "{path:?}"
         );
     }
-    for exception in [".", ".aster", ".aster-other/loops"] {
+    for exception in [".", ".krun", ".krun-other/loops"] {
         assert!(StoragePathRestriction::new(
             StorageAttachmentId::new("workspace").unwrap(),
             vec![],
-            vec![".aster".into()],
+            vec![".krun".into()],
             vec![exception.into()]
         )
         .is_err());

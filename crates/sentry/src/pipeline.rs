@@ -37,7 +37,7 @@ pub struct Pipeline {
     l2: Option<Arc<dyn Judge>>,
     l3: Option<Arc<dyn Judge>>,
     /// The SAE mechanistic-interpretability tier — judges model-output `LlmActivations` events from
-    /// aster-power's in-enclave feature emission (a separate domain from the observer-event rule chain).
+    /// krun-power's in-enclave feature emission (a separate domain from the observer-event rule chain).
     sae: Option<Arc<dyn Judge>>,
     fail_closed: bool,
     speculate_above: Option<Severity>,

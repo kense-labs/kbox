@@ -319,7 +319,7 @@ fn archive_locks_check_download_and_source_layout_before_publication() {
         text.replace("record_sha256 =", "unknown ="),
         text.replace("archive {", "archive \"unexpected\" {"),
         text.replace("archive {", "archive {\nextra {}"),
-        text.replace("aster.env-lock.v3", "aster.env-lock.v2"),
+        text.replace("krun.env-lock.v3", "krun.env-lock.v2"),
         text.replace("record_sha256 = \"", "record_sha256 = \"invalid"),
     ] {
         assert!(crate::EnvLock::parse(&invalid).is_err());

@@ -1,9 +1,14 @@
 use std::collections::{BTreeMap, VecDeque};
 use std::sync::{Arc, Mutex};
 
-use aster_box_core::log::LogEntry;
-use aster_box_core::pty::PtyRequest;
-use aster_box_core::{
+use async_trait::async_trait;
+use base64::engine::general_purpose::STANDARD;
+use base64::Engine;
+use chrono::Utc;
+use futures::StreamExt;
+use krun_box_core::log::LogEntry;
+use krun_box_core::pty::PtyRequest;
+use krun_box_core::{
     resolve_execution, BoxConfig, CreateExecutionRequest, ExecOutput, ExecRequest,
     ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
     ExecutionId, ExecutionIsolation, ExecutionLease, ExecutionManager, ExecutionManagerError,
@@ -13,18 +18,13 @@ use aster_box_core::{
     FilesystemOp, FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
     ReconcileOutcome, RestartExecutionOptions,
 };
-use async_trait::async_trait;
-use base64::engine::general_purpose::STANDARD;
-use base64::Engine;
-use chrono::Utc;
-use futures::StreamExt;
 
 use super::{
     ArtifactExportOptions, CommandRunOptions, FilesystemOptions, Sandbox, SandboxCreateOptions,
     SandboxEventStreamOptions, SandboxLogOptions, SandboxNetwork, SandboxRestartOptions,
     MAX_ARTIFACT_BYTES,
 };
-use crate::{AsterBoxClient, AsterBoxPaths, ClientError};
+use crate::{ClientError, KrunBoxClient, KrunBoxPaths};
 
 #[derive(Debug)]
 struct RecordingRuntime {
@@ -504,12 +504,8 @@ impl ExecutionSessionManager for RecordingRuntime {
     }
 }
 
-fn test_client(runtime: Arc<RecordingRuntime>, home: &std::path::Path) -> AsterBoxClient {
-    AsterBoxClient::with_execution_services(
-        AsterBoxPaths::from_home(home),
-        runtime.clone(),
-        runtime,
-    )
+fn test_client(runtime: Arc<RecordingRuntime>, home: &std::path::Path) -> KrunBoxClient {
+    KrunBoxClient::with_execution_services(KrunBoxPaths::from_home(home), runtime.clone(), runtime)
 }
 
 #[tokio::test]

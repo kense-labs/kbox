@@ -1,11 +1,11 @@
 [package]
-name = "aster-use-core"
-description = "Shared typed contracts for Aster Use domains"
+name = "krun-use-core"
+description = "Shared typed contracts for Krun Use domains"
 version = "0.2.4"
 edition = "2021"
 license = "MIT"
-repository = "https://github.com/aster-ai-lab/Use"
-authors = ["Aster"]
+repository = "https://github.com/kense-labs/krun"
+authors = ["Krun"]
 rust-version = "1.82"
 publish = false
 

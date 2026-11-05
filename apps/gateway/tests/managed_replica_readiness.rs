@@ -1,7 +1,7 @@
-use aster_gateway::managed_snapshot::{
+use chrono::{Duration, Utc};
+use krun_gateway::managed_snapshot::{
     ManagedSnapshot, ManagedSnapshotState, ManagedSnapshotStatus,
 };
-use chrono::{Duration, Utc};
 use std::net::SocketAddr;
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
@@ -20,7 +20,7 @@ struct GatewayProcess {
 impl GatewayProcess {
     fn start(config_path: &Path) -> Self {
         common::ensure_test_admin_token();
-        let mut command = Command::new(env!("CARGO_BIN_EXE_aster-gateway"));
+        let mut command = Command::new(env!("CARGO_BIN_EXE_krun-gateway"));
         command
             .env(common::TEST_ADMIN_TOKEN_ENV, common::TEST_ADMIN_TOKEN)
             .arg("--config")
@@ -222,7 +222,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 
@@ -291,7 +291,7 @@ management {{
   enabled        = true
   address        = "127.0.0.1:{management_port}"
   path_prefix    = "/api/gateway"
-  auth_token_env = "ASTER_GATEWAY_TEST_ADMIN_TOKEN"
+  auth_token_env = "KRUN_GATEWAY_TEST_ADMIN_TOKEN"
   allowed_ips    = ["127.0.0.1"]
 }}
 

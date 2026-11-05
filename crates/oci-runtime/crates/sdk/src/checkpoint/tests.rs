@@ -77,7 +77,7 @@ fn compatibility() -> CheckpointCompatibility {
         HostPlatform::Linux,
         "x86_64",
         RuntimeArtifact::new(
-            "aster-oci-runtime",
+            "krun-oci-runtime",
             "0.1.0",
             digest('a').to_string(),
             Some("checkpoint-contract-test".to_string()),
@@ -132,7 +132,7 @@ fn immutable_reference_round_trips_and_binds_the_paused_source() {
     );
     assert_eq!(
         reference.compatibility().runtime_artifact().name(),
-        "aster-oci-runtime"
+        "krun-oci-runtime"
     );
     assert_eq!(
         reference.compatibility().driver_build_digest(),
@@ -208,7 +208,7 @@ fn reference_creation_requires_a_matching_paused_source_stack() {
         IsolationClass::DedicatedVm,
         HostPlatform::Linux,
         "x86_64",
-        RuntimeArtifact::new("aster-oci-runtime", "0.1.0", digest('a').to_string(), None)
+        RuntimeArtifact::new("krun-oci-runtime", "0.1.0", digest('a').to_string(), None)
             .expect("runtime artifact"),
         digest('b'),
         CheckpointFormat::new("vm-snapshot", 1).expect("checkpoint format"),
@@ -219,9 +219,8 @@ fn reference_creation_requires_a_matching_paused_source_stack() {
 
 #[test]
 fn hardware_vm_checkpoint_pairs_and_guest_arch_follow_the_shared_contract() {
-    let artifact =
-        RuntimeArtifact::new("aster-oci-runtime", "0.1.0", digest('a').to_string(), None)
-            .expect("runtime artifact");
+    let artifact = RuntimeArtifact::new("krun-oci-runtime", "0.1.0", digest('a').to_string(), None)
+        .expect("runtime artifact");
     let format = CheckpointFormat::new("vm-snapshot", 1).expect("checkpoint format");
     let accepted = [
         (
@@ -318,7 +317,7 @@ fn reference_deserialization_rejects_tampered_evidence() {
 
     let mut tampered = Vec::new();
     let mut schema = canonical.clone();
-    schema["schemaVersion"] = json!("aster.oci.checkpoint-reference.v2");
+    schema["schemaVersion"] = json!("krun.oci.checkpoint-reference.v2");
     tampered.push(schema);
     let mut size = canonical.clone();
     size["artifactSizeBytes"] = json!(0);

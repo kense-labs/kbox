@@ -2,13 +2,13 @@
 
 use std::path::{Path, PathBuf};
 
-use aster_box_core::config::{ResourceConfig, TeeConfig};
-use aster_box_core::{
+use async_trait::async_trait;
+use krun_box_core::config::{ResourceConfig, TeeConfig};
+use krun_box_core::{
     BoxError, ExecutionBackend, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
     NetworkMode,
 };
-use aster_oci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
-use async_trait::async_trait;
+use krun_oci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
 
 use super::{
     LocalExecutionResourcePlan, OciBundlePreparationContext, OciBundleProvider,
@@ -18,7 +18,7 @@ use crate::sandbox::probe_sandbox_capabilities_for;
 use crate::{BoxRecord, ManagedExecutionMetadata};
 
 /// Prepares immutable bundles from Box image/rootfs policy while the separate
-/// Aster OCI Runtime service owns container lifecycle and I/O.
+/// Krun OCI Runtime service owns container lifecycle and I/O.
 #[derive(Clone)]
 pub struct NativeLinuxOciBundleProvider {
     preparer: VmLocalExecutionBackend,
@@ -227,7 +227,7 @@ impl OciBundleProvider for NativeLinuxOciBundleProvider {
         // Re-hash the exact configured artifacts immediately before rootfs or
         // bundle mutations. Owner startup and bundle evidence use this same pair.
         let capabilities = probe_sandbox_capabilities_for(
-            ExecutionBackend::AsterOci,
+            ExecutionBackend::KrunOci,
             Some(&self.runtime_path),
             Some(&self.agent_path),
         );
@@ -897,9 +897,9 @@ fn native_linux_metadata(record: &BoxRecord) -> ExecutionManagerResult<&ManagedE
     metadata
         .validate()
         .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
-    if metadata.plan.backend != ExecutionBackend::AsterOci {
+    if metadata.plan.backend != ExecutionBackend::KrunOci {
         return Err(ExecutionManagerError::InvalidRequest(format!(
-            "execution {} did not resolve to the Aster OCI Sandbox backend",
+            "execution {} did not resolve to the Krun OCI Sandbox backend",
             record.id
         )));
     }
@@ -922,7 +922,7 @@ fn cleanup_after_prepare_failure(
 mod tests {
     use std::collections::BTreeMap;
 
-    use aster_box_core::{
+    use krun_box_core::{
         BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionSnapshotId,
         NetworkMode, OperationId, SnapshotImageConfig, SnapshotMetadata,
     };

@@ -9,11 +9,11 @@ use std::path::PathBuf;
 use std::sync::OnceLock;
 use std::time::Duration;
 
-use aster_apofasi::{Client, SystemOneRequest};
-use aster_use_bge::{EmbeddingClient, EmbeddingRequest, RerankClient, RerankRequest};
-use aster_use_ocr::{OcrClient, OcrRequest};
 use bytes::Bytes;
 use http::{HeaderMap, HeaderValue, Response, StatusCode};
+use krun_apofasi::{Client, SystemOneRequest};
+use krun_use_bge::{EmbeddingClient, EmbeddingRequest, RerankClient, RerankRequest};
+use krun_use_ocr::{OcrClient, OcrRequest};
 use uuid::Uuid;
 
 use super::access_error::InferenceAccessError;
@@ -257,7 +257,7 @@ async fn recognize(headers: &HeaderMap, body: Bytes, request_id: Uuid) -> Respon
             return InferenceAccessError::Unavailable.into_response_with_request_id(request_id);
         }
     };
-    let path = std::env::temp_dir().join(format!("aster-gateway-ocr-{request_id}.{extension}"));
+    let path = std::env::temp_dir().join(format!("krun-gateway-ocr-{request_id}.{extension}"));
     let _file = TempImage(path.clone());
     if let Err(error) = tokio::fs::write(&path, &body).await {
         tracing::error!(error = %error, "Platform OCR could not store the image");
@@ -322,7 +322,7 @@ pub(crate) fn warm_platform_engines() {
     });
 }
 
-fn platform_ocr_client() -> aster_use_ocr::UseResult<OcrClient> {
+fn platform_ocr_client() -> krun_use_ocr::UseResult<OcrClient> {
     static SLOT: OnceLock<OcrClient> = OnceLock::new();
     if let Some(client) = SLOT.get() {
         return Ok(client.clone());
@@ -332,7 +332,7 @@ fn platform_ocr_client() -> aster_use_ocr::UseResult<OcrClient> {
     Ok(SLOT.get().cloned().unwrap_or(client))
 }
 
-fn platform_embedding_client() -> aster_use_bge::UseResult<EmbeddingClient> {
+fn platform_embedding_client() -> krun_use_bge::UseResult<EmbeddingClient> {
     static SLOT: OnceLock<EmbeddingClient> = OnceLock::new();
     if let Some(client) = SLOT.get() {
         return Ok(client.clone());
@@ -342,7 +342,7 @@ fn platform_embedding_client() -> aster_use_bge::UseResult<EmbeddingClient> {
     Ok(SLOT.get().cloned().unwrap_or(client))
 }
 
-fn platform_rerank_client() -> aster_use_bge::UseResult<RerankClient> {
+fn platform_rerank_client() -> krun_use_bge::UseResult<RerankClient> {
     static SLOT: OnceLock<RerankClient> = OnceLock::new();
     if let Some(client) = SLOT.get() {
         return Ok(client.clone());
@@ -515,7 +515,7 @@ fn record_observed_tokens(
 fn engine_unavailable(
     request_id: Uuid,
     engine: &str,
-    error: &aster_use_bge::UseError,
+    error: &krun_use_bge::UseError,
 ) -> Response<Bytes> {
     tracing::warn!(
         engine,
@@ -527,7 +527,7 @@ fn engine_unavailable(
     error_envelope_response(
         request_id,
         StatusCode::SERVICE_UNAVAILABLE,
-        "The platform model engine is unavailable; install it with 'aster-use-bge install'.",
+        "The platform model engine is unavailable; install it with 'krun-use-bge install'.",
         "use.bge.unavailable",
     )
 }
@@ -535,7 +535,7 @@ fn engine_unavailable(
 fn engine_request_invalid(
     request_id: Uuid,
     engine: &str,
-    error: &aster_use_bge::UseError,
+    error: &krun_use_bge::UseError,
 ) -> Response<Bytes> {
     tracing::warn!(
         engine,

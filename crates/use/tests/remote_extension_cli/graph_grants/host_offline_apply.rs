@@ -174,7 +174,7 @@ async fn reviewed_host_install_and_upgrade_apply_use_only_planning_cache() {
 
 fn apply_request(
     plan_request: &PluginHostPlanRequest,
-    plan: &aster_use_core::PluginHostPlanResult,
+    plan: &krun_use_core::PluginHostPlanResult,
     request_id: &str,
 ) -> PluginHostApplyRequest {
     PluginHostApplyRequest {

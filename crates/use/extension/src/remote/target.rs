@@ -1,4 +1,4 @@
-use aster_use_core::{PluginCatalogRecord, UseError, UseResult};
+use krun_use_core::{PluginCatalogRecord, UseError, UseResult};
 use semver::Version;
 use tough::{Repository, TargetName};
 
@@ -54,14 +54,14 @@ pub(super) fn decode_registry_target_metadata(
         .ok_or_else(|| {
             UseError::new(
                 "use.extension.registry_target_invalid",
-                "The signed target has no Aster catalog metadata.",
+                "The signed target has no Krun catalog metadata.",
             )
         })?;
     let bytes = serde_json::to_vec(value).map_err(|error| {
         UseError::new(
             "use.extension.registry_target_invalid",
             format!(
-                "Failed to decode Aster catalog metadata for TUF target '{}': {error}",
+                "Failed to decode Krun catalog metadata for TUF target '{}': {error}",
                 target_name.raw()
             ),
         )

@@ -1,8 +1,8 @@
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentCloseStdinRequest, AgentReadOutputRequest, AgentResizeRequest, AgentWriteStdinRequest,
 };
-use aster_oci_sdk::oci_spec::runtime::ContainerState;
-use aster_oci_sdk::{Error, ErrorCode, OutputChunk, OutputStream, Result};
+use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use krun_oci_sdk::{Error, ErrorCode, OutputChunk, OutputStream, Result};
 
 use super::super::guest_journal::{already_exists, changed_request};
 use super::JournaledLifecycleGuest;

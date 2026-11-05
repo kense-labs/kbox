@@ -6,7 +6,7 @@
 
 use std::path::{Path, PathBuf};
 
-use aster_box_core::error::{BoxError, Result};
+use krun_box_core::error::{BoxError, Result};
 
 /// Directory and marker names used for a bounded Linux Sandbox writable layer.
 ///

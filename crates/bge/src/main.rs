@@ -2,7 +2,7 @@
 #[tokio::main]
 async fn main() -> std::process::ExitCode {
     let json = std::env::args().any(|argument| argument == "--json");
-    match aster_use_bge::cli::run().await {
+    match krun_use_bge::cli::run().await {
         Ok(output) => {
             if output.should_print && json {
                 println!(
@@ -26,7 +26,7 @@ async fn main() -> std::process::ExitCode {
                     serde_json::to_string_pretty(&output).unwrap_or_default()
                 );
             } else {
-                eprintln!("aster-use-bge: {error}");
+                eprintln!("krun-use-bge: {error}");
                 if let Some(suggestion) = &error.suggestion {
                     eprintln!("suggestion: {suggestion}");
                 }
@@ -37,4 +37,4 @@ async fn main() -> std::process::ExitCode {
 }
 
 #[cfg(not(feature = "cli"))]
-compile_error!("The aster-use-bge binary requires the cli feature");
+compile_error!("The krun-use-bge binary requires the cli feature");

@@ -43,12 +43,12 @@ use std::sync::Arc;
 /// Callback type for image pull progress: `(current, total, digest, size_bytes)`.
 pub type PullProgressFn = Arc<dyn Fn(usize, usize, &str, i64) + Send + Sync>;
 
-use aster_box_core::config::BoxConfig;
+use krun_box_core::config::BoxConfig;
 #[cfg(unix)]
-use aster_box_core::config::TeeConfig;
-use aster_box_core::error::{BoxError, Result};
-use aster_box_core::event::{BoxEvent, EventEmitter};
-use aster_box_core::execution::ResolvedExecutionPlan;
+use krun_box_core::config::TeeConfig;
+use krun_box_core::error::{BoxError, Result};
+use krun_box_core::event::{BoxEvent, EventEmitter};
+use krun_box_core::execution::ResolvedExecutionPlan;
 use serde::{Deserialize, Serialize};
 use tokio::sync::RwLock;
 use tracing::Instrument;
@@ -67,8 +67,8 @@ pub(crate) struct OriginalVmScope {
     execution_id: String,
     home: PathBuf,
     store: PathBuf,
-    creation: aster_box_core::OperationId,
-    generation: aster_box_core::ExecutionGeneration,
+    creation: krun_box_core::OperationId,
+    generation: krun_box_core::ExecutionGeneration,
     intent: String,
     handler: std::sync::Weak<RwLock<Option<Box<dyn VmHandler>>>>,
 }
@@ -206,15 +206,15 @@ pub(crate) struct BoxLayout {
 }
 
 #[cfg(target_os = "windows")]
-const WINDOWS_GUEST_EXIT_CODE: &str = ".aster_exit_code";
+const WINDOWS_GUEST_EXIT_CODE: &str = ".krun_exit_code";
 #[cfg(target_os = "windows")]
 const WINDOWS_GUEST_STDOUT: &str = "guest-init.stdout.log";
 #[cfg(target_os = "windows")]
 const WINDOWS_GUEST_STDERR: &str = "guest-init.stderr.log";
 #[cfg(target_os = "windows")]
-const WINDOWS_GUEST_RESULT_MARKER: &str = ".aster_host_result_collected";
+const WINDOWS_GUEST_RESULT_MARKER: &str = ".krun_host_result_collected";
 #[cfg(target_os = "windows")]
-const WINDOWS_LIVE_LOGS_DRAINED_MARKER: &str = ".aster_host_live_logs_drained";
+const WINDOWS_LIVE_LOGS_DRAINED_MARKER: &str = ".krun_host_live_logs_drained";
 
 pub(crate) const TERMINAL_EXIT_POLL_INTERVAL: std::time::Duration =
     std::time::Duration::from_millis(25);
@@ -227,11 +227,11 @@ pub(crate) const TERMINAL_EXIT_POLL_TIMEOUT: std::time::Duration =
 fn append_windows_guest_stream(
     source: &Path,
     destination: &Path,
-    runtime_filter: &aster_box_core::log::RuntimeConsoleFilter,
+    runtime_filter: &krun_box_core::log::RuntimeConsoleFilter,
 ) -> std::io::Result<()> {
     use std::io::{BufRead, Write};
 
-    let input = match aster_box_core::windows_file::open_regular_file(source, None) {
+    let input = match krun_box_core::windows_file::open_regular_file(source, None) {
         Ok((input, _)) => input,
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
         Err(error) => return Err(error),
@@ -262,7 +262,7 @@ fn append_windows_guest_stream(
 fn windows_marker_matches(path: &Path, expected: &[u8]) -> bool {
     use std::io::Read;
 
-    let Ok((file, _)) = aster_box_core::windows_file::open_regular_file(path, None) else {
+    let Ok((file, _)) = krun_box_core::windows_file::open_regular_file(path, None) else {
         return false;
     };
     let mut contents = Vec::with_capacity(expected.len().saturating_add(1));
@@ -287,7 +287,7 @@ fn windows_guest_persisted_exit_code(box_dir: &Path) -> Option<i32> {
     use std::io::Read;
 
     let exit_path = box_dir.join("rootfs").join(WINDOWS_GUEST_EXIT_CODE);
-    let (file, _) = aster_box_core::windows_file::open_regular_file(&exit_path, None).ok()?;
+    let (file, _) = krun_box_core::windows_file::open_regular_file(&exit_path, None).ok()?;
     let mut contents = String::new();
     file.take(64).read_to_string(&mut contents).ok()?;
     contents.trim().parse::<i32>().ok()
@@ -301,7 +301,7 @@ fn windows_guest_persisted_exit_code(box_dir: &Path) -> Option<i32> {
 #[cfg(target_os = "windows")]
 pub fn collect_windows_guest_result(
     box_dir: &Path,
-    log_config: &aster_box_core::log::LogConfig,
+    log_config: &krun_box_core::log::LogConfig,
     shim_exit_code: i32,
 ) -> Result<i32> {
     let rootfs = box_dir.join("rootfs");
@@ -313,7 +313,7 @@ pub fn collect_windows_guest_result(
 
     if !windows_marker_matches(&marker, b"collected\n") {
         std::fs::create_dir_all(&logs)?;
-        let runtime_filter = aster_box_core::log::RuntimeConsoleFilter::new();
+        let runtime_filter = krun_box_core::log::RuntimeConsoleFilter::new();
 
         for (source, destination) in [
             (&stdout_source, logs.join("console.log")),
@@ -338,7 +338,7 @@ pub fn collect_windows_guest_result(
         // previous restart.
         if !windows_marker_matches(&live_logs_drained, b"drained\n") {
             let stopped = std::sync::atomic::AtomicBool::new(true);
-            aster_box_core::log::run_log_processor_streams(
+            krun_box_core::log::run_log_processor_streams(
                 &stdout_source,
                 &stderr_source,
                 &logs,
@@ -347,7 +347,7 @@ pub fn collect_windows_guest_result(
             );
         }
 
-        aster_box_core::windows_file::replace_regular_file(&marker, b"collected\n").map_err(
+        krun_box_core::windows_file::replace_regular_file(&marker, b"collected\n").map_err(
             |error| BoxError::BoxBootError {
                 message: format!(
                     "Failed to mark the Windows guest result collected at {}: {error}",
@@ -359,7 +359,7 @@ pub fn collect_windows_guest_result(
     }
 
     let exit_path = rootfs.join(WINDOWS_GUEST_EXIT_CODE);
-    let contents = match aster_box_core::windows_file::open_regular_file(&exit_path, None) {
+    let contents = match krun_box_core::windows_file::open_regular_file(&exit_path, None) {
         Ok((file, _)) => {
             use std::io::Read;
             let mut contents = String::new();
@@ -441,7 +441,7 @@ pub struct VmManager {
     /// Platform-specific: passt on Linux, gvproxy on macOS.
     pub(crate) net_manager: Option<Box<dyn crate::network::NetworkBackend>>,
 
-    /// Aster home directory (~/.aster)
+    /// Krun home directory (~/.krun)
     pub(crate) home_dir: PathBuf,
 
     /// Anonymous volume names created during boot (from OCI VOLUME directives)
@@ -508,7 +508,7 @@ pub struct VmManager {
     /// Logging driver config, threaded into the InstanceSpec so the shim runs
     /// the log processor for the box's lifetime (set by the CLI via
     /// [`VmManager::set_log_config`]).
-    pub(crate) log_config: aster_box_core::log::LogConfig,
+    pub(crate) log_config: krun_box_core::log::LogConfig,
 
     /// Backend-neutral resolution captured before any boot side effects.
     pub(crate) resolved_execution_plan: Option<ResolvedExecutionPlan>,
@@ -526,7 +526,7 @@ impl VmManager {
     /// Create a new VM manager.
     pub fn new(config: BoxConfig, event_emitter: EventEmitter) -> Self {
         let box_id = uuid::Uuid::new_v4().to_string();
-        let home_dir = aster_box_core::dirs_home();
+        let home_dir = krun_box_core::dirs_home();
         let rootfs_provider =
             crate::rootfs::default_provider_for_boot(rootfs_snapshot_requested(&config));
 
@@ -559,7 +559,7 @@ impl VmManager {
             prom: None,
             shim_exit_code: None,
             pull_progress_fn: None,
-            log_config: aster_box_core::log::LogConfig::default(),
+            log_config: krun_box_core::log::LogConfig::default(),
             resolved_execution_plan: None,
             managed_secret_root: None,
             transient_registry_auth: None,
@@ -568,7 +568,7 @@ impl VmManager {
 
     /// Create a new VM manager with a specific box ID.
     pub fn with_box_id(config: BoxConfig, event_emitter: EventEmitter, box_id: String) -> Self {
-        let home_dir = aster_box_core::dirs_home();
+        let home_dir = krun_box_core::dirs_home();
         let rootfs_provider = crate::rootfs::default_provider_for_box_boot(
             &home_dir.join("boxes").join(&box_id),
             rootfs_snapshot_requested(&config),
@@ -603,7 +603,7 @@ impl VmManager {
             prom: None,
             shim_exit_code: None,
             pull_progress_fn: None,
-            log_config: aster_box_core::log::LogConfig::default(),
+            log_config: krun_box_core::log::LogConfig::default(),
             resolved_execution_plan: None,
             managed_secret_root: None,
             transient_registry_auth: None,
@@ -615,8 +615,7 @@ impl VmManager {
         // Sandbox peer-auth may have dropped this process to the real UID.
         // Overlay unmount needs effective root / CAP_SYS_ADMIN.
         #[cfg(target_os = "linux")]
-        if let Err(error) = crate::sandbox::aster_oci_controller::restore_effective_root_if_saved()
-        {
+        if let Err(error) = crate::sandbox::krun_oci_controller::restore_effective_root_if_saved() {
             tracing::warn!(
                 box_id = %self.box_id,
                 %error,
@@ -933,7 +932,7 @@ impl VmManager {
         provider: Box<dyn VmmProvider>,
     ) -> Self {
         let box_id = uuid::Uuid::new_v4().to_string();
-        let home_dir = aster_box_core::dirs_home();
+        let home_dir = krun_box_core::dirs_home();
         let rootfs_provider =
             crate::rootfs::default_provider_for_boot(rootfs_snapshot_requested(&config));
         Self {
@@ -965,7 +964,7 @@ impl VmManager {
             prom: None,
             shim_exit_code: None,
             pull_progress_fn: None,
-            log_config: aster_box_core::log::LogConfig::default(),
+            log_config: krun_box_core::log::LogConfig::default(),
             resolved_execution_plan: None,
             managed_secret_root: None,
             transient_registry_auth: None,

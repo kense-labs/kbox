@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use aster_oci_core::{CapabilityStatus, HostPlatform};
-use aster_oci_sdk::OciBundle;
+use krun_oci_core::{CapabilityStatus, HostPlatform};
+use krun_oci_sdk::OciBundle;
 
 use super::lifecycle::exercise_until_fault;
 use super::{

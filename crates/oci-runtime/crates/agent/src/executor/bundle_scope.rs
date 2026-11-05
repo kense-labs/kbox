@@ -5,8 +5,8 @@ use std::os::fd::{AsRawFd, FromRawFd, RawFd};
 use std::os::unix::ffi::OsStrExt;
 use std::path::{Component, Path, PathBuf};
 
-use aster_oci_agent_protocol::GuestPath;
-use aster_oci_sdk::{Error, ErrorCode, Result};
+use krun_oci_agent_protocol::GuestPath;
+use krun_oci_sdk::{Error, ErrorCode, Result};
 
 use super::executor_error;
 
@@ -562,8 +562,8 @@ mod tests {
     use std::fs;
     use std::os::fd::AsRawFd;
 
-    use aster_oci_agent_protocol::GuestPath;
-    use aster_oci_sdk::ErrorCode;
+    use krun_oci_agent_protocol::GuestPath;
+    use krun_oci_sdk::ErrorCode;
     use tempfile::tempdir;
 
     use super::BundleDirectoryScope;

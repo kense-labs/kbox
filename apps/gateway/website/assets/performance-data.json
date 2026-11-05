@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "commit": "fbb8ae0ef490ea793f5baf9c205f93f6818f9eb9",
-  "run_url": "https://github.com/kense-labs/gateway/actions/runs/31070380529",
+  "run_url": "https://github.com/kense-labs/krun/actions/runs/31070380529",
   "generated_at": "2026-08-06T04:27:36Z",
   "environment": {
     "runner_image": "ubuntu24-20260720.247.2",

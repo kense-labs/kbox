@@ -1,4 +1,4 @@
-//! `aster-box login` command — Store registry credentials.
+//! `krun-box login` command — Store registry credentials.
 
 use clap::Args;
 
@@ -54,7 +54,7 @@ pub async fn execute(args: LoginArgs) -> Result<(), Box<dyn std::error::Error>> 
     validate_credentials(&username, &password)
         .map_err(|error| -> Box<dyn std::error::Error> { error.into() })?;
 
-    let store = aster_box_runtime::CredentialStore::default_path()?;
+    let store = krun_box_runtime::CredentialStore::default_path()?;
     store.store(&server, &username, &password)?;
 
     println!("Login Succeeded");

@@ -1,4 +1,4 @@
-use aster_oci_sdk::Result;
+use krun_oci_sdk::Result;
 use serde::Deserialize;
 
 use super::{
@@ -62,7 +62,7 @@ impl Image {
         require_equal(
             "image.archive_name",
             &self.archive_name,
-            "aster-oci-system.ext4.xz",
+            "krun-oci-system.ext4.xz",
         )?;
         if self.archive_size == 0 {
             return Err(image_error(

@@ -287,33 +287,33 @@ pub(super) async fn pod_sandbox_stats(
 pub(super) fn metric_descriptors() -> Vec<MetricDescriptor> {
     vec![
         MetricDescriptor {
-            name: "aster_box_pod_sandbox_ready".to_string(),
+            name: "krun_box_pod_sandbox_ready".to_string(),
             help: "Whether the CRI pod sandbox is Ready after VM health re-proof (not durable store alone)."
                 .to_string(),
             kind: "gauge".to_string(),
             unit: "1".to_string(),
         },
         MetricDescriptor {
-            name: "aster_box_pod_sandbox_vm_manager_present".to_string(),
+            name: "krun_box_pod_sandbox_vm_manager_present".to_string(),
             help: "Whether the runtime has an in-process VM manager for the pod sandbox."
                 .to_string(),
             kind: "gauge".to_string(),
             unit: "1".to_string(),
         },
         MetricDescriptor {
-            name: "aster_box_pod_sandbox_containers_total".to_string(),
+            name: "krun_box_pod_sandbox_containers_total".to_string(),
             help: "Number of containers tracked for the pod sandbox.".to_string(),
             kind: "gauge".to_string(),
             unit: "count".to_string(),
         },
         MetricDescriptor {
-            name: "aster_box_pod_sandbox_containers_running".to_string(),
+            name: "krun_box_pod_sandbox_containers_running".to_string(),
             help: "Number of running containers tracked for the pod sandbox.".to_string(),
             kind: "gauge".to_string(),
             unit: "count".to_string(),
         },
         MetricDescriptor {
-            name: "aster_box_pod_sandbox_containers_exited".to_string(),
+            name: "krun_box_pod_sandbox_containers_exited".to_string(),
             help: "Number of exited containers tracked for the pod sandbox.".to_string(),
             kind: "gauge".to_string(),
             unit: "count".to_string(),
@@ -363,7 +363,7 @@ pub(super) fn pod_sandbox_metrics(
         pod_sandbox_id: sandbox.id.clone(),
         metrics: vec![
             pod_metric(
-                "aster_box_pod_sandbox_ready",
+                "krun_box_pod_sandbox_ready",
                 &labels,
                 if sandbox.state == SandboxState::Ready {
                     1.0
@@ -373,25 +373,25 @@ pub(super) fn pod_sandbox_metrics(
                 now_ns,
             ),
             pod_metric(
-                "aster_box_pod_sandbox_vm_manager_present",
+                "krun_box_pod_sandbox_vm_manager_present",
                 &labels,
                 if vm_manager_present { 1.0 } else { 0.0 },
                 now_ns,
             ),
             pod_metric(
-                "aster_box_pod_sandbox_containers_total",
+                "krun_box_pod_sandbox_containers_total",
                 &labels,
                 containers.len() as f64,
                 now_ns,
             ),
             pod_metric(
-                "aster_box_pod_sandbox_containers_running",
+                "krun_box_pod_sandbox_containers_running",
                 &labels,
                 running_containers as f64,
                 now_ns,
             ),
             pod_metric(
-                "aster_box_pod_sandbox_containers_exited",
+                "krun_box_pod_sandbox_containers_exited",
                 &labels,
                 exited_containers as f64,
                 now_ns,
@@ -416,7 +416,7 @@ mod stats_tests {
             labels: HashMap::from([("app".to_string(), "web".to_string())]),
             annotations: HashMap::from([("team".to_string(), "platform".to_string())]),
             log_directory: "/var/log/pods/default_web_uid-1".to_string(),
-            runtime_handler: "aster".to_string(),
+            runtime_handler: "krun".to_string(),
             network_ip: "10.244.0.2".to_string(),
             additional_ips: vec![],
             dns: crate::sandbox::SandboxDns::default(),
@@ -452,7 +452,7 @@ mod stats_tests {
             annotations: HashMap::from([("container".to_string(), id.to_string())]),
             log_path: format!("/var/log/pods/{id}.log"),
             rootfs_path,
-            rootfs_guest_path: format!("/run/aster/cri/container-rootfs/sandbox-1/{id}/rootfs"),
+            rootfs_guest_path: format!("/run/krun/cri/container-rootfs/sandbox-1/{id}/rootfs"),
         }
     }
 
@@ -504,7 +504,7 @@ mod stats_tests {
         assert!(!should_collect_rootfs_usage(""));
         assert!(!should_collect_rootfs_usage("   "));
         assert!(!should_collect_rootfs_usage("/"));
-        assert!(should_collect_rootfs_usage("/tmp/aster/rootfs"));
+        assert!(should_collect_rootfs_usage("/tmp/krun/rootfs"));
     }
 
     #[test]
@@ -631,11 +631,11 @@ mod stats_tests {
             .collect();
 
         assert_eq!(descriptors.len(), 5);
-        assert!(names.contains("aster_box_pod_sandbox_ready"));
-        assert!(names.contains("aster_box_pod_sandbox_vm_manager_present"));
-        assert!(names.contains("aster_box_pod_sandbox_containers_total"));
-        assert!(names.contains("aster_box_pod_sandbox_containers_running"));
-        assert!(names.contains("aster_box_pod_sandbox_containers_exited"));
+        assert!(names.contains("krun_box_pod_sandbox_ready"));
+        assert!(names.contains("krun_box_pod_sandbox_vm_manager_present"));
+        assert!(names.contains("krun_box_pod_sandbox_containers_total"));
+        assert!(names.contains("krun_box_pod_sandbox_containers_running"));
+        assert!(names.contains("krun_box_pod_sandbox_containers_exited"));
         assert!(descriptors
             .iter()
             .all(|descriptor| descriptor.kind == "gauge"));
@@ -653,34 +653,34 @@ mod stats_tests {
         let metrics = pod_sandbox_metrics(&sandbox, &containers, true);
 
         assert_eq!(metrics.pod_sandbox_id, "sandbox-1");
-        assert_eq!(metric_value(&metrics, "aster_box_pod_sandbox_ready"), 1.0);
+        assert_eq!(metric_value(&metrics, "krun_box_pod_sandbox_ready"), 1.0);
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_vm_manager_present"),
+            metric_value(&metrics, "krun_box_pod_sandbox_vm_manager_present"),
             1.0
         );
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_containers_total"),
+            metric_value(&metrics, "krun_box_pod_sandbox_containers_total"),
             3.0
         );
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_containers_running"),
+            metric_value(&metrics, "krun_box_pod_sandbox_containers_running"),
             1.0
         );
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_containers_exited"),
+            metric_value(&metrics, "krun_box_pod_sandbox_containers_exited"),
             1.0
         );
 
         let ready_metric = metrics
             .metrics
             .iter()
-            .find(|metric| metric.name == "aster_box_pod_sandbox_ready")
+            .find(|metric| metric.name == "krun_box_pod_sandbox_ready")
             .unwrap();
         assert_eq!(ready_metric.labels["pod_sandbox_id"], "sandbox-1");
         assert_eq!(ready_metric.labels["namespace"], "default");
         assert_eq!(ready_metric.labels["name"], "web");
         assert_eq!(ready_metric.labels["uid"], "uid-1");
-        assert_eq!(ready_metric.labels["runtime_handler"], "aster");
+        assert_eq!(ready_metric.labels["runtime_handler"], "krun");
     }
 
     #[test]
@@ -688,13 +688,13 @@ mod stats_tests {
         let sandbox = test_sandbox(SandboxState::NotReady);
         let metrics = pod_sandbox_metrics(&sandbox, &[], false);
 
-        assert_eq!(metric_value(&metrics, "aster_box_pod_sandbox_ready"), 0.0);
+        assert_eq!(metric_value(&metrics, "krun_box_pod_sandbox_ready"), 0.0);
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_vm_manager_present"),
+            metric_value(&metrics, "krun_box_pod_sandbox_vm_manager_present"),
             0.0
         );
         assert_eq!(
-            metric_value(&metrics, "aster_box_pod_sandbox_containers_total"),
+            metric_value(&metrics, "krun_box_pod_sandbox_containers_total"),
             0.0
         );
     }

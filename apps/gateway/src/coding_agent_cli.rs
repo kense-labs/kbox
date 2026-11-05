@@ -96,8 +96,8 @@ pub(crate) struct SkillSearchArgs {
     skill_dirs: Vec<PathBuf>,
 }
 
-pub(crate) async fn operate_agent(command: &AgentCommands) -> aster_gateway::Result<()> {
-    use aster_gateway::agent::{find_executable, AgentRegistry, AgentRuntime};
+pub(crate) async fn operate_agent(command: &AgentCommands) -> krun_gateway::Result<()> {
+    use krun_gateway::agent::{find_executable, AgentRegistry, AgentRuntime};
 
     let registry = AgentRegistry::with_builtins();
     match command {
@@ -117,7 +117,7 @@ pub(crate) async fn operate_agent(command: &AgentCommands) -> aster_gateway::Res
                 println!(
                     "{}",
                     serde_json::to_string_pretty(&profiles)
-                        .map_err(|error| aster_gateway::GatewayError::Other(error.to_string()))?
+                        .map_err(|error| krun_gateway::GatewayError::Other(error.to_string()))?
                 );
             } else {
                 for profile in registry.profiles() {
@@ -151,7 +151,7 @@ pub(crate) async fn operate_agent(command: &AgentCommands) -> aster_gateway::Res
                 println!(
                     "{}",
                     serde_json::to_string_pretty(&body)
-                        .map_err(|error| aster_gateway::GatewayError::Other(error.to_string()))?
+                        .map_err(|error| krun_gateway::GatewayError::Other(error.to_string()))?
                 );
             } else {
                 println!("Agent:       {} ({})", profile.display_name(), profile.id());
@@ -195,8 +195,8 @@ pub(crate) async fn operate_agent(command: &AgentCommands) -> aster_gateway::Res
     Ok(())
 }
 
-pub(crate) async fn operate_skill(command: &SkillCommands) -> aster_gateway::Result<()> {
-    use aster_gateway::agent::{AgentRegistry, AgentRuntime, SkillCatalog, SkillDiscovery};
+pub(crate) async fn operate_skill(command: &SkillCommands) -> krun_gateway::Result<()> {
+    use krun_gateway::agent::{AgentRegistry, AgentRuntime, SkillCatalog, SkillDiscovery};
 
     let registry = AgentRegistry::with_builtins();
     match command {
@@ -216,7 +216,7 @@ pub(crate) async fn operate_skill(command: &SkillCommands) -> aster_gateway::Res
                 println!(
                     "{}",
                     serde_json::to_string_pretty(&skills)
-                        .map_err(|error| aster_gateway::GatewayError::Other(error.to_string()))?
+                        .map_err(|error| krun_gateway::GatewayError::Other(error.to_string()))?
                 );
             } else {
                 for skill in catalog.skills() {
@@ -250,7 +250,7 @@ pub(crate) async fn operate_skill(command: &SkillCommands) -> aster_gateway::Res
             task,
         } => {
             if task.trim().is_empty() {
-                return Err(aster_gateway::GatewayError::Skill(
+                return Err(krun_gateway::GatewayError::Skill(
                     "--task must not be empty".to_string(),
                 ));
             }
@@ -274,9 +274,9 @@ pub(crate) async fn operate_skill(command: &SkillCommands) -> aster_gateway::Res
 
 fn discover_skills(
     search: &SkillSearchArgs,
-    registry: &aster_gateway::agent::AgentRegistry,
-) -> aster_gateway::Result<aster_gateway::agent::SkillCatalog> {
-    use aster_gateway::agent::{SkillCatalog, SkillDiscovery};
+    registry: &krun_gateway::agent::AgentRegistry,
+) -> krun_gateway::Result<krun_gateway::agent::SkillCatalog> {
+    use krun_gateway::agent::{SkillCatalog, SkillDiscovery};
 
     let mut discovery = SkillDiscovery::new(&search.workspace)
         .with_explicit_roots(search.skill_dirs.iter().cloned());
@@ -306,11 +306,11 @@ fn join_arguments(arguments: &[OsString]) -> String {
 fn require_agent_success(
     agent: &str,
     status: std::process::ExitStatus,
-) -> aster_gateway::Result<()> {
+) -> krun_gateway::Result<()> {
     if status.success() {
         Ok(())
     } else {
-        Err(aster_gateway::GatewayError::Agent(format!(
+        Err(krun_gateway::GatewayError::Agent(format!(
             "agent `{agent}` exited with {}",
             status
                 .code()

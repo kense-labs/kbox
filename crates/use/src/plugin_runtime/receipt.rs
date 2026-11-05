@@ -1,5 +1,5 @@
-use aster_runtime::ProviderId;
-use aster_use_core::{PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, UseResult};
+use krun_runtime::ProviderId;
+use krun_use_core::{PackageSurfaceKind, PlanQualifiedSurfaceRef, PlanScope, UseResult};
 use serde::{Deserialize, Serialize};
 
 use super::model::{

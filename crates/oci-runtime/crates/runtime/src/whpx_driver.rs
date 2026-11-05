@@ -6,12 +6,12 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::{Arc, Weak};
 use std::time::Duration;
 
-use aster_oci_agent_protocol::{
+use krun_oci_agent_protocol::{
     AgentRecoveryReport, GuestAgentService, GuestPath, AGENT_RECOVERY_REPORT_MAX_BYTES,
     AGENT_RECOVERY_REPORT_PENDING_SUFFIX, AGENT_RUNTIME_SHARE_GUEST_ROOT,
 };
-use aster_oci_core::{CapabilityStatus, DriverCapability, DriverReadiness, IsolationClass};
-use aster_oci_sdk::{
+use krun_oci_core::{CapabilityStatus, DriverCapability, DriverReadiness, IsolationClass};
+use krun_oci_sdk::{
     async_trait, runtime_bundle_handoff_directory, runtime_bundle_handoff_root,
     AttachmentCapabilities, ContainerId, ContainerRecord, ContainerStats, ContainerTarget, Error,
     ErrorCode, ExitStatus, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse,
@@ -44,10 +44,10 @@ use crate::whpx_bootstrap::validate_whpx_bootstrap_root;
 const CONSOLE_DIRECTORY: &str = "console";
 const RECOVERY_DIRECTORY: &str = "recovery";
 const RUNTIME_SHARE_DIRECTORY: &str = "shares";
-const BUNDLE_HANDOFF_MARKER: &str = ".aster-oci-bundle-handoff.json";
-const BUNDLE_HANDOFF_MARKER_PENDING: &str = ".aster-oci-bundle-handoff.pending";
-const BUNDLE_HANDOFF_MARKER_STAGING_PREFIX: &str = ".aster-oci-bundle-handoff.pending.";
-const BUNDLE_HANDOFF_MARKER_SCHEMA: &str = "aster.oci.bundle-handoff.v1";
+const BUNDLE_HANDOFF_MARKER: &str = ".krun-oci-bundle-handoff.json";
+const BUNDLE_HANDOFF_MARKER_PENDING: &str = ".krun-oci-bundle-handoff.pending";
+const BUNDLE_HANDOFF_MARKER_STAGING_PREFIX: &str = ".krun-oci-bundle-handoff.pending.";
+const BUNDLE_HANDOFF_MARKER_SCHEMA: &str = "krun.oci.bundle-handoff.v1";
 const MAX_BUNDLE_HANDOFF_MARKER_BYTES: usize = 4 * 1024;
 const BUNDLE_HANDOFF_MARKER_PUBLISH_ATTEMPTS: usize = 3;
 const BUNDLE_HANDOFF_MARKER_STAGING_ATTEMPTS: usize = 8;
@@ -189,8 +189,8 @@ impl WhpxRuntimeDriver {
         capability
             .evidence
             .insert("runtime_root_protected".to_string(), "true".to_string());
-        const RUNTIME_SHARE: &str = match aster_oci_core::hardware_vm::virtiofs_share_mode(
-            aster_oci_core::DriverKind::LibkrunWhpx,
+        const RUNTIME_SHARE: &str = match krun_oci_core::hardware_vm::virtiofs_share_mode(
+            krun_oci_core::DriverKind::LibkrunWhpx,
         ) {
             Some(mode) => mode,
             None => panic!("libkrun WHPX must advertise a hardware-vm virtio-fs share"),
@@ -254,7 +254,7 @@ impl WhpxRuntimeDriver {
         Self::open_qualification(config, "host-service-owner-death-only").await
     }
 
-    /// Open one launch-ready instance exclusively for the Aster Box product
+    /// Open one launch-ready instance exclusively for the Krun Box product
     /// lifecycle qualification gate.
     ///
     /// This remains crate-private and leaves [`Self::open_candidate`] in its
@@ -306,7 +306,7 @@ impl WhpxRuntimeDriver {
                 let mut cleanup = DetachedAsyncCleanup::new(move || async move {
                     if let Err(error) = cleanup_owner.shutdown().await {
                         eprintln!(
-                            "aster-oci-runtime: cancelled WHPX shutdown cleanup failed: {error}"
+                            "krun-oci-runtime: cancelled WHPX shutdown cleanup failed: {error}"
                         );
                     }
                 });
@@ -598,7 +598,7 @@ impl WhpxRuntimeDriver {
         let mut owner_cleanup = DetachedAsyncCleanup::new(move || async move {
             if let Err(error) = cleanup_owner.shutdown().await {
                 eprintln!(
-                    "aster-oci-runtime: cancelled WHPX terminal-create cleanup failed: {error}"
+                    "krun-oci-runtime: cancelled WHPX terminal-create cleanup failed: {error}"
                 );
             }
         });
@@ -785,8 +785,8 @@ impl RuntimeDriver for WhpxRuntimeDriver {
         self.capability.clone()
     }
 
-    fn linux_support(&self) -> Result<aster_oci_sdk::OciLinuxSupport> {
-        aster_oci_sdk::OciLinuxSupport::shared_executor()
+    fn linux_support(&self) -> Result<krun_oci_sdk::OciLinuxSupport> {
+        krun_oci_sdk::OciLinuxSupport::shared_executor()
     }
 
     fn operations(&self) -> &[RuntimeOperation] {
@@ -840,7 +840,7 @@ impl RuntimeDriver for WhpxRuntimeDriver {
         let target =
             ContainerTarget::exact(ContainerId::new(record.state.id())?, record.generation);
         let can_commit_stopped =
-            *record.state.status() != aster_oci_sdk::oci_spec::runtime::ContainerState::Creating;
+            *record.state.status() != krun_oci_sdk::oci_spec::runtime::ContainerState::Creating;
 
         {
             let sessions = self.sessions.lock().await;
@@ -1023,7 +1023,7 @@ impl RuntimeDriver for WhpxRuntimeDriver {
                 let mut launch_cleanup = DetachedAsyncCleanup::new(move || async move {
                     if let Err(error) = cleanup_owner.shutdown().await {
                         eprintln!(
-                            "aster-oci-runtime: cancelled WHPX guest launch cleanup failed: {error}"
+                            "krun-oci-runtime: cancelled WHPX guest launch cleanup failed: {error}"
                         );
                     }
                 });
@@ -1082,7 +1082,7 @@ impl RuntimeDriver for WhpxRuntimeDriver {
                 let mut owner_cleanup = DetachedAsyncCleanup::new(move || async move {
                     if let Err(error) = cleanup_owner.shutdown().await {
                         eprintln!(
-                            "aster-oci-runtime: cancelled WHPX delete cleanup failed: {error}"
+                            "krun-oci-runtime: cancelled WHPX delete cleanup failed: {error}"
                         );
                     }
                 });
@@ -1715,7 +1715,7 @@ async fn validate_handoff_ancestry(
     runtime_root: &Path,
     source: &Path,
     container_id: &ContainerId,
-    operation_id: &aster_oci_sdk::OperationId,
+    operation_id: &krun_oci_sdk::OperationId,
 ) -> Result<()> {
     let expected = runtime_bundle_handoff_directory(runtime_root, container_id, operation_id)?;
     let expected = canonical_plain_directory(&expected, "WHPX operation bundle handoff").await?;
@@ -2657,7 +2657,7 @@ async fn guest_bundle_path(runtime_share: &Path, bundle: &Path) -> Result<GuestP
 fn require_exact_generation(
     target: &ContainerTarget,
     operation: &'static str,
-) -> Result<aster_oci_sdk::Generation> {
+) -> Result<krun_oci_sdk::Generation> {
     target.generation.ok_or_else(|| {
         Error::new(
             ErrorCode::InvalidArgument,
@@ -2945,16 +2945,16 @@ mod tests {
     use std::sync::{Arc, Mutex as StdMutex};
     use std::time::Duration;
 
-    use aster_oci_agent_protocol::{
+    use krun_oci_agent_protocol::{
         AgentCapabilities, AgentCreateRequest, AgentDeleteRequest, AgentKillRequest,
         AgentRecoveryRecord, AgentRecoveryReport, AgentStartRequest, AgentState, AgentStateRequest,
         GuestAgentService,
     };
-    use aster_oci_core::{
+    use krun_oci_core::{
         CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
     };
-    use aster_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-    use aster_oci_sdk::{
+    use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+    use krun_oci_sdk::{
         async_trait, runtime_bundle_handoff_directory, ContainerId, ContainerRecord,
         ContainerTarget, CreateAttachments, DeleteMode, Error, ErrorCode, ExitStatus, Generation,
         IsolationRequest, OciBundle, OperationContext, OperationId, ProcessIo, Result, Signal,
@@ -3487,7 +3487,7 @@ mod tests {
     async fn bundle_handoff_partial_pending_is_rejected_without_replacement() {
         let temporary = tempfile::tempdir().expect("temporary marker root");
         let pending = temporary.path().join(BUNDLE_HANDOFF_MARKER_PENDING);
-        let retained = br#"{"schemaVersion":"aster.oci.bundle-handoff.v1""#;
+        let retained = br#"{"schemaVersion":"krun.oci.bundle-handoff.v1""#;
         write_private_marker(&pending, retained).await;
 
         let error = ensure_bundle_handoff_marker(
@@ -3663,7 +3663,7 @@ mod tests {
     #[tokio::test]
     async fn prepared_layout_creates_a_disjoint_protected_share_parent() {
         let temporary = tempfile::tempdir().expect("temporary WHPX layout");
-        let shim = temporary.path().join("aster-oci-krun-shim.exe");
+        let shim = temporary.path().join("krun-oci-krun-shim.exe");
         let runtime_root = temporary.path().join("runtime");
         let system_root = runtime_root.join("system");
         let asset_root = temporary.path().join("assets");
@@ -3725,7 +3725,7 @@ mod tests {
     #[tokio::test]
     async fn prepared_layout_rejects_a_nonempty_bootstrap_root() {
         let temporary = tempfile::tempdir().expect("temporary WHPX layout");
-        let shim = temporary.path().join("aster-oci-krun-shim.exe");
+        let shim = temporary.path().join("krun-oci-krun-shim.exe");
         let runtime_root = temporary.path().join("runtime");
         let system_root = runtime_root.join("system");
         let asset_root = temporary.path().join("assets");
@@ -3750,7 +3750,7 @@ mod tests {
     #[tokio::test]
     async fn prepared_layout_rejects_a_nonempty_bootstrap_dev_mount_point() {
         let temporary = tempfile::tempdir().expect("temporary WHPX layout");
-        let shim = temporary.path().join("aster-oci-krun-shim.exe");
+        let shim = temporary.path().join("krun-oci-krun-shim.exe");
         let runtime_root = temporary.path().join("runtime");
         let system_root = runtime_root.join("system");
         let dev = system_root.join("dev");
@@ -3776,7 +3776,7 @@ mod tests {
     #[tokio::test]
     async fn prepared_layout_rejects_system_assets_below_the_mutable_runtime_root() {
         let temporary = tempfile::tempdir().expect("temporary WHPX layout");
-        let shim = temporary.path().join("aster-oci-krun-shim.exe");
+        let shim = temporary.path().join("krun-oci-krun-shim.exe");
         let runtime_root = temporary.path().join("runtime");
         let bootstrap_root = runtime_root.join("bootstrap");
         let system_image_manifest = runtime_root.join("assets/system-image.json");
@@ -3855,7 +3855,7 @@ mod tests {
                 .lock()
                 .expect("guest directory lock")
                 .as_deref(),
-            Some("/run/aster-oci-runtime/workloads/test")
+            Some("/run/krun-oci-runtime/workloads/test")
         );
         assert_eq!(fixture.driver.active_session_count().await, 1);
 
@@ -4703,20 +4703,20 @@ mod tests {
         assert!(!capability.can_launch());
         assert!(fixture.driver.attachment_capabilities().supports_extension(
             RUNTIME_BUNDLE_HANDOFF_EXTENSION,
-            aster_oci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
+            krun_oci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
         ));
         assert!(!fixture
             .driver
             .operations()
-            .contains(&aster_oci_sdk::RuntimeOperation::Attest));
+            .contains(&krun_oci_sdk::RuntimeOperation::Attest));
         for extension in [
-            aster_oci_sdk::AMD_SEV_SNP_LAUNCH_EXTENSION,
-            aster_oci_sdk::INTEL_TDX_LAUNCH_EXTENSION,
+            krun_oci_sdk::AMD_SEV_SNP_LAUNCH_EXTENSION,
+            krun_oci_sdk::INTEL_TDX_LAUNCH_EXTENSION,
         ] {
             assert!(!fixture
                 .driver
                 .attachment_capabilities()
-                .supports_extension(extension, aster_oci_sdk::TEE_LAUNCH_EXTENSION_VERSION,));
+                .supports_extension(extension, krun_oci_sdk::TEE_LAUNCH_EXTENSION_VERSION,));
         }
     }
 }

@@ -1,4 +1,4 @@
-use aster_box_core::{
+use krun_box_core::{
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, ReconcileOutcome,
 };
 

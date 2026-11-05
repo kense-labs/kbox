@@ -1,4 +1,4 @@
-//! `aster-box load` command — Load an image from a tar archive.
+//! `krun-box load` command — Load an image from a tar archive.
 
 use clap::Args;
 

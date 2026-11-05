@@ -340,9 +340,9 @@ def check_soak_wrapper_envelope_pins() -> list[str]:
         if not path.is_file():
             continue
         text = path.read_text(encoding="utf-8")
-        if "ASTER_GATEWAY_DEDICATED_RUNNER" not in text:
+        if "KRUN_GATEWAY_DEDICATED_RUNNER" not in text:
             errors.append(
-                f"{path.name} must require ASTER_GATEWAY_DEDICATED_RUNNER"
+                f"{path.name} must require KRUN_GATEWAY_DEDICATED_RUNNER"
             )
         if "7200" not in text:
             errors.append(

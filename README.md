@@ -34,8 +34,22 @@ sh kbox-3.2.7-macos-arm64/install.sh
 ```sh
 # 运行一个 alpine MicroVM
 kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
+```
 
-# 运行 dsh-acp（公开镜像，匿名拉取），接入 ACP 客户端
+在 dsh-acp 源码根目录运行真实模型问候测试（启动预热池 → 发送问候 → 打印模型回复 → 自动清理）：
+
+```sh
+DEEPSEEK_API_KEY=你的密钥 \
+DSH_MODEL=deepseek-flash \
+DSH_REASONING_EFFORT=low \
+RUNS=1 sh "$PWD/scripts/bench-pool-dsh-acp.sh"
+```
+
+脚本源码见 [dsh-acp/scripts/bench-pool-dsh-acp.sh](https://github.com/kense-labs/dsh-acp/blob/main/scripts/bench-pool-dsh-acp.sh)。
+
+下面的 `kbox run -i` **仅供 ACP 客户端启动 dsh-acp，不是终端聊天命令**。直接在终端执行会等待 JSON-RPC `initialize`，不会接受普通聊天文字；需要停止时按 Ctrl-C：
+
+```sh
 export DEEPSEEK_API_KEY=your_key
 kbox run -i --rm \
   --memory 2g \
@@ -44,12 +58,6 @@ kbox run -i --rm \
   -v "$PWD:/workspace" \
   -e DEEPSEEK_API_KEY \
   ghcr.io/kense-labs/dsh-acp:latest
-```
-
-也可以直接运行 dsh-acp 仓库的问候示例（启动 VM → 发送问候 → 打印模型回复）：
-
-```sh
-python3 examples/acp_hello.py   # 见 https://github.com/kense-labs/dsh-acp
 ```
 
 `kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。完整命令见第 6 章起。

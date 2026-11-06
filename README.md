@@ -30,6 +30,8 @@ kbox update 3.3.0      # 安装指定版本
 
 3.2.7 及更早版本没有 `update` 命令，请先执行第 1.1 节的一键安装脚本升级到 3.3.0；之后的版本可直接使用 `kbox update`。
 
+3.3.0 官方 Release 已在 macOS arm64 通过完整自更新验证：官方安装器完成隔离安装后，安装后的 kbox 成功执行 `update --force`，终端下载进度达到 100%，SHA-256 校验、自身文件替换和安装后版本检查均通过；随后 `update --check` 正确报告 `kbox is up to date.`。完整记录见[自更新实测证据](docs/evidence/box/20261106-self-update/OUTCOME.md)。
+
 ### 1.3 手动安装
 
 从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.3.0) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
@@ -471,7 +473,12 @@ BASH
 | 守护进程内部接管（不含 CLI 与协议） | 0.222 ms | 0.251 ms | 0.313 ms |
 | 模型 prompt RTT（网络请求，非启动指标） | 676.883 ms | 1436.499 ms | 1676.068 ms |
 
-kbox 3.3.0 官方 Release 经线上安装和自更新后，也通过完整 HTTPS 脚本完成一次真实 DeepSeek 会话，返回文本、`end_turn` 和退出码 0。
+kbox 3.3.0 官方 Release 经线上安装和自更新后，使用全新隔离 `K_HOME` 执行上述完整 HTTPS 脚本，成功拉取公开镜像、预热 VM 与 dsh-acp 进程，并完成真实 DeepSeek 会话：
+
+- 完整 CLI 启动到 initialize 响应：15.031 ms。
+- initialize 请求 RTT：13.402 ms。
+- 模型 prompt RTT：963.367 ms（网络请求，非启动指标）。
+- 模型与思考强度：`deepseek-flash`＋`low`；返回非空中文文本、`end_turn` 和退出码 0，随后自动清理预热池。
 
 守护进程内部接管低于 1 ms，不代表完整 CLI 启动或 initialize 为 1 ms。原始样本与验证边界见[实测证据](docs/evidence/box/20261106-process-prewarm-attach/OUTCOME.md)。
 

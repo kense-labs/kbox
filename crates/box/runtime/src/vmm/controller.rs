@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
 use async_trait::async_trait;
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::handler::ShimHandler;
 use super::provider::VmmProvider;
@@ -136,11 +136,11 @@ fn clear_handle_inherit_flag(
 
 /// Controller for spawning VM subprocesses.
 ///
-/// Spawns the `krun-box-shim` binary in a subprocess and returns a ShimHandler
+/// Spawns the `kbox-shim` binary in a subprocess and returns a ShimHandler
 /// for runtime operations. The subprocess isolation ensures that VM process
 /// takeover doesn't affect the host application.
 pub struct VmController {
-    /// Path to the krun-box-shim binary
+    /// Path to the kbox-shim binary
     shim_path: PathBuf,
 }
 
@@ -217,7 +217,7 @@ impl VmController {
     /// Create a new VmController.
     ///
     /// # Arguments
-    /// * `shim_path` - Path to the krun-box-shim binary
+    /// * `shim_path` - Path to the kbox-shim binary
     ///
     /// # Returns
     /// * `Ok(VmController)` - Successfully created controller
@@ -227,7 +227,7 @@ impl VmController {
         if !shim_path.exists() {
             return Err(BoxError::BoxBootError {
                 message: format!("Shim binary not found: {}", shim_path.display()),
-                hint: Some("Build the shim with: cargo build -p krun-box-shim".to_string()),
+                hint: Some("Build the shim with: cargo build -p kbox-shim".to_string()),
             });
         }
 
@@ -256,7 +256,7 @@ impl VmController {
         }
 
         // Acquire exclusive file lock to prevent concurrent codesign
-        let lock_path = std::env::temp_dir().join("krun-box-shim-codesign.lock");
+        let lock_path = std::env::temp_dir().join("kbox-shim-codesign.lock");
         let lock_file = File::create(&lock_path).map_err(|e| BoxError::BoxBootError {
             message: format!("Failed to create codesign lock file: {}", e),
             hint: None,
@@ -340,7 +340,7 @@ impl VmController {
         }
 
         // Try the source tree relative to the shim binary
-        // target/debug/krun-box-shim -> ../../shim/entitlements.plist
+        // target/debug/kbox-shim -> ../../shim/entitlements.plist
         if let Some(dir) = shim_path.parent() {
             for ancestor in dir.ancestors().take(5) {
                 let plist = ancestor.join("shim").join("entitlements.plist");
@@ -351,7 +351,7 @@ impl VmController {
         }
 
         // Generate a temporary entitlements plist as fallback
-        let tmp_plist = std::env::temp_dir().join("krun-box-entitlements.plist");
+        let tmp_plist = std::env::temp_dir().join("kbox-entitlements.plist");
         std::fs::write(
             &tmp_plist,
             r#"<?xml version="1.0" encoding="UTF-8"?>
@@ -376,15 +376,15 @@ impl VmController {
     ///
     /// Searches in order:
     /// 1. Same directory as current executable
-    /// 2. `~/.krun/bin/` (SDK-extracted shim)
+    /// 2. `~/.kbox/bin/` (SDK-extracted shim)
     /// 3. target/debug or target/release (for development)
     /// 4. PATH
     pub fn find_shim() -> Result<PathBuf> {
         // On Windows the binary has a .exe suffix; on other platforms it's empty.
         #[cfg(target_os = "windows")]
-        let shim_name = "krun-box-shim.exe";
+        let shim_name = "kbox-shim.exe";
         #[cfg(not(target_os = "windows"))]
-        let shim_name = "krun-box-shim";
+        let shim_name = "kbox-shim";
 
         // Try same directory as current executable
         if let Ok(exe_path) = std::env::current_exe() {
@@ -396,9 +396,9 @@ impl VmController {
             }
         }
 
-        // Try ~/.krun/bin/ (SDK-extracted shim)
+        // Try ~/.kbox/bin/ (SDK-extracted shim)
         {
-            let shim_path = krun_box_core::dirs_home().join("bin").join(shim_name);
+            let shim_path = kbox_core::dirs_home().join("bin").join(shim_name);
             if shim_path.exists() {
                 return Ok(shim_path);
             }
@@ -434,8 +434,8 @@ impl VmController {
         }
 
         Err(BoxError::BoxBootError {
-            message: "Could not find krun-box-shim binary".to_string(),
-            hint: Some("Build the shim with: cargo build -p krun-box-shim".to_string()),
+            message: "Could not find kbox-shim binary".to_string(),
+            hint: Some("Build the shim with: cargo build -p kbox-shim".to_string()),
         })
     }
 
@@ -444,10 +444,10 @@ impl VmController {
         use std::collections::HashSet;
 
         let mut dirs = Vec::<PathBuf>::new();
-        if let Ok(dir) = std::env::var("LIBKRUN_DIR") {
+        if let Ok(dir) = std::env::var("LIBK_DIR") {
             dirs.push(PathBuf::from(dir));
         }
-        if let Some(dir) = option_env!("LIBKRUN_DIR") {
+        if let Some(dir) = option_env!("LIBK_DIR") {
             dirs.push(PathBuf::from(dir));
         }
         if let Some(dir) = shim_path.parent() {
@@ -569,9 +569,9 @@ impl VmmProvider for VmController {
         self.configure_shim_stdio(&mut cmd, spec);
 
         // KSM page-merging: the shim opts its (guest) memory in via prctl when this
-        // env is set; driven by InstanceSpec.ksm (BoxConfig.ksm or KRUN_BOX_KSM).
+        // env is set; driven by InstanceSpec.ksm (BoxConfig.ksm or K_BOX_KSM).
         if spec.ksm {
-            cmd.env("KRUN_BOX_KSM", "1");
+            cmd.env("K_BOX_KSM", "1");
         }
 
         // Snapshot-fork: set the file-backed-RAM / snapshot-trigger / restore paths
@@ -580,9 +580,9 @@ impl VmmProvider for VmController {
         // template/restore per VM, which a process-global env cannot. Fall back to the
         // process env only when the spec doesn't set a given var (single-VM `run`).
         let snap_env: [(&str, Option<&str>); 3] = [
-            ("KRUN_SNAPSHOT_MEM_FILE", spec.snapshot_mem_file.as_deref()),
-            ("KRUN_SNAPSHOT_SOCK", spec.snapshot_sock.as_deref()),
-            ("KRUN_RESTORE_FROM", spec.restore_from.as_deref()),
+            ("K_SNAPSHOT_MEM_FILE", spec.snapshot_mem_file.as_deref()),
+            ("K_SNAPSHOT_SOCK", spec.snapshot_sock.as_deref()),
+            ("K_RESTORE_FROM", spec.restore_from.as_deref()),
         ];
         for (var, spec_val) in snap_env {
             match spec_val {
@@ -611,7 +611,7 @@ impl VmmProvider for VmController {
             if let Some(path) = bundled_lib_dir.filter(|path| path.exists()) {
                 dylib_paths.push(path);
             }
-            let home_lib_dir = krun_box_core::dirs_home().join("lib");
+            let home_lib_dir = kbox_core::dirs_home().join("lib");
             if home_lib_dir.exists() {
                 dylib_paths.push(home_lib_dir);
             }
@@ -631,9 +631,9 @@ impl VmmProvider for VmController {
         }
 
         // Put the VMM shim in its own session/process-group so it survives teardown
-        // of the launcher's session — e.g. a containerd-shim foreground `krun-box run`
+        // of the launcher's session — e.g. a containerd-shim foreground `kbox run`
         // whose process group is reaped on container kill. Without this the libkrun
-        // shim (which owns the box's exec.sock) dies with the launcher and `krun-box
+        // shim (which owns the box's exec.sock) dies with the launcher and `kbox
         // exec` fails with "exec socket missing".
         #[cfg(unix)]
         {
@@ -703,15 +703,15 @@ mod tests {
     fn make_fake_shim(dir: &std::path::Path) -> PathBuf {
         use std::os::unix::fs::PermissionsExt;
 
-        let shim_path = dir.join("fake-krun-box-shim");
+        let shim_path = dir.join("fake-kbox-shim");
         std::fs::write(
             &shim_path,
             r#"#!/bin/sh
-printf '%s\n' "$@" > "$KRUN_TEST_ARGS_FILE"
-printf '%s\n' "$KRUN_BOX_KSM" > "$KRUN_TEST_KSM_FILE"
-printf '%s\n' "$KRUN_SNAPSHOT_MEM_FILE" > "$KRUN_TEST_SNAPSHOT_MEM_FILE"
-printf '%s\n' "$KRUN_SNAPSHOT_SOCK" > "$KRUN_TEST_SNAPSHOT_SOCK_FILE"
-printf '%s\n' "$KRUN_RESTORE_FROM" > "$KRUN_TEST_RESTORE_FILE"
+printf '%s\n' "$@" > "$K_TEST_ARGS_FILE"
+printf '%s\n' "$K_BOX_KSM" > "$K_TEST_KSM_FILE"
+printf '%s\n' "$K_SNAPSHOT_MEM_FILE" > "$K_TEST_SNAPSHOT_MEM_FILE"
+printf '%s\n' "$K_SNAPSHOT_SOCK" > "$K_TEST_SNAPSHOT_SOCK_FILE"
+printf '%s\n' "$K_RESTORE_FROM" > "$K_TEST_RESTORE_FILE"
 printf shim-stdout
 printf shim-stderr >&2
 exec /bin/sleep 30
@@ -741,7 +741,7 @@ exec /bin/sleep 30
         let missing = tempfile::tempdir()
             .unwrap()
             .path()
-            .join("missing-krun-box-shim");
+            .join("missing-kbox-shim");
 
         let error = match VmController::new(missing.clone()) {
             Ok(_) => panic!("missing shim should be rejected"),
@@ -751,7 +751,7 @@ exec /bin/sleep 30
 
         assert!(message.contains("Shim binary not found"));
         assert!(message.contains(&missing.display().to_string()));
-        assert!(message.contains("cargo build -p krun-box-shim"));
+        assert!(message.contains("cargo build -p kbox-shim"));
     }
 
     #[cfg(unix)]
@@ -859,11 +859,11 @@ exec /bin/sleep 30
         let snapshot_sock_file = temp.path().join("shim.snapshot_sock");
         let restore_file = temp.path().join("shim.restore");
 
-        std::env::set_var("KRUN_TEST_ARGS_FILE", &args_file);
-        std::env::set_var("KRUN_TEST_KSM_FILE", &ksm_file);
-        std::env::set_var("KRUN_TEST_SNAPSHOT_MEM_FILE", &snapshot_mem_file);
-        std::env::set_var("KRUN_TEST_SNAPSHOT_SOCK_FILE", &snapshot_sock_file);
-        std::env::set_var("KRUN_TEST_RESTORE_FILE", &restore_file);
+        std::env::set_var("K_TEST_ARGS_FILE", &args_file);
+        std::env::set_var("K_TEST_KSM_FILE", &ksm_file);
+        std::env::set_var("K_TEST_SNAPSHOT_MEM_FILE", &snapshot_mem_file);
+        std::env::set_var("K_TEST_SNAPSHOT_SOCK_FILE", &snapshot_sock_file);
+        std::env::set_var("K_TEST_RESTORE_FILE", &restore_file);
 
         let socket_dir = temp.path().join("runtime").join("sockets");
         let spec = InstanceSpec {
@@ -871,9 +871,9 @@ exec /bin/sleep 30
             exec_socket_path: socket_dir.join("exec.sock"),
             console_output: Some(temp.path().join("logs").join("console.log")),
             ksm: true,
-            snapshot_mem_file: Some("/tmp/krun-mem".to_string()),
-            snapshot_sock: Some("/tmp/krun-snapshot.sock".to_string()),
-            restore_from: Some("/tmp/krun-restore".to_string()),
+            snapshot_mem_file: Some("/tmp/kmem".to_string()),
+            snapshot_sock: Some("/tmp/ksnapshot.sock".to_string()),
+            restore_from: Some("/tmp/krestore".to_string()),
             ..Default::default()
         };
 
@@ -889,15 +889,15 @@ exec /bin/sleep 30
         assert_eq!(std::fs::read_to_string(&ksm_file).unwrap().trim(), "1");
         assert_eq!(
             std::fs::read_to_string(&snapshot_mem_file).unwrap().trim(),
-            "/tmp/krun-mem"
+            "/tmp/kmem"
         );
         assert_eq!(
             std::fs::read_to_string(&snapshot_sock_file).unwrap().trim(),
-            "/tmp/krun-snapshot.sock"
+            "/tmp/ksnapshot.sock"
         );
         assert_eq!(
             std::fs::read_to_string(&restore_file).unwrap().trim(),
-            "/tmp/krun-restore"
+            "/tmp/krestore"
         );
         assert_eq!(
             std::fs::read_to_string(temp.path().join("logs").join("shim.stdout.log")).unwrap(),
@@ -910,11 +910,11 @@ exec /bin/sleep 30
 
         handler.stop(libc::SIGTERM, 1_000).unwrap();
 
-        std::env::remove_var("KRUN_TEST_ARGS_FILE");
-        std::env::remove_var("KRUN_TEST_KSM_FILE");
-        std::env::remove_var("KRUN_TEST_SNAPSHOT_MEM_FILE");
-        std::env::remove_var("KRUN_TEST_SNAPSHOT_SOCK_FILE");
-        std::env::remove_var("KRUN_TEST_RESTORE_FILE");
+        std::env::remove_var("K_TEST_ARGS_FILE");
+        std::env::remove_var("K_TEST_KSM_FILE");
+        std::env::remove_var("K_TEST_SNAPSHOT_MEM_FILE");
+        std::env::remove_var("K_TEST_SNAPSHOT_SOCK_FILE");
+        std::env::remove_var("K_TEST_RESTORE_FILE");
     }
 
     #[cfg(unix)]

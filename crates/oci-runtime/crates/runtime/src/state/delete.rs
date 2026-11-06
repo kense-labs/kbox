@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ErrorCode, OperationId, Result, RuntimeEventKind,
     ValidateRequest,
 };
@@ -303,7 +303,7 @@ impl DurableStateStore {
     }
 }
 
-fn invalid_state(target: &ContainerTarget, status: ContainerState) -> krun_oci_sdk::Error {
+fn invalid_state(target: &ContainerTarget, status: ContainerState) -> koci_sdk::Error {
     state_error(
         ErrorCode::FailedPrecondition,
         "prepare-delete",

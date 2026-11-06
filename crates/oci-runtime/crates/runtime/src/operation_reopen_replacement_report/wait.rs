@@ -1,4 +1,4 @@
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportFaultPoint, AgentTransportOperationStage,
     AGENT_PROTOCOL_VERSION_MAX,
 };
@@ -6,9 +6,9 @@ use krun_oci_agent_protocol::{
     all(target_os = "macos", target_arch = "aarch64"),
     all(target_os = "windows", target_arch = "x86_64")
 )))]
-use krun_oci_core::CapabilityStatus;
-use krun_oci_core::HostPlatform;
-use krun_oci_sdk::ExitStatus;
+use koci_core::CapabilityStatus;
+use koci_core::HostPlatform;
+use koci_sdk::ExitStatus;
 
 use super::{
     OciVmOperationReopenReplacementReport, OCI_VM_OPERATION_REOPEN_REPLACEMENT_WAIT_SCHEMA_VERSION,
@@ -121,7 +121,7 @@ impl OciVmOperationReopenReplacementReport {
             && self.negotiated_protocol == Some(AGENT_PROTOCOL_VERSION_MAX)
             && self.injected_point.as_deref() == Some(expected_point.as_str())
             && self.fault_crossings == 1
-            && self.first_operation_error_code == Some(krun_oci_sdk::ErrorCode::Unavailable)
+            && self.first_operation_error_code == Some(koci_sdk::ErrorCode::Unavailable)
             && expected_error_operation
             && self.first_operation_error_retryable
             && self.first_operation_response_received == response_delivered
@@ -186,11 +186,11 @@ impl OciVmOperationReopenReplacementReport {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentOperation, AgentTransportOperationStage, AGENT_PROTOCOL_VERSION_MAX,
     };
-    use krun_oci_core::{CapabilityStatus, HostPlatform};
-    use krun_oci_sdk::{ContainerId, ErrorCode, Generation, OperationId};
+    use koci_core::{CapabilityStatus, HostPlatform};
+    use koci_sdk::{ContainerId, ErrorCode, Generation, OperationId};
     use serde_json::json;
 
     use super::{expected_wait_exit_status, OciVmOperationReopenReplacementReport};
@@ -345,7 +345,7 @@ mod tests {
         let mut report = AgentVmSmokeReport::initial(HostPlatform::Macos);
         report.status = CapabilityStatus::Available;
         report.endpoint_bound = true;
-        report.endpoint_name = Some(format!("krun-oci-agent-{name}"));
+        report.endpoint_name = Some(format!("koci-agent-{name}"));
         report.shim_spawned = true;
         report.shim_process_id = Some(shim);
         report.bridge_process_id = Some(bridge);
@@ -375,7 +375,7 @@ mod tests {
         let mut report = AgentVmSmokeReport::initial(HostPlatform::Linux);
         report.status = CapabilityStatus::Available;
         report.endpoint_bound = true;
-        report.endpoint_name = Some(format!("krun-oci-agent-{name}"));
+        report.endpoint_name = Some(format!("koci-agent-{name}"));
         report.shim_spawned = true;
         report.shim_process_id = Some(shim);
         report.bridge_process_id = Some(bridge);

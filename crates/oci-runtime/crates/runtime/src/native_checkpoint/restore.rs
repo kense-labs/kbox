@@ -1,9 +1,9 @@
 use std::{io, path::Path};
 
-use krun_oci_agent::{LinuxExecutor, StaleGenerationRecovery};
-use krun_oci_agent_protocol::{AgentCreateRequest, AgentState};
-use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
-use krun_oci_sdk::{
+use koci_agent::{LinuxExecutor, StaleGenerationRecovery};
+use koci_agent_protocol::{AgentCreateRequest, AgentState};
+use koci_core::{DriverKind, HostPlatform, IsolationClass};
+use koci_sdk::{
     canonical_json_bytes, CheckpointDigest, CheckpointFormat, CheckpointReference, ContainerId,
     ContainerTarget, ErrorCode, OperationId, Result, RuntimeArtifact,
 };
@@ -22,20 +22,20 @@ use super::{
     NativeCriuCheckpoint,
 };
 
-const RESTORE_JOURNAL_REQUEST_SCHEMA_V1: &str = "krun.oci.native-restore-request.v1";
+const RESTORE_JOURNAL_REQUEST_SCHEMA_V1: &str = "koci.native-restore-request.v1";
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 struct RestoreRequestFingerprint<'a> {
     schema_version: &'static str,
-    context: &'a krun_oci_sdk::OperationContext,
+    context: &'a koci_sdk::OperationContext,
     target: &'a ContainerTarget,
-    bundle: &'a krun_oci_sdk::OciBundle,
-    artifact_path: &'a krun_oci_sdk::CheckpointArtifactPath,
-    isolation: &'a krun_oci_sdk::IsolationRequest,
-    io: &'a krun_oci_sdk::ProcessIo,
-    attachment_contract: &'a krun_oci_sdk::CreateAttachments,
-    tee_launch: &'a Option<krun_oci_sdk::TeeLaunchRequest>,
+    bundle: &'a koci_sdk::OciBundle,
+    artifact_path: &'a koci_sdk::CheckpointArtifactPath,
+    isolation: &'a koci_sdk::IsolationRequest,
+    io: &'a koci_sdk::ProcessIo,
+    attachment_contract: &'a koci_sdk::CreateAttachments,
+    tee_launch: &'a Option<koci_sdk::TeeLaunchRequest>,
     reference: &'a CheckpointReference,
     runtime_artifact: &'a RuntimeArtifact,
     agent_request: &'a AgentCreateRequest,
@@ -191,7 +191,7 @@ impl NativeCriuCheckpoint {
     pub(crate) async fn recover_restore(
         &self,
         executor: &LinuxExecutor,
-        durable: &krun_oci_sdk::ContainerRecord,
+        durable: &koci_sdk::ContainerRecord,
     ) -> Result<Option<NativeRestoreRecovery>> {
         let target = ContainerTarget::exact(
             ContainerId::new(durable.state.id().to_string())?,
@@ -236,10 +236,10 @@ impl NativeCriuCheckpoint {
         }
 
         match *durable.state.status() {
-            krun_oci_sdk::oci_spec::runtime::ContainerState::Creating => {
+            koci_sdk::oci_spec::runtime::ContainerState::Creating => {
                 Ok(Some(NativeRestoreRecovery::Pending))
             }
-            krun_oci_sdk::oci_spec::runtime::ContainerState::Running if durable.is_paused() => {
+            koci_sdk::oci_spec::runtime::ContainerState::Running if durable.is_paused() => {
                 let manifest = record.manifest().cloned().ok_or_else(|| {
                     checkpoint_error(
                         ErrorCode::FailedPrecondition,
@@ -349,7 +349,7 @@ impl NativeCriuCheckpoint {
     fn validate_durable_restore(
         &self,
         record: &RestoreJournalRecord,
-        durable: &krun_oci_sdk::ContainerRecord,
+        durable: &koci_sdk::ContainerRecord,
     ) -> Result<()> {
         validate_restore_stack(
             record.reference(),
@@ -375,7 +375,7 @@ impl NativeCriuCheckpoint {
 
     async fn open_external_artifact(
         &self,
-        path: &krun_oci_sdk::CheckpointArtifactPath,
+        path: &koci_sdk::CheckpointArtifactPath,
     ) -> Result<std::fs::File> {
         ArtifactDestination::open(path)
             .await?

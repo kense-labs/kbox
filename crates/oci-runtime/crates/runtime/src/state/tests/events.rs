@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use krun_oci_sdk::{EventsRequest, RuntimeEventKind};
+use koci_sdk::{EventsRequest, RuntimeEventKind};
 use sha2::{Digest, Sha256};
 
 use super::*;
@@ -49,7 +49,7 @@ async fn lifecycle_and_process_events_are_durable_ordered_and_replay_safe() {
         .expect("initialize state root");
 
     let prepared = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let RecordOperationPreparation::Prepared(prepared) = prepared else {
@@ -68,7 +68,7 @@ async fn lifecycle_and_process_events_are_durable_ordered_and_replay_safe() {
 
     assert!(matches!(
         store
-            .prepare_create(&create, DriverKind::LibkrunWhpx)
+            .prepare_create(&create, DriverKind::LibkWhpx)
             .await
             .expect("resume create"),
         RecordOperationPreparation::Resume(_)
@@ -303,7 +303,7 @@ async fn force_delete_appends_stopped_before_deleted_for_a_created_container() {
         .expect("initialize state root");
     let create = create_request(&bundle_directory, "force-delete", "force-delete-create");
     let prepared = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let RecordOperationPreparation::Prepared(prepared) = prepared else {
@@ -356,7 +356,7 @@ async fn event_poll_rejects_an_unclaimed_record() {
         .expect("initialize state root");
     let create = create_request(&bundle_directory, "unclaimed-event", "unclaimed-create");
     store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
 
@@ -387,7 +387,7 @@ async fn event_poll_rejects_duplicate_sequence_claims() {
         .expect("initialize state root");
     let create = create_request(&bundle_directory, "duplicate-event", "duplicate-create");
     store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
 
@@ -434,7 +434,7 @@ async fn event_poll_rejects_a_process_kind_without_process_identity() {
         .expect("initialize state root");
     let create = create_request(&bundle_directory, "invalid-kind", "invalid-kind-create");
     store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
 
@@ -477,7 +477,7 @@ async fn non_operation_event_rejects_an_operation_identity_projection() {
         "non-operation-identity-create",
     );
     store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
 
@@ -521,7 +521,7 @@ async fn operation_event_identity_tampering_fails_closed() {
         "operation-event-tampering-create",
     );
     let prepared = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let RecordOperationPreparation::Prepared(prepared) = prepared else {
@@ -658,7 +658,7 @@ async fn event_long_poll_wakes_for_a_matching_event_and_times_out_cleanly() {
     });
     tokio::time::sleep(Duration::from_millis(25)).await;
     store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("create must wake event poll");
     let batch = waiter

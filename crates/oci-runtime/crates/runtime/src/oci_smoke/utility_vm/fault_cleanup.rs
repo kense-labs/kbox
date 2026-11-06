@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::OciBundle;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::OciBundle;
 
 use super::lifecycle::exercise_until_fault;
 use super::{

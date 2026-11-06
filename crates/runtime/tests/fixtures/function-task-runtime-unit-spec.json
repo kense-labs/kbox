@@ -1,10 +1,10 @@
 {
-  "schema": "krun.runtime.unit-spec.v4",
+  "schema": "kbox_contract.unit-spec.v4",
   "unit_id": "execution:function-invocation:1",
   "generation": 1,
   "class": "task",
   "artifact": {
-    "uri": "oci://registry.example/krun/function@sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "uri": "oci://registry.example/kbox/function@sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
     "digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
     "media_type": "application/vnd.oci.image.manifest.v1+json"
   },

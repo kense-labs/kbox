@@ -1,4 +1,4 @@
-//! Prometheus metrics + health endpoint for the `krun-box monitor` daemon.
+//! Prometheus metrics + health endpoint for the `kbox monitor` daemon.
 //!
 //! The monitor is the one always-on process in the daemonless design, and it
 //! already polls every box's state — so it is the natural place to expose
@@ -53,29 +53,27 @@ fn render_from<'a>(items: impl Iterator<Item = BoxMetric<'a>>) -> String {
     }
 
     let mut out = String::new();
-    out.push_str("# HELP krun_box_total Total boxes tracked in state.\n");
-    out.push_str("# TYPE krun_box_total gauge\n");
-    out.push_str(&format!("krun_box_total {total}\n"));
+    out.push_str("# HELP kbox_total Total boxes tracked in state.\n");
+    out.push_str("# TYPE kbox_total gauge\n");
+    out.push_str(&format!("kbox_total {total}\n"));
 
-    out.push_str("# HELP krun_box_state Boxes by lifecycle status.\n");
-    out.push_str("# TYPE krun_box_state gauge\n");
-    out.push_str(&format!("krun_box_state{{status=\"running\"}} {running}\n"));
-    out.push_str(&format!("krun_box_state{{status=\"paused\"}} {paused}\n"));
-    out.push_str(&format!("krun_box_state{{status=\"dead\"}} {dead}\n"));
-    out.push_str(&format!("krun_box_state{{status=\"created\"}} {created}\n"));
-    out.push_str(&format!("krun_box_state{{status=\"other\"}} {other}\n"));
+    out.push_str("# HELP kbox_state Boxes by lifecycle status.\n");
+    out.push_str("# TYPE kbox_state gauge\n");
+    out.push_str(&format!("kbox_state{{status=\"running\"}} {running}\n"));
+    out.push_str(&format!("kbox_state{{status=\"paused\"}} {paused}\n"));
+    out.push_str(&format!("kbox_state{{status=\"dead\"}} {dead}\n"));
+    out.push_str(&format!("kbox_state{{status=\"created\"}} {created}\n"));
+    out.push_str(&format!("kbox_state{{status=\"other\"}} {other}\n"));
 
-    out.push_str("# HELP krun_box_restarts_total Sum of per-box restart counts.\n");
-    out.push_str("# TYPE krun_box_restarts_total counter\n");
-    out.push_str(&format!("krun_box_restarts_total {restarts_total}\n"));
+    out.push_str("# HELP kbox_restarts_total Sum of per-box restart counts.\n");
+    out.push_str("# TYPE kbox_restarts_total counter\n");
+    out.push_str(&format!("kbox_restarts_total {restarts_total}\n"));
 
-    out.push_str("# HELP krun_box_health Boxes by health-check status.\n");
-    out.push_str("# TYPE krun_box_health gauge\n");
+    out.push_str("# HELP kbox_health Boxes by health-check status.\n");
+    out.push_str("# TYPE kbox_health gauge\n");
+    out.push_str(&format!("kbox_health{{status=\"healthy\"}} {healthy}\n"));
     out.push_str(&format!(
-        "krun_box_health{{status=\"healthy\"}} {healthy}\n"
-    ));
-    out.push_str(&format!(
-        "krun_box_health{{status=\"unhealthy\"}} {unhealthy}\n"
+        "kbox_health{{status=\"unhealthy\"}} {unhealthy}\n"
     ));
 
     out
@@ -120,12 +118,12 @@ fn render_monitor_liveness(last_poll_secs: u64, stale_after_secs: u64) -> String
     let age = now_secs().saturating_sub(last_poll_secs);
     let up = u8::from(age <= stale_after_secs);
     format!(
-        "# HELP krun_box_monitor_up 1 if the monitor poll loop completed a poll within the staleness threshold.\n\
-         # TYPE krun_box_monitor_up gauge\n\
-         krun_box_monitor_up {up}\n\
-         # HELP krun_box_monitor_seconds_since_last_poll Seconds since the monitor last completed a poll iteration.\n\
-         # TYPE krun_box_monitor_seconds_since_last_poll gauge\n\
-         krun_box_monitor_seconds_since_last_poll {age}\n"
+        "# HELP kbox_monitor_up 1 if the monitor poll loop completed a poll within the staleness threshold.\n\
+         # TYPE kbox_monitor_up gauge\n\
+         kbox_monitor_up {up}\n\
+         # HELP kbox_monitor_seconds_since_last_poll Seconds since the monitor last completed a poll iteration.\n\
+         # TYPE kbox_monitor_seconds_since_last_poll gauge\n\
+         kbox_monitor_seconds_since_last_poll {age}\n"
     )
 }
 
@@ -146,7 +144,7 @@ pub async fn serve(
     use tokio::net::TcpListener;
 
     let listener = TcpListener::bind(&addr).await?;
-    println!("krun-box monitor: metrics/health on http://{addr}/metrics");
+    println!("kbox monitor: metrics/health on http://{addr}/metrics");
 
     loop {
         let mut sock = match listener.accept().await {
@@ -224,20 +222,20 @@ mod tests {
             m("paused", 0, "none"),
         ];
         let out = render_from(items.into_iter());
-        assert!(out.contains("krun_box_total 4"));
-        assert!(out.contains("krun_box_state{status=\"running\"} 2"));
-        assert!(out.contains("krun_box_state{status=\"dead\"} 1"));
-        assert!(out.contains("krun_box_state{status=\"paused\"} 1"));
-        assert!(out.contains("krun_box_restarts_total 8"));
-        assert!(out.contains("krun_box_health{status=\"healthy\"} 1"));
-        assert!(out.contains("krun_box_health{status=\"unhealthy\"} 1"));
+        assert!(out.contains("kbox_total 4"));
+        assert!(out.contains("kbox_state{status=\"running\"} 2"));
+        assert!(out.contains("kbox_state{status=\"dead\"} 1"));
+        assert!(out.contains("kbox_state{status=\"paused\"} 1"));
+        assert!(out.contains("kbox_restarts_total 8"));
+        assert!(out.contains("kbox_health{status=\"healthy\"} 1"));
+        assert!(out.contains("kbox_health{status=\"unhealthy\"} 1"));
     }
 
     #[test]
     fn empty_state_is_valid_exposition() {
         let out = render_from(std::iter::empty());
-        assert!(out.contains("krun_box_total 0"));
-        assert!(out.contains("# TYPE krun_box_state gauge"));
+        assert!(out.contains("kbox_total 0"));
+        assert!(out.contains("# TYPE kbox_state gauge"));
     }
 
     #[test]
@@ -266,11 +264,11 @@ mod tests {
     fn monitor_liveness_up_when_fresh_down_when_stale() {
         let now = now_secs();
         let fresh = render_monitor_liveness(now, 60);
-        assert!(fresh.contains("krun_box_monitor_up 1"));
-        assert!(fresh.contains("krun_box_monitor_seconds_since_last_poll 0"));
+        assert!(fresh.contains("kbox_monitor_up 1"));
+        assert!(fresh.contains("kbox_monitor_seconds_since_last_poll 0"));
 
         // A poll 1000s ago with a 60s threshold is stale → down.
         let stale = render_monitor_liveness(now.saturating_sub(1000), 60);
-        assert!(stale.contains("krun_box_monitor_up 0"));
+        assert!(stale.contains("kbox_monitor_up 0"));
     }
 }

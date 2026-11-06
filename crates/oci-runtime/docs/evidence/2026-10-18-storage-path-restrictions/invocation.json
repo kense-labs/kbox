@@ -6,18 +6,18 @@
     "source_dirty": false,
     "sha256": {
       "qualify_hvf_workspace": "ec9a770a7d528c7455f31a9d93d62a115834c187e0c001349635d801264aec56",
-      "krun-oci": "927495ce677f1381f7cf1d12f9a7ab1f3cce9277219c928226181b9c0e024303",
-      "krun-oci-krun-shim": "283634f567ec98aacbbd223367dc2f23e163a3305d080d6af6dc5636f6c4228d",
-      "krun-oci-krun-runtime/libkrun.1.17.0.dylib": "c5353f9cbd91564ce26eceaf1bdc33341097b43280fe029203ccca02807c082d",
-      "krun-oci-krun-runtime/libkrunfw.5.dylib": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
+      "koci": "927495ce677f1381f7cf1d12f9a7ab1f3cce9277219c928226181b9c0e024303",
+      "koci-kshim": "283634f567ec98aacbbd223367dc2f23e163a3305d080d6af6dc5636f6c4228d",
+      "koci-kruntime/libkrun.1.17.0.dylib": "c5353f9cbd91564ce26eceaf1bdc33341097b43280fe029203ccca02807c082d",
+      "koci-kruntime/libkrunfw.5.dylib": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
     }
   },
   "source_revision": "dc30d18352b521da7e69eb5b0918b56408f9812e",
   "source_dirty": false,
   "args": [
     "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/candidate-nyjwtgsv/qualify_hvf_workspace",
-    "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/candidate-nyjwtgsv/krun-oci",
-    "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/candidate-nyjwtgsv/krun-oci-krun-shim",
+    "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/candidate-nyjwtgsv/koci",
+    "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/candidate-nyjwtgsv/koci-kshim",
     "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/storage-path-restrictions-20261018/clean-system/system-image.json",
     "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/macos-vmm-confinement-20261018/fixture",
     "/private/var/tmp/wd-s6e6xcfb"

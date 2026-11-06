@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-: "${KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
+: "${K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
 
 source .github/scripts/lib/linux-kvm-provenance.sh
 
@@ -22,34 +22,34 @@ target_dir="${CARGO_TARGET_DIR:-target}"
 if [[ "$target_dir" != /* ]]; then
   target_dir="$PWD/$target_dir"
 fi
-profile="${KRUN_OCI_BUILD_PROFILE:-debug}"
-build_arguments=(build -p krun-oci-cli -p krun-oci-krun)
+profile="${K_OCI_BUILD_PROFILE:-debug}"
+build_arguments=(build -p koci-cli -p koci-kbox)
 case "$profile" in
   debug) ;;
   release) build_arguments+=(--release) ;;
   *) build_arguments+=(--profile "$profile") ;;
 esac
 binary_dir="$target_dir/$profile"
-cli="$binary_dir/krun-oci"
-shim="$binary_dir/krun-oci-krun-shim"
-runtime_dir="$binary_dir/krun-oci-krun-runtime"
-runtime_assets_manifest="crates/krun/runtime/runtime-assets.json"
+cli="$binary_dir/koci"
+shim="$binary_dir/koci-kshim"
+runtime_dir="$binary_dir/koci-kbox-runtime"
+runtime_assets_manifest="crates/kbox/runtime/runtime-assets.json"
 
 cargo "${build_arguments[@]}"
 test -x "$cli"
 test -x "$shim"
 test -d "$runtime_dir"
-test -f "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
-test ! -L "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test -f "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test ! -L "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 
-system_image_directory="$(dirname "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST")"
+system_image_directory="$(dirname "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST")"
 system_image_name="$(
-  jq --raw-output '.image.name' "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+  jq --raw-output '.image.name' "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 )"
 source_system_image="$system_image_directory/$system_image_name"
 test -f "$source_system_image"
 test ! -L "$source_system_image"
-test "$(jq --raw-output '.image.sha256' "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST")" = \
+test "$(jq --raw-output '.image.sha256' "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST")" = \
   "$(sha256sum "$source_system_image" | cut -d ' ' -f 1)"
 
 architecture="$(uname -m)"
@@ -66,12 +66,12 @@ provenance="$(
   linux_kvm_provenance \
     linux-kvm-compatibility-drift-14-case-v1 "$profile" \
     "$cli" "$shim" "$runtime_dir" "$runtime_assets_manifest" \
-    "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+    "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 )"
 
 temporary_root="${RUNNER_TEMP:-/tmp}"
 test -d "$temporary_root"
-work="$(mktemp -d "$temporary_root/krun-oci-kvm-compatibility-drift.XXXXXX")"
+work="$(mktemp -d "$temporary_root/koci-kvm-compatibility-drift.XXXXXX")"
 active_pid=""
 current_case="setup"
 cleanup() {
@@ -80,7 +80,7 @@ cleanup() {
     wait "$active_pid" 2>/dev/null || true
   fi
   case "$work" in
-    "$temporary_root"/krun-oci-kvm-compatibility-drift.*)
+    "$temporary_root"/koci-kvm-compatibility-drift.*)
       rm -rf -- "$work"
       ;;
     *)
@@ -107,17 +107,17 @@ on_error() {
 }
 trap on_error ERR
 
-report_path="${KRUN_OCI_LINUX_KVM_COMPATIBILITY_DRIFT_REPORT:-$work/report.json}"
+report_path="${K_OCI_LINUX_KVM_COMPATIBILITY_DRIFT_REPORT:-$work/report.json}"
 cases_path="$work/cases.ndjson"
 : > "$cases_path"
 
 endpoint_inventory() {
   find /tmp -maxdepth 1 -type d -uid "$(id -u)" \
-    -name 'krun-oci-agent-*' -print 2>/dev/null | sort
+    -name 'koci-agent-*' -print 2>/dev/null | sort
 }
 
 shim_process_inventory() {
-  ps -eo pid=,comm= | awk 'index($2, "krun-oci-krun") == 1 {print $1 " " $2}' | sort
+  ps -eo pid=,comm= | awk 'index($2, "koci-kbox") == 1 {print $1 " " $2}' | sort
 }
 
 runtime_share_inventory() {
@@ -138,7 +138,7 @@ prepare_case() {
   case_stderr="$case_root/stderr.log"
   case_manifest="$case_system_image_directory/system-image.json"
   case_system_image="$case_system_image_directory/$system_image_name"
-  case_shim="$case_binary_directory/krun-oci-krun-shim"
+  case_shim="$case_binary_directory/koci-kshim"
 
   mkdir -p \
     "$case_system_image_directory" \
@@ -153,12 +153,12 @@ prepare_case() {
     "$case_runtime_share" \
     "$case_runtime_share/run"
   cp --reflink=auto --sparse=always \
-    "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" "$case_manifest"
+    "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" "$case_manifest"
   cp --reflink=auto --sparse=always "$source_system_image" "$case_system_image"
   cp -p "$shim" "$case_shim"
-  cp -a "$runtime_dir" "$case_binary_directory/krun-oci-krun-runtime"
+  cp -a "$runtime_dir" "$case_binary_directory/koci-kbox-runtime"
   chmod 0600 "$case_manifest" "$case_system_image"
-  chmod -R u+w "$case_binary_directory/krun-oci-krun-runtime"
+  chmod -R u+w "$case_binary_directory/koci-kbox-runtime"
 }
 
 rewrite_manifest() {
@@ -203,7 +203,7 @@ mutate_before_load() {
     runtime-archive-provenance-drift)
       rewrite_manifest '.runtime.archive_sha256 = ("0" * 64)'
       ;;
-    libkrun-provenance-drift)
+    libkprovenance-drift)
       rewrite_manifest \
         '(.runtime.files[] | select(.role == "library") | .sha256) = ("0" * 64)'
       ;;
@@ -284,13 +284,13 @@ assert_common_report() {
   local report="$1"
   local reason_fragment="$2"
   jq --exit-status --arg reason_fragment "$reason_fragment" \
-    '.schema_version == "krun.oci.agent-vm-smoke.v10"
+    '.schema_version == "koci.agent-vm-smoke.v10"
      and .platform == "linux" and .status == "unavailable"
      and .endpoint_bound and .shim_spawned
      and (.shim_process_id > 0) and (.bridge_process_id == null)
      and (.shim_client_verified | not) and (.protocol_negotiated | not)
      and (.shim_report_verified | not) and .shim_exit_code == 2
-     and .shim_report.schema_version == "krun.oci.krun-agent-vm-smoke.v7"
+     and .shim_report.schema_version == "koci.kagent-vm-smoke.v7"
      and .shim_report.platform == "linux"
      and .shim_report.status == "unavailable"
      and (.shim_report.kvm_device_opened | not)
@@ -316,9 +316,9 @@ assert_cleanup() {
   test "$runtime_after" = "$runtime_before"
   test -z "$(
     find "$case_runtime_share" -maxdepth 2 \
-      \( -name '.krun-oci-bootstrap-*' \
-         -o -name '.krun-oci-recovery-*' \
-         -o -name '.krun-oci-kvm-compatibility-drift-*' \) \
+      \( -name '.koci-bootstrap-*' \
+         -o -name '.koci-recovery-*' \
+         -o -name '.koci-kvm-compatibility-drift-*' \) \
       -print -quit
   )"
 }
@@ -388,8 +388,8 @@ run_post_configuration_case() {
   endpoint_before="$(endpoint_inventory)"
   process_before="$(shim_process_inventory)"
   runtime_before="$(runtime_share_inventory "$case_runtime_share")"
-  ready="$case_runtime_share/run/.krun-oci-kvm-compatibility-drift-ready"
-  proceed="$case_runtime_share/run/.krun-oci-kvm-compatibility-drift-continue"
+  ready="$case_runtime_share/run/.koci-kvm-compatibility-drift-ready"
+  proceed="$case_runtime_share/run/.koci-kvm-compatibility-drift-continue"
   continue_staging="$case_runtime_share/run/compatibility-drift-continue.staging"
 
   "$cli" agent-vm-smoke \
@@ -469,7 +469,7 @@ run_pre_load_case guest-agent-identity-drift \
   'manifest sources.agent.version mismatch'
 run_pre_load_case runtime-archive-provenance-drift \
   'manifest runtime bundle does not match the checked-in target bundle'
-run_pre_load_case libkrun-provenance-drift \
+run_pre_load_case libkprovenance-drift \
   'manifest runtime bundle does not match the checked-in target bundle'
 run_pre_load_case firmware-provenance-drift \
   'manifest runtime bundle does not match the checked-in target bundle'
@@ -479,7 +479,7 @@ run_pre_load_case kernel-provenance-drift \
 jq --slurp --arg architecture "$architecture" \
   --argjson provenance "$provenance" \
   '{
-    schema_version: "krun.oci.linux-kvm-compatibility-drift.v2",
+    schema_version: "koci.linux-kvm-compatibility-drift.v2",
     platform: "linux",
     architecture: $architecture,
     status: "available",
@@ -490,14 +490,14 @@ jq --slurp --arg architecture "$architecture" \
   }' "$cases_path" | tee "$report_path"
 
 jq --exit-status \
-  '.schema_version == "krun.oci.linux-kvm-compatibility-drift.v2"
+  '.schema_version == "koci.linux-kvm-compatibility-drift.v2"
    and .status == "available" and (.kvm_required | not)
-   and .provenance.schema_version == "krun.oci.linux-kvm-provenance.v1"
+   and .provenance.schema_version == "koci.linux-kvm-provenance.v1"
    and .provenance.platform == .platform
    and .provenance.architecture == .architecture
    and .provenance.qualification_profile
      == "linux-kvm-compatibility-drift-14-case-v1"
-   and .provenance.driver == "libkrun-kvm"
+   and .provenance.driver == "libkkvm"
    and .provenance.isolation == "dedicated-vm"
    and .provenance.source_tree_clean
    and .case_count == 14

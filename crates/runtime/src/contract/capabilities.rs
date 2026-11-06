@@ -62,7 +62,7 @@ pub struct RuntimeCapabilities {
 }
 
 impl RuntimeCapabilities {
-    pub const SCHEMA: &'static str = "krun.runtime.capabilities.v6";
+    pub const SCHEMA: &'static str = "kbox_contract.capabilities.v6";
 
     pub fn validate(&self) -> Result<(), String> {
         if self.schema != Self::SCHEMA {

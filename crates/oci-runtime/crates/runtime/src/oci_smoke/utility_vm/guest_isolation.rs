@@ -2,13 +2,13 @@ use std::path::Path;
 use std::time::Duration;
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentBundle, AgentClient, AgentCreateRequest, AgentDeleteRequest, AgentStateRequest, GuestPath,
     AGENT_RUNTIME_SHARE_STATE_GUEST_ROOT,
 };
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerId, ContainerTarget, DeleteMode, Error, ErrorCode, FileOp, FileRequest, FilesystemOp,
     FilesystemRequest, Generation, IoMode, OciBundle, OperationContext, OperationId, ProcessIo,
 };
@@ -28,7 +28,7 @@ use fixture::IsolationFixture;
 
 const CALL_TIMEOUT: Duration = Duration::from_secs(15);
 const CLEANUP_TIMEOUT: Duration = Duration::from_secs(10);
-const CANARY_CONTENTS: &[u8] = b"krun-oci-guest-isolation-canary-v1\n";
+const CANARY_CONTENTS: &[u8] = b"koci-guest-isolation-canary-v1\n";
 const TAMPER_CONTENTS: &[u8] = b"guest-isolation-escape-must-not-write\n";
 const FILESYSTEM_OPERATION: &str = "linux-container-filesystem";
 

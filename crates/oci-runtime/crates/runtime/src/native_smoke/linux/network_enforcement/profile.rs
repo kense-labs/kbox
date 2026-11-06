@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use krun_oci_sdk::{NetworkEnforcementAttachment, OciBundle, NETWORK_ENFORCEMENT_EXTENSION};
+use koci_sdk::{NetworkEnforcementAttachment, OciBundle, NETWORK_ENFORCEMENT_EXTENSION};
 use serde_json::Value;
 
 use crate::NativeLinuxNetworkEnforcementSmokeConfig;

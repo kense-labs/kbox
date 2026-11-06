@@ -1,18 +1,18 @@
-//! `krun-box monitor` command — Background daemon that restarts dead boxes.
+//! `kbox monitor` command — Background daemon that restarts dead boxes.
 //!
 //! Polls `boxes.json` periodically, detects dead VMs via PID liveness checks,
 //! and restarts boxes according to their restart policy. Also monitors health
 //! check status and restarts unhealthy boxes. Uses exponential backoff to
 //! prevent crash loops.
 //!
-//! Usage: `krun-box monitor` (long-running, typically run as a background service)
+//! Usage: `kbox monitor` (long-running, typically run as a background service)
 
 use std::collections::HashMap;
 use std::time::{Duration, Instant};
 
 use clap::Args;
-use krun_box_core::{ExecutionGeneration, ExecutionManager, OperationId, RestartExecutionOptions};
-use krun_box_runtime::ManagedRestartOutcome;
+use kbox_core::{ExecutionGeneration, ExecutionManager, OperationId, RestartExecutionOptions};
+use kbox_runtime::ManagedRestartOutcome;
 
 use crate::boot;
 #[cfg(not(windows))]
@@ -176,10 +176,7 @@ pub async fn execute(args: MonitorArgs) -> Result<(), Box<dyn std::error::Error>
     let interval = Duration::from_secs(args.interval);
     let mut tracker = BackoffTracker::new();
 
-    println!(
-        "krun-box monitor started (poll interval: {}s)",
-        args.interval
-    );
+    println!("kbox monitor started (poll interval: {}s)", args.interval);
 
     // Shared last-poll clock so the metrics endpoint's /healthz reflects whether
     // the poll loop is actually alive (not just that the HTTP task is up).
@@ -220,7 +217,7 @@ pub async fn execute(args: MonitorArgs) -> Result<(), Box<dyn std::error::Error>
         tokio::select! {
             _ = tokio::time::sleep(interval) => {}
             _ = &mut shutdown => {
-                println!("krun-box monitor: received shutdown signal, exiting after completing the poll cycle");
+                println!("kbox monitor: received shutdown signal, exiting after completing the poll cycle");
                 break;
             }
         }
@@ -470,7 +467,7 @@ async fn poll_once(tracker: &mut BackoffTracker) -> Result<(), Box<dyn std::erro
 
 async fn restart_managed_candidate(
     record: &BoxRecord,
-    execution_id: krun_box_core::ExecutionId,
+    execution_id: kbox_core::ExecutionId,
     source_generation: ExecutionGeneration,
     operation_id: Option<OperationId>,
     stop_timeout_secs: Option<u64>,
@@ -479,7 +476,7 @@ async fn restart_managed_candidate(
         Some(operation_id) => operation_id,
         None => OperationId::new(format!("monitor-restart-{}", uuid::Uuid::new_v4()))?,
     };
-    let home = krun_box_core::dirs_home();
+    let home = kbox_core::dirs_home();
     let manager = super::configured_local_execution_manager(&home).await?;
     let lease = manager
         .restart_with_options(
@@ -762,8 +759,8 @@ async fn run_due_health_checks(state: &StateFile) -> Result<(), Box<dyn std::err
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation};
-    use krun_box_runtime::{ManagedExecutionMetadata, ManagedRestartCompletion};
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation};
+    use kbox_runtime::{ManagedExecutionMetadata, ManagedRestartCompletion};
     use std::collections::BTreeMap;
 
     use crate::test_helpers::fixtures::make_record;

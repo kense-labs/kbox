@@ -1,6 +1,6 @@
 # Spec-Driven Development
 
-krun uses an adapted spec-kit workflow for bounded epics. House templates and the constitution live in this repository. Do not run an upstream installer.
+kbox uses an adapted spec-kit workflow for bounded epics. House templates and the constitution live in this repository. Do not run an upstream installer.
 
 ## Artifacts
 

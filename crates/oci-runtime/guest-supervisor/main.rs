@@ -1,8 +1,8 @@
 //! PID-namespace init for one macOS guest command.
 //!
 //! The system-image builder installs this static binary at
-//! `/usr/bin/krun-oci-agent`. The guest init execs
-//! `krun-oci-agent --guest-command ./.krun-guest-command`. This process becomes
+//! `/usr/bin/koci-agent`. The guest init execs
+//! `koci-agent --guest-command ./.kguest-command`. This process becomes
 //! the VM's PID 1, then creates a new PID namespace whose init is the command
 //! script. When that init exits, the kernel kills every remaining process in
 //! the namespace before this parent observes the exit.

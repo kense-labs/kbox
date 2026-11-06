@@ -176,7 +176,7 @@ pub mod windows_security;
 mod windows_service;
 
 #[cfg(target_os = "linux")]
-pub use krun_oci_agent::RootlessDevicePolicyBootstrap;
+pub use koci_agent::RootlessDevicePolicyBootstrap;
 #[cfg(not(target_os = "linux"))]
 #[derive(Debug)]
 pub struct RootlessDevicePolicyBootstrap {
@@ -226,7 +226,7 @@ pub use guest_isolation_report::{
 };
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 pub use hvf_driver::{HvfRuntimeDriver, HvfRuntimeDriverConfig};
-pub use krun_oci_agent_protocol::{
+pub use koci_agent_protocol::{
     AgentTransportFaultStage, AgentTransportOperationStage, AgentTransportShutdownStage,
 };
 #[cfg(all(
@@ -441,7 +441,7 @@ pub use whpx_recovery_smoke::{
 #[cfg(windows)]
 pub use windows_service::WindowsHostService;
 
-use krun_oci_core::RuntimeFeatures;
+use koci_core::RuntimeFeatures;
 
 /// Inspect runtime drivers without claiming unsupported workload capability.
 #[must_use]

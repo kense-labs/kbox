@@ -3,7 +3,7 @@
 use std::collections::HashMap;
 use std::path::Path;
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::super::dockerignore::DockerIgnore;
 #[cfg(test)]
@@ -48,9 +48,9 @@ pub(super) fn extract_tar_to_dst(archive_path: &Path, dst: &Path) -> Result<()> 
     // Bound decompressed output so a compression-bomb archive (`ADD app.tar.gz`)
     // cannot fill the build host's disk. Mirrors the MAX_ADD_URL_BYTES cap on the
     // ADD-URL path (which the local-archive path previously lacked); tune with
-    // Krun_BOX_MAX_BUILD_EXTRACT_BYTES.
+    // Kbox_BOX_MAX_BUILD_EXTRACT_BYTES.
     let max_bytes = crate::oci::limited_reader::cap_from_env(
-        "KRUN_BOX_MAX_BUILD_EXTRACT_BYTES",
+        "K_BOX_MAX_BUILD_EXTRACT_BYTES",
         4 * 1024 * 1024 * 1024,
     );
 

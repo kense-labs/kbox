@@ -152,13 +152,13 @@ fn accepts_validated_normative_cross_field_boundaries() {
             }
         },
         "vm": {
-            "hypervisor": {"path": "/usr/bin/krun-vmm"},
+            "hypervisor": {"path": "/usr/bin/kvmm"},
             "kernel": {
-                "path": "/usr/lib/krun/vmlinux",
-                "initrd": "/usr/lib/krun/initrd"
+                "path": "/usr/lib/kbox/vmlinux",
+                "initrd": "/usr/lib/kbox/initrd"
             },
             "image": {
-                "path": "/var/lib/krun/root.raw",
+                "path": "/var/lib/kbox/root.raw",
                 "format": "raw"
             }
         }
@@ -204,10 +204,10 @@ fn validates_linux_device_identity_and_conditional_numbers() {
         "linux": {
             "devices": [
                 {"type": "c", "path": "/dev/null", "major": 1, "minor": 3},
-                {"type": "p", "path": "/run/krun/device-fifo"},
+                {"type": "p", "path": "/run/kbox/device-fifo"},
                 {
                     "type": "p",
-                    "path": "/run/krun/device-fifo-with-ignored-numbers",
+                    "path": "/run/kbox/device-fifo-with-ignored-numbers",
                     "major": -1,
                     "minor": 9223372036854775807_i64
                 }
@@ -397,7 +397,7 @@ fn validates_pinned_oci_image_annotation_values() {
             "org.opencontainers.image.os.features": r#"["sse4","aes"]"#,
             "org.opencontainers.image.architecture": "arm64",
             "org.opencontainers.image.variant": "v8",
-            "org.opencontainers.image.author": "Krun <dev@krun.dev>",
+            "org.opencontainers.image.author": "Kbox <dev@kbox.dev>",
             "org.opencontainers.image.created": "2026-08-17T10:11:12.123456789+08:00",
             "org.opencontainers.image.stopSignal": "SIGRTMIN+3"
         }
@@ -742,8 +742,8 @@ fn rejects_nul_in_vm_runtime_paths_and_parameters() {
         "root": {"path": "rootfs"},
         "vm": {
             "hypervisor": {
-                "path": "/runtime/krun-vmm\u{0}",
-                "parameters": ["--machine", "krun\u{0}"]
+                "path": "/runtime/kvmm\u{0}",
+                "parameters": ["--machine", "kbox\u{0}"]
             },
             "kernel": {
                 "path": "/runtime/vmlinux\u{0}",

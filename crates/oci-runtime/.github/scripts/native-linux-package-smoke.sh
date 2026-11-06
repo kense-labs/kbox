@@ -8,31 +8,31 @@ if [[ "$#" -ne 1 ]]; then
 fi
 
 package_directory=$1
-source_commit="${KRUN_QUALIFICATION_SOURCE_COMMIT:-}"
-criu_binary="${KRUN_OCI_CRIU_BINARY:-}"
-runtime_tools_binary="${KRUN_OCI_UPSTREAM_RUNTIME_TOOL:-}"
-runtime_tools_manifest="${KRUN_OCI_UPSTREAM_RUNTIME_TOOL_MANIFEST:-}"
+source_commit="${K_QUALIFICATION_SOURCE_COMMIT:-}"
+criu_binary="${K_OCI_CRIU_BINARY:-}"
+runtime_tools_binary="${K_OCI_UPSTREAM_RUNTIME_TOOL:-}"
+runtime_tools_manifest="${K_OCI_UPSTREAM_RUNTIME_TOOL_MANIFEST:-}"
 if [[ ! "$source_commit" =~ ^[0-9a-f]{40}$ ]]; then
   printf '%s\n' \
-    'KRUN_QUALIFICATION_SOURCE_COMMIT must be one lowercase 40-character Git commit' >&2
+    'K_QUALIFICATION_SOURCE_COMMIT must be one lowercase 40-character Git commit' >&2
   exit 2
 fi
 if [[ -z "$criu_binary" || "$criu_binary" != /* ]] ||
   [[ ! -f "$criu_binary" || -L "$criu_binary" || ! -x "$criu_binary" ]]; then
   printf '%s\n' \
-    'KRUN_OCI_CRIU_BINARY must name one absolute regular nonsymlink executable' >&2
+    'K_OCI_CRIU_BINARY must name one absolute regular nonsymlink executable' >&2
   exit 2
 fi
 for runtime_tools_input in "$runtime_tools_binary" "$runtime_tools_manifest"; do
   if [[ -z "$runtime_tools_input" || "$runtime_tools_input" != /* ]] ||
     [[ ! -f "$runtime_tools_input" || -L "$runtime_tools_input" ]]; then
     printf '%s\n' \
-      'KRUN_OCI_UPSTREAM_RUNTIME_TOOL and its MANIFEST must name absolute regular nonsymlink files' >&2
+      'K_OCI_UPSTREAM_RUNTIME_TOOL and its MANIFEST must name absolute regular nonsymlink files' >&2
     exit 2
   fi
 done
 if [[ ! -x "$runtime_tools_binary" ]]; then
-  printf '%s\n' 'KRUN_OCI_UPSTREAM_RUNTIME_TOOL must be executable' >&2
+  printf '%s\n' 'K_OCI_UPSTREAM_RUNTIME_TOOL must be executable' >&2
   exit 2
 fi
 runtime_tools_binary="$(realpath -e -- "$runtime_tools_binary")"
@@ -68,9 +68,9 @@ if [[ ! -d "$package_directory" || -L "$package_directory" ]]; then
 fi
 package_directory="$(realpath -e -- "$package_directory")"
 package_name="$(basename "$package_directory")"
-runtime_binary="$package_directory/krun-oci"
-agent_binary="$package_directory/krun-oci-agent"
-shim_binary="$package_directory/containerd-shim-krun-oci-v2"
+runtime_binary="$package_directory/koci"
+agent_binary="$package_directory/koci-agent"
+shim_binary="$package_directory/containerd-shim-koci-v2"
 runtime_tools_lock="$package_directory/compat/upstream-runtime-tools.json"
 
 required_files=(
@@ -164,7 +164,7 @@ expected_lifecycle_rootfs_source="$(
   jq --compact-output --arg architecture "$package_architecture" \
     '.lifecycle.rootfs_sources[$architecture]' "$runtime_tools_lock"
 )"
-expected_package_name="krun-oci-runtime-v${runtime_version}-linux-${package_architecture}"
+expected_package_name="koci-runtime-v${runtime_version}-linux-${package_architecture}"
 if [[ "$package_name" != "$expected_package_name" ]]; then
   printf 'Native Linux package name mismatch: expected %s, found %s\n' \
     "$expected_package_name" "$package_name" >&2
@@ -196,7 +196,7 @@ package_report="$qualification_directory/native-linux-package.json"
 
 "$runtime_binary" features >"$features_report"
 jq --exit-status \
-  '.schema_version == "krun.oci.features.v1"
+  '.schema_version == "koci.features.v1"
    and .platform == "linux"
    and any(
      .drivers[];
@@ -224,7 +224,7 @@ jq --exit-status \
   --arg shim_sha256 "$shim_sha256" \
   --arg upstream_commit "$expected_runtime_tools_commit" \
   --arg runtime_spec_version "$expected_runtime_tools_spec_version" \
-  '.schema_version == "krun.oci.upstream-bundle-validation.v1"
+  '.schema_version == "koci.upstream-bundle-validation.v1"
    and .status == "available"
    and .source_commit == $source_commit
    and .upstream.commit == $upstream_commit
@@ -258,7 +258,7 @@ jq --exit-status \
   --arg runtime_spec_version "$expected_runtime_tools_spec_version" \
   --argjson rootfs_source "$expected_lifecycle_rootfs_source" \
   --argjson upstream_harness_defects "$expected_lifecycle_upstream_harness_defects" \
-  '.schema_version == "krun.oci.upstream-lifecycle-validation.v1"
+  '.schema_version == "koci.upstream-lifecycle-validation.v1"
    and .status == "available"
    and .reason == null
    and .blocker == null
@@ -305,20 +305,20 @@ jq --exit-status \
    and .full_lifecycle_qualified == false' \
   "$upstream_lifecycle_report" >/dev/null
 
-KRUN_OCI_NATIVE_RUNTIME_BINARY="$runtime_binary" \
-KRUN_OCI_NATIVE_AGENT_BINARY="$agent_binary" \
-KRUN_OCI_NATIVE_SOAK_ITERATIONS=25 \
-KRUN_OCI_NATIVE_SOAK_REPORT="$soak_report" \
-KRUN_OCI_NATIVE_RECOVERY_REPORT="$recovery_report" \
-KRUN_OCI_NATIVE_HOOK_RECOVERY_REPORT="$hook_recovery_report" \
-KRUN_OCI_NATIVE_ROOTLESS_RECOVERY_REPORT="$rootless_recovery_report" \
-KRUN_OCI_NATIVE_ROOTLESS_DEVICE_POLICY_REPORT="$rootless_device_report" \
-KRUN_OCI_NATIVE_NETWORK_ENFORCEMENT_REPORT="$network_enforcement_report" \
-KRUN_OCI_NATIVE_KVM_ABSENCE_EVIDENCE="$kvm_absence_report" \
+K_OCI_NATIVE_RUNTIME_BINARY="$runtime_binary" \
+K_OCI_NATIVE_AGENT_BINARY="$agent_binary" \
+K_OCI_NATIVE_SOAK_ITERATIONS=25 \
+K_OCI_NATIVE_SOAK_REPORT="$soak_report" \
+K_OCI_NATIVE_RECOVERY_REPORT="$recovery_report" \
+K_OCI_NATIVE_HOOK_RECOVERY_REPORT="$hook_recovery_report" \
+K_OCI_NATIVE_ROOTLESS_RECOVERY_REPORT="$rootless_recovery_report" \
+K_OCI_NATIVE_ROOTLESS_DEVICE_POLICY_REPORT="$rootless_device_report" \
+K_OCI_NATIVE_NETWORK_ENFORCEMENT_REPORT="$network_enforcement_report" \
+K_OCI_NATIVE_KVM_ABSENCE_EVIDENCE="$kvm_absence_report" \
   bash <(tr -d '\015' < .github/scripts/native-linux-smoke.sh)
 
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-soak.v2"
+  '.schema_version == "koci.native-linux-soak.v2"
    and .status == "available"
    and .configuration.iterations == 25
    and .configuration.concurrent_containers == 4
@@ -336,25 +336,25 @@ jq --exit-status \
    )' \
   "$soak_report" >/dev/null
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-recovery-smoke.v2"
+  '.schema_version == "koci.native-linux-recovery-smoke.v2"
    and .status == "available"' \
   "$recovery_report" >/dev/null
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-hook-owner-death-smoke.v1"
+  '.schema_version == "koci.native-linux-hook-owner-death-smoke.v1"
    and .status == "available"' \
   "$hook_recovery_report" >/dev/null
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-recovery-smoke.v2"
+  '.schema_version == "koci.native-linux-recovery-smoke.v2"
    and .status == "available"
    and .cgroup_delegation_requested
    and .cgroup_delegation_verified' \
   "$rootless_recovery_report" >/dev/null
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-rootless-smoke.v4"
+  '.schema_version == "koci.native-linux-rootless-smoke.v4"
    and .status == "available"' \
   "$rootless_device_report" >/dev/null
 jq --exit-status \
-  '.schema_version == "krun.oci.native-linux-network-enforcement-smoke.v1"
+  '.schema_version == "koci.native-linux-network-enforcement-smoke.v1"
    and .status == "available"
    and .extension_advertised
    and .mechanism_verified_before_create
@@ -365,19 +365,19 @@ jq --exit-status \
    and .mechanism_preserved_after_delete' \
   "$network_enforcement_report" >/dev/null
 jq --exit-status --arg architecture "$architecture" \
-  '.schema_version == "krun.oci.native-linux-kvm-absence.v1"
+  '.schema_version == "koci.native-linux-kvm-absence.v1"
    and .platform == "linux"
    and .architecture == $architecture
    and .device_absent_before_lifecycle' \
   "$kvm_absence_report" >/dev/null
 
-KRUN_OCI_NATIVE_RUNTIME_BINARY="$runtime_binary" \
-KRUN_OCI_NATIVE_AGENT_BINARY="$agent_binary" \
-KRUN_OCI_CRIU_BINARY="$criu_binary" \
-KRUN_QUALIFICATION_SOURCE_COMMIT="$source_commit" \
-KRUN_OCI_NATIVE_CHECKPOINT_REPORT="$checkpoint_report" \
-KRUN_OCI_NATIVE_CHECKPOINT_PIDNS_REPORT="$checkpoint_pidns_report" \
-KRUN_OCI_NATIVE_CHECKPOINT_NETNS_REPORT="$checkpoint_netns_report" \
+K_OCI_NATIVE_RUNTIME_BINARY="$runtime_binary" \
+K_OCI_NATIVE_AGENT_BINARY="$agent_binary" \
+K_OCI_CRIU_BINARY="$criu_binary" \
+K_QUALIFICATION_SOURCE_COMMIT="$source_commit" \
+K_OCI_NATIVE_CHECKPOINT_REPORT="$checkpoint_report" \
+K_OCI_NATIVE_CHECKPOINT_PIDNS_REPORT="$checkpoint_pidns_report" \
+K_OCI_NATIVE_CHECKPOINT_NETNS_REPORT="$checkpoint_netns_report" \
   bash <(tr -d '\015' < .github/scripts/native-linux-checkpoint.sh)
 
 criu_digest="sha256:$criu_sha256"
@@ -393,7 +393,7 @@ jq --exit-status \
   --arg criu_digest "$criu_digest" \
   --arg criu_version "$criu_version" \
   '
-    .schemaVersion == "krun.oci.native-linux-checkpoint-smoke.v3"
+    .schemaVersion == "koci.native-linux-checkpoint-smoke.v3"
     and .status == "available"
     and .sourceRevision == $source_commit
     and .checkpointAdvertised and .restoreAdvertised
@@ -425,7 +425,7 @@ for checkpoint_negative_report in \
     --arg criu_digest "$criu_digest" \
     --arg criu_version "$criu_version" \
     '
-      .schemaVersion == "krun.oci.native-linux-checkpoint-smoke.v3"
+      .schemaVersion == "koci.native-linux-checkpoint-smoke.v3"
       and .status == "unavailable"
       and .sourceRevision == $source_commit
       and .checkpointAdvertised and .restoreAdvertised
@@ -499,7 +499,7 @@ runtime_tools_sha256="$(jq --raw-output '.upstream.tool_sha256' "$upstream_bundl
 runtime_tools_size="$(jq --raw-output '.upstream.tool_size' "$upstream_bundle_report")"
 runtime_tools_manifest_sha256="$(jq --raw-output '.upstream.build_manifest_sha256' "$upstream_bundle_report")"
 jq --null-input \
-  --arg schema_version 'krun.oci.native-linux-package-qualification.v7' \
+  --arg schema_version 'koci.native-linux-package-qualification.v7' \
   --arg status 'available' \
   --arg source_commit "$source_commit" \
   --arg workflow_run_id "$workflow_run_id" \
@@ -613,7 +613,7 @@ jq --exit-status \
   --argjson upstream_lifecycle_blocker "$upstream_lifecycle_blocker_json" \
   --argjson upstream_core_lifecycle_verified "$upstream_core_lifecycle_verified" \
   'select(
-     .schema_version == "krun.oci.native-linux-package-qualification.v7"
+     .schema_version == "koci.native-linux-package-qualification.v7"
      and .status == "available"
      and .package_layout_verified
      and .static_elf_verified

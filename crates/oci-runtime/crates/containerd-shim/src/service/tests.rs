@@ -1,8 +1,8 @@
 use super::*;
-use krun_oci_sdk::oci_spec::runtime::{
+use koci_sdk::oci_spec::runtime::{
     ContainerState, LinuxSchedulerFlag, LinuxSchedulerPolicy, Process, StateBuilder,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     async_trait, CreateRequest, DeleteMode, DeleteRequest as RuntimeDeleteRequest, DriverKind,
     ExecRequest, Generation, IsolationClass, KillRequest as RuntimeKillRequest, OciRuntimeService,
     OutputChunk, OutputStream, ProcessesRequest, ReadOutputRequest, StateRequest,
@@ -56,15 +56,15 @@ struct DeletedRuntimeService {
 
 #[async_trait]
 impl OciRuntimeService for DeletedRuntimeService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, _request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, request: StateRequest) -> koci_sdk::Result<ContainerRecord> {
         self.calls
             .lock()
             .expect("deleted-runtime calls")
@@ -79,12 +79,12 @@ impl OciRuntimeService for DeletedRuntimeService {
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, _request: RuntimeKillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, _request: RuntimeKillRequest) -> koci_sdk::Result<ContainerRecord> {
         self.calls.lock().expect("deleted-runtime calls").kills += 1;
         Err(RuntimeError::new(
             ErrorCode::NotFound,
@@ -93,7 +93,7 @@ impl OciRuntimeService for DeletedRuntimeService {
         .for_operation("test-kill"))
     }
 
-    async fn delete(&self, request: RuntimeDeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, request: RuntimeDeleteRequest) -> koci_sdk::Result<()> {
         let mode = request.mode;
         self.calls
             .lock()
@@ -114,11 +114,11 @@ impl OciRuntimeService for DeletedRuntimeService {
 
 #[async_trait]
 impl OciRuntimeService for CreateIntentCleanupService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, request: CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         self.calls
             .lock()
             .expect("create-intent cleanup calls")
@@ -143,18 +143,18 @@ impl OciRuntimeService for CreateIntentCleanupService {
         Ok(self.record.clone())
     }
 
-    async fn state(&self, _request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, _request: StateRequest) -> koci_sdk::Result<ContainerRecord> {
         Ok(self.record.clone())
     }
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, request: RuntimeKillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, request: RuntimeKillRequest) -> koci_sdk::Result<ContainerRecord> {
         self.calls
             .lock()
             .expect("create-intent cleanup calls")
@@ -163,7 +163,7 @@ impl OciRuntimeService for CreateIntentCleanupService {
         Ok(self.record.clone())
     }
 
-    async fn delete(&self, request: RuntimeDeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, request: RuntimeDeleteRequest) -> koci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("create-intent cleanup calls")
@@ -172,25 +172,25 @@ impl OciRuntimeService for CreateIntentCleanupService {
         Ok(())
     }
 
-    async fn wait(&self, _request: WaitRequest) -> krun_oci_sdk::Result<ExitStatus> {
+    async fn wait(&self, _request: WaitRequest) -> koci_sdk::Result<ExitStatus> {
         ExitStatus::signaled(9, false)
     }
 }
 
 #[async_trait]
 impl OciRuntimeService for RecoveryService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
     async fn create(
         &self,
-        _request: krun_oci_sdk::CreateRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+        _request: koci_sdk::CreateRequest,
+    ) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, request: StateRequest) -> koci_sdk::Result<ContainerRecord> {
         if request.target.generation.is_none() {
             return Err(RuntimeError::new(
                 ErrorCode::InvalidArgument,
@@ -208,27 +208,27 @@ impl OciRuntimeService for RecoveryService {
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
     async fn kill(
         &self,
-        _request: krun_oci_sdk::KillRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+        _request: koci_sdk::KillRequest,
+    ) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: krun_oci_sdk::DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: koci_sdk::DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn exec(&self, request: ExecRequest) -> krun_oci_sdk::Result<ProcessRecord> {
+    async fn exec(&self, request: ExecRequest) -> koci_sdk::Result<ProcessRecord> {
         self.exec_calls
             .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         let record = ProcessRecord {
-            target: krun_oci_sdk::ProcessTarget {
+            target: koci_sdk::ProcessTarget {
                 container: request.container,
                 process_id: request.process_id,
             },
@@ -242,14 +242,14 @@ impl OciRuntimeService for RecoveryService {
         Ok(record)
     }
 
-    async fn wait(&self, _request: WaitRequest) -> krun_oci_sdk::Result<ExitStatus> {
+    async fn wait(&self, _request: WaitRequest) -> koci_sdk::Result<ExitStatus> {
         std::future::pending().await
     }
 
     async fn processes(
         &self,
         _request: ProcessesRequest,
-    ) -> krun_oci_sdk::Result<Vec<ProcessRecord>> {
+    ) -> koci_sdk::Result<Vec<ProcessRecord>> {
         Ok(self
             .processes
             .lock()
@@ -257,14 +257,14 @@ impl OciRuntimeService for RecoveryService {
             .clone())
     }
 
-    async fn wait_process(&self, _request: WaitProcessRequest) -> krun_oci_sdk::Result<ExitStatus> {
+    async fn wait_process(&self, _request: WaitProcessRequest) -> koci_sdk::Result<ExitStatus> {
         std::future::pending().await
     }
 
     async fn read_output(
         &self,
         request: ReadOutputRequest,
-    ) -> krun_oci_sdk::Result<Vec<OutputChunk>> {
+    ) -> koci_sdk::Result<Vec<OutputChunk>> {
         let Some(output) = &self.output else {
             return std::future::pending().await;
         };
@@ -363,7 +363,7 @@ fn recovery_service(
     };
     (
         RuntimeAdapter::from_client(
-            krun_oci_sdk::RuntimeClient::new(service),
+            koci_sdk::RuntimeClient::new(service),
             IsolationRequest::SharedHostKernel,
         ),
         exec_calls,
@@ -637,7 +637,7 @@ async fn delete_shim_replays_an_in_flight_create_intent_before_exact_cleanup() {
     .expect("store create intent");
     let calls = Arc::new(std::sync::Mutex::new(CreateIntentCleanupCalls::default()));
     let adapter = RuntimeAdapter::from_client(
-        krun_oci_sdk::RuntimeClient::new(CreateIntentCleanupService {
+        koci_sdk::RuntimeClient::new(CreateIntentCleanupService {
             record,
             calls: calls.clone(),
             retryable_create_failures: Arc::new(std::sync::atomic::AtomicUsize::new(2)),
@@ -685,7 +685,7 @@ async fn delete_shim_finishes_local_cleanup_after_runtime_delete_committed() {
     };
     let calls = runtime.calls.clone();
     let adapter = RuntimeAdapter::from_client(
-        krun_oci_sdk::RuntimeClient::new(runtime),
+        koci_sdk::RuntimeClient::new(runtime),
         IsolationRequest::SharedHostKernel,
     );
     let mut service = recovery_service_instance(directory.path(), adapter);
@@ -723,7 +723,7 @@ async fn delete_shim_retains_metadata_when_runtime_absence_is_unconfirmed() {
     };
     let calls = runtime.calls.clone();
     let adapter = RuntimeAdapter::from_client(
-        krun_oci_sdk::RuntimeClient::new(runtime),
+        koci_sdk::RuntimeClient::new(runtime),
         IsolationRequest::SharedHostKernel,
     );
     let mut service = recovery_service_instance(directory.path(), adapter);

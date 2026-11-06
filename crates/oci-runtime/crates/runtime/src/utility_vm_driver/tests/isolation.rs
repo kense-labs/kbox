@@ -69,7 +69,7 @@ async fn create_requires_dedicated_vm_and_an_exact_generation_before_handoff() {
         "shared-guest-kernel",
         target(),
         IsolationRequest::SharedGuestKernel {
-            trust_domain: krun_oci_sdk::TrustDomainId::new("test-domain").expect("trust domain"),
+            trust_domain: koci_sdk::TrustDomainId::new("test-domain").expect("trust domain"),
         },
     );
     let shared_source = shared.bundle.directory().to_path_buf();
@@ -115,8 +115,7 @@ async fn shared_isolation_does_not_implicitly_advertise_attachment_v4() {
     capability
         .isolation_classes
         .push(IsolationClass::SharedGuestKernel);
-    let fixture =
-        Fixture::with_profile(capability, krun_oci_sdk::AttachmentCapabilities::base_v1());
+    let fixture = Fixture::with_profile(capability, koci_sdk::AttachmentCapabilities::base_v1());
     let request = fixture.shared_handoff_request(
         "unadvertised-v4",
         named_target("unadvertised-v4", 1),
@@ -203,7 +202,7 @@ async fn drifted_handoff_config_does_not_create_an_exact_runtime_share() {
     let mut config: serde_json::Value =
         serde_json::from_slice(&std::fs::read(&config_path).expect("read original handoff config"))
             .expect("decode original handoff config");
-    config["annotations"]["dev.krun.qualification-drift"] =
+    config["annotations"]["dev.kbox.qualification-drift"] =
         serde_json::Value::String("changed".to_string());
     std::fs::write(
         &config_path,

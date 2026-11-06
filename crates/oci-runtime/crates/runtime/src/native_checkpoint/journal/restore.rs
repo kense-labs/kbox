@@ -4,9 +4,9 @@ use std::io::{Read, Write};
 use std::os::unix::fs::OpenOptionsExt;
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent_protocol::{AgentCreateRequest, AgentState};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentCreateRequest, AgentState};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     canonical_json_bytes, CheckpointArtifactPath, CheckpointDigest, CheckpointReference,
     ContainerTarget, ErrorCode, OperationId, Result,
 };
@@ -19,7 +19,7 @@ use super::{
 };
 use crate::native_checkpoint::artifact::CheckpointArtifactManifest;
 
-const RESTORE_JOURNAL_SCHEMA_V1: &str = "krun.oci.native-restore-operation.v1";
+const RESTORE_JOURNAL_SCHEMA_V1: &str = "koci.native-restore-operation.v1";
 const MAX_RESTORE_JOURNAL_BYTES: u64 = 32 * 1024 * 1024;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -589,10 +589,10 @@ fn is_pending_journal_name(name: &str) -> bool {
 mod tests {
     use std::collections::HashMap;
 
-    use krun_oci_agent_protocol::{AgentBundle, GuestPath};
-    use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
-    use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-    use krun_oci_sdk::{
+    use koci_agent_protocol::{AgentBundle, GuestPath};
+    use koci_core::{DriverKind, HostPlatform, IsolationClass};
+    use koci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+    use koci_sdk::{
         CheckpointCompatibility, CheckpointFormat, ContainerId, ContainerRecord, CreateAttachments,
         Generation, OciBundle, OperationContext, ProcessIo, RuntimeArtifact,
         PAUSED_STATE_ANNOTATION,
@@ -655,8 +655,7 @@ mod tests {
             IsolationClass::SharedHostKernel,
             HostPlatform::Linux,
             std::env::consts::ARCH,
-            RuntimeArtifact::new("krun-oci-runtime", "0.2.0", digest('2').to_string(), None)
-                .unwrap(),
+            RuntimeArtifact::new("koci-runtime", "0.2.0", digest('2').to_string(), None).unwrap(),
             digest('3'),
             CheckpointFormat::new("native-linux-criu", 1).unwrap(),
         )
@@ -670,7 +669,7 @@ mod tests {
                 ContainerId::new("restore-journal-target").unwrap(),
                 Generation(2),
             ),
-            bundle: AgentBundle::new(&bundle, GuestPath::new("/run/krun/restore-bundle").unwrap()),
+            bundle: AgentBundle::new(&bundle, GuestPath::new("/run/kbox/restore-bundle").unwrap()),
             io,
         };
         let artifact = CheckpointArtifactPath::new(root.join("checkpoint.bin")).unwrap();
@@ -701,7 +700,7 @@ mod tests {
             Some(record.clone())
         );
         let mut changed = request.clone();
-        changed.io.stdin = krun_oci_sdk::IoMode::Pipe;
+        changed.io.stdin = koci_sdk::IoMode::Pipe;
         let error = record
             .validate_request(
                 record.operation_id(),

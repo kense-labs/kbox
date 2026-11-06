@@ -4,17 +4,17 @@ use std::os::unix::net::UnixListener;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use krun_oci_sdk::OciBundle;
+use koci_sdk::OciBundle;
 use tokio::net::UnixStream;
 use tokio::time::{sleep, Instant};
 
 use super::filesystem::create_private_directory;
 use crate::NativeControlDescriptors;
 
-const CONTROL_ENVIRONMENT: &str = "KRUN_OCI_NATIVE_CONTROL_SMOKE=1";
+const CONTROL_ENVIRONMENT: &str = "K_OCI_NATIVE_CONTROL_SMOKE=1";
 const CONTROL_TIMEOUT: Duration = Duration::from_secs(15);
 const CONTROL_POLL_INTERVAL: Duration = Duration::from_millis(25);
-pub(super) const INIT_LOG_CONTENTS: &[u8] = b"krun-box-native-control-v1\n";
+pub(super) const INIT_LOG_CONTENTS: &[u8] = b"kbox-native-control-v1\n";
 
 pub(super) struct ControlDescriptorFixture {
     descriptors: Option<NativeControlDescriptors>,
@@ -136,7 +136,7 @@ pub(super) fn enable_workload_verification(bundle: &OciBundle) -> Result<OciBund
     if environment.iter().any(|entry| {
         entry
             .as_str()
-            .is_some_and(|entry| entry.starts_with("KRUN_OCI_NATIVE_CONTROL_SMOKE="))
+            .is_some_and(|entry| entry.starts_with("K_OCI_NATIVE_CONTROL_SMOKE="))
     }) {
         return Err("native smoke control environment is already configured".into());
     }

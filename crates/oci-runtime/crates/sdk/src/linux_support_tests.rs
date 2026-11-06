@@ -118,7 +118,7 @@ fn support_profile_rejects_every_unadvertised_linux_feature_class() {
     for (field, mutation) in [
         (
             "process.apparmorProfile",
-            json!({"process": {"apparmorProfile": "krun-test"}}),
+            json!({"process": {"apparmorProfile": "ktest"}}),
         ),
         (
             "process.selinuxLabel",

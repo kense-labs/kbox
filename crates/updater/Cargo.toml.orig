@@ -1,11 +1,11 @@
 [package]
-name = "krun-updater"
+name = "kupdater"
 version = "0.3.0"
 edition = "2021"
-authors = ["Krun"]
+authors = ["Kbox"]
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
-description = "Self-update library for Krun CLI binaries via GitHub Releases"
+repository = "https://github.com/kense-labs/kbox"
+description = "Self-update library for Kbox CLI binaries via GitHub Releases"
 
 [dependencies]
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json", "stream"] }

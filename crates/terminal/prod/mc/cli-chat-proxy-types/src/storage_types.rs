@@ -1,4 +1,4 @@
-//! Signed upload URL types shared between cli-chat-proxy (server) and krun-shell (client).
+//! Signed upload URL types shared between cli-chat-proxy (server) and kshell (client).
 
 use serde::{Deserialize, Serialize};
 

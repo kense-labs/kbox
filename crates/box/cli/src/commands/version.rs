@@ -1,4 +1,4 @@
-//! `krun-box version` command.
+//! `kbox version` command.
 
 use clap::Args;
 
@@ -11,7 +11,7 @@ pub async fn execute(_args: VersionArgs) -> Result<(), Box<dyn std::error::Error
 }
 
 fn version_line() -> String {
-    format!("krun-box version {}", krun_box_core::VERSION)
+    format!("kbox version {}", kbox_core::VERSION)
 }
 
 #[cfg(test)]
@@ -22,7 +22,7 @@ mod tests {
     fn version_line_uses_core_package_version() {
         assert_eq!(
             version_line(),
-            format!("krun-box version {}", krun_box_core::VERSION)
+            format!("kbox version {}", kbox_core::VERSION)
         );
     }
 }

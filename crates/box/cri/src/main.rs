@@ -1,7 +1,7 @@
-//! Krun Box CRI - Kubernetes Container Runtime Interface binary.
+//! Kbox Box CRI - Kubernetes Container Runtime Interface binary.
 //!
 //! Serves CRI RuntimeService and ImageService over a Unix domain socket,
-//! allowing kubelet to schedule pods onto Krun Box microVMs.
+//! allowing kubelet to schedule pods onto Kbox Box microVMs.
 
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -9,31 +9,31 @@ use std::sync::Arc;
 use clap::Parser;
 use tracing_subscriber::EnvFilter;
 
-use krun_box_runtime::oci::{ImageStore, RegistryAuth};
+use kbox_runtime::oci::{ImageStore, RegistryAuth};
 
-use krun_box_cri::config_mapper::DEFAULT_AGENT_IMAGE;
-use krun_box_cri::runtime_service::CriRuntimeOptions;
-use krun_box_cri::server::CriServer;
+use kbox_cri::config_mapper::DEFAULT_AGENT_IMAGE;
+use kbox_cri::runtime_service::CriRuntimeOptions;
+use kbox_cri::server::CriServer;
 
-const AGENT_IMAGE_ENV: &str = "KRUN_BOX_CRI_AGENT_IMAGE";
+const AGENT_IMAGE_ENV: &str = "K_BOX_CRI_AGENT_IMAGE";
 
-/// Krun Box CRI Runtime
+/// Kbox Box CRI Runtime
 #[derive(Parser, Debug)]
-#[command(name = "krun-box-cri", about = "Krun Box CRI Runtime")]
+#[command(name = "kbox-cri", about = "Kbox Box CRI Runtime")]
 struct Args {
     /// Path to the Unix domain socket for CRI communication.
-    #[arg(long, default_value = "/var/run/krun-box/krun-box.sock")]
+    #[arg(long, default_value = "/var/run/kbox/kbox.sock")]
     socket: PathBuf,
 
     /// Directory for storing pulled OCI images.
-    #[arg(long, default_value = "~/.krun/images")]
+    #[arg(long, default_value = "~/.kbox/images")]
     image_dir: String,
 
     /// Maximum image cache size in bytes (default: 10GB).
     #[arg(long, default_value = "10737418240")]
     image_cache_size: u64,
 
-    /// Default sandbox VM agent/rootfs image used when Pods omit krun.box/agent-image.
+    /// Default sandbox VM agent/rootfs image used when Pods omit kbox/agent-image.
     #[arg(long)]
     agent_image: Option<String>,
 
@@ -105,7 +105,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         cache_size = args.image_cache_size,
         agent_image = %runtime_options.default_agent_image,
         runtime_handler_overrides = runtime_options.runtime_handler_agent_images.len(),
-        "Starting Krun Box CRI Runtime"
+        "Starting Kbox Box CRI Runtime"
     );
 
     // Initialize image store

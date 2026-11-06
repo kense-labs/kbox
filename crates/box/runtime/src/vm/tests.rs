@@ -1,5 +1,5 @@
 use super::*;
-use krun_box_core::event::EventEmitter;
+use kbox_core::event::EventEmitter;
 use std::sync::{
     atomic::{AtomicBool, AtomicUsize, Ordering},
     Arc,

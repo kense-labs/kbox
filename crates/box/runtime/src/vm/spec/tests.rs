@@ -1,8 +1,8 @@
 use std::fs;
 use std::path::Path;
 
-use krun_box_core::config::BoxConfig;
-use krun_box_core::event::EventEmitter;
+use kbox_core::config::BoxConfig;
+use kbox_core::event::EventEmitter;
 
 use super::*;
 use tempfile::tempdir;
@@ -22,12 +22,12 @@ fn create_file_symlink(target: &Path, link: &Path) -> bool {
 
 #[cfg(windows)]
 fn create_file_symlink(target: &Path, link: &Path) -> bool {
-    let guard = krun_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
+    let guard = kbox_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
     let assigned_privilege_enabled = guard.assigned_privilege_enabled();
     match std::os::windows::fs::symlink_file(target, link) {
         Ok(()) => true,
         Err(error)
-            if krun_box_core::windows_symlink::is_capability_denial(
+            if kbox_core::windows_symlink::is_capability_denial(
                 &error,
                 assigned_privilege_enabled,
             ) =>
@@ -40,12 +40,12 @@ fn create_file_symlink(target: &Path, link: &Path) -> bool {
 
 #[cfg(windows)]
 fn create_dir_symlink(target: &Path, link: &Path) -> bool {
-    let guard = krun_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
+    let guard = kbox_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
     let assigned_privilege_enabled = guard.assigned_privilege_enabled();
     match std::os::windows::fs::symlink_dir(target, link) {
         Ok(()) => true,
         Err(error)
-            if krun_box_core::windows_symlink::is_capability_denial(
+            if kbox_core::windows_symlink::is_capability_denial(
                 &error,
                 assigned_privilege_enabled,
             ) =>
@@ -137,8 +137,7 @@ fn env_value<'a>(spec: &'a InstanceSpec, key: &str) -> Option<&'a str> {
 }
 
 fn staged_exec_config(layout: &BoxLayout) -> GuestExecConfig {
-    serde_json::from_slice(&fs::read(layout.rootfs_path.join(".krun-box-exec.json")).unwrap())
-        .unwrap()
+    serde_json::from_slice(&fs::read(layout.rootfs_path.join(".kbox-exec.json")).unwrap()).unwrap()
 }
 
 fn staged_boot_config(spec: &InstanceSpec) -> GuestBootConfig {

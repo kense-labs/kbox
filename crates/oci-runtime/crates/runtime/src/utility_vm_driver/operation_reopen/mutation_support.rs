@@ -1,8 +1,8 @@
 use std::path::Path;
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{
     ContainerTarget, Error, ErrorCode, FileRequest, FileResponse, FilesystemEntryKind,
     FilesystemRequest, FilesystemResponse, OciBundle,
 };

@@ -77,7 +77,7 @@ fn compatibility() -> CheckpointCompatibility {
         HostPlatform::Linux,
         "x86_64",
         RuntimeArtifact::new(
-            "krun-oci-runtime",
+            "koci-runtime",
             "0.1.0",
             digest('a').to_string(),
             Some("checkpoint-contract-test".to_string()),
@@ -132,7 +132,7 @@ fn immutable_reference_round_trips_and_binds_the_paused_source() {
     );
     assert_eq!(
         reference.compatibility().runtime_artifact().name(),
-        "krun-oci-runtime"
+        "koci-runtime"
     );
     assert_eq!(
         reference.compatibility().driver_build_digest(),
@@ -204,11 +204,11 @@ fn reference_creation_requires_a_matching_paused_source_stack() {
     let paused_reference = reference(&paused);
     assert!(RestoreResponse::new(paused.clone(), paused_reference).is_err());
     let vm_compatibility = CheckpointCompatibility::new(
-        DriverKind::LibkrunKvm,
+        DriverKind::LibkKvm,
         IsolationClass::DedicatedVm,
         HostPlatform::Linux,
         "x86_64",
-        RuntimeArtifact::new("krun-oci-runtime", "0.1.0", digest('a').to_string(), None)
+        RuntimeArtifact::new("koci-runtime", "0.1.0", digest('a').to_string(), None)
             .expect("runtime artifact"),
         digest('b'),
         CheckpointFormat::new("vm-snapshot", 1).expect("checkpoint format"),
@@ -219,36 +219,36 @@ fn reference_creation_requires_a_matching_paused_source_stack() {
 
 #[test]
 fn hardware_vm_checkpoint_pairs_and_guest_arch_follow_the_shared_contract() {
-    let artifact = RuntimeArtifact::new("krun-oci-runtime", "0.1.0", digest('a').to_string(), None)
+    let artifact = RuntimeArtifact::new("koci-runtime", "0.1.0", digest('a').to_string(), None)
         .expect("runtime artifact");
     let format = CheckpointFormat::new("vm-snapshot", 1).expect("checkpoint format");
     let accepted = [
         (
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
             IsolationClass::DedicatedVm,
             HostPlatform::Linux,
             "x86_64",
         ),
         (
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
             IsolationClass::SharedGuestKernel,
             HostPlatform::Linux,
             "aarch64",
         ),
         (
-            DriverKind::LibkrunHvf,
+            DriverKind::LibkHvf,
             IsolationClass::DedicatedVm,
             HostPlatform::Macos,
             "aarch64",
         ),
         (
-            DriverKind::LibkrunHvf,
+            DriverKind::LibkHvf,
             IsolationClass::SharedGuestKernel,
             HostPlatform::Macos,
             "x86_64",
         ),
         (
-            DriverKind::LibkrunWhpx,
+            DriverKind::LibkWhpx,
             IsolationClass::DedicatedVm,
             HostPlatform::Windows,
             "x86_64",
@@ -276,7 +276,7 @@ fn hardware_vm_checkpoint_pairs_and_guest_arch_follow_the_shared_contract() {
     }
 
     let arch_error = CheckpointCompatibility::new(
-        DriverKind::LibkrunKvm,
+        DriverKind::LibkKvm,
         IsolationClass::DedicatedVm,
         HostPlatform::Linux,
         "riscv64",
@@ -291,7 +291,7 @@ fn hardware_vm_checkpoint_pairs_and_guest_arch_follow_the_shared_contract() {
     );
 
     let pair_error = CheckpointCompatibility::new(
-        DriverKind::LibkrunWhpx,
+        DriverKind::LibkWhpx,
         IsolationClass::SharedHostKernel,
         HostPlatform::Windows,
         "x86_64",
@@ -317,7 +317,7 @@ fn reference_deserialization_rejects_tampered_evidence() {
 
     let mut tampered = Vec::new();
     let mut schema = canonical.clone();
-    schema["schemaVersion"] = json!("krun.oci.checkpoint-reference.v2");
+    schema["schemaVersion"] = json!("koci.checkpoint-reference.v2");
     tampered.push(schema);
     let mut size = canonical.clone();
     size["artifactSizeBytes"] = json!(0);

@@ -19,8 +19,8 @@ $expectedRootfsSha256 = '4b4daa9fe2fc696c4919c4412a4c3d3e770d8fb70292a004a2c72f5
 $repositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $rootfsArchive = (Resolve-Path -LiteralPath $RootfsArchive -ErrorAction Stop).Path
 $systemImageManifest = (Resolve-Path -LiteralPath $SystemImageManifest -ErrorAction Stop).Path
-$shim = Join-Path $repositoryRoot 'target\debug\krun-oci-krun-shim.exe'
-$krunDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
+$shim = Join-Path $repositoryRoot 'target\debug\koci-kshim.exe'
+$kDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
 $firmwareDll = Join-Path $repositoryRoot 'target\debug\libkrunfw.dll'
 $tar = (Get-Command tar.exe -ErrorAction Stop).Source
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -106,10 +106,10 @@ function Invoke-CapturedProcess {
     }
 }
 
-function Get-KrunOciProcesses {
+function Get-KOciProcesses {
     @(
         Get-Process -ErrorAction SilentlyContinue |
-            Where-Object { $_.ProcessName -in @('krun-oci', 'krun-oci-krun-shim') } |
+            Where-Object { $_.ProcessName -in @('koci', 'koci-kshim') } |
             Select-Object ProcessName, Id, StartTime
     )
 }
@@ -122,8 +122,8 @@ if ($rootfsSha256 -ne $expectedRootfsSha256) {
 
 $manifestItem = Assert-PlainFile -Path $systemImageManifest -Description 'System-image manifest'
 $systemImage = Get-Content -LiteralPath $systemImageManifest -Raw | ConvertFrom-Json
-if ($systemImage.schema_version -ne 'krun.oci.windows-system-image.v1' -or
-    $systemImage.architecture -ne 'x86_64' -or $systemImage.image.name -ne 'krun-oci-system.ext4') {
+if ($systemImage.schema_version -ne 'koci.windows-system-image.v1' -or
+    $systemImage.architecture -ne 'x86_64' -or $systemImage.image.name -ne 'koci-system.ext4') {
     throw "Unexpected Windows system-image manifest: $systemImageManifest"
 }
 $systemImagePath = Join-Path $manifestItem.DirectoryName $systemImage.image.name
@@ -156,19 +156,19 @@ if (-not (Test-Path -LiteralPath (Join-Path $rootfs 'bin\sh') -PathType Leaf)) {
 }
 
 if (-not $SkipBuild) {
-    & cargo.exe build --manifest-path (Join-Path $repositoryRoot 'Cargo.toml') -p krun-oci-krun --jobs 1
+    & cargo.exe build --manifest-path (Join-Path $repositoryRoot 'Cargo.toml') -p koci-kbox --jobs 1
     if ($LASTEXITCODE -ne 0) { throw 'Failed to build the Windows libkrun shim.' }
 }
-foreach ($path in @($shim, $krunDll, $firmwareDll)) {
+foreach ($path in @($shim, $kDll, $firmwareDll)) {
     Assert-PlainFile -Path $path -Description 'WHPX qualification binary' | Out-Null
 }
-$krunDllSha256 = (Get-FileHash -LiteralPath $krunDll -Algorithm SHA256).Hash.ToLowerInvariant()
+$kDllSha256 = (Get-FileHash -LiteralPath $kDll -Algorithm SHA256).Hash.ToLowerInvariant()
 $firmwareDllSha256 = (Get-FileHash -LiteralPath $firmwareDll -Algorithm SHA256).Hash.ToLowerInvariant()
-if ($systemImage.runtime.krun_dll.sha256 -ne $krunDllSha256 -or
+if ($systemImage.runtime.krun_dll.sha256 -ne $kDllSha256 -or
     $systemImage.runtime.firmware.sha256 -ne $firmwareDllSha256) {
     throw 'The adjacent Windows runtime DLLs do not match the system-image manifest.'
 }
-if (@(Get-KrunOciProcesses).Count -gt 0) { throw 'Krun OCI processes were already active.' }
+if (@(Get-KOciProcesses).Count -gt 0) { throw 'Kbox OCI processes were already active.' }
 
 $startedAt = [DateTime]::UtcNow
 $failures = New-Object 'System.Collections.Generic.List[string]'
@@ -196,7 +196,7 @@ try {
     try { $report = Get-Content -LiteralPath $reportPath -Raw | ConvertFrom-Json }
     catch { $failures.Add("shim report is not valid JSON: $($_.Exception.Message)") }
     if ($null -ne $report) {
-        if ($report.schema_version -ne 'krun.oci.krun-whpx-handle-reclamation-smoke.v1') {
+        if ($report.schema_version -ne 'koci.kwhpx-handle-reclamation-smoke.v1') {
             $failures.Add("unexpected report schema: $($report.schema_version)")
         }
         if ($report.platform -ne 'windows' -or $report.status -ne 'available') {
@@ -234,11 +234,11 @@ try {
 } catch { $failures.Add($_.Exception.Message) }
 
 Start-Sleep -Milliseconds 250
-$remainingProcesses = @(Get-KrunOciProcesses)
-if ($remainingProcesses.Count -gt 0) { $failures.Add('Krun OCI processes remained after the gate') }
+$remainingProcesses = @(Get-KOciProcesses)
+if ($remainingProcesses.Count -gt 0) { $failures.Add('Kbox OCI processes remained after the gate') }
 $finishedAt = [DateTime]::UtcNow
 $summary = [ordered]@{
-    schema_version = 'krun.oci.windows-whpx-handle-reclamation-run.v1'
+    schema_version = 'koci.windows-whpx-handle-reclamation-run.v1'
     result = if ($failures.Count -eq 0) { 'pass' } else { 'fail' }
     commit = (& git -C $repositoryRoot rev-parse HEAD).Trim()
     started_at = $startedAt.ToString('o'); finished_at = $finishedAt.ToString('o')
@@ -246,7 +246,7 @@ $summary = [ordered]@{
     rootfs_archive = $rootfsArchive; rootfs_archive_sha256 = $rootfsSha256
     system_image_manifest = $systemImageManifest; system_image_manifest_sha256 = $systemImageManifestSha256
     system_image_sha256 = $systemImageSha256; shim_sha256 = (Get-FileHash -LiteralPath $shim -Algorithm SHA256).Hash.ToLowerInvariant()
-    krun_dll_sha256 = $krunDllSha256; firmware_dll_sha256 = $firmwareDllSha256
+    krun_dll_sha256 = $kDllSha256; firmware_dll_sha256 = $firmwareDllSha256
     requested_iterations = $Iterations; timeout_seconds = $TimeoutSeconds; shim_exit_code = $shimExitCode
     remaining_processes = $remainingProcesses; failures = @($failures); report = $report
 }

@@ -9,7 +9,7 @@ use axum::{
     routing::get,
     Json, Router,
 };
-use krun_box_core::scale::{ScaleObservation, ScaleOperationConflict, ScaleOperationRequest};
+use kbox_core::scale::{ScaleObservation, ScaleOperationConflict, ScaleOperationRequest};
 use tokio::sync::Mutex;
 
 use super::{
@@ -247,7 +247,7 @@ mod tests {
     use super::*;
     use async_trait::async_trait;
     use chrono::Utc;
-    use krun_box_core::{
+    use kbox_core::{
         scale::{ScaleDirection, ScaleOperationResponse, SCALE_OPERATION_SCHEMA_VERSION},
         ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
         KillOutcome,

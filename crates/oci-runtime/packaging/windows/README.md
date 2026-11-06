@@ -21,35 +21,35 @@ directory. Do **not** flatten `bin/*` into the same directory as
 `system-image/` — WHPX `WindowsSystemImage::load` requires the shim/runtime
 directory and the system-image directory to be disjoint.
 
-Place beside `krun-box.exe` under an install root, or under
-`%USERPROFILE%\.krun\`:
+Place beside `kbox.exe` under an install root, or under
+`%USERPROFILE%\.kbox\`:
 
 ```text
 install-root/
   bin/
-    krun-oci.exe
-    krun-oci-krun-shim.exe
+    koci.exe
+    koci-kshim.exe
     krun.dll
     libkrunfw.dll
   system-image/
-    system-image.json          # krun.oci.windows-system-image.v1
+    system-image.json          # koci.windows-system-image.v1
     <ext4 image + companions>  # as bound by the manifest
   bootstrap-vm-rootfs/         # empty seed; Box materializes the live copy
 ```
 
-Equivalent Krun-home layout:
+Equivalent Khome layout:
 
 ```text
-%USERPROFILE%\.krun\
-  bin\                         # Host binaries (+ optional krun-box.exe)
-  share\krun\
+%USERPROFILE%\.kbox\
+  bin\                         # Host binaries (+ optional kbox.exe)
+  share\kbox\
     system-image\
     bootstrap-vm-rootfs\       # empty seed
 ```
 
 `box-whpx-qualification-service` requires both `--vm-rootfs` (bootstrap) and
 `--system-image-manifest`. The guest agent is embedded in the system image;
-do not require a loose `usr\bin\krun-oci-agent` under the bootstrap root for
+do not require a loose `usr\bin\koci-agent` under the bootstrap root for
 Box-owned ensure. The bootstrap root must stay empty (or only the fixed
 post-boot mount points / bounded init logs); it is not an Alpine rootfs.
 
@@ -61,27 +61,27 @@ OCI WHPX requires:
 2. Immutable `system-image/` is **disjoint** from that mutable runtime root
 3. Host `bin/` (shim/runtime directory) is **disjoint** from `system-image/`
 
-Do **not** point `KRUN_BOX_OCI_HOST_ROOT` / `KRUN_BOX_WHPX_OCI_SERVICE_ROOT` at
+Do **not** point `K_BOX_OCI_HOST_ROOT` / `K_BOX_WHPX_OCI_SERVICE_ROOT` at
 the install root that contains `system-image/`. Box packaged opt-in defaults
-the mutable service root under the Krun home (`run/oci-host`) and materializes
+the mutable service root under the Kbox home (`run/oci-host`) and materializes
 `bootstrap-vm-rootfs/` there from the packaged seed.
 
 ## Staging from CI (operator / packager)
 
 ```powershell
 gh run download <run-id> --repo kense-labs/OCI-Runtime `
-  --name windows-whpx-qualification --dir C:\krun\oci-host-package
+  --name windows-whpx-qualification --dir C:\kbox\oci-host-package
 
 # Expected under that directory after extract:
-#   bin\krun-oci.exe, bin\krun-oci-krun-shim.exe, bin\krun.dll, bin\libkrunfw.dll
+#   bin\koci.exe, bin\koci-kshim.exe, bin\krun.dll, bin\libkrunfw.dll
 #   system-image\system-image.json (+ image files)
 ```
 
 Preserve the artifact’s `bin\` vs `system-image\` sibling layout when copying
-into the install root (or into `%USERPROFILE%\.krun\bin` +
-`%USERPROFILE%\.krun\share\krun\system-image`). Create an empty
+into the install root (or into `%USERPROFILE%\.kbox\bin` +
+`%USERPROFILE%\.kbox\share\kbox\system-image`). Create an empty
 `bootstrap-vm-rootfs` directory beside `system-image` (or under
-`share\krun\`). Do **not** copy `bin\*` into the same folder as `system-image\`.
+`share\kbox\`). Do **not** copy `bin\*` into the same folder as `system-image\`.
 
 ## Non-claims
 

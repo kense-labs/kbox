@@ -1,13 +1,13 @@
-//! `krun-box restart` command — Restart one or more boxes.
+//! `kbox restart` command — Restart one or more boxes.
 //!
 //! Managed records use the durable lifecycle manager. Legacy records retain
-//! the equivalent of `krun-box stop` followed by `krun-box start`.
+//! the equivalent of `kbox stop` followed by `kbox start`.
 
 use clap::Args;
-use krun_box_core::{
+use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionManager, OperationId, RestartExecutionOptions,
 };
-use krun_box_runtime::{ManagedExecutionOperation, ManagedExecutionState};
+use kbox_runtime::{ManagedExecutionOperation, ManagedExecutionState};
 
 use crate::boot;
 use crate::lifecycle;
@@ -85,7 +85,7 @@ async fn restart_one(
             Some(operation_id) => operation_id,
             None => OperationId::new(format!("cli-restart-{}", uuid::Uuid::new_v4()))?,
         };
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         manager
             .restart_with_options(
@@ -114,7 +114,7 @@ async fn restart_one(
         let stop_signal = record
             .stop_signal
             .as_deref()
-            .map(krun_box_core::vmm::parse_signal_name)
+            .map(kbox_core::vmm::parse_signal_name)
             .unwrap_or(libc::SIGTERM);
         let effective_timeout = record.stop_timeout.unwrap_or(timeout);
         lifecycle::resume_paused_for_termination(&record, pid, "restart")
@@ -276,8 +276,8 @@ pub(crate) fn restart_plan(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation};
-    use krun_box_runtime::ManagedExecutionMetadata;
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation};
+    use kbox_runtime::ManagedExecutionMetadata;
     use std::collections::BTreeMap;
 
     use crate::test_helpers::fixtures::make_record;

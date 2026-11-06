@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use krun_box_core::{
+use kbox_core::{
     CreateExecutionRequest, ExecutionEventBatch, ExecutionEventsRequest, ExecutionGeneration,
     ExecutionId, ExecutionLease, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
     ExecutionProcessInventory, ExecutionReservation, ExecutionResourceUpdate, ExecutionSnapshot,
@@ -95,7 +95,7 @@ impl ExecutionManager for LocalExecutionManager {
         &self,
         execution_id: &ExecutionId,
         expected_generation: ExecutionGeneration,
-    ) -> ExecutionManagerResult<Vec<krun_box_core::log::LogEntry>> {
+    ) -> ExecutionManagerResult<Vec<kbox_core::log::LogEntry>> {
         self.read_structured_logs(execution_id, expected_generation)
             .await
     }

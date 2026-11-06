@@ -5,10 +5,10 @@ use std::time::Duration;
 
 use async_trait::async_trait;
 #[cfg(unix)]
-use krun_box_core::ExecutionBackend;
+use kbox_core::ExecutionBackend;
 #[cfg(unix)]
-use krun_box_core::ExecutionUdpPortIo;
-use krun_box_core::{
+use kbox_core::ExecutionUdpPortIo;
+use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
     ExecutionPortConnector, ExecutionPortStream, ExecutionUdpPort,
 };
@@ -414,7 +414,7 @@ async fn connect_in_network_namespace(
 ) -> ExecutionManagerResult<tokio::net::TcpStream> {
     let (sender, receiver) = tokio::sync::oneshot::channel();
     std::thread::Builder::new()
-        .name(format!("krun-port-{pid}-{}", port.get()))
+        .name(format!("kport-{pid}-{}", port.get()))
         .spawn(move || {
             let result = connect_in_network_namespace_blocking(
                 &execution_id,
@@ -522,7 +522,7 @@ async fn connect_udp_in_network_namespace(
 ) -> ExecutionManagerResult<NamespaceUdpPort> {
     let (sender, receiver) = tokio::sync::oneshot::channel();
     std::thread::Builder::new()
-        .name(format!("krun-udp-{pid}-{}", port.get()))
+        .name(format!("kudp-{pid}-{}", port.get()))
         .spawn(move || {
             let result = connect_udp_in_network_namespace_blocking(
                 &execution_id,

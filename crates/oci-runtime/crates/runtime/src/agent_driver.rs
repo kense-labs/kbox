@@ -7,22 +7,22 @@ use std::sync::{Arc, Weak};
     all(target_os = "windows", target_arch = "x86_64"),
     all(target_os = "macos", target_arch = "aarch64")
 ))]
-use krun_oci_agent_protocol::{AgentBundle, AgentCreateRequest, GuestPath};
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{AgentBundle, AgentCreateRequest, GuestPath};
+use koci_agent_protocol::{
     AgentCloseStdinRequest, AgentContainerOperationRequest, AgentDeleteRequest, AgentExecRequest,
     AgentKillRequest, AgentProcessesRequest, AgentReadOutputRequest, AgentResizeRequest,
     AgentSignalProcessRequest, AgentStartRequest, AgentState, AgentStateRequest, AgentStatsRequest,
     AgentUpdateRequest, AgentWaitProcessRequest, AgentWaitRequest, AgentWriteStdinRequest,
     GuestAgentService, AGENT_MAX_IO_PAYLOAD_BYTES,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::oci_spec::runtime::ContainerState;
 #[cfg(any(
     target_os = "linux",
     all(target_os = "windows", target_arch = "x86_64"),
     all(target_os = "macos", target_arch = "aarch64")
 ))]
-use krun_oci_sdk::RuntimeOperation;
-use krun_oci_sdk::{
+use koci_sdk::RuntimeOperation;
+use koci_sdk::{
     ContainerStats, ContainerTarget, Error, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OperationContext, OperationId, OutputChunk,
     ProcessRecord, Result,
@@ -586,7 +586,7 @@ fn process_io_chunk_context(parent: &OperationContext, index: usize) -> Result<O
         .for_operation("derive-stdin-chunk-operation")
     })?;
     let mut hasher = Sha256::new();
-    hasher.update(b"krun-oci-stdin-chunk-v1\0");
+    hasher.update(b"koci-stdin-chunk-v1\0");
     hasher.update(parent.operation_id.as_str().as_bytes());
     hasher.update([0]);
     hasher.update(index.to_be_bytes());
@@ -603,12 +603,12 @@ mod tests {
     use std::sync::Arc;
     use std::sync::Mutex as StdMutex;
 
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentCapabilities, AgentState, AgentWriteStdinRequest, GuestAgentService,
         AGENT_MAX_IO_PAYLOAD_BYTES,
     };
-    use krun_oci_sdk::oci_spec::runtime::ContainerState;
-    use krun_oci_sdk::{
+    use koci_sdk::oci_spec::runtime::ContainerState;
+    use koci_sdk::{
         async_trait, ContainerId, ContainerTarget, Error, Generation, OperationContext,
         OperationId, ProcessId, ProcessTarget, Result, RuntimeOperation,
     };
@@ -660,7 +660,7 @@ mod tests {
                         control.release_first.notified().await;
                         if control.fail_first.swap(false, Ordering::SeqCst) {
                             return Err(Error::new(
-                                krun_oci_sdk::ErrorCode::Unavailable,
+                                koci_sdk::ErrorCode::Unavailable,
                                 "injected acknowledgement failure",
                             ));
                         }
@@ -674,36 +674,33 @@ mod tests {
 
         async fn create(
             &self,
-            _request: krun_oci_agent_protocol::AgentCreateRequest,
+            _request: koci_agent_protocol::AgentCreateRequest,
         ) -> Result<AgentState> {
             Err(Error::unsupported("mapping-test-create"))
         }
 
         async fn state(
             &self,
-            _request: krun_oci_agent_protocol::AgentStateRequest,
+            _request: koci_agent_protocol::AgentStateRequest,
         ) -> Result<AgentState> {
             Err(Error::unsupported("mapping-test-state"))
         }
 
         async fn start(
             &self,
-            _request: krun_oci_agent_protocol::AgentStartRequest,
+            _request: koci_agent_protocol::AgentStartRequest,
         ) -> Result<AgentState> {
             Err(Error::unsupported("mapping-test-start"))
         }
 
         async fn kill(
             &self,
-            _request: krun_oci_agent_protocol::AgentKillRequest,
+            _request: koci_agent_protocol::AgentKillRequest,
         ) -> Result<AgentState> {
             Err(Error::unsupported("mapping-test-kill"))
         }
 
-        async fn delete(
-            &self,
-            _request: krun_oci_agent_protocol::AgentDeleteRequest,
-        ) -> Result<()> {
+        async fn delete(&self, _request: koci_agent_protocol::AgentDeleteRequest) -> Result<()> {
             Err(Error::unsupported("mapping-test-delete"))
         }
 

@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::{ErrorCode, Result};
 
 use super::{
     event_identity_hash, is_transaction_file, parse_event_claim_name, parse_event_record_name,

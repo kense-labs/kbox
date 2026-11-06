@@ -1,5 +1,5 @@
 use super::*;
-use krun_oci_sdk::OciSchemaDocument;
+use koci_sdk::OciSchemaDocument;
 
 #[derive(Debug, Clone)]
 struct DriverSchemaProfile {
@@ -25,19 +25,19 @@ const DRIVER_PROFILES: &[DriverSchemaProfile] = &[
     },
     DriverSchemaProfile {
         name: "linux-kvm",
-        driver: DriverKind::LibkrunKvm,
+        driver: DriverKind::LibkKvm,
         isolation: IsolationRequest::DedicatedVm,
         configuration: UTILITY_VM_CONFIGURATION,
     },
     DriverSchemaProfile {
         name: "macos-hvf",
-        driver: DriverKind::LibkrunHvf,
+        driver: DriverKind::LibkHvf,
         isolation: IsolationRequest::DedicatedVm,
         configuration: UTILITY_VM_CONFIGURATION,
     },
     DriverSchemaProfile {
         name: "windows-whpx",
-        driver: DriverKind::LibkrunWhpx,
+        driver: DriverKind::LibkWhpx,
         isolation: IsolationRequest::DedicatedVm,
         configuration: WHPX_CONFIGURATION,
     },

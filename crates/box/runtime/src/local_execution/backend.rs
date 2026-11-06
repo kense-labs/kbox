@@ -3,12 +3,12 @@
 use super::store::{
     FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleRequest, OwnerBinding,
 };
-use krun_box_core::vmm::OwnedCloseBudget;
+use kbox_core::vmm::OwnedCloseBudget;
 use std::path::{Path, PathBuf};
 
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
-use krun_box_core::{
+use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
     ExecutionId, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
     ExecutionProcess, ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState,
@@ -78,7 +78,7 @@ pub struct LocalExecutionHandle {
     pub exec_socket_path: PathBuf,
     pub console_log: PathBuf,
     pub anonymous_volumes: Vec<String>,
-    /// Exact Krun OCI identity when lifecycle ownership is delegated through
+    /// Exact Kbox OCI identity when lifecycle ownership is delegated through
     /// the public SDK rather than a Box-owned VM process.
     pub oci_runtime: Option<OciRuntimeBinding>,
 }

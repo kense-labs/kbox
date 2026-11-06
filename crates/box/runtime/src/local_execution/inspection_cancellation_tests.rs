@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use async_trait::async_trait;
-use krun_box_core::{
+use kbox_core::{
     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, NetworkMode,
     OperationId,

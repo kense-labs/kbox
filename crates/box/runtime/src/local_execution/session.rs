@@ -3,8 +3,8 @@
 use std::sync::Arc;
 
 use async_trait::async_trait;
-use krun_box_core::pty::PtyRequest;
-use krun_box_core::{
+use kbox_core::pty::PtyRequest;
+use kbox_core::{
     BoxError, ExecEvent, ExecOutput, ExecRequest, ExecutionGeneration, ExecutionId,
     ExecutionManagerError, ExecutionManagerResult, ExecutionProcess, ExecutionProcessInput,
     ExecutionProcessSignal, ExecutionProcessStream, ExecutionSessionManager, FileRequest,
@@ -374,7 +374,7 @@ fn validate_microvm_exec_request_id(request: &ExecRequest) -> ExecutionManagerRe
                 || request_id.contains('\0') =>
         {
             Err(ExecutionManagerError::InvalidRequest(
-                "Krun MicroVM exec request ID is invalid".to_string(),
+                "Kbox MicroVM exec request ID is invalid".to_string(),
             ))
         }
         _ => Ok(()),

@@ -1,6 +1,6 @@
 use std::collections::{BTreeMap, HashMap};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use mkext4::{FsBuilder, InodeHandle, SparseSeg, ROOT};
 
 use super::super::ext4::sparse::{FileFill, SourceSegment};

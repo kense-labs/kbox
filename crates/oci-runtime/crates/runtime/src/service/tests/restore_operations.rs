@@ -585,7 +585,7 @@ async fn driver_specific_checkpoint_and_restore_survive_a_smaller_common_operati
         secondary.attachments = AttachmentCapabilities::base_v4();
     }
     if secondary.capability.driver == primary.capability.driver {
-        secondary.capability.driver = DriverKind::LibkrunKvm;
+        secondary.capability.driver = DriverKind::LibkKvm;
     }
     let secondary = Arc::new(secondary);
     let drivers: Vec<Arc<dyn RuntimeDriver>> = vec![primary.clone(), secondary.clone()];

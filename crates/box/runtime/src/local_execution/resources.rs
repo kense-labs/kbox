@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::{BoxError, ExecutionManagerError, ExecutionManagerResult, NetworkMode};
+use kbox_core::{BoxError, ExecutionManagerError, ExecutionManagerResult, NetworkMode};
 
 use crate::{BoxRecord, LocalExecutionManager, NetworkStore, VolumeStore};
 
@@ -185,7 +185,7 @@ impl ExecutionResourceGuard {
         let metadata_file = metadata_path
             .canonicalize()
             .map_err(|error| resource_error(record, "resolve managed snapshot metadata", error))?;
-        let metadata: krun_box_core::snapshot::SnapshotMetadata =
+        let metadata: kbox_core::snapshot::SnapshotMetadata =
             serde_json::from_slice(&std::fs::read(&metadata_file).map_err(|error| {
                 resource_error(record, "read managed snapshot metadata", error)
             })?)
@@ -268,8 +268,7 @@ impl ExecutionResourceGuard {
             progress.snapshot =
                 Some((marker.clone(), temporary.clone(), ResourceEffect::Attempted));
         }
-        let result =
-            krun_box_core::fs_atomic::write_durable(&temporary, &marker, expected.as_bytes());
+        let result = kbox_core::fs_atomic::write_durable(&temporary, &marker, expected.as_bytes());
         if let Some(progress) = self.selected.as_mut() {
             if let Some((_, _, effect)) = progress.snapshot.as_mut() {
                 *effect = if result.is_ok() {
@@ -387,7 +386,7 @@ struct SelectedResources {
 }
 
 fn selected_resource_deadline(
-    budget: krun_box_core::vmm::OwnedCleanupBudget,
+    budget: kbox_core::vmm::OwnedCleanupBudget,
 ) -> ExecutionManagerResult<()> {
     if budget.remaining_at(std::time::Instant::now()).is_zero() {
         Err(ExecutionManagerError::Unavailable(
@@ -419,7 +418,7 @@ impl ExecutionResourceGuard {
     pub(super) fn prepare_retained(
         &mut self,
         record: &BoxRecord,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         if record.id != self.execution_id {
             return Err(resource_error(
@@ -557,7 +556,7 @@ impl ExecutionResourceGuard {
 
     pub(super) fn rollback_retained(
         &mut self,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let progress = self.selected.as_mut().ok_or_else(|| {
             ExecutionManagerError::Unavailable("legacy guard cannot run retained rollback".into())
@@ -650,7 +649,7 @@ impl ExecutionResourceGuard {
 
 #[cfg(test)]
 mod tests {
-    use krun_box_core::{
+    use kbox_core::{
         network::NetworkConfig, snapshot::SnapshotMetadata, volume::VolumeConfig,
         CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, ExecutionSnapshotId,
         OperationId,
@@ -702,7 +701,7 @@ mod tests {
         record.volume_names.clear();
         record.network_mode = NetworkMode::None;
         record.network_name = None;
-        let config = krun_box_core::BoxConfig {
+        let config = kbox_core::BoxConfig {
             image: record.image.clone(),
             isolation: ExecutionIsolation::Sandbox,
             ..Default::default()

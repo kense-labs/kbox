@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use dashmap::mapref::entry::Entry;
 use dashmap::DashMap;
-use krun_box_core::{ExecutionManagerError, ExecutionManagerResult};
+use kbox_core::{ExecutionManagerError, ExecutionManagerResult};
 
 use crate::oci::RegistryAuth;
 

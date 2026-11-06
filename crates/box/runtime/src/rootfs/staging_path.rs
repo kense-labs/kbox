@@ -13,12 +13,12 @@ use std::path::{Component, Path, PathBuf};
 
 #[cfg(target_os = "macos")]
 use base64::Engine as _;
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 #[cfg(target_os = "macos")]
-use krun_box_core::rootfs_metadata::{RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH};
+use kbox_core::rootfs_metadata::{RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH};
 
 #[cfg(target_os = "macos")]
-const ESCAPE_PREFIX: &str = ".krun-rp1-";
+const ESCAPE_PREFIX: &str = ".krp1-";
 #[cfg(target_os = "macos")]
 const MAX_METADATA_BYTES: u64 = 64 * 1024 * 1024;
 

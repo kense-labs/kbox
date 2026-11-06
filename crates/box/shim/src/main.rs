@@ -1,41 +1,41 @@
-//! Krun Box Shim - MicroVM subprocess for process isolation.
+//! Kbox Box Shim - MicroVM subprocess for process isolation.
 //!
 //! This binary is spawned by VmController to isolate the VM from the host application.
-//! libkrun's `krun_start_enter()` performs process takeover, so we need a separate
+//! libkrun's `kstart_enter()` performs process takeover, so we need a separate
 //! process to prevent the host application from being taken over.
 //!
 //! # Usage
 //! ```bash
-//! krun-box-shim --config '{"box_id": "...", ...}'
+//! kbox-shim --config '{"box_id": "...", ...}'
 //! ```
 
 // Allow large error types - this is a binary, not a library
 #![allow(clippy::result_large_err)]
 
-mod krun;
+mod kbox;
 mod managed_oci_log_worker;
 mod vm_launch;
 
 use clap::Parser;
-use krun::KrunContext;
+use kbox::KContext;
 #[cfg(target_os = "windows")]
-use krun_box_core::config::validate_vcpu_count;
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::config::validate_vcpu_count;
+use kbox_core::error::{BoxError, Result};
 #[cfg(target_os = "windows")]
-use krun_box_core::exec::WINDOWS_STOP_REQUEST_FILE;
-use krun_box_core::vmm::{InstanceSpec, RawBlockDevice, RootfsSource};
+use kbox_core::exec::WINDOWS_STOP_REQUEST_FILE;
+use kbox_core::vmm::{InstanceSpec, RawBlockDevice, RootfsSource};
 #[cfg(not(target_os = "windows"))]
-use krun_box_core::EXEC_VSOCK_PORT;
+use kbox_core::EXEC_VSOCK_PORT;
 #[cfg(target_os = "windows")]
-use krun_box_core::PORT_FWD_VSOCK_PORT;
+use kbox_core::PORT_FWD_VSOCK_PORT;
 #[cfg(not(target_os = "windows"))]
-use krun_box_core::{ATTEST_VSOCK_PORT, PORT_FWD_VSOCK_PORT, PTY_VSOCK_PORT};
+use kbox_core::{ATTEST_VSOCK_PORT, PORT_FWD_VSOCK_PORT, PTY_VSOCK_PORT};
 #[cfg(target_os = "macos")]
-use krun_box_netproxy::{spawn_inherited_netproxy, InheritedNetProxyConfig};
+use kbox_netproxy::{spawn_inherited_netproxy, InheritedNetProxyConfig};
 #[cfg(target_os = "linux")]
-use krun_box_netproxy::{spawn_inherited_passt_bridge, UntrustedEgressScope};
+use kbox_netproxy::{spawn_inherited_passt_bridge, UntrustedEgressScope};
 #[cfg(target_os = "windows")]
-use libkrun_sys::{KRUN_KERNEL_FORMAT_ELF, KRUN_KERNEL_FORMAT_IMAGE_GZ};
+use libksys::{K_KERNEL_FORMAT_ELF, K_KERNEL_FORMAT_IMAGE_GZ};
 #[cfg(all(target_os = "windows", test))]
 use std::fs;
 #[cfg(target_os = "windows")]
@@ -53,17 +53,17 @@ use vm_launch::configure_and_start_vm;
 #[cfg(target_os = "windows")]
 use vm_launch::*;
 
-/// Krun Box Shim - MicroVM subprocess
+/// Kbox Box Shim - MicroVM subprocess
 #[derive(Parser, Debug)]
-#[command(name = "krun-box-shim")]
-#[command(about = "MicroVM shim process for Krun Box")]
+#[command(name = "kbox-shim")]
+#[command(about = "MicroVM shim process for Kbox Box")]
 struct Args {
     /// JSON-encoded InstanceSpec configuration
     #[arg(long)]
     config: Option<String>,
 
     /// Internal: project one Sandbox generation's split console into its
-    /// configured log driver until the exact Krun OCI owner exits.
+    /// configured log driver until the exact Kbox OCI owner exits.
     #[cfg(target_os = "linux")]
     #[arg(long, hide = true)]
     sandbox_log_worker_config: Option<String>,
@@ -110,7 +110,7 @@ fn main() {
     }
 }
 
-/// Opt-in (env `KRUN_BOX_KSM=1`): mark this shim's anonymous memory — including
+/// Opt-in (env `K_BOX_KSM=1`): mark this shim's anonymous memory — including
 /// libkrun's guest RAM, which `start_enter` allocates as anonymous `mmap` after
 /// this runs — as KSM-mergeable via `prctl(PR_SET_MEMORY_MERGE)` (Linux 6.4+).
 /// With KSM enabled on the host (`/sys/kernel/mm/ksm/run = 1`), identical pages
@@ -123,7 +123,7 @@ fn maybe_enable_ksm_merge() {
     // the numeric value directly.
     const PR_SET_MEMORY_MERGE: libc::c_int = 67;
 
-    let enabled = std::env::var("KRUN_BOX_KSM")
+    let enabled = std::env::var("K_BOX_KSM")
         .map(|v| matches!(v.as_str(), "1" | "true" | "yes" | "on"))
         .unwrap_or(false);
     if !enabled {
@@ -138,7 +138,7 @@ fn maybe_enable_ksm_merge() {
     } else {
         tracing::warn!(
             error = %std::io::Error::last_os_error(),
-            "KRUN_BOX_KSM set but PR_SET_MEMORY_MERGE failed (needs Linux 6.4+); continuing without KSM"
+            "K_BOX_KSM set but PR_SET_MEMORY_MERGE failed (needs Linux 6.4+); continuing without KSM"
         );
     }
 }
@@ -218,7 +218,7 @@ fn run() -> Result<()> {
     maybe_enable_ksm_merge();
 
     validate_rootfs_source(&spec.rootfs)?;
-    krun_box_core::validate_host_service_sockets(&spec.host_services, None)?;
+    kbox_core::validate_host_service_sockets(&spec.host_services, None)?;
     if !spec.host_services.is_empty()
         && (spec.snapshot_mem_file.is_some()
             || spec.snapshot_sock.is_some()
@@ -268,7 +268,7 @@ fn run() -> Result<()> {
 
 #[cfg(target_os = "linux")]
 fn run_sandbox_log_worker(config: &str) -> Result<()> {
-    use krun_box_core::log::{
+    use kbox_core::log::{
         run_log_processor_with_ready_and_eof_policy, ConsoleEofPolicy, SandboxLogWorkerSpec,
     };
     use std::io::Write;
@@ -362,8 +362,8 @@ fn run_sandbox_log_worker(config: &str) -> Result<()> {
 }
 
 #[cfg(target_os = "linux")]
-fn validate_sandbox_log_worker_spec(spec: &krun_box_core::log::SandboxLogWorkerSpec) -> Result<()> {
-    if spec.schema != krun_box_core::log::SANDBOX_LOG_WORKER_SCHEMA
+fn validate_sandbox_log_worker_spec(spec: &kbox_core::log::SandboxLogWorkerSpec) -> Result<()> {
+    if spec.schema != kbox_core::log::SANDBOX_LOG_WORKER_SCHEMA
         || spec.box_id.is_empty()
         || spec.watched_pid == 0
         || spec.watched_pid_start_time == 0
@@ -507,7 +507,7 @@ fn tsi_port_map_for_spec(spec: &InstanceSpec) -> Vec<String> {
         .collect()
 }
 
-/// Whether the shim must call `krun_set_port_map` for default TSI.
+/// Whether the shim must call `kset_port_map` for default TSI.
 ///
 /// Always configure an explicit map (including empty) so libkrun enters
 /// allowlist mode (`Some`) instead of legacy auto-publish (`None`). Skip only
@@ -538,17 +538,17 @@ fn is_auto_assigned_host_port(mapping: &str) -> bool {
 }
 
 #[cfg(target_os = "windows")]
-const WINDOWS_GUEST_EXIT_CODE: &str = ".krun_exit_code";
+const WINDOWS_GUEST_EXIT_CODE: &str = ".kexit_code";
 #[cfg(target_os = "windows")]
 const WINDOWS_GUEST_STDOUT: &str = "guest-init.stdout.log";
 #[cfg(target_os = "windows")]
 const WINDOWS_GUEST_STDERR: &str = "guest-init.stderr.log";
 #[cfg(target_os = "windows")]
-const WINDOWS_GUEST_RESULT_MARKER: &str = ".krun_host_result_collected";
+const WINDOWS_GUEST_RESULT_MARKER: &str = ".khost_result_collected";
 #[cfg(target_os = "windows")]
-const WINDOWS_LIVE_LOGS_DRAINED_MARKER: &str = ".krun_host_live_logs_drained";
+const WINDOWS_LIVE_LOGS_DRAINED_MARKER: &str = ".khost_live_logs_drained";
 #[cfg(target_os = "windows")]
-const WINDOWS_RETURN_ON_EXIT_ENV: &str = "LIBKRUN_WINDOWS_RETURN_ON_EXIT";
+const WINDOWS_RETURN_ON_EXIT_ENV: &str = "LIBK_WINDOWS_RETURN_ON_EXIT";
 
 fn validate_rootfs_source(rootfs: &RootfsSource) -> Result<()> {
     let path = rootfs.path();
@@ -677,7 +677,7 @@ fn validate_raw_block_device(disk: &RawBlockDevice) -> Result<()> {
 }
 
 /// Hold an advisory exclusive lock for every raw disk throughout the libkrun
-/// process lifetime. All Krun shims participate, so an orphaned read-only
+/// process lifetime. All Kbox shims participate, so an orphaned read-only
 /// maintenance VM and a normal writable boot can never own one generation at
 /// the same time.
 #[cfg(unix)]
@@ -706,7 +706,7 @@ fn lock_raw_disk_ownership(spec: &InstanceSpec) -> Result<Vec<std::fs::File>> {
             })?;
         if unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) } != 0 {
             return Err(BoxError::StateError(format!(
-                "Raw disk {} is already owned by another Krun VM",
+                "Raw disk {} is already owned by another Kbox VM",
                 path.display()
             )));
         }
@@ -764,7 +764,7 @@ fn log_inherited_net_fd(fd: i32) {
 /// - "uid" (e.g., "1000")
 /// - "uid:gid" (e.g., "1000:1000")
 /// - Non-numeric names are logged and skipped (would require /etc/passwd lookup)
-unsafe fn apply_user_config(ctx: &KrunContext, user: &str) -> Result<()> {
+unsafe fn apply_user_config(ctx: &KContext, user: &str) -> Result<()> {
     if user.is_empty() {
         return Ok(());
     }

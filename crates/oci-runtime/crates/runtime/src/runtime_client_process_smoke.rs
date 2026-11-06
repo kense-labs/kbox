@@ -1,8 +1,8 @@
 use std::future::Future;
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ExecCPUAffinity, Process};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ExecCPUAffinity, Process};
+use koci_sdk::{
     CloseStdinRequest, ContainerTarget, Error, ErrorCode, ExecRequest, ExitStatus, IoMode,
     OperationContext, OperationId, OutputStream, ProcessId, ProcessIo, ProcessTarget,
     ReadOutputRequest, ResizeRequest, RuntimeClient, Signal, SignalProcessRequest, TerminalSize,
@@ -91,7 +91,7 @@ pub(crate) async fn exercise_process_io(
     let first_write = WriteStdinRequest {
         context: operation(nonce, "write-io-first")?,
         process: process.clone(),
-        data: b"krun-io-first\n".to_vec(),
+        data: b"kio-first\n".to_vec(),
     };
     call(
         "write first process I/O probe stdin",
@@ -108,7 +108,7 @@ pub(crate) async fn exercise_process_io(
         client.write_stdin(WriteStdinRequest {
             context: operation(nonce, "write-io-second")?,
             process: process.clone(),
-            data: b"krun-io-second\n".to_vec(),
+            data: b"kio-second\n".to_vec(),
         }),
     )
     .await?;
@@ -144,9 +144,7 @@ pub(crate) async fn exercise_process_io(
     }
 
     let (stdout, stderr) = collect_output(client, &process).await?;
-    if stdout != b"stdout:krun-io-first:krun-io-second\n"
-        || stderr != b"stderr:krun-io-first:krun-io-second\n"
-    {
+    if stdout != b"stdout:kio-first:kio-second\n" || stderr != b"stderr:kio-first:kio-second\n" {
         return Err(format!(
             "native captured output mismatch: stdout={stdout:?}, stderr={stderr:?}"
         ));
@@ -648,7 +646,7 @@ fn operation(nonce: &str, suffix: &str) -> Result<OperationContext, String> {
 
 async fn call<T>(
     operation: &str,
-    future: impl Future<Output = krun_oci_sdk::Result<T>>,
+    future: impl Future<Output = koci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),
@@ -663,7 +661,7 @@ fn call_error(operation: &str, error: &Error) -> String {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::{ContainerId, Generation};
+    use koci_sdk::{ContainerId, Generation};
 
     use super::{terminal_exec_request, ContainerTarget, TerminalSize};
 

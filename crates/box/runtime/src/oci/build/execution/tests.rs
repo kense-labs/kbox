@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use krun_box_core::OperationId;
+use kbox_core::OperationId;
 
 use super::*;
 use crate::oci::build::engine::BuildExecutionObserver;
@@ -32,7 +32,7 @@ build "oci" {{
   file = "Dockerfile"
   network = "none"
   platform = "{platform}"
-  schema = "krun.box.build-plan.v1"
+  schema = "kbox.build-plan.v1"
 }}
 "#
     ))
@@ -44,7 +44,7 @@ build "oci" {{
         &plan,
         &source,
         BoxBuildOptions {
-            tag: Some("krun-cloud/build:test".into()),
+            tag: Some("kcloud/build:test".into()),
             quiet: true,
         },
         Arc::clone(&store),
@@ -53,7 +53,7 @@ build "oci" {{
     .unwrap();
 
     assert_eq!(result.plan_digest, expected_plan_digest);
-    assert_eq!(result.output.reference, "krun-cloud/build:test");
+    assert_eq!(result.output.reference, "kcloud/build:test");
     assert_eq!(result.output.platform, *plan.platform());
     assert_eq!(
         result.output.descriptor.media_type,
@@ -72,7 +72,7 @@ build "oci" {{
     assert!(result.output.layout_directory.join("index.json").is_file());
     crate::oci::OciImage::from_path(&result.output.layout_directory).unwrap();
 
-    let stored = store.get("krun-cloud/build:test").await.unwrap();
+    let stored = store.get("kcloud/build:test").await.unwrap();
     assert_eq!(stored.digest, result.output.descriptor.digest);
     assert_eq!(
         stored.path.canonicalize().unwrap(),
@@ -98,7 +98,7 @@ build "oci" {{
   file = "Dockerfile"
   network = "none"
   platform = "linux/{}"
-  schema = "krun.box.build-plan.v1"
+  schema = "kbox.build-plan.v1"
 }}
 "#,
         if cfg!(target_arch = "aarch64") {

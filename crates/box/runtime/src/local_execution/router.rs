@@ -1,11 +1,11 @@
-//! Durable dispatch between the retained Box backend and the Krun OCI SDK.
+//! Durable dispatch between the retained Box backend and the Kbox OCI SDK.
 
 use std::sync::Arc;
 
 use super::store::{FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleRequest};
 use async_trait::async_trait;
-use krun_box_core::vmm::OwnedCloseBudget;
-use krun_box_core::{
+use kbox_core::vmm::OwnedCloseBudget;
+use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
     ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
     ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse,

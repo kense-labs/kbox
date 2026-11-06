@@ -13,13 +13,13 @@
 //!
 //! ## Storage
 //!
-//! Version state is stored in `~/.krun/sealed-versions.json` (or a custom path).
+//! Version state is stored in `~/.kbox/sealed-versions.json` (or a custom path).
 //! The file is atomically updated on each seal operation.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// Versioned sealed data — extends SealedData with rollback protection.
@@ -74,9 +74,9 @@ impl VersionStore {
         })
     }
 
-    /// Load from the default path (~/.krun/sealed-versions.json).
+    /// Load from the default path (~/.kbox/sealed-versions.json).
     pub fn load_default() -> Result<Self> {
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         Self::load(&home.join("sealed-versions.json"))
     }
 

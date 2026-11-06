@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{ContainerTarget, Error, ErrorCode, OperationId, StartRequest};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{ContainerTarget, Error, ErrorCode, OperationId, StartRequest};
 
 pub(super) use super::super::super::workload_marker::{
     path_absent, reset_marker, runtime_marker, wait_for_replacement_marker,

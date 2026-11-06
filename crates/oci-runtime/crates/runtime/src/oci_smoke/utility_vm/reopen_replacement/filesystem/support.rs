@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{
     ContainerTarget, Error, ErrorCode, FilesystemEntryKind, FilesystemRequest, FilesystemResponse,
 };
 

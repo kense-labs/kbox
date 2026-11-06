@@ -1,4 +1,4 @@
-//! Krun Box CLI - Docker-like MicroVM runtime.
+//! Kbox Box CLI - Docker-like MicroVM runtime.
 
 pub mod audit;
 pub mod boot;

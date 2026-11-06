@@ -1,15 +1,15 @@
 [package]
 publish = false
-name = "krun-oci-runtime"
+name = "koci-runtime"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Cross-platform host runtime for Krun OCI workloads"
+description = "Cross-platform host runtime for Kbox OCI workloads"
 
 [dependencies]
-krun-oci-agent-protocol = { path = "../agent-protocol" }
-krun-oci-core = { path = "../core" }
-krun-oci-sdk = { path = "../sdk" }
+koci-agent-protocol = { path = "../agent-protocol" }
+koci-core = { path = "../core" }
+koci-sdk = { path = "../sdk" }
 base64.workspace = true
 cap-fs-ext.workspace = true
 cap-std.workspace = true
@@ -31,7 +31,7 @@ libc = "0.2"
 sha2 = { workspace = true, features = ["asm"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]
-krun-oci-agent = { path = "../agent" }
+koci-agent = { path = "../agent" }
 
 [dev-dependencies]
 tempfile = "3.20"

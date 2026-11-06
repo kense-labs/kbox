@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::AgentWaitProcessRequest;
-use krun_oci_core::IsolationClass;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentWaitProcessRequest;
+use koci_core::IsolationClass;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, ListRequest, OciRuntimeService, OperationContext,
     ProcessTarget, WaitProcessRequest,
 };
@@ -31,7 +31,7 @@ pub(super) async fn run(
     report: &mut OciVmOperationReopenReplacementReport,
 ) -> std::result::Result<(), String> {
     let response_delivered = qualification.stage
-        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == koci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let expected_exit =
         crate::operation_reopen_replacement_report::wait_process::expected_wait_process_exit_status(
         );

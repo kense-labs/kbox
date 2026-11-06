@@ -1,4 +1,4 @@
-# Krun OCI Runtime Roadmap
+# Kbox OCI Runtime Roadmap
 
 Status: **In development**
 
@@ -31,9 +31,9 @@ See the [restriction outcome](docs/evidence/2026-10-18-storage-path-restrictions
 
 Standards baseline: **OCI Runtime Specification 1.3.0**
 
-Primary consumer: **Krun Box through `krun-oci-sdk`**
+Primary consumer: **Kbox Box through `koci-sdk`**
 
-## Krun Cloud substrate obligations
+## Kbox Cloud substrate obligations
 
 **Status as of 2026-09-10.**
 
@@ -41,13 +41,13 @@ Cloud `BX0` depends on Box, which depends on this runtime for process and
 isolation mechanics. Hardware-backed MicroVM/TEE drivers Box pins for `BX0.3`
 must fail closed when isolation cannot be met. This repository must not own
 Box product types, registries, builds, or Cloud placement. See
-[Cloud foundations roadmap](https://github.com/kense-labs/krun/blob/main/docs/project-roadmaps/foundations-and-execution.md).
+[Cloud foundations roadmap](https://github.com/kense-labs/kbox/blob/main/docs/project-roadmaps/foundations-and-execution.md).
 
 ## Release Contract
 
 The production runtime must implement every normative OCI Runtime
 Specification 1.3.0 requirement applicable to Linux containers and every
-driver it advertises. A reduced Krun-only OCI profile is not an acceptable
+driver it advertises. A reduced Konly OCI profile is not an acceptable
 terminal state.
 
 Complete means all of the following:
@@ -63,28 +63,28 @@ Complete means all of the following:
 7. the feature report describes only behavior that passed the same release
    build's tests.
 
-The SDK is also a release blocker. Krun Box must be able to perform the complete
+The SDK is also a release blocker. Kbox Box must be able to perform the complete
 supported lifecycle without constructing CLI commands or importing platform
 driver internals.
 
 ## Repository Boundary
 
-Krun OCI Runtime is the sole low-level execution engine. It owns exact OCI
+Kbox OCI Runtime is the sole low-level execution engine. It owns exact OCI
 validation, actual container state, durable operation replay, process control,
 platform drivers, utility VMs, the guest agent, and runtime-scoped cleanup.
 
-Krun Box owns product configuration and desired state, image distribution and
+Kbox Box owns product configuration and desired state, image distribution and
 builds, named volumes and product snapshots, network/IPAM/DNS policy, Compose,
 health and restart policy, log retention, and secret authorization. Box passes
-prepared, immutable execution inputs through `krun-oci-sdk`; OCI Runtime does
+prepared, immutable execution inputs through `koci-sdk`; OCI Runtime does
 not pull images, build images, implement Compose, or become a Docker daemon.
 
 The dependency direction is strict:
 
 ```text
-Krun Box or containerd shim
+Kbox Box or containerd shim
           |
-          | krun-oci-sdk over bounded local IPC
+          | koci-sdk over bounded local IPC
           v
 OCI Runtime host service
           |
@@ -108,7 +108,7 @@ Boundary rules:
    Versioned extensions may attach already-authorized resources or expose
    runtime mechanisms without moving product policy into this repository.
 5. The containerd runtime-v2 shim belongs here and calls the SDK directly. It
-   must not shell out to Krun Box or duplicate lifecycle state.
+   must not shell out to Kbox Box or duplicate lifecycle state.
 
 ## Delivery Milestones
 
@@ -118,7 +118,7 @@ field and platform feature is implemented.
 
 | Milestone | Runtime delivery | Cross-repository exit gate |
 | --- | --- | --- |
-| M0 - Boundary freeze | Generic public contracts, attachment schemas, driver/isolation vocabulary, and state ownership | Box depends only on `krun-oci-sdk`; runtime behavior does not depend on Box types |
+| M0 - Boundary freeze | Generic public contracts, attachment schemas, driver/isolation vocabulary, and state ownership | Box depends only on `koci-sdk`; runtime behavior does not depend on Box types |
 | M1 - Host service | Multi-driver registry, secure Unix/Windows service endpoints, durable routing, state migration, restart reconciliation, and reattachment/cleanup | A service restart at every lifecycle boundary preserves or safely terminates the exact workload |
 | M2 - Windows experimental | Launch-ready WHPX driver, protected runtime storage, pinned kernel, immutable system root, authenticated protocol-v10 agent, and leak gates | A fresh Windows host passes complete SDK lifecycle, I/O, filesystem, resource, recovery, and multi-container suites |
 | M3 - Box cutover | Stable SDK surface and Linux/KVM/HVF drivers needed by the unified Box adapter | Box routes `microvm` and `sandbox` through the SDK with no silent fallback |
@@ -138,10 +138,10 @@ orders that work; it does not maintain a second completion state.
 | Wave | Outcome | Canonical workstreams | Exit evidence |
 | --- | --- | --- | --- |
 | W0 - Evidence and host safety | Close normative classification, descriptor-relative ownership, and utility-VM transport recovery gaps before widening launch claims | R0, R1, R5 | No unclassified requirement or silent path fallback; every injected host/agent interruption recovers or cleans up the exact generation |
-| W1 - Native Linux qualification | Turn the existing explicit Native Linux path into a packaged, reproducible Krun Box Sandbox baseline without KVM | R3, R4 | Signed or checksummed packages pass the complete Rust, Python, TypeScript, and Go Sandbox suites on x86_64 and aarch64 with `/dev/kvm` absent and inaccessible |
+| W1 - Native Linux qualification | Turn the existing explicit Native Linux path into a packaged, reproducible Kbox Box Sandbox baseline without KVM | R3, R4 | Signed or checksummed packages pass the complete Rust, Python, TypeScript, and Go Sandbox suites on x86_64 and aarch64 with `/dev/kvm` absent and inaccessible |
 | W2 - Real-driver restart continuity | Reattach supported live process, I/O, and filesystem sessions after an out-of-process runtime restart, or terminate them with exact durable evidence | R1, R6 | Native Linux and one utility-VM driver pass the same owner-death and service-restart matrix without duplicate effects, invented exit status, or leaked resources |
 | W3 - Utility-VM experimental drivers | Qualify immutable guest assets and complete WHPX first, followed by HVF and KVM through the same SDK and guest-agent contract | R2, R2M, R2L, R3 | Each promoted driver independently passes lifecycle, I/O, filesystem, resource, recovery, negative-isolation, multi-container, and soak gates on a fresh host |
-| W4 - Krun Box cutover | Route both Box isolation choices through the SDK and remove fallback only after behavior and recovery parity pass | R6 | `microvm` and `sandbox` use recorded SDK routes with no direct VMM path, no silent fallback, and complete cross-platform behavior and soak evidence |
+| W4 - Kbox Box cutover | Route both Box isolation choices through the SDK and remove fallback only after behavior and recovery parity pass | R6 | `microvm` and `sandbox` use recorded SDK routes with no direct VMM path, no silent fallback, and complete cross-platform behavior and soak evidence |
 | W5 - Downstream adapters and extensions | Add containerd and optional parity mechanisms without moving product policy into the runtime | R7, R8 | Each adapter or extension is version-negotiated, separately advertised, restart-safe, and tested through public SDK contracts |
 | W6 - Supported release | Finish upstream OCI, adversarial security, upgrade, packaging, and long-running qualification against exact release artifacts | R5, M6 | The release report binds every advertised driver and operation to passing evidence from the published artifacts |
 
@@ -167,7 +167,7 @@ evidence only. It cannot flip WHPX R2 or Linux KVM R2L from `probe-only` to
 already run WHPX and KVM qualification suites, retains prior kernels, images,
 and runtime state, and is not a newly provisioned release host. Do not set
 `operator_attests_fresh_provisioning=true` here, and do not pass
-`-HostClass fresh` / `KRUN_OCI_LINUX_KVM_HOST_CLASS=fresh` on this host.
+`-HostClass fresh` / `K_OCI_LINUX_KVM_HOST_CLASS=fresh` on this host.
 
 ### WHPX R2 (Windows)
 
@@ -183,7 +183,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass `
   -FreshHostAttestation <fresh-host-attestation.json>
 ```
 
-Attestation schema `krun.oci.windows-whpx-fresh-host-attestation.v1` must set
+Attestation schema `koci.windows-whpx-fresh-host-attestation.v1` must set
 `operator_attests_fresh_provisioning=true` and `provisioned_at_utc`. Fresh
 without attestation is rejected; `existing` never sets
 `promotes_readiness=true`. `existing` plus `-FreshHostAttestation` is also
@@ -204,17 +204,17 @@ Requires **fresh** x86_64 and AArch64 KVM-capable Linux hosts (not this WSL
 distro), tip-matched system-image manifests, and:
 
 ```bash
-KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST=/absolute/path/to/system-image.json \
-  KRUN_OCI_LINUX_KVM_RELEASE_MATRIX_REPORT=/absolute/path/to/release-matrix.json \
-  KRUN_OCI_LINUX_KVM_HOST_CLASS=fresh \
-  KRUN_OCI_LINUX_KVM_FRESH_HOST_ATTESTATION=/absolute/path/to/fresh-host-attestation.json \
+K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST=/absolute/path/to/system-image.json \
+  K_OCI_LINUX_KVM_RELEASE_MATRIX_REPORT=/absolute/path/to/release-matrix.json \
+  K_OCI_LINUX_KVM_HOST_CLASS=fresh \
+  K_OCI_LINUX_KVM_FRESH_HOST_ATTESTATION=/absolute/path/to/fresh-host-attestation.json \
   bash .github/scripts/linux-kvm-release-matrix.sh
 ```
 
-Attestation schema `krun.oci.linux-kvm-fresh-host-attestation.v1` must set
+Attestation schema `koci.linux-kvm-fresh-host-attestation.v1` must set
 `operator_attests_fresh_provisioning=true` and `provisioned_at_utc`. Leave soak
-enabled for promotion (`KRUN_OCI_LINUX_KVM_SKIP_SOAK=1` is refused for
-`host_class=fresh`, `KRUN_OCI_LINUX_KVM_SOAK_ITERATIONS` must be 25, and bound
+enabled for promotion (`K_OCI_LINUX_KVM_SKIP_SOAK=1` is refused for
+`host_class=fresh`, `K_OCI_LINUX_KVM_SOAK_ITERATIONS` must be 25, and bound
 gate summaries must retain full case depths). Both
 architectures need `available` lifecycle (incl. Guest path-isolation),
 owner-death/restart, and 25-wave soak. See
@@ -222,7 +222,7 @@ owner-death/restart, and 25-wave soak. See
 
 ### Pre-fresh promote-honesty tooling (closed on tip)
 
-As of tip merge [#305](https://github.com/kense-labs/krun/pull/305)
+As of tip merge [#305](https://github.com/kense-labs/kbox/pull/305)
 (`3e2a9c1`), operator-reachable dishonest promote paths for fresh WHPX/KVM
 matrices are refuse-closed in library + unit tests (attestation fail-closed,
 skip-soak / reduced soak, thinned reopen, soak breadth, handle-reclamation
@@ -234,19 +234,19 @@ exploitable path are overfit — do not land them.
 WHPX and Linux KVM (x86_64 + AArch64) hosts tip-matched to current `main`,
 attestation-bound release matrices with soak on and full profiles. Used
 developer hosts must keep `-HostClass existing` /
-`KRUN_OCI_LINUX_KVM_HOST_CLASS=existing`. The shared hardware-vm profile on
+`K_OCI_LINUX_KVM_HOST_CLASS=existing`. The shared hardware-vm profile on
 OS `main` `f1078a74` does not close those matrices. Live work still owed by
 Linux KVM and Windows WHPX is
 [`docs/hardware-vm-platform-remainder.md`](docs/hardware-vm-platform-remainder.md). Fresh-host matrices check out current
 `main`; do not pin an older hygiene commit. The latest published workspace
-archive is [`v0.3.6`](https://github.com/kense-labs/krun/releases/tag/v0.3.6)
+archive is [`v0.3.6`](https://github.com/kense-labs/kbox/releases/tag/v0.3.6)
 (`b34c81c`), a docs and version-string archive on `v0.3.5` (`139850c`). CI
 pins rustc `1.98.1` and
-[run 34680331496](https://github.com/kense-labs/krun/actions/runs/34680331496)
+[run 34680331496](https://github.com/kense-labs/kbox/actions/runs/34680331496)
 passed `cargo fmt --all --check` and
 `cargo clippy --workspace --all-targets -- -D warnings` on ubuntu, macOS, and
 Windows for that `v0.3.5` archive commit. The `v0.3.6` release
-[run 34684646135](https://github.com/kense-labs/krun/actions/runs/34684646135)
+[run 34684646135](https://github.com/kense-labs/kbox/actions/runs/34684646135)
 published assets and does not promote readiness. Later docs-only commits do
 not change driver behavior aside from the workspace version string. The
 archive does not promote readiness. Feature layers and open gates are in
@@ -263,7 +263,7 @@ Promote-honesty shell gates still pass locally
    silent fallback (R6 cutover items).
 3. **Default supervised create** — flip Native create off Host-bound
    PDEATHSIG only after Live reopen policy is release-accepted
-   (`KRUN_OCI_NATIVE_SESSION_SUPERVISOR=1` stays opt-in until then).
+   (`K_OCI_NATIVE_SESSION_SUPERVISOR=1` stays opt-in until then).
 4. **HostRuntimeService KVM registration** — public candidate stays
    `probe-only` until fresh-host matrices pass; no premature registry.
 5. **B2 harness self-certify remains forbidden** as a single-report claim —
@@ -332,13 +332,13 @@ Completed:
   endpoint, bundle-handoff, runtime-share, recovery-report, and configured
   Guest `cgroupsPath` lifetime checks. CI records zero completed iterations and
   skips the Alpine fixture when KVM cannot be opened;
-- one fail-closed `krun.oci.linux-kvm-provenance.v1` contract shared by the
+- one fail-closed `koci.linux-kvm-provenance.v1` contract shared by the
   authenticated entry, post-probe failure, compatibility-drift, lifecycle,
   owner-restart, and soak reports. It requires a clean exact checkout, rejects
   a claimed revision that differs from the built checkout, and binds the Git
   object format, commit/tree, Linux platform/architecture, CLI and shim bytes,
   runtime manifest and selected runtime files, immutable system-image manifest,
-  build/test profiles, `libkrun-kvm`, and `DedicatedVm`. PR qualification now
+  build/test profiles, `libkkvm`, and `DedicatedVm`. PR qualification now
   records the actual checked-out merge commit rather than a different
   branch-head revision;
 - Apple Silicon and Hypervisor.framework capability reporting through a
@@ -431,7 +431,7 @@ Completed:
   verified setuid-root `newuidmap`/`newgidmap`, `setgroups=deny`, exact map and
   ownership read-back, ordered durable events, and complete cleanup;
 - single-container native Linux runtime ownership behind a private `0600`
-  same-UID Unix SDK endpoint, with an owner-only root, automatic Krun Box FD
+  same-UID Unix SDK endpoint, with an owner-only root, automatic Kbox Box FD
   3/4/5 binding for one exact container ID, full transported lifecycle evidence,
   `SIGINT`/`SIGTERM` driver shutdown, inode-scoped socket removal, and empty
   executor-root evidence on x86_64 and aarch64 without KVM;
@@ -448,12 +448,12 @@ Completed:
   bounded configuration, timeout and process-group cleanup, typed rollback for
   every failing prestart through poststart phase, warning-only poststop
   continuation, and native Linux lifecycle trace evidence;
-- direct Krun Box compiler compatibility fixture pinned to Box commit
+- direct Kbox Box compiler compatibility fixture pinned to Box commit
   `d24c951989c8ee8dbc772ccd0021713855613656`, with schema/semantic loading and
   fail-closed executor planning for its absolute rootfs, annotations,
   capabilities, cgroup v2 resources, exact device allowlist, legacy `cgroup`
   mount normalization, and AArch64 seccomp policy;
-- public-SDK-only Krun Box lifecycle, process-session, filesystem,
+- public-SDK-only Kbox Box lifecycle, process-session, filesystem,
   observability, and resource-control consumer at Box commit `a16772c3`, with
   isolation preflight before product reservation, distinct product/runtime
   identities and generations, exact endpoint/driver/configuration/attachment
@@ -499,8 +499,8 @@ Completed:
   read-back and pre-Create rollback, exact static device nodes within a bounded
   default-deny profile, and pure-Rust x86_64/AArch64 seccomp BPF retained
   across init and exec;
-- versioned control/workload cgroup topology for trusted Krun Box init: exact
-  `linux.resources` enforcement on `krun-workload`, derived outer control-plane
+- versioned control/workload cgroup topology for trusted Kbox Box init: exact
+  `linux.resources` enforcement on `kworkload`, derived outer control-plane
   headroom, pre-opened FD 6/7 membership handoff, read-only guest cgroupfs,
   workload-scoped update/freeze/stats, non-group OOM behavior, and complete
   topology cleanup;
@@ -531,7 +531,7 @@ Completed:
   normative OCI 1.3.0 documents;
 - rejection of unknown configuration properties;
 - immutable SHA-256 binding of the loaded `config.json`;
-- public `krun.oci.attachments.v1` derivation and validation for rootfs, mounts,
+- public `koci.attachments.v1` derivation and validation for rootfs, mounts,
   networking, process I/O, secret classifications, and optional runtime
   extensions, with fail-closed protocol-3 negotiation, durable manifest
   retention, and exact digest replay;
@@ -631,7 +631,7 @@ Not yet complete:
 - complete Linux configuration enforcement and driver feature parity;
 - production-ready native Linux execution;
 - real-driver live process and filesystem session reattachment;
-- Krun Box default routing and cross-platform real-host cutover;
+- Kbox Box default routing and cross-platform real-host cutover;
 - containerd runtime-v2 task, restart, I/O, and cleanup integration;
 - versioned storage, networking, reusable-session, checkpoint/restore, and TEE
   extensions;
@@ -647,10 +647,10 @@ driver implements.
 
 ### R0 — Contract And Spec Ingestion
 
-- [x] Create `krun-oci-sdk`.
+- [x] Create `koci-sdk`.
 - [x] Use official Rust OCI types for `Spec`, `Process`, `LinuxResources`,
   `State`, and `Features`.
-- [x] Define all OCI lifecycle and Krun Box control operations.
+- [x] Define all OCI lifecycle and Kbox Box control operations.
 - [x] Add typed IDs, operation IDs, generation fencing, deadlines, isolation,
   I/O, stats, events, checkpoint, restore, and stable errors.
 - [x] Strictly load and digest-bind OCI bundles.
@@ -778,7 +778,7 @@ driver implements.
   - [x] Bind all 24 OCI VM configuration entries to pinned schema, semantic,
     and selected-driver evidence. Validate every hypervisor, kernel, image,
     and hardware member, including required relationships and all image
-    formats. Current Krun drivers keep utility-VM launch assets runtime-owned
+    formats. Current Kbox drivers keep utility-VM launch assets runtime-owned
     and reject a caller-provided `vm` section before durable generation
     reservation, bundle handoff, hypervisor launch, or mutating driver
     dispatch. A future driver must explicitly override this fail-closed policy
@@ -809,7 +809,7 @@ driver implements.
     conformant, and all 41 `features-linux.md` requirements as enforced by the
     runtime feature report.
   - [x] Bind the two Linux runtime file-descriptor entries to the typed,
-    collision-safe inherited-descriptor planner. Krun passes only the exact
+    collision-safe inherited-descriptor planner. Kbox passes only the exact
     advertised control descriptors and deliberately adds no optional
     `/dev/null` descriptors.
   - [x] Bind the two network-device termination entries to retained native
@@ -1091,7 +1091,7 @@ enforce it. No property is silently ignored.
     gate passed all four stages once and then five repeated four-stage waves
     (24 fresh VMs total) with a valid unprivileged UID/GID mapping. The
     machine-readable evidence now uses the expanded
-    `krun.oci.oci-vm-transport-fault-cleanup.v3` schema.
+    `koci.oci-vm-transport-fault-cleanup.v3` schema.
   - [x] Cross the five Guest-side `create` read/dispatch/response transitions
     inside fresh authenticated utility VMs. The qualification handoff is
     versioned, accepted only for Guest stages, and bound to the exact validated
@@ -1108,7 +1108,7 @@ enforce it. No property is silently ignored.
     close and complete Guest, VM, endpoint, process, marker, runtime-root, and
     Host descriptor cleanup. Apple Silicon HVF passed both points in two fresh
     VMs, then passed the complete eleven-stage matrix in eleven fresh VMs with
-    `krun.oci.oci-vm-transport-fault-cleanup.v3` evidence.
+    `koci.oci-vm-transport-fault-cleanup.v3` evidence.
   - [x] Resume one real `create` after `host-before-request-write` through both
     `HostRuntimeService` reopen and actual HVF VM/session-owner replacement.
     The first VM returns a retryable `Unavailable`, closes with complete Host
@@ -1118,7 +1118,7 @@ enforce it. No property is silently ignored.
     `create`, force-delete it, and return every resource inventory to baseline.
     The August 10, 2026 Apple Silicon gate passed with two distinct endpoint,
     shim, and VM-worker identities under
-    `krun.oci.oci-vm-reopen-replacement.v2`.
+    `koci.oci-vm-reopen-replacement.v2`.
   - [x] Carry the other three Host-side `create` request/response stages through
     the same durable reopen and actual HVF owner replacement. The selected
     point is explicit in the CLI and retained report; every run requires the
@@ -1212,7 +1212,7 @@ enforce it. No property is silently ignored.
     to write that marker; force-deletes the generation; and restores Host and
     Guest inventories. The August 10, 2026 matrix passed all nine stages in 18
     fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v6`.
+    `koci.oci-vm-operation-reopen-replacement.v6`.
   - [x] Carry all nine Host/Guest `signal-process` stages through durable
     service reopen and an actual HVF owner replacement after exact Create,
     Start, and a long-running terminal Exec. The first eight paths retain a
@@ -1227,7 +1227,7 @@ enforce it. No property is silently ignored.
     write the exact signal marker; force-deletes the generation; and restores
     Host and Guest inventories. The August 11, 2026 matrix passed all nine
     stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v7`.
+    `koci.oci-vm-operation-reopen-replacement.v7`.
   - [x] Carry all nine Host/Guest non-init `wait-process` stages through
     durable service reopen and an actual HVF owner replacement after exact
     Create, Start, terminal Exec, and signal-10 setup. Recovery always rebuilds
@@ -1241,7 +1241,7 @@ enforce it. No property is silently ignored.
     and process ID; rejects stale Host and Guest generations; force-deletes the
     still-running init; and restores Host and Guest inventories. The August 11,
     2026 matrix passed all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v8`.
+    `koci.oci-vm-operation-reopen-replacement.v8`.
   - [x] Carry all nine Host/Guest `pause` stages through durable service reopen
     and an actual HVF owner replacement after exact Create and Start. The first
     eight paths retain an unpaused running record and a Prepared Pause journal;
@@ -1256,7 +1256,7 @@ enforce it. No property is silently ignored.
     force-deletes the paused generation, and restores Host and Guest
     inventories. The August 11, 2026 Apple Silicon matrix passed all nine
     stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v9`.
+    `koci.oci-vm-operation-reopen-replacement.v9`.
   - [x] Carry all nine Host/Guest `resume` stages through durable service
     reopen and an actual HVF owner replacement after exact Create, Start, and
     Pause. Every recovery recreates and starts init, waits for the exact
@@ -1271,7 +1271,7 @@ enforce it. No property is silently ignored.
     changed and stale Host and Guest requests, force-deletes the resumed
     generation, and restores Host and Guest inventories. The August 11, 2026
     Apple Silicon matrix passed all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v10`.
+    `koci.oci-vm-operation-reopen-replacement.v10`.
   - [x] Carry all nine Host/Guest read-only `processes` stages through durable
     service reopen and an actual HVF owner replacement after exact Create,
     Start, and live terminal Exec setup. Recovery always recreates init and
@@ -1284,7 +1284,7 @@ enforce it. No property is silently ignored.
     Guest generations, force-deletes the live generation, and restores both
     owner inventories. The August 11, 2026 Apple Silicon matrix passed all
     nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v11`.
+    `koci.oci-vm-operation-reopen-replacement.v11`.
   - [x] Carry all nine Host/Guest `update` stages through durable service
     reopen and an actual HVF owner replacement after exact Create and Start.
     The first eight paths retain a Prepared Update journal and dispatch the
@@ -1299,7 +1299,7 @@ enforce it. No property is silently ignored.
     monotonic live counters; force-deletes the generation; and restores both
     owner inventories. The August 11, 2026 Apple Silicon matrix passed all
     nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v12`.
+    `koci.oci-vm-operation-reopen-replacement.v12`.
   - [x] Carry all nine Host/Guest read-only `stats` stages through durable
     service reopen and an actual HVF owner replacement after exact Create,
     Start, and committed Update setup. Every recovery recreates and starts
@@ -1314,7 +1314,7 @@ enforce it. No property is silently ignored.
     Host and Guest generations, force-deletes the generation, and restores
     both owner inventories. The August 11, 2026 Apple Silicon matrix passed
     all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v13`.
+    `koci.oci-vm-operation-reopen-replacement.v13`.
   - [x] Carry all nine Host/Guest read-only `read-output` stages through
     durable service reopen and actual HVF owner replacement. Recovery rebuilds
     the exact Create, Start, and non-terminal captured-output Exec requests,
@@ -1325,7 +1325,7 @@ enforce it. No property is silently ignored.
     fail closed, force delete removes the generation, and both owner
     inventories return to baseline. The August 11, 2026 Apple Silicon matrix
     passed all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v14`.
+    `koci.oci-vm-operation-reopen-replacement.v14`.
   - [x] Carry all nine Host/Guest `write-stdin` stages through durable
     service reopen and actual HVF owner replacement. Recovery always rebuilds
     the exact pipe-backed Exec. The first eight stages leave the Host journal
@@ -1336,7 +1336,7 @@ enforce it. No property is silently ignored.
     identity, changed-payload rejection, stale generations, PID rebinding,
     force delete, and both owner cleanup inventories are required. The
     August 11, 2026 Apple Silicon matrix passed all nine stages in 18 fresh VMs
-    under `krun.oci.oci-vm-operation-reopen-replacement.v15`.
+    under `koci.oci-vm-operation-reopen-replacement.v15`.
   - [x] Carry all nine Host/Guest `close-stdin` stages through durable
     service reopen and actual HVF owner replacement. Recovery always rebuilds
     the exact pipe-backed Exec. The first eight stages leave the Host journal
@@ -1347,7 +1347,7 @@ enforce it. No property is silently ignored.
     rejection, stale generations, PID rebinding, force delete, and both owner
     cleanup inventories are required. The August 11, 2026 Apple Silicon matrix
     passed all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v16`.
+    `koci.oci-vm-operation-reopen-replacement.v16`.
   - [x] Carry all nine Host/Guest `resize` stages through durable service
     reopen and actual HVF owner replacement. Recovery always rebuilds the
     exact terminal-backed Exec. The first eight stages leave the Host journal
@@ -1358,7 +1358,7 @@ enforce it. No property is silently ignored.
     changed-dimension rejection, stale generations, PID rebinding, force
     delete, and both owner cleanup inventories are required. The August 11,
     2026 Apple Silicon matrix passed all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v17`.
+    `koci.oci-vm-operation-reopen-replacement.v17`.
   - [x] Carry all nine Host/Guest `file` stages through service reopen and
     actual HVF owner replacement. The v3 Host journal retains the exact upload
     and typed response. Prepared paths dispatch once after reopen. At
@@ -1369,7 +1369,7 @@ enforce it. No property is silently ignored.
     stale generations, explicit removal, force delete, and both owner cleanup
     inventories are required. The August 15, 2026 Apple Silicon matrix passed
     all nine stages in 18 fresh VMs under
-    `krun.oci.oci-vm-operation-reopen-replacement.v18`.
+    `koci.oci-vm-operation-reopen-replacement.v18`.
   - [x] Carry all nine Host/Guest `filesystem` stages through service reopen
     and actual HVF owner replacement. The v3 Host journal retains the exact
     MakeDir request and typed response. Prepared paths dispatch once after
@@ -1381,7 +1381,7 @@ enforce it. No property is silently ignored.
     Remove, force delete, and both owner cleanup inventories are required. The
     August 15, 2026 Apple Silicon matrix passed all nine stages in 18 fresh VMs
     under
-    `krun.oci.oci-vm-operation-reopen-replacement.v19`, completing all 180 real
+    `koci.oci-vm-operation-reopen-replacement.v19`, completing all 180 real
     operation-stage paths across all 20 workload operations.
   - [x] Requalify `guest-after-response-write` for all 14 journaled mutations
     against real Apple Silicon HVF with protocol v10 acknowledgement. Every
@@ -1406,7 +1406,7 @@ enforce it. No property is silently ignored.
   the other 19 operations at 9/9 each (171 cases), for the core 180/180
   Host/Guest operation-stage paths. Aggregate summary SHA-256
   `e3c0f48ac002026ddd9ee793a30390e120422a7dfc3f49b5a84938fd0c87396d`
-  (`krun.oci.linux-kvm-operation-stage-aggregate.v1`, `host_class=existing`,
+  (`koci.linux-kvm-operation-stage-aggregate.v1`, `host_class=existing`,
   `promotes_readiness=false`). Observation-only; the parent stays open until
   KVM and WHPX fresh-host promotion close.
 - [x] Implement all OCI hook phases with typed prestart, createRuntime,
@@ -1425,7 +1425,7 @@ backends remains open.
 
 - [x] Load and probe Windows Hypervisor Platform securely.
 - [x] Create and delete a real WHPX partition object.
-- [x] Pin the `krun-libkrun-sys 3.1.0` FFI ABI and stage a runtime-owned,
+- [x] Pin the `klibksys 3.1.0` FFI ABI and stage a runtime-owned,
   checksum-verified Windows bundle for the isolated shim, with firmware
   provenance from `kense-labs/Box@93fc281` and segmented WHPX stream plus
   writable virtio-fs flush fixes from `kense-labs/libkrun@dc5519f`.
@@ -1463,10 +1463,10 @@ backends remains open.
     authenticated recovery-publication, and cleanup evidence.
   - [x] Run the owner-death and service-restart matrix through that share on a
     fresh WHPX-enabled Windows host and retain its machine-readable evidence.
-    Clean commit `2d91cd0` emitted `krun.oci.whpx-recovery-smoke-run.v1` after
+    Clean commit `2d91cd0` emitted `koci.whpx-recovery-smoke-run.v1` after
     exact owner termination, both Recover fault boundaries, service reopen,
     terminal replay, stopped-only delete, and complete transient cleanup.
-- [ ] Boot the pinned Krun Linux kernel and immutable system root.
+- [ ] Boot the pinned Kbox Linux kernel and immutable system root.
   - [x] Record source revisions, reproducible build inputs, checksums, and the
     runtime-to-guest compatibility level in the release evidence.
   - [x] Mount the immutable system root separately from the protected
@@ -1477,7 +1477,7 @@ backends remains open.
 
   The August 15, 2026 implementation builds the Alpine 3.22.5 x86_64 ext4
   image twice and requires byte-for-byte equality, binds Linux 6.12.91 and the
-  Box/libkrun/firmware source revisions in `krun.oci.windows-system-image.v1`,
+  Box/libkrun/firmware source revisions in `koci.windows-system-image.v1`,
   pins the manifest, image, `krun.dll`, and `libkrunfw.dll` with read-only
   Windows handles, rejects reparse paths and identity changes, and rehashes
   every asset immediately before VM entry. The shim attaches the image as a
@@ -1521,7 +1521,7 @@ backends remains open.
 - [ ] Prove in-process native handle reclamation independently of Windows
   process teardown.
   - [x] Emit nonzero current-process handle counts immediately before libkrun
-    context creation and after `krun_start_enter` returns. Shim schema v6 and
+    context creation and after `kstart_enter` returns. Shim schema v6 and
     Host validation require exact equality before cleanup can succeed.
   - [ ] Retain that exact evidence across the complete fresh-host WHPX SDK,
     recovery, negative, and soak matrices.
@@ -1559,7 +1559,7 @@ network mediation, protected metadata or stale control-file recovery.
   cleanup.
 - [x] Retain fail-closed unavailable-HVF and missing-entitlement evidence
   without accepting pre-entry configuration as guest execution.
-- [x] Boot the same pinned Krun Linux kernel and immutable system root through
+- [x] Boot the same pinned Kbox Linux kernel and immutable system root through
   HVF, retain their digests in the host report, keep the writable
   per-generation share separate, and rerun the complete macOS SDK and soak
   matrices against those exact assets. The retained Apple Silicon run used
@@ -1672,7 +1672,7 @@ release-promotion gates above.
 - [x] Report `/dev/kvm` presence, access, ioctl, and API-version evidence
   independently from Native Linux readiness.
 - [x] Pin and verify the Linux libkrun runtime, firmware, and
-  firmware-exported Krun Linux kernel for x86_64 and AArch64. The build accepts
+  firmware-exported Kbox Linux kernel for x86_64 and AArch64. The build accepts
   only the exact two-file archive for the selected architecture, and the
   isolated shim repeats real-file, size, digest, kernel-size, address, and
   kernel-digest checks before native API use.
@@ -1718,7 +1718,7 @@ release-promotion gates above.
     17-case CI entry for the complete 20-operation lifecycle, two-container
     isolation, one ten-case real-Guest path-isolation profile, three lifecycle
     cleanup boundaries, and all 11 Host/Guest transport interruption points. The
-    `krun.oci.linux-kvm-lifecycle-matrix.v2` report retains endpoint,
+    `koci.linux-kvm-lifecycle-matrix.v2` report retains endpoint,
     shim-process, runtime-state, bootstrap, token/recovery, and marker cleanup.
     Runners without usable KVM emit `unavailable` with zero cases and skip the
     Alpine fixture rather than manufacturing a pass.
@@ -1729,13 +1729,13 @@ release-promotion gates above.
     evidence, reopens through a distinct kernel-authenticated socket peer, and
     verifies exact stopped/Wait replay plus stopped-only Delete and zero
     transient residue. Runners without KVM retain an explicit zero-case
-    `krun.oci.linux-kvm-recovery-matrix.v2` report without downloading Alpine.
+    `koci.linux-kvm-recovery-matrix.v2` report without downloading Alpine.
   - [x] Add a separately scoped bounded KVM soak for x86_64 and AArch64. One
     durable Host Service runs 25 fresh exact generations by default and retains
     per-wave generation/replay, process-incarnation, descriptor, marker,
     endpoint, bundle-handoff, runtime-share, recovery-report, console, and
     configured Guest `cgroupsPath` lifetime evidence. Unavailable runners emit
-    `krun.oci.linux-kvm-soak-matrix.v2` with zero completed iterations and do not
+    `koci.linux-kvm-soak-matrix.v2` with zero completed iterations and do not
     download Alpine.
   - [x] Close the KVM-independent driver isolation preflight before any Guest
     share or VM exists. Dedicated-VM Create now rejects `SharedHostKernel`,
@@ -1766,7 +1766,7 @@ release-promotion gates above.
     runtime-share inventory restoration.
   - [x] Run the complete system-root and guest-agent compatibility-drift matrix
     at the configured real-entry worker boundary on x86_64 and AArch64. The
-    14-case `krun.oci.linux-kvm-compatibility-drift.v2` gate covers manifest and
+    14-case `koci.linux-kvm-compatibility-drift.v2` gate covers manifest and
     raw-image replacement, same-size mutation, and symlinks; architecture and
     runtime-target mismatch; Guest Agent version and digest drift; and runtime
     archive, libkrun, firmware, and exported-kernel provenance drift. Every
@@ -1995,7 +1995,7 @@ leak. Only then may KVM become `experimental`.
   nodes at normalized paths inside or outside `/dev`, with exact identity,
   mode, mapped ownership, existing-target conflict handling, and durable
   cleanup. Supply the six default nodes, `/dev/ptmx`, and terminal-backed
-  `/dev/console`; retain the bounded Krun Box rootless profile and ordered
+  `/dev/console`; retain the bounded Kbox Box rootless profile and ordered
   cgroup-device policy path.
 - [x] Complete the remaining process and rootless configuration boundary.
   - [x] Enforce supplementary credentials, I/O priority, exec CPU affinity,
@@ -2046,7 +2046,7 @@ leak. Only then may KVM become `experimental`.
     user-owned cgroup-v2 descriptor, starts a parent-bound privileged helper
     before Tokio, permanently drops the owner to its real UID/GID, and accepts
     only structured install/replace/remove requests for normalized descendants.
-    The first bounded profile is the exact six-device Krun Box fixture. Its smoke
+    The first bounded profile is the exact six-device Kbox Box fixture. Its smoke
     verifies retained device-node mounts, read-only replacement, failed-update
     rollback, resource-rule clear/restore with the inventory boundary retained,
     durable events, helper shutdown, and complete
@@ -2095,7 +2095,7 @@ leak. Only then may KVM become `experimental`.
 - [x] Backpressured piped stdin, bounded captured stdout/stderr, controlling
   PTYs, OCI `consoleSize` initial terminal dimensions, resize, merged terminal
   output, VEOF close, signals, and byte-accurate output cursors.
-- [x] Native inherited descriptor handoff for the Krun Box exec listener on FD
+- [x] Native inherited descriptor handoff for the Kbox Box exec listener on FD
   3, PTY listener on FD 4, and dedicated init log on FD 5, with type/role/count
   validation, collision-safe child `dup2`, stable host/agent replay schemas,
   non-native rejection, exact listener/log lifecycle evidence, and cleanup.
@@ -2137,7 +2137,7 @@ and recovery suites in the Windows guest and on native Linux.
 - [x] Prove shutdown cleanup without delete after create, start, and kill on
   x86_64 and aarch64 without KVM.
 - [x] Add the Sandbox-scoped native runtime owner, bind its protected Unix SDK
-  endpoint, route the complete lifecycle through `krun-oci-sdk`, fence inherited
+  endpoint, route the complete lifecycle through `koci-sdk`, fence inherited
   Box descriptors to one container ID, and prove signal-driven cleanup on
   x86_64 and aarch64 without KVM.
 - [x] Add a bounded, versioned native complex-container soak that repeatedly
@@ -2148,9 +2148,9 @@ and recovery suites in the Windows guest and on native Linux.
   architecture's JSON report. **Tip-source Native soak refresh (observation-
   only):** clean tip `d337aef892e1bffd8a5ef9820112780656041eb2` (Merge #297)
   greened full `.github/scripts/native-linux-smoke.sh` EXIT=0 on existing-host
-  WSL2, including soak schema `krun.oci.native-linux-soak.v2` status
+  WSL2, including soak schema `koci.native-linux-soak.v2` status
   `available` (25 iterations × 4 concurrent) report
-  `/var/tmp/krun-oci-native-smoke-tip-d337aef/soak-report.json` SHA-256
+  `/var/tmp/koci-native-smoke-tip-d337aef/soak-report.json` SHA-256
   `2614c462ea4c1dfd7aa40df0d6e9f54332f7c7b517186198fe11530f0a2e6cc1`. Does not
   promote readiness, fresh-host, cutover, or B2.
 - [x] Retain a versioned real-driver configuration matrix for private,
@@ -2169,38 +2169,38 @@ and recovery suites in the Windows guest and on native Linux.
   distinct process, commit only a stopped tombstone, refuse invented wait
   evidence, and prove stopped-only delete plus complete transient cleanup.
   Live process-session reattachment remains an R6 gate.
-- [x] Prove packaged installation and Krun Box product startup without KVM.
-  Krun Box main commit `d6861de302e6e165a2fdc473b2d399bb0692048e`
+- [x] Prove packaged installation and Kbox Box product startup without KVM.
+  Kbox Box main commit `d6861de302e6e165a2fdc473b2d399bb0692048e`
   built a checksummed release-layout archive, installed it through the public
   installer, verified the installed binary and libkrun loader layout, and
-  started `krun-box info` against pinned Runtime commit
+  started `kbox info` against pinned Runtime commit
   `438e4b7936cd08d408160fe9341a21786f60cd26` without resolving any product
   executable outside the install root.
 - [x] Run the full Sandbox SDK suite with `/dev/kvm` absent and inaccessible.
   The same installed product passed the complete Rust, Python, TypeScript, and
   Go Sandbox suites twice on both
-  [x86_64](https://github.com/kense-labs/krun/actions/runs/33497670646/job/99823489427)
+  [x86_64](https://github.com/kense-labs/kbox/actions/runs/33497670646/job/99823489427)
   and
-  [aarch64](https://github.com/kense-labs/krun/actions/runs/33497670646/job/99823489043):
+  [aarch64](https://github.com/kense-labs/kbox/actions/runs/33497670646/job/99823489043):
   first with `/dev/kvm` absent and then with a mode-000 wrong-type path.
   Each phase also proved replacement-owner restart, exact-generation cleanup,
   and no invented exit status. The complete Box
-  [main run](https://github.com/kense-labs/krun/actions/runs/33497670646) passed;
+  [main run](https://github.com/kense-labs/kbox/actions/runs/33497670646) passed;
   published tag artifacts remain a separate release gate.
 - [x] Fail explicit dedicated-VM requests before runtime state or driver
   mutation.
-- [x] Reject unavailable dedicated-VM selection in Krun Box before image
-  mutation. Krun Box PR
-  [#221](https://github.com/kense-labs/krun/pull/221) added route-identical
+- [x] Reject unavailable dedicated-VM selection in Kbox Box before image
+  mutation. Kbox Box PR
+  [#221](https://github.com/kense-labs/kbox/pull/221) added route-identical
   isolation preflight before named-volume creation, image-cache access, image
   pulls, container records, reservations, providers, or runtime mutation. Its
   focused tests prove unavailable dedicated-VM selection fails closed without
   fallback and reject probe-only drivers without product mutation. Box main
   commit `332ab93896a7293cda6f788103ca8f5559566f2d` passed the complete
-  [required CI gate](https://github.com/kense-labs/krun/actions/runs/33466602542)
+  [required CI gate](https://github.com/kense-labs/kbox/actions/runs/33466602542)
   on x86_64 and aarch64.
 
-Exit gate: Krun Box Sandbox and its Rust, Python, TypeScript, and Go SDK tests
+Exit gate: Kbox Box Sandbox and its Rust, Python, TypeScript, and Go SDK tests
 pass on supported x86_64 and aarch64 Linux hosts without KVM.
 
 ### R5 — Full OCI 1.3 Conformance
@@ -2259,9 +2259,9 @@ pass on supported x86_64 and aarch64 Linux hosts without KVM.
 Exit gate: the release report contains retained evidence for every applicable
 normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
 
-### R6 — Krun Box Migration
+### R6 — Kbox Box Migration
 
-- [x] Add the pinned `krun-oci-sdk` dependency to Krun Box.
+- [x] Add the pinned `koci-sdk` dependency to Kbox Box.
 - [x] Implement the Box adapter using SDK types only.
 - [x] Route explicitly opted-in new Linux Sandbox records through Box-owned
   resource and bundle preparation into the long-lived Native Linux host owner,
@@ -2301,12 +2301,12 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   **Closed** by aggregated existing-host WSL2 evidence with Box main
   `5f74b5c2356aca534bf35fa5b4d80043c95a691c` + OCI
   `61f77712e420c176dfc1a5d7ba2457e8c8299dcf`: Native Live stream+filesystem
-  (Box `krun.box.linux-native-live-session.v4` report SHA-256
+  (Box `kbox.linux-native-live-session.v4` report SHA-256
   `3d158d6755afcd187f883234768f54aaa1dbd330e56a2ef763d11164fd6b5818`; OCI
   Native Live FS smoke
   `1b635b199b43b3666773d16a8d9718270f0efd809782326d75d7eec525f3612f`) and
   KVM MicroVM Live stream+filesystem (Box
-  `krun.box.linux-kvm-live-session.v2` report SHA-256
+  `kbox.linux-kvm-live-session.v2` report SHA-256
   `1f8cede9c5906b915a067d8347ede99ceb647b3eb93408610daca7c0ea5f758f`; OCI
   KVM Live FS matrix
   `74d60f3e472ae7380fb702ea416fc4cbad01f28ab95af268dedaa0d0533e316b`).
@@ -2320,11 +2320,11 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   host-surviving supervisor identity (PID + start-time) and lifetime split
   versus Host-bound PDEATHSIG. Production `HostSessionSupervisor` /
   `session-supervise` can parent workloads and survive Host death; recovery
-  schema `krun.oci.native-linux-recovery.v4` can record the supervisor identity.
-  Opt-in Native create (`KRUN_OCI_NATIVE_SESSION_SUPERVISOR=1`) now spawns the
+  schema `koci.native-linux-recovery.v4` can record the supervisor identity.
+  Opt-in Native create (`K_OCI_NATIVE_SESSION_SUPERVISOR=1`) now spawns the
   launcher under that supervisor and persists `sessionSupervisor` on create.
   Control-channel reattach slice is retained: after Host EOF the supervisor
-  publishes `krun.oci.session-supervise.<pid>.<start_time>` and
+  publishes `koci.session-supervise.<pid>.<start_time>` and
   `HostSessionSupervisor::reattach` authenticates and resumes wait/spawn
   without inventing exit status (re-exec remains wrong for PDEATHSIG
   parentage). Host reopen now reattaches a live recorded supervisor in
@@ -2335,7 +2335,7 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   identity → one control Arc across generations). Partial Host-reopen process
   inventory now exposes the authenticated live init plus still-live durable
   exec identities from recovery
-  `krun.oci.native-linux-recovery.v6` (v5 normalizes without helper; empty after
+  `koci.native-linux-recovery.v6` (v5 normalizes without helper; empty after
   those identities exit; no invented exit status). Supervised exec persists
   payload + helper PID + start-time into the
   recovery record and spawns under the session supervisor so the payload can
@@ -2364,7 +2364,7 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   supervisor-parents the helper (`ExecProcess::spawn_with_context`).
   Null/Capture/Pipe I/O are accepted on Host-reopen exec; Terminal/`Inherit`
   remain `Unsupported` there. Supervised create accepts Host `Inherit` stdio and
-  `krun_box_control_v1`. Default create stays Host-bound. Opt-in supervised
+  `kbox_control_v1`. Default create stays Host-bound. Opt-in supervised
   create accepts rootless device mounts over
   the Host create-control SCM_RIGHTS path (same as default create; mounts do not
   ride `spawn_launcher`). Existing-host WSL2 Box live-session v3 evidence on
@@ -2376,20 +2376,20 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   parent while default create Host-bound policy, fresh-host, and cutover
   remain open.
 - [x] Opt-in KVM / utility-VM Live Host reopen (observation-only; no cutover):
-  durable `krun-oci-krun-shim session-owner` helper + AgentVmSession
-  `KRUN_OCI_KVM_SESSION_OWNER=1` spawn path land parentage that outlives Host
+  durable `koci-kshim session-owner` helper + AgentVmSession
+  `K_OCI_KVM_SESSION_OWNER=1` spawn path land parentage that outlives Host
   Service (default remains Host-PID owner-watchdog so stopped-only owner-death
   gates stay green). **Landed in-tree:** Host-control bridge proxy, guest
   Host-reconnect loop (clean EOF reconnects), authenticated Live binding
   publish/load, `recover` reattach to `UtilityVmAttachment::Live` /
   `DriverRecovery::observed` without inventing exit, reattach shutdown reclaim
   of the durable `/tmp/<pipe>` endpoint, and the dedicated Live evidence harness
-  (`krun.oci.linux-kvm-live-recovery-smoke.v3` /
+  (`koci.linux-kvm-live-recovery-smoke.v3` /
   `.github/scripts/linux-kvm-live-recovery.sh`; distinct from stopped-only
   `linux-kvm-recovery` and stopped-only `linux-kvm-filesystem-reopen`).
   **Existing-host WSL2 `/dev/kvm` greened Host survival** on revision
   `c3b5fc5416e2f0902b14308d2f79ff38557ef165` with matrix
-  `krun.oci.linux-kvm-live-recovery-matrix.v1` SHA-256
+  `koci.linux-kvm-live-recovery-matrix.v1` SHA-256
   `15d99d8e5b087112612859783ed76881bcc3e8be68b513032edb8673b1958db3`
   (system-image manifest
   `805d4afea01b1c3a9ed7343b2406edfc6c7e43912e35134ec72661c29fe56449`; continuous
@@ -2409,8 +2409,8 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   FileOp::Download exact payload match after reattach). **Existing-host WSL2
   `/dev/kvm` greened Live filesystem continuity** on revision
   `2decde5832a713abf4d859b2c11881b50de15d3d` with matrix
-  `krun.oci.linux-kvm-live-recovery-matrix.v1` report
-  `/var/tmp/krun-oci-kvm-live-fs-v3-20260910214714.json` SHA-256
+  `koci.linux-kvm-live-recovery-matrix.v1` report
+  `/var/tmp/koci-kvm-live-fs-v3-20260910214714.json` SHA-256
   `74d60f3e472ae7380fb702ea416fc4cbad01f28ab95af268dedaa0d0533e316b`
   (system-image manifest
   `805d4afea01b1c3a9ed7343b2406edfc6c7e43912e35134ec72661c29fe56449`; continuous
@@ -2421,7 +2421,7 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   through the reattached Guest agent). **Existing-host WSL2 `/dev/kvm`
   greened new-exec + filesystem Live reopen** on revision
   `53ccc419858d987f1f80419ab83d63408ff53b43` with matrix report
-  `/tmp/krun-oci-obs/kvm-live-recovery-new-exec-20260911174642.json` SHA-256
+  `/tmp/koci-obs/kvm-live-recovery-new-exec-20260911174642.json` SHA-256
   `cc118bdcdae8b255b5bdce9863f27d13f1f1ab3582c4575d2aea6152671c852d`
   (system-image manifest
   `7bd6f0590f41c79172ca5868ed1003ad821173be1b1f0d53fb5f46a4402cd181`; continuous
@@ -2436,9 +2436,9 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   **product path** (Host-reopen `file`/`filesystem` via rebuilt
   `RetainedExecutionContext` + `live_for`) and first-principles unit tests are
   landed; Host-reopen evidence harness
-  `krun.oci.linux-native-live-recovery-smoke.v3` /
+  `koci.linux-native-live-recovery-smoke.v3` /
   `.github/scripts/linux-native-live-recovery.sh` is implemented under
-  `KRUN_OCI_NATIVE_SESSION_SUPERVISOR=1` (distinct from stopped-only
+  `K_OCI_NATIVE_SESSION_SUPERVISOR=1` (distinct from stopped-only
   `native-linux-recovery`). v3 requires retained exec I/O (Pipe stdin +
   Capture stdout on the same process ID before Host SIGKILL and after
   reattach), a **new** post-reattach Pipe+Capture exec
@@ -2449,30 +2449,30 @@ normative MUST and MUST NOT requirement in OCI Runtime Specification 1.3.0.
   `1b635b199b43b3666773d16a8d9718270f0efd809782326d75d7eec525f3612f`).
   **Existing-host WSL2 Native Live v2 greened** on revision
   `f047d862bd0a000392cf9bd013854590c1e4a7c7` with report
-  `/var/tmp/krun-oci-native-live-io-v2-20260911003055.json` SHA-256
+  `/var/tmp/koci-native-live-io-v2-20260911003055.json` SHA-256
   `88def24f4fb652bdf03a7204c7f087aa18e783f060230535858779d002b17c34`
   (`retained_exec_io_proven` / `retained_filesystem_proven` /
   `exec_io_before_kill` / `write_stdin_after_reattach` /
   `read_output_after_reattach` / `init_survived_host_sigkill` /
   `replacement_state_running`). **Existing-host WSL2 Native Live v3
   greened** on tip `6cc7da3c91bb09a6dbb59527b256b7ce95e86adf` with report
-  `/var/tmp/krun-oci-native-live-v3-20260911121600.json` SHA-256
+  `/var/tmp/koci-native-live-v3-20260911121600.json` SHA-256
   `e46c6a5325039fb07c6b7cdddd3e742bae4e185f139a9c28a8686434c809ccdf`
   (`status=available`, `new_exec_io_after_reattach_proven` plus the v2
   continuity flags). Existing-host only (`promotes_readiness=false`). Does
   not register KVM with normal HostRuntimeService, flip default supervised
   create, or cut over MicroVM product routing.
-- [ ] Complete the Box cross-platform behavior and soak suites against Krun OCI
+- [ ] Complete the Box cross-platform behavior and soak suites against Kbox OCI
   Runtime.
 - [x] Qualify the Box R17 resource profile against `control-workload-v1`,
   including exact CPU/memory/PID enforcement, control-service survival under
-  workload OOM pressure, and zero leaked processes or cgroups. Krun Box PR
-  [#180](https://github.com/kense-labs/krun/pull/180) used OCI Runtime
+  workload OOM pressure, and zero leaked processes or cgroups. Kbox Box PR
+  [#180](https://github.com/kense-labs/kbox/pull/180) used OCI Runtime
   `e6b840b73a4e5c3bbfa72c2b5d6fd89104a60f9a` to resolve the fixed control and
   workload children, verify the derived outer headroom and exact workload
   limits, observe real CPU throttling, PID exhaustion, and workload OOM, then
   complete a post-OOM exec through the surviving control transport. Its
-  [required CI gate](https://github.com/kense-labs/krun/actions/runs/30416074539/job/90462773534)
+  [required CI gate](https://github.com/kense-labs/kbox/actions/runs/30416074539/job/90462773534)
   passed all advertised R17 profiles in 67.20 seconds and required the final
   process, cgroup, mount, provider-home, and runtime-state inventory to equal
   the clean baseline.
@@ -2503,7 +2503,7 @@ terminal evidence when Live is not opted in.
   namespace and task identity to OCI container ID and runtime generation.
 - [x] Load the containerd-provided OCI bundle and translate create, start,
   state, wait, kill, delete, exec, resize, close-I/O, and stats operations into
-  public `krun-oci-sdk` calls without invoking Krun Box or importing driver
+  public `koci-sdk` calls without invoking Kbox Box or importing driver
   internals.
 - [x] Preserve containerd stdin/stdout/stderr and terminal semantics through
   the SDK's bounded process-I/O contract, including reconnect, EOF, resize,
@@ -2519,16 +2519,16 @@ terminal evidence when Live is not opted in.
   the exact containerd, shim, SDK, runtime, and driver compatibility record.
 
 Contract v1 now freezes `containerd.task.v2.Task`, the exact 16 implemented
-methods and explicit Checkpoint gap, runtime type `io.containerd.krun-oci.v2`,
-binary and Linux archive entry `containerd-shim-krun-oci-v2`, installation at
-`/usr/local/bin/containerd-shim-krun-oci-v2`, the exact compatibility matrix,
+methods and explicit Checkpoint gap, runtime type `io.containerd.koci.v2`,
+binary and Linux archive entry `containerd-shim-koci-v2`, installation at
+`/usr/local/bin/containerd-shim-koci-v2`, the exact compatibility matrix,
 and `sha256-length-framed-u64be-v1` identity vectors. Tagged Linux archives
 include the shim and contract document; RuntimeInfo exposes the contract,
 identity, generation, and exact development-qualification annotations.
 The same code-owned contract now freezes 23 exact Task and FIFO-pump routes
 and derives their 18-operation public-SDK union. Endpoint admission consumes
 that union directly, version and RuntimeInfo output expose it, and manifest
-tests reject Krun Box, Runtime implementation, Agent, or Core dependencies in
+tests reject Kbox Box, Runtime implementation, Agent, or Core dependencies in
 the shim crate.
 The bounded process-I/O gate is also complete. Stdin and output requests use
 64 KiB shim bounds below the public SDK maxima; non-terminal stdout and stderr
@@ -2775,13 +2775,13 @@ or leaked runtime resources.
 
 - [x] Add versioned extension discovery and negotiation so an optional
   operation is advertised only when the selected driver and exact release
-  artifact passed its own gate. `krun.oci.extensions.v1` publishes bounded,
+  artifact passed its own gate. `koci.extensions.v1` publishes bounded,
   canonical operation and attachment versions per launch-ready driver, binds
   them to the running executable SHA-256, and makes typed isolation negotiation
   fail closed; legacy flat fields retain only the common driver surface.
 - [x] Accept already-authorized storage attachments with immutable identity,
   access mode, ownership, and cleanup contracts while leaving named-volume
-  and snapshot policy in Krun Box. `krun.oci.attachments.v2` binds one
+  and snapshot policy in Kbox Box. `koci.attachments.v2` binds one
   caller-owned allocation incarnation to an exact OCI mount and matching
   read-only/read-write mode, permits detach-only cleanup, rejects ownership or
   classification drift, and requires SDK protocol 5 without changing v1
@@ -2790,7 +2790,7 @@ or leaked runtime resources.
   detach-cleanup gate exists.
 - [x] Accept already-authorized network attachments with exact namespace,
   interface, and cleanup identities while leaving IPAM, DNS, and network
-  policy in Krun Box. `krun.oci.attachments.v3` binds caller-issued namespace,
+  policy in Kbox Box. `koci.attachments.v3` binds caller-issued namespace,
   interface, and cleanup incarnation IDs to exact OCI network-namespace and
   `linux.netDevices` descriptors. New namespaces use runtime-namespace
   release; joined caller namespaces are preserved; exact bindings reject
@@ -2822,7 +2822,7 @@ supported core runtime release.
 | Driver | Probe-only | Experimental | Supported |
 | --- | --- | --- | --- |
 | Windows libkrun/WHPX | Capability and partition smoke | Fixed bundle plus full SDK lifecycle | OCI, security, recovery, and soak gates |
-| Native Linux | Host feature inventory | Full Krun Box Sandbox suite without KVM | OCI and adversarial gates on x86_64/aarch64 |
+| Native Linux | Host feature inventory | Full Kbox Box Sandbox suite without KVM | OCI and adversarial gates on x86_64/aarch64 |
 | Linux libkrun/KVM | KVM capability evidence | Same guest lifecycle as WHPX | Driver-specific isolation and soak gates |
 | macOS libkrun/HVF | HVF capability and signed VM-object evidence | Same guest lifecycle as WHPX | Driver-specific isolation and soak gates |
 
@@ -2832,6 +2832,6 @@ never enables workload launch.
 ## Commit And Integration Policy
 
 Each coherent, tested increment is committed and pushed to
-`git@github.com:kense-labs/OCI-Runtime.git`. The `krun` monorepo gitlink is updated
+`git@github.com:kense-labs/OCI-Runtime.git`. The `kbox` monorepo gitlink is updated
 only after the runtime commit is remotely available and all focused checks
 pass. Unrelated dirty submodules are never staged.

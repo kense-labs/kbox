@@ -124,13 +124,13 @@ impl OutputReplayService {
 
 #[derive(Clone, Default)]
 struct ReplaySafeStdinService {
-    completed: Arc<std::sync::Mutex<std::collections::HashMap<krun_oci_sdk::OperationId, Vec<u8>>>>,
-    requests: Arc<std::sync::Mutex<Vec<krun_oci_sdk::OperationId>>>,
+    completed: Arc<std::sync::Mutex<std::collections::HashMap<koci_sdk::OperationId, Vec<u8>>>>,
+    requests: Arc<std::sync::Mutex<Vec<koci_sdk::OperationId>>>,
     effects: Arc<std::sync::Mutex<Vec<Vec<u8>>>>,
 }
 
 impl ReplaySafeStdinService {
-    fn with_completed(operation_id: krun_oci_sdk::OperationId, data: Vec<u8>) -> Self {
+    fn with_completed(operation_id: koci_sdk::OperationId, data: Vec<u8>) -> Self {
         let mut completed = std::collections::HashMap::new();
         completed.insert(operation_id, data.clone());
         Self {
@@ -141,48 +141,48 @@ impl ReplaySafeStdinService {
     }
 }
 
-#[krun_oci_sdk::async_trait]
-impl krun_oci_sdk::OciRuntimeService for ReplaySafeStdinService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+#[koci_sdk::async_trait]
+impl koci_sdk::OciRuntimeService for ReplaySafeStdinService {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
     async fn create(
         &self,
-        _request: krun_oci_sdk::CreateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::CreateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
     async fn state(
         &self,
-        _request: krun_oci_sdk::StateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-state"))
     }
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
     async fn kill(
         &self,
-        _request: krun_oci_sdk::KillRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::KillRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: krun_oci_sdk::DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: koci_sdk::DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
     async fn write_stdin(
         &self,
-        request: krun_oci_sdk::WriteStdinRequest,
-    ) -> krun_oci_sdk::Result<()> {
+        request: koci_sdk::WriteStdinRequest,
+    ) -> koci_sdk::Result<()> {
         let operation_id = request.context.operation_id;
         self.requests
             .lock()
@@ -208,8 +208,8 @@ impl krun_oci_sdk::OciRuntimeService for ReplaySafeStdinService {
 
     async fn close_stdin(
         &self,
-        _request: krun_oci_sdk::CloseStdinRequest,
-    ) -> krun_oci_sdk::Result<()> {
+        _request: koci_sdk::CloseStdinRequest,
+    ) -> koci_sdk::Result<()> {
         Ok(())
     }
 }
@@ -253,48 +253,48 @@ impl StdinJournal for RecordingStdinJournal {
     }
 }
 
-#[krun_oci_sdk::async_trait]
-impl krun_oci_sdk::OciRuntimeService for OutputReplayService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+#[koci_sdk::async_trait]
+impl koci_sdk::OciRuntimeService for OutputReplayService {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
     async fn create(
         &self,
-        _request: krun_oci_sdk::CreateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::CreateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
     async fn state(
         &self,
-        _request: krun_oci_sdk::StateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-state"))
     }
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
     async fn kill(
         &self,
-        _request: krun_oci_sdk::KillRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::KillRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: krun_oci_sdk::DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: koci_sdk::DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
     async fn read_output(
         &self,
-        request: krun_oci_sdk::ReadOutputRequest,
-    ) -> krun_oci_sdk::Result<Vec<krun_oci_sdk::OutputChunk>> {
+        request: koci_sdk::ReadOutputRequest,
+    ) -> koci_sdk::Result<Vec<koci_sdk::OutputChunk>> {
         let mut requested = self
             .requested_cursors
             .lock()
@@ -321,7 +321,7 @@ impl krun_oci_sdk::OciRuntimeService for OutputReplayService {
                         "test output page range overflowed",
                     )
                 })?;
-                return Ok(vec![krun_oci_sdk::OutputChunk {
+                return Ok(vec![koci_sdk::OutputChunk {
                     sequence: request
                         .after_sequence
                         .checked_add(u64::try_from(length).expect("test output page length"))
@@ -332,7 +332,7 @@ impl krun_oci_sdk::OciRuntimeService for OutputReplayService {
                 }]);
             }
             if start == payload.len() {
-                return Ok(vec![krun_oci_sdk::OutputChunk {
+                return Ok(vec![koci_sdk::OutputChunk {
                     sequence: request.after_sequence + 1,
                     stream: OutputStream::Stdout,
                     data: Vec::new(),
@@ -354,13 +354,13 @@ impl krun_oci_sdk::OciRuntimeService for OutputReplayService {
             ));
         }
         Ok(vec![
-            krun_oci_sdk::OutputChunk {
+            koci_sdk::OutputChunk {
                 sequence: 8,
                 stream: OutputStream::Stdout,
                 data: b"new".to_vec(),
                 eof: false,
             },
-            krun_oci_sdk::OutputChunk {
+            koci_sdk::OutputChunk {
                 sequence: 9,
                 stream: OutputStream::Stdout,
                 data: Vec::new(),
@@ -416,48 +416,48 @@ impl OutputCursorCommitter for GatedCursorCommitter {
     }
 }
 
-#[krun_oci_sdk::async_trait]
-impl krun_oci_sdk::OciRuntimeService for BlockingStdinService {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+#[koci_sdk::async_trait]
+impl koci_sdk::OciRuntimeService for BlockingStdinService {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
     async fn create(
         &self,
-        _request: krun_oci_sdk::CreateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::CreateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
     async fn state(
         &self,
-        _request: krun_oci_sdk::StateRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StateRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-state"))
     }
 
     async fn start(
         &self,
-        _request: krun_oci_sdk::StartRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::StartRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
     async fn kill(
         &self,
-        _request: krun_oci_sdk::KillRequest,
-    ) -> krun_oci_sdk::Result<krun_oci_sdk::ContainerRecord> {
+        _request: koci_sdk::KillRequest,
+    ) -> koci_sdk::Result<koci_sdk::ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: krun_oci_sdk::DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: koci_sdk::DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
     async fn write_stdin(
         &self,
-        request: krun_oci_sdk::WriteStdinRequest,
-    ) -> krun_oci_sdk::Result<()> {
+        request: koci_sdk::WriteStdinRequest,
+    ) -> koci_sdk::Result<()> {
         self.write_calls
             .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         self.write_started.notify_waiters();
@@ -476,8 +476,8 @@ impl krun_oci_sdk::OciRuntimeService for BlockingStdinService {
 
     async fn close_stdin(
         &self,
-        _request: krun_oci_sdk::CloseStdinRequest,
-    ) -> krun_oci_sdk::Result<()> {
+        _request: koci_sdk::CloseStdinRequest,
+    ) -> koci_sdk::Result<()> {
         assert!(
             self.producer_finished
                 .load(std::sync::atomic::Ordering::SeqCst),
@@ -488,13 +488,13 @@ impl krun_oci_sdk::OciRuntimeService for BlockingStdinService {
     }
 }
 
-fn process_target() -> krun_oci_sdk::ProcessTarget {
-    krun_oci_sdk::ProcessTarget {
-        container: krun_oci_sdk::ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("late-stdin-test").expect("container ID"),
+fn process_target() -> koci_sdk::ProcessTarget {
+    koci_sdk::ProcessTarget {
+        container: koci_sdk::ContainerTarget::exact(
+            koci_sdk::ContainerId::new("late-stdin-test").expect("container ID"),
             Generation(7),
         ),
-        process_id: krun_oci_sdk::ProcessId::init(),
+        process_id: koci_sdk::ProcessId::init(),
     }
 }
 
@@ -510,14 +510,14 @@ fn cancellation_is_replay_safe() {
 
 #[test]
 fn output_chunks_require_exact_byte_cursors_and_a_durable_committer() {
-    let data = krun_oci_sdk::OutputChunk {
+    let data = koci_sdk::OutputChunk {
         sequence: 3,
         stream: OutputStream::Stdout,
         data: b"abc".to_vec(),
         eof: false,
     };
     assert_eq!(validate_output_chunk(&data, 0).expect("data cursor"), 3);
-    let eof = krun_oci_sdk::OutputChunk {
+    let eof = koci_sdk::OutputChunk {
         sequence: 4,
         stream: OutputStream::Stdout,
         data: Vec::new(),
@@ -584,7 +584,7 @@ fn terminal_io_rejects_a_separate_stderr_fifo() {
 #[test]
 fn late_stdin_is_ignored_only_after_the_exact_process_exits() {
     let target = process_target();
-    let still_live = krun_oci_sdk::ProcessRecord {
+    let still_live = koci_sdk::ProcessRecord {
         target: target.clone(),
         pid: Some(4242),
         terminal: true,

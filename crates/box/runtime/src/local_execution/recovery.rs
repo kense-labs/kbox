@@ -1,6 +1,4 @@
-use krun_box_core::{
-    ExecutionManagerError, ExecutionManagerResult, ExecutionState, ReconcileOutcome,
-};
+use kbox_core::{ExecutionManagerError, ExecutionManagerResult, ExecutionState, ReconcileOutcome};
 
 use super::create::startup_terminal_state;
 use super::record::{execution_id, lease_from_record};

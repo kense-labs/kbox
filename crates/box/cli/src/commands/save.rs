@@ -1,7 +1,7 @@
-//! `krun-box save` command — Save an image to a tar archive.
+//! `kbox save` command — Save an image to a tar archive.
 //!
 //! Creates a tar archive of the OCI image layout directory, suitable for
-//! transferring to another machine and loading with `krun-box load`.
+//! transferring to another machine and loading with `kbox load`.
 
 use clap::Args;
 
@@ -124,7 +124,7 @@ fn create_tar_archive(
 mod tests {
     use super::*;
     use chrono::Utc;
-    use krun_box_runtime::StoredImage;
+    use kbox_runtime::StoredImage;
     use std::fs;
     use std::path::PathBuf;
     use tempfile::TempDir;

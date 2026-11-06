@@ -1,4 +1,4 @@
-//! Standalone machine-facing scale authority for Krun Gateway.
+//! Standalone machine-facing scale authority for Kbox Gateway.
 
 use std::{
     net::{IpAddr, Ipv4Addr, SocketAddr},
@@ -7,7 +7,7 @@ use std::{
 };
 
 use clap::Args;
-use krun_box_runtime::{
+use kbox_runtime::{
     serve_scale_api, DurableScaleAuthority, LocalScaleReconciler, ScaleApiState,
     ScaleEndpointConfig, ScaleServiceCatalog,
 };
@@ -60,7 +60,7 @@ pub struct ScaleApiArgs {
 pub async fn execute(args: ScaleApiArgs) -> Result<(), Box<dyn std::error::Error>> {
     let state = args
         .state
-        .unwrap_or_else(|| krun_box_core::dirs_home().join("scale-authority.json"));
+        .unwrap_or_else(|| kbox_core::dirs_home().join("scale-authority.json"));
     let authority = DurableScaleAuthority::open(state, args.max_instances)?;
     let authority = if let Some(services) = args.services {
         let catalog = ScaleServiceCatalog::from_acl_file(
@@ -68,7 +68,7 @@ pub async fn execute(args: ScaleApiArgs) -> Result<(), Box<dyn std::error::Error
             "gateway-scale",
             resolve_isolation(args.isolation),
         )?;
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         let advertise_host =
             match args.endpoint_advertise_host {
@@ -106,9 +106,8 @@ mod tests {
 
     #[test]
     fn scale_api_command_has_safe_loopback_defaults() {
-        let cli =
-            super::super::Cli::try_parse_from(["krun-box", "scale-api", "--desired-state-only"])
-                .unwrap();
+        let cli = super::super::Cli::try_parse_from(["kbox", "scale-api", "--desired-state-only"])
+            .unwrap();
         let super::super::Command::ScaleApi(args) = cli.command else {
             panic!("expected scale-api command");
         };
@@ -124,7 +123,7 @@ mod tests {
 
     #[test]
     fn scale_api_requires_templates_unless_authority_only_is_explicit() {
-        let error = super::super::Cli::try_parse_from(["krun-box", "scale-api"])
+        let error = super::super::Cli::try_parse_from(["kbox", "scale-api"])
             .err()
             .expect("missing service catalog must be rejected");
         assert!(error.to_string().contains("--services"));
@@ -133,7 +132,7 @@ mod tests {
     #[test]
     fn scale_api_parses_private_endpoint_publication_policy() {
         let cli = super::super::Cli::try_parse_from([
-            "krun-box",
+            "kbox",
             "scale-api",
             "--services",
             "services.acl",

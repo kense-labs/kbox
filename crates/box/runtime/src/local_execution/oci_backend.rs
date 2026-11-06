@@ -1,4 +1,4 @@
-//! Public-SDK-only Krun OCI lifecycle boundary for managed local execution.
+//! Public-SDK-only Kbox OCI lifecycle boundary for managed local execution.
 
 use std::collections::BTreeSet;
 use std::future::Future;
@@ -8,7 +8,7 @@ use std::sync::Arc;
 use async_trait::async_trait;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use chrono::Utc;
-use krun_box_core::{
+use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionCpuStats,
     ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
     ExecutionId, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
@@ -20,10 +20,10 @@ use krun_box_core::{
     FilesystemResponse as BoxFilesystemResponse, KillOutcome, OperationId as BoxOperationId,
     MAX_BOUNDED_FILE_BYTES,
 };
-use krun_oci_sdk::oci_spec::runtime::{
+use koci_sdk::oci_spec::runtime::{
     ContainerState, LinuxCpuBuilder, LinuxMemoryBuilder, LinuxPidsBuilder, LinuxResourcesBuilder,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     runtime_bundle_handoff_directory as sdk_runtime_bundle_handoff_directory,
     AttachmentCapabilities, ContainerId, ContainerOperationRequest, ContainerRecord,
     ContainerTarget, CreateAttachments, CreateRequest, DeleteMode, DeleteRequest, DriverKind,
@@ -50,7 +50,7 @@ use super::{
 use crate::{BoxRecord, ManagedExecutionState};
 
 /// Durable schema for one Box-to-OCI runtime attachment.
-pub const OCI_RUNTIME_BINDING_SCHEMA_VERSION: &str = "krun.box.oci-runtime-binding.v2";
+pub const OCI_RUNTIME_BINDING_SCHEMA_VERSION: &str = "kbox.oci-runtime-binding.v2";
 
 const REQUIRED_LIFECYCLE_OPERATIONS: &[RuntimeOperation] = &[
     RuntimeOperation::Create,
@@ -91,7 +91,7 @@ impl OciRuntimeEndpoint {
         match self {
             Self::UnixSocket { path } if path.is_absolute() => Ok(()),
             Self::UnixSocket { path } => Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI Unix endpoint must be absolute: {}",
+                "Kbox OCI Unix endpoint must be absolute: {}",
                 path.display()
             ))),
             Self::WindowsNamedPipe { name }
@@ -102,7 +102,7 @@ impl OciRuntimeEndpoint {
                 Ok(())
             }
             Self::WindowsNamedPipe { name } => Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI named-pipe endpoint is not local and non-empty: {name:?}"
+                "Kbox OCI named-pipe endpoint is not local and non-empty: {name:?}"
             ))),
         }
     }
@@ -115,7 +115,7 @@ impl OciRuntimeEndpoint {
                 Self::UnixSocket { path } => LocalIpcEndpoint::unix_socket(path.clone())
                     .map_err(|error| sdk_error("connect", error)),
                 Self::WindowsNamedPipe { .. } => Err(ExecutionManagerError::Unavailable(
-                    "a Windows Krun OCI endpoint cannot be opened on this host".to_string(),
+                    "a Windows Kbox OCI endpoint cannot be opened on this host".to_string(),
                 )),
             };
         }
@@ -127,13 +127,13 @@ impl OciRuntimeEndpoint {
                         .map_err(|error| sdk_error("connect", error))
                 }
                 Self::UnixSocket { .. } => Err(ExecutionManagerError::Unavailable(
-                    "a Unix Krun OCI endpoint cannot be opened on this host".to_string(),
+                    "a Unix Kbox OCI endpoint cannot be opened on this host".to_string(),
                 )),
             };
         }
         #[allow(unreachable_code)]
         Err(ExecutionManagerError::Unavailable(
-            "Krun OCI local IPC is unsupported on this host".to_string(),
+            "Kbox OCI local IPC is unsupported on this host".to_string(),
         ))
     }
 }
@@ -166,7 +166,7 @@ impl OciRuntimeBinding {
         validate_record_id(record, expected_id, "bind")?;
         if record.generation.0 == 0 {
             return Err(ExecutionManagerError::Internal(
-                "Krun OCI returned runtime generation zero".to_string(),
+                "Kbox OCI returned runtime generation zero".to_string(),
             ));
         }
         let binding = Self {
@@ -178,7 +178,7 @@ impl OciRuntimeBinding {
             config_digest: record.config_digest.clone(),
             attachments_digest: record.attachments_digest.clone().ok_or_else(|| {
                 ExecutionManagerError::Internal(
-                    "Krun OCI returned no versioned attachment evidence".to_string(),
+                    "Kbox OCI returned no versioned attachment evidence".to_string(),
                 )
             })?,
         };
@@ -190,19 +190,19 @@ impl OciRuntimeBinding {
     pub fn validate(&self) -> ExecutionManagerResult<()> {
         if self.schema_version != OCI_RUNTIME_BINDING_SCHEMA_VERSION {
             return Err(ExecutionManagerError::Internal(format!(
-                "unsupported Krun OCI binding schema {:?}",
+                "unsupported Kbox OCI binding schema {:?}",
                 self.schema_version
             )));
         }
         self.endpoint.validate()?;
         let generation = self.target.generation.ok_or_else(|| {
             ExecutionManagerError::Internal(
-                "Krun OCI binding does not contain an exact runtime generation".to_string(),
+                "Kbox OCI binding does not contain an exact runtime generation".to_string(),
             )
         })?;
         if generation.0 == 0 {
             return Err(ExecutionManagerError::Internal(
-                "Krun OCI binding contains runtime generation zero".to_string(),
+                "Kbox OCI binding contains runtime generation zero".to_string(),
             ));
         }
         validate_config_digest(&self.config_digest)?;
@@ -216,7 +216,7 @@ impl OciRuntimeBinding {
         let expected = runtime_container_id(execution_id)?;
         if self.target.id != expected {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI binding target {} does not belong to Box execution {execution_id}",
+                "Kbox OCI binding target {} does not belong to Box execution {execution_id}",
                 self.target.id
             )));
         }
@@ -233,7 +233,7 @@ impl OciRuntimeBinding {
             || record.attachments_digest.as_deref() != Some(self.attachments_digest.as_str())
         {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI runtime evidence drifted for {} generation {:?}",
+                "Kbox OCI runtime evidence drifted for {} generation {:?}",
                 self.target.id, self.target.generation
             )));
         }
@@ -283,7 +283,7 @@ impl OciBundlePreparationContext {
             RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
         ) {
             return Err(ExecutionManagerError::Unavailable(format!(
-                "Krun OCI Runtime does not advertise {RUNTIME_BUNDLE_HANDOFF_EXTENSION} version {RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION}"
+                "Kbox OCI Runtime does not advertise {RUNTIME_BUNDLE_HANDOFF_EXTENSION} version {RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION}"
             )));
         }
         sdk_runtime_bundle_handoff_directory(
@@ -320,14 +320,14 @@ impl OciBundlePreparationContext {
                 == Some(RUNTIME_BUNDLE_HANDOFF_ROOT_DIRECTORY);
         let Some(runtime_root) = runtime_root.filter(|_| exact_shape) else {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI bundle handoff does not match the exact runtime/container/create-operation layout: {}",
+                "Kbox OCI bundle handoff does not match the exact runtime/container/create-operation layout: {}",
                 directory.display()
             )));
         };
         let expected = self.runtime_bundle_handoff_directory(runtime_root)?;
         if directory != expected {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI bundle handoff path is not normalized: {}",
+                "Kbox OCI bundle handoff path is not normalized: {}",
                 directory.display()
             )));
         }
@@ -384,7 +384,7 @@ impl OciPreparedExecution {
         let expected = context.runtime_bundle_handoff_directory(runtime_root)?;
         if !exact_handoff_directory_matches(self.bundle.directory(), &expected) {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI bundle handoff must use exact operation path {}: {}",
+                "Kbox OCI bundle handoff must use exact operation path {}: {}",
                 expected.display(),
                 self.bundle.directory().display()
             )));
@@ -413,13 +413,13 @@ impl OciPreparedExecution {
         }
         if self.console_log != record.console_log {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI preparation changed the durable console path for {}",
+                "Kbox OCI preparation changed the durable console path for {}",
                 record.id
             )));
         }
         if self.anonymous_volumes != record.anonymous_volumes {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI preparation drifted from the durable anonymous-volume plan for {}",
+                "Kbox OCI preparation drifted from the durable anonymous-volume plan for {}",
                 record.id
             )));
         }
@@ -594,7 +594,7 @@ pub struct OciLifecycleAdapter {
 }
 
 impl OciLifecycleAdapter {
-    /// Connect to an out-of-process Krun OCI host service.
+    /// Connect to an out-of-process Kbox OCI host service.
     pub async fn connect(endpoint: OciRuntimeEndpoint) -> ExecutionManagerResult<Self> {
         let sdk_endpoint = endpoint.to_sdk()?;
         let client = RuntimeClient::connect(&sdk_endpoint)
@@ -630,13 +630,13 @@ impl OciLifecycleAdapter {
         for operation in REQUIRED_LIFECYCLE_OPERATIONS {
             if !info.operations.contains(operation) {
                 return Err(ExecutionManagerError::Unavailable(format!(
-                    "Krun OCI Runtime does not advertise {operation:?}"
+                    "Kbox OCI Runtime does not advertise {operation:?}"
                 )));
             }
         }
         if !info.attachments.supports_schema(ATTACHMENT_SCHEMA_V1) {
             return Err(ExecutionManagerError::Unavailable(format!(
-                "Krun OCI Runtime does not advertise attachment schema {ATTACHMENT_SCHEMA_V1}"
+                "Kbox OCI Runtime does not advertise attachment schema {ATTACHMENT_SCHEMA_V1}"
             )));
         }
         let required = oci_isolation_request(isolation).class();
@@ -644,7 +644,7 @@ impl OciLifecycleAdapter {
             capability.can_launch() && capability.isolation_classes.contains(&required)
         }) {
             return Err(ExecutionManagerError::Unavailable(format!(
-                "Krun OCI Runtime has no launch-ready driver for {required:?}"
+                "Kbox OCI Runtime has no launch-ready driver for {required:?}"
             )));
         }
         Ok(info)
@@ -662,7 +662,7 @@ impl OciLifecycleAdapter {
             .map_err(|error| sdk_error("features", error))?;
         if !info.operations.contains(&operation) {
             return Err(ExecutionManagerError::Unavailable(format!(
-                "Krun OCI Runtime does not advertise {label}"
+                "Kbox OCI Runtime does not advertise {label}"
             )));
         }
         Ok(())
@@ -903,7 +903,7 @@ impl OciLifecycleAdapter {
         binding.validate_record(record)?;
         if *record.state.status() != ContainerState::Stopped {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI terminal wait was requested for non-stopped container {}",
+                "Kbox OCI terminal wait was requested for non-stopped container {}",
                 binding.target.id
             )));
         }
@@ -1062,7 +1062,7 @@ impl OciLifecycleAdapter {
         &self,
         execution_id: &ExecutionId,
         binding: &OciRuntimeBinding,
-    ) -> ExecutionManagerResult<krun_oci_sdk::ContainerStats> {
+    ) -> ExecutionManagerResult<koci_sdk::ContainerStats> {
         binding.validate_for(execution_id)?;
         self.require_operation(RuntimeOperation::Stats, "stats")
             .await?;
@@ -1084,7 +1084,7 @@ impl OciLifecycleAdapter {
             .map_err(|error| sdk_error("stats", error))?;
         if stats.target != binding.target {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI stats returned a different target for {execution_id}"
+                "Kbox OCI stats returned a different target for {execution_id}"
             )));
         }
         Ok(stats)
@@ -1095,7 +1095,7 @@ impl OciLifecycleAdapter {
         execution_id: &ExecutionId,
         binding: &OciRuntimeBinding,
         request: &ExecutionEventsRequest,
-    ) -> ExecutionManagerResult<krun_oci_sdk::EventBatch> {
+    ) -> ExecutionManagerResult<koci_sdk::EventBatch> {
         binding.validate_for(execution_id)?;
         self.require_operation(RuntimeOperation::Events, "events")
             .await?;
@@ -1343,7 +1343,7 @@ impl OciLifecycleAdapter {
 #[derive(Debug, Clone)]
 pub struct NativeLinuxOwnerRecovery {
     service_root: PathBuf,
-    artifacts: crate::sandbox::CertifiedKrunOci,
+    artifacts: crate::sandbox::CertifiedKOci,
 }
 
 /// Retained-manager recovery for the qualification-only Linux KVM OCI owner.
@@ -1362,7 +1362,7 @@ pub struct WindowsWhpxOwnerRecovery {
     artifacts: super::oci_whpx_owner::WindowsWhpxOwnerArtifacts,
 }
 
-/// Opt-in canonical local-execution backend over one Krun OCI host service.
+/// Opt-in canonical local-execution backend over one Kbox OCI host service.
 #[derive(Clone)]
 pub struct OciLocalExecutionBackend {
     adapter: OciLifecycleAdapter,
@@ -1421,7 +1421,7 @@ impl OciLocalExecutionBackend {
     pub fn with_native_linux_owner_recovery(
         mut self,
         service_root: impl Into<PathBuf>,
-        artifacts: crate::sandbox::CertifiedKrunOci,
+        artifacts: crate::sandbox::CertifiedKOci,
     ) -> Self {
         self.native_linux_owner = Some(Arc::new(NativeLinuxOwnerRecovery {
             service_root: service_root.into(),
@@ -1436,7 +1436,7 @@ impl OciLocalExecutionBackend {
     pub fn with_native_linux_owner_recovery(
         self,
         _service_root: impl Into<PathBuf>,
-        _artifacts: crate::sandbox::CertifiedKrunOci,
+        _artifacts: crate::sandbox::CertifiedKOci,
     ) -> Self {
         self
     }
@@ -1638,7 +1638,7 @@ impl OciLocalExecutionBackend {
             binding.validate_for(&execution_id)?;
             if binding.endpoint != self.adapter.endpoint {
                 return Err(ExecutionManagerError::Internal(format!(
-                    "execution {execution_id} belongs to a different Krun OCI endpoint"
+                    "execution {execution_id} belongs to a different Kbox OCI endpoint"
                 )));
             }
         }
@@ -1913,7 +1913,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
             return Err(ExecutionManagerError::Conflict {
                 execution_id,
                 message: format!(
-                    "Krun OCI already contains runtime state {:?} for this generation",
+                    "Kbox OCI already contains runtime state {:?} for this generation",
                     runtime.state.status()
                 ),
             });
@@ -1986,7 +1986,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                 // reconciliation performs the normal provider/resource cleanup.
                 resources.disarm();
                 Err(ExecutionManagerError::Unavailable(format!(
-                    "execution {execution_id} completed while Krun OCI startup was being published"
+                    "execution {execution_id} completed while Kbox OCI startup was being published"
                 )))
             }
             Err(error) => {
@@ -2005,7 +2005,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                     Err(reconcile_error) => {
                         resources.disarm();
                         return Err(ExecutionManagerError::Unavailable(format!(
-                            "{error}; Krun OCI launch ownership could not be reconciled and Box preparation was retained: {reconcile_error}"
+                            "{error}; Kbox OCI launch ownership could not be reconciled and Box preparation was retained: {reconcile_error}"
                         )));
                     }
                     Ok(None) => {}
@@ -2115,7 +2115,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
     ) -> ExecutionManagerResult<LocalExecutionHandle> {
         if !keep_memory {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI in-place pause requires memory retention for {}",
+                "Kbox OCI in-place pause requires memory retention for {}",
                 record.id
             )));
         }
@@ -2124,7 +2124,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let operation_seed = freezer_operation_seed(record, &execution_id, true)?;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding to pause"
+                "execution {execution_id} has no exact Kbox OCI binding to pause"
             ))
         })?;
         let runtime = self
@@ -2146,7 +2146,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let operation_seed = freezer_operation_seed(record, &execution_id, false)?;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding to resume"
+                "execution {execution_id} has no exact Kbox OCI binding to resume"
             ))
         })?;
         let runtime = self
@@ -2171,7 +2171,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let execution_id = self.execution_id(record)?;
         self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding to update"
+                "execution {execution_id} has no exact Kbox OCI binding to update"
             ))
         })?;
         self.adapter
@@ -2191,7 +2191,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding to update"
+                "execution {execution_id} has no exact Kbox OCI binding to update"
             ))
         })?;
         let resources = compile_resource_update(record, update)?;
@@ -2209,7 +2209,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding for process inventory"
+                "execution {execution_id} has no exact Kbox OCI binding for process inventory"
             ))
         })?;
         let mut processes = self
@@ -2238,7 +2238,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding for stats"
+                "execution {execution_id} has no exact Kbox OCI binding for stats"
             ))
         })?;
         let stats = self.adapter.stats(&execution_id, &binding).await?;
@@ -2274,7 +2274,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding for events"
+                "execution {execution_id} has no exact Kbox OCI binding for events"
             ))
         })?;
         let batch = self
@@ -2337,7 +2337,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding for file transfer"
+                "execution {execution_id} has no exact Kbox OCI binding for file transfer"
             ))
         })?;
         self.adapter
@@ -2354,7 +2354,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let binding = self.binding(record)?.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "execution {execution_id} has no exact Krun OCI binding for filesystem access"
+                "execution {execution_id} has no exact Kbox OCI binding for filesystem access"
             ))
         })?;
         self.adapter
@@ -2388,7 +2388,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
             let signal_number = record
                 .stop_signal
                 .as_deref()
-                .map(krun_box_core::vmm::parse_signal_name)
+                .map(kbox_core::vmm::parse_signal_name)
                 .unwrap_or(DEFAULT_KILL_SIGNAL);
             let signal = Signal::new(signal_number).map_err(|error| sdk_error("kill", error))?;
             let graceful_timeout_ms = if signal_number == DEFAULT_KILL_SIGNAL {
@@ -2451,7 +2451,7 @@ pub const fn oci_isolation_request(isolation: ExecutionIsolation) -> IsolationRe
 }
 
 fn runtime_container_id(execution_id: &ExecutionId) -> ExecutionManagerResult<ContainerId> {
-    ContainerId::new(format!("krun-box-{execution_id}"))
+    ContainerId::new(format!("kbox-{execution_id}"))
         .map_err(|error| ExecutionManagerError::Internal(error.to_string()))
 }
 
@@ -2502,7 +2502,7 @@ pub(super) fn operation_context(
 ) -> ExecutionManagerResult<OperationContext> {
     let payload = serde_json::to_vec(&payload).map_err(|error| {
         ExecutionManagerError::Internal(format!(
-            "failed to encode Krun OCI {operation} operation identity: {error}"
+            "failed to encode Kbox OCI {operation} operation identity: {error}"
         ))
     })?;
     let mut digest = Sha256::new();
@@ -2513,7 +2513,7 @@ pub(super) fn operation_context(
     digest.update(operation.as_bytes());
     digest.update([0]);
     digest.update(payload);
-    let id = format!("krun-box-{operation}-{}", hex::encode(digest.finalize()));
+    let id = format!("kbox-{operation}-{}", hex::encode(digest.finalize()));
     OciOperationId::new(id)
         .map(OperationContext::new)
         .map_err(|error| sdk_error(operation, error))
@@ -2556,19 +2556,19 @@ fn validate_created_record(
         || record.isolation != required_isolation
     {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI create returned an invalid state, generation, or isolation for {expected_id}"
+            "Kbox OCI create returned an invalid state, generation, or isolation for {expected_id}"
         )));
     }
     validate_config_digest(&record.config_digest)?;
     let attachments_digest = validate_record_attachments(record, "create")?;
     if expected_config_digest.is_some_and(|expected| record.config_digest != expected) {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI create returned configuration evidence that differs from the submitted bundle for {expected_id}"
+            "Kbox OCI create returned configuration evidence that differs from the submitted bundle for {expected_id}"
         )));
     }
     if expected_attachments_digest.is_some_and(|expected| attachments_digest != expected) {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI create returned attachment evidence that differs from the submitted manifest for {expected_id}"
+            "Kbox OCI create returned attachment evidence that differs from the submitted manifest for {expected_id}"
         )));
     }
     validate_selected_driver(info, record)
@@ -2583,7 +2583,7 @@ fn validate_recovered_record(
     validate_record_id(record, expected_id, "recover")?;
     if record.generation.0 == 0 || record.isolation != required_isolation {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI recovery returned an invalid generation or isolation for {expected_id}"
+            "Kbox OCI recovery returned an invalid generation or isolation for {expected_id}"
         )));
     }
     validate_config_digest(&record.config_digest)?;
@@ -2610,7 +2610,7 @@ fn validate_started_record(
         )
     {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI start changed exact runtime evidence for {} generation {:?}",
+            "Kbox OCI start changed exact runtime evidence for {} generation {:?}",
             target.id, target.generation
         )));
     }
@@ -2627,7 +2627,7 @@ fn validate_freezer_record(
     binding.validate_record(record)?;
     if *record.state.status() != ContainerState::Running || record.is_paused() != paused {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI {operation} returned an invalid freezer state for {} generation {:?}",
+            "Kbox OCI {operation} returned an invalid freezer state for {} generation {:?}",
             binding.target.id, binding.target.generation
         )));
     }
@@ -2736,7 +2736,7 @@ fn validate_updated_record(
     binding.validate_record(record)?;
     if *record.state.status() != ContainerState::Running || record.is_paused() {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI update returned an invalid running state for {} generation {:?}",
+            "Kbox OCI update returned an invalid running state for {} generation {:?}",
             binding.target.id, binding.target.generation
         )));
     }
@@ -2750,7 +2750,7 @@ fn runtime_process_identity(
     binding.validate_record(record)?;
     if *record.state.status() != ContainerState::Running {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI returned runtime state {:?} while publishing the active handle for {} generation {:?}",
+            "Kbox OCI returned runtime state {:?} while publishing the active handle for {} generation {:?}",
             record.state.status(),
             binding.target.id,
             binding.target.generation
@@ -2766,7 +2766,7 @@ fn runtime_process_identity(
                 .filter(|pid| *pid != 0)
                 .ok_or_else(|| {
                     ExecutionManagerError::Internal(format!(
-                        "Krun OCI returned no valid host init PID for {} generation {:?}",
+                        "Kbox OCI returned no valid host init PID for {} generation {:?}",
                         binding.target.id, binding.target.generation
                     ))
                 })?;
@@ -2774,7 +2774,7 @@ fn runtime_process_identity(
             #[cfg(target_os = "linux")]
             if pid_start_time.is_none() {
                 return Err(ExecutionManagerError::Unavailable(format!(
-                    "Krun OCI host init PID {pid} for {} generation {:?} has no live Linux process identity",
+                    "Kbox OCI host init PID {pid} for {} generation {:?} has no live Linux process identity",
                     binding.target.id, binding.target.generation
                 )));
             }
@@ -2797,7 +2797,7 @@ fn validate_file_response(
 ) -> ExecutionManagerResult<()> {
     if response.target != binding.target || response.size > MAX_FILE_TRANSFER_BYTES as u64 {
         return Err(ExecutionManagerError::Internal(
-            "Krun OCI returned invalid file target or size evidence".to_string(),
+            "Kbox OCI returned invalid file target or size evidence".to_string(),
         ));
     }
     match operation {
@@ -2805,34 +2805,34 @@ fn validate_file_response(
             if response.data.is_some() || Some(response.size) != expected_upload_size =>
         {
             Err(ExecutionManagerError::Internal(
-                "Krun OCI returned an invalid file upload acknowledgement".to_string(),
+                "Kbox OCI returned an invalid file upload acknowledgement".to_string(),
             ))
         }
         OciFileOp::Download => {
             if maximum_download_size.is_some_and(|limit| response.size > limit) {
                 return Err(ExecutionManagerError::Internal(
-                    "Krun OCI file response exceeds the requested download limit".to_string(),
+                    "Kbox OCI file response exceeds the requested download limit".to_string(),
                 ));
             }
             let data = response.data.as_deref().ok_or_else(|| {
                 ExecutionManagerError::Internal(
-                    "Krun OCI omitted the downloaded file payload".to_string(),
+                    "Kbox OCI omitted the downloaded file payload".to_string(),
                 )
             })?;
             let maximum_encoded = MAX_FILE_TRANSFER_BYTES.div_ceil(3) * 4;
             if data.len() > maximum_encoded {
                 return Err(ExecutionManagerError::Internal(format!(
-                    "Krun OCI file payload exceeds {MAX_FILE_TRANSFER_BYTES} decoded bytes"
+                    "Kbox OCI file payload exceeds {MAX_FILE_TRANSFER_BYTES} decoded bytes"
                 )));
             }
             let decoded = STANDARD.decode(data).map_err(|error| {
                 ExecutionManagerError::Internal(format!(
-                    "Krun OCI returned invalid base64 file data: {error}"
+                    "Kbox OCI returned invalid base64 file data: {error}"
                 ))
             })?;
             if decoded.len() as u64 != response.size {
                 return Err(ExecutionManagerError::Internal(
-                    "Krun OCI file size does not match its decoded payload".to_string(),
+                    "Kbox OCI file size does not match its decoded payload".to_string(),
                 ));
             }
             Ok(())
@@ -2857,17 +2857,17 @@ fn validate_filesystem_response(
     };
     if response.target != binding.target || !valid_shape || response.entries.len() > MAX_ENTRIES {
         return Err(ExecutionManagerError::Internal(
-            "Krun OCI returned invalid filesystem target or response shape".to_string(),
+            "Kbox OCI returned invalid filesystem target or response shape".to_string(),
         ));
     }
     let encoded = serde_json::to_vec(response).map_err(|error| {
         ExecutionManagerError::Internal(format!(
-            "failed to size Krun OCI filesystem response: {error}"
+            "failed to size Kbox OCI filesystem response: {error}"
         ))
     })?;
     if encoded.len() > MAX_RESPONSE_BYTES {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI filesystem response exceeds {MAX_RESPONSE_BYTES} bytes"
+            "Kbox OCI filesystem response exceeds {MAX_RESPONSE_BYTES} bytes"
         )));
     }
     Ok(())
@@ -2902,19 +2902,19 @@ fn validate_process_records(
     for record in records {
         if record.target.container != binding.target {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI process inventory crossed the exact target for {}",
+                "Kbox OCI process inventory crossed the exact target for {}",
                 binding.target.id
             )));
         }
         if record.pid == Some(0) {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI process {} returned PID zero",
+                "Kbox OCI process {} returned PID zero",
                 record.target.process_id
             )));
         }
         if !process_ids.insert(record.target.process_id.as_str()) {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI process inventory returned duplicate process {}",
+                "Kbox OCI process inventory returned duplicate process {}",
                 record.target.process_id
             )));
         }
@@ -2925,29 +2925,29 @@ fn validate_process_records(
 fn validate_event_batch(
     binding: &OciRuntimeBinding,
     after_sequence: u64,
-    batch: &krun_oci_sdk::EventBatch,
+    batch: &koci_sdk::EventBatch,
 ) -> ExecutionManagerResult<()> {
     if batch.next_sequence < after_sequence {
         return Err(ExecutionManagerError::Internal(
-            "Krun OCI event cursor regressed".to_string(),
+            "Kbox OCI event cursor regressed".to_string(),
         ));
     }
     let mut previous = after_sequence;
     for event in &batch.events {
         if event.container != binding.target {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI events crossed the exact target for {}",
+                "Kbox OCI events crossed the exact target for {}",
                 binding.target.id
             )));
         }
         if event.sequence == 0 || event.sequence <= previous {
             return Err(ExecutionManagerError::Internal(
-                "Krun OCI events are not strictly ordered after the requested cursor".to_string(),
+                "Kbox OCI events are not strictly ordered after the requested cursor".to_string(),
             ));
         }
         if event.timestamp_unix_ns == 0 {
             return Err(ExecutionManagerError::Internal(format!(
-                "Krun OCI event {} has timestamp zero",
+                "Kbox OCI event {} has timestamp zero",
                 event.sequence
             )));
         }
@@ -2955,7 +2955,7 @@ fn validate_event_batch(
     }
     if batch.next_sequence < previous {
         return Err(ExecutionManagerError::Internal(
-            "Krun OCI event next cursor precedes the returned batch".to_string(),
+            "Kbox OCI event next cursor precedes the returned batch".to_string(),
         ));
     }
     Ok(())
@@ -2977,7 +2977,7 @@ fn map_event_kind(kind: RuntimeEventKind) -> ExecutionManagerResult<ExecutionEve
         RuntimeEventKind::OutputDropped => Ok(ExecutionEventKind::OutputDropped),
         RuntimeEventKind::RuntimeWarning => Ok(ExecutionEventKind::RuntimeWarning),
         _ => Err(ExecutionManagerError::Unavailable(
-            "Krun OCI Runtime returned an event kind unsupported by this Box build".to_string(),
+            "Kbox OCI Runtime returned an event kind unsupported by this Box build".to_string(),
         )),
     }
 }
@@ -2993,7 +2993,7 @@ fn validate_selected_driver(
     });
     if !valid {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI selected unadvertised or non-launch-ready driver {:?}",
+            "Kbox OCI selected unadvertised or non-launch-ready driver {:?}",
             record.driver
         )));
     }
@@ -3007,7 +3007,7 @@ fn validate_record_id(
 ) -> ExecutionManagerResult<()> {
     if record.state.id() != expected_id.as_str() {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI {operation} returned container {}, expected {expected_id}",
+            "Kbox OCI {operation} returned container {}, expected {expected_id}",
             record.state.id()
         )));
     }
@@ -3028,7 +3028,7 @@ fn validate_record_attachments<'a>(
 ) -> ExecutionManagerResult<&'a str> {
     let digest = record.attachments_digest.as_deref().ok_or_else(|| {
         ExecutionManagerError::Internal(format!(
-            "Krun OCI {operation} returned no versioned attachment evidence"
+            "Kbox OCI {operation} returned no versioned attachment evidence"
         ))
     })?;
     validate_attachments_digest(digest)?;
@@ -3044,7 +3044,7 @@ fn validate_sha256_evidence(value: &str, label: &str) -> ExecutionManagerResult<
     });
     if !valid {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI binding contains invalid {label} evidence"
+            "Kbox OCI binding contains invalid {label} evidence"
         )));
     }
     Ok(())
@@ -3056,25 +3056,25 @@ pub(super) fn exit_code(status: &ExitStatus) -> ExecutionManagerResult<i32> {
     }
     let signal = status.signal.ok_or_else(|| {
         ExecutionManagerError::Internal(
-            "Krun OCI terminal status contains neither an exit code nor a signal".to_string(),
+            "Kbox OCI terminal status contains neither an exit code nor a signal".to_string(),
         )
     })?;
     128_i32.checked_add(signal).ok_or_else(|| {
         ExecutionManagerError::Internal(format!(
-            "Krun OCI terminal signal {signal} cannot be represented as a Box exit code"
+            "Kbox OCI terminal signal {signal} cannot be represented as a Box exit code"
         ))
     })
 }
 
-pub(super) fn sdk_error(operation: &str, error: krun_oci_sdk::Error) -> ExecutionManagerError {
+pub(super) fn sdk_error(operation: &str, error: koci_sdk::Error) -> ExecutionManagerError {
     match error.code {
         ErrorCode::InvalidArgument => {
-            ExecutionManagerError::InvalidRequest(format!("Krun OCI {operation}: {error}"))
+            ExecutionManagerError::InvalidRequest(format!("Kbox OCI {operation}: {error}"))
         }
         ErrorCode::Conflict | ErrorCode::FailedPrecondition => ExecutionManagerError::Unavailable(
-            format!("Krun OCI {operation} rejected the lifecycle boundary: {error}"),
+            format!("Kbox OCI {operation} rejected the lifecycle boundary: {error}"),
         ),
-        _ => ExecutionManagerError::Unavailable(format!("Krun OCI {operation}: {error}")),
+        _ => ExecutionManagerError::Unavailable(format!("Kbox OCI {operation}: {error}")),
     }
 }
 

@@ -1,5 +1,5 @@
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     CloseStdinRequest, OperationContext, OperationId, ProcessTarget, ResizeRequest, Result,
     TerminalSize, ValidateRequest, WriteStdinRequest,
 };
@@ -473,8 +473,8 @@ pub(super) async fn migrate_legacy_process_io_claim(
 
 fn validate_legacy_io_operation(
     operation: &StoredOperation,
-    container_id: &krun_oci_sdk::ContainerId,
-    generation: krun_oci_sdk::Generation,
+    container_id: &koci_sdk::ContainerId,
+    generation: koci_sdk::Generation,
     init: bool,
 ) -> Result<()> {
     let process_matches = operation

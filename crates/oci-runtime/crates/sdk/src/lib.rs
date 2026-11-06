@@ -1,4 +1,4 @@
-//! Async, strongly typed API used by Krun Box and other runtime callers.
+//! Async, strongly typed API used by Kbox Box and other runtime callers.
 //!
 //! The SDK owns the public contract. Runtime drivers, WHPX, libkrun, and
 //! durable-state implementation details remain behind [`OciRuntimeService`].
@@ -86,7 +86,7 @@ pub use id::{
 pub use image_annotation::{
     OCI_IMAGE_SPEC_COMMIT, OCI_IMAGE_SPEC_VERSION, OCI_IMAGE_STOP_SIGNAL_ANNOTATION,
 };
-pub use krun_oci_core::{
+pub use koci_core::{
     hardware_vm, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
     RuntimeFeatures,
 };

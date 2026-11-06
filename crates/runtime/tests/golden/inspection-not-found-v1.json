@@ -1,6 +1,6 @@
 {
   "status": "not_found",
-  "schema": "krun.runtime.inspection.v1",
+  "schema": "kbox_contract.inspection.v1",
   "unit_id": "golden-service",
   "last_generation": 3
 }

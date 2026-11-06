@@ -7,9 +7,9 @@ use std::path::{Component, Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use krun_oci_agent_protocol::AGENT_RUNTIME_SHARE_GUEST_ROOT;
-use krun_oci_sdk::oci_spec::runtime::{LinuxResources, Process};
-use krun_oci_sdk::{
+use koci_agent_protocol::AGENT_RUNTIME_SHARE_GUEST_ROOT;
+use koci_sdk::oci_spec::runtime::{LinuxResources, Process};
+use koci_sdk::{
     ContainerStats, ContainerTarget, Error, ErrorCode, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, IoMode, OciBundle, ProcessId, ProcessIo, ProcessRecord,
     ProcessTarget, Result, ValidateRequest, CONTROL_CGROUP_NAME, WORKLOAD_CGROUP_NAME,
@@ -36,17 +36,17 @@ use super::process::{PreparedProcess, SharedSessionSupervisor};
 use super::seccomp::SeccompPlan;
 use super::session_supervisor::{HostSessionSupervisor, SessionSupervisorIdentity};
 
-const RUNTIME_ROOT_PREFIX: &str = "krun-oci-agent-";
+const RUNTIME_ROOT_PREFIX: &str = "koci-agent-";
 const OWNER_RECORD_NAME: &str = "owner.json";
 const CONTAINER_RECORD_NAME: &str = "recovery.json";
 const CONFIG_SNAPSHOT_NAME: &str = "config.json";
-const OWNER_SCHEMA_VERSION: &str = "krun.oci.native-linux-executor-owner.v1";
-const CONTAINER_SCHEMA_VERSION: &str = "krun.oci.native-linux-recovery.v6";
-const CONTAINER_SCHEMA_VERSION_V5: &str = "krun.oci.native-linux-recovery.v5";
-const CONTAINER_SCHEMA_VERSION_V4: &str = "krun.oci.native-linux-recovery.v4";
-const CONTAINER_SCHEMA_VERSION_V3: &str = "krun.oci.native-linux-recovery.v3";
-const CONTAINER_SCHEMA_VERSION_V2: &str = "krun.oci.native-linux-recovery.v2";
-const CONTAINER_SCHEMA_VERSION_V1: &str = "krun.oci.native-linux-recovery.v1";
+const OWNER_SCHEMA_VERSION: &str = "koci.native-linux-executor-owner.v1";
+const CONTAINER_SCHEMA_VERSION: &str = "koci.native-linux-recovery.v6";
+const CONTAINER_SCHEMA_VERSION_V5: &str = "koci.native-linux-recovery.v5";
+const CONTAINER_SCHEMA_VERSION_V4: &str = "koci.native-linux-recovery.v4";
+const CONTAINER_SCHEMA_VERSION_V3: &str = "koci.native-linux-recovery.v3";
+const CONTAINER_SCHEMA_VERSION_V2: &str = "koci.native-linux-recovery.v2";
+const CONTAINER_SCHEMA_VERSION_V1: &str = "koci.native-linux-recovery.v1";
 const MAX_RECORD_BYTES: u64 = 64 * 1024;
 const TERMINATION_TIMEOUT: Duration = Duration::from_secs(10);
 const TERMINATION_POLL_INTERVAL: Duration = Duration::from_millis(10);
@@ -617,7 +617,7 @@ impl LinuxLiveSupervisedSession {
         after_sequence: u64,
         max_bytes: u32,
         wait_timeout_ms: Option<u64>,
-    ) -> Result<Vec<krun_oci_sdk::OutputChunk>> {
+    ) -> Result<Vec<koci_sdk::OutputChunk>> {
         let launcher_pid = if process_id.is_init() {
             self.launcher_pid()
         } else {
@@ -2401,7 +2401,7 @@ fn validate_cgroup_record(cgroup: &RecoveryCgroupRecord) -> Result<()> {
         .file_name()
         .and_then(|name| name.to_str())
         .unwrap_or_default();
-    if !manager_name.starts_with("krun-oci-")
+    if !manager_name.starts_with("koci-")
         || cgroup.manager_root.parent() != Some(cgroup.authority_root.as_path())
         || cgroup.created.is_empty()
     {
@@ -3120,9 +3120,9 @@ mod tests {
         };
         let name = runtime_root_name(identity);
         assert_eq!(parse_runtime_root_name(&name), Some(identity));
-        assert_eq!(parse_runtime_root_name("krun-oci-agent-42001"), None);
+        assert_eq!(parse_runtime_root_name("koci-agent-42001"), None);
         assert_eq!(
-            parse_runtime_root_name("krun-oci-agent-0-0000000000000001"),
+            parse_runtime_root_name("koci-agent-0-0000000000000001"),
             None
         );
     }
@@ -3227,7 +3227,7 @@ mod tests {
 
         let escaping = RecoveryCgroupRecord {
             authority_root: PathBuf::from("/sys/fs/cgroup"),
-            manager_root: PathBuf::from("/sys/fs/cgroup/krun-oci-1-test"),
+            manager_root: PathBuf::from("/sys/fs/cgroup/koci-1-test"),
             leaf: PathBuf::from("/outside/unrelated"),
             created: vec![PathBuf::from("/outside/unrelated")],
         };
@@ -3235,17 +3235,17 @@ mod tests {
 
         let unrelated_authority = RecoveryCgroupRecord {
             authority_root: PathBuf::from("/sys/fs/cgroup/delegated-a"),
-            manager_root: PathBuf::from("/sys/fs/cgroup/delegated-b/krun-oci-1-test"),
-            leaf: PathBuf::from("/sys/fs/cgroup/delegated-b/krun-oci-1-test/workload"),
+            manager_root: PathBuf::from("/sys/fs/cgroup/delegated-b/koci-1-test"),
+            leaf: PathBuf::from("/sys/fs/cgroup/delegated-b/koci-1-test/workload"),
             created: vec![PathBuf::from(
-                "/sys/fs/cgroup/delegated-b/krun-oci-1-test/workload",
+                "/sys/fs/cgroup/delegated-b/koci-1-test/workload",
             )],
         };
         assert!(validate_cgroup_record(&unrelated_authority).is_err());
 
         let absolute = RecoveryCgroupRecord {
             authority_root: PathBuf::from("/sys/fs/cgroup"),
-            manager_root: PathBuf::from("/sys/fs/cgroup/krun-oci-1-test"),
+            manager_root: PathBuf::from("/sys/fs/cgroup/koci-1-test"),
             leaf: PathBuf::from("/sys/fs/cgroup/tenant/workload"),
             created: vec![
                 PathBuf::from("/sys/fs/cgroup/tenant"),
@@ -3262,7 +3262,7 @@ mod tests {
     #[test]
     fn recovered_cgroup_termination_root_is_generation_scoped() {
         let authority = PathBuf::from("/sys/fs/cgroup");
-        let manager = authority.join("krun-oci-1-test");
+        let manager = authority.join("koci-1-test");
         let management = manager.join("tenant");
         let control = management.join(CONTROL_CGROUP_NAME);
         let workload = management.join(WORKLOAD_CGROUP_NAME);
@@ -3307,8 +3307,8 @@ mod tests {
         let legacy = LegacyContainerRecoveryRecord {
             schema_version: CONTAINER_SCHEMA_VERSION_V1.to_string(),
             target: ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new("legacy-rootful").expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new("legacy-rootful").expect("container ID"),
+                koci_sdk::Generation(1),
             ),
             config_digest: "sha256:test".to_string(),
             owner: ProcessIdentity {
@@ -3324,9 +3324,9 @@ mod tests {
                 start_time_ticks: 3,
             },
             cgroup: Some(LegacyRecoveryCgroupRecord {
-                manager_root: PathBuf::from("/sys/fs/cgroup/krun-oci-100-test"),
-                leaf: PathBuf::from("/sys/fs/cgroup/krun-oci-100-test/workload"),
-                created: vec![PathBuf::from("/sys/fs/cgroup/krun-oci-100-test/workload")],
+                manager_root: PathBuf::from("/sys/fs/cgroup/koci-100-test"),
+                leaf: PathBuf::from("/sys/fs/cgroup/koci-100-test/workload"),
+                created: vec![PathBuf::from("/sys/fs/cgroup/koci-100-test/workload")],
             }),
         };
 
@@ -3344,8 +3344,8 @@ mod tests {
         let previous = PreviousContainerRecoveryRecord {
             schema_version: CONTAINER_SCHEMA_VERSION_V2.to_string(),
             target: ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new("v2-record").expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new("v2-record").expect("container ID"),
+                koci_sdk::Generation(1),
             ),
             config_digest: "sha256:test".to_string(),
             owner: ProcessIdentity {
@@ -3375,8 +3375,8 @@ mod tests {
         let previous = V3ContainerRecoveryRecord {
             schema_version: CONTAINER_SCHEMA_VERSION_V3.to_string(),
             target: ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new("v3-record").expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new("v3-record").expect("container ID"),
+                koci_sdk::Generation(1),
             ),
             config_digest: "sha256:test".to_string(),
             owner: ProcessIdentity {
@@ -3407,8 +3407,8 @@ mod tests {
         let previous = V4ContainerRecoveryRecord {
             schema_version: CONTAINER_SCHEMA_VERSION_V4.to_string(),
             target: ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new("v4-record").expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new("v4-record").expect("container ID"),
+                koci_sdk::Generation(1),
             ),
             config_digest: "sha256:test".to_string(),
             owner: ProcessIdentity {
@@ -3514,8 +3514,8 @@ mod tests {
         let legacy = LegacyContainerRecoveryRecord {
             schema_version: CONTAINER_SCHEMA_VERSION_V1.to_string(),
             target: ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new("legacy-delegated").expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new("legacy-delegated").expect("container ID"),
+                koci_sdk::Generation(1),
             ),
             config_digest: "sha256:test".to_string(),
             owner: ProcessIdentity {
@@ -3531,10 +3531,10 @@ mod tests {
                 start_time_ticks: 3,
             },
             cgroup: Some(LegacyRecoveryCgroupRecord {
-                manager_root: PathBuf::from("/sys/fs/cgroup/delegated/krun-oci-100-test"),
-                leaf: PathBuf::from("/sys/fs/cgroup/delegated/krun-oci-100-test/workload"),
+                manager_root: PathBuf::from("/sys/fs/cgroup/delegated/koci-100-test"),
+                leaf: PathBuf::from("/sys/fs/cgroup/delegated/koci-100-test/workload"),
                 created: vec![PathBuf::from(
-                    "/sys/fs/cgroup/delegated/krun-oci-100-test/workload",
+                    "/sys/fs/cgroup/delegated/koci-100-test/workload",
                 )],
             }),
         };
@@ -3660,8 +3660,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-supervisor").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-supervisor").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -3885,8 +3885,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-exec-inventory").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-exec-inventory").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -3895,7 +3895,7 @@ mod tests {
                 .expect("launcher live")
                 .start_time_ticks,
         };
-        let exec_id = krun_oci_sdk::ProcessId::new("worker").expect("exec process ID");
+        let exec_id = koci_sdk::ProcessId::new("worker").expect("exec process ID");
         let exec_identity = ProcessIdentity {
             pid: exec_pid,
             start_time_ticks: process_observation(exec_pid)
@@ -4109,8 +4109,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-signal-exec").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-signal-exec").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -4119,7 +4119,7 @@ mod tests {
                 .expect("launcher live")
                 .start_time_ticks,
         };
-        let exec_id = krun_oci_sdk::ProcessId::new("worker").expect("exec process ID");
+        let exec_id = koci_sdk::ProcessId::new("worker").expect("exec process ID");
         let exec_identity = ProcessIdentity {
             pid: exec_pid,
             start_time_ticks: process_observation(exec_pid)
@@ -4171,7 +4171,7 @@ mod tests {
             panic!("live session supervisor must recover as Live");
         };
 
-        let missing = krun_oci_sdk::ProcessId::new("missing-exec").expect("missing process ID");
+        let missing = koci_sdk::ProcessId::new("missing-exec").expect("missing process ID");
         let missing_error = live
             .signal_process(&missing, libc::SIGTERM)
             .expect_err("unknown durable process must fail closed");
@@ -4340,8 +4340,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-wait-exec").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-wait-exec").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -4350,7 +4350,7 @@ mod tests {
                 .expect("launcher live")
                 .start_time_ticks,
         };
-        let exec_id = krun_oci_sdk::ProcessId::new("worker").expect("exec process ID");
+        let exec_id = koci_sdk::ProcessId::new("worker").expect("exec process ID");
         let exec_identity = ProcessIdentity {
             pid: exec_pid,
             start_time_ticks: process_observation(exec_pid)
@@ -4358,7 +4358,7 @@ mod tests {
                 .expect("exec live")
                 .start_time_ticks,
         };
-        let v5_exec_id = krun_oci_sdk::ProcessId::new("legacy-worker").expect("v5 exec process ID");
+        let v5_exec_id = koci_sdk::ProcessId::new("legacy-worker").expect("v5 exec process ID");
         let v5_exec_identity = ProcessIdentity {
             pid: v5_exec_pid,
             start_time_ticks: process_observation(v5_exec_pid)
@@ -4418,7 +4418,7 @@ mod tests {
             panic!("live session supervisor must recover as Live");
         };
 
-        let missing = krun_oci_sdk::ProcessId::new("missing-exec").expect("missing process ID");
+        let missing = koci_sdk::ProcessId::new("missing-exec").expect("missing process ID");
         let missing_error = live
             .wait_process(&missing)
             .expect_err("unknown durable process must fail closed");
@@ -4489,10 +4489,8 @@ mod tests {
             eprintln!("skipping: host lacks cgroup v2 controllers for live pause/stats");
             return;
         }
-        let manager_root = cgroup_root.join(format!(
-            "krun-oci-{}-live-cgroup-controls",
-            std::process::id()
-        ));
+        let manager_root =
+            cgroup_root.join(format!("koci-{}-live-cgroup-controls", std::process::id()));
         if let Err(error) = std::fs::create_dir(&manager_root) {
             eprintln!(
                 "skipping: cannot create test cgroup manager {}: {error}",
@@ -4627,8 +4625,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-cgroup-controls").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-cgroup-controls").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -4710,7 +4708,7 @@ mod tests {
             "resume must observe kernel frozen=0"
         );
 
-        let resources: krun_oci_sdk::oci_spec::runtime::LinuxResources =
+        let resources: koci_sdk::oci_spec::runtime::LinuxResources =
             serde_json::from_value(serde_json::json!({
                 "memory": {"limit": 67_108_864},
                 "pids": {"limit": 128}
@@ -4844,8 +4842,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-missing-cgroup").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-missing-cgroup").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -4904,7 +4902,7 @@ mod tests {
             .expect_err("stats without recovery cgroup must fail closed");
         assert_eq!(stats_error.code, ErrorCode::Unavailable);
         let update_error = live
-            .update(&krun_oci_sdk::oci_spec::runtime::LinuxResources::default())
+            .update(&koci_sdk::oci_spec::runtime::LinuxResources::default())
             .await
             .expect_err("update without recovery cgroup must fail closed");
         assert_eq!(update_error.code, ErrorCode::Unavailable);
@@ -4928,8 +4926,8 @@ mod tests {
         use std::os::unix::net::UnixStream;
         use std::path::Path;
 
-        use krun_oci_sdk::oci_spec::runtime::Process;
-        use krun_oci_sdk::{IoMode, ProcessId, ProcessIo};
+        use koci_sdk::oci_spec::runtime::Process;
+        use koci_sdk::{IoMode, ProcessId, ProcessIo};
 
         use super::super::pid_supervisor::{terminate_pid, wait_for_child};
         use super::super::session_supervisor::HostSessionSupervisor;
@@ -5015,8 +5013,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-exec-io").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-exec-io").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -5145,7 +5143,7 @@ mod tests {
 
     #[test]
     fn require_supervised_exec_process_io_rejects_terminal_and_inherit() {
-        use krun_oci_sdk::{IoMode, ProcessIo};
+        use koci_sdk::{IoMode, ProcessIo};
 
         let ok = ProcessIo {
             stdin: IoMode::Null,
@@ -5286,8 +5284,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-stdin-restore").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-stdin-restore").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -5469,8 +5467,8 @@ mod tests {
             .and_then(|mut file| file.write_all(config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("live-output-restore").expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("live-output-restore").expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -5693,8 +5691,8 @@ mod tests {
                 .and_then(|mut file| file.write_all(config))
                 .expect("configuration snapshot");
             let target = ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new(container_id).expect("container ID"),
-                krun_oci_sdk::Generation(generation),
+                koci_sdk::ContainerId::new(container_id).expect("container ID"),
+                koci_sdk::Generation(generation),
             );
             let init = ProcessIdentity {
                 pid: launcher,
@@ -5810,7 +5808,7 @@ mod tests {
     }
 
     fn resolve_test_agent_executable() -> PathBuf {
-        if let Ok(path) = std::env::var("CARGO_BIN_EXE_krun-oci-agent") {
+        if let Ok(path) = std::env::var("CARGO_BIN_EXE_koci-agent") {
             return PathBuf::from(path);
         }
         let mut path = std::env::current_exe().expect("current test executable");
@@ -5822,7 +5820,7 @@ mod tests {
         {
             path.pop();
         }
-        let candidate = path.join("krun-oci-agent");
+        let candidate = path.join("koci-agent");
         if candidate.is_file() {
             return candidate;
         }
@@ -5830,16 +5828,16 @@ mod tests {
         // once into this profile's target directory so Live reopen fixtures can
         // spawn a real agent beside the test executable.
         let status = std::process::Command::new(env!("CARGO"))
-            .args(["build", "-p", "krun-oci-agent", "--bin", "krun-oci-agent"])
+            .args(["build", "-p", "koci-agent", "--bin", "koci-agent"])
             .status()
-            .expect("spawn cargo to build krun-oci-agent for Live reopen fixtures");
+            .expect("spawn cargo to build koci-agent for Live reopen fixtures");
         assert!(
             status.success(),
-            "cargo build -p krun-oci-agent --bin krun-oci-agent failed with {status}"
+            "cargo build -p koci-agent --bin koci-agent failed with {status}"
         );
         assert!(
             candidate.is_file(),
-            "krun-oci-agent must be built beside the test profile at {}",
+            "koci-agent must be built beside the test profile at {}",
             candidate.display()
         );
         candidate
@@ -5952,8 +5950,8 @@ mod tests {
             .and_then(|mut file| file.write_all(&config))
             .expect("configuration snapshot");
         let target = ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new(format!("live-fs-{label}")).expect("container ID"),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new(format!("live-fs-{label}")).expect("container ID"),
+            koci_sdk::Generation(1),
         );
         let init = ProcessIdentity {
             pid: launcher_pid,
@@ -6023,15 +6021,15 @@ mod tests {
     #[tokio::test]
     async fn live_session_downloads_bytes_planted_before_host_reattach() {
         use base64::{engine::general_purpose::STANDARD, Engine as _};
-        use krun_oci_sdk::{FileOp, FileRequest};
+        use koci_sdk::{FileOp, FileRequest};
 
         let agent = resolve_test_agent_executable();
         let (_temporary, supervisors, live, supervisor_pid, target) =
             recover_live_filesystem_fixture("preplant").await;
 
         let nonce = format!("{}-{}", std::process::id(), live.init_pid());
-        let path = format!("/tmp/.krun-oci-live-fs-preplant-{nonce}.bin");
-        let expected = format!("krun-oci-live-fs-preplant-{nonce}\0binary\n").into_bytes();
+        let path = format!("/tmp/.koci-live-fs-preplant-{nonce}.bin");
+        let expected = format!("koci-live-fs-preplant-{nonce}\0binary\n").into_bytes();
         // Simulate FileOp::Upload completed before Host death: bytes already
         // visible through the live init root before reopen helpers run.
         std::fs::write(&path, &expected).expect("plant retained filesystem bytes");
@@ -6067,7 +6065,7 @@ mod tests {
     #[tokio::test]
     async fn live_session_upload_stat_and_download_after_reattach() {
         use base64::{engine::general_purpose::STANDARD, Engine as _};
-        use krun_oci_sdk::{
+        use koci_sdk::{
             FileOp, FileRequest, FilesystemEntryKind, FilesystemOp, FilesystemRequest,
             OperationContext, OperationId,
         };
@@ -6077,9 +6075,9 @@ mod tests {
             recover_live_filesystem_fixture("upload").await;
 
         let nonce = format!("{}-{}", std::process::id(), live.init_pid());
-        let dir = format!("/tmp/.krun-oci-live-fs-dir-{nonce}");
+        let dir = format!("/tmp/.koci-live-fs-dir-{nonce}");
         let path = format!("{dir}/payload.bin");
-        let expected = format!("krun-oci-live-fs-upload-{nonce}\0binary\n").into_bytes();
+        let expected = format!("koci-live-fs-upload-{nonce}\0binary\n").into_bytes();
         // request.user defaults to root:root; unprivileged harnesses must pass
         // the calling ids or mkdir/upload chown fail-closes PermissionDenied.
         let owner = format!("{}:{}", unsafe { libc::geteuid() }, unsafe {
@@ -6168,7 +6166,7 @@ mod tests {
 
     #[tokio::test]
     async fn live_session_file_fail_closes_when_init_is_dead() {
-        use krun_oci_sdk::{FileOp, FileRequest};
+        use koci_sdk::{FileOp, FileRequest};
         use std::path::Path;
 
         use super::super::pid_supervisor::terminate_pid;
@@ -6195,7 +6193,7 @@ mod tests {
                 FileRequest {
                     target: target.clone(),
                     op: FileOp::Download,
-                    path: "/tmp/.krun-oci-live-fs-missing.bin".to_string(),
+                    path: "/tmp/.koci-live-fs-missing.bin".to_string(),
                     data: None,
                     user: None,
                     context: None,
@@ -6214,7 +6212,7 @@ mod tests {
 
     #[tokio::test]
     async fn live_session_file_fail_closes_wrong_generation() {
-        use krun_oci_sdk::{FileOp, FileRequest, Generation};
+        use koci_sdk::{FileOp, FileRequest, Generation};
         use std::path::Path;
 
         // Fail-closed on the generation fence before spawning the helper.
@@ -6229,7 +6227,7 @@ mod tests {
                 FileRequest {
                     target: wrong,
                     op: FileOp::Download,
-                    path: "/tmp/.krun-oci-live-fs-wrong-gen.bin".to_string(),
+                    path: "/tmp/.koci-live-fs-wrong-gen.bin".to_string(),
                     data: None,
                     user: None,
                     context: None,
@@ -6295,8 +6293,8 @@ mod tests {
                 .and_then(|mut file| file.write_all(config))
                 .expect("configuration snapshot");
             let target = ContainerTarget::exact(
-                krun_oci_sdk::ContainerId::new(id).expect("container ID"),
-                krun_oci_sdk::Generation(1),
+                koci_sdk::ContainerId::new(id).expect("container ID"),
+                koci_sdk::Generation(1),
             );
             let init = ProcessIdentity {
                 pid: 2_000_002,
@@ -6386,8 +6384,8 @@ mod tests {
             &ContainerRecoveryRecord {
                 schema_version: CONTAINER_SCHEMA_VERSION.to_string(),
                 target: ContainerTarget::exact(
-                    krun_oci_sdk::ContainerId::new("box-1").expect("container ID"),
-                    krun_oci_sdk::Generation(1),
+                    koci_sdk::ContainerId::new("box-1").expect("container ID"),
+                    koci_sdk::Generation(1),
                 ),
                 config_digest: "sha256:test".to_string(),
                 owner,
@@ -6401,7 +6399,7 @@ mod tests {
         )
         .expect("seed supervised recovery");
 
-        let process_id = krun_oci_sdk::ProcessId::new("exec-1").expect("process ID");
+        let process_id = koci_sdk::ProcessId::new("exec-1").expect("process ID");
         record_exec_identity(temporary.path(), &process_id, self_pid, helper_pid, false)
             .expect("append exec identity");
         let record = read_container_record(&path).expect("reread recovery");
@@ -6435,11 +6433,11 @@ mod tests {
     #[test]
     fn durable_owner_uses_runtime_share_root_for_virtiofs_paths() {
         let temporary = tempfile::tempdir().expect("temporary share");
-        let share_root = temporary.path().join("run-krun-oci-runtime");
+        let share_root = temporary.path().join("run-koci-runtime");
         std::fs::create_dir(&share_root).expect("create share root");
         std::fs::set_permissions(&share_root, std::fs::Permissions::from_mode(0o700))
             .expect("protect share root");
-        let nested = share_root.join("run").join("krun-oci-agent-1").join("c-1");
+        let nested = share_root.join("run").join("koci-agent-1").join("c-1");
         std::fs::create_dir_all(&nested).expect("create nested runtime path");
         let path = nested.join("device-targets.json");
         std::fs::write(&path, "{}").expect("write device targets");
@@ -6453,11 +6451,11 @@ mod tests {
     #[test]
     fn durable_owner_matches_accepts_guest_euid_under_runtime_share() {
         let temporary = tempfile::tempdir().expect("temporary share");
-        let share_root = temporary.path().join("run-krun-oci-runtime");
+        let share_root = temporary.path().join("run-koci-runtime");
         std::fs::create_dir(&share_root).expect("create share root");
         std::fs::set_permissions(&share_root, std::fs::Permissions::from_mode(0o700))
             .expect("protect share root");
-        let nested = share_root.join("run").join("krun-oci-agent-1").join("c-1");
+        let nested = share_root.join("run").join("koci-agent-1").join("c-1");
         std::fs::create_dir_all(&nested).expect("create nested runtime path");
         let path = nested.join("device-targets.json");
         std::fs::write(&path, "{}").expect("write device targets");

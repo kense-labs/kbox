@@ -32,7 +32,7 @@ CAP_SYS_ADMIN 和 CAP_DAC_OVERRIDE，成功 remount,rw 后宿主仍拒绝写只�
 
 ## 产品状态
 
-尚未接入 KrunDream 默认 Bash。调用方凭据拒绝策略、资源分发、网络与工具链、
+尚未接入 KDream 默认 Bash。调用方凭据拒绝策略、资源分发、网络与工具链、
 产品端到端仍未完成。此次没有取消原生进程生命周期保护，没有推送、发布或触发 CI。
 
 ## 干净源码验收
@@ -51,4 +51,4 @@ Host、已签名 Shim、静态 Guest 和镜像，产物摘要记录于 candidate
 
 目录运行与公共回归使用同一冻结候选及镜像。qualified-config.json 保留特权反例的
 精确 OCI 配置，qualified-attachments.json 保留公共授权；两个运行脚本和原始报告
-均随证据保留。上述结论仍不包括 KrunDream 默认 Bash 或产品界面端到端。
+均随证据保留。上述结论仍不包括 KDream 默认 Bash 或产品界面端到端。

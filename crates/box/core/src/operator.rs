@@ -7,7 +7,7 @@
 //! ## CRD Schema
 //!
 //! ```yaml
-//! apiVersion: box.krun.dev/v1alpha1
+//! apiVersion: box.kbox.dev/v1alpha1
 //! kind: BoxAutoscaler
 //! metadata:
 //!   name: my-service-autoscaler
@@ -37,7 +37,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 /// API group for Box CRDs.
-pub const API_GROUP: &str = "box.krun.dev";
+pub const API_GROUP: &str = "box.kbox.dev";
 /// API version for BoxAutoscaler.
 pub const API_VERSION: &str = "v1alpha1";
 /// CRD kind.
@@ -300,7 +300,7 @@ mod tests {
     fn test_box_autoscaler_new() {
         let ba = BoxAutoscaler::new("test-scaler", sample_spec());
         assert_eq!(ba.name, "test-scaler");
-        assert_eq!(ba.api_version, "box.krun.dev/v1alpha1");
+        assert_eq!(ba.api_version, "box.kbox.dev/v1alpha1");
         assert_eq!(ba.kind, "BoxAutoscaler");
         assert_eq!(ba.namespace, "default");
         assert_eq!(ba.spec.min_replicas, 1);
@@ -446,7 +446,7 @@ mod tests {
 
     #[test]
     fn test_constants() {
-        assert_eq!(API_GROUP, "box.krun.dev");
+        assert_eq!(API_GROUP, "box.kbox.dev");
         assert_eq!(API_VERSION, "v1alpha1");
         assert_eq!(KIND, "BoxAutoscaler");
     }

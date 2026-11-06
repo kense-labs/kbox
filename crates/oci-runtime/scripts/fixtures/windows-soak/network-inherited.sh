@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-evidence='/.krun-network-evidence'
-marker='/.krun-oci-create-start-smoke'
+evidence='/.knetwork-evidence'
+marker='/.koci-create-start-smoke'
 
 on_term() {
     printf 'phase=term\n' >> "$evidence"
@@ -39,7 +39,7 @@ printf '%s\n' "$interfaces" | grep -qx 'lo'
     printf 'phase=ready\n'
     printf 'mode=inherited\n'
 } >> "$evidence"
-printf 'krun-oci-create-start-user-time-v1\n' > "$marker"
+printf 'koci-create-start-user-time-v1\n' > "$marker"
 
 while :; do
     sleep 1

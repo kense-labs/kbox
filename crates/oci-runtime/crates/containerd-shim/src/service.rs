@@ -3,8 +3,8 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Weak};
 use std::time::{Duration, SystemTime};
 
-use krun_oci_sdk::oci_spec::runtime::Process;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::Process;
+use koci_sdk::{
     ContainerRecord, Error as RuntimeError, ErrorCode, ExitStatus, IsolationRequest, ProcessRecord,
     TerminalSize,
 };
@@ -152,7 +152,7 @@ impl Service {
         &self,
         adapter: &RuntimeAdapter,
         identity: &TaskIdentity,
-        generation: krun_oci_sdk::Generation,
+        generation: koci_sdk::Generation,
         bundle: &Path,
         rootfs_mounted: bool,
         context: &str,

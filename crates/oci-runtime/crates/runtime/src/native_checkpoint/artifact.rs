@@ -4,7 +4,7 @@ use std::io::{Read, Seek, SeekFrom, Write};
 use std::os::unix::fs::OpenOptionsExt;
 use std::path::{Component, Path, PathBuf};
 
-use krun_oci_sdk::{
+use koci_sdk::{
     canonical_json_bytes, CheckpointCompatibility, CheckpointDigest, ContainerTarget, ErrorCode,
     Result,
 };
@@ -18,7 +18,7 @@ use super::{checkpoint_error, io_error};
 // external-device mount contract needed by restore without changing how the
 // length-delimited manifest and image bodies are encoded.
 const ARTIFACT_MAGIC: [u8; 16] = *b"ASTR-OCI-CRIU-V1";
-const ARTIFACT_SCHEMA_V2: &str = "krun.oci.native-criu-checkpoint.v2";
+const ARTIFACT_SCHEMA_V2: &str = "koci.native-criu-checkpoint.v2";
 const INVENTORY_IMAGE: &str = "inventory.img";
 const MAX_IMAGE_FILES: usize = 4_096;
 const MAX_IMAGE_NAME_BYTES: usize = 255;
@@ -216,7 +216,7 @@ impl ExternalMountManifestEntry {
     }
 
     fn validate(&self) -> Result<()> {
-        let Some(index) = self.name.strip_prefix("krun-oci-device-") else {
+        let Some(index) = self.name.strip_prefix("koci-device-") else {
             return Err(invalid_artifact(
                 "native checkpoint external mount has an invalid cookie",
             ));
@@ -863,32 +863,27 @@ pub(super) fn retained_manifest_fixture() -> (CheckpointArtifactManifest, Vec<u8
         schema_version: ARTIFACT_SCHEMA_V2.to_string(),
         publication_token: encode_token(&token),
         source: ContainerTarget::exact(
-            krun_oci_sdk::ContainerId::new("restore-journal-source").unwrap(),
-            krun_oci_sdk::Generation(1),
+            koci_sdk::ContainerId::new("restore-journal-source").unwrap(),
+            koci_sdk::Generation(1),
         ),
         source_config_digest: digest('1'),
         source_attachments_digest: digest('2'),
         compatibility: CheckpointCompatibility::new(
-            krun_oci_core::DriverKind::NativeLinux,
-            krun_oci_core::IsolationClass::SharedHostKernel,
-            krun_oci_core::HostPlatform::Linux,
+            koci_core::DriverKind::NativeLinux,
+            koci_core::IsolationClass::SharedHostKernel,
+            koci_core::HostPlatform::Linux,
             std::env::consts::ARCH,
-            krun_oci_sdk::RuntimeArtifact::new(
-                "krun-oci-runtime",
-                "0.2.0",
-                digest('3').to_string(),
-                None,
-            )
-            .unwrap(),
+            koci_sdk::RuntimeArtifact::new("koci-runtime", "0.2.0", digest('3').to_string(), None)
+                .unwrap(),
             digest('4'),
-            krun_oci_sdk::CheckpointFormat::new("native-linux-criu", 1).unwrap(),
+            koci_sdk::CheckpointFormat::new("native-linux-criu", 1).unwrap(),
         )
         .unwrap(),
         quiesce: "paused".to_string(),
         launcher_pid: 4_241,
         checkpoint_root_pid: 4_242,
         init_pid: 4_242,
-        cgroup_path: "/krun/restore/krun-workload".to_string(),
+        cgroup_path: "/kbox/restore/kworkload".to_string(),
         criu: CriuIdentity {
             executable_digest: digest('5'),
             version: "4.2.1".to_string(),
@@ -896,7 +891,7 @@ pub(super) fn retained_manifest_fixture() -> (CheckpointArtifactManifest, Vec<u8
         },
         dump_options: vec!["--shell-job".to_string()],
         external_mounts: vec![ExternalMountManifestEntry {
-            name: "krun-oci-device-0000".to_string(),
+            name: "koci-device-0000".to_string(),
             mountpoint: PathBuf::from("/dev/null"),
         }],
         images: vec![ImageManifestEntry {
@@ -909,16 +904,11 @@ pub(super) fn retained_manifest_fixture() -> (CheckpointArtifactManifest, Vec<u8
     (manifest, image)
 }
 
-fn image_io(
-    action: &str,
-    directory: &Path,
-    name: &str,
-    error: std::io::Error,
-) -> krun_oci_sdk::Error {
+fn image_io(action: &str, directory: &Path, name: &str, error: std::io::Error) -> koci_sdk::Error {
     io_error(action, &directory.join(name), error)
 }
 
-fn invalid_artifact(message: impl Into<String>) -> krun_oci_sdk::Error {
+fn invalid_artifact(message: impl Into<String>) -> koci_sdk::Error {
     checkpoint_error(ErrorCode::FailedPrecondition, message)
 }
 
@@ -926,8 +916,8 @@ fn invalid_artifact(message: impl Into<String>) -> krun_oci_sdk::Error {
 mod tests {
     use std::os::unix::fs::OpenOptionsExt;
 
-    use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
-    use krun_oci_sdk::{CheckpointFormat, ContainerId, Generation, RuntimeArtifact};
+    use koci_core::{DriverKind, HostPlatform, IsolationClass};
+    use koci_sdk::{CheckpointFormat, ContainerId, Generation, RuntimeArtifact};
     use tempfile::tempdir;
 
     use super::*;
@@ -935,7 +925,7 @@ mod tests {
     fn metadata() -> ArtifactMetadata {
         let digest = CheckpointDigest::new(format!("sha256:{}", "1".repeat(64))).unwrap();
         let runtime = RuntimeArtifact::new(
-            "krun-oci-runtime",
+            "koci-runtime",
             "0.2.0",
             format!("sha256:{}", "2".repeat(64)),
             None,
@@ -961,7 +951,7 @@ mod tests {
             launcher_pid: 41,
             checkpoint_root_pid: 43,
             init_pid: 43,
-            cgroup_path: "/sys/fs/cgroup/krun-test".to_string(),
+            cgroup_path: "/sys/fs/cgroup/ktest".to_string(),
             criu: CriuIdentity {
                 executable_digest: digest,
                 version: "4.2.1".to_string(),
@@ -969,7 +959,7 @@ mod tests {
             },
             dump_options: vec!["--leave-running".to_string()],
             external_mounts: vec![ExternalMountManifestEntry::new(
-                "krun-oci-device-0000",
+                "koci-device-0000",
                 Path::new("/dev/null"),
             )
             .expect("external mount")],
@@ -1072,20 +1062,18 @@ mod tests {
 
     #[test]
     fn validates_exact_external_mount_cookie_and_path_contract() {
-        let mount = ExternalMountManifestEntry::new(
-            "krun-oci-device-0255",
-            Path::new("/dev/qualified-device"),
-        )
-        .expect("bounded external device mount");
-        assert_eq!(mount.name(), "krun-oci-device-0255");
+        let mount =
+            ExternalMountManifestEntry::new("koci-device-0255", Path::new("/dev/qualified-device"))
+                .expect("bounded external device mount");
+        assert_eq!(mount.name(), "koci-device-0255");
         assert_eq!(mount.mountpoint(), Path::new("/dev/qualified-device"));
 
         for cookie in [
             "device-0000",
-            "krun-oci-device-000",
-            "krun-oci-device-00000",
-            "krun-oci-device-0256",
-            "krun-oci-device-abcd",
+            "koci-device-000",
+            "koci-device-00000",
+            "koci-device-0256",
+            "koci-device-abcd",
         ] {
             assert!(ExternalMountManifestEntry::new(cookie, Path::new("/dev/null")).is_err());
         }
@@ -1098,7 +1086,7 @@ mod tests {
             "/dev/null/",
         ] {
             assert!(
-                ExternalMountManifestEntry::new("krun-oci-device-0000", Path::new(mountpoint),)
+                ExternalMountManifestEntry::new("koci-device-0000", Path::new(mountpoint),)
                     .is_err()
             );
         }

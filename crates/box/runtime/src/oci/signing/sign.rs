@@ -1,6 +1,6 @@
 //! Image signing (cosign-compatible): create and push a signature artifact.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use oci_distribution::client::ClientProtocol;
 use oci_distribution::secrets::RegistryAuth;
 use oci_distribution::{Client, Reference};

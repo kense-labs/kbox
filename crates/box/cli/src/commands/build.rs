@@ -1,4 +1,4 @@
-//! `krun-box build` command — Build an image from a Dockerfile or Containerfile.
+//! `kbox build` command — Build an image from a Dockerfile or Containerfile.
 //!
 //! Parses a Dockerfile/Containerfile, pulls the base image, executes instructions,
 //! and produces an OCI image stored in the local image store.
@@ -9,9 +9,25 @@ use std::sync::Arc;
 
 use clap::Args;
 
-const BUILD_RUN_POOL_SOCKET_ENV: &str = "KRUN_BOX_BUILD_RUN_POOL_SOCKET";
-const BUILD_RUN_CACHE_DIR_ENV: &str = "KRUN_BOX_BUILD_RUN_CACHE_DIR";
-const DEFAULT_BUILD_RUN_POOL_GUEST_ROOTFS: &str = "/run/krun/build-rootfs";
+const BUILD_RUN_POOL_SOCKET_ENV: &str = "K_BOX_BUILD_RUN_POOL_SOCKET";
+const BUILD_RUN_CACHE_DIR_ENV: &str = "K_BOX_BUILD_RUN_CACHE_DIR";
+const DEFAULT_BUILD_RUN_POOL_GUEST_ROOTFS: &str = "/mnt/kbox-build/rootfs";
+#[cfg(target_os = "macos")]
+const DEFAULT_BUILD_RUN_POOL_IMAGE: &str = "docker.io/library/alpine:latest";
+#[cfg(target_os = "macos")]
+const UNSAFE_HOST_RUN_ENV: &str = "K_BOX_UNSAFE_HOST_RUN";
+
+#[cfg(target_os = "macos")]
+fn default_run_pool_enabled() -> bool {
+    std::env::var(UNSAFE_HOST_RUN_ENV)
+        .map(|value| !matches!(value.as_str(), "1" | "true" | "TRUE" | "yes" | "YES"))
+        .unwrap_or(true)
+}
+
+#[cfg(not(target_os = "macos"))]
+fn default_run_pool_enabled() -> bool {
+    false
+}
 
 #[derive(Args)]
 pub struct BuildArgs {
@@ -105,7 +121,7 @@ pub async fn execute(args: BuildArgs) -> Result<(), Box<dyn std::error::Error>> 
     let platforms = parse_platforms(args.platform.as_deref())?;
 
     let run_pool = resolve_run_pool_config(&args)?;
-    if args.run_pool_autostart {
+    if args.run_pool_autostart || default_run_pool_enabled() {
         if let Some(config) = &run_pool {
             super::pool::ensure_pool_daemon_running(&pool_autostart_config_for_build(config)?)
                 .await?;
@@ -115,7 +131,7 @@ pub async fn execute(args: BuildArgs) -> Result<(), Box<dyn std::error::Error>> 
     // Open image store
     let store = Arc::new(super::open_image_store()?);
 
-    let config = krun_box_runtime::BuildConfig {
+    let config = kbox_runtime::BuildConfig {
         context_dir,
         dockerfile_path,
         tag: args.tag.clone(),
@@ -124,12 +140,12 @@ pub async fn execute(args: BuildArgs) -> Result<(), Box<dyn std::error::Error>> 
         platforms,
         target: args.target.clone(),
         no_cache: args.no_cache,
-        network: krun_box_runtime::BuildNetworkPolicy::Outbound,
+        network: kbox_runtime::BuildNetworkPolicy::Outbound,
         metrics: None,
         run_pool,
     };
 
-    let result = krun_box_runtime::oci::build::engine::build(config, store).await?;
+    let result = kbox_runtime::oci::build::engine::build(config, store).await?;
 
     if args.quiet {
         println!("{}", result.digest);
@@ -140,14 +156,16 @@ pub async fn execute(args: BuildArgs) -> Result<(), Box<dyn std::error::Error>> 
 
 fn resolve_run_pool_config(
     args: &BuildArgs,
-) -> Result<Option<krun_box_runtime::BuildRunPoolConfig>, Box<dyn std::error::Error>> {
+) -> Result<Option<kbox_runtime::BuildRunPoolConfig>, Box<dyn std::error::Error>> {
     let env_socket = std::env::var(BUILD_RUN_POOL_SOCKET_ENV)
         .ok()
         .filter(|value| !value.trim().is_empty());
     let env_cache_dir = std::env::var(BUILD_RUN_CACHE_DIR_ENV)
         .ok()
         .filter(|value| !value.trim().is_empty());
-    let enabled = args.run_pool
+    let default_run_pool = default_run_pool_enabled();
+    let enabled = default_run_pool
+        || args.run_pool
         || args.run_pool_autostart
         || args.run_pool_socket.is_some()
         || env_socket.is_some()
@@ -183,15 +201,17 @@ fn resolve_run_pool_config(
         .clone()
         .or(env_cache_dir)
         .map(PathBuf::from)
-        .unwrap_or_else(|| {
-            krun_box_core::dirs_home()
-                .join("buildcache")
-                .join("run-cache")
-        });
+        .unwrap_or_else(|| kbox_core::dirs_home().join("buildcache").join("run-cache"));
 
-    Ok(Some(krun_box_runtime::BuildRunPoolConfig {
+    Ok(Some(kbox_runtime::BuildRunPoolConfig {
         socket,
-        image: args.run_pool_image.clone(),
+        image: args.run_pool_image.clone().or_else(|| {
+            #[cfg(target_os = "macos")]
+            if default_run_pool {
+                return Some(DEFAULT_BUILD_RUN_POOL_IMAGE.to_string());
+            }
+            None
+        }),
         vcpus: args.run_pool_cpus,
         memory_mb,
         guest_rootfs: DEFAULT_BUILD_RUN_POOL_GUEST_ROOTFS.to_string(),
@@ -201,7 +221,7 @@ fn resolve_run_pool_config(
 }
 
 fn pool_autostart_config_for_build(
-    config: &krun_box_runtime::BuildRunPoolConfig,
+    config: &kbox_runtime::BuildRunPoolConfig,
 ) -> Result<super::pool::PoolAutoStartConfig, Box<dyn std::error::Error>> {
     Ok(super::pool::PoolAutoStartConfig {
         socket: config.socket.clone(),
@@ -225,12 +245,12 @@ fn parse_build_args(args: &[String]) -> Result<HashMap<String, String>, String> 
 
 fn parse_platforms(
     platform: Option<&str>,
-) -> Result<Vec<krun_box_core::platform::Platform>, Box<dyn std::error::Error>> {
+) -> Result<Vec<kbox_core::platform::Platform>, Box<dyn std::error::Error>> {
     let Some(platform) = platform else {
         return Ok(vec![]);
     };
 
-    let platforms = krun_box_core::platform::Platform::parse_list(platform)
+    let platforms = kbox_core::platform::Platform::parse_list(platform)
         .map_err(|e| format!("Invalid --platform: {e}"))?;
     if platforms.len() > 1 {
         return Err(
@@ -358,22 +378,52 @@ mod tests {
     fn test_resolve_run_pool_config_explicit_socket() {
         let mut args = build_args();
         args.run_pool = true;
-        args.run_pool_socket = Some("/tmp/krun-build-pool.sock".to_string());
+        args.run_pool_socket = Some("/tmp/kbuild-pool.sock".to_string());
         args.run_pool_image = Some("alpine:latest".to_string());
         args.run_pool_cpus = 4;
         args.run_pool_memory = "1g".to_string();
         args.run_pool_timeout = 90;
-        args.run_cache_dir = Some("/tmp/krun-run-cache".to_string());
+        args.run_cache_dir = Some("/tmp/kcache".to_string());
 
         let config = resolve_run_pool_config(&args).unwrap().unwrap();
 
-        assert_eq!(config.socket, "/tmp/krun-build-pool.sock");
+        assert_eq!(config.socket, "/tmp/kbuild-pool.sock");
         assert_eq!(config.image.as_deref(), Some("alpine:latest"));
         assert_eq!(config.vcpus, 4);
         assert_eq!(config.memory_mb, 1024);
         assert_eq!(config.guest_rootfs, DEFAULT_BUILD_RUN_POOL_GUEST_ROOTFS);
         assert_eq!(config.timeout_ns, 90_000_000_000);
-        assert_eq!(config.run_cache_dir, PathBuf::from("/tmp/krun-run-cache"));
+        assert_eq!(config.run_cache_dir, PathBuf::from("/tmp/kcache"));
+    }
+
+    #[cfg(target_os = "macos")]
+    #[test]
+    fn test_macos_build_defaults_to_isolated_run_pool() {
+        let _guard = EnvGuard::set(UNSAFE_HOST_RUN_ENV, "0");
+        let args = build_args();
+
+        let config = resolve_run_pool_config(&args).unwrap().unwrap();
+
+        assert_eq!(config.image.as_deref(), Some(DEFAULT_BUILD_RUN_POOL_IMAGE));
+        assert_eq!(config.guest_rootfs, "/mnt/kbox-build/rootfs");
+    }
+
+    #[cfg(not(target_os = "macos"))]
+    #[test]
+    fn test_non_macos_build_does_not_default_to_run_pool() {
+        let args = build_args();
+
+        assert!(resolve_run_pool_config(&args).unwrap().is_none());
+    }
+
+    #[test]
+    fn test_default_run_pool_rootfs_is_outside_reserved_runtime_state() {
+        let mut args = build_args();
+        args.run_pool = true;
+
+        let config = resolve_run_pool_config(&args).unwrap().unwrap();
+
+        assert_eq!(config.guest_rootfs, "/mnt/kbox-build/rootfs");
     }
 
     #[test]
@@ -414,14 +464,14 @@ mod tests {
         let mut args = build_args();
         args.run_pool = true;
         args.run_pool_autostart = true;
-        args.run_pool_socket = Some("/tmp/krun-build-pool.sock".to_string());
+        args.run_pool_socket = Some("/tmp/kbuild-pool.sock".to_string());
         args.run_pool_image = Some("alpine:latest".to_string());
 
         let config = resolve_run_pool_config(&args).unwrap().unwrap();
         let autostart = pool_autostart_config_for_build(&config).unwrap();
 
         assert_eq!(config.image.as_deref(), Some("alpine:latest"));
-        assert_eq!(autostart.socket, "/tmp/krun-build-pool.sock");
+        assert_eq!(autostart.socket, "/tmp/kbuild-pool.sock");
         assert!(autostart.image.is_none());
         assert_eq!(
             autostart.size,

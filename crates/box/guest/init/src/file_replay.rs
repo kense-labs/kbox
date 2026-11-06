@@ -9,7 +9,7 @@ use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Condvar, Mutex, OnceLock};
 use std::time::Duration;
 
-use krun_box_core::{FileOp, FileRequest, FileResponse};
+use kbox_core::{FileOp, FileRequest, FileResponse};
 use sha2::{Digest, Sha256};
 
 const FILE_REPLAY_MAX_ENTRIES: usize = 128;

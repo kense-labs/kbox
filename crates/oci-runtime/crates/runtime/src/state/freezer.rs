@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerOperationRequest, ContainerRecord, ContainerTarget, ErrorCode, OciSchemaValidator,
     OperationId, Result, RuntimeEventKind, ValidateRequest,
 };

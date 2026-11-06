@@ -28,7 +28,7 @@ pub fn stage_runtime_dylibs(source_dir: &Path, destination_dir: &Path) -> io::Re
             metadata.dev() == source_metadata.dev() && metadata.ino() == source_metadata.ino()
         });
         if !same_file {
-            // libkrun-sys already fixes @rpath install names and signs each
+            // libksys already fixes @rpath install names and signs each
             // dylib. Rewriting an alias ID with install_name_tool invalidates
             // that signature. Preserve the exact bytes, including SONAMEs,
             // and include fully versioned files rather than guessing the ABI.

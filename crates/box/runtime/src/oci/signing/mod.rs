@@ -4,7 +4,7 @@
 //! - Key-based: verify against a PEM-encoded public key
 //! - Keyless: verify Fulcio certificate identity (OIDC issuer + SAN) and signature
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 // `base64::Engine` is only needed by the test module now that the base64
 // helpers moved to `crypto`; `der::Decode` is still used by cert parsing here.
 #[cfg(test)]
@@ -921,7 +921,7 @@ mod tests {
                 },
                 sig_type: "cosign container image signature".to_string(),
             },
-            optional: serde_json::json!({"creator": "krun-box"}),
+            optional: serde_json::json!({"creator": "kbox"}),
         };
         let json = serde_json::to_string(&payload).unwrap();
         let parsed: CosignPayload = serde_json::from_str(&json).unwrap();
@@ -1034,9 +1034,9 @@ mod tests {
         let err = sign_image(
             missing.to_str().unwrap(),
             "registry.example.com",
-            "krun/app",
+            "kbox/app",
             "sha256:abc123",
-            "registry.example.com/krun/app:latest",
+            "registry.example.com/kbox/app:latest",
             oci_distribution::client::ClientProtocol::Https,
         )
         .await
@@ -1054,9 +1054,9 @@ mod tests {
         let err = sign_image(
             key_path.to_str().unwrap(),
             "registry.example.com",
-            "krun/app",
+            "kbox/app",
             "sha256:abc123",
-            "registry.example.com/krun/app:latest",
+            "registry.example.com/kbox/app:latest",
             oci_distribution::client::ClientProtocol::Https,
         )
         .await
@@ -1074,9 +1074,9 @@ mod tests {
         let err = sign_image(
             key_path.to_str().unwrap(),
             "bad registry",
-            "krun/app",
+            "kbox/app",
             "sha256:abc123",
-            "registry.example.com/krun/app:latest",
+            "registry.example.com/kbox/app:latest",
             oci_distribution::client::ClientProtocol::Https,
         )
         .await

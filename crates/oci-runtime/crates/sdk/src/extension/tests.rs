@@ -1,4 +1,4 @@
-use krun_oci_core::{DriverKind, IsolationClass};
+use koci_core::{DriverKind, IsolationClass};
 
 use super::{
     RuntimeArtifact, RuntimeDriverCapabilities, RuntimeExtensions, RuntimeNegotiationRequest,
@@ -9,11 +9,11 @@ use crate::{
     ATTACHMENT_SCHEMA_V1,
 };
 
-const NETWORK_EXTENSION: &str = "dev.krun.network.tsi";
+const NETWORK_EXTENSION: &str = "dev.kbox.network.tsi";
 
 fn artifact() -> RuntimeArtifact {
     RuntimeArtifact::new(
-        "krun-oci-runtime",
+        "koci-runtime",
         "0.2.0",
         format!("sha256:{}", "a".repeat(64)),
         Some("0123456789abcdef".to_string()),
@@ -23,7 +23,7 @@ fn artifact() -> RuntimeArtifact {
 
 fn dedicated() -> RuntimeDriverCapabilities {
     RuntimeDriverCapabilities::new(
-        DriverKind::LibkrunWhpx,
+        DriverKind::LibkWhpx,
         vec![IsolationClass::DedicatedVm],
         [
             RuntimeOperation::Create,
@@ -44,7 +44,7 @@ fn dedicated() -> RuntimeDriverCapabilities {
 
 fn shared() -> RuntimeDriverCapabilities {
     RuntimeDriverCapabilities::new(
-        DriverKind::LibkrunHvf,
+        DriverKind::LibkHvf,
         vec![IsolationClass::SharedGuestKernel],
         [
             RuntimeOperation::Create,
@@ -72,7 +72,7 @@ fn selects_only_the_driver_that_satisfies_exact_versions() {
             .source_revision(),
         Some("0123456789abcdef")
     );
-    assert_eq!(catalog.drivers()[0].driver(), DriverKind::LibkrunHvf);
+    assert_eq!(catalog.drivers()[0].driver(), DriverKind::LibkHvf);
 
     let request = RuntimeNegotiationRequest::new(IsolationClass::DedicatedVm)
         .with_operation(RuntimeOperation::Wait, RUNTIME_OPERATION_CONTRACT_V1)
@@ -84,7 +84,7 @@ fn selects_only_the_driver_that_satisfies_exact_versions() {
     let selected = catalog
         .negotiate(&request)
         .expect("select dedicated driver");
-    assert_eq!(selected.driver(), DriverKind::LibkrunWhpx);
+    assert_eq!(selected.driver(), DriverKind::LibkWhpx);
 
     let unavailable = RuntimeNegotiationRequest::new(IsolationClass::SharedGuestKernel)
         .with_operation(RuntimeOperation::Wait, RUNTIME_OPERATION_CONTRACT_V1)
@@ -110,7 +110,7 @@ fn catalog_round_trip_retains_canonical_artifact_and_driver_contracts() {
 
 #[test]
 fn rejects_invalid_artifacts_ambiguous_isolation_and_legacy_negotiation() {
-    let invalid = RuntimeArtifact::new("krun-oci-runtime", "0.2.0", "sha256:ABCDEF", None)
+    let invalid = RuntimeArtifact::new("koci-runtime", "0.2.0", "sha256:ABCDEF", None)
         .expect_err("non-canonical digest must fail");
     assert_eq!(invalid.code, ErrorCode::InvalidArgument);
 

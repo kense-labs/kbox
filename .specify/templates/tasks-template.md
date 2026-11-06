@@ -21,7 +21,7 @@ description: "Task list template for feature implementation"
 
 - Execution: `crates/box/`, `crates/oci-runtime/`
 - Runtime contracts: `crates/runtime/`
-- Policy: `apps/gateway/`, `crates/sentry/`, `crates/acl/`
+- Policy: `crates/acl/`
 - Native dependencies: root `libkrun` and `libkrunfw` gitlinks
 - Evidence: `docs/evidence/<domain>/<date-slug>/OUTCOME.md`
 

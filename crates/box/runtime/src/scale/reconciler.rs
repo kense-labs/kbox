@@ -7,7 +7,7 @@ use std::{
 };
 
 use async_trait::async_trait;
-use krun_box_core::{
+use kbox_core::{
     scale::ScaleEndpoint, CreateExecutionRequest, ExecutionGeneration, ExecutionId, ExecutionLease,
     ExecutionManager, ExecutionPortConnector, ExecutionState, OperationId, ReconcileOutcome,
 };
@@ -705,7 +705,7 @@ mod tests {
     };
 
     use chrono::Utc;
-    use krun_box_core::{
+    use kbox_core::{
         ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
     };
     use tokio::{
@@ -766,7 +766,7 @@ mod tests {
             _generation: ExecutionGeneration,
             _port: NonZeroU16,
             _timeout: std::time::Duration,
-        ) -> ExecutionManagerResult<krun_box_core::ExecutionPortStream> {
+        ) -> ExecutionManagerResult<kbox_core::ExecutionPortStream> {
             let (client, mut server) = tokio::io::duplex(1_024);
             tokio::spawn(async move {
                 let mut buffer = [0_u8; 1_024];
@@ -792,7 +792,7 @@ mod tests {
             _generation: ExecutionGeneration,
             _port: NonZeroU16,
             _timeout: std::time::Duration,
-        ) -> ExecutionManagerResult<krun_box_core::ExecutionPortStream> {
+        ) -> ExecutionManagerResult<kbox_core::ExecutionPortStream> {
             Err(ExecutionManagerError::Unavailable(
                 "MicroVM port 8080 rejected the connection".to_string(),
             ))

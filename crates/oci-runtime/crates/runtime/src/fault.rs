@@ -1,6 +1,6 @@
 use std::fmt;
 
-use krun_oci_sdk::Result;
+use koci_sdk::Result;
 
 /// One semantic mutation of runtime-owned durable state.
 ///
@@ -474,7 +474,7 @@ pub(crate) mod testing {
     use std::sync::atomic::{AtomicBool, Ordering};
     use std::sync::Mutex;
 
-    use krun_oci_sdk::{Error, ErrorCode, Result};
+    use koci_sdk::{Error, ErrorCode, Result};
 
     use super::{FaultInjector, FaultPoint};
 

@@ -1,7 +1,7 @@
 //! Destructive live-session qualification for Box over Linux KVM MicroVM OCI.
 //!
 //! Exercises MicroVM via `box-kvm-qualification-service` with
-//! `KRUN_OCI_KVM_SESSION_OWNER=1`, keeps the Box manager across Host Service
+//! `K_OCI_KVM_SESSION_OWNER=1`, keeps the Box manager across Host Service
 //! SIGKILL, proves retained streaming process-handle continuity, mutating
 //! filesystem continuity via public Box `filesystem` (keyed MakeDir / Move /
 //! Remove before kill, ListDir after reattach) plus `transfer_file` (keyed
@@ -9,7 +9,7 @@
 //! keyed captured exec / state / inventory / stats / kill, without inventing
 //! an exit.
 //!
-//! Schema `krun.box.linux-kvm-live-session.v5`.
+//! Schema `kbox.linux-kvm-live-session.v5`.
 //!
 //! Honest scope (anti-overfit):
 //! - Distinct from stopped-only `linux-kvm-oci-qualification`.
@@ -61,7 +61,7 @@ mod qualification {
 
     use base64::engine::general_purpose::STANDARD;
     use base64::Engine;
-    use krun_box_core::{
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecEvent, ExecRequest, ExecutionBackend,
         ExecutionGeneration, ExecutionId, ExecutionIsolation, ExecutionManager,
         ExecutionManagerError, ExecutionProcessSignal, ExecutionProcessStream,
@@ -70,49 +70,49 @@ mod qualification {
         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
         ResourceConfig, StreamType,
     };
-    use krun_box_runtime::{
+    use kbox_runtime::{
         LinuxKvmOciMigrationConfig, LocalExecutionManager, ManagedExecutionStore,
         ManagedRuntimeRoute, OciRuntimeBinding,
     };
-    use krun_oci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
+    use koci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
     use serde::Serialize;
     use serde_json::Value;
 
-    const ENABLE_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_QUALIFICATION";
-    const HOME_ENV: &str = "KRUN_HOME";
-    const HOST_ROOT_ENV: &str = "KRUN_BOX_OCI_HOST_ROOT";
-    const ENDPOINT_ENV: &str = "KRUN_BOX_OCI_KVM_ENDPOINT";
-    const IMAGE_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_IMAGE";
-    const REPORT_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_REPORT";
-    const BOX_SHA_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_BOX_SHA";
-    const OCI_SHA_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_OCI_SHA";
-    const SERVICE_PID_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_PID";
-    const SERVICE_BIN_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_BIN";
-    const SERVICE_ROOT_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_ROOT";
-    const SERVICE_SHIM_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_SHIM";
-    const SERVICE_MANIFEST_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_MANIFEST";
-    const SERVICE_LOG_ENV: &str = "KRUN_BOX_KVM_LIVE_SESSION_SERVICE_LOG";
-    const BOX_OWNED_ENV: &str = "KRUN_BOX_KVM_OCI_BOX_OWNED";
-    const SESSION_OWNER_ENV: &str = "KRUN_OCI_KVM_SESSION_OWNER";
-    const SCHEMA_VERSION: &str = "krun.box.linux-kvm-live-session.v5";
-    const KVM_LIVE_BINDING_SCHEMA: &str = "krun.oci.kvm-live-session-binding.v1";
-    const KVM_LIVE_BINDING_FILE: &str = ".krun-oci-kvm-live-session-binding.json";
-    const KEYED_EXEC_BEFORE: &str = "krun.box.live-session.keyed-exec.before-owner-kill";
-    const KEYED_EXEC_AFTER: &str = "krun.box.live-session.keyed-exec.after-reopen";
-    const KEYED_FILE_UPLOAD_BEFORE: &str = "krun.box.live-session.keyed-file.before-owner-kill";
-    const KEYED_MKDIR_BEFORE: &str = "krun.box.live-session.keyed-mkdir.before-owner-kill";
-    const KEYED_MOVE_BEFORE: &str = "krun.box.live-session.keyed-move.before-owner-kill";
-    const KEYED_REMOVE_BEFORE: &str = "krun.box.live-session.keyed-remove.before-owner-kill";
+    const ENABLE_ENV: &str = "K_BOX_KVM_LIVE_SESSION_QUALIFICATION";
+    const HOME_ENV: &str = "K_HOME";
+    const HOST_ROOT_ENV: &str = "K_BOX_OCI_HOST_ROOT";
+    const ENDPOINT_ENV: &str = "K_BOX_OCI_KVM_ENDPOINT";
+    const IMAGE_ENV: &str = "K_BOX_KVM_LIVE_SESSION_IMAGE";
+    const REPORT_ENV: &str = "K_BOX_KVM_LIVE_SESSION_REPORT";
+    const BOX_SHA_ENV: &str = "K_BOX_KVM_LIVE_SESSION_BOX_SHA";
+    const OCI_SHA_ENV: &str = "K_BOX_KVM_LIVE_SESSION_OCI_SHA";
+    const SERVICE_PID_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_PID";
+    const SERVICE_BIN_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_BIN";
+    const SERVICE_ROOT_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_ROOT";
+    const SERVICE_SHIM_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_SHIM";
+    const SERVICE_MANIFEST_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_MANIFEST";
+    const SERVICE_LOG_ENV: &str = "K_BOX_KVM_LIVE_SESSION_SERVICE_LOG";
+    const BOX_OWNED_ENV: &str = "K_BOX_KVM_OCI_BOX_OWNED";
+    const SESSION_OWNER_ENV: &str = "K_OCI_KVM_SESSION_OWNER";
+    const SCHEMA_VERSION: &str = "kbox.linux-kvm-live-session.v5";
+    const KVM_LIVE_BINDING_SCHEMA: &str = "koci.kvm-live-session-binding.v1";
+    const KVM_LIVE_BINDING_FILE: &str = ".koci-kvm-live-session-binding.json";
+    const KEYED_EXEC_BEFORE: &str = "kbox.live-session.keyed-exec.before-owner-kill";
+    const KEYED_EXEC_AFTER: &str = "kbox.live-session.keyed-exec.after-reopen";
+    const KEYED_FILE_UPLOAD_BEFORE: &str = "kbox.live-session.keyed-file.before-owner-kill";
+    const KEYED_MKDIR_BEFORE: &str = "kbox.live-session.keyed-mkdir.before-owner-kill";
+    const KEYED_MOVE_BEFORE: &str = "kbox.live-session.keyed-move.before-owner-kill";
+    const KEYED_REMOVE_BEFORE: &str = "kbox.live-session.keyed-remove.before-owner-kill";
     const KEYED_EXEC_MARKER: &[u8] = b"live-session-keyed-ok\n";
     const STREAM_MARKER: &[u8] = b"live-session-stream-ok\n";
     const STREAM_ECHO_BEFORE: &[u8] = b"before-owner-kill\n";
     const STREAM_ECHO_AFTER: &[u8] = b"after-owner-reopen\n";
-    const FS_GUEST_DIR: &str = "/tmp/.krun-box-kvm-live-fs.d";
-    const FS_GUEST_PATH: &str = "/tmp/.krun-box-kvm-live-fs.d/payload.bin";
-    const FS_GUEST_DIR_KEPT: &str = "/tmp/.krun-box-kvm-live-fs.kept.d";
-    const FS_GUEST_PATH_KEPT: &str = "/tmp/.krun-box-kvm-live-fs.kept.d/payload.bin";
-    const FS_GUEST_EPHEMERAL: &str = "/tmp/.krun-box-kvm-live-fs.ephemeral.d";
-    const FS_PAYLOAD: &[u8] = b"krun-box-kvm-live-fs\0binary\nv5\n";
+    const FS_GUEST_DIR: &str = "/tmp/.kbox-kvm-live-fs.d";
+    const FS_GUEST_PATH: &str = "/tmp/.kbox-kvm-live-fs.d/payload.bin";
+    const FS_GUEST_DIR_KEPT: &str = "/tmp/.kbox-kvm-live-fs.kept.d";
+    const FS_GUEST_PATH_KEPT: &str = "/tmp/.kbox-kvm-live-fs.kept.d/payload.bin";
+    const FS_GUEST_EPHEMERAL: &str = "/tmp/.kbox-kvm-live-fs.ephemeral.d";
+    const FS_PAYLOAD: &[u8] = b"kbox-kvm-live-fs\0binary\nv5\n";
 
     type AnyError = Box<dyn Error + Send + Sync>;
 
@@ -382,7 +382,7 @@ mod qualification {
                 .file_name()
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name.contains("kvm-live-session")),
-            "KRUN_HOME must name a dedicated kvm-live-session directory",
+            "K_HOME must name a dedicated kvm-live-session directory",
         )?;
         let runtime_root = absolute_environment_path(HOST_ROOT_ENV)?;
         let endpoint = absolute_environment_path(ENDPOINT_ENV)?;
@@ -495,7 +495,7 @@ mod qualification {
             owner_pid_from_box_record(&service.service_root)
         } else {
             service.pid.ok_or_else(|| {
-                failure("external Host Live path requires KRUN_BOX_KVM_LIVE_SESSION_SERVICE_PID")
+                failure("external Host Live path requires K_BOX_KVM_LIVE_SESSION_SERVICE_PID")
             })
         }
     }
@@ -511,7 +511,7 @@ mod qualification {
         report.execution_id = Some(reservation.execution_id.to_string());
         report.box_generation = Some(reservation.generation);
         require(
-            reservation.plan.backend == ExecutionBackend::Krun
+            reservation.plan.backend == ExecutionBackend::Kbox
                 && reservation.plan.isolation_class == BoxIsolationClass::HardwareVm,
             "the Box request did not retain its dedicated MicroVM product plan",
         )?;
@@ -545,7 +545,7 @@ mod qualification {
             .clone()
             .ok_or_else(|| failure("started Box record has no exact OCI runtime binding"))?;
         require(
-            binding.driver == DriverKind::LibkrunKvm
+            binding.driver == DriverKind::LibkKvm
                 && binding.isolation == OciIsolationClass::DedicatedVm,
             "runtime did not return the dedicated-VM libkrun/KVM binding",
         )?;
@@ -1471,7 +1471,7 @@ mod qualification {
                 cmd: vec![
                     "/bin/sh".to_string(),
                     "-c".to_string(),
-                    "printf 'krun-box-kvm-live-session\\n'; while :; do sleep 60; done".to_string(),
+                    "printf 'kbox-kvm-live-session\\n'; while :; do sleep 60; done".to_string(),
                 ],
                 network: NetworkMode::None,
                 persistent: false,
@@ -1603,7 +1603,7 @@ mod qualification {
     }
 
     fn init_identity_from_inventory(
-        inventory: &krun_box_core::ExecutionProcessInventory,
+        inventory: &kbox_core::ExecutionProcessInventory,
         binding: &OciRuntimeBinding,
     ) -> Result<ProcessIdentityReport, AnyError> {
         let init = inventory

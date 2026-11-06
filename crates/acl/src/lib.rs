@@ -1,7 +1,7 @@
 // ============================================================================
 // ACL - Agent Configuration Language
 //
-// Krun-native configuration language for defining agent configurations.
+// Knative configuration language for defining agent configurations.
 // ============================================================================
 
 pub mod ast;
@@ -34,7 +34,7 @@ pub use schema::{
 /// # Example
 ///
 /// ```
-/// use krun_acl::parse;
+/// use kacl::parse;
 ///
 /// let input = r#"
 ///     default_model = "openai/gpt-4"
@@ -60,7 +60,7 @@ pub fn parse_acl(input: &str) -> Result<Document, ParseError> {
 /// # Example
 ///
 /// ```
-/// use krun_acl::{generate, Document, Block, Value};
+/// use kacl::{generate, Document, Block, Value};
 /// use std::collections::HashMap;
 ///
 /// let mut attrs = HashMap::new();

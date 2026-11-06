@@ -1,4 +1,4 @@
-//! containerd runtime-v2 entry point for Krun OCI Runtime.
+//! containerd runtime-v2 entry point for Kbox OCI Runtime.
 
 #[cfg(unix)]
 use std::io::{stdin, stdout, Read, Write};
@@ -131,9 +131,9 @@ fn write_runtime_info() -> Result<(), String> {
         .build()
         .map_err(|error| format!("start RuntimeInfo client runtime: {error}"))?;
     let features = runtime.block_on(async {
-        let endpoint = krun_oci_sdk::LocalIpcEndpoint::unix_socket(&endpoint)
+        let endpoint = koci_sdk::LocalIpcEndpoint::unix_socket(&endpoint)
             .map_err(|error| error.to_string())?;
-        let client = krun_oci_sdk::RuntimeClient::connect(&endpoint)
+        let client = koci_sdk::RuntimeClient::connect(&endpoint)
             .await
             .map_err(|error| error.to_string())?;
         client.features().await.map_err(|error| error.to_string())
@@ -154,24 +154,24 @@ fn encode_runtime_info(feature_json: &[u8], endpoint: &str) -> Result<Vec<u8>, S
 
     let mut annotations = std::collections::HashMap::new();
     annotations.insert(
-        "dev.krun.oci.runtime-type".to_string(),
+        "dev.koci.runtime-type".to_string(),
         contract::RUNTIME_TYPE.to_string(),
     );
-    annotations.insert("dev.krun.oci.sdk-endpoint".to_string(), endpoint.to_string());
+    annotations.insert("dev.koci.sdk-endpoint".to_string(), endpoint.to_string());
     annotations.insert(
-        "dev.krun.oci.containerd-contract-version".to_string(),
+        "dev.koci.containerd-contract-version".to_string(),
         contract::CONTRACT_VERSION.to_string(),
     );
     annotations.insert(
-        "dev.krun.oci.containerd-task-api".to_string(),
+        "dev.koci.containerd-task-api".to_string(),
         contract::TASK_API_SERVICE.to_string(),
     );
     annotations.insert(
-        "dev.krun.oci.identity-encoding".to_string(),
+        "dev.koci.identity-encoding".to_string(),
         contract::IDENTITY_ENCODING.to_string(),
     );
     annotations.insert(
-        "dev.krun.oci.generation-mapping".to_string(),
+        "dev.koci.generation-mapping".to_string(),
         contract::GENERATION_MAPPING.to_string(),
     );
     let required_sdk_operations = contract::required_sdk_operations();
@@ -181,7 +181,7 @@ fn encode_runtime_info(feature_json: &[u8], endpoint: &str) -> Result<Vec<u8>, S
     );
     let qualified = &contract::DEVELOPMENT_QUALIFICATION;
     annotations.insert(
-        "dev.krun.oci.containerd-development-qualification".to_string(),
+        "dev.koci.containerd-development-qualification".to_string(),
         format!(
             "{};{};{};{}",
             qualified.containerd,
@@ -199,7 +199,7 @@ fn encode_runtime_info(feature_json: &[u8], endpoint: &str) -> Result<Vec<u8>, S
         name: contract::SHIM_BINARY.to_string(),
         version: MessageField::some(RuntimeVersion {
             version: env!("CARGO_PKG_VERSION").to_string(),
-            revision: option_env!("KRUN_OCI_GIT_REVISION")
+            revision: option_env!("K_OCI_GIT_REVISION")
                 .unwrap_or_default()
                 .to_string(),
             ..Default::default()
@@ -215,7 +215,7 @@ fn encode_runtime_info(feature_json: &[u8], endpoint: &str) -> Result<Vec<u8>, S
 #[cfg(not(unix))]
 fn main() {
     eprintln!(
-        "containerd-shim-krun-oci-v2 is currently supported on Unix hosts; this build does not advertise a Windows runtime-v2 service"
+        "containerd-shim-koci-v2 is currently supported on Unix hosts; this build does not advertise a Windows runtime-v2 service"
     );
     std::process::exit(1);
 }
@@ -228,7 +228,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn runtime_info_is_krun_identified_and_carries_oci_features() {
+    fn runtime_info_is_kidentified_and_carries_oci_features() {
         let feature_json = br#"{"ociVersionMin":"1.0.2","ociVersionMax":"1.3.0"}"#;
         let encoded = encode_runtime_info(feature_json, contract::DEFAULT_UNIX_ENDPOINT)
             .expect("encode RuntimeInfo");
@@ -237,19 +237,19 @@ mod tests {
         assert_eq!(info.name(), contract::SHIM_BINARY);
         assert_eq!(info.version().version(), env!("CARGO_PKG_VERSION"));
         assert_eq!(
-            info.annotations()["dev.krun.oci.runtime-type"],
+            info.annotations()["dev.koci.runtime-type"],
             contract::RUNTIME_TYPE
         );
         assert_eq!(
-            info.annotations()["dev.krun.oci.containerd-contract-version"],
+            info.annotations()["dev.koci.containerd-contract-version"],
             contract::CONTRACT_VERSION.to_string()
         );
         assert_eq!(
-            info.annotations()["dev.krun.oci.containerd-task-api"],
+            info.annotations()["dev.koci.containerd-task-api"],
             contract::TASK_API_SERVICE
         );
         assert_eq!(
-            info.annotations()["dev.krun.oci.identity-encoding"],
+            info.annotations()["dev.koci.identity-encoding"],
             contract::IDENTITY_ENCODING
         );
         assert_eq!(

@@ -1,5 +1,5 @@
 {
-  "schema": "krun.runtime.action-request.v1",
+  "schema": "kbox_contract.action-request.v1",
   "request_id": "golden-stop",
   "unit_id": "golden-service",
   "generation": 3,

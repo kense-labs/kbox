@@ -1,7 +1,7 @@
 use std::io;
 use std::path::Path;
 
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 
 use super::state::{
     parse_weight_state, read_max_state, read_max_state_async, read_optional, read_optional_async,

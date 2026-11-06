@@ -1,5 +1,5 @@
 #[cfg(not(any(target_os = "linux", target_os = "macos", windows)))]
-use krun_oci_core::{
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
     RuntimeFeatures,
 };
@@ -14,7 +14,7 @@ use crate::WhpxSmokeReport;
 #[cfg(not(any(target_os = "linux", target_os = "macos", windows)))]
 pub(crate) fn features() -> RuntimeFeatures {
     RuntimeFeatures::current(vec![DriverCapability {
-        driver: DriverKind::LibkrunWhpx,
+        driver: DriverKind::LibkWhpx,
         status: CapabilityStatus::Unsupported,
         readiness: DriverReadiness::ProbeOnly,
         isolation_classes: vec![
@@ -34,7 +34,7 @@ pub(crate) fn whpx_smoke() -> WhpxSmokeReport {
 #[cfg(not(target_os = "macos"))]
 pub(crate) fn hvf_smoke() -> HvfSmokeReport {
     HvfSmokeReport::unsupported(
-        krun_oci_core::HostPlatform::current(),
+        koci_core::HostPlatform::current(),
         "Hypervisor.framework smoke is available only on macOS hosts",
     )
 }

@@ -1,14 +1,14 @@
 use std::sync::Mutex;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentCapabilities, AgentCloseStdinRequest, AgentContainerOperationRequest, AgentCreateRequest,
     AgentDeleteRequest, AgentExecRequest, AgentKillRequest, AgentOperation, AgentProcess,
     AgentProcessesRequest, AgentReadOutputRequest, AgentResizeRequest, AgentSignalProcessRequest,
     AgentStartRequest, AgentState, AgentStateRequest, AgentStatsRequest, AgentUpdateRequest,
     AgentWaitProcessRequest, AgentWaitRequest, AgentWriteStdinRequest, GuestAgentService,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     async_trait, ContainerStats, DeleteMode, Error, ErrorCode, ExitStatus, FileRequest,
     FileResponse, FilesystemRequest, FilesystemResponse, OperationId, OutputChunk, ProcessRecord,
     Result,

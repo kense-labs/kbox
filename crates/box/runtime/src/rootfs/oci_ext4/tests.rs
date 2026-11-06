@@ -130,7 +130,7 @@ fn assembles_layers_without_a_host_namespace() {
 
     let mut lower_tar = Builder::new(File::create(&lower).unwrap());
     lower_tar
-        .append_pax_extensions([("SCHILY.xattr.user.krun", b"preserved".as_slice())])
+        .append_pax_extensions([("SCHILY.xattr.user.kbox", b"preserved".as_slice())])
         .unwrap();
     append_file(&mut lower_tar, Path::new("README"), b"upper-case", 0o640);
     append_file(&mut lower_tar, Path::new("Readme"), b"mixed-case", 0o600);
@@ -197,7 +197,7 @@ fn assembles_layers_without_a_host_namespace() {
         (0o640, 123, 456)
     );
     assert!(filesystem.xattrs(readme).unwrap().iter().any(|xattr| {
-        xattr.full_name().as_deref() == Some(b"user.krun") && xattr.value == b"preserved"
+        xattr.full_name().as_deref() == Some(b"user.kbox") && xattr.value == b"preserved"
     }));
     assert_eq!(
         filesystem
@@ -260,7 +260,7 @@ fn assembles_layers_without_a_host_namespace() {
         ),
         (0o755, 0, 0, 0)
     );
-    assert!(filesystem.resolve("/.krun_image_metadata_v1.json").is_err());
+    assert!(filesystem.resolve("/.kimage_metadata_v1.json").is_err());
 }
 
 #[test]
@@ -292,7 +292,7 @@ fn failed_capacity_check_never_publishes_a_partial_generation() {
     assert!(std::fs::read_dir(temporary.path()).unwrap().all(|entry| {
         let name = entry.unwrap().file_name();
         let name = name.to_string_lossy();
-        !name.starts_with(".krun-rootfs-ext4-") && !name.starts_with(".krun-oci-ext4-content-")
+        !name.starts_with(".krootfs-ext4-") && !name.starts_with(".koci-ext4-content-")
     }));
 }
 
@@ -304,7 +304,7 @@ fn rejects_internal_paths_and_symlink_parent_escapes() {
             Box::new(|archive: &mut Builder<File>| {
                 append_file(
                     archive,
-                    Path::new(".krun_rootfs_metadata_v1.json"),
+                    Path::new(".krootfs_metadata_v1.json"),
                     b"forged",
                     0o644,
                 );

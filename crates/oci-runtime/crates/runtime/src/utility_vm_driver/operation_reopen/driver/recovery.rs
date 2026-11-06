@@ -1,8 +1,8 @@
 use std::sync::atomic::Ordering;
 
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerRecord, ContainerTarget, ErrorCode, FileRequest, FilesystemRequest, OciBundle,
     ProcessRecord, ProcessTarget, ResizeRequest, Result,
 };
@@ -387,7 +387,7 @@ impl QualificationKvmOperationDriver {
 
     async fn recovery_request(&self, record: &ContainerRecord) -> Result<DriverCreateRequest> {
         let attachment_digest = self.retained_create.attachments.digest()?;
-        if record.driver != DriverKind::LibkrunKvm
+        if record.driver != DriverKind::LibkKvm
             || record.isolation != IsolationClass::DedicatedVm
             || record.state.id() != self.retained_create.id.as_str()
             || record.config_digest != self.retained_create.bundle.config_digest()

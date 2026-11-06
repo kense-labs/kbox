@@ -1,7 +1,7 @@
 //! Cache backend abstraction.
 //!
 //! Decouples rootfs and layer caching from the filesystem-based LRU
-//! implementation in `krun-box-runtime`. Implementations can use any
+//! implementation in `kbox-runtime`. Implementations can use any
 //! storage backend: local filesystem, shared NFS, Redis, content-addressable
 //! store, etc.
 //!

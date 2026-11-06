@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use krun_oci_sdk::{ErrorCode, IoMode, OciBundle, ProcessIo};
+use koci_sdk::{ErrorCode, IoMode, OciBundle, ProcessIo};
 
 use super::plan::InitPlan;
 use super::rootfs::RootfsPropagation;

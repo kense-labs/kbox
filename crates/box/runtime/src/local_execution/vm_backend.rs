@@ -10,7 +10,7 @@ use std::time::Duration;
 use async_trait::async_trait;
 use dashmap::mapref::entry::Entry;
 use dashmap::DashMap;
-use krun_box_core::{
+use kbox_core::{
     BoxError, EventEmitter, ExecutionBackend, ExecutionId, ExecutionManagerError,
     ExecutionManagerResult, ExecutionState, KillOutcome, DEFAULT_SHUTDOWN_TIMEOUT_MS,
 };
@@ -295,7 +295,7 @@ impl VmLocalExecutionBackend {
                 "runtime returned no host PID for {execution_id}"
             ))
         })?;
-        let has_record_binding = record.isolation == krun_box_core::ExecutionIsolation::Microvm
+        let has_record_binding = record.isolation == kbox_core::ExecutionIsolation::Microvm
             && (record.pid.is_some() || record.pid_start_time.is_some());
         let pid_start_time = if has_record_binding {
             self.metadata(record)?;
@@ -455,7 +455,7 @@ impl VmLocalExecutionBackend {
         exit_code: Option<i32>,
     ) -> ExecutionManagerResult<LocalExecutionObservation> {
         // A workload can exit between the first non-blocking wait and the
-        // following health probe. Krun OCI publishes the exact status shortly
+        // following health probe. Kbox OCI publishes the exact status shortly
         // after the process becomes non-running, so retain its terminal record
         // and poll within a strict bound before any teardown.
         let deadline = tokio::time::Instant::now() + TERMINAL_EXIT_POLL_TIMEOUT;
@@ -734,7 +734,7 @@ impl VmLocalExecutionBackend {
         let home_dir = self.home_dir.clone();
         let execution_id = record.id.clone();
         let short_id = record.id.chars().take(8).collect::<String>();
-        let result = tokio::task::spawn_blocking(move || -> krun_box_core::Result<Vec<String>> {
+        let result = tokio::task::spawn_blocking(move || -> kbox_core::Result<Vec<String>> {
             let store =
                 crate::VolumeStore::new(home_dir.join("volumes.json"), home_dir.join("volumes"));
             let prefix = format!("anon_{short_id}_");
@@ -779,7 +779,7 @@ impl VmLocalExecutionBackend {
         let home_dir = self.home_dir.clone();
         let owner = owner.to_string();
         let owner_for_error = owner.clone();
-        let task = tokio::task::spawn_blocking(move || -> krun_box_core::Result<()> {
+        let task = tokio::task::spawn_blocking(move || -> kbox_core::Result<()> {
             let store =
                 crate::VolumeStore::new(home_dir.join("volumes.json"), home_dir.join("volumes"));
             for name in names {
@@ -835,11 +835,11 @@ impl VmLocalExecutionBackend {
                 .await;
         }
         match metadata.plan.backend {
-            ExecutionBackend::KrunOci => {
+            ExecutionBackend::KOci => {
                 self.destroy_detached_sandbox(record, remove_anonymous_volumes, false, timeout_secs)
                     .await
             }
-            ExecutionBackend::Krun => {
+            ExecutionBackend::Kbox => {
                 let manager = self.recover_microvm(record).await?;
                 self.destroy_registered(
                     record,
@@ -854,12 +854,12 @@ impl VmLocalExecutionBackend {
     }
 }
 
-fn admit_launch(isolation: krun_box_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
+fn admit_launch(isolation: kbox_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
     crate::host_check::admit_requested_isolation(isolation)
         .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))
 }
 
-fn admit_create(isolation: krun_box_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
+fn admit_create(isolation: kbox_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
     crate::host_check::admit_isolation_class(isolation)
         .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))
 }
@@ -867,7 +867,7 @@ fn admit_create(isolation: krun_box_core::ExecutionIsolation) -> ExecutionManage
 async fn destroy_after_observation(
     manager: &mut VmManager,
     preserve_rootfs: bool,
-) -> krun_box_core::Result<()> {
+) -> kbox_core::Result<()> {
     if preserve_rootfs {
         manager.destroy_preserving_rootfs().await
     } else {
@@ -1004,7 +1004,7 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
 
     async fn preflight_isolation(
         &self,
-        isolation: krun_box_core::ExecutionIsolation,
+        isolation: kbox_core::ExecutionIsolation,
     ) -> ExecutionManagerResult<()> {
         // CLI and explicit readiness probes open the hypervisor.
         admit_launch(isolation)
@@ -1014,12 +1014,12 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         self.require_legacy_lineage(&record.id)?;
         if let Some(metadata) = record.managed_execution.as_ref() {
             #[cfg(not(any(target_os = "linux", target_os = "windows")))]
-            if record.isolation == krun_box_core::ExecutionIsolation::Microvm {
+            if record.isolation == kbox_core::ExecutionIsolation::Microvm {
                 VmManager::validate_virtiofs_mount_support(&metadata.request.config)
                     .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
             }
             if !metadata.request.config.host_services.is_empty() {
-                krun_box_core::resolve_execution(&metadata.request.config)
+                kbox_core::resolve_execution(&metadata.request.config)
                     .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
                 #[cfg(unix)]
                 for service in &metadata.request.config.host_services {
@@ -1105,10 +1105,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         self.claim_transient_registry_auth_for_boot(&mut guard);
         if let Err(error) = guard.boot().await {
             guard.config.persistent = requested_persistence;
-            // The teardown that follows deletes the box directory with the
-            // only evidence for why the guest exec server never became
-            // ready; retain one bounded copy of the boot logs first.
-            guard.retain_boot_failure_diagnostics();
             // Sandbox boot cleanup synchronously asks the authoritative OCI
             // handler for its exit status before tearing down transient host
             // artifacts. A very short task can therefore complete while boot
@@ -1321,11 +1317,11 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
                 .outcome);
         }
         match metadata.plan.backend {
-            ExecutionBackend::KrunOci => Ok(self
+            ExecutionBackend::KOci => Ok(self
                 .destroy_detached_sandbox(record, false, true, timeout_secs)
                 .await?
                 .outcome),
-            ExecutionBackend::Krun => {
+            ExecutionBackend::Kbox => {
                 let manager = self.recover_microvm(record).await?;
                 Ok(self
                     .destroy_registered(record, manager, false, true, timeout_secs)
@@ -1390,7 +1386,7 @@ fn graceful_stop_options(
     let signal = record
         .stop_signal
         .as_deref()
-        .map(krun_box_core::vmm::parse_signal_name)
+        .map(kbox_core::vmm::parse_signal_name)
         .unwrap_or(libc::SIGTERM);
     Ok(Some((signal, timeout_ms)))
 }
@@ -1529,7 +1525,7 @@ fn execution_id(record: &BoxRecord) -> ExecutionManagerResult<ExecutionId> {
 #[cfg(target_os = "windows")]
 fn authenticate_windows_managed_terminal_exit(
     box_dir: &Path,
-    log_config: &krun_box_core::log::LogConfig,
+    log_config: &kbox_core::log::LogConfig,
     exit_code: Option<i32>,
 ) -> Option<i32> {
     let Some(code) = exit_code else {
@@ -1585,11 +1581,11 @@ async fn exec_endpoint_ready(box_id: &str, path: Option<&Path>) -> bool {
         return false;
     };
     let guest_control_ready =
-        layout_path.with_file_name(krun_box_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
+        layout_path.with_file_name(kbox_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
     if !guest_control_ready.is_file() {
         return false;
     }
-    let pipe = std::path::PathBuf::from(krun_box_core::exec::windows_exec_pipe_path(box_id));
+    let pipe = std::path::PathBuf::from(kbox_core::exec::windows_exec_pipe_path(box_id));
     let attempt = async {
         let client = crate::ExecClient::connect(&pipe).await.ok()?;
         client.heartbeat().await.ok().filter(|ready| *ready)
@@ -1648,11 +1644,11 @@ impl OwnedVmJobKind {
 }
 
 enum OwnedVmJobOutput {
-    Metadata(krun_box_core::Result<()>),
+    Metadata(kbox_core::Result<()>),
     Prepare(ExecutionManagerResult<()>),
     Rollback(ExecutionManagerResult<()>),
-    Finalize(krun_box_core::Result<()>),
-    Anonymous(krun_box_core::Result<()>),
+    Finalize(kbox_core::Result<()>),
+    Anonymous(kbox_core::Result<()>),
 }
 
 impl OwnedVmJobOutput {
@@ -1703,9 +1699,9 @@ struct OwnedVmProgress {
     anonymous: Option<Arc<std::sync::Mutex<OwnedAnonymousCleanup>>>,
     job: OwnedVmJobSlot,
     completed: Vec<OwnedVmCompleted>,
-    physical: Option<krun_box_core::Result<krun_box_core::vmm::VmExitConfirmation>>,
-    physical_budget: Option<krun_box_core::vmm::OwnedCloseBudget>,
-    cleanup_budget: Option<krun_box_core::vmm::OwnedCleanupBudget>,
+    physical: Option<kbox_core::Result<kbox_core::vmm::VmExitConfirmation>>,
+    physical_budget: Option<kbox_core::vmm::OwnedCloseBudget>,
+    cleanup_budget: Option<kbox_core::vmm::OwnedCleanupBudget>,
     #[cfg(test)]
     hooks: Option<OwnedJobHooks>,
 }
@@ -1811,7 +1807,7 @@ impl OwnedVmProgress {
         &mut self,
         call: &super::store::ValidatedOwnedCall<'_>,
         work: OwnedVmWork,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let binding = call.stage(budget)?;
         self.validate_bound_settings(call.record)?;
@@ -1913,7 +1909,7 @@ impl OwnedVmProgress {
     async fn poll_job(
         &mut self,
         call: &super::store::ValidatedOwnedCall<'_>,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         use std::future::Future;
         self.reconcile_ready(call)?;
@@ -1963,7 +1959,7 @@ struct OwnedAnonymousCleanup {
     unproved: bool,
 }
 impl OwnedAnonymousCleanup {
-    fn run(&mut self, budget: krun_box_core::vmm::OwnedCleanupBudget) -> krun_box_core::Result<()> {
+    fn run(&mut self, budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
         if self.unproved {
             return Err(BoxError::StateError(
                 "original anonymous cleanup effect is unproved".into(),
@@ -2070,7 +2066,7 @@ impl OwnedVmWork {
             Self::CleanupAnonymousVolumes(_) => OwnedVmJobKind::CleanupAnonymousVolumes,
         }
     }
-    fn run(self, budget: krun_box_core::vmm::OwnedCleanupBudget) -> OwnedVmJobOutput {
+    fn run(self, budget: kbox_core::vmm::OwnedCleanupBudget) -> OwnedVmJobOutput {
         match self {
             Self::StageMetadata(path) => OwnedVmJobOutput::Metadata(
                 require_job_time(budget)
@@ -2104,7 +2100,7 @@ impl OwnedVmWork {
         }
     }
 }
-fn require_job_time(budget: krun_box_core::vmm::OwnedCleanupBudget) -> krun_box_core::Result<()> {
+fn require_job_time(budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
     if budget.remaining_at(std::time::Instant::now()).is_zero() {
         Err(BoxError::StateError(
             "original ancillary job deadline expired".into(),
@@ -2126,7 +2122,7 @@ struct OwnedJobHooks {
 fn spawn_original_work(
     work: OwnedVmWork,
     guard: Arc<super::ExecutionLifecycleLock>,
-    budget: krun_box_core::vmm::OwnedCleanupBudget,
+    budget: kbox_core::vmm::OwnedCleanupBudget,
     #[cfg(test)] hooks: Option<OwnedJobHooks>,
 ) -> tokio::task::JoinHandle<OwnedVmJobOutput> {
     // Closed concrete dispatch only, never a generic closure/future host.
@@ -2213,7 +2209,7 @@ impl VmLocalExecutionBackend {
     async fn run_original_preparation(
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let owner = self.exact_original(call)?;
         let mut progress = tokio::time::timeout_at(
@@ -2275,7 +2271,7 @@ impl VmLocalExecutionBackend {
     async fn rollback_original_resources(
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let owner = self.exact_original(call)?;
         let mut progress = tokio::time::timeout_at(
@@ -2312,7 +2308,7 @@ impl VmLocalExecutionBackend {
     async fn boot_original_component(
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         self.run_original_preparation(call, budget).await?;
         let owner = self.exact_original(call)?;
@@ -2354,7 +2350,7 @@ impl VmLocalExecutionBackend {
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
         signal: i32,
-        budget: krun_box_core::vmm::OwnedCloseBudget,
+        budget: kbox_core::vmm::OwnedCloseBudget,
     ) -> ExecutionManagerResult<()> {
         let owner = self.exact_original(call)?;
         let deadline = tokio::time::Instant::from_std(budget.physical_deadline());
@@ -2412,7 +2408,7 @@ impl VmLocalExecutionBackend {
             Some(Ok(_)) => {
                 if progress.cleanup_budget.is_none() {
                     progress.cleanup_budget = Some(
-                        krun_box_core::vmm::OwnedCleanupBudget::from_validation(
+                        kbox_core::vmm::OwnedCleanupBudget::from_validation(
                             std::time::Instant::now(),
                         )
                         .map_err(|e| runtime_error("admit original cleanup", call.record, e))?,
@@ -2431,7 +2427,7 @@ impl VmLocalExecutionBackend {
     async fn cleanup_original_anonymous(
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let owner = self.exact_original(call)?;
         let deadline = tokio::time::Instant::from_std(budget.deadline());
@@ -2496,7 +2492,7 @@ impl VmLocalExecutionBackend {
         &self,
         call: &super::store::ValidatedOwnedCall<'_>,
         preserve_rootfs: bool,
-        budget: krun_box_core::vmm::OwnedCleanupBudget,
+        budget: kbox_core::vmm::OwnedCleanupBudget,
     ) -> ExecutionManagerResult<()> {
         let owner = self.exact_original(call)?;
         let mut progress = tokio::time::timeout_at(

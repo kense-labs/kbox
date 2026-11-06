@@ -49,7 +49,7 @@ specs/[###-feature-name]/
 | --- | --- | --- |
 | Execution | `crates/box/` or `crates/oci-runtime/` | [Files] |
 | Runtime contracts | `crates/runtime/` | [Files] |
-| Policy | `apps/gateway/`, `crates/sentry/` or `crates/acl/` | [Files] |
+| Policy | `crates/acl/` | [Files] |
 | Supporting crate | `crates/<name>/` | [Files] |
 | Native submodule | `libkrun` or `libkrunfw` gitlink | [Owning commit and pointer] |
 

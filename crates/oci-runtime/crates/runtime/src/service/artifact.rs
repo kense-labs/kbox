@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointDigest, Error, ErrorCode, Result, RuntimeArtifact,
 };
 use sha2::{Digest, Sha256};
@@ -353,7 +353,7 @@ async fn load() -> Result<RuntimeArtifact> {
         env!("CARGO_PKG_NAME"),
         env!("CARGO_PKG_VERSION"),
         digest,
-        option_env!("KRUN_OCI_GIT_REVISION").map(str::to_string),
+        option_env!("K_OCI_GIT_REVISION").map(str::to_string),
     )
     .map_err(|error| {
         artifact_error(format!(
@@ -397,7 +397,7 @@ fn artifact_error(message: impl Into<String>) -> Error {
 mod tests {
     use std::path::PathBuf;
 
-    use krun_oci_sdk::{CheckpointArtifactPath, CheckpointDigest, ErrorCode};
+    use koci_sdk::{CheckpointArtifactPath, CheckpointDigest, ErrorCode};
     use sha2::{Digest, Sha256};
 
     fn artifact_path(path: PathBuf) -> CheckpointArtifactPath {

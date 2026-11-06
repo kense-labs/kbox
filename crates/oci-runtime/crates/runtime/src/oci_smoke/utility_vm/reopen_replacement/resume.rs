@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use koci_sdk::{
     ContainerOperationRequest, ContainerTarget, CreateRequest, OperationId, StartRequest,
 };
 

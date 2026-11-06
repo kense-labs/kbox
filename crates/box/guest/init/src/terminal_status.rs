@@ -11,7 +11,7 @@ use std::io::{Read, Seek, SeekFrom, Write};
 use std::path::Path;
 use std::sync::{Mutex, OnceLock};
 
-use krun_box_core::guest_exec::{GuestTerminalStatus, MAX_GUEST_TERMINAL_STATUS_BYTES};
+use kbox_core::guest_exec::{GuestTerminalStatus, MAX_GUEST_TERMINAL_STATUS_BYTES};
 
 static TERMINAL_STATUS_FILE: OnceLock<Mutex<File>> = OnceLock::new();
 

@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixStream;
 
@@ -200,7 +200,7 @@ impl RaTlsAttestationClient {
         policy: crate::tee::AttestationPolicy,
         allow_simulated: bool,
     ) -> Result<crate::tee::VerificationResult> {
-        use krun_box_core::tee::{AttestRequest, AttestRoute};
+        use kbox_core::tee::{AttestRequest, AttestRoute};
 
         let mut tls_stream = connect_ratls(&self.socket_path, policy, allow_simulated).await?;
 
@@ -285,7 +285,7 @@ impl RaTlsAttestationClient {
         policy: crate::tee::AttestationPolicy,
         allow_simulated: bool,
     ) -> Result<RaTlsAttestationEvidence> {
-        use krun_box_core::tee::{AttestRequest, AttestRoute};
+        use kbox_core::tee::{AttestRequest, AttestRoute};
 
         let mut tls_stream = connect_ratls(&self.socket_path, policy, allow_simulated).await?;
 
@@ -381,7 +381,7 @@ impl SecretInjector {
         policy: crate::tee::AttestationPolicy,
         allow_simulated: bool,
     ) -> Result<SecretInjectionResult> {
-        use krun_box_core::tee::{AttestRequest, AttestRoute};
+        use kbox_core::tee::{AttestRequest, AttestRoute};
 
         if secrets.is_empty() {
             return Ok(SecretInjectionResult {
@@ -482,7 +482,7 @@ impl SealClient {
         allow_simulated: bool,
     ) -> Result<SealResult> {
         use base64::Engine;
-        use krun_box_core::tee::{AttestRequest, AttestRoute};
+        use kbox_core::tee::{AttestRequest, AttestRoute};
 
         let mut tls_stream =
             connect_ratls(&self.socket_path, attestation_policy, allow_simulated).await?;
@@ -539,7 +539,7 @@ impl SealClient {
         allow_simulated: bool,
     ) -> Result<Vec<u8>> {
         use base64::Engine;
-        use krun_box_core::tee::{AttestRequest, AttestRoute};
+        use kbox_core::tee::{AttestRequest, AttestRoute};
 
         let mut tls_stream =
             connect_ratls(&self.socket_path, attestation_policy, allow_simulated).await?;
@@ -689,7 +689,7 @@ mod tests {
     #[tokio::test]
     async fn test_attestation_connect_nonexistent_socket() {
         let result =
-            AttestationClient::connect(Path::new("/tmp/nonexistent-krun-attest-test.sock")).await;
+            AttestationClient::connect(Path::new("/tmp/nonexistent-kattest-test.sock")).await;
         assert!(result.is_err());
         let err = result.unwrap_err();
         assert!(matches!(err, BoxError::AttestationError(_)));
@@ -869,7 +869,7 @@ mod tests {
 
     #[test]
     fn test_attestation_client_constructors_and_serde_defaults() {
-        let path = Path::new("/tmp/krun-attest.sock");
+        let path = Path::new("/tmp/kattest.sock");
         assert_eq!(RaTlsAttestationClient::new(path).socket_path(), path);
         assert_eq!(SecretInjector::new(path).socket_path, path);
         assert_eq!(SealClient::new(path).socket_path, path);

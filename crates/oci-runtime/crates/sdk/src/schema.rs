@@ -22,7 +22,7 @@ pub use coverage::{
     OciSchemaEvidenceBinding, OciSchemaEvidenceManifest,
 };
 
-const SCHEMA_BASE_URI: &str = "https://schema.krun.dev/oci/runtime-spec/v1.3.0/";
+const SCHEMA_BASE_URI: &str = "https://schema.kbox.dev/oci/runtime-spec/v1.3.0/";
 const MAX_REPORTED_VIOLATIONS: usize = 64;
 
 /// Official OCI JSON document validated by the SDK.
@@ -502,9 +502,9 @@ mod tests {
         for annotations in [
             json!({}),
             json!({
-                "dev.krun.runtime.empty": "",
-                "dev.krun.runtime.structured": r#"{"lifecycle":"durable"}"#,
-                "dev.krun.runtime.unstructured": "probe-only"
+                "dev.kbox_contract.empty": "",
+                "dev.kbox_contract.structured": r#"{"lifecycle":"durable"}"#,
+                "dev.kbox_contract.unstructured": "probe-only"
             }),
         ] {
             let mut features = feature_base();
@@ -513,7 +513,7 @@ mod tests {
                 .validate(OciSchemaDocument::Features, &features)
                 .expect("feature annotations must accept string metadata");
         }
-        for annotations in [json!([]), json!({"dev.krun.runtime.level": 2})] {
+        for annotations in [json!([]), json!({"dev.kbox_contract.level": 2})] {
             let mut features = feature_base();
             features["annotations"] = annotations;
             validator
@@ -568,11 +568,11 @@ mod tests {
                     "linux": {
                         "devices": [
                             {"type": "c", "path": "/dev/null", "major": 1, "minor": 3},
-                            {"type": "u", "path": "/run/krun/char", "major": 10, "minor": 229},
+                            {"type": "u", "path": "/run/kbox/char", "major": 10, "minor": 229},
                             {"type": "b", "path": "/storage/block", "major": 8, "minor": 0},
                             {
                                 "type": "p",
-                                "path": "/run/krun/fifo",
+                                "path": "/run/kbox/fifo",
                                 "fileMode": 416,
                                 "uid": 1,
                                 "gid": 2
@@ -631,8 +631,8 @@ mod tests {
                     "ociVersion": "1.3.0",
                     "vm": {
                         "hypervisor": {
-                            "path": "/runtime/krun-vmm",
-                            "parameters": ["--machine", "krun"]
+                            "path": "/runtime/kvmm",
+                            "parameters": ["--machine", "kbox"]
                         },
                         "kernel": {
                             "path": "/runtime/vmlinux",
@@ -644,7 +644,7 @@ mod tests {
                             "format": "vmdk"
                         },
                         "hwConfig": {
-                            "deviceTree": "/runtime/krun.dtb",
+                            "deviceTree": "/runtime/kbox.dtb",
                             "vcpus": 2,
                             "memory": 536870912,
                             "dtdevs": ["/soc/virtio@1000"],
@@ -735,7 +735,7 @@ mod tests {
                         "org.opencontainers.image.os.features": "win32k",
                         "org.opencontainers.image.architecture": "arm64",
                         "org.opencontainers.image.variant": "v8",
-                        "org.opencontainers.image.author": "Krun <dev@krun.dev>",
+                        "org.opencontainers.image.author": "Kbox <dev@kbox.dev>",
                         "org.opencontainers.image.created": "2026-08-17T10:11:12Z",
                         "org.opencontainers.image.stopSignal": "SIGTERM"
                     }
@@ -812,7 +812,7 @@ mod tests {
         ))
         .expect("decode checked-in coverage manifest");
 
-        assert_eq!(actual.schema_version, "krun.oci.schema-coverage.v2");
+        assert_eq!(actual.schema_version, "koci.schema-coverage.v2");
         assert_eq!(actual.oci_runtime_spec, "1.3.0");
         assert_eq!(
             actual.upstream_commit,

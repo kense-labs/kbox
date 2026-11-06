@@ -1,4 +1,4 @@
-//! `krun-box events` command — Stream real-time system events.
+//! `kbox events` command — Stream real-time system events.
 //!
 //! Monitors state changes and outputs events similar to `docker events`.
 //! Events are detected by polling the state file for changes.

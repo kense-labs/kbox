@@ -2,9 +2,9 @@ use std::os::unix::fs::{MetadataExt, PermissionsExt};
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_agent_protocol::AgentRecoveryReport;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentRecoveryReport;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerId, ContainerTarget, CreateRequest, DeleteMode, DeleteRequest, ExitStatus,
     IsolationRequest, ListRequest, ProcessesRequest, StartRequest, StateRequest, WaitRequest,
 };

@@ -1,4 +1,4 @@
-use krun_box_core::{
+use kbox_core::{
     ExecutionLease, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
     KillExecutionOptions, KillOutcome,
 };

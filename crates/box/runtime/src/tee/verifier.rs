@@ -5,7 +5,7 @@
 //! trust anchor — if verification passes, the report was genuinely
 //! produced by AMD hardware running the expected workload.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::attestation::{parse_platform_info, AttestationReport, PlatformInfo, SNP_REPORT_SIZE};
 use super::policy::{AttestationPolicy, PolicyResult, PolicyViolation};

@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use krun_acl::{generate, parse, parse_with_limits, ParseLimits, Value};
+use kacl::{generate, parse, parse_with_limits, ParseLimits, Value};
 
 #[test]
 fn quoted_header_keys_and_attributes_are_preserved() {

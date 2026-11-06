@@ -10,7 +10,7 @@ driver coverage are implemented. Production drivers advertise neither the TEE
 extensions nor `RuntimeOperation::Attest` until hardware execution, restart,
 upgrade, cleanup, and destructive real-host qualification pass.
 
-Krun Box or Cloud owns evidence appraisal, endorsement lookup, freshness policy,
+Kbox Box or Cloud owns evidence appraisal, endorsement lookup, freshness policy,
 allowlists, tenant authorization, and the decision to release a workload or a
 secret. Runtime never converts a provider report into a trust decision.
 
@@ -20,8 +20,8 @@ One dedicated-VM create or restore may require exactly one launch technology:
 
 | Technology | Required extension | Annotation schema |
 | --- | --- | --- |
-| AMD SEV-SNP | `dev.krun.tee.amd-sev-snp@1` | `krun.oci.tee-launch.v1` |
-| Intel TDX | `dev.krun.tee.intel-tdx@1` | `krun.oci.tee-launch.v1` |
+| AMD SEV-SNP | `dev.kbox.tee.amd-sev-snp@1` | `koci.tee-launch.v1` |
+| Intel TDX | `dev.kbox.tee.intel-tdx@1` | `koci.tee-launch.v1` |
 
 The annotation is canonical JSON and selects `hardware` or `simulated` mode.
 The extension must be required, version 1, classified as neither network nor
@@ -79,7 +79,7 @@ driver dispatch. Runtime then claims the exact container so another lifecycle
 mutation cannot race evidence collection. An already committed exact response
 or terminal error remains replayable after the source stops or is deleted.
 
-The immutable `krun.oci.tee-attestation.v1` response binds:
+The immutable `koci.tee-attestation.v1` response binds:
 
 - the exact container ID and generation;
 - the launch technology and hardware/simulated mode;
@@ -103,7 +103,7 @@ parse the provider format and validate the claims.
 
 ## Durability And Retry
 
-Attestation uses `krun.oci.operation.v6`. Before writing an intent, the Host
+Attestation uses `koci.operation.v6`. Before writing an intent, the Host
 performs read-only source, driver, extension, and current-artifact checks. The
 journal then retains the exact target and report data under the caller's
 `OperationId`. Drivers must collect or retrieve evidence idempotently by that

@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-19
-- Decision owners: Krun Runtime maintainers
+- Decision owners: Kbox Runtime maintainers
 
 ## Context
 

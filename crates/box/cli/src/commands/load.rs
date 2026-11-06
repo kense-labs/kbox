@@ -1,4 +1,4 @@
-//! `krun-box load` command — Load an image from a tar archive.
+//! `kbox load` command — Load an image from a tar archive.
 
 use clap::Args;
 

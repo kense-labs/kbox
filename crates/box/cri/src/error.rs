@@ -1,6 +1,6 @@
 //! CRI-specific error conversions.
 
-use krun_box_core::error::BoxError;
+use kbox_core::error::BoxError;
 use tonic::Status;
 
 /// Convert a BoxError to a gRPC Status.

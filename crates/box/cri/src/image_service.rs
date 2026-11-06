@@ -1,6 +1,6 @@
 //! CRI ImageService implementation.
 //!
-//! Maps CRI image operations to Krun Box ImageStore and ImagePuller.
+//! Maps CRI image operations to Kbox Box ImageStore and ImagePuller.
 
 use std::pin::Pin;
 use std::sync::Arc;
@@ -8,8 +8,8 @@ use std::sync::Arc;
 use futures::Stream;
 use tonic::{Request, Response, Status};
 
-use krun_box_core::StoredImage;
-use krun_box_runtime::oci::{ImagePuller, ImageStore, OciImage, RegistryAuth};
+use kbox_core::StoredImage;
+use kbox_runtime::oci::{ImagePuller, ImageStore, OciImage, RegistryAuth};
 
 use crate::cri_api::image_service_server::ImageService;
 use crate::cri_api::*;
@@ -118,7 +118,7 @@ fn image_matches_filter(image: &Image, filter: &str) -> bool {
         || image.repo_digests.iter().any(|d| d == filter)
 }
 
-/// Krun Box implementation of the CRI ImageService.
+/// Kbox Box implementation of the CRI ImageService.
 /// Convert a CRI per-request `AuthConfig` (kubelet fills it from a pod's
 /// `imagePullSecrets`) into a registry credential.
 ///
@@ -399,7 +399,7 @@ impl ImageService for BoxImageService {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_runtime::oci::ImageStore;
+    use kbox_runtime::oci::ImageStore;
     use futures::StreamExt;
 
     const TEST_DIGEST: &str =

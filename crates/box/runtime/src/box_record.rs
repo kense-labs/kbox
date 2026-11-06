@@ -4,16 +4,16 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 
 use chrono::{DateTime, Utc};
-use krun_box_core::config::ResourceLimits;
-use krun_box_core::log::LogConfig;
-use krun_box_core::{
+use kbox_core::config::ResourceLimits;
+use kbox_core::log::LogConfig;
+use kbox_core::{
     CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, ExecutionResourceUpdate,
     ExecutionSnapshotId, NetworkMode, OperationId, ResolvedExecutionPlan,
 };
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-pub use krun_box_core::ExecutionHealthCheck as HealthCheck;
+pub use kbox_core::ExecutionHealthCheck as HealthCheck;
 
 /// Metadata record for a single local box execution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -215,7 +215,7 @@ impl BoxRecord {
     /// Legacy records return `None`. Unknown managed states fail closed so a
     /// runtime service cannot operate on a record written by incompatible
     /// code.
-    pub fn managed_state(&self) -> krun_box_core::Result<Option<ManagedExecutionState>> {
+    pub fn managed_state(&self) -> kbox_core::Result<Option<ManagedExecutionState>> {
         let Some(metadata) = self.managed_execution.as_ref() else {
             return Ok(None);
         };
@@ -294,7 +294,7 @@ impl ManagedExecutionState {
     }
 
     /// Parse a persisted managed lifecycle state.
-    pub fn from_status(status: &str) -> krun_box_core::Result<Self> {
+    pub fn from_status(status: &str) -> kbox_core::Result<Self> {
         match status {
             "creating" => Ok(Self::Creating),
             "created" => Ok(Self::Created),
@@ -311,7 +311,7 @@ impl ManagedExecutionState {
             "removing" => Ok(Self::Removing),
             "stopped" => Ok(Self::Stopped),
             "dead" | "failed" => Ok(Self::Failed),
-            other => Err(krun_box_core::BoxError::StateError(format!(
+            other => Err(kbox_core::BoxError::StateError(format!(
                 "unknown managed execution state: {other}"
             ))),
         }
@@ -339,7 +339,7 @@ impl std::fmt::Display for ManagedExecutionState {
 
 /// Durable lifecycle metadata for an execution owned by [`ExecutionManager`].
 ///
-/// [`ExecutionManager`]: krun_box_core::ExecutionManager
+/// [`ExecutionManager`]: kbox_core::ExecutionManager
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ManagedExecutionMetadata {
     /// Idempotency key of the create operation.
@@ -355,7 +355,7 @@ pub struct ManagedExecutionMetadata {
     pub generation: ExecutionGeneration,
     /// Full creation intent required to recover an interrupted launch.
     pub request: CreateExecutionRequest,
-    /// Exact runtime identity returned by Krun OCI Runtime. Product and runtime
+    /// Exact runtime identity returned by Kbox OCI Runtime. Product and runtime
     /// generations remain separate and this field is cleared after teardown.
     #[serde(default)]
     pub oci_runtime: Option<crate::local_execution::OciRuntimeBinding>,
@@ -397,7 +397,7 @@ pub enum ManagedRuntimeRoute {
     Unspecified,
     /// Box's existing in-process VM/Sandbox ownership path.
     BoxVm,
-    /// The public Krun OCI SDK and its out-of-process host service.
+    /// The public Kbox OCI SDK and its out-of-process host service.
     OciSdk,
 }
 
@@ -497,13 +497,13 @@ impl ManagedExecutionMetadata {
         operation_id: OperationId,
         generation: ExecutionGeneration,
         request: CreateExecutionRequest,
-    ) -> krun_box_core::Result<Self> {
+    ) -> kbox_core::Result<Self> {
         if request.external_sandbox_id.trim().is_empty() {
-            return Err(krun_box_core::BoxError::ConfigError(
+            return Err(kbox_core::BoxError::ConfigError(
                 "external sandbox ID cannot be empty".to_string(),
             ));
         }
-        let plan = krun_box_core::resolve_execution(&request.config)?;
+        let plan = kbox_core::resolve_execution(&request.config)?;
         let creation_intent_digest = Some(digest_creation_request(&request)?);
         Ok(Self {
             operation_id,
@@ -524,7 +524,7 @@ impl ManagedExecutionMetadata {
         })
     }
 
-    /// Whether this durable record must dispatch through Krun OCI Runtime.
+    /// Whether this durable record must dispatch through Kbox OCI Runtime.
     ///
     /// Records written before `runtime_route` was introduced are identified by
     /// their exact OCI binding. Callers must never fall back to a Box-owned
@@ -535,43 +535,43 @@ impl ManagedExecutionMetadata {
     }
 
     /// Validate deserialized metadata before it participates in reconciliation.
-    pub fn validate(&self) -> krun_box_core::Result<()> {
+    pub fn validate(&self) -> kbox_core::Result<()> {
         if self.request.external_sandbox_id.trim().is_empty() {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "managed execution has an empty external sandbox ID".to_string(),
             ));
         }
-        let resolved = krun_box_core::resolve_execution(&self.request.config)?;
+        let resolved = kbox_core::resolve_execution(&self.request.config)?;
         if let Some(digest) = self.creation_intent_digest.as_deref() {
             validate_creation_intent_digest(digest)?;
         }
         if !execution_plan_matches(&resolved, &self.plan) {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "managed execution plan does not match its persisted creation request".to_string(),
             ));
         }
         if let Some(binding) = &self.oci_runtime {
             if self.runtime_route == ManagedRuntimeRoute::BoxVm {
-                return Err(krun_box_core::BoxError::StateError(
-                    "Box VM-routed execution contains an Krun OCI binding".to_string(),
+                return Err(kbox_core::BoxError::StateError(
+                    "Box VM-routed execution contains an Kbox OCI binding".to_string(),
                 ));
             }
             binding
                 .validate()
-                .map_err(|error| krun_box_core::BoxError::StateError(error.to_string()))?;
+                .map_err(|error| kbox_core::BoxError::StateError(error.to_string()))?;
             let expected_isolation =
                 crate::local_execution::oci_isolation_request(self.request.config.isolation)
                     .class();
             if binding.isolation != expected_isolation {
-                return Err(krun_box_core::BoxError::StateError(
-                    "Krun OCI binding weakens or changes the requested isolation".to_string(),
+                return Err(kbox_core::BoxError::StateError(
+                    "Kbox OCI binding weakens or changes the requested isolation".to_string(),
                 ));
             }
         }
         if let Some(completed) = &self.last_restart {
             let expected_target = next_generation(completed.source_generation)?;
             if completed.target_generation != expected_target {
-                return Err(krun_box_core::BoxError::StateError(format!(
+                return Err(kbox_core::BoxError::StateError(format!(
                     "completed restart {} has inconsistent generations",
                     completed.operation_id
                 )));
@@ -580,13 +580,13 @@ impl ManagedExecutionMetadata {
         }
         if let Some(completed) = &self.last_resource_update {
             completed.update.validate().map_err(|error| {
-                krun_box_core::BoxError::StateError(format!(
+                kbox_core::BoxError::StateError(format!(
                     "completed resource update {} is invalid: {error}",
                     completed.operation_id
                 ))
             })?;
             if completed.generation > self.generation {
-                return Err(krun_box_core::BoxError::StateError(format!(
+                return Err(kbox_core::BoxError::StateError(format!(
                     "completed resource update {} belongs to future generation {}",
                     completed.operation_id,
                     completed.generation.get()
@@ -597,21 +597,21 @@ impl ManagedExecutionMetadata {
     }
 }
 
-fn digest_creation_request(request: &CreateExecutionRequest) -> krun_box_core::Result<String> {
+fn digest_creation_request(request: &CreateExecutionRequest) -> kbox_core::Result<String> {
     let value = serde_json::to_value(request).map_err(|error| {
-        krun_box_core::BoxError::ConfigError(format!(
+        kbox_core::BoxError::ConfigError(format!(
             "failed to encode managed creation intent: {error}"
         ))
     })?;
     let encoded = serde_json::to_vec(&value).map_err(|error| {
-        krun_box_core::BoxError::ConfigError(format!(
+        kbox_core::BoxError::ConfigError(format!(
             "failed to canonicalize managed creation intent: {error}"
         ))
     })?;
     Ok(format!("sha256:{}", hex::encode(Sha256::digest(encoded))))
 }
 
-fn validate_creation_intent_digest(digest: &str) -> krun_box_core::Result<()> {
+fn validate_creation_intent_digest(digest: &str) -> kbox_core::Result<()> {
     let valid = digest.strip_prefix("sha256:").is_some_and(|value| {
         value.len() == 64
             && value
@@ -621,7 +621,7 @@ fn validate_creation_intent_digest(digest: &str) -> krun_box_core::Result<()> {
     if valid {
         Ok(())
     } else {
-        Err(krun_box_core::BoxError::StateError(
+        Err(kbox_core::BoxError::StateError(
             "managed creation intent digest is invalid".to_string(),
         ))
     }
@@ -637,7 +637,7 @@ fn execution_plan_matches(
 fn validate_pending_operation(
     state: ManagedExecutionState,
     metadata: &ManagedExecutionMetadata,
-) -> krun_box_core::Result<()> {
+) -> kbox_core::Result<()> {
     let operation = metadata.pending_operation.as_ref();
     let consistent = matches!(
         (state, operation),
@@ -676,7 +676,7 @@ fn validate_pending_operation(
         )
     );
     if !consistent {
-        return Err(krun_box_core::BoxError::StateError(format!(
+        return Err(kbox_core::BoxError::StateError(format!(
             "managed execution state {state} has inconsistent pending operation"
         )));
     }
@@ -696,7 +696,7 @@ fn validate_pending_operation(
                 | ManagedExecutionState::Stopped
                 | ManagedExecutionState::Failed
         ) {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "restart source state is not stable".to_string(),
             ));
         }
@@ -704,13 +704,13 @@ fn validate_pending_operation(
             ManagedExecutionState::RestartStopping => *source_generation,
             ManagedExecutionState::RestartStarting => next_generation(*source_generation)?,
             _ => {
-                return Err(krun_box_core::BoxError::StateError(
+                return Err(kbox_core::BoxError::StateError(
                     "restart operation is attached to a non-restart state".to_string(),
                 ))
             }
         };
         if metadata.generation != expected {
-            return Err(krun_box_core::BoxError::StateError(format!(
+            return Err(kbox_core::BoxError::StateError(format!(
                 "restart state {state} has generation {}, expected {}",
                 metadata.generation.get(),
                 expected.get()
@@ -730,24 +730,24 @@ fn validate_pending_operation(
                 ManagedExecutionState::Running | ManagedExecutionState::Paused
             )
         {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "snapshot operation has an invalid source state".to_string(),
             ));
         }
         if *freezer_applied && *source_state != ManagedExecutionState::Running {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "paused-source snapshot cannot carry a runtime freezer phase".to_string(),
             ));
         }
     }
     if let Some(ManagedExecutionOperation::UpdateResources { update, .. }) = operation {
         if state != ManagedExecutionState::UpdatingResources {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "resource update operation is attached to a non-update state".to_string(),
             ));
         }
         update.validate().map_err(|error| {
-            krun_box_core::BoxError::StateError(format!(
+            kbox_core::BoxError::StateError(format!(
                 "persisted resource update is invalid: {error}"
             ))
         })?;
@@ -758,7 +758,7 @@ fn validate_pending_operation(
     }) = operation
     {
         if signal.is_some_and(|signal| signal <= 0 || 128_i32.checked_add(signal).is_none()) {
-            return Err(krun_box_core::BoxError::StateError(
+            return Err(kbox_core::BoxError::StateError(
                 "kill signal must be positive and representable as a Box exit code".to_string(),
             ));
         }
@@ -784,7 +784,7 @@ fn validate_pending_operation(
             _ => false,
         };
         if !valid_cold_pause_state {
-            return Err(krun_box_core::BoxError::StateError(format!(
+            return Err(kbox_core::BoxError::StateError(format!(
                 "managed execution state {state} cannot retain a filesystem-only pause"
             )));
         }
@@ -792,9 +792,9 @@ fn validate_pending_operation(
     Ok(())
 }
 
-fn validate_stop_timeout(timeout_secs: Option<u64>) -> krun_box_core::Result<()> {
+fn validate_stop_timeout(timeout_secs: Option<u64>) -> kbox_core::Result<()> {
     if timeout_secs.is_some_and(|timeout| timeout.checked_mul(1_000).is_none()) {
-        Err(krun_box_core::BoxError::StateError(
+        Err(kbox_core::BoxError::StateError(
             "managed stop timeout is too large".to_string(),
         ))
     } else {
@@ -802,12 +802,12 @@ fn validate_stop_timeout(timeout_secs: Option<u64>) -> krun_box_core::Result<()>
     }
 }
 
-fn next_generation(generation: ExecutionGeneration) -> krun_box_core::Result<ExecutionGeneration> {
+fn next_generation(generation: ExecutionGeneration) -> kbox_core::Result<ExecutionGeneration> {
     let value = generation.get().checked_add(1).ok_or_else(|| {
-        krun_box_core::BoxError::StateError("execution generation is exhausted".to_string())
+        kbox_core::BoxError::StateError("execution generation is exhausted".to_string())
     })?;
     ExecutionGeneration::new(value).map_err(|error| {
-        krun_box_core::BoxError::StateError(format!("invalid execution generation: {error}"))
+        kbox_core::BoxError::StateError(format!("invalid execution generation: {error}"))
     })
 }
 
@@ -867,7 +867,7 @@ mod tests {
 
     #[test]
     fn managed_execution_metadata_round_trips_recovery_intent() {
-        let mut config = krun_box_core::BoxConfig {
+        let mut config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
             isolation: ExecutionIsolation::Sandbox,
             ..Default::default()
@@ -923,7 +923,7 @@ mod tests {
             ExecutionGeneration::INITIAL,
             CreateExecutionRequest {
                 external_sandbox_id: "sandbox-route".to_string(),
-                config: krun_box_core::BoxConfig {
+                config: kbox_core::BoxConfig {
                     image: "alpine:latest".to_string(),
                     isolation: ExecutionIsolation::Sandbox,
                     ..Default::default()
@@ -1003,7 +1003,7 @@ mod tests {
 
     #[test]
     fn managed_execution_rejects_a_cold_pause_marker_in_running_state() {
-        let config = krun_box_core::BoxConfig {
+        let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
             isolation: ExecutionIsolation::Sandbox,
             ..Default::default()
@@ -1031,7 +1031,7 @@ mod tests {
 
     #[test]
     fn managed_execution_validation_rejects_plan_drift() {
-        let config = krun_box_core::BoxConfig {
+        let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
             isolation: ExecutionIsolation::Sandbox,
             ..Default::default()
@@ -1048,8 +1048,7 @@ mod tests {
             },
         )
         .unwrap();
-        metadata.plan =
-            krun_box_core::resolve_execution(&krun_box_core::BoxConfig::default()).unwrap();
+        metadata.plan = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
 
         assert!(metadata.validate().is_err());
     }

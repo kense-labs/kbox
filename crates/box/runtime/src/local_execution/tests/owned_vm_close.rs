@@ -5,8 +5,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex as StdMutex;
 use std::time::Instant;
 
-use krun_box_core::vmm::OwnedCloseBudget;
-use krun_box_core::{
+use kbox_core::vmm::OwnedCloseBudget;
+use kbox_core::{
     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode,
     OperationId,
 };

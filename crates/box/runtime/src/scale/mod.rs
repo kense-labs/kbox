@@ -4,7 +4,7 @@
 //! handles scale-up/scale-down decisions, and emits instance state events.
 
 use chrono::{DateTime, Utc};
-use krun_box_core::scale::{InstanceHealth, InstanceState};
+use kbox_core::scale::{InstanceHealth, InstanceState};
 use serde::{Deserialize, Serialize};
 
 mod api;

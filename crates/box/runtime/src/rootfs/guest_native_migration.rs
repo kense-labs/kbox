@@ -4,16 +4,16 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 use super::guest_native_ext4::GuestNativeExt4Provider;
 use super::provider::{CaseSensitiveApfsProvider, RootfsProvider};
 
-const MIGRATION_SCHEMA: &str = "krun.box.rootfs-migration.v1";
+const MIGRATION_SCHEMA: &str = "kbox.rootfs-migration.v1";
 const MIGRATION_FILE_NAME: &str = "rootfs-migration-v1.json";
 const MIGRATION_SOURCE_FORMAT: &str = "case-sensitive-apfs-sparseimage-v2";
-pub(super) const MIGRATION_STAGING_PREFIX: &str = ".krun-rootfs-migration-";
+pub(super) const MIGRATION_STAGING_PREFIX: &str = ".krootfs-migration-";
 const MAX_MIGRATION_MANIFEST_BYTES: u64 = 64 * 1024;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

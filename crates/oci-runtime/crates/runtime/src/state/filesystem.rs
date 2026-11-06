@@ -9,7 +9,7 @@ mod transaction;
 use cap_fs_ext::{DirExt, FollowSymlinks, MetadataExt, OpenOptionsFollowExt};
 use cap_std::ambient_authority;
 use cap_std::fs::{Dir, OpenOptions};
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 use serde::de::DeserializeOwned;
 use tokio::io::AsyncReadExt;
 
@@ -802,6 +802,6 @@ mod tests {
             .verify_directory_location(&foreign, Path::new("/dev"))
             .expect_err("a foreign mount must fail the state-root identity check");
 
-        assert_eq!(error.code, krun_oci_sdk::ErrorCode::FailedPrecondition);
+        assert_eq!(error.code, koci_sdk::ErrorCode::FailedPrecondition);
     }
 }

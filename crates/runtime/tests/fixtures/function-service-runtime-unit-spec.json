@@ -1,10 +1,10 @@
 {
-  "schema": "krun.runtime.unit-spec.v4",
+  "schema": "kbox_contract.unit-spec.v4",
   "unit_id": "workload:function-http:replica:1",
   "generation": 2,
   "class": "service",
   "artifact": {
-    "uri": "oci://registry.example/krun/function-http@sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "uri": "oci://registry.example/kbox/function-http@sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     "digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     "media_type": "application/vnd.oci.image.manifest.v1+json"
   },

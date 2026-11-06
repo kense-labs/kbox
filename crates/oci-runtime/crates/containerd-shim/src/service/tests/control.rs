@@ -2,8 +2,8 @@ use std::collections::{BTreeSet, VecDeque};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, StateBuilder};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, StateBuilder};
+use koci_sdk::{
     async_trait, ContainerOperationRequest, ContainerRecord, CreateRequest, DeleteRequest,
     Error as RuntimeError, ErrorCode, IsolationRequest, KillRequest, OciRuntimeService,
     OperationContext, RuntimeClient, RuntimeInfo, StartRequest, StateRequest, UpdateRequest,
@@ -118,34 +118,34 @@ impl ControlRuntime {
 
 #[async_trait]
 impl OciRuntimeService for ControlRuntime {
-    async fn features(&self) -> krun_oci_sdk::Result<RuntimeInfo> {
+    async fn features(&self) -> koci_sdk::Result<RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, _request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, _request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, _request: StateRequest) -> koci_sdk::Result<ContainerRecord> {
         Ok(self.current_record())
     }
 
-    async fn start(&self, _request: StartRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, _request: KillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, _request: KillRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
-    async fn delete(&self, _request: DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
     async fn pause(
         &self,
         request: ContainerOperationRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+    ) -> koci_sdk::Result<ContainerRecord> {
         self.record_call("pause", request.context, None);
         let barriers = self.pause_barriers.lock().expect("Pause barriers").take();
         if let Some(barriers) = barriers {
@@ -161,7 +161,7 @@ impl OciRuntimeService for ControlRuntime {
     async fn resume(
         &self,
         request: ContainerOperationRequest,
-    ) -> krun_oci_sdk::Result<ContainerRecord> {
+    ) -> koci_sdk::Result<ContainerRecord> {
         self.record_call("resume", request.context, None);
         if let Some(error) = self
             .resume_errors
@@ -174,7 +174,7 @@ impl OciRuntimeService for ControlRuntime {
         Ok(self.set_paused(false))
     }
 
-    async fn update(&self, request: UpdateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn update(&self, request: UpdateRequest) -> koci_sdk::Result<ContainerRecord> {
         self.record_call("update", request.context, Some(request.resources));
         if let Some(error) = self
             .update_errors

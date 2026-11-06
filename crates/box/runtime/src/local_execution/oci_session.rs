@@ -1,4 +1,4 @@
-//! Exact-generation process sessions over the public Krun OCI SDK.
+//! Exact-generation process sessions over the public Kbox OCI SDK.
 
 use std::collections::VecDeque;
 use std::path::PathBuf;
@@ -7,19 +7,19 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 use async_trait::async_trait;
-use krun_box_core::exec::{
+use kbox_core::exec::{
     ExecChunk, ExecEvent, ExecExit, ExecOutput, ExecRequest as BoxExecRequest, StreamType,
     DEFAULT_EXEC_TIMEOUT_NS, MAX_ONE_SHOT_OUTPUT_BYTES,
 };
-use krun_box_core::pty::PtyRequest;
-use krun_box_core::{
+use kbox_core::pty::PtyRequest;
+use kbox_core::{
     ExecutionGeneration, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
     ExecutionProcessInput, ExecutionProcessSignal, ExecutionProcessStream,
 };
-use krun_oci_sdk::oci_spec::runtime::{
+use koci_sdk::oci_spec::runtime::{
     Capabilities, LinuxCapabilitiesBuilder, Process, ProcessBuilder, UserBuilder,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     CloseStdinRequest, ErrorCode, ExecRequest as OciExecRequest, ExitStatus, IoMode, OutputChunk,
     OutputStream, ProcessId, ProcessIo, ProcessRecord, ProcessTarget, ReadOutputRequest,
     ResizeRequest, RuntimeClient, RuntimeOperation, Signal, SignalProcessRequest, TerminalSize,
@@ -77,7 +77,7 @@ pub(super) async fn execute(
     }
 
     Err(ExecutionManagerError::Internal(format!(
-        "Krun OCI exec process for {} ended without an exact terminal status",
+        "Kbox OCI exec process for {} ended without an exact terminal status",
         record.id
     )))
 }
@@ -89,7 +89,7 @@ pub(super) async fn start_process(
 ) -> ExecutionManagerResult<ExecutionProcess> {
     if request.request_id.is_some() {
         return Err(ExecutionManagerError::InvalidRequest(
-            "streaming Krun OCI exec does not accept a one-shot request_id".to_string(),
+            "streaming Kbox OCI exec does not accept a one-shot request_id".to_string(),
         ));
     }
     Ok(Box::new(
@@ -140,7 +140,7 @@ impl LaunchRequest {
                 || request_id.contains('\0')
             {
                 return Err(ExecutionManagerError::InvalidRequest(
-                    "Krun OCI exec request ID is invalid".to_string(),
+                    "Kbox OCI exec request ID is invalid".to_string(),
                 ));
             }
         }
@@ -216,7 +216,7 @@ async fn launch_process(
         .map(|timeout| {
             Instant::now().checked_add(timeout).ok_or_else(|| {
                 ExecutionManagerError::InvalidRequest(
-                    "Krun OCI exec timeout exceeds the host clock range".to_string(),
+                    "Kbox OCI exec timeout exceeds the host clock range".to_string(),
                 )
             })
         })
@@ -225,7 +225,7 @@ async fn launch_process(
     let box_generation = backend.metadata(record)?.generation;
     let binding = backend.binding(record)?.ok_or_else(|| {
         ExecutionManagerError::Internal(format!(
-            "execution {execution_id} has no exact Krun OCI binding for exec"
+            "execution {execution_id} has no exact Kbox OCI binding for exec"
         ))
     })?;
     binding.validate_for(&execution_id)?;
@@ -253,7 +253,7 @@ async fn launch_process(
         box_generation,
         "exec",
         (
-            "krun.box.oci-exec.v1",
+            "kbox.oci-exec.v1",
             &binding.target,
             terminal,
             process.user().uid(),
@@ -276,7 +276,7 @@ async fn launch_process(
         &launch.seed,
         box_generation,
         "exec-process",
-        ("krun.box.oci-exec-process.v1", &binding.target),
+        ("kbox.oci-exec-process.v1", &binding.target),
     )?;
     let process_id = ProcessId::new(process_context.operation_id.as_str().to_string())
         .map_err(|error| sdk_error("exec process identity", error))?;
@@ -379,7 +379,7 @@ fn resolve_exec_executable(
     let image_config = if request_path.is_none() {
         crate::load_resolved_image_config(&record.box_dir).map_err(|error| {
             ExecutionManagerError::Unavailable(format!(
-                "cannot load resolved image environment for Krun OCI exec in {}: {error}",
+                "cannot load resolved image environment for Kbox OCI exec in {}: {error}",
                 record.id
             ))
         })?
@@ -404,17 +404,15 @@ fn resolve_exec_executable(
     Ok(())
 }
 
-fn exec_path_request_error(error: krun_box_core::BoxError) -> ExecutionManagerError {
+fn exec_path_request_error(error: kbox_core::BoxError) -> ExecutionManagerError {
     match error {
-        krun_box_core::BoxError::ConfigError(message) => {
-            ExecutionManagerError::InvalidRequest(message)
-        }
-        krun_box_core::BoxError::BoxBootError { message, hint } => {
+        kbox_core::BoxError::ConfigError(message) => ExecutionManagerError::InvalidRequest(message),
+        kbox_core::BoxError::BoxBootError { message, hint } => {
             let message = hint.map_or(message.clone(), |hint| format!("{message} ({hint})"));
             ExecutionManagerError::InvalidRequest(message)
         }
         error => ExecutionManagerError::Unavailable(format!(
-            "failed to inspect the prepared rootfs for Krun OCI exec: {error}"
+            "failed to inspect the prepared rootfs for Kbox OCI exec: {error}"
         )),
     }
 }
@@ -425,7 +423,7 @@ fn spawn_timeout_watchdog(
     exec_request: OciExecRequest,
     terminal: bool,
     deadline: Instant,
-    context: krun_oci_sdk::OperationContext,
+    context: koci_sdk::OperationContext,
     state: Arc<AtomicU8>,
 ) {
     tokio::spawn(async move {
@@ -465,7 +463,7 @@ fn spawn_timeout_watchdog(
                     tracing::warn!(
                         process_id = %target.process_id,
                         %error,
-                        "Krun OCI exec timeout watchdog could not inspect the process"
+                        "Kbox OCI exec timeout watchdog could not inspect the process"
                     );
                     state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                     return;
@@ -494,7 +492,7 @@ fn spawn_timeout_watchdog(
                         tracing::warn!(
                             process_id = %target.process_id,
                             %error,
-                            "Krun OCI exec timeout watchdog received an invalid replay binding"
+                            "Kbox OCI exec timeout watchdog received an invalid replay binding"
                         );
                         state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                         return;
@@ -509,7 +507,7 @@ fn spawn_timeout_watchdog(
                     tracing::warn!(
                         process_id = %target.process_id,
                         %error,
-                        "Krun OCI exec timeout watchdog refused a non-matching replay"
+                        "Kbox OCI exec timeout watchdog refused a non-matching replay"
                     );
                     state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                     return;
@@ -519,7 +517,7 @@ fn spawn_timeout_watchdog(
         if !validated {
             tracing::warn!(
                 process_id = %target.process_id,
-                "Krun OCI exec timeout watchdog could not validate its exact replay"
+                "Kbox OCI exec timeout watchdog could not validate its exact replay"
             );
             state.store(WATCHDOG_FAILED, Ordering::SeqCst);
             return;
@@ -531,7 +529,7 @@ fn spawn_timeout_watchdog(
                 tracing::warn!(
                     process_id = %target.process_id,
                     %error,
-                    "Krun OCI exec timeout watchdog could not construct SIGKILL"
+                    "Kbox OCI exec timeout watchdog could not construct SIGKILL"
                 );
                 state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                 return;
@@ -576,7 +574,7 @@ fn spawn_timeout_watchdog(
                             tracing::warn!(
                                 process_id = %target.process_id,
                                 %wait_error,
-                                "Krun OCI exec timeout watchdog could not reconcile a lost signal response"
+                                "Kbox OCI exec timeout watchdog could not reconcile a lost signal response"
                             );
                             state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                             return;
@@ -590,7 +588,7 @@ fn spawn_timeout_watchdog(
                     tracing::warn!(
                         process_id = %target.process_id,
                         %error,
-                        "Krun OCI exec timeout watchdog could not signal the process"
+                        "Kbox OCI exec timeout watchdog could not signal the process"
                     );
                     state.store(WATCHDOG_FAILED, Ordering::SeqCst);
                     return;
@@ -599,7 +597,7 @@ fn spawn_timeout_watchdog(
         }
         tracing::warn!(
             process_id = %target.process_id,
-            "Krun OCI exec timeout watchdog exhausted signal retries"
+            "Kbox OCI exec timeout watchdog exhausted signal retries"
         );
         state.store(WATCHDOG_FAILED, Ordering::SeqCst);
     });
@@ -615,12 +613,12 @@ fn build_process(
 ) -> ExecutionManagerResult<Process> {
     if args.is_empty() {
         return Err(ExecutionManagerError::InvalidRequest(
-            "Krun OCI exec requires a non-empty command".to_string(),
+            "Kbox OCI exec requires a non-empty command".to_string(),
         ));
     }
     if rootfs.is_some() {
         return Err(ExecutionManagerError::InvalidRequest(
-            "Krun OCI exec cannot reinterpret a second rootfs; prepare it as the container attachment"
+            "Kbox OCI exec cannot reinterpret a second rootfs; prepare it as the container attachment"
                 .to_string(),
         ));
     }
@@ -631,7 +629,7 @@ fn build_process(
         .build()
         .map_err(|error| {
             ExecutionManagerError::InvalidRequest(format!(
-                "failed to build Krun OCI exec user: {error}"
+                "failed to build Kbox OCI exec user: {error}"
             ))
         })?;
     let empty = Capabilities::new();
@@ -644,7 +642,7 @@ fn build_process(
         .build()
         .map_err(|error| {
             ExecutionManagerError::InvalidRequest(format!(
-                "failed to build Krun OCI exec capabilities: {error}"
+                "failed to build Kbox OCI exec capabilities: {error}"
             ))
         })?;
     ProcessBuilder::default()
@@ -660,7 +658,7 @@ fn build_process(
         .build()
         .map_err(|error| {
             ExecutionManagerError::InvalidRequest(format!(
-                "failed to build Krun OCI exec process: {error}"
+                "failed to build Kbox OCI exec process: {error}"
             ))
         })
 }
@@ -685,7 +683,7 @@ fn parse_id_component(value: &str, label: &str) -> ExecutionManagerResult<u32> {
     }
     value.parse::<u32>().map_err(|_| {
         ExecutionManagerError::InvalidRequest(format!(
-            "Krun OCI exec {label} {value:?} is not root or a numeric ID"
+            "Kbox OCI exec {label} {value:?} is not root or a numeric ID"
         ))
     })
 }
@@ -723,7 +721,7 @@ async fn require_process_operations(
     for (operation, label) in required {
         if !info.operations.contains(&operation) {
             return Err(ExecutionManagerError::Unavailable(format!(
-                "Krun OCI Runtime does not advertise {label}"
+                "Kbox OCI Runtime does not advertise {label}"
             )));
         }
     }
@@ -741,7 +739,7 @@ fn validate_process_record(
         || record.target.container.generation.is_none()
     {
         return Err(ExecutionManagerError::Internal(format!(
-            "Krun OCI exec returned an invalid process binding for {}",
+            "Kbox OCI exec returned an invalid process binding for {}",
             target.process_id
         )));
     }
@@ -769,7 +767,7 @@ impl OciProcessInput {
         &self,
         sequence: u64,
         operation: &str,
-    ) -> ExecutionManagerResult<krun_oci_sdk::OperationContext> {
+    ) -> ExecutionManagerResult<koci_sdk::OperationContext> {
         operation_context(
             self.process.process_id.as_str(),
             self.box_generation,
@@ -781,7 +779,7 @@ impl OciProcessInput {
     fn advance(state: &mut InputState) -> ExecutionManagerResult<()> {
         state.next_mutation = state.next_mutation.checked_add(1).ok_or_else(|| {
             ExecutionManagerError::Internal(
-                "Krun OCI process mutation sequence is exhausted".to_string(),
+                "Kbox OCI process mutation sequence is exhausted".to_string(),
             )
         })?;
         Ok(())
@@ -793,14 +791,14 @@ impl ExecutionProcessInput for OciProcessInput {
     async fn write_stdin(&self, data: &[u8]) -> ExecutionManagerResult<()> {
         if !self.stdin_enabled {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI process for {} has no writable stdin",
+                "Kbox OCI process for {} has no writable stdin",
                 self.execution_id
             )));
         }
         let mut state = self.state.lock().await;
         if state.stdin_closed {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI process stdin for {} is already closed",
+                "Kbox OCI process stdin for {} is already closed",
                 self.execution_id
             )));
         }
@@ -823,7 +821,7 @@ impl ExecutionProcessInput for OciProcessInput {
     async fn close_stdin(&self) -> ExecutionManagerResult<()> {
         if !self.stdin_enabled {
             return Err(ExecutionManagerError::InvalidRequest(format!(
-                "Krun OCI process for {} has no stdin to close",
+                "Kbox OCI process for {} has no stdin to close",
                 self.execution_id
             )));
         }
@@ -874,7 +872,7 @@ impl ExecutionProcessInput for OciProcessInput {
     async fn resize_pty(&self, cols: u16, rows: u16) -> ExecutionManagerResult<()> {
         if !self.terminal {
             return Err(ExecutionManagerError::InvalidRequest(
-                "Krun OCI process does not have a PTY".to_string(),
+                "Kbox OCI process does not have a PTY".to_string(),
             ));
         }
         let mut state = self.state.lock().await;
@@ -995,7 +993,7 @@ impl OciProcessStream {
 
     fn invalid_output(&self, reason: &str) -> ExecutionManagerError {
         ExecutionManagerError::Internal(format!(
-            "Krun OCI process output for {} is invalid: {reason}",
+            "Kbox OCI process output for {} is invalid: {reason}",
             self.target.process_id
         ))
     }
@@ -1089,7 +1087,7 @@ impl ExecutionProcessStream for OciProcessStream {
                 match self.watchdog.load(Ordering::SeqCst) {
                     WATCHDOG_FAILED => {
                         return Err(ExecutionManagerError::Unavailable(format!(
-                            "Krun OCI exec timeout watchdog failed for {}",
+                            "Kbox OCI exec timeout watchdog failed for {}",
                             self.target.process_id
                         )))
                     }

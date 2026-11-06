@@ -2,16 +2,16 @@ use std::future::Future;
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentBundle, AgentClient, AgentCloseStdinRequest, AgentContainerOperationRequest,
     AgentCreateRequest, AgentDeleteRequest, AgentExecRequest, AgentKillRequest,
     AgentProcessesRequest, AgentReadOutputRequest, AgentResizeRequest, AgentSignalProcessRequest,
     AgentStartRequest, AgentStateRequest, AgentStatsRequest, AgentUpdateRequest,
     AgentWaitProcessRequest, AgentWaitRequest, AgentWriteStdinRequest, GuestPath,
 };
-use krun_oci_core::HostPlatform;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, ExecCPUAffinity, LinuxResources, Process};
-use krun_oci_sdk::{
+use koci_core::HostPlatform;
+use koci_sdk::oci_spec::runtime::{ContainerState, ExecCPUAffinity, LinuxResources, Process};
+use koci_sdk::{
     ContainerTarget, DeleteMode, Error, ErrorCode, ExitStatus, IoMode, OciBundle, OperationContext,
     OperationId, OutputStream, ProcessId, ProcessIo, ProcessTarget, Signal, TerminalSize,
 };
@@ -29,8 +29,8 @@ const POLL_INTERVAL: Duration = Duration::from_millis(25);
 const FREEZER_OBSERVATION_DELAY: Duration = Duration::from_millis(1_250);
 const LINUX_SIGTERM: i32 = 15;
 const LINUX_SIGKILL: i32 = 9;
-const MARKER_CONTENTS: &[u8] = b"krun-oci-create-start-user-time-v1\n";
-const PROGRESS_PATH: &str = "/.krun-oci-create-start-smoke";
+const MARKER_CONTENTS: &[u8] = b"koci-create-start-user-time-v1\n";
+const PROGRESS_PATH: &str = "/.koci-create-start-smoke";
 pub(crate) const UPDATED_MEMORY_LIMIT: u64 = 512 * 1024 * 1024;
 
 pub(super) trait AgentStream: AsyncRead + AsyncWrite + Unpin + Send {}
@@ -240,7 +240,7 @@ async fn exercise_process_io<T: AgentStream>(
     let first_write = AgentWriteStdinRequest {
         context: Some(operation(nonce, "write-io-first")?),
         process: process.clone(),
-        data: b"krun-io-first\n".to_vec(),
+        data: b"kio-first\n".to_vec(),
     };
     guest_call(
         "write first process I/O probe stdin",
@@ -257,7 +257,7 @@ async fn exercise_process_io<T: AgentStream>(
         client.write_stdin(AgentWriteStdinRequest {
             context: Some(operation(nonce, "write-io-second")?),
             process: process.clone(),
-            data: b"krun-io-second\n".to_vec(),
+            data: b"kio-second\n".to_vec(),
         }),
     )
     .await?;
@@ -296,9 +296,7 @@ async fn exercise_process_io<T: AgentStream>(
     }
 
     let (stdout, stderr) = collect_output(client, &process).await?;
-    if stdout != b"stdout:krun-io-first:krun-io-second\n"
-        || stderr != b"stderr:krun-io-first:krun-io-second\n"
-    {
+    if stdout != b"stdout:kio-first:kio-second\n" || stderr != b"stderr:kio-first:kio-second\n" {
         return Err(format!(
             "guest captured output mismatch: stdout={stdout:?}, stderr={stderr:?}"
         ));
@@ -723,8 +721,8 @@ pub(crate) fn resource_profile(platform: HostPlatform) -> Result<LinuxResources,
 }
 
 pub(crate) fn resource_stats_are_exact(
-    first: &krun_oci_sdk::ContainerStats,
-    second: &krun_oci_sdk::ContainerStats,
+    first: &koci_sdk::ContainerStats,
+    second: &koci_sdk::ContainerStats,
     target: &ContainerTarget,
 ) -> bool {
     resource_stats_snapshot_is_exact(first, target)
@@ -734,7 +732,7 @@ pub(crate) fn resource_stats_are_exact(
 }
 
 pub(crate) fn resource_stats_snapshot_is_exact(
-    stats: &krun_oci_sdk::ContainerStats,
+    stats: &koci_sdk::ContainerStats,
     target: &ContainerTarget,
 ) -> bool {
     stats.target == *target
@@ -748,7 +746,7 @@ pub(crate) fn resource_stats_snapshot_is_exact(
 }
 
 pub(crate) fn process_inventory_is_exact(
-    processes: &[krun_oci_sdk::ProcessRecord],
+    processes: &[koci_sdk::ProcessRecord],
     target: &ContainerTarget,
     worker: &ProcessTarget,
 ) -> bool {
@@ -1158,7 +1156,7 @@ pub(super) async fn best_effort_delete<T: AgentStream>(
 
 async fn guest_call<T>(
     operation: &str,
-    future: impl Future<Output = krun_oci_sdk::Result<T>>,
+    future: impl Future<Output = koci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(GUEST_CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),
@@ -1197,8 +1195,8 @@ fn null_io() -> ProcessIo {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_core::HostPlatform;
-    use krun_oci_sdk::{ContainerId, ContainerTarget, Generation, TerminalSize};
+    use koci_core::HostPlatform;
+    use koci_sdk::{ContainerId, ContainerTarget, Generation, TerminalSize};
 
     use super::{resource_profile, terminal_exec_request, UPDATED_MEMORY_LIMIT};
 

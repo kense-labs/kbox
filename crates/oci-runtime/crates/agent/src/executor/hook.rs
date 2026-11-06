@@ -7,8 +7,8 @@ use std::process::{Child, Command, ExitStatus, Stdio};
 use std::thread;
 use std::time::{Duration, Instant};
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, Hook, Hooks};
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::{ContainerState, Hook, Hooks};
+use koci_sdk::{Error, ErrorCode, Result};
 use serde::Serialize;
 
 #[cfg(test)]
@@ -140,11 +140,11 @@ impl HookSet {
         match joined {
             Ok(warnings) => {
                 for warning in warnings {
-                    eprintln!("krun-oci-agent: poststop hook warning: {warning}");
+                    eprintln!("koci-agent: poststop hook warning: {warning}");
                 }
             }
             Err(error) => {
-                eprintln!("krun-oci-agent: poststop hook worker warning: {error}");
+                eprintln!("koci-agent: poststop hook worker warning: {error}");
             }
         }
     }
@@ -478,7 +478,7 @@ fn run_hook(phase: HookPhase, index: usize, hook: &HookPlan, state: &[u8]) -> Re
     })?;
     let payload = state.to_vec();
     let writer = thread::Builder::new()
-        .name(format!("krun-oci-hook-{index}"))
+        .name(format!("koci-hook-{index}"))
         .spawn(move || write_hook_state(stdin, &payload, deadline))
         .map_err(|error| {
             terminate_hook(&mut child);
@@ -641,12 +641,12 @@ mod tests {
     use std::process::Command;
     use std::time::{Duration, Instant};
 
-    use krun_oci_sdk::oci_spec::runtime::ContainerState;
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::oci_spec::runtime::ContainerState;
+    use koci_sdk::ErrorCode;
 
     use super::{HookPhase, HookPlan, HookSet, HookStateTemplate};
 
-    const DESCRIPTOR_CHILD_ENV: &str = "KRUN_OCI_TEST_HOOK_DESCRIPTOR_CHILD";
+    const DESCRIPTOR_CHILD_ENV: &str = "K_OCI_TEST_HOOK_DESCRIPTOR_CHILD";
     const DESCRIPTOR_CHILD_TEST: &str = "executor::hook::tests::hook_descriptor_isolation_child";
 
     #[test]
@@ -673,7 +673,7 @@ mod tests {
             prestart: vec![HookPlan {
                 path: PathBuf::from("/bin/sh"),
                 args: Some(vec![
-                    "krun-hook".to_string(),
+                    "khook".to_string(),
                     "-c".to_string(),
                     format!("/bin/cat >/dev/null; test ! -e /proc/self/fd/{raw_descriptor}"),
                 ]),
@@ -704,16 +704,15 @@ mod tests {
 
     #[test]
     fn hook_planning_accepts_every_phase_and_rejects_unsafe_inputs() {
-        let hooks: krun_oci_sdk::oci_spec::runtime::Hooks =
-            serde_json::from_value(serde_json::json!({
-                "prestart": [{"path": "/bin/true"}],
-                "createRuntime": [{"path": "/bin/true", "timeout": 1}],
-                "createContainer": [{"path": "/bin/true"}],
-                "startContainer": [{"path": "/bin/true"}],
-                "poststart": [{"path": "/bin/true"}],
-                "poststop": [{"path": "/bin/true"}]
-            }))
-            .expect("decode complete hooks");
+        let hooks: koci_sdk::oci_spec::runtime::Hooks = serde_json::from_value(serde_json::json!({
+            "prestart": [{"path": "/bin/true"}],
+            "createRuntime": [{"path": "/bin/true", "timeout": 1}],
+            "createContainer": [{"path": "/bin/true"}],
+            "startContainer": [{"path": "/bin/true"}],
+            "poststart": [{"path": "/bin/true"}],
+            "poststop": [{"path": "/bin/true"}]
+        }))
+        .expect("decode complete hooks");
         let planned = HookSet::from_oci(Some(&hooks)).expect("plan complete hooks");
         for phase in [
             HookPhase::Prestart,
@@ -726,7 +725,7 @@ mod tests {
             assert_eq!(planned.phase(phase).len(), 1, "missing {phase:?}");
         }
 
-        let relative: krun_oci_sdk::oci_spec::runtime::Hooks =
+        let relative: koci_sdk::oci_spec::runtime::Hooks =
             serde_json::from_value(serde_json::json!({"poststop": [{"path": "relative"}]}))
                 .expect("decode relative hook");
         assert_eq!(
@@ -735,7 +734,7 @@ mod tests {
                 .code,
             ErrorCode::InvalidArgument
         );
-        let duplicate_environment: krun_oci_sdk::oci_spec::runtime::Hooks =
+        let duplicate_environment: koci_sdk::oci_spec::runtime::Hooks =
             serde_json::from_value(serde_json::json!({
                 "poststop": [{"path": "/bin/true", "env": ["A=1", "A=2"]}]
             }))
@@ -762,7 +761,7 @@ mod tests {
         let creating = template
             .encode(ContainerState::Creating, Some(42))
             .expect("creating state");
-        let state: krun_oci_sdk::oci_spec::runtime::State =
+        let state: koci_sdk::oci_spec::runtime::State =
             serde_json::from_slice(&creating).expect("decode creating state");
         assert_eq!(state.id(), "hook-container");
         assert_eq!(*state.status(), ContainerState::Creating);
@@ -772,7 +771,7 @@ mod tests {
         let stopped = template
             .encode(ContainerState::Stopped, None)
             .expect("stopped state");
-        let state: krun_oci_sdk::oci_spec::runtime::State =
+        let state: koci_sdk::oci_spec::runtime::State =
             serde_json::from_slice(&stopped).expect("decode stopped state");
         assert_eq!(*state.status(), ContainerState::Stopped);
         assert_eq!(*state.pid(), None);
@@ -786,7 +785,7 @@ mod tests {
             HookPlan {
                 path: PathBuf::from("/bin/sh"),
                 args: Some(vec![
-                    "krun-hook".to_string(),
+                    "khook".to_string(),
                     "-c".to_string(),
                     "printf '%s ' \"$PHASE\" >> \"$TRACE\"; cat >> \"$TRACE\"; printf '\\n' >> \"$TRACE\""
                         .to_string(),
@@ -823,7 +822,7 @@ mod tests {
             prestart: vec![HookPlan {
                 path: PathBuf::from("/bin/sh"),
                 args: Some(vec![
-                    "krun-hook".to_string(),
+                    "khook".to_string(),
                     "-c".to_string(),
                     "set -eu; (trap '' HUP TERM; /bin/sleep 1; : > \"$ESCAPED\") & \
                      printf '%s\\n' \"$!\" > \"$STARTED\"; exec /bin/sleep 30"
@@ -902,7 +901,7 @@ mod tests {
                 HookPlan {
                     path: PathBuf::from("/bin/sh"),
                     args: Some(vec![
-                        "krun-hook".to_string(),
+                        "khook".to_string(),
                         "-c".to_string(),
                         "cat > \"$TRACE\"".to_string(),
                     ]),

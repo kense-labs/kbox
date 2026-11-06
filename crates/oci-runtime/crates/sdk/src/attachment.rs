@@ -35,16 +35,16 @@ pub use storage_paths::{
     STORAGE_PATH_RESTRICTIONS_VERSION,
 };
 
-/// First public create-time attachment contract understood by Krun OCI Runtime.
-pub const ATTACHMENT_SCHEMA_V1: &str = "krun.oci.attachments.v1";
+/// First public create-time attachment contract understood by Kbox OCI Runtime.
+pub const ATTACHMENT_SCHEMA_V1: &str = "koci.attachments.v1";
 /// Storage-aware create-time attachment contract.
-pub const ATTACHMENT_SCHEMA_V2: &str = "krun.oci.attachments.v2";
+pub const ATTACHMENT_SCHEMA_V2: &str = "koci.attachments.v2";
 /// Network-aware create-time attachment contract.
-pub const ATTACHMENT_SCHEMA_V3: &str = "krun.oci.attachments.v3";
+pub const ATTACHMENT_SCHEMA_V3: &str = "koci.attachments.v3";
 /// Reusable-guest-session-aware create-time attachment contract.
-pub const ATTACHMENT_SCHEMA_V4: &str = "krun.oci.attachments.v4";
+pub const ATTACHMENT_SCHEMA_V4: &str = "koci.attachments.v4";
 /// Required extension declaring an operation-scoped transfer of bundle ownership.
-pub const RUNTIME_BUNDLE_HANDOFF_EXTENSION: &str = "dev.krun.bundle-handoff";
+pub const RUNTIME_BUNDLE_HANDOFF_EXTENSION: &str = "dev.kbox.bundle-handoff";
 /// First bundle-handoff contract version.
 pub const RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION: u16 = 1;
 /// Exact annotation value for an atomic move into runtime-owned storage.

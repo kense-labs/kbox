@@ -1,6 +1,6 @@
 //! Compose file types for multi-container orchestration.
 //!
-//! Defines Krun ACL and Docker Compose-compatible YAML schemas for declaring
+//! Defines Kbox ACL and Docker Compose-compatible YAML schemas for declaring
 //! multi-service workloads. Each service maps to a single MicroVM.
 
 use serde::{Deserialize, Serialize};
@@ -399,14 +399,14 @@ impl DnsConfig {
 }
 
 impl ComposeConfig {
-    /// Parse an Krun Compose ACL document using the process environment for
+    /// Parse an Kbox Compose ACL document using the process environment for
     /// `env("NAME")` calls.
     pub fn from_acl_str(source: &str) -> Result<Self, ComposeAclError> {
         let environment = std::env::vars().collect();
         Self::from_acl_str_with_environment(source, &environment)
     }
 
-    /// Parse an Krun Compose ACL document using an explicit environment.
+    /// Parse an Kbox Compose ACL document using an explicit environment.
     pub fn from_acl_str_with_environment(
         source: &str,
         environment: &HashMap<String, String>,

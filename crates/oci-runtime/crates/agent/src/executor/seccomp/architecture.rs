@@ -1,7 +1,7 @@
 use std::collections::BTreeSet;
 
-use krun_oci_sdk::oci_spec::runtime::Arch;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::Arch;
+use koci_sdk::{Error, ErrorCode, Result};
 use seccompiler::{sock_filter, BpfProgram, TargetArch};
 use serde::{Deserialize, Serialize};
 
@@ -397,7 +397,7 @@ mod tests {
         raw[1].jt = 0;
         let error = scope_compiled_filter(raw, SeccompArchitecture::X86_64)
             .expect_err("unexpected compiler output must be rejected");
-        assert_eq!(error.code, krun_oci_sdk::ErrorCode::Internal);
+        assert_eq!(error.code, koci_sdk::ErrorCode::Internal);
     }
 
     fn raw_compiler_program(audit_architecture: u32, action: u32) -> seccompiler::BpfProgram {

@@ -3,8 +3,8 @@ use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     async_trait, ContainerStats, Error, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OperationId, OutputChunk, ProcessRecord, Result,
 };
@@ -922,10 +922,7 @@ fn validate_response_for_request(request: &AgentRequest, response: &AgentRespons
     }
 }
 
-fn validate_state_target(
-    expected: &krun_oci_sdk::ContainerTarget,
-    state: &AgentState,
-) -> Result<()> {
+fn validate_state_target(expected: &koci_sdk::ContainerTarget, state: &AgentState) -> Result<()> {
     if state.target() == expected {
         Ok(())
     } else {
@@ -940,8 +937,8 @@ fn validate_state_target(
 }
 
 fn validate_container_target(
-    expected: &krun_oci_sdk::ContainerTarget,
-    actual: &krun_oci_sdk::ContainerTarget,
+    expected: &koci_sdk::ContainerTarget,
+    actual: &koci_sdk::ContainerTarget,
 ) -> Result<()> {
     if actual == expected {
         Ok(())
@@ -954,8 +951,8 @@ fn validate_container_target(
 }
 
 fn validate_process_target(
-    expected: &krun_oci_sdk::ProcessTarget,
-    actual: &krun_oci_sdk::ProcessTarget,
+    expected: &koci_sdk::ProcessTarget,
+    actual: &koci_sdk::ProcessTarget,
 ) -> Result<()> {
     if actual == expected {
         Ok(())

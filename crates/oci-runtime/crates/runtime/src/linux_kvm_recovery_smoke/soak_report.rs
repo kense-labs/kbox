@@ -1,13 +1,13 @@
 use std::collections::BTreeSet;
 use std::path::{Component, Path, PathBuf};
 
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{ContainerTarget, ExitStatus};
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{ContainerTarget, ExitStatus};
 use serde::{Deserialize, Serialize};
 
 use super::report::{canonical_sha256_digest, LinuxKvmRecoveryArtifacts, LinuxProcessIdentity};
 
-pub const LINUX_KVM_SOAK_SCHEMA_VERSION: &str = "krun.oci.linux-kvm-soak.v1";
+pub const LINUX_KVM_SOAK_SCHEMA_VERSION: &str = "koci.linux-kvm-soak.v1";
 pub const DEFAULT_LINUX_KVM_SOAK_ITERATIONS: u32 = 25;
 pub const MAX_LINUX_KVM_SOAK_ITERATIONS: u32 = 1_000;
 
@@ -232,7 +232,7 @@ fn valid_cgroups_path(path: &Path) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::{ContainerId, ContainerTarget, Generation};
+    use koci_sdk::{ContainerId, ContainerTarget, Generation};
 
     use super::*;
 
@@ -242,7 +242,7 @@ mod tests {
             parent_pid: 10,
             process_group_id: pid,
             start_time_ticks: u64::from(pid) * 100,
-            command: "krun-oci-krun".to_string(),
+            command: "koci-kbox".to_string(),
         }
     }
 
@@ -253,7 +253,7 @@ mod tests {
                 ContainerId::new("kvm-soak").expect("container ID"),
                 Generation(u64::from(iteration)),
             )),
-            configured_cgroups_path: Some(PathBuf::from("krun-oci-kvm-soak")),
+            configured_cgroups_path: Some(PathBuf::from("koci-kvm-soak")),
             created_config_digest: Some(format!("sha256:{}", "6".repeat(64))),
             create_replayed: true,
             generation_monotonic: true,
@@ -289,9 +289,9 @@ mod tests {
             requested_iterations: 2,
             evidence_root: PathBuf::from("/tmp/kvm-soak"),
             artifacts: LinuxKvmRecoveryArtifacts {
-                host_service_executable: PathBuf::from("/tmp/krun-oci"),
+                host_service_executable: PathBuf::from("/tmp/koci"),
                 host_service_executable_sha256: "1".repeat(64),
-                shim: PathBuf::from("/tmp/krun-oci-krun-shim"),
+                shim: PathBuf::from("/tmp/koci-kshim"),
                 shim_sha256: "2".repeat(64),
                 system_image_manifest: PathBuf::from("/tmp/system-image.json"),
                 system_image_manifest_sha256: "3".repeat(64),
@@ -302,7 +302,7 @@ mod tests {
             qualification_scope_verified: true,
             host_service: Some(service.clone()),
             socket_peer: Some(service),
-            source_cgroups_path: Some(PathBuf::from("krun-oci-kvm-soak")),
+            source_cgroups_path: Some(PathBuf::from("koci-kvm-soak")),
             waves: vec![wave(1, 200), wave(2, 300)],
             steady_open_descriptors: Some(12),
             final_open_descriptors: Some(12),

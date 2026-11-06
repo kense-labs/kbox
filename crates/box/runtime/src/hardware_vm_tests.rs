@@ -293,7 +293,7 @@ fn root_identity_rejects_bad_format_digest_and_missing_scratch() {
 #[test]
 fn virtio_fs_shares_stay_out_of_snapshot_bytes_and_reattach_on_match() {
     let share = ShareAttachment {
-        path: "/krun-box-virtiofs-share/not-in-snapshot-7f3c".to_string(),
+        path: "/kbox-virtiofs-share/not-in-snapshot-7f3c".to_string(),
         mode: "read-write".to_string(),
         deny: vec!["b".to_string(), "a".to_string()],
     };
@@ -431,7 +431,7 @@ fn publish_renames_once_and_does_not_replace() {
         .duration_since(UNIX_EPOCH)
         .expect("clock")
         .as_nanos();
-    let root = std::env::temp_dir().join(format!("krun-box-hwvm-publish-{unique}"));
+    let root = std::env::temp_dir().join(format!("kbox-hwvm-publish-{unique}"));
     fs::create_dir_all(&root).expect("temp root");
     let destination = publish_snapshot(&root, "snap-a", b"body-v1").expect("publish");
     assert_eq!(
@@ -685,8 +685,8 @@ fn sandbox_rejects_every_vm_only_feature() {
 
 #[test]
 fn profile_bytes_match_the_oci_core_contract() {
-    use krun_oci_core::hardware_vm::{self as core_vm, GuestArch};
-    use krun_oci_core::{DriverKind, IsolationClass};
+    use koci_core::hardware_vm::{self as core_vm, GuestArch};
+    use koci_core::{DriverKind, IsolationClass};
 
     let shared = core_vm::profile_bytes(&core_vm::HardwareVmProfile::shared());
     for host in HostKind::all() {

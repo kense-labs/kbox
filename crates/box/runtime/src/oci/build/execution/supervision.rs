@@ -4,8 +4,8 @@
 use std::time::Duration;
 
 use async_trait::async_trait;
-use krun_box_core::error::{BoxError, Result as BoxResult};
-use krun_box_core::OperationId;
+use kbox_core::error::{BoxError, Result as BoxResult};
+use kbox_core::OperationId;
 
 use crate::oci::build::cache::RecordedBuildCache;
 use crate::oci::build::engine::{BuildExecutionObserver, BuildImageCommitPermit};

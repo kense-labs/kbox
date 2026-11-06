@@ -1,11 +1,11 @@
-//! `krun-box volume` subcommands — Manage named volumes.
+//! `kbox volume` subcommands — Manage named volumes.
 //!
 //! Provides create/ls/rm/inspect/prune for persistent named volumes
 //! that can be shared across box instances.
 
 use clap::{Args, Subcommand};
-use krun_box_core::volume::VolumeConfig;
-use krun_box_runtime::VolumeStore;
+use kbox_core::volume::VolumeConfig;
+use kbox_runtime::VolumeStore;
 
 /// Manage volumes.
 #[derive(Args)]
@@ -226,7 +226,8 @@ pub fn resolve_named_volume(
         return Ok((volume_spec.to_string(), None));
     }
     let store = VolumeStore::default_path()?;
-    resolve_named_volume_with_store(&store, volume_spec)
+    let (resolved, name, _created) = resolve_named_volume_with_store(&store, volume_spec)?;
+    Ok((resolved, name))
 }
 
 /// Resolve one spec against an explicit store.
@@ -236,16 +237,16 @@ pub fn resolve_named_volume(
 pub(crate) fn resolve_named_volume_with_store(
     store: &VolumeStore,
     volume_spec: &str,
-) -> Result<(String, Option<String>), Box<dyn std::error::Error>> {
+) -> Result<(String, Option<String>, bool), Box<dyn std::error::Error>> {
     let Some(volume_name) = named_volume_name(volume_spec) else {
-        return Ok((volume_spec.to_string(), None));
+        return Ok((volume_spec.to_string(), None, false));
     };
     let parts: Vec<&str> = volume_spec.split(':').collect();
 
     // Auto-create the volume if it doesn't exist (Docker behavior). Atomic
     // under the store's cross-process lock, so two concurrent first-time
     // `run -v name:/path` share one volume instead of racing to an error.
-    let config = store.get_or_create(VolumeConfig::new(volume_name, ""))?;
+    let (config, created) = store.get_or_create_with_status(VolumeConfig::new(volume_name, ""))?;
 
     // Replace the named volume with the host mount point path
     let mut resolved = config.mount_point.clone();
@@ -254,8 +255,10 @@ pub(crate) fn resolve_named_volume_with_store(
         resolved.push_str(part);
     }
 
-    Ok((resolved, Some(volume_name.to_string())))
+    Ok((resolved, Some(volume_name.to_string()), created))
 }
+
+type VolumeSpecResolution = (Vec<String>, Vec<String>, Vec<String>);
 
 /// Validate the effective health check, then resolve volume specs.
 ///
@@ -265,19 +268,33 @@ pub(crate) fn resolve_volume_specs_after_health_gate(
     store: &VolumeStore,
     volume_specs: &[String],
     health_check: Option<&crate::state::HealthCheck>,
-) -> Result<(Vec<String>, Vec<String>), Box<dyn std::error::Error>> {
+) -> Result<VolumeSpecResolution, Box<dyn std::error::Error>> {
     super::common::validate_health_check_support(health_check)
         .map_err(|error| -> Box<dyn std::error::Error> { error.into() })?;
     let mut resolved = Vec::new();
     let mut names = Vec::new();
+    let mut created_names = Vec::new();
     for spec in volume_specs {
-        let (resolved_spec, volume_name) = resolve_named_volume_with_store(store, spec)?;
+        let (resolved_spec, volume_name, created) = resolve_named_volume_with_store(store, spec)?;
         if let Some(volume_name) = volume_name {
-            names.push(volume_name);
+            names.push(volume_name.clone());
+            if created {
+                created_names.push(volume_name);
+            }
         }
         resolved.push(resolved_spec);
     }
-    Ok((resolved, names))
+    Ok((resolved, names, created_names))
+}
+
+pub(crate) fn rollback_created_volumes(
+    store: &VolumeStore,
+    created_names: &[String],
+) -> Result<(), Box<dyn std::error::Error>> {
+    for name in created_names {
+        store.remove(name, false)?;
+    }
+    Ok(())
 }
 
 /// Named-volume name when `volume_spec` is not a bind mount or a bare token.
@@ -332,7 +349,7 @@ pub(crate) fn attach_volumes_with_store(
 ///
 /// Missing volumes are success (`modify` → `Ok(false)`). Store open / lock /
 /// write failures fail closed so `in_use_by` cannot stay stale after stop/rm.
-pub fn detach_volumes(volume_names: &[String], box_id: &str) -> krun_box_core::error::Result<()> {
+pub fn detach_volumes(volume_names: &[String], box_id: &str) -> kbox_core::error::Result<()> {
     if volume_names.is_empty() {
         return Ok(());
     }
@@ -539,13 +556,14 @@ mod tests {
     #[test]
     fn health_gate_creates_named_volume_when_no_health_check_is_effective() {
         let (dir, store) = temp_store();
-        let (resolved, names) = resolve_volume_specs_after_health_gate(
+        let (resolved, names, created) = resolve_volume_specs_after_health_gate(
             &store,
             &["healthprobe:/data".to_string()],
             None,
         )
         .unwrap();
         assert_eq!(names, vec!["healthprobe".to_string()]);
+        assert_eq!(created, names);
         assert!(resolved[0].ends_with(":/data") || resolved[0].ends_with(":\\data"));
         assert!(store.get("healthprobe").unwrap().is_some());
         assert!(dir.path().join("volumes").join("healthprobe").is_dir());

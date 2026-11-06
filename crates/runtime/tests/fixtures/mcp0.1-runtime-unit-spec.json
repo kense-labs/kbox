@@ -1,10 +1,10 @@
 {
-  "schema": "krun.runtime.unit-spec.v4",
+  "schema": "kbox_contract.unit-spec.v4",
   "unit_id": "workload:mcp-weather:replica:1",
   "generation": 3,
   "class": "service",
   "artifact": {
-    "uri": "oci://registry.example/krun/mcp-weather@sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "uri": "oci://registry.example/kbox/mcp-weather@sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
     "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
     "media_type": "application/vnd.oci.image.manifest.v1+json"
   },

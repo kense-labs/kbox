@@ -1,4 +1,4 @@
-//! Bind Box-owned storage allocations into `krun.oci.attachments.v2`.
+//! Bind Box-owned storage allocations into `koci.attachments.v2`.
 //!
 //! Volume lookup, authorization, and deletion stay in Box. The runtime only
 //! receives immutable storage identities + caller-owned detach-only lifetime.
@@ -6,8 +6,8 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use krun_box_core::{ExecutionManagerError, ExecutionManagerResult};
-use krun_oci_sdk::{
+use kbox_core::{ExecutionManagerError, ExecutionManagerResult};
+use koci_sdk::{
     CreateAttachments, OciBundle, StorageAccessMode, StorageAttachmentId, StorageCleanup,
     StorageOwnership,
 };
@@ -15,10 +15,10 @@ use krun_oci_sdk::{
 use crate::{BoxRecord, VolumeStore};
 
 /// Stable storage identity for the Box-owned Sandbox workspace bind.
-const WORKSPACE_STORAGE_IDENTITY: &str = "krun.box.workspace";
+const WORKSPACE_STORAGE_IDENTITY: &str = "kbox.workspace";
 
 /// Attach Box-owned VolumeStore mounts and the implicit `/workspace` bind into
-/// `krun.oci.attachments.v2`.
+/// `koci.attachments.v2`.
 ///
 /// Caller ownership + DetachOnly matches Box retaining deletion authority.
 /// Staged caller bind aliases are attached separately via
@@ -45,10 +45,10 @@ pub(super) fn attach_box_owned_volume_storage(
 }
 
 /// Classify Box-staged caller bind aliases under
-/// `{box_dir}/sandbox/attachments/{slot}` into `krun.oci.attachments.v2`.
+/// `{box_dir}/sandbox/attachments/{slot}` into `koci.attachments.v2`.
 ///
 /// Preparation rewrites external `-v` sources onto these O_PATH aliases; this
-/// attaches the matching storage identity (`krun.box.bind.{slot}`) so create no
+/// attaches the matching storage identity (`kbox.bind.{slot}`) so create no
 /// longer sees an unclassified bind for the common Docker bind surface.
 pub(super) fn attach_staged_caller_bind_aliases(
     bundle: &OciBundle,
@@ -86,7 +86,7 @@ pub(super) fn attach_staged_caller_bind_aliases(
                 alias_root.display()
             ))
         })?;
-        let identity = format!("krun.box.bind.{slot}");
+        let identity = format!("kbox.bind.{slot}");
         attachments = attach_storage(bundle, attachments, index, &identity, mount.read_only)?;
     }
     Ok(attachments)
@@ -394,8 +394,8 @@ fn oci_bind_mounts(bundle: &OciBundle) -> ExecutionManagerResult<Vec<OciBindMoun
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::volume::VolumeConfig;
-    use krun_oci_sdk::ProcessIo;
+    use kbox_core::volume::VolumeConfig;
+    use koci_sdk::ProcessIo;
     use serde_json::json;
 
     fn make_record(home_dir: &Path, id: &str) -> BoxRecord {
@@ -465,12 +465,12 @@ mod tests {
         record.volume_names = vec!["dataset-a".to_string()];
 
         let attachments = CreateAttachments::from_bundle(&bundle, ProcessIo::default()).unwrap();
-        assert_eq!(attachments.schema_version(), "krun.oci.attachments.v1");
+        assert_eq!(attachments.schema_version(), "koci.attachments.v1");
 
         let attached =
             attach_box_owned_volume_storage(&bundle, attachments, home.path(), &record, &[])
                 .unwrap();
-        assert_eq!(attached.schema_version(), "krun.oci.attachments.v2");
+        assert_eq!(attached.schema_version(), "koci.attachments.v2");
         assert_eq!(attached.storage().len(), 1);
         assert_eq!(attached.storage()[0].identity().as_str(), "dataset-a");
         assert_eq!(
@@ -515,7 +515,7 @@ mod tests {
         let attached =
             attach_box_owned_volume_storage(&bundle, attachments, home.path(), &record, &[])
                 .unwrap();
-        assert_eq!(attached.schema_version(), "krun.oci.attachments.v2");
+        assert_eq!(attached.schema_version(), "koci.attachments.v2");
         assert_eq!(attached.storage().len(), 1);
         assert_eq!(
             attached.storage()[0].identity().as_str(),
@@ -564,12 +564,9 @@ mod tests {
         assert!(attached.storage().is_empty());
         let attached =
             attach_staged_caller_bind_aliases(&bundle, attached, home.path(), &record).unwrap();
-        assert_eq!(attached.schema_version(), "krun.oci.attachments.v2");
+        assert_eq!(attached.schema_version(), "koci.attachments.v2");
         assert_eq!(attached.storage().len(), 1);
-        assert_eq!(
-            attached.storage()[0].identity().as_str(),
-            "krun.box.bind.0000"
-        );
+        assert_eq!(attached.storage()[0].identity().as_str(), "kbox.bind.0000");
         assert_eq!(
             attached.storage()[0].access_mode(),
             StorageAccessMode::ReadOnly

@@ -1,6 +1,6 @@
 //! VM Snapshot Store — Save and restore VM configuration snapshots.
 //!
-//! Snapshots are stored as directories under `~/.krun/snapshots/<id>/`:
+//! Snapshots are stored as directories under `~/.kbox/snapshots/<id>/`:
 //! - `metadata.json` — SnapshotMetadata (config, resources, env, etc.)
 //! - `rootfs.json` — versioned payload identity
 //! - `rootfs/` — immutable directory payload (legacy-compatible), or
@@ -13,14 +13,14 @@
 use std::cmp::Reverse;
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::rootfs_metadata::RootfsMetadataManifest;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::rootfs_metadata::RootfsMetadataManifest;
 #[cfg(test)]
-use krun_box_core::rootfs_metadata::{
+use kbox_core::rootfs_metadata::{
     IMAGE_ROOTFS_METADATA_PATH, PREVIOUS_ROOTFS_METADATA_PATH, ROOTFS_METADATA_PATH,
 };
-use krun_box_core::snapshot::SnapshotMetadata;
-use krun_box_core::SnapshotStoreBackend;
+use kbox_core::snapshot::SnapshotMetadata;
+use kbox_core::SnapshotStoreBackend;
 
 use crate::file_lock::FileLock;
 
@@ -86,9 +86,9 @@ impl SnapshotStore {
         })
     }
 
-    /// Open the default snapshot store at `~/.krun/snapshots`.
+    /// Open the default snapshot store at `~/.kbox/snapshots`.
     pub fn default_path() -> Result<Self> {
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         Self::new(&home.join("snapshots"))
     }
 
@@ -376,7 +376,7 @@ impl SnapshotStore {
 
     /// Rootfs paths currently referenced by a restored box as its CoW overlay lower
     /// (`<box_dir>/.snapshot-lower`, written by `snapshot restore`). These snapshots
-    /// must not be pruned. Boxes live next to snapshots under the krun home
+    /// must not be pruned. Boxes live next to snapshots under the kbox home
     /// (`base_dir` = `<home>/snapshots`).
     ///
     /// Inventory I/O failures fail closed: callers must not treat an unread
@@ -878,7 +878,7 @@ mod tests {
         let second = rootfs.join("second");
         std::fs::write(&first, b"shared inode").unwrap();
         std::fs::hard_link(&first, &second).unwrap();
-        xattr::set(&first, "user.krun.snapshot", b"preserved").unwrap();
+        xattr::set(&first, "user.kbox.snapshot", b"preserved").unwrap();
 
         let saved = store
             .save(make_metadata("hardlink-xattr", "hardlink-xattr"), &rootfs)
@@ -891,7 +891,7 @@ mod tests {
         assert_eq!(captured_first.ino(), captured_second.ino());
         assert_eq!(saved.size_bytes, b"shared inode".len() as u64);
         assert_eq!(
-            xattr::get(captured.join("first"), "user.krun.snapshot").unwrap(),
+            xattr::get(captured.join("first"), "user.kbox.snapshot").unwrap(),
             Some(b"preserved".to_vec())
         );
     }

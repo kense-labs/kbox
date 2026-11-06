@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 
-use krun_oci_core::{LifecycleEvent, LifecycleState};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{LifecycleEvent, LifecycleState};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerRecord, ContainerTarget, ErrorCode, OciSchemaValidator, Result, RuntimeEventKind,
 };
 

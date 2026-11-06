@@ -20,21 +20,21 @@ fn sha256_hex(bytes: &[u8]) -> String {
         .collect()
 }
 
-fn libkrun_drivers() -> [DriverKind; 3] {
+fn libkdrivers() -> [DriverKind; 3] {
     [
-        DriverKind::LibkrunKvm,
-        DriverKind::LibkrunHvf,
-        DriverKind::LibkrunWhpx,
+        DriverKind::LibkKvm,
+        DriverKind::LibkHvf,
+        DriverKind::LibkWhpx,
     ]
 }
 
 #[test]
-fn profile_bytes_are_identical_for_every_libkrun_host_and_guest_arch() {
+fn profile_bytes_are_identical_for_every_libkhost_and_guest_arch() {
     let shared = profile_bytes(&HardwareVmProfile::shared());
     assert_eq!(shared.len(), 207);
     assert_eq!(sha256_hex(&shared), PROFILE_SHA256);
     assert_eq!(&shared[..4], &PROFILE_VERSION.to_le_bytes());
-    for driver in libkrun_drivers() {
+    for driver in libkdrivers() {
         for arch in GuestArch::all() {
             let profile = profile_for(driver, arch).expect("libkrun profile");
             assert_eq!(profile, HardwareVmProfile::shared());
@@ -57,7 +57,7 @@ fn native_linux_is_not_a_hardware_vm_profile_host() {
         }
     );
     assert!(!is_libkrun(DriverKind::NativeLinux));
-    for driver in libkrun_drivers() {
+    for driver in libkdrivers() {
         assert!(is_libkrun(driver));
     }
 }
@@ -111,15 +111,15 @@ fn resources_use_the_shared_bounds() {
 }
 
 #[test]
-fn restore_requires_the_same_libkrun_driver_version_and_arch() {
+fn restore_requires_the_same_libkdriver_version_and_arch() {
     assert_eq!(
         restore_permitted(
             PROFILE_VERSION,
             GuestArch::X86_64,
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
             PROFILE_VERSION,
             GuestArch::X86_64,
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
         ),
         Ok(())
     );
@@ -127,10 +127,10 @@ fn restore_requires_the_same_libkrun_driver_version_and_arch() {
         restore_permitted(
             PROFILE_VERSION,
             GuestArch::X86_64,
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
             PROFILE_VERSION,
             GuestArch::Aarch64,
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
         ),
         Err(HardwareVmError::RestoreMismatch)
     );
@@ -138,10 +138,10 @@ fn restore_requires_the_same_libkrun_driver_version_and_arch() {
         restore_permitted(
             PROFILE_VERSION,
             GuestArch::X86_64,
-            DriverKind::LibkrunKvm,
+            DriverKind::LibkKvm,
             PROFILE_VERSION,
             GuestArch::X86_64,
-            DriverKind::LibkrunHvf,
+            DriverKind::LibkHvf,
         ),
         Err(HardwareVmError::RestoreMismatch)
     );
@@ -162,12 +162,12 @@ fn restore_requires_the_same_libkrun_driver_version_and_arch() {
 fn checkpoint_pairs_match_the_driver_isolation_matrix() {
     let permitted = [
         (DriverKind::NativeLinux, IsolationClass::SharedHostKernel),
-        (DriverKind::LibkrunKvm, IsolationClass::DedicatedVm),
-        (DriverKind::LibkrunKvm, IsolationClass::SharedGuestKernel),
-        (DriverKind::LibkrunHvf, IsolationClass::DedicatedVm),
-        (DriverKind::LibkrunHvf, IsolationClass::SharedGuestKernel),
-        (DriverKind::LibkrunWhpx, IsolationClass::DedicatedVm),
-        (DriverKind::LibkrunWhpx, IsolationClass::SharedGuestKernel),
+        (DriverKind::LibkKvm, IsolationClass::DedicatedVm),
+        (DriverKind::LibkKvm, IsolationClass::SharedGuestKernel),
+        (DriverKind::LibkHvf, IsolationClass::DedicatedVm),
+        (DriverKind::LibkHvf, IsolationClass::SharedGuestKernel),
+        (DriverKind::LibkWhpx, IsolationClass::DedicatedVm),
+        (DriverKind::LibkWhpx, IsolationClass::SharedGuestKernel),
     ];
     for (driver, isolation) in permitted {
         assert!(checkpoint_pair_permitted(driver, isolation));
@@ -175,9 +175,9 @@ fn checkpoint_pairs_match_the_driver_isolation_matrix() {
     let refused = [
         (DriverKind::NativeLinux, IsolationClass::DedicatedVm),
         (DriverKind::NativeLinux, IsolationClass::SharedGuestKernel),
-        (DriverKind::LibkrunKvm, IsolationClass::SharedHostKernel),
-        (DriverKind::LibkrunHvf, IsolationClass::SharedHostKernel),
-        (DriverKind::LibkrunWhpx, IsolationClass::SharedHostKernel),
+        (DriverKind::LibkKvm, IsolationClass::SharedHostKernel),
+        (DriverKind::LibkHvf, IsolationClass::SharedHostKernel),
+        (DriverKind::LibkWhpx, IsolationClass::SharedHostKernel),
     ];
     for (driver, isolation) in refused {
         assert!(!checkpoint_pair_permitted(driver, isolation));
@@ -185,7 +185,7 @@ fn checkpoint_pairs_match_the_driver_isolation_matrix() {
 }
 
 #[test]
-fn libkrun_guest_arch_is_x86_64_or_aarch64() {
+fn libkguest_arch_is_x86_64_or_aarch64() {
     assert_eq!(admit_guest_arch("x86_64"), Ok(GuestArch::X86_64));
     assert_eq!(admit_guest_arch("aarch64"), Ok(GuestArch::Aarch64));
     assert_eq!(
@@ -209,17 +209,17 @@ fn vm_only_operations_allow_guest_kernels_and_refuse_the_host_kernel() {
 }
 
 #[test]
-fn virtiofs_share_modes_follow_the_libkrun_host() {
+fn virtiofs_share_modes_follow_the_libkhost() {
     assert_eq!(
-        virtiofs_share_mode(DriverKind::LibkrunKvm),
+        virtiofs_share_mode(DriverKind::LibkKvm),
         Some("same-uid-private-per-generation-virtiofs")
     );
     assert_eq!(
-        virtiofs_share_mode(DriverKind::LibkrunHvf),
-        virtiofs_share_mode(DriverKind::LibkrunKvm)
+        virtiofs_share_mode(DriverKind::LibkHvf),
+        virtiofs_share_mode(DriverKind::LibkKvm)
     );
     assert_eq!(
-        virtiofs_share_mode(DriverKind::LibkrunWhpx),
+        virtiofs_share_mode(DriverKind::LibkWhpx),
         Some("protected-per-generation-virtiofs")
     );
     assert_eq!(virtiofs_share_mode(DriverKind::NativeLinux), None);

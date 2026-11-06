@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "krun.oci.attachments.v2",
+  "schemaVersion": "koci.attachments.v2",
   "rootfs": {
     "jsonPointer": "/root",
     "valueDigest": "sha256:2f9b36d930ecf25ea5df68f77c368b53f750ca0bd8e82afff17dca1941d1fee4"

@@ -1,9 +1,9 @@
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     RuntimeActionRequest, RuntimeApplyRequest, RuntimeCapabilities, RuntimeExecRequest,
     RuntimeExecResult, RuntimeInspection, RuntimeLogChunk, RuntimeLogQuery, RuntimeObservation,
     RuntimeRemoval, RuntimeUnitSpec,
 };
-use krun_runtime::{RuntimeRequestReceipt, RuntimeUnitRecord};
+use kbox_contract::{RuntimeRequestReceipt, RuntimeUnitRecord};
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{Map, Value};

@@ -267,7 +267,7 @@ fn network_enforcement_create_request() -> CreateRequest {
         "linux": {
             "namespaces": [{
                 "type": "network",
-                "path": "/run/krun/network/protocol-enforcement-namespace-1"
+                "path": "/run/kbox/network/protocol-enforcement-namespace-1"
             }],
             "netDevices": {"tap0": {"name": "eth0"}}
         },
@@ -409,9 +409,9 @@ fn attestation_fixture() -> (TeeAttestationRequest, TeeAttestationResponse) {
         report_data,
         TeeSha256Digest::new(format!("sha256:{}", "1".repeat(64))).unwrap(),
         TeeSha256Digest::new(format!("sha256:{}", "2".repeat(64))).unwrap(),
-        DriverKind::LibkrunKvm,
+        DriverKind::LibkKvm,
         RuntimeArtifact::new(
-            "krun-oci-runtime",
+            "koci-runtime",
             "0.3.1",
             format!("sha256:{}", "3".repeat(64)),
             None,
@@ -443,9 +443,7 @@ fn checkpoint_source(create: &CreateRequest) -> ContainerRecord {
         generation: Generation(7),
         driver: match create.isolation.class() {
             IsolationClass::SharedHostKernel => DriverKind::NativeLinux,
-            IsolationClass::DedicatedVm | IsolationClass::SharedGuestKernel => {
-                DriverKind::LibkrunKvm
-            }
+            IsolationClass::DedicatedVm | IsolationClass::SharedGuestKernel => DriverKind::LibkKvm,
         },
         isolation: create.isolation.class(),
         guest_session: create.attachments.guest_session().cloned(),
@@ -471,7 +469,7 @@ fn checkpoint_reference(create: &CreateRequest) -> (ContainerRecord, CheckpointR
         HostPlatform::Linux,
         "x86_64",
         RuntimeArtifact::new(
-            "krun-oci-runtime",
+            "koci-runtime",
             "0.3.1",
             format!("sha256:{}", "a".repeat(64)),
             Some("sdk-transport-test".to_string()),

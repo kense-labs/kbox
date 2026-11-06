@@ -84,7 +84,7 @@ impl VmManager {
         self.preserve_rootfs_on_boot_failure =
             self.config.persistent && layout::persistent_rootfs_generation_exists(&box_dir)?;
 
-        let execution_plan = krun_box_core::resolve_execution(&self.config)?;
+        let execution_plan = kbox_core::resolve_execution(&self.config)?;
         self.resolved_execution_plan = Some(execution_plan.clone());
         if execution_plan.backend.is_sandbox() {
             if selected_path {
@@ -123,11 +123,9 @@ impl VmManager {
         // this box's overlay. Stage via the exact guest-visible root so rename
         // copy-ups into the per-box upper before any guest process can launch.
         if !self.rootfs_provider.guest_owns_terminal_fencing() {
-            if let Err(error) =
-                krun_box_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
-                    &layout.rootfs_path,
-                )
-            {
+            if let Err(error) = kbox_core::rootfs_metadata::stage_terminal_rootfs_metadata_for_boot(
+                &layout.rootfs_path,
+            ) {
                 self.cleanup_failed_boot_if_legacy(selected_path).await;
                 return Err(BoxError::IoError(error));
             }
@@ -148,7 +146,7 @@ impl VmManager {
 
         // 2.5. Configure bridge networking if requested
         let bridge_network = match &self.config.network {
-            krun_box_core::NetworkMode::Bridge { network } => Some(network.clone()),
+            kbox_core::NetworkMode::Bridge { network } => Some(network.clone()),
             _ => None,
         };
         if let Some(network_name) = bridge_network.as_deref() {
@@ -161,17 +159,14 @@ impl VmManager {
             };
 
             // Inject network env vars into entrypoint so they are passed via
-            // krun_set_exec's envp (not krun_set_env which overwrites all vars).
+            // kset_exec's envp (not kset_env which overwrites all vars).
             let ip_cidr = format!("{}/{}", net_config.ip_address, net_config.prefix_len);
+            spec.entrypoint.env.push(("K_NET_IP".to_string(), ip_cidr));
             spec.entrypoint
                 .env
-                .push(("KRUN_NET_IP".to_string(), ip_cidr));
+                .push(("K_NET_GATEWAY".to_string(), net_config.gateway.to_string()));
             spec.entrypoint.env.push((
-                "KRUN_NET_GATEWAY".to_string(),
-                net_config.gateway.to_string(),
-            ));
-            spec.entrypoint.env.push((
-                "KRUN_NET_DNS".to_string(),
+                "K_NET_DNS".to_string(),
                 net_config
                     .dns_servers
                     .iter()
@@ -185,7 +180,7 @@ impl VmManager {
 
         #[cfg(target_os = "macos")]
         if spec.network.is_none()
-            && matches!(self.config.network, krun_box_core::NetworkMode::Tsi)
+            && matches!(self.config.network, kbox_core::NetworkMode::Tsi)
             && !self.config.port_map.is_empty()
         {
             let net_config = match self.setup_published_default_network() {
@@ -196,15 +191,12 @@ impl VmManager {
                 }
             };
             let ip_cidr = format!("{}/{}", net_config.ip_address, net_config.prefix_len);
+            spec.entrypoint.env.push(("K_NET_IP".to_string(), ip_cidr));
             spec.entrypoint
                 .env
-                .push(("KRUN_NET_IP".to_string(), ip_cidr));
+                .push(("K_NET_GATEWAY".to_string(), net_config.gateway.to_string()));
             spec.entrypoint.env.push((
-                "KRUN_NET_GATEWAY".to_string(),
-                net_config.gateway.to_string(),
-            ));
-            spec.entrypoint.env.push((
-                "KRUN_NET_DNS".to_string(),
+                "K_NET_DNS".to_string(),
                 net_config
                     .dns_servers
                     .iter()
@@ -247,7 +239,7 @@ impl VmManager {
             });
         }
         if !uses_guest_boot_config {
-            let resolv_content = krun_box_core::dns::generate_resolv_conf(&self.config.dns);
+            let resolv_content = kbox_core::dns::generate_resolv_conf(&self.config.dns);
             if let Err(error) = crate::oci::rootfs::write_guest_file(
                 &layout.rootfs_path,
                 "etc/resolv.conf",
@@ -511,7 +503,7 @@ impl VmManager {
             crate::oci::rootfs::resolve_guest_file_path(&layout.rootfs_path, relative)?;
         let guest_init_sha256 = Self::guest_init_sha256(&guest_init)?;
 
-        let architecture = krun_box_core::platform::Platform::host().architecture;
+        let architecture = kbox_core::platform::Platform::host().architecture;
         Ok(Some(crate::rootfs::RootfsArtifactCacheOptions {
             directory: self.resolve_cache_dir().join("rootfs-ext4-v1"),
             oci_manifest_digest: oci_manifest_digest.clone(),

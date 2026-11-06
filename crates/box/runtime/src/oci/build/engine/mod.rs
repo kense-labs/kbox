@@ -8,8 +8,8 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::platform::Platform;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::platform::Platform;
 
 use super::cache::{
     hash_context_sources, BuildCache, BuildCacheExportIdentity, BuildCacheTrace, CachedLayer,
@@ -228,7 +228,7 @@ fn run_bind_mount_input_hash(
             None => ("context".to_string(), context_dir),
         };
 
-        let source_hash = hash_context_sources(source_root, &[source.to_string()])?;
+        let source_hash = hash_context_sources(source_root, &[source.to_string()], None)?;
         input.push_str(&origin);
         input.push('\0');
         input.push_str(source);
@@ -272,7 +272,7 @@ fn run_cache_mount_input_hash(
             mount.source.as_str()
         };
         let source_root = resolve_stage_rootfs(from_ref, completed_stages).ok()?;
-        let source_hash = hash_context_sources(source_root, &[source.to_string()])?;
+        let source_hash = hash_context_sources(source_root, &[source.to_string()], None)?;
         input.push_str("cache-seed:");
         input.push_str(from_ref);
         input.push('\0');
@@ -675,7 +675,7 @@ async fn build_in_workspace(
                 let input_hash = match instruction {
                     Instruction::Copy {
                         src, from: None, ..
-                    } => hash_context_sources(&config.context_dir, src),
+                    } => hash_context_sources(&config.context_dir, src, Some(&dockerignore)),
                     Instruction::Copy {
                         src,
                         from: Some(from_ref),
@@ -690,9 +690,11 @@ async fn build_in_workspace(
                         // None (the image ref is already in `repr`).
                         resolve_stage_rootfs(from_ref, &completed_stages)
                             .ok()
-                            .and_then(|rootfs| hash_context_sources(rootfs, src))
+                            .and_then(|rootfs| hash_context_sources(rootfs, src, None))
                     }
-                    Instruction::Add { src, .. } => hash_context_sources(&config.context_dir, src),
+                    Instruction::Add { src, .. } => {
+                        hash_context_sources(&config.context_dir, src, Some(&dockerignore))
+                    }
                     Instruction::Run {
                         cache_mounts,
                         bind_mounts,
@@ -1322,7 +1324,7 @@ async fn build_in_workspace(
     let reference = config
         .tag
         .clone()
-        .unwrap_or_else(|| "krun-build:latest".to_string());
+        .unwrap_or_else(|| "kbuild:latest".to_string());
 
     let final_layers_dir = build_dir.join(format!("layers_{}", output_stage_idx));
 
@@ -1610,7 +1612,7 @@ fn validate_instruction_network(
 
 fn run_instruction_cache_repr(instruction: &Instruction, network: BuildNetworkPolicy) -> String {
     format!(
-        "{}\n#krun.box.build.network={}",
+        "{}\n#kbox.build.network={}",
         instruction_to_string(instruction),
         network.as_acl()
     )

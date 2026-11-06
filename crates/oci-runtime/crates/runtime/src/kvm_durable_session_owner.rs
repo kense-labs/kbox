@@ -5,7 +5,7 @@
 //! inserts a long-lived session-owner process as the shim's direct parent so
 //! Host SIGKILL does not tear down the Guest. Replacement Host Live reattach
 //! is a later slice; this module only owns the parentage invariant the Linux
-//! krun watchdog already enforces (`owner_pid == getppid()`).
+//! kbox watchdog already enforces (`owner_pid == getppid()`).
 
 #![cfg(all(
     target_os = "linux",
@@ -25,7 +25,7 @@ use std::time::Duration;
 /// When unset/false, Host remains the shim parent (stopped-only on Host death).
 /// When true, callers must spawn through [`spawn_via_session_owner_helper`] so
 /// the session owner — not Host — is the shim's direct parent.
-pub const KVM_SESSION_OWNER_ENV: &str = "KRUN_OCI_KVM_SESSION_OWNER";
+pub const KVM_SESSION_OWNER_ENV: &str = "K_OCI_KVM_SESSION_OWNER";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum KvmOwnerMode {
@@ -126,17 +126,17 @@ impl DurableSessionOwner {
     }
 }
 
-/// Spawn `krun-oci-krun-shim session-owner` as a Host child (Tokio-safe).
+/// Spawn `koci-kshim session-owner` as a Host child (Tokio-safe).
 ///
 /// `shim_argv` is the trailing shim argv (for example `agent-vm-smoke ...`) and
 /// must not include `--owner-pid`. The helper injects its own PID.
 #[cfg(test)]
 pub fn spawn_via_session_owner_helper(
-    krun_shim: &std::path::Path,
+    kshim: &std::path::Path,
     shim_argv: &[std::ffi::OsString],
     ready_file: &std::path::Path,
 ) -> io::Result<DurableSessionOwner> {
-    spawn_via_session_owner_helper_with_env(krun_shim, shim_argv, ready_file, None, &[])
+    spawn_via_session_owner_helper_with_env(kshim, shim_argv, ready_file, None, &[])
 }
 
 /// Like [`spawn_via_session_owner_helper`], forwarding extra environment into the
@@ -145,7 +145,7 @@ pub fn spawn_via_session_owner_helper(
 /// When `host_control` is set, the session-owner binds the shim `--socket-path`
 /// and proxies Host↔guest on that control socket for Live reattach.
 pub fn spawn_via_session_owner_helper_with_env(
-    krun_shim: &std::path::Path,
+    kshim: &std::path::Path,
     shim_argv: &[std::ffi::OsString],
     ready_file: &std::path::Path,
     host_control: Option<&std::path::Path>,
@@ -180,7 +180,7 @@ pub fn spawn_via_session_owner_helper_with_env(
         .truncate(true)
         .open(&stderr_log)?;
 
-    let mut owner = Command::new(krun_shim);
+    let mut owner = Command::new(kshim);
     owner
         .arg("session-owner")
         .arg("--ready-file")
@@ -260,7 +260,7 @@ pub fn spawn_holding_child(child: Command) -> io::Result<DurableSessionOwner> {
     let (child_ready_reader, child_ready_writer) = anonymous_pipe()?;
 
     // SAFETY: callers must invoke from a single-threaded Host context (or a
-    // freshly exec'd helper). The Linux krun Host path matches that boundary.
+    // freshly exec'd helper). The Linux kbox Host path matches that boundary.
     let owner_pid = unsafe { libc::fork() };
     if owner_pid < 0 {
         return Err(io::Error::last_os_error());
@@ -471,8 +471,8 @@ mod tests {
     use std::thread;
     use std::time::{Duration, Instant};
 
-    const HOST_REPORT_ENV: &str = "KRUN_OCI_TEST_KVM_OWNER_REPORT";
-    const HOST_GATE_ENV: &str = "KRUN_OCI_TEST_KVM_OWNER_GATE";
+    const HOST_REPORT_ENV: &str = "K_OCI_TEST_KVM_OWNER_REPORT";
+    const HOST_GATE_ENV: &str = "K_OCI_TEST_KVM_OWNER_GATE";
     const HOST_WORKER: &str = "kvm_durable_session_owner::tests::host_analogue_worker";
 
     #[test]
@@ -581,7 +581,7 @@ mod tests {
 
     #[test]
     fn session_owner_helper_parents_probe_and_survives_host_detach() {
-        let shim = env::var("KRUN_OCI_KRUN_SHIM")
+        let shim = env::var("K_OCI_K_SHIM")
             .ok()
             .filter(|value| !value.is_empty())
             .map(PathBuf::from)
@@ -589,14 +589,14 @@ mod tests {
                 let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
                 path.pop(); // crates/runtime -> crates
                 path.pop(); // crates -> repo root
-                let candidate = path.join("target/debug/krun-oci-krun-shim");
+                let candidate = path.join("target/debug/koci-kshim");
                 candidate.is_file().then_some(candidate)
             });
         let Some(shim) = shim else {
-            eprintln!("skipping: build krun-oci-krun-shim or set KRUN_OCI_KRUN_SHIM");
+            eprintln!("skipping: build koci-kshim or set K_OCI_K_SHIM");
             return;
         };
-        assert!(shim.is_file(), "krun shim must be a file: {shim:?}");
+        assert!(shim.is_file(), "kbox shim must be a file: {shim:?}");
 
         let temp = tempfile::tempdir().expect("tempdir");
         let ready = temp.path().join("ready");
@@ -633,7 +633,7 @@ mod tests {
         use std::io::{Read, Write};
         use std::os::unix::net::UnixStream;
 
-        let shim = env::var("KRUN_OCI_KRUN_SHIM")
+        let shim = env::var("K_OCI_K_SHIM")
             .ok()
             .filter(|value| !value.is_empty())
             .map(PathBuf::from)
@@ -641,11 +641,11 @@ mod tests {
                 let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
                 path.pop();
                 path.pop();
-                let candidate = path.join("target/debug/krun-oci-krun-shim");
+                let candidate = path.join("target/debug/koci-kshim");
                 candidate.is_file().then_some(candidate)
             });
         let Some(shim) = shim else {
-            eprintln!("skipping: build krun-oci-krun-shim or set KRUN_OCI_KRUN_SHIM");
+            eprintln!("skipping: build koci-kshim or set K_OCI_K_SHIM");
             return;
         };
 

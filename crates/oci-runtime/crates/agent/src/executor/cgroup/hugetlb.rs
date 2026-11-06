@@ -2,8 +2,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::io;
 use std::path::Path;
 
-use krun_oci_sdk::oci_spec::runtime::LinuxHugepageLimit;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::LinuxHugepageLimit;
+use koci_sdk::{Error, ErrorCode, Result};
 
 use super::{cgroup_error, CgroupSetting};
 
@@ -221,13 +221,13 @@ fn invalid(message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::oci_spec::runtime::LinuxResources;
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::oci_spec::runtime::LinuxResources;
+    use koci_sdk::ErrorCode;
 
     use super::HugeTlbPlan;
     use crate::executor::cgroup::{apply_settings, CgroupSetting};
 
-    fn plan(value: serde_json::Value) -> Result<HugeTlbPlan, krun_oci_sdk::Error> {
+    fn plan(value: serde_json::Value) -> Result<HugeTlbPlan, koci_sdk::Error> {
         let resources: LinuxResources = serde_json::from_value(serde_json::json!({
             "hugepageLimits": value
         }))

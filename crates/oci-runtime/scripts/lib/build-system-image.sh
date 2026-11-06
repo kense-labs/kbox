@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # Shared deterministic ext4 system-image builder. Platform wrappers must set
-# every KRUN_SYSTEM_IMAGE_* variable below before calling this function.
+# every K_SYSTEM_IMAGE_* variable below before calling this function.
 # Resolved when this file is sourced, not when the function later runs.
-KRUN_SYSTEM_IMAGE_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-krun_build_system_image() {
+K_SYSTEM_IMAGE_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+kbuild_system_image() {
   local alpine_archive=""
   local agent=""
   local output_dir=""
@@ -49,15 +49,15 @@ krun_build_system_image() {
   fi
 
   local required_variables=(
-    KRUN_SYSTEM_IMAGE_SCHEMA_VERSION
-    KRUN_SYSTEM_IMAGE_ARCHITECTURE
-    KRUN_SYSTEM_IMAGE_ELF_PATTERN
-    KRUN_SYSTEM_IMAGE_ALPINE_URL
-    KRUN_SYSTEM_IMAGE_ALPINE_SHA256
-    KRUN_SYSTEM_IMAGE_ALPINE_SIZE
-    KRUN_SYSTEM_IMAGE_FILESYSTEM_UUID
-    KRUN_SYSTEM_IMAGE_DIRECTORY_HASH_SEED
-    KRUN_SYSTEM_IMAGE_RUNTIME_JSON
+    K_SYSTEM_IMAGE_SCHEMA_VERSION
+    K_SYSTEM_IMAGE_ARCHITECTURE
+    K_SYSTEM_IMAGE_ELF_PATTERN
+    K_SYSTEM_IMAGE_ALPINE_URL
+    K_SYSTEM_IMAGE_ALPINE_SHA256
+    K_SYSTEM_IMAGE_ALPINE_SIZE
+    K_SYSTEM_IMAGE_FILESYSTEM_UUID
+    K_SYSTEM_IMAGE_DIRECTORY_HASH_SEED
+    K_SYSTEM_IMAGE_RUNTIME_JSON
   )
   local variable
   for variable in "${required_variables[@]}"; do
@@ -79,7 +79,7 @@ krun_build_system_image() {
   agent="$(readlink -f "$agent")"
   output_dir="$(mkdir -p "$output_dir" && readlink -f "$output_dir")"
   local output_name
-  for output_name in krun-oci-system.ext4 krun-oci-system.ext4.xz system-image.json; do
+  for output_name in koci-system.ext4 koci-system.ext4.xz system-image.json; do
     if [[ -e "$output_dir/$output_name" ]]; then
       echo "refusing to overwrite existing system-image output: $output_dir/$output_name" >&2
       return 1
@@ -88,9 +88,9 @@ krun_build_system_image() {
 
   local source_date_epoch=1735689600
   local image_size=67108864
-  local filesystem_label="krun-oci-system"
-  local compatibility_level="krun-oci-runtime-0.2.0-agent-protocol-v10"
-  local cargo_toml="$KRUN_SYSTEM_IMAGE_LIB_DIR/../../Cargo.toml"
+  local filesystem_label="koci-system"
+  local compatibility_level="koci-runtime-0.2.0-agent-protocol-v10"
+  local cargo_toml="$K_SYSTEM_IMAGE_LIB_DIR/../../Cargo.toml"
   local agent_version
   agent_version="$(
     sed -n '/^\[workspace.package\]/,/^\[/s/^version = "\([^"]*\)"/\1/p' "$cargo_toml"
@@ -104,13 +104,13 @@ krun_build_system_image() {
   local actual_alpine_size
   actual_alpine_sha256="$(sha256sum "$alpine_archive" | cut -d ' ' -f 1)"
   actual_alpine_size="$(stat --format '%s' "$alpine_archive")"
-  if [[ "$actual_alpine_sha256" != "$KRUN_SYSTEM_IMAGE_ALPINE_SHA256" || "$actual_alpine_size" -ne "$KRUN_SYSTEM_IMAGE_ALPINE_SIZE" ]]; then
-    echo "Alpine input does not match the pinned 3.22.5 $KRUN_SYSTEM_IMAGE_ARCHITECTURE archive" >&2
+  if [[ "$actual_alpine_sha256" != "$K_SYSTEM_IMAGE_ALPINE_SHA256" || "$actual_alpine_size" -ne "$K_SYSTEM_IMAGE_ALPINE_SIZE" ]]; then
+    echo "Alpine input does not match the pinned 3.22.5 $K_SYSTEM_IMAGE_ARCHITECTURE archive" >&2
     return 1
   fi
 
-  if ! file "$agent" | grep -Eq "$KRUN_SYSTEM_IMAGE_ELF_PATTERN"; then
-    echo "guest agent must be a statically linked $KRUN_SYSTEM_IMAGE_ARCHITECTURE ELF executable" >&2
+  if ! file "$agent" | grep -Eq "$K_SYSTEM_IMAGE_ELF_PATTERN"; then
+    echo "guest agent must be a statically linked $K_SYSTEM_IMAGE_ARCHITECTURE ELF executable" >&2
     return 1
   fi
   if readelf --program-headers "$agent" | grep -q INTERP; then
@@ -135,17 +135,17 @@ krun_build_system_image() {
 
     mkdir "$root"
     tar --extract --gzip --file "$alpine_archive" --directory "$root" --numeric-owner
-    install -D -m 0755 "$agent" "$root/usr/bin/krun-oci-agent"
-    install -d -m 0755 "$root/run/krun-oci-runtime"
+    install -D -m 0755 "$agent" "$root/usr/bin/koci-agent"
+    install -d -m 0755 "$root/run/koci-runtime"
     find "$root" -xdev -exec touch -h -d "@$source_date_epoch" {} +
 
     truncate -s "$image_size" "$image"
     E2FSPROGS_FAKE_TIME="$source_date_epoch" \
       mkfs.ext4 -q -F -b 4096 -I 256 -N 8192 -m 0 \
-        -U "$KRUN_SYSTEM_IMAGE_FILESYSTEM_UUID" \
+        -U "$K_SYSTEM_IMAGE_FILESYSTEM_UUID" \
         -L "$filesystem_label" \
         -O '^has_journal,^metadata_csum_seed,^orphan_file' \
-        -E "root_owner=0:0,lazy_itable_init=0,hash_seed=$KRUN_SYSTEM_IMAGE_DIRECTORY_HASH_SEED" \
+        -E "root_owner=0:0,lazy_itable_init=0,hash_seed=$K_SYSTEM_IMAGE_DIRECTORY_HASH_SEED" \
         -d "$root" \
         "$image"
 
@@ -176,14 +176,14 @@ krun_build_system_image() {
   fi
 
   local image="$temporary/system-1.ext4"
-  local installed_agent="$temporary/installed-krun-oci-agent"
-  debugfs -R "dump /usr/bin/krun-oci-agent $installed_agent" "$image" >/dev/null 2>&1
+  local installed_agent="$temporary/installed-koci-agent"
+  debugfs -R "dump /usr/bin/koci-agent $installed_agent" "$image" >/dev/null 2>&1
   if ! cmp "$agent" "$installed_agent"; then
     echo "system image does not contain the exact supplied guest agent" >&2
     return 1
   fi
 
-  local archive="$temporary/krun-oci-system.ext4.xz"
+  local archive="$temporary/koci-system.ext4.xz"
   xz --threads=1 --check=crc64 -9e --stdout "$image" > "$archive"
 
   local image_sha256 archive_sha256 archive_size agent_sha256 agent_size e2fsprogs_version
@@ -194,37 +194,37 @@ krun_build_system_image() {
   agent_size="$(stat --format '%s' "$agent")"
   e2fsprogs_version="$(mkfs.ext4 -V 2>&1 | sed -n '1s/^mke2fs //p')"
 
-  install -m 0644 "$image" "$output_dir/krun-oci-system.ext4"
-  install -m 0644 "$archive" "$output_dir/krun-oci-system.ext4.xz"
+  install -m 0644 "$image" "$output_dir/koci-system.ext4"
+  install -m 0644 "$archive" "$output_dir/koci-system.ext4.xz"
   jq --null-input --sort-keys \
-    --arg schema_version "$KRUN_SYSTEM_IMAGE_SCHEMA_VERSION" \
+    --arg schema_version "$K_SYSTEM_IMAGE_SCHEMA_VERSION" \
     --arg compatibility_level "$compatibility_level" \
-    --arg architecture "$KRUN_SYSTEM_IMAGE_ARCHITECTURE" \
+    --arg architecture "$K_SYSTEM_IMAGE_ARCHITECTURE" \
     --arg image_sha256 "$image_sha256" \
     --arg archive_sha256 "$archive_sha256" \
-    --arg filesystem_uuid "$KRUN_SYSTEM_IMAGE_FILESYSTEM_UUID" \
+    --arg filesystem_uuid "$K_SYSTEM_IMAGE_FILESYSTEM_UUID" \
     --arg filesystem_label "$filesystem_label" \
-    --arg directory_hash_seed "$KRUN_SYSTEM_IMAGE_DIRECTORY_HASH_SEED" \
-    --arg alpine_url "$KRUN_SYSTEM_IMAGE_ALPINE_URL" \
-    --arg alpine_sha256 "$KRUN_SYSTEM_IMAGE_ALPINE_SHA256" \
+    --arg directory_hash_seed "$K_SYSTEM_IMAGE_DIRECTORY_HASH_SEED" \
+    --arg alpine_url "$K_SYSTEM_IMAGE_ALPINE_URL" \
+    --arg alpine_sha256 "$K_SYSTEM_IMAGE_ALPINE_SHA256" \
     --arg agent_sha256 "$agent_sha256" \
     --arg agent_version "$agent_version" \
     --arg e2fsprogs_version "$e2fsprogs_version" \
     --argjson image_size "$image_size" \
     --argjson archive_size "$archive_size" \
-    --argjson alpine_size "$KRUN_SYSTEM_IMAGE_ALPINE_SIZE" \
+    --argjson alpine_size "$K_SYSTEM_IMAGE_ALPINE_SIZE" \
     --argjson agent_size "$agent_size" \
     --argjson source_date_epoch "$source_date_epoch" \
-    --argjson runtime "$KRUN_SYSTEM_IMAGE_RUNTIME_JSON" \
+    --argjson runtime "$K_SYSTEM_IMAGE_RUNTIME_JSON" \
     '{
       schema_version: $schema_version,
       compatibility_level: $compatibility_level,
       architecture: $architecture,
       image: {
-        name: "krun-oci-system.ext4",
+        name: "koci-system.ext4",
         size: $image_size,
         sha256: $image_sha256,
-        archive_name: "krun-oci-system.ext4.xz",
+        archive_name: "koci-system.ext4.xz",
         archive_size: $archive_size,
         archive_sha256: $archive_sha256,
         filesystem: "ext4",

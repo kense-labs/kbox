@@ -2,8 +2,8 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use krun_oci_agent_protocol::{AgentVmAttachmentManifest, AGENT_VM_DIRECTORY_RELATIVE_ROOT};
-use krun_oci_sdk::{Error, ErrorCode, Result, StorageAccessMode};
+use koci_agent_protocol::{AgentVmAttachmentManifest, AGENT_VM_DIRECTORY_RELATIVE_ROOT};
+use koci_sdk::{Error, ErrorCode, Result, StorageAccessMode};
 use serde::{Deserialize, Serialize};
 
 #[cfg(target_os = "linux")]
@@ -54,7 +54,7 @@ impl UtilityVmStorageSource {
         });
         let directory = self
             .guest_source
-            .strip_prefix(&format!("{AGENT_VM_DIRECTORY_RELATIVE_ROOT}/krun-dir-"))
+            .strip_prefix(&format!("{AGENT_VM_DIRECTORY_RELATIVE_ROOT}/kdir-"))
             .is_some_and(|tag| {
                 tag.len() == 24
                     && tag
@@ -322,14 +322,14 @@ fn storage_error(message: impl Into<String>) -> Error {
 mod tests {
     #[test]
     fn directory_sources_reject_paths_outside_the_reserved_bundle_subtree() {
-        let valid = format!(".krun-oci-directories/krun-dir-{}", "a".repeat(24));
+        let valid = format!(".koci-directories/kdir-{}", "a".repeat(24));
         for source in [
             valid.as_str(),
             "../../etc",
             "/etc",
-            ".krun-oci-directories/../secret",
-            ".krun-oci-directories/krun-dir-a",
-            ".krun-oci-directories/krun-dir-AAAAAAAAAAAAAAAAAAAAAAAA",
+            ".koci-directories/../secret",
+            ".koci-directories/kdir-a",
+            ".koci-directories/kdir-AAAAAAAAAAAAAAAAAAAAAAAA",
         ] {
             let encoded = serde_json::json!([{"mountIndex":0, "configuredSource":"/srv/workspace",
                 "guestSource":source}])
@@ -343,11 +343,11 @@ mod tests {
         }
     }
 
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentVmAttachmentManifest, AgentVmStorageAttachment, AgentVmStorageSourceIdentity,
         GuestPath,
     };
-    use krun_oci_sdk::{
+    use koci_sdk::{
         oci_spec::runtime::Spec, ContainerId, ContainerTarget, CreateAttachments, Generation,
         OciBundle, ProcessIo, StorageAccessMode, StorageAttachmentId, StorageCleanup,
         StorageOwnership,
@@ -365,7 +365,7 @@ mod tests {
             "options": ["ro"]
         }]);
         let bundle = OciBundle::from_json(
-            std::env::temp_dir().join("krun-agent-storage-inventory"),
+            std::env::temp_dir().join("kagent-storage-inventory"),
             value.to_string(),
         )
         .expect("bundle");
@@ -395,7 +395,7 @@ mod tests {
         .expect("transport");
         AgentVmAttachmentManifest::new(
             ContainerTarget::exact(ContainerId::new("stored").unwrap(), Generation(1)),
-            GuestPath::new("/run/krun-oci-runtime/bundle").unwrap(),
+            GuestPath::new("/run/koci-runtime/bundle").unwrap(),
             bundle.config_digest(),
             digest,
             Vec::new(),

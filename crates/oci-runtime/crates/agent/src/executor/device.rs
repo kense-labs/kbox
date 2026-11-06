@@ -1,6 +1,6 @@
 use std::io;
 
-use krun_oci_sdk::{Error, ErrorCode};
+use koci_sdk::{Error, ErrorCode};
 
 mod access;
 mod console;

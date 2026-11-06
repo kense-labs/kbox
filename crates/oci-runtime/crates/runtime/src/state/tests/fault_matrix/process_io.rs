@@ -1,6 +1,4 @@
-use krun_oci_sdk::{
-    CloseStdinRequest, ProcessTarget, ResizeRequest, TerminalSize, WriteStdinRequest,
-};
+use koci_sdk::{CloseStdinRequest, ProcessTarget, ResizeRequest, TerminalSize, WriteStdinRequest};
 
 use crate::state::ProcessIoPreparation;
 
@@ -113,7 +111,7 @@ async fn drive_success(
     store: &DurableStateStore,
     target: &ContainerTarget,
     kind: ProcessIoKind,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     let process = ProcessTarget {
         container: target.clone(),
         process_id: ProcessId::init(),
@@ -172,7 +170,7 @@ async fn drive_failure(
     target: &ContainerTarget,
     kind: ProcessIoKind,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     let process = ProcessTarget {
         container: target.clone(),
         process_id: ProcessId::init(),
@@ -237,7 +235,7 @@ async fn drive_failure(
     }
 }
 
-fn unexpected_success(kind: ProcessIoKind) -> krun_oci_sdk::Result<()> {
+fn unexpected_success(kind: ProcessIoKind) -> koci_sdk::Result<()> {
     Err(Error::new(
         ErrorCode::Conflict,
         format!(

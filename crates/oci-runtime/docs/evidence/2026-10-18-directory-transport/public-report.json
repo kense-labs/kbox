@@ -1,12 +1,12 @@
 {
-  "schema_version": "krun.oci.macos-hvf-host-service-smoke.v1",
+  "schema_version": "koci.macos-hvf-host-service-smoke.v1",
   "status": "available",
   "platform": "macos",
   "evidence_root": "/private/var/tmp/oh-d46hue8m/hvf-14340-1792330820148210000",
   "artifacts": {
-    "host_service_executable": "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/hvf-directory-transport-20261018/candidate-n664bosi/krun-oci",
+    "host_service_executable": "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/hvf-directory-transport-20261018/candidate-n664bosi/koci",
     "host_service_executable_sha256": "8e3eb4cf86d653055f211aa1963dc4dfeb61e6cbf3787d51c8aa9ce76b4ccfdc",
-    "shim": "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/hvf-directory-transport-20261018/candidate-n664bosi/krun-oci-krun-shim",
+    "shim": "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/hvf-directory-transport-20261018/candidate-n664bosi/koci-kshim",
     "shim_sha256": "3cd5cc093becc2ce6c8fc2c36f15daced76aa24387c8eb0e4e6b8b1c63a66962",
     "system_image_manifest": "/Users/roylin/code/krun/.claude/worktrees/sandbox-lifecycle/crates/oci-runtime/target/qualification/hvf-directory-transport-20261018/clean-system/system-image.json",
     "system_image_manifest_sha256": "2a9d7ad6e72e8d93a8f6b4d9dae8a036e8c65a552094b2c2e2dbbc7f7319744f",
@@ -125,7 +125,7 @@
       "parent_pid": 14340,
       "process_group_id": 14340,
       "start_time_unix_us": 1792330846590255,
-      "command": "krun-oci"
+      "command": "koci"
     },
     "target": {
       "id": "hvf-owner-death-14340-1792330820148210000-owner",
@@ -138,14 +138,14 @@
         "parent_pid": 14436,
         "process_group_id": 14436,
         "start_time_unix_us": 1792330846836827,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14436,
         "parent_pid": 14433,
         "process_group_id": 14436,
         "start_time_unix_us": 1792330846826993,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       }
     ],
     "authenticated_endpoint_consumed": true,
@@ -161,7 +161,7 @@
       "parent_pid": 14340,
       "process_group_id": 14340,
       "start_time_unix_us": 1792330857643185,
-      "command": "krun-oci"
+      "command": "koci"
     },
     "replacement_socket_new_owner": true,
     "replacement_connected": true,
@@ -207,350 +207,350 @@
         "parent_pid": 14474,
         "process_group_id": 14474,
         "start_time_unix_us": 1792330858107352,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14474,
         "parent_pid": 14472,
         "process_group_id": 14474,
         "start_time_unix_us": 1792330858096244,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14503,
         "parent_pid": 14502,
         "process_group_id": 14502,
         "start_time_unix_us": 1792330869455315,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14502,
         "parent_pid": 14472,
         "process_group_id": 14502,
         "start_time_unix_us": 1792330869428779,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14702,
         "parent_pid": 14701,
         "process_group_id": 14701,
         "start_time_unix_us": 1792330882924151,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14701,
         "parent_pid": 14472,
         "process_group_id": 14701,
         "start_time_unix_us": 1792330882909892,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14747,
         "parent_pid": 14746,
         "process_group_id": 14746,
         "start_time_unix_us": 1792330894530548,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14746,
         "parent_pid": 14472,
         "process_group_id": 14746,
         "start_time_unix_us": 1792330894519890,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14772,
         "parent_pid": 14771,
         "process_group_id": 14771,
         "start_time_unix_us": 1792330905696138,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14771,
         "parent_pid": 14472,
         "process_group_id": 14771,
         "start_time_unix_us": 1792330905684947,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14841,
         "parent_pid": 14840,
         "process_group_id": 14840,
         "start_time_unix_us": 1792330916836701,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14840,
         "parent_pid": 14472,
         "process_group_id": 14840,
         "start_time_unix_us": 1792330916825489,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14879,
         "parent_pid": 14878,
         "process_group_id": 14878,
         "start_time_unix_us": 1792330927980593,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14878,
         "parent_pid": 14472,
         "process_group_id": 14878,
         "start_time_unix_us": 1792330927969131,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14939,
         "parent_pid": 14938,
         "process_group_id": 14938,
         "start_time_unix_us": 1792330939264773,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 14938,
         "parent_pid": 14472,
         "process_group_id": 14938,
         "start_time_unix_us": 1792330939253658,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15308,
         "parent_pid": 15307,
         "process_group_id": 15307,
         "start_time_unix_us": 1792330954429136,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15307,
         "parent_pid": 14472,
         "process_group_id": 15307,
         "start_time_unix_us": 1792330954410471,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15533,
         "parent_pid": 15532,
         "process_group_id": 15532,
         "start_time_unix_us": 1792330972219824,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15532,
         "parent_pid": 14472,
         "process_group_id": 15532,
         "start_time_unix_us": 1792330972204492,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15681,
         "parent_pid": 15680,
         "process_group_id": 15680,
         "start_time_unix_us": 1792330985163436,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15680,
         "parent_pid": 14472,
         "process_group_id": 15680,
         "start_time_unix_us": 1792330985151534,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15754,
         "parent_pid": 15753,
         "process_group_id": 15753,
         "start_time_unix_us": 1792330997650679,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15753,
         "parent_pid": 14472,
         "process_group_id": 15753,
         "start_time_unix_us": 1792330997638739,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15859,
         "parent_pid": 15857,
         "process_group_id": 15857,
         "start_time_unix_us": 1792331008971346,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15857,
         "parent_pid": 14472,
         "process_group_id": 15857,
         "start_time_unix_us": 1792331008960399,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15918,
         "parent_pid": 15917,
         "process_group_id": 15917,
         "start_time_unix_us": 1792331020199512,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15917,
         "parent_pid": 14472,
         "process_group_id": 15917,
         "start_time_unix_us": 1792331020187942,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15945,
         "parent_pid": 15944,
         "process_group_id": 15944,
         "start_time_unix_us": 1792331031337689,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15944,
         "parent_pid": 14472,
         "process_group_id": 15944,
         "start_time_unix_us": 1792331031326618,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15968,
         "parent_pid": 15967,
         "process_group_id": 15967,
         "start_time_unix_us": 1792331042514253,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15967,
         "parent_pid": 14472,
         "process_group_id": 15967,
         "start_time_unix_us": 1792331042502405,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15991,
         "parent_pid": 15990,
         "process_group_id": 15990,
         "start_time_unix_us": 1792331053651013,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 15990,
         "parent_pid": 14472,
         "process_group_id": 15990,
         "start_time_unix_us": 1792331053639871,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16014,
         "parent_pid": 16013,
         "process_group_id": 16013,
         "start_time_unix_us": 1792331064889248,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16013,
         "parent_pid": 14472,
         "process_group_id": 16013,
         "start_time_unix_us": 1792331064878313,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16150,
         "parent_pid": 16149,
         "process_group_id": 16149,
         "start_time_unix_us": 1792331076058519,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16149,
         "parent_pid": 14472,
         "process_group_id": 16149,
         "start_time_unix_us": 1792331076047886,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16212,
         "parent_pid": 16211,
         "process_group_id": 16211,
         "start_time_unix_us": 1792331087668992,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16211,
         "parent_pid": 14472,
         "process_group_id": 16211,
         "start_time_unix_us": 1792331087657459,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16264,
         "parent_pid": 16263,
         "process_group_id": 16263,
         "start_time_unix_us": 1792331098898581,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16263,
         "parent_pid": 14472,
         "process_group_id": 16263,
         "start_time_unix_us": 1792331098886591,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16287,
         "parent_pid": 16286,
         "process_group_id": 16286,
         "start_time_unix_us": 1792331110200105,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16286,
         "parent_pid": 14472,
         "process_group_id": 16286,
         "start_time_unix_us": 1792331110188738,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16358,
         "parent_pid": 16357,
         "process_group_id": 16357,
         "start_time_unix_us": 1792331121605627,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16357,
         "parent_pid": 14472,
         "process_group_id": 16357,
         "start_time_unix_us": 1792331121592386,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16557,
         "parent_pid": 16556,
         "process_group_id": 16556,
         "start_time_unix_us": 1792331133525669,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16556,
         "parent_pid": 14472,
         "process_group_id": 16556,
         "start_time_unix_us": 1792331133514895,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16749,
         "parent_pid": 16748,
         "process_group_id": 16748,
         "start_time_unix_us": 1792331147068424,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       },
       {
         "pid": 16748,
         "parent_pid": 14472,
         "process_group_id": 16748,
         "start_time_unix_us": 1792331147055855,
-        "command": "krun-oci-krun-shim"
+        "command": "koci-kshim"
       }
     ],
     "console_files_created": 25,

@@ -3,7 +3,7 @@ use std::fs::{self, OpenOptions};
 use std::os::fd::AsRawFd;
 use std::path::Path;
 
-use krun_oci_core::{
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
     RuntimeFeatures,
 };
@@ -62,7 +62,7 @@ fn observe_native_linux() -> NativeLinuxObservation {
         .collect::<Vec<_>>();
     let namespace_api = missing_namespaces.is_empty();
     let cgroup_v2 = Path::new("/sys/fs/cgroup/cgroup.controllers").is_file();
-    let pidfd_error = krun_oci_agent::verify_linux_pidfd_support().err();
+    let pidfd_error = koci_agent::verify_linux_pidfd_support().err();
     let pidfd_signaling = pidfd_error.is_none();
     let reason = if !namespace_api {
         Some(format!(
@@ -229,7 +229,7 @@ fn kvm_capability(observation: KvmObservation) -> DriverCapability {
     );
 
     DriverCapability {
-        driver: DriverKind::LibkrunKvm,
+        driver: DriverKind::LibkKvm,
         status: if observation.device_opened && observation.api_version == Some(KVM_API_VERSION) {
             CapabilityStatus::Available
         } else {
@@ -247,7 +247,7 @@ fn kvm_capability(observation: KvmObservation) -> DriverCapability {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_core::{CapabilityStatus, DriverKind, DriverReadiness, IsolationClass};
+    use koci_core::{CapabilityStatus, DriverKind, DriverReadiness, IsolationClass};
 
     use super::{
         features, kvm_capability, native_capability, KvmObservation, NativeLinuxObservation,
@@ -327,7 +327,7 @@ mod tests {
             reason: None,
         });
 
-        assert_eq!(capability.driver, DriverKind::LibkrunKvm);
+        assert_eq!(capability.driver, DriverKind::LibkKvm);
         assert_eq!(capability.status, CapabilityStatus::Available);
         assert_eq!(capability.readiness, DriverReadiness::ProbeOnly);
         assert!(!capability.can_launch());
@@ -354,7 +354,7 @@ mod tests {
 
         assert_eq!(inventory.drivers.len(), 2);
         assert!(inventory.driver(DriverKind::NativeLinux).is_some());
-        assert!(inventory.driver(DriverKind::LibkrunKvm).is_some());
+        assert!(inventory.driver(DriverKind::LibkKvm).is_some());
         assert!(inventory
             .drivers
             .iter()

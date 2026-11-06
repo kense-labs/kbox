@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     ArtifactRef, HealthCheckKind, HealthProbe, IsolationLevel, MountKind, NetworkMode,
     ResourceControl, ResourceLimits, RestartPolicy, RuntimeActionRequest, RuntimeApplyRequest,
     RuntimeCapabilities, RuntimeEvidence, RuntimeExecRequest, RuntimeExecResult, RuntimeFeature,
@@ -9,7 +9,7 @@ use krun_runtime::contract::{
     RuntimeServiceEndpoint, RuntimeServiceLifecycle, RuntimeUnitClass, RuntimeUnitSpec,
     RuntimeUnitState, TransportProtocol, EXEC_CONTROL_PLANE_BUDGET_MS,
 };
-use krun_runtime::{
+use kbox_contract::{
     verify_runtime_provider, FileRuntimeStateStore, ManagedRuntimeClient, ProviderId,
     RuntimeActionKind, RuntimeClient, RuntimeClientRegistry, RuntimeClock, RuntimeConformanceCase,
     RuntimeDriver, RuntimeError, RuntimeOperationLease, RuntimeProviderFactory, RuntimeResult,
@@ -164,7 +164,7 @@ impl RuntimeDriver for GenerationDriver {
 
     async fn apply(
         &self,
-        request: &krun_runtime::contract::RuntimeApplyRequest,
+        request: &kbox_contract::contract::RuntimeApplyRequest,
         current: &RuntimeObservation,
     ) -> RuntimeResult<RuntimeObservation> {
         self.apply_calls.fetch_add(1, Ordering::SeqCst);
@@ -326,7 +326,7 @@ impl RuntimeStateStore for SignalingStateStore {
         &self,
         unit_id: &str,
         request_id: &str,
-    ) -> RuntimeResult<krun_runtime::RuntimeRequestReceipt> {
+    ) -> RuntimeResult<kbox_contract::RuntimeRequestReceipt> {
         self.inner.load_request(unit_id, request_id).await
     }
 
@@ -362,7 +362,7 @@ impl RuntimeDriver for TestDriver {
 
     async fn apply(
         &self,
-        request: &krun_runtime::contract::RuntimeApplyRequest,
+        request: &kbox_contract::contract::RuntimeApplyRequest,
         current: &RuntimeObservation,
     ) -> RuntimeResult<RuntimeObservation> {
         self.apply_calls.fetch_add(1, Ordering::SeqCst);
@@ -599,7 +599,7 @@ fn digest(character: char) -> String {
 fn artifact(character: char) -> ArtifactRef {
     ArtifactRef {
         uri: format!(
-            "oci://registry.example/krun/demo@sha256:{}",
+            "oci://registry.example/kbox/demo@sha256:{}",
             character.to_string().repeat(64)
         ),
         digest: digest(character),
@@ -838,7 +838,7 @@ async fn ambiguous_apply_is_reentered_with_the_same_identity() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 
     let recovered_client =
@@ -939,7 +939,7 @@ async fn generation_reconciliation_recovers_create_before_error_after_restart() 
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 
     drop(client);
@@ -1317,7 +1317,7 @@ async fn pending_exec_reattaches_after_an_ambiguous_after_effect_error() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 
     let restarted =
@@ -1332,7 +1332,7 @@ async fn pending_exec_reattaches_after_an_ambiguous_after_effect_error() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Completed
+        kbox_contract::RuntimeRequestState::Completed
     );
     assert_eq!(restarted.exec(&request).await.unwrap(), recovered);
     assert_eq!(driver.exec_calls.load(Ordering::SeqCst), 2);
@@ -1379,7 +1379,7 @@ async fn cancelled_exec_releases_the_lease_and_remains_replayable() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 
     driver.hang_exec.store(false, Ordering::SeqCst);
@@ -1462,7 +1462,7 @@ async fn lc_exec_002_oversized_provider_result_stays_pending() {
             .load_request("exec-oversized", "exec-oversized-request")
             .await
             .unwrap();
-        assert_eq!(receipt.state, krun_runtime::RuntimeRequestState::Pending);
+        assert_eq!(receipt.state, kbox_contract::RuntimeRequestState::Pending);
         assert!(receipt.exec_result.is_none());
     }
 }
@@ -1543,7 +1543,7 @@ async fn expired_pending_request_remains_pending_and_is_not_redispatched() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 
     clock.set(deadline);
@@ -1559,7 +1559,7 @@ async fn expired_pending_request_remains_pending_and_is_not_redispatched() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 }
 
@@ -1574,7 +1574,7 @@ fn top_level_log_exec_and_inspection_records_require_current_schemas() {
         stream: None,
     };
     query.validate().unwrap();
-    query.schema = "krun.runtime.log-query.v0".into();
+    query.schema = "kbox_contract.log-query.v0".into();
     assert!(query.validate().is_err());
 
     let mut chunk = RuntimeLogChunk {
@@ -1762,12 +1762,12 @@ async fn file_operation_leases_serialize_one_unit_but_not_different_units() {
 
 #[tokio::test]
 async fn subprocess_operation_lease_helper() {
-    let Ok(root) = std::env::var("KRUN_RUNTIME_LEASE_HELPER_ROOT") else {
+    let Ok(root) = std::env::var("K_RUNTIME_LEASE_HELPER_ROOT") else {
         return;
     };
-    let unit_id = std::env::var("KRUN_RUNTIME_LEASE_HELPER_UNIT").unwrap();
-    let ready = std::env::var("KRUN_RUNTIME_LEASE_HELPER_READY").unwrap();
-    let release = std::env::var("KRUN_RUNTIME_LEASE_HELPER_RELEASE").unwrap();
+    let unit_id = std::env::var("K_RUNTIME_LEASE_HELPER_UNIT").unwrap();
+    let ready = std::env::var("K_RUNTIME_LEASE_HELPER_READY").unwrap();
+    let release = std::env::var("K_RUNTIME_LEASE_HELPER_RELEASE").unwrap();
     let store = FileRuntimeStateStore::new(root);
     let _lease = store.acquire_operation_lease(&unit_id).await.unwrap();
     std::fs::write(&ready, b"ready").unwrap();
@@ -1792,10 +1792,10 @@ async fn file_operation_lease_serializes_independent_processes() {
         .arg("subprocess_operation_lease_helper")
         .arg("--nocapture")
         .arg("--test-threads=1")
-        .env("KRUN_RUNTIME_LEASE_HELPER_ROOT", directory.path())
-        .env("KRUN_RUNTIME_LEASE_HELPER_UNIT", "cross-process-unit")
-        .env("KRUN_RUNTIME_LEASE_HELPER_READY", &ready)
-        .env("KRUN_RUNTIME_LEASE_HELPER_RELEASE", &release)
+        .env("K_RUNTIME_LEASE_HELPER_ROOT", directory.path())
+        .env("K_RUNTIME_LEASE_HELPER_UNIT", "cross-process-unit")
+        .env("K_RUNTIME_LEASE_HELPER_READY", &ready)
+        .env("K_RUNTIME_LEASE_HELPER_RELEASE", &release)
         .spawn()
         .unwrap();
 
@@ -1904,7 +1904,7 @@ async fn deadlines_bound_capability_queries_and_provider_dispatch() {
         .load_request("provider-timeout", "provider-timeout")
         .await
         .unwrap();
-    assert_eq!(pending.state, krun_runtime::RuntimeRequestState::Pending);
+    assert_eq!(pending.state, kbox_contract::RuntimeRequestState::Pending);
     assert_eq!(provider_driver.apply_calls.load(Ordering::SeqCst), 1);
 
     provider_driver.hang_apply.store(false, Ordering::SeqCst);
@@ -2050,7 +2050,7 @@ async fn lc_exec_001_pending_replay_cannot_extend_original_relative_deadline() {
         .load_request("exec-relative-replay", "exec-relative-replay-request")
         .await
         .unwrap();
-    assert_eq!(pending.state, krun_runtime::RuntimeRequestState::Pending);
+    assert_eq!(pending.state, kbox_contract::RuntimeRequestState::Pending);
     assert_eq!(
         pending.deadline_at_ms,
         Some(NOW + 10 + EXEC_CONTROL_PLANE_BUDGET_MS)
@@ -2071,7 +2071,7 @@ async fn lc_exec_001_pending_replay_cannot_extend_original_relative_deadline() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Pending
+        kbox_contract::RuntimeRequestState::Pending
     );
 }
 
@@ -2197,7 +2197,7 @@ async fn concurrent_file_reservations_preserve_every_request() {
                 .await
                 .unwrap()
                 .state,
-            krun_runtime::RuntimeRequestState::Pending
+            kbox_contract::RuntimeRequestState::Pending
         );
     }
 }
@@ -2228,7 +2228,7 @@ async fn request_journal_preserves_more_than_ten_thousand_exact_replays() {
             .await
             .unwrap()
             .state,
-        krun_runtime::RuntimeRequestState::Completed
+        kbox_contract::RuntimeRequestState::Completed
     );
     let unit_directory = std::fs::read_dir(directory.path().join("units"))
         .unwrap()
@@ -2381,11 +2381,11 @@ async fn request_journal_layout_is_versioned_owner_only_and_fail_closed() {
         serde_json::from_slice(&std::fs::read(&record_path).unwrap()).unwrap();
     let receipt: serde_json::Value =
         serde_json::from_slice(&std::fs::read(&receipt_path).unwrap()).unwrap();
-    assert_eq!(record["schema"], krun_runtime::RuntimeUnitRecord::SCHEMA);
+    assert_eq!(record["schema"], kbox_contract::RuntimeUnitRecord::SCHEMA);
     assert!(record.get("requests").is_none());
     assert_eq!(
         receipt["schema"],
-        krun_runtime::RuntimeRequestReceipt::SCHEMA
+        kbox_contract::RuntimeRequestReceipt::SCHEMA
     );
     assert_eq!(
         std::fs::metadata(&unit_directory)

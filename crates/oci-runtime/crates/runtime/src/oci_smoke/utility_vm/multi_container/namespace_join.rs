@@ -1,8 +1,8 @@
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_agent_protocol::{AgentClient, AgentDeleteRequest, AgentWaitRequest, GuestPath};
-use krun_oci_sdk::{DeleteMode, ErrorCode, ExitStatus, OciBundle};
+use koci_agent_protocol::{AgentClient, AgentDeleteRequest, AgentWaitRequest, GuestPath};
+use koci_sdk::{DeleteMode, ErrorCode, ExitStatus, OciBundle};
 use tokio::time::timeout;
 
 use super::super::remove_marker;
@@ -168,7 +168,7 @@ async fn run_joiner<T: AgentStream>(
     client: &AgentClient<T>,
     nonce: &str,
     label: &str,
-    target: &krun_oci_sdk::ContainerTarget,
+    target: &koci_sdk::ContainerTarget,
     bundle: &OciBundle,
 ) -> Result<(), String> {
     let started = guest_call(

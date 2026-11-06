@@ -4,8 +4,8 @@ mod signal;
 
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, State};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, State};
+use koci_sdk::{
     ContainerId, ContainerRecord, ContainerTarget, CreateAttachments, CreateRequest, DeleteMode,
     DeleteRequest, Error, ErrorCode, IsolationRequest, KillRequest, OciBundle, OperationContext,
     OperationId, ProcessIo, Result, RuntimeClient, Signal, StartRequest, StateRequest,
@@ -587,7 +587,7 @@ fn operation_id(
 ) -> Result<OperationId> {
     let mut digest = Sha256::new();
     for value in [
-        "krun.oci.cli-operation.v1",
+        "koci.cli-operation.v1",
         id.as_str(),
         action,
         &incarnation.to_string(),

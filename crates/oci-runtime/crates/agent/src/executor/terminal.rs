@@ -3,14 +3,14 @@ use std::os::fd::{AsRawFd, OwnedFd, RawFd};
 use std::process::Stdio;
 use std::sync::Arc;
 
-use krun_oci_sdk::{Error, ErrorCode, Result, TerminalSize};
+use koci_sdk::{Error, ErrorCode, Result, TerminalSize};
 use nix::pty::openpty;
 use tokio::io::unix::AsyncFd;
 use tokio::process::Command;
 
 /// One PTY allocated before process launch.
 ///
-/// This follows the same mechanism used by Krun Box: one master remains with
+/// This follows the same mechanism used by Kbox Box: one master remains with
 /// the runtime and three duplicates of the slave become child stdin, stdout,
 /// and stderr. The child creates a session and acquires the slave as its
 /// controlling terminal immediately before exec.
@@ -300,7 +300,7 @@ fn terminal_error(code: ErrorCode, message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::TerminalSize;
+    use koci_sdk::TerminalSize;
     use tokio::process::Command;
 
     use super::TerminalSetup;

@@ -159,13 +159,54 @@ fn test_hash_context_sources_detects_change() {
     fs::write(ctx.path().join("sub/b.txt"), "world").unwrap();
 
     let srcs = vec![".".to_string()];
-    let h1 = hash_context_sources(ctx.path(), &srcs).unwrap();
-    let h2 = hash_context_sources(ctx.path(), &srcs).unwrap();
+    let h1 = hash_context_sources(ctx.path(), &srcs, None).unwrap();
+    let h2 = hash_context_sources(ctx.path(), &srcs, None).unwrap();
     assert_eq!(h1, h2, "stable hash for unchanged content");
 
     fs::write(ctx.path().join("a.txt"), "HELLO").unwrap();
-    let h3 = hash_context_sources(ctx.path(), &srcs).unwrap();
+    let h3 = hash_context_sources(ctx.path(), &srcs, None).unwrap();
     assert_ne!(h1, h3, "changed content must change the hash");
+}
+
+#[cfg(unix)]
+#[test]
+fn test_hash_context_sources_does_not_follow_symlink_cycles() {
+    let ctx = TempDir::new().unwrap();
+    fs::create_dir(ctx.path().join("a")).unwrap();
+    fs::create_dir(ctx.path().join("b")).unwrap();
+    fs::write(ctx.path().join("a/file.txt"), "a").unwrap();
+    fs::write(ctx.path().join("b/file.txt"), "b").unwrap();
+    std::os::unix::fs::symlink("../b", ctx.path().join("a/link")).unwrap();
+    std::os::unix::fs::symlink("../a", ctx.path().join("b/link")).unwrap();
+    let srcs = vec![".".to_string()];
+
+    let first = hash_context_sources(ctx.path(), &srcs, None).unwrap();
+    let second = hash_context_sources(ctx.path(), &srcs, None).unwrap();
+    assert_eq!(first, second);
+
+    fs::remove_file(ctx.path().join("b/link")).unwrap();
+    std::os::unix::fs::symlink("../a/file.txt", ctx.path().join("b/link")).unwrap();
+    let changed = hash_context_sources(ctx.path(), &srcs, None).unwrap();
+    assert_ne!(first, changed, "link targets must affect the cache key");
+}
+
+#[test]
+fn test_hash_context_sources_honors_dockerignore() {
+    let ctx = TempDir::new().unwrap();
+    fs::write(ctx.path().join(".dockerignore"), "node_modules\n").unwrap();
+    fs::create_dir(ctx.path().join("node_modules")).unwrap();
+    fs::write(ctx.path().join("node_modules/ignored.txt"), "ignored").unwrap();
+    let ignore = crate::oci::build::dockerignore::DockerIgnore::load(ctx.path());
+    let srcs = vec![".".to_string()];
+
+    let first = hash_context_sources(ctx.path(), &srcs, Some(&ignore)).unwrap();
+    fs::write(ctx.path().join("node_modules/ignored.txt"), "changed").unwrap();
+    let second = hash_context_sources(ctx.path(), &srcs, Some(&ignore)).unwrap();
+
+    assert_eq!(
+        first, second,
+        "excluded files must not affect the cache key"
+    );
 }
 
 #[test]
@@ -243,5 +284,5 @@ fn hydration_prune_preserves_the_imported_layer_set() {
 fn test_hash_context_sources_missing_source_is_none() {
     let ctx = TempDir::new().unwrap();
     let srcs = vec!["does-not-exist".to_string()];
-    assert!(hash_context_sources(ctx.path(), &srcs).is_none());
+    assert!(hash_context_sources(ctx.path(), &srcs, None).is_none());
 }

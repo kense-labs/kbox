@@ -59,7 +59,7 @@ fn shim_command_targets_execution(command: &[String], execution_id: &str) -> boo
     else {
         return false;
     };
-    if !matches!(file_name, "krun-box-shim" | "krun-box-shim.exe") {
+    if !matches!(file_name, "kbox-shim" | "kbox-shim.exe") {
         return false;
     }
 
@@ -87,7 +87,7 @@ mod tests {
     #[test]
     fn command_match_requires_exact_binary_argument_and_internal_id() {
         let command = vec![
-            "/usr/bin/krun-box-shim".to_string(),
+            "/usr/bin/kbox-shim".to_string(),
             "--config".to_string(),
             r#"{"box_id":"11111111-1111-4111-8111-111111111111"}"#.to_string(),
         ];
@@ -102,12 +102,12 @@ mod tests {
     #[test]
     fn command_match_rejects_lookalikes_and_malformed_json() {
         let lookalike = vec![
-            "/tmp/not-krun-box-shim".to_string(),
+            "/tmp/not-kbox-shim".to_string(),
             "--config".to_string(),
             r#"{"box_id":"box-1"}"#.to_string(),
         ];
         let malformed = vec![
-            "krun-box-shim".to_string(),
+            "kbox-shim".to_string(),
             "--config".to_string(),
             "not-json".to_string(),
         ];

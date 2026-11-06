@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
-use krun_oci_core::IsolationClass;
-use krun_oci_sdk::{
+use koci_core::IsolationClass;
+use koci_sdk::{
     AttachmentCapabilities, CreateAttachments, CreateRequest, ErrorCode, GuestSessionCapacity,
     GuestSessionGeneration, GuestSessionId, GuestSessionReset, IsolationRequest, OciBundle,
     OciRuntimeService, OperationContext, ProcessIo, TrustDomainId, ATTACHMENT_SCHEMA_V4,

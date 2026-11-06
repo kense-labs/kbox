@@ -1,6 +1,4 @@
-use krun_box_core::{
-    ExecutionLease, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
-};
+use kbox_core::{ExecutionLease, ExecutionManagerError, ExecutionManagerResult, ExecutionState};
 
 use super::record::{execution_id, lease_from_record};
 use super::store::RuntimeUpdate;
@@ -255,7 +253,7 @@ impl LocalExecutionManager {
 }
 
 fn startup_reconciliation_error(
-    execution_id: &krun_box_core::ExecutionId,
+    execution_id: &kbox_core::ExecutionId,
     start_error: &ExecutionManagerError,
     action: &str,
     reconciliation_error: ExecutionManagerError,

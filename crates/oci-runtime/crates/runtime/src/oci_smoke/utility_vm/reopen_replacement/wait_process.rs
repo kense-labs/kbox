@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use koci_sdk::{
     ContainerTarget, CreateRequest, ExecRequest, OperationId, SignalProcessRequest, StartRequest,
     WaitProcessRequest,
 };
@@ -35,10 +35,10 @@ struct Qualification {
 struct FirstOwnerEvidence {
     create_identity: (OperationId, ContainerTarget),
     start_identity: (OperationId, ContainerTarget),
-    exec_record: krun_oci_sdk::ProcessRecord,
+    exec_record: koci_sdk::ProcessRecord,
     exec_identity: DriverExecRequest,
     signal_process_identity: DriverSignalProcessRequest,
-    wait_process_identity: (krun_oci_sdk::ProcessTarget, Option<u64>),
+    wait_process_identity: (koci_sdk::ProcessTarget, Option<u64>),
 }
 
 mod entry;

@@ -12,8 +12,8 @@ use std::process::ExitStatus as ProcessExitStatus;
 use std::sync::Arc;
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::LinuxResources;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::LinuxResources;
+use koci_sdk::{
     ContainerStats, ContainerTarget, Error, ErrorCode, ExitStatus, IoMode, ProcessIo, Result,
     CONTROL_CGROUP_PROCS_FD, WORKLOAD_CGROUP_PROCS_FD,
 };
@@ -747,7 +747,7 @@ impl PreparedProcess {
                         }
                     }
                     let creating = match hook_state.encode(
-                        krun_oci_sdk::oci_spec::runtime::ContainerState::Creating,
+                        koci_sdk::oci_spec::runtime::ContainerState::Creating,
                         Some(runtime_pid),
                     ) {
                         Ok(state) => state,
@@ -1101,7 +1101,7 @@ impl PreparedProcess {
         };
         report_capability_warnings(&warnings);
         let state = self.hook_state.encode(
-            krun_oci_sdk::oci_spec::runtime::ContainerState::Running,
+            koci_sdk::oci_spec::runtime::ContainerState::Running,
             Some(self.pid),
         )?;
         if let Err(error) = self.hooks.run(HookPhase::Poststart, &state).await {
@@ -1112,10 +1112,9 @@ impl PreparedProcess {
     }
 
     pub(super) fn poststop_plan(&self) -> Result<(HookSet, Vec<u8>)> {
-        let state = self.hook_state.encode(
-            krun_oci_sdk::oci_spec::runtime::ContainerState::Stopped,
-            None,
-        )?;
+        let state = self
+            .hook_state
+            .encode(koci_sdk::oci_spec::runtime::ContainerState::Stopped, None)?;
         Ok((self.hooks.clone(), state))
     }
 
@@ -1291,10 +1290,7 @@ async fn cleanup_failed_create(
     primary: Error,
 ) -> Error {
     let mut primary = cleanup_uncommitted_create(child, cgroup, primary).await;
-    match hook_state.encode(
-        krun_oci_sdk::oci_spec::runtime::ContainerState::Stopped,
-        None,
-    ) {
+    match hook_state.encode(koci_sdk::oci_spec::runtime::ContainerState::Stopped, None) {
         Ok(state) => hooks.run_poststop(&state).await,
         Err(error) => append_cleanup_error(&mut primary, "encode the poststop hook state", &error),
     }

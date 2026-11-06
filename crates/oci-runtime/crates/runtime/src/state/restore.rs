@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::DriverKind;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointReference, ContainerId, ContainerRecord, ContainerTarget,
     CreateAttachments, ErrorCode, IsolationRequest, OciBundle, OciSchemaValidator, OperationId,
     RestoreRequest, RestoreResponse, Result, RuntimeEventKind, ValidateRequest,
@@ -303,7 +303,7 @@ impl DurableStateStore {
         &self,
         request: &RestoreRequest,
         driver: DriverKind,
-        generation: krun_oci_sdk::Generation,
+        generation: koci_sdk::Generation,
     ) -> Result<super::model::StoredContainer> {
         if request.reference()?.compatibility().driver() != driver {
             return Err(state_error(
@@ -484,7 +484,7 @@ fn retained_restore_request(operation: &StoredOperation) -> Result<&RestoreReque
     Ok(request)
 }
 
-fn invalid_restore_outcome(operation_id: &OperationId) -> krun_oci_sdk::Error {
+fn invalid_restore_outcome(operation_id: &OperationId) -> koci_sdk::Error {
     state_error(
         ErrorCode::FailedPrecondition,
         "restore",

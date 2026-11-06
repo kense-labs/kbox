@@ -1,4 +1,4 @@
-//! `krun-box attach` command — attach to a running box.
+//! `kbox attach` command — attach to a running box.
 //!
 //! Without `-it`, tails the console log (read-only, original behavior).
 //! With `-it`, opens an interactive PTY session to a shell inside the box.
@@ -79,11 +79,19 @@ pub async fn execute(args: AttachArgs) -> Result<(), Box<dyn std::error::Error>>
         return Err(missing_console_log_message(&record.name, &streams.stdout).into());
     }
 
+    #[cfg(unix)]
+    let _stdin_forwarder = if args.interactive {
+        Some(crate::commands::interactive_stdin::spawn_forwarder(
+            &record.exec_socket_path,
+        )?)
+    } else {
+        None
+    };
     println!("Attached to box {}. Press Ctrl-C to detach.", record.name);
 
     let runtime_filter = streams
         .filter_runtime_noise
-        .then(|| std::sync::Arc::new(krun_box_core::log::RuntimeConsoleFilter::new()));
+        .then(|| std::sync::Arc::new(kbox_core::log::RuntimeConsoleFilter::new()));
     let stdout_runtime_filter = runtime_filter.clone();
     let stderr_runtime_filter = runtime_filter;
     let stdout_path = streams.stdout.clone();
@@ -187,7 +195,7 @@ fn resolve_attach_route(record: &BoxRecord, tty: bool) -> AttachRoute {
     let managed = record
         .managed_execution
         .as_ref()
-        .is_some_and(krun_box_runtime::ManagedExecutionMetadata::is_oci_routed);
+        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed);
     match (managed, tty) {
         (true, true) => AttachRoute::ManagedPty,
         (true, false) => AttachRoute::ManagedLogs,
@@ -197,23 +205,23 @@ fn resolve_attach_route(record: &BoxRecord, tty: bool) -> AttachRoute {
 }
 
 struct ManagedAttachTarget {
-    manager: krun_box_runtime::LocalExecutionManager,
-    execution_id: krun_box_core::ExecutionId,
-    generation: krun_box_core::ExecutionGeneration,
+    manager: kbox_runtime::LocalExecutionManager,
+    execution_id: kbox_core::ExecutionId,
+    generation: kbox_core::ExecutionGeneration,
 }
 
 async fn prepare_managed_attach(
     record: &BoxRecord,
 ) -> Result<ManagedAttachTarget, Box<dyn std::error::Error>> {
-    use krun_box_core::{ExecutionManager, ExecutionState};
+    use kbox_core::{ExecutionManager, ExecutionState};
 
     let metadata = record
         .managed_execution
         .as_ref()
         .ok_or_else(|| format!("Box {} lost managed execution metadata", record.name))?;
-    let execution_id = krun_box_core::ExecutionId::new(record.id.clone())?;
+    let execution_id = kbox_core::ExecutionId::new(record.id.clone())?;
     let generation = metadata.generation;
-    let home = krun_box_core::dirs_home();
+    let home = kbox_core::dirs_home();
     let manager = super::configured_local_execution_manager(&home).await?;
     let status = manager.inspect(&execution_id).await?;
     if status.generation != generation || status.state != ExecutionState::Running {
@@ -232,7 +240,7 @@ async fn prepare_managed_attach(
 }
 
 async fn wait_for_managed_attach_exit(target: &ManagedAttachTarget) {
-    use krun_box_core::{ExecutionManager, ExecutionManagerError};
+    use kbox_core::{ExecutionManager, ExecutionManagerError};
 
     let mut poll = tokio::time::interval(ATTACH_EXIT_POLL);
     poll.set_missed_tick_behavior(tokio::time::MissedTickBehavior::Skip);
@@ -254,13 +262,13 @@ async fn wait_for_managed_attach_exit(target: &ManagedAttachTarget) {
 }
 
 fn managed_status_keeps_attach_open(
-    generation: krun_box_core::ExecutionGeneration,
-    status: &krun_box_core::ExecutionStatus,
+    generation: kbox_core::ExecutionGeneration,
+    status: &kbox_core::ExecutionStatus,
 ) -> bool {
     status.generation == generation
         && matches!(
             status.state,
-            krun_box_core::ExecutionState::Running | krun_box_core::ExecutionState::Paused
+            kbox_core::ExecutionState::Running | kbox_core::ExecutionState::Paused
         )
 }
 
@@ -379,7 +387,7 @@ fn attach_stream_sources(
 
 fn missing_console_log_message(name: &str, console_log: &std::path::Path) -> String {
     format!(
-        "Console log is missing for running box {} at {}. The box may still be starting or the state may be stale; try `krun-box logs -f {}` or `krun-box ps`.",
+        "Console log is missing for running box {} at {}. The box may still be starting or the state may be stale; try `kbox logs -f {}` or `kbox ps`.",
         name,
         console_log.display(),
         name
@@ -392,7 +400,7 @@ async fn execute_pty_attach(
     record: &crate::state::BoxRecord,
 ) -> Result<(), Box<dyn std::error::Error>> {
     use crate::terminal;
-    use krun_box_core::pty::PtyRequest;
+    use kbox_core::pty::PtyRequest;
 
     let pty_socket_path = crate::socket_paths::require_runtime_socket(
         record,
@@ -436,15 +444,15 @@ async fn execute_pty_attach(
 async fn execute_managed_pty_attach(
     record: &crate::state::BoxRecord,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::pty::PtyRequest;
-    use krun_box_core::{ExecutionId, ExecutionSessionManager};
+    use kbox_core::pty::PtyRequest;
+    use kbox_core::{ExecutionId, ExecutionSessionManager};
 
     let metadata = record
         .managed_execution
         .as_ref()
         .ok_or_else(|| format!("Box {} lost managed execution metadata", record.name))?;
     let (cols, rows) = crate::terminal::size().unwrap_or((80, 24));
-    let home = krun_box_core::dirs_home();
+    let home = kbox_core::dirs_home();
     let manager = super::configured_local_execution_manager(&home).await?;
     let process = manager
         .start_pty(
@@ -477,8 +485,8 @@ mod tests {
     use std::path::Path;
 
     fn managed_record() -> BoxRecord {
-        use krun_box_core::config::BoxConfig;
-        use krun_box_core::{CreateExecutionRequest, ExecutionGeneration, OperationId};
+        use kbox_core::config::BoxConfig;
+        use kbox_core::{CreateExecutionRequest, ExecutionGeneration, OperationId};
 
         let mut record = crate::test_helpers::fixtures::make_record(
             "managed-attach-id",
@@ -486,7 +494,7 @@ mod tests {
             "running",
             None,
         );
-        let mut metadata = krun_box_runtime::ManagedExecutionMetadata::new(
+        let mut metadata = kbox_runtime::ManagedExecutionMetadata::new(
             OperationId::new("managed-attach-create").unwrap(),
             ExecutionGeneration::new(7).unwrap(),
             CreateExecutionRequest {
@@ -501,7 +509,7 @@ mod tests {
             },
         )
         .unwrap();
-        metadata.runtime_route = krun_box_runtime::ManagedRuntimeRoute::OciSdk;
+        metadata.runtime_route = kbox_runtime::ManagedRuntimeRoute::OciSdk;
         record.managed_execution = Some(metadata);
         record
     }
@@ -533,12 +541,12 @@ mod tests {
 
     #[test]
     fn managed_attach_liveness_is_generation_fenced_without_a_host_pid() {
-        use krun_box_core::{ExecutionGeneration, ExecutionState, ExecutionStatus};
+        use kbox_core::{ExecutionGeneration, ExecutionState, ExecutionStatus};
 
         let record = managed_record();
         let metadata = record.managed_execution.as_ref().unwrap();
         let mut status = ExecutionStatus {
-            execution_id: krun_box_core::ExecutionId::new(record.id.clone()).unwrap(),
+            execution_id: kbox_core::ExecutionId::new(record.id.clone()).unwrap(),
             generation: metadata.generation,
             state: ExecutionState::Running,
             plan: metadata.plan.clone(),
@@ -565,8 +573,8 @@ mod tests {
 
         assert!(message.contains("running box web"));
         assert!(message.contains("/tmp/krun/web/console.log"));
-        assert!(message.contains("krun-box logs -f web"));
-        assert!(message.contains("krun-box ps"));
+        assert!(message.contains("kbox logs -f web"));
+        assert!(message.contains("kbox ps"));
     }
 
     #[test]

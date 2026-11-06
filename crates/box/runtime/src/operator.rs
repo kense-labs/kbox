@@ -7,7 +7,7 @@
 use std::time::Instant;
 
 use chrono::Utc;
-use krun_box_core::operator::{
+use kbox_core::operator::{
     AutoscalerCondition, BoxAutoscalerSpec, BoxAutoscalerStatus, MetricType, MetricValue,
 };
 use serde::{Deserialize, Serialize};
@@ -279,7 +279,7 @@ fn compute_desired_replicas(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::operator::{
+    use kbox_core::operator::{
         BoxAutoscalerSpec, MetricSpec, MetricType, ScalingBehavior, ScalingRules, TargetRef,
     };
 

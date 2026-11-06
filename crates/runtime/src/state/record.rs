@@ -58,7 +58,7 @@ pub struct RuntimeRequestReceipt {
 }
 
 impl RuntimeRequestReceipt {
-    pub const SCHEMA: &'static str = "krun.runtime.request-receipt.v2";
+    pub const SCHEMA: &'static str = "kbox_contract.request-receipt.v2";
 
     pub(crate) fn pending_apply(request: &RuntimeApplyRequest) -> Result<Self, String> {
         Ok(Self::pending(
@@ -230,7 +230,7 @@ pub struct RuntimeUnitRecord {
 }
 
 impl RuntimeUnitRecord {
-    pub const SCHEMA: &'static str = "krun.runtime.unit-record.v2";
+    pub const SCHEMA: &'static str = "kbox_contract.unit-record.v2";
 
     pub(crate) fn new(request: &RuntimeApplyRequest, now_ms: u64) -> Result<Self, String> {
         let record = Self {

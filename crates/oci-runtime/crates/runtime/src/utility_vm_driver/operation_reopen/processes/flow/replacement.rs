@@ -1,10 +1,10 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::AgentProcessesRequest;
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ErrorCode, ListRequest, OciRuntimeService, ProcessesRequest};
+use koci_agent_protocol::AgentProcessesRequest;
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ErrorCode, ListRequest, OciRuntimeService, ProcessesRequest};
 use tokio::time::timeout;
 
 use super::super::super::driver::QualificationKvmOperationDriver;
@@ -94,7 +94,7 @@ pub(super) async fn run(
             let record = &records[0];
             if record.state.id() != qualification.create.id.as_str()
                 || first.target.generation != Some(record.generation)
-                || record.driver != DriverKind::LibkrunKvm
+                || record.driver != DriverKind::LibkKvm
                 || record.isolation != IsolationClass::DedicatedVm
                 || *record.state.status() != ContainerState::Running
                 || record.is_paused()
@@ -241,7 +241,7 @@ pub(super) async fn run(
     }
 
     let processes = ProcessesRequest {
-        target: krun_oci_sdk::ContainerTarget::current(qualification.create.id.clone()),
+        target: koci_sdk::ContainerTarget::current(qualification.create.id.clone()),
     };
     let calls_before_processes = driver.processes_calls();
     let replacement_inventory = match timeout(

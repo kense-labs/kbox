@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::io::Read;
 use std::path::Path;
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use mkext4::{Meta, SpecialKind};
 use tar::Archive;
 
@@ -25,10 +25,8 @@ pub(super) fn apply_layer(
         compressed_size,
         rootfs.spool.path(),
     )?;
-    let limit = crate::oci::limited_reader::cap_from_env(
-        "KRUN_BOX_MAX_LAYER_BYTES",
-        DEFAULT_MAX_LAYER_BYTES,
-    );
+    let limit =
+        crate::oci::limited_reader::cap_from_env("K_BOX_MAX_LAYER_BYTES", DEFAULT_MAX_LAYER_BYTES);
     let decoder = crate::oci::limited_reader::LimitedReader::new(decoder, limit);
     let mut archive = Archive::new(decoder);
     let entries = archive.entries().map_err(|error| {
@@ -222,11 +220,11 @@ fn reject_reserved_path(path: &GuestPath) -> Result<()> {
         return Ok(());
     };
     let reserved = [
-        b".krun_image_metadata_v1.json".as_slice(),
-        b".krun_image_metadata_v1.json.tmp".as_slice(),
-        b".krun_rootfs_metadata_v1.json".as_slice(),
-        b".krun_rootfs_metadata_v1.json.tmp".as_slice(),
-        b".krun_rootfs_metadata_v1.previous.json".as_slice(),
+        b".kimage_metadata_v1.json".as_slice(),
+        b".kimage_metadata_v1.json.tmp".as_slice(),
+        b".krootfs_metadata_v1.json".as_slice(),
+        b".krootfs_metadata_v1.json.tmp".as_slice(),
+        b".krootfs_metadata_v1.previous.json".as_slice(),
     ];
     if reserved.contains(&first.as_slice()) {
         return Err(oci_error(format!(

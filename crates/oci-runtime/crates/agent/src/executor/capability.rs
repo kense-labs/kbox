@@ -1,7 +1,7 @@
 use std::io;
 
-use krun_oci_sdk::oci_spec::runtime::{Capabilities, Capability, LinuxCapabilities};
-use krun_oci_sdk::{oci_linux_capability_number, Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::{Capabilities, Capability, LinuxCapabilities};
+use koci_sdk::{oci_linux_capability_number, Error, ErrorCode, Result};
 use serde::{Deserialize, Serialize};
 
 mod warning;

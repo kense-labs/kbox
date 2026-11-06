@@ -1,4 +1,4 @@
-//! `krun-box logout` command — Remove stored registry credentials.
+//! `kbox logout` command — Remove stored registry credentials.
 
 use clap::Args;
 
@@ -13,7 +13,7 @@ pub struct LogoutArgs {
 pub async fn execute(args: LogoutArgs) -> Result<(), Box<dyn std::error::Error>> {
     let server = registry_server_or_default(args.server);
 
-    let store = krun_box_runtime::CredentialStore::default_path()?;
+    let store = kbox_runtime::CredentialStore::default_path()?;
     let removed = store.remove(&server)?;
 
     println!("{}", logout_result_line(&server, removed));

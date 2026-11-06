@@ -1,6 +1,6 @@
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use krun_oci_sdk::{
+use koci_core::DriverKind;
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use koci_sdk::{
     ContainerOperationRequest, ContainerTarget, FileOp, FileRequest, FilesystemOp,
     FilesystemRequest, Generation, OperationContext, StartRequest, UpdateRequest,
 };
@@ -66,7 +66,7 @@ async fn recreated_running_process_preserves_prepared_file_mutation() {
     assert_eq!(*recovered.state.pid(), Some(5_151));
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -147,7 +147,7 @@ async fn recreated_running_process_preserves_prepared_filesystem_mutation() {
     assert_eq!(*recovered.state.pid(), Some(5_151));
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -219,7 +219,7 @@ async fn recreated_running_process_preserves_prepared_pause_and_rebinds_setup_jo
     assert!(!recovered.is_paused());
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -306,7 +306,7 @@ async fn recreated_paused_process_preserves_prepared_resume_and_rebinds_setup_jo
     assert!(recovered.is_paused());
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -411,7 +411,7 @@ async fn recreated_running_process_rebinds_completed_pause_and_resume_history() 
     assert!(!recovered.is_paused());
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -495,7 +495,7 @@ async fn recreated_running_process_preserves_prepared_update_and_rebinds_setup_j
     assert_eq!(*recovered.state.pid(), Some(5_151));
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {

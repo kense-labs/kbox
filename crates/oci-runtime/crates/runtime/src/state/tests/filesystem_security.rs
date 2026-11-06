@@ -1,7 +1,7 @@
 use std::os::unix::fs::symlink;
 
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::ErrorCode;
+use koci_core::DriverKind;
+use koci_sdk::ErrorCode;
 
 use super::{create_request, state_root, DurableStateStore};
 
@@ -27,7 +27,7 @@ async fn pinned_root_is_not_redirected_by_ambient_path_replacement() {
     symlink(&redirected_root, &root).expect("replace ambient root path with symlink");
 
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("the pinned root must remain usable");
 
@@ -67,7 +67,7 @@ async fn replaced_layout_directory_fails_closed_before_external_mutation() {
     symlink(&outside, root.join("operations")).expect("replace operations with symlink");
 
     let error = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("a replaced layout directory must fail closed");
 
@@ -104,7 +104,7 @@ async fn symlinked_transaction_file_fails_closed_without_touching_its_target() {
     .expect("symlink transaction file");
 
     let error = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("a symlinked transaction file must fail closed");
 
@@ -121,7 +121,7 @@ async fn bind_mount_replacement_fails_closed_when_qualification_is_enabled() {
     use std::ffi::CString;
     use std::os::unix::ffi::OsStrExt as _;
 
-    const QUALIFICATION_ENV: &str = "KRUN_OCI_DURABLE_STATE_MOUNT_QUALIFICATION";
+    const QUALIFICATION_ENV: &str = "K_OCI_DURABLE_STATE_MOUNT_QUALIFICATION";
     if std::env::var_os(QUALIFICATION_ENV).as_deref() != Some(std::ffi::OsStr::new("1")) {
         return;
     }
@@ -184,7 +184,7 @@ async fn bind_mount_replacement_fails_closed_when_qualification_is_enabled() {
     let mount = TestMount(target);
 
     let error = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("a bind-mounted layout replacement must fail closed");
 

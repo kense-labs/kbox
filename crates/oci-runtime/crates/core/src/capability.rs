@@ -3,7 +3,7 @@ use std::collections::BTreeMap;
 use serde::{Deserialize, Serialize};
 
 /// Schema emitted by the runtime `features` command.
-pub const FEATURES_SCHEMA_VERSION: &str = "krun.oci.features.v1";
+pub const FEATURES_SCHEMA_VERSION: &str = "koci.features.v1";
 
 /// Host operating-system family.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -42,11 +42,11 @@ pub enum DriverKind {
     /// Native Linux namespaces and cgroups without a VM.
     NativeLinux,
     /// libkrun using Linux KVM.
-    LibkrunKvm,
+    LibkKvm,
     /// libkrun using macOS Hypervisor.framework.
-    LibkrunHvf,
+    LibkHvf,
     /// libkrun using Windows Hypervisor Platform.
-    LibkrunWhpx,
+    LibkWhpx,
 }
 
 /// Effective kernel-sharing and host boundary.
@@ -154,7 +154,7 @@ mod tests {
     #[test]
     fn probe_only_driver_never_claims_launch_support() {
         let capability = DriverCapability {
-            driver: DriverKind::LibkrunWhpx,
+            driver: DriverKind::LibkWhpx,
             status: CapabilityStatus::Available,
             readiness: DriverReadiness::ProbeOnly,
             isolation_classes: vec![
@@ -171,7 +171,7 @@ mod tests {
     #[test]
     fn supported_driver_requires_available_host_capability() {
         let capability = DriverCapability {
-            driver: DriverKind::LibkrunWhpx,
+            driver: DriverKind::LibkWhpx,
             status: CapabilityStatus::Unavailable,
             readiness: DriverReadiness::Supported,
             isolation_classes: vec![IsolationClass::DedicatedVm],

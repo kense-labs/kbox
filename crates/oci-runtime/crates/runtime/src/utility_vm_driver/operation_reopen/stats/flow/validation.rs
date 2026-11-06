@@ -1,5 +1,5 @@
-use krun_oci_agent_protocol::AgentStatsRequest;
-use krun_oci_sdk::{ErrorCode, OciRuntimeService, StatsRequest};
+use koci_agent_protocol::AgentStatsRequest;
+use koci_sdk::{ErrorCode, OciRuntimeService, StatsRequest};
 use tokio::time::timeout;
 
 use super::super::Qualification;

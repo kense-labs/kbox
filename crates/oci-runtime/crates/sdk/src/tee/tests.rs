@@ -80,9 +80,9 @@ fn attestation_response_is_exactly_request_bound() {
         request.report_data,
         TeeSha256Digest::new(format!("sha256:{}", "1".repeat(64))).unwrap(),
         TeeSha256Digest::new(format!("sha256:{}", "2".repeat(64))).unwrap(),
-        DriverKind::LibkrunKvm,
+        DriverKind::LibkKvm,
         RuntimeArtifact::new(
-            "krun-oci-runtime",
+            "koci-runtime",
             "0.3.1",
             format!("sha256:{}", "3".repeat(64)),
             None,

@@ -2,8 +2,8 @@ use std::future::Future;
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, State};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, State};
+use koci_sdk::{
     ContainerId, ContainerOperationRequest, ContainerTarget, CreateAttachments, CreateRequest,
     DeleteMode, DeleteRequest, Error, ErrorCode, EventsRequest, ExitStatus, IoMode,
     IsolationRequest, KillRequest, ListRequest, OciBundle, OciRuntimeService, OperationContext,
@@ -24,8 +24,8 @@ use crate::{
 const LIFECYCLE_TIMEOUT: Duration = Duration::from_secs(15);
 const POLL_INTERVAL: Duration = Duration::from_millis(25);
 const FREEZER_OBSERVATION_DELAY: Duration = Duration::from_millis(1_250);
-const PROGRESS_PATH: &str = "/.krun-oci-native-smoke";
-pub(super) const HOOK_TRACE_NAME: &str = ".krun-oci-hook-trace";
+const PROGRESS_PATH: &str = "/.koci-native-smoke";
+pub(super) const HOOK_TRACE_NAME: &str = ".koci-hook-trace";
 const UPDATED_MEMORY_LIMIT: u64 = 512 * 1024 * 1024;
 
 struct ExerciseInput<'a> {
@@ -176,14 +176,14 @@ async fn exercise_client(
     let filtered = native_call(
         "filtered list after create",
         client.list(ListRequest {
-            isolation: Some(krun_oci_sdk::IsolationClass::SharedHostKernel),
+            isolation: Some(koci_sdk::IsolationClass::SharedHostKernel),
         }),
     )
     .await?;
     let excluded = native_call(
         "excluded list after create",
         client.list(ListRequest {
-            isolation: Some(krun_oci_sdk::IsolationClass::DedicatedVm),
+            isolation: Some(koci_sdk::IsolationClass::DedicatedVm),
         }),
     )
     .await?;
@@ -364,7 +364,7 @@ pub(crate) async fn verify_runtime_events(
         client.events(EventsRequest {
             container: Some(target.clone()),
             after_sequence: 0,
-            limit: krun_oci_sdk::MAX_EVENT_BATCH_ITEMS,
+            limit: koci_sdk::MAX_EVENT_BATCH_ITEMS,
             wait_timeout_ms: None,
         }),
     )
@@ -642,8 +642,8 @@ fn resource_profile() -> Result<LinuxResources, String> {
 }
 
 fn resource_stats_are_exact(
-    first: &krun_oci_sdk::ContainerStats,
-    second: &krun_oci_sdk::ContainerStats,
+    first: &koci_sdk::ContainerStats,
+    second: &koci_sdk::ContainerStats,
     target: &ContainerTarget,
 ) -> bool {
     first.target == *target
@@ -665,7 +665,7 @@ fn resource_stats_are_exact(
 }
 
 fn process_inventory_is_exact(
-    processes: &[krun_oci_sdk::ProcessRecord],
+    processes: &[koci_sdk::ProcessRecord],
     target: &ContainerTarget,
     worker: &ProcessTarget,
 ) -> bool {
@@ -723,7 +723,7 @@ pub(super) async fn exercise_until_fault(
     nonce: &str,
     marker: &Path,
     evidence: &mut FaultInjectionEvidence,
-) -> Result<Vec<krun_oci_sdk::RuntimeOperation>, String> {
+) -> Result<Vec<koci_sdk::RuntimeOperation>, String> {
     let operations = native_call("features", client.features()).await?.operations;
     let id = ContainerId::new(format!("native-fault-{nonce}"))
         .map_err(|error| format!("failed to construct native fault container ID: {error}"))?;
@@ -735,9 +735,9 @@ pub(super) async fn exercise_until_fault(
         attachments: CreateAttachments::from_bundle(
             bundle,
             ProcessIo {
-                stdin: krun_oci_sdk::IoMode::Null,
-                stdout: krun_oci_sdk::IoMode::Null,
-                stderr: krun_oci_sdk::IoMode::Null,
+                stdin: koci_sdk::IoMode::Null,
+                stdout: koci_sdk::IoMode::Null,
+                stderr: koci_sdk::IoMode::Null,
                 terminal_size: None,
             },
         )
@@ -929,7 +929,7 @@ async fn state_is_missing(client: &RuntimeClient, target: ContainerTarget) -> Re
 
 async fn native_call<T>(
     operation: &str,
-    future: impl Future<Output = krun_oci_sdk::Result<T>>,
+    future: impl Future<Output = koci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),

@@ -2,16 +2,14 @@
 use std::sync::atomic::{AtomicU16, AtomicU32, Ordering};
 
 #[cfg(any(target_os = "linux", test))]
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentTransportFaultInjector, AgentTransportFaultPoint, AgentTransportQualificationEvidence,
     AGENT_TRANSPORT_QUALIFICATION_EVIDENCE_PREFIX, AGENT_TRANSPORT_QUALIFICATION_FAULT_OPERATION,
 };
-use krun_oci_agent_protocol::{
-    AgentTransportQualificationRequest, AGENT_TRANSPORT_QUALIFICATION_ENV,
-};
+use koci_agent_protocol::{AgentTransportQualificationRequest, AGENT_TRANSPORT_QUALIFICATION_ENV};
 #[cfg(any(target_os = "linux", test))]
-use krun_oci_sdk::OperationId;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::OperationId;
+use koci_sdk::{Error, ErrorCode, Result};
 
 pub(crate) fn take_request() -> Result<Option<AgentTransportQualificationRequest>> {
     let Some(encoded) = std::env::var_os(AGENT_TRANSPORT_QUALIFICATION_ENV) else {
@@ -158,12 +156,12 @@ pub(crate) fn finish(
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentOperation, AgentTransportFaultInjector, AgentTransportFaultPoint,
         AgentTransportOperationStage, AgentTransportQualificationRequest,
         AGENT_PROTOCOL_VERSION_MAX, AGENT_TRANSPORT_QUALIFICATION_FAULT_OPERATION,
     };
-    use krun_oci_sdk::{Error, ErrorCode, OperationId};
+    use koci_sdk::{Error, ErrorCode, OperationId};
 
     use super::{finish, GuestTransportQualificationFault};
 

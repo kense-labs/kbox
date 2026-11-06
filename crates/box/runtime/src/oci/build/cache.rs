@@ -6,7 +6,7 @@
 //! (RUN/COPY/ADD) is reached with a chain key that has been seen before, the
 //! previously produced layer is reused instead of re-executing the instruction.
 //!
-//! The cache lives under `~/.krun/buildcache`:
+//! The cache lives under `~/.kbox/buildcache`:
 //! - `blobs/<digest>`  — the cached layer tar.gz, content-addressed.
 //! - `keys/<chain-key>` — a small JSON record `{digest, diff_id, size}` pointing
 //!   at the blob.
@@ -18,7 +18,7 @@ use std::collections::BTreeSet;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use krun_box_core::dirs_home;
+use kbox_core::dirs_home;
 use serde::{Deserialize, Serialize};
 
 use super::layer::{sha256_bytes, sha256_file, LayerInfo};
@@ -37,16 +37,16 @@ pub use import::hydrate_recorded_build_cache;
 static STORE_SEQ: AtomicU64 = AtomicU64::new(0);
 
 // Invalidate layers exported before guest-only ownership and mode were preserved.
-const CACHE_KEY_PROFILE: &str = "krun.box.build-cache-key.v2";
+const CACHE_KEY_PROFILE: &str = "kbox.build-cache-key.v2";
 
 /// Default cap on the total size of cached layer blobs (2 GiB). Override with
-/// `KRUN_BOX_BUILDCACHE_MAX_BYTES`. When the cap is exceeded after a store, the
+/// `K_BOX_BUILDCACHE_MAX_BYTES`. When the cap is exceeded after a store, the
 /// oldest blobs are evicted (FIFO) until the total is back under the cap; a
 /// later build that needs an evicted layer simply re-runs the instruction.
 const DEFAULT_MAX_BYTES: u64 = 2 * 1024 * 1024 * 1024;
 
 fn configured_max_bytes() -> u64 {
-    std::env::var("KRUN_BOX_BUILDCACHE_MAX_BYTES")
+    std::env::var("K_BOX_BUILDCACHE_MAX_BYTES")
         .ok()
         .and_then(|s| s.parse::<u64>().ok())
         .unwrap_or(DEFAULT_MAX_BYTES)
@@ -73,7 +73,7 @@ pub(crate) struct CachedLayer {
     pub(crate) size: u64,
 }
 
-/// Layer-level build cache rooted at `~/.krun/buildcache`.
+/// Layer-level build cache rooted at `~/.kbox/buildcache`.
 pub(crate) struct BuildCache {
     dir: PathBuf,
 }
@@ -214,7 +214,7 @@ impl BuildCache {
         if let Ok(bytes) = serde_json::to_vec(&record) {
             let target = self.dir.join("keys").join(key);
             let temporary = target.with_extension("tmp");
-            if krun_box_core::fs_atomic::write_durable(&temporary, &target, &bytes).is_ok() {
+            if kbox_core::fs_atomic::write_durable(&temporary, &target, &bytes).is_ok() {
                 return true;
             }
         }
@@ -338,7 +338,11 @@ fn cached_blob_is_valid(path: &Path, digest: &str, size: u64) -> bool {
 ///
 /// Returns `None` if any source cannot be read (so the caller treats it as a
 /// cache miss and falls back to executing the instruction).
-pub(crate) fn hash_context_sources(context_dir: &Path, src_patterns: &[String]) -> Option<String> {
+pub(crate) fn hash_context_sources(
+    context_dir: &Path,
+    src_patterns: &[String],
+    ignore: Option<&super::dockerignore::DockerIgnore>,
+) -> Option<String> {
     use sha2::{Digest, Sha256};
 
     let mut files: Vec<(PathBuf, PathBuf)> = Vec::new();
@@ -350,7 +354,7 @@ pub(crate) fn hash_context_sources(context_dir: &Path, src_patterns: &[String]) 
             return None;
         }
         if src_path.is_dir() {
-            collect_files(&src_path, &src_path, &mut files)?;
+            collect_files(&src_path, &src_path, Path::new(""), ignore, &mut files)?;
         } else {
             let rel = PathBuf::from(src);
             files.push((rel, src_path));
@@ -362,22 +366,41 @@ pub(crate) fn hash_context_sources(context_dir: &Path, src_patterns: &[String]) 
 
     let mut hasher = Sha256::new();
     for (rel, full) in &files {
-        let bytes = std::fs::read(full).ok()?;
         hasher.update(rel.to_string_lossy().as_bytes());
         hasher.update(b"\0");
-        hasher.update((bytes.len() as u64).to_le_bytes());
-        hasher.update(&bytes);
+        if full.symlink_metadata().ok()?.file_type().is_symlink() {
+            let target = std::fs::read_link(full).ok()?;
+            let target = target.to_string_lossy();
+            hasher.update(b"symlink\0");
+            hasher.update((target.len() as u64).to_le_bytes());
+            hasher.update(target.as_bytes());
+        } else {
+            let bytes = std::fs::read(full).ok()?;
+            hasher.update(b"file\0");
+            hasher.update((bytes.len() as u64).to_le_bytes());
+            hasher.update(&bytes);
+        }
     }
     Some(hex::encode(hasher.finalize()))
 }
 
-/// Recursively collect `(relative_path, full_path)` pairs for files under `root`.
-fn collect_files(root: &Path, current: &Path, out: &mut Vec<(PathBuf, PathBuf)>) -> Option<()> {
+/// Recursively collect `(relative_path, full_path)` pairs without following links.
+fn collect_files(
+    root: &Path,
+    current: &Path,
+    relative: &Path,
+    ignore: Option<&super::dockerignore::DockerIgnore>,
+    out: &mut Vec<(PathBuf, PathBuf)>,
+) -> Option<()> {
     for entry in std::fs::read_dir(current).ok()? {
         let entry = entry.ok()?;
         let path = entry.path();
-        if path.is_dir() {
-            collect_files(root, &path, out)?;
+        let entry_relative = relative.join(entry.file_name());
+        if ignore.is_some_and(|ignore| ignore.is_excluded(&entry_relative)) {
+            continue;
+        }
+        if entry.file_type().ok()?.is_dir() {
+            collect_files(root, &path, &entry_relative, ignore, out)?;
         } else {
             let rel = path.strip_prefix(root).ok()?.to_path_buf();
             out.push((rel, path));

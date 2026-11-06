@@ -11,10 +11,10 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 use std::time::{Duration, Instant};
 
-use krun_box_core::guest_exec::{GuestTerminalStatus, GUEST_TERMINAL_STATUS_FILE_NAME};
+use kbox_core::guest_exec::{GuestTerminalStatus, GUEST_TERMINAL_STATUS_FILE_NAME};
 
-// Set KRUN_BOX_KEEP_SMOKE_HOME to retain the isolated KRUN_HOME after a failure.
-const LEGACY_APFS_ROOTFS_ENV: &str = "KRUN_BOX_MACOS_LEGACY_APFS_ROOTFS";
+// Set K_BOX_KEEP_SMOKE_HOME to retain the isolated K_HOME after a failure.
+const LEGACY_APFS_ROOTFS_ENV: &str = "K_BOX_MACOS_LEGACY_APFS_ROOTFS";
 const DEFAULT_IMAGE: &str = "docker.io/library/alpine:3.20";
 const RECOVER_FEATURE: u32 = 0x4;
 
@@ -28,11 +28,11 @@ struct GuestNativeSmoke {
 
 impl GuestNativeSmoke {
     fn new() -> Self {
-        let preserve_on_drop = std::env::var_os("KRUN_BOX_KEEP_SMOKE_HOME").is_some();
-        let mut home = tempfile::tempdir().expect("temporary KRUN_HOME");
+        let preserve_on_drop = std::env::var_os("K_BOX_KEEP_SMOKE_HOME").is_some();
+        let mut home = tempfile::tempdir().expect("temporary K_HOME");
         home.disable_cleanup(preserve_on_drop);
         if preserve_on_drop {
-            eprintln!("    preserving KRUN_HOME at {}", home.path().display());
+            eprintln!("    preserving K_HOME at {}", home.path().display());
         }
         Self {
             binary: find_binary(),
@@ -47,18 +47,18 @@ impl GuestNativeSmoke {
         let mut command = Command::new(&self.binary);
         command
             .args(args)
-            .env("KRUN_HOME", self.home.path())
+            .env("K_HOME", self.home.path())
             .env_remove(LEGACY_APFS_ROOTFS_ENV);
         command
     }
 
     fn output(&self, args: &[&str], environment: &[(&str, &str)]) -> Output {
-        eprintln!("    $ krun-box {}", args.join(" "));
+        eprintln!("    $ kbox {}", args.join(" "));
         let output = self
             .command(args)
             .envs(environment.iter().copied())
             .output()
-            .unwrap_or_else(|error| panic!("failed to run `krun-box {}`: {error}", args.join(" ")));
+            .unwrap_or_else(|error| panic!("failed to run `kbox {}`: {error}", args.join(" ")));
         eprint!("{}", String::from_utf8_lossy(&output.stderr));
         output
     }
@@ -71,12 +71,12 @@ impl GuestNativeSmoke {
         let output = self.output(args, environment);
         assert!(
             output.status.success(),
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             String::from_utf8_lossy(&output.stdout),
             String::from_utf8_lossy(&output.stderr)
         );
-        String::from_utf8(output.stdout).expect("krun-box stdout is UTF-8")
+        String::from_utf8(output.stdout).expect("kbox stdout is UTF-8")
     }
 
     fn inspect(&self) -> serde_json::Value {
@@ -149,7 +149,7 @@ impl GuestNativeSmoke {
 fn legacy_apfs_migration_retains_verified_rollback_generation() {
     let mut smoke = GuestNativeSmoke::new();
     smoke.name = format!("guest-native-migration-{}", std::process::id());
-    let image = std::env::var("KRUN_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
+    let image = std::env::var("K_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
     let name = smoke.name.clone();
 
     // Create and stop one compatibility generation first. The explicit legacy
@@ -250,7 +250,7 @@ impl Drop for GuestNativeSmoke {
 #[ignore]
 fn guest_native_persistent_restart_and_crash_recovery() {
     let mut smoke = GuestNativeSmoke::new();
-    let image = std::env::var("KRUN_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
+    let image = std::env::var("K_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
     let name = smoke.name.clone();
 
     smoke.ok(&[
@@ -308,7 +308,7 @@ fn guest_native_persistent_restart_and_crash_recovery() {
         String::from_utf8_lossy(&unsafe_offline_read.stderr)
     );
 
-    let recovery = smoke.ok_with_env(&["start", &name], &[("RUST_LOG", "krun_box_runtime=info")]);
+    let recovery = smoke.ok_with_env(&["start", &name], &[("RUST_LOG", "kbox_runtime=info")]);
     assert!(
         recovery.contains(&name),
         "recovery start did not report the box name"
@@ -394,7 +394,7 @@ fn guest_native_filesystem_snapshot_clone_is_mount_free() {
     let mut smoke = GuestNativeSmoke::new();
     smoke.name = format!("guest-native-snapshot-{}", std::process::id());
     let restored_name = format!("{}-restored", smoke.name);
-    let image = std::env::var("KRUN_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
+    let image = std::env::var("K_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string());
     let source_name = smoke.name.clone();
 
     smoke.ok(&[
@@ -478,7 +478,7 @@ fn guest_native_filesystem_snapshot_clone_is_mount_free() {
 fn find_binary() -> PathBuf {
     if let Ok(test_binary) = std::env::current_exe() {
         if let Some(profile_dir) = test_binary.parent().and_then(Path::parent) {
-            let candidate = profile_dir.join("krun-box");
+            let candidate = profile_dir.join("kbox");
             if candidate.is_file() {
                 return candidate;
             }
@@ -488,12 +488,12 @@ fn find_binary() -> PathBuf {
         .parent()
         .expect("CLI crate is inside the workspace");
     for profile in ["debug", "release"] {
-        let candidate = workspace.join("target").join(profile).join("krun-box");
+        let candidate = workspace.join("target").join(profile).join("kbox");
         if candidate.is_file() {
             return candidate;
         }
     }
-    PathBuf::from("krun-box")
+    PathBuf::from("kbox")
 }
 
 fn contains_sparse_image(root: &Path) -> bool {

@@ -1,5 +1,5 @@
 {
-  "schema": "krun.runtime.exec-request.v1",
+  "schema": "kbox_contract.exec-request.v1",
   "request_id": "golden-exec",
   "unit_id": "golden-service",
   "generation": 3,

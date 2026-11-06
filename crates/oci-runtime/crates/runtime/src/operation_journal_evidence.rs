@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerRecord, ContainerTarget, ExitStatus, OperationId, ProcessRecord, ProcessTarget,
 };
 
@@ -369,7 +369,7 @@ pub(crate) async fn durable_process(
     if value
         .get("schemaVersion")
         .and_then(serde_json::Value::as_str)
-        != Some("krun.oci.process-record.v1")
+        != Some("koci.process-record.v1")
         || value.get("activeOperation").is_some()
         || value.get("exitStatus").is_some()
     {
@@ -423,7 +423,7 @@ pub(crate) async fn process_exit_cache(
     if value
         .get("schemaVersion")
         .and_then(serde_json::Value::as_str)
-        != Some("krun.oci.process-record.v1")
+        != Some("koci.process-record.v1")
         || value.get("activeOperation").is_some()
     {
         return Err(format!(

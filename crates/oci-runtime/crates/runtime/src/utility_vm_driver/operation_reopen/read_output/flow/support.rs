@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{
     ContainerTarget, DeleteRequest, Error, ErrorCode, ExecRequest, OperationId, ProcessRecord,
     StartRequest,
 };
@@ -44,7 +44,7 @@ pub(super) fn exec_marker(init_marker: &Path) -> Result<PathBuf, String> {
 pub(super) async fn exec_journal_status(
     state_root: &Path,
     operation_id: &OperationId,
-    target: &krun_oci_sdk::ProcessTarget,
+    target: &koci_sdk::ProcessTarget,
 ) -> Result<ExecJournalStatus, String> {
     crate::operation_journal_evidence::process_operation_journal_status(
         state_root,
@@ -57,7 +57,7 @@ pub(super) async fn exec_journal_status(
 
 pub(super) async fn durable_exec_process(
     state_root: &Path,
-    target: &krun_oci_sdk::ProcessTarget,
+    target: &koci_sdk::ProcessTarget,
 ) -> Result<ProcessRecord, String> {
     crate::operation_journal_evidence::durable_process(state_root, target).await
 }

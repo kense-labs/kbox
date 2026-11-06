@@ -2,7 +2,7 @@
 set -eu
 
 log='/mnt/rw/lifecycle.log'
-marker='/.krun-oci-create-start-smoke'
+marker='/.koci-create-start-smoke'
 
 on_term() {
     printf 'phase=term\n' >> "$log"
@@ -23,7 +23,7 @@ test "$(cat /mnt/rw/round-trip.txt)" = 'rw-round-trip-v1'
     printf 'readonly=verified\n'
     printf 'rw_round_trip=verified\n'
 } > "$log"
-printf 'krun-oci-create-start-user-time-v1\n' > "$marker"
+printf 'koci-create-start-user-time-v1\n' > "$marker"
 
 while :; do
     sleep 1

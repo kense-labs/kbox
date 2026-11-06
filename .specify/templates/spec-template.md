@@ -58,7 +58,7 @@
 - [ ] New behavior has a small hermetic test in the owning package
 - [ ] Resource ownership and generation fencing are explicit
 - [ ] New admitted values use closed typed sets
-- [ ] Product configuration, if any, is ACL parsed by `krun-acl`
+- [ ] Product configuration, if any, is ACL parsed by `kacl`
 - [ ] Secret and DataRef flows have redaction and lineage tests
 - [ ] Decisions and actual PEP effects are separate
 - [ ] Native claims have native test targets

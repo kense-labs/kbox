@@ -1,14 +1,14 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportOperationStage, AgentTransportQualificationRequest, AgentWaitRequest,
     AGENT_PROTOCOL_VERSION_MAX,
 };
-use krun_oci_core::{CapabilityStatus, HostPlatform, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{CapabilityStatus, HostPlatform, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, CreateAttachments, CreateRequest, DeleteMode, DeleteRequest, Error, ErrorCode,
     ExitStatus, IoMode, IsolationRequest, KillRequest, ListRequest, OciBundle, OciRuntimeService,
     OperationContext, OperationId, ProcessIo, Signal, StartRequest, StateRequest, WaitRequest,
@@ -827,7 +827,7 @@ async fn exercise(
 
     let stale_target = ContainerTarget::exact(
         create.id.clone(),
-        krun_oci_sdk::Generation(created.generation.0 + 1),
+        koci_sdk::Generation(created.generation.0 + 1),
     );
     match replacement_session
         .client()

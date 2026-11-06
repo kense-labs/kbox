@@ -9,8 +9,8 @@ use std::io::{BufRead, BufReader, Write};
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
-use krun_box_core::audit::{AuditAction, AuditConfig, AuditEvent, AuditOutcome};
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::audit::{AuditAction, AuditConfig, AuditEvent, AuditOutcome};
+use kbox_core::error::{BoxError, Result};
 
 /// Persistent audit log that appends events to a JSON-lines file.
 ///
@@ -59,9 +59,9 @@ impl AuditLog {
         })
     }
 
-    /// Open the audit log at the default path (~/.krun/audit/audit.jsonl).
+    /// Open the audit log at the default path (~/.kbox/audit/audit.jsonl).
     pub fn default_path() -> Result<Self> {
-        let path = krun_box_core::dirs_home().join("audit").join("audit.jsonl");
+        let path = kbox_core::dirs_home().join("audit").join("audit.jsonl");
 
         Self::new(path, AuditConfig::default())
     }
@@ -259,7 +259,7 @@ pub fn read_audit_log(path: &Path, query: &AuditQuery) -> Result<Vec<AuditEvent>
     Ok(events)
 }
 
-impl krun_box_core::traits::AuditSink for AuditLog {
+impl kbox_core::traits::AuditSink for AuditLog {
     fn record(&self, event: &AuditEvent) -> Result<()> {
         self.log(event)
     }

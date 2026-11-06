@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::AgentUpdateRequest;
-use krun_oci_core::IsolationClass;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentUpdateRequest;
+use koci_core::IsolationClass;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, ListRequest, OciRuntimeService, OperationContext,
     StatsRequest, UpdateRequest,
 };
@@ -24,7 +24,7 @@ pub(super) async fn run(
     report: &mut OciVmOperationReopenReplacementReport,
 ) -> std::result::Result<(), String> {
     let response_delivered = qualification.stage
-        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == koci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let cleanup = MacosHostCleanupTracker::capture();
     let session = match super::super::connect_replacement_qualification_session(
         &qualification.shim,
@@ -624,8 +624,8 @@ pub(super) async fn run(
 }
 
 fn changed_resources(
-    original: &krun_oci_sdk::oci_spec::runtime::LinuxResources,
-) -> std::result::Result<krun_oci_sdk::oci_spec::runtime::LinuxResources, String> {
+    original: &koci_sdk::oci_spec::runtime::LinuxResources,
+) -> std::result::Result<koci_sdk::oci_spec::runtime::LinuxResources, String> {
     let mut value = serde_json::to_value(original)
         .map_err(|error| format!("failed to encode changed Update resources: {error}"))?;
     value["memory"]["limit"] = serde_json::json!(256 * 1024 * 1024_u64);

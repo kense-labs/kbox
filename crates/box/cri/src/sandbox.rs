@@ -1,6 +1,6 @@
 //! Pod sandbox state management.
 //!
-//! Maps CRI PodSandbox to Krun Box instances (one microVM per pod).
+//! Maps CRI PodSandbox to Kbox Box instances (one microVM per pod).
 
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -158,7 +158,7 @@ mod tests {
             labels: HashMap::from([("app".to_string(), "test".to_string())]),
             annotations: HashMap::new(),
             log_directory: "/var/log/pods".to_string(),
-            runtime_handler: "krun".to_string(),
+            runtime_handler: "kbox".to_string(),
             network_ip: String::new(),
             additional_ips: vec![],
             dns: SandboxDns::default(),
@@ -188,7 +188,7 @@ mod tests {
             "labels": {},
             "annotations": {},
             "log_directory": "/var/log/pods",
-            "runtime_handler": "krun"
+            "runtime_handler": "kbox"
         }"#;
 
         let sandbox: PodSandbox = serde_json::from_str(json).unwrap();

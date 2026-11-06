@@ -1,9 +1,9 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent_protocol::AgentInheritedDescriptorSchema;
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentInheritedDescriptorSchema;
+use koci_core::DriverKind;
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
+use koci_sdk::{
     CloseStdinRequest, ContainerId, ContainerOperationRequest, ContainerTarget, CreateAttachments,
     CreateRequest, DeleteMode, DeleteRequest, Error, ErrorCode, ExecRequest, ExitStatus,
     Generation, GuestSessionCapacity, GuestSessionGeneration, GuestSessionId, GuestSessionReset,
@@ -44,11 +44,11 @@ const TEST_CONFIG: &str = concat!(
     "    \"cwd\": \"/\"\n",
     "  },\n",
     "  \"root\": {\"path\": \"rootfs\", \"readonly\": true},\n",
-    "  \"annotations\": {\"dev.krun.test\": \"durable-state\"}\n",
+    "  \"annotations\": {\"dev.kbox.test\": \"durable-state\"}\n",
     "}\n",
 );
 
-fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> krun_oci_sdk::Result<T>) -> T {
+fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> koci_sdk::Result<T>) -> T {
     constructor(value.to_string()).unwrap_or_else(|error| panic!("valid test identifier: {error}"))
 }
 
@@ -88,7 +88,7 @@ fn state_root(temporary: &TempDir) -> PathBuf {
 
 async fn create_container(store: &DurableStateStore, request: &CreateRequest) {
     store
-        .prepare_create(request, DriverKind::LibkrunWhpx)
+        .prepare_create(request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     store
@@ -113,7 +113,7 @@ async fn replays_legacy_v1_operation_journal_with_its_original_fingerprint() {
         .expect("initialize state root");
 
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare current operation journal");
     let mut operation = store
@@ -134,7 +134,7 @@ async fn replays_legacy_v1_operation_journal_with_its_original_fingerprint() {
 
     assert!(matches!(
         store
-            .prepare_create(&request, DriverKind::LibkrunWhpx)
+            .prepare_create(&request, DriverKind::LibkWhpx)
             .await
             .expect("resume legacy operation journal"),
         RecordOperationPreparation::Resume(_)
@@ -195,7 +195,7 @@ async fn create_is_durable_idempotent_and_generation_fenced() {
         .expect("initialize state root");
 
     let prepared = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let RecordOperationPreparation::Prepared(prepared) = prepared else {
@@ -211,7 +211,7 @@ async fn create_is_durable_idempotent_and_generation_fenced() {
     );
 
     let resumed = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("resume prepared create");
     assert_eq!(
@@ -227,7 +227,7 @@ async fn create_is_durable_idempotent_and_generation_fenced() {
     assert_eq!(*completed.state.pid(), Some(4_242));
 
     let replayed = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("replay completed create");
     assert_eq!(
@@ -282,7 +282,7 @@ async fn attachment_contract_is_fingerprinted_and_revalidated_after_reopen() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare attachment create");
     let created = store
@@ -301,7 +301,7 @@ async fn attachment_contract_is_fingerprinted_and_revalidated_after_reopen() {
         .expect("reopen state root");
     assert_eq!(
         reopened
-            .prepare_create(&request, DriverKind::LibkrunWhpx)
+            .prepare_create(&request, DriverKind::LibkWhpx)
             .await
             .expect("replay exact attachment contract"),
         RecordOperationPreparation::Replayed(created)
@@ -315,7 +315,7 @@ async fn attachment_contract_is_fingerprinted_and_revalidated_after_reopen() {
         terminal_size: None,
     });
     let error = reopened
-        .prepare_create(&changed, DriverKind::LibkrunWhpx)
+        .prepare_create(&changed, DriverKind::LibkWhpx)
         .await
         .expect_err("same operation ID cannot change attachment I/O");
     assert_eq!(error.code, ErrorCode::FailedPrecondition);
@@ -399,7 +399,7 @@ async fn guest_session_evidence_is_durable_and_revalidated_after_reopen() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare guest-session create");
     let created = store
@@ -483,7 +483,7 @@ async fn network_enforcement_evidence_is_durable_and_tamper_evident_after_reopen
     configuration["linux"] = serde_json::json!({
         "namespaces": [{
             "type": "network",
-            "path": "/run/krun/network/durable-network-namespace-41"
+            "path": "/run/kbox/network/durable-network-namespace-41"
         }],
         "netDevices": {"tap0": {"name": "eth0"}}
     });
@@ -518,7 +518,7 @@ async fn network_enforcement_evidence_is_durable_and_tamper_evident_after_reopen
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare network-enforcement create");
     let created = store
@@ -533,7 +533,7 @@ async fn network_enforcement_evidence_is_durable_and_tamper_evident_after_reopen
         .expect("reopen network-enforcement state");
     assert_eq!(
         reopened
-            .prepare_create(&request, DriverKind::LibkrunWhpx)
+            .prepare_create(&request, DriverKind::LibkWhpx)
             .await
             .expect("replay exact network-enforcement create"),
         RecordOperationPreparation::Replayed(created)
@@ -573,7 +573,7 @@ async fn descriptor_bearing_create_is_durable_and_replays_after_reopen() {
         "descriptor-container",
         "descriptor-create",
     );
-    let schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+    let schema = AgentInheritedDescriptorSchema::kbox_control_v1();
     let store = DurableStateStore::open(&root)
         .await
         .expect("initialize state root");
@@ -591,7 +591,7 @@ async fn descriptor_bearing_create_is_durable_and_replays_after_reopen() {
     let reopened = DurableStateStore::open(&root)
         .await
         .expect("reopen state root");
-    let equivalent_schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+    let equivalent_schema = AgentInheritedDescriptorSchema::kbox_control_v1();
     assert_eq!(
         reopened
             .prepare_create_with_inherited_descriptors(
@@ -623,11 +623,11 @@ async fn operation_id_cannot_be_reused_for_a_different_request() {
         .expect("initialize state root");
 
     store
-        .prepare_create(&first, DriverKind::LibkrunWhpx)
+        .prepare_create(&first, DriverKind::LibkWhpx)
         .await
         .expect("prepare first request");
     let error = store
-        .prepare_create(&second, DriverKind::LibkrunWhpx)
+        .prepare_create(&second, DriverKind::LibkWhpx)
         .await
         .expect_err("operation IDs are globally idempotent");
 
@@ -649,7 +649,7 @@ async fn expired_deadline_and_invalid_pid_do_not_commit_state() {
         .expect("initialize state root");
 
     let deadline_error = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("expired operation must fail before mutation");
     assert_eq!(deadline_error.code, ErrorCode::DeadlineExceeded);
@@ -668,7 +668,7 @@ async fn expired_deadline_and_invalid_pid_do_not_commit_state() {
 
     request.context.deadline_unix_ms = None;
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare valid create");
     let pid_error = store
@@ -706,7 +706,7 @@ async fn core_lifecycle_is_idempotent_and_generation_safe() {
         "create-duplicate-container-id",
     );
     let duplicate_error = store
-        .prepare_create(&duplicate_create, DriverKind::LibkrunWhpx)
+        .prepare_create(&duplicate_create, DriverKind::LibkWhpx)
         .await
         .expect_err("a live container ID must remain unique on the host");
     assert_eq!(duplicate_error.code, ErrorCode::AlreadyExists);
@@ -844,7 +844,7 @@ async fn core_lifecycle_is_idempotent_and_generation_safe() {
 
     let recreate = create_request(&bundle_directory, "container-1", "create-2");
     let RecordOperationPreparation::Prepared(recreated) = store
-        .prepare_create(&recreate, DriverKind::LibkrunWhpx)
+        .prepare_create(&recreate, DriverKind::LibkWhpx)
         .await
         .expect("container ID may be reused after delete")
     else {
@@ -1242,7 +1242,7 @@ async fn recreated_paused_running_process_rebinds_all_completed_setup_journals()
     assert!(recovered.is_paused());
 
     let RecordOperationPreparation::Replayed(created) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("replay rebound Create")
     else {
@@ -1383,7 +1383,7 @@ async fn completed_operation_replays_after_its_deadline_and_delete_move_recovers
     create.context.deadline_unix_ms = Some(1);
     assert!(matches!(
         store
-            .prepare_create(&create, DriverKind::LibkrunWhpx)
+            .prepare_create(&create, DriverKind::LibkWhpx)
             .await
             .expect("completed work replays after its deadline"),
         RecordOperationPreparation::Replayed(_)
@@ -1419,7 +1419,7 @@ async fn completed_operation_replays_after_its_deadline_and_delete_move_recovers
         "create-after-delete-crash",
     );
     let RecordOperationPreparation::Prepared(recreated) = store
-        .prepare_create(&recreate, DriverKind::LibkrunWhpx)
+        .prepare_create(&recreate, DriverKind::LibkWhpx)
         .await
         .expect("ID reuse may occur before delete journal recovery")
     else {
@@ -1446,14 +1446,14 @@ async fn prepared_create_rebuilds_missing_durable_records_after_a_crash() {
         .expect("initialize state root");
 
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     std::fs::remove_dir_all(store.root().join("containers").join("container-1"))
         .expect("simulate crash before durable create record");
 
     let recovered = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("rebuild prepared create");
     let RecordOperationPreparation::Resume(recovered) = recovered else {
@@ -1481,7 +1481,7 @@ async fn failed_create_replays_its_exact_error_and_finishes_quarantine() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let failure =
@@ -1501,7 +1501,7 @@ async fn failed_create_replays_its_exact_error_and_finishes_quarantine() {
 
     assert_eq!(
         store
-            .prepare_create(&request, DriverKind::LibkrunWhpx)
+            .prepare_create(&request, DriverKind::LibkWhpx)
             .await
             .expect_err("failed operation must replay"),
         failure

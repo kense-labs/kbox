@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-: "${KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
+: "${K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
 
 source .github/scripts/lib/linux-kvm-provenance.sh
 
@@ -40,34 +40,34 @@ target_dir="${CARGO_TARGET_DIR:-target}"
 if [[ "$target_dir" != /* ]]; then
   target_dir="$PWD/$target_dir"
 fi
-profile="${KRUN_OCI_BUILD_PROFILE:-debug}"
-build_arguments=(build -p krun-oci-cli -p krun-oci-krun)
+profile="${K_OCI_BUILD_PROFILE:-debug}"
+build_arguments=(build -p koci-cli -p koci-kbox)
 case "$profile" in
   debug) ;;
   release) build_arguments+=(--release) ;;
   *) build_arguments+=(--profile "$profile") ;;
 esac
 binary_dir="$target_dir/$profile"
-source_cli="$binary_dir/krun-oci"
-source_shim="$binary_dir/krun-oci-krun-shim"
-source_runtime_dir="$binary_dir/krun-oci-krun-runtime"
-runtime_assets_manifest="crates/krun/runtime/runtime-assets.json"
+source_cli="$binary_dir/koci"
+source_shim="$binary_dir/koci-kshim"
+source_runtime_dir="$binary_dir/koci-kbox-runtime"
+runtime_assets_manifest="crates/kbox/runtime/runtime-assets.json"
 
 temporary_root="${RUNNER_TEMP:-/tmp}"
 test -d "$temporary_root"
-work="$(mktemp -d "$temporary_root/krun-oci-kvm-lifecycle.XXXXXX")"
+work="$(mktemp -d "$temporary_root/koci-kvm-lifecycle.XXXXXX")"
 current_case="setup"
 case_report=""
 case_stderr=""
 cleanup() {
   local status=$?
-  if [[ "$status" -ne 0 && "${KRUN_OCI_KEEP_FAILED_WORK:-0}" == "1" ]]; then
+  if [[ "$status" -ne 0 && "${K_OCI_KEEP_FAILED_WORK:-0}" == "1" ]]; then
     printf 'preserving failed Linux KVM lifecycle work directory: %s\n' \
       "$work" >&2
     return 0
   fi
   case "$work" in
-    "$temporary_root"/krun-oci-kvm-lifecycle.*)
+    "$temporary_root"/koci-kvm-lifecycle.*)
       rm -rf -- "$work"
       ;;
     *)
@@ -99,14 +99,14 @@ on_error() {
 }
 trap on_error ERR
 
-report_path="${KRUN_OCI_LINUX_KVM_LIFECYCLE_REPORT:-$work/report.json}"
+report_path="${K_OCI_LINUX_KVM_LIFECYCLE_REPORT:-$work/report.json}"
 if [[ -e "$report_path" || -L "$report_path" ]]; then
   printf 'refusing to overwrite Linux KVM lifecycle report: %s\n' "$report_path" >&2
   exit 1
 fi
 test -d "$(dirname "$report_path")"
-test -f "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
-test ! -L "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test -f "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test ! -L "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 
 cargo "${build_arguments[@]}"
 test -x "$source_cli"
@@ -116,31 +116,31 @@ test -d "$source_runtime_dir"
 binary_stage="$work/bin"
 mkdir "$binary_stage"
 chmod 0700 "$work" "$binary_stage"
-cp -p "$source_cli" "$binary_stage/krun-oci"
-cp -p "$source_shim" "$binary_stage/krun-oci-krun-shim"
-cp -a "$source_runtime_dir" "$binary_stage/krun-oci-krun-runtime"
-cli="$binary_stage/krun-oci"
-shim="$binary_stage/krun-oci-krun-shim"
-runtime_dir="$binary_stage/krun-oci-krun-runtime"
+cp -p "$source_cli" "$binary_stage/koci"
+cp -p "$source_shim" "$binary_stage/koci-kshim"
+cp -a "$source_runtime_dir" "$binary_stage/koci-kbox-runtime"
+cli="$binary_stage/koci"
+shim="$binary_stage/koci-kshim"
+runtime_dir="$binary_stage/koci-kbox-runtime"
 
 provenance="$(
   linux_kvm_provenance \
     linux-kvm-lifecycle-17-case-v1 "$profile" \
     "$cli" "$shim" "$runtime_dir" \
     "$runtime_assets_manifest" \
-    "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+    "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 )"
 
 features="$($cli features)"
 kvm_driver="$(
   jq --compact-output \
-    '.drivers[] | select(.driver == "libkrun-kvm")' \
+    '.drivers[] | select(.driver == "libkkvm")' \
     <<<"$features"
 )"
 test -n "$kvm_driver"
 kvm_status="$(jq --raw-output '.status' <<<"$kvm_driver")"
 manifest_sha256="$(
-  sha256sum "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" | cut -d ' ' -f 1
+  sha256sum "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" | cut -d ' ' -f 1
 )"
 
 if [[ "$kvm_status" == "unavailable" ]]; then
@@ -152,7 +152,7 @@ if [[ "$kvm_status" == "unavailable" ]]; then
     --argjson kvm_driver "$kvm_driver" \
     --argjson provenance "$provenance" \
     '{
-      schema_version: "krun.oci.linux-kvm-lifecycle-matrix.v2",
+      schema_version: "koci.linux-kvm-lifecycle-matrix.v2",
       platform: "linux",
       architecture: $architecture,
       status: "unavailable",
@@ -166,14 +166,14 @@ if [[ "$kvm_status" == "unavailable" ]]; then
       reason: $reason
     }' | tee "$report_path"
   jq --exit-status \
-    '.schema_version == "krun.oci.linux-kvm-lifecycle-matrix.v2"
+    '.schema_version == "koci.linux-kvm-lifecycle-matrix.v2"
      and .platform == "linux" and .status == "unavailable"
      and .kvm_required and .expected_case_count == 17 and .case_count == 0
-     and .provenance.schema_version == "krun.oci.linux-kvm-provenance.v1"
+     and .provenance.schema_version == "koci.linux-kvm-provenance.v1"
      and .provenance.platform == .platform
      and .provenance.architecture == .architecture
      and .provenance.qualification_profile == "linux-kvm-lifecycle-17-case-v1"
-     and .provenance.driver == "libkrun-kvm"
+     and .provenance.driver == "libkkvm"
      and .provenance.isolation == "dedicated-vm"
      and .provenance.source_tree_clean
      and .provenance.system_image_manifest_sha256
@@ -205,32 +205,32 @@ curl --fail --location --retry 3 --silent --show-error \
   --output "$alpine_archive" "$alpine_url"
 rootfs_archive_sha256="$(sha256sum "$alpine_archive" | cut -d ' ' -f 1)"
 
-bundle_a="$runtime_share/var/lib/krun-oci-lifecycle/bundle-a"
-bundle_b="$runtime_share/var/lib/krun-oci-lifecycle/bundle-b"
+bundle_a="$runtime_share/var/lib/koci-lifecycle/bundle-a"
+bundle_b="$runtime_share/var/lib/koci-lifecycle/bundle-b"
 scripts/prepare-utility-vm-bundle.sh \
   --alpine-archive "$alpine_archive" \
   --config fixtures/utility-vm/config.linux-kvm.json \
   --bundle "$bundle_a" \
-  --cgroups-path krun-oci-kvm-lifecycle-a
+  --cgroups-path koci-kvm-lifecycle-a
 scripts/prepare-utility-vm-bundle.sh \
   --alpine-archive "$alpine_archive" \
   --config fixtures/utility-vm/config.linux-kvm.json \
   --bundle "$bundle_b" \
-  --cgroups-path krun-oci-kvm-lifecycle-b
+  --cgroups-path koci-kvm-lifecycle-b
 
-marker_a="$bundle_a/rootfs/.krun-oci-create-start-smoke"
-marker_b="$bundle_b/rootfs/.krun-oci-create-start-smoke"
+marker_a="$bundle_a/rootfs/.koci-create-start-smoke"
+marker_b="$bundle_b/rootfs/.koci-create-start-smoke"
 cases_path="$work/cases.ndjson"
 : > "$cases_path"
 
 endpoint_inventory() {
   find /tmp -maxdepth 1 -type d -uid "$(id -u)" \
-    -name 'krun-oci-agent-*' -print 2>/dev/null | sort
+    -name 'koci-agent-*' -print 2>/dev/null | sort
 }
 
 shim_process_inventory() {
   ps -eo pid=,comm= | awk \
-    'index($2, "krun-oci-krun") == 1 {print $1 " " $2}' | sort
+    'index($2, "koci-kbox") == 1 {print $1 " " $2}' | sort
 }
 
 runtime_state_inventory() {
@@ -251,12 +251,12 @@ assert_no_residue() {
   test -z "$(find "$bootstrap" -mindepth 1 -print -quit)"
   test -z "$(
     find "$runtime_share" -xdev \
-      -name '.krun-oci-guest-isolation-*' -print -quit
+      -name '.koci-guest-isolation-*' -print -quit
   )"
   test -z "$(
     find "$runtime_share" -xdev \
-      \( -name '.krun-oci-bootstrap-*' \
-         -o -name '.krun-oci-recovery-*' \
+      \( -name '.koci-bootstrap-*' \
+         -o -name '.koci-recovery-*' \
          -o -name '*.pending' \) \
       -print -quit
   )"
@@ -404,22 +404,22 @@ run_case() {
 }
 
 run_case \
-  oci-vm-smoke lifecycle krun.oci.oci-vm-smoke.v9 "" \
+  oci-vm-smoke lifecycle koci.oci-vm-smoke.v9 "" \
   oci-vm-smoke \
   --shim "$shim" \
   --vm-rootfs "$bootstrap" \
-  --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+  --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
   --runtime-share "$runtime_share" \
   --bundle "$bundle_a" \
   --console "$console_directory/oci-vm-smoke.log"
 
 run_case \
   oci-vm-multi-container-smoke multi-container \
-  krun.oci.oci-vm-multi-container-smoke.v11 "" \
+  koci.oci-vm-multi-container-smoke.v11 "" \
   oci-vm-multi-container-smoke \
   --shim "$shim" \
   --vm-rootfs "$bootstrap" \
-  --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+  --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
   --runtime-share "$runtime_share" \
   --bundle-a "$bundle_a" \
   --bundle-b "$bundle_b" \
@@ -427,11 +427,11 @@ run_case \
 
 run_case \
   oci-vm-guest-isolation-smoke guest-isolation \
-  krun.oci.oci-vm-guest-isolation.v1 "" \
+  koci.oci-vm-guest-isolation.v1 "" \
   oci-vm-guest-isolation-smoke \
   --shim "$shim" \
   --vm-rootfs "$bootstrap" \
-  --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+  --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
   --runtime-share "$runtime_share" \
   --bundle "$bundle_a" \
   --console "$console_directory/oci-vm-guest-isolation-smoke.log"
@@ -439,11 +439,11 @@ run_case \
 for phase in after-create after-start after-kill; do
   run_case \
     "lifecycle-fault-$phase" lifecycle-fault \
-    krun.oci.oci-vm-fault-cleanup.v4 "$phase" \
+    koci.oci-vm-fault-cleanup.v4 "$phase" \
     oci-vm-fault-cleanup \
     --shim "$shim" \
     --vm-rootfs "$bootstrap" \
-    --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+    --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
     --runtime-share "$runtime_share" \
     --bundle "$bundle_a" \
     --console "$console_directory/lifecycle-fault-$phase.log" \
@@ -465,11 +465,11 @@ for transport_stage in \
 do
   run_case \
     "transport-fault-$transport_stage" transport-fault \
-    krun.oci.oci-vm-transport-fault-cleanup.v3 "$transport_stage" \
+    koci.oci-vm-transport-fault-cleanup.v3 "$transport_stage" \
     oci-vm-transport-fault-cleanup \
     --shim "$shim" \
     --vm-rootfs "$bootstrap" \
-    --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+    --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
     --runtime-share "$runtime_share" \
     --bundle "$bundle_a" \
     --console "$console_directory/transport-fault-$transport_stage.log" \
@@ -486,7 +486,7 @@ jq --slurp \
   --argjson kvm_driver "$kvm_driver" \
   --argjson provenance "$provenance" \
   '{
-    schema_version: "krun.oci.linux-kvm-lifecycle-matrix.v2",
+    schema_version: "koci.linux-kvm-lifecycle-matrix.v2",
     platform: "linux",
     architecture: $architecture,
     status: "available",
@@ -501,14 +501,14 @@ jq --slurp \
   }' "$cases_path" | tee "$report_path"
 
 jq --exit-status \
-  '.schema_version == "krun.oci.linux-kvm-lifecycle-matrix.v2"
+  '.schema_version == "koci.linux-kvm-lifecycle-matrix.v2"
    and .platform == "linux" and .status == "available"
    and .kvm_required and .expected_case_count == 17 and .case_count == 17
-   and .provenance.schema_version == "krun.oci.linux-kvm-provenance.v1"
+   and .provenance.schema_version == "koci.linux-kvm-provenance.v1"
    and .provenance.platform == .platform
    and .provenance.architecture == .architecture
    and .provenance.qualification_profile == "linux-kvm-lifecycle-17-case-v1"
-   and .provenance.driver == "libkrun-kvm"
+   and .provenance.driver == "libkkvm"
    and .provenance.isolation == "dedicated-vm"
    and .provenance.source_tree_clean
    and .provenance.system_image_manifest_sha256

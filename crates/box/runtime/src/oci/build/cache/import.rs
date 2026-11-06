@@ -2,7 +2,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::export::{validate_build_cache_artifact, ValidatedCacheEntry};
 use super::{
@@ -148,7 +148,7 @@ mod tests {
     use std::fs;
     use std::path::Path;
 
-    use krun_box_core::platform::Platform;
+    use kbox_core::platform::Platform;
     use tempfile::TempDir;
 
     use super::super::{BuildCacheTrace, CachedLayer};

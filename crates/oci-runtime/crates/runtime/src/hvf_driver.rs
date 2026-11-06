@@ -2,9 +2,9 @@ use std::fmt;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::GuestAgentService;
-use krun_oci_core::{CapabilityStatus, DriverReadiness, IsolationClass};
-use krun_oci_sdk::{async_trait, Error, ErrorCode, Result};
+use koci_agent_protocol::GuestAgentService;
+use koci_core::{CapabilityStatus, DriverReadiness, IsolationClass};
+use koci_sdk::{async_trait, Error, ErrorCode, Result};
 
 use crate::agent_driver::AgentDriverClient;
 use crate::agent_session::UtilityVmSession;
@@ -103,12 +103,11 @@ impl HvfRuntimeDriver {
         .await?;
         capability.readiness = DriverReadiness::Experimental;
         capability.isolation_classes = vec![IsolationClass::DedicatedVm];
-        const RUNTIME_SHARE: &str = match krun_oci_core::hardware_vm::virtiofs_share_mode(
-            krun_oci_core::DriverKind::LibkrunHvf,
-        ) {
-            Some(mode) => mode,
-            None => panic!("libkrun HVF must advertise a hardware-vm virtio-fs share"),
-        };
+        const RUNTIME_SHARE: &str =
+            match koci_core::hardware_vm::virtiofs_share_mode(koci_core::DriverKind::LibkHvf) {
+                Some(mode) => mode,
+                None => panic!("libkrun HVF must advertise a hardware-vm virtio-fs share"),
+            };
         capability.evidence.extend([
             (
                 "execution_path".to_string(),
@@ -140,17 +139,17 @@ impl HvfRuntimeDriver {
         Ok(Self {
             inner: UtilityVmRuntimeDriver::new(
                 capability,
-                krun_oci_sdk::AttachmentCapabilities::base_v2()
+                koci_sdk::AttachmentCapabilities::base_v2()
                     .with_extension(
-                        krun_oci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION,
+                        koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION,
                         vec![
-                            krun_oci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
-                            krun_oci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTERNAL_STORAGE_VERSION,
+                            koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
+                            koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTERNAL_STORAGE_VERSION,
                         ],
                     )?
                     .with_extension(
-                        krun_oci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION,
-                        vec![krun_oci_sdk::STORAGE_PATH_RESTRICTIONS_VERSION],
+                        koci_sdk::STORAGE_PATH_RESTRICTIONS_EXTENSION,
+                        vec![koci_sdk::STORAGE_PATH_RESTRICTIONS_VERSION],
                     )?,
                 "HVF",
                 prepared.runtime_root,

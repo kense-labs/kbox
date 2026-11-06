@@ -1,37 +1,37 @@
-//! Map Kubernetes CRI config to Krun Box config.
+//! Map Kubernetes CRI config to Kbox Box config.
 //!
-//! Reads Krun-specific annotations from pod/container configs:
-//! - `krun.box/agent-image` → optional sandbox VM agent/rootfs image override
-//! - `krun.box/vcpus`, `krun.box/memory-mb` → ResourceConfig
-//! - `krun.box/tee` → TeeConfig
+//! Reads Kspecific annotations from pod/container configs:
+//! - `kbox/agent-image` → optional sandbox VM agent/rootfs image override
+//! - `kbox/vcpus`, `kbox/memory-mb` → ResourceConfig
+//! - `kbox/tee` → TeeConfig
 
 use std::collections::HashMap;
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::{
+use kbox_core::error::{BoxError, Result};
+use kbox_core::{
     config::{BoxConfig, ResourceConfig, TeeConfig},
     NetworkMode,
 };
 
 use crate::cri_api::{port_mapping, PodSandboxConfig};
 
-/// Annotation keys for Krun Box configuration.
-pub const ANN_AGENT_IMAGE: &str = "krun.box/agent-image";
-pub const ANN_NETWORK: &str = "krun.box/network";
+/// Annotation keys for Kbox Box configuration.
+pub const ANN_AGENT_IMAGE: &str = "kbox/agent-image";
+pub const ANN_NETWORK: &str = "kbox/network";
 /// Default sandbox agent/rootfs image when `--agent-image` /
-/// `KRUN_BOX_CRI_AGENT_IMAGE` / `krun.box/agent-image` are unset.
+/// `K_BOX_CRI_AGENT_IMAGE` / `kbox/agent-image` are unset.
 ///
-/// Must be anonymously pullable. The previous `ghcr.io/krun-box/code:v0.1.0`
+/// Must be anonymously pullable. The previous `ghcr.io/kbox/code:v0.1.0`
 /// default returned HTTP 401 for every stock `RunPodSandbox` (#607). Matches
 /// `docs/cri-conformance.md` guidance to use alpine for out-of-box CRI.
 pub const DEFAULT_AGENT_IMAGE: &str = "docker.io/library/alpine:latest";
-const ANN_VCPUS: &str = "krun.box/vcpus";
-const ANN_MEMORY_MB: &str = "krun.box/memory-mb";
-const ANN_DISK_MB: &str = "krun.box/disk-mb";
-const ANN_TEE: &str = "krun.box/tee";
-const ANN_TEE_WORKLOAD_ID: &str = "krun.box/tee-workload-id";
+const ANN_VCPUS: &str = "kbox/vcpus";
+const ANN_MEMORY_MB: &str = "kbox/memory-mb";
+const ANN_DISK_MB: &str = "kbox/disk-mb";
+const ANN_TEE: &str = "kbox/tee";
+const ANN_TEE_WORKLOAD_ID: &str = "kbox/tee-workload-id";
 
-/// Convert a CRI PodSandboxConfig to an Krun BoxConfig.
+/// Convert a CRI PodSandboxConfig to an Kbox BoxConfig.
 pub fn pod_sandbox_config_to_box_config(
     config: &PodSandboxConfig,
     default_agent_image: &str,
@@ -104,7 +104,7 @@ fn parse_hostname(config: &PodSandboxConfig) -> Result<Option<String>> {
     if hostname.is_empty() {
         return Ok(None);
     }
-    krun_box_core::dns::validate_hostname(hostname)
+    kbox_core::dns::validate_hostname(hostname)
         .map_err(|e| BoxError::ConfigError(format!("Invalid CRI sandbox hostname: {e}")))?;
     Ok(Some(hostname.to_string()))
 }
@@ -162,7 +162,7 @@ fn parse_positive_resource(
 /// Parse resource configuration from annotations.
 fn parse_resources(annotations: &HashMap<String, String>) -> Result<ResourceConfig> {
     let vcpus = parse_positive_resource(annotations, ANN_VCPUS, 2)?;
-    krun_box_core::config::validate_vcpu_count(vcpus).map_err(BoxError::ConfigError)?;
+    kbox_core::config::validate_vcpu_count(vcpus).map_err(BoxError::ConfigError)?;
     let memory_mb = parse_positive_resource(annotations, ANN_MEMORY_MB, 1024)?;
     let disk_mb = parse_positive_resource(annotations, ANN_DISK_MB, 4096)?;
 
@@ -368,12 +368,12 @@ mod tests {
     fn test_annotation_overrides_default_agent_image() {
         let annotations = HashMap::from([(
             ANN_AGENT_IMAGE.to_string(),
-            "ghcr.io/krun-box/code:v0.1.0".to_string(),
+            "ghcr.io/kbox/code:v0.1.0".to_string(),
         )]);
         let config = make_config(annotations);
         let box_config =
-            pod_sandbox_config_to_box_config(&config, "ghcr.io/krun-box/default:v1").unwrap();
-        assert_eq!(box_config.image, "ghcr.io/krun-box/code:v0.1.0");
+            pod_sandbox_config_to_box_config(&config, "ghcr.io/kbox/default:v1").unwrap();
+        assert_eq!(box_config.image, "ghcr.io/kbox/code:v0.1.0");
     }
 
     #[test]

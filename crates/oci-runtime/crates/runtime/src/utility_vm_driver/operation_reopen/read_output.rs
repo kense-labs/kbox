@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::oci_spec::runtime::Process;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::oci_spec::runtime::Process;
+use koci_sdk::{
     ContainerTarget, CreateRequest, IoMode, IsolationRequest, OciBundle, OperationContext,
     OutputChunk, OutputStream, ProcessId, ProcessIo, ProcessTarget, ReadOutputRequest,
 };
@@ -18,7 +18,7 @@ use crate::OciVmOperationReopenReplacementReport;
 
 mod flow;
 
-const READ_OUTPUT_MARKER_NAME: &str = ".krun-oci-read-output-reopen-smoke";
+const READ_OUTPUT_MARKER_NAME: &str = ".koci-read-output-reopen-smoke";
 const READ_OUTPUT_WAIT_TIMEOUT_MS: u64 = 5_000;
 
 /// Exact inputs for one real Linux KVM ReadOutput interruption and owner reopen.
@@ -33,10 +33,10 @@ pub struct LinuxKvmReadOutputReopenConfig {
 
 pub(super) struct Qualification {
     create: CreateRequest,
-    start_operation_id: krun_oci_sdk::OperationId,
-    exec_operation_id: krun_oci_sdk::OperationId,
-    read_output_operation_id: krun_oci_sdk::OperationId,
-    delete_operation_id: krun_oci_sdk::OperationId,
+    start_operation_id: koci_sdk::OperationId,
+    exec_operation_id: koci_sdk::OperationId,
+    read_output_operation_id: koci_sdk::OperationId,
+    delete_operation_id: koci_sdk::OperationId,
     process_id: ProcessId,
     process: Process,
     io: ProcessIo,
@@ -84,13 +84,10 @@ pub async fn linux_kvm_read_output_reopen_replacement(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let container_id =
-        match krun_oci_sdk::ContainerId::new(format!("kvm-read-output-reopen-{nonce}")) {
-            Ok(id) => id,
-            Err(error) => {
-                return failed(report, format!("failed to construct container ID: {error}"))
-            }
-        };
+    let container_id = match koci_sdk::ContainerId::new(format!("kvm-read-output-reopen-{nonce}")) {
+        Ok(id) => id,
+        Err(error) => return failed(report, format!("failed to construct container ID: {error}")),
+    };
     let create_operation_id = match operation_id(&format!("kvm-read-output-reopen-{nonce}-create"))
     {
         Ok(operation_id) => operation_id,
@@ -208,8 +205,8 @@ pub async fn linux_kvm_read_output_reopen_replacement(
         io,
         read_output,
         expected_output,
-        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("krun-oci-read-output-ready-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("koci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("koci-read-output-ready-{nonce}\n").into_bytes(),
         stage: config.stage,
     };
     let state_root = prepared.runtime_root.join("operation-reopen-state");
@@ -291,9 +288,9 @@ pub async fn linux_kvm_read_output_reopen_replacement(
 fn read_output_exec(nonce: &str) -> Result<(ProcessId, Process, ProcessIo, Vec<u8>), String> {
     let process_id = ProcessId::new(format!("reader-{nonce}"))
         .map_err(|error| format!("failed to construct ReadOutput process ID: {error}"))?;
-    let output = format!("krun-oci-read-output-{nonce}\n").into_bytes();
+    let output = format!("koci-read-output-{nonce}\n").into_bytes();
     let command = format!(
-        "set -eu; printf 'krun-oci-read-output-{nonce}\\n'; printf 'krun-oci-read-output-ready-{nonce}\\n' > /{READ_OUTPUT_MARKER_NAME}; while :; do /bin/busybox sleep 1; done"
+        "set -eu; printf 'koci-read-output-{nonce}\\n'; printf 'koci-read-output-ready-{nonce}\\n' > /{READ_OUTPUT_MARKER_NAME}; while :; do /bin/busybox sleep 1; done"
     );
     let process = serde_json::from_value(serde_json::json!({
         "terminal": false,

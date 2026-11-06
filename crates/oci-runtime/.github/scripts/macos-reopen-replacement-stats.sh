@@ -5,9 +5,9 @@ run_stats_stage() {
   mkdir "$stage_console_dir"
   set +e
   output="$(
-    target/debug/krun-oci oci-vm-reopen-replacement \
+    target/debug/koci oci-vm-reopen-replacement \
       --operation stats \
-      --shim "$signed_dir/krun-oci-krun-shim" \
+      --shim "$signed_dir/koci-kshim" \
       --vm-rootfs "$rootfs_dir" \
       --system-image-manifest "$system_image_manifest" \
       --bundle "$bundle_dir" \
@@ -23,7 +23,7 @@ run_stats_stage() {
     jq --exit-status --arg stage "$fault_stage" \
       '. as $report
        | .schema_version
-           == "krun.oci.oci-vm-operation-reopen-replacement.v13"
+           == "koci.oci-vm-operation-reopen-replacement.v13"
        and .platform == "macos" and .status == "available"
        and .bundle_loaded
        and .requested_operation == "stats"
@@ -228,7 +228,7 @@ run_stats_stage() {
     test "$gate_exit_code" -eq 2
     jq --exit-status --arg stage "$fault_stage" \
       '.schema_version
-           == "krun.oci.oci-vm-operation-reopen-replacement.v13"
+           == "koci.oci-vm-operation-reopen-replacement.v13"
        and .platform == "macos"
        and .status != "available"
        and .requested_operation == "stats"

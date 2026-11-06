@@ -11,7 +11,7 @@
 
 use std::collections::HashMap;
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// KBS endpoint configuration.

@@ -67,7 +67,7 @@ mod tests {
         std::fs::create_dir_all(box_dir.join("logs")).unwrap();
         std::fs::write(
             box_dir.join("logs/console.log"),
-            "KRUN_BOOT_ABORT: stage=event_loop",
+            "K_BOOT_ABORT: stage=event_loop",
         )
         .unwrap();
         std::fs::write(box_dir.join("logs/shim.log"), "shim ready").unwrap();
@@ -77,7 +77,7 @@ mod tests {
         let retained = home.join("diag/failed-boots/box-1/logs");
         assert_eq!(
             std::fs::read_to_string(retained.join("console.log")).unwrap(),
-            "KRUN_BOOT_ABORT: stage=event_loop"
+            "K_BOOT_ABORT: stage=event_loop"
         );
         assert_eq!(
             std::fs::read_to_string(retained.join("shim.log")).unwrap(),

@@ -1,8 +1,8 @@
 //! VMM contract — types and traits for pluggable VM backends.
 //!
 //! All types here are pure data (no runtime dependencies). This lets
-//! third-party VMM implementors depend only on `krun-box-core` rather
-//! than pulling in the full `krun-box-runtime`.
+//! third-party VMM implementors depend only on `kbox-core` rather
+//! than pulling in the full `kbox-runtime`.
 //!
 //! # Extension points
 //!
@@ -275,7 +275,7 @@ pub struct NetworkInstanceConfig {
     pub network_name: Option<String>,
 }
 
-/// Stable guest device path used for an Krun-managed ext4 root disk.
+/// Stable guest device path used for an Kmanaged ext4 root disk.
 pub const GUEST_EXT4_ROOT_DEVICE: &str = "/dev/vda";
 
 /// An explicitly raw auxiliary block device attached to a MicroVM.
@@ -471,12 +471,16 @@ pub struct InstanceSpec {
     /// RESTORE — it resumes the snapshotted template from this state file with
     /// MAP_PRIVATE CoW of the RAM file, instead of cold-booting. This is the
     /// per-VM seam that lets one process fork many VMs (the pool / fork daemon),
-    /// which a process-global `KRUN_RESTORE_FROM` env cannot express.
+    /// which a process-global `K_RESTORE_FROM` env cannot express.
     #[serde(default)]
     pub restore_from: Option<String>,
 
     /// Optional console output file path
     pub console_output: Option<PathBuf>,
+
+    /// Connect the main process stdin to the interactive console input.
+    #[serde(default)]
+    pub stdin_open: bool,
 
     /// Working directory inside the VM
     pub workdir: String,
@@ -539,6 +543,7 @@ impl Default for InstanceSpec {
             snapshot_sock: None,
             restore_from: None,
             console_output: None,
+            stdin_open: false,
             workdir: "/".to_string(),
             tee_config: None,
             port_map: Vec::new(),
@@ -849,6 +854,7 @@ mod tests {
                 env: vec![("HOME".to_string(), "/root".to_string())],
             },
             console_output: Some(PathBuf::from("/tmp/console.log")),
+            stdin_open: true,
             workdir: "/app".to_string(),
             tee_config: None,
             port_map: vec!["8080:80".to_string()],
@@ -869,6 +875,7 @@ mod tests {
         assert_eq!(deserialized.rootfs, RootfsSource::directory("/tmp/rootfs"));
         assert_eq!(deserialized.block_devices, spec.block_devices);
         assert_eq!(deserialized.workdir, "/app");
+        assert!(deserialized.stdin_open);
         assert_eq!(deserialized.fs_mounts.len(), 1);
         assert_eq!(deserialized.fs_mounts[0].tag, "workspace");
         assert!(!deserialized.fs_mounts[0].read_only);
@@ -922,7 +929,7 @@ mod tests {
                 #[cfg(unix)]
                 net_proxy_fd: Some(43),
                 #[cfg(unix)]
-                bridge_socket_dir: Some(PathBuf::from("/tmp/krun-switch")),
+                bridge_socket_dir: Some(PathBuf::from("/tmp/kswitch")),
                 ip_address: "10.0.0.2".parse().unwrap(),
                 gateway: "10.0.0.1".parse().unwrap(),
                 prefix_len: 24,

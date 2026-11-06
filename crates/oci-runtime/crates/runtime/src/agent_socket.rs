@@ -5,8 +5,8 @@ use std::os::fd::AsRawFd;
 use std::os::unix::fs::{DirBuilderExt, FileTypeExt, MetadataExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent_protocol::AgentVsockEndpoint;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_agent_protocol::AgentVsockEndpoint;
+use koci_sdk::{Error, ErrorCode, Result};
 use tokio::net::{UnixListener, UnixStream};
 
 #[cfg(target_os = "macos")]
@@ -125,7 +125,7 @@ impl UnixAgentSocketListener {
         &self.endpoint
     }
 
-    /// Borrow the exact short path passed to `krun_add_vsock_port2`.
+    /// Borrow the exact short path passed to `kadd_vsock_port2`.
     #[must_use]
     pub fn socket_path(&self) -> &Path {
         &self.socket_path
@@ -165,7 +165,7 @@ impl UnixAgentSocketListener {
     /// Accept only a Unix peer whose parent is the previously spawned shim.
     ///
     /// libkrun enters the VM in a direct worker child because
-    /// `krun_start_enter` takes over that process. The kernel-reported peer PID
+    /// `kstart_enter` takes over that process. The kernel-reported peer PID
     /// and its direct parent are both verified before the session token is
     /// disclosed.
     pub async fn accept_from_child(

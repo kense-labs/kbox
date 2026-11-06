@@ -1,6 +1,6 @@
-//! Krun Box CRI - Kubernetes Container Runtime Interface implementation.
+//! Kbox Box CRI - Kubernetes Container Runtime Interface implementation.
 //!
-//! Maps CRI concepts to Krun Box primitives:
+//! Maps CRI concepts to Kbox Box primitives:
 //! - Pod Sandbox → Box instance (one microVM per pod)
 //! - Container → Session within Box
 

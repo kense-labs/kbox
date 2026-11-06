@@ -98,6 +98,34 @@ fn malformed_guest_metadata_refuses_snapshot_and_layer_publication() {
 }
 
 #[test]
+fn symlink_export_supports_gnu_longlink_targets() {
+    let root = tempfile::tempdir().unwrap();
+    let output = tempfile::tempdir().unwrap();
+    let target = "a".repeat(120);
+    let target_path = root.path().join(&target);
+    std::fs::write(&target_path, "payload").unwrap();
+    set_guest_stat(&target_path, "0:0:0100644");
+    std::os::unix::fs::symlink(&target, root.path().join("link")).unwrap();
+    let layer = output.path().join("longlink.tar.gz");
+
+    create_layer_from_dir_with_chown(root.path(), Path::new("."), &layer, Some((0, 0))).unwrap();
+
+    let file = std::fs::File::open(layer).unwrap();
+    let mut archive = tar::Archive::new(flate2::read::GzDecoder::new(file));
+    let mut entries = archive.entries().unwrap();
+    let entry = entries
+        .find_map(|entry| {
+            let entry = entry.unwrap();
+            (entry.header().entry_type() == tar::EntryType::Symlink).then_some(entry)
+        })
+        .unwrap();
+    assert_eq!(
+        entry.link_name().unwrap().unwrap().to_string_lossy(),
+        target
+    );
+}
+
+#[test]
 fn symlink_export_does_not_inherit_the_targets_guest_identity() {
     let root = tempfile::tempdir().unwrap();
     let output = tempfile::tempdir().unwrap();

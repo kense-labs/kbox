@@ -52,7 +52,7 @@ pub fn sibling(record: &BoxRecord, socket_name: &str) -> PathBuf {
 pub fn exec(record: &BoxRecord) -> PathBuf {
     #[cfg(windows)]
     {
-        PathBuf::from(krun_box_core::exec::windows_exec_pipe_path(&record.id))
+        PathBuf::from(kbox_core::exec::windows_exec_pipe_path(&record.id))
     }
 
     #[cfg(not(windows))]
@@ -89,7 +89,7 @@ pub fn require_running(record: &BoxRecord, action: &str) -> Result<(), String> {
     }
 
     Err(format!(
-        "Cannot {action} box {} because it is {}. Use `krun-box start {}` to start it or `krun-box ps -a` to inspect state.",
+        "Cannot {action} box {} because it is {}. Use `kbox start {}` to start it or `kbox ps -a` to inspect state.",
         record.name, record.status, record.name
     ))
 }
@@ -111,7 +111,7 @@ pub fn require_runtime_socket(
     }
 
     Err(format!(
-        "{} socket is missing for running box {} at {}. The box state may be stale or the guest control channel is not ready; run `krun-box ps` to reconcile state, then `krun-box restart {}` if the socket is still missing.",
+        "{} socket is missing for running box {} at {}. The box state may be stale or the guest control channel is not ready; run `kbox ps` to reconcile state, then `kbox restart {}` if the socket is still missing.",
         socket.label(),
         record.name,
         path.display(),
@@ -128,9 +128,9 @@ mod tests {
     #[test]
     fn test_exec_uses_recorded_exec_socket_path() {
         let mut record = make_record("id", "box", "running", Some(1));
-        record.exec_socket_path = PathBuf::from("/tmp/krun-custom/exec.sock");
+        record.exec_socket_path = PathBuf::from("/tmp/kcustom/exec.sock");
 
-        assert_eq!(exec(&record), PathBuf::from("/tmp/krun-custom/exec.sock"));
+        assert_eq!(exec(&record), PathBuf::from("/tmp/kcustom/exec.sock"));
     }
 
     #[cfg(windows)]
@@ -138,19 +138,16 @@ mod tests {
     fn test_exec_uses_shim_owned_named_pipe() {
         let record = make_record("1a2b-3c4d", "box", "running", Some(1));
 
-        assert_eq!(
-            exec(&record),
-            PathBuf::from(r"\\.\pipe\krun-box-exec-1a2b3c4d")
-        );
+        assert_eq!(exec(&record), PathBuf::from(r"\\.\pipe\kbox-exec-1a2b3c4d"));
     }
 
     #[cfg(not(windows))]
     #[test]
     fn test_pty_uses_exec_socket_sibling() {
         let mut record = make_record("id", "box", "running", Some(1));
-        record.exec_socket_path = PathBuf::from("/tmp/krun-custom/exec.sock");
+        record.exec_socket_path = PathBuf::from("/tmp/kcustom/exec.sock");
 
-        assert_eq!(pty(&record), PathBuf::from("/tmp/krun-custom/pty.sock"));
+        assert_eq!(pty(&record), PathBuf::from("/tmp/kcustom/pty.sock"));
     }
 
     #[test]
@@ -160,7 +157,7 @@ mod tests {
         let error = require_running(&record, "exec").unwrap_err();
 
         assert!(error.contains("Cannot exec box box because it is dead"));
-        assert!(error.contains("krun-box start box"));
+        assert!(error.contains("kbox start box"));
     }
 
     #[cfg(not(windows))]
@@ -171,8 +168,8 @@ mod tests {
         let error = require_runtime_socket(&record, RuntimeSocket::Exec).unwrap_err();
 
         assert!(error.contains("exec socket is missing"));
-        assert!(error.contains("krun-box ps"));
-        assert!(error.contains("krun-box restart box"));
+        assert!(error.contains("kbox ps"));
+        assert!(error.contains("kbox restart box"));
     }
 
     #[cfg(not(windows))]

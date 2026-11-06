@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::fmt;
 
-use krun_oci_sdk::oci_spec::runtime::{Features, FeaturesBuilder};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{Features, FeaturesBuilder};
+use koci_sdk::{
     AttachmentCapabilities, Error, ErrorCode, OciLinuxSupport, OciSchemaValidator, Result,
     BUILTIN_POTENTIALLY_UNSAFE_CONFIG_ANNOTATIONS, OCI_RUNTIME_SPEC_VERSION_MAX,
     OCI_RUNTIME_SPEC_VERSION_MIN,
@@ -18,11 +18,11 @@ pub(super) fn build(
 ) -> Result<Features> {
     let annotations = HashMap::from([
         (
-            "dev.krun.oci.runtime.version".to_string(),
+            "dev.koci.runtime.version".to_string(),
             env!("CARGO_PKG_VERSION").to_string(),
         ),
         (
-            "dev.krun.oci.runtime.lifecycle".to_string(),
+            "dev.koci.runtime.lifecycle".to_string(),
             if has_lifecycle {
                 "durable-core"
             } else {

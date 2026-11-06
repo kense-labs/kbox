@@ -3,8 +3,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, Process, StateBuilder};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, Process, StateBuilder};
+use koci_sdk::{
     async_trait, ContainerRecord, CreateRequest, DeleteRequest, Error as RuntimeError, ErrorCode,
     ExecRequest, ExitStatus, IsolationRequest, KillRequest, OciRuntimeService, OperationContext,
     OperationId, ProcessRecord, ProcessesRequest, RuntimeClient, SignalProcessRequest,
@@ -39,11 +39,11 @@ struct SignalRuntime {
     record: Arc<StdMutex<ContainerRecord>>,
     durable_exit: Arc<StdMutex<Option<ExitStatus>>>,
     wait_calls: Arc<AtomicUsize>,
-    durable_exec_exits: Arc<StdMutex<Vec<(krun_oci_sdk::ProcessTarget, ExitStatus)>>>,
+    durable_exec_exits: Arc<StdMutex<Vec<(koci_sdk::ProcessTarget, ExitStatus)>>>,
     wait_process_calls: Arc<AtomicUsize>,
     calls: Arc<StdMutex<Vec<SignalCall>>>,
     effects: Arc<StdMutex<BTreeMap<OperationId, String>>>,
-    exec_targets: Arc<StdMutex<Vec<krun_oci_sdk::ProcessTarget>>>,
+    exec_targets: Arc<StdMutex<Vec<koci_sdk::ProcessTarget>>>,
     retryable_failures: Arc<AtomicUsize>,
     next_error: Arc<StdMutex<Option<RuntimeError>>>,
     first_barriers: Arc<StdMutex<Option<SignalBarriers>>>,
@@ -125,7 +125,7 @@ impl SignalRuntime {
             Some(SignalBarriers { entered, release });
     }
 
-    fn record_effect(&self, call: SignalCall, fingerprint: String) -> krun_oci_sdk::Result<()> {
+    fn record_effect(&self, call: SignalCall, fingerprint: String) -> koci_sdk::Result<()> {
         let operation_id = call.context.operation_id.clone();
         self.calls.lock().expect("signal calls").push(call);
         let mut effects = self.effects.lock().expect("signal effects");
@@ -143,7 +143,7 @@ impl SignalRuntime {
         }
     }
 
-    async fn finish_effect(&self) -> krun_oci_sdk::Result<()> {
+    async fn finish_effect(&self) -> koci_sdk::Result<()> {
         let barriers = self.first_barriers.lock().expect("signal barriers").take();
         if let Some(barriers) = barriers {
             barriers.entered.wait().await;
@@ -171,15 +171,15 @@ impl SignalRuntime {
 
 #[async_trait]
 impl OciRuntimeService for SignalRuntime {
-    async fn features(&self) -> krun_oci_sdk::Result<krun_oci_sdk::RuntimeInfo> {
+    async fn features(&self) -> koci_sdk::Result<koci_sdk::RuntimeInfo> {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(&self, _request: CreateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
-    async fn state(&self, request: StateRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn state(&self, request: StateRequest) -> koci_sdk::Result<ContainerRecord> {
         let record = self.record.lock().expect("signal record");
         if request.target.generation != Some(record.generation)
             || request.target.id.as_str() != record.state.id()
@@ -192,11 +192,11 @@ impl OciRuntimeService for SignalRuntime {
         Ok(record.clone())
     }
 
-    async fn start(&self, _request: StartRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(&self, request: KillRequest) -> krun_oci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, request: KillRequest) -> koci_sdk::Result<ContainerRecord> {
         let fingerprint = format!(
             "init:{}:{:?}:{}:{}",
             request.target.id.as_str(),
@@ -217,15 +217,15 @@ impl OciRuntimeService for SignalRuntime {
         Ok(self.record.lock().expect("signal record").clone())
     }
 
-    async fn delete(&self, _request: DeleteRequest) -> krun_oci_sdk::Result<()> {
+    async fn delete(&self, _request: DeleteRequest) -> koci_sdk::Result<()> {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn exec(&self, _request: ExecRequest) -> krun_oci_sdk::Result<ProcessRecord> {
+    async fn exec(&self, _request: ExecRequest) -> koci_sdk::Result<ProcessRecord> {
         Err(RuntimeError::unsupported("test-exec"))
     }
 
-    async fn signal_process(&self, request: SignalProcessRequest) -> krun_oci_sdk::Result<()> {
+    async fn signal_process(&self, request: SignalProcessRequest) -> koci_sdk::Result<()> {
         let fingerprint = format!(
             "exec:{}:{:?}:{}:{}",
             request.process.container.id.as_str(),
@@ -254,7 +254,7 @@ impl OciRuntimeService for SignalRuntime {
     async fn processes(
         &self,
         _request: ProcessesRequest,
-    ) -> krun_oci_sdk::Result<Vec<ProcessRecord>> {
+    ) -> koci_sdk::Result<Vec<ProcessRecord>> {
         Ok(self
             .exec_targets
             .lock()
@@ -270,7 +270,7 @@ impl OciRuntimeService for SignalRuntime {
             .collect())
     }
 
-    async fn wait(&self, _request: WaitRequest) -> krun_oci_sdk::Result<ExitStatus> {
+    async fn wait(&self, _request: WaitRequest) -> koci_sdk::Result<ExitStatus> {
         self.wait_calls.fetch_add(1, Ordering::SeqCst);
         let exit = self
             .durable_exit
@@ -283,7 +283,7 @@ impl OciRuntimeService for SignalRuntime {
         }
     }
 
-    async fn wait_process(&self, request: WaitProcessRequest) -> krun_oci_sdk::Result<ExitStatus> {
+    async fn wait_process(&self, request: WaitProcessRequest) -> koci_sdk::Result<ExitStatus> {
         self.wait_process_calls.fetch_add(1, Ordering::SeqCst);
         let exit = self
             .durable_exec_exits
@@ -672,8 +672,8 @@ fn add_exec(task: &mut super::TaskState, exec_id: &str) {
         "cwd": "/"
     }))
     .expect("OCI process");
-    let target = krun_oci_sdk::ProcessTarget {
-        container: krun_oci_sdk::ContainerTarget::exact(
+    let target = koci_sdk::ProcessTarget {
+        container: koci_sdk::ContainerTarget::exact(
             task.identity.container_id.clone(),
             task.record.generation,
         ),

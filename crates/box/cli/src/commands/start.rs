@@ -1,10 +1,10 @@
-//! `krun-box start` command — Start one or more eligible boxes.
+//! `kbox start` command — Start one or more eligible boxes.
 
 use clap::Args;
-use krun_box_core::{
+use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionManager, OperationId, RestartExecutionOptions,
 };
-use krun_box_runtime::{ManagedExecutionOperation, ManagedExecutionState};
+use kbox_runtime::{ManagedExecutionOperation, ManagedExecutionState};
 
 use crate::boot;
 use crate::resolve;
@@ -92,7 +92,7 @@ async fn start_one(state: &StateFile, query: &str) -> Result<(), Box<dyn std::er
             // Managed lifecycle APIs acquire the same cross-process lock in the
             // runtime crate, covering CLI, SDK, and reconcile entry points.
             drop(lifecycle_lock.take());
-            let home = krun_box_core::dirs_home();
+            let home = kbox_core::dirs_home();
             let manager = super::configured_local_execution_manager(&home).await?;
             let start_result = match managed_plan {
                 StartPlan::Managed {
@@ -258,8 +258,8 @@ fn validate_start_status(name: &str, status: &str) -> Result<(), String> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
-    use krun_box_runtime::{ManagedExecutionMetadata, ManagedExecutionOperation};
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
+    use kbox_runtime::{ManagedExecutionMetadata, ManagedExecutionOperation};
     use std::collections::BTreeMap;
 
     use crate::test_helpers::fixtures::make_record;

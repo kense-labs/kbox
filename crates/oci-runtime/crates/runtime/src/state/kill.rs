@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 
-use krun_oci_core::{LifecycleEvent, LifecycleState};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{LifecycleEvent, LifecycleState};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerRecord, ContainerTarget, ErrorCode, KillRequest, OciSchemaValidator, OperationId,
     Result, RuntimeEventKind, ValidateRequest,
 };
@@ -24,7 +24,7 @@ use super::{
 #[derive(Serialize)]
 struct KillFingerprint<'a> {
     target: &'a ContainerTarget,
-    signal: krun_oci_sdk::Signal,
+    signal: koci_sdk::Signal,
     all: bool,
 }
 
@@ -320,7 +320,7 @@ fn invalid_state(
     target: &ContainerTarget,
     status: ContainerState,
     operation: &'static str,
-) -> krun_oci_sdk::Error {
+) -> koci_sdk::Error {
     state_error(
         ErrorCode::FailedPrecondition,
         operation,
@@ -335,7 +335,7 @@ fn pid_conflict(
     record: &ContainerRecord,
     observed: Option<i32>,
     operation: &'static str,
-) -> krun_oci_sdk::Error {
+) -> koci_sdk::Error {
     state_error(
         ErrorCode::Conflict,
         operation,

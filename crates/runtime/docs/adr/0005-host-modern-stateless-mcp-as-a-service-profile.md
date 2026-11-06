@@ -2,7 +2,7 @@
 
 - Status: Accepted
 - Date: 2026-07-30
-- Decision owners: Krun Runtime maintainers
+- Decision owners: Kbox Runtime maintainers
 
 ## Context
 
@@ -13,7 +13,7 @@ self-reported metadata, not an authenticated identity. A server must implement
 `server/discover`. This makes requests protocol-stateless, but it does not make
 the server process ephemeral, side-effect-free, or safe to replay.
 
-Krun Cloud must deploy and reconcile hosted MCP services, and Krun Gateway must
+Kbox Cloud must deploy and reconcile hosted MCP services, and Kbox Gateway must
 expose their public protocol. Runtime already has a durable Service lifecycle,
 opaque product-profile binding, typed TCP endpoints, health, logs, resources,
 and provider conformance. Adding MCP methods or product fields to that core
@@ -34,7 +34,7 @@ provider discovery, or reconciliation.
 
 ### 2. The MCP profile stays outside the Runtime wire protocol
 
-Krun Cloud owns an immutable Service-profile ACL for the MCP release and a
+Kbox Cloud owns an immutable Service-profile ACL for the MCP release and a
 separate mutable Gateway route-policy ACL. The Service profile covers protocol
 versions, server endpoint path, capability expectations, and server bounds;
 the route policy covers public Origin, authorization, grants, effective
@@ -60,7 +60,7 @@ Runtime does not implement a second drain or routing controller.
 
 ### 4. Certification uses a real MCP server as a black-box consumer
 
-The Runtime consumer gate launches a pinned modern MCP fixture through Krun Box
+The Runtime consumer gate launches a pinned modern MCP fixture through Kbox Box
 and proves that the typed endpoint reaches the expected fixture, including a
 `server/discover` request. The MCP protocol assertions belong to the joint
 Gateway/Cloud conformance harness; Runtime assertions remain lifecycle,

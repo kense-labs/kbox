@@ -95,14 +95,14 @@ prepare_hook_owner_death_bundle() {
   local bundle_path=$1
   local command
 
-  hook_recovery_leader="$bundle_path/rootfs/.krun-oci-hook-owner-leader"
-  hook_recovery_descendant="$bundle_path/rootfs/.krun-oci-hook-owner-descendant"
+  hook_recovery_leader="$bundle_path/rootfs/.koci-hook-owner-leader"
+  hook_recovery_descendant="$bundle_path/rootfs/.koci-hook-owner-descendant"
   # shellcheck disable=SC2016 # Expanded by the interrupted startContainer Hook.
-  command='IFS= read -r KRUN_HOOK_STATE || :; trap "" HUP TERM; (trap "" HUP TERM; exec /bin/busybox sleep 300) & child=$!; printf "%s\n" "$$" > /.krun-oci-hook-owner-leader; printf "%s\n" "$child" > /.krun-oci-hook-owner-descendant; exec /bin/busybox sleep 300'
+  command='IFS= read -r K_HOOK_STATE || :; trap "" HUP TERM; (trap "" HUP TERM; exec /bin/busybox sleep 300) & child=$!; printf "%s\n" "$$" > /.koci-hook-owner-leader; printf "%s\n" "$child" > /.koci-hook-owner-descendant; exec /bin/busybox sleep 300'
   jq \
     --arg command "$command" \
     '
-      .linux.cgroupsPath = "krun-oci-hook-owner-recovery"
+      .linux.cgroupsPath = "koci-hook-owner-recovery"
       | .hooks = {
           startContainer: [{
             path: "/bin/sh",
@@ -137,7 +137,7 @@ run_hook_owner_death_recovery() {
   sudo rm -f \
     "$hook_recovery_leader" \
     "$hook_recovery_descendant" \
-    "$hook_recovery_bundle/rootfs/.krun-oci-native-smoke"
+    "$hook_recovery_bundle/rootfs/.koci-native-smoke"
   sudo "$native_runtime_binary" native-linux-hook-owner-death-owner \
     --agent "$native_agent_binary" \
     --root "$recovery_root" \
@@ -166,7 +166,7 @@ run_hook_owner_death_recovery() {
   test "$(sudo stat --format '%u:%g:%a' "$ready_file")" = '0:0:600'
   ready_json="$(sudo cat -- "$ready_file")"
   jq --exit-status \
-    '.schema_version == "krun.oci.native-linux-recovery-owner-ready.v3"
+    '.schema_version == "koci.native-linux-recovery-owner-ready.v3"
      and .status == "available" and .platform == "linux"
      and .target.id == "native-hook-owner-recovery"
      and .target.generation == 1
@@ -200,7 +200,7 @@ run_hook_owner_death_recovery() {
     <<<null >/dev/null
   evidence_json="$(
     jq --compact-output --null-input \
-      --arg schema 'krun.oci.native-linux-hook-owner-death-evidence.v1' \
+      --arg schema 'koci.native-linux-hook-owner-death-evidence.v1' \
       --argjson generation "$generation" \
       --argjson owner "$owner_identity" \
       --argjson leader "$hook_leader" \
@@ -241,9 +241,9 @@ run_hook_owner_death_recovery() {
     status=$?
   fi
   printf '%s\n' "$output"
-  if [[ -n "${KRUN_OCI_NATIVE_HOOK_RECOVERY_REPORT:-}" ]]; then
-    mkdir -p "$(dirname "$KRUN_OCI_NATIVE_HOOK_RECOVERY_REPORT")"
-    printf '%s\n' "$output" >"$KRUN_OCI_NATIVE_HOOK_RECOVERY_REPORT"
+  if [[ -n "${K_OCI_NATIVE_HOOK_RECOVERY_REPORT:-}" ]]; then
+    mkdir -p "$(dirname "$K_OCI_NATIVE_HOOK_RECOVERY_REPORT")"
+    printf '%s\n' "$output" >"$K_OCI_NATIVE_HOOK_RECOVERY_REPORT"
   fi
   if ((status != 0)); then
     cat "$owner_log" >&2
@@ -252,7 +252,7 @@ run_hook_owner_death_recovery() {
   fi
   jq --exit-status \
     --argjson evidence "$evidence_json" \
-    '.schema_version == "krun.oci.native-linux-hook-owner-death-smoke.v1"
+    '.schema_version == "koci.native-linux-hook-owner-death-smoke.v1"
      and .status == "available" and .platform == "linux"
      and .target == $evidence.target
      and .evidence == $evidence
@@ -264,7 +264,7 @@ run_hook_owner_death_recovery() {
      and .owner_terminated
      and .hook_leader_terminated
      and .hook_descendant_terminated
-     and .recovery.schema_version == "krun.oci.native-linux-recovery-smoke.v2"
+     and .recovery.schema_version == "koci.native-linux-recovery-smoke.v2"
      and .recovery.status == "available"
      and .recovery.target == $evidence.target
      and .recovery.host_service_reopened
@@ -286,5 +286,5 @@ run_hook_owner_death_recovery() {
   sudo rm -f \
     "$hook_recovery_leader" \
     "$hook_recovery_descendant" \
-    "$hook_recovery_bundle/rootfs/.krun-oci-native-smoke"
+    "$hook_recovery_bundle/rootfs/.koci-native-smoke"
 }

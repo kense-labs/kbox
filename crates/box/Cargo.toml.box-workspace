@@ -5,7 +5,7 @@ members = [
     "netproxy",
     "shim",
     "guest/init",
-    "deps/libkrun-sys",
+    "deps/libksys",
     "cri",
     "cli",
     "sdk",
@@ -25,9 +25,9 @@ h2 = { path = "third_party/h2" }
 [workspace.package]
 version = "3.2.7"
 edition = "2021"
-authors = ["Krun Team"]
+authors = ["Kbox Team"]
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 
 [workspace.dependencies]
 # Async runtime
@@ -123,15 +123,15 @@ base64 = "0.22"
 ring = "0.17"
 
 # Shared types (transport protocol, privacy, tools)
-krun-acl = { path = "../acl" }
-krun-transport = { version = "0.1.1", package = "krun-common", path = "../common" }
-krun-runtime = { path = "../runtime" }
-krun-oci-sdk = { path = "../oci-runtime/crates/sdk" }
+kacl = { path = "../acl" }
+ktransport = { version = "0.1.1", package = "kcommon", path = "../common" }
+kbox-contract = { path = "../runtime" }
+koci-sdk = { path = "../oci-runtime/crates/sdk" }
 
 # Metrics
 prometheus = "0.13"
 
 # The release-owned ext4 writer keeps its upstream test profile while sharing
 # the Box workspace version and publication lifecycle.
-[profile.test.package.krun-box-mkext4]
+[profile.test.package.kbox-mkext4]
 opt-level = 2

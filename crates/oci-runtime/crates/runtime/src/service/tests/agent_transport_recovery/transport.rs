@@ -1,12 +1,12 @@
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     serve_agent_connection, serve_agent_connection_with_fault_injector, AgentClient,
     AgentTransportFaultInjector, AgentTransportFaultPoint, AgentTransportOperationStage,
     GuestAgentService, SessionToken,
 };
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 use tokio::io::DuplexStream;
 use tokio::task::JoinHandle;
 

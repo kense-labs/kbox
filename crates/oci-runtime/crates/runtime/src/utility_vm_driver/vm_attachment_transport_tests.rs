@@ -2,8 +2,8 @@
 
 use std::os::unix::fs::PermissionsExt;
 
-use krun_oci_agent_protocol::{AgentVmMacAddress, AgentVmNetworkAttachment, GuestPath};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentVmMacAddress, AgentVmNetworkAttachment, GuestPath};
+use koci_sdk::{
     oci_spec::runtime::Spec, ContainerId, ContainerTarget, CreateAttachments, Generation,
     NetworkAttachmentIdentity, NetworkCleanup, NetworkCleanupId, NetworkInterfaceId,
     NetworkNamespaceId, OciBundle, ProcessIo,
@@ -23,7 +23,7 @@ fn manifest(generation: u64) -> AgentVmAttachmentManifest {
         "netDevices": {"tap0": {"name": "eth0"}}
     });
     let bundle = OciBundle::from_json(
-        std::env::temp_dir().join("krun-kvm-network-manifest"),
+        std::env::temp_dir().join("kkvm-network-manifest"),
         serde_json::to_string(&value).expect("fixture JSON"),
     )
     .expect("valid bundle");
@@ -58,7 +58,7 @@ fn manifest(generation: u64) -> AgentVmAttachmentManifest {
             ContainerId::new("networked").expect("container ID"),
             Generation(generation),
         ),
-        GuestPath::new("/run/krun-oci-runtime/bundle").expect("guest bundle"),
+        GuestPath::new("/run/koci-runtime/bundle").expect("guest bundle"),
         bundle.config_digest(),
         attachment_digest,
         vec![network],

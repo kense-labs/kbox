@@ -2,7 +2,7 @@
 
 ## Contract
 
-`krun-oci-sdk` is the only lifecycle API that Krun Box should consume. The same
+`koci-sdk` is the only lifecycle API that Kbox Box should consume. The same
 `OciRuntimeService` trait is used for in-process tests and out-of-process
 runtime calls. The transport maps every trait method; it does not invoke the
 CLI or expose WHPX, libkrun, or native Linux driver internals.
@@ -16,7 +16,7 @@ retains its attachment-dependent minimum, and a non-TEE restore retains its
 protocol-8 minimum.
 
 Version 8 replaced the legacy checkpoint directory and `leave_running` boolean with an immutable
-`krun.oci.checkpoint-reference.v1`, typed single-file artifact paths, paused
+`koci.checkpoint-reference.v1`, typed single-file artifact paths, paused
 quiescence, exact driver/build compatibility evidence, and request-bound
 checkpoint/restore responses. Every checkpoint and non-TEE restore requires
 protocol 8 regardless of attachment schema; protocol 7 and earlier reject it
@@ -37,21 +37,21 @@ replays byte-for-byte without another driver call. Runtime treats evidence as
 opaque and does not appraise provider claims; no production driver advertises
 the TEE operation or extensions yet.
 
-Version 7 added `krun.oci.attachments.v4` reusable guest-session identity
+Version 7 added `koci.attachments.v4` reusable guest-session identity
 evidence to create. A v4 create is rejected before dispatch when a connection
 negotiated protocol 6 or earlier. Version 6 added
-`krun.oci.attachments.v3` already-authorized network identity evidence; v3
-create requires protocol 6. Version 5 added `krun.oci.attachments.v2`
+`koci.attachments.v3` already-authorized network identity evidence; v3
+create requires protocol 6. Version 5 added `koci.attachments.v2`
 already-authorized storage evidence; v2 create requires protocol 5, while
 ordinary v1 create requests remain valid on protocol 3. Restore combines the
 selected attachment schema with the protocol-8 checkpoint reference. The
-required `dev.krun.network.enforcement@1` extension reuses the existing
+required `dev.kbox.network.enforcement@1` extension reuses the existing
 extension wire and per-driver negotiation; because it requires v3 network
 bindings, protocol 6 remains its create minimum. Version 4 added exact-target
 file upload/download and filesystem stat/mkdir/move/list/remove. Mutations
 carry stable `OperationContext` identities, payloads and recursive listings
 are bounded, and protocol-3 peers reject those file operations before
-dispatch. Version 3 made the complete `krun.oci.attachments.v1` manifest
+dispatch. Version 3 made the complete `koci.attachments.v1` manifest
 mandatory for create and the later restore contract, moved init process I/O
 inside that versioned contract, and returned its durable digest.
 The transport rejects protocol-2 peers rather than silently dropping rootfs,
@@ -101,7 +101,7 @@ transport evidence.
 
 ## Per-driver Capability Negotiation
 
-`RuntimeInfo::extensions` carries the additive `krun.oci.extensions.v1`
+`RuntimeInfo::extensions` carries the additive `koci.extensions.v1`
 catalog. The Host hashes the currently running executable and binds its
 component name, semantic version, optional source revision, and lowercase
 SHA-256 to the complete catalog. Each launch-ready registered driver then owns
@@ -112,12 +112,12 @@ Callers negotiate against the isolation requirement rather than a raw backend
 name:
 
 ```rust,no_run
-use krun_oci_sdk::{
+use koci_sdk::{
     IsolationClass, RuntimeClient, RuntimeNegotiationRequest, RuntimeOperation,
     ATTACHMENT_SCHEMA_V1, RUNTIME_OPERATION_CONTRACT_V1,
 };
 
-async fn require_update(client: &RuntimeClient) -> krun_oci_sdk::Result<()> {
+async fn require_update(client: &RuntimeClient) -> koci_sdk::Result<()> {
     let info = client.features().await?;
     let requirement = RuntimeNegotiationRequest::new(IsolationClass::SharedHostKernel)
         .with_operation(RuntimeOperation::Update, RUNTIME_OPERATION_CONTRACT_V1)?
@@ -162,21 +162,21 @@ hostnames, addresses, routes, endpoints, credentials, or tenant metadata.
 
 TEE negotiation likewise requires more than `DedicatedVm`. A caller requests
 `RuntimeOperation::Attest` and exactly one
-`dev.krun.tee.amd-sev-snp@1` or `dev.krun.tee.intel-tdx@1` extension from the
+`dev.kbox.tee.amd-sev-snp@1` or `dev.kbox.tee.intel-tdx@1` extension from the
 same per-driver catalog entry. The registry rejects an `Attest` operation
 without a known TEE extension, a TEE extension without `Attest`, or either on a
 driver that lacks dedicated-VM isolation.
 
-## Krun Box Client
+## Kbox Box Client
 
 On Windows, use a local named pipe:
 
 ```rust
-use krun_oci_sdk::{LocalIpcEndpoint, RuntimeClient};
+use koci_sdk::{LocalIpcEndpoint, RuntimeClient};
 
-# async fn connect() -> krun_oci_sdk::Result<()> {
+# async fn connect() -> koci_sdk::Result<()> {
 let endpoint =
-    LocalIpcEndpoint::windows_named_pipe(r"\\.\pipe\krun-oci-runtime")?;
+    LocalIpcEndpoint::windows_named_pipe(r"\\.\pipe\koci-runtime")?;
 let client = RuntimeClient::connect(&endpoint).await?;
 let info = client.features().await?;
 # let _ = info;
@@ -187,10 +187,10 @@ let info = client.features().await?;
 On Linux and macOS, use an absolute Unix-domain-socket path:
 
 ```rust
-use krun_oci_sdk::{LocalIpcEndpoint, RuntimeClient};
+use koci_sdk::{LocalIpcEndpoint, RuntimeClient};
 
-# async fn connect() -> krun_oci_sdk::Result<()> {
-let endpoint = LocalIpcEndpoint::unix_socket("/run/krun-oci/runtime.sock")?;
+# async fn connect() -> koci_sdk::Result<()> {
+let endpoint = LocalIpcEndpoint::unix_socket("/run/koci/runtime.sock")?;
 let client = RuntimeClient::connect(&endpoint).await?;
 let info = client.features().await?;
 # let _ = info;
@@ -204,7 +204,7 @@ already authenticated async byte stream.
 
 ### Native Linux multi-container host owner
 
-`krun-oci native-linux-host-service --root <absolute-root> --agent
+`koci native-linux-host-service --root <absolute-root> --agent
 <absolute-agent>` publishes a long-lived Linux SDK endpoint for ordinary
 transported create requests. It opens the experimental Native Linux driver and
 reconciles the durable state root before binding `runtime.sock`; the endpoint
@@ -219,13 +219,13 @@ owner. Abrupt owner replacement reopens the same durable service state; the
 client still exposes the first broken request and reconnects only on a later
 explicit reconciliation.
 
-### Native Linux Krun Box owner
+### Native Linux Kbox Box owner
 
-`krun-oci native-linux-service` is the Linux process owner used by the Box
+`koci native-linux-service` is the Linux process owner used by the Box
 adapter. It binds one absolute private runtime root and one `ContainerId`.
 Before starting it, Box creates and listens on its exec and PTY Unix sockets,
 opens the writable init log, and inherits those handles as FD 3, FD 4, and FD
-5. The explicit `--krun-box-control-fds` flag prevents an accidental service
+5. The explicit `--kbox-control-fds` flag prevents an accidental service
 start with a different descriptor contract.
 
 The owner creates `runtime.sock` beneath its `0700` runtime root, applies mode
@@ -244,7 +244,7 @@ transient executor slot before the exact service socket is removed. Durable
 state stays inside the Sandbox runtime root until Box removes that
 product-owned root.
 
-For an in-process host integration, Krun Box can wrap
+For an in-process host integration, Kbox Box can wrap
 `HostRuntimeService::open(state_root, driver)` in `RuntimeClient`. The
 `RuntimeDriver` trait receives exact-generation requests and the immutable
 durable bundle at both create and start. Its mutating methods are async,
@@ -258,13 +258,13 @@ protocol types remain behind that boundary.
 the wire protocol, so there is only one lifecycle implementation:
 
 ```rust,no_run
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerId, CreateAttachments, CreateRequest, IsolationRequest,
     OperationContext, OperationId, ProcessIo, RunRequest, RuntimeClient,
 };
 
-# async fn run(client: RuntimeClient, bundle: krun_oci_sdk::OciBundle)
-#     -> krun_oci_sdk::Result<()> {
+# async fn run(client: RuntimeClient, bundle: koci_sdk::OciBundle)
+#     -> koci_sdk::Result<()> {
 let attachments = CreateAttachments::from_bundle(&bundle, ProcessIo::default())?;
 let status = client
     .run(RunRequest {
@@ -316,12 +316,12 @@ Poll from the beginning with cursor zero, then pass each returned
 all retained generations of that container ID:
 
 ```rust,no_run
-use krun_oci_sdk::{ContainerTarget, EventsRequest, RuntimeClient};
+use koci_sdk::{ContainerTarget, EventsRequest, RuntimeClient};
 
 async fn poll_events(
     client: &RuntimeClient,
     container: ContainerTarget,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     let mut cursor = 0;
     let batch = client
         .events(EventsRequest {
@@ -413,13 +413,13 @@ local stream, the runtime serves it with:
 ```rust
 use std::sync::Arc;
 
-use krun_oci_sdk::{serve_transport_connection, OciRuntimeService};
+use koci_sdk::{serve_transport_connection, OciRuntimeService};
 use tokio::io::{AsyncRead, AsyncWrite};
 
 async fn serve<T>(
     service: Arc<dyn OciRuntimeService>,
     stream: T,
-) -> krun_oci_sdk::Result<()>
+) -> koci_sdk::Result<()>
 where
     T: AsyncRead + AsyncWrite + Unpin + Send,
 {

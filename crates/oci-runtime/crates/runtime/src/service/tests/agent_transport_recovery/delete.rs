@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentClient, AgentDeleteRequest, AgentOperation, AgentTransportFaultPoint,
     AgentTransportOperationStage,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ErrorCode, KillRequest, ListRequest,
     OciRuntimeService, OperationContext, Signal, StartRequest,
 };
@@ -40,7 +40,7 @@ async fn exercise_delete_reopen(index: usize, stage: AgentTransportOperationStag
     let guest = Arc::new(JournaledLifecycleGuest::new());
     let metrics = Arc::new(DriverMetrics::default());
     let fault_point = AgentTransportFaultPoint::Operation {
-        protocol_version: krun_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
+        protocol_version: koci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
         operation: AgentOperation::Delete,
         stage,
     };

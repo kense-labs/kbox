@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+pub mod registry;
+
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, ExitStatus, Stdio};
@@ -22,12 +24,12 @@ pub const COMMAND_TIMEOUT: Duration = Duration::from_secs(300);
 /// resource-leak assertion report a test-harness artifact instead of a daemon
 /// bug.
 const BACKGROUND_INTERRUPT_TIMEOUT: Duration = Duration::from_secs(90);
-pub const HOST_SMOKE_IMAGE_ENV: &str = "KRUN_BOX_HOST_SMOKE_IMAGE";
-pub const HOST_SMOKE_TIMEOUT_SECS_ENV: &str = "KRUN_BOX_HOST_SMOKE_TIMEOUT_SECS";
-pub const TEST_ALPINE_TAR_ENV: &str = "KRUN_BOX_TEST_ALPINE_TAR";
+pub const HOST_SMOKE_IMAGE_ENV: &str = "K_BOX_HOST_SMOKE_IMAGE";
+pub const HOST_SMOKE_TIMEOUT_SECS_ENV: &str = "K_BOX_HOST_SMOKE_TIMEOUT_SECS";
+pub const TEST_ALPINE_TAR_ENV: &str = "K_BOX_TEST_ALPINE_TAR";
 
 fn find_binary() -> PathBuf {
-    if let Some(path) = option_env!("CARGO_BIN_EXE_krun-box") {
+    if let Some(path) = option_env!("CARGO_BIN_EXE_kbox") {
         let bin = PathBuf::from(path);
         if bin.exists() {
             return bin;
@@ -36,17 +38,31 @@ fn find_binary() -> PathBuf {
 
     let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let workspace_root = manifest_dir
-        .parent()
+        .ancestors()
+        .nth(3)
         .expect("cli crate should be inside workspace");
 
     for profile in ["debug", "release"] {
-        let bin = workspace_root.join("target").join(profile).join("krun-box");
+        let bin = workspace_root.join("target").join(profile).join("kbox");
         if bin.exists() {
             return bin;
         }
     }
 
-    PathBuf::from("krun-box")
+    PathBuf::from("kbox")
+}
+
+pub struct CliOutput {
+    pub stdout: Vec<u8>,
+    pub stderr: Vec<u8>,
+    pub status: ExitStatus,
+    pub duration: Duration,
+}
+
+impl CliOutput {
+    pub fn exit_code(&self) -> Option<i32> {
+        self.status.code()
+    }
 }
 
 pub struct CliTest {
@@ -93,10 +109,10 @@ impl BackgroundProcessGuard<'_> {
             }
 
             if report_stdout && !stdout.trim().is_empty() {
-                eprintln!("background `krun-box {}` stdout:\n{}", self.command, stdout);
+                eprintln!("background `kbox {}` stdout:\n{}", self.command, stdout);
             }
             if !stderr.trim().is_empty() {
-                eprintln!("background `krun-box {}` stderr:\n{}", self.command, stderr);
+                eprintln!("background `kbox {}` stderr:\n{}", self.command, stderr);
             }
         }
     }
@@ -110,9 +126,15 @@ impl Drop for BackgroundProcessGuard<'_> {
 
 impl CliTest {
     pub fn new() -> Self {
+        let preserve = std::env::var_os("K_BOX_KEEP_SMOKE_HOME").is_some();
+        let mut home = tempfile::tempdir().expect("temp K_HOME");
+        home.disable_cleanup(preserve);
+        if preserve {
+            eprintln!("preserving K_HOME at {}", home.path().display());
+        }
         Self {
             bin: find_binary(),
-            home: tempfile::tempdir().expect("temp KRUN_HOME"),
+            home,
         }
     }
 
@@ -122,7 +144,7 @@ impl CliTest {
 
     fn command(&self, args: &[&str]) -> Command {
         let mut cmd = Command::new(&self.bin);
-        cmd.args(args).env("KRUN_HOME", self.home_path());
+        cmd.args(args).env("K_HOME", self.home_path());
         cmd
     }
 
@@ -138,21 +160,25 @@ impl CliTest {
         self.output_with_env(args, &[])
     }
 
-    pub fn output_with_env(&self, args: &[&str], envs: &[(&str, &str)]) -> (String, String, bool) {
-        eprintln!("    $ krun-box {}", args.join(" "));
+    pub fn output_result(&self, args: &[&str]) -> CliOutput {
+        self.output_with_env_result(args, &[])
+    }
+
+    pub fn output_with_env_result(&self, args: &[&str], envs: &[(&str, &str)]) -> CliOutput {
+        eprintln!("    $ kbox {}", args.join(" "));
 
         let mut command = self.command_with_env(args, envs);
         let mut child = command
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `kbox {}`: {e}", args.join(" ")));
 
         let start = Instant::now();
         loop {
             if child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", args.join(" ")))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", args.join(" ")))
                 .is_some()
             {
                 break;
@@ -162,12 +188,12 @@ impl CliTest {
                 let _ = child.kill();
                 let output = child.wait_with_output().unwrap_or_else(|e| {
                     panic!(
-                        "timed out and failed to collect `krun-box {}` output: {e}",
+                        "timed out and failed to collect `kbox {}` output: {e}",
                         args.join(" ")
                     )
                 });
                 panic!(
-                    "`krun-box {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     COMMAND_TIMEOUT,
                     String::from_utf8_lossy(&output.stdout),
@@ -178,12 +204,19 @@ impl CliTest {
             std::thread::sleep(Duration::from_millis(50));
         }
 
-        let output = child.wait_with_output().unwrap_or_else(|e| {
-            panic!(
-                "failed to collect `krun-box {}` output: {e}",
-                args.join(" ")
-            )
-        });
+        let output = child
+            .wait_with_output()
+            .unwrap_or_else(|e| panic!("failed to collect `kbox {}` output: {e}", args.join(" ")));
+        CliOutput {
+            stdout: output.stdout,
+            stderr: output.stderr,
+            status: output.status,
+            duration: start.elapsed(),
+        }
+    }
+
+    pub fn output_with_env(&self, args: &[&str], envs: &[(&str, &str)]) -> (String, String, bool) {
+        let output = self.output_with_env_result(args, envs);
         (
             String::from_utf8_lossy(&output.stdout).to_string(),
             String::from_utf8_lossy(&output.stderr).to_string(),
@@ -191,20 +224,15 @@ impl CliTest {
         )
     }
 
-    /// Spawn `krun-box <args>` as a background process (e.g. a daemon), inheriting
-    /// the test env plus `KRUN_HOME`. The caller owns the `Child` and must kill it.
+    /// Spawn `kbox <args>` as a background process (e.g. a daemon), inheriting
+    /// the test env plus `K_HOME`. The caller owns the `Child` and must kill it.
     pub fn spawn_background(&self, args: &[&str]) -> std::process::Child {
-        eprintln!("    $ krun-box {} &", args.join(" "));
+        eprintln!("    $ kbox {} &", args.join(" "));
         self.command(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| {
-                panic!(
-                    "failed to spawn background `krun-box {}`: {e}",
-                    args.join(" ")
-                )
-            })
+            .unwrap_or_else(|e| panic!("failed to spawn background `kbox {}`: {e}", args.join(" ")))
     }
 
     pub fn spawn_guarded_background(&self, args: &[&str]) -> BackgroundProcessGuard<'_> {
@@ -239,7 +267,7 @@ impl CliTest {
     }
 
     pub fn output_with_stdin(&self, args: &[&str], stdin: &[u8]) -> (String, String, bool) {
-        eprintln!("    $ printf ... | krun-box {}", args.join(" "));
+        eprintln!("    $ printf ... | kbox {}", args.join(" "));
 
         let mut command = self.command(args);
         let mut child = command
@@ -247,25 +275,20 @@ impl CliTest {
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `kbox {}`: {e}", args.join(" ")));
 
         child
             .stdin
             .take()
             .expect("stdin should be piped")
             .write_all(stdin)
-            .unwrap_or_else(|e| {
-                panic!(
-                    "failed to write stdin for `krun-box {}`: {e}",
-                    args.join(" ")
-                )
-            });
+            .unwrap_or_else(|e| panic!("failed to write stdin for `kbox {}`: {e}", args.join(" ")));
 
         let start = Instant::now();
         loop {
             if child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", args.join(" ")))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", args.join(" ")))
                 .is_some()
             {
                 break;
@@ -275,12 +298,12 @@ impl CliTest {
                 let _ = child.kill();
                 let output = child.wait_with_output().unwrap_or_else(|e| {
                     panic!(
-                        "timed out and failed to collect `krun-box {}` output: {e}",
+                        "timed out and failed to collect `kbox {}` output: {e}",
                         args.join(" ")
                     )
                 });
                 panic!(
-                    "`krun-box {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     COMMAND_TIMEOUT,
                     String::from_utf8_lossy(&output.stdout),
@@ -291,12 +314,9 @@ impl CliTest {
             std::thread::sleep(Duration::from_millis(50));
         }
 
-        let output = child.wait_with_output().unwrap_or_else(|e| {
-            panic!(
-                "failed to collect `krun-box {}` output: {e}",
-                args.join(" ")
-            )
-        });
+        let output = child
+            .wait_with_output()
+            .unwrap_or_else(|e| panic!("failed to collect `kbox {}` output: {e}", args.join(" ")));
         (
             String::from_utf8_lossy(&output.stdout).to_string(),
             String::from_utf8_lossy(&output.stderr).to_string(),
@@ -308,7 +328,7 @@ impl CliTest {
         let (stdout, stderr, success) = self.output(args);
         assert!(
             success,
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             stdout,
             stderr
@@ -320,7 +340,7 @@ impl CliTest {
         let (stdout, stderr, success) = self.output_with_stdin(args, stdin);
         assert!(
             success,
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             stdout,
             stderr
@@ -332,7 +352,7 @@ impl CliTest {
         let (stdout, stderr, success) = self.output_with_env(args, envs);
         assert!(
             success,
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             stdout,
             stderr
@@ -344,7 +364,7 @@ impl CliTest {
         let (stdout, stderr, success) = self.output(args);
         assert!(
             success,
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             stdout,
             stderr
@@ -359,7 +379,7 @@ impl CliTest {
         let (stdout, stderr, success) = self.output_with_env(args, envs);
         assert!(
             !success,
-            "`krun-box {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             stdout,
             stderr
@@ -367,7 +387,7 @@ impl CliTest {
         let combined = format!("{stdout}\n{stderr}");
         assert!(
             combined.contains(expected),
-            "`krun-box {}` failure did not contain {:?}\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failure did not contain {:?}\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             expected,
             stdout,
@@ -376,29 +396,26 @@ impl CliTest {
     }
 
     pub fn runs_until_timeout(&self, args: &[&str], timeout: Duration) -> (String, String) {
-        eprintln!("    $ krun-box {}  # expect timeout", args.join(" "));
+        eprintln!("    $ kbox {}  # expect timeout", args.join(" "));
 
         let mut command = self.command(args);
         let mut child = command
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `kbox {}`: {e}", args.join(" ")));
 
         let start = Instant::now();
         loop {
             if let Some(status) = child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", args.join(" ")))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", args.join(" ")))
             {
                 let output = child.wait_with_output().unwrap_or_else(|e| {
-                    panic!(
-                        "failed to collect `krun-box {}` output: {e}",
-                        args.join(" ")
-                    )
+                    panic!("failed to collect `kbox {}` output: {e}", args.join(" "))
                 });
                 panic!(
-                    "`krun-box {}` exited before {:?} with status {}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` exited before {:?} with status {}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     timeout,
                     status,
@@ -411,7 +428,7 @@ impl CliTest {
                 let _ = child.kill();
                 let output = child.wait_with_output().unwrap_or_else(|e| {
                     panic!(
-                        "timed out and failed to collect `krun-box {}` output: {e}",
+                        "timed out and failed to collect `kbox {}` output: {e}",
                         args.join(" ")
                     )
                 });
@@ -431,8 +448,27 @@ impl CliTest {
         marker: &str,
         timeout: Duration,
     ) -> (String, String) {
+        self.interrupts_after_output_with_status(args, marker, timeout, true)
+    }
+
+    pub fn interrupts_after_output_any_status(
+        &self,
+        args: &[&str],
+        marker: &str,
+        timeout: Duration,
+    ) -> (String, String) {
+        self.interrupts_after_output_with_status(args, marker, timeout, false)
+    }
+
+    fn interrupts_after_output_with_status(
+        &self,
+        args: &[&str],
+        marker: &str,
+        timeout: Duration,
+        require_success: bool,
+    ) -> (String, String) {
         eprintln!(
-            "    $ krun-box {}  # interrupt after {:?}",
+            "    $ kbox {}  # interrupt after {:?}",
             args.join(" "),
             timeout
         );
@@ -451,7 +487,7 @@ impl CliTest {
             .stdout(Stdio::from(stdout_file))
             .stderr(Stdio::from(stderr_file))
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `kbox {}`: {e}", args.join(" ")));
 
         let start = Instant::now();
         let saw_marker = loop {
@@ -464,10 +500,10 @@ impl CliTest {
 
             if let Some(status) = child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", args.join(" ")))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", args.join(" ")))
             {
                 panic!(
-                    "`krun-box {}` exited before marker {:?} with status {}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` exited before marker {:?} with status {}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     marker,
                     status,
@@ -480,7 +516,7 @@ impl CliTest {
                 let _ = child.kill();
                 let _ = child.wait();
                 panic!(
-                    "`krun-box {}` did not print marker {:?} within {:?}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` did not print marker {:?} within {:?}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     marker,
                     timeout,
@@ -506,7 +542,7 @@ impl CliTest {
         let status = loop {
             if let Some(status) = child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", args.join(" ")))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", args.join(" ")))
             {
                 break status;
             }
@@ -514,7 +550,7 @@ impl CliTest {
                 let _ = child.kill();
                 let _ = child.wait();
                 panic!(
-                    "`krun-box {}` did not exit after interrupt within {:?}",
+                    "`kbox {}` did not exit after interrupt within {:?}",
                     args.join(" "),
                     COMMAND_TIMEOUT
                 );
@@ -524,14 +560,16 @@ impl CliTest {
 
         let stdout = std::fs::read_to_string(&stdout_path).unwrap_or_default();
         let stderr = std::fs::read_to_string(&stderr_path).unwrap_or_default();
-        assert!(
-            status.success(),
-            "`krun-box {}` failed after interrupt with status {}\nstdout:\n{}\nstderr:\n{}",
-            args.join(" "),
-            status,
-            stdout,
-            stderr
-        );
+        if require_success {
+            assert!(
+                status.success(),
+                "`kbox {}` failed after interrupt with status {}\nstdout:\n{}\nstderr:\n{}",
+                args.join(" "),
+                status,
+                stdout,
+                stderr
+            );
+        }
         (stdout, stderr)
     }
 }
@@ -751,7 +789,7 @@ pub fn create_minimal_oci_tar(path: &Path, reference: &str) {
             "diff_ids": [format!("sha256:{diff_id}")]
         },
         "history": [
-            {"created_by": "krun-box test fixture"}
+            {"created_by": "kbox test fixture"}
         ]
     });
     let config_bytes = serde_json::to_vec(&config).expect("serialize config");
@@ -839,9 +877,9 @@ pub fn host_smoke_timeout(default_secs: u64) -> Duration {
 #[cfg(unix)]
 pub fn host_socket_dirs() -> std::collections::BTreeSet<PathBuf> {
     #[cfg(target_os = "macos")]
-    let socket_root = Path::new("/private/tmp/krun-box-sockets");
+    let socket_root = Path::new("/private/tmp/kbox-sockets");
     #[cfg(not(target_os = "macos"))]
-    let socket_root = Path::new("/tmp/krun-box-sockets");
+    let socket_root = Path::new("/tmp/kbox-sockets");
     let Ok(entries) = std::fs::read_dir(socket_root) else {
         return std::collections::BTreeSet::new();
     };

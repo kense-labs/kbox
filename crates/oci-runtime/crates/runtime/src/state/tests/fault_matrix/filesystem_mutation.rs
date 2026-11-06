@@ -1,4 +1,4 @@
-use krun_oci_sdk::{
+use koci_sdk::{
     FileOp, FileRequest, FileResponse, FilesystemOp, FilesystemRequest, FilesystemResponse,
 };
 
@@ -104,7 +104,7 @@ async fn drive_success(
     store: &DurableStateStore,
     target: &ContainerTarget,
     kind: MutationKind,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match kind {
         MutationKind::File => {
             let request = file_request(target, "filesystem-mutation-success-file");
@@ -168,7 +168,7 @@ async fn drive_failure(
     target: &ContainerTarget,
     kind: MutationKind,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match kind {
         MutationKind::File => {
             let request = file_request(target, "filesystem-mutation-failure-file");

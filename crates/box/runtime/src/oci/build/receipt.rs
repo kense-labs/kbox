@@ -8,8 +8,8 @@
 //! a second supervisor store.
 
 use chrono::{DateTime, Utc};
-use krun_box_core::platform::Platform;
-use krun_box_core::OperationId;
+use kbox_core::platform::Platform;
+use kbox_core::OperationId;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
@@ -67,7 +67,7 @@ impl BuildOperationIdentity {
         Ok(Self {
             operation_id,
             source_digest,
-            output_reference: format!("krun-box/build-operation:{operation_key}"),
+            output_reference: format!("kbox/build-operation:{operation_key}"),
         })
     }
 
@@ -103,7 +103,7 @@ pub(super) struct PendingBuildOperation {
 }
 
 impl PendingBuildOperation {
-    const SCHEMA: &'static str = "krun.box.build-output-intent.v1";
+    const SCHEMA: &'static str = "kbox.build-output-intent.v1";
 
     #[cfg_attr(not(test), allow(dead_code))]
     pub(super) fn new(
@@ -127,10 +127,7 @@ impl PendingBuildOperation {
             || canonical_sha256_digest_hex(&self.source_digest).is_err()
             || canonical_sha256_digest_hex(&self.plan_digest).is_err()
             || self.output_reference
-                != format!(
-                    "krun-box/build-operation:{}",
-                    operation_key(&self.operation_id)
-                )
+                != format!("kbox/build-operation:{}", operation_key(&self.operation_id))
         {
             return Err(BuildReceiptError::InvalidReceipt {
                 operation_id: self.operation_id.to_string(),
@@ -230,8 +227,8 @@ pub(super) struct SupervisedBuildOperation {
 }
 
 impl SupervisedBuildOperation {
-    pub(super) const SCHEMA: &'static str = "krun.box.build-operation.v2";
-    const LEGACY_SCHEMA: &'static str = "krun.box.build-operation.v1";
+    pub(super) const SCHEMA: &'static str = "kbox.build-operation.v2";
+    const LEGACY_SCHEMA: &'static str = "kbox.build-operation.v1";
 
     pub(super) fn new(
         identity: &BuildOperationIdentity,
@@ -276,10 +273,7 @@ impl SupervisedBuildOperation {
             || canonical_sha256_digest_hex(&self.source_digest).is_err()
             || canonical_sha256_digest_hex(&self.plan_digest).is_err()
             || self.output_reference
-                != format!(
-                    "krun-box/build-operation:{}",
-                    operation_key(&self.operation_id)
-                )
+                != format!("kbox/build-operation:{}", operation_key(&self.operation_id))
             || self.updated_at < self.started_at
         {
             return Err(BuildReceiptError::InvalidReceipt {
@@ -457,7 +451,7 @@ pub struct BuildOutputReceipt {
     pub operation_id: OperationId,
     /// Immutable source Artifact content identity.
     pub source_digest: String,
-    /// Canonical Krun ACL build-plan identity.
+    /// Canonical Kbox ACL build-plan identity.
     pub plan_digest: String,
     /// Path-independent native OCI output evidence.
     pub output: BuildReceiptOutput,
@@ -468,8 +462,8 @@ pub struct BuildOutputReceipt {
 
 impl BuildOutputReceipt {
     /// Current closed receipt schema.
-    pub const SCHEMA: &'static str = "krun.box.build-output-receipt.v2";
-    const LEGACY_SCHEMA: &'static str = "krun.box.build-output-receipt.v1";
+    pub const SCHEMA: &'static str = "kbox.build-output-receipt.v2";
+    const LEGACY_SCHEMA: &'static str = "kbox.build-output-receipt.v1";
 
     pub(super) fn from_result(
         identity: &BuildOperationIdentity,
@@ -563,10 +557,7 @@ impl BuildOutputReceipt {
             }
         }
         if self.output.reference
-            != format!(
-                "krun-box/build-operation:{}",
-                operation_key(&self.operation_id)
-            )
+            != format!("kbox/build-operation:{}", operation_key(&self.operation_id))
         {
             return Err(BuildReceiptError::InvalidReceipt {
                 operation_id,

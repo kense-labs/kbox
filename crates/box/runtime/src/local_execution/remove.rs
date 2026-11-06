@@ -2,9 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::{
-    ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
-};
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult};
 
 use super::record::execution_id;
 use super::store::run_store;
@@ -95,7 +93,7 @@ fn cleanup_execution_paths(home_dir: &Path, record: &BoxRecord) -> ExecutionMana
     // Sandbox peer-auth may have dropped this process to the real UID. Overlay
     // unmount and mount-alias detach need effective root / CAP_SYS_ADMIN.
     #[cfg(target_os = "linux")]
-    crate::sandbox::krun_oci_controller::restore_effective_root_if_saved().map_err(|error| {
+    crate::sandbox::koci_controller::restore_effective_root_if_saved().map_err(|error| {
         ExecutionManagerError::Internal(format!(
             "failed to restore effective root before execution cleanup: {error}"
         ))
@@ -209,7 +207,7 @@ fn remove_tree_if_present(path: &Path) -> std::io::Result<()> {
 }
 
 fn remove_host_cgroup(record: &BoxRecord) -> ExecutionManagerResult<()> {
-    // Krun OCI Runtime owns and removes the complete Sandbox hierarchy. This
+    // Kbox OCI Runtime owns and removes the complete Sandbox hierarchy. This
     // compatibility cleanup is only for legacy MicroVM shim cgroups.
     if record.isolation.is_sandbox() {
         return Ok(());
@@ -234,7 +232,7 @@ mod tests {
     use std::sync::Arc;
 
     use async_trait::async_trait;
-    use krun_box_core::{
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecutionIsolation, ExecutionManager,
         ExecutionRecordPolicy, OperationId,
     };
@@ -277,7 +275,7 @@ mod tests {
         async fn kill(
             &self,
             _record: &BoxRecord,
-        ) -> ExecutionManagerResult<krun_box_core::KillOutcome> {
+        ) -> ExecutionManagerResult<kbox_core::KillOutcome> {
             unreachable!("removal test never kills a backend")
         }
     }

@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use std::time::Duration;
 
-use krun_oci_sdk::{LocalIpcEndpoint, RuntimeClient};
+use koci_sdk::{LocalIpcEndpoint, RuntimeClient};
 use tokio::process::{Child, Command};
 use tokio::time::{sleep, timeout, Instant};
 
@@ -44,7 +44,7 @@ impl HostServiceKind {
 /// Optional spawn overrides for Live session-owner Host Services.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub(crate) struct HostServiceSpawnOptions {
-    /// When true, sets `KRUN_OCI_KVM_SESSION_OWNER=1` on the Host Service.
+    /// When true, sets `K_OCI_KVM_SESSION_OWNER=1` on the Host Service.
     pub(crate) durable_session_owner: bool,
 }
 
@@ -401,7 +401,7 @@ pub(crate) fn endpoint_inventory() -> Result<BTreeSet<PathBuf>, String> {
         if entry
             .file_name()
             .to_string_lossy()
-            .starts_with("krun-oci-agent-")
+            .starts_with("koci-agent-")
         {
             endpoints.insert(entry.path());
         }

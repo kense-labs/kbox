@@ -153,8 +153,8 @@ pub struct PlatformCapabilities {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum VmBackend {
-    /// Native libkrun-backed VM execution.
-    Krun,
+    /// Native libkbacked VM execution.
+    Kbox,
     /// Native Windows Hypervisor Platform backend through libkrun.
     Whpx,
     /// No supported VM backend for this host.
@@ -164,7 +164,7 @@ pub enum VmBackend {
 impl fmt::Display for VmBackend {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Krun => write!(f, "krun"),
+            Self::Kbox => write!(f, "kbox"),
             Self::Whpx => write!(f, "whpx"),
             Self::Unsupported => write!(f, "unsupported"),
         }
@@ -260,7 +260,7 @@ impl PlatformCapabilities {
             HostFamily::Linux => Self {
                 os: "linux".to_string(),
                 architecture,
-                vm_backend: VmBackend::Krun,
+                vm_backend: VmBackend::Kbox,
                 host_guest_channel: HostGuestChannel::UnixSocket,
                 unix_sockets: true,
                 named_pipes: false,
@@ -275,7 +275,7 @@ impl PlatformCapabilities {
             HostFamily::Macos => Self {
                 os: "macos".to_string(),
                 architecture,
-                vm_backend: VmBackend::Krun,
+                vm_backend: VmBackend::Kbox,
                 host_guest_channel: HostGuestChannel::UnixSocket,
                 unix_sockets: true,
                 named_pipes: false,
@@ -328,7 +328,7 @@ impl PlatformCapabilities {
 
     /// Whether the host can run the VM runtime directly.
     pub fn supports_native_vm(&self) -> bool {
-        matches!(self.vm_backend, VmBackend::Krun | VmBackend::Whpx)
+        matches!(self.vm_backend, VmBackend::Kbox | VmBackend::Whpx)
     }
 
     /// Whether the host has a supported control channel.
@@ -500,7 +500,7 @@ mod tests {
 
         #[cfg(unix)]
         {
-            assert_eq!(capabilities.vm_backend, VmBackend::Krun);
+            assert_eq!(capabilities.vm_backend, VmBackend::Kbox);
             assert_eq!(
                 capabilities.host_guest_channel,
                 HostGuestChannel::UnixSocket
@@ -524,7 +524,7 @@ mod tests {
 
     #[test]
     fn test_platform_capability_display_values() {
-        assert_eq!(VmBackend::Krun.to_string(), "krun");
+        assert_eq!(VmBackend::Kbox.to_string(), "kbox");
         assert_eq!(VmBackend::Whpx.to_string(), "whpx");
         assert_eq!(HostGuestChannel::UnixSocket.to_string(), "unix-socket");
         assert_eq!(HostGuestChannel::NamedPipe.to_string(), "named-pipe");
@@ -559,7 +559,7 @@ mod tests {
 
         let linux = PlatformCapabilities::for_host(HostFamily::Linux, "amd64");
         assert_eq!(linux.os, "linux");
-        assert_eq!(linux.vm_backend, VmBackend::Krun);
+        assert_eq!(linux.vm_backend, VmBackend::Kbox);
         assert_eq!(linux.host_guest_channel, HostGuestChannel::UnixSocket);
         assert!(linux.unix_sockets);
         assert!(!linux.named_pipes);
@@ -568,7 +568,7 @@ mod tests {
         assert_ne!(linux.host_guest_channel, HostGuestChannel::NamedPipe);
 
         let macos = PlatformCapabilities::for_host(HostFamily::Macos, "arm64");
-        assert_eq!(macos.vm_backend, VmBackend::Krun);
+        assert_eq!(macos.vm_backend, VmBackend::Kbox);
         assert_eq!(macos.host_guest_channel, HostGuestChannel::UnixSocket);
         assert_ne!(macos.vm_backend, VmBackend::Whpx);
 

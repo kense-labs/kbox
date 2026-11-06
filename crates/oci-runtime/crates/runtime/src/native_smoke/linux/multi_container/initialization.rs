@@ -2,7 +2,7 @@ use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, Error, ExitStatus, ListRequest, OciBundle,
     RuntimeClient, StartRequest,
 };
@@ -16,8 +16,8 @@ use super::lifecycle::{
 };
 use crate::NativeLinuxMultiContainerSmokeReport;
 
-const EXTERNAL_SCRIPT_EVIDENCE: &[u8] = b"krun-oci-external-init-v1\n";
-const INLINE_EVIDENCE: &[u8] = b"krun-oci-inline-init-v1\n";
+const EXTERNAL_SCRIPT_EVIDENCE: &[u8] = b"koci-external-init-v1\n";
+const INLINE_EVIDENCE: &[u8] = b"koci-inline-init-v1\n";
 const HOOK_DESCENDANT_STARTED: &str = "hook-timeout-descendant-started";
 const HOOK_DESCENDANT_ESCAPED: &str = "hook-timeout-descendant-escaped";
 const HOOK_DESCENDANT_OBSERVATION: Duration = Duration::from_secs(3);
@@ -66,18 +66,18 @@ impl InitializationFixture {
                 )
             })?;
 
-        let target_name = format!(".krun-oci-init-{nonce}");
+        let target_name = format!(".koci-init-{nonce}");
         let target = format!("/{target_name}");
-        let script_name = format!("krun-oci-init-{nonce}");
+        let script_name = format!("koci-init-{nonce}");
         let script_path = rootfs.join("bin").join(&script_name);
         let script = format!(
             "#!/bin/sh\nset -eu\ntest \"$PWD\" = \"{target}\"\n\
-             test \"${{KRUN_INIT_PROFILE:-}}\" = external\n\
+             test \"${{K_INIT_PROFILE:-}}\" = external\n\
              test \"$(/bin/busybox id -u)\" = 0\n\
              test \"$(/bin/busybox id -g)\" = 0\n\
              test \"$(umask)\" = 0022\n\
              case \" $(/bin/busybox id -G) \" in *\" 1 \"*) ;; *) exit 1 ;; esac\n\
-             printf 'krun-oci-external-init-v1\\n' > {target}/evidence/external\n"
+             printf 'koci-external-init-v1\\n' > {target}/evidence/external\n"
         );
         tokio::fs::write(&script_path, script)
             .await
@@ -107,21 +107,21 @@ impl InitializationFixture {
                 "/bin/sh",
                 "-c",
                 format!(
-                    "set -eu; printf 'krun-oci-inline-init-v1\\n' > \
+                    "set -eu; printf 'koci-inline-init-v1\\n' > \
                      {target}/evidence/inline"
                 )
             ]),
             json!(["PATH=/bin"]),
             None,
-            &format!("krun-oci-init-inline-{nonce}"),
+            &format!("koci-init-inline-{nonce}"),
         )?;
         let external_script = build_profile(
             base,
             mount,
             json!([format!("/bin/{script_name}")]),
-            json!(["PATH=/bin", "KRUN_INIT_PROFILE=external"]),
+            json!(["PATH=/bin", "K_INIT_PROFILE=external"]),
             None,
-            &format!("krun-oci-init-script-{nonce}"),
+            &format!("koci-init-script-{nonce}"),
         )?;
         let external_script = with_exact_process_profile(&external_script, &target)?;
         let direct_argv = build_profile(
@@ -130,7 +130,7 @@ impl InitializationFixture {
             json!(["/bin/busybox", "touch", format!("{target}/evidence/direct")]),
             json!(["PATH=/bin"]),
             None,
-            &format!("krun-oci-init-direct-{nonce}"),
+            &format!("koci-init-direct-{nonce}"),
         )?;
         let nonzero_exit = build_profile(
             base,
@@ -138,7 +138,7 @@ impl InitializationFixture {
             json!(["/bin/busybox", "sh", "-c", "exit 42"]),
             json!(["PATH=/bin"]),
             None,
-            &format!("krun-oci-init-nonzero-{nonce}"),
+            &format!("koci-init-nonzero-{nonce}"),
         )?;
         let prestart_failure = build_profile(
             base,
@@ -146,7 +146,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(hooks("prestart", "exit 11", 2)),
-            &format!("krun-oci-hook-prestart-{nonce}"),
+            &format!("koci-hook-prestart-{nonce}"),
         )?;
         let create_runtime_failure = build_profile(
             base,
@@ -154,7 +154,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(hooks("createRuntime", "exit 13", 2)),
-            &format!("krun-oci-hook-create-runtime-{nonce}"),
+            &format!("koci-hook-create-runtime-{nonce}"),
         )?;
         let create_container_failure = build_profile(
             base,
@@ -162,7 +162,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(hooks("createContainer", "exit 17", 2)),
-            &format!("krun-oci-hook-create-container-{nonce}"),
+            &format!("koci-hook-create-container-{nonce}"),
         )?;
         let start_container_failure = build_profile(
             base,
@@ -170,7 +170,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(hooks("startContainer", "exit 19", 2)),
-            &format!("krun-oci-hook-start-container-{nonce}"),
+            &format!("koci-hook-start-container-{nonce}"),
         )?;
         let poststart_failure = build_profile(
             base,
@@ -178,7 +178,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(hooks("poststart", "exit 21", 2)),
-            &format!("krun-oci-hook-poststart-{nonce}"),
+            &format!("koci-hook-poststart-{nonce}"),
         )?;
         let hook_timeout = build_profile(
             base,
@@ -186,7 +186,7 @@ impl InitializationFixture {
             sleeping_init(),
             json!(["PATH=/bin"]),
             Some(timeout_hooks(&evidence_directory)?),
-            &format!("krun-oci-hook-timeout-{nonce}"),
+            &format!("koci-hook-timeout-{nonce}"),
         )?;
         let poststop_failure = build_profile(
             base,
@@ -194,7 +194,7 @@ impl InitializationFixture {
             json!(["/bin/busybox", "true"]),
             json!(["PATH=/bin"]),
             Some(hooks("poststop", "exit 23", 2)),
-            &format!("krun-oci-hook-poststop-{nonce}"),
+            &format!("koci-hook-poststop-{nonce}"),
         )?;
 
         Ok(Self {
@@ -635,13 +635,13 @@ fn timeout_hooks(evidence_directory: &Path) -> Result<Value, String> {
                 "sh",
                 "-c",
                 "set -eu; (trap '' HUP TERM; /bin/busybox sleep 2; \
-                 /bin/busybox touch \"$KRUN_HOOK_DESCENDANT_ESCAPED\") & \
-                 printf '%s\\n' \"$!\" > \"$KRUN_HOOK_DESCENDANT_STARTED\"; \
+                 /bin/busybox touch \"$K_HOOK_DESCENDANT_ESCAPED\") & \
+                 printf '%s\\n' \"$!\" > \"$K_HOOK_DESCENDANT_STARTED\"; \
                  exec /bin/busybox sleep 30"
             ],
             "env": [
-                format!("KRUN_HOOK_DESCENDANT_STARTED={started}"),
-                format!("KRUN_HOOK_DESCENDANT_ESCAPED={escaped}")
+                format!("K_HOOK_DESCENDANT_STARTED={started}"),
+                format!("K_HOOK_DESCENDANT_ESCAPED={escaped}")
             ],
             "timeout": 1
         }]
@@ -729,7 +729,7 @@ fn object_mut<'a>(
 mod tests {
     use std::path::Path;
 
-    use krun_oci_sdk::OciBundle;
+    use koci_sdk::OciBundle;
     use serde_json::{json, Value};
 
     use super::{
@@ -748,19 +748,19 @@ mod tests {
         let bundle = build_profile(
             &base,
             EvidenceMount {
-                source: Path::new("/tmp/krun-oci-init-evidence"),
+                source: Path::new("/tmp/koci-init-evidence"),
                 target: "/.matrix",
             },
             json!(["/bin/busybox", "true"]),
             json!(["PATH=/bin"]),
             Some(hooks("poststop", "exit 7", 2)),
-            "krun-oci-init-test",
+            "koci-init-test",
         )
         .expect("init profile");
         let config: Value = serde_json::from_str(bundle.config_json()).expect("profile JSON");
 
         assert_eq!(config["process"]["args"], json!(["/bin/busybox", "true"]));
-        assert_eq!(config["linux"]["cgroupsPath"], "krun-oci-init-test");
+        assert_eq!(config["linux"]["cgroupsPath"], "koci-init-test");
         assert_eq!(config["hooks"]["poststop"][0]["timeout"], 2);
         assert!(config["mounts"]
             .as_array()
@@ -778,16 +778,16 @@ mod tests {
         assert_eq!(config["process"]["user"]["additionalGids"], json!([1]));
 
         let timeout =
-            timeout_hooks(Path::new("/tmp/krun-oci-hook-evidence")).expect("timeout Hook profile");
+            timeout_hooks(Path::new("/tmp/koci-hook-evidence")).expect("timeout Hook profile");
         assert_eq!(timeout["prestart"][0]["timeout"], 1);
         assert_eq!(
             timeout["prestart"][0]["env"],
             json!([
                 format!(
-                    "KRUN_HOOK_DESCENDANT_STARTED=/tmp/krun-oci-hook-evidence/{HOOK_DESCENDANT_STARTED}"
+                    "K_HOOK_DESCENDANT_STARTED=/tmp/koci-hook-evidence/{HOOK_DESCENDANT_STARTED}"
                 ),
                 format!(
-                    "KRUN_HOOK_DESCENDANT_ESCAPED=/tmp/krun-oci-hook-evidence/{HOOK_DESCENDANT_ESCAPED}"
+                    "K_HOOK_DESCENDANT_ESCAPED=/tmp/koci-hook-evidence/{HOOK_DESCENDANT_ESCAPED}"
                 )
             ])
         );

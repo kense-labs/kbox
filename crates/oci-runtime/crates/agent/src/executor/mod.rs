@@ -72,7 +72,7 @@ use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentCapabilities, AgentCloseStdinRequest, AgentContainerOperationRequest, AgentCreateRequest,
     AgentDeleteRequest, AgentExecRequest, AgentKillRequest, AgentProcess, AgentProcessesRequest,
     AgentReadOutputRequest, AgentRecoveryRecord, AgentResizeRequest, AgentSignalProcessRequest,
@@ -80,8 +80,8 @@ use krun_oci_agent_protocol::{
     AgentWaitProcessRequest, AgentWaitRequest, AgentWriteStdinRequest, GuestAgentService,
     AGENT_MAX_ACKNOWLEDGED_OPERATIONS,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     async_trait, ContainerStats, DeleteMode, Error, ErrorCode, ExitStatus, FileRequest,
     FileResponse, FilesystemRequest, FilesystemResponse, OperationContext, OperationId,
     OutputChunk, ProcessRecord, Result,
@@ -762,7 +762,7 @@ async fn shutdown_executor(
         match plan {
             Ok((hooks, hook_state)) => hooks.run_poststop(&hook_state).await,
             Err(error) => {
-                eprintln!("krun-oci-agent: shutdown poststop hook state warning: {error}");
+                eprintln!("koci-agent: shutdown poststop hook state warning: {error}");
             }
         }
     }
@@ -1130,7 +1130,7 @@ impl LinuxExecutor {
     /// `SessionSupervisorReattachCache`.
     pub async fn recover_stale_generation(
         &self,
-        target: &krun_oci_sdk::ContainerTarget,
+        target: &koci_sdk::ContainerTarget,
         config_digest: &str,
         durable_pid: Option<i32>,
     ) -> Result<Option<StaleGenerationRecovery>> {
@@ -1403,7 +1403,7 @@ impl LinuxExecutor {
         state.containers.remove(&key);
         match poststop {
             Ok((hooks, hook_state)) => hooks.run_poststop(&hook_state).await,
-            Err(error) => eprintln!("krun-oci-agent: poststop hook state warning: {error}"),
+            Err(error) => eprintln!("koci-agent: poststop hook state warning: {error}"),
         }
         Ok(())
     }
@@ -1721,7 +1721,7 @@ async fn wait_for_unit_operation(
     }
 }
 
-fn confirms_terminal_kill(signal: krun_oci_sdk::Signal) -> bool {
+fn confirms_terminal_kill(signal: koci_sdk::Signal) -> bool {
     signal.get() == libc::SIGKILL
 }
 
@@ -1915,7 +1915,7 @@ fn executor_error(code: ErrorCode, message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod kill_tests {
-    use krun_oci_sdk::Signal;
+    use koci_sdk::Signal;
 
     use super::confirms_terminal_kill;
 
@@ -1957,7 +1957,7 @@ mod shutdown_device_tests {
             let runtime_directory = temporary.path().join(format!("runtime-{index}"));
             std::fs::create_dir(&runtime_directory).expect("runtime directory");
             let manifest = serde_json::json!({
-                "schemaVersion": "krun.oci.native-linux-device-targets.v2",
+                "schemaVersion": "koci.native-linux-device-targets.v2",
                 "rootfs": {
                     "canonicalPath": rootfs,
                     "dev": rootfs_metadata.dev(),
@@ -1997,7 +1997,7 @@ mod shutdown_completion_tests {
     use std::sync::Arc;
     use std::time::Duration;
 
-    use krun_oci_sdk::Result;
+    use koci_sdk::Result;
     use tokio::sync::{oneshot, Notify};
 
     use super::ExecutorShutdownCompletion;
@@ -2045,9 +2045,9 @@ mod rootless_device_tests {
     use std::path::PathBuf;
     use std::sync::Arc;
 
-    use krun_oci_agent_protocol::{AgentBundle, AgentCreateRequest, GuestPath};
-    use krun_oci_sdk::OciBundle;
-    use krun_oci_sdk::{
+    use koci_agent_protocol::{AgentBundle, AgentCreateRequest, GuestPath};
+    use koci_sdk::OciBundle;
+    use koci_sdk::{
         ContainerId, ContainerTarget, ErrorCode, Generation, IoMode, OperationContext, OperationId,
         ProcessIo,
     };
@@ -2188,7 +2188,7 @@ mod rootless_device_tests {
                 "gidMappings": [
                     {"containerID": 0, "hostID": 1001, "size": 1}
                 ],
-                "cgroupsPath": "krun/rootless-cgroup"
+                "cgroupsPath": "kbox/rootless-cgroup"
             }
         });
         let config = serde_json::to_string(&config).expect("encode rootless cgroup config");

@@ -50,9 +50,9 @@ mod tests {
     #[test]
     fn layout_is_exact_and_uses_only_validated_components() {
         let root = if cfg!(windows) {
-            Path::new(r"C:\krun-runtime")
+            Path::new(r"C:\kbox_contract")
         } else {
-            Path::new("/var/lib/krun-oci")
+            Path::new("/var/lib/koci")
         };
         let container = ContainerId::new("box-1").expect("container ID");
         let operation = OperationId::new("create-7").expect("operation ID");

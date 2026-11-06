@@ -1,10 +1,10 @@
 [package]
 publish = false
-name = "krun-oci-core"
+name = "koci-core"
 version = "0.3.2"
 edition = "2021"
 license = "MIT"
-description = "Pure capability and OCI lifecycle contracts for Krun OCI Runtime"
+description = "Pure capability and OCI lifecycle contracts for Kbox OCI Runtime"
 
 [dependencies]
 serde.workspace = true

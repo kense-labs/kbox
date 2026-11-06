@@ -1,8 +1,8 @@
-# krun-runtime
+# kbox_contract
 
 ## 概述
 
-Provider-neutral execution contract and client for Krun runtimes
+Provider-neutral execution contract and client for Kbox runtimes
 
 ## 构建与验证
 
@@ -13,7 +13,7 @@ cargo check --locked
 ```
 
 <p align="center">
-  <img src="./assets/readme/hero.svg" width="100%" alt="Krun Runtime: one durable lifecycle for provider-neutral Tasks and Services">
+  <img src="./assets/readme/hero.svg" width="100%" alt="Kbox Runtime: one durable lifecycle for provider-neutral Tasks and Services">
 </p>
 
 
@@ -24,10 +24,10 @@ cargo check --locked
 </p>
 
 <p align="center">
-  <a href="https://crates.io/crates/krun-runtime"><img alt="Crates.io release" src="https://img.shields.io/crates/v/krun-runtime?style=flat-square&color=f97316"></a>
-  <a href="https://docs.rs/krun-runtime/latest/krun_runtime/"><img alt="docs.rs API documentation" src="https://img.shields.io/docsrs/krun-runtime?style=flat-square"></a>
-  <a href="https://github.com/kense-labs/krun/actions/workflows/ci.yml"><img alt="Continuous integration status" src="https://img.shields.io/github/actions/workflow/status/kense-labs/Runtime/ci.yml?branch=main&style=flat-square&label=CI"></a>
-  <a href="https://github.com/kense-labs/krun/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-5eead4?style=flat-square"></a>
+  <a href="https://crates.io/crates/kbox_contract"><img alt="Crates.io release" src="https://img.shields.io/crates/v/kbox_contract?style=flat-square&color=f97316"></a>
+  <a href="https://docs.rs/kbox_contract/latest/kbox_contract/"><img alt="docs.rs API documentation" src="https://img.shields.io/docsrs/kbox_contract?style=flat-square"></a>
+  <a href="https://github.com/kense-labs/kbox/actions/workflows/ci.yml"><img alt="Continuous integration status" src="https://img.shields.io/github/actions/workflow/status/kense-labs/Runtime/ci.yml?branch=main&style=flat-square&label=CI"></a>
+  <a href="https://github.com/kense-labs/kbox/blob/main/LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-5eead4?style=flat-square"></a>
   <img alt="Minimum supported Rust version 1.85" src="https://img.shields.io/badge/MSRV-1.85-8b949e?style=flat-square">
 </p>
 
@@ -40,15 +40,15 @@ cargo check --locked
   <a href="#deliberate-boundaries">Boundaries</a>
 </p>
 
-**Krun Runtime** is the provider-neutral execution contract for finite Tasks and
+**Kbox Runtime** is the provider-neutral execution contract for finite Tasks and
 long-running Services. It gives callers one lifecycle API across local,
 container, sandbox, and remote providers while keeping provider mechanics
 behind a typed driver boundary.
 
-It is the single execution substrate beneath Krun Cloud AaaS, executable WaaS
+It is the single execution substrate beneath Kbox Cloud AaaS, executable WaaS
 nodes, FaaS, hosted MCP, and Durable Cell application Services. The supported
-production chain uses Krun Box as the process/sandbox provider; public traffic
-enters through Krun Gateway and never through a Runtime endpoint directly.
+production chain uses Kbox Box as the process/sandbox provider; public traffic
+enters through Kbox Gateway and never through a Runtime endpoint directly.
 
 Runtime owns validation, immutable generations, capability admission, durable
 request identity, and observed convergence. Scheduling, routing, deployment
@@ -80,24 +80,24 @@ Every unit generation is bound to one immutable identity:
 | `Task` | `succeeded` | Builds, finite Functions, migrations, evaluations, backups |
 | `Service` | `running`, ready and live when configured | Stateful Agents, stateless Functions/MCP, Durable Cell applications |
 
-Workflow orchestration is not a third unit class. Krun Flow owns the durable
+Workflow orchestration is not a third unit class. Kbox Flow owns the durable
 Workflow state machine; only its executable Agent or Function children project
 to a Runtime Task or Service.
 
 ## Architecture
 
 <p align="center">
-  <img src="./assets/readme/architecture.svg" width="100%" alt="Krun Runtime architecture from caller policy through ManagedRuntimeClient and RuntimeDriver to an external provider">
+  <img src="./assets/readme/architecture.svg" width="100%" alt="Kbox Runtime architecture from caller policy through ManagedRuntimeClient and RuntimeDriver to an external provider">
 </p>
 
 `ManagedRuntimeClient` is the shared lifecycle implementation. It composes three
 replaceable ports:
 
-- [`RuntimeStateStore`](https://docs.rs/krun-runtime/latest/krun_runtime/trait.RuntimeStateStore.html)
+- [`RuntimeStateStore`](https://docs.rs/kbox_contract/latest/kbox_contract/trait.RuntimeStateStore.html)
   owns unit records, request receipts, and per-unit operation leases.
-- [`RuntimeDriver`](https://docs.rs/krun-runtime/latest/krun_runtime/trait.RuntimeDriver.html)
+- [`RuntimeDriver`](https://docs.rs/kbox_contract/latest/kbox_contract/trait.RuntimeDriver.html)
   owns provider resource mechanics and stable provider identity.
-- [`RuntimeClock`](https://docs.rs/krun-runtime/latest/krun_runtime/trait.RuntimeClock.html)
+- [`RuntimeClock`](https://docs.rs/kbox_contract/latest/kbox_contract/trait.RuntimeClock.html)
   supplies deadline and observation time.
 
 The driver never decides generation or request-conflict policy. The registry
@@ -107,7 +107,7 @@ explicit `ProviderId` and connect through `RuntimeClientRegistry`.
 ### Cloud, Runtime, Box, and Gateway
 
 ```text
-Client -> Krun Gateway -> Krun Cloud -> Krun Runtime -> Krun Box
+Client -> Kbox Gateway -> Kbox Cloud -> Kbox Runtime -> Kbox Box
           public path    semantics    lifecycle     execution
 ```
 
@@ -117,8 +117,8 @@ features, opaque semantics evidence, Service readiness/liveness, and exact
 endpoints while leaving all product fields in the caller:
 
 ```rust,ignore
-use krun_runtime::contract::{RuntimeFeature, RuntimeUnitClass};
-use krun_runtime::RuntimeConsumerRequirements;
+use kbox_contract::contract::{RuntimeFeature, RuntimeUnitClass};
+use kbox_contract::RuntimeConsumerRequirements;
 
 let requirements = RuntimeConsumerRequirements::new(RuntimeUnitClass::Service)
     .require_semantics_profile()
@@ -155,20 +155,20 @@ than create a duplicate.
 Install the latest release:
 
 ```bash
-cargo add krun-runtime
+cargo add kbox_contract
 ```
 
 After implementing a provider driver, compose it with the managed lifecycle:
 
 ```rust,ignore
-use krun_runtime::{
+use kbox_contract::{
     FileRuntimeStateStore, ManagedRuntimeClient, RuntimeClient, RuntimeDriver,
 };
 use std::sync::Arc;
 
 let driver: Arc<dyn RuntimeDriver> = Arc::new(provider_driver);
 let client = ManagedRuntimeClient::new(
-    Arc::new(FileRuntimeStateStore::new("/var/lib/krun/runtime")),
+    Arc::new(FileRuntimeStateStore::new("/var/lib/kbox/runtime")),
     driver,
 );
 
@@ -179,7 +179,7 @@ let observation = client.apply(&request).await?;
 Choose the entry point that matches your role:
 
 - **Runtime consumer:** call the
-  [`RuntimeClient`](https://docs.rs/krun-runtime/latest/krun_runtime/trait.RuntimeClient.html)
+  [`RuntimeClient`](https://docs.rs/kbox_contract/latest/kbox_contract/trait.RuntimeClient.html)
   lifecycle directly or obtain one from `RuntimeClientRegistry`.
 - **Provider author:** implement `RuntimeDriver`, expose it through a
   `RuntimeProviderFactory`, and make `apply`, `stop`, `remove`, and advertised
@@ -189,10 +189,10 @@ Choose the entry point that matches your role:
   equivalent fenced per-unit lease.
 
 > [!NOTE]
-> `krun-runtime` 0.5.0 uses capabilities v6 and unit-spec/observation v4. It
+> `kbox_contract` 0.5.0 uses capabilities v6 and unit-spec/observation v4. It
 > separates Service readiness from liveness, carries a bounded graceful-stop
 > policy, and retains typed endpoints plus opaque identity-attestation binding.
-> Production claims still require exact Krun Box certification.
+> Production claims still require exact Kbox Box certification.
 
 ## Runtime specification
 
@@ -311,7 +311,7 @@ Production providers implement `RuntimeConformanceFixture` and run the shared
 suite against real, disposable infrastructure:
 
 ```rust,ignore
-use krun_runtime::{verify_runtime_profiles, RuntimeConformanceFixture};
+use kbox_contract::{verify_runtime_profiles, RuntimeConformanceFixture};
 
 let fixture: &dyn RuntimeConformanceFixture = provider_fixture;
 let report = verify_runtime_profiles(client.as_ref(), fixture).await?;
@@ -330,14 +330,14 @@ cases. A provider must not advertise it from configuration intent alone.
 The lower-level `verify_runtime_provider` helper covers the successful Task and
 Service lifecycle, but it is not production certification by itself.
 
-Krun Box contains the production `RuntimeDriver` and capability-triggered
+Kbox Box contains the production `RuntimeDriver` and capability-triggered
 fixtures. A Cloud product may claim support only after the exact Runtime and Box
 revisions pass every advertised profile and restore the pre-test inventory;
 unadvertised capabilities such as outbound networking cannot be inferred.
 
 ## Deliberate boundaries
 
-Krun Runtime intentionally does not own:
+Kbox Runtime intentionally does not own:
 
 - scheduling, placement, routing, traffic switching, or deployment workflows;
 - provider-selection policy, login discovery, or default-provider fallback;
@@ -354,7 +354,7 @@ reasoning:
 - [ADR 0003 — Interactive streaming exec stays outside v0.2](docs/adr/0003-keep-interactive-streaming-exec-outside-v0.2-core.md)
 - [ADR 0004 — Typed Service endpoints and protocol capabilities](docs/adr/0004-type-service-endpoints-and-protocol-capabilities.md)
 - [ADR 0005 — Host modern stateless MCP as a Service profile](docs/adr/0005-host-modern-stateless-mcp-as-a-service-profile.md)
-- [ADR 0006 — Unify AI service consumers on Task, Service, and Krun Box](docs/adr/0006-unify-ai-service-consumers-on-task-service-and-box.md)
+- [ADR 0006 — Unify AI service consumers on Task, Service, and Kbox Box](docs/adr/0006-unify-ai-service-consumers-on-task-service-and-box.md)
 - [ADR 0007 — Bind opaque identity attachment to provider attestation](docs/adr/0007-bind-opaque-identity-attachment-to-provider-attestation.md)
 - [ADR 0008 — Separate Service readiness, liveness, and graceful stop](docs/adr/0008-separate-service-readiness-liveness-and-graceful-stop.md)
 - [Unified AI Service Runtime](docs/unified-ai-service-runtime.md)
@@ -381,4 +381,4 @@ conformance.
 
 ## License
 
-[MIT](LICENSE) © Krun
+[MIT](LICENSE) © Kbox

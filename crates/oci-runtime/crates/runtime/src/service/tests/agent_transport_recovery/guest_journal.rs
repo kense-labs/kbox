@@ -1,4 +1,4 @@
-use krun_oci_sdk::{Error, ErrorCode};
+use koci_sdk::{Error, ErrorCode};
 
 #[derive(Debug)]
 pub(super) struct OperationJournal<Request, Response> {

@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ContainerTarget, ErrorCode, ProcessId, ProcessRecord, Result};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ContainerTarget, ErrorCode, ProcessId, ProcessRecord, Result};
 
 use crate::fault::DurableMutation;
 

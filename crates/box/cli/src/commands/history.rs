@@ -1,4 +1,4 @@
-//! `krun-box history` command — Show image layer history.
+//! `kbox history` command — Show image layer history.
 
 use clap::Args;
 use oci_spec::image::{History, ImageConfiguration};
@@ -145,7 +145,7 @@ fn format_timestamp(ts: &str) -> String {
 mod tests {
     use super::*;
     use chrono::Utc;
-    use krun_box_runtime::StoredImage;
+    use kbox_runtime::StoredImage;
     use std::path::PathBuf;
 
     #[test]

@@ -1,8 +1,8 @@
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentCloseStdinRequest, AgentReadOutputRequest, AgentResizeRequest, AgentWriteStdinRequest,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{Error, ErrorCode, OutputChunk, OutputStream, Result};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{Error, ErrorCode, OutputChunk, OutputStream, Result};
 
 use super::super::guest_journal::{already_exists, changed_request};
 use super::JournaledLifecycleGuest;

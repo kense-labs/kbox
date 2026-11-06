@@ -200,7 +200,7 @@ pub fn spawn_isolated(
                 cgroup_procs,
             ) {
                 tracing::error!("Child process failed: {}", e);
-                eprintln!("krun-box child setup failed: {e}");
+                eprintln!("kbox child setup failed: {e}");
                 std::process::exit(1);
             }
             unreachable!("exec should not return");
@@ -506,7 +506,7 @@ pub(crate) fn setgroups_permitted() -> bool {
 /// Apply security restrictions (seccomp, no-new-privileges, capabilities) and
 /// the container user before exec using the pre_exec hook.
 ///
-/// Reads security configuration from `KRUN_SEC_*` environment variables
+/// Reads security configuration from `K_SEC_*` environment variables
 /// set by the host runtime.
 #[cfg(target_os = "linux")]
 fn apply_security_before_exec(
@@ -514,7 +514,7 @@ fn apply_security_before_exec(
     process_user: Option<crate::user::ProcessUser>,
     supplemental_groups: Vec<u32>,
 ) -> Result<(), NamespaceError> {
-    use krun_box_core::security::{SeccompMode, SecurityConfig};
+    use kbox_core::security::{SeccompMode, SecurityConfig};
 
     let config = SecurityConfig::from_env_vars();
 
@@ -546,7 +546,7 @@ fn apply_security_before_exec(
         config.cap_drop.clone()
     };
     let cap_keep =
-        if !privileged && std::env::var("KRUN_BOOTSTRAP_MODE").as_deref() == Ok("host-sandbox") {
+        if !privileged && std::env::var("K_BOOTSTRAP_MODE").as_deref() == Ok("host-sandbox") {
             Some(sandbox_workload_capability_keep(
                 &config.cap_add,
                 &config.cap_drop,
@@ -688,7 +688,7 @@ fn apply_security_before_exec(
 /// and PTY processes. Bootstrap-only capabilities such as `NET_ADMIN` are not
 /// inherited by user code.
 pub(crate) fn sandbox_workload_capability_keep_from_env() -> Vec<String> {
-    let config = krun_box_core::security::SecurityConfig::from_env_vars();
+    let config = kbox_core::security::SecurityConfig::from_env_vars();
     sandbox_workload_capability_keep(&config.cap_add, &config.cap_drop)
 }
 
@@ -1480,7 +1480,7 @@ mod tests {
 
     #[test]
     fn test_resolve_command_path_missing() {
-        let path = resolve_command_path("definitely-not-an-krun-command", &[("PATH", "/bin")]);
+        let path = resolve_command_path("definitely-not-an-kcommand", &[("PATH", "/bin")]);
         assert!(path.is_none());
     }
 

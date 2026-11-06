@@ -1,5 +1,5 @@
-use krun_oci_core::HostPlatform;
-use krun_oci_sdk::{
+use koci_core::HostPlatform;
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest, CheckpointFormat,
     CheckpointReference, CheckpointRequest, CheckpointResponse, ContainerRecord, RuntimeArtifact,
 };

@@ -1,9 +1,9 @@
 use std::os::unix::fs::MetadataExt;
 use std::path::Path;
 
-use krun_oci_sdk::OciBundle;
+use koci_sdk::OciBundle;
 
-const SUBORDINATE_FILE_NAME: &str = ".krun-oci-rootless-subordinate";
+const SUBORDINATE_FILE_NAME: &str = ".koci-rootless-subordinate";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub(super) struct Mapping {

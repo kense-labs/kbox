@@ -1,6 +1,6 @@
-//! Install/uninstall the `krun-box monitor` as a supervised per-user service.
+//! Install/uninstall the `kbox monitor` as a supervised per-user service.
 //!
-//! The monitor (`krun-box monitor`) restarts dead/unhealthy detached boxes per
+//! The monitor (`kbox monitor`) restarts dead/unhealthy detached boxes per
 //! their restart policy. On its own it is just a foreground process: if the
 //! operator's shell or the process dies, every detached box silently loses
 //! restart + health supervision. This module installs it as a **per-user**
@@ -12,18 +12,18 @@ use std::path::{Path, PathBuf};
 
 /// systemd unit name.
 #[cfg(any(target_os = "linux", test))]
-const SYSTEMD_UNIT: &str = "krun-box-monitor.service";
+const SYSTEMD_UNIT: &str = "kbox-monitor.service";
 /// launchd label.
 #[cfg(any(target_os = "macos", test))]
-const LAUNCHD_LABEL: &str = "com.krun-box.monitor";
+const LAUNCHD_LABEL: &str = "com.kbox.monitor";
 
-/// Render the systemd **user** unit that supervises `krun-box monitor`.
+/// Render the systemd **user** unit that supervises `kbox monitor`.
 #[cfg(any(target_os = "linux", test))]
 pub fn systemd_unit(exe: &Path, interval: u64) -> String {
     format!(
         "[Unit]\n\
-         Description=krun-box monitor — restarts dead/unhealthy detached boxes\n\
-         Documentation=https://github.com/kense-labs/krun\n\
+         Description=kbox monitor — restarts dead/unhealthy detached boxes\n\
+         Documentation=https://github.com/kense-labs/kbox\n\
          After=network.target\n\
          \n\
          [Service]\n\
@@ -38,7 +38,7 @@ pub fn systemd_unit(exe: &Path, interval: u64) -> String {
     )
 }
 
-/// Render the launchd LaunchAgent plist that supervises `krun-box monitor`.
+/// Render the launchd LaunchAgent plist that supervises `kbox monitor`.
 #[cfg(any(target_os = "macos", test))]
 pub fn launchd_plist(exe: &Path, interval: u64, log_path: &Path) -> String {
     format!(
@@ -143,7 +143,7 @@ fn install_impl(interval: u64) -> Result<(), Box<dyn std::error::Error>> {
     if let Some(parent) = path.parent() {
         std::fs::create_dir_all(parent)?;
     }
-    let log = krun_box_core::dirs_home().join("monitor.log");
+    let log = kbox_core::dirs_home().join("monitor.log");
     if let Some(parent) = log.parent() {
         std::fs::create_dir_all(parent)?;
     }
@@ -217,8 +217,8 @@ mod tests {
 
     #[test]
     fn systemd_unit_has_execstart_and_restart() {
-        let unit = systemd_unit(Path::new("/usr/local/bin/krun-box"), 5);
-        assert!(unit.contains("ExecStart=/usr/local/bin/krun-box monitor --interval 5"));
+        let unit = systemd_unit(Path::new("/usr/local/bin/kbox"), 5);
+        assert!(unit.contains("ExecStart=/usr/local/bin/kbox monitor --interval 5"));
         assert!(unit.contains("Restart=always"));
         assert!(unit.contains("WantedBy=default.target"));
     }
@@ -226,15 +226,15 @@ mod tests {
     #[test]
     fn launchd_plist_has_keepalive_and_program() {
         let plist = launchd_plist(
-            Path::new("/usr/local/bin/krun-box"),
+            Path::new("/usr/local/bin/kbox"),
             7,
-            Path::new("/home/u/.krun/monitor.log"),
+            Path::new("/home/u/.kbox/monitor.log"),
         );
-        assert!(plist.contains("<key>Label</key><string>com.krun-box.monitor</string>"));
-        assert!(plist.contains("<string>/usr/local/bin/krun-box</string>"));
+        assert!(plist.contains("<key>Label</key><string>com.kbox.monitor</string>"));
+        assert!(plist.contains("<string>/usr/local/bin/kbox</string>"));
         assert!(plist.contains("<string>7</string>"));
         assert!(plist.contains("<key>KeepAlive</key><true/>"));
-        assert!(plist.contains("/home/u/.krun/monitor.log"));
+        assert!(plist.contains("/home/u/.kbox/monitor.log"));
     }
 
     #[test]
@@ -242,23 +242,23 @@ mod tests {
         assert!(systemd_unit_path().ends_with(
             Path::new("systemd")
                 .join("user")
-                .join("krun-box-monitor.service")
+                .join("kbox-monitor.service")
         ));
         assert!(launchd_plist_path()
-            .ends_with(Path::new("LaunchAgents").join("com.krun-box.monitor.plist")));
+            .ends_with(Path::new("LaunchAgents").join("com.kbox.monitor.plist")));
     }
 
     #[test]
     fn launchd_plist_escapes_xml_specials_in_paths() {
-        // A path with `&`/`<`/`>` (e.g. a quirky KRUN_HOME) must not produce a
+        // A path with `&`/`<`/`>` (e.g. a quirky K_HOME) must not produce a
         // malformed plist that launchctl rejects.
         let plist = launchd_plist(
-            Path::new("/opt/a&b/<bin>/krun-box"),
+            Path::new("/opt/a&b/<bin>/kbox"),
             5,
-            Path::new("/home/a&b/.krun/monitor.log"),
+            Path::new("/home/a&b/.kbox/monitor.log"),
         );
-        assert!(plist.contains("/opt/a&amp;b/&lt;bin&gt;/krun-box"));
-        assert!(plist.contains("/home/a&amp;b/.krun/monitor.log"));
+        assert!(plist.contains("/opt/a&amp;b/&lt;bin&gt;/kbox"));
+        assert!(plist.contains("/home/a&amp;b/.kbox/monitor.log"));
         // The raw, unescaped forms must NOT appear.
         assert!(!plist.contains("a&b"));
         assert!(!plist.contains("<bin>"));

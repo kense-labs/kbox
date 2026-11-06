@@ -2,10 +2,10 @@
 
 use std::path::Path;
 
-use krun_box_core::snapshot::SnapshotMetadata;
+use kbox_core::snapshot::SnapshotMetadata;
 #[cfg(target_os = "linux")]
-use krun_box_core::ExecutionIsolation;
-use krun_box_core::{
+use kbox_core::ExecutionIsolation;
+use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionLease, ExecutionManagerError,
     ExecutionManagerResult, ExecutionSnapshot, ExecutionSnapshotId, ExecutionState, OperationId,
 };
@@ -700,7 +700,7 @@ pub fn capture_sandbox_host_rootfs_for_commit(
     record: &BoxRecord,
 ) -> ExecutionManagerResult<(
     std::path::PathBuf,
-    krun_box_core::rootfs_metadata::RootfsMetadataManifest,
+    kbox_core::rootfs_metadata::RootfsMetadataManifest,
 )> {
     if record.isolation != ExecutionIsolation::Sandbox {
         return Err(ExecutionManagerError::Unavailable(format!(
@@ -729,7 +729,7 @@ pub fn capture_sandbox_host_rootfs_for_commit(
 fn capture_sandbox_rootfs_metadata(
     record: &BoxRecord,
     rootfs: &Path,
-) -> ExecutionManagerResult<krun_box_core::rootfs_metadata::RootfsMetadataManifest> {
+) -> ExecutionManagerResult<kbox_core::rootfs_metadata::RootfsMetadataManifest> {
     let plan = if sandbox_bundle_config_present(record)? {
         let plan = sandbox_id_mapping_plan_from_bundle(record, Some(rootfs))?;
         crate::sandbox::rootfs::persist_rootfs_id_mappings(&record.box_dir, &plan).map_err(

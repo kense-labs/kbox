@@ -4,7 +4,7 @@ use std::collections::HashMap;
 use std::path::Path;
 
 use chrono::{DateTime, Utc};
-use krun_box_core::{
+use kbox_core::{
     CreateExecutionRequest, ExecutionGeneration, ExecutionId, ExecutionLease,
     ExecutionManagerError, ExecutionManagerResult, ExecutionReservation, ExecutionState,
     ExecutionStatus, NetworkMode, OperationId,
@@ -106,18 +106,18 @@ pub(crate) fn build_managed_record(
     })
 }
 
-fn validate_execution_config(config: &krun_box_core::BoxConfig) -> ExecutionManagerResult<()> {
+fn validate_execution_config(config: &kbox_core::BoxConfig) -> ExecutionManagerResult<()> {
     if !config.host_services.is_empty() {
-        krun_box_core::resolve_execution(config)
+        kbox_core::resolve_execution(config)
             .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
     }
-    if config.isolation == krun_box_core::ExecutionIsolation::Microvm {
-        krun_box_core::config::validate_vcpu_count(config.resources.vcpus)
+    if config.isolation == kbox_core::ExecutionIsolation::Microvm {
+        kbox_core::config::validate_vcpu_count(config.resources.vcpus)
             .map_err(ExecutionManagerError::InvalidRequest)?;
     }
 
     #[cfg(windows)]
-    if config.isolation == krun_box_core::ExecutionIsolation::Sandbox {
+    if config.isolation == kbox_core::ExecutionIsolation::Sandbox {
         return Err(ExecutionManagerError::InvalidRequest(
             "Sandbox isolation is supported only on Linux; use MicroVM isolation on Windows"
                 .to_string(),
@@ -125,21 +125,21 @@ fn validate_execution_config(config: &krun_box_core::BoxConfig) -> ExecutionMana
     }
 
     #[cfg(windows)]
-    if !matches!(config.tee, krun_box_core::config::TeeConfig::None) {
+    if !matches!(config.tee, kbox_core::config::TeeConfig::None) {
         return Err(ExecutionManagerError::InvalidRequest(
             "TEE configuration is not supported on Windows".to_string(),
         ));
     }
 
     #[cfg(windows)]
-    if matches!(config.network, krun_box_core::NetworkMode::Bridge { .. }) {
+    if matches!(config.network, kbox_core::NetworkMode::Bridge { .. }) {
         return Err(ExecutionManagerError::InvalidRequest(
             "bridge networking is not supported on Windows".to_string(),
         ));
     }
 
     #[cfg(not(any(target_os = "linux", target_os = "macos", windows)))]
-    if matches!(config.network, krun_box_core::NetworkMode::Bridge { .. }) {
+    if matches!(config.network, kbox_core::NetworkMode::Bridge { .. }) {
         return Err(ExecutionManagerError::InvalidRequest(
             "bridge networking is not supported on this platform".to_string(),
         ));
@@ -156,9 +156,7 @@ pub(super) fn validate_record_health(record: &BoxRecord) -> ExecutionManagerResu
     Ok(())
 }
 
-fn validate_health_policy(
-    policy: &krun_box_core::ExecutionRecordPolicy,
-) -> ExecutionManagerResult<()> {
+fn validate_health_policy(policy: &kbox_core::ExecutionRecordPolicy) -> ExecutionManagerResult<()> {
     validate_effective_health_check(policy.health_check.is_some(), policy.healthcheck_disabled)
 }
 

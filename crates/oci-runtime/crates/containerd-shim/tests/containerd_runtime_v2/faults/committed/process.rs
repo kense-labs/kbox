@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, Process};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, Process};
+use koci_sdk::{
     ContainerTarget, ExecRequest as RuntimeExecRequest, Generation, IoMode, OperationContext,
     ProcessIo, ProcessRecord, ProcessTarget, Signal,
     SignalProcessRequest as RuntimeSignalProcessRequest, StateRequest as RuntimeStateRequest,
@@ -363,7 +363,7 @@ async fn wait_runtime_process(
     task_id: &str,
     exec_id: &str,
     identity: &RuntimeIdentity,
-) -> TestResult<krun_oci_sdk::ExitStatus> {
+) -> TestResult<koci_sdk::ExitStatus> {
     let client = runtime_client(config).await?;
     let request = RuntimeWaitProcessRequest {
         process: exact_process_target(config, task_id, exec_id, identity)?,
@@ -389,7 +389,7 @@ async fn wait_runtime_process(
 async fn runtime_state(
     config: &QualificationConfig,
     identity: &RuntimeIdentity,
-) -> TestResult<krun_oci_sdk::ContainerRecord> {
+) -> TestResult<koci_sdk::ContainerRecord> {
     runtime_client(config)
         .await?
         .state(RuntimeStateRequest {

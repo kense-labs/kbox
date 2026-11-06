@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use koci_sdk::{
     ContainerTarget, CreateRequest, ExecRequest, OperationId, OutputChunk, ReadOutputRequest,
     StartRequest,
 };
@@ -10,7 +10,7 @@ use krun_oci_sdk::{
 use super::QualificationHvfDriver;
 use crate::{DriverExecRequest, DriverReadOutputRequest, OciVmOperationReopenReplacementReport};
 
-const READ_OUTPUT_MARKER_NAME: &str = ".krun-oci-read-output-reopen-smoke";
+const READ_OUTPUT_MARKER_NAME: &str = ".koci-read-output-reopen-smoke";
 
 struct Qualification {
     shim: PathBuf,

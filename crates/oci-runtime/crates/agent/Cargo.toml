@@ -1,18 +1,18 @@
 [package]
 publish = false
-name = "krun-oci-agent"
+name = "koci-agent"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Linux guest agent for Krun OCI Runtime"
+description = "Linux guest agent for Kbox OCI Runtime"
 
 [[bin]]
-name = "krun-oci-agent"
+name = "koci-agent"
 path = "src/main.rs"
 
 [dependencies]
-krun-oci-agent-protocol = { path = "../agent-protocol" }
-krun-oci-sdk = { path = "../sdk" }
+koci-agent-protocol = { path = "../agent-protocol" }
+koci-sdk = { path = "../sdk" }
 base64.workspace = true
 zeroize.workspace = true
 

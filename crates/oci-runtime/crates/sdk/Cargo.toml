@@ -1,13 +1,13 @@
 [package]
 publish = false
-name = "krun-oci-sdk"
+name = "koci-sdk"
 version = "0.3.2"
 edition = "2021"
 license = "MIT"
-description = "Async, strongly typed Rust SDK for Krun OCI Runtime"
+description = "Async, strongly typed Rust SDK for Kbox OCI Runtime"
 
 [dependencies]
-krun-oci-core = { version = "=0.3.2", path = "../core" }
+koci-core = { version = "=0.3.2", path = "../core" }
 async-trait.workspace = true
 base64.workspace = true
 cap-fs-ext.workspace = true

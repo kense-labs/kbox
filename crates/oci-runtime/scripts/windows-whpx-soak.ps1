@@ -65,9 +65,9 @@ foreach ($delay in $OwnerKillDelayMilliseconds) {
 $repositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $fixtureConfig = Join-Path $repositoryRoot 'fixtures\utility-vm\config.windows.json'
 $fixtureAssetDirectory = Join-Path $PSScriptRoot 'fixtures\windows-soak'
-$cli = Join-Path $repositoryRoot 'target\debug\krun-oci.exe'
-$shim = Join-Path $repositoryRoot 'target\debug\krun-oci-krun-shim.exe'
-$krunDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
+$cli = Join-Path $repositoryRoot 'target\debug\koci.exe'
+$shim = Join-Path $repositoryRoot 'target\debug\koci-kshim.exe'
+$kDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
 $firmwareDll = Join-Path $repositoryRoot 'target\debug\libkrunfw.dll'
 $rootfsArchive = (Resolve-Path -LiteralPath $RootfsArchive -ErrorAction Stop).Path
 $systemImageManifest = (
@@ -101,9 +101,9 @@ if ($manifestItem.PSObject.Properties.Name -contains 'LinkType' -and $manifestIt
     throw "System-image manifest must not be a link: $systemImageManifest"
 }
 $systemImage = Get-Content -LiteralPath $systemImageManifest -Raw | ConvertFrom-Json
-if ($systemImage.schema_version -ne 'krun.oci.windows-system-image.v1' -or
+if ($systemImage.schema_version -ne 'koci.windows-system-image.v1' -or
     $systemImage.architecture -ne 'x86_64' -or
-    $systemImage.image.name -ne 'krun-oci-system.ext4') {
+    $systemImage.image.name -ne 'koci-system.ext4') {
     throw "Unexpected Windows system-image manifest: $systemImageManifest"
 }
 $systemImagePath = Join-Path $manifestItem.DirectoryName $systemImage.image.name
@@ -152,7 +152,7 @@ $failure = $null
 $commit = $null
 $worktreeStatus = @()
 $rootfsArchiveSha256 = $null
-$krunDllSha256 = $null
+$kDllSha256 = $null
 $firmwareDllSha256 = $null
 $startedAt = [DateTime]::UtcNow
 $soakStartedAt = $null
@@ -564,7 +564,7 @@ function Initialize-InitScriptFixture {
         [switch]$DelayBeforeReady
     )
 
-    $scriptSource = Join-Path $ContainerRootfs 'opt\krun\init.sh'
+    $scriptSource = Join-Path $ContainerRootfs 'opt\kbox\init.sh'
     $stateDirectory = Join-Path $Bundle 'volumes\rw'
     New-Item -ItemType Directory -Path $stateDirectory -Force | Out-Null
     Copy-WorkloadAsset -Name $Asset -Destination $scriptSource
@@ -579,12 +579,12 @@ function Initialize-InitScriptFixture {
         (New-OciMount -Destination '/mnt/rw' -Type 'none' `
             -Source 'volumes/rw' -Options @('bind', 'rw'))
     )
-    $Config.process.args = @('/bin/sh', '/opt/krun/init.sh')
+    $Config.process.args = @('/bin/sh', '/opt/kbox/init.sh')
     $Config.process.env = @($Config.process.env) + @(
-        "KRUN_INIT_SCENARIO=$Scenario"
+        "K_INIT_SCENARIO=$Scenario"
     )
     if ($DelayBeforeReady) {
-        $Config.process.env += 'KRUN_INIT_DELAY_SECONDS=1'
+        $Config.process.env += 'K_INIT_DELAY_SECONDS=1'
     }
 
     [pscustomobject]@{
@@ -660,7 +660,7 @@ function New-SoakFixture {
         throw "Failed to extract container rootfs for fixture $Name"
     }
     $config = Get-Content -LiteralPath $script:fixtureConfig -Raw | ConvertFrom-Json
-    $config.linux.cgroupsPath = "krun-oci-windows-soak-$Name"
+    $config.linux.cgroupsPath = "koci-windows-soak-$Name"
     $scenarioMetadata = [pscustomobject]@{
         Evidence = $null
         Source = $null
@@ -685,7 +685,7 @@ function New-SoakFixture {
         }
         'apparmor-profile' {
             $config.process | Add-Member -NotePropertyName apparmorProfile `
-                -NotePropertyValue 'krun-windows-soak'
+                -NotePropertyValue 'kwindows-soak'
         }
         'mount-label' {
             $config.linux | Add-Member -NotePropertyName mountLabel `
@@ -748,24 +748,24 @@ function New-SoakFixture {
             )
         }
         'network-isolated' {
-            $target = Join-Path $containerRootfs 'opt\krun\network-isolated.sh'
+            $target = Join-Path $containerRootfs 'opt\kbox\network-isolated.sh'
             Copy-WorkloadAsset -Name 'network-isolated.sh' -Destination $target
-            $config.process.args = @('/bin/sh', '/opt/krun/network-isolated.sh')
+            $config.process.args = @('/bin/sh', '/opt/kbox/network-isolated.sh')
             $scenarioMetadata.Evidence = Join-Path (
                 $containerRootfs
-            ) '.krun-network-evidence'
+            ) '.knetwork-evidence'
         }
         'network-inherited' {
             $config.linux.namespaces = @(
                 $config.linux.namespaces |
                     Where-Object { $_.type -ne 'network' }
             )
-            $target = Join-Path $containerRootfs 'opt\krun\network-inherited.sh'
+            $target = Join-Path $containerRootfs 'opt\kbox\network-inherited.sh'
             Copy-WorkloadAsset -Name 'network-inherited.sh' -Destination $target
-            $config.process.args = @('/bin/sh', '/opt/krun/network-inherited.sh')
+            $config.process.args = @('/bin/sh', '/opt/kbox/network-inherited.sh')
             $scenarioMetadata.Evidence = Join-Path (
                 $containerRootfs
-            ) '.krun-network-evidence'
+            ) '.knetwork-evidence'
         }
         'storage-matrix' {
             $rwSource = Join-Path $bundle 'volumes\rw'
@@ -775,7 +775,7 @@ function New-SoakFixture {
             $sentinel = Join-Path $readOnlySource 'sentinel.txt'
             Write-Utf8Text -Path $sentinel -Text 'read-only-volume-v1'
 
-            $scriptTarget = Join-Path $containerRootfs 'opt\krun\storage-matrix.sh'
+            $scriptTarget = Join-Path $containerRootfs 'opt\kbox\storage-matrix.sh'
             Copy-WorkloadAsset -Name 'storage-matrix.sh' -Destination $scriptTarget
             $rwTarget = Join-Path $containerRootfs 'mnt\rw'
             $readOnlyTarget = Join-Path $containerRootfs 'mnt\readonly'
@@ -790,9 +790,9 @@ function New-SoakFixture {
             )
             $config | Add-Member -NotePropertyName annotations `
                 -NotePropertyValue ([pscustomobject][ordered]@{
-                    'org.krun.qualification.transport-padding' = 'x' * 1024
+                    'org.kbox.qualification.transport-padding' = 'x' * 1024
                 })
-            $config.process.args = @('/bin/sh', '/opt/krun/storage-matrix.sh')
+            $config.process.args = @('/bin/sh', '/opt/kbox/storage-matrix.sh')
             $scenarioMetadata.Evidence = Join-Path $rwSource 'lifecycle.log'
             $scenarioMetadata.ReadOnlySource = $sentinel
             $scenarioMetadata.RoundTrip = Join-Path $rwSource 'round-trip.txt'
@@ -827,7 +827,7 @@ function New-SoakFixture {
         VmRootfs = $vmRootfs
         RuntimeShare = $runtimeShare
         Bundle = $bundle
-        Marker = Join-Path $containerRootfs '.krun-oci-create-start-smoke'
+        Marker = Join-Path $containerRootfs '.koci-create-start-smoke'
         Scenario = $scenarioMetadata
     }
 }
@@ -851,7 +851,7 @@ function New-SecondBundle {
         throw "Failed to extract the second container rootfs for $Name"
     }
     $config = Get-Content -LiteralPath $script:fixtureConfig -Raw | ConvertFrom-Json
-    $config.linux.cgroupsPath = "krun-oci-windows-soak-$Name"
+    $config.linux.cgroupsPath = "koci-windows-soak-$Name"
     Write-JsonFile -Path (Join-Path $bundle 'config.json') -Value $config
     $bundle
 }
@@ -930,18 +930,18 @@ function Get-FixtureAudit {
         }
     }
     $tokenHits = @(
-        $logs | Select-String -SimpleMatch 'KRUN_OCI_AGENT_SESSION_TOKEN='
+        $logs | Select-String -SimpleMatch 'K_OCI_AGENT_SESSION_TOKEN='
     )
     $bootstrapDirectories = @(
         Get-ChildItem -LiteralPath $Fixture.RuntimeShare -Directory -Force |
-            Where-Object { $_.Name -like '.krun-oci-bootstrap-*' }
+            Where-Object { $_.Name -like '.koci-bootstrap-*' }
     )
     $runtimeParent = Join-Path $Fixture.RuntimeShare 'run'
     $runtimeDirectories = @()
     if (Test-Path -LiteralPath $runtimeParent -PathType Container) {
         $runtimeDirectories = @(
             Get-ChildItem -LiteralPath $runtimeParent -Directory -Force |
-                Where-Object { $_.Name -like 'krun-oci-agent-*' }
+                Where-Object { $_.Name -like 'koci-agent-*' }
         )
     }
     [int64]$logBytes = 0
@@ -1007,9 +1007,9 @@ function Assert-HostPreflightAudit {
     Assert-NoRuntimeResidue -Label $Label -Audit $Audit
 }
 
-function Get-KrunProcesses {
+function Get-KProcesses {
     @(
-        Get-Process -Name 'krun-oci', 'krun-oci-krun-shim' `
+        Get-Process -Name 'koci', 'koci-kshim' `
             -ErrorAction SilentlyContinue |
             ForEach-Object {
                 $processIdentifier = $null
@@ -1035,24 +1035,24 @@ function Get-KrunProcesses {
     )
 }
 
-function Wait-ForKrunProcessesToExit {
+function Wait-ForKProcessesToExit {
     param([int]$TimeoutSeconds = 20)
 
     $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
     do {
-        $processes = @(Get-KrunProcesses)
+        $processes = @(Get-KProcesses)
         if ($processes.Count -eq 0) {
             return @()
         }
         Start-Sleep -Milliseconds 50
     } while ([DateTime]::UtcNow -lt $deadline)
-    @(Get-KrunProcesses)
+    @(Get-KProcesses)
 }
 
-function Assert-NoKrunProcesses {
+function Assert-NoKProcesses {
     param([Parameter(Mandatory)][string]$Label)
 
-    $residual = @(Wait-ForKrunProcessesToExit)
+    $residual = @(Wait-ForKProcessesToExit)
     if ($residual.Count -gt 0) {
         $description = ($residual | ForEach-Object {
             '{0}:{1}' -f $_.Name, $_.ProcessId
@@ -1162,7 +1162,7 @@ function Assert-MultiContainerReport {
         throw "$Label did not complete successfully"
     }
     if ($Result.Report.schema_version -ne `
-            'krun.oci.windows-oci-vm-multi-container-smoke.v1' -or
+            'koci.windows-oci-vm-multi-container-smoke.v1' -or
         $Result.Report.platform -ne 'windows' -or
         $Result.Report.status -ne 'available' -or
         $Result.Report.bundles_loaded -ne $true -or
@@ -1185,7 +1185,7 @@ function Assert-WindowsShimHandleReclamation {
 
     $shim = $Bridge.shim_report
     if ($null -eq $shim -or
-        $shim.schema_version -ne 'krun.oci.krun-agent-vm-smoke.v7' -or
+        $shim.schema_version -ne 'koci.kagent-vm-smoke.v7' -or
         [uint64]$shim.windows_handles_before_vm -eq 0 -or
         [uint64]$shim.windows_handles_after_vm -ne
             [uint64]$shim.windows_handles_before_vm -or
@@ -1207,7 +1207,7 @@ function Assert-LifecycleFaultReport {
     if ($Result.Completed.ExitCode -ne 0 -or $null -eq $Result.Report) {
         throw "$Label did not complete successfully"
     }
-    if ($Result.Report.schema_version -ne 'krun.oci.oci-vm-fault-cleanup.v4' -or
+    if ($Result.Report.schema_version -ne 'koci.oci-vm-fault-cleanup.v4' -or
         $Result.Report.platform -ne 'windows' -or
         $Result.Report.status -ne 'available' -or
         $Result.Report.lifecycle.requested_fault -ne $Fault -or
@@ -1236,7 +1236,7 @@ function Assert-PositiveReport {
     if ($null -eq $Result.Report) {
         throw "$Label emitted no report"
     }
-    if ($Result.Report.schema_version -ne 'krun.oci.oci-vm-smoke.v9' -or
+    if ($Result.Report.schema_version -ne 'koci.oci-vm-smoke.v9' -or
         $Result.Report.platform -ne 'windows' -or
         $Result.Report.status -ne 'available') {
         throw "$Label did not return an available Windows report"
@@ -1314,7 +1314,7 @@ function Invoke-PositiveRun {
     if ($audit.MarkerExists) {
         throw "$Label left the fixed workload marker"
     }
-    Assert-NoKrunProcesses -Label $Label
+    Assert-NoKProcesses -Label $Label
     [pscustomobject]@{
         Result = $run
         Audit = $audit
@@ -1332,9 +1332,9 @@ function Wait-ForShimChild {
     $deadline = [DateTime]::UtcNow.AddSeconds($TimeoutSeconds)
     do {
         $child = @(
-            Get-KrunProcesses |
+            Get-KProcesses |
                 Where-Object {
-                    $_.Name -eq 'krun-oci-krun-shim.exe' -and
+                    $_.Name -eq 'koci-kshim.exe' -and
                     [StringComparer]::OrdinalIgnoreCase.Equals(
                         $_.ExecutablePath,
                         $script:shim
@@ -1374,12 +1374,12 @@ function Get-VerificationFailures {
     }
     if ($script:startInventory.Count -ne 0) {
         $failures.Add(
-            "start inventory contains $($script:startInventory.Count) Krun processes"
+            "start inventory contains $($script:startInventory.Count) Kbox processes"
         )
     }
     if ($script:finalInventory.Count -ne 0) {
         $failures.Add(
-            "final inventory contains $($script:finalInventory.Count) Krun processes"
+            "final inventory contains $($script:finalInventory.Count) Kbox processes"
         )
     }
     if ($script:capabilityResults.Count -ne 2) {
@@ -1552,7 +1552,7 @@ function Write-Summary {
     }
     Write-EvidenceTables
     $summary = [ordered]@{
-        schema = 'krun.oci.windows-whpx-soak.v2'
+        schema = 'koci.windows-whpx-soak.v2'
         run_id = $script:runId
         result = $script:result
         verification = $script:verification
@@ -1565,8 +1565,8 @@ function Write-Summary {
         system_image_manifest_sha256 = $script:systemImageManifestSha256
         system_image = $script:systemImagePath
         system_image_sha256 = $script:systemImageSha256
-        native_krun = $script:krunDll
-        native_krun_sha256 = $script:krunDllSha256
+        native_kbox = $script:kDll
+        native_ksha256 = $script:kDllSha256
         firmware_dll = $script:firmwareDll
         firmware_dll_sha256 = $script:firmwareDllSha256
         started_at = $script:startedAt.ToString('o')
@@ -1649,7 +1649,7 @@ function Write-Summary {
 }
 
 try {
-    $preexisting = @(Get-KrunProcesses)
+    $preexisting = @(Get-KProcesses)
     $startInventory = $preexisting
     Write-JsonFile `
         -Path (Join-Path $evidenceDirectory 'inventory-start.json') `
@@ -1658,7 +1658,7 @@ try {
         $description = ($preexisting | ForEach-Object {
             '{0}:{1}' -f $_.Name, $_.ProcessId
         }) -join ', '
-        throw "Refusing to start with active Krun OCI processes: $description"
+        throw "Refusing to start with active Kbox OCI processes: $description"
     }
 
     $commit = (& git -C $repositoryRoot rev-parse HEAD).Trim()
@@ -1675,15 +1675,15 @@ try {
 
     if (-not $SkipBuild) {
         Invoke-LoggedNative -Label 'build-windows' -FilePath 'cargo.exe' `
-            -Arguments @('build', '-p', 'krun-oci-cli', '-p', 'krun-oci-krun')
+            -Arguments @('build', '-p', 'koci-cli', '-p', 'koci-kbox')
     }
-    foreach ($path in @($cli, $shim, $krunDll, $firmwareDll)) {
+    foreach ($path in @($cli, $shim, $kDll, $firmwareDll)) {
         if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
             throw "Required soak binary is missing: $path"
         }
     }
-    $krunDllSha256 = (
-        Get-FileHash -LiteralPath $krunDll -Algorithm SHA256
+    $kDllSha256 = (
+        Get-FileHash -LiteralPath $kDll -Algorithm SHA256
     ).Hash.ToLowerInvariant()
     $firmwareDllSha256 = (
         Get-FileHash -LiteralPath $firmwareDll -Algorithm SHA256
@@ -1699,8 +1699,8 @@ try {
         update_build_revision = $operatingSystem.UBR
         architecture = $env:PROCESSOR_ARCHITECTURE
         logical_processors = [Environment]::ProcessorCount
-        native_krun = $krunDll
-        native_krun_sha256 = $krunDllSha256
+        native_kbox = $kDll
+        native_ksha256 = $kDllSha256
     })
 
     $probe = Start-CapturedProcess -FilePath $cli -Arguments @('whpx-smoke')
@@ -1725,13 +1725,13 @@ try {
         throw 'The libkrun context smoke is unavailable.'
     }
     $capabilityResults += [ordered]@{
-        capability = 'libkrun-context'
+        capability = 'libkcontext'
         result = 'pass'
         status = $contextReport.status
         exit_code = $context.ExitCode
         duration_ms = $context.DurationMilliseconds
     }
-    Assert-NoKrunProcesses -Label 'host probes'
+    Assert-NoKProcesses -Label 'host probes'
 
     $serialFixture = New-SoakFixture -Name 'serial'
     $serialInitialLogBytes = (Get-FixtureAudit -Fixture $serialFixture).RootLogBytes
@@ -1781,7 +1781,7 @@ try {
         Assert-MultiContainerReport -Label $label -Result $run
         $audit = Get-FixtureAudit -Fixture $fixture
         Assert-RuntimeAudit -Label $label -Audit $audit
-        Assert-NoKrunProcesses -Label $label
+        Assert-NoKProcesses -Label $label
         $samples += [ordered]@{
             kind = 'multi-container'
             iteration = $multiIteration
@@ -1816,7 +1816,7 @@ try {
                     -Fault $fault
                 $audit = Get-FixtureAudit -Fixture $fixture
                 Assert-RuntimeAudit -Label $label -Audit $audit
-                Assert-NoKrunProcesses -Label $label
+                Assert-NoKProcesses -Label $label
                 $samples += [ordered]@{
                     kind = 'lifecycle-fault'
                     iteration = $faultIteration
@@ -1885,7 +1885,7 @@ try {
                 }
                 $completedParallelRuns++
             }
-            Assert-NoKrunProcesses -Label "parallel wave $wave"
+            Assert-NoKProcesses -Label "parallel wave $wave"
             Write-Summary
         }
     }
@@ -2030,7 +2030,7 @@ try {
         if ($audit.MarkerExists) {
             throw "$label unexpectedly produced the ready marker"
         }
-        Assert-NoKrunProcesses -Label $label
+        Assert-NoKProcesses -Label $label
         Assert-TextEvidence -Label $label -Path $fixture.Scenario.Evidence `
             -RequiredFragments @(
                 'phase=begin',
@@ -2158,7 +2158,7 @@ try {
             if ($audit.MarkerExists) {
                 throw "$label unexpectedly produced the workload marker"
             }
-            Assert-NoKrunProcesses -Label $label
+            Assert-NoKProcesses -Label $label
             $samples += [ordered]@{
                 kind = 'negative'
                 variant = $case.Variant
@@ -2214,7 +2214,7 @@ try {
             Start-Sleep -Milliseconds 100
             $audit = Get-FixtureAudit -Fixture $fixture
             Assert-RuntimeAudit -Label $label -Audit $audit
-            Assert-NoKrunProcesses -Label $label
+            Assert-NoKProcesses -Label $label
             $samples += [ordered]@{
                 kind = 'owner-kill'
                 delay_ms = $delay
@@ -2255,14 +2255,14 @@ finally {
         }
     }
     $activeProcesses.Clear()
-    $residual = @(Wait-ForKrunProcessesToExit)
+    $residual = @(Wait-ForKProcessesToExit)
     $finalInventory = $residual
     Write-JsonFile `
         -Path (Join-Path $evidenceDirectory 'inventory-final.json') `
         -Value @($finalInventory)
     if ($residual.Count -gt 0 -and $null -eq $failure) {
         $result = 'fail'
-        $failure = 'The soak runner finished with residual Krun OCI processes.'
+        $failure = 'The soak runner finished with residual Kbox OCI processes.'
     }
     $verificationFailures = @(Get-VerificationFailures)
     if ($verificationFailures.Count -eq 0) {

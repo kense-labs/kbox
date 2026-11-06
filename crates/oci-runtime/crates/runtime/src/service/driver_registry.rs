@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::sync::Arc;
 
-use krun_oci_core::{DriverCapability, DriverKind, HostPlatform, IsolationClass};
-use krun_oci_sdk::{
+use koci_core::{DriverCapability, DriverKind, HostPlatform, IsolationClass};
+use koci_sdk::{
     AttachmentCapabilities, ContainerRecord, CreateAttachments, Error, ErrorCode, OciLinuxSupport,
     OperationId, Result, RuntimeArtifact, RuntimeDriverCapabilities, RuntimeExtensions,
     RuntimeOperation, RuntimeOperationCapability, AMD_SEV_SNP_LAUNCH_EXTENSION,
@@ -401,7 +401,7 @@ impl DriverRegistry {
 
 fn validate_capability(capability: &DriverCapability) -> Result<()> {
     if !capability.can_launch() {
-        let code = if capability.status == krun_oci_core::CapabilityStatus::Unavailable {
+        let code = if capability.status == koci_core::CapabilityStatus::Unavailable {
             ErrorCode::Unavailable
         } else {
             ErrorCode::Unsupported
@@ -519,15 +519,15 @@ fn open_error(message: impl Into<String>) -> Error {
 
 const fn driver_platform(driver: DriverKind) -> HostPlatform {
     match driver {
-        DriverKind::NativeLinux | DriverKind::LibkrunKvm => HostPlatform::Linux,
-        DriverKind::LibkrunHvf => HostPlatform::Macos,
-        DriverKind::LibkrunWhpx => HostPlatform::Windows,
+        DriverKind::NativeLinux | DriverKind::LibkKvm => HostPlatform::Linux,
+        DriverKind::LibkHvf => HostPlatform::Macos,
+        DriverKind::LibkWhpx => HostPlatform::Windows,
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::RuntimeOperation;
+    use koci_sdk::RuntimeOperation;
 
     use super::validate_driver_operations;
 

@@ -3,9 +3,9 @@ use std::fmt;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Weak};
 
-use krun_oci_agent_protocol::{GuestPath, AGENT_RUNTIME_SHARE_GUEST_ROOT};
-use krun_oci_core::{DriverCapability, IsolationClass};
-use krun_oci_sdk::{
+use koci_agent_protocol::{GuestPath, AGENT_RUNTIME_SHARE_GUEST_ROOT};
+use koci_core::{DriverCapability, IsolationClass};
+use koci_sdk::{
     async_trait, AttachmentCapabilities, ContainerId, ContainerRecord, ContainerStats,
     ContainerTarget, CreateAttachments, Error, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, GuestSessionAttachment, GuestSessionId,
@@ -174,7 +174,7 @@ impl UtilityVmRuntimeDriver {
                 let mut cleanup = DetachedAsyncCleanup::new(move || async move {
                     if let Err(error) = shutdown_guest(&cleanup_guest).await {
                         eprintln!(
-                            "krun-oci-runtime: cancelled utility-VM shutdown cleanup failed: {error}"
+                            "koci-runtime: cancelled utility-VM shutdown cleanup failed: {error}"
                         );
                     }
                 });
@@ -247,8 +247,8 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
         self.capability.clone()
     }
 
-    fn linux_support(&self) -> Result<krun_oci_sdk::OciLinuxSupport> {
-        krun_oci_sdk::OciLinuxSupport::shared_executor()
+    fn linux_support(&self) -> Result<koci_sdk::OciLinuxSupport> {
+        koci_sdk::OciLinuxSupport::shared_executor()
     }
 
     fn operations(&self) -> &[RuntimeOperation] {
@@ -326,7 +326,7 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
             .for_operation("utility-vm-recover"));
         }
 
-        if *record.state.status() == krun_oci_sdk::oci_spec::runtime::ContainerState::Creating {
+        if *record.state.status() == koci_sdk::oci_spec::runtime::ContainerState::Creating {
             // An interrupted durable Create must resume through its original
             // operation. Wait for any owner-death report handoff to settle so
             // the replacement owner cannot race the old shim, but never
@@ -672,7 +672,7 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
                     Some(DetachedAsyncCleanup::new(move || async move {
                         if let Err(error) = shutdown_guest(&cleanup_guest).await {
                             eprintln!(
-                                "krun-oci-runtime: cancelled utility-VM delete cleanup failed: {error}"
+                                "koci-runtime: cancelled utility-VM delete cleanup failed: {error}"
                             );
                         }
                     }))

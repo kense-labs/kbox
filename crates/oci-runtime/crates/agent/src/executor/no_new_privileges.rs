@@ -1,6 +1,6 @@
 use std::io;
 
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 
 pub(super) fn apply(enabled: bool) -> Result<()> {
     if !enabled {
@@ -51,7 +51,7 @@ mod tests {
 
     use super::{apply, read_current};
 
-    const CHILD_ENV: &str = "KRUN_OCI_NO_NEW_PRIVILEGES_TEST_CHILD";
+    const CHILD_ENV: &str = "K_OCI_NO_NEW_PRIVILEGES_TEST_CHILD";
 
     #[test]
     fn applies_and_reads_back_in_isolated_process() {

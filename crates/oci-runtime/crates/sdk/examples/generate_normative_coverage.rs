@@ -3,7 +3,7 @@ use std::error::Error;
 use std::fs;
 use std::path::PathBuf;
 
-use krun_oci_sdk::{OciNormativeEvidenceManifest, OciNormativeInventory};
+use koci_sdk::{OciNormativeEvidenceManifest, OciNormativeInventory};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let (evidence_path, output) = paths()?;

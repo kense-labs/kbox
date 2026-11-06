@@ -3,8 +3,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
 
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{ContainerId, OciBundle, RuntimeClient, RuntimeOperation};
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{ContainerId, OciBundle, RuntimeClient, RuntimeOperation};
 use tokio::time::timeout;
 
 use super::filesystem::{
@@ -170,7 +170,7 @@ pub(super) async fn run(
         Ok(ids) => ids,
         Err(reason) => return failed(report, reason),
     };
-    let session_root = work_parent.join(format!("krun-oci-native-soak-{nonce}"));
+    let session_root = work_parent.join(format!("koci-native-soak-{nonce}"));
     if let Err(reason) = create_private_directory(&session_root).await {
         return failed(report, reason);
     }
@@ -439,7 +439,7 @@ async fn reopen_runtime(
 async fn runtime_call<T>(
     timeout_duration: Duration,
     operation: &str,
-    future: impl std::future::Future<Output = krun_oci_sdk::Result<T>>,
+    future: impl std::future::Future<Output = koci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(timeout_duration, future).await {
         Ok(Ok(value)) => Ok(value),

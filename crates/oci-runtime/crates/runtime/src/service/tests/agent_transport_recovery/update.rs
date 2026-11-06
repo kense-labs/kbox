@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentClient, AgentOperation, AgentTransportFaultPoint, AgentTransportOperationStage,
     AgentUpdateRequest,
 };
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use koci_sdk::{
     ContainerTarget, ErrorCode, Generation, ListRequest, OciRuntimeService, OperationContext,
     StartRequest, UpdateRequest,
 };
@@ -40,7 +40,7 @@ async fn exercise_update_reopen(index: usize, stage: AgentTransportOperationStag
     let guest = Arc::new(JournaledLifecycleGuest::new());
     let metrics = Arc::new(DriverMetrics::default());
     let fault_point = AgentTransportFaultPoint::Operation {
-        protocol_version: krun_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
+        protocol_version: koci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
         operation: AgentOperation::Update,
         stage,
     };
@@ -205,7 +205,7 @@ async fn exercise_update_reopen(index: usize, stage: AgentTransportOperationStag
 }
 
 fn assert_running(
-    record: &krun_oci_sdk::ContainerRecord,
+    record: &koci_sdk::ContainerRecord,
     generation: Generation,
     stage: AgentTransportOperationStage,
 ) {

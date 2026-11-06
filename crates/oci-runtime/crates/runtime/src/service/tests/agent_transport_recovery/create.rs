@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentClient, AgentOperation, AgentTransportFaultPoint, AgentTransportOperationStage,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, CreateAttachments, ErrorCode, IoMode, ListRequest, OciRuntimeService,
 };
 use tokio::io::DuplexStream;
@@ -35,7 +35,7 @@ async fn exercise_create_reopen(index: usize, stage: AgentTransportOperationStag
     let guest = Arc::new(JournaledLifecycleGuest::new());
     let metrics = Arc::new(DriverMetrics::default());
     let fault_point = AgentTransportFaultPoint::Operation {
-        protocol_version: krun_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
+        protocol_version: koci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
         operation: AgentOperation::Create,
         stage,
     };
@@ -187,8 +187,8 @@ async fn exercise_create_reopen(index: usize, stage: AgentTransportOperationStag
 async fn verify_changed_replays_fail_closed(
     client: &AgentClient<DuplexStream>,
     service: &HostRuntimeService,
-    request: &krun_oci_sdk::CreateRequest,
-    generation: krun_oci_sdk::Generation,
+    request: &koci_sdk::CreateRequest,
+    generation: koci_sdk::Generation,
     guest: &JournaledLifecycleGuest,
     metrics: &DriverMetrics,
 ) {

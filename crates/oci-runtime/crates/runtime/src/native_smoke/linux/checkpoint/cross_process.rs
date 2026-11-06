@@ -6,8 +6,8 @@ use std::process::Stdio;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     canonical_json_bytes, CheckpointArtifactPath, CheckpointReference, ContainerId,
     ContainerOperationRequest, ContainerTarget, CreateAttachments, DeleteMode, DeleteRequest,
     Error, ErrorCode, ExitStatus, Generation, IsolationRequest, KillRequest, ListRequest,
@@ -33,7 +33,7 @@ use super::{
 };
 
 const OWNER_EXIT_CODE: i32 = 86;
-const OWNER_EVIDENCE_SCHEMA_V1: &str = "krun.oci.native-restore-owner-exit.v1";
+const OWNER_EVIDENCE_SCHEMA_V1: &str = "koci.native-restore-owner-exit.v1";
 const MAX_REQUEST_BYTES: u64 = 32 * 1024 * 1024;
 const MAX_EVIDENCE_BYTES: u64 = 64 * 1024;
 

@@ -1,11 +1,11 @@
-//! `krun-box exec` command — Execute a command in a running box.
+//! `kbox exec` command — Execute a command in a running box.
 //!
 //! Connects to the exec server inside the guest VM via the platform-local
 //! control channel and runs the specified command, printing stdout/stderr and
 //! exiting with the command's exit code.
 //!
 //! When `-t` (tty) is specified, allocates a PTY in the guest for interactive
-//! terminal sessions (e.g., `krun-box exec -it mybox /bin/sh`).
+//! terminal sessions (e.g., `kbox exec -it mybox /bin/sh`).
 
 use clap::Args;
 
@@ -60,11 +60,11 @@ pub struct ExecArgs {
 pub(crate) async fn connect_pty_with_retry(
     socket_path: &std::path::Path,
     timeout: std::time::Duration,
-) -> Result<krun_box_runtime::PtyClient, Box<dyn std::error::Error>> {
+) -> Result<kbox_runtime::PtyClient, Box<dyn std::error::Error>> {
     let deadline = std::time::Instant::now() + timeout;
 
     loop {
-        match krun_box_runtime::PtyClient::connect(socket_path).await {
+        match kbox_runtime::PtyClient::connect(socket_path).await {
             Ok(client) => return Ok(client),
             Err(error) => {
                 let last_error = error.to_string();
@@ -85,7 +85,7 @@ pub(crate) async fn connect_pty_with_retry(
 }
 
 pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::exec::ExecRequest;
+    use kbox_core::exec::ExecRequest;
 
     #[cfg(windows)]
     if args.tty {
@@ -170,8 +170,8 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
     // below may std::process::exit. The container command's own exit code is
     // separate from whether the exec was delivered.
     crate::audit::record(
-        krun_box_core::audit::AuditAction::ExecCommand,
-        krun_box_core::audit::AuditOutcome::Success,
+        kbox_core::audit::AuditAction::ExecCommand,
+        kbox_core::audit::AuditOutcome::Success,
         &record.id,
         &format!("exec command in box {}", record.name),
     );
@@ -195,9 +195,9 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
 
 pub(crate) async fn execute_captured(
     record: &crate::state::BoxRecord,
-    request: krun_box_core::exec::ExecRequest,
-) -> Result<krun_box_core::exec::ExecOutput, Box<dyn std::error::Error>> {
-    use krun_box_core::{ExecutionId, ExecutionSessionManager};
+    request: kbox_core::exec::ExecRequest,
+) -> Result<kbox_core::exec::ExecOutput, Box<dyn std::error::Error>> {
+    use kbox_core::{ExecutionId, ExecutionSessionManager};
 
     if uses_oci_session(record) {
         if record.status != "running" {
@@ -207,7 +207,7 @@ pub(crate) async fn execute_captured(
             .managed_execution
             .as_ref()
             .ok_or_else(|| format!("Box {} lost managed execution metadata", record.name))?;
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         manager
             .execute(
@@ -223,7 +223,7 @@ pub(crate) async fn execute_captured(
             crate::socket_paths::RuntimeSocket::Exec,
         )
         .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-        let client = krun_box_runtime::ExecClient::connect(&exec_socket_path).await?;
+        let client = kbox_runtime::ExecClient::connect(&exec_socket_path).await?;
         client
             .exec_command(&request)
             .await
@@ -235,12 +235,12 @@ pub(crate) fn uses_oci_session(record: &crate::state::BoxRecord) -> bool {
     record
         .managed_execution
         .as_ref()
-        .is_some_and(krun_box_runtime::ManagedExecutionMetadata::is_oci_routed)
+        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
 }
 
 fn timeout_secs_to_ns(timeout_secs: u64) -> u64 {
     if timeout_secs == 0 {
-        krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
+        kbox_core::exec::DEFAULT_EXEC_TIMEOUT_NS
     } else {
         // Cap absurd values at u64::MAX ns instead of overflowing into a tiny
         // timeout in release builds.
@@ -275,7 +275,7 @@ fn annotate_unavailable_with_request_id(
     error: Box<dyn std::error::Error>,
     request_id: &str,
 ) -> Box<dyn std::error::Error> {
-    use krun_box_core::ExecutionManagerError;
+    use kbox_core::ExecutionManagerError;
 
     let unavailable = error
         .downcast_ref::<ExecutionManagerError>()
@@ -297,15 +297,15 @@ async fn execute_managed_pty(
     record: &crate::state::BoxRecord,
     user: Option<String>,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::pty::PtyRequest;
-    use krun_box_core::{ExecutionId, ExecutionSessionManager};
+    use kbox_core::pty::PtyRequest;
+    use kbox_core::{ExecutionId, ExecutionSessionManager};
 
     let metadata = record
         .managed_execution
         .as_ref()
         .ok_or_else(|| format!("Box {} lost managed execution metadata", record.name))?;
     let (cols, rows) = crate::terminal::size().unwrap_or((80, 24));
-    let home = krun_box_core::dirs_home();
+    let home = kbox_core::dirs_home();
     let manager = super::configured_local_execution_manager(&home).await?;
     let process = manager
         .start_pty(
@@ -323,8 +323,8 @@ async fn execute_managed_pty(
         )
         .await?;
     crate::audit::record(
-        krun_box_core::audit::AuditAction::ExecCommand,
-        krun_box_core::audit::AuditOutcome::Success,
+        kbox_core::audit::AuditAction::ExecCommand,
+        kbox_core::audit::AuditOutcome::Success,
         &record.id,
         &format!("exec (managed pty) in box {}", record.name),
     );
@@ -340,8 +340,8 @@ async fn execute_managed_pty(
 }
 
 #[cfg(not(windows))]
-pub(crate) async fn run_managed_pty_session(mut process: krun_box_core::ExecutionProcess) -> i32 {
-    use krun_box_core::{ExecEvent, StreamType};
+pub(crate) async fn run_managed_pty_session(mut process: kbox_core::ExecutionProcess) -> i32 {
+    use kbox_core::{ExecEvent, StreamType};
 
     let input = process.input();
     let reader_task = tokio::spawn(async move {
@@ -430,7 +430,7 @@ async fn execute_pty(
     user: Option<String>,
 ) -> Result<(), Box<dyn std::error::Error>> {
     use crate::terminal;
-    use krun_box_core::pty::PtyRequest;
+    use kbox_core::pty::PtyRequest;
 
     let pty_socket_path = crate::socket_paths::require_runtime_socket(
         record,
@@ -459,8 +459,8 @@ async fn execute_pty(
     // Record the interactive (pty) exec once the request is delivered — opening
     // a shell in a box is a key forensic event.
     crate::audit::record(
-        krun_box_core::audit::AuditAction::ExecCommand,
-        krun_box_core::audit::AuditOutcome::Success,
+        kbox_core::audit::AuditAction::ExecCommand,
+        kbox_core::audit::AuditOutcome::Success,
         &record.id,
         &format!("exec (pty) in box {}", record.name),
     );
@@ -488,10 +488,10 @@ async fn execute_pty(
 /// Returns the process exit code.
 #[cfg(not(windows))]
 pub(crate) async fn run_pty_session(
-    mut reader: krun_transport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>,
-    mut writer: krun_transport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>,
+    mut reader: ktransport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>,
+    mut writer: ktransport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>,
 ) -> i32 {
-    use krun_box_core::pty::{FRAME_PTY_DATA, FRAME_PTY_ERROR, FRAME_PTY_EXIT};
+    use kbox_core::pty::{FRAME_PTY_DATA, FRAME_PTY_ERROR, FRAME_PTY_EXIT};
 
     // Task 1: Read from guest PTY → write to stdout
     let reader_task = tokio::spawn(async move {
@@ -509,9 +509,9 @@ pub(crate) async fn run_pty_session(
                             let _ = stdout.flush().await;
                         }
                         FRAME_PTY_EXIT => {
-                            if let Ok(exit) = serde_json::from_slice::<krun_box_core::pty::PtyExit>(
-                                &frame.payload,
-                            ) {
+                            if let Ok(exit) =
+                                serde_json::from_slice::<kbox_core::pty::PtyExit>(&frame.payload)
+                            {
                                 return exit.exit_code;
                             }
                             return 1;
@@ -564,9 +564,9 @@ pub(crate) async fn run_pty_session(
                     match data {
                         Some(bytes) => {
                             // Send PTY_DATA frame (0x02), not generic Data frame (0x01)
-                            let ft = krun_transport::FrameType::try_from(krun_box_core::pty::FRAME_PTY_DATA)
-                                .unwrap_or(krun_transport::FrameType::Data);
-                            let frame = krun_transport::Frame { frame_type: ft, payload: bytes };
+                            let ft = ktransport::FrameType::try_from(kbox_core::pty::FRAME_PTY_DATA)
+                                .unwrap_or(ktransport::FrameType::Data);
+                            let frame = ktransport::Frame { frame_type: ft, payload: bytes };
                             if writer.write_frame(&frame).await.is_err() {
                                 break;
                             }
@@ -581,11 +581,11 @@ pub(crate) async fn run_pty_session(
                     }
                 } => {
                     if let Ok((cols, rows)) = crate::terminal::size() {
-                        let resize = krun_box_core::pty::PtyResize { cols, rows };
+                        let resize = kbox_core::pty::PtyResize { cols, rows };
                         if let Ok(payload) = serde_json::to_vec(&resize) {
-                            let ft = krun_transport::FrameType::try_from(krun_box_core::pty::FRAME_PTY_RESIZE)
-                                .unwrap_or(krun_transport::FrameType::Control);
-                            let frame = krun_transport::Frame { frame_type: ft, payload };
+                            let ft = ktransport::FrameType::try_from(kbox_core::pty::FRAME_PTY_RESIZE)
+                                .unwrap_or(ktransport::FrameType::Control);
+                            let frame = ktransport::Frame { frame_type: ft, payload };
                             let _ = writer.write_frame(&frame).await;
                         }
                     }
@@ -607,7 +607,7 @@ pub(crate) async fn run_pty_session(
 mod tests {
     use super::*;
     use clap::Parser;
-    use krun_box_core::ExecutionManagerError;
+    use kbox_core::ExecutionManagerError;
 
     #[derive(Parser)]
     struct ExecCli {
@@ -619,7 +619,7 @@ mod tests {
     fn timeout_secs_to_ns_uses_default_for_zero() {
         assert_eq!(
             timeout_secs_to_ns(0),
-            krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS
+            kbox_core::exec::DEFAULT_EXEC_TIMEOUT_NS
         );
     }
 

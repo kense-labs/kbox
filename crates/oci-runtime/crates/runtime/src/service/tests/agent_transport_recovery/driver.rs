@@ -2,18 +2,16 @@ use std::collections::BTreeMap;
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentBundle, AgentClient, AgentCloseStdinRequest, AgentContainerOperationRequest,
     AgentCreateRequest, AgentDeleteRequest, AgentExecRequest, AgentKillRequest,
     AgentProcessesRequest, AgentReadOutputRequest, AgentResizeRequest, AgentSignalProcessRequest,
     AgentStartRequest, AgentState, AgentStateRequest, AgentStatsRequest, AgentUpdateRequest,
     AgentWaitProcessRequest, AgentWaitRequest, AgentWriteStdinRequest, GuestPath,
 };
-use krun_oci_core::{
-    CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
-};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     async_trait, ContainerRecord, ContainerStats, ContainerTarget, Error, ErrorCode, ExitStatus,
     FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, OciBundle, OperationContext,
     OperationId, OutputChunk, ProcessIo, ProcessRecord, Result, RuntimeOperation,
@@ -71,7 +69,7 @@ impl AgentLifecycleDriver {
 impl RuntimeDriver for AgentLifecycleDriver {
     fn capability(&self) -> DriverCapability {
         DriverCapability {
-            driver: DriverKind::LibkrunWhpx,
+            driver: DriverKind::LibkWhpx,
             status: CapabilityStatus::Available,
             readiness: DriverReadiness::Experimental,
             isolation_classes: vec![IsolationClass::DedicatedVm],
@@ -83,8 +81,8 @@ impl RuntimeDriver for AgentLifecycleDriver {
         }
     }
 
-    fn linux_support(&self) -> Result<krun_oci_sdk::OciLinuxSupport> {
-        krun_oci_sdk::OciLinuxSupport::shared_executor()
+    fn linux_support(&self) -> Result<koci_sdk::OciLinuxSupport> {
+        koci_sdk::OciLinuxSupport::shared_executor()
     }
 
     fn operations(&self) -> &[RuntimeOperation] {
@@ -371,7 +369,7 @@ pub(super) fn agent_create_request(
     Ok(AgentCreateRequest {
         context,
         target,
-        bundle: AgentBundle::new(bundle, GuestPath::new("/run/krun/reopen-test-bundle")?),
+        bundle: AgentBundle::new(bundle, GuestPath::new("/run/kbox/reopen-test-bundle")?),
         io,
     })
 }

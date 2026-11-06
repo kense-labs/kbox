@@ -1,10 +1,10 @@
 [package]
-name = "krun-acl"
+name = "kacl"
 version = "0.3.0"
 edition = "2021"
-description = "Parser and generator for the Krun Agent Configuration Language"
+description = "Parser and generator for the Kbox Agent Configuration Language"
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 publish = false
 
 [dependencies]

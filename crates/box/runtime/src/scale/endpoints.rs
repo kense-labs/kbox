@@ -8,7 +8,7 @@ use std::{
     time::Duration,
 };
 
-use krun_box_core::{
+use kbox_core::{
     scale::ScaleEndpoint, ExecutionGeneration, ExecutionId, ExecutionPortConnector,
     ExecutionPortStream,
 };
@@ -552,7 +552,7 @@ async fn relay_connection(
 mod tests {
     use super::*;
     use async_trait::async_trait;
-    use krun_box_core::ExecutionManagerResult;
+    use kbox_core::ExecutionManagerResult;
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
     struct EchoConnector;
@@ -602,7 +602,7 @@ mod tests {
             _port: NonZeroU16,
             _timeout: Duration,
         ) -> ExecutionManagerResult<ExecutionPortStream> {
-            Err(krun_box_core::ExecutionManagerError::Unavailable(
+            Err(kbox_core::ExecutionManagerError::Unavailable(
                 "MicroVM port 8080 rejected the connection".to_string(),
             ))
         }
@@ -618,7 +618,7 @@ mod tests {
             _timeout: Duration,
         ) -> ExecutionManagerResult<ExecutionPortStream> {
             if execution_id.as_str() == self.reject {
-                return Err(krun_box_core::ExecutionManagerError::Unavailable(
+                return Err(kbox_core::ExecutionManagerError::Unavailable(
                     "MicroVM port 8080 rejected the connection".to_string(),
                 ));
             }
@@ -709,7 +709,7 @@ mod tests {
                 _timeout: Duration,
             ) -> ExecutionManagerResult<ExecutionPortStream> {
                 if self.reject.load(std::sync::atomic::Ordering::SeqCst) {
-                    return Err(krun_box_core::ExecutionManagerError::Unavailable(
+                    return Err(kbox_core::ExecutionManagerError::Unavailable(
                         "MicroVM port 8080 rejected the connection".to_string(),
                     ));
                 }

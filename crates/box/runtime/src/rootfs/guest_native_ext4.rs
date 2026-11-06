@@ -2,8 +2,8 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::vmm::RootfsSource;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::vmm::RootfsSource;
 
 use super::guest_native_migration::{self as migration, MigrationState};
 use super::provider::{
@@ -64,9 +64,8 @@ impl GuestNativeExt4Provider {
         let mut hasher = Sha256::new();
         hasher.update(super::EXT4_BUILDER_ID.as_bytes());
         hasher.update(disk_mib.to_le_bytes());
-        let metadata_path = staged_rootfs.join(
-            krun_box_core::rootfs_metadata::IMAGE_ROOTFS_METADATA_PATH.trim_start_matches('/'),
-        );
+        let metadata_path = staged_rootfs
+            .join(kbox_core::rootfs_metadata::IMAGE_ROOTFS_METADATA_PATH.trim_start_matches('/'));
         match std::fs::File::open(&metadata_path) {
             Ok(file) => {
                 const MAX_IDENTITY_BYTES: u64 = 64 * 1024 * 1024;

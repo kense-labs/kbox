@@ -1,10 +1,10 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentClient, AgentOperation, AgentStatsRequest, AgentTransportFaultPoint,
     AgentTransportOperationStage,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerStats, ContainerTarget, ErrorCode, Generation, OciRuntimeService, OperationContext,
     StartRequest, StatsRequest,
 };
@@ -39,7 +39,7 @@ async fn exercise_stats_reopen(index: usize, stage: AgentTransportOperationStage
     let guest = Arc::new(JournaledLifecycleGuest::new());
     let metrics = Arc::new(DriverMetrics::default());
     let fault_point = AgentTransportFaultPoint::Operation {
-        protocol_version: krun_oci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
+        protocol_version: koci_agent_protocol::AGENT_PROTOCOL_VERSION_MAX,
         operation: AgentOperation::Stats,
         stage,
     };

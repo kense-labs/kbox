@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerRecord, ContainerTarget, DeleteMode, DeleteRequest as RuntimeDeleteRequest,
     Generation, KillRequest as RuntimeKillRequest, OperationContext, Signal,
     StartRequest as RuntimeStartRequest,

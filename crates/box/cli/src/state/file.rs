@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_runtime::BoxStateStore;
+use kbox_runtime::BoxStateStore;
 
 use super::BoxRecord;
 use crate::state::policy::{is_record_pid_live, should_restart};
@@ -12,7 +12,7 @@ use crate::state::policy::{is_record_pid_live, should_restart};
 /// On success, use the collected guest/shim code. On collection failure, keep
 /// only authenticated evidence (`durable` record exit or persisted guest
 /// marker). Never invent `0` or `1` when both are absent — same honesty as
-/// Linux [`krun_box_runtime::rootfs::resolve_workload_exit_code`] and inspect
+/// Linux [`kbox_runtime::rootfs::resolve_workload_exit_code`] and inspect
 /// ExitCode null projection.
 #[cfg(any(test, target_os = "windows"))]
 pub(crate) fn resolve_windows_reconcile_exit(
@@ -60,9 +60,9 @@ impl StateFile {
         Ok(state)
     }
 
-    /// Load from the default path (~/.krun/boxes.json).
+    /// Load from the default path (~/.kbox/boxes.json).
     pub fn load_default() -> Result<Self, std::io::Error> {
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         Self::load(&home.join("boxes.json"))
     }
 
@@ -75,7 +75,7 @@ impl StateFile {
     /// from an empty/absent file. Swallowing the parse error would make
     /// `/metrics` report a falsely healthy all-zero snapshot.
     pub(crate) fn load_readonly() -> Result<Self, std::io::Error> {
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         Self::load_readonly_from(home.join("boxes.json"))
     }
 
@@ -104,7 +104,7 @@ impl StateFile {
     where
         E: From<std::io::Error>,
     {
-        let path = krun_box_core::dirs_home().join("boxes.json");
+        let path = kbox_core::dirs_home().join("boxes.json");
         BoxStateStore::modify_or_quarantine(&path, |store| Self::with_runtime_store(store, f))
     }
 
@@ -127,7 +127,7 @@ impl StateFile {
     /// appending a box must not pay an O(N) PID-liveness/cleanup pass over every
     /// other box (the high-concurrency fork bottleneck).
     pub fn add_record(record: BoxRecord) -> Result<(), std::io::Error> {
-        let path = krun_box_core::dirs_home().join("boxes.json");
+        let path = kbox_core::dirs_home().join("boxes.json");
         BoxStateStore::modify_or_quarantine(&path, |store| {
             store.records_mut().push(record);
             Ok::<(), std::io::Error>(())
@@ -226,7 +226,7 @@ impl StateFile {
             if record
                 .managed_execution
                 .as_ref()
-                .is_some_and(krun_box_runtime::ManagedExecutionMetadata::is_oci_routed)
+                .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
             {
                 continue;
             }
@@ -238,15 +238,14 @@ impl StateFile {
                 // host-visible rootfs marker. Liveness alone can yield exit 0.
                 #[cfg(target_os = "windows")]
                 {
-                    let persisted =
-                        krun_box_runtime::rootfs::read_persisted_exit_code(&record.box_dir);
+                    let persisted = kbox_runtime::rootfs::read_persisted_exit_code(&record.box_dir);
                     let authenticated = record.exit_code.or(persisted);
                     if record.box_dir.join("rootfs").is_dir() {
                         // `collect_windows_guest_result` uses a nonzero shim hint
                         // as crash evidence when the guest marker is missing; a
                         // zero hint must not invent success (see collector).
                         let shim_hint = authenticated.unwrap_or(0);
-                        let collected = krun_box_runtime::vm::collect_windows_guest_result(
+                        let collected = kbox_runtime::vm::collect_windows_guest_result(
                             &record.box_dir,
                             &record.log_config,
                             shim_hint,
@@ -266,13 +265,13 @@ impl StateFile {
                 }
                 #[cfg(not(target_os = "windows"))]
                 {
-                    record.exit_code = krun_box_runtime::rootfs::resolve_workload_exit_code_for(
+                    record.exit_code = kbox_runtime::rootfs::resolve_workload_exit_code_for(
                         &record.box_dir,
                         record.exit_code,
                         if record.isolation.is_sandbox() {
-                            krun_box_runtime::rootfs::ProviderExitPolicy::TrustProvider
+                            kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
                         } else {
-                            krun_box_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
+                            kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
                         },
                     );
                 }

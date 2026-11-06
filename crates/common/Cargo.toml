@@ -11,29 +11,29 @@
 
 [package]
 edition = "2021"
-name = "krun-common"
+name = "kcommon"
 version = "0.1.1"
-authors = ["Krun"]
+authors = ["Kbox"]
 build = false
 autolib = false
 autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Shared types for Krun: privacy classification, tool definitions, transport protocol"
+description = "Shared types for Kbox: privacy classification, tool definitions, transport protocol"
 readme = false
 keywords = [
-    "krun",
+    "kbox",
     "privacy",
     "tools",
     "transport",
 ]
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 publish = false
 
 [lib]
-name = "krun_common"
+name = "kcommon"
 path = "src/lib.rs"
 
 [dependencies]

@@ -1,9 +1,9 @@
-//! `krun-box rm` command — Remove one or more boxes.
+//! `kbox rm` command — Remove one or more boxes.
 
 use clap::Args;
 
-use krun_box_core::{ExecutionGeneration, ExecutionId, ExecutionManager, KillExecutionOptions};
-use krun_box_runtime::ManagedExecutionState;
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionManager, KillExecutionOptions};
+use kbox_runtime::ManagedExecutionState;
 
 use crate::cleanup;
 use crate::resolve;
@@ -63,7 +63,7 @@ async fn rm_one(
     {
         let name = record.name.clone();
         drop(lifecycle_lock);
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         if terminate {
             manager
@@ -80,8 +80,8 @@ async fn rm_one(
         manager.remove_execution(&execution_id, generation).await?;
         state.forget(&box_id);
         crate::audit::record(
-            krun_box_core::audit::AuditAction::BoxDestroy,
-            krun_box_core::audit::AuditOutcome::Success,
+            kbox_core::audit::AuditAction::BoxDestroy,
+            kbox_core::audit::AuditOutcome::Success,
             &box_id,
             &format!("removed box {name}"),
         );
@@ -112,8 +112,8 @@ async fn rm_one(
     StateFile::remove_record(&box_id)?;
     state.forget(&box_id);
     crate::audit::record(
-        krun_box_core::audit::AuditAction::BoxDestroy,
-        krun_box_core::audit::AuditOutcome::Success,
+        kbox_core::audit::AuditAction::BoxDestroy,
+        kbox_core::audit::AuditOutcome::Success,
         &box_id,
         &format!("removed box {name}"),
     );
@@ -199,8 +199,8 @@ fn validate_remove_request(
 mod tests {
     use super::*;
     use crate::test_helpers::fixtures::make_record;
-    use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
-    use krun_box_runtime::{ManagedExecutionMetadata, ManagedExecutionOperation};
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
+    use kbox_runtime::{ManagedExecutionMetadata, ManagedExecutionOperation};
     use std::collections::BTreeMap;
 
     fn managed_record(state: ManagedExecutionState) -> crate::state::BoxRecord {

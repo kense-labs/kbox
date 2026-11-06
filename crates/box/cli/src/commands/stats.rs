@@ -1,4 +1,4 @@
-//! `krun-box stats` command — Display live resource usage statistics.
+//! `kbox stats` command — Display live resource usage statistics.
 //!
 //! Shows CPU, memory, network, and block I/O usage for active boxes, similar to `docker stats`.
 //! By default streams updates every second; use `--no-stream` for a single snapshot.
@@ -6,13 +6,12 @@
 use clap::{Args, ValueEnum};
 use serde::Serialize;
 use std::path::Path;
-use std::sync::Arc;
 use std::time::Duration;
 use sysinfo::{Pid, System};
 
-use krun_box_core::exec::{ExecRequest, DEFAULT_EXEC_TIMEOUT_NS};
-use krun_box_runtime::ExecClient;
-use krun_box_sdk::{BoxStatsSummary, KrunBoxClient, KrunBoxPaths};
+use kbox_core::exec::{ExecRequest, DEFAULT_EXEC_TIMEOUT_NS};
+use kbox_core::{ExecutionManager, ExecutionProcessInventory, ExecutionStats};
+use kbox_runtime::ExecClient;
 
 use crate::output;
 use crate::resolve;
@@ -74,24 +73,59 @@ impl BoxStats {
     }
 }
 
-impl From<BoxStatsSummary> for BoxStats {
-    fn from(stats: BoxStatsSummary) -> Self {
-        Self {
-            id: stats.id,
-            name: stats.name,
-            short_id: stats.short_id,
-            status: stats.status,
-            pid: stats.pid,
-            cpus: stats.cpus,
-            cpu_percent: stats.cpu_percent,
-            memory_bytes: stats.memory_bytes,
-            memory_limit_bytes: stats.memory_limit_bytes,
-            network_rx_bytes: stats.network_rx_bytes,
-            network_tx_bytes: stats.network_tx_bytes,
-            block_read_bytes: stats.block_read_bytes,
-            block_write_bytes: stats.block_write_bytes,
-            pids_current: stats.pids_current,
-        }
+fn project_runtime_box_stats(
+    record: &BoxRecord,
+    first: &ExecutionStats,
+    second: &ExecutionStats,
+    processes: &ExecutionProcessInventory,
+) -> BoxStats {
+    let elapsed_ns = second
+        .timestamp_unix_ns
+        .saturating_sub(first.timestamp_unix_ns);
+    let usage_ns = second.cpu.usage_ns.saturating_sub(first.cpu.usage_ns);
+    let cpus = record.cpus.max(1);
+    let cpu_percent = if elapsed_ns == 0 {
+        0.0
+    } else {
+        (usage_ns as f64 / elapsed_ns as f64 * 100.0).min(f64::from(cpus) * 100.0)
+    };
+    let memory_limit_bytes = second
+        .memory
+        .limit_bytes
+        .unwrap_or(u64::from(record.memory_mb) * 1024 * 1024);
+    let pid = processes
+        .processes
+        .iter()
+        .find(|process| process.process_id == "init")
+        .and_then(|process| process.pid)
+        .or_else(|| processes.processes.iter().find_map(|process| process.pid))
+        .or(record.pid)
+        .unwrap_or_default();
+    let network = collect_network_stats(record);
+
+    BoxStats {
+        id: record.id.clone(),
+        name: record.name.clone(),
+        short_id: record.short_id.clone(),
+        status: record.status.clone(),
+        pid,
+        cpus: record.cpus,
+        cpu_percent: cpu_percent as f32,
+        memory_bytes: second.memory.usage_bytes,
+        memory_limit_bytes,
+        network_rx_bytes: network.rx_bytes,
+        network_tx_bytes: network.tx_bytes,
+        block_read_bytes: second
+            .metrics
+            .get(kbox_runtime::IO_READ_BYTES_METRIC)
+            .copied()
+            .unwrap_or_default(),
+        block_write_bytes: second
+            .metrics
+            .get(kbox_runtime::IO_WRITE_BYTES_METRIC)
+            .copied()
+            .unwrap_or_default(),
+        pids_current: Some(second.process_count),
     }
 }
 
@@ -328,7 +362,7 @@ fn collect_passt_pcap_stats(record: &BoxRecord) -> Option<NetworkStats> {
 
 fn guest_mac_address(record: &BoxRecord) -> Option<[u8; 6]> {
     let network_name = crate::cleanup::record_network_name(record)?;
-    let store = krun_box_runtime::NetworkStore::default_path().ok()?;
+    let store = kbox_runtime::NetworkStore::default_path().ok()?;
     let network = store.get(network_name).ok()??;
     let endpoint = network.endpoints.get(&record.id)?;
     parse_mac_address(&endpoint.mac_address)
@@ -411,7 +445,7 @@ impl PcapEndian {
 
 pub async fn execute(args: StatsArgs) -> Result<(), Box<dyn std::error::Error>> {
     let mut sys = System::new();
-    let mut runtime_client = None;
+    let mut runtime_manager = None;
 
     loop {
         // Present-tense active set: retire/resume abandoned managed claims
@@ -436,31 +470,27 @@ pub async fn execute(args: StatsArgs) -> Result<(), Box<dyn std::error::Error>> 
             if record
                 .managed_execution
                 .as_ref()
-                .is_some_and(krun_box_runtime::ManagedExecutionMetadata::is_oci_routed)
+                .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
             {
                 let metadata = record.managed_execution.as_ref().ok_or_else(|| {
                     format!("Box {} lost managed execution metadata", record.name)
                 })?;
-                if runtime_client.is_none() {
-                    let home = krun_box_core::dirs_home();
-                    let manager = super::configured_local_execution_manager(&home).await?;
-                    runtime_client = Some(KrunBoxClient::with_execution_manager(
-                        KrunBoxPaths::from_home(home),
-                        Arc::new(manager),
-                    ));
+                if runtime_manager.is_none() {
+                    let home = kbox_core::dirs_home();
+                    runtime_manager = Some(super::configured_local_execution_manager(&home).await?);
                 }
-                let client = runtime_client.as_ref().ok_or_else(|| {
+                let manager = runtime_manager.as_ref().ok_or_else(|| {
                     format!("failed to initialize runtime stats for {}", record.name)
                 })?;
-                if let Some(summary) = client
-                    .get_sandbox_stats(
-                        &krun_box_core::ExecutionId::new(record.id.clone())?,
-                        metadata.generation,
-                    )
-                    .await?
-                {
-                    stats.push(summary.into());
-                }
+                let execution_id = kbox_core::ExecutionId::new(record.id.clone())?;
+                let generation = metadata.generation;
+                let first = manager.stats(&execution_id, generation).await?;
+                tokio::time::sleep(Duration::from_millis(200)).await;
+                let second = manager.stats(&execution_id, generation).await?;
+                let processes = manager.list_processes(&execution_id, generation).await?;
+                stats.push(project_runtime_box_stats(
+                    record, &first, &second, &processes,
+                ));
                 continue;
             }
             if let Some(mut box_stats) = build_box_stats(&mut sys, record) {
@@ -530,7 +560,7 @@ mod tests {
         let error = select_targets(&state, Some("stopped_box")).unwrap_err();
 
         assert!(error.to_string().contains("Cannot show stats for"));
-        assert!(error.to_string().contains("krun-box start stopped_box"));
+        assert!(error.to_string().contains("kbox start stopped_box"));
     }
 
     #[test]
@@ -544,7 +574,7 @@ mod tests {
         let path = tmp.path().join("net.stats.json");
         std::fs::write(
             &path,
-            r#"{"schema":"krun-box.netproxy.stats.v1","rx_bytes":1024,"tx_bytes":2048,"rx_packets":3,"tx_packets":4}"#,
+            r#"{"schema":"kbox.netproxy.stats.v1","rx_bytes":1024,"tx_bytes":2048,"rx_packets":3,"tx_packets":4}"#,
         )
         .unwrap();
 
@@ -601,27 +631,53 @@ mod tests {
 
     #[test]
     fn managed_runtime_summary_preserves_exact_counters() {
-        let row = BoxStats::from(BoxStatsSummary {
-            id: "managed-id".to_string(),
-            short_id: "managed".to_string(),
-            name: "sandbox".to_string(),
-            status: "paused".to_string(),
-            pid: 42,
-            cpus: 4,
-            cpu_percent: 75.0,
-            cpu_percent_scaled: 18.75,
-            memory_bytes: 128,
-            memory_limit_bytes: 512,
-            memory_percent: 25.0,
-            network_rx_bytes: 1_024,
-            network_tx_bytes: 2_048,
-            block_read_bytes: 4_096,
-            block_write_bytes: 8_192,
-            pids_current: Some(3),
-        });
+        let execution_id = kbox_core::ExecutionId::new("managed-id").unwrap();
+        let generation = kbox_core::ExecutionGeneration::INITIAL;
+        let sample = |timestamp_unix_ns, usage_ns| ExecutionStats {
+            execution_id: execution_id.clone(),
+            generation,
+            timestamp_unix_ns,
+            cpu: kbox_core::ExecutionCpuStats {
+                usage_ns,
+                user_ns: usage_ns / 2,
+                system_ns: usage_ns / 2,
+                throttled_ns: 0,
+            },
+            memory: kbox_core::ExecutionMemoryStats {
+                usage_bytes: 128,
+                limit_bytes: Some(512),
+                peak_bytes: Some(256),
+            },
+            process_count: 3,
+            metrics: std::collections::BTreeMap::from([
+                (kbox_runtime::IO_READ_BYTES_METRIC.to_string(), 4_096),
+                (kbox_runtime::IO_WRITE_BYTES_METRIC.to_string(), 8_192),
+            ]),
+        };
+        let processes = ExecutionProcessInventory {
+            execution_id: execution_id.clone(),
+            generation,
+            processes: vec![kbox_core::ExecutionProcessInfo {
+                process_id: "init".to_string(),
+                pid: Some(42),
+                terminal: false,
+            }],
+        };
+        let mut record = make_record("managed-id", "sandbox", "paused", Some(42));
+        record.cpus = 4;
+
+        let row = project_runtime_box_stats(
+            &record,
+            &sample(1_000_000_000, 100_000_000),
+            &sample(1_200_000_000, 300_000_000),
+            &processes,
+        );
 
         assert_eq!(row.status, "paused");
         assert_eq!(row.pid, 42);
+        assert_eq!(row.cpu_percent, 100.0);
+        assert_eq!(row.scaled_cpu_percent(), 25.0);
+        assert_eq!(row.mem_percent(), 25.0);
         assert_eq!(row.block_read_bytes, 4_096);
         assert_eq!(row.block_write_bytes, 8_192);
         assert_eq!(row.pids_current, Some(3));

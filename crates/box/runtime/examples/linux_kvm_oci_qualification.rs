@@ -1,11 +1,11 @@
-//! Destructive product-lifecycle qualification for Box over Krun OCI Runtime/KVM.
+//! Destructive product-lifecycle qualification for Box over Kbox OCI Runtime/KVM.
 //!
 //! A host operator owns image import and process-leak checks. This executable
 //! exercises the public Box lifecycle boundary, including an optional Host
 //! Service SIGKILL/restart while a MicroVM is running. It always emits a
-//! versioned JSON report when `KRUN_BOX_KVM_OCI_REPORT` names an absolute path.
+//! versioned JSON report when `K_BOX_KVM_OCI_REPORT` names an absolute path.
 //!
-//! Schema `krun.box.linux-kvm-oci-qualification.v2` covers:
+//! Schema `kbox.linux-kvm-oci-qualification.v2` covers:
 //! 1. create replay + Box-manager reopen + start + exact exit `23` + delete
 //! 2. when service restart inputs are present: a second generation that is
 //!    observed running, interrupted by Host Service SIGKILL/restart, and
@@ -47,35 +47,35 @@ mod qualification {
     use std::process::{Command, Stdio};
     use std::time::Duration;
 
-    use krun_box_core::{
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
         ExecutionIsolation, ExecutionManager, ExecutionManagerError, ExecutionState,
         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
         ResourceConfig,
     };
-    use krun_box_runtime::{
+    use kbox_runtime::{
         LinuxKvmOciMigrationConfig, LocalExecutionManager, ManagedExecutionStore,
         ManagedRuntimeRoute, OciRuntimeBinding,
     };
-    use krun_oci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
+    use koci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
     use serde::Serialize;
 
-    const ENABLE_ENV: &str = "KRUN_BOX_KVM_OCI_QUALIFICATION";
-    const HOME_ENV: &str = "KRUN_HOME";
-    const RUNTIME_ROOT_ENV: &str = "KRUN_BOX_OCI_HOST_ROOT";
-    const ENDPOINT_ENV: &str = "KRUN_BOX_OCI_KVM_ENDPOINT";
-    const IMAGE_ENV: &str = "KRUN_BOX_KVM_OCI_IMAGE";
-    const REPORT_ENV: &str = "KRUN_BOX_KVM_OCI_REPORT";
-    const SERVICE_PID_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_PID";
-    const SERVICE_BIN_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_BIN";
-    const SERVICE_ROOT_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_ROOT";
-    const SERVICE_SHIM_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_SHIM";
-    const SERVICE_MANIFEST_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_MANIFEST";
-    const SERVICE_LOG_ENV: &str = "KRUN_BOX_KVM_OCI_SERVICE_LOG";
-    const BOX_OWNED_ENV: &str = "KRUN_BOX_KVM_OCI_BOX_OWNED";
-    const SCHEMA_VERSION: &str = "krun.box.linux-kvm-oci-qualification.v2";
-    const STDOUT_MARKER: &str = "krun-box-kvm-oci-stdout";
-    const STDERR_MARKER: &str = "krun-box-kvm-oci-stderr";
+    const ENABLE_ENV: &str = "K_BOX_KVM_OCI_QUALIFICATION";
+    const HOME_ENV: &str = "K_HOME";
+    const RUNTIME_ROOT_ENV: &str = "K_BOX_OCI_HOST_ROOT";
+    const ENDPOINT_ENV: &str = "K_BOX_OCI_KVM_ENDPOINT";
+    const IMAGE_ENV: &str = "K_BOX_KVM_OCI_IMAGE";
+    const REPORT_ENV: &str = "K_BOX_KVM_OCI_REPORT";
+    const SERVICE_PID_ENV: &str = "K_BOX_KVM_OCI_SERVICE_PID";
+    const SERVICE_BIN_ENV: &str = "K_BOX_KVM_OCI_SERVICE_BIN";
+    const SERVICE_ROOT_ENV: &str = "K_BOX_KVM_OCI_SERVICE_ROOT";
+    const SERVICE_SHIM_ENV: &str = "K_BOX_KVM_OCI_SERVICE_SHIM";
+    const SERVICE_MANIFEST_ENV: &str = "K_BOX_KVM_OCI_SERVICE_MANIFEST";
+    const SERVICE_LOG_ENV: &str = "K_BOX_KVM_OCI_SERVICE_LOG";
+    const BOX_OWNED_ENV: &str = "K_BOX_KVM_OCI_BOX_OWNED";
+    const SCHEMA_VERSION: &str = "kbox.linux-kvm-oci-qualification.v2";
+    const STDOUT_MARKER: &str = "kbox-kvm-oci-stdout";
+    const STDERR_MARKER: &str = "kbox-kvm-oci-stderr";
     const EXPECTED_EXIT_CODE: i32 = 23;
 
     type AnyError = Box<dyn Error + Send + Sync>;
@@ -272,7 +272,7 @@ mod qualification {
                 .file_name()
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name.contains("kvm-oci-qualification")),
-            "KRUN_HOME must name a dedicated kvm-oci-qualification directory",
+            "K_HOME must name a dedicated kvm-oci-qualification directory",
         )?;
         let runtime_root = absolute_environment_path(RUNTIME_ROOT_ENV)?;
         // The qualification Host Service owns the runtime root; it is not
@@ -412,7 +412,7 @@ mod qualification {
         report.box_generation = Some(reservation.generation);
 
         require(
-            reservation.plan.backend == ExecutionBackend::Krun
+            reservation.plan.backend == ExecutionBackend::Kbox
                 && reservation.plan.isolation_class == BoxIsolationClass::HardwareVm,
             "the Box request did not retain its dedicated MicroVM product plan",
         )?;
@@ -484,7 +484,7 @@ mod qualification {
             .and_then(|metadata| metadata.oci_runtime.clone())
             .ok_or_else(|| failure("started Box record has no exact OCI runtime binding"))?;
         require(
-            binding.driver == DriverKind::LibkrunKvm
+            binding.driver == DriverKind::LibkKvm
                 && binding.isolation == OciIsolationClass::DedicatedVm,
             "runtime did not return the dedicated-VM libkrun/KVM binding",
         )?;
@@ -774,7 +774,7 @@ mod qualification {
             owner_pid_from_box_record(&service.service_root)?
         } else {
             service.pid.ok_or_else(|| {
-                failure("external Host restart requires KRUN_BOX_KVM_OCI_SERVICE_PID")
+                failure("external Host restart requires K_BOX_KVM_OCI_SERVICE_PID")
             })?
         };
         // SAFETY: qualification-only SIGKILL of the exact Host owner pid.
@@ -979,7 +979,7 @@ mod qualification {
             && left.timeout == right.timeout
     }
 
-    const KVM_LIVE_BINDING_FILE: &str = ".krun-oci-kvm-live-session-binding.json";
+    const KVM_LIVE_BINDING_FILE: &str = ".koci-kvm-live-session-binding.json";
 
     fn load_live_session_identities(
         runtime_root: &Path,

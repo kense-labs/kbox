@@ -1,4 +1,4 @@
-//! `krun-box tag` command — create a tag that refers to an existing image.
+//! `kbox tag` command — create a tag that refers to an existing image.
 
 use clap::Args;
 
@@ -54,7 +54,7 @@ pub async fn execute(args: ImageTagArgs) -> Result<(), Box<dyn std::error::Error
 mod tests {
     use super::*;
     use chrono::Utc;
-    use krun_box_runtime::StoredImage;
+    use kbox_runtime::StoredImage;
     use std::path::PathBuf;
 
     fn stored(reference: &str) -> StoredImage {

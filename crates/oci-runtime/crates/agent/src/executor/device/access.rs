@@ -2,8 +2,8 @@ use std::collections::BTreeSet;
 use std::os::fd::OwnedFd;
 use std::path::Path;
 
-use krun_oci_sdk::oci_spec::runtime::{LinuxDeviceCgroup, LinuxDeviceType};
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::{LinuxDeviceCgroup, LinuxDeviceType};
+use koci_sdk::{ErrorCode, Result};
 use serde::{Deserialize, Serialize};
 
 use crate::OCI_LINUX_DEFAULT_DEVICE_NODES;

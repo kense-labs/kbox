@@ -1,4 +1,4 @@
-use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
+use koci_core::{DriverKind, HostPlatform, IsolationClass};
 use oci_spec::runtime::ContainerState;
 use serde::{de, Deserialize, Deserializer, Serialize};
 
@@ -107,9 +107,9 @@ impl CheckpointCompatibility {
 
     pub(super) fn validate(&self) -> Result<()> {
         let expected_platform = match self.driver {
-            DriverKind::NativeLinux | DriverKind::LibkrunKvm => HostPlatform::Linux,
-            DriverKind::LibkrunHvf => HostPlatform::Macos,
-            DriverKind::LibkrunWhpx => HostPlatform::Windows,
+            DriverKind::NativeLinux | DriverKind::LibkKvm => HostPlatform::Linux,
+            DriverKind::LibkHvf => HostPlatform::Macos,
+            DriverKind::LibkWhpx => HostPlatform::Windows,
         };
         if self.platform != expected_platform {
             return Err(checkpoint_error(format!(
@@ -117,7 +117,7 @@ impl CheckpointCompatibility {
                 self.driver, self.platform
             )));
         }
-        if !krun_oci_core::hardware_vm::checkpoint_pair_permitted(self.driver, self.isolation) {
+        if !koci_core::hardware_vm::checkpoint_pair_permitted(self.driver, self.isolation) {
             return Err(checkpoint_error(format!(
                 "checkpoint driver {:?} is incompatible with isolation {:?}",
                 self.driver, self.isolation
@@ -128,8 +128,8 @@ impl CheckpointCompatibility {
             "checkpoint architecture",
             MAX_CHECKPOINT_ARCHITECTURE_BYTES,
         )?;
-        if krun_oci_core::hardware_vm::is_libkrun(self.driver)
-            && krun_oci_core::hardware_vm::admit_guest_arch(&self.architecture).is_err()
+        if koci_core::hardware_vm::is_libkrun(self.driver)
+            && koci_core::hardware_vm::admit_guest_arch(&self.architecture).is_err()
         {
             return Err(checkpoint_error(
                 "libkrun checkpoint architecture must be x86_64 or aarch64",

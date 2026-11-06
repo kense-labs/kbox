@@ -2,7 +2,7 @@ use std::future::Future;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_oci_sdk::{async_trait, Error, ErrorCode, Result};
+use koci_sdk::{async_trait, Error, ErrorCode, Result};
 
 use crate::unix_service::{
     prepare_private_directory, validate_absolute_normalized_path, validate_unix_socket_path,
@@ -157,7 +157,7 @@ impl LinuxKvmSoakHostServiceConfig {
     }
 }
 
-/// Exact paths for the qualification-only Krun Box/KVM product lifecycle owner.
+/// Exact paths for the qualification-only Kbox Box/KVM product lifecycle owner.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LinuxKvmBoxHostServiceConfig {
     inner: LinuxKvmRecoveryHostServiceConfig,
@@ -210,7 +210,7 @@ pub struct LinuxKvmSoakHostService {
     inner: UtilityVmHostService<KvmRuntimeDriver>,
 }
 
-/// Qualification-only same-UID SDK owner for the Krun Box product lifecycle.
+/// Qualification-only same-UID SDK owner for the Kbox Box product lifecycle.
 pub struct LinuxKvmBoxHostService {
     inner: UtilityVmHostService<KvmRuntimeDriver>,
 }
@@ -262,7 +262,7 @@ impl LinuxKvmBoxHostService {
         driver: Arc<KvmRuntimeDriver>,
     ) -> Result<Self> {
         let capability = driver.capability();
-        let scoped = capability.readiness == krun_oci_core::DriverReadiness::Experimental
+        let scoped = capability.readiness == koci_core::DriverReadiness::Experimental
             && capability
                 .evidence
                 .get("qualification_scope")
@@ -354,10 +354,10 @@ mod tests {
     use std::collections::BTreeMap;
     use std::os::unix::fs::{FileTypeExt, MetadataExt, PermissionsExt};
 
-    use krun_oci_core::{
+    use koci_core::{
         CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
     };
-    use krun_oci_sdk::{
+    use koci_sdk::{
         async_trait, LocalIpcEndpoint, RuntimeClient, RUNTIME_BUNDLE_HANDOFF_EXTENSION,
         RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
     };
@@ -403,7 +403,7 @@ mod tests {
     ) -> Arc<KvmRuntimeDriver> {
         let runtime_root = config.driver_runtime_root();
         let capability = DriverCapability {
-            driver: DriverKind::LibkrunKvm,
+            driver: DriverKind::LibkKvm,
             status: CapabilityStatus::Available,
             readiness: DriverReadiness::Experimental,
             isolation_classes: vec![IsolationClass::DedicatedVm],
@@ -418,7 +418,7 @@ mod tests {
         };
         let inner = UtilityVmRuntimeDriver::new(
             capability,
-            krun_oci_sdk::AttachmentCapabilities::base_v1(),
+            koci_sdk::AttachmentCapabilities::base_v1(),
             "KVM qualification fixture",
             runtime_root.clone(),
             runtime_root.join("shares"),
@@ -467,7 +467,7 @@ mod tests {
             .collect::<Vec<_>>();
         assert_eq!(launchable.len(), 1);
         let capability = launchable[0];
-        assert_eq!(capability.driver, DriverKind::LibkrunKvm);
+        assert_eq!(capability.driver, DriverKind::LibkKvm);
         assert_eq!(capability.readiness, DriverReadiness::Experimental);
         assert_eq!(
             capability
@@ -520,23 +520,20 @@ mod tests {
     #[test]
     fn config_separates_durable_state_from_driver_runtime() {
         let config = LinuxKvmRecoveryHostServiceConfig::new(
-            "/tmp/krun-oci-kvm-owner",
-            "/tmp/krun-oci-kvm-shim",
-            "/tmp/krun-oci-kvm-system-image.json",
+            "/tmp/koci-kvm-owner",
+            "/tmp/koci-kvm-shim",
+            "/tmp/koci-kvm-system-image.json",
         )
         .expect("valid Linux KVM recovery config");
 
         assert_eq!(
             config.socket_path(),
-            Path::new("/tmp/krun-oci-kvm-owner/runtime.sock")
+            Path::new("/tmp/koci-kvm-owner/runtime.sock")
         );
-        assert_eq!(
-            config.state_root(),
-            Path::new("/tmp/krun-oci-kvm-owner/state")
-        );
+        assert_eq!(config.state_root(), Path::new("/tmp/koci-kvm-owner/state"));
         assert_eq!(
             config.driver_runtime_root(),
-            Path::new("/tmp/krun-oci-kvm-owner/runtime")
+            Path::new("/tmp/koci-kvm-owner/runtime")
         );
         assert_ne!(config.state_root(), config.driver_runtime_root());
     }

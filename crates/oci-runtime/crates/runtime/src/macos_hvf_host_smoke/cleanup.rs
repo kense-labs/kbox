@@ -2,7 +2,7 @@ use std::collections::BTreeSet;
 use std::io;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::ContainerTarget;
+use koci_sdk::ContainerTarget;
 
 const BUNDLE_HANDOFF_DIRECTORY: &str = "bundle-handoffs";
 const CONSOLE_DIRECTORY: &str = "console";

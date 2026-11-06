@@ -1,7 +1,7 @@
 //! Linux capability evidence for the shared-kernel Sandbox backend.
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::ExecutionBackend;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::ExecutionBackend;
 use serde::{Deserialize, Serialize};
 #[cfg(target_os = "linux")]
 use sha2::{Digest, Sha256};
@@ -14,14 +14,14 @@ use std::path::Component;
 use std::path::{Path, PathBuf};
 
 /// Capability snapshot schema persisted with a resolved execution plan.
-pub const SANDBOX_CAPABILITY_SCHEMA: &str = "krun.box.sandbox-capabilities.v1";
+pub const SANDBOX_CAPABILITY_SCHEMA: &str = "kbox.sandbox-capabilities.v1";
 
 #[cfg(target_os = "linux")]
 const REQUIRED_CGROUP_CONTROLLERS: &[&str] = &["cpu", "memory", "pids"];
 
-/// Verified Krun OCI Runtime artifacts used by the native Linux owner.
+/// Verified Kbox OCI Runtime artifacts used by the native Linux owner.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct CertifiedKrunOci {
+pub struct CertifiedKOci {
     pub runtime_path: PathBuf,
     pub runtime_sha256: String,
     pub agent_path: PathBuf,
@@ -142,7 +142,7 @@ pub struct SandboxCapabilitySnapshot {
     pub platform: String,
     pub architecture: String,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub krun_oci: Option<CertifiedKrunOci>,
+    pub koci: Option<CertifiedKOci>,
     pub namespaces: Vec<String>,
     pub user_namespace: Option<UserNamespaceEvidence>,
     pub seccomp_actions: Vec<String>,
@@ -170,7 +170,7 @@ impl SandboxCapabilitySnapshot {
                 self.failures.join("; ")
             ),
             hint: Some(
-                "Use an Krun Sandbox host with the selected runtime artifacts, user namespaces, and delegated cgroup v2"
+                "Use an Kbox Sandbox host with the selected runtime artifacts, user namespaces, and delegated cgroup v2"
                     .to_string(),
             ),
         })
@@ -180,10 +180,10 @@ impl SandboxCapabilitySnapshot {
 /// Probe the current host without changing namespaces, cgroups, or mounts.
 ///
 /// An explicit runtime path is still subject to artifact validation. When
-/// omitted, only packaged Krun locations are searched; `PATH` is deliberately
+/// omitted, only packaged Kbox locations are searched; `PATH` is deliberately
 /// ignored.
 pub fn probe_sandbox_capabilities(runtime_path: Option<&Path>) -> SandboxCapabilitySnapshot {
-    probe_sandbox_capabilities_for(ExecutionBackend::KrunOci, runtime_path, None)
+    probe_sandbox_capabilities_for(ExecutionBackend::KOci, runtime_path, None)
 }
 
 /// Probe host controls and the artifacts required by one Sandbox backend.
@@ -196,7 +196,7 @@ pub fn probe_sandbox_capabilities_for(
         schema: SANDBOX_CAPABILITY_SCHEMA.to_string(),
         platform: std::env::consts::OS.to_string(),
         architecture: std::env::consts::ARCH.to_string(),
-        krun_oci: None,
+        koci: None,
         namespaces: Vec::new(),
         user_namespace: None,
         seccomp_actions: Vec::new(),
@@ -223,13 +223,11 @@ pub fn probe_sandbox_capabilities_for(
     #[cfg(target_os = "linux")]
     {
         match backend {
-            ExecutionBackend::KrunOci => {
-                match resolve_krun_oci_artifacts(runtime_path, agent_path) {
-                    Ok(runtime) => snapshot.krun_oci = Some(runtime),
-                    Err(error) => snapshot.failures.push(error.to_string()),
-                }
-            }
-            ExecutionBackend::Krun => snapshot
+            ExecutionBackend::KOci => match resolve_koci_artifacts(runtime_path, agent_path) {
+                Ok(runtime) => snapshot.koci = Some(runtime),
+                Err(error) => snapshot.failures.push(error.to_string()),
+            },
+            ExecutionBackend::Kbox => snapshot
                 .failures
                 .push("MicroVM execution is not a Sandbox backend".to_string()),
         }
@@ -249,11 +247,11 @@ pub fn probe_sandbox_capabilities_for(
 }
 
 #[cfg(target_os = "linux")]
-const SANDBOX_OCI_LAUNCHER_ENV: &str = "KRUN_BOX_SANDBOX_OCI_LAUNCHER";
+const SANDBOX_OCI_LAUNCHER_ENV: &str = "K_BOX_SANDBOX_OCI_LAUNCHER";
 #[cfg(target_os = "linux")]
-const SANDBOX_OCI_LAUNCHER_FILENAME: &str = "krun-box-sandbox-oci-launcher";
+const SANDBOX_OCI_LAUNCHER_FILENAME: &str = "kbox-sandbox-oci-launcher";
 #[cfg(target_os = "linux")]
-const SANDBOX_OCI_LAUNCHER_SYSTEM_PATH: &str = "/usr/local/libexec/krun-box-sandbox-oci-launcher";
+const SANDBOX_OCI_LAUNCHER_SYSTEM_PATH: &str = "/usr/local/libexec/kbox-sandbox-oci-launcher";
 
 /// Resolve the setuid Sandbox OCI launcher used for native-linux-service owners.
 #[cfg(target_os = "linux")]
@@ -264,7 +262,7 @@ pub(crate) fn resolve_sandbox_oci_launcher(explicit: Option<&Path>) -> Result<Pa
             explicit,
             SANDBOX_OCI_LAUNCHER_ENV,
             SANDBOX_OCI_LAUNCHER_FILENAME,
-            "Krun Box Sandbox OCI launcher",
+            "Kbox Box Sandbox OCI launcher",
         );
     }
 
@@ -272,7 +270,7 @@ pub(crate) fn resolve_sandbox_oci_launcher(explicit: Option<&Path>) -> Result<Pa
         None,
         SANDBOX_OCI_LAUNCHER_ENV,
         SANDBOX_OCI_LAUNCHER_FILENAME,
-        "Krun Box Sandbox OCI launcher",
+        "Kbox Box Sandbox OCI launcher",
     ) {
         Ok(path) => Ok(path),
         Err(packaged_error) => {
@@ -284,7 +282,7 @@ pub(crate) fn resolve_sandbox_oci_launcher(explicit: Option<&Path>) -> Result<Pa
                 Some(&system),
                 SANDBOX_OCI_LAUNCHER_ENV,
                 SANDBOX_OCI_LAUNCHER_FILENAME,
-                "Krun Box Sandbox OCI launcher",
+                "Kbox Box Sandbox OCI launcher",
             )
         }
     }
@@ -292,7 +290,7 @@ pub(crate) fn resolve_sandbox_oci_launcher(explicit: Option<&Path>) -> Result<Pa
 
 /// Require a root-owned setuid launcher for non-root operator Host spawn.
 ///
-/// Lab CI may elevate through `KRUN_BOX_CI_SETPRIV_WRAPPER` instead; that path
+/// Lab CI may elevate through `K_BOX_CI_SETPRIV_WRAPPER` instead; that path
 /// skips this check. Does not claim that CI setpriv proves operator setuid.
 #[cfg(target_os = "linux")]
 pub(crate) fn require_operator_setuid_launcher(path: &Path) -> Result<()> {
@@ -329,7 +327,7 @@ pub(crate) fn require_operator_setuid_launcher(path: &Path) -> Result<()> {
             ),
             hint: Some(
                 format!(
-                    "Run: sudo bash scripts/prepare-linux-sandbox-host.sh --install-launcher <krun-oci>; expected {SANDBOX_OCI_LAUNCHER_SYSTEM_PATH} mode 4755 root:root. After that exec, krun-oci keeps the real uid and gid, sets effective gid 0, and clears supplementary groups before device-policy bootstrap. CI setpriv is not a substitute."
+                    "Run: sudo bash scripts/prepare-linux-sandbox-host.sh --install-launcher <koci>; expected {SANDBOX_OCI_LAUNCHER_SYSTEM_PATH} mode 4755 root:root. After that exec, koci keeps the real uid and gid, sets effective gid 0, and clears supplementary groups before device-policy bootstrap. CI setpriv is not a substitute."
                 ),
             ),
         });
@@ -351,23 +349,23 @@ pub(crate) fn require_operator_setuid_launcher(path: &Path) -> Result<()> {
 }
 
 #[cfg(target_os = "linux")]
-fn resolve_krun_oci_artifacts(
+fn resolve_koci_artifacts(
     runtime_path: Option<&Path>,
     agent_path: Option<&Path>,
-) -> Result<CertifiedKrunOci> {
+) -> Result<CertifiedKOci> {
     let runtime_path = resolve_packaged_artifact(
         runtime_path,
-        "KRUN_BOX_OCI_RUNTIME_PATH",
-        "krun-oci",
-        "Krun OCI Runtime",
+        "K_BOX_OCI_RUNTIME_PATH",
+        "koci",
+        "Kbox OCI Runtime",
     )?;
     let agent_path = resolve_packaged_artifact(
         agent_path,
-        "KRUN_BOX_OCI_AGENT_PATH",
-        "krun-oci-agent",
-        "Krun OCI agent",
+        "K_BOX_OCI_AGENT_PATH",
+        "koci-agent",
+        "Kbox OCI agent",
     )?;
-    Ok(CertifiedKrunOci {
+    Ok(CertifiedKOci {
         runtime_sha256: sha256_file(&runtime_path)?,
         agent_sha256: sha256_file(&agent_path)?,
         runtime_path,
@@ -398,14 +396,14 @@ fn resolve_packaged_artifact(
                 }
             }
         }
-        candidates.push(krun_box_core::dirs_home().join("bin").join(filename));
+        candidates.push(kbox_core::dirs_home().join("bin").join(filename));
         candidates
             .into_iter()
             .find(|candidate| candidate.is_file())
             .ok_or_else(|| BoxError::BoxBootError {
-                message: format!("{label} artifact was not found in packaged Krun locations"),
+                message: format!("{label} artifact was not found in packaged Kbox locations"),
                 hint: Some(format!(
-                    "Install the Krun Box Sandbox runtime package or set {environment} to its packaged artifact"
+                    "Install the Kbox Box Sandbox runtime package or set {environment} to its packaged artifact"
                 )),
             })?
     };
@@ -955,18 +953,18 @@ mod tests {
 
     #[cfg(target_os = "linux")]
     #[test]
-    fn resolves_and_digests_explicit_krun_oci_artifacts() {
+    fn resolves_and_digests_explicit_koci_artifacts() {
         use std::os::unix::fs::PermissionsExt;
 
         let temporary = tempfile::tempdir().unwrap();
-        let runtime = temporary.path().join("krun-oci");
-        let agent = temporary.path().join("krun-oci-agent");
+        let runtime = temporary.path().join("koci");
+        let agent = temporary.path().join("koci-agent");
         std::fs::write(&runtime, b"runtime-artifact").unwrap();
         std::fs::write(&agent, b"agent-artifact").unwrap();
         std::fs::set_permissions(&runtime, std::fs::Permissions::from_mode(0o700)).unwrap();
         std::fs::set_permissions(&agent, std::fs::Permissions::from_mode(0o700)).unwrap();
 
-        let artifacts = resolve_krun_oci_artifacts(Some(&runtime), Some(&agent)).unwrap();
+        let artifacts = resolve_koci_artifacts(Some(&runtime), Some(&agent)).unwrap();
 
         assert_eq!(artifacts.runtime_path, runtime.canonicalize().unwrap());
         assert_eq!(artifacts.agent_path, agent.canonicalize().unwrap());
@@ -981,7 +979,7 @@ mod tests {
         use std::os::unix::fs::PermissionsExt;
 
         let temporary = tempfile::tempdir().unwrap();
-        let launcher = temporary.path().join("krun-box-sandbox-oci-launcher");
+        let launcher = temporary.path().join("kbox-sandbox-oci-launcher");
         std::fs::write(&launcher, b"launcher").unwrap();
         std::fs::set_permissions(&launcher, std::fs::Permissions::from_mode(0o755)).unwrap();
 
@@ -995,7 +993,7 @@ mod tests {
         use std::os::unix::fs::PermissionsExt;
 
         let temporary = tempfile::tempdir().unwrap();
-        let launcher = temporary.path().join("krun-box-sandbox-oci-launcher");
+        let launcher = temporary.path().join("kbox-sandbox-oci-launcher");
         std::fs::write(&launcher, b"launcher").unwrap();
         std::fs::set_permissions(&launcher, std::fs::Permissions::from_mode(0o755)).unwrap();
 
@@ -1013,7 +1011,7 @@ mod tests {
         use std::os::unix::fs::{MetadataExt, PermissionsExt};
 
         let temporary = tempfile::tempdir().unwrap();
-        let launcher = temporary.path().join("krun-box-sandbox-oci-launcher");
+        let launcher = temporary.path().join("kbox-sandbox-oci-launcher");
         std::fs::write(&launcher, b"launcher").unwrap();
         std::fs::set_permissions(&launcher, std::fs::Permissions::from_mode(0o4755)).unwrap();
         let metadata = std::fs::metadata(&launcher).unwrap();
@@ -1035,18 +1033,18 @@ mod tests {
 
     #[cfg(target_os = "linux")]
     #[test]
-    fn rejects_a_non_executable_krun_oci_artifact() {
+    fn rejects_a_non_executable_koci_artifact() {
         use std::os::unix::fs::PermissionsExt;
 
         let temporary = tempfile::tempdir().unwrap();
-        let runtime = temporary.path().join("krun-oci");
-        let agent = temporary.path().join("krun-oci-agent");
+        let runtime = temporary.path().join("koci");
+        let agent = temporary.path().join("koci-agent");
         std::fs::write(&runtime, b"runtime-artifact").unwrap();
         std::fs::write(&agent, b"agent-artifact").unwrap();
         std::fs::set_permissions(&runtime, std::fs::Permissions::from_mode(0o600)).unwrap();
         std::fs::set_permissions(&agent, std::fs::Permissions::from_mode(0o700)).unwrap();
 
-        let error = resolve_krun_oci_artifacts(Some(&runtime), Some(&agent)).unwrap_err();
+        let error = resolve_koci_artifacts(Some(&runtime), Some(&agent)).unwrap_err();
 
         assert!(error.to_string().contains("not executable"));
     }
@@ -1190,12 +1188,12 @@ mod tests {
             Some(Path::new("/sys/fs/cgroup"))
         );
         assert_eq!(
-            parse_current_cgroup_path("0::/user.slice/krun.service\n"),
-            Some("/user.slice/krun.service")
+            parse_current_cgroup_path("0::/user.slice/kbox.service\n"),
+            Some("/user.slice/kbox.service")
         );
         assert_eq!(
-            parse_cgroup_v2_path(mountinfo, "0::/krun-oci-42/krun-box/unit-1\n").as_deref(),
-            Some(Path::new("/sys/fs/cgroup/krun-oci-42/krun-box/unit-1"))
+            parse_cgroup_v2_path(mountinfo, "0::/koci-42/kbox/unit-1\n").as_deref(),
+            Some(Path::new("/sys/fs/cgroup/koci-42/kbox/unit-1"))
         );
         assert!(safe_join_cgroup(Path::new("/sys/fs/cgroup"), "/../../etc").is_none());
         assert!(parse_cgroup_v2_path(mountinfo, "0::/../../etc\n").is_none());

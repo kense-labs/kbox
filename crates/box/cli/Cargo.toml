@@ -1,23 +1,22 @@
 [package]
-name = "krun-box-cli"
+name = "kbox-cli"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
 
 [[bin]]
-name = "krun-box"
+name = "kbox"
 path = "src/main.rs"
 
 [lib]
-name = "krun_box_cli"
+name = "kbox_cli"
 path = "src/lib.rs"
 
 [dependencies]
-krun-box-core = { path = "../core" }
-krun-box-runtime = { path = "../runtime" }
-krun-box-sdk = { path = "../sdk" }
-krun-transport = { workspace = true }
+kbox-core = { path = "../core" }
+kbox-runtime = { path = "../runtime" }
+ktransport = { workspace = true }
 
 # Async runtime
 tokio = { workspace = true }
@@ -81,4 +80,5 @@ windows-sys = { version = "0.48", features = [
 
 [dev-dependencies]
 async-trait = { workspace = true }
+axum = { workspace = true }
 tempfile = { workspace = true }

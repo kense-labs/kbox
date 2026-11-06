@@ -5,8 +5,8 @@ mod profile;
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::OciBundle;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::OciBundle;
 
 use self::lifecycle::{exercise, QualificationContext};
 use self::probe::{namespace_identity, probe_mechanism};
@@ -20,8 +20,8 @@ use crate::{
     NativeLinuxNetworkEnforcementSmokeReport, RuntimeDriver,
 };
 
-const REDIRECT_MARKER_NAME: &str = ".krun-oci-oar01-redirect";
-const REJECTION_MARKER_NAME: &str = ".krun-oci-oar01-rejection";
+const REDIRECT_MARKER_NAME: &str = ".koci-oar01-redirect";
+const REJECTION_MARKER_NAME: &str = ".koci-oar01-rejection";
 
 pub(super) async fn run(
     init_executable: &Path,
@@ -103,7 +103,7 @@ pub(super) async fn run(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let session_root = work_parent.join(format!("krun-oci-native-oar01-{nonce}"));
+    let session_root = work_parent.join(format!("koci-native-oar01-{nonce}"));
     if let Err(reason) = create_private_directory(&session_root).await {
         return failed(report, reason);
     }

@@ -1,4 +1,4 @@
-//! Versioned hardware-vm contract shared by Krun Box and the OCI runtime.
+//! Versioned hardware-vm contract shared by Kbox Box and the OCI runtime.
 //!
 //! KVM, HVF, and WHPX keep one profile: device roles, lifecycle names,
 //! snapshot tier names, vCPU and memory bounds, and control-channel limits.
@@ -258,7 +258,7 @@ pub fn restore_permitted(
 pub const fn is_libkrun(driver: DriverKind) -> bool {
     matches!(
         driver,
-        DriverKind::LibkrunKvm | DriverKind::LibkrunHvf | DriverKind::LibkrunWhpx
+        DriverKind::LibkKvm | DriverKind::LibkHvf | DriverKind::LibkWhpx
     )
 }
 
@@ -273,7 +273,7 @@ pub const fn checkpoint_pair_permitted(driver: DriverKind, isolation: IsolationC
         (driver, isolation),
         (DriverKind::NativeLinux, IsolationClass::SharedHostKernel)
             | (
-                DriverKind::LibkrunKvm | DriverKind::LibkrunHvf | DriverKind::LibkrunWhpx,
+                DriverKind::LibkKvm | DriverKind::LibkHvf | DriverKind::LibkWhpx,
                 IsolationClass::DedicatedVm | IsolationClass::SharedGuestKernel,
             )
     )
@@ -306,8 +306,8 @@ pub fn vm_only_permitted(isolation: IsolationClass) -> Result<(), HardwareVmErro
 #[must_use]
 pub const fn virtiofs_share_mode(driver: DriverKind) -> Option<&'static str> {
     match driver {
-        DriverKind::LibkrunKvm | DriverKind::LibkrunHvf => Some(KVM_HVF_VIRTIOFS_SHARE),
-        DriverKind::LibkrunWhpx => Some(WHPX_VIRTIOFS_SHARE),
+        DriverKind::LibkKvm | DriverKind::LibkHvf => Some(KVM_HVF_VIRTIOFS_SHARE),
+        DriverKind::LibkWhpx => Some(WHPX_VIRTIOFS_SHARE),
         DriverKind::NativeLinux => None,
     }
 }

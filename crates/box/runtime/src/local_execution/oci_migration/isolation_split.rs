@@ -7,8 +7,8 @@
 use std::sync::Arc;
 
 use async_trait::async_trait;
-use krun_box_core::pty::PtyRequest;
-use krun_box_core::{
+use kbox_core::pty::PtyRequest;
+use kbox_core::{
     ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest, ExecutionIsolation,
     ExecutionManagerResult, ExecutionProcess, ExecutionProcessInventory, ExecutionResourceUpdate,
     ExecutionStats, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome,

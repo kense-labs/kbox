@@ -4,7 +4,7 @@ use std::ffi::c_void;
 use std::mem;
 use std::ptr;
 
-use krun_oci_core::{
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
     RuntimeFeatures,
 };
@@ -157,7 +157,7 @@ fn observe_hvf() -> HvfObservation {
             apple_silicon: false,
             hypervisor_supported: None,
             reason: Some(
-                "Krun OCI Runtime supports Hypervisor.framework only on Apple Silicon".into(),
+                "Kbox OCI Runtime supports Hypervisor.framework only on Apple Silicon".into(),
             ),
         };
     }
@@ -230,7 +230,7 @@ fn capability_from_observation(observation: HvfObservation) -> DriverCapability 
     };
 
     DriverCapability {
-        driver: DriverKind::LibkrunHvf,
+        driver: DriverKind::LibkHvf,
         status,
         readiness: DriverReadiness::Experimental,
         // The public HVF driver owns one fresh VM per exact generation. Do
@@ -248,7 +248,7 @@ pub(crate) fn hvf_driver_capability() -> DriverCapability {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_core::{CapabilityStatus, DriverKind, DriverReadiness};
+    use koci_core::{CapabilityStatus, DriverKind, DriverReadiness};
 
     use super::{capability_from_observation, features, HvfObservation};
     #[cfg(target_arch = "aarch64")]
@@ -262,12 +262,12 @@ mod tests {
             reason: None,
         });
 
-        assert_eq!(capability.driver, DriverKind::LibkrunHvf);
+        assert_eq!(capability.driver, DriverKind::LibkHvf);
         assert_eq!(capability.status, CapabilityStatus::Available);
         assert_eq!(capability.readiness, DriverReadiness::Experimental);
         assert_eq!(
             capability.isolation_classes,
-            vec![krun_oci_core::IsolationClass::DedicatedVm]
+            vec![koci_core::IsolationClass::DedicatedVm]
         );
         assert!(capability.can_launch());
     }
@@ -289,7 +289,7 @@ mod tests {
     fn real_probe_reports_one_hvf_driver() {
         let inventory = features();
         let capability = inventory
-            .driver(DriverKind::LibkrunHvf)
+            .driver(DriverKind::LibkHvf)
             .expect("macOS features must include the HVF driver");
 
         assert_eq!(inventory.drivers.len(), 1);

@@ -1,6 +1,6 @@
 use std::sync::atomic::Ordering;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerStats, ContainerTarget, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OutputChunk, ProcessRecord, Result,
 };

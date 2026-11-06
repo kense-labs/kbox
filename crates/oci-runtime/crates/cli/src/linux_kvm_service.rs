@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
-use krun_oci_runtime::{
+use koci_runtime::{
     LinuxKvmBoxHostService, LinuxKvmBoxHostServiceConfig, LinuxKvmRecoveryHostService,
     LinuxKvmRecoveryHostServiceConfig, LinuxKvmSoakHostService, LinuxKvmSoakHostServiceConfig,
 };
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 use tokio::signal::unix::{signal, SignalKind};
 
 pub(crate) async fn run(

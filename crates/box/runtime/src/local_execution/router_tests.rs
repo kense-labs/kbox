@@ -3,7 +3,7 @@ use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 
 use async_trait::async_trait;
-use krun_box_core::{
+use kbox_core::{
     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, OperationId,
 };

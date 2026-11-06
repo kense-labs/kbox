@@ -1,11 +1,11 @@
-//! `krun-box top` command — Display running processes in a box.
+//! `kbox top` command — Display running processes in a box.
 //!
 //! Convenience wrapper that runs `ps` inside the box via the exec channel.
 
 use clap::{Args, ValueEnum};
 use serde::Serialize;
 
-use krun_box_core::exec::{ExecRequest, DEFAULT_EXEC_TIMEOUT_NS};
+use kbox_core::exec::{ExecRequest, DEFAULT_EXEC_TIMEOUT_NS};
 
 use crate::resolve;
 use crate::state::StateFile;

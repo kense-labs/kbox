@@ -1,5 +1,5 @@
 use super::fault_driver::IMAGE_MEDIA_TYPE;
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     ArtifactRef, IsolationLevel, NetworkMode, ResourceLimits, RestartPolicy, RuntimeActionRequest,
     RuntimeApplyRequest, RuntimeExecRequest, RuntimeNetworkSpec, RuntimeProcessSpec,
     RuntimeUnitClass, RuntimeUnitSpec,
@@ -14,7 +14,7 @@ pub fn service_spec(unit_id: &str) -> RuntimeUnitSpec {
         class: RuntimeUnitClass::Service,
         artifact: ArtifactRef {
             uri: format!(
-                "oci://registry.example/krun/fault@sha256:{}",
+                "oci://registry.example/kbox/fault@sha256:{}",
                 "a".repeat(64)
             ),
             digest: format!("sha256:{}", "a".repeat(64)),

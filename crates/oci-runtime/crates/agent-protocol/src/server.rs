@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     async_trait, ContainerStats, Error, ErrorCode, ExitStatus, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, OperationId, OutputChunk, ProcessRecord, Result,
 };
@@ -25,7 +25,7 @@ use crate::wire::{read_frame, write_frame};
 /// Linux guest executor behind the versioned protocol server.
 ///
 /// Every mutating method must be idempotent by
-/// [`krun_oci_sdk::OperationContext::operation_id`]. The implementation must
+/// [`koci_sdk::OperationContext::operation_id`]. The implementation must
 /// retain enough state to reconcile a retry after the agent process restarts.
 #[async_trait]
 pub trait GuestAgentService: Send + Sync {
@@ -421,7 +421,7 @@ where
 
 struct ResponseFaultContext<'a> {
     operation: crate::AgentOperation,
-    operation_id: Option<&'a krun_oci_sdk::OperationId>,
+    operation_id: Option<&'a koci_sdk::OperationId>,
     request_validated: bool,
     faults: &'a dyn AgentTransportFaultInjector,
 }
@@ -429,7 +429,7 @@ struct ResponseFaultContext<'a> {
 fn check_response_fault(
     faults: &dyn AgentTransportFaultInjector,
     point: AgentTransportFaultPoint,
-    operation_id: Option<&krun_oci_sdk::OperationId>,
+    operation_id: Option<&koci_sdk::OperationId>,
     request_validated: bool,
 ) -> Result<()> {
     if request_validated {

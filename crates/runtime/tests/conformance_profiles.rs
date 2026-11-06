@@ -3,12 +3,12 @@ mod driver;
 
 use async_trait::async_trait;
 use driver::{ProcessRaceDriver, IMAGE_MEDIA_TYPE};
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     ArtifactRef, HealthCheckKind, IsolationLevel, MountKind, NetworkMode, ResourceControl,
     ResourceLimits, RestartPolicy, RuntimeActionRequest, RuntimeApplyRequest, RuntimeFeature,
     RuntimeNetworkSpec, RuntimeProcessSpec, RuntimeUnitClass, RuntimeUnitSpec,
 };
-use krun_runtime::{
+use kbox_contract::{
     required_runtime_profiles, runtime_profile_requirements, verify_runtime_profiles,
     FileRuntimeStateStore, ManagedRuntimeClient, RuntimeConformanceCase, RuntimeConformanceFixture,
     RuntimeConformanceInventory, RuntimeConformanceProfile, RuntimeConformanceProfileEvidence,
@@ -27,7 +27,7 @@ fn spec(unit_id: &str, class: RuntimeUnitClass, args: &[&str]) -> RuntimeUnitSpe
         class,
         artifact: ArtifactRef {
             uri: format!(
-                "oci://registry.example/krun/conformance@sha256:{}",
+                "oci://registry.example/kbox/conformance@sha256:{}",
                 "a".repeat(64)
             ),
             digest: format!("sha256:{}", "a".repeat(64)),
@@ -88,7 +88,7 @@ fn action(request_id: &str, apply: &RuntimeApplyRequest) -> RuntimeActionRequest
     }
 }
 
-fn base_case() -> krun_runtime::RuntimeBaseConformanceCase {
+fn base_case() -> kbox_contract::RuntimeBaseConformanceCase {
     let task_apply = apply(
         "base-task-apply",
         spec("base-task", RuntimeUnitClass::Task, &[]),
@@ -113,7 +113,7 @@ fn base_case() -> krun_runtime::RuntimeBaseConformanceCase {
         "base-generation-conflict",
         spec("base-generation", RuntimeUnitClass::Service, &["changed"]),
     );
-    krun_runtime::RuntimeBaseConformanceCase {
+    kbox_contract::RuntimeBaseConformanceCase {
         lifecycle: RuntimeConformanceCase {
             task_remove: action("base-task-remove", &task_apply),
             service_stop: action("base-service-stop", &service_apply),
@@ -132,7 +132,7 @@ fn base_case() -> krun_runtime::RuntimeBaseConformanceCase {
 }
 
 struct ProfileFixture {
-    base: krun_runtime::RuntimeBaseConformanceCase,
+    base: kbox_contract::RuntimeBaseConformanceCase,
     driver: ProcessRaceDriver,
     available: BTreeSet<RuntimeConformanceProfile>,
     incomplete: Option<RuntimeConformanceProfile>,
@@ -168,7 +168,7 @@ impl ProfileFixture {
 
 #[async_trait]
 impl RuntimeConformanceFixture for ProfileFixture {
-    fn base_case(&self) -> &krun_runtime::RuntimeBaseConformanceCase {
+    fn base_case(&self) -> &kbox_contract::RuntimeBaseConformanceCase {
         &self.base
     }
 
@@ -197,8 +197,8 @@ impl RuntimeConformanceFixture for ProfileFixture {
 
     async fn run_profile(
         &self,
-        _client: &dyn krun_runtime::RuntimeClient,
-        capabilities: &krun_runtime::contract::RuntimeCapabilities,
+        _client: &dyn kbox_contract::RuntimeClient,
+        capabilities: &kbox_contract::contract::RuntimeCapabilities,
         profile: RuntimeConformanceProfile,
     ) -> RuntimeResult<RuntimeConformanceProfileEvidence> {
         let requirements = runtime_profile_requirements(capabilities, profile)?;

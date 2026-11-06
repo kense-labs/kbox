@@ -10,16 +10,16 @@ use crate::network::NetworkMode;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum ExecutionBackend {
-    /// libkrun-backed MicroVM execution.
-    Krun,
-    /// Shared-kernel execution through Krun OCI Runtime.
-    KrunOci,
+    /// libkbacked MicroVM execution.
+    Kbox,
+    /// Shared-kernel execution through Kbox OCI Runtime.
+    KOci,
 }
 
 impl ExecutionBackend {
     /// Whether this backend provides shared-kernel Sandbox execution.
     pub const fn is_sandbox(self) -> bool {
-        matches!(self, Self::KrunOci)
+        matches!(self, Self::KOci)
     }
 }
 
@@ -104,7 +104,7 @@ pub fn resolve_execution(config: &BoxConfig) -> Result<ResolvedExecutionPlan> {
             validate_microvm_compatibility(config)?;
             Ok(ResolvedExecutionPlan {
                 requested_isolation: ExecutionIsolation::Microvm,
-                backend: ExecutionBackend::Krun,
+                backend: ExecutionBackend::Kbox,
                 isolation_class: IsolationClass::HardwareVm,
                 required_controls: Vec::new(),
             })
@@ -113,7 +113,7 @@ pub fn resolve_execution(config: &BoxConfig) -> Result<ResolvedExecutionPlan> {
             validate_sandbox_compatibility(config)?;
             Ok(ResolvedExecutionPlan {
                 requested_isolation: ExecutionIsolation::Sandbox,
-                backend: ExecutionBackend::KrunOci,
+                backend: ExecutionBackend::KOci,
                 isolation_class: IsolationClass::SharedKernel,
                 required_controls: SANDBOX_REQUIRED_CONTROLS
                     .iter()
@@ -348,9 +348,9 @@ mod tests {
     }
 
     #[test]
-    fn default_resolves_only_to_krun_hardware_vm() {
+    fn default_resolves_only_to_khardware_vm() {
         let plan = resolve_execution(&BoxConfig::default()).unwrap();
-        assert_eq!(plan.backend, ExecutionBackend::Krun);
+        assert_eq!(plan.backend, ExecutionBackend::Kbox);
         assert_eq!(plan.isolation_class, IsolationClass::HardwareVm);
         assert!(plan.required_controls.is_empty());
     }
@@ -394,9 +394,9 @@ mod tests {
     }
 
     #[test]
-    fn sandbox_resolves_to_krun_oci_shared_kernel_with_mandatory_controls() {
+    fn sandbox_resolves_to_koci_shared_kernel_with_mandatory_controls() {
         let plan = resolve_execution(&sandbox_config()).unwrap();
-        assert_eq!(plan.backend, ExecutionBackend::KrunOci);
+        assert_eq!(plan.backend, ExecutionBackend::KOci);
         assert!(plan.backend.is_sandbox());
         assert_eq!(plan.isolation_class, IsolationClass::SharedKernel);
         for required in SANDBOX_REQUIRED_CONTROLS {

@@ -114,18 +114,15 @@ mod tests {
             ("FOO".to_string(), "bar".to_string())
         );
         // Bare KEY copies from the host env (docker run -e KEY).
-        std::env::set_var("KRUN_TEST_HOSTPASS", "host_value_123");
+        std::env::set_var("K_TEST_HOSTPASS", "host_value_123");
         assert_eq!(
-            parse_runtime_env_var("KRUN_TEST_HOSTPASS"),
-            (
-                "KRUN_TEST_HOSTPASS".to_string(),
-                "host_value_123".to_string()
-            )
+            parse_runtime_env_var("K_TEST_HOSTPASS"),
+            ("K_TEST_HOSTPASS".to_string(), "host_value_123".to_string())
         );
         // Bare KEY unset on host => empty value, never an error.
         assert_eq!(
-            parse_runtime_env_var("KRUN_TEST_DEFINITELY_UNSET_XYZ"),
-            ("KRUN_TEST_DEFINITELY_UNSET_XYZ".to_string(), String::new())
+            parse_runtime_env_var("K_TEST_DEFINITELY_UNSET_XYZ"),
+            ("K_TEST_DEFINITELY_UNSET_XYZ".to_string(), String::new())
         );
     }
 

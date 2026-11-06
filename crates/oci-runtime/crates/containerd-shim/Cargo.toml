@@ -1,16 +1,16 @@
 [package]
-name = "krun-oci-containerd-shim"
+name = "koci-containerd-shim"
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
-description = "containerd runtime-v2 shim backed exclusively by the Krun OCI SDK"
+description = "containerd runtime-v2 shim backed exclusively by the Kbox OCI SDK"
 
 [[bin]]
-name = "containerd-shim-krun-oci-v2"
+name = "containerd-shim-koci-v2"
 path = "src/main.rs"
 
 [dependencies]
-krun-oci-sdk = { path = "../sdk" }
+koci-sdk = { path = "../sdk" }
 async-trait.workspace = true
 getrandom.workspace = true
 log = "0.4"

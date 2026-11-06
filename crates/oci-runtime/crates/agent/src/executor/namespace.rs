@@ -4,8 +4,8 @@ use std::os::unix::ffi::OsStrExt;
 use std::os::unix::net::UnixStream;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::oci_spec::runtime::{Linux, LinuxIdMapping, LinuxNamespaceType};
-use krun_oci_sdk::{Error, ErrorCode, OciLinuxSysctlNamespace, Result};
+use koci_sdk::oci_spec::runtime::{Linux, LinuxIdMapping, LinuxNamespaceType};
+use koci_sdk::{Error, ErrorCode, OciLinuxSysctlNamespace, Result};
 
 use super::control;
 
@@ -625,7 +625,7 @@ fn mapped_host_id(id: u32, mappings: &[IdMapping]) -> Option<u32> {
 
 fn time_offset(
     clock: &str,
-    offset: &krun_oci_sdk::oci_spec::runtime::LinuxTimeOffset,
+    offset: &koci_sdk::oci_spec::runtime::LinuxTimeOffset,
 ) -> Result<TimeOffset> {
     let nanosecs = offset.nanosecs().unwrap_or_default();
     if nanosecs >= NANOSECONDS_PER_SECOND {

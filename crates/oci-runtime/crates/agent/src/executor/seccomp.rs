@@ -1,9 +1,9 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use krun_oci_sdk::oci_spec::runtime::{
+use koci_sdk::oci_spec::runtime::{
     Linux, LinuxSeccomp, LinuxSeccompAction, LinuxSeccompArg, LinuxSeccompOperator,
 };
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::{Error, ErrorCode, Result};
 use seccompiler::{
     BpfProgram, SeccompAction, SeccompCmpArgLen, SeccompCmpOp, SeccompCondition, SeccompFilter,
     SeccompRule,

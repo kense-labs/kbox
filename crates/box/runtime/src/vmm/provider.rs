@@ -1,3 +1,3 @@
-//! VmmProvider re-exported from `krun-box-core`.
+//! VmmProvider re-exported from `kbox-core`.
 
-pub use krun_box_core::vmm::VmmProvider;
+pub use kbox_core::vmm::VmmProvider;

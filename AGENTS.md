@@ -1,6 +1,6 @@
-# krun
+# kbox
 
-krun is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime contracts, model traffic, and runtime security. Root `libkrun` and `libkrunfw` directories are Git submodules with their own repositories.
+kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime contracts, model traffic, and runtime security. Root `libkrun` and `libkrunfw` directories are Git submodules with their own repositories.
 
 ## Execution and completion
 
@@ -20,8 +20,6 @@ krun is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 | `crates/box` | Execution resources, MicroVM lifecycle, images, volumes, networks, snapshots and credentials | Preserve ExecutionManager ownership and generation fencing |
 | `crates/oci-runtime` | OCI execution and guest/host integration | Preserve backend routing and platform-specific behavior |
 | `crates/runtime` | Provider-neutral Task／Service contracts and lifecycle clients | Do not create a second execution state machine |
-| `apps/gateway` | Model Provider routing and local traffic policy | Do not route unrelated Plugin traffic through model-specific logic |
-| `crates/sentry` | Behavioral decisions and intervention requests | Separate decisions from actual PEP effects |
 | `crates/acl` | ACL parsing and typed configuration | Keep product configuration in ACL |
 | `libkrun` | Native virtualization source submodule | Edit in `kense-labs/libkrun`, test, then update the gitlink |
 | `libkrunfw` | Guest kernel bundle submodule | Edit in `kense-labs/libkrunfw`, preserve version and provenance, then update the gitlink |
@@ -41,7 +39,7 @@ krun is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 
 ## General rules
 
-- Do not create another Cargo workspace or root lockfile. Keep internal `krun-*` dependencies on local paths and `publish = false`.
+- Do not create another Cargo workspace or root lockfile. Keep internal `k*` dependencies on local paths and `publish = false`.
 - Do not edit submodule content in the parent repository. Land and test the change in the owning repository, then update the parent's gitlink.
 - Do not create a repository for a new library without explicit user authorization.
 - Validate external input once at the entry boundary and pass typed values inward.
@@ -66,7 +64,7 @@ krun is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 
 ## Configuration, identity and data security
 
-- ACL is the only product configuration language, parsed by `krun-acl`. Manifests, evidence and protocol schemas are data contracts, not a second configuration system.
+- ACL is the only product configuration language, parsed by `kacl`. Manifests, evidence and protocol schemas are data contracts, not a second configuration system.
 - Use closed enums with `parse()` and `as_str()` for admitted values. Unknown security-critical values are refused.
 - Bind workload credentials to the principal, Run, Capability, DataRef and generation. Delegated permissions may only narrow.
 - Keep real secrets out of images, prompts, memory, checkpoints, events, logs and evidence. Store only typed references.
@@ -98,7 +96,7 @@ cargo clippy --locked -p <owning-package> --all-targets --no-deps
 Run `cargo check --workspace --all-targets --locked` for workspace integration changes. Run affected native backend tests for platform claims.
 
 - Unit tests cover contracts, state machines, validation and errors.
-- Hermetic integration tests cover callers, drivers, ACP, Plugin, CLI and SDK behavior.
+- Hermetic integration tests cover callers, drivers, ACP, Plugin and CLI behavior.
 - Malformed-input tests cover truncation, excessive sizes, path escape and invalid combinations.
 - Crash tests cover SIGKILL, restart, partial operations, stale generations and reconciliation.
 - Native tests cover only the actual backend, image and host configuration being claimed.

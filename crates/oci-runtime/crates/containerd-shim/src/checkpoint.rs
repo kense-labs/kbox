@@ -1,14 +1,14 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::{CheckpointArtifactPath, CheckpointReference, Error, ErrorCode, Result};
+use koci_sdk::{CheckpointArtifactPath, CheckpointReference, Error, ErrorCode, Result};
 use containerd_shim_protos::protobuf::well_known_types::any::Any;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 
-const PACKAGE_SCHEMA_V1: &str = "krun.oci.containerd-checkpoint.v1";
-const ARTIFACT_FILE_NAME: &str = "krun-oci-checkpoint-v1.bin";
-const MANIFEST_FILE_NAME: &str = "krun-oci-checkpoint-v1.json";
+const PACKAGE_SCHEMA_V1: &str = "koci.containerd-checkpoint.v1";
+const ARTIFACT_FILE_NAME: &str = "koci-checkpoint-v1.bin";
+const MANIFEST_FILE_NAME: &str = "koci-checkpoint-v1.json";
 const RUNC_CHECKPOINT_OPTIONS_NAME: &str = "containerd.runc.v1.CheckpointOptions";
 const MAX_MANIFEST_BYTES: u64 = 1024 * 1024;
 const MAX_OPTIONS_BYTES: usize = 64 * 1024;
@@ -392,7 +392,7 @@ fn require_same_manifest(
     } else {
         Err(package_error(
             ErrorCode::AlreadyExists,
-            "checkpoint directory already contains a different Krun checkpoint package",
+            "checkpoint directory already contains a different Kbox checkpoint package",
         ))
     }
 }

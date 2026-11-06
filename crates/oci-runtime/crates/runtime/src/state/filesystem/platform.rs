@@ -3,7 +3,7 @@ use std::io;
 use std::path::Path;
 
 use cap_std::fs::Dir;
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::{ErrorCode, Result};
 
 #[cfg(unix)]
 use cap_fs_ext::{DirExt, MetadataExt};

@@ -1,7 +1,7 @@
-//! Krun Box Core - Foundational Types and Abstractions
+//! Kbox Box Core - Foundational Types and Abstractions
 //!
 //! This module provides the foundational types, traits, and abstractions
-//! used across the Krun Box MicroVM runtime.
+//! used across the Kbox Box MicroVM runtime.
 
 pub mod audit;
 pub mod compose;
@@ -104,22 +104,22 @@ pub use vmm::{
 };
 pub use volume::VolumeConfig;
 
-/// Krun Box version
+/// Kbox Box version
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-/// Get the Krun home directory.
+/// Get the Kbox home directory.
 ///
 /// Resolution order:
-/// 1. `KRUN_HOME` environment variable (if set)
-/// 2. `~/.krun` (via `dirs::home_dir()`)
-/// 3. Fallback to `.krun` in the current directory
+/// 1. `K_HOME` environment variable (if set)
+/// 2. `~/.kbox` (via `dirs::home_dir()`)
+/// 3. Fallback to `.kbox` in the current directory
 pub fn dirs_home() -> std::path::PathBuf {
-    if let Ok(home) = std::env::var("KRUN_HOME") {
+    if let Ok(home) = std::env::var("K_HOME") {
         return std::path::PathBuf::from(home);
     }
     dirs::home_dir()
-        .map(|h| h.join(".krun"))
-        .unwrap_or_else(|| std::path::PathBuf::from(".krun"))
+        .map(|h| h.join(".kbox"))
+        .unwrap_or_else(|| std::path::PathBuf::from(".kbox"))
 }
 
 #[cfg(test)]
@@ -130,36 +130,36 @@ mod tests {
     static ENV_LOCK: Mutex<()> = Mutex::new(());
 
     #[test]
-    fn dirs_home_prefers_krun_home_environment_variable() {
+    fn dirs_home_prefers_khome_environment_variable() {
         let _guard = ENV_LOCK.lock().unwrap();
-        let previous = std::env::var_os("KRUN_HOME");
+        let previous = std::env::var_os("K_HOME");
         let tmp = tempfile::tempdir().unwrap();
 
-        std::env::set_var("KRUN_HOME", tmp.path());
+        std::env::set_var("K_HOME", tmp.path());
         assert_eq!(dirs_home(), tmp.path());
 
         match previous {
-            Some(value) => std::env::set_var("KRUN_HOME", value),
-            None => std::env::remove_var("KRUN_HOME"),
+            Some(value) => std::env::set_var("K_HOME", value),
+            None => std::env::remove_var("K_HOME"),
         }
     }
 
     #[test]
-    fn dirs_home_defaults_to_dot_krun_under_user_home_when_env_absent() {
+    fn dirs_home_defaults_to_dot_kunder_user_home_when_env_absent() {
         let _guard = ENV_LOCK.lock().unwrap();
-        let previous = std::env::var_os("KRUN_HOME");
+        let previous = std::env::var_os("K_HOME");
 
-        std::env::remove_var("KRUN_HOME");
+        std::env::remove_var("K_HOME");
         let home = dirs_home();
 
-        assert!(home.ends_with(".krun"));
+        assert!(home.ends_with(".kbox"));
         if let Some(user_home) = dirs::home_dir() {
-            assert_eq!(home, user_home.join(".krun"));
+            assert_eq!(home, user_home.join(".kbox"));
         }
 
         match previous {
-            Some(value) => std::env::set_var("KRUN_HOME", value),
-            None => std::env::remove_var("KRUN_HOME"),
+            Some(value) => std::env::set_var("K_HOME", value),
+            None => std::env::remove_var("K_HOME"),
         }
     }
 }

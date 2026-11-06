@@ -20,7 +20,7 @@ mod oci_cli;
 mod reopen_replacement;
 
 #[derive(Debug, Parser)]
-#[command(name = "krun-oci", version, about)]
+#[command(name = "koci", version, about)]
 struct Cli {
     #[command(subcommand)]
     command: Command,
@@ -54,7 +54,7 @@ enum NativeLinuxCheckpointRestoreCrashPointArg {
 
 #[cfg(target_os = "linux")]
 impl From<NativeLinuxCheckpointRestoreCrashPointArg>
-    for krun_oci_runtime::NativeLinuxCheckpointRestoreCrashPoint
+    for koci_runtime::NativeLinuxCheckpointRestoreCrashPoint
 {
     fn from(value: NativeLinuxCheckpointRestoreCrashPointArg) -> Self {
         match value {
@@ -125,7 +125,7 @@ enum Command {
     HvfSmoke,
     /// Run the experimental native Linux core lifecycle through the Rust SDK.
     NativeLinuxSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// OCI bundle containing config.json and rootfs.
@@ -137,7 +137,7 @@ enum Command {
     },
     /// Qualify immutable Native Linux checkpoints with one exact CRIU binary.
     NativeLinuxCheckpointSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Exact root-owned CRIU executable qualified by this run.
@@ -174,7 +174,7 @@ enum Command {
     },
     /// Qualify one opaque caller-owned network enforcement and redirect mechanism.
     NativeLinuxNetworkEnforcementSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// OCI bundle bound to one joined namespace and exact interface.
@@ -201,7 +201,7 @@ enum Command {
     },
     /// Prove helper-backed native Linux execution as an unprivileged user.
     NativeLinuxRootlessSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Rootless OCI bundle containing config.json and rootfs.
@@ -237,7 +237,7 @@ enum Command {
     #[cfg(target_os = "linux")]
     #[command(hide = true)]
     NativeLinuxRootlessDevicePolicySmoke {
-        /// Matching krun-oci-agent executable used for prepared init.
+        /// Matching koci-agent executable used for prepared init.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Rootless OCI bundle containing the bounded device profile.
@@ -256,7 +256,7 @@ enum Command {
         /// Private absolute root containing runtime.sock, state, and executor data.
         #[arg(long, value_name = "DIR")]
         root: PathBuf,
-        /// Absolute matching krun-oci-agent executable used for prepared init.
+        /// Absolute matching koci-agent executable used for prepared init.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Explicit user-owned cgroup-v2 delegation for rootless Sandbox use.
@@ -297,7 +297,7 @@ enum Command {
         #[arg(long, value_name = "FILE")]
         system_image_manifest: PathBuf,
     },
-    /// Serve the KVM candidate only for Krun Box product-lifecycle qualification.
+    /// Serve the KVM candidate only for Kbox Box product-lifecycle qualification.
     #[cfg(all(
         target_os = "linux",
         any(target_arch = "x86_64", target_arch = "aarch64")
@@ -364,7 +364,7 @@ enum Command {
     #[cfg(target_os = "linux")]
     #[command(hide = true)]
     LinuxNativeLiveRecoverySmoke {
-        /// Absolute `krun-oci-agent` executable.
+        /// Absolute `koci-agent` executable.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// OCI bundle for the supervised Native Live attempt.
@@ -912,7 +912,7 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long, value_name = "FILE")]
         ready_file: PathBuf,
         /// Explicit user-owned cgroup-v2 delegation for rootless recovery.
@@ -933,7 +933,7 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long)]
         generation: u64,
         /// Exact cgroup-v2 delegation used by the killed rootless owner.
@@ -954,7 +954,7 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long, value_name = "FILE")]
         ready_file: PathBuf,
     },
@@ -969,35 +969,35 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long)]
         generation: u64,
         /// Root-owned JSON captured while the Hook process group was live.
         #[arg(long, value_name = "FILE")]
         evidence: PathBuf,
     },
-    /// Own one Krun Box container through the native Linux SDK service.
+    /// Own one Kbox Box container through the native Linux SDK service.
     #[cfg(target_os = "linux")]
     NativeLinuxService {
         /// Private absolute root containing runtime.sock, state, and executor data.
         #[arg(long, value_name = "DIR")]
         root: PathBuf,
-        /// Absolute matching krun-oci-agent executable used for the prepared init mode.
+        /// Absolute matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Explicit user-owned cgroup-v2 delegation for rootless Sandbox use.
         #[arg(long, value_name = "DIR")]
         delegated_cgroup_root: Option<PathBuf>,
-        /// Exact Krun Box container identity allowed to consume the inherited descriptors.
+        /// Exact Kbox Box container identity allowed to consume the inherited descriptors.
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
-        /// Require Krun Box exec, PTY, and init-log handles on descriptors 3, 4, and 5.
+        container_id: koci_sdk::ContainerId,
+        /// Require Kbox Box exec, PTY, and init-log handles on descriptors 3, 4, and 5.
         #[arg(long, action = clap::ArgAction::SetTrue, required = true)]
-        krun_box_control_fds: bool,
+        kbox_control_fds: bool,
     },
     /// Prove the complete native lifecycle over the packaged Unix SDK service.
     NativeLinuxServiceSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// OCI bundle containing config.json and rootfs.
@@ -1009,7 +1009,7 @@ enum Command {
     },
     /// Prove two native Linux containers remain independently fenced.
     NativeLinuxMultiContainerSmoke {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// First OCI bundle containing config.json and rootfs.
@@ -1024,7 +1024,7 @@ enum Command {
     },
     /// Run repeated concurrent native Linux lifecycle and leak checks.
     NativeLinuxSoak {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// Distinct writable OCI bundle; repeat once per available soak slot.
@@ -1045,7 +1045,7 @@ enum Command {
     },
     /// Interrupt native Linux lifecycle and prove cleanup without OCI delete.
     NativeLinuxFaultCleanup {
-        /// Matching krun-oci-agent executable used for the prepared init mode.
+        /// Matching koci-agent executable used for the prepared init mode.
         #[arg(long, value_name = "FILE")]
         agent: PathBuf,
         /// OCI bundle containing config.json and rootfs.
@@ -1156,12 +1156,12 @@ enum Command {
         bundle: PathBuf,
         /// Exact path-safe container identity used by the candidate driver.
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         /// Exact container generation represented by the share.
         #[arg(long, default_value_t = 1)]
         generation: u64,
     },
-    /// Serve the explicit Krun Box lifecycle qualification over a protected Windows pipe.
+    /// Serve the explicit Kbox Box lifecycle qualification over a protected Windows pipe.
     BoxWhpxQualificationService {
         /// Isolated libkrun shim executable.
         #[arg(long, value_name = "FILE")]
@@ -1201,7 +1201,7 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long, value_name = "FILE")]
         ready_file: PathBuf,
     },
@@ -1221,7 +1221,7 @@ enum Command {
         #[arg(long, value_name = "DIR")]
         bundle: PathBuf,
         #[arg(long, value_name = "ID")]
-        container_id: krun_oci_sdk::ContainerId,
+        container_id: koci_sdk::ContainerId,
         #[arg(long)]
         generation: u64,
     },
@@ -1359,7 +1359,7 @@ enum FaultPointArg {
     Kill,
 }
 
-impl From<FaultPointArg> for krun_oci_runtime::LifecycleFaultPoint {
+impl From<FaultPointArg> for koci_runtime::LifecycleFaultPoint {
     fn from(value: FaultPointArg) -> Self {
         match value {
             FaultPointArg::Create => Self::AfterCreate,
@@ -1395,41 +1395,41 @@ enum TransportFaultStageArg {
     HostAfterShutdown,
 }
 
-impl From<TransportFaultStageArg> for krun_oci_runtime::AgentTransportFaultStage {
+impl From<TransportFaultStageArg> for koci_runtime::AgentTransportFaultStage {
     fn from(value: TransportFaultStageArg) -> Self {
         match value {
-            TransportFaultStageArg::BeforeRequestWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite,
-            ),
-            TransportFaultStageArg::AfterRequestWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostAfterRequestWrite,
-            ),
-            TransportFaultStageArg::BeforeResponseRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostBeforeResponseRead,
-            ),
-            TransportFaultStageArg::AfterResponseRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostAfterResponseRead,
-            ),
-            TransportFaultStageArg::GuestAfterRequestRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestAfterRequestRead,
-            ),
+            TransportFaultStageArg::BeforeRequestWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite)
+            }
+            TransportFaultStageArg::AfterRequestWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostAfterRequestWrite)
+            }
+            TransportFaultStageArg::BeforeResponseRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostBeforeResponseRead)
+            }
+            TransportFaultStageArg::AfterResponseRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostAfterResponseRead)
+            }
+            TransportFaultStageArg::GuestAfterRequestRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterRequestRead)
+            }
             TransportFaultStageArg::GuestBeforeDispatch => {
-                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestBeforeDispatch)
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestBeforeDispatch)
             }
             TransportFaultStageArg::GuestAfterDispatch => {
-                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
             }
             TransportFaultStageArg::GuestBeforeResponseWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
+                koci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
             ),
-            TransportFaultStageArg::GuestAfterResponseWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite,
-            ),
+            TransportFaultStageArg::GuestAfterResponseWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite)
+            }
             TransportFaultStageArg::HostBeforeShutdown => {
-                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
+                Self::Shutdown(koci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
             }
             TransportFaultStageArg::HostAfterShutdown => {
-                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
+                Self::Shutdown(koci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
             }
         }
     }
@@ -1440,7 +1440,7 @@ enum CliError {
     #[error("{0}")]
     Message(String),
     #[error("runtime request failed: {0}")]
-    Runtime(#[from] krun_oci_sdk::Error),
+    Runtime(#[from] koci_sdk::Error),
     #[error("failed to serialize command output: {0}")]
     Serialize(#[from] serde_json::Error),
     #[cfg(target_os = "linux")]
@@ -1464,7 +1464,7 @@ enum CliError {
             any(target_arch = "x86_64", target_arch = "aarch64")
         )
     ))]
-    #[error("failed to resolve the current krun-oci executable: {0}")]
+    #[error("failed to resolve the current koci executable: {0}")]
     CurrentExecutable(std::io::Error),
 }
 
@@ -1477,20 +1477,20 @@ const CLI_THREAD_STACK_BYTES: usize = 8 * 1024 * 1024;
 #[cfg(target_os = "windows")]
 fn main() -> ExitCode {
     let worker = match std::thread::Builder::new()
-        .name("krun-oci-command".to_string())
+        .name("koci-command".to_string())
         .stack_size(CLI_THREAD_STACK_BYTES)
         .spawn(cli_main)
     {
         Ok(worker) => worker,
         Err(error) => {
-            eprintln!("krun-oci: failed to start command worker: {error}");
+            eprintln!("koci: failed to start command worker: {error}");
             return ExitCode::FAILURE;
         }
     };
     match worker.join() {
         Ok(code) => code,
         Err(_) => {
-            eprintln!("krun-oci: command worker panicked");
+            eprintln!("koci: command worker panicked");
             ExitCode::FAILURE
         }
     }
@@ -1541,10 +1541,10 @@ fn cli_main() -> ExitCode {
     #[cfg(target_os = "linux")]
     let rootless_device_policy_bootstrap = match bootstrap_root {
         Some(delegated_cgroup_root) => {
-            match krun_oci_runtime::RootlessDevicePolicyBootstrap::start(delegated_cgroup_root) {
+            match koci_runtime::RootlessDevicePolicyBootstrap::start(delegated_cgroup_root) {
                 Ok(bootstrap) => Some(bootstrap),
                 Err(error) => {
-                    eprintln!("krun-oci: runtime request failed: {error}");
+                    eprintln!("koci: runtime request failed: {error}");
                     return ExitCode::FAILURE;
                 }
             }
@@ -1559,14 +1559,14 @@ fn cli_main() -> ExitCode {
     {
         Ok(runtime) => runtime,
         Err(error) => {
-            eprintln!("krun-oci: failed to create async runtime: {error}");
+            eprintln!("koci: failed to create async runtime: {error}");
             return ExitCode::FAILURE;
         }
     };
     match runtime.block_on(dispatch::run(cli, rootless_device_policy_bootstrap)) {
         Ok(code) => code,
         Err(error) => {
-            eprintln!("krun-oci: {error}");
+            eprintln!("koci: {error}");
             ExitCode::FAILURE
         }
     }

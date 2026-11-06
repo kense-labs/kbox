@@ -2,7 +2,7 @@ use std::io;
 use std::os::unix::fs::MetadataExt;
 use std::path::{Component, Path, PathBuf};
 
-use krun_oci_sdk::{
+use koci_sdk::{
     runtime_bundle_handoff_root, ContainerTarget, Error, ErrorCode, Generation,
     GuestSessionAttachment, Result,
 };

@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-rootfs_dir="$RUNNER_TEMP/krun-oci-alpine-aarch64"
-signed_dir="$RUNNER_TEMP/krun-oci-agent-vm-signed"
-system_image_manifest="${KRUN_OCI_MACOS_SYSTEM_IMAGE_MANIFEST:?macOS system-image manifest is required}"
-bundle_dir="$rootfs_dir/var/lib/krun-oci-smoke/bundle"
-marker="$bundle_dir/rootfs/.krun-oci-create-start-smoke"
+rootfs_dir="$RUNNER_TEMP/koci-alpine-aarch64"
+signed_dir="$RUNNER_TEMP/koci-agent-vm-signed"
+system_image_manifest="${K_OCI_MACOS_SYSTEM_IMAGE_MANIFEST:?macOS system-image manifest is required}"
+bundle_dir="$rootfs_dir/var/lib/koci-smoke/bundle"
+marker="$bundle_dir/rootfs/.koci-create-start-smoke"
 support="$(sysctl -n kern.hv_support 2>/dev/null || printf unavailable)"
 test -f "$system_image_manifest"
 
 endpoint_baseline="$(
-  find /private/tmp -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
+  find /private/tmp -maxdepth 1 -name 'koci-agent-*' -print | sort
 )"
 runtime_baseline="$(
-  find "$rootfs_dir/run" -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
+  find "$rootfs_dir/run" -maxdepth 1 -name 'koci-agent-*' -print | sort
 )"
 
 assert_cleanup_baseline() {
   local endpoint_after runtime_after
   endpoint_after="$(
-    find /private/tmp -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
+    find /private/tmp -maxdepth 1 -name 'koci-agent-*' -print | sort
   )"
   runtime_after="$(
-    find "$rootfs_dir/run" -maxdepth 1 -name 'krun-oci-agent-*' -print | sort
+    find "$rootfs_dir/run" -maxdepth 1 -name 'koci-agent-*' -print | sort
   )"
   test "$endpoint_after" = "$endpoint_baseline"
   test "$runtime_after" = "$runtime_baseline"
@@ -31,12 +31,12 @@ assert_cleanup_baseline() {
 
 run_lifecycle_fault() {
   local phase="$1"
-  local console="$RUNNER_TEMP/krun-oci-fault-$phase.log"
+  local console="$RUNNER_TEMP/koci-fault-$phase.log"
   local output status
   set +e
   output="$(
-    target/debug/krun-oci oci-vm-fault-cleanup \
-      --shim "$signed_dir/krun-oci-krun-shim" \
+    target/debug/koci oci-vm-fault-cleanup \
+      --shim "$signed_dir/koci-kshim" \
       --vm-rootfs "$rootfs_dir" \
       --system-image-manifest "$system_image_manifest" \
       --bundle "$bundle_dir" \
@@ -50,7 +50,7 @@ run_lifecycle_fault() {
   if [[ "$support" == "1" ]]; then
     test "$status" -eq 0
     jq --exit-status --arg phase "$phase" \
-      '.schema_version == "krun.oci.oci-vm-fault-cleanup.v4"
+      '.schema_version == "koci.oci-vm-fault-cleanup.v4"
        and .platform == "macos" and .status == "available"
        and .bundle_loaded
        and .lifecycle.requested_fault == $phase
@@ -96,7 +96,7 @@ run_lifecycle_fault() {
   else
     test "$status" -eq 2
     jq --exit-status --arg phase "$phase" \
-      '.schema_version == "krun.oci.oci-vm-fault-cleanup.v4"
+      '.schema_version == "koci.oci-vm-fault-cleanup.v4"
        and .platform == "macos" and .status == "unavailable"
        and .bundle_loaded
        and .lifecycle.requested_fault == $phase
@@ -118,12 +118,12 @@ run_lifecycle_fault() {
 
 run_transport_fault() {
   local transport_stage="$1"
-  local console="$RUNNER_TEMP/krun-oci-transport-$transport_stage.log"
+  local console="$RUNNER_TEMP/koci-transport-$transport_stage.log"
   local output status
   set +e
   output="$(
-    target/debug/krun-oci oci-vm-transport-fault-cleanup \
-      --shim "$signed_dir/krun-oci-krun-shim" \
+    target/debug/koci oci-vm-transport-fault-cleanup \
+      --shim "$signed_dir/koci-kshim" \
       --vm-rootfs "$rootfs_dir" \
       --system-image-manifest "$system_image_manifest" \
       --bundle "$bundle_dir" \
@@ -137,7 +137,7 @@ run_transport_fault() {
   if [[ "$(uname -m)" == "arm64" && "$support" == "1" ]]; then
     test "$status" -eq 0
     jq --exit-status --arg stage "$transport_stage" \
-      '.schema_version == "krun.oci.oci-vm-transport-fault-cleanup.v3"
+      '.schema_version == "koci.oci-vm-transport-fault-cleanup.v3"
        and .platform == "macos" and .status == "available"
        and .bundle_loaded
        and .requested_operation == "create"
@@ -202,7 +202,7 @@ run_transport_fault() {
   else
     test "$status" -eq 2
     jq --exit-status --arg stage "$transport_stage" \
-      '.schema_version == "krun.oci.oci-vm-transport-fault-cleanup.v3"
+      '.schema_version == "koci.oci-vm-transport-fault-cleanup.v3"
        and .platform == "macos" and .status != "available"
        and .requested_operation == "create"
        and .requested_stage == $stage

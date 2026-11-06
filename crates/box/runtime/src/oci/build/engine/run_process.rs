@@ -2,7 +2,7 @@
 
 use std::process::{Output, Stdio};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use tokio::io::{AsyncRead, AsyncReadExt};
 
 use super::control::BuildExecutionControl;

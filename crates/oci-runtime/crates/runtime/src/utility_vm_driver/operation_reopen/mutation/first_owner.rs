@@ -1,15 +1,13 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentTransportFaultInjector, AgentTransportFaultStage, AgentTransportOperationStage,
     AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
 };
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
-    ContainerTarget, ListRequest, OciRuntimeService, OperationContext, StartRequest,
-};
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ContainerTarget, ListRequest, OciRuntimeService, OperationContext, StartRequest};
 use tokio::time::timeout;
 
 use super::super::driver::QualificationKvmOperationDriver;
@@ -285,7 +283,7 @@ pub(super) async fn run(
         Ok(records) if records.len() == 1 => {
             let record = &records[0];
             report.durable_running_retained = record.state.id() == qualification.create.id.as_str()
-                && record.driver == DriverKind::LibkrunKvm
+                && record.driver == DriverKind::LibkKvm
                 && record.isolation == IsolationClass::DedicatedVm
                 && record.generation == created.generation
                 && record.config_digest == created.config_digest

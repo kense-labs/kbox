@@ -1,10 +1,10 @@
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     ArtifactRef, IsolationLevel, NetworkMode, ResourceControl, ResourceLimits, RestartPolicy,
     RuntimeCapabilities, RuntimeEvidence, RuntimeFeature, RuntimeNetworkSpec, RuntimeObservation,
     RuntimePort, RuntimeProcessSpec, RuntimeServiceEndpoint, RuntimeUnitClass, RuntimeUnitSpec,
     RuntimeUnitState, TransportProtocol,
 };
-use krun_runtime::{runtime_profile_requirements, ProviderId, RuntimeConformanceProfile};
+use kbox_contract::{runtime_profile_requirements, ProviderId, RuntimeConformanceProfile};
 use std::collections::BTreeMap;
 use std::net::{IpAddr, Ipv4Addr};
 
@@ -16,7 +16,7 @@ fn service_spec(protocol: TransportProtocol) -> RuntimeUnitSpec {
         class: RuntimeUnitClass::Service,
         artifact: ArtifactRef {
             uri: format!(
-                "oci://registry.example/krun/service@sha256:{}",
+                "oci://registry.example/kbox/service@sha256:{}",
                 "a".repeat(64)
             ),
             digest: format!("sha256:{}", "a".repeat(64)),

@@ -1,11 +1,11 @@
-//! `krun-box pause` command — Pause one or more running boxes.
+//! `kbox pause` command — Pause one or more running boxes.
 //!
 //! Uses the durable execution manager for managed boxes and SIGSTOP only for
 //! legacy state records.
 
 use clap::Args;
-use krun_box_core::{ExecutionGeneration, ExecutionId, ExecutionManager};
-use krun_box_runtime::ManagedExecutionState;
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionManager};
+use kbox_runtime::ManagedExecutionState;
 
 use crate::lifecycle;
 #[cfg(unix)]
@@ -65,9 +65,9 @@ async fn pause_one(state: &StateFile, query: &str) -> Result<(), Box<dyn std::er
     {
         // The managed lifecycle uses the same cross-process lock. Release the
         // command guard before entering it so Sandbox pause is performed by
-        // the Krun OCI owner and the durable generation advances exactly once.
+        // the Kbox OCI owner and the durable generation advances exactly once.
         drop(lifecycle_lock);
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         manager.pause(&execution_id, generation, true).await?;
         println!("{}", record.name);
@@ -152,7 +152,7 @@ fn pause_plan(record: &crate::state::BoxRecord) -> Result<PausePlan, Box<dyn std
             .ok_or_else(|| format!("Box {} lost managed lifecycle metadata", record.name))?;
         if state != ManagedExecutionState::Running {
             return Err(format!(
-                "Cannot pause box {} because it is {state}. Use `krun-box ps -a` to inspect state.",
+                "Cannot pause box {} because it is {state}. Use `kbox ps -a` to inspect state.",
                 record.name
             )
             .into());
@@ -165,7 +165,7 @@ fn pause_plan(record: &crate::state::BoxRecord) -> Result<PausePlan, Box<dyn std
 
     if record.status != "running" {
         return Err(format!(
-            "Cannot pause box {} because it is {}. Use `krun-box start {}` to start it or `krun-box ps -a` to inspect state.",
+            "Cannot pause box {} because it is {}. Use `kbox start {}` to start it or `kbox ps -a` to inspect state.",
             record.name, record.status, record.name
         )
         .into());
@@ -178,8 +178,8 @@ fn pause_plan(record: &crate::state::BoxRecord) -> Result<PausePlan, Box<dyn std
 mod tests {
     use super::*;
     use crate::test_helpers::fixtures::{make_record, setup_state};
-    use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
-    use krun_box_runtime::ManagedExecutionMetadata;
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
+    use kbox_runtime::ManagedExecutionMetadata;
     use std::collections::BTreeMap;
 
     fn managed_record(state: ManagedExecutionState) -> crate::state::BoxRecord {
@@ -244,7 +244,7 @@ mod tests {
         assert!(result.is_err());
         let error = result.unwrap_err().to_string();
         assert!(error.contains("no recorded PID"));
-        assert!(error.contains("krun-box ps"));
+        assert!(error.contains("kbox ps"));
         assert_eq!(
             state.find_by_id("id-1").unwrap().status,
             "running",

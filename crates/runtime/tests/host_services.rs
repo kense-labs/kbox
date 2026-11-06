@@ -1,8 +1,8 @@
 #![cfg(test)]
 
 mod support;
-use krun_runtime::contract::{NetworkMode, RuntimeFeature, RuntimeHostService, RuntimeUnitSpec};
-use krun_runtime::RuntimeDriver;
+use kbox_contract::contract::{NetworkMode, RuntimeFeature, RuntimeHostService, RuntimeUnitSpec};
+use kbox_contract::RuntimeDriver;
 use support::fault_driver::DeterministicFaultDriver;
 use support::fixtures::service_spec;
 

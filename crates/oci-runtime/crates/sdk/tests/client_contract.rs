@@ -1,6 +1,6 @@
 use std::sync::{Arc, Mutex};
 
-use krun_oci_sdk::{
+use koci_sdk::{
     async_trait, ContainerId, ContainerRecord, CreateAttachments, CreateRequest, DeleteRequest,
     Error, IsolationRequest, KillRequest, OciBundle, OciRuntimeService, OperationContext,
     OperationId, ProcessIo, Result, RuntimeClient, RuntimeInfo, StartRequest, StateRequest,
@@ -21,7 +21,7 @@ impl OciRuntimeService for RecordingService {
     async fn create(&self, request: CreateRequest) -> Result<ContainerRecord> {
         let mut recorded = self.create_request.lock().map_err(|error| {
             Error::new(
-                krun_oci_sdk::ErrorCode::Internal,
+                koci_sdk::ErrorCode::Internal,
                 format!("recording service lock was poisoned: {error}"),
             )
         })?;
@@ -61,7 +61,7 @@ async fn client_preserves_complete_oci_spec_and_unknown_properties_at_service_bo
         "root": { "path": "rootfs", "readonly": true },
         "linux": {
             "intelRdt": {
-                "closID": "krun",
+                "closID": "kbox",
                 "enableMonitoring": true
             },
             "memoryPolicy": {
@@ -70,15 +70,15 @@ async fn client_preserves_complete_oci_spec_and_unknown_properties_at_service_bo
             }
         },
         "vm": {
-            "hypervisor": { "path": "/ignored/by/krun-policy" },
-            "kernel": { "path": "/ignored/by/krun-policy" },
+            "hypervisor": { "path": "/ignored/by/kpolicy" },
+            "kernel": { "path": "/ignored/by/kpolicy" },
             "image": {
-                "path": "/ignored/by/krun-policy",
+                "path": "/ignored/by/kpolicy",
                 "format": "raw"
             }
         },
         "annotations": {
-            "dev.krun.test": "sdk-boundary"
+            "dev.kbox.test": "sdk-boundary"
         }
     });
     let bundle_path = std::env::current_dir()
@@ -120,10 +120,10 @@ async fn client_preserves_complete_oci_spec_and_unknown_properties_at_service_bo
     assert_eq!(encoded["linux"]["memoryPolicy"]["mode"], json!("MPOL_BIND"));
     assert_eq!(
         encoded["vm"]["kernel"]["path"],
-        json!("/ignored/by/krun-policy")
+        json!("/ignored/by/kpolicy")
     );
     assert_eq!(
-        encoded["annotations"]["dev.krun.test"],
+        encoded["annotations"]["dev.kbox.test"],
         json!("sdk-boundary")
     );
     assert!(encoded.get("futureTopLevel").is_none());

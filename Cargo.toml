@@ -2,23 +2,18 @@
 resolver = "3"
 exclude = [
     "crates/code/fixtures/s3-compat",
-    "crates/power/third-party/magnitude/inference",
     "apps/api",
     "apps/cloud",
     "apps/control-plane",
 ]
 members = [
-    "apps/gateway",
     "crates/acl",
-    "crates/apofasi",
-    "crates/bge",
     "crates/box/cli",
     "crates/box/core",
-    "crates/box/deps/libkrun-sys",
+    "crates/box/deps/libksys",
     "crates/box/guest/init",
     "crates/box/netproxy",
     "crates/box/runtime",
-    "crates/box/sdk",
     "crates/box/shim",
     "crates/box/third_party/mkext4",
     "crates/common",
@@ -26,29 +21,23 @@ members = [
     "crates/oci-runtime/crates/agent-protocol",
     "crates/oci-runtime/crates/cli",
     "crates/oci-runtime/crates/core",
-    "crates/oci-runtime/crates/krun",
+    "crates/oci-runtime/crates/kbox",
     "crates/oci-runtime/crates/runtime",
     "crates/oci-runtime/crates/sdk",
-    "crates/ocr",
     "crates/runtime",
-    "crates/sentry",
-    "crates/terminal/crates/codegen/krun-config",
-    "crates/terminal/crates/codegen/krun-dirs",
-    "crates/terminal/crates/codegen/krun-env",
-    "crates/terminal/crates/codegen/krun-tty-utils",
-    "crates/terminal/crates/codegen/krun-version",
+    "crates/sandbox",
+    "crates/terminal/crates/codegen/kconfig",
+    "crates/terminal/crates/codegen/kdirs",
+    "crates/terminal/crates/codegen/kenv",
+    "crates/terminal/crates/codegen/ktty-utils",
+    "crates/terminal/crates/codegen/kversion",
     "crates/terminal/prod/mc/cli-chat-proxy-types",
     "crates/third-party/crossterm",
     "crates/third-party/saphyr-parser-bw",
     "crates/third-party/serde-saphyr",
     "crates/updater",
-    "crates/use",
-    "crates/use/core",
-    "crates/use/extension",
-    "crates/use/reconcile",
-    "crates/use/tool-acquire",
 ]
-default-members = ["crates/runtime", "crates/box/cli", "apps/gateway", "crates/sentry"]
+default-members = ["crates/runtime", "crates/box/cli"]
 
 [workspace.package]
 version = "0.1.0"
@@ -144,8 +133,8 @@ windows = {features = ["Win32_Security", "Win32_Security_Authorization", "Win32_
 wiremock = {version = "0.6"}
 zstd = {version = "0.13"}
 
-krun-acl = { path = "crates/acl" }
-krun-boot = { path = "crates/boot", features = [
+kacl = { path = "crates/acl" }
+kboot = { path = "crates/boot", features = [
     "auth",
     "axum",
     "cqrs",
@@ -156,15 +145,14 @@ krun-boot = { path = "crates/boot", features = [
     "queue-postgres",
     "security",
 ], default-features = false }
-krun-box-core = { path = "crates/box/core" }
-krun-box-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
-krun-core = { path = "crates/code/core", default-features = false }
-krun-event = { path = "crates/event", features = ["nats", "iggy"], default-features = false }
-krun-flow = { path = "crates/flow", features = ["boot", "postgres"], default-features = false }
-krun-form-core = { path = "crates/form-core" }
-krun-orm = { path = "crates/orm", features = ["postgres"], default-features = false }
-krun-runtime = { path = "crates/runtime" }
-krun-use-extension = { path = "crates/use/extension" }
+kbox-core = { path = "crates/box/core" }
+kbox-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
+kcore = { path = "crates/code/core", default-features = false }
+kevent = { path = "crates/event", features = ["nats", "iggy"], default-features = false }
+kflow = { path = "crates/flow", features = ["boot", "postgres"], default-features = false }
+kform-core = { path = "crates/form-core" }
+korm = { path = "crates/orm", features = ["postgres"], default-features = false }
+kbox-contract = { path = "crates/runtime" }
 aes-gcm = "0.10"
 argon2 = "0.5"
 chrono-tz = "=0.10.4"
@@ -202,8 +190,8 @@ zeroize = "1"
 # Cryptography (for TEE attestation verification)
 zip = { version = "2", default-features = false, features = ["deflate"] }
 
-krun-oci-sdk = { path = "crates/oci-runtime/crates/sdk" }
-krun-transport = { version = "0.1.1", package = "krun-common", path = "crates/common" }
+koci-sdk = { path = "crates/oci-runtime/crates/sdk" }
+ktransport = { version = "0.1.1", package = "kcommon", path = "crates/common" }
 der = { version = "0.7", features = ["std", "alloc"] }
 ecdsa = { version = "0.16", features = ["verifying"] }
 hex = "0.4"
@@ -228,7 +216,7 @@ olpc-cjson = "0.1"
 rmcp = { version = "=0.8.5", default-features = false, features = ["base64", "client", "macros", "server", "transport-io", "transport-streamable-http-client-reqwest", "transport-streamable-http-server"] }
 tonic-build = "0.11"
 
-krun-libkrun-sys = { path = "crates/box/deps/libkrun-sys" }
+klibksys = { path = "crates/box/deps/libksys" }
 cap-fs-ext = "=4.0.2"
 cap-std = "=4.0.2"
 libloading = "0.8"
@@ -248,14 +236,9 @@ windows-sys = { version = "0.59", features = [
     "Win32_System_Threading",
 ] }
 
-[workspace.dependencies.krun-office-formula-parser]
+[workspace.dependencies.koffice-formula-parser]
 path = "crates/office/crates/formula-parser"
 
-[workspace.dependencies.krun-use-core]
-path = "crates/use/core"
-
-[workspace.dependencies.krun-use-browser]
-path = "crates/browser"
 [workspace.lints.clippy]
 # prost 0.14 renders proto doc-comment bullet lists in a way that trips this
 # lint on generated code. Kept in sync with bazel/lint/linters.bzl.

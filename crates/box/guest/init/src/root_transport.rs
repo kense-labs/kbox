@@ -2,18 +2,18 @@
 //!
 //! libkrun boots directory roots directly through virtio-fs. Block roots are
 //! different: `init.krun` starts from a private, empty virtio-fs bootstrap,
-//! mounts the configured block device, and switches to it before executing Krun
+//! mounts the configured block device, and switches to it before executing Kbox
 //! guest-init. The bootstrap share still uses the `/dev/root` virtio-fs tag, so
 //! probing that tag after a block-root switch would incorrectly pivot back into
 //! the empty bootstrap filesystem.
 
 use std::ffi::OsString;
 
-use krun_box_core::vmm::GUEST_EXT4_ROOT_DEVICE;
+use kbox_core::vmm::GUEST_EXT4_ROOT_DEVICE;
 
 /// Kernel-command-line environment imported by libkrun's `init.krun` when a
 /// block device owns the guest root filesystem.
-pub const LIBKRUN_BLOCK_ROOT_DEVICE_ENV: &str = "KRUN_BLOCK_ROOT_DEVICE";
+pub const LIBK_BLOCK_ROOT_DEVICE_ENV: &str = "KRUN_BLOCK_ROOT_DEVICE";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum RootTransport {
@@ -28,17 +28,17 @@ impl RootTransport {
         };
         let device = value
             .into_string()
-            .map_err(|_| format!("{LIBKRUN_BLOCK_ROOT_DEVICE_ENV} must contain valid UTF-8"))?;
+            .map_err(|_| format!("{LIBK_BLOCK_ROOT_DEVICE_ENV} must contain valid UTF-8"))?;
         if device != GUEST_EXT4_ROOT_DEVICE {
             return Err(format!(
-                "unsupported {LIBKRUN_BLOCK_ROOT_DEVICE_ENV} value {device:?}; expected {GUEST_EXT4_ROOT_DEVICE:?}"
+                "unsupported {LIBK_BLOCK_ROOT_DEVICE_ENV} value {device:?}; expected {GUEST_EXT4_ROOT_DEVICE:?}"
             ));
         }
         Ok(Self::Block { device })
     }
 
     fn from_env() -> Result<Self, String> {
-        Self::from_block_device(std::env::var_os(LIBKRUN_BLOCK_ROOT_DEVICE_ENV))
+        Self::from_block_device(std::env::var_os(LIBK_BLOCK_ROOT_DEVICE_ENV))
     }
 }
 
@@ -259,7 +259,7 @@ fn pivot_to_rootfs(new_root: &str) -> Result<(), Box<dyn std::error::Error>> {
     use nix::unistd::chdir;
     use std::ffi::CString;
 
-    let put_old = format!("{new_root}/.krun-old-root");
+    let put_old = format!("{new_root}/.kold-root");
     std::fs::create_dir_all(&put_old)?;
 
     mount(
@@ -288,10 +288,10 @@ fn pivot_to_rootfs(new_root: &str) -> Result<(), Box<dyn std::error::Error>> {
     }
 
     chdir("/")?;
-    if let Err(error) = umount2("/.krun-old-root", MntFlags::MNT_DETACH) {
+    if let Err(error) = umount2("/.kold-root", MntFlags::MNT_DETACH) {
         tracing::warn!(%error, "Failed to detach old root after pivot_root");
     }
-    if let Err(error) = std::fs::remove_dir("/.krun-old-root") {
+    if let Err(error) = std::fs::remove_dir("/.kold-root") {
         tracing::warn!(%error, "Failed to remove old root mount point after pivot_root");
     }
     Ok(())

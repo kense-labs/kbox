@@ -1,9 +1,9 @@
 //! ShimHandler — concrete VmHandler for a libkrun shim subprocess.
 
-pub use krun_box_core::vmm::{VmHandler, VmMetrics, DEFAULT_SHUTDOWN_TIMEOUT_MS};
+pub use kbox_core::vmm::{VmHandler, VmMetrics, DEFAULT_SHUTDOWN_TIMEOUT_MS};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::vmm::{OwnedCloseBudget, VmExitConfirmation};
+use kbox_core::error::{BoxError, Result};
+use kbox_core::vmm::{OwnedCloseBudget, VmExitConfirmation};
 use std::process::{Child, ExitStatus};
 use std::sync::Mutex;
 use std::time::{Duration, Instant};
@@ -480,7 +480,7 @@ impl VmHandler for ShimHandler {
                 Ok(self.exit_code)
             }
             Ok(None) => Ok(None),
-            Err(e) => Err(krun_box_core::error::BoxError::ExecError(format!(
+            Err(e) => Err(kbox_core::error::BoxError::ExecError(format!(
                 "Failed to poll VM process {}: {}",
                 self.pid, e
             ))),

@@ -3,7 +3,7 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_oci_sdk::ContainerRecord;
+use koci_sdk::ContainerRecord;
 
 mod attestation;
 mod checkpoint;
@@ -171,7 +171,7 @@ async fn exercise_recreated_created_recovery(point: FaultPoint) {
             mutation: DurableMutation::CompleteCreateOperation,
             ..
         } => injected
-            .prepare_create(&create, DriverKind::LibkrunWhpx)
+            .prepare_create(&create, DriverKind::LibkWhpx)
             .await
             .map(|_| ()),
         _ => unreachable!("recreated-process test uses only selected file faults"),
@@ -191,7 +191,7 @@ async fn exercise_recreated_created_recovery(point: FaultPoint) {
         .await
         .unwrap_or_else(|error| panic!("recover replacement PID after {point}: {error}"));
     let replayed = recovered
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .unwrap_or_else(|error| panic!("repair Create journal after {point}: {error}"));
     let RecordOperationPreparation::Replayed(replayed) = replayed else {
@@ -234,7 +234,7 @@ async fn recreated_created_rebind_preserves_an_active_start_claim() {
     assert_eq!(*rebound.state.status(), ContainerState::Created);
     assert_eq!(*rebound.state.pid(), Some(5_252));
     let RecordOperationPreparation::Replayed(replayed_create) = store
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .expect("repair Create journal around active Start")
     else {
@@ -347,7 +347,7 @@ async fn exercise_recreated_running_recovery(point: FaultPoint, active_kill: boo
     }
     if mutation == DurableMutation::CompleteStartOperation {
         let RecordOperationPreparation::Replayed(replayed) = setup
-            .prepare_create(&create, DriverKind::LibkrunWhpx)
+            .prepare_create(&create, DriverKind::LibkWhpx)
             .await
             .expect("repair Create journal before Start journal fault")
         else {
@@ -370,7 +370,7 @@ async fn exercise_recreated_running_recovery(point: FaultPoint, active_kill: boo
             .await
             .map(|_| ()),
         DurableMutation::CompleteCreateOperation => injected
-            .prepare_create(&create, DriverKind::LibkrunWhpx)
+            .prepare_create(&create, DriverKind::LibkWhpx)
             .await
             .map(|_| ()),
         DurableMutation::CompleteStartOperation => injected.prepare_start(&start).await.map(|_| ()),
@@ -391,7 +391,7 @@ async fn exercise_recreated_running_recovery(point: FaultPoint, active_kill: boo
         .await
         .unwrap_or_else(|error| panic!("recover replacement running PID after {point}: {error}"));
     let RecordOperationPreparation::Replayed(replayed_create) = recovered
-        .prepare_create(&create, DriverKind::LibkrunWhpx)
+        .prepare_create(&create, DriverKind::LibkWhpx)
         .await
         .unwrap_or_else(|error| panic!("repair Create journal after {point}: {error}"))
     else {
@@ -1227,7 +1227,7 @@ async fn exercise_observation(point: FaultPoint) {
 async fn open_injected(
     root: &Path,
     injector: Arc<RecordingFaultInjector>,
-) -> krun_oci_sdk::Result<DurableStateStore> {
+) -> koci_sdk::Result<DurableStateStore> {
     let faults: Arc<dyn FaultInjector> = injector;
     DurableStateStore::open_with_fault_injector(root, faults).await
 }
@@ -1243,7 +1243,7 @@ async fn initialize_root(root: &Path) {
 async fn drive_successful_lifecycle(
     store: &DurableStateStore,
     create: &CreateRequest,
-) -> krun_oci_sdk::Result<Generation> {
+) -> koci_sdk::Result<Generation> {
     let created = drive_create(store, create).await?;
     let target = ContainerTarget::exact(create.id.clone(), created.generation);
     drive_start(
@@ -1279,11 +1279,8 @@ async fn drive_successful_lifecycle(
 async fn drive_create(
     store: &DurableStateStore,
     request: &CreateRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
-    match store
-        .prepare_create(request, DriverKind::LibkrunWhpx)
-        .await?
-    {
+) -> koci_sdk::Result<ContainerRecord> {
+    match store.prepare_create(request, DriverKind::LibkWhpx).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
                 .complete_create(&request.context.operation_id, 4_242)
@@ -1296,7 +1293,7 @@ async fn drive_create(
 async fn drive_start(
     store: &DurableStateStore,
     request: &StartRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     match store.prepare_start(request).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
@@ -1315,7 +1312,7 @@ async fn drive_freezer_lifecycle(
     store: &DurableStateStore,
     pause: &ContainerOperationRequest,
     resume: &ContainerOperationRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     let paused = drive_pause(store, pause).await?;
     assert!(paused.is_paused());
     let running = drive_resume(store, resume).await?;
@@ -1326,7 +1323,7 @@ async fn drive_freezer_lifecycle(
 async fn drive_pause(
     store: &DurableStateStore,
     request: &ContainerOperationRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     match store.prepare_pause(request).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
@@ -1345,7 +1342,7 @@ async fn drive_pause(
 async fn drive_resume(
     store: &DurableStateStore,
     request: &ContainerOperationRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     match store.prepare_resume(request).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
@@ -1364,7 +1361,7 @@ async fn drive_resume(
 async fn drive_update(
     store: &DurableStateStore,
     request: &UpdateRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     match store.prepare_update(request).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
@@ -1383,7 +1380,7 @@ async fn drive_update(
 async fn drive_kill(
     store: &DurableStateStore,
     request: &KillRequest,
-) -> krun_oci_sdk::Result<ContainerRecord> {
+) -> koci_sdk::Result<ContainerRecord> {
     match store.prepare_kill(request).await? {
         RecordOperationPreparation::Prepared(_) | RecordOperationPreparation::Resume(_) => {
             store
@@ -1394,10 +1391,7 @@ async fn drive_kill(
     }
 }
 
-async fn drive_delete(
-    store: &DurableStateStore,
-    request: &DeleteRequest,
-) -> krun_oci_sdk::Result<()> {
+async fn drive_delete(store: &DurableStateStore, request: &DeleteRequest) -> koci_sdk::Result<()> {
     match store.prepare_delete(request).await? {
         DeletePreparation::Prepared(_) | DeletePreparation::Resume(_) => {
             store.complete_delete(&request.context.operation_id).await
@@ -1410,8 +1404,8 @@ async fn drive_failed_create(
     store: &DurableStateStore,
     request: &CreateRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
-    match store.prepare_create(request, DriverKind::LibkrunWhpx).await {
+) -> koci_sdk::Result<()> {
+    match store.prepare_create(request, DriverKind::LibkWhpx).await {
         Ok(RecordOperationPreparation::Prepared(_)) | Ok(RecordOperationPreparation::Resume(_)) => {
             store
                 .fail_operation(&request.context.operation_id, failure)
@@ -1424,7 +1418,7 @@ async fn drive_failed_create(
         Err(error) => return Err(error),
     }
     expect_failure(
-        store.prepare_create(request, DriverKind::LibkrunWhpx).await,
+        store.prepare_create(request, DriverKind::LibkWhpx).await,
         failure,
     )
 }
@@ -1433,7 +1427,7 @@ async fn drive_failed_start(
     store: &DurableStateStore,
     request: &StartRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_start(request).await {
         Ok(RecordOperationPreparation::Prepared(_)) | Ok(RecordOperationPreparation::Resume(_)) => {
             store
@@ -1453,7 +1447,7 @@ async fn drive_failed_kill(
     store: &DurableStateStore,
     request: &KillRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_kill(request).await {
         Ok(RecordOperationPreparation::Prepared(_)) | Ok(RecordOperationPreparation::Resume(_)) => {
             store
@@ -1474,7 +1468,7 @@ async fn drive_failed_freezer(
     request: &ContainerOperationRequest,
     failure: &Error,
     pause: bool,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     let prepared = if pause {
         store.prepare_pause(request).await
     } else {
@@ -1504,7 +1498,7 @@ async fn drive_failed_update(
     store: &DurableStateStore,
     request: &UpdateRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_update(request).await {
         Ok(RecordOperationPreparation::Prepared(_)) | Ok(RecordOperationPreparation::Resume(_)) => {
             store
@@ -1524,7 +1518,7 @@ async fn drive_failed_delete(
     store: &DurableStateStore,
     request: &DeleteRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_delete(request).await {
         Ok(DeletePreparation::Prepared(_)) | Ok(DeletePreparation::Resume(_)) => {
             store
@@ -1538,10 +1532,7 @@ async fn drive_failed_delete(
     expect_failure(store.prepare_delete(request).await, failure)
 }
 
-fn expect_failure<T>(
-    result: krun_oci_sdk::Result<T>,
-    expected: &Error,
-) -> krun_oci_sdk::Result<()> {
+fn expect_failure<T>(result: koci_sdk::Result<T>, expected: &Error) -> koci_sdk::Result<()> {
     match result {
         Err(error) if error == *expected => Ok(()),
         Err(error) => Err(error),

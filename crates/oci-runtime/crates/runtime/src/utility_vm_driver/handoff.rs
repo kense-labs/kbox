@@ -1,8 +1,8 @@
 use std::io;
 use std::path::{Component, Path, PathBuf};
 
-use krun_oci_agent_protocol::{GuestPath, AGENT_RUNTIME_SHARE_GUEST_ROOT};
-use krun_oci_sdk::{
+use koci_agent_protocol::{GuestPath, AGENT_RUNTIME_SHARE_GUEST_ROOT};
+use koci_sdk::{
     runtime_bundle_handoff_directory, runtime_bundle_handoff_root, ContainerId, ContainerTarget,
     CreateAttachments, Error, ErrorCode, GuestSessionAttachment, OciBundle, OperationId, Result,
     RUNTIME_BUNDLE_HANDOFF_BUNDLE_DIRECTORY, RUNTIME_BUNDLE_HANDOFF_EXTENSION,
@@ -23,10 +23,10 @@ use super::layout::{
 use super::session_marker;
 use crate::DriverCreateRequest;
 
-const MARKER_FILE: &str = ".krun-oci-bundle-handoff.json";
-const PENDING_MARKER_FILE: &str = ".krun-oci-bundle-handoff.pending";
-const STAGING_MARKER_PREFIX: &str = ".krun-oci-bundle-handoff.pending.";
-const MARKER_SCHEMA: &str = "krun.oci.bundle-handoff.v1";
+const MARKER_FILE: &str = ".koci-bundle-handoff.json";
+const PENDING_MARKER_FILE: &str = ".koci-bundle-handoff.pending";
+const STAGING_MARKER_PREFIX: &str = ".koci-bundle-handoff.pending.";
+const MARKER_SCHEMA: &str = "koci.bundle-handoff.v1";
 const MAX_MARKER_BYTES: usize = 4 * 1024;
 const PUBLISH_ATTEMPTS: usize = atomic_publication::PUBLISH_ATTEMPTS;
 
@@ -1223,7 +1223,7 @@ fn nonempty_session_error(session: &GuestSessionAttachment) -> Error {
 mod tests {
     use std::path::Path;
 
-    use krun_oci_sdk::{ContainerId, ContainerTarget, ErrorCode, Generation};
+    use koci_sdk::{ContainerId, ContainerTarget, ErrorCode, Generation};
     use tempfile::tempdir;
     use tokio::io::AsyncWriteExt;
 
@@ -1309,7 +1309,7 @@ mod tests {
     async fn partial_pending_marker_is_rejected_without_replacement() {
         let temporary = tempdir().expect("temporary marker root");
         let pending = temporary.path().join(PENDING_MARKER_FILE);
-        let retained = br#"{"schemaVersion":"krun.oci.bundle-handoff.v1""#;
+        let retained = br#"{"schemaVersion":"koci.bundle-handoff.v1""#;
         write_private(&pending, retained).await;
 
         let error = ensure_marker(

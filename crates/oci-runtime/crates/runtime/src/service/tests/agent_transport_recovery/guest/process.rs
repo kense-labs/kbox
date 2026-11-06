@@ -1,6 +1,6 @@
-use krun_oci_agent_protocol::AgentProcessesRequest;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{Error, ErrorCode, ProcessId, ProcessRecord, ProcessTarget, Result};
+use koci_agent_protocol::AgentProcessesRequest;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{Error, ErrorCode, ProcessId, ProcessRecord, ProcessTarget, Result};
 
 use super::JournaledLifecycleGuest;
 

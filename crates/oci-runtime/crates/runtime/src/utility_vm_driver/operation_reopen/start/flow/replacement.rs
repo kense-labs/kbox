@@ -1,9 +1,9 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     CreateRequest, DeleteMode, DeleteRequest, ListRequest, OciRuntimeService, OperationContext,
     OperationId,
 };
@@ -88,7 +88,7 @@ pub(super) async fn run(
             } else {
                 ContainerState::Created
             };
-            let exact = record.driver == DriverKind::LibkrunKvm
+            let exact = record.driver == DriverKind::LibkKvm
                 && record.isolation == IsolationClass::DedicatedVm
                 && record.state.id() == create.id.as_str()
                 && record.generation == first.target.generation.unwrap_or(record.generation)

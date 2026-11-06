@@ -1,25 +1,25 @@
-//! Real core lifecycle smoke test for the krun-box CLI.
+//! Real core lifecycle smoke test for the kbox CLI.
 //!
 //! This test is ignored by default because it needs registry access, a built
-//! `krun-box` binary, libkrun/HVF or KVM, and a runnable Linux image.
+//! `kbox` binary, libkrun/HVF or KVM, and a runnable Linux image.
 //!
 //! Run it from `crates/box/src`:
 //!
 //! ```bash
-//! cargo test -p krun-box-cli --test core_smoke -- --ignored --nocapture --test-threads=1
+//! cargo test -p kbox-cli --test core_smoke -- --ignored --nocapture --test-threads=1
 //! ```
 //!
 //! Optional environment:
 //!
-//! - `KRUN_BOX_SMOKE_IMAGE`: image to use (default: `docker.io/library/alpine:latest`)
-//! - `KRUN_BOX_SMOKE_IMAGE_TAR`: load this OCI archive into the isolated `KRUN_HOME`
+//! - `K_BOX_SMOKE_IMAGE`: image to use (default: `docker.io/library/alpine:latest`)
+//! - `K_BOX_SMOKE_IMAGE_TAR`: load this OCI archive into the isolated `K_HOME`
 //!   before running, useful for offline HVF/KVM smoke tests
-//! - `KRUN_BOX_TEST_ALPINE_TAR`: fallback OCI archive path shared with host smoke coverage
-//! - `KRUN_BOX_SMOKE_SKIP_PULL=1`: skip the explicit `pull` step for cached images
-//! - `KRUN_BOX_SMOKE_TIMEOUT_SECS`: command and polling timeout (default: 300)
-//! - `KRUN_BOX_VIRTIOFS_TAR_TIMEOUT_SECS`: Windows timeout for the high-intensity
+//! - `K_BOX_TEST_ALPINE_TAR`: fallback OCI archive path shared with host smoke coverage
+//! - `K_BOX_SMOKE_SKIP_PULL=1`: skip the explicit `pull` step for cached images
+//! - `K_BOX_SMOKE_TIMEOUT_SECS`: command and polling timeout (default: 300)
+//! - `K_BOX_VIRTIOFS_TAR_TIMEOUT_SECS`: Windows timeout for the high-intensity
 //!   virtio-fs tar test (default: 900; never shorter than the general timeout)
-//! - `KRUN_BOX_HVF_POSTGRES_IMAGE`: digest-pinned PostgreSQL image for the macOS
+//! - `K_BOX_HVF_POSTGRES_IMAGE`: digest-pinned PostgreSQL image for the macOS
 //!   published-port/SCRAM regression
 
 #[path = "core_smoke/postgres_wire.rs"]
@@ -55,16 +55,16 @@ impl BackgroundCommand {
             let child = self.child.as_mut().expect("background command child");
             child
                 .try_wait()
-                .unwrap_or_else(|e| panic!("failed to poll `krun-box {}`: {e}", self.args))
+                .unwrap_or_else(|e| panic!("failed to poll `kbox {}`: {e}", self.args))
         };
 
         if let Some(status) = status {
             let child = self.child.take().expect("background command child");
-            let output = child.wait_with_output().unwrap_or_else(|e| {
-                panic!("failed to collect `krun-box {}` output: {e}", self.args)
-            });
+            let output = child
+                .wait_with_output()
+                .unwrap_or_else(|e| panic!("failed to collect `kbox {}` output: {e}", self.args));
             panic!(
-                "`krun-box {}` exited unexpectedly with status {}\nstdout:\n{}\nstderr:\n{}",
+                "`kbox {}` exited unexpectedly with status {}\nstdout:\n{}\nstderr:\n{}",
                 self.args,
                 status,
                 String::from_utf8_lossy(&output.stdout),
@@ -78,7 +78,7 @@ impl BackgroundCommand {
         let _ = child.kill();
         let output = child
             .wait_with_output()
-            .unwrap_or_else(|e| panic!("failed to collect `krun-box {}` output: {e}", self.args));
+            .unwrap_or_else(|e| panic!("failed to collect `kbox {}` output: {e}", self.args));
 
         CommandResult {
             stdout: String::from_utf8_lossy(&output.stdout).to_string(),
@@ -98,7 +98,7 @@ impl BackgroundCommand {
                 Ok(Some(_)) => {
                     let output = child.wait_with_output().unwrap_or_else(|error| {
                         panic!(
-                            "failed to collect signalled `krun-box {}` output: {error}",
+                            "failed to collect signalled `kbox {}` output: {error}",
                             self.args
                         )
                     });
@@ -115,10 +115,10 @@ impl BackgroundCommand {
                 Ok(None) => {
                     let _ = child.kill();
                     let output = child.wait_with_output().unwrap_or_else(|error| {
-                        panic!("failed to reap timed-out `krun-box {}`: {error}", self.args)
+                        panic!("failed to reap timed-out `kbox {}`: {error}", self.args)
                     });
                     panic!(
-                        "`krun-box {}` did not exit after signal {signal}\nstdout:\n{}\nstderr:\n{}",
+                        "`kbox {}` did not exit after signal {signal}\nstdout:\n{}\nstderr:\n{}",
                         self.args,
                         String::from_utf8_lossy(&output.stdout),
                         String::from_utf8_lossy(&output.stderr)
@@ -127,7 +127,7 @@ impl BackgroundCommand {
                 Err(error) => {
                     let _ = child.kill();
                     let _ = child.wait();
-                    panic!("failed to poll signalled `krun-box {}`: {error}", self.args);
+                    panic!("failed to poll signalled `kbox {}`: {error}", self.args);
                 }
             }
         }
@@ -155,7 +155,7 @@ impl CoreSmoke {
     fn new() -> Self {
         Self {
             bin: find_binary(),
-            home: tempfile::tempdir().expect("temp KRUN_HOME"),
+            home: tempfile::tempdir().expect("temp K_HOME"),
             name: unique_name(),
             timeout: smoke_timeout(),
         }
@@ -167,12 +167,12 @@ impl CoreSmoke {
 
     fn command(&self, args: &[&str]) -> Command {
         let mut cmd = Command::new(&self.bin);
-        cmd.args(args).env("KRUN_HOME", self.home_path());
+        cmd.args(args).env("K_HOME", self.home_path());
         cmd
     }
 
     fn try_output(&self, args: &[&str], timeout: Duration) -> Result<CommandResult, String> {
-        eprintln!("    $ krun-box {}", args.join(" "));
+        eprintln!("    $ kbox {}", args.join(" "));
 
         let capture_id = unique_capture_id();
         let stdout_path = self.home_path().join(format!("{capture_id}.stdout"));
@@ -192,13 +192,13 @@ impl CoreSmoke {
             .stdout(Stdio::from(stdout))
             .stderr(Stdio::from(stderr))
             .spawn()
-            .map_err(|e| format!("failed to run `krun-box {}`: {e}", args.join(" ")))?;
+            .map_err(|e| format!("failed to run `kbox {}`: {e}", args.join(" ")))?;
 
         let start = Instant::now();
         loop {
             if let Some(status) = child
                 .try_wait()
-                .map_err(|e| format!("failed to poll `krun-box {}`: {e}", args.join(" ")))?
+                .map_err(|e| format!("failed to poll `kbox {}`: {e}", args.join(" ")))?
             {
                 let (stdout, stderr) = read_command_output(&stdout_path, &stderr_path)?;
                 return Ok(CommandResult {
@@ -213,13 +213,13 @@ impl CoreSmoke {
                 let _ = child.kill();
                 let _ = child.wait().map_err(|e| {
                     format!(
-                        "timed out and failed to reap `krun-box {}`: {e}",
+                        "timed out and failed to reap `kbox {}`: {e}",
                         args.join(" ")
                     )
                 })?;
                 let (stdout, stderr) = read_command_output(&stdout_path, &stderr_path)?;
                 return Err(format!(
-                    "`krun-box {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
+                    "`kbox {}` timed out after {:?}\nstdout:\n{}\nstderr:\n{}",
                     args.join(" "),
                     timeout,
                     stdout,
@@ -238,14 +238,14 @@ impl CoreSmoke {
 
     #[cfg(unix)]
     fn spawn_background(&self, args: &[&str]) -> BackgroundCommand {
-        eprintln!("    $ krun-box {}  # background", args.join(" "));
+        eprintln!("    $ kbox {}  # background", args.join(" "));
 
         let child = self
             .command(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .unwrap_or_else(|e| panic!("failed to run `krun-box {}`: {e}", args.join(" ")));
+            .unwrap_or_else(|e| panic!("failed to run `kbox {}`: {e}", args.join(" ")));
 
         BackgroundCommand {
             child: Some(child),
@@ -263,7 +263,7 @@ impl CoreSmoke {
             .unwrap_or_else(|error| panic!("{error}"));
         assert!(
             result.success,
-            "`krun-box {}` failed\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` failed\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             result.stdout,
             result.stderr
@@ -276,7 +276,7 @@ impl CoreSmoke {
         let result = self.output(args);
         assert!(
             !result.success,
-            "`krun-box {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
+            "`kbox {}` unexpectedly succeeded\nstdout:\n{}\nstderr:\n{}",
             args.join(" "),
             result.stdout,
             result.stderr
@@ -307,7 +307,7 @@ impl CoreSmoke {
         use std::io::{Read, Write};
         use std::os::fd::{AsRawFd, FromRawFd, RawFd};
 
-        eprintln!("    $ [pty] krun-box {}", args.join(" "));
+        eprintln!("    $ [pty] kbox {}", args.join(" "));
 
         let (master_fd, slave_fd) = open_pty()?;
         let stdout_fd = duplicate_fd(slave_fd).inspect_err(|_| {
@@ -331,7 +331,7 @@ impl CoreSmoke {
             .stdout(Stdio::from(slave_stdout))
             .stderr(Stdio::from(slave_stderr))
             .spawn()
-            .map_err(|e| format!("failed to run `krun-box {}` under PTY: {e}", args.join(" ")))?;
+            .map_err(|e| format!("failed to run `kbox {}` under PTY: {e}", args.join(" ")))?;
 
         if !input.is_empty() {
             master
@@ -349,12 +349,10 @@ impl CoreSmoke {
         loop {
             drain_pty_output(&mut master, &mut buf, &mut output)?;
 
-            if let Some(status) = child.try_wait().map_err(|e| {
-                format!(
-                    "failed to poll PTY command `krun-box {}`: {e}",
-                    args.join(" ")
-                )
-            })? {
+            if let Some(status) = child
+                .try_wait()
+                .map_err(|e| format!("failed to poll PTY command `kbox {}`: {e}", args.join(" ")))?
+            {
                 let drain_deadline = Instant::now() + Duration::from_millis(500);
                 while Instant::now() < drain_deadline {
                     let before = output.len();
@@ -377,7 +375,7 @@ impl CoreSmoke {
                 let _ = child.wait();
                 drain_pty_output(&mut master, &mut buf, &mut output)?;
                 return Err(format!(
-                    "`krun-box {}` timed out after {:?}\npty output:\n{}",
+                    "`kbox {}` timed out after {:?}\npty output:\n{}",
                     args.join(" "),
                     timeout,
                     String::from_utf8_lossy(&output)
@@ -535,7 +533,7 @@ impl CoreSmoke {
         let parsed: serde_json::Value = serde_json::from_str(&stdout).unwrap_or_else(|e| {
             panic!("failed to parse inspect JSON for {name}: {e}\nstdout:\n{stdout}")
         });
-        // `krun-box inspect` returns a Docker-shaped array `[{...}]`. Every caller
+        // `kbox inspect` returns a Docker-shaped array `[{...}]`. Every caller
         // here wants the single object, so unwrap it (pass through if it is
         // already an object, for robustness).
         match parsed {
@@ -788,7 +786,7 @@ impl Drop for CoreSmoke {
 }
 
 fn find_binary() -> PathBuf {
-    if let Some(path) = option_env!("CARGO_BIN_EXE_krun-box") {
+    if let Some(path) = option_env!("CARGO_BIN_EXE_kbox") {
         let bin = PathBuf::from(path);
         if bin.exists() {
             return bin;
@@ -801,17 +799,17 @@ fn find_binary() -> PathBuf {
         .expect("cli crate should be inside workspace");
 
     for profile in ["debug", "release"] {
-        let bin = workspace_root.join("target").join(profile).join("krun-box");
+        let bin = workspace_root.join("target").join(profile).join("kbox");
         if bin.exists() {
             return bin;
         }
     }
 
-    PathBuf::from("krun-box")
+    PathBuf::from("kbox")
 }
 
 fn smoke_timeout() -> Duration {
-    let seconds = std::env::var("KRUN_BOX_SMOKE_TIMEOUT_SECS")
+    let seconds = std::env::var("K_BOX_SMOKE_TIMEOUT_SECS")
         .ok()
         .and_then(|value| value.parse::<u64>().ok())
         .filter(|value| *value > 0)
@@ -820,24 +818,23 @@ fn smoke_timeout() -> Duration {
 }
 
 fn smoke_image() -> String {
-    std::env::var("KRUN_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string())
+    std::env::var("K_BOX_SMOKE_IMAGE").unwrap_or_else(|_| DEFAULT_IMAGE.to_string())
 }
 
 fn postgres_image() -> String {
-    std::env::var("KRUN_BOX_HVF_POSTGRES_IMAGE")
-        .unwrap_or_else(|_| DEFAULT_POSTGRES_IMAGE.to_string())
+    std::env::var("K_BOX_HVF_POSTGRES_IMAGE").unwrap_or_else(|_| DEFAULT_POSTGRES_IMAGE.to_string())
 }
 
 fn smoke_image_tar() -> Option<String> {
-    std::env::var("KRUN_BOX_SMOKE_IMAGE_TAR")
+    std::env::var("K_BOX_SMOKE_IMAGE_TAR")
         .ok()
-        .or_else(|| std::env::var("KRUN_BOX_TEST_ALPINE_TAR").ok())
+        .or_else(|| std::env::var("K_BOX_TEST_ALPINE_TAR").ok())
         .filter(|path| !path.trim().is_empty())
 }
 
 fn skip_pull() -> bool {
     matches!(
-        std::env::var("KRUN_BOX_SMOKE_SKIP_PULL").as_deref(),
+        std::env::var("K_BOX_SMOKE_SKIP_PULL").as_deref(),
         Ok("1" | "true" | "TRUE" | "yes" | "YES")
     )
 }
@@ -985,7 +982,7 @@ fn kill_host_pid(pid: u64, signal: libc::c_int) {
 fn passt_pid_for_box(smoke: &CoreSmoke, name: &str) -> u32 {
     let inspect = smoke.inspect_json(name);
     let id = json_string_field(&inspect, "id");
-    let pid_path = PathBuf::from("/tmp/krun-box-sockets")
+    let pid_path = PathBuf::from("/tmp/kbox-sockets")
         .join(id)
         .join("passt.pid");
     let pid = std::fs::read_to_string(&pid_path)
@@ -1038,7 +1035,7 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
     let env_file = smoke.home_path().join("smoke.env");
     std::fs::write(
         &env_file,
-        "KRUN_SMOKE_FROM_FILE=file\nASTER_SMOKE_OVERRIDE=file\n",
+        "K_SMOKE_FROM_FILE=file\nASTER_SMOKE_OVERRIDE=file\n",
     )
     .expect("write smoke env file");
     let env_file_arg = env_file.to_string_lossy().to_string();
@@ -1051,9 +1048,9 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "--env-file",
         &env_file_arg,
         "--env",
-        "KRUN_SMOKE_OVERRIDE=cli",
+        "K_SMOKE_OVERRIDE=cli",
         "--env",
-        "KRUN_SMOKE_INLINE=inline",
+        "K_SMOKE_INLINE=inline",
         "--hostname",
         "smoke-box",
         "--add-host",
@@ -1062,7 +1059,7 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "--",
         "/bin/sh",
         "-c",
-        "hostname_value=$(cat /etc/hostname); hosts_value=$(grep -q '^127\\.0\\.0\\.2[[:space:]].*db\\.local' /etc/hosts && printf hosts-ok || printf hosts-missing); printf 'core-smoke-booted:%s:%s:%s:%s:%s\\n' \"$KRUN_SMOKE_FROM_FILE\" \"$KRUN_SMOKE_OVERRIDE\" \"$KRUN_SMOKE_INLINE\" \"$hostname_value\" \"$hosts_value\"; sleep 3600",
+        "hostname_value=$(cat /etc/hostname); hosts_value=$(grep -q '^127\\.0\\.0\\.2[[:space:]].*db\\.local' /etc/hosts && printf hosts-ok || printf hosts-missing); printf 'core-smoke-booted:%s:%s:%s:%s:%s\\n' \"$K_SMOKE_FROM_FILE\" \"$K_SMOKE_OVERRIDE\" \"$K_SMOKE_INLINE\" \"$hostname_value\" \"$hosts_value\"; sleep 3600",
     ]);
 
     smoke.wait_for_running();
@@ -1071,11 +1068,11 @@ fn real_core_lifecycle_pull_run_exec_logs_stop_rm() {
         "exec",
         &smoke.name,
         "--env",
-        "KRUN_EXEC_SMOKE=ok",
+        "K_EXEC_SMOKE=ok",
         "--",
         "/bin/sh",
         "-c",
-        "printf '%s' \"$KRUN_EXEC_SMOKE\"",
+        "printf '%s' \"$K_EXEC_SMOKE\"",
     ]);
     assert_eq!(exec_env.trim(), "ok");
 
@@ -1252,7 +1249,7 @@ fn real_core_long_argument_avoids_kernel_cmdline_overflow() {
         "/bin/sh",
         "-c",
         "test \"${#1}\" -eq 4096; case \"$1\" in *[!x]*) exit 41;; esac; printf 'core-smoke-long-argv-ok:%s\\n' \"${#1}\"",
-        "krun-long-argv",
+        "klong-argv",
         &long_argument,
     ]);
 
@@ -1295,7 +1292,7 @@ fn real_core_utility_commands_cp_top_stats() {
     let host_src = smoke.home_path().join("host-to-box.txt");
     std::fs::write(&host_src, "cp-smoke-ok\n").expect("write host source file");
     let host_src_arg = host_src.to_string_lossy().to_string();
-    let box_path = format!("{}:/tmp/krun-box-cp-smoke.txt", smoke.name);
+    let box_path = format!("{}:/tmp/kbox-cp-smoke.txt", smoke.name);
     smoke.ok(&["cp", &host_src_arg, &box_path]);
 
     let copied_in_box = smoke.ok(&[
@@ -1304,7 +1301,7 @@ fn real_core_utility_commands_cp_top_stats() {
         "--",
         "/bin/sh",
         "-c",
-        "cat /tmp/krun-box-cp-smoke.txt",
+        "cat /tmp/kbox-cp-smoke.txt",
     ]);
     assert_eq!(copied_in_box, "cp-smoke-ok\n");
 
@@ -1391,14 +1388,14 @@ fn real_core_tsi_published_tcp_nonblocking_accept_and_exec() {
         "--",
         "/bin/sh",
         "-c",
-        r#"cat >/tmp/krun-pong <<'EOF'
+        r#"cat >/tmp/kpong <<'EOF'
 #!/bin/sh
 dd bs=1 count=14 of=/dev/null 2>/dev/null
 printf '+PONG\r\n'
 EOF
-chmod +x /tmp/krun-pong
+chmod +x /tmp/kpong
 echo TSI_ACCEPT_READY
-exec nc -ll -p 6379 -e /tmp/krun-pong"#,
+exec nc -ll -p 6379 -e /tmp/kpong"#,
     ]);
     smoke.wait_for_running();
     smoke.wait_for_logs("TSI_ACCEPT_READY");
@@ -1465,11 +1462,11 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
         "-p",
         &publish,
         "--env",
-        "POSTGRES_DB=krun_cloud",
+        "POSTGRES_DB=kcloud",
         "--env",
-        "POSTGRES_USER=krun_cloud",
+        "POSTGRES_USER=kcloud",
         "--env",
-        "POSTGRES_PASSWORD=krun_cloud",
+        "POSTGRES_PASSWORD=kcloud",
         &image,
     ]);
     smoke.wait_for_running();
@@ -1482,13 +1479,7 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
         let row = loop {
             attempt += 1;
             let nonce = format!("asterboxhvf{}{}{}", std::process::id(), connection, attempt);
-            match postgres_wire::query_text(
-                address,
-                "krun_cloud",
-                "krun_cloud",
-                "krun_cloud",
-                &nonce,
-            ) {
+            match postgres_wire::query_text(address, "kcloud", "kcloud", "kcloud", &nonce) {
                 Ok(row) => break row,
                 Err(error) if Instant::now() < deadline => {
                     eprintln!(
@@ -1502,7 +1493,7 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
             }
         };
         assert_eq!(
-            row, "krun-box-hvf-krun_cloud",
+            row, "kbox-hvf-kcloud",
             "PostgreSQL query result for connection {connection}"
         );
     }
@@ -1513,7 +1504,7 @@ fn real_core_postgres_scram_survives_sequential_published_connections() {
         "--",
         "/bin/sh",
         "-c",
-        "pg_isready -U krun_cloud -d krun_cloud",
+        "pg_isready -U kcloud -d kcloud",
     ]);
     assert_contains(&exec, "accepting connections", "pg_isready after SCRAM");
     smoke.assert_shim_log_excludes(
@@ -1547,7 +1538,7 @@ fn real_core_virtiofs_tar_closes_every_source_file_cleanly() {
     seed_smoke_image(&smoke, &image);
     #[cfg(target_os = "windows")]
     let tar_timeout = smoke.timeout.max(Duration::from_secs(
-        std::env::var("KRUN_BOX_VIRTIOFS_TAR_TIMEOUT_SECS")
+        std::env::var("K_BOX_VIRTIOFS_TAR_TIMEOUT_SECS")
             .ok()
             .and_then(|value| value.parse().ok())
             .filter(|seconds| *seconds > 0)
@@ -1589,7 +1580,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
 
     seed_smoke_image(&smoke, &image);
 
-    let directory_mount = format!("{}:/mnt/krun-bind:ro", host_dir.path().display());
+    let directory_mount = format!("{}:/mnt/kbind:ro", host_dir.path().display());
     let directory_result = smoke.ok(&[
         "run",
         "--rm",
@@ -1601,7 +1592,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "--",
         "/bin/sh",
         "-c",
-        "test \"$(cat /mnt/krun-bind/directory.txt)\" = directory-bind-ok || exit 31; if printf changed >/mnt/krun-bind/directory.txt 2>/dev/null; then exit 32; fi; printf directory-bind-ro-ok",
+        "test \"$(cat /mnt/kbind/directory.txt)\" = directory-bind-ok || exit 31; if printf changed >/mnt/kbind/directory.txt 2>/dev/null; then exit 32; fi; printf directory-bind-ro-ok",
     ]);
     assert_contains(
         &directory_result,
@@ -1609,7 +1600,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "directory bind output",
     );
 
-    let single_file_mount = format!("{}:/etc/krun-bind-test.txt:ro", single_file.display());
+    let single_file_mount = format!("{}:/etc/kbind-test.txt:ro", single_file.display());
     let single_file_result = smoke.ok(&[
         "run",
         "--rm",
@@ -1621,7 +1612,7 @@ fn real_core_bind_mounts_preserve_host_paths_and_read_only_mode() {
         "--",
         "/bin/sh",
         "-c",
-        "test \"$(cat /etc/krun-bind-test.txt)\" = single-file-bind-ok || exit 41; if printf changed >/etc/krun-bind-test.txt 2>/dev/null; then exit 42; fi; printf single-file-bind-ro-ok",
+        "test \"$(cat /etc/kbind-test.txt)\" = single-file-bind-ok || exit 41; if printf changed >/etc/kbind-test.txt 2>/dev/null; then exit 42; fi; printf single-file-bind-ro-ok",
     ]);
     assert_contains(
         &single_file_result,
@@ -1744,7 +1735,7 @@ fn real_core_volume_backed_init_script_success_and_failure() {
     let init_config = init_source.path().join("init.conf");
     let volume = format!("{}-init-state", smoke.name);
     let state_mount = format!("{volume}:/state");
-    let init_mount = format!("{}:/opt/krun-init:ro", init_source.path().display());
+    let init_mount = format!("{}:/opt/kinit:ro", init_source.path().display());
     let _volume_cleanup = NamedVolumeCleanup {
         smoke: &smoke,
         name: volume.clone(),
@@ -1755,12 +1746,12 @@ fn real_core_volume_backed_init_script_success_and_failure() {
         r#"#!/bin/sh
 set -eu
 
-test "$(cat /opt/krun-init/init.conf)" = profile=windows-whpx
-if printf tamper >>/opt/krun-init/init.conf 2>/dev/null; then
+test "$(cat /opt/kinit/init.conf)" = profile=windows-whpx
+if printf tamper >>/opt/kinit/init.conf 2>/dev/null; then
     exit 31
 fi
 
-case "${KRUN_INIT_MODE:-}" in
+case "${K_INIT_MODE:-}" in
     success)
         printf success >/state/success
         printf 'box-init-success\n'
@@ -1788,7 +1779,7 @@ esac
         "--name",
         &format!("{}-init-success", smoke.name),
         "-e",
-        "KRUN_INIT_MODE=success",
+        "K_INIT_MODE=success",
         "-v",
         &state_mount,
         "-v",
@@ -1796,7 +1787,7 @@ esac
         &image,
         "--",
         "/bin/sh",
-        "/opt/krun-init/init.sh",
+        "/opt/kinit/init.sh",
     ]);
     assert_contains(&success, "box-init-success", "successful init output");
 
@@ -1806,7 +1797,7 @@ esac
         "--name",
         &format!("{}-init-failure", smoke.name),
         "-e",
-        "KRUN_INIT_MODE=failure",
+        "K_INIT_MODE=failure",
         "-v",
         &state_mount,
         "-v",
@@ -1814,7 +1805,7 @@ esac
         &image,
         "--",
         "/bin/sh",
-        "/opt/krun-init/init.sh",
+        "/opt/kinit/init.sh",
     ]);
     assert_eq!(
         failure.code,
@@ -2394,7 +2385,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
         "snapshot id: {snapshot_id}"
     );
     snapshot_cleanup.id = Some(snapshot_id.clone());
-    let store = krun_box_runtime::SnapshotStore::new(&smoke.home_path().join("snapshots"))
+    let store = kbox_runtime::SnapshotStore::new(&smoke.home_path().join("snapshots"))
         .expect("open snapshot store");
     let rootfs_format = store
         .rootfs_format(&snapshot_id)
@@ -2445,7 +2436,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
     );
 
     match rootfs_format {
-        krun_box_runtime::SnapshotRootfsFormat::Directory => {
+        kbox_runtime::SnapshotRootfsFormat::Directory => {
             let guarded = smoke.output(&["snapshot", "rm", &snapshot_id]);
             assert!(
                 !guarded.success,
@@ -2455,7 +2446,7 @@ fn real_core_snapshot_cow_isolation_and_rm_guard() {
             assert_contains(&guarded.stderr, "still used", "rm guard message");
             smoke.ok(&["snapshot", "inspect", &snapshot_id]);
         }
-        krun_box_runtime::SnapshotRootfsFormat::GuestNativeExt4 => {
+        kbox_runtime::SnapshotRootfsFormat::GuestNativeExt4 => {
             smoke.ok(&["snapshot", "rm", &snapshot_id]);
             snapshot_cleanup.id = None;
             assert!(
@@ -2538,7 +2529,7 @@ fn real_core_restart_policy_monitor_recovers_dead_box() {
     let combined_monitor_output = format!("{}\n{}", monitor_output.stdout, monitor_output.stderr);
     assert_contains(
         &combined_monitor_output,
-        "krun-box monitor started",
+        "kbox monitor started",
         "monitor output",
     );
 
@@ -2705,9 +2696,9 @@ fn real_core_compose_single_service_lifecycle() {
             r#"services:
   {service}:
     image: {image}
-    command: ["/bin/sh", "-c", "printf 'core-smoke-compose:%s\n' \"$$KRUN_COMPOSE_SMOKE\"; sleep 3600"]
+    command: ["/bin/sh", "-c", "printf 'core-smoke-compose:%s\n' \"$$K_COMPOSE_SMOKE\"; sleep 3600"]
     environment:
-      KRUN_COMPOSE_SMOKE: "ok"
+      K_COMPOSE_SMOKE: "ok"
     labels:
       purpose: core-smoke
 "#,
@@ -2774,7 +2765,7 @@ fn real_core_compose_single_service_lifecycle() {
         "--",
         "/bin/sh",
         "-c",
-        "printf '%s' \"$KRUN_COMPOSE_SMOKE\"",
+        "printf '%s' \"$K_COMPOSE_SMOKE\"",
     ]);
     assert_eq!(env_value, "ok");
 
@@ -2957,12 +2948,12 @@ fn real_core_interactive_pty_commands() {
             "--name",
             &run_box,
             "--env",
-            "KRUN_TTY_SMOKE=run",
+            "K_TTY_SMOKE=run",
             &image,
             "--",
             "/bin/sh",
             "-c",
-            "printf 'core-smoke-run-pty:%s\\n' \"$KRUN_TTY_SMOKE\"",
+            "printf 'core-smoke-run-pty:%s\\n' \"$K_TTY_SMOKE\"",
         ],
         b"",
     );
@@ -2979,7 +2970,7 @@ fn real_core_interactive_pty_commands() {
         "--name",
         &smoke.name,
         "--env",
-        "KRUN_TTY_SMOKE=detached",
+        "K_TTY_SMOKE=detached",
         &image,
         "--",
         "/bin/sh",
@@ -2994,11 +2985,11 @@ fn real_core_interactive_pty_commands() {
             "-it",
             &smoke.name,
             "--env",
-            "KRUN_EXEC_TTY=ok",
+            "K_EXEC_TTY=ok",
             "--",
             "/bin/sh",
             "-c",
-            "printf 'core-smoke-exec-pty:%s:%s\\n' \"$KRUN_TTY_SMOKE\" \"$KRUN_EXEC_TTY\"",
+            "printf 'core-smoke-exec-pty:%s:%s\\n' \"$K_TTY_SMOKE\" \"$K_EXEC_TTY\"",
         ],
         b"",
     );
@@ -3015,7 +3006,7 @@ fn real_core_interactive_pty_commands() {
 
     let attach = smoke.tty_output(
         &["attach", "-it", &smoke.name],
-        b"printf 'core-smoke-attach-pty:%s\\n' \"$KRUN_TTY_SMOKE\"; exit\n",
+        b"printf 'core-smoke-attach-pty:%s\\n' \"$K_TTY_SMOKE\"; exit\n",
     );
     assert!(
         attach.success,

@@ -12,13 +12,13 @@ use std::os::unix::fs::OpenOptionsExt;
 use std::os::unix::net::UnixListener;
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use krun_oci_core::{
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
 };
-use krun_oci_sdk::oci_spec::runtime::{
+use koci_sdk::oci_spec::runtime::{
     ContainerState, LinuxNamespaceType, LinuxResources, LinuxSeccompAction, Process,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     async_trait, canonical_json_bytes, AttachmentCapabilities, CheckpointArtifactPath,
     CheckpointCompatibility, CheckpointDigest, CheckpointFormat, CheckpointReference,
     CheckpointRequest, CloseStdinRequest, ContainerId, ContainerOperationRequest, ContainerRecord,
@@ -251,7 +251,7 @@ struct RecordingDriver {
     checkpoint_replays:
         Mutex<HashMap<OperationId, (DriverCheckpointRequest, DriverCheckpointResult)>>,
     checkpoint_gate: tokio::sync::Mutex<()>,
-    checkpoint_runtime_artifact: Mutex<Option<krun_oci_sdk::RuntimeArtifact>>,
+    checkpoint_runtime_artifact: Mutex<Option<koci_sdk::RuntimeArtifact>>,
     checkpoint_artifact_evidence: Mutex<Option<(CheckpointDigest, u64)>>,
     restore_replays: Mutex<HashMap<OperationId, (DriverRestoreRequest, DriverState)>>,
     restore_gate: tokio::sync::Mutex<()>,
@@ -278,7 +278,7 @@ impl RecordingDriver {
     fn supported() -> Self {
         Self {
             capability: DriverCapability {
-                driver: DriverKind::LibkrunWhpx,
+                driver: DriverKind::LibkWhpx,
                 status: CapabilityStatus::Available,
                 readiness: DriverReadiness::Supported,
                 isolation_classes: vec![IsolationClass::DedicatedVm],
@@ -359,7 +359,7 @@ impl RecordingDriver {
 
     fn shared_guest_supported() -> Self {
         let mut driver = Self::supported();
-        driver.capability.driver = DriverKind::LibkrunHvf;
+        driver.capability.driver = DriverKind::LibkHvf;
         driver.capability.isolation_classes = vec![IsolationClass::SharedGuestKernel];
         driver.attachments = AttachmentCapabilities::base_v4();
         driver
@@ -413,10 +413,10 @@ impl RecordingDriver {
             driver.capability.driver = DriverKind::NativeLinux;
             driver.capability.isolation_classes = vec![IsolationClass::SharedHostKernel];
         } else if cfg!(target_os = "macos") {
-            driver.capability.driver = DriverKind::LibkrunHvf;
+            driver.capability.driver = DriverKind::LibkHvf;
             driver.capability.isolation_classes = vec![IsolationClass::DedicatedVm];
         } else {
-            driver.capability.driver = DriverKind::LibkrunWhpx;
+            driver.capability.driver = DriverKind::LibkWhpx;
             driver.capability.isolation_classes = vec![IsolationClass::DedicatedVm];
         }
         driver.operations.push(RuntimeOperation::Checkpoint);
@@ -432,11 +432,11 @@ impl RecordingDriver {
     fn with_attestation_operations() -> Self {
         let mut driver = Self::with_control_operations();
         if cfg!(target_os = "linux") {
-            driver.capability.driver = DriverKind::LibkrunKvm;
+            driver.capability.driver = DriverKind::LibkKvm;
         } else if cfg!(target_os = "macos") {
-            driver.capability.driver = DriverKind::LibkrunHvf;
+            driver.capability.driver = DriverKind::LibkHvf;
         } else {
-            driver.capability.driver = DriverKind::LibkrunWhpx;
+            driver.capability.driver = DriverKind::LibkWhpx;
         }
         driver.capability.isolation_classes = vec![IsolationClass::DedicatedVm];
         driver.operations.push(RuntimeOperation::Attest);
@@ -446,7 +446,7 @@ impl RecordingDriver {
         driver
     }
 
-    fn override_checkpoint_runtime_artifact(&self, artifact: krun_oci_sdk::RuntimeArtifact) {
+    fn override_checkpoint_runtime_artifact(&self, artifact: koci_sdk::RuntimeArtifact) {
         *self
             .checkpoint_runtime_artifact
             .lock()
@@ -769,7 +769,7 @@ impl RecordingDriver {
         &self,
         artifact_path: &CheckpointArtifactPath,
         reference: &CheckpointReference,
-        runtime_artifact: &krun_oci_sdk::RuntimeArtifact,
+        runtime_artifact: &koci_sdk::RuntimeArtifact,
         operation: &'static str,
     ) -> Result<()> {
         let compatibility = reference.compatibility();
@@ -2062,7 +2062,7 @@ fn checkpoint_fixture_io_error(action: &str, path: &Path, error: std::io::Error)
     .for_operation("driver-checkpoint")
 }
 
-fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> krun_oci_sdk::Result<T>) -> T {
+fn identifier<T>(value: &str, constructor: impl FnOnce(String) -> koci_sdk::Result<T>) -> T {
     constructor(value.to_string()).unwrap_or_else(|error| panic!("valid identifier: {error}"))
 }
 
@@ -2405,7 +2405,7 @@ async fn rejects_caller_vm_configuration_before_durable_reservation_and_create_d
             "root": {"path": "rootfs", "readonly": true},
             "vm": {
                 "hypervisor": {
-                    "path": "/untrusted/krun-vmm",
+                    "path": "/untrusted/kvmm",
                     "parameters": ["--untrusted-option"]
                 },
                 "kernel": {
@@ -2511,7 +2511,7 @@ async fn rejects_unsupported_mount_labels_before_durable_reservation_and_create_
 
 #[tokio::test]
 async fn reports_builtin_and_driver_unsafe_config_annotations_for_configured_services() {
-    const DRIVER_EXTENSION: &str = "dev.krun.network.tsi";
+    const DRIVER_EXTENSION: &str = "dev.kbox.network.tsi";
 
     let temporary = tempfile::tempdir().expect("temporary directory");
     let driver = Arc::new(RecordingDriver::with_attachment_extension(
@@ -3298,16 +3298,16 @@ async fn required_runtime_extension_fails_before_durable_or_driver_mutation() {
             "  \"ociVersion\": \"1.3.0\",\n",
             "  \"process\": {\"terminal\": false, \"user\": {\"uid\": 0, \"gid\": 0}, \"args\": [\"/bin/true\"], \"cwd\": \"/\"},\n",
             "  \"root\": {\"path\": \"rootfs\", \"readonly\": true},\n",
-            "  \"annotations\": {\"dev.krun.network.tsi\": \"proxy-v1\"}\n",
+            "  \"annotations\": {\"dev.kbox.network.tsi\": \"proxy-v1\"}\n",
             "}\n"
         ),
     )
     .expect("extension bundle");
     let attachments = CreateAttachments::from_bundle(&bundle, ProcessIo::default())
         .expect("base attachments")
-        .add_extension_from_annotation(&bundle, "dev.krun.network.tsi", 1, true)
+        .add_extension_from_annotation(&bundle, "dev.kbox.network.tsi", 1, true)
         .expect("required extension declaration")
-        .attach_network_extension("dev.krun.network.tsi")
+        .attach_network_extension("dev.kbox.network.tsi")
         .expect("network extension classification");
     let request = CreateRequest {
         context: OperationContext::new(operation_id("required-extension-create")),
@@ -3322,7 +3322,7 @@ async fn required_runtime_extension_fails_before_durable_or_driver_mutation() {
         .await
         .expect_err("unsupported required extension must fail");
     assert_eq!(error.code, ErrorCode::Unsupported);
-    assert!(error.message.contains("dev.krun.network.tsi"));
+    assert!(error.message.contains("dev.kbox.network.tsi"));
     assert!(driver.calls().is_empty());
     assert!(!temporary
         .path()
@@ -3926,7 +3926,7 @@ async fn multi_driver_service_routes_create_and_reopen_by_durable_driver() {
         .create(dedicated_request.clone())
         .await
         .expect("create dedicated container");
-    assert_eq!(dedicated_record.driver, DriverKind::LibkrunWhpx);
+    assert_eq!(dedicated_record.driver, DriverKind::LibkWhpx);
 
     let mut shared_request = bind_guest_session(
         create_request(&bundle_directory, "multi-create-shared"),
@@ -3938,7 +3938,7 @@ async fn multi_driver_service_routes_create_and_reopen_by_durable_driver() {
         .create(shared_request.clone())
         .await
         .expect("create shared-guest container");
-    assert_eq!(shared_record.driver, DriverKind::LibkrunHvf);
+    assert_eq!(shared_record.driver, DriverKind::LibkHvf);
     assert_eq!(
         dedicated
             .calls()
@@ -4026,7 +4026,7 @@ async fn multi_driver_service_routes_create_and_reopen_by_durable_driver() {
         .await
         .expect("recreate ID with shared-guest isolation");
     assert!(reused_record.generation > dedicated_record.generation);
-    assert_eq!(reused_record.driver, DriverKind::LibkrunHvf);
+    assert_eq!(reused_record.driver, DriverKind::LibkHvf);
     reopened
         .start(StartRequest {
             context: OperationContext::new(operation_id("multi-start-reused")),
@@ -4056,14 +4056,14 @@ async fn multi_driver_service_routes_create_and_reopen_by_durable_driver() {
     let info = reopened.features().await.expect("multi-driver features");
     assert_eq!(
         info.drivers
-            .driver(DriverKind::LibkrunWhpx)
+            .driver(DriverKind::LibkWhpx)
             .expect("dedicated driver")
             .readiness,
         DriverReadiness::Supported
     );
     assert_eq!(
         info.drivers
-            .driver(DriverKind::LibkrunHvf)
+            .driver(DriverKind::LibkHvf)
             .expect("shared driver")
             .readiness,
         DriverReadiness::Supported
@@ -4429,7 +4429,7 @@ async fn service_open_reconciles_each_record_with_its_recorded_driver() {
         })
         .collect::<Vec<_>>();
     assert_eq!(recovery_calls.len(), 1);
-    assert_eq!(recovery_calls[0].driver, DriverKind::LibkrunWhpx);
+    assert_eq!(recovery_calls[0].driver, DriverKind::LibkWhpx);
     assert_eq!(recovery_calls[0].state.id(), dedicated_request.id.as_str());
 }
 
@@ -4461,7 +4461,7 @@ async fn service_open_rejects_missing_or_drifted_durable_driver_bindings() {
         .expect_err("missing recorded driver must fail service open");
     assert_eq!(error.code, ErrorCode::Unavailable);
     assert!(error.message.contains(record.state.id().as_str()));
-    assert!(error.message.contains("LibkrunWhpx"));
+    assert!(error.message.contains("LibkWhpx"));
 
     let mut drifted = RecordingDriver::supported();
     drifted.capability.isolation_classes = vec![IsolationClass::SharedGuestKernel];
@@ -4503,7 +4503,7 @@ async fn multi_driver_registration_rejects_ambiguous_sets_before_state() {
 
     let first = Arc::new(RecordingDriver::supported());
     let mut overlapping = RecordingDriver::supported();
-    overlapping.capability.driver = DriverKind::LibkrunHvf;
+    overlapping.capability.driver = DriverKind::LibkHvf;
     let overlap_root = temporary.path().join("overlap");
     let overlap_drivers: Vec<Arc<dyn RuntimeDriver>> = vec![first, Arc::new(overlapping)];
     let error = HostRuntimeService::open_with_drivers(&overlap_root, overlap_drivers)
@@ -4528,7 +4528,7 @@ async fn multi_driver_registration_rejects_ambiguous_sets_before_state() {
 
 #[tokio::test]
 async fn negotiates_versioned_capabilities_for_the_selected_driver_and_artifact() {
-    const NETWORK_EXTENSION: &str = "dev.krun.network.tsi";
+    const NETWORK_EXTENSION: &str = "dev.kbox.network.tsi";
 
     let temporary = tempfile::tempdir().expect("temporary directory");
     let mut dedicated_driver = RecordingDriver::supported();
@@ -4577,7 +4577,7 @@ async fn negotiates_versioned_capabilities_for_the_selected_driver_and_artifact(
         .extensions
         .negotiate(&dedicated_request)
         .expect("dedicated driver contract");
-    assert_eq!(negotiated.driver(), DriverKind::LibkrunWhpx);
+    assert_eq!(negotiated.driver(), DriverKind::LibkWhpx);
     assert!(negotiated.supports_operation(RuntimeOperation::Wait, RUNTIME_OPERATION_CONTRACT_V1));
 
     let shared_request = RuntimeNegotiationRequest::new(IsolationClass::SharedGuestKernel)
@@ -4860,15 +4860,15 @@ async fn recovered_optional_operation_capability_drift_fails_terminally() {
 }
 
 #[cfg(any(unix, windows))]
-const PROCESS_OWNER_CHILD_ENV: &str = "KRUN_OCI_TEST_RUNTIME_OWNER_CHILD";
+const PROCESS_OWNER_CHILD_ENV: &str = "K_OCI_TEST_RUNTIME_OWNER_CHILD";
 #[cfg(any(unix, windows))]
-const PROCESS_OWNER_STATE_ENV: &str = "KRUN_OCI_TEST_RUNTIME_OWNER_STATE";
+const PROCESS_OWNER_STATE_ENV: &str = "K_OCI_TEST_RUNTIME_OWNER_STATE";
 #[cfg(any(unix, windows))]
-const PROCESS_OWNER_ENDPOINT_ENV: &str = "KRUN_OCI_TEST_RUNTIME_OWNER_ENDPOINT";
+const PROCESS_OWNER_ENDPOINT_ENV: &str = "K_OCI_TEST_RUNTIME_OWNER_ENDPOINT";
 #[cfg(any(unix, windows))]
-const PROCESS_OWNER_READY_ENV: &str = "KRUN_OCI_TEST_RUNTIME_OWNER_READY";
+const PROCESS_OWNER_READY_ENV: &str = "K_OCI_TEST_RUNTIME_OWNER_READY";
 #[cfg(any(unix, windows))]
-const PROCESS_OWNER_LOG_ENV: &str = "KRUN_OCI_TEST_RUNTIME_OWNER_LOG";
+const PROCESS_OWNER_LOG_ENV: &str = "K_OCI_TEST_RUNTIME_OWNER_LOG";
 #[cfg(any(unix, windows))]
 const PROCESS_OWNER_TEST_NAME: &str =
     "service::tests::retained_sdk_client_recovers_after_runtime_owner_process_restart";
@@ -4975,7 +4975,7 @@ async fn run_process_owner_child() {
     {
         let endpoint_name = std::env::var(PROCESS_OWNER_ENDPOINT_ENV)
             .expect("Windows runtime owner endpoint environment");
-        let endpoint = krun_oci_sdk::LocalIpcEndpoint::windows_named_pipe(endpoint_name)
+        let endpoint = koci_sdk::LocalIpcEndpoint::windows_named_pipe(endpoint_name)
             .expect("valid child named-pipe endpoint");
         let owner = crate::WindowsHostService::bind(endpoint, service)
             .expect("bind child Windows host service");
@@ -4997,7 +4997,7 @@ async fn run_process_owner_child() {
         let service: Arc<dyn OciRuntimeService> = Arc::new(service);
         std::fs::write(&ready_path, b"ready").expect("publish child readiness");
         let (stream, _) = listener.accept().await.expect("accept parent SDK client");
-        krun_oci_sdk::serve_transport_connection(service, stream)
+        koci_sdk::serve_transport_connection(service, stream)
             .await
             .expect("serve child Unix SDK connection");
     }
@@ -5022,18 +5022,18 @@ async fn retained_sdk_client_recovers_after_runtime_owner_process_restart() {
         use std::sync::atomic::{AtomicU64, Ordering};
         static NEXT_PIPE: AtomicU64 = AtomicU64::new(30_000);
         let name = format!(
-            r"\\.\pipe\krun-oci-owner-restart-test-{}-{}",
+            r"\\.\pipe\koci-owner-restart-test-{}-{}",
             std::process::id(),
             NEXT_PIPE.fetch_add(1, Ordering::Relaxed)
         );
-        let endpoint = krun_oci_sdk::LocalIpcEndpoint::windows_named_pipe(name.clone())
+        let endpoint = koci_sdk::LocalIpcEndpoint::windows_named_pipe(name.clone())
             .expect("valid parent named-pipe endpoint");
         (std::ffi::OsString::from(name), endpoint)
     };
     #[cfg(unix)]
     let (endpoint_value, endpoint) = {
         let path = temporary.path().join("runtime.sock");
-        let endpoint = krun_oci_sdk::LocalIpcEndpoint::unix_socket(path.clone())
+        let endpoint = koci_sdk::LocalIpcEndpoint::unix_socket(path.clone())
             .expect("valid parent Unix endpoint");
         (path.into_os_string(), endpoint)
     };
@@ -5047,7 +5047,7 @@ async fn retained_sdk_client_recovers_after_runtime_owner_process_restart() {
         temporary.path().join("owner-1.stderr"),
     );
     first_owner.wait_until_ready(&first_ready);
-    let client = krun_oci_sdk::RuntimeClient::connect(&endpoint)
+    let client = koci_sdk::RuntimeClient::connect(&endpoint)
         .await
         .expect("connect retained SDK client to first owner");
     let create = create_request(&bundle_directory, "process-restart-create");

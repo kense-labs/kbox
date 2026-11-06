@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     AttachmentCapabilities, CreateAttachments, CreateRequest, ErrorCode, IsolationRequest,
     LocalNetworkRedirectAttachment, NetworkAttachmentIdentity, NetworkCleanup, NetworkCleanupId,
     NetworkEnforcementAttachment, NetworkEnforcementId, NetworkInterfaceId, NetworkMechanismDigest,
@@ -73,7 +73,7 @@ fn enforcement_bundle(
         "linux": {
             "namespaces": [{
                 "type": "network",
-                "path": "/run/krun/network/authorized-network-namespace-31"
+                "path": "/run/kbox/network/authorized-network-namespace-31"
             }],
             "netDevices": {"tap0": {"name": "eth0"}}
         },

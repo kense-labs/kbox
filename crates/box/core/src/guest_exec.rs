@@ -4,38 +4,38 @@ use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
 /// Fixed in-guest location of the runtime-owned entrypoint configuration.
-pub const RUNTIME_EXEC_CONFIG_PATH: &str = "/.krun-box-exec.json";
+pub const RUNTIME_EXEC_CONFIG_PATH: &str = "/.kbox-exec.json";
 /// Versioned schema written by the runtime and consumed by guest-init.
-pub const RUNTIME_EXEC_CONFIG_SCHEMA: &str = "krun.box.guest-exec.v1";
+pub const RUNTIME_EXEC_CONFIG_SCHEMA: &str = "kbox.guest-exec.v1";
 /// Maximum serialized entrypoint configuration accepted by either side.
 pub const MAX_RUNTIME_EXEC_CONFIG_BYTES: usize = 1024 * 1024;
 /// Match libkrun's maximum argument pointer count.
 pub const MAX_RUNTIME_EXEC_ARGS: usize = 4096;
 
 /// Virtio-fs tag used for the private, runtime-owned MicroVM boot channel.
-pub const GUEST_BOOT_CONTROL_TAG: &str = "krun-boot";
+pub const GUEST_BOOT_CONTROL_TAG: &str = "kboot";
 /// Fixed mount point used only while guest-init consumes the boot bundle.
-pub const GUEST_BOOT_CONTROL_MOUNT_PATH: &str = "/run/krun-box/boot";
+pub const GUEST_BOOT_CONTROL_MOUNT_PATH: &str = "/run/kbox/boot";
 /// Fixed in-guest location of the versioned MicroVM boot bundle.
-pub const GUEST_BOOT_CONFIG_PATH: &str = "/run/krun-box/boot/config.json";
+pub const GUEST_BOOT_CONFIG_PATH: &str = "/run/kbox/boot/config.json";
 /// File name stored in the host side of the private boot share.
 pub const GUEST_BOOT_CONFIG_FILE_NAME: &str = "config.json";
 /// Environment variable selecting the boot-bundle transport.
 pub const GUEST_BOOT_CONFIG_ENV: &str = "BOX_BOOT_CONFIG_FILE";
 /// Versioned schema written by the runtime and consumed by guest-init.
-pub const GUEST_BOOT_CONFIG_SCHEMA: &str = "krun.box.guest-boot.v1";
+pub const GUEST_BOOT_CONFIG_SCHEMA: &str = "kbox.guest-boot.v1";
 /// Maximum serialized boot bundle accepted by either side.
 pub const MAX_GUEST_BOOT_CONFIG_BYTES: usize = 4 * 1024 * 1024;
 /// Virtio-fs tag for the private terminal-status handoff.
-pub const GUEST_TERMINAL_CONTROL_TAG: &str = "krun-terminal";
+pub const GUEST_TERMINAL_CONTROL_TAG: &str = "kterminal";
 /// Temporary guest mount point used only while guest-init opens the status file.
-pub const GUEST_TERMINAL_CONTROL_MOUNT_PATH: &str = "/run/krun-box/terminal";
+pub const GUEST_TERMINAL_CONTROL_MOUNT_PATH: &str = "/run/kbox/terminal";
 /// Fixed status file opened before the terminal-control share is unmounted.
-pub const GUEST_TERMINAL_STATUS_PATH: &str = "/run/krun-box/terminal/status.json";
+pub const GUEST_TERMINAL_STATUS_PATH: &str = "/run/kbox/terminal/status.json";
 /// Host-side file name within the private terminal-control directory.
 pub const GUEST_TERMINAL_STATUS_FILE_NAME: &str = "status.json";
 /// Versioned terminal-status contract shared by guest-init and the host runtime.
-pub const GUEST_TERMINAL_STATUS_SCHEMA: &str = "krun.box.guest-terminal.v1";
+pub const GUEST_TERMINAL_STATUS_SCHEMA: &str = "kbox.guest-terminal.v1";
 /// Defensive serialized terminal-status bound.
 pub const MAX_GUEST_TERMINAL_STATUS_BYTES: usize = 256;
 /// Defensive bound for the number of workload environment entries.
@@ -47,11 +47,11 @@ pub const MAX_GUEST_HOST_FILE_BYTES: usize = 1024 * 1024;
 /// The typed boot bundle confirms this value after guest-init mounts and reads
 /// the private control share. The early selector exists only so PID 1 can avoid
 /// replaying metadata from its temporary maintenance root before that point.
-pub const GUEST_ROOTFS_MAINTENANCE_ENV: &str = "KRUN_ROOTFS_MAINTENANCE";
+pub const GUEST_ROOTFS_MAINTENANCE_ENV: &str = "K_ROOTFS_MAINTENANCE";
 /// Exact read-only block device exposed to the maintenance guest.
-pub const GUEST_ROOTFS_MAINTENANCE_DEVICE_ENV: &str = "KRUN_ROOTFS_MAINTENANCE_DEVICE";
+pub const GUEST_ROOTFS_MAINTENANCE_DEVICE_ENV: &str = "K_ROOTFS_MAINTENANCE_DEVICE";
 /// Mount point used by the restricted maintenance archive server.
-pub const GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH: &str = "/mnt/krun-rootfs";
+pub const GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH: &str = "/mnt/krootfs";
 
 /// Host-selected PID 1 behavior carried by the versioned boot bundle.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
@@ -309,7 +309,7 @@ mod tests {
         valid.validate().unwrap();
 
         let mut wrong_schema = valid.clone();
-        wrong_schema.schema = "krun.box.guest-exec.v2".to_string();
+        wrong_schema.schema = "kbox.guest-exec.v2".to_string();
         assert!(wrong_schema.validate().is_err());
 
         let mut too_many = valid.clone();
@@ -339,13 +339,13 @@ mod tests {
         );
 
         let legacy = serde_json::from_slice::<GuestTerminalStatus>(
-            br#"{"schema":"krun.box.guest-terminal.v1","exit_code":0}"#,
+            br#"{"schema":"kbox.guest-terminal.v1","exit_code":0}"#,
         )
         .unwrap();
         assert!(!legacy.rootfs_quiesced);
 
         let mut unsupported = status;
-        unsupported.schema = "krun.box.guest-terminal.v2".to_string();
+        unsupported.schema = "kbox.guest-terminal.v2".to_string();
         assert!(unsupported.validate().is_err());
     }
 

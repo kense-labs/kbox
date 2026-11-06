@@ -4,7 +4,7 @@ use std::path::{Path, PathBuf};
 
 use cap_fs_ext::{FollowSymlinks, OpenOptionsFollowExt};
 use cap_std::fs::{Dir, OpenOptions};
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::{ErrorCode, Result};
 use serde::Serialize;
 use tokio::io::AsyncWriteExt;
 

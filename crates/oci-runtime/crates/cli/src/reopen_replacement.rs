@@ -8,7 +8,7 @@ pub(crate) struct Args {
     /// Isolated, entitlement-signed libkrun shim executable.
     #[arg(long, value_name = "FILE")]
     shim: PathBuf,
-    /// Extracted Linux root filesystem containing /usr/bin/krun-oci-agent.
+    /// Extracted Linux root filesystem containing /usr/bin/koci-agent.
     #[arg(long, value_name = "DIR")]
     vm_rootfs: PathBuf,
     /// Immutable system-image manifest bound to both macOS HVF owners.
@@ -78,51 +78,51 @@ pub(crate) enum FaultStageArg {
     HostAfterShutdown,
 }
 
-impl From<FaultStageArg> for krun_oci_runtime::AgentTransportFaultStage {
+impl From<FaultStageArg> for koci_runtime::AgentTransportFaultStage {
     fn from(value: FaultStageArg) -> Self {
         match value {
-            FaultStageArg::BeforeRequestWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite,
-            ),
-            FaultStageArg::AfterRequestWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostAfterRequestWrite,
-            ),
-            FaultStageArg::BeforeResponseRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostBeforeResponseRead,
-            ),
-            FaultStageArg::AfterResponseRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::HostAfterResponseRead,
-            ),
-            FaultStageArg::GuestAfterRequestRead => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestAfterRequestRead,
-            ),
+            FaultStageArg::BeforeRequestWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostBeforeRequestWrite)
+            }
+            FaultStageArg::AfterRequestWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostAfterRequestWrite)
+            }
+            FaultStageArg::BeforeResponseRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostBeforeResponseRead)
+            }
+            FaultStageArg::AfterResponseRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::HostAfterResponseRead)
+            }
+            FaultStageArg::GuestAfterRequestRead => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterRequestRead)
+            }
             FaultStageArg::GuestBeforeDispatch => {
-                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestBeforeDispatch)
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestBeforeDispatch)
             }
             FaultStageArg::GuestAfterDispatch => {
-                Self::Operation(krun_oci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterDispatch)
             }
             FaultStageArg::GuestBeforeResponseWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
+                koci_runtime::AgentTransportOperationStage::GuestBeforeResponseWrite,
             ),
-            FaultStageArg::GuestAfterResponseWrite => Self::Operation(
-                krun_oci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite,
-            ),
+            FaultStageArg::GuestAfterResponseWrite => {
+                Self::Operation(koci_runtime::AgentTransportOperationStage::GuestAfterResponseWrite)
+            }
             FaultStageArg::HostBeforeShutdown => {
-                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
+                Self::Shutdown(koci_runtime::AgentTransportShutdownStage::HostBeforeShutdown)
             }
             FaultStageArg::HostAfterShutdown => {
-                Self::Shutdown(krun_oci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
+                Self::Shutdown(koci_runtime::AgentTransportShutdownStage::HostAfterShutdown)
             }
         }
     }
 }
 
-impl TryFrom<FaultStageArg> for krun_oci_runtime::AgentTransportOperationStage {
+impl TryFrom<FaultStageArg> for koci_runtime::AgentTransportOperationStage {
     type Error = String;
 
     fn try_from(value: FaultStageArg) -> Result<Self, Self::Error> {
-        let fault_stage = krun_oci_runtime::AgentTransportFaultStage::from(value);
+        let fault_stage = koci_runtime::AgentTransportFaultStage::from(value);
         match fault_stage.operation() {
             Some(stage) => Ok(stage),
             None => Err(format!(
@@ -136,8 +136,8 @@ impl TryFrom<FaultStageArg> for krun_oci_runtime::AgentTransportOperationStage {
 pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
     let succeeded = match arguments.operation {
         OperationArg::Create => {
-            let fault_stage = krun_oci_runtime::AgentTransportFaultStage::from(arguments.fault_at);
-            let report = krun_oci_runtime::oci_vm_reopen_replacement_at(
+            let fault_stage = koci_runtime::AgentTransportFaultStage::from(arguments.fault_at);
+            let report = koci_runtime::oci_vm_reopen_replacement_at(
                 &arguments.shim,
                 &arguments.vm_rootfs,
                 &arguments.system_image_manifest,
@@ -151,13 +151,12 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
             succeeded
         }
         operation => {
-            let stage =
-                krun_oci_runtime::AgentTransportOperationStage::try_from(arguments.fault_at)
-                    .map_err(super::CliError::Message)?;
+            let stage = koci_runtime::AgentTransportOperationStage::try_from(arguments.fault_at)
+                .map_err(super::CliError::Message)?;
             match operation {
                 OperationArg::Create => unreachable!("Create handled above"),
                 OperationArg::CloseStdin => {
-                    let report = krun_oci_runtime::oci_vm_close_stdin_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_close_stdin_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -171,7 +170,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Delete => {
-                    let report = krun_oci_runtime::oci_vm_delete_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_delete_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -185,7 +184,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Exec => {
-                    let report = krun_oci_runtime::oci_vm_exec_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_exec_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -199,7 +198,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::File => {
-                    let report = krun_oci_runtime::oci_vm_file_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_file_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -213,7 +212,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Filesystem => {
-                    let report = krun_oci_runtime::oci_vm_filesystem_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_filesystem_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -227,7 +226,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Kill => {
-                    let report = krun_oci_runtime::oci_vm_kill_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_kill_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -241,7 +240,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Pause => {
-                    let report = krun_oci_runtime::oci_vm_pause_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_pause_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -255,7 +254,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Processes => {
-                    let report = krun_oci_runtime::oci_vm_processes_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_processes_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -269,7 +268,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::ReadOutput => {
-                    let report = krun_oci_runtime::oci_vm_read_output_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_read_output_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -283,7 +282,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Resize => {
-                    let report = krun_oci_runtime::oci_vm_resize_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_resize_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -297,7 +296,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Resume => {
-                    let report = krun_oci_runtime::oci_vm_resume_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_resume_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -311,7 +310,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::SignalProcess => {
-                    let report = krun_oci_runtime::oci_vm_signal_process_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_signal_process_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -325,7 +324,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::State => {
-                    let report = krun_oci_runtime::oci_vm_state_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_state_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -339,7 +338,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Start => {
-                    let report = krun_oci_runtime::oci_vm_start_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_start_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -353,7 +352,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Stats => {
-                    let report = krun_oci_runtime::oci_vm_stats_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_stats_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -367,7 +366,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Update => {
-                    let report = krun_oci_runtime::oci_vm_update_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_update_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -381,7 +380,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::Wait => {
-                    let report = krun_oci_runtime::oci_vm_wait_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_wait_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -395,7 +394,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::WaitProcess => {
-                    let report = krun_oci_runtime::oci_vm_wait_process_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_wait_process_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,
@@ -409,7 +408,7 @@ pub(crate) async fn run(arguments: Args) -> Result<ExitCode, super::CliError> {
                     succeeded
                 }
                 OperationArg::WriteStdin => {
-                    let report = krun_oci_runtime::oci_vm_write_stdin_reopen_replacement_at(
+                    let report = koci_runtime::oci_vm_write_stdin_reopen_replacement_at(
                         &arguments.shim,
                         &arguments.vm_rootfs,
                         &arguments.system_image_manifest,

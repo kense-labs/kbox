@@ -34,7 +34,7 @@ impl<R: Read> Read for LimitedReader<R> {
         if n as u64 > self.remaining {
             return Err(io::Error::other(format!(
                 "decompressed output exceeded the {}-byte limit (possible decompression bomb); \
-                 raise the limit via the relevant KRUN_BOX_MAX_*_BYTES env var if this is a \
+                 raise the limit via the relevant K_BOX_MAX_*_BYTES env var if this is a \
                  legitimately large image/archive",
                 self.limit
             )));
@@ -105,10 +105,7 @@ mod tests {
 
     #[test]
     fn cap_from_env_uses_positive_values_only() {
-        let var = format!(
-            "KRUN_BOX_LIMITED_READER_TEST_POSITIVE_{}",
-            std::process::id()
-        );
+        let var = format!("K_BOX_LIMITED_READER_TEST_POSITIVE_{}", std::process::id());
         std::env::set_var(&var, " 4096 ");
 
         let cap = cap_from_env(&var, 1024);
@@ -119,10 +116,7 @@ mod tests {
 
     #[test]
     fn cap_from_env_falls_back_for_unset_zero_and_invalid_values() {
-        let base = format!(
-            "KRUN_BOX_LIMITED_READER_TEST_FALLBACK_{}",
-            std::process::id()
-        );
+        let base = format!("K_BOX_LIMITED_READER_TEST_FALLBACK_{}", std::process::id());
         let unset = format!("{base}_UNSET");
         let zero = format!("{base}_ZERO");
         let invalid = format!("{base}_INVALID");

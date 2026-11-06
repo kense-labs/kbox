@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
-use krun_oci_sdk::oci_spec::runtime::LinuxBlockIo;
-use krun_oci_sdk::ErrorCode;
+use koci_sdk::oci_spec::runtime::LinuxBlockIo;
+use koci_sdk::ErrorCode;
 
 use super::state::{parse_max_state, parse_weight_state};
 use super::{
@@ -247,8 +247,8 @@ fn prepares_exact_keyed_rollback_commands() {
 #[tokio::test]
 async fn applies_reads_back_and_rolls_back_real_io_max_when_requested() {
     let (Some(path), Some(device)) = (
-        std::env::var_os("KRUN_OCI_TEST_CGROUP_IO_PATH"),
-        std::env::var_os("KRUN_OCI_TEST_CGROUP_IO_DEVICE"),
+        std::env::var_os("K_OCI_TEST_CGROUP_IO_PATH"),
+        std::env::var_os("K_OCI_TEST_CGROUP_IO_DEVICE"),
     ) else {
         return;
     };

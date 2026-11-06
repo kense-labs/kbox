@@ -1,8 +1,8 @@
-# krun-box-mkext4
+# kbox-mkext4
 
 ## 概述
 
-Krun Box deterministic ext4 image builder with raw Linux path byte support
+Kbox Box deterministic ext4 image builder with raw Linux path byte support
 
 ## 构建与验证
 
@@ -12,14 +12,14 @@ Krun Box deterministic ext4 image builder with raw Linux path byte support
 cargo check --locked
 ```
 
-[![crates.io](https://img.shields.io/crates/v/krun-box-mkext4)](https://crates.io/crates/krun-box-mkext4)
-[![docs.rs](https://img.shields.io/docsrs/krun-box-mkext4)](https://docs.rs/krun-box-mkext4)
-[![CI](https://github.com/kense-labs/krun/actions/workflows/ci.yml/badge.svg)](https://github.com/kense-labs/krun/actions/workflows/ci.yml)
+[![crates.io](https://img.shields.io/crates/v/kbox-mkext4)](https://crates.io/crates/kbox-mkext4)
+[![docs.rs](https://img.shields.io/docsrs/kbox-mkext4)](https://docs.rs/kbox-mkext4)
+[![CI](https://github.com/kense-labs/kbox/actions/workflows/ci.yml/badge.svg)](https://github.com/kense-labs/kbox/actions/workflows/ci.yml)
 
-This is the Krun Box release-owned fork of upstream `mkext4` 0.0.3. It keeps
+This is the Kbox Box release-owned fork of upstream `mkext4` 0.0.3. It keeps
 the upstream implementation and adds byte-preserving Linux directory-entry and
 symbolic-link inputs required by Box's guest-native rootfs builder. See
-[`KRUN_PATCHES.md`](KRUN_PATCHES.md) for the exact provenance and patch boundary.
+[`K_PATCHES.md`](K_PATCHES.md) for the exact provenance and patch boundary.
 
 Deterministic, streaming, pure-Rust ext4 image builder — plus a
 verification-grade reader. No C dependencies, no kernel mounts, no clocks,
@@ -161,7 +161,7 @@ mount read-write on any modern Linux kernel.
 ## Installing
 
 ```sh
-cargo add krun-box-mkext4 --rename mkext4
+cargo add kbox-mkext4 --rename mkext4
 ```
 
 Early release (0.0.x): the API may still move before 0.1.

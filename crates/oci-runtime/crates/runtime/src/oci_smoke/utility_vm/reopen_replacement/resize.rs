@@ -1,15 +1,15 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use koci_sdk::{
     ContainerTarget, CreateRequest, ExecRequest, OperationId, ResizeRequest, StartRequest,
 };
 
 use super::QualificationHvfDriver;
 use crate::{DriverExecRequest, DriverResizeRequest, OciVmOperationReopenReplacementReport};
 
-pub(super) const RESIZE_MARKER_NAME: &str = ".krun-oci-resize-reopen-smoke";
+pub(super) const RESIZE_MARKER_NAME: &str = ".koci-resize-reopen-smoke";
 
 struct Qualification {
     shim: PathBuf,

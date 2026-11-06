@@ -6,7 +6,7 @@ use std::io::{Read, Seek, SeekFrom};
 use std::os::fd::AsRawFd;
 use std::path::PathBuf;
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use mkext4::InodeHandle;
 
 pub(crate) enum FileFill {

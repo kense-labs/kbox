@@ -4,7 +4,7 @@ members = [
     "crates/sdk",
     "crates/agent-protocol",
     "crates/agent",
-    "crates/krun",
+    "crates/kbox",
     "crates/runtime",
     "crates/cli",
     "crates/containerd-shim",
@@ -14,12 +14,12 @@ resolver = "2"
 [workspace.package]
 version = "0.3.6"
 edition = "2021"
-authors = ["Krun Team"]
+authors = ["Kbox Team"]
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 
 [workspace.dependencies]
-krun-libkrun-sys = "=3.1.0"
+klibksys = { path = "../box/deps/libksys" }
 async-trait = "0.1"
 base64 = "0.22"
 cap-fs-ext = "=4.0.2"

@@ -6,12 +6,12 @@ use std::io::{Read, Write};
 use std::path::Path;
 
 use base64::Engine as _;
-use krun_box_core::rootfs_metadata::{
+use kbox_core::rootfs_metadata::{
     RootfsEntryKind, RootfsMetadataManifest, IMAGE_ROOTFS_METADATA_PATH,
     IMAGE_ROOTFS_METADATA_TEMP_PATH,
 };
-use krun_box_core::{BoxError, Result};
-use krun_oci_sdk::{
+use kbox_core::{BoxError, Result};
+use koci_sdk::{
     PortableRootfsEntryKind, PortableRootfsMetadataEntry, PortableRootfsMetadataManifest,
     PORTABLE_ROOTFS_METADATA_ANNOTATION, PORTABLE_ROOTFS_METADATA_FILE,
     PORTABLE_ROOTFS_METADATA_MAX_BYTES, PORTABLE_ROOTFS_METADATA_MAX_ENTRIES,
@@ -22,21 +22,21 @@ use oci_spec::runtime::Spec;
 const MAX_SOURCE_METADATA_BYTES: u64 = 64 * 1024 * 1024;
 const MAX_ENCODED_PATH_BYTES: usize = 16 * 1024;
 const MAX_DECODED_PATH_BYTES: usize = 4_096;
-const PORTABLE_ROOTFS_METADATA_TEMP_FILE: &str = ".krun-oci-rootfs-metadata.v1.json.tmp";
+const PORTABLE_ROOTFS_METADATA_TEMP_FILE: &str = ".koci-rootfs-metadata.v1.json.tmp";
 
 const RUNTIME_INTERNAL_ROOT_ENTRIES: &[&[u8]] = &[
-    b".krun-box-env",
-    b".krun-box-exec.json",
-    b".krun_exit_code",
-    b".krun_host_live_logs_drained",
-    b".krun_host_result_collected",
-    b".krun_image_metadata_v1.json",
-    b".krun_image_metadata_v1.json.tmp",
-    b".krun_rootfs_metadata_v1.json",
-    b".krun_rootfs_metadata_v1.json.tmp",
-    b".krun_rootfs_metadata_v1.previous.json",
-    b".krun-oci-rootfs-metadata.v1.json",
-    b".krun-oci-rootfs-metadata.v1.json.tmp",
+    b".kbox-env",
+    b".kbox-exec.json",
+    b".kexit_code",
+    b".khost_live_logs_drained",
+    b".khost_result_collected",
+    b".kimage_metadata_v1.json",
+    b".kimage_metadata_v1.json.tmp",
+    b".krootfs_metadata_v1.json",
+    b".krootfs_metadata_v1.json.tmp",
+    b".krootfs_metadata_v1.previous.json",
+    b".koci-rootfs-metadata.v1.json",
+    b".koci-rootfs-metadata.v1.json.tmp",
     b"guest-init.stderr.log",
     b"guest-init.stdout.log",
     b"init-rust.log",
@@ -352,7 +352,7 @@ fn open_plain_file(path: &Path, label: &str) -> Result<File> {
             .open(path)
     };
     #[cfg(windows)]
-    let file = krun_box_core::windows_file::open_regular_file(path, None).map(|opened| opened.0);
+    let file = kbox_core::windows_file::open_regular_file(path, None).map(|opened| opened.0);
     #[cfg(not(any(unix, windows)))]
     let file = File::open(path);
 
@@ -450,7 +450,7 @@ fn sync_directory(_path: &Path) -> std::io::Result<()> {
 
 #[cfg(windows)]
 fn remove_path_no_follow(path: &Path) -> std::io::Result<()> {
-    krun_box_core::windows_file::remove_path_no_follow(path)
+    kbox_core::windows_file::remove_path_no_follow(path)
 }
 
 #[cfg(not(windows))]
@@ -489,8 +489,8 @@ mod tests {
     fn entry(
         path: &[u8],
         kind: RootfsEntryKind,
-    ) -> krun_box_core::rootfs_metadata::RootfsMetadataEntry {
-        krun_box_core::rootfs_metadata::RootfsMetadataEntry {
+    ) -> kbox_core::rootfs_metadata::RootfsMetadataEntry {
+        kbox_core::rootfs_metadata::RootfsMetadataEntry {
             path_base64: encoded(path),
             kind,
             mode: if kind == RootfsEntryKind::Directory {
@@ -506,10 +506,7 @@ mod tests {
         }
     }
 
-    fn write_source(
-        root: &Path,
-        entries: Vec<krun_box_core::rootfs_metadata::RootfsMetadataEntry>,
-    ) {
+    fn write_source(root: &Path, entries: Vec<kbox_core::rootfs_metadata::RootfsMetadataEntry>) {
         let manifest = RootfsMetadataManifest::new(entries);
         std::fs::write(
             root.join(IMAGE_ROOTFS_METADATA_PATH.trim_start_matches('/')),
@@ -579,8 +576,8 @@ mod tests {
     #[test]
     fn rejects_runtime_internal_and_unsafe_paths_without_publishing() {
         for path in [
-            b"./.krun-box-env".as_slice(),
-            b"./.krun-box-env/child".as_slice(),
+            b"./.kbox-env".as_slice(),
+            b"./.kbox-env/child".as_slice(),
             b"../escape".as_slice(),
             b"/absolute".as_slice(),
         ] {
@@ -742,7 +739,7 @@ mod tests {
         let mut annotations = HashMap::new();
         annotations.insert(
             PORTABLE_ROOTFS_METADATA_ANNOTATION.to_string(),
-            "krun.oci.rootfs-metadata.v0".to_string(),
+            "koci.rootfs-metadata.v0".to_string(),
         );
         let spec = oci_spec::runtime::SpecBuilder::default()
             .annotations(annotations)

@@ -211,7 +211,7 @@ pub fn generate_hosts_file_with_entries(
     lines.join("\n") + "\n"
 }
 
-/// Validate a hostname or DNS name accepted by krun-box runtime options.
+/// Validate a hostname or DNS name accepted by kbox runtime options.
 pub fn validate_hostname(hostname: &str) -> Result<(), String> {
     if hostname.is_empty() {
         return Err("hostname must not be empty".to_string());

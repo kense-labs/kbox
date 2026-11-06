@@ -1,20 +1,20 @@
 [package]
-name = "krun-box-cri"
+name = "kbox-cri"
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
 
 [[bin]]
-name = "krun-box-cri"
+name = "kbox-cri"
 path = "src/main.rs"
 
 [lib]
-name = "krun_box_cri"
+name = "kbox_cri"
 path = "src/lib.rs"
 
 [dependencies]
-krun-box-core = { path = "../core" }
-krun-box-runtime = { path = "../runtime" }
+kbox-core = { path = "../core" }
+kbox-runtime = { path = "../runtime" }
 
 # Async runtime
 tokio = { workspace = true }
@@ -62,5 +62,5 @@ tonic-build = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }
-krun-transport = { workspace = true }
+ktransport = { workspace = true }
 sha2 = { workspace = true }

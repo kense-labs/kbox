@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ErrorCode, ExitStatus, OciBundle, RuntimeClient,
     StartRequest, WaitRequest,
 };
@@ -58,7 +58,7 @@ pub(super) async fn exercise(
 
     let bundles = build_bundles(joiner_bundle, donor_pid)?;
     let host_network =
-        build_host_network_bundle(joiner_bundle, &format!("krun-oci-host-network-{nonce}"))?;
+        build_host_network_bundle(joiner_bundle, &format!("koci-host-network-{nonce}"))?;
     verify_wrong_type_rejection(client, &bundles.wrong_type, nonce).await?;
     report.namespace_join.wrong_type_rejected_before_state = true;
 
@@ -192,7 +192,7 @@ async fn same_network_namespace_with_host(pid: i32) -> Result<bool, String> {
 
 fn verify_private_loopback(pid: i32) -> Result<(), String> {
     let check = std::thread::Builder::new()
-        .name(format!("krun-oci-loopback-{pid}"))
+        .name(format!("koci-loopback-{pid}"))
         .spawn(move || {
             use std::fs::File;
             use std::net::{Ipv4Addr, SocketAddrV4, TcpListener, TcpStream};

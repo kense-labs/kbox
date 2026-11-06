@@ -7,7 +7,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 /// Host-global parent of per-box runtime socket directories on Unix.
 #[cfg(all(unix, target_os = "macos"))]
@@ -17,16 +17,16 @@ pub fn shared_runtime_socket_root() -> PathBuf {
 
 /// Whether `name` is the shared runtime socket root or a per-user fallback.
 ///
-/// The fallback is `krun-box-sockets-<uid>` when a root-owned `/tmp/krun-box-sockets`
+/// The fallback is `kbox-sockets-<uid>` when a root-owned `/tmp/kbox-sockets`
 /// is not sticky world-writable and this process cannot repair it.
 pub fn is_shared_runtime_socket_root_name(name: &std::ffi::OsStr) -> bool {
     let Some(name) = name.to_str() else {
         return false;
     };
-    if name == "krun-box-sockets" {
+    if name == "kbox-sockets" {
         return true;
     }
-    let Some(uid) = name.strip_prefix("krun-box-sockets-") else {
+    let Some(uid) = name.strip_prefix("kbox-sockets-") else {
         return false;
     };
     !uid.is_empty() && uid.bytes().all(|byte| byte.is_ascii_digit())
@@ -98,11 +98,11 @@ pub fn ensure_runtime_socket_dir(home_dir: &Path, box_id: &str) -> Result<PathBu
 /// directory this uid can create under the same temporary parent.
 #[cfg(unix)]
 fn select_shared_runtime_socket_root(temp_parent: PathBuf) -> PathBuf {
-    let preferred = temp_parent.join("krun-box-sockets");
+    let preferred = temp_parent.join("kbox-sockets");
     if shared_root_is_usable(&preferred) {
         preferred
     } else {
-        temp_parent.join(format!("krun-box-sockets-{}", current_unix_uid()))
+        temp_parent.join(format!("kbox-sockets-{}", current_unix_uid()))
     }
 }
 
@@ -204,23 +204,23 @@ mod tests {
             .duration_since(UNIX_EPOCH)
             .expect("clock")
             .as_nanos();
-        std::env::temp_dir().join(format!("krun-box-socket-root-{label}-{nanos}"))
+        std::env::temp_dir().join(format!("kbox-socket-root-{label}-{nanos}"))
     }
 
     #[test]
     fn per_user_socket_root_name_is_recognized_and_ubuntu_is_not() {
         use std::ffi::OsStr;
         assert!(is_shared_runtime_socket_root_name(OsStr::new(
-            "krun-box-sockets"
+            "kbox-sockets"
         )));
         assert!(is_shared_runtime_socket_root_name(OsStr::new(
-            "krun-box-sockets-1000"
+            "kbox-sockets-1000"
         )));
         assert!(!is_shared_runtime_socket_root_name(OsStr::new(
-            "krun-box-sockets-ubuntu"
+            "kbox-sockets-ubuntu"
         )));
         assert!(!is_shared_runtime_socket_root_name(OsStr::new(
-            "krun-box-sockets-"
+            "kbox-sockets-"
         )));
     }
 

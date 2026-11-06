@@ -1,4 +1,4 @@
-use krun_box_core::{
+use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
     ExecutionResourceUpdate, ExecutionState, KillExecutionOptions, OperationId, ReconcileOutcome,
 };

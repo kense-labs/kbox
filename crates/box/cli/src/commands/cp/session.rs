@@ -1,13 +1,13 @@
-//! Runtime-route selection for `krun-box cp`.
+//! Runtime-route selection for `kbox cp`.
 
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use krun_box_core::exec::{
+use kbox_core::exec::{
     ExecOutput, ExecRequest, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse,
 };
-use krun_box_core::{ExecutionGeneration, ExecutionId, ExecutionSessionManager};
-use krun_box_runtime::ExecClient;
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionSessionManager};
+use kbox_runtime::ExecClient;
 
 use crate::resolve;
 use crate::state::{BoxRecord, StateFile};
@@ -103,7 +103,7 @@ pub(super) fn resolve_copy_route(
     if record
         .managed_execution
         .as_ref()
-        .is_some_and(krun_box_runtime::ManagedExecutionMetadata::is_oci_routed)
+        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
     {
         // Managed OCI file/filesystem copy is available while Running or
         // freezer-Paused; exec-based tar paths stay Running-only elsewhere.
@@ -144,7 +144,7 @@ pub(super) async fn connect_copy_session(
             execution_id,
             generation,
         } => {
-            let home = krun_box_core::dirs_home();
+            let home = kbox_core::dirs_home();
             let manager = super::super::configured_local_execution_manager(&home).await?;
             Ok(CopySession::Managed {
                 manager: Arc::new(manager),

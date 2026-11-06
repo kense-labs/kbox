@@ -1,18 +1,18 @@
 [package]
 publish = false
-name = "krun-oci-cli"
+name = "koci-cli"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Command-line frontend for Krun OCI Runtime"
+description = "Command-line frontend for Kbox OCI Runtime"
 
 [[bin]]
-name = "krun-oci"
+name = "koci"
 path = "src/main.rs"
 
 [dependencies]
-krun-oci-sdk = { path = "../sdk" }
-krun-oci-runtime = { path = "../runtime" }
+koci-sdk = { path = "../sdk" }
+koci-runtime = { path = "../runtime" }
 clap.workspace = true
 fs2.workspace = true
 serde.workspace = true
@@ -25,7 +25,7 @@ tokio.workspace = true
 libc = "0.2"
 
 [dev-dependencies]
-krun-oci-core = { path = "../core" }
+koci-core = { path = "../core" }
 async-trait.workspace = true
 tempfile = "3.20"
 

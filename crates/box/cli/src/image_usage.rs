@@ -2,7 +2,7 @@
 
 use std::collections::HashSet;
 
-use krun_box_runtime::StoredImage;
+use kbox_runtime::StoredImage;
 
 use crate::state::{BoxRecord, StateFile};
 use crate::status;
@@ -77,7 +77,7 @@ pub fn reference_aliases(reference: &str) -> HashSet<String> {
 
     aliases.insert(reference.to_string());
     if !is_digest_reference(reference) {
-        if let Ok(parsed) = krun_box_runtime::ImageReference::parse(reference) {
+        if let Ok(parsed) = kbox_runtime::ImageReference::parse(reference) {
             aliases.insert(parsed.full_reference());
         }
     }
@@ -230,7 +230,7 @@ pub fn normalize_reference(reference: &str) -> String {
         return reference.to_string();
     }
 
-    if let Ok(parsed) = krun_box_runtime::ImageReference::parse(reference) {
+    if let Ok(parsed) = kbox_runtime::ImageReference::parse(reference) {
         return parsed.full_reference();
     }
     reference.to_string()

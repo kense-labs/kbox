@@ -22,9 +22,9 @@ $systemImageManifest = (
     Resolve-Path -LiteralPath $SystemImageManifest -ErrorAction Stop
 ).Path
 $fixtureConfig = Join-Path $repositoryRoot 'fixtures\utility-vm\config.windows.json'
-$cli = Join-Path $repositoryRoot 'target\debug\krun-oci.exe'
-$shim = Join-Path $repositoryRoot 'target\debug\krun-oci-krun-shim.exe'
-$krunDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
+$cli = Join-Path $repositoryRoot 'target\debug\koci.exe'
+$shim = Join-Path $repositoryRoot 'target\debug\koci-kshim.exe'
+$kDll = Join-Path $repositoryRoot 'target\debug\krun.dll'
 $firmwareDll = Join-Path $repositoryRoot 'target\debug\libkrunfw.dll'
 $tar = (Get-Command tar.exe -ErrorAction Stop).Source
 $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -53,9 +53,9 @@ if ($manifestItem.PSObject.Properties.Name -contains 'LinkType' -and $manifestIt
     throw "System-image manifest must not be a link: $systemImageManifest"
 }
 $systemImage = Get-Content -LiteralPath $systemImageManifest -Raw | ConvertFrom-Json
-if ($systemImage.schema_version -ne 'krun.oci.windows-system-image.v1' -or
+if ($systemImage.schema_version -ne 'koci.windows-system-image.v1' -or
     $systemImage.architecture -ne 'x86_64' -or
-    $systemImage.image.name -ne 'krun-oci-system.ext4') {
+    $systemImage.image.name -ne 'koci-system.ext4') {
     throw "Unexpected Windows system-image manifest: $systemImageManifest"
 }
 $systemImagePath = Join-Path $manifestItem.DirectoryName $systemImage.image.name
@@ -109,45 +109,45 @@ function Write-Utf8Text {
     [IO.File]::WriteAllText($Path, $Text, $script:utf8NoBom)
 }
 
-function Get-KrunOciProcesses {
+function Get-KOciProcesses {
     @(
         Get-Process -ErrorAction SilentlyContinue |
             Where-Object {
-                $_.ProcessName -in @('krun-oci', 'krun-oci-krun-shim')
+                $_.ProcessName -in @('koci', 'koci-kshim')
             } |
             Select-Object ProcessName, Id, StartTime
     )
 }
 
-function Wait-ForKrunOciProcessesToExit {
+function Wait-ForKOciProcessesToExit {
     for ($attempt = 0; $attempt -lt 50; $attempt++) {
-        $processes = @(Get-KrunOciProcesses)
+        $processes = @(Get-KOciProcesses)
         if ($processes.Count -eq 0) {
             return @()
         }
         Start-Sleep -Milliseconds 100
     }
-    @(Get-KrunOciProcesses)
+    @(Get-KOciProcesses)
 }
 
-$preexisting = @(Get-KrunOciProcesses)
+$preexisting = @(Get-KOciProcesses)
 if ($preexisting.Count -gt 0) {
     $description = ($preexisting | ForEach-Object {
         '{0}:{1}' -f $_.ProcessName, $_.Id
     }) -join ', '
-    throw "Refusing to start with active Krun OCI processes: $description"
+    throw "Refusing to start with active Kbox OCI processes: $description"
 }
 
 New-Item -ItemType Directory -Path $bootstrapRoot, $containerRootfs | Out-Null
 
 if (-not $SkipBuild) {
     & cargo.exe build --manifest-path (Join-Path $repositoryRoot 'Cargo.toml') `
-        -p krun-oci-cli -p krun-oci-krun
+        -p koci-cli -p koci-kbox
     if ($LASTEXITCODE -ne 0) {
         throw 'Failed to build the Windows qualification binaries.'
     }
 }
-foreach ($path in @($cli, $shim, $krunDll, $firmwareDll)) {
+foreach ($path in @($cli, $shim, $kDll, $firmwareDll)) {
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
         throw "Required WHPX driver smoke binary is missing: $path"
     }
@@ -195,11 +195,11 @@ catch {
 if ($exitCode -ne 0 -or $report.status -ne 'available') {
     throw "WHPX driver smoke failed with exit code $exitCode; see $reportPath"
 }
-if ($report.schema_version -ne 'krun.oci.whpx-driver-smoke.v1') {
+if ($report.schema_version -ne 'koci.whpx-driver-smoke.v1') {
     throw "Unexpected WHPX driver smoke schema: $($report.schema_version)"
 }
 
-$residual = @(Wait-ForKrunOciProcessesToExit)
+$residual = @(Wait-ForKOciProcessesToExit)
 if ($residual.Count -gt 0) {
     $description = ($residual | ForEach-Object {
         '{0}:{1}' -f $_.ProcessName, $_.Id
@@ -212,7 +212,7 @@ if ($LASTEXITCODE -ne 0) {
     throw 'Unable to resolve the repository commit.'
 }
 $summary = [ordered]@{
-    schema_version = 'krun.oci.whpx-driver-smoke-run.v1'
+    schema_version = 'koci.whpx-driver-smoke-run.v1'
     status = 'available'
     started_at_utc = $startedAt.ToString('o')
     completed_at_utc = [DateTime]::UtcNow.ToString('o')
@@ -228,7 +228,7 @@ $summary = [ordered]@{
         Get-FileHash -LiteralPath $shim -Algorithm SHA256
     ).Hash.ToLowerInvariant()
     krun_dll_sha256 = (
-        Get-FileHash -LiteralPath $krunDll -Algorithm SHA256
+        Get-FileHash -LiteralPath $kDll -Algorithm SHA256
     ).Hash.ToLowerInvariant()
     firmware_dll_sha256 = (
         Get-FileHash -LiteralPath $firmwareDll -Algorithm SHA256

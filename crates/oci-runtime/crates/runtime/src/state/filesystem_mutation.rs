@@ -1,5 +1,5 @@
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, ErrorCode, FileOp, FileRequest, FileResponse, FilesystemOp, FilesystemRequest,
     FilesystemResponse, OperationContext, OperationId, Result, ValidateRequest,
 };
@@ -411,14 +411,14 @@ fn ensure_live_filesystem(
 fn invalid_outcome(
     context: &OperationContext,
     profile: FilesystemMutationProfile,
-) -> krun_oci_sdk::Error {
+) -> koci_sdk::Error {
     invalid_operation_outcome(&context.operation_id, profile)
 }
 
 fn invalid_operation_outcome(
     operation_id: &OperationId,
     profile: FilesystemMutationProfile,
-) -> krun_oci_sdk::Error {
+) -> koci_sdk::Error {
     state_error(
         ErrorCode::FailedPrecondition,
         profile.name,

@@ -1,10 +1,10 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportOperationStage, AgentTransportQualificationRequest,
 };
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{
     CreateAttachments, CreateRequest, ExecRequest, IoMode, IsolationRequest, OciBundle,
     OperationContext, ProcessIo, ProcessTarget, StartRequest, WriteStdinRequest,
 };
@@ -183,7 +183,7 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
             container: exact_target.clone(),
             process_id: process_id.clone(),
         },
-        data: format!("krun-oci-write-stdin-{nonce}\n").into_bytes(),
+        data: format!("koci-write-stdin-{nonce}\n").into_bytes(),
     };
     let guest_qualification = if stage.is_guest() {
         match AgentTransportQualificationRequest::new(
@@ -211,7 +211,7 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
     report.exec_terminal = Some(false);
     report.write_stdin_data = Some(write_stdin.data.clone());
 
-    let state_root = console_directory.join(format!("krun-oci-write-stdin-reopen-{nonce}-state"));
+    let state_root = console_directory.join(format!("koci-write-stdin-reopen-{nonce}-state"));
     if let Err(reason) = super::super::create_qualification_state_root(&state_root).await {
         return failed(report, reason);
     }
@@ -220,17 +220,15 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
         vm_rootfs,
         system_image_manifest: system_image_manifest.to_path_buf(),
         state_root: state_root.clone(),
-        first_console: console_directory
-            .join(format!("krun-oci-write-stdin-reopen-{nonce}-first.log")),
-        replacement_console: console_directory.join(format!(
-            "krun-oci-write-stdin-reopen-{nonce}-replacement.log"
-        )),
+        first_console: console_directory.join(format!("koci-write-stdin-reopen-{nonce}-first.log")),
+        replacement_console: console_directory
+            .join(format!("koci-write-stdin-reopen-{nonce}-replacement.log")),
         init_marker,
         exec_marker,
         write_marker,
-        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("krun-oci-exec-process-{nonce}\n").into_bytes(),
-        write_marker_contents: format!("krun-oci-write-stdin-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("koci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("koci-exec-process-{nonce}\n").into_bytes(),
+        write_marker_contents: format!("koci-write-stdin-{nonce}\n").into_bytes(),
         create,
         start,
         exec,

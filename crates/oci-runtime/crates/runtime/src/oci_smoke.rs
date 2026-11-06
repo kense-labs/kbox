@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::{AgentTransportFaultStage, AgentTransportOperationStage};
-use krun_oci_core::HostPlatform;
+use koci_agent_protocol::{AgentTransportFaultStage, AgentTransportOperationStage};
+use koci_core::HostPlatform;
 
 use crate::report::OciVmSmokeReport;
 use crate::{

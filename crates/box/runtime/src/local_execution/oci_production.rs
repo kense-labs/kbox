@@ -3,12 +3,12 @@
 use std::path::{Path, PathBuf};
 
 use async_trait::async_trait;
-use krun_box_core::config::{ResourceConfig, TeeConfig};
-use krun_box_core::{
+use kbox_core::config::{ResourceConfig, TeeConfig};
+use kbox_core::{
     BoxError, ExecutionBackend, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
     NetworkMode,
 };
-use krun_oci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
+use koci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
 
 use super::{
     LocalExecutionResourcePlan, OciBundlePreparationContext, OciBundleProvider,
@@ -18,7 +18,7 @@ use crate::sandbox::probe_sandbox_capabilities_for;
 use crate::{BoxRecord, ManagedExecutionMetadata};
 
 /// Prepares immutable bundles from Box image/rootfs policy while the separate
-/// Krun OCI Runtime service owns container lifecycle and I/O.
+/// Kbox OCI Runtime service owns container lifecycle and I/O.
 #[derive(Clone)]
 pub struct NativeLinuxOciBundleProvider {
     preparer: VmLocalExecutionBackend,
@@ -227,7 +227,7 @@ impl OciBundleProvider for NativeLinuxOciBundleProvider {
         // Re-hash the exact configured artifacts immediately before rootfs or
         // bundle mutations. Owner startup and bundle evidence use this same pair.
         let capabilities = probe_sandbox_capabilities_for(
-            ExecutionBackend::KrunOci,
+            ExecutionBackend::KOci,
             Some(&self.runtime_path),
             Some(&self.agent_path),
         );
@@ -522,7 +522,7 @@ impl OciBundleProvider for DedicatedVmOciBundleProvider {
         metadata
             .validate()
             .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
-        if metadata.plan.backend != ExecutionBackend::Krun {
+        if metadata.plan.backend != ExecutionBackend::Kbox {
             return Err(ExecutionManagerError::InvalidRequest(format!(
                 "execution {} did not resolve to the MicroVM backend",
                 record.id
@@ -897,9 +897,9 @@ fn native_linux_metadata(record: &BoxRecord) -> ExecutionManagerResult<&ManagedE
     metadata
         .validate()
         .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
-    if metadata.plan.backend != ExecutionBackend::KrunOci {
+    if metadata.plan.backend != ExecutionBackend::KOci {
         return Err(ExecutionManagerError::InvalidRequest(format!(
-            "execution {} did not resolve to the Krun OCI Sandbox backend",
+            "execution {} did not resolve to the Kbox OCI Sandbox backend",
             record.id
         )));
     }
@@ -922,7 +922,7 @@ fn cleanup_after_prepare_failure(
 mod tests {
     use std::collections::BTreeMap;
 
-    use krun_box_core::{
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionSnapshotId,
         NetworkMode, OperationId, SnapshotImageConfig, SnapshotMetadata,
     };

@@ -3,8 +3,8 @@
 use std::collections::BTreeMap;
 use std::path::Path;
 
-use krun_box_core::error::Result;
-use krun_box_core::platform::Platform;
+use kbox_core::error::Result;
+use kbox_core::platform::Platform;
 use oci_spec::image::{Descriptor, ImageIndex, ImageManifest, MediaType, SCHEMA_VERSION};
 
 use super::{

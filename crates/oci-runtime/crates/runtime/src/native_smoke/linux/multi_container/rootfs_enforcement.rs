@@ -1,4 +1,4 @@
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerTarget, DeleteMode, DeleteRequest, ExitStatus, RuntimeClient, StartRequest,
 };
 

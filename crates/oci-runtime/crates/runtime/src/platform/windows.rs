@@ -3,7 +3,7 @@ use std::ffi::c_void;
 use std::mem;
 use std::ptr;
 
-use krun_oci_core::{
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, IsolationClass,
     RuntimeFeatures,
 };
@@ -240,7 +240,7 @@ fn capability_from_observation(observation: ProbeObservation) -> DriverCapabilit
     );
 
     DriverCapability {
-        driver: DriverKind::LibkrunWhpx,
+        driver: DriverKind::LibkWhpx,
         status,
         readiness: DriverReadiness::ProbeOnly,
         isolation_classes: vec![
@@ -282,7 +282,7 @@ pub(crate) fn whpx_smoke() -> WhpxSmokeReport {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_core::{CapabilityStatus, DriverReadiness};
+    use koci_core::{CapabilityStatus, DriverReadiness};
 
     use super::{capability_from_observation, features, ProbeObservation};
 

@@ -8,7 +8,7 @@ use std::collections::{HashMap, VecDeque};
 use std::sync::{Arc, Condvar, Mutex, OnceLock};
 use std::time::Duration;
 
-use krun_box_core::{FilesystemOp, FilesystemRequest, FilesystemResponse};
+use kbox_core::{FilesystemOp, FilesystemRequest, FilesystemResponse};
 use sha2::{Digest, Sha256};
 
 const FILESYSTEM_REPLAY_MAX_ENTRIES: usize = 128;

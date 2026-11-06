@@ -3,7 +3,7 @@
 //! Extracts an OCI image into a guest rootfs directory.
 //! Optionally installs the guest-init binary at /sbin/init.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use std::collections::VecDeque;
 use std::path::PathBuf;
 use std::path::{Component, Path};
@@ -527,7 +527,7 @@ pub(crate) fn remove_guest_entry_no_follow(
         }
         Ok(_) => {
             #[cfg(windows)]
-            krun_box_core::windows_file::remove_path_no_follow(&path).map_err(|error| {
+            kbox_core::windows_file::remove_path_no_follow(&path).map_err(|error| {
                 BoxError::BuildError(format!(
                     "Failed to remove guest entry {}: {error}",
                     path.display()
@@ -1262,12 +1262,12 @@ mod tests {
 
     #[cfg(windows)]
     fn create_windows_symlink(create: impl FnOnce() -> std::io::Result<()>) -> bool {
-        let guard = krun_box_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
+        let guard = kbox_core::windows_symlink::WindowsSymlinkPrivilegeGuard::acquire();
         let assigned_privilege_enabled = guard.assigned_privilege_enabled();
         match create() {
             Ok(()) => true,
             Err(error)
-                if krun_box_core::windows_symlink::is_capability_denial(
+                if kbox_core::windows_symlink::is_capability_denial(
                     &error,
                     assigned_privilege_enabled,
                 ) =>

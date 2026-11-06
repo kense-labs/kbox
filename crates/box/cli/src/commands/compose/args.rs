@@ -65,7 +65,7 @@ pub enum ComposeCommand {
     Images(ProjectServicesArgs),
     /// Pull service images
     Pull(ComposePullArgs),
-    /// List Compose projects known to Krun Box
+    /// List Compose projects known to Kbox Box
     Ls(ComposeLsArgs),
     /// List named volumes declared by the project
     Volumes,

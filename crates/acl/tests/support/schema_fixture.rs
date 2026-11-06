@@ -1,4 +1,4 @@
-use krun_acl::{
+use kacl::{
     AttributeSchema, BlockSchema, CallSchema, Cardinality, ObjectSchema, Schema, ValueSchema,
 };
 use serde::Deserialize;

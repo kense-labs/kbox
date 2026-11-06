@@ -62,10 +62,9 @@ impl VmManager {
             .exec_socket_path
             .clone()
             .ok_or_else(|| BoxError::ExecError("Exec socket path is unavailable".to_string()))?;
-        let pipe =
-            std::path::PathBuf::from(krun_box_core::exec::windows_exec_pipe_path(&self.box_id));
+        let pipe = std::path::PathBuf::from(kbox_core::exec::windows_exec_pipe_path(&self.box_id));
         let guest_control_ready =
-            layout_path.with_file_name(krun_box_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
+            layout_path.with_file_name(kbox_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
         let deadline = tokio::time::Instant::now() + timeout;
         loop {
             if guest_control_ready.is_file() {
@@ -215,9 +214,8 @@ impl VmManager {
         }
 
         let guest_control_ready =
-            exec_socket_path.with_file_name(krun_box_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
-        let pipe =
-            std::path::PathBuf::from(krun_box_core::exec::windows_exec_pipe_path(&self.box_id));
+            exec_socket_path.with_file_name(kbox_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
+        let pipe = std::path::PathBuf::from(kbox_core::exec::windows_exec_pipe_path(&self.box_id));
         let ready = if guest_control_ready.is_file() {
             let client = crate::grpc::ExecClient::for_socket(&pipe);
             match tokio::time::timeout(std::time::Duration::from_millis(500), client.heartbeat())
@@ -313,7 +311,7 @@ impl VmManager {
 
     /// Set the logging driver config. Threaded into the InstanceSpec so the shim
     /// runs the log processor for the box's lifetime.
-    pub fn set_log_config(&mut self, log_config: krun_box_core::log::LogConfig) {
+    pub fn set_log_config(&mut self, log_config: kbox_core::log::LogConfig) {
         self.log_config = log_config;
     }
 
@@ -495,10 +493,10 @@ impl VmManager {
         &mut self,
         spec_json: &[u8],
         timeout: std::time::Duration,
-    ) -> Result<krun_box_core::exec::ExecOutput> {
+    ) -> Result<kbox_core::exec::ExecOutput> {
         let log_dir = self.home_dir.join("boxes").join(&self.box_id).join("logs");
         let console_out_path = log_dir.join("console.log");
-        let console_err_path = krun_box_core::log::stderr_console_path(&console_out_path);
+        let console_err_path = kbox_core::log::stderr_console_path(&console_out_path);
         let console_out_start = std::fs::metadata(&console_out_path)
             .map(|metadata| metadata.len())
             .unwrap_or(0);
@@ -585,11 +583,11 @@ impl VmManager {
         if stderr.is_empty() {
             stderr = Self::read_file_from_offset(&console_err_path, console_err_start);
         }
-        let truncated = stdout.len() > krun_box_core::exec::MAX_OUTPUT_BYTES
-            || stderr.len() > krun_box_core::exec::MAX_OUTPUT_BYTES;
-        stdout.truncate(krun_box_core::exec::MAX_OUTPUT_BYTES);
-        stderr.truncate(krun_box_core::exec::MAX_OUTPUT_BYTES);
-        Ok(krun_box_core::exec::ExecOutput {
+        let truncated = stdout.len() > kbox_core::exec::MAX_OUTPUT_BYTES
+            || stderr.len() > kbox_core::exec::MAX_OUTPUT_BYTES;
+        stdout.truncate(kbox_core::exec::MAX_OUTPUT_BYTES);
+        stderr.truncate(kbox_core::exec::MAX_OUTPUT_BYTES);
+        Ok(kbox_core::exec::ExecOutput {
             stdout,
             stderr,
             exit_code,
@@ -628,7 +626,7 @@ impl VmManager {
         let (mut out, mut err) = (Vec::new(), Vec::new());
         if let Ok(content) = std::fs::read_to_string(&path) {
             for line in content.lines() {
-                if let Ok(entry) = serde_json::from_str::<krun_box_core::log::LogEntry>(line) {
+                if let Ok(entry) = serde_json::from_str::<kbox_core::log::LogEntry>(line) {
                     if entry.stream == "stderr" {
                         err.extend_from_slice(entry.log.as_bytes());
                     } else {
@@ -647,8 +645,8 @@ impl VmManager {
     #[tracing::instrument(skip(self, request), fields(box_id = %self.box_id))]
     pub async fn exec_request(
         &self,
-        request: &krun_box_core::exec::ExecRequest,
-    ) -> Result<krun_box_core::exec::ExecOutput> {
+        request: &kbox_core::exec::ExecRequest,
+    ) -> Result<kbox_core::exec::ExecOutput> {
         if request.cmd.is_empty() {
             return Err(BoxError::ExecError(
                 "Exec request requires a non-empty command".to_string(),
@@ -711,8 +709,8 @@ impl VmManager {
         &self,
         cmd: Vec<String>,
         timeout_ns: u64,
-    ) -> Result<krun_box_core::exec::ExecOutput> {
-        let request = krun_box_core::exec::ExecRequest {
+    ) -> Result<kbox_core::exec::ExecOutput> {
+        let request = kbox_core::exec::ExecRequest {
             request_id: Some(format!("vm-exec-{}", uuid::Uuid::new_v4().simple())),
             cmd,
             timeout_ns,

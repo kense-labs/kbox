@@ -1,7 +1,7 @@
 {
   "services": {
     "api": {
-      "image": "ghcr.io/krun/api:latest",
+      "image": "ghcr.io/kbox/api:latest",
       "entrypoint": [
         "/bin/api"
       ],

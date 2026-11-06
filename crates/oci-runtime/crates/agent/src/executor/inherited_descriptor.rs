@@ -3,11 +3,11 @@ use std::io;
 use std::mem::size_of;
 use std::os::fd::{AsRawFd, BorrowedFd, FromRawFd, OwnedFd, RawFd};
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentInheritedDescriptorRole, AgentInheritedDescriptorSchema, AgentInheritedDescriptorSlot,
     AgentInheritedDescriptorType,
 };
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::{ErrorCode, Result};
 
 use super::executor_error;
 
@@ -48,13 +48,13 @@ impl InheritedDescriptorPlan {
         }
     }
 
-    /// Build the Krun Box exec/PTY/init-log descriptor contract.
-    pub fn krun_box_control(
+    /// Build the Kbox Box exec/PTY/init-log descriptor contract.
+    pub fn kbox_control(
         exec_listener: BorrowedFd<'_>,
         pty_listener: BorrowedFd<'_>,
         init_log: BorrowedFd<'_>,
     ) -> Result<Self> {
-        let schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+        let schema = AgentInheritedDescriptorSchema::kbox_control_v1();
         let sources = [
             DescriptorSource {
                 slot: schema.slots[0],
@@ -360,7 +360,7 @@ fn socket_option(
     Ok(value)
 }
 
-fn last_os_error(action: impl Into<String>) -> krun_oci_sdk::Error {
+fn last_os_error(action: impl Into<String>) -> koci_sdk::Error {
     let action = action.into();
     descriptor_error(format!(
         "failed to {action}: {}",
@@ -368,7 +368,7 @@ fn last_os_error(action: impl Into<String>) -> krun_oci_sdk::Error {
     ))
 }
 
-fn descriptor_error(message: impl Into<String>) -> krun_oci_sdk::Error {
+fn descriptor_error(message: impl Into<String>) -> koci_sdk::Error {
     executor_error(ErrorCode::InvalidArgument, message)
         .for_operation("prepare-inherited-descriptors")
 }
@@ -382,11 +382,11 @@ mod tests {
     use std::os::unix::process::CommandExt;
     use std::process::{Command, Stdio};
 
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentInheritedDescriptorRole, AgentInheritedDescriptorSchema, AgentInheritedDescriptorSlot,
         AgentInheritedDescriptorType,
     };
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::ErrorCode;
 
     use super::{DescriptorSource, InheritedDescriptorPlan, MAX_INHERITED_DESCRIPTORS};
 
@@ -410,12 +410,11 @@ mod tests {
             .open(temporary.path().join("init.log"))
             .expect("init log");
 
-        let plan =
-            InheritedDescriptorPlan::krun_box_control(exec.as_fd(), pty.as_fd(), log.as_fd())
-                .expect("descriptor plan");
+        let plan = InheritedDescriptorPlan::kbox_control(exec.as_fd(), pty.as_fd(), log.as_fd())
+            .expect("descriptor plan");
         assert_eq!(
             plan.schema(),
-            Some(&AgentInheritedDescriptorSchema::krun_box_control_v1())
+            Some(&AgentInheritedDescriptorSchema::kbox_control_v1())
         );
         let protected = plan.protected_sources();
         assert_eq!(protected.len(), 3);
@@ -453,7 +452,7 @@ mod tests {
             .create_new(true)
             .open(temporary.path().join("init.log"))
             .expect("init log");
-        let schema = AgentInheritedDescriptorSchema::krun_box_control_v1();
+        let schema = AgentInheritedDescriptorSchema::kbox_control_v1();
 
         let wrong_type = [
             DescriptorSource {
@@ -604,9 +603,8 @@ mod tests {
             .mode(0o600)
             .open(&log_path)
             .expect("init log");
-        let plan =
-            InheritedDescriptorPlan::krun_box_control(exec.as_fd(), pty.as_fd(), log.as_fd())
-                .expect("descriptor plan");
+        let plan = InheritedDescriptorPlan::kbox_control(exec.as_fd(), pty.as_fd(), log.as_fd())
+            .expect("descriptor plan");
         let occupied = OpenOptions::new()
             .read(true)
             .open("/dev/null")

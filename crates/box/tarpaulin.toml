@@ -1,4 +1,4 @@
-# Tarpaulin configuration for krun-box
+# Tarpaulin configuration for kbox
 # Excludes vendor/third-party dependencies from coverage
 
 [tarpaulin]

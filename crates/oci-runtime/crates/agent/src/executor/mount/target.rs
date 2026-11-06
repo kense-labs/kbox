@@ -2,7 +2,7 @@ use std::fs::{self, OpenOptions};
 use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::Result;
+use koci_sdk::Result;
 
 use super::{internal, invalid, permission_denied, MountPlan, MountTargetKind};
 

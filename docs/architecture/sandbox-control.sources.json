@@ -1,5 +1,5 @@
 {
-  "title": "Krun 沙箱、观测与干预统一架构",
+  "title": "Kbox 沙箱、观测与干预统一架构",
   "status": "Current working-tree architecture analysis and integrated diagram. Runtime and external integrations are not qualified.",
   "checked_at": "2026-11-03T20:10:21.783322+08:00",
   "repository_head": "4c6c9eb08c66370adb5b7c054baf7128c8120a63",
@@ -60,7 +60,7 @@
     ]
   },
   "integration_boundaries": {
-    "sentry": "krun-sentry security engine, separate from error-reporting Sentry SDK",
+    "sentry": "ksentry security engine, separate from error-reporting Sentry SDK",
     "observer": "External Linux collector/guards; source is absent from this checkout. Relations come from the local event parser, Enforcer and reference deployment, not a live guard test.",
     "gateway": "wire Cargo feature and configured guardrails or dedicated Wire route are required",
     "sae": "SDK/host explicitly composes SAE Pipeline. Power has encoder and event emitter; production backend/TEE activation is not established.",
@@ -157,22 +157,6 @@
       "matches_head": false
     },
     {
-      "path": "crates/box/sdk/README.md",
-      "bytes": 15913,
-      "sha256": "4a2ca5ad43d060c8fdc57edf376d600cc91c523d4dc7af2547cc76f299f6da31",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/box/sdk/src/sandbox/lifecycle.rs",
-      "bytes": 5390,
-      "sha256": "04cf0312c9fb22d7369f1a43b0c980ae26fb8525b98959ec275431f1e0ccac70",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
       "path": "crates/browser/src/pool.rs",
       "bytes": 15549,
       "sha256": "c77159baaf5b3296d9c861caf550002093a7f2779e79045db34224f981c377fb",
@@ -229,7 +213,7 @@
       "matches_head": true
     },
     {
-      "path": "crates/power/src/sae.rs",
+      "path": "crates/kpower/src/sae.rs",
       "bytes": 7446,
       "sha256": "e3b16e5827aef0ea4dc5316dd88775421d3eec40779fb57fa51a755c593b2047",
       "repository": "krun",
@@ -341,7 +325,7 @@
       "matches_head": true
     },
     {
-      "path": "crates/terminal/crates/codegen/krun-sandbox/src/lib.rs",
+      "path": "crates/terminal/crates/codegen/ksandbox/src/lib.rs",
       "bytes": 45437,
       "sha256": "7d11e828b5ca261688a3a611fd57c738feb412c0baec0a6c4ac6418d0bf41f78",
       "repository": "krun",
@@ -349,7 +333,7 @@
       "matches_head": false
     },
     {
-      "path": "crates/terminal/crates/codegen/krun-telemetry/src/sentry.rs",
+      "path": "crates/terminal/crates/codegen/ktelemetry/src/sentry.rs",
       "bytes": 14787,
       "sha256": "9f4cfbbc922ee804149f569e541b02f9afaf00987c0d2a213a9e7b2dadd17a60",
       "repository": "krun",

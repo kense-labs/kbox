@@ -1,9 +1,9 @@
 use std::fs;
 use std::sync::Arc;
 
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{Error, ErrorCode, Generation};
+use koci_core::DriverKind;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{Error, ErrorCode, Generation};
 
 use crate::fault::testing::RecordingFaultInjector;
 use crate::fault::{DurableMutation, FaultInjector, FaultPoint, FileCommitStage};
@@ -41,7 +41,7 @@ async fn startup_rejects_a_generation_record_bound_to_another_filename() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     drop(store);
@@ -70,7 +70,7 @@ async fn startup_rejects_an_operation_record_bound_to_another_filename() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     drop(store);
@@ -99,7 +99,7 @@ async fn startup_rejects_an_operation_without_an_allocated_generation() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     drop(store);
@@ -135,7 +135,7 @@ async fn startup_rejects_two_create_operations_for_one_generation() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     drop(store);
@@ -170,7 +170,7 @@ async fn startup_rejects_a_live_container_without_its_create_operation() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     store
@@ -200,7 +200,7 @@ async fn startup_rejects_a_live_container_below_its_generation_fence() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     store
@@ -258,7 +258,7 @@ async fn startup_rejects_quarantine_owned_by_another_container() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let failure = Error::new(ErrorCode::FailedPrecondition, "terminal create failure")
@@ -310,7 +310,7 @@ async fn startup_rejects_the_same_generation_live_and_quarantined() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let failure = Error::new(ErrorCode::FailedPrecondition, "terminal create failure")
@@ -348,7 +348,7 @@ async fn startup_rejects_an_unexpected_quarantined_process_entry() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let failure = Error::new(ErrorCode::FailedPrecondition, "terminal create failure")
@@ -383,7 +383,7 @@ async fn startup_rejects_an_unclaimed_event_record() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     drop(store);
@@ -414,7 +414,7 @@ async fn startup_preserves_a_recoverable_prepared_create_without_live_state() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     fs::remove_dir_all(root.join("containers/recoverable-container"))
@@ -425,7 +425,7 @@ async fn startup_preserves_a_recoverable_prepared_create_without_live_state() {
         .await
         .expect("prepared create remains recoverable");
     let RecordOperationPreparation::Resume(record) = reopened
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("rebuild prepared create")
     else {
@@ -460,7 +460,7 @@ async fn startup_preserves_a_failed_create_until_its_quarantine_move_replays() {
         .await
         .expect("initialize state root");
     store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare create");
     let failure = Error::new(ErrorCode::FailedPrecondition, "terminal create failure")
@@ -477,7 +477,7 @@ async fn startup_preserves_a_failed_create_until_its_quarantine_move_replays() {
         .await
         .expect("failed create remains recoverable at startup");
     let replayed = reopened
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("failed create must replay its terminal error");
     assert_eq!(replayed, failure);

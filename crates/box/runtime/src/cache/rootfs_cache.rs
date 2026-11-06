@@ -6,7 +6,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -44,7 +44,7 @@ pub struct RootfsMeta {
 /// Rootfs entries are stored under `cache_dir/rootfs/<key>/`.
 /// Metadata is stored alongside as `<key>.meta.json`.
 pub struct RootfsCache {
-    /// Root directory for rootfs cache (e.g., ~/.krun/cache/rootfs)
+    /// Root directory for rootfs cache (e.g., ~/.kbox/cache/rootfs)
     cache_dir: PathBuf,
 }
 
@@ -426,7 +426,7 @@ fn removable_path_size(path: &Path) -> Result<Option<u64>> {
     }
 }
 
-impl krun_box_core::traits::CacheBackend for RootfsCache {
+impl kbox_core::traits::CacheBackend for RootfsCache {
     fn get(&self, key: &str) -> Result<Option<PathBuf>> {
         self.get(key)
     }
@@ -443,11 +443,11 @@ impl krun_box_core::traits::CacheBackend for RootfsCache {
         self.prune(max_entries, max_bytes)
     }
 
-    fn list(&self) -> Result<Vec<krun_box_core::traits::CacheEntry>> {
+    fn list(&self) -> Result<Vec<kbox_core::traits::CacheEntry>> {
         self.list_entries().map(|entries| {
             entries
                 .into_iter()
-                .map(|m| krun_box_core::traits::CacheEntry {
+                .map(|m| kbox_core::traits::CacheEntry {
                     key: m.key,
                     description: m.description,
                     size_bytes: m.size_bytes,

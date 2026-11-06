@@ -14,8 +14,8 @@ use std::sync::{mpsc, Arc, Condvar, Mutex, MutexGuard};
 use std::thread;
 use std::time::{Duration, Instant};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::exec::{
+use kbox_core::error::{BoxError, Result};
+use kbox_core::exec::{
     windows_exec_pipe_path, WINDOWS_CONTROL_EXEC_FRAME, WINDOWS_CONTROL_SIGNAL_FRAME,
     WINDOWS_GUEST_CONTROL_READY_FILE,
 };
@@ -100,9 +100,9 @@ pub fn spawn_port_forward_manager(
     stop_request: &Path,
 ) -> Result<PortForwardManager> {
     parse_port_map(port_map)?;
-    let pipe_base_name = format!("krun-box-portfwd-{}", box_id.replace('-', ""));
+    let pipe_base_name = format!("kbox-portfwd-{}", box_id.replace('-', ""));
     let ready_file = std::env::temp_dir().join(format!(
-        "krun-box-portfwd-{}-{}.ready",
+        "kbox-portfwd-{}-{}.ready",
         box_id.replace('-', ""),
         std::process::id()
     ));
@@ -196,7 +196,7 @@ pub fn run_port_forward_worker(
 
     spawn_parent_watchdog(parent_pid);
 
-    let pipe_base_name = format!("krun-box-portfwd-{}", box_id.replace('-', ""));
+    let pipe_base_name = format!("kbox-portfwd-{}", box_id.replace('-', ""));
     let pipe_path = format!(r"\\.\pipe\{}", pipe_base_name);
     let exec_pipe_path = windows_exec_pipe_path(box_id);
     let guest_control_ready_file = stop_request.with_file_name(WINDOWS_GUEST_CONTROL_READY_FILE);
@@ -1277,10 +1277,7 @@ mod tests {
             .duration_since(UNIX_EPOCH)
             .unwrap()
             .as_nanos();
-        let path = format!(
-            r"\\.\pipe\krun-box-flush-test-{}-{nonce}",
-            std::process::id()
-        );
+        let path = format!(r"\\.\pipe\kbox-flush-test-{}-{nonce}", std::process::id());
         let server = NamedPipeServer::create(&path, true).unwrap();
         let client_path = path.clone();
         let payload = b"response-before-close";

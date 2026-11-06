@@ -10,7 +10,7 @@ use crate::{Error, ErrorCode, Result};
 
 const OCI_RUNTIME_SPEC_VERSION: &str = "1.3.0";
 const OCI_RUNTIME_SPEC_COMMIT: &str = "92249139eea7161e13745abd4cb6d0ea02a3227a";
-const NORMATIVE_COVERAGE_SCHEMA_VERSION: &str = "krun.oci.normative-coverage.v1";
+const NORMATIVE_COVERAGE_SCHEMA_VERSION: &str = "koci.normative-coverage.v1";
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct OciNonSemanticRule {
@@ -669,7 +669,7 @@ impl OciNormativeInventory {
         self,
         evidence: &OciNormativeEvidenceManifest,
     ) -> Result<OciNormativeCoverageManifest> {
-        if evidence.schema_version != "krun.oci.normative-evidence.v1"
+        if evidence.schema_version != "koci.normative-evidence.v1"
             || evidence.oci_runtime_spec != OCI_RUNTIME_SPEC_VERSION
             || evidence.upstream_commit != OCI_RUNTIME_SPEC_COMMIT
         {

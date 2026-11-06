@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_sdk::oci_spec::runtime::Linux;
-use krun_oci_sdk::ErrorCode;
+use koci_sdk::oci_spec::runtime::Linux;
+use koci_sdk::ErrorCode;
 
 use super::{
     ensure_id_mapped, validate_observed_mappings, IdMapping, NamespacePlan, TimeOffset,

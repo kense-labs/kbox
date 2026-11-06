@@ -1,13 +1,13 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportOperationStage, AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
 };
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, CreateRequest, DeleteMode, DeleteRequest, Error, ErrorCode, ListRequest,
     OciRuntimeService, OperationContext, OperationId, StateRequest,
 };
@@ -186,7 +186,7 @@ pub(super) async fn exercise(
             let durable = &records[0];
             report.generation_before_reopen = Some(durable.generation);
             report.first_created_pid = *durable.state.pid();
-            report.durable_created_retained = durable.driver == DriverKind::LibkrunKvm
+            report.durable_created_retained = durable.driver == DriverKind::LibkKvm
                 && durable.isolation == IsolationClass::DedicatedVm
                 && durable.state.id() == create.id.as_str()
                 && *durable.state.status() == ContainerState::Created

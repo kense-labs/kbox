@@ -3,15 +3,15 @@ use std::sync::atomic::{AtomicU16, AtomicU32, Ordering};
 use std::sync::Arc;
 use std::time::Duration;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentBundle, AgentCreateRequest, AgentOperation, AgentStateRequest,
     AgentTransportFaultInjector, AgentTransportFaultPoint, AgentTransportFaultStage,
     AgentTransportOperationStage, AgentTransportQualificationEvidence,
     AgentTransportQualificationRequest, AGENT_PROTOCOL_VERSION_MAX,
     AGENT_TRANSPORT_QUALIFICATION_EVIDENCE_PREFIX,
 };
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{Error, ErrorCode, IoMode, OciBundle, OperationContext, OperationId, ProcessIo};
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{Error, ErrorCode, IoMode, OciBundle, OperationContext, OperationId, ProcessIo};
 use tokio::time::timeout;
 
 use super::{
@@ -81,7 +81,7 @@ impl HostTransportFault {
 }
 
 impl AgentTransportFaultInjector for HostTransportFault {
-    fn check(&self, point: AgentTransportFaultPoint) -> krun_oci_sdk::Result<()> {
+    fn check(&self, point: AgentTransportFaultPoint) -> koci_sdk::Result<()> {
         let protocol_version = match (self.stage, point) {
             (
                 AgentTransportFaultStage::Operation(selected),
@@ -586,13 +586,13 @@ fn failed(
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_agent_protocol::{
+    use koci_agent_protocol::{
         AgentOperation, AgentTransportFaultInjector, AgentTransportFaultPoint,
         AgentTransportOperationStage, AgentTransportQualificationEvidence,
         AgentTransportQualificationRequest, AgentTransportShutdownStage,
         AGENT_PROTOCOL_VERSION_MAX, AGENT_TRANSPORT_QUALIFICATION_EVIDENCE_PREFIX,
     };
-    use krun_oci_sdk::{ErrorCode, OperationId};
+    use koci_sdk::{ErrorCode, OperationId};
 
     use super::{read_guest_qualification_evidence, HostTransportFault};
 

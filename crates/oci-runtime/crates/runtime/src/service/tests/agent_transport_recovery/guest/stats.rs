@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 
-use krun_oci_agent_protocol::AgentStatsRequest;
-use krun_oci_sdk::{ContainerStats, CpuStats, Error, ErrorCode, MemoryStats, Result};
+use koci_agent_protocol::AgentStatsRequest;
+use koci_sdk::{ContainerStats, CpuStats, Error, ErrorCode, MemoryStats, Result};
 
 use super::JournaledLifecycleGuest;
 

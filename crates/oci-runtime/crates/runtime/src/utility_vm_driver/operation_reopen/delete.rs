@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{CreateRequest, IsolationRequest, OciBundle, OperationContext};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{CreateRequest, IsolationRequest, OciBundle, OperationContext};
 
 use super::{bundle_marker, directory_is_empty, operation_id, unique_nonce};
 use crate::linux_kvm_recovery_smoke::bundle;
@@ -60,7 +60,7 @@ pub async fn linux_kvm_delete_reopen_replacement(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let container_id = match krun_oci_sdk::ContainerId::new(format!("kvm-delete-reopen-{nonce}")) {
+    let container_id = match koci_sdk::ContainerId::new(format!("kvm-delete-reopen-{nonce}")) {
         Ok(id) => id,
         Err(error) => return failed(report, format!("failed to construct container ID: {error}")),
     };

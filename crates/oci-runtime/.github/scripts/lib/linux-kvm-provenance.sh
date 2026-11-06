@@ -92,7 +92,7 @@ linux_kvm_provenance() {
     printf '%s\n' 'failed to resolve the checked-out Git commit' >&2
     return 1
   fi
-  requested_revision="${KRUN_QUALIFICATION_SOURCE_COMMIT:-$checkout_revision}"
+  requested_revision="${K_QUALIFICATION_SOURCE_COMMIT:-$checkout_revision}"
   if [[ ! "$requested_revision" =~ ^[0-9a-f]+$ ]] ||
     [[ "${#requested_revision}" -ne "$object_id_length" ]]; then
     printf 'Linux KVM source revision is not a canonical %s object ID: %s\n' \
@@ -128,7 +128,7 @@ linux_kvm_provenance() {
   if ! runtime_bundle="$(
     jq --compact-output --exit-status \
       --arg architecture "$architecture" \
-      'if .schema_version != "krun.oci.krun-runtime-assets.v1" then
+      'if .schema_version != "koci.kbox_contract-assets.v1" then
          error("unexpected runtime asset schema")
        else
          [.bundles[] | select(
@@ -162,7 +162,7 @@ linux_kvm_provenance() {
   if ! jq --exit-status \
     --arg architecture "$architecture" \
     --argjson runtime_bundle "$runtime_bundle" \
-    '.schema_version == "krun.oci.linux-kvm-system-image.v1"
+    '.schema_version == "koci.linux-kvm-system-image.v1"
      and .architecture == $architecture and .runtime == $runtime_bundle' \
     "$system_image_manifest" >/dev/null
   then
@@ -247,7 +247,7 @@ linux_kvm_provenance() {
     --arg system_image_manifest_sha256 "$system_manifest_sha256" \
     --argjson runtime_bundle "$runtime_bundle" \
     '{
-      schema_version: "krun.oci.linux-kvm-provenance.v1",
+      schema_version: "koci.linux-kvm-provenance.v1",
       platform: "linux",
       architecture: $architecture,
       qualification_profile: $qualification_profile,
@@ -256,7 +256,7 @@ linux_kvm_provenance() {
       source_revision: $source_revision,
       source_tree_id: $source_tree_id,
       source_tree_clean: true,
-      driver: "libkrun-kvm",
+      driver: "libkkvm",
       isolation: "dedicated-vm",
       host_executable_sha256: $host_executable_sha256,
       shim_executable_sha256: $shim_executable_sha256,

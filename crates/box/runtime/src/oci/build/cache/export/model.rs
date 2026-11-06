@@ -2,8 +2,8 @@
 
 use std::path::PathBuf;
 
-use krun_box_core::error::Result;
-use krun_box_core::platform::Platform;
+use kbox_core::error::Result;
+use kbox_core::platform::Platform;
 use oci_spec::image::MediaType;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -30,7 +30,7 @@ pub struct BuildCacheReceipt {
 }
 
 impl BuildCacheReceipt {
-    pub const SCHEMA: &'static str = "krun.box.build-cache-receipt.v1";
+    pub const SCHEMA: &'static str = "kbox.build-cache-receipt.v1";
 
     pub(in crate::oci::build) fn validate(&self) -> Result<()> {
         if self.schema != Self::SCHEMA

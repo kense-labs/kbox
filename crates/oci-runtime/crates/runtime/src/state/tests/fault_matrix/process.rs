@@ -1,6 +1,6 @@
 use std::io::Write;
 
-use krun_oci_sdk::ProcessRecord;
+use koci_sdk::ProcessRecord;
 
 use crate::state::model::StoredProcess;
 
@@ -258,7 +258,7 @@ async fn drive_process_success(
     exec: &ExecRequest,
     signal: &SignalProcessRequest,
     expected_exit: &ExitStatus,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     let process = drive_exec(store, exec).await?;
     drive_signal_process(store, signal).await?;
     let exit = drive_process_wait(
@@ -295,7 +295,7 @@ async fn drive_process_success(
 async fn drive_exec(
     store: &DurableStateStore,
     request: &ExecRequest,
-) -> krun_oci_sdk::Result<krun_oci_sdk::ProcessRecord> {
+) -> koci_sdk::Result<koci_sdk::ProcessRecord> {
     match store.prepare_exec(request).await? {
         ProcessOperationPreparation::Prepared(_) | ProcessOperationPreparation::Resume(_) => {
             store
@@ -313,7 +313,7 @@ async fn drive_exec(
 async fn drive_signal_process(
     store: &DurableStateStore,
     request: &SignalProcessRequest,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_signal_process(request).await? {
         SignalProcessPreparation::Prepared(_) | SignalProcessPreparation::Resume(_) => {
             store
@@ -328,7 +328,7 @@ async fn drive_process_wait(
     store: &DurableStateStore,
     request: &WaitProcessRequest,
     observed: ExitStatus,
-) -> krun_oci_sdk::Result<ExitStatus> {
+) -> koci_sdk::Result<ExitStatus> {
     match store.prepare_wait_process(request).await? {
         ProcessWaitPreparation::Replayed(status) => Ok(status),
         ProcessWaitPreparation::Prepared(target) => {
@@ -341,7 +341,7 @@ async fn drive_failed_exec(
     store: &DurableStateStore,
     request: &ExecRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_exec(request).await {
         Ok(ProcessOperationPreparation::Prepared(_))
         | Ok(ProcessOperationPreparation::Resume(_)) => {
@@ -366,7 +366,7 @@ async fn drive_failed_signal_process(
     store: &DurableStateStore,
     request: &SignalProcessRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_signal_process(request).await {
         Ok(SignalProcessPreparation::Prepared(_)) | Ok(SignalProcessPreparation::Resume(_)) => {
             store

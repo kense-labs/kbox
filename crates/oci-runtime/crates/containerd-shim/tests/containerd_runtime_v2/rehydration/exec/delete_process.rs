@@ -13,7 +13,7 @@ use crate::support::{
     RuntimeIdentity, TestResult,
 };
 
-const DELETE_JOURNAL_FILE_NAME: &str = "krun-oci-shim-exec-delete-v1.json";
+const DELETE_JOURNAL_FILE_NAME: &str = "koci-shim-exec-delete-v1.json";
 
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]

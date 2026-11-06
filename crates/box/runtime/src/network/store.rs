@@ -1,10 +1,10 @@
 //! Persistent storage for network configurations.
 //!
-//! Networks are stored as JSON in `~/.krun/networks.json` with atomic writes
+//! Networks are stored as JSON in `~/.kbox/networks.json` with atomic writes
 //! (write to tmp file, then rename) to prevent corruption.
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::network::NetworkConfig;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::network::NetworkConfig;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
@@ -27,9 +27,9 @@ impl NetworkStore {
         Self { path: path.into() }
     }
 
-    /// Create a store at the default location (`~/.krun/networks.json`).
+    /// Create a store at the default location (`~/.kbox/networks.json`).
     pub fn default_path() -> Result<Self> {
-        let home = krun_box_core::dirs_home();
+        let home = kbox_core::dirs_home();
         Ok(Self::new(home.join("networks.json")))
     }
 
@@ -211,7 +211,7 @@ impl NetworkStore {
     }
 }
 
-impl krun_box_core::traits::NetworkStoreBackend for NetworkStore {
+impl kbox_core::traits::NetworkStoreBackend for NetworkStore {
     fn get(&self, name: &str) -> Result<Option<NetworkConfig>> {
         self.get(name)
     }

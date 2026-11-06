@@ -5,8 +5,8 @@ use std::os::unix::ffi::OsStrExt;
 use std::os::unix::fs::{FileTypeExt, MetadataExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent::{OciLinuxDefaultDeviceNode, OCI_LINUX_DEFAULT_DEVICE_NODES};
-use krun_oci_sdk::OciBundle;
+use koci_agent::{OciLinuxDefaultDeviceNode, OCI_LINUX_DEFAULT_DEVICE_NODES};
+use koci_sdk::OciBundle;
 
 pub(super) struct JoinedMountDeviceFixture {
     created: Vec<PathBuf>,

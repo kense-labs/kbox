@@ -6,8 +6,8 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use krun_oci_core::DriverKind;
-use krun_oci_sdk::ErrorCode;
+use koci_core::DriverKind;
+use koci_sdk::ErrorCode;
 use windows_sys::Win32::Storage::FileSystem::FILE_ATTRIBUTE_REPARSE_POINT;
 
 use crate::fault::{DurableMutation, FaultInjector, FaultPoint, FileCommitStage, NoFaultInjector};
@@ -45,7 +45,7 @@ impl fmt::Debug for CallbackFaultInjector {
 }
 
 impl FaultInjector for CallbackFaultInjector {
-    fn check(&self, point: FaultPoint) -> krun_oci_sdk::Result<()> {
+    fn check(&self, point: FaultPoint) -> koci_sdk::Result<()> {
         if point == self.target && !self.fired.swap(true, Ordering::SeqCst) {
             let callback = self
                 .callback
@@ -107,7 +107,7 @@ async fn rejects_layout_directory_replaced_by_a_reparse_point() {
     let request = create_request(&bundle, "reparse-container", "reparse-create");
 
     let error = store
-        .prepare_create(&request, DriverKind::LibkrunWhpx)
+        .prepare_create(&request, DriverKind::LibkWhpx)
         .await
         .expect_err("a reparse-point layout directory must fail closed");
 

@@ -152,31 +152,27 @@ impl VmLocalExecutionBackend {
         let inspection = tokio::task::spawn_blocking(move || {
             let inspection =
                 inspect_recorded_sandbox(&home_dir, &box_dir, &box_id)?.ok_or_else(|| {
-                    krun_box_core::BoxError::StateError(format!(
+                    kbox_core::BoxError::StateError(format!(
                         "Sandbox runtime record is missing for {box_id}"
                     ))
                 })?;
             let socket = inspection.runtime.runtime_socket.as_ref().ok_or_else(|| {
-                krun_box_core::BoxError::StateError(format!(
-                    "Krun OCI runtime socket is missing for {box_id}"
+                kbox_core::BoxError::StateError(format!(
+                    "Kbox OCI runtime socket is missing for {box_id}"
                 ))
             })?;
             let generation = inspection.runtime.generation.ok_or_else(|| {
-                krun_box_core::BoxError::StateError(format!(
-                    "Krun OCI generation is missing for {box_id}"
+                kbox_core::BoxError::StateError(format!(
+                    "Kbox OCI generation is missing for {box_id}"
                 ))
             })?;
             if pause {
-                crate::sandbox::krun_oci_handler::KrunOciHandler::pause_at(
-                    socket, &box_id, generation,
-                )?;
+                crate::sandbox::koci_handler::KOciHandler::pause_at(socket, &box_id, generation)?;
             } else {
-                crate::sandbox::krun_oci_handler::KrunOciHandler::resume_at(
-                    socket, &box_id, generation,
-                )?;
+                crate::sandbox::koci_handler::KOciHandler::resume_at(socket, &box_id, generation)?;
             }
             inspect_recorded_sandbox(&home_dir, &box_dir, &box_id)?.ok_or_else(|| {
-                krun_box_core::BoxError::StateError(format!(
+                kbox_core::BoxError::StateError(format!(
                     "Sandbox runtime record disappeared after {operation} for {box_id}"
                 ))
             })
@@ -228,37 +224,37 @@ impl VmLocalExecutionBackend {
         manager.port_forward_socket_path = Some(socket_dir.join("portfwd.sock"));
         let runtime_socket = inspection.runtime.runtime_socket.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI runtime socket is missing for {}",
+                "Kbox OCI runtime socket is missing for {}",
                 record.id
             ))
         })?;
         let generation = inspection.runtime.generation.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI generation is missing for {}",
+                "Kbox OCI generation is missing for {}",
                 record.id
             ))
         })?;
         let owner_pid = inspection.runtime.owner_pid.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI owner PID is missing for {}",
+                "Kbox OCI owner PID is missing for {}",
                 record.id
             ))
         })?;
         let owner_pid_start_time = inspection.runtime.owner_pid_start_time.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI owner identity is missing for {}",
+                "Kbox OCI owner identity is missing for {}",
                 record.id
             ))
         })?;
-        let container_id = krun_oci_sdk::ContainerId::new(record.id.clone())
+        let container_id = koci_sdk::ContainerId::new(record.id.clone())
             .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
-        let handler: Box<dyn krun_box_core::vmm::VmHandler> = Box::new(
-            crate::sandbox::krun_oci_handler::KrunOciHandler::from_recorded_runtime(
-                crate::sandbox::krun_oci_handler::KrunOciHandlerSpec {
+        let handler: Box<dyn kbox_core::vmm::VmHandler> = Box::new(
+            crate::sandbox::koci_handler::KOciHandler::from_recorded_runtime(
+                crate::sandbox::koci_handler::KOciHandlerSpec {
                     runtime_socket,
                     runtime_root: inspection.runtime.runtime_root,
                     container_id,
-                    generation: krun_oci_sdk::Generation(generation),
+                    generation: koci_sdk::Generation(generation),
                     init_pid: inspection.pid,
                     owner_pid,
                     owner_pid_start_time,
@@ -343,47 +339,44 @@ impl VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<i32> {
         let runtime_socket = state.runtime.runtime_socket.clone().ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI runtime socket is missing for {}",
+                "Kbox OCI runtime socket is missing for {}",
                 record.id
             ))
         })?;
         let generation = state.runtime.generation.ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
-                "Krun OCI generation is missing for {}",
+                "Kbox OCI generation is missing for {}",
                 record.id
             ))
         })?;
         let box_id = record.id.clone();
-        let exit_code =
-            tokio::task::spawn_blocking(move || -> krun_box_core::Result<Option<i32>> {
-                let deadline = std::time::Instant::now() + TERMINAL_EXIT_POLL_TIMEOUT;
-                loop {
-                    if let Some(exit_code) = crate::sandbox::KrunOciHandler::try_wait_at(
-                        &runtime_socket,
-                        &box_id,
-                        generation,
-                    )? {
-                        return Ok(Some(exit_code));
-                    }
-                    if std::time::Instant::now() >= deadline {
-                        return Ok(None);
-                    }
-                    std::thread::sleep(TERMINAL_EXIT_POLL_INTERVAL);
+        let exit_code = tokio::task::spawn_blocking(move || -> kbox_core::Result<Option<i32>> {
+            let deadline = std::time::Instant::now() + TERMINAL_EXIT_POLL_TIMEOUT;
+            loop {
+                if let Some(exit_code) =
+                    crate::sandbox::KOciHandler::try_wait_at(&runtime_socket, &box_id, generation)?
+                {
+                    return Ok(Some(exit_code));
                 }
-            })
-            .await
-            .map_err(|error| {
-                ExecutionManagerError::Unavailable(format!(
-                    "Sandbox exit-status task failed for {}: {error}",
-                    record.id
-                ))
-            })?
-            .map_err(|error| {
-                ExecutionManagerError::Unavailable(format!(
-                    "failed to collect exact Sandbox exit status for {}: {error}",
-                    record.id
-                ))
-            })?;
+                if std::time::Instant::now() >= deadline {
+                    return Ok(None);
+                }
+                std::thread::sleep(TERMINAL_EXIT_POLL_INTERVAL);
+            }
+        })
+        .await
+        .map_err(|error| {
+            ExecutionManagerError::Unavailable(format!(
+                "Sandbox exit-status task failed for {}: {error}",
+                record.id
+            ))
+        })?
+        .map_err(|error| {
+            ExecutionManagerError::Unavailable(format!(
+                "failed to collect exact Sandbox exit status for {}: {error}",
+                record.id
+            ))
+        })?;
         exit_code.ok_or_else(|| {
             ExecutionManagerError::Unavailable(format!(
                 "Sandbox reported execution {} as terminal before its exact exit status became available",
@@ -449,27 +442,25 @@ fn inspect_recorded_sandbox(
     home_dir: &Path,
     box_dir: &Path,
     box_id: &str,
-) -> krun_box_core::Result<Option<SandboxInspection>> {
+) -> kbox_core::Result<Option<SandboxInspection>> {
     let Some(runtime) = crate::vm::reap::load_recorded_sandbox_runtime(home_dir, box_dir, box_id)?
     else {
         return Ok(None);
     };
     let socket = runtime.runtime_socket.as_ref().ok_or_else(|| {
-        krun_box_core::BoxError::StateError(format!(
-            "Krun OCI runtime socket is missing for {box_id}"
-        ))
+        kbox_core::BoxError::StateError(format!("Kbox OCI runtime socket is missing for {box_id}"))
     })?;
     let generation = runtime.generation.ok_or_else(|| {
-        krun_box_core::BoxError::StateError(format!("Krun OCI generation is missing for {box_id}"))
+        kbox_core::BoxError::StateError(format!("Kbox OCI generation is missing for {box_id}"))
     })?;
-    let (status, pid) = match crate::sandbox::krun_oci_handler::KrunOciHandler::query_state_at(
+    let (status, pid) = match crate::sandbox::koci_handler::KOciHandler::query_state_at(
         socket, box_id, generation,
     )? {
         Some(state) => (state.status, state.pid),
         None => ("stopped".to_string(), 0),
     };
     if matches!(status.as_str(), "created" | "running" | "paused") && pid != runtime.init_pid {
-        return Err(krun_box_core::BoxError::StateError(format!(
+        return Err(kbox_core::BoxError::StateError(format!(
             "Sandbox runtime PID disagrees with its durable record for {box_id}"
         )));
     }
@@ -491,8 +482,8 @@ fn inspect_recorded_sandbox(
     _home_dir: &Path,
     _box_dir: &Path,
     _box_id: &str,
-) -> krun_box_core::Result<Option<SandboxInspection>> {
-    Err(krun_box_core::BoxError::StateError(
+) -> kbox_core::Result<Option<SandboxInspection>> {
+    Err(kbox_core::BoxError::StateError(
         "Sandbox execution requires Linux".to_string(),
     ))
 }

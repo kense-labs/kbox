@@ -43,7 +43,7 @@ pub fn require_active(record: &BoxRecord, action: &str) -> Result<(), String> {
     }
 
     let hint =
-        status_hint(record).unwrap_or_else(|| "Use `krun-box ps -a` to inspect state.".to_string());
+        status_hint(record).unwrap_or_else(|| "Use `kbox ps -a` to inspect state.".to_string());
     Err(format!(
         "Cannot {action} box {} because it is {}. {hint}",
         record.name, record.status
@@ -109,23 +109,23 @@ pub fn status_details(record: &BoxRecord) -> StatusDetails {
 fn status_hint(record: &BoxRecord) -> Option<String> {
     match record.status.as_str() {
         "created" => Some(format!(
-            "Use `krun-box start {}` to start it or `krun-box rm {}` to remove it.",
+            "Use `kbox start {}` to start it or `kbox rm {}` to remove it.",
             record.name, record.name
         )),
         "paused" => Some(format!(
-            "Use `krun-box unpause {}` to resume it or `krun-box stop {}` to stop it.",
+            "Use `kbox unpause {}` to resume it or `kbox stop {}` to stop it.",
             record.name, record.name
         )),
         "stopped" => Some(format!(
-            "Use `krun-box start {}` to start it again or `krun-box rm {}` to remove it.",
+            "Use `kbox start {}` to start it again or `kbox rm {}` to remove it.",
             record.name, record.name
         )),
         "dead" if record.exit_code == Some(0) => Some(format!(
-            "The box exited successfully. Run `krun-box logs {}` to review output, then `krun-box restart {}` or `krun-box rm {}`.",
+            "The box exited successfully. Run `kbox logs {}` to review output, then `kbox restart {}` or `kbox rm {}`.",
             record.name, record.name, record.name
         )),
         "dead" => Some(format!(
-            "Run `krun-box logs {}` to inspect failure output, then `krun-box restart {}` or `krun-box rm {}`.",
+            "Run `kbox logs {}` to inspect failure output, then `kbox restart {}` or `kbox rm {}`.",
             record.name, record.name, record.name
         )),
         _ => None,
@@ -222,7 +222,7 @@ mod tests {
 
         assert_eq!(details.summary, "paused");
         assert!(details.active);
-        assert!(details.hint.unwrap().contains("krun-box unpause box"));
+        assert!(details.hint.unwrap().contains("kbox unpause box"));
     }
 
     #[test]
@@ -251,6 +251,6 @@ mod tests {
         let error = require_active(&record, "show stats for").unwrap_err();
 
         assert!(error.contains("Cannot show stats for box box because it is stopped"));
-        assert!(error.contains("krun-box start box"));
+        assert!(error.contains("kbox start box"));
     }
 }

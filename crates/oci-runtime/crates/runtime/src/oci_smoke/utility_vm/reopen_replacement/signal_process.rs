@@ -1,15 +1,15 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
-use krun_oci_sdk::{
+use koci_agent_protocol::{AgentTransportOperationStage, AgentTransportQualificationRequest};
+use koci_sdk::{
     ContainerTarget, CreateRequest, ExecRequest, OperationId, SignalProcessRequest, StartRequest,
 };
 
 use super::QualificationHvfDriver;
 use crate::{DriverExecRequest, DriverSignalProcessRequest, OciVmOperationReopenReplacementReport};
 
-pub(super) const SIGNAL_MARKER_NAME: &str = ".krun-oci-signal-process-reopen-smoke";
+pub(super) const SIGNAL_MARKER_NAME: &str = ".koci-signal-process-reopen-smoke";
 pub(super) const SIGNAL_PROCESS_SIGNAL: i32 = 10;
 
 struct Qualification {

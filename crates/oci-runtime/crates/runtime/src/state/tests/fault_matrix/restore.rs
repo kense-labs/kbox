@@ -1,6 +1,6 @@
-use krun_oci_core::{DriverKind, HostPlatform};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::{DriverKind, HostPlatform};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest, CheckpointFormat,
     CheckpointReference, ContainerRecord, OperationContext, RestoreRequest, RestoreResponse,
     RuntimeArtifact,
@@ -92,7 +92,7 @@ async fn exercise_restored_pid_rebind(point: FaultPoint) {
     drive_success(&setup, &request)
         .await
         .expect("complete original restore");
-    let target = ContainerTarget::exact(request.id().clone(), krun_oci_sdk::Generation(1));
+    let target = ContainerTarget::exact(request.id().clone(), koci_sdk::Generation(1));
     setup
         .observe_recreated_paused_running_process(
             &target,
@@ -224,14 +224,11 @@ fn digest(symbol: char) -> CheckpointDigest {
 async fn drive_success(
     store: &DurableStateStore,
     request: &RestoreRequest,
-) -> krun_oci_sdk::Result<RestoreResponse> {
+) -> koci_sdk::Result<RestoreResponse> {
     match store.lookup_restore(request).await? {
         RestoreOperationLookup::Replayed(response) => Ok(*response),
         RestoreOperationLookup::Pending => {
-            match store
-                .prepare_restore(request, DriverKind::LibkrunWhpx)
-                .await?
-            {
+            match store.prepare_restore(request, DriverKind::LibkWhpx).await? {
                 RestoreOperationPreparation::Prepared(_)
                 | RestoreOperationPreparation::Resume(_) => {
                     store
@@ -248,7 +245,7 @@ async fn drive_failure(
     store: &DurableStateStore,
     request: &RestoreRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.lookup_restore(request).await {
         Ok(RestoreOperationLookup::Pending) => {}
         Ok(RestoreOperationLookup::Replayed(_)) => {
@@ -257,10 +254,7 @@ async fn drive_failure(
         Err(error) if error == *failure => return Ok(()),
         Err(error) => return Err(error),
     }
-    match store
-        .prepare_restore(request, DriverKind::LibkrunWhpx)
-        .await
-    {
+    match store.prepare_restore(request, DriverKind::LibkWhpx).await {
         Ok(RestoreOperationPreparation::Prepared(_))
         | Ok(RestoreOperationPreparation::Resume(_)) => {
             store

@@ -1,4 +1,4 @@
-//! Shared launch utilities for the Krun OCI Runtime Sandbox owner.
+//! Shared launch utilities for the Kbox OCI Runtime Sandbox owner.
 
 #[cfg(target_os = "linux")]
 use std::fs::File;
@@ -11,11 +11,11 @@ use std::process::{Command, Stdio};
 #[cfg(target_os = "linux")]
 use std::time::{Duration, Instant};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::execution::ResolvedExecutionPlan;
-use krun_box_core::log::LogConfig;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::execution::ResolvedExecutionPlan;
+use kbox_core::log::LogConfig;
 #[cfg(target_os = "linux")]
-use krun_box_core::log::{SandboxLogWorkerSpec, SANDBOX_LOG_WORKER_SCHEMA};
+use kbox_core::log::{SandboxLogWorkerSpec, SANDBOX_LOG_WORKER_SCHEMA};
 use oci_spec::runtime::Spec;
 use serde::Serialize;
 
@@ -146,7 +146,7 @@ pub(crate) fn start_log_worker(
         .stdin(Stdio::null())
         .stdout(Stdio::from(stdout))
         .stderr(Stdio::from(stderr));
-    // Packaged `krun-box-shim` resolves libkrun via `$ORIGIN/../lib`. Under
+    // Packaged `kbox-shim` resolves libkrun via `$ORIGIN/../lib`. Under
     // setpriv (`euid=0`, `ruid≠0`) the child inherits mismatched IDs, so the
     // dynamic linker enters secure-execution mode, ignores `LD_LIBRARY_PATH`,
     // and can fail to open the bundled libkrun (`ENOENT` / exit 127). Clear the

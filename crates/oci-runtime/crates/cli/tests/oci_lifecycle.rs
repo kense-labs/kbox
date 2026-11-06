@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Output};
 use std::sync::Arc;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, State};
+use koci_sdk::oci_spec::runtime::{ContainerState, State};
 use serde_json::json;
 
 use support::{LifecycleService, TestServer};
@@ -123,19 +123,19 @@ async fn invoke<const N: usize>(
 async fn run_command(mut command: Command) -> Output {
     tokio::task::spawn_blocking(move || command.output())
         .await
-        .expect("krun-oci task must join")
-        .expect("start krun-oci")
+        .expect("koci task must join")
+        .expect("start koci")
 }
 
 fn configured_command(server: &TestServer, state_root: &Path) -> Command {
-    let mut command = Command::new(env!("CARGO_BIN_EXE_krun-oci"));
+    let mut command = Command::new(env!("CARGO_BIN_EXE_koci"));
     command
-        .env("KRUN_OCI_RUNTIME_ENDPOINT", server.endpoint())
-        .env("KRUN_OCI_CLI_STATE_ROOT", state_root)
-        .env("KRUN_OCI_CLI_ISOLATION", "shared-host-kernel")
+        .env("K_OCI_RUNTIME_ENDPOINT", server.endpoint())
+        .env("K_OCI_CLI_STATE_ROOT", state_root)
+        .env("K_OCI_CLI_ISOLATION", "shared-host-kernel")
         .env("LISTEN_FDS", "0")
-        .env_remove("KRUN_OCI_RUNTIME_SOCKET")
-        .env_remove("KRUN_OCI_CLI_TRUST_DOMAIN");
+        .env_remove("K_OCI_RUNTIME_SOCKET")
+        .env_remove("K_OCI_CLI_TRUST_DOMAIN");
     command
 }
 
@@ -195,6 +195,6 @@ fn create_private_directory(path: &Path) {
 
 #[cfg(windows)]
 fn create_private_directory(path: &Path) {
-    krun_oci_runtime::windows_security::create_private_directory(path)
+    koci_runtime::windows_security::create_private_directory(path)
         .expect("private Windows state directory");
 }

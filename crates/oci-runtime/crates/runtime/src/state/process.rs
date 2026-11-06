@@ -1,7 +1,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, Process};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, Process};
+use koci_sdk::{
     ContainerId, ContainerTarget, ErrorCode, ExecRequest, ExitStatus, OciSchemaValidator,
     OperationId, ProcessId, ProcessIo, ProcessRecord, ProcessTarget, Result, RuntimeEventKind,
     Signal, SignalProcessRequest, ValidateRequest, WaitProcessRequest,
@@ -1223,7 +1223,7 @@ fn exit_status_conflict(
     target: &ProcessTarget,
     durable: &ExitStatus,
     observed: &ExitStatus,
-) -> krun_oci_sdk::Error {
+) -> koci_sdk::Error {
     state_error(
         ErrorCode::Conflict,
         "complete-process-wait",

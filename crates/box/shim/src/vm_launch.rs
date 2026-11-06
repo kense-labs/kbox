@@ -1,6 +1,14 @@
 //! Cross-platform libkrun launch with Windows WHPX guest preparation.
 
 use super::*;
+#[cfg(unix)]
+use std::path::Path;
+
+#[cfg(unix)]
+type StdinChannel = (
+    std::os::unix::net::UnixStream,
+    std::thread::JoinHandle<std::io::Result<u64>>,
+);
 
 /// Apply the currently supported WHPX boot contract and clear result files from
 /// an earlier boot before libkrun opens the rootfs.
@@ -15,12 +23,12 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
     // The checked-in libkrunfw kernel boots reliably through WHPX's legacy PIC
     // path. An explicitly present value (including an empty one) remains an
     // expert override for kernel debugging.
-    if std::env::var_os("LIBKRUN_WINDOWS_KERNEL_CMDLINE_APPEND").is_none() {
-        std::env::set_var("LIBKRUN_WINDOWS_KERNEL_CMDLINE_APPEND", "noapic");
+    if std::env::var_os("LIBK_WINDOWS_KERNEL_CMDLINE_APPEND").is_none() {
+        std::env::set_var("LIBK_WINDOWS_KERNEL_CMDLINE_APPEND", "noapic");
         tracing::debug!("Enabled the Windows WHPX noapic kernel boot path");
     }
 
-    // Krun owns this dedicated shim process and must regain control after the
+    // Kbox owns this dedicated shim process and must regain control after the
     // workload exits so its live log processor can drain the complete streams.
     // The bundled libkrun keeps its normal process-takeover contract unless this
     // internal opt-in is set.
@@ -34,7 +42,7 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
         WINDOWS_LIVE_LOGS_DRAINED_MARKER,
     ] {
         let path = rootfs.join(name);
-        if let Err(error) = krun_box_core::windows_file::remove_path_no_follow(&path) {
+        if let Err(error) = kbox_core::windows_file::remove_path_no_follow(&path) {
             return Err(BoxError::BoxBootError {
                 message: format!(
                     "Failed to remove stale Windows guest result {}: {error}",
@@ -53,7 +61,7 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
     // to make that readiness barrier possible and discard any stale output.
     for name in [WINDOWS_GUEST_STDOUT, WINDOWS_GUEST_STDERR] {
         let path = rootfs.join(name);
-        krun_box_core::windows_file::replace_regular_file(&path, b"").map_err(|error| {
+        kbox_core::windows_file::replace_regular_file(&path, b"").map_err(|error| {
             BoxError::BoxBootError {
                 message: format!(
                     "Failed to create empty Windows guest stream {}: {error}",
@@ -78,13 +86,13 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
 pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     // Initialize libkrun logging
     tracing::debug!("Initializing libkrun logging");
-    if let Err(e) = KrunContext::init_logging() {
+    if let Err(e) = KContext::init_logging() {
         tracing::warn!(error = %e, "Failed to initialize libkrun logging");
     }
 
     // Create libkrun context
     tracing::debug!("Creating libkrun context");
-    let ctx = KrunContext::create()?;
+    let ctx = KContext::create()?;
 
     // Configure VM resources
     tracing::debug!(
@@ -153,7 +161,7 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
             // Per-mount temp dir (keyed by tag) so two file mounts sharing a
             // basename (e.g. two app.conf to different targets) don't collide.
             let temp_dir =
-                std::env::temp_dir().join(format!("krun-fs-mount-{}-{}", spec.box_id, mount.tag));
+                std::env::temp_dir().join(format!("kfs-mount-{}-{}", spec.box_id, mount.tag));
             let file_name = host_path.file_name().unwrap();
             let temp_file_path = temp_dir.join(file_name);
 
@@ -374,18 +382,18 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
         port_forward_manager
     };
 
-    // Note: KRUN_TEE_SIMULATE is already included in spec.entrypoint.env
+    // Note: K_TEE_SIMULATE is already included in spec.entrypoint.env
     // (added by vm.rs when simulate mode is on) and passed to the guest init
-    // via krun_set_exec's envp parameter. Do NOT call set_env here — libkrun's
-    // krun_set_env overwrites (not appends) the environment, which would erase
+    // via kset_exec's envp parameter. Do NOT call set_env here — libkrun's
+    // kset_env overwrites (not appends) the environment, which would erase
     // all BOX_EXEC_* vars set by set_exec.
     if spec
         .entrypoint
         .env
         .iter()
-        .any(|(k, _)| k == "KRUN_TEE_SIMULATE")
+        .any(|(k, _)| k == "K_TEE_SIMULATE")
     {
-        tracing::info!("TEE simulation mode: KRUN_TEE_SIMULATE=1 included in entrypoint env");
+        tracing::info!("TEE simulation mode: K_TEE_SIMULATE=1 included in entrypoint env");
     }
 
     // Configure networking: virtio-net (passt on Linux, gvproxy on macOS) or TSI (default)
@@ -434,7 +442,7 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
                     (Some(networks_json), Some(network_name))
                         if !net_config.dns_servers.is_empty() =>
                     {
-                        Some(krun_box_netproxy::NetworkDnsConfig {
+                        Some(kbox_netproxy::NetworkDnsConfig {
                             networks_json,
                             network_name,
                             dns_servers: net_config.dns_servers.clone(),
@@ -479,10 +487,10 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
             ctx.add_net_unixgram_fd(fd, &net_config.mac_address)?;
         }
 
-        // Network env vars (KRUN_NET_IP, KRUN_NET_GATEWAY, KRUN_NET_DNS) are now
+        // Network env vars (K_NET_IP, K_NET_GATEWAY, K_NET_DNS) are now
         // injected into spec.entrypoint.env by vm.rs, so they are passed via
-        // krun_set_exec's envp alongside all BOX_EXEC_* vars. Do NOT call
-        // ctx.set_env here — libkrun's krun_set_env overwrites (not appends)
+        // kset_exec's envp alongside all BOX_EXEC_* vars. Do NOT call
+        // ctx.set_env here — libkrun's kset_env overwrites (not appends)
         // the environment, which would erase all vars set by set_exec.
     }
 
@@ -496,7 +504,8 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     // boundary; leaking them with mem::forget made short detached output race
     // the processor indefinitely.
     #[cfg(unix)]
-    let mut split_console_files: Option<(std::fs::File, std::fs::File)> = None;
+    let mut split_console_files: Option<(std::fs::File, std::fs::File, Option<StdinChannel>)> =
+        None;
 
     // Configure console output if specified
     if let Some(console_path) = &spec.console_output {
@@ -525,8 +534,14 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
                     .open(p)
             };
             if let (Ok(out_f), Ok(err_f)) = (open(console_path), open(&err_path)) {
-                ctx.add_split_console(-1, out_f.as_raw_fd(), err_f.as_raw_fd())?;
-                split_console_files = Some((out_f, err_f));
+                let stdin = if spec.stdin_open {
+                    Some(open_stdin_channel(&spec.exec_socket_path)?)
+                } else {
+                    None
+                };
+                let input_fd = stdin.as_ref().map_or(-1, |channel| channel.0.as_raw_fd());
+                ctx.add_split_console(input_fd, out_f.as_raw_fd(), err_f.as_raw_fd())?;
+                split_console_files = Some((out_f, err_f, stdin));
                 tracing::debug!("split console enabled (stdout/stderr separated)");
                 split_done = true;
             }
@@ -582,7 +597,7 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     // INSIDE the guest by guest-init's per-container cgroup (the workload runs in
     // the microVM, so the in-guest cgroup is what bounds it — real-VM measured
     // cpu.max actively throttling a 0.5-core cap). The old host-side
-    // apply_cgroup_limits created /sys/fs/cgroup/krun-box/<id> and wrote
+    // apply_cgroup_limits created /sys/fs/cgroup/kbox/<id> and wrote
     // cpu.weight/cpu.max/memory.* there, but the controllers were never delegated
     // to that subtree (writes ENOENT'd, swallowed) so it never enforced anything —
     // it only leaked an empty host cgroup. Removed. (cpuset above stays: CPU
@@ -613,7 +628,7 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
                 // diagnostics. Tail those files directly so `logs` is live.
                 let stdout = windows_guest_rootfs.join(WINDOWS_GUEST_STDOUT);
                 let stderr = windows_guest_rootfs.join(WINDOWS_GUEST_STDERR);
-                krun_box_core::log::run_log_processor_streams_with_ready(
+                kbox_core::log::run_log_processor_streams_with_ready(
                     &stdout,
                     &stderr,
                     &log_dir,
@@ -623,7 +638,7 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
                 );
             }
             #[cfg(not(target_os = "windows"))]
-            krun_box_core::log::run_log_processor_with_ready(
+            kbox_core::log::run_log_processor_with_ready(
                 &console,
                 &log_dir,
                 &config,
@@ -667,14 +682,14 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     log_stop.store(true, std::sync::atomic::Ordering::SeqCst);
     let _log_thread_drained = log_thread.is_some_and(|handle| handle.join().is_ok());
     if let Some(console) = spec.console_output.as_ref() {
-        let structured = krun_box_core::log::json_log_path(
+        let structured = kbox_core::log::json_log_path(
             console
                 .parent()
                 .unwrap_or_else(|| std::path::Path::new(".")),
         );
         #[cfg(not(target_os = "windows"))]
         {
-            let stderr_console = krun_box_core::log::stderr_console_path(console);
+            let stderr_console = kbox_core::log::stderr_console_path(console);
             let structured_empty = structured.metadata().map(|m| m.len() == 0).unwrap_or(true);
             let raw_has_output = console.metadata().map(|m| m.len() > 0).unwrap_or(false)
                 || stderr_console
@@ -683,14 +698,14 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
                     .unwrap_or(false);
             if structured_empty
                 && raw_has_output
-                && spec.log_config.driver == krun_box_core::log::LogDriver::JsonFile
+                && spec.log_config.driver == kbox_core::log::LogDriver::JsonFile
             {
                 // A very short VM can finish while the first processor is sitting
                 // on a provisional console EOF. Its raw files are authoritative at
                 // this point (start_enter returned and the write fds are closed), so
                 // repair the empty projection synchronously. The empty guard makes
                 // this idempotent and prevents duplicate records.
-                krun_box_core::log::run_log_processor(
+                kbox_core::log::run_log_processor(
                     console,
                     console
                         .parent()
@@ -708,18 +723,18 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
             let stderr = rootfs.join(WINDOWS_GUEST_STDERR);
             let structured_empty = structured.metadata().map(|m| m.len() == 0).unwrap_or(true);
             let raw_has_output = [&stdout, &stderr].iter().any(|path| {
-                krun_box_core::windows_file::open_regular_file(path, None)
+                kbox_core::windows_file::open_regular_file(path, None)
                     .and_then(|(file, _)| file.metadata())
                     .is_ok_and(|metadata| metadata.len() > 0)
             });
             if structured_empty
                 && raw_has_output
-                && spec.log_config.driver == krun_box_core::log::LogDriver::JsonFile
+                && spec.log_config.driver == kbox_core::log::LogDriver::JsonFile
             {
                 // A short WHPX workload can finish before its live tailers emit
                 // the first record. The completed rootfs streams are authoritative
                 // after start_enter returns, so project them synchronously once.
-                krun_box_core::log::run_log_processor_streams(
+                kbox_core::log::run_log_processor_streams(
                     &stdout,
                     &stderr,
                     console
@@ -735,23 +750,23 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     #[cfg(target_os = "windows")]
     if status >= 0 && _log_thread_drained {
         let marker = windows_rootfs_path(spec)?.join(WINDOWS_LIVE_LOGS_DRAINED_MARKER);
-        krun_box_core::windows_file::replace_regular_file(&marker, b"drained\n").map_err(
-            |error| BoxError::BoxBootError {
+        kbox_core::windows_file::replace_regular_file(&marker, b"drained\n").map_err(|error| {
+            BoxError::BoxBootError {
                 message: format!(
                     "Failed to mark Windows live logs drained at {}: {error}",
                     marker.display()
                 ),
                 hint: None,
-            },
-        )?;
+            }
+        })?;
     }
 
     #[cfg(target_os = "windows")]
     drop(windows_port_forward_manager);
 
     // `std::process::exit` below skips Rust destructors. On Windows,
-    // `start_enter` returns after guest shutdown and the KrunContext owns the
-    // WHPX partition until `krun_free_ctx` runs in Drop. Free it explicitly so
+    // `start_enter` returns after guest shutdown and the KContext owns the
+    // WHPX partition until `kfree_ctx` runs in Drop. Free it explicitly so
     // a following restart/new VM cannot race Windows' asynchronous process-handle
     // cleanup and boot into a live shim with no functioning guest channel.
     #[cfg(target_os = "windows")]
@@ -780,14 +795,14 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
 /// Windows guest kernel chosen before libkrun opens a file.
 ///
 /// The bundled libkrunfw image is the default. An external path is used only
-/// when `KRUN_BOX_KERNEL` is set, and that path is never discovered from a WSL
+/// when `K_BOX_KERNEL` is set, and that path is never discovered from a WSL
 /// package directory.
 #[cfg(target_os = "windows")]
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) enum WindowsKernelSelection {
     /// Bundled WHPX kernel. No host path is opened.
     Bundled,
-    /// Explicit `KRUN_BOX_KERNEL` override.
+    /// Explicit `K_BOX_KERNEL` override.
     External(PathBuf),
 }
 
@@ -806,18 +821,15 @@ impl WindowsKernelSelection {
 }
 
 #[cfg(target_os = "windows")]
-pub(super) fn configure_windows_kernel(ctx: &KrunContext) -> Result<()> {
+pub(super) fn configure_windows_kernel(ctx: &KContext) -> Result<()> {
     apply_windows_kernel_selection(
         ctx,
-        WindowsKernelSelection::from_env(std::env::var_os("KRUN_BOX_KERNEL").as_deref()),
+        WindowsKernelSelection::from_env(std::env::var_os("K_BOX_KERNEL").as_deref()),
     )
 }
 
 #[cfg(target_os = "windows")]
-fn apply_windows_kernel_selection(
-    ctx: &KrunContext,
-    selection: WindowsKernelSelection,
-) -> Result<()> {
+fn apply_windows_kernel_selection(ctx: &KContext, selection: WindowsKernelSelection) -> Result<()> {
     if !selection.reads_host_file() {
         return Ok(());
     }
@@ -828,11 +840,11 @@ fn apply_windows_kernel_selection(
     if !kernel_path.is_file() {
         return Err(BoxError::BoxBootError {
             message: format!(
-                "KRUN_BOX_KERNEL does not point to a file: {}",
+                "K_BOX_KERNEL does not point to a file: {}",
                 kernel_path.display()
             ),
             hint: Some(
-                "Provide an x86_64 ELF vmlinux or a PE/COFF kernel image. Leave KRUN_BOX_KERNEL unset to use the bundled WHPX kernel."
+                "Provide an x86_64 ELF vmlinux or a PE/COFF kernel image. Leave K_BOX_KERNEL unset to use the bundled WHPX kernel."
                     .to_string(),
             ),
         });
@@ -840,10 +852,7 @@ fn apply_windows_kernel_selection(
 
     let kernel_format = detect_windows_kernel_format(&kernel_path)?;
     let kernel_path_str = kernel_path.to_str().ok_or_else(|| BoxError::BoxBootError {
-        message: format!(
-            "KRUN_BOX_KERNEL is not valid UTF-8: {}",
-            kernel_path.display()
-        ),
+        message: format!("K_BOX_KERNEL is not valid UTF-8: {}", kernel_path.display()),
         hint: None,
     })?;
 
@@ -853,6 +862,54 @@ fn apply_windows_kernel_selection(
         "Using external Windows guest kernel"
     );
     unsafe { ctx.set_kernel(kernel_path_str, kernel_format, None, None) }
+}
+
+#[cfg(unix)]
+fn open_stdin_channel(console_path: &Path) -> Result<StdinChannel> {
+    use std::os::unix::fs::{FileTypeExt, PermissionsExt};
+    use std::os::unix::net::{UnixListener, UnixStream};
+
+    let path = console_path.with_file_name("stdin.sock");
+    if let Ok(metadata) = std::fs::symlink_metadata(&path) {
+        if !metadata.file_type().is_socket() {
+            return Err(BoxError::BoxBootError {
+                message: format!("Interactive stdin path is not a socket: {}", path.display()),
+                hint: None,
+            });
+        }
+        std::fs::remove_file(&path).map_err(|error| BoxError::BoxBootError {
+            message: format!(
+                "Failed to replace stale interactive stdin socket {}: {error}",
+                path.display()
+            ),
+            hint: None,
+        })?;
+    }
+    let listener = UnixListener::bind(&path).map_err(|error| BoxError::BoxBootError {
+        message: format!(
+            "Failed to bind interactive stdin socket {}: {error}",
+            path.display()
+        ),
+        hint: None,
+    })?;
+    std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o600)).map_err(|error| {
+        BoxError::BoxBootError {
+            message: format!(
+                "Failed to protect interactive stdin socket {}: {error}",
+                path.display()
+            ),
+            hint: None,
+        }
+    })?;
+    let (input, mut output) = UnixStream::pair().map_err(|error| BoxError::BoxBootError {
+        message: format!("Failed to create interactive stdin channel: {error}"),
+        hint: None,
+    })?;
+    let forwarder = std::thread::spawn(move || {
+        let (mut client, _) = listener.accept()?;
+        std::io::copy(&mut client, &mut output)
+    });
+    Ok((input, forwarder))
 }
 
 #[cfg(target_os = "windows")]
@@ -889,8 +946,8 @@ pub(super) fn detect_windows_kernel_format(path: &Path) -> Result<u32> {
 #[cfg(target_os = "windows")]
 pub(super) fn kernel_format_from_magic(magic: [u8; 4]) -> Option<u32> {
     match magic {
-        [0x7f, b'E', b'L', b'F'] => Some(KRUN_KERNEL_FORMAT_ELF),
-        [b'M', b'Z', _, _] => Some(KRUN_KERNEL_FORMAT_IMAGE_GZ),
+        [0x7f, b'E', b'L', b'F'] => Some(K_KERNEL_FORMAT_ELF),
+        [b'M', b'Z', _, _] => Some(K_KERNEL_FORMAT_IMAGE_GZ),
         _ => None,
     }
 }
@@ -900,7 +957,7 @@ pub(super) fn kernel_format_from_magic(magic: [u8; 4]) -> Option<u32> {
 /// backend directly and skips that proxy.
 #[cfg(unix)]
 pub(super) fn inherited_net_proxy_fds(
-    net: &krun_box_core::vmm::NetworkInstanceConfig,
+    net: &kbox_core::vmm::NetworkInstanceConfig,
 ) -> Result<(std::os::fd::RawFd, std::os::fd::RawFd)> {
     match (net.net_socket_fd, net.net_proxy_fd) {
         (Some(guest_fd), Some(proxy_fd)) => Ok((guest_fd, proxy_fd)),
@@ -919,18 +976,18 @@ pub(super) fn inherited_net_proxy_fds(
 fn load_microvm_egress_rules(
     networks_json: Option<&std::path::Path>,
     network_name: Option<&str>,
-) -> Vec<krun_box_core::EgressMatchRule> {
+) -> Vec<kbox_core::EgressMatchRule> {
     let (Some(path), Some(name)) = (networks_json, network_name) else {
         return Vec::new();
     };
-    match krun_box_core::load_network_egress_rules(path, name) {
+    match kbox_core::load_network_egress_rules(path, name) {
         Ok(rules) => rules,
         Err(error) => {
             tracing::error!(
                 %error,
                 "MicroVM egress rules failed to load; denying IPv4 egress"
             );
-            vec![krun_box_core::EgressMatchRule::deny_all()]
+            vec![kbox_core::EgressMatchRule::deny_all()]
         }
     }
 }

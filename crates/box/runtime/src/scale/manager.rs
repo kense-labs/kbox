@@ -3,7 +3,7 @@
 use std::collections::{HashMap, VecDeque};
 
 use chrono::Utc;
-use krun_box_core::scale::{
+use kbox_core::scale::{
     InstanceEvent, InstanceHealth, InstanceInfo, InstanceState, ScaleDirection, ScaleObservation,
     ScaleOperationConflict, ScaleOperationRequest, ScaleOperationResponse, ScaleRequest,
     ScaleResponse, SCALE_OPERATION_SCHEMA_VERSION,

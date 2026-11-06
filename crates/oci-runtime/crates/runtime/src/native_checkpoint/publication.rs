@@ -5,7 +5,7 @@ use std::os::fd::{AsRawFd, FromRawFd, RawFd};
 use std::os::unix::ffi::OsStrExt;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::{CheckpointArtifactPath, ErrorCode, Result};
+use koci_sdk::{CheckpointArtifactPath, ErrorCode, Result};
 
 use super::artifact;
 use super::{checkpoint_error, io_error};
@@ -462,7 +462,7 @@ fn path_c_string(path: &Path) -> Result<CString> {
 mod tests {
     use std::io::{Seek, SeekFrom};
 
-    use krun_oci_sdk::CheckpointArtifactPath;
+    use koci_sdk::CheckpointArtifactPath;
     use tempfile::tempdir;
 
     use super::*;
@@ -476,7 +476,7 @@ mod tests {
         let destination = ArtifactDestination::open(&path).await.unwrap();
         destination.ensure_absent().await.unwrap();
         let token = [3_u8; 32];
-        let name = format!(".krun-test-{}.pending", encode_token(&token));
+        let name = format!(".ktest-{}.pending", encode_token(&token));
         let mut pending = destination.create_pending(&name, token).await.unwrap();
         assert_eq!(
             destination.publish(&name).await.unwrap(),

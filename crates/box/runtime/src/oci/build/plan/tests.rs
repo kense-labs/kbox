@@ -1,11 +1,11 @@
 use super::*;
-use krun_acl::SchemaDiagnosticCode;
-use krun_box_core::platform::Platform;
+use kacl::SchemaDiagnosticCode;
+use kbox_core::platform::Platform;
 
 const PLAN: &str = r#"
 build "oci" {
   target = "release"
-  schema = "krun.box.build-plan.v1"
+  schema = "kbox.build-plan.v1"
   platform = "linux/amd64"
   network = "none"
   file = "Dockerfile"
@@ -24,7 +24,7 @@ fn canonical_acl_and_digest_are_stable() {
         file = "Dockerfile"
         network = "none"
         platform = "linux/amd64"
-        schema = "krun.box.build-plan.v1"
+        schema = "kbox.build-plan.v1"
         target = "release"
       }
     "#;
@@ -35,7 +35,7 @@ fn canonical_acl_and_digest_are_stable() {
         "  file = \"Dockerfile\"\n",
         "  network = \"none\"\n",
         "  platform = \"linux/amd64\"\n",
-        "  schema = \"krun.box.build-plan.v1\"\n",
+        "  schema = \"kbox.build-plan.v1\"\n",
         "  target = \"release\"\n",
         "}\n",
     );
@@ -81,7 +81,7 @@ fn schema_is_closed_and_identity_values_are_exact() {
         Err(BoxBuildPlanError::InvalidValue { field: "label", .. })
     ));
 
-    let wrong_schema = PLAN.replace("krun.box.build-plan.v1", "krun.box.build-plan.experimental");
+    let wrong_schema = PLAN.replace("kbox.build-plan.v1", "kbox.build-plan.experimental");
     assert!(matches!(
         BoxBuildPlan::parse_acl(&wrong_schema),
         Err(BoxBuildPlanError::InvalidValue {
@@ -141,7 +141,7 @@ fn repository_paths_and_target_are_bounded_posix_values() {
 fn compiles_exactly_into_the_existing_build_engine() {
     let source = tempfile::TempDir::new().unwrap();
     let context = source.path().join("service");
-    let recipe = source.path().join(".krun");
+    let recipe = source.path().join(".kbox");
     std::fs::create_dir_all(&context).unwrap();
     std::fs::create_dir_all(&recipe).unwrap();
     std::fs::write(recipe.join("Containerfile"), "FROM scratch\n").unwrap();
@@ -149,9 +149,9 @@ fn compiles_exactly_into_the_existing_build_engine() {
     let plan = BoxBuildPlan::parse_acl(
         r#"
 build "oci" {
-  schema = "krun.box.build-plan.v1"
+  schema = "kbox.build-plan.v1"
   context = "service"
-  file = ".krun/Containerfile"
+  file = ".kbox/Containerfile"
   platform = "linux/arm64"
   target = "release"
   network = "none"
@@ -161,7 +161,7 @@ build "oci" {
     )
     .unwrap();
     let options = BoxBuildOptions {
-        tag: Some("registry.example/krun/test:build".to_string()),
+        tag: Some("registry.example/kbox/test:build".to_string()),
         quiet: true,
     };
 
@@ -174,7 +174,7 @@ build "oci" {
     );
     assert_eq!(
         config.tag.as_deref(),
-        Some("registry.example/krun/test:build")
+        Some("registry.example/kbox/test:build")
     );
     assert!(config.build_args.is_empty());
     assert!(config.quiet);

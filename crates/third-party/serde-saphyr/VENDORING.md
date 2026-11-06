@@ -14,4 +14,4 @@ SmallVec 2 alpha.10 while preserving the required ORT version and Mistral
 backend. The package is unpublished in this workspace.
 
 This is an existing inference backend dependency, not a new product
-configuration parser; Krun product configuration remains ACL.
+configuration parser; Kbox product configuration remains ACL.

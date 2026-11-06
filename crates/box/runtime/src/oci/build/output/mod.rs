@@ -4,9 +4,9 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::platform::Platform;
-use krun_box_core::StoredImage;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::platform::Platform;
+use kbox_core::StoredImage;
 use serde::{Deserialize, Serialize};
 
 use crate::oci::image::canonical_sha256_digest_hex;

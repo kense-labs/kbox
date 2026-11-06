@@ -1,5 +1,5 @@
 use super::{mount_rootfs_maintenance_device, unmount_rootfs_maintenance_device, BootstrapMode};
-use krun_box_guest_init::exec_server;
+use kbox_guest_init::exec_server;
 use std::sync::atomic::{AtomicI32, Ordering};
 use tracing::{error, info, warn};
 

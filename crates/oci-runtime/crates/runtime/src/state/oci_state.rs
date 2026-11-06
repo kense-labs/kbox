@@ -1,6 +1,6 @@
-use krun_oci_core::LifecycleState;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, State, StateBuilder};
-use krun_oci_sdk::{ContainerId, ErrorCode, OciBundle, Result, PAUSED_STATE_ANNOTATION};
+use koci_core::LifecycleState;
+use koci_sdk::oci_spec::runtime::{ContainerState, State, StateBuilder};
+use koci_sdk::{ContainerId, ErrorCode, OciBundle, Result, PAUSED_STATE_ANNOTATION};
 
 use super::filesystem::state_error;
 
@@ -131,8 +131,8 @@ pub(super) const fn container_state(state: LifecycleState) -> ContainerState {
 mod tests {
     use std::collections::HashMap;
 
-    use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-    use krun_oci_sdk::{ContainerId, OciBundle, OciSchemaValidator};
+    use koci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+    use koci_sdk::{ContainerId, OciBundle, OciSchemaValidator};
 
     use super::{build_state, rebuild_paused_state, rebuild_state};
 
@@ -148,7 +148,7 @@ mod tests {
                 "\"process\":{\"user\":{\"uid\":0,\"gid\":0},",
                 "\"args\":[\"/bin/true\"],\"cwd\":\"/\"},",
                 "\"root\":{\"path\":\"rootfs\"},",
-                "\"annotations\":{\"dev.krun.test\":\"retained\"}}"
+                "\"annotations\":{\"dev.kbox.test\":\"retained\"}}"
             ),
         )
         .expect("valid bundle");
@@ -165,7 +165,7 @@ mod tests {
             created
                 .annotations()
                 .as_ref()
-                .and_then(|annotations| annotations.get("dev.krun.test"))
+                .and_then(|annotations| annotations.get("dev.kbox.test"))
                 .map(String::as_str),
             Some("retained")
         );
@@ -226,7 +226,7 @@ mod tests {
             .pid(42)
             .bundle("/bundle")
             .annotations(HashMap::from([(
-                "dev.krun.test".to_string(),
+                "dev.kbox.test".to_string(),
                 "retained".to_string(),
             )]))
             .build()
@@ -239,7 +239,7 @@ mod tests {
             resumed
                 .annotations()
                 .as_ref()
-                .and_then(|annotations| annotations.get("dev.krun.test"))
+                .and_then(|annotations| annotations.get("dev.kbox.test"))
                 .map(String::as_str),
             Some("retained")
         );

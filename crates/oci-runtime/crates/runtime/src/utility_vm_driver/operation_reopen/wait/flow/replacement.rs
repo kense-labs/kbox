@@ -1,10 +1,10 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::AgentWaitRequest;
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentWaitRequest;
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, CreateRequest, ErrorCode, Generation, ListRequest, OciRuntimeService,
     WaitRequest,
 };
@@ -85,7 +85,7 @@ pub(super) async fn run(
     match service.list(ListRequest::default()).await {
         Ok(records) if records.len() == 1 => {
             let record = &records[0];
-            let exact = record.driver == DriverKind::LibkrunKvm
+            let exact = record.driver == DriverKind::LibkKvm
                 && record.isolation == IsolationClass::DedicatedVm
                 && record.state.id() == create.id.as_str()
                 && first.target.generation == Some(record.generation)

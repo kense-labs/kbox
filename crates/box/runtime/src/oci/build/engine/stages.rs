@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::super::dockerfile::Instruction;
 #[cfg(test)]

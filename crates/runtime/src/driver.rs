@@ -196,7 +196,7 @@ mod snapshot_tests {
         let decoded: RuntimeSnapshotRequest = serde_json::from_slice(&encoded).expect("decode");
         assert_eq!(decoded, valid);
         let mut wrong_schema = valid.clone();
-        wrong_schema.schema = "krun.runtime.snapshot.v0".into();
+        wrong_schema.schema = "kbox_contract.snapshot.v0".into();
         assert!(wrong_schema.validate().is_err());
         let mut zero_generation = valid;
         zero_generation.generation = 0;
@@ -221,7 +221,7 @@ mod snapshot_tests {
         let decoded: RuntimeSnapshot = serde_json::from_slice(&encoded).expect("decode");
         assert_eq!(decoded, receipt);
         let mut wrong_schema = receipt;
-        wrong_schema.schema = "krun.runtime.snapshot.v0".into();
+        wrong_schema.schema = "kbox_contract.snapshot.v0".into();
         assert!(wrong_schema.validate().is_err());
     }
 
@@ -229,10 +229,10 @@ mod snapshot_tests {
     async fn drivers_without_the_feature_keep_the_default_refusal() {
         let driver = NoSnapshotDriver;
         let apply: RuntimeApplyRequest = serde_json::from_value(serde_json::json!({
-            "schema": "krun.runtime.apply-request.v1",
+            "schema": "kbox_contract.apply-request.v1",
             "request_id": "snapshot-default-test",
             "spec": {
-                "schema": "krun.runtime.unit-spec.v4",
+                "schema": "kbox_contract.unit-spec.v4",
                 "unit_id": "unit-1",
                 "generation": 3,
                 "class": "task",

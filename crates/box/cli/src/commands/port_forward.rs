@@ -1,4 +1,4 @@
-//! `krun-box port-forward` command — forward host loopback TCP to a Sandbox box.
+//! `kbox port-forward` command — forward host loopback TCP to a Sandbox box.
 
 use std::num::{NonZeroU16, NonZeroU64, NonZeroUsize};
 #[cfg(target_os = "linux")]
@@ -8,7 +8,7 @@ use std::time::Duration;
 
 use clap::Args;
 #[cfg(any(target_os = "linux", test))]
-use krun_box_core::{ExecutionId, ExecutionPortConnector};
+use kbox_core::{ExecutionId, ExecutionPortConnector};
 #[cfg(any(target_os = "linux", test))]
 use tokio::io::{AsyncRead, AsyncWrite};
 
@@ -78,7 +78,7 @@ pub async fn execute(args: PortForwardArgs) -> Result<(), Box<dyn std::error::Er
         )
     };
 
-    let home = krun_box_core::dirs_home();
+    let home = kbox_core::dirs_home();
     let connector = Arc::new(super::configured_local_execution_manager(&home).await?);
     let bind_address =
         std::net::SocketAddr::from((std::net::Ipv4Addr::LOCALHOST, args.host_port.get()));
@@ -136,7 +136,7 @@ pub async fn execute(args: PortForwardArgs) -> Result<(), Box<dyn std::error::Er
 async fn proxy_connection<C, S>(
     connector: &C,
     execution_id: &ExecutionId,
-    generation: krun_box_core::ExecutionGeneration,
+    generation: kbox_core::ExecutionGeneration,
     guest_port: NonZeroU16,
     connect_timeout: Duration,
     mut host_stream: S,
@@ -160,7 +160,7 @@ mod tests {
 
     use async_trait::async_trait;
     use clap::Parser;
-    use krun_box_core::{
+    use kbox_core::{
         ExecutionGeneration, ExecutionManagerError, ExecutionManagerResult, ExecutionPortStream,
     };
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -174,7 +174,7 @@ mod tests {
     #[test]
     fn parses_a_bounded_loopback_forward() {
         let cli = crate::commands::Cli::try_parse_from([
-            "krun-box",
+            "kbox",
             "port-forward",
             "database",
             "--host-port",
@@ -208,7 +208,7 @@ mod tests {
                 "0",
             ][..],
         ] {
-            let mut args = vec!["krun-box", "port-forward", "database"];
+            let mut args = vec!["kbox", "port-forward", "database"];
             args.extend(invalid_args);
             assert!(crate::commands::Cli::try_parse_from(args).is_err());
         }

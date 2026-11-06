@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{
     ContainerOperationRequest, ContainerTarget, Error, ErrorCode, OperationId, StartRequest,
 };
 

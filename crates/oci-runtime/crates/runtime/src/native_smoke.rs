@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
 #[cfg(not(target_os = "linux"))]
-use krun_oci_core::HostPlatform;
+use koci_core::HostPlatform;
 
 use crate::{
     LifecycleFaultPoint, NativeLinuxCheckpointSmokeReport, NativeLinuxFaultCleanupReport,
@@ -36,8 +36,8 @@ pub async fn native_linux_smoke(
 
 /// Exercise the complete native Linux lifecycle over the packaged Unix SDK service.
 ///
-/// This gate binds the same single-container service used by Krun Box, connects
-/// through [`krun_oci_sdk::RuntimeClient::connect`], and verifies service-owned
+/// This gate binds the same single-container service used by Kbox Box, connects
+/// through [`koci_sdk::RuntimeClient::connect`], and verifies service-owned
 /// descriptor, process, socket, and executor cleanup.
 pub async fn native_linux_service_smoke(
     init_executable: &Path,
@@ -264,7 +264,7 @@ pub async fn native_linux_checkpoint_restore_owner(
     request_file: &Path,
     ready_file: &Path,
     crash_point: crate::NativeLinuxCheckpointRestoreCrashPoint,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     linux::run_checkpoint_restore_owner(
         init_executable,
         criu_executable,

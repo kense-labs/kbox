@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{ContainerTarget, Error, ErrorCode, OperationId};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{ContainerTarget, Error, ErrorCode, OperationId};
 
 use super::super::{QualificationHvfDriver, FAULT_OPERATION};
 pub(super) use crate::operation_journal_evidence::ContainerOperationJournalStatus as FreezerJournalStatus;

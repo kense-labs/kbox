@@ -1,4 +1,4 @@
-//! `krun-box wait` command — Block until one or more boxes stop, then print exit codes.
+//! `kbox wait` command — Block until one or more boxes stop, then print exit codes.
 
 use clap::Args;
 
@@ -57,7 +57,7 @@ async fn wait_one(
     query: &str,
     heartbeat_interval: Option<std::time::Duration>,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::{ExecutionId, ExecutionManager, ExecutionState};
+    use kbox_core::{ExecutionId, ExecutionManager, ExecutionState};
 
     let mut heartbeat = WaitHeartbeat::new(heartbeat_interval);
     let mut managed_manager = None;
@@ -87,7 +87,7 @@ async fn wait_one(
 
         if uses_managed_execution(record) {
             if managed_manager.is_none() {
-                let home = krun_box_core::dirs_home();
+                let home = kbox_core::dirs_home();
                 managed_manager = Some(super::configured_local_execution_manager(&home).await?);
             }
             let manager = managed_manager
@@ -228,7 +228,7 @@ impl WaitHeartbeat {
         }
 
         eprintln!(
-            "krun-box wait: still waiting for {query} ({}s)",
+            "kbox wait: still waiting for {query} ({}s)",
             now.duration_since(self.started).as_secs()
         );
         self.next = now + interval;
@@ -372,8 +372,8 @@ mod tests {
     fn test_uses_managed_execution_when_metadata_present() {
         use std::collections::BTreeMap;
 
-        use krun_box_core::{BoxConfig, CreateExecutionRequest, ExecutionGeneration, OperationId};
-        use krun_box_runtime::ManagedExecutionMetadata;
+        use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionGeneration, OperationId};
+        use kbox_runtime::ManagedExecutionMetadata;
 
         let unmanaged = crate::test_helpers::fixtures::make_record("id", "box", "starting", None);
         assert!(!uses_managed_execution(&unmanaged));

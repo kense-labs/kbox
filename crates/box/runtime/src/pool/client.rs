@@ -1,6 +1,6 @@
 //! Socket protocol and client helpers for the warm-pool daemon.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// Maximum encoded payload accepted by the pool socket protocol.
@@ -264,7 +264,7 @@ pub async fn run_client(req: PoolClientRun) -> Result<PoolClientOutput> {
 
     let mut stream = UnixStream::connect(&req.socket).await.map_err(|e| {
         BoxError::PoolError(format!(
-            "Failed to connect to pool daemon at {} ({}). Is `krun-box pool start` running?",
+            "Failed to connect to pool daemon at {} ({}). Is `kbox pool start` running?",
             req.socket, e
         ))
     })?;
@@ -345,7 +345,7 @@ async fn lease_client(req: &PoolClientLease) -> Result<PoolLeaseResponse> {
 
     let mut stream = UnixStream::connect(&req.socket).await.map_err(|e| {
         BoxError::PoolError(format!(
-            "Failed to connect to pool daemon at {} ({}). Is `krun-box pool start` running?",
+            "Failed to connect to pool daemon at {} ({}). Is `kbox pool start` running?",
             req.socket, e
         ))
     })?;

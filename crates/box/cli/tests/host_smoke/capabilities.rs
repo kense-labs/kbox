@@ -1,7 +1,7 @@
 #![cfg(test)]
 
 use super::*;
-use krun_box_core::pty::{parse_frame, PtyFrame, PtyRequest};
+use kbox_core::pty::{parse_frame, PtyFrame, PtyRequest};
 
 const NONROOT_PROBE: &str = r#"
 set -eu
@@ -72,9 +72,9 @@ fn nonroot_drop_all_applies_to_main_exec_and_pty() {
         "--user",
         "10001:10001",
         "--env",
-        "KRUN_SEC_CAP_DROP=ALL",
+        "K_SEC_CAP_DROP=ALL",
         "--env",
-        "KRUN_SEC_NO_NEW_PRIVS=1",
+        "K_SEC_NO_NEW_PRIVS=1",
         boxes[1],
         "--",
         "sh",
@@ -91,16 +91,13 @@ fn nonroot_drop_all_applies_to_main_exec_and_pty() {
         .unwrap();
     let output = runtime.block_on(async {
         tokio::time::timeout(Duration::from_secs(10), async {
-            let mut client = krun_box_runtime::grpc::PtyClient::connect(&socket)
+            let mut client = kbox_runtime::grpc::PtyClient::connect(&socket)
                 .await
                 .unwrap();
             client
                 .send_request(&PtyRequest {
                     cmd: vec!["sh".into(), "-c".into(), NONROOT_PROBE.into()],
-                    env: vec![
-                        "KRUN_SEC_CAP_DROP=ALL".into(),
-                        "KRUN_SEC_NO_NEW_PRIVS=1".into(),
-                    ],
+                    env: vec!["K_SEC_CAP_DROP=ALL".into(), "K_SEC_NO_NEW_PRIVS=1".into()],
                     working_dir: None,
                     rootfs: None,
                     user: Some("10001:10001".into()),

@@ -149,11 +149,14 @@ pub(super) fn mount_virtio_fs_shares() -> Result<(), Box<dyn std::error::Error>>
 
     #[cfg(target_os = "linux")]
     {
-        root_transport::prepare_current_root()?;
+        root_transport::prepare_current_root()
+            .map_err(|error| format!("failed to prepare current root transport: {error}"))?;
         if std::env::var(GUEST_ROOTFS_MAINTENANCE_ENV).as_deref() != Ok("1") {
-            mount_guest_terminal_control()?;
+            mount_guest_terminal_control()
+                .map_err(|error| format!("failed to mount terminal control: {error}"))?;
         }
-        mount_guest_boot_control()?;
+        mount_guest_boot_control()
+            .map_err(|error| format!("failed to mount boot control: {error}"))?;
     }
 
     #[cfg(not(target_os = "linux"))]
@@ -169,10 +172,10 @@ pub(super) fn mount_virtio_fs_shares() -> Result<(), Box<dyn std::error::Error>>
 /// `MS_RDONLY` and `noload` so this observational path cannot replay a journal.
 #[cfg(target_os = "linux")]
 pub(super) fn mount_rootfs_maintenance_device() -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::guest_exec::{
+    use kbox_core::guest_exec::{
         GUEST_ROOTFS_MAINTENANCE_DEVICE_ENV, GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH,
     };
-    use krun_box_core::vmm::GUEST_EXT4_ROOT_DEVICE;
+    use kbox_core::vmm::GUEST_EXT4_ROOT_DEVICE;
     use nix::mount::{mount, MsFlags};
 
     let device = std::env::var(GUEST_ROOTFS_MAINTENANCE_DEVICE_ENV)
@@ -221,7 +224,7 @@ pub(super) fn mount_rootfs_maintenance_device() -> Result<(), Box<dyn std::error
 
 #[cfg(target_os = "linux")]
 pub(super) fn unmount_rootfs_maintenance_device() -> Result<(), Box<dyn std::error::Error>> {
-    use krun_box_core::guest_exec::GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH;
+    use kbox_core::guest_exec::GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH;
     use nix::mount::{umount2, MntFlags};
 
     umount2(GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH, MntFlags::empty())?;
@@ -329,7 +332,7 @@ pub(super) fn virtiofs_mount_options_from_env_value(value: Option<&str>) -> Opti
 
 #[cfg_attr(not(target_os = "linux"), allow(dead_code))]
 pub(super) fn virtiofs_mount_options() -> Option<String> {
-    virtiofs_mount_options_from_env_value(std::env::var("KRUN_VIRTIOFS_CACHE").ok().as_deref())
+    virtiofs_mount_options_from_env_value(std::env::var("K_VIRTIOFS_CACHE").ok().as_deref())
 }
 
 #[cfg(target_os = "linux")]
@@ -361,7 +364,8 @@ pub(super) fn mount_virtiofs(
         }
     }
 
-    mount(Some(tag), target, Some("virtiofs"), flags, None::<&str>)?;
+    mount(Some(tag), target, Some("virtiofs"), flags, None::<&str>)
+        .map_err(|error| format!("virtio-fs mount of tag {tag:?} at {target:?} failed: {error}"))?;
     Ok(())
 }
 
@@ -388,7 +392,7 @@ pub(super) fn mount_user_volumes() -> Result<(), Box<dyn std::error::Error>> {
                 let guest_path = parts[1];
                 if guest_mount_path_overlaps_runtime_state(guest_path) {
                     return Err(format!(
-                        "guest volume path {guest_path:?} overlaps reserved runtime state /run/krun-box"
+                        "guest volume path {guest_path:?} overlaps reserved runtime state /run/kbox"
                     )
                     .into());
                 }
@@ -411,7 +415,7 @@ pub(super) fn mount_user_volumes() -> Result<(), Box<dyn std::error::Error>> {
                     // onto guest_path. This preserves the target's parent directory
                     // (e.g. /etc) instead of clobbering it with the share.
                     let file_name = guest_path.rsplit('/').next().unwrap_or(guest_path);
-                    let private_mp = format!("/run/.krun-filemounts/{}", index);
+                    let private_mp = format!("/run/.kfilemounts/{}", index);
                     std::fs::create_dir_all(&private_mp)?;
                     mount_virtiofs(tag, private_mp.as_str(), MsFlags::empty())?;
 
@@ -501,8 +505,8 @@ pub(super) fn guest_mount_path_overlaps_runtime_state(path: &str) -> bool {
     );
     normalized == "/"
         || normalized == "/run"
-        || normalized == "/run/krun-box"
-        || normalized.starts_with("/run/krun-box/")
+        || normalized == "/run/kbox"
+        || normalized.starts_with("/run/kbox/")
 }
 
 /// Mount a managed volume privately, seed it from the image directory when
@@ -550,7 +554,7 @@ pub(super) fn volume_staging_path(
 ) -> Result<std::path::PathBuf, Box<dyn std::error::Error>> {
     for root in ["/run", "/dev", "/tmp"] {
         let root = std::fs::canonicalize(root)?;
-        let candidate = root.join(".krun-volume-mounts").join(index.to_string());
+        let candidate = root.join(".kvolume-mounts").join(index.to_string());
         if !candidate.starts_with(source) {
             return Ok(candidate);
         }

@@ -9,10 +9,10 @@ use base64::{engine::general_purpose::STANDARD, Engine as _};
         any(target_arch = "x86_64", target_arch = "aarch64")
     )
 ))]
-use krun_oci_agent_protocol::AgentClient;
+use koci_agent_protocol::AgentClient;
 #[cfg(any(target_os = "linux", all(target_os = "macos", target_arch = "aarch64")))]
-use krun_oci_sdk::RuntimeClient;
-use krun_oci_sdk::{
+use koci_sdk::RuntimeClient;
+use koci_sdk::{
     async_trait, ContainerTarget, ErrorCode, FileOp, FileRequest, FileResponse, FilesystemEntry,
     FilesystemEntryKind, FilesystemOp, FilesystemRequest, FilesystemResponse, OperationContext,
     OperationId, Result,
@@ -29,7 +29,7 @@ use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::time::timeout;
 
 const CALL_TIMEOUT: Duration = Duration::from_secs(15);
-const PAYLOAD: &[u8] = b"krun-oci-filesystem-smoke\0\xff\x80\n";
+const PAYLOAD: &[u8] = b"koci-filesystem-smoke\0\xff\x80\n";
 
 #[async_trait]
 trait FilesystemSmokeClient: Sync {
@@ -115,7 +115,7 @@ async fn exercise(
     target: &ContainerTarget,
     nonce: &str,
 ) -> std::result::Result<(), String> {
-    let directory = format!("/tmp/.krun-oci-filesystem-{nonce}");
+    let directory = format!("/tmp/.koci-filesystem-{nonce}");
     let source = format!("{directory}/source.bin");
     let moved = format!("{directory}/moved.bin");
     let conflict = format!("{directory}/conflict.bin");

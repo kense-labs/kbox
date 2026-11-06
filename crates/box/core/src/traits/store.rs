@@ -1,7 +1,7 @@
 //! Persistent store abstractions for networks, volumes, snapshots, and images.
 //!
 //! Decouples the runtime from the JSON-file-based storage in
-//! `krun-box-runtime`. Implementations can use any backend:
+//! `kbox-runtime`. Implementations can use any backend:
 //! JSON files, etcd, consul, SQLite, etc.
 
 use chrono::{DateTime, Utc};

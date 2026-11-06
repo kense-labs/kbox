@@ -2,9 +2,9 @@ use std::fmt;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::GuestAgentService;
-use krun_oci_core::{CapabilityStatus, DriverCapability, DriverReadiness, IsolationClass};
-use krun_oci_sdk::{async_trait, Error, ErrorCode, Result};
+use koci_agent_protocol::GuestAgentService;
+use koci_core::{CapabilityStatus, DriverCapability, DriverReadiness, IsolationClass};
+use koci_sdk::{async_trait, Error, ErrorCode, Result};
 
 use crate::agent_driver::AgentDriverClient;
 use crate::agent_session::{UtilityVmSession, VerifiedLinuxUtilityVmConnectOptions};
@@ -116,7 +116,7 @@ impl KvmRuntimeDriver {
         .await
     }
 
-    /// Open the candidate only for the Krun Box product lifecycle qualification
+    /// Open the candidate only for the Kbox Box product lifecycle qualification
     /// owner.
     ///
     /// The public candidate remains `probe-only`. This crate-private scope is
@@ -169,7 +169,7 @@ impl KvmRuntimeDriver {
         Ok(Self {
             inner: UtilityVmRuntimeDriver::new(
                 capability,
-                krun_oci_sdk::AttachmentCapabilities::base_v1(),
+                koci_sdk::AttachmentCapabilities::base_v1(),
                 "KVM",
                 prepared.runtime_root,
                 prepared.runtime_share_root,
@@ -202,12 +202,11 @@ fn candidate_capability(
     system_image_manifest_sha256: &str,
     registration: KvmRegistration,
 ) -> DriverCapability {
-    const RUNTIME_SHARE: &str = match krun_oci_core::hardware_vm::virtiofs_share_mode(
-        krun_oci_core::DriverKind::LibkrunKvm,
-    ) {
-        Some(mode) => mode,
-        None => panic!("libkrun KVM must advertise a hardware-vm virtio-fs share"),
-    };
+    const RUNTIME_SHARE: &str =
+        match koci_core::hardware_vm::virtiofs_share_mode(koci_core::DriverKind::LibkKvm) {
+            Some(mode) => mode,
+            None => panic!("libkrun KVM must advertise a hardware-vm virtio-fs share"),
+        };
     capability.readiness = registration.readiness();
     capability.isolation_classes = vec![IsolationClass::DedicatedVm];
     capability.evidence.extend([
@@ -377,7 +376,7 @@ mod tests {
     use std::collections::BTreeMap;
     use std::os::unix::fs::PermissionsExt;
 
-    use krun_oci_core::{DriverKind, DriverReadiness};
+    use koci_core::{DriverKind, DriverReadiness};
 
     use super::*;
     use crate::{HostRuntimeService, RuntimeDriver};
@@ -397,7 +396,7 @@ mod tests {
     fn test_driver(root: &Path) -> KvmRuntimeDriver {
         let capability = candidate_capability(
             DriverCapability {
-                driver: DriverKind::LibkrunKvm,
+                driver: DriverKind::LibkKvm,
                 status: CapabilityStatus::Available,
                 readiness: DriverReadiness::Experimental,
                 isolation_classes: vec![IsolationClass::SharedHostKernel],
@@ -410,7 +409,7 @@ mod tests {
         let runtime_root = root.join("runtime");
         let inner = UtilityVmRuntimeDriver::new(
             capability,
-            krun_oci_sdk::AttachmentCapabilities::base_v1(),
+            koci_sdk::AttachmentCapabilities::base_v1(),
             "KVM",
             runtime_root.clone(),
             runtime_root.join("shares"),
@@ -434,7 +433,7 @@ mod tests {
         let driver = test_driver(temporary.path());
         let capability = driver.capability();
 
-        assert_eq!(capability.driver, DriverKind::LibkrunKvm);
+        assert_eq!(capability.driver, DriverKind::LibkKvm);
         assert_eq!(capability.status, CapabilityStatus::Available);
         assert_eq!(capability.readiness, DriverReadiness::ProbeOnly);
         assert_eq!(capability.isolation_classes, [IsolationClass::DedicatedVm]);
@@ -460,14 +459,14 @@ mod tests {
         assert_eq!(driver.operations().len(), 20);
         assert!(!driver
             .operations()
-            .contains(&krun_oci_sdk::RuntimeOperation::Attest));
+            .contains(&koci_sdk::RuntimeOperation::Attest));
         for extension in [
-            krun_oci_sdk::AMD_SEV_SNP_LAUNCH_EXTENSION,
-            krun_oci_sdk::INTEL_TDX_LAUNCH_EXTENSION,
+            koci_sdk::AMD_SEV_SNP_LAUNCH_EXTENSION,
+            koci_sdk::INTEL_TDX_LAUNCH_EXTENSION,
         ] {
             assert!(!driver
                 .attachment_capabilities()
-                .supports_extension(extension, krun_oci_sdk::TEE_LAUNCH_EXTENSION_VERSION,));
+                .supports_extension(extension, koci_sdk::TEE_LAUNCH_EXTENSION_VERSION,));
         }
         assert_eq!(driver.hooks(), &crate::agent_driver::AGENT_DRIVER_HOOKS);
         assert_eq!(driver.hooks().len(), 6);
@@ -491,7 +490,7 @@ mod tests {
     fn recovery_qualification_is_explicit_and_does_not_promote_the_candidate() {
         let capability = candidate_capability(
             DriverCapability {
-                driver: DriverKind::LibkrunKvm,
+                driver: DriverKind::LibkKvm,
                 status: CapabilityStatus::Available,
                 readiness: DriverReadiness::Supported,
                 isolation_classes: vec![IsolationClass::SharedHostKernel],
@@ -518,7 +517,7 @@ mod tests {
 
         let soak = candidate_capability(
             DriverCapability {
-                driver: DriverKind::LibkrunKvm,
+                driver: DriverKind::LibkKvm,
                 status: CapabilityStatus::Available,
                 readiness: DriverReadiness::Supported,
                 isolation_classes: vec![IsolationClass::SharedHostKernel],
@@ -536,7 +535,7 @@ mod tests {
 
         let box_product = candidate_capability(
             DriverCapability {
-                driver: DriverKind::LibkrunKvm,
+                driver: DriverKind::LibkKvm,
                 status: CapabilityStatus::Available,
                 readiness: DriverReadiness::Supported,
                 isolation_classes: vec![IsolationClass::SharedHostKernel],
@@ -640,19 +639,19 @@ mod tests {
     fn config_rejects_relative_or_ambiguous_paths() {
         assert!(KvmRuntimeDriverConfig::new(
             "relative-shim",
-            "/tmp/krun-oci-kvm",
+            "/tmp/koci-kvm",
             "/tmp/system-image.json"
         )
         .is_err());
         assert!(KvmRuntimeDriverConfig::new(
             "/tmp/shim",
-            "/tmp/krun-oci-kvm/../runtime",
+            "/tmp/koci-kvm/../runtime",
             "/tmp/system-image.json"
         )
         .is_err());
         assert!(KvmRuntimeDriverConfig::new(
             "/tmp/shim",
-            "/tmp/krun-oci-kvm",
+            "/tmp/koci-kvm",
             "relative-system-image.json"
         )
         .is_err());

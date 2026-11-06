@@ -1,7 +1,7 @@
 //! CLI helpers for host-platform capability checks.
 
 #[cfg(windows)]
-use krun_box_core::PlatformCapabilities;
+use kbox_core::PlatformCapabilities;
 
 #[cfg(windows)]
 pub(crate) fn unsupported_command(command: &str, required: &str) -> Box<dyn std::error::Error> {

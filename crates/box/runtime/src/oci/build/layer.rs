@@ -6,7 +6,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use sha2::{Digest, Sha256};
 
 #[cfg(all(test, target_os = "macos"))]
@@ -542,24 +542,22 @@ fn append_file_with_chown<W: std::io::Write>(
             })?;
             header.set_entry_type(tar::EntryType::Symlink);
             header.set_size(0);
-            header.set_link_name(&target).map_err(|e| {
-                BoxError::BuildError(format!(
-                    "Failed to encode layer symlink {} -> {}: {}",
-                    file_path.display(),
-                    target.display(),
-                    e
-                ))
-            })?;
+            header.set_cksum();
+            return builder
+                .append_link(&mut header, tar_path, &target)
+                .map_err(|e| {
+                    BoxError::BuildError(format!(
+                        "Failed to encode layer symlink {} -> {}: {}",
+                        file_path.display(),
+                        target.display(),
+                        e
+                    ))
+                });
         }
         header.set_cksum();
-        // For symlinks, the data is empty (target is in link_name header field).
-        let body: Box<dyn std::io::Read> = if meta.file_type().is_symlink() {
-            Box::new(std::io::empty())
-        } else {
-            Box::new(std::fs::File::open(file_path).map_err(|e| {
-                BoxError::BuildError(format!("Failed to open {}: {}", file_path.display(), e))
-            })?)
-        };
+        let body = std::fs::File::open(file_path).map_err(|e| {
+            BoxError::BuildError(format!("Failed to open {}: {}", file_path.display(), e))
+        })?;
         builder
             .append_data(&mut header, tar_path, body)
             .map_err(|e| BoxError::BuildError(format!("Failed to add file to layer: {}", e)))

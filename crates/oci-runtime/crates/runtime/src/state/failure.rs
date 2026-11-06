@@ -1,4 +1,4 @@
-use krun_oci_sdk::{Error, ErrorCode, OperationId, Result};
+use koci_sdk::{Error, ErrorCode, OperationId, Result};
 
 use crate::fault::DurableMutation;
 

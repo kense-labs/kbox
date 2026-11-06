@@ -1,5 +1,5 @@
-use krun_oci_core::HostPlatform;
-use krun_oci_sdk::{
+use koci_core::HostPlatform;
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest, CheckpointFormat,
     CheckpointReference, ContainerRecord, RestoreRequest, RuntimeArtifact,
 };
@@ -126,7 +126,7 @@ async fn restore_v5_journal_replays_one_exact_paused_running_generation() {
     ));
     let RestoreOperationPreparation::Prepared(prepared) = fixture
         .store
-        .prepare_restore(&request, DriverKind::LibkrunWhpx)
+        .prepare_restore(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare restore")
     else {
@@ -226,7 +226,7 @@ async fn startup_rejects_restore_request_drift_inside_the_v5_journal() {
     );
     fixture
         .store
-        .prepare_restore(&request, DriverKind::LibkrunWhpx)
+        .prepare_restore(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare restore");
     fixture
@@ -276,7 +276,7 @@ async fn failed_restore_quarantines_its_generation_and_allows_exact_id_reuse() {
     );
     fixture
         .store
-        .prepare_restore(&request, DriverKind::LibkrunWhpx)
+        .prepare_restore(&request, DriverKind::LibkWhpx)
         .await
         .expect("prepare failed restore");
     let failure = Error::new(ErrorCode::FailedPrecondition, "terminal restore failure")
@@ -306,7 +306,7 @@ async fn failed_restore_quarantines_its_generation_and_allows_exact_id_reuse() {
     );
     let RestoreOperationPreparation::Prepared(prepared) = fixture
         .store
-        .prepare_restore(&retry, DriverKind::LibkrunWhpx)
+        .prepare_restore(&retry, DriverKind::LibkWhpx)
         .await
         .expect("reuse ID after failed restore")
     else {

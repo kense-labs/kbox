@@ -3,10 +3,8 @@ use std::io::{BufRead, BufReader, Read};
 use std::path::{Path, PathBuf};
 
 use flate2::read::GzDecoder;
-use krun_box_core::log::{LogDriver, LogEntry};
-use krun_box_core::{
-    ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
-};
+use kbox_core::log::{LogDriver, LogEntry};
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult};
 
 use super::support::require_generation;
 use super::LocalExecutionManager;

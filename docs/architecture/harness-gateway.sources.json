@@ -32,9 +32,9 @@
       "统一沙箱"
     ],
     "implementation_mapping": {
-      "授权策略层 / 策略执行引擎": "krun-sandbox",
-      "执行运行时层 / 统一沙箱": "krun-box",
-      "执行运行时层 / 共享机制": "krun-core"
+      "授权策略层 / 策略执行引擎": "ksandbox",
+      "执行运行时层 / 统一沙箱": "kbox",
+      "执行运行时层 / 共享机制": "kcore"
     },
     "diagram_labels": "brand-neutral; implementation names are in the design document only",
     "adapter_types": [
@@ -139,20 +139,6 @@
       "path": "crates/sandbox/src/lib.rs",
       "bytes": 28152,
       "sha256": "cf2705ce21a66d4f2620bf6f568d25b25c3f247c0a7608cd9916581c858dd228",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/box/sdk/src/lib.rs",
-      "bytes": 2930,
-      "sha256": "75058db3f7266311f76488e9aa4ac192b1ec7734ca8aaacce225a130a0036cff",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/box/sdk/README.md",
-      "bytes": 15913,
-      "sha256": "4a2ca5ad43d060c8fdc57edf376d600cc91c523d4dc7af2547cc76f299f6da31",
       "tracked_at_head": true,
       "matches_head": true
     },

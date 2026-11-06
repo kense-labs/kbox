@@ -1,11 +1,11 @@
 use std::path::{Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use krun_oci_sdk::OciBundle;
+use koci_sdk::OciBundle;
 use tokio::io::AsyncReadExt;
 
-pub(super) const MARKER_NAME: &str = ".krun-oci-native-smoke";
-pub(super) const MARKER_CONTENTS: &[u8] = b"krun-oci-native-box-mapping-v1\n";
+pub(super) const MARKER_NAME: &str = ".koci-native-smoke";
+pub(super) const MARKER_CONTENTS: &[u8] = b"koci-native-box-mapping-v1\n";
 const MAX_MARKER_BYTES: u64 = 1_024;
 
 pub(super) async fn canonical_directory(path: &Path, description: &str) -> Result<PathBuf, String> {

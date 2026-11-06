@@ -1,4 +1,4 @@
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::oci_spec::runtime::ContainerState;
 
 use super::*;
 

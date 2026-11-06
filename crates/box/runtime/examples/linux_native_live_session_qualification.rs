@@ -1,7 +1,7 @@
 //! Destructive live-session qualification for Box over Native Linux OCI.
 //!
 //! Exercises the public Box Sandbox path with
-//! `KRUN_OCI_NATIVE_SESSION_SUPERVISOR=1`, keeps the Box manager across a
+//! `K_OCI_NATIVE_SESSION_SUPERVISOR=1`, keeps the Box manager across a
 //! Native Linux Host owner SIGKILL, proves retained streaming process-handle
 //! continuity, mutating filesystem continuity via public Box `filesystem`
 //! (keyed MakeDir / Move / Remove before kill, ListDir after reattach) plus
@@ -9,7 +9,7 @@
 //! same generation), and keyed captured exec / state / inventory / stats /
 //! kill, without inventing an exit status.
 //!
-//! Schema `krun.box.linux-native-live-session.v7`.
+//! Schema `kbox.linux-native-live-session.v7`.
 //!
 //! Honest scope (anti-overfit):
 //! - Live Host-reopen is Native-Linux-driver-only today.
@@ -59,7 +59,7 @@ mod qualification {
 
     use base64::engine::general_purpose::STANDARD;
     use base64::Engine;
-    use krun_box_core::{
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecEvent, ExecRequest, ExecutionBackend,
         ExecutionGeneration, ExecutionId, ExecutionIsolation, ExecutionManager,
         ExecutionManagerError, ExecutionProcessSignal, ExecutionProcessStream,
@@ -68,42 +68,42 @@ mod qualification {
         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
         ResourceConfig, StreamType,
     };
-    use krun_box_runtime::{
+    use kbox_runtime::{
         LocalExecutionManager, ManagedExecutionStore, ManagedRuntimeRoute,
         NativeLinuxOciMigrationConfig, OciRuntimeBinding,
     };
-    use krun_oci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
+    use koci_sdk::{DriverKind, IsolationClass as OciIsolationClass};
     use serde::Serialize;
     use serde_json::Value;
 
-    const ENABLE_ENV: &str = "KRUN_BOX_NATIVE_LIVE_SESSION_QUALIFICATION";
-    const HOME_ENV: &str = "KRUN_HOME";
-    const HOST_ROOT_ENV: &str = "KRUN_BOX_OCI_HOST_ROOT";
-    const RUNTIME_PATH_ENV: &str = "KRUN_BOX_OCI_RUNTIME_PATH";
-    const AGENT_PATH_ENV: &str = "KRUN_BOX_OCI_AGENT_PATH";
-    const IMAGE_ENV: &str = "KRUN_BOX_NATIVE_LIVE_SESSION_IMAGE";
-    const REPORT_ENV: &str = "KRUN_BOX_NATIVE_LIVE_SESSION_REPORT";
-    const BOX_SHA_ENV: &str = "KRUN_BOX_NATIVE_LIVE_SESSION_BOX_SHA";
-    const OCI_SHA_ENV: &str = "KRUN_BOX_NATIVE_LIVE_SESSION_OCI_SHA";
-    const SUPERVISOR_ENV: &str = "KRUN_OCI_NATIVE_SESSION_SUPERVISOR";
-    const SCHEMA_VERSION: &str = "krun.box.linux-native-live-session.v7";
-    const OWNER_SCHEMA: &str = "krun.box.native-linux-oci-owner.v1";
-    const KEYED_EXEC_BEFORE: &str = "krun.box.live-session.keyed-exec.before-owner-kill";
-    const KEYED_EXEC_AFTER: &str = "krun.box.live-session.keyed-exec.after-reopen";
-    const KEYED_FILE_UPLOAD_BEFORE: &str = "krun.box.live-session.keyed-file.before-owner-kill";
-    const KEYED_MKDIR_BEFORE: &str = "krun.box.live-session.keyed-mkdir.before-owner-kill";
-    const KEYED_MOVE_BEFORE: &str = "krun.box.live-session.keyed-move.before-owner-kill";
-    const KEYED_REMOVE_BEFORE: &str = "krun.box.live-session.keyed-remove.before-owner-kill";
+    const ENABLE_ENV: &str = "K_BOX_NATIVE_LIVE_SESSION_QUALIFICATION";
+    const HOME_ENV: &str = "K_HOME";
+    const HOST_ROOT_ENV: &str = "K_BOX_OCI_HOST_ROOT";
+    const RUNTIME_PATH_ENV: &str = "K_BOX_OCI_RUNTIME_PATH";
+    const AGENT_PATH_ENV: &str = "K_BOX_OCI_AGENT_PATH";
+    const IMAGE_ENV: &str = "K_BOX_NATIVE_LIVE_SESSION_IMAGE";
+    const REPORT_ENV: &str = "K_BOX_NATIVE_LIVE_SESSION_REPORT";
+    const BOX_SHA_ENV: &str = "K_BOX_NATIVE_LIVE_SESSION_BOX_SHA";
+    const OCI_SHA_ENV: &str = "K_BOX_NATIVE_LIVE_SESSION_OCI_SHA";
+    const SUPERVISOR_ENV: &str = "K_OCI_NATIVE_SESSION_SUPERVISOR";
+    const SCHEMA_VERSION: &str = "kbox.linux-native-live-session.v7";
+    const OWNER_SCHEMA: &str = "kbox.native-linux-oci-owner.v1";
+    const KEYED_EXEC_BEFORE: &str = "kbox.live-session.keyed-exec.before-owner-kill";
+    const KEYED_EXEC_AFTER: &str = "kbox.live-session.keyed-exec.after-reopen";
+    const KEYED_FILE_UPLOAD_BEFORE: &str = "kbox.live-session.keyed-file.before-owner-kill";
+    const KEYED_MKDIR_BEFORE: &str = "kbox.live-session.keyed-mkdir.before-owner-kill";
+    const KEYED_MOVE_BEFORE: &str = "kbox.live-session.keyed-move.before-owner-kill";
+    const KEYED_REMOVE_BEFORE: &str = "kbox.live-session.keyed-remove.before-owner-kill";
     const KEYED_EXEC_MARKER: &[u8] = b"live-session-keyed-ok\n";
     const STREAM_MARKER: &[u8] = b"live-session-stream-ok\n";
     const STREAM_ECHO_BEFORE: &[u8] = b"before-owner-kill\n";
     const STREAM_ECHO_AFTER: &[u8] = b"after-owner-reopen\n";
-    const FS_GUEST_DIR: &str = "/tmp/.krun-box-native-live-fs.d";
-    const FS_GUEST_PATH: &str = "/tmp/.krun-box-native-live-fs.d/payload.bin";
-    const FS_GUEST_DIR_KEPT: &str = "/tmp/.krun-box-native-live-fs.kept.d";
-    const FS_GUEST_PATH_KEPT: &str = "/tmp/.krun-box-native-live-fs.kept.d/payload.bin";
-    const FS_GUEST_EPHEMERAL: &str = "/tmp/.krun-box-native-live-fs.ephemeral.d";
-    const FS_PAYLOAD: &[u8] = b"krun-box-native-live-fs\0binary\nv7\n";
+    const FS_GUEST_DIR: &str = "/tmp/.kbox-native-live-fs.d";
+    const FS_GUEST_PATH: &str = "/tmp/.kbox-native-live-fs.d/payload.bin";
+    const FS_GUEST_DIR_KEPT: &str = "/tmp/.kbox-native-live-fs.kept.d";
+    const FS_GUEST_PATH_KEPT: &str = "/tmp/.kbox-native-live-fs.kept.d/payload.bin";
+    const FS_GUEST_EPHEMERAL: &str = "/tmp/.kbox-native-live-fs.ephemeral.d";
+    const FS_PAYLOAD: &[u8] = b"kbox-native-live-fs\0binary\nv7\n";
 
     type AnyError = Box<dyn Error + Send + Sync>;
 
@@ -352,7 +352,7 @@ mod qualification {
                 .file_name()
                 .and_then(|name| name.to_str())
                 .is_some_and(|name| name.contains("native-live-session")),
-            "KRUN_HOME must name a dedicated native-live-session directory",
+            "K_HOME must name a dedicated native-live-session directory",
         )?;
         let host_root = absolute_environment_path(HOST_ROOT_ENV)?;
         let runtime_path = absolute_environment_path(RUNTIME_PATH_ENV)?;
@@ -399,7 +399,7 @@ mod qualification {
         report.execution_id = Some(reservation.execution_id.to_string());
         report.box_generation = Some(reservation.generation);
         require(
-            reservation.plan.backend == ExecutionBackend::KrunOci
+            reservation.plan.backend == ExecutionBackend::KOci
                 && reservation.plan.isolation_class == BoxIsolationClass::SharedKernel,
             "the Box request did not retain its Native Linux Sandbox product plan",
         )?;
@@ -1331,8 +1331,7 @@ mod qualification {
                 cmd: vec![
                     "/bin/sh".to_string(),
                     "-c".to_string(),
-                    "printf 'krun-box-native-live-session\\n'; while :; do sleep 60; done"
-                        .to_string(),
+                    "printf 'kbox-native-live-session\\n'; while :; do sleep 60; done".to_string(),
                 ],
                 network: NetworkMode::None,
                 persistent: false,
@@ -1406,7 +1405,7 @@ mod qualification {
         binding: &OciRuntimeBinding,
     ) -> Result<RecoverySnapshot, AnyError> {
         let executor_root = host_root.join("executor").join(format!(
-            "krun-oci-agent-{}-{:016x}",
+            "koci-agent-{}-{:016x}",
             owner.pid, owner.start_time_ticks
         ));
         let mut candidates = Vec::new();
@@ -1437,7 +1436,7 @@ mod qualification {
             .ok_or_else(|| failure("recovery record lacks schemaVersion"))?
             .to_string();
         require(
-            schema_version.starts_with("krun.oci.native-linux-recovery.v"),
+            schema_version.starts_with("koci.native-linux-recovery.v"),
             format!("unexpected recovery schema {schema_version}"),
         )?;
         let target_id = recovery

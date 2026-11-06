@@ -1,4 +1,4 @@
-//! `krun-box ps` command — List boxes.
+//! `kbox ps` command — List boxes.
 
 use clap::Args;
 
@@ -240,13 +240,13 @@ mod tests {
             health_status: "none".to_string(),
             health_retries: 0,
             health_last_check: None,
-            network_mode: krun_box_core::NetworkMode::default(),
+            network_mode: kbox_core::NetworkMode::default(),
             network_name: None,
             volume_names: vec![],
             tmpfs: vec![],
             anonymous_volumes: vec![],
-            resource_limits: krun_box_core::config::ResourceLimits::default(),
-            log_config: krun_box_core::log::LogConfig::default(),
+            resource_limits: kbox_core::config::ResourceLimits::default(),
+            log_config: kbox_core::log::LogConfig::default(),
             add_host: vec![],
             platform: None,
             init: false,

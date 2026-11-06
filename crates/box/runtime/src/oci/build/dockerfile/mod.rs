@@ -4,7 +4,7 @@
 //! Supports line continuations (`\`), comments, and both shell and JSON
 //! (exec) forms for RUN/CMD/ENTRYPOINT.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 mod parsers;
 mod tests;

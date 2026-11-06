@@ -1,10 +1,13 @@
-//! Pure integration coverage for the krun-box command surface.
+//! Pure integration coverage for the kbox command surface.
 //!
 //! These tests cover parser entrypoints and commands that operate only on local
 //! state. VM, registry, and host-network smoke tests live in `host_smoke.rs` so
 //! default command coverage stays deterministic.
 
 use std::time::Duration;
+
+use clap::CommandFactory;
+use kbox_cli::commands::Cli;
 
 mod support;
 use support::{assert_json_array_contains, read_file_from_saved_oci_tar, unique_tag, CliTest};
@@ -19,186 +22,80 @@ fn parse_inspect(out: &str) -> serde_json::Value {
     }
 }
 
-const TOP_LEVEL_COMMANDS: &[&str] = &[
-    "run",
-    "create",
-    "start",
-    "stop",
-    "restart",
-    "rm",
-    "kill",
-    "pause",
-    "unpause",
-    "ps",
-    "stats",
-    "logs",
-    "exec",
-    "top",
-    "inspect",
-    "attach",
-    "attest",
-    "audit",
-    "seal",
-    "unseal",
-    "inject-secret",
-    "wait",
-    "rename",
-    "port",
-    "port-forward",
-    "export",
-    "commit",
-    "diff",
-    "events",
-    "container-update",
-    "compose",
-    "snapshot",
-    "build",
-    "images",
-    "pull",
-    "push",
-    "login",
-    "logout",
-    "rmi",
-    "image-inspect",
-    "history",
-    "image-prune",
-    "tag",
-    "save",
-    "load",
-    "import",
-    "cp",
-    "network",
-    "volume",
-    "df",
-    "prune",
-    "system-prune",
-    "version",
-    "info",
-    "monitor",
-    "pool",
-    "shell",
-    "scale-api",
-    "help",
-];
+fn command_paths() -> Vec<Vec<String>> {
+    fn visit(command: &clap::Command, parent: &[String], paths: &mut Vec<Vec<String>>) {
+        for subcommand in command.get_subcommands() {
+            let mut path = parent.to_vec();
+            path.push(subcommand.get_name().to_string());
+            paths.push(path.clone());
+            visit(subcommand, &path, paths);
+        }
+    }
+
+    let mut paths = Vec::new();
+    visit(&Cli::command(), &[], &mut paths);
+    paths
+}
 
 #[test]
-fn test_all_top_level_command_help() {
+fn test_all_command_help_from_clap_tree() {
     let cli = CliTest::new();
-    for command in TOP_LEVEL_COMMANDS {
-        let args = if *command == "help" {
-            vec!["help"]
-        } else {
-            vec![*command, "--help"]
-        };
+    let commands = command_paths();
+    assert!(commands.len() > 100, "unexpectedly small command tree");
+
+    for command in commands {
+        let mut args = command.clone();
+        args.push("--help".to_string());
+        let args = args.iter().map(String::as_str).collect::<Vec<_>>();
         let (stdout, stderr, success) = cli.output(&args);
         assert!(
             success,
-            "`krun-box {}` help failed\nstdout:\n{}\nstderr:\n{}",
-            command, stdout, stderr
+            "`kbox {}` help failed\nstdout:\n{}\nstderr:\n{}",
+            command.join(" "),
+            stdout,
+            stderr
         );
         assert!(
-            stdout.contains("Usage:") || stdout.contains("Usage"),
-            "`krun-box {}` help did not contain usage\n{}",
-            command,
+            stdout.contains("Usage:"),
+            "`kbox {}` help did not contain usage\n{}",
+            command.join(" "),
             stdout
         );
     }
 }
 
 #[test]
-fn test_top_level_help_matches_coverage_list() {
+fn test_prune_alias_is_discovered_and_executable() {
+    let root = Cli::command();
+    let prune = root
+        .find_subcommand("prune")
+        .expect("prune command must exist");
+    assert!(prune
+        .get_visible_aliases()
+        .any(|alias| alias == "container-prune"));
+
     let cli = CliTest::new();
-    let help = cli.ok(&["--help"]);
-    let mut discovered = Vec::new();
-    let mut in_commands = false;
-
-    for line in help.lines() {
-        let trimmed = line.trim();
-        if trimmed == "Commands:" {
-            in_commands = true;
-            continue;
-        }
-        if in_commands && (trimmed == "Options:" || trimmed.is_empty()) {
-            break;
-        }
-        if in_commands {
-            if let Some(command) = trimmed.split_whitespace().next() {
-                discovered.push(command.to_string());
-            }
-        }
-    }
-
-    let covered: std::collections::BTreeSet<_> = TOP_LEVEL_COMMANDS.iter().copied().collect();
-    let discovered: std::collections::BTreeSet<_> = discovered.iter().map(String::as_str).collect();
-
-    let missing: Vec<_> = discovered.difference(&covered).copied().collect();
-    let stale: Vec<_> = covered.difference(&discovered).copied().collect();
-    assert!(
-        missing.is_empty() && stale.is_empty(),
-        "top-level command coverage list mismatch\nmissing from tests: {:?}\nstale entries: {:?}",
-        missing,
-        stale
-    );
+    cli.ok(&[
+        "create",
+        "--name",
+        "alias-stopped",
+        "docker.io/library/alpine:latest",
+    ]);
+    cli.ok(&["container-prune", "--force"]);
+    assert!(!cli.ok(&["ps", "-a"]).contains("alias-stopped"));
 }
 
 #[test]
-fn test_nested_subcommand_help() {
+fn test_process_result_preserves_exit_code_bytes_and_duration() {
     let cli = CliTest::new();
-    let commands: &[&[&str]] = &[
-        &["network", "create"],
-        &["network", "ls"],
-        &["network", "rm"],
-        &["network", "inspect"],
-        &["network", "connect"],
-        &["network", "disconnect"],
-        &["volume", "create"],
-        &["volume", "ls"],
-        &["volume", "rm"],
-        &["volume", "inspect"],
-        &["volume", "prune"],
-        &["snapshot", "create"],
-        &["snapshot", "restore"],
-        &["snapshot", "ls"],
-        &["snapshot", "rm"],
-        &["snapshot", "inspect"],
-        &["pool", "start"],
-        &["pool", "stop"],
-        &["pool", "status"],
-        &["compose", "up"],
-        &["compose", "down"],
-        &["compose", "ps"],
-        &["compose", "logs"],
-        &["compose", "config"],
-        &["compose", "start"],
-        &["compose", "stop"],
-        &["compose", "restart"],
-        &["compose", "rm"],
-        &["compose", "kill"],
-        &["compose", "pause"],
-        &["compose", "unpause"],
-        &["compose", "wait"],
-        &["compose", "exec"],
-        &["compose", "top"],
-        &["compose", "port"],
-        &["compose", "cp"],
-        &["compose", "images"],
-        &["compose", "pull"],
-        &["compose", "ls"],
-        &["compose", "volumes"],
-    ];
+    let version = cli.output_result(&["version"]);
+    assert_eq!(version.exit_code(), Some(0));
+    assert!(!version.stdout.is_empty());
+    assert!(version.duration > Duration::ZERO);
 
-    for command in commands {
-        let mut args = command.to_vec();
-        args.push("--help");
-        let (stdout, stderr, success) = cli.output(&args);
-        assert!(
-            success,
-            "`krun-box {}` help failed\nstdout:\n{}\nstderr:\n{}",
-            command.join(" "),
-            stdout,
-            stderr
-        );
-    }
+    let invalid = cli.output_result(&["not-a-command"]);
+    assert_eq!(invalid.exit_code(), Some(2));
+    assert!(String::from_utf8_lossy(&invalid.stderr).contains("unrecognized subcommand"));
 }
 
 #[test]
@@ -357,7 +254,7 @@ fn test_build_from_scratch_copy_metadata_cli_smoke() {
         build_dir.join("Dockerfile"),
         r#"FROM scratch
 COPY message.txt /opt/message.txt
-ENV KRUN_BUILD_SMOKE=1
+ENV K_BUILD_SMOKE=1
 WORKDIR /opt
 USER 1000:1000
 EXPOSE 8080/tcp
@@ -385,7 +282,7 @@ CMD ["cat", "/opt/message.txt"]
         inspect["Config"]["Cmd"],
         serde_json::json!(["cat", "/opt/message.txt"])
     );
-    assert_eq!(inspect["Config"]["Env"]["KRUN_BUILD_SMOKE"], "1");
+    assert_eq!(inspect["Config"]["Env"]["K_BUILD_SMOKE"], "1");
     assert_eq!(inspect["Config"]["WorkingDir"], "/opt");
     assert_eq!(inspect["Config"]["User"], "1000:1000");
     assert_eq!(inspect["Config"]["StopSignal"], "SIGTERM");
@@ -447,6 +344,11 @@ fn test_create_persists_rich_runtime_options() {
     } else {
         "0,1"
     };
+    let volume_spec = if cfg!(target_os = "macos") {
+        "covrichdata:/data"
+    } else {
+        "covrichdata:/data:ro"
+    };
 
     cli.ok(&[
         "create",
@@ -459,7 +361,7 @@ fn test_create_persists_rich_runtime_options() {
         "--dns",
         "1.1.1.1",
         "--volume",
-        "covrichdata:/data:ro",
+        volume_spec,
         "--env-file",
         &env_file_arg,
         "--env",
@@ -553,7 +455,7 @@ fn test_create_persists_rich_runtime_options() {
         inspect["volumes"][0]
             .as_str()
             .expect("resolved volume spec")
-            .ends_with(":/data:ro"),
+            .ends_with(volume_spec),
         "resolved named volume should preserve guest target and mode: {}",
         inspect["volumes"][0]
     );
@@ -628,6 +530,25 @@ fn test_create_persists_rich_runtime_options() {
 
     cli.ok(&["rm", "cov-rich"]);
     cli.ok(&["volume", "rm", "covrichdata"]);
+}
+
+#[cfg(target_os = "macos")]
+#[test]
+fn test_macos_read_only_volume_fails_before_reservation() {
+    let cli = CliTest::new();
+    cli.fails(
+        &[
+            "create",
+            "--name",
+            "cov-read-only-volume",
+            "--volume",
+            "covro:/data:ro",
+            "docker.io/library/alpine:latest",
+        ],
+        "requires host-enforced virtio-fs write denial",
+    );
+    assert!(!cli.ok(&["ps", "-a"]).contains("cov-read-only-volume"));
+    assert!(!cli.ok(&["volume", "ls", "--quiet"]).contains("covro"));
 }
 
 #[cfg(not(target_os = "windows"))]
@@ -954,7 +875,7 @@ fn test_stopped_managed_update_rewrites_the_next_start_request() {
         record["managed_execution"]["request"]["policy"]["max_restart_count"],
         4
     );
-    let metadata: krun_box_runtime::ManagedExecutionMetadata =
+    let metadata: kbox_runtime::ManagedExecutionMetadata =
         serde_json::from_value(record["managed_execution"].clone())
             .expect("deserialize managed start intent");
     metadata
@@ -1079,7 +1000,7 @@ fn test_noninteractive_boundary_command_smoke() {
     let cli = CliTest::new();
 
     cli.fails(
-        &["push", "example.invalid/krun/missing:latest", "--quiet"],
+        &["push", "example.invalid/kbox/missing:latest", "--quiet"],
         "not found locally",
     );
     cli.fails(&["attach", "missing-box"], "No such box");
@@ -1174,7 +1095,7 @@ fn test_noninteractive_boundary_command_smoke() {
         cli.runs_until_timeout(&["monitor", "--interval", "1"], Duration::from_millis(1200));
     let combined = format!("{stdout}\n{stderr}");
     assert!(
-        combined.contains("krun-box monitor started"),
+        combined.contains("kbox monitor started"),
         "monitor did not announce startup\nstdout:\n{stdout}\nstderr:\n{stderr}"
     );
 }
@@ -1191,25 +1112,25 @@ fn test_compose_config_interpolates_shell_over_project_dotenv() {
   redis:
     image: redis:7-alpine
     ports:
-      - "${KRUN_COMPOSE_TEST_PORT:-6379}:6379"
+      - "${K_COMPOSE_TEST_PORT:-6379}:6379"
     environment:
-      FROM_DOTENV: ${KRUN_COMPOSE_TEST_DOTENV-default}
-      EMPTY_DEFAULT: ${KRUN_COMPOSE_TEST_EMPTY:-default}
-      EMPTY_SET: ${KRUN_COMPOSE_TEST_EMPTY+replacement}
-      EMPTY_NONEMPTY: ${KRUN_COMPOSE_TEST_EMPTY:+replacement}
+      FROM_DOTENV: ${K_COMPOSE_TEST_DOTENV-default}
+      EMPTY_DEFAULT: ${K_COMPOSE_TEST_EMPTY:-default}
+      EMPTY_SET: ${K_COMPOSE_TEST_EMPTY+replacement}
+      EMPTY_NONEMPTY: ${K_COMPOSE_TEST_EMPTY:+replacement}
 "#,
     )
     .expect("write Compose file");
     std::fs::write(
         project.join(".env"),
-        "KRUN_COMPOSE_TEST_PORT=6379\nASTER_COMPOSE_TEST_DOTENV=dotenv\nASTER_COMPOSE_TEST_EMPTY=\n",
+        "K_COMPOSE_TEST_PORT=6379\nK_COMPOSE_TEST_DOTENV=dotenv\nK_COMPOSE_TEST_EMPTY=\n",
     )
     .expect("write project .env");
     let compose_arg = compose.to_string_lossy().to_string();
 
     let output = cli.ok_with_env(
         &["compose", "--file", &compose_arg, "config"],
-        &[("KRUN_COMPOSE_TEST_PORT", "16379")],
+        &[("K_COMPOSE_TEST_PORT", "16379")],
     );
 
     assert!(output.contains("ports: 16379:6379"));
@@ -1221,7 +1142,7 @@ fn test_compose_config_interpolates_shell_over_project_dotenv() {
 }
 
 #[test]
-fn test_compose_config_accepts_krun_acl() {
+fn test_compose_config_accepts_kacl() {
     let cli = CliTest::new();
     let project = cli.home_path().join("compose-acl");
     std::fs::create_dir_all(&project).expect("create Compose ACL project directory");
@@ -1229,8 +1150,8 @@ fn test_compose_config_accepts_krun_acl() {
     std::fs::write(
         &compose,
         r#"service "api" {
-  image = "ghcr.io/krun-lab/api:${KRUN_COMPOSE_TEST_TAG:-latest}"
-  environment = { TOKEN = env("KRUN_COMPOSE_TEST_TOKEN") }
+  image = "ghcr.io/klab/api:${K_COMPOSE_TEST_TAG:-latest}"
+  environment = { TOKEN = env("K_COMPOSE_TEST_TOKEN") }
   labels = { description = "服务" }
   ports = ["8080:8080"]
 
@@ -1245,10 +1166,10 @@ fn test_compose_config_accepts_krun_acl() {
 
     let output = cli.ok_with_env(
         &["compose", "--file", &compose_arg, "config"],
-        &[("KRUN_COMPOSE_TEST_TOKEN", "secret")],
+        &[("K_COMPOSE_TEST_TOKEN", "secret")],
     );
 
-    assert!(output.contains("ghcr.io/krun-lab/api:latest"));
+    assert!(output.contains("ghcr.io/klab/api:latest"));
     assert!(output.contains("TOKEN=secret"));
     assert!(output.contains("ports: 8080:8080"));
     assert!(output.contains("Configuration is valid."));
@@ -1264,7 +1185,7 @@ fn test_compose_local_project_views_do_not_require_a_runtime() {
         &compose,
         r#"services:
   api:
-    image: ghcr.io/krun-lab/api:latest
+    image: ghcr.io/klab/api:latest
     depends_on: [db]
   db:
     image: postgres:17
@@ -1279,7 +1200,7 @@ volumes:
 
     let images = cli.ok(&["compose", "--file", &compose_arg, "images"]);
     assert!(images.contains("api"));
-    assert!(images.contains("ghcr.io/krun-lab/api:latest"));
+    assert!(images.contains("ghcr.io/klab/api:latest"));
     assert!(images.contains("postgres:17"));
 
     let volumes = cli.ok(&["compose", "--file", &compose_arg, "volumes"]);
@@ -1370,10 +1291,7 @@ fn test_info_reports_warm_pool_daemon_status() {
     });
 
     let socket_arg = socket.to_string_lossy().to_string();
-    let stdout = cli.ok_with_env(
-        &["info"],
-        &[("KRUN_BOX_RUN_POOL_SOCKET", socket_arg.as_str())],
-    );
+    let stdout = cli.ok_with_env(&["info"], &[("K_BOX_RUN_POOL_SOCKET", socket_arg.as_str())]);
     server.join().expect("fake pool server should finish");
 
     assert!(

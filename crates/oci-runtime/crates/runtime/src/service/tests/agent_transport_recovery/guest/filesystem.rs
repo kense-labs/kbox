@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     Error, ErrorCode, FileOp, FileRequest, FileResponse, FilesystemEntry, FilesystemEntryKind,
     FilesystemOp, FilesystemRequest, FilesystemResponse, Result,
 };

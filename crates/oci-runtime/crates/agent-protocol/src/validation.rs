@@ -1,8 +1,8 @@
 use std::collections::BTreeSet;
 use std::path::PathBuf;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerOperationRequest, ContainerTarget, CreateAttachments, CreateRequest, ErrorCode,
     ExecRequest, IsolationRequest, OciBundle, OutputChunk, ProcessRecord, ProcessTarget,
     ProcessesRequest, ReadOutputRequest, Result, SignalProcessRequest, StatsRequest, UpdateRequest,
@@ -327,7 +327,7 @@ impl AgentRequest {
 
 fn validate_process_io_context(
     selected_version: u16,
-    context: Option<&krun_oci_sdk::OperationContext>,
+    context: Option<&koci_sdk::OperationContext>,
 ) -> Result<()> {
     match (selected_version >= 8, context.is_some()) {
         (true, true) | (false, false) => Ok(()),
@@ -653,7 +653,7 @@ fn validate_digest(value: &str) -> Result<()> {
     Ok(())
 }
 
-fn invalid_digest() -> krun_oci_sdk::Error {
+fn invalid_digest() -> koci_sdk::Error {
     protocol_error(
         ErrorCode::InvalidArgument,
         "configuration digest must be canonical lowercase sha256:<64 hex>",
@@ -663,13 +663,13 @@ fn invalid_digest() -> krun_oci_sdk::Error {
 fn validation_directory() -> PathBuf {
     #[cfg(windows)]
     {
-        PathBuf::from(r"C:\krun-agent-protocol-validation")
+        PathBuf::from(r"C:\kagent-protocol-validation")
     }
 
     #[cfg(not(windows))]
     {
-        PathBuf::from("/krun-agent-protocol-validation")
+        PathBuf::from("/kagent-protocol-validation")
     }
 }
 
-const _: () = assert!(AGENT_MAX_FRAME_BYTES > krun_oci_sdk::MAX_CONFIG_BYTES as u32);
+const _: () = assert!(AGENT_MAX_FRAME_BYTES > koci_sdk::MAX_CONFIG_BYTES as u32);

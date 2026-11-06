@@ -1,4 +1,4 @@
-use krun_oci_sdk::OperationId;
+use koci_sdk::OperationId;
 
 use super::JournaledLifecycleGuest;
 

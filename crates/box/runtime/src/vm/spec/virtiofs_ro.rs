@@ -10,7 +10,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 /// Subdirectory under `.filemounts` that owns MicroVM `:ro` bind aliases.
 #[cfg(any(target_os = "linux", target_os = "windows"))]
@@ -162,7 +162,7 @@ pub(super) fn stage_virtiofs_ro_share(
     }
 
     // Prove host write denial on the alias without mutating the caller's source.
-    let probe = target.join(".krun-box-ro-probe");
+    let probe = target.join(".kbox-ro-probe");
     match std::fs::write(&probe, b"no") {
         Err(_) => {}
         Ok(()) => {
@@ -183,9 +183,9 @@ pub(super) fn stage_virtiofs_ro_share(
     }
 
     // Prove the live view still reads through to the backing path.
-    let marker = source.join(".krun-box-ro-marker");
+    let marker = source.join(".kbox-ro-marker");
     std::fs::write(&marker, b"ro-ok").map_err(BoxError::IoError)?;
-    let seen = std::fs::read(target.join(".krun-box-ro-marker"));
+    let seen = std::fs::read(target.join(".kbox-ro-marker"));
     let _ = std::fs::remove_file(&marker);
     if seen.map(|bytes| bytes == b"ro-ok").unwrap_or(false) {
         Ok(target)

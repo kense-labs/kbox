@@ -1,7 +1,7 @@
 //! Private host-to-guest boot and terminal control shares.
 
 use super::*;
-use krun_box_core::rootfs_baseline::GUEST_DIFF_BASELINE_FILE_NAME;
+use kbox_core::rootfs_baseline::GUEST_DIFF_BASELINE_FILE_NAME;
 #[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
 
@@ -196,16 +196,16 @@ pub(super) fn stage_guest_terminal_control(
 
 /// Persist the non-secret environment manifest beside terminal control.
 ///
-/// Virtio-fs boot does not write `/.krun-box-env` onto the guest rootfs. The
+/// Virtio-fs boot does not write `/.kbox-env` onto the guest rootfs. The
 /// full environment lives in the boot bundle until the guest consumes it.
-/// Secret values stay out of this file; only `KRUN_BOX_SECRET_ENV_V1` is kept,
+/// Secret values stay out of this file; only `K_BOX_SECRET_ENV_V1` is kept,
 /// base64-encoded the same way as the legacy rootfs env file.
 pub(super) fn persist_redacted_staged_environment(
     box_dir: &Path,
     container_env: &[(String, String)],
 ) -> Result<()> {
     use base64::Engine;
-    use krun_box_core::secret::SECRET_ENVIRONMENT_MANIFEST;
+    use kbox_core::secret::SECRET_ENVIRONMENT_MANIFEST;
 
     let body: String = container_env
         .iter()

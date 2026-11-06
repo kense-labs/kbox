@@ -1,10 +1,10 @@
 {
-  "schema": "krun.runtime.unit-spec.v4",
+  "schema": "kbox_contract.unit-spec.v4",
   "unit_id": "golden-task",
   "generation": 7,
   "class": "task",
   "artifact": {
-    "uri": "oci://registry.example/krun/golden@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "uri": "oci://registry.example/kbox/golden@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "media_type": "application/vnd.oci.image.manifest.v1+json"
   },
@@ -24,7 +24,7 @@
         "artifact": {
           "uri": "artifact://source@sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
           "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-          "media_type": "application/vnd.krun.source.v1+tar"
+          "media_type": "application/vnd.kbox.source.v1+tar"
         }
       },
       "target": "/inputs/source",

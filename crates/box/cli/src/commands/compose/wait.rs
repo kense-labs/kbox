@@ -113,13 +113,13 @@ pub(super) async fn wait_for_completed(
             // file yet. guest-init persists the authoritative container code
             // before halting the VM, so read it directly instead of treating an
             // unknown code as success.
-            let exit_code = krun_box_runtime::rootfs::resolve_workload_exit_code_for(
+            let exit_code = kbox_runtime::rootfs::resolve_workload_exit_code_for(
                 &record.box_dir,
                 record.exit_code,
                 if record.isolation.is_sandbox() {
-                    krun_box_runtime::rootfs::ProviderExitPolicy::TrustProvider
+                    kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
                 } else {
-                    krun_box_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
+                    kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
                 },
             );
             let Some(code) = exit_code else {

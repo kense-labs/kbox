@@ -1,7 +1,7 @@
-use krun_oci_agent_protocol::AgentInheritedDescriptorSchema;
-use krun_oci_core::DriverCapability;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentInheritedDescriptorSchema;
+use koci_core::DriverCapability;
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, Process};
+use koci_sdk::{
     async_trait, AttachmentCapabilities, CheckpointArtifactPath, CheckpointCompatibility,
     CheckpointDigest, CheckpointReference, ContainerRecord, ContainerStats, ContainerTarget,
     CreateAttachments, DeleteMode, Error, ErrorCode, ExitStatus, FileRequest, FileResponse,
@@ -25,7 +25,7 @@ pub enum DriverCreateAttachments {
     /// Normal SDK or guest-protocol create with no inherited descriptors.
     #[default]
     None,
-    /// Krun Box exec listener, PTY listener, and dedicated init log.
+    /// Kbox Box exec listener, PTY listener, and dedicated init log.
     #[cfg(target_os = "linux")]
     NativeControl(crate::NativeControlDescriptors),
 }
@@ -37,7 +37,7 @@ impl DriverCreateAttachments {
         match self {
             Self::None => None,
             #[cfg(target_os = "linux")]
-            Self::NativeControl(_) => Some(AgentInheritedDescriptorSchema::krun_box_control_v1()),
+            Self::NativeControl(_) => Some(AgentInheritedDescriptorSchema::kbox_control_v1()),
         }
     }
 

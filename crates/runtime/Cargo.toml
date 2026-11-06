@@ -1,12 +1,12 @@
 [package]
-name = "krun-runtime"
+name = "kbox-contract"
 publish = false
 version = "0.8.0"
 edition = "2021"
 rust-version = "1.85"
-description = "Provider-neutral execution contract and client for Krun runtimes"
+description = "Provider-neutral execution contract and client for Kbox runtimes"
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 
 [dependencies]
 async-trait = "0.1"

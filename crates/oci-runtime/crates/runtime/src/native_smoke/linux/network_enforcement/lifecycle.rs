@@ -3,8 +3,8 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerId, ContainerTarget, CreateAttachments, CreateRequest, DeleteMode, DeleteRequest,
     ErrorCode, ExitStatus, IsolationRequest, KillRequest, ListRequest, NetworkAttachmentIdentity,
     NetworkCleanup, OciBundle, OperationContext, OperationId, ProcessIo, RuntimeClient, Signal,
@@ -331,7 +331,7 @@ fn operation(nonce: &str, suffix: &str) -> Result<OperationContext, String> {
 
 async fn native_call<T>(
     description: &str,
-    future: impl Future<Output = krun_oci_sdk::Result<T>>,
+    future: impl Future<Output = koci_sdk::Result<T>>,
 ) -> Result<T, String> {
     match timeout(CALL_TIMEOUT, future).await {
         Ok(Ok(value)) => Ok(value),

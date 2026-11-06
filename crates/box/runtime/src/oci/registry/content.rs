@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::path::Path;
 
 use futures::{stream, StreamExt, TryStreamExt};
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use oci_distribution::manifest::{OciDescriptor, OciImageManifest};
 use oci_distribution::Reference;
 

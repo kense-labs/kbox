@@ -1,7 +1,7 @@
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
+use koci_sdk::{
     ContainerOperationRequest, ContainerRecord, ContainerTarget, Generation, OperationContext,
     StatsRequest, UpdateRequest, PIDS_LIMIT_METRIC,
 };

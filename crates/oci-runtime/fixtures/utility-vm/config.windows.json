@@ -13,7 +13,7 @@
     "args": [
       "/bin/sh",
       "-c",
-      "set -eu; trap 'exit 0' TERM; test \"$(/bin/busybox cat /proc/self/personality)\" = 00000008; /bin/busybox awk '$2 == \"bind=static:0\" { ok = 1 } END { exit !ok }' /proc/self/numa_maps; printf 'krun-oci-create-start-user-time-v1\\n' > /.krun-oci-create-start-smoke; while :; do /bin/busybox sleep 1; done"
+      "set -eu; trap 'exit 0' TERM; test \"$(/bin/busybox cat /proc/self/personality)\" = 00000008; /bin/busybox awk '$2 == \"bind=static:0\" { ok = 1 } END { exit !ok }' /proc/self/numa_maps; printf 'koci-create-start-user-time-v1\\n' > /.koci-create-start-smoke; while :; do /bin/busybox sleep 1; done"
     ],
     "env": [
       "PATH=/bin:/usr/bin:/sbin:/usr/sbin"
@@ -21,7 +21,7 @@
     "cwd": "/",
     "noNewPrivileges": true
   },
-  "hostname": "krun-smoke",
+  "hostname": "ksmoke",
   "domainname": "runtime.test",
   "mounts": [
     {
@@ -36,7 +36,7 @@
     }
   ],
   "linux": {
-    "cgroupsPath": "krun-oci-smoke-a",
+    "cgroupsPath": "koci-smoke-a",
     "personality": {
       "domain": "LINUX32",
       "flags": []

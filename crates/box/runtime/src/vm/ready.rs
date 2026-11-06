@@ -1,6 +1,6 @@
 //! VM readiness checks — waiting for exec socket.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use crate::grpc::ExecClient;
 
@@ -19,7 +19,7 @@ fn parse_exec_ready_timeout_ms(value: Option<&str>) -> u64 {
 }
 
 fn exec_ready_timeout_ms() -> u64 {
-    parse_exec_ready_timeout_ms(std::env::var("KRUN_EXEC_READY_TIMEOUT_MS").ok().as_deref())
+    parse_exec_ready_timeout_ms(std::env::var("K_EXEC_READY_TIMEOUT_MS").ok().as_deref())
 }
 
 impl VmManager {
@@ -109,7 +109,7 @@ impl VmManager {
         // accept loop runs, and an exited VM returns immediately below. Keep the
         // default short enough that foreground `run` starts streaming the guest's
         // logs promptly; callers that truly need a longer cold-boot grace can set
-        // KRUN_EXEC_READY_TIMEOUT_MS.
+        // K_EXEC_READY_TIMEOUT_MS.
         let max_wait_ms = exec_ready_timeout_ms();
 
         // `exec_socket_path` is the layout/record path shared with Unix. WHPX
@@ -118,12 +118,12 @@ impl VmManager {
         // runs before that record becomes `running`, so it must map explicitly.
         #[cfg(windows)]
         let exec_endpoint =
-            std::path::PathBuf::from(krun_box_core::exec::windows_exec_pipe_path(&self.box_id));
+            std::path::PathBuf::from(kbox_core::exec::windows_exec_pipe_path(&self.box_id));
         #[cfg(not(windows))]
         let exec_endpoint = exec_socket_path.to_path_buf();
         #[cfg(windows)]
         let guest_control_ready_path =
-            exec_socket_path.with_file_name(krun_box_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
+            exec_socket_path.with_file_name(kbox_core::exec::WINDOWS_GUEST_CONTROL_READY_FILE);
         let box_dir = self.home_dir.join("boxes").join(&self.box_id);
 
         tracing::debug!(
@@ -363,8 +363,8 @@ fn vm_exited_before_exec_ready(box_dir: &std::path::Path, exit_code: Option<i32>
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::config::BoxConfig;
-    use krun_box_core::event::EventEmitter;
+    use kbox_core::config::BoxConfig;
+    use kbox_core::event::EventEmitter;
 
     #[test]
     fn test_parse_exec_ready_timeout_ms() {

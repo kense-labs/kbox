@@ -1,7 +1,7 @@
 use std::collections::BTreeSet;
 
-use krun_oci_sdk::oci_spec::runtime::Linux;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::Linux;
+use koci_sdk::{Error, ErrorCode, Result};
 
 use super::namespace::NamespacePlan;
 
@@ -141,13 +141,13 @@ fn network_error(code: ErrorCode, message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::oci_spec::runtime::Linux;
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::oci_spec::runtime::Linux;
+    use koci_sdk::ErrorCode;
 
     use super::NetworkDevicePlan;
     use crate::executor::namespace::NamespacePlan;
 
-    fn plan(value: serde_json::Value) -> krun_oci_sdk::Result<NetworkDevicePlan> {
+    fn plan(value: serde_json::Value) -> koci_sdk::Result<NetworkDevicePlan> {
         let linux: Linux = serde_json::from_value(value).expect("schema-shaped Linux config");
         let namespaces = NamespacePlan::from_linux(Some(&linux), 0, 0, &[])?;
         NetworkDevicePlan::from_linux(Some(&linux), &namespaces)

@@ -1,4 +1,4 @@
-//! Shared types for the Krun ecosystem.
+//! Shared types for the Kbox ecosystem.
 //!
 //! This crate provides:
 //! - [`privacy`] — PII classification, regex-based redaction, keyword matching

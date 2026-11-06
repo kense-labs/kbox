@@ -1,4 +1,4 @@
-//! General provider-neutral Task and Service Runtime contracts for Krun.
+//! General provider-neutral Task and Service Runtime contracts for Kbox.
 
 mod attestation;
 mod client;

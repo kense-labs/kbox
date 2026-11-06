@@ -3,11 +3,11 @@ use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, AtomicI32, AtomicU32};
 use std::sync::{Arc, Mutex as StdMutex};
 
-use krun_oci_agent_protocol::GuestAgentService;
-use krun_oci_core::{
+use koci_agent_protocol::GuestAgentService;
+use koci_core::{
     CapabilityStatus, DriverCapability, DriverKind, DriverReadiness, HostPlatform, IsolationClass,
 };
-use krun_oci_sdk::{
+use koci_sdk::{
     async_trait, AttachmentCapabilities, CloseStdinRequest, ContainerOperationRequest,
     ContainerRecord, ContainerStats, ContainerTarget, CreateRequest, DeleteMode, Error, ErrorCode,
     ExecRequest, ExitStatus, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse,
@@ -685,7 +685,7 @@ impl QualificationKvmOperationDriver {
 impl RuntimeDriver for QualificationKvmOperationDriver {
     fn capability(&self) -> DriverCapability {
         DriverCapability {
-            driver: DriverKind::LibkrunKvm,
+            driver: DriverKind::LibkKvm,
             status: CapabilityStatus::Available,
             readiness: DriverReadiness::Experimental,
             isolation_classes: vec![IsolationClass::DedicatedVm],
@@ -704,8 +704,8 @@ impl RuntimeDriver for QualificationKvmOperationDriver {
         }
     }
 
-    fn linux_support(&self) -> Result<krun_oci_sdk::OciLinuxSupport> {
-        krun_oci_sdk::OciLinuxSupport::shared_executor()
+    fn linux_support(&self) -> Result<koci_sdk::OciLinuxSupport> {
+        koci_sdk::OciLinuxSupport::shared_executor()
     }
 
     fn operations(&self) -> &[RuntimeOperation] {

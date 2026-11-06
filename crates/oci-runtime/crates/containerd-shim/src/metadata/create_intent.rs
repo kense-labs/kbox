@@ -2,7 +2,7 @@ use std::fs::{self, OpenOptions};
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::{
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointReference, ContainerId, IsolationRequest, Result,
 };
 use serde::{Deserialize, Serialize};
@@ -13,7 +13,7 @@ use super::{
 use crate::adapter::TaskIdentity;
 use crate::identity::IncarnationId;
 
-const CREATE_INTENT_FILE_NAME: &str = "krun-oci-shim-create-v1.json";
+const CREATE_INTENT_FILE_NAME: &str = "koci-shim-create-v1.json";
 const CREATE_INTENT_SCHEMA_VERSION: u32 = 2;
 const MIN_CREATE_INTENT_SCHEMA_VERSION: u32 = 1;
 
@@ -326,6 +326,6 @@ mod tests {
             restore: None,
         })
         .expect_err("missing incarnation must fail closed");
-        assert_eq!(error.code, krun_oci_sdk::ErrorCode::FailedPrecondition);
+        assert_eq!(error.code, koci_sdk::ErrorCode::FailedPrecondition);
     }
 }

@@ -1,13 +1,13 @@
 [package]
 publish = false
-name = "krun-oci-agent-protocol"
+name = "koci-agent-protocol"
 version = "0.3.6"
 edition = "2021"
 license = "MIT"
-description = "Versioned host-to-guest protocol for Krun OCI Runtime"
+description = "Versioned host-to-guest protocol for Kbox OCI Runtime"
 
 [dependencies]
-krun-oci-sdk = { path = "../sdk" }
+koci-sdk = { path = "../sdk" }
 async-trait.workspace = true
 base64.workspace = true
 getrandom.workspace = true

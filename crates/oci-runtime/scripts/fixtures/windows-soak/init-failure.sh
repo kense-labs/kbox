@@ -5,7 +5,7 @@ log='/mnt/rw/lifecycle.log'
 
 {
     printf 'phase=begin\n'
-    printf 'scenario=%s\n' "${KRUN_INIT_SCENARIO:-missing}"
+    printf 'scenario=%s\n' "${K_INIT_SCENARIO:-missing}"
     printf 'phase=failure\n'
     printf 'exit=42\n'
 } > "$log"

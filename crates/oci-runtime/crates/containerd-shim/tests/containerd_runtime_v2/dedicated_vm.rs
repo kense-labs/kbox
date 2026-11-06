@@ -12,7 +12,7 @@ const PROCESS_SPEC_TYPE: &str = "types.containerd.io/opencontainers/runtime-spec
 /// Vertical-slice containerd lifecycle against a DedicatedVm Host Service.
 ///
 /// Narrower than the Native Linux restart matrix: proves CreateOptions select
-/// dedicated-vm, the shim records libkrun-kvm, create/start/exec/kill/wait/delete
+/// dedicated-vm, the shim records libkkvm, create/start/exec/kill/wait/delete
 /// complete without inventing process state, and containerd daemon restart at
 /// init and exec Created/Running/Stopped preserves PID, driver, isolation, and
 /// exec identity under `KillMode=process`.
@@ -347,9 +347,9 @@ async fn expect_dedicated_vm_binding(
     lifecycle_id: &str,
 ) -> TestResult<()> {
     let (driver, isolation) = read_shim_driver_isolation(config, lifecycle_id).await?;
-    if driver != "libkrun-kvm" {
+    if driver != "libkkvm" {
         return Err(qualification_error(format!(
-            "dedicated-vm Create recorded driver {driver}, expected libkrun-kvm"
+            "dedicated-vm Create recorded driver {driver}, expected libkkvm"
         ))
         .into());
     }

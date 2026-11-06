@@ -8,17 +8,17 @@ use std::fs::{File, OpenOptions};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::snapshot::SnapshotMetadata;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::snapshot::SnapshotMetadata;
 use serde::{Deserialize, Serialize};
 
 use super::SnapshotStore;
 
-pub const SNAPSHOT_ROOTFS_SCHEMA: &str = "krun.box.snapshot-rootfs.v1";
+pub const SNAPSHOT_ROOTFS_SCHEMA: &str = "kbox.snapshot-rootfs.v1";
 const ROOTFS_MANIFEST_NAME: &str = "rootfs.json";
 const DIRECTORY_NAME: &str = "rootfs";
 const RAW_EXT4_DIRECTORY_NAME: &str = "rootfs-ext4-v1";
-const RAW_EXT4_ARTIFACT_SCHEMA: &str = "krun.box.rootfs-ext4.v1";
+const RAW_EXT4_ARTIFACT_SCHEMA: &str = "kbox.rootfs-ext4.v1";
 const MAX_ROOTFS_MANIFEST_BYTES: u64 = 64 * 1024;
 const MAX_SNAPSHOT_METADATA_BYTES: u64 = 1024 * 1024;
 
@@ -209,7 +209,7 @@ impl SnapshotStore {
                     ".snapshot-lower.{}.tmp",
                     uuid::Uuid::new_v4().simple()
                 ));
-                krun_box_core::fs_atomic::write_durable(
+                kbox_core::fs_atomic::write_durable(
                     &temporary,
                     &marker,
                     rootfs.to_string_lossy().as_bytes(),
@@ -663,7 +663,7 @@ mod tests {
             "source-box".to_string(),
             "alpine:3.20".to_string(),
         );
-        metadata.image_config = Some(krun_box_core::SnapshotImageConfig::default());
+        metadata.image_config = Some(kbox_core::SnapshotImageConfig::default());
         metadata
     }
 

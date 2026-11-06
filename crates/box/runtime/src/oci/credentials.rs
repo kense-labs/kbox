@@ -1,13 +1,13 @@
 //! Persistent credential store for container registries.
 //!
-//! Stores per-registry credentials at `~/.krun/auth/credentials.json`.
+//! Stores per-registry credentials at `~/.kbox/auth/credentials.json`.
 //! Uses atomic writes (write tmp, rename) for safety.
 
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use base64::Engine as _;
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
 /// Per-registry credential entry.
@@ -47,18 +47,16 @@ struct DockerAuthEntry {
 
 /// Persistent credential store for container registries.
 ///
-/// Stores credentials at `~/.krun/auth/credentials.json`.
+/// Stores credentials at `~/.kbox/auth/credentials.json`.
 pub struct CredentialStore {
     path: PathBuf,
 }
 
 impl CredentialStore {
-    /// Create a credential store at the default path (`~/.krun/auth/credentials.json`).
+    /// Create a credential store at the default path (`~/.kbox/auth/credentials.json`).
     pub fn default_path() -> Result<Self> {
         Ok(Self {
-            path: krun_box_core::dirs_home()
-                .join("auth")
-                .join("credentials.json"),
+            path: kbox_core::dirs_home().join("auth").join("credentials.json"),
         })
     }
 
@@ -164,7 +162,7 @@ impl CredentialStore {
     /// Run `f` over the credential file under a cross-process advisory lock,
     /// re-loading fresh inside the lock and saving the result.
     ///
-    /// `store`/`remove` funnel through here so two concurrent `krun-box login`
+    /// `store`/`remove` funnel through here so two concurrent `kbox login`
     /// processes cannot lose each other's entry: the atomic tmp+rename in
     /// `save` only prevents a torn read, and `save` even uses a fixed `.tmp`
     /// name that concurrent writers would collide on. `save` stays lock-free —
@@ -405,7 +403,7 @@ fn normalize_registry(registry: &str) -> String {
     }
 }
 
-impl krun_box_core::traits::CredentialProvider for CredentialStore {
+impl kbox_core::traits::CredentialProvider for CredentialStore {
     fn get(&self, registry: &str) -> Result<Option<(String, String)>> {
         self.get(registry)
     }

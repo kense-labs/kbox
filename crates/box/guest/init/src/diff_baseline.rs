@@ -10,8 +10,8 @@ use std::path::Path;
 use std::sync::{Mutex, OnceLock};
 
 #[cfg(test)]
-use krun_box_core::rootfs_baseline::GuestDiffBaseline;
-use krun_box_core::rootfs_baseline::MAX_GUEST_DIFF_BASELINE_BYTES;
+use kbox_core::rootfs_baseline::GuestDiffBaseline;
+use kbox_core::rootfs_baseline::MAX_GUEST_DIFF_BASELINE_BYTES;
 
 static DIFF_BASELINE_FILE: OnceLock<Mutex<File>> = OnceLock::new();
 
@@ -94,7 +94,7 @@ fn write_baseline(file: &mut File, bytes: &[u8]) -> std::io::Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use krun_box_core::rootfs_baseline::RootfsFileInfo;
+    use kbox_core::rootfs_baseline::RootfsFileInfo;
     use std::collections::BTreeMap;
     use std::io::Read;
 

@@ -4,7 +4,7 @@
 //! the virtio-net backend for bridge-mode networking. Each box gets
 //! its own passt process with a dedicated Unix socket.
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 use std::net::Ipv4Addr;
 use std::os::fd::{AsRawFd, FromRawFd, OwnedFd, RawFd};
 use std::path::{Path, PathBuf};
@@ -37,11 +37,11 @@ impl PasstManager {
     ///
     /// The socket and PID file are placed directly in the provided runtime
     /// socket directory (the same directory that holds the exec/PTY control
-    /// sockets, e.g. `/tmp/krun-box-sockets/<box_id>`).
+    /// sockets, e.g. `/tmp/kbox-sockets/<box_id>`).
     ///
     /// This directory MUST be reachable by the user passt runs as. When passt
     /// is started as root it drops privileges to `nobody`, so the socket
-    /// directory has to be world-traversable — the box's `~/.krun/boxes/<id>`
+    /// directory has to be world-traversable — the box's `~/.kbox/boxes/<id>`
     /// home is mode 0700 for root and would leave passt unable to bind its
     /// socket, silently breaking all bridge networking and Compose.
     pub fn new(socket_dir: &Path) -> Self {
@@ -591,7 +591,7 @@ fn passt_port_specs(port_map: &[String]) -> Result<PasstPortSpecs> {
         udp: Vec::new(),
     };
     for entry in port_map {
-        let mapping = krun_box_core::parse_port_mapping(entry).map_err(|error| {
+        let mapping = kbox_core::parse_port_mapping(entry).map_err(|error| {
             BoxError::NetworkError(format!(
                 "passt published ports reject invalid mapping '{entry}': {error}"
             ))
@@ -603,8 +603,8 @@ fn passt_port_specs(port_map: &[String]) -> Result<PasstPortSpecs> {
         }
         let rendered = format!("{}:{}", mapping.host_port, mapping.guest_port);
         match mapping.protocol {
-            krun_box_core::PortProtocol::Tcp => specs.tcp.push(rendered),
-            krun_box_core::PortProtocol::Udp => specs.udp.push(rendered),
+            kbox_core::PortProtocol::Tcp => specs.tcp.push(rendered),
+            kbox_core::PortProtocol::Udp => specs.udp.push(rendered),
         }
     }
     Ok(specs)

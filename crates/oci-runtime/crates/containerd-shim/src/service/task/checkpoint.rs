@@ -1,4 +1,4 @@
-use krun_oci_sdk::CheckpointResponse;
+use koci_sdk::CheckpointResponse;
 
 use super::*;
 

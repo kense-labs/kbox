@@ -1,19 +1,19 @@
 [package]
-name = "krun-box-shim"
+name = "kbox-shim"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
-description = "MicroVM shim process for Krun Box"
+description = "MicroVM shim process for Kbox Box"
 
 [[bin]]
-name = "krun-box-shim"
+name = "kbox-shim"
 path = "src/main.rs"
 
 [dependencies]
-krun-box-core = { path = "../core" }
-krun-oci-sdk = { workspace = true }
-libkrun-sys = { version = "3.0", path = "../deps/libkrun-sys", package = "krun-libkrun-sys" }
+kbox-core = { path = "../core" }
+koci-sdk = { workspace = true }
+libksys = { version = "3.0", path = "../deps/libksys", package = "klibksys" }
 
 # Async runtime used by the detached managed-OCI init log projector.
 tokio = { workspace = true }
@@ -30,7 +30,7 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 
 [target.'cfg(unix)'.dependencies]
-krun-box-netproxy = { path = "../netproxy" }
+kbox-netproxy = { path = "../netproxy" }
 libc = { workspace = true }
 
 [target.'cfg(windows)'.dependencies]

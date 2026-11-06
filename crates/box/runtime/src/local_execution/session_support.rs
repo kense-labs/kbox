@@ -2,9 +2,9 @@
 
 use std::collections::{BTreeMap, HashMap};
 
-use krun_box_core::{ExecutionGeneration, ExecutionId};
+use kbox_core::{ExecutionGeneration, ExecutionId};
 #[cfg(unix)]
-use krun_box_core::{ExecutionManagerError, ExecutionManagerResult, SecurityConfig};
+use kbox_core::{ExecutionManagerError, ExecutionManagerResult, SecurityConfig};
 
 use crate::BoxRecord;
 
@@ -49,7 +49,7 @@ pub(super) fn inherit_container_environment(
 ///
 /// A MicroVM's guest-init control plane is intentionally more privileged than
 /// its workloads. Every later process must therefore receive the same private
-/// `KRUN_SEC_*` controls as the main process. Request and container environment
+/// `K_SEC_*` controls as the main process. Request and container environment
 /// entries cannot override these runtime-owned values, and the guest filters
 /// them before the workload observes its environment.
 #[cfg(unix)]
@@ -81,7 +81,7 @@ pub(super) fn inherit_execution_security_environment(
     let mut malformed = Vec::new();
     for entry in std::mem::take(request) {
         if let Some((key, value)) = entry.split_once('=') {
-            if !key.starts_with("KRUN_SEC_") {
+            if !key.starts_with("K_SEC_") {
                 merged.insert(key.to_string(), value.to_string());
             }
         } else {

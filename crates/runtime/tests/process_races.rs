@@ -2,12 +2,12 @@
 mod driver;
 
 use driver::{ProcessRaceDriver, ProviderResource, IMAGE_MEDIA_TYPE};
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     ArtifactRef, IsolationLevel, NetworkMode, ResourceLimits, RestartPolicy, RuntimeActionRequest,
     RuntimeApplyRequest, RuntimeNetworkSpec, RuntimeProcessSpec, RuntimeUnitClass, RuntimeUnitSpec,
     RuntimeUnitState,
 };
-use krun_runtime::{
+use kbox_contract::{
     FileRuntimeStateStore, ManagedRuntimeClient, RuntimeClient, RuntimeError, RuntimeRequestState,
     RuntimeStateStore,
 };
@@ -19,17 +19,17 @@ use std::sync::Arc;
 use std::thread;
 use std::time::{Duration, Instant};
 
-const STATE_ROOT_ENV: &str = "KRUN_RUNTIME_PROCESS_STATE_ROOT";
-const PROVIDER_ROOT_ENV: &str = "KRUN_RUNTIME_PROCESS_PROVIDER_ROOT";
-const OPERATION_ENV: &str = "KRUN_RUNTIME_PROCESS_OPERATION";
-const REQUEST_ID_ENV: &str = "KRUN_RUNTIME_PROCESS_REQUEST_ID";
-const UNIT_ID_ENV: &str = "KRUN_RUNTIME_PROCESS_UNIT_ID";
-const GENERATION_ENV: &str = "KRUN_RUNTIME_PROCESS_GENERATION";
-const START_GATE_ENV: &str = "KRUN_RUNTIME_PROCESS_START_GATE";
-const READY_ENV: &str = "KRUN_RUNTIME_PROCESS_READY";
-const RESULT_ENV: &str = "KRUN_RUNTIME_PROCESS_RESULT";
-const DRIVER_FAILPOINT_ENV: &str = "KRUN_RUNTIME_PROCESS_DRIVER_FAILPOINT";
-const DRIVER_FAILPOINT_READY_ENV: &str = "KRUN_RUNTIME_PROCESS_DRIVER_FAILPOINT_READY";
+const STATE_ROOT_ENV: &str = "K_RUNTIME_PROCESS_STATE_ROOT";
+const PROVIDER_ROOT_ENV: &str = "K_RUNTIME_PROCESS_PROVIDER_ROOT";
+const OPERATION_ENV: &str = "K_RUNTIME_PROCESS_OPERATION";
+const REQUEST_ID_ENV: &str = "K_RUNTIME_PROCESS_REQUEST_ID";
+const UNIT_ID_ENV: &str = "K_RUNTIME_PROCESS_UNIT_ID";
+const GENERATION_ENV: &str = "K_RUNTIME_PROCESS_GENERATION";
+const START_GATE_ENV: &str = "K_RUNTIME_PROCESS_START_GATE";
+const READY_ENV: &str = "K_RUNTIME_PROCESS_READY";
+const RESULT_ENV: &str = "K_RUNTIME_PROCESS_RESULT";
+const DRIVER_FAILPOINT_ENV: &str = "K_RUNTIME_PROCESS_DRIVER_FAILPOINT";
+const DRIVER_FAILPOINT_READY_ENV: &str = "K_RUNTIME_PROCESS_DRIVER_FAILPOINT_READY";
 const APPLY_AFTER_PUBLISH: &str = "provider.apply.after-current-publish";
 
 fn service_spec(unit_id: &str, generation: u64) -> RuntimeUnitSpec {
@@ -40,7 +40,7 @@ fn service_spec(unit_id: &str, generation: u64) -> RuntimeUnitSpec {
         class: RuntimeUnitClass::Service,
         artifact: ArtifactRef {
             uri: format!(
-                "oci://registry.example/krun/process-race@sha256:{}",
+                "oci://registry.example/kbox/process-race@sha256:{}",
                 "a".repeat(64)
             ),
             digest: format!("sha256:{}", "a".repeat(64)),

@@ -3,7 +3,7 @@
 
 use super::*;
 use futures::FutureExt;
-use krun_box_core::{
+use kbox_core::{
     BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId, VmHandler, VmMetrics,
 };
 use std::cell::Cell;
@@ -201,9 +201,9 @@ async fn attach_rechecks_original_identity_after_heartbeat_await() {
         let (stream, _) = listener.accept().await.unwrap();
         observe("heartbeat_connection_accepted");
         let (read, mut write) = tokio::io::split(stream);
-        let mut reader = krun_transport::FrameReader::new(read);
+        let mut reader = ktransport::FrameReader::new(read);
         let frame = reader.read_frame().await.unwrap().unwrap();
-        assert_eq!(frame.frame_type, krun_transport::FrameType::Heartbeat);
+        assert_eq!(frame.frame_type, ktransport::FrameType::Heartbeat);
         frame_observed.set(true);
         observe("heartbeat_frame_received");
         // Only the test fixture owns/reaps this Child. The product attach
@@ -211,7 +211,7 @@ async fn attach_rechecks_original_identity_after_heartbeat_await() {
         fixture.terminate_and_observe();
         observe("original_fixture_child_reaped");
         write
-            .write_all(&krun_transport::Frame::heartbeat().encode().unwrap())
+            .write_all(&ktransport::Frame::heartbeat().encode().unwrap())
             .await
             .unwrap();
         observe("heartbeat_response_sent");
@@ -234,7 +234,7 @@ async fn attach_rechecks_original_identity_after_heartbeat_await() {
 struct CurrentProcessHandler;
 
 impl VmHandler for CurrentProcessHandler {
-    fn stop(&mut self, _: i32, _: u64) -> krun_box_core::Result<()> {
+    fn stop(&mut self, _: i32, _: u64) -> kbox_core::Result<()> {
         Err(BoxError::StateError("fixture cannot stop".to_string()))
     }
 

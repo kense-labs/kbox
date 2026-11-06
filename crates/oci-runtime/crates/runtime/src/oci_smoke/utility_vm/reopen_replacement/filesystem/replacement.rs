@@ -1,8 +1,8 @@
 use std::sync::Arc;
 
-use krun_oci_core::IsolationClass;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_core::IsolationClass;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     DeleteMode, DeleteRequest, ErrorCode, FilesystemRequest, Generation, ListRequest,
     OciRuntimeService, OperationContext,
 };
@@ -44,7 +44,7 @@ pub(super) async fn run(
         }
     };
     let response_delivered = qualification.stage
-        == krun_oci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
+        == koci_agent_protocol::AgentTransportOperationStage::GuestAfterResponseWrite;
     let recovery_filesystem = response_delivered.then(|| qualification.filesystem.clone());
     let recovery_marker = response_delivered.then(|| {
         (

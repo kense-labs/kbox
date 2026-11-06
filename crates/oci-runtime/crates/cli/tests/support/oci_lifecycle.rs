@@ -2,8 +2,8 @@ use std::path::Path;
 use std::sync::{Arc, Mutex, MutexGuard};
 
 use async_trait::async_trait;
-use krun_oci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
+use koci_sdk::{
     serve_transport_connection, ContainerId, ContainerRecord, ContainerTarget, CreateRequest,
     DeleteMode, DeleteRequest, DriverKind, Error, ErrorCode, Generation, IsolationClass,
     KillRequest, OciRuntimeService, Result, RuntimeInfo, StartRequest, StateRequest,
@@ -211,7 +211,7 @@ fn test_endpoint(_root: &Path) -> String {
         .expect("system clock after epoch")
         .as_nanos();
     format!(
-        r"\\.\pipe\krun-oci-cli-lifecycle-{}-{nonce}",
+        r"\\.\pipe\koci-cli-lifecycle-{}-{nonce}",
         std::process::id()
     )
 }

@@ -1,8 +1,8 @@
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentCloseStdinRequest, AgentReadOutputRequest, AgentResizeRequest, AgentWriteStdinRequest,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{Error, ErrorCode, OperationId, OutputChunk, ProcessTarget, Result};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{Error, ErrorCode, OperationId, OutputChunk, ProcessTarget, Result};
 use tokio::sync::watch;
 
 use super::io::ProcessIoHandle;
@@ -273,7 +273,7 @@ fn configured_process_accepts_stdin(status: ContainerState) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_sdk::oci_spec::runtime::ContainerState;
+    use koci_sdk::oci_spec::runtime::ContainerState;
 
     use super::configured_process_accepts_stdin;
 

@@ -3,172 +3,6 @@
 version = 4
 
 [[package]]
-name = "krun-libkrun-sys"
-version = "3.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "beaf6186b5791f42dc720aba0ec9f24af8d2703ec0a92d08bf3ad2c9adb5ed4f"
-dependencies = [
- "libc",
- "num_cpus",
- "pkg-config",
- "sha2",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "krun-oci-agent"
-version = "0.3.6"
-dependencies = [
- "krun-oci-agent-protocol",
- "krun-oci-sdk",
- "base64",
- "libc",
- "nix 0.29.0",
- "seccompiler",
- "serde",
- "serde_json",
- "sha2",
- "syscalls",
- "tempfile",
- "tokio",
- "zeroize",
-]
-
-[[package]]
-name = "krun-oci-agent-protocol"
-version = "0.1.0"
-dependencies = [
- "krun-oci-sdk",
- "async-trait",
- "base64",
- "getrandom 0.3.4",
- "serde",
- "serde_json",
- "sha2",
- "tokio",
- "zeroize",
-]
-
-[[package]]
-name = "krun-oci-cli"
-version = "0.1.0"
-dependencies = [
- "krun-oci-core",
- "krun-oci-runtime",
- "krun-oci-sdk",
- "async-trait",
- "clap",
- "fs2",
- "libc",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
-]
-
-[[package]]
-name = "krun-oci-containerd-shim"
-version = "0.1.0"
-dependencies = [
- "krun-oci-sdk",
- "async-trait",
- "containerd-shim",
- "containerd-shim-protos",
- "getrandom 0.3.4",
- "http",
- "hyper-util",
- "libc",
- "log",
- "prost 0.14.4",
- "prost-types 0.14.4",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "tokio",
- "tonic",
- "tonic-prost",
- "tower",
-]
-
-[[package]]
-name = "krun-oci-core"
-version = "0.3.2"
-dependencies = [
- "serde",
- "sha2",
- "thiserror 2.0.19",
-]
-
-[[package]]
-name = "krun-oci-krun"
-version = "0.1.0"
-dependencies = [
- "krun-libkrun-sys",
- "krun-oci-agent-protocol",
- "krun-oci-core",
- "krun-oci-sdk",
- "clap",
- "libc",
- "libloading",
- "serde",
- "serde_json",
- "sha2",
- "tar",
- "tempfile",
- "windows-sys 0.59.0",
- "xz2",
- "zeroize",
-]
-
-[[package]]
-name = "krun-oci-runtime"
-version = "0.1.0"
-dependencies = [
- "krun-oci-agent",
- "krun-oci-agent-protocol",
- "krun-oci-core",
- "krun-oci-sdk",
- "base64",
- "cap-fs-ext",
- "cap-std",
- "fs2",
- "getrandom 0.3.4",
- "libc",
- "serde",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "krun-oci-sdk"
-version = "0.3.2"
-dependencies = [
- "krun-oci-core",
- "async-trait",
- "base64",
- "cap-fs-ext",
- "cap-std",
- "jsonschema",
- "oci-spec 0.10.0",
- "semver",
- "serde",
- "serde_ignored",
- "serde_json",
- "sha2",
- "tempfile",
- "thiserror 2.0.19",
- "tokio",
- "windows-sys 0.59.0",
-]
-
-[[package]]
 name = "ahash"
 version = "0.8.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1634,6 +1468,170 @@ dependencies = [
 ]
 
 [[package]]
+name = "klibksys"
+version = "3.2.7"
+dependencies = [
+ "libc",
+ "num_cpus",
+ "pkg-config",
+ "sha2",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "koci-agent"
+version = "0.3.6"
+dependencies = [
+ "base64",
+ "koci-agent-protocol",
+ "koci-sdk",
+ "libc",
+ "nix 0.29.0",
+ "seccompiler",
+ "serde",
+ "serde_json",
+ "sha2",
+ "syscalls",
+ "tempfile",
+ "tokio",
+ "zeroize",
+]
+
+[[package]]
+name = "koci-agent-protocol"
+version = "0.3.6"
+dependencies = [
+ "async-trait",
+ "base64",
+ "getrandom 0.3.4",
+ "koci-sdk",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tokio",
+ "zeroize",
+]
+
+[[package]]
+name = "koci-cli"
+version = "0.3.6"
+dependencies = [
+ "async-trait",
+ "clap",
+ "fs2",
+ "koci-core",
+ "koci-runtime",
+ "koci-sdk",
+ "libc",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+]
+
+[[package]]
+name = "koci-containerd-shim"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "containerd-shim",
+ "containerd-shim-protos",
+ "getrandom 0.3.4",
+ "http",
+ "hyper-util",
+ "koci-sdk",
+ "libc",
+ "log",
+ "prost 0.14.4",
+ "prost-types 0.14.4",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "tokio",
+ "tonic",
+ "tonic-prost",
+ "tower",
+]
+
+[[package]]
+name = "koci-core"
+version = "0.3.2"
+dependencies = [
+ "serde",
+ "sha2",
+ "thiserror 2.0.19",
+]
+
+[[package]]
+name = "koci-kbox"
+version = "0.3.6"
+dependencies = [
+ "clap",
+ "klibksys",
+ "koci-agent-protocol",
+ "koci-core",
+ "koci-sdk",
+ "libc",
+ "libloading",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tar",
+ "tempfile",
+ "windows-sys 0.59.0",
+ "xz2",
+ "zeroize",
+]
+
+[[package]]
+name = "koci-runtime"
+version = "0.3.6"
+dependencies = [
+ "base64",
+ "cap-fs-ext",
+ "cap-std",
+ "fs2",
+ "getrandom 0.3.4",
+ "koci-agent",
+ "koci-agent-protocol",
+ "koci-core",
+ "koci-sdk",
+ "libc",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "koci-sdk"
+version = "0.3.2"
+dependencies = [
+ "async-trait",
+ "base64",
+ "cap-fs-ext",
+ "cap-std",
+ "jsonschema",
+ "koci-core",
+ "oci-spec 0.10.0",
+ "semver",
+ "serde",
+ "serde_ignored",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "thiserror 2.0.19",
+ "tokio",
+ "windows-sys 0.59.0",
+]
+
+[[package]]
 name = "konst"
 version = "0.2.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2481,6 +2479,16 @@ dependencies = [
  "cfg-if 1.0.4",
  "cpufeatures",
  "digest",
+ "sha2-asm",
+]
+
+[[package]]
+name = "sha2-asm"
+version = "0.6.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b845214d6175804686b2bd482bcffe96651bb2d1200742b712003504a2dac1ab"
+dependencies = [
+ "cc",
 ]
 
 [[package]]

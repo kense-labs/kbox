@@ -1,7 +1,7 @@
 use std::io;
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::{Error, ErrorCode, GuestSessionAttachment, Result};
+use koci_sdk::{Error, ErrorCode, GuestSessionAttachment, Result};
 use serde::{Deserialize, Serialize};
 use tokio::io::AsyncReadExt;
 
@@ -9,10 +9,10 @@ use super::atomic_publication;
 use super::directory_cleanup::remove_directory_if_empty;
 use super::layout::{is_private_file, path_metadata, REUSABLE_GUEST_SESSION_DIRECTORY};
 
-const MARKER_FILE: &str = ".krun-oci-guest-session.json";
-const PENDING_MARKER_FILE: &str = ".krun-oci-guest-session.pending";
-const STAGING_MARKER_PREFIX: &str = ".krun-oci-guest-session.pending.";
-const MARKER_SCHEMA: &str = "krun.oci.guest-session.v1";
+const MARKER_FILE: &str = ".koci-guest-session.json";
+const PENDING_MARKER_FILE: &str = ".koci-guest-session.pending";
+const STAGING_MARKER_PREFIX: &str = ".koci-guest-session.pending.";
+const MARKER_SCHEMA: &str = "koci.guest-session.v1";
 const MAX_MARKER_BYTES: usize = 4 * 1024;
 const PUBLISH_ATTEMPTS: usize = atomic_publication::PUBLISH_ATTEMPTS;
 

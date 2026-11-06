@@ -3,17 +3,17 @@ use std::os::fd::{AsFd, BorrowedFd, FromRawFd, OwnedFd, RawFd};
 use std::os::unix::net::UnixListener;
 use std::sync::Arc;
 
-use krun_oci_agent::InheritedDescriptorPlan;
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_agent::InheritedDescriptorPlan;
+use koci_sdk::{Error, ErrorCode, Result};
 
-/// Exec listener descriptor consumed by Krun Box guest init.
+/// Exec listener descriptor consumed by Kbox Box guest init.
 pub const EXEC_LISTENER_FD: i32 = 3;
-/// PTY listener descriptor consumed by Krun Box guest init.
+/// PTY listener descriptor consumed by Kbox Box guest init.
 pub const PTY_LISTENER_FD: i32 = 4;
-/// Dedicated init-log descriptor consumed by Krun Box guest init.
+/// Dedicated init-log descriptor consumed by Kbox Box guest init.
 pub const INIT_LOG_FD: i32 = 5;
 
-/// Native Krun Box control resources attached to one OCI create.
+/// Native Kbox Box control resources attached to one OCI create.
 ///
 /// The runtime validates both listeners as bound Unix stream listeners and the
 /// log as a writable regular file. It then exposes them only to the configured
@@ -27,7 +27,7 @@ pub struct NativeControlDescriptors {
 }
 
 impl NativeControlDescriptors {
-    /// Own and validate the exact Krun Box listener and log resources.
+    /// Own and validate the exact Kbox Box listener and log resources.
     pub fn new(
         exec_listener: UnixListener,
         pty_listener: UnixListener,
@@ -42,7 +42,7 @@ impl NativeControlDescriptors {
         Ok(descriptors)
     }
 
-    /// Duplicate and own inherited Krun Box control descriptor roles.
+    /// Duplicate and own inherited Kbox Box control descriptor roles.
     ///
     /// The source descriptors remain owned by the caller. Each duplicate is
     /// revalidated as a bound Unix stream listener or writable regular file
@@ -104,7 +104,7 @@ impl NativeControlDescriptors {
     }
 
     pub(crate) fn descriptor_plan(&self) -> Result<InheritedDescriptorPlan> {
-        InheritedDescriptorPlan::krun_box_control(
+        InheritedDescriptorPlan::kbox_control(
             self.exec_listener.as_fd(),
             self.pty_listener.as_fd(),
             self.init_log.as_fd(),
@@ -128,7 +128,7 @@ mod tests {
     use std::os::fd::AsFd;
     use std::os::unix::net::UnixListener;
 
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::ErrorCode;
 
     use super::NativeControlDescriptors;
 

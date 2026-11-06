@@ -1,18 +1,18 @@
-//! `krun-box cp` command — Copy files or directories between host and a box
+//! `kbox cp` command — Copy files or directories between host and a box
 //! (running, or freezer-paused for managed OCI Sandbox file I/O).
 //!
 //! Uses the selected runtime session's native file protocol for single files.
 //! Directories are archived with `tar` before transfer.
 //!
 //! Syntax:
-//!   krun-box cp <box>:/path/in/box /host/path   (box → host)
-//!   krun-box cp /host/path <box>:/path/in/box   (host → box)
+//!   kbox cp <box>:/path/in/box /host/path   (box → host)
+//!   kbox cp /host/path <box>:/path/in/box   (host → box)
 
 use clap::Args;
 
 #[cfg(unix)]
-use krun_box_core::exec::DEFAULT_EXEC_TIMEOUT_NS;
-use krun_box_core::exec::{
+use kbox_core::exec::DEFAULT_EXEC_TIMEOUT_NS;
+use kbox_core::exec::{
     ExecRequest, FileOp, FileRequest, FilesystemEntryKind, FilesystemOp, FilesystemRequest,
 };
 
@@ -36,7 +36,7 @@ fn annotate_cp_unavailable(
     error: Box<dyn std::error::Error>,
     request_id: &str,
 ) -> Box<dyn std::error::Error> {
-    use krun_box_core::ExecutionManagerError;
+    use kbox_core::ExecutionManagerError;
 
     let unavailable = error
         .downcast_ref::<ExecutionManagerError>()
@@ -55,7 +55,7 @@ fn annotate_cp_unavailable(
 async fn execute_copy_command(
     session: &CopySession,
     mut request: ExecRequest,
-) -> Result<krun_box_core::exec::ExecOutput, Box<dyn std::error::Error>> {
+) -> Result<kbox_core::exec::ExecOutput, Box<dyn std::error::Error>> {
     let request_id = match request.request_id.take() {
         Some(request_id) => {
             if request_id.is_empty()
@@ -515,13 +515,13 @@ mod tests {
     use std::path::PathBuf;
     use std::sync::{Arc, Mutex};
 
-    use krun_box_core::pty::PtyRequest;
-    use krun_box_core::{
+    use kbox_core::pty::PtyRequest;
+    use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecOutput, ExecutionGeneration, ExecutionId,
         ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
         ExecutionSessionManager, FileResponse, FilesystemResponse, OperationId,
     };
-    use krun_box_runtime::{ManagedExecutionMetadata, ManagedRuntimeRoute};
+    use kbox_runtime::{ManagedExecutionMetadata, ManagedRuntimeRoute};
 
     use super::session::{resolve_copy_route, CopyRoute};
     use crate::state::BoxRecord;
@@ -876,7 +876,7 @@ mod tests {
     #[test]
     fn annotate_cp_unavailable_surfaces_request_id() {
         let error: Box<dyn std::error::Error> =
-            krun_box_core::ExecutionManagerError::Unavailable("response lost".to_string()).into();
+            kbox_core::ExecutionManagerError::Unavailable("response lost".to_string()).into();
         let annotated = annotate_cp_unavailable(error, "cli-cp-abc");
         let message = annotated.to_string();
         assert!(message.contains("unavailable"), "{message}");
@@ -987,7 +987,7 @@ mod tests {
 
     #[test]
     fn test_create_tar_nonexistent_dir() {
-        let result = create_tar_from_dir("/nonexistent/path/krun_test_12345");
+        let result = create_tar_from_dir("/nonexistent/path/ktest_12345");
         assert!(result.is_err());
     }
 

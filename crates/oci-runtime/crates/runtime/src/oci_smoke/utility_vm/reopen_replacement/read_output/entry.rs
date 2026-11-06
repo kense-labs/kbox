@@ -1,10 +1,10 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportOperationStage, AgentTransportQualificationRequest,
 };
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{
     ContainerTarget, CreateAttachments, CreateRequest, ExecRequest, IoMode, IsolationRequest,
     OciBundle, OperationContext, ProcessIo, ProcessTarget, ReadOutputRequest, StartRequest,
 };
@@ -211,7 +211,7 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
     report.read_output_wait_timeout_ms = read_output.wait_timeout_ms;
     report.expected_output_chunks = Some(expected_output.clone());
 
-    let state_root = console_directory.join(format!("krun-oci-read-output-reopen-{nonce}-state"));
+    let state_root = console_directory.join(format!("koci-read-output-reopen-{nonce}-state"));
     if let Err(reason) = super::super::create_qualification_state_root(&state_root).await {
         return failed(report, reason);
     }
@@ -220,15 +220,13 @@ pub(in crate::oci_smoke::utility_vm) async fn run(
         vm_rootfs,
         system_image_manifest: system_image_manifest.to_path_buf(),
         state_root: state_root.clone(),
-        first_console: console_directory
-            .join(format!("krun-oci-read-output-reopen-{nonce}-first.log")),
-        replacement_console: console_directory.join(format!(
-            "krun-oci-read-output-reopen-{nonce}-replacement.log"
-        )),
+        first_console: console_directory.join(format!("koci-read-output-reopen-{nonce}-first.log")),
+        replacement_console: console_directory
+            .join(format!("koci-read-output-reopen-{nonce}-replacement.log")),
         init_marker,
         exec_marker,
-        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("krun-oci-read-output-ready-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("koci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("koci-read-output-ready-{nonce}\n").into_bytes(),
         create,
         start,
         exec,

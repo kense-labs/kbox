@@ -128,7 +128,7 @@ impl SecurityConfig {
 
     /// Encode as environment variables for passing to guest-init.
     ///
-    /// Returns a list of (key, value) pairs with `KRUN_SEC_*` prefix.
+    /// Returns a list of (key, value) pairs with `K_SEC_*` prefix.
     pub fn to_env_vars(&self) -> Vec<(String, String)> {
         let mut env = Vec::new();
 
@@ -138,25 +138,25 @@ impl SecurityConfig {
             SeccompMode::Unconfined => "unconfined".to_string(),
             SeccompMode::Custom(path) => format!("custom:{}", path),
         };
-        env.push(("KRUN_SEC_SECCOMP".to_string(), seccomp_value));
+        env.push(("K_SEC_SECCOMP".to_string(), seccomp_value));
 
         // No new privileges
         env.push((
-            "KRUN_SEC_NO_NEW_PRIVS".to_string(),
+            "K_SEC_NO_NEW_PRIVS".to_string(),
             if self.no_new_privileges { "1" } else { "0" }.to_string(),
         ));
 
         // Privileged
         if self.privileged {
-            env.push(("KRUN_SEC_PRIVILEGED".to_string(), "1".to_string()));
+            env.push(("K_SEC_PRIVILEGED".to_string(), "1".to_string()));
         }
 
         // Capabilities
         if !self.cap_add.is_empty() {
-            env.push(("KRUN_SEC_CAP_ADD".to_string(), self.cap_add.join(",")));
+            env.push(("K_SEC_CAP_ADD".to_string(), self.cap_add.join(",")));
         }
         if !self.cap_drop.is_empty() {
-            env.push(("KRUN_SEC_CAP_DROP".to_string(), self.cap_drop.join(",")));
+            env.push(("K_SEC_CAP_DROP".to_string(), self.cap_drop.join(",")));
         }
 
         env
@@ -166,7 +166,7 @@ impl SecurityConfig {
     pub fn from_env_vars() -> Self {
         let mut config = Self::default();
 
-        if let Ok(val) = std::env::var("KRUN_SEC_PRIVILEGED") {
+        if let Ok(val) = std::env::var("K_SEC_PRIVILEGED") {
             if val == "1" {
                 return Self {
                     seccomp: SeccompMode::Unconfined,
@@ -178,7 +178,7 @@ impl SecurityConfig {
             }
         }
 
-        if let Ok(val) = std::env::var("KRUN_SEC_SECCOMP") {
+        if let Ok(val) = std::env::var("K_SEC_SECCOMP") {
             config.seccomp = if val == "unconfined" {
                 SeccompMode::Unconfined
             } else if val == "default" {
@@ -190,15 +190,15 @@ impl SecurityConfig {
             };
         }
 
-        if let Ok(val) = std::env::var("KRUN_SEC_NO_NEW_PRIVS") {
+        if let Ok(val) = std::env::var("K_SEC_NO_NEW_PRIVS") {
             config.no_new_privileges = val == "1";
         }
 
-        if let Ok(val) = std::env::var("KRUN_SEC_CAP_ADD") {
+        if let Ok(val) = std::env::var("K_SEC_CAP_ADD") {
             config.cap_add = val.split(',').map(|s| s.trim().to_string()).collect();
         }
 
-        if let Ok(val) = std::env::var("KRUN_SEC_CAP_DROP") {
+        if let Ok(val) = std::env::var("K_SEC_CAP_DROP") {
             config.cap_drop = val.split(',').map(|s| s.trim().to_string()).collect();
         }
 
@@ -293,22 +293,22 @@ mod tests {
     fn test_to_env_vars_default() {
         let config = SecurityConfig::default();
         let env = config.to_env_vars();
-        assert!(env.contains(&("KRUN_SEC_SECCOMP".to_string(), "default".to_string())));
-        assert!(env.contains(&("KRUN_SEC_NO_NEW_PRIVS".to_string(), "1".to_string())));
+        assert!(env.contains(&("K_SEC_SECCOMP".to_string(), "default".to_string())));
+        assert!(env.contains(&("K_SEC_NO_NEW_PRIVS".to_string(), "1".to_string())));
         // No cap_add/cap_drop/privileged env vars when empty
-        assert!(!env.iter().any(|(k, _)| k == "KRUN_SEC_CAP_ADD"));
-        assert!(!env.iter().any(|(k, _)| k == "KRUN_SEC_CAP_DROP"));
-        assert!(!env.iter().any(|(k, _)| k == "KRUN_SEC_PRIVILEGED"));
+        assert!(!env.iter().any(|(k, _)| k == "K_SEC_CAP_ADD"));
+        assert!(!env.iter().any(|(k, _)| k == "K_SEC_CAP_DROP"));
+        assert!(!env.iter().any(|(k, _)| k == "K_SEC_PRIVILEGED"));
     }
 
     #[test]
     fn test_to_env_vars_privileged() {
         let config = SecurityConfig::from_options(&[], &[], &[], true);
         let env = config.to_env_vars();
-        assert!(env.contains(&("KRUN_SEC_SECCOMP".to_string(), "unconfined".to_string())));
-        assert!(env.contains(&("KRUN_SEC_NO_NEW_PRIVS".to_string(), "0".to_string())));
-        assert!(env.contains(&("KRUN_SEC_PRIVILEGED".to_string(), "1".to_string())));
-        assert!(env.contains(&("KRUN_SEC_CAP_ADD".to_string(), "ALL".to_string())));
+        assert!(env.contains(&("K_SEC_SECCOMP".to_string(), "unconfined".to_string())));
+        assert!(env.contains(&("K_SEC_NO_NEW_PRIVS".to_string(), "0".to_string())));
+        assert!(env.contains(&("K_SEC_PRIVILEGED".to_string(), "1".to_string())));
+        assert!(env.contains(&("K_SEC_CAP_ADD".to_string(), "ALL".to_string())));
     }
 
     #[test]
@@ -317,8 +317,8 @@ mod tests {
         let cap_drop = vec!["ALL".to_string()];
         let config = SecurityConfig::from_options(&[], &cap_add, &cap_drop, false);
         let env = config.to_env_vars();
-        assert!(env.contains(&("KRUN_SEC_CAP_ADD".to_string(), "NET_ADMIN".to_string())));
-        assert!(env.contains(&("KRUN_SEC_CAP_DROP".to_string(), "ALL".to_string())));
+        assert!(env.contains(&("K_SEC_CAP_ADD".to_string(), "NET_ADMIN".to_string())));
+        assert!(env.contains(&("K_SEC_CAP_DROP".to_string(), "ALL".to_string())));
     }
 
     #[test]

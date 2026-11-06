@@ -2,7 +2,7 @@
 
 use std::path::{Path, PathBuf};
 
-use krun_box_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
+use kbox_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
 
 use super::VmManager;
 use crate::sandbox::{compile_portable_microvm_oci_spec, SandboxRuntimeProcess};
@@ -22,9 +22,9 @@ impl VmManager {
         execution_plan: &ResolvedExecutionPlan,
         bundle_directory: &Path,
     ) -> Result<RuntimeOwnedMicrovmBundle> {
-        if execution_plan.backend != ExecutionBackend::Krun {
+        if execution_plan.backend != ExecutionBackend::Kbox {
             return Err(BoxError::BoxBootError {
-                message: "portable MicroVM OCI preparation requires the Krun execution plan"
+                message: "portable MicroVM OCI preparation requires the Kbox execution plan"
                     .to_string(),
                 hint: None,
             });

@@ -4,8 +4,8 @@ use std::collections::BTreeMap;
 use std::path::Path;
 use std::str::FromStr;
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::platform::Platform;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::platform::Platform;
 use oci_spec::image::{
     Arch, Descriptor, DescriptorBuilder, ImageIndexBuilder, ImageManifestBuilder, MediaType, Os,
     PlatformBuilder, Sha256Digest, SCHEMA_VERSION,
@@ -17,11 +17,10 @@ use crate::oci::build::layer::sha256_bytes;
 use crate::oci::build::BuildOutputDescriptor;
 use crate::oci::image::canonical_sha256_digest_hex;
 
-pub const BUILD_CACHE_ARTIFACT_MEDIA_TYPE: &str = "application/vnd.krun.box.build-cache.v1";
-pub const BUILD_CACHE_CONFIG_MEDIA_TYPE: &str =
-    "application/vnd.krun.box.build-cache.config.v1+json";
+pub const BUILD_CACHE_ARTIFACT_MEDIA_TYPE: &str = "application/vnd.kbox.build-cache.v1";
+pub const BUILD_CACHE_CONFIG_MEDIA_TYPE: &str = "application/vnd.kbox.build-cache.config.v1+json";
 
-const CACHE_CONFIG_SCHEMA: &str = "krun.box.build-cache-config.v1";
+const CACHE_CONFIG_SCHEMA: &str = "kbox.build-cache-config.v1";
 const MAX_CACHE_ENTRIES: usize = 16 * 1024;
 
 mod model;

@@ -1,6 +1,6 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::Result;
+use koci_sdk::Result;
 
 use super::{BindSourceResolver, DetachedMountSources, MountPlan};
 

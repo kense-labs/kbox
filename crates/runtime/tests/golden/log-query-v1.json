@@ -1,5 +1,5 @@
 {
-  "schema": "krun.runtime.log-query.v1",
+  "schema": "kbox_contract.log-query.v1",
   "unit_id": "golden-service",
   "generation": 3,
   "cursor": "cursor-41",

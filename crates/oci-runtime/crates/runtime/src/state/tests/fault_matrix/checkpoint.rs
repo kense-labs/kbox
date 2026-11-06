@@ -1,5 +1,5 @@
-use krun_oci_core::{DriverKind, HostPlatform};
-use krun_oci_sdk::{
+use koci_core::{DriverKind, HostPlatform};
+use koci_sdk::{
     CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest, CheckpointFormat,
     CheckpointReference, CheckpointRequest, CheckpointResponse, ContainerOperationRequest,
     OperationContext, RuntimeArtifact,
@@ -109,7 +109,7 @@ fn checkpoint_request(
 async fn drive_success(
     store: &DurableStateStore,
     request: &CheckpointRequest,
-) -> krun_oci_sdk::Result<CheckpointResponse> {
+) -> koci_sdk::Result<CheckpointResponse> {
     match store.prepare_checkpoint(request).await? {
         CheckpointOperationPreparation::Prepared(source)
         | CheckpointOperationPreparation::Resume(source) => {
@@ -126,7 +126,7 @@ async fn drive_failure(
     store: &DurableStateStore,
     request: &CheckpointRequest,
     failure: &Error,
-) -> krun_oci_sdk::Result<()> {
+) -> koci_sdk::Result<()> {
     match store.prepare_checkpoint(request).await {
         Ok(CheckpointOperationPreparation::Prepared(_))
         | Ok(CheckpointOperationPreparation::Resume(_)) => {
@@ -143,13 +143,11 @@ async fn drive_failure(
     expect_failure(store.prepare_checkpoint(request).await, failure)
 }
 
-pub(super) fn checkpoint_response(
-    source: ContainerRecord,
-) -> krun_oci_sdk::Result<CheckpointResponse> {
+pub(super) fn checkpoint_response(source: ContainerRecord) -> koci_sdk::Result<CheckpointResponse> {
     let platform = match source.driver {
-        DriverKind::NativeLinux | DriverKind::LibkrunKvm => HostPlatform::Linux,
-        DriverKind::LibkrunHvf => HostPlatform::Macos,
-        DriverKind::LibkrunWhpx => HostPlatform::Windows,
+        DriverKind::NativeLinux | DriverKind::LibkKvm => HostPlatform::Linux,
+        DriverKind::LibkHvf => HostPlatform::Macos,
+        DriverKind::LibkWhpx => HostPlatform::Windows,
     };
     let compatibility = CheckpointCompatibility::new(
         source.driver,

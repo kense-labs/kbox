@@ -3,20 +3,20 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_box_core::error::{BoxError, Result};
-use krun_box_core::ExecutionProcessSignal;
+use kbox_core::error::{BoxError, Result};
+use kbox_core::ExecutionProcessSignal;
 use tokio::sync::Mutex;
 
 const PTY_CONTROL_SIGNAL: &[u8] = b"signal:";
 
-type PtyFrameReader = krun_transport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>;
-type PtyFrameWriter = krun_transport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>;
+type PtyFrameReader = ktransport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>;
+type PtyFrameWriter = ktransport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>;
 
 /// Client for interactive PTY sessions in the guest over Unix socket.
 ///
 /// Connects to the PTY server (vsock port 4090) and provides async
 /// frame-based communication for bidirectional terminal I/O.
-/// Uses `krun_transport::FrameReader`/`FrameWriter` for wire I/O.
+/// Uses `ktransport::FrameReader`/`FrameWriter` for wire I/O.
 #[derive(Debug)]
 pub struct PtyClient {
     reader: PtyFrameReader,
@@ -38,24 +38,21 @@ impl PtyClient {
 
         let (r, w) = tokio::io::split(stream);
         Ok(Self {
-            reader: krun_transport::FrameReader::new(r),
-            writer: krun_transport::FrameWriter::new(w),
+            reader: ktransport::FrameReader::new(r),
+            writer: ktransport::FrameWriter::new(w),
         })
     }
 
     /// Send a PtyRequest to start an interactive session.
-    pub async fn send_request(&mut self, req: &krun_box_core::pty::PtyRequest) -> Result<()> {
+    pub async fn send_request(&mut self, req: &kbox_core::pty::PtyRequest) -> Result<()> {
         let payload = serde_json::to_vec(req)
             .map_err(|e| BoxError::ExecError(format!("Failed to serialize PtyRequest: {}", e)))?;
-        self.write_raw_frame(krun_box_core::pty::FRAME_PTY_REQUEST, &payload)
+        self.write_raw_frame(kbox_core::pty::FRAME_PTY_REQUEST, &payload)
             .await
     }
 
     /// Start a streaming PTY session and return a handle for supervision.
-    pub async fn start_stream(
-        mut self,
-        req: &krun_box_core::pty::PtyRequest,
-    ) -> Result<StreamingPty> {
+    pub async fn start_stream(mut self, req: &kbox_core::pty::PtyRequest) -> Result<StreamingPty> {
         self.send_request(req).await?;
         Ok(StreamingPty {
             reader: self.reader,
@@ -68,16 +65,16 @@ impl PtyClient {
 
     /// Send terminal data to the guest.
     pub async fn send_data(&mut self, data: &[u8]) -> Result<()> {
-        self.write_raw_frame(krun_box_core::pty::FRAME_PTY_DATA, data)
+        self.write_raw_frame(kbox_core::pty::FRAME_PTY_DATA, data)
             .await
     }
 
     /// Send a terminal resize notification.
     pub async fn send_resize(&mut self, cols: u16, rows: u16) -> Result<()> {
-        let resize = krun_box_core::pty::PtyResize { cols, rows };
+        let resize = kbox_core::pty::PtyResize { cols, rows };
         let payload = serde_json::to_vec(&resize)
             .map_err(|e| BoxError::ExecError(format!("Failed to serialize PtyResize: {}", e)))?;
-        self.write_raw_frame(krun_box_core::pty::FRAME_PTY_RESIZE, &payload)
+        self.write_raw_frame(kbox_core::pty::FRAME_PTY_RESIZE, &payload)
             .await
     }
 
@@ -96,8 +93,8 @@ impl PtyClient {
     pub fn into_split(
         self,
     ) -> (
-        krun_transport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>,
-        krun_transport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>,
+        ktransport::FrameReader<tokio::io::ReadHalf<tokio::net::UnixStream>>,
+        ktransport::FrameWriter<tokio::io::WriteHalf<tokio::net::UnixStream>>,
     ) {
         (self.reader, self.writer)
     }
@@ -105,9 +102,8 @@ impl PtyClient {
     /// Write a raw PTY frame using the transport writer.
     async fn write_raw_frame(&mut self, frame_type: u8, payload: &[u8]) -> Result<()> {
         // PTY uses custom frame type bytes (0x01-0x05) that map to transport FrameType
-        let ft = krun_transport::FrameType::try_from(frame_type)
-            .unwrap_or(krun_transport::FrameType::Data);
-        let frame = krun_transport::Frame {
+        let ft = ktransport::FrameType::try_from(frame_type).unwrap_or(ktransport::FrameType::Data);
+        let frame = ktransport::Frame {
             frame_type: ft,
             payload: payload.to_vec(),
         };
@@ -127,8 +123,8 @@ pub struct StreamingPtyInput {
 impl StreamingPtyInput {
     /// Write terminal data to the PTY.
     pub async fn write_stdin(&self, data: &[u8]) -> Result<()> {
-        let frame = krun_transport::Frame {
-            frame_type: krun_transport::FrameType::Control,
+        let frame = ktransport::Frame {
+            frame_type: ktransport::FrameType::Control,
             payload: data.to_vec(),
         };
         self.writer
@@ -141,11 +137,11 @@ impl StreamingPtyInput {
 
     /// Request terminal resize.
     pub async fn resize(&self, cols: u16, rows: u16) -> Result<()> {
-        let resize = krun_box_core::pty::PtyResize { cols, rows };
+        let resize = kbox_core::pty::PtyResize { cols, rows };
         let payload = serde_json::to_vec(&resize)
             .map_err(|e| BoxError::ExecError(format!("Failed to serialize PtyResize: {}", e)))?;
-        let frame = krun_transport::Frame {
-            frame_type: krun_transport::FrameType::Heartbeat,
+        let frame = ktransport::Frame {
+            frame_type: ktransport::FrameType::Heartbeat,
             payload,
         };
         self.writer
@@ -161,7 +157,7 @@ impl StreamingPtyInput {
         self.writer
             .lock()
             .await
-            .write_frame(&krun_transport::Frame::close())
+            .write_frame(&ktransport::Frame::close())
             .await
             .map_err(|e| BoxError::ExecError(format!("PTY close write failed: {}", e)))
     }
@@ -173,10 +169,10 @@ impl StreamingPtyInput {
         }
         let mut payload = PTY_CONTROL_SIGNAL.to_vec();
         payload.extend_from_slice(signal.linux_number().to_string().as_bytes());
-        let frame = krun_transport::Frame {
+        let frame = ktransport::Frame {
             // PTY frames are directional. Error/Close (0x05) is the existing
             // host-to-guest control lane and remains an error guest-to-host.
-            frame_type: krun_transport::FrameType::Close,
+            frame_type: ktransport::FrameType::Close,
             payload,
         };
         self.writer
@@ -206,8 +202,8 @@ impl StreamingPty {
     }
 
     /// Read the next PTY output or exit event.
-    pub async fn next_event(&mut self) -> Result<Option<krun_box_core::exec::ExecEvent>> {
-        use krun_box_core::exec::{ExecChunk, ExecEvent, ExecExit, StreamType};
+    pub async fn next_event(&mut self) -> Result<Option<kbox_core::exec::ExecEvent>> {
+        use kbox_core::exec::{ExecChunk, ExecEvent, ExecExit, StreamType};
 
         if self.done {
             return Ok(None);
@@ -224,15 +220,15 @@ impl StreamingPty {
         };
 
         match frame.frame_type as u8 {
-            krun_box_core::pty::FRAME_PTY_DATA => {
+            kbox_core::pty::FRAME_PTY_DATA => {
                 self.stdout_bytes += frame.payload.len() as u64;
                 Ok(Some(ExecEvent::Chunk(ExecChunk {
                     stream: StreamType::Stdout,
                     data: frame.payload,
                 })))
             }
-            krun_box_core::pty::FRAME_PTY_EXIT => {
-                let exit: krun_box_core::pty::PtyExit = serde_json::from_slice(&frame.payload)
+            kbox_core::pty::FRAME_PTY_EXIT => {
+                let exit: kbox_core::pty::PtyExit = serde_json::from_slice(&frame.payload)
                     .map_err(|e| BoxError::ExecError(format!("Failed to parse PTY exit: {}", e)))?;
                 self.done = true;
                 Ok(Some(ExecEvent::Exit(ExecExit {
@@ -240,7 +236,7 @@ impl StreamingPty {
                     oom_killed: exit.oom_killed,
                 })))
             }
-            krun_box_core::pty::FRAME_PTY_ERROR => {
+            kbox_core::pty::FRAME_PTY_ERROR => {
                 let msg = String::from_utf8_lossy(&frame.payload);
                 self.done = true;
                 Err(BoxError::ExecError(format!("PTY session error: {}", msg)))
@@ -262,8 +258,8 @@ impl StreamingPty {
     }
 
     /// Get execution metrics so far.
-    pub fn metrics(&self) -> krun_box_core::exec::ExecMetrics {
-        krun_box_core::exec::ExecMetrics {
+    pub fn metrics(&self) -> kbox_core::exec::ExecMetrics {
+        kbox_core::exec::ExecMetrics {
             duration_ms: self.started.elapsed().as_millis() as u64,
             peak_memory_bytes: None,
             stdout_bytes: self.stdout_bytes,
@@ -302,12 +298,12 @@ mod tests {
         }
     }
 
-    fn test_pty_request() -> krun_box_core::pty::PtyRequest {
-        krun_box_core::pty::PtyRequest {
+    fn test_pty_request() -> kbox_core::pty::PtyRequest {
+        kbox_core::pty::PtyRequest {
             cmd: vec!["/bin/sh".to_string()],
             env: vec!["TERM=xterm".to_string()],
             working_dir: Some("/workspace".to_string()),
-            rootfs: Some("/run/krun/rootfs".to_string()),
+            rootfs: Some("/run/kbox/rootfs".to_string()),
             user: Some("1000:1000".to_string()),
             cols: 100,
             rows: 30,
@@ -350,11 +346,11 @@ mod tests {
         client.send_data(b"hello world").await.unwrap();
 
         let frame = client.read_frame().await.unwrap().unwrap();
-        assert_eq!(frame.0, krun_box_core::pty::FRAME_PTY_DATA);
+        assert_eq!(frame.0, kbox_core::pty::FRAME_PTY_DATA);
         assert_eq!(&frame.1[..], b"hello world");
 
         let (server_type, server_payload) = server.await.unwrap();
-        assert_eq!(server_type, krun_box_core::pty::FRAME_PTY_DATA);
+        assert_eq!(server_type, kbox_core::pty::FRAME_PTY_DATA);
         assert_eq!(&server_payload[..], b"hello world");
     }
 
@@ -369,7 +365,7 @@ mod tests {
         let server = tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, _w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
+            let mut reader = ktransport::FrameReader::new(r);
             reader.read_frame().await.unwrap().unwrap()
         });
 
@@ -378,12 +374,8 @@ mod tests {
         client.send_request(&req).await.unwrap();
 
         let frame = server.await.unwrap();
-        assert_eq!(
-            frame.frame_type as u8,
-            krun_box_core::pty::FRAME_PTY_REQUEST
-        );
-        let parsed: krun_box_core::pty::PtyRequest =
-            serde_json::from_slice(&frame.payload).unwrap();
+        assert_eq!(frame.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
+        let parsed: kbox_core::pty::PtyRequest = serde_json::from_slice(&frame.payload).unwrap();
         assert_eq!(parsed.cmd, req.cmd);
         assert_eq!(parsed.env, req.env);
         assert_eq!(parsed.working_dir, req.working_dir);
@@ -410,8 +402,8 @@ mod tests {
             let mut payload = vec![0u8; len];
             stream.read_exact(&mut payload).await.unwrap();
 
-            assert_eq!(frame_type, krun_box_core::pty::FRAME_PTY_RESIZE);
-            let resize: krun_box_core::pty::PtyResize = serde_json::from_slice(&payload).unwrap();
+            assert_eq!(frame_type, kbox_core::pty::FRAME_PTY_RESIZE);
+            let resize: kbox_core::pty::PtyResize = serde_json::from_slice(&payload).unwrap();
             assert_eq!(resize.cols, 120);
             assert_eq!(resize.rows, 40);
         });
@@ -431,13 +423,10 @@ mod tests {
         let server = tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, _w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
+            let mut reader = ktransport::FrameReader::new(r);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
             let stdin = reader.read_frame().await.unwrap().unwrap();
             let resize = reader.read_frame().await.unwrap().unwrap();
             let terminate = reader.read_frame().await.unwrap().unwrap();
@@ -460,18 +449,17 @@ mod tests {
             .unwrap();
 
         let (stdin, resize, terminate, kill) = server.await.unwrap();
-        assert_eq!(stdin.frame_type, krun_transport::FrameType::Control);
+        assert_eq!(stdin.frame_type, ktransport::FrameType::Control);
         assert_eq!(stdin.payload, b"echo hi\n");
 
-        assert_eq!(resize.frame_type, krun_transport::FrameType::Heartbeat);
-        let resize: krun_box_core::pty::PtyResize =
-            serde_json::from_slice(&resize.payload).unwrap();
+        assert_eq!(resize.frame_type, ktransport::FrameType::Heartbeat);
+        let resize: kbox_core::pty::PtyResize = serde_json::from_slice(&resize.payload).unwrap();
         assert_eq!(resize.cols, 132);
         assert_eq!(resize.rows, 43);
 
-        assert_eq!(terminate.frame_type, krun_transport::FrameType::Close);
+        assert_eq!(terminate.frame_type, ktransport::FrameType::Close);
         assert_eq!(terminate.payload, b"signal:15");
-        assert_eq!(kill.frame_type, krun_transport::FrameType::Close);
+        assert_eq!(kill.frame_type, ktransport::FrameType::Close);
         assert!(kill.payload.is_empty());
     }
 
@@ -504,17 +492,14 @@ mod tests {
         tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
-            let mut writer = krun_transport::FrameWriter::new(w);
+            let mut reader = ktransport::FrameReader::new(r);
+            let mut writer = ktransport::FrameWriter::new(w);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
             writer
-                .write_frame(&krun_transport::Frame {
-                    frame_type: krun_transport::FrameType::Control,
+                .write_frame(&ktransport::Frame {
+                    frame_type: ktransport::FrameType::Control,
                     payload: b"abc".to_vec(),
                 })
                 .await
@@ -526,7 +511,7 @@ mod tests {
         assert!(!stream.is_done());
 
         match stream.next_event().await.unwrap().unwrap() {
-            krun_box_core::exec::ExecEvent::Chunk(chunk) => assert_eq!(chunk.data, b"abc"),
+            kbox_core::exec::ExecEvent::Chunk(chunk) => assert_eq!(chunk.data, b"abc"),
             other => panic!("unexpected event: {other:?}"),
         }
         assert_eq!(stream.metrics().stdout_bytes, 3);
@@ -547,30 +532,27 @@ mod tests {
         tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
-            let mut writer = krun_transport::FrameWriter::new(w);
+            let mut reader = ktransport::FrameReader::new(r);
+            let mut writer = ktransport::FrameWriter::new(w);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
 
             writer
-                .write_frame(&krun_transport::Frame {
-                    frame_type: krun_transport::FrameType::Control,
+                .write_frame(&ktransport::Frame {
+                    frame_type: ktransport::FrameType::Control,
                     payload: b"tty output".to_vec(),
                 })
                 .await
                 .unwrap();
 
-            let exit = krun_box_core::pty::PtyExit {
+            let exit = kbox_core::pty::PtyExit {
                 exit_code: 9,
                 oom_killed: false,
             };
             writer
-                .write_frame(&krun_transport::Frame {
-                    frame_type: krun_transport::FrameType::Error,
+                .write_frame(&ktransport::Frame {
+                    frame_type: ktransport::FrameType::Error,
                     payload: serde_json::to_vec(&exit).unwrap(),
                 })
                 .await
@@ -578,7 +560,7 @@ mod tests {
         });
 
         let client = PtyClient::connect(&sock_path).await.unwrap();
-        let req = krun_box_core::pty::PtyRequest {
+        let req = kbox_core::pty::PtyRequest {
             cmd: vec!["/bin/sh".to_string()],
             env: vec![],
             working_dir: None,
@@ -590,14 +572,14 @@ mod tests {
         let mut stream = client.start_stream(&req).await.unwrap();
 
         match stream.next_event().await.unwrap().unwrap() {
-            krun_box_core::exec::ExecEvent::Chunk(chunk) => {
-                assert_eq!(chunk.stream, krun_box_core::exec::StreamType::Stdout);
+            kbox_core::exec::ExecEvent::Chunk(chunk) => {
+                assert_eq!(chunk.stream, kbox_core::exec::StreamType::Stdout);
                 assert_eq!(chunk.data, b"tty output");
             }
             other => panic!("unexpected event: {other:?}"),
         }
         match stream.next_event().await.unwrap().unwrap() {
-            krun_box_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 9),
+            kbox_core::exec::ExecEvent::Exit(exit) => assert_eq!(exit.exit_code, 9),
             other => panic!("unexpected event: {other:?}"),
         }
     }
@@ -613,17 +595,14 @@ mod tests {
         tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
-            let mut writer = krun_transport::FrameWriter::new(w);
+            let mut reader = ktransport::FrameReader::new(r);
+            let mut writer = ktransport::FrameWriter::new(w);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
             writer
-                .write_frame(&krun_transport::Frame {
-                    frame_type: krun_transport::FrameType::Close,
+                .write_frame(&ktransport::Frame {
+                    frame_type: ktransport::FrameType::Close,
                     payload: b"terminal failed".to_vec(),
                 })
                 .await
@@ -650,17 +629,14 @@ mod tests {
         tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
-            let mut writer = krun_transport::FrameWriter::new(w);
+            let mut reader = ktransport::FrameReader::new(r);
+            let mut writer = ktransport::FrameWriter::new(w);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
             writer
-                .write_frame(&krun_transport::Frame {
-                    frame_type: krun_transport::FrameType::Data,
+                .write_frame(&ktransport::Frame {
+                    frame_type: ktransport::FrameType::Data,
                     payload: b"not a PTY data frame".to_vec(),
                 })
                 .await
@@ -686,20 +662,17 @@ mod tests {
         tokio::spawn(async move {
             let (stream, _) = listener.accept().await.unwrap();
             let (r, _w) = tokio::io::split(stream);
-            let mut reader = krun_transport::FrameReader::new(r);
+            let mut reader = ktransport::FrameReader::new(r);
 
             let request = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(
-                request.frame_type as u8,
-                krun_box_core::pty::FRAME_PTY_REQUEST
-            );
+            assert_eq!(request.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
             let close = reader.read_frame().await.unwrap().unwrap();
-            assert_eq!(close.frame_type, krun_transport::FrameType::Close);
+            assert_eq!(close.frame_type, ktransport::FrameType::Close);
             assert!(close.payload.is_empty());
         });
 
         let client = PtyClient::connect(&sock_path).await.unwrap();
-        let req = krun_box_core::pty::PtyRequest {
+        let req = kbox_core::pty::PtyRequest {
             cmd: vec!["sleep".to_string(), "60".to_string()],
             env: vec![],
             working_dir: None,

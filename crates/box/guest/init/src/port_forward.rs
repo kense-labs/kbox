@@ -14,9 +14,9 @@ use std::thread;
 use std::time::Duration;
 
 #[cfg(target_os = "linux")]
-use krun_box_core::exec::{WINDOWS_CONTROL_EXEC_FRAME, WINDOWS_CONTROL_SIGNAL_FRAME};
+use kbox_core::exec::{WINDOWS_CONTROL_EXEC_FRAME, WINDOWS_CONTROL_SIGNAL_FRAME};
 #[cfg(target_os = "linux")]
-use krun_box_core::PORT_FWD_VSOCK_PORT;
+use kbox_core::PORT_FWD_VSOCK_PORT;
 #[cfg(target_os = "linux")]
 use nix::sys::socket::{connect, socket, AddressFamily, SockFlag, SockType, VsockAddr};
 use tracing::info;

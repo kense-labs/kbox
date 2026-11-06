@@ -4,7 +4,7 @@ use std::os::unix::fs::{DirBuilderExt, MetadataExt, OpenOptionsExt, PermissionsE
 use std::path::{Path, PathBuf};
 
 use fs2::FileExt;
-use krun_oci_sdk::{
+use koci_sdk::{
     canonical_json_bytes, CheckpointArtifactPath, CheckpointCompatibility, CheckpointDigest,
     ErrorCode, OperationId, Result,
 };
@@ -19,9 +19,9 @@ mod restore;
 
 pub(super) use restore::RestoreJournalRecord;
 
-const STATE_DIRECTORY: &str = ".krun-oci-native-checkpoint-v1";
-const STATE_SCHEMA_V1: &str = "krun.oci.native-checkpoint-state.v1";
-const JOURNAL_SCHEMA_V1: &str = "krun.oci.native-checkpoint-operation.v1";
+const STATE_DIRECTORY: &str = ".koci-native-checkpoint-v1";
+const STATE_SCHEMA_V1: &str = "koci.native-checkpoint-state.v1";
+const JOURNAL_SCHEMA_V1: &str = "koci.native-checkpoint-operation.v1";
 const MARKER_FILE: &str = "schema.json";
 const LOCK_FILE: &str = "lock";
 const JOURNALS_DIRECTORY: &str = "operations";
@@ -409,7 +409,7 @@ pub(super) fn operation_hash(operation_id: &OperationId) -> String {
 
 fn pending_name(operation_id: &OperationId, token: &[u8; 32]) -> String {
     format!(
-        ".krun-oci-checkpoint-{}-{}.pending",
+        ".koci-checkpoint-{}-{}.pending",
         operation_hash(operation_id),
         encode_token(token)
     )
@@ -763,8 +763,8 @@ fn decode_token(encoded: &str) -> Result<[u8; 32]> {
 
 #[cfg(test)]
 mod tests {
-    use krun_oci_core::{DriverKind, HostPlatform, IsolationClass};
-    use krun_oci_sdk::{CheckpointFormat, RuntimeArtifact};
+    use koci_core::{DriverKind, HostPlatform, IsolationClass};
+    use koci_sdk::{CheckpointFormat, RuntimeArtifact};
     use tempfile::tempdir;
 
     use super::*;
@@ -789,7 +789,7 @@ mod tests {
                 IsolationClass::SharedHostKernel,
                 HostPlatform::Linux,
                 std::env::consts::ARCH,
-                RuntimeArtifact::new("krun-oci-runtime", "0.2.0", digest('2').to_string(), None)
+                RuntimeArtifact::new("koci-runtime", "0.2.0", digest('2').to_string(), None)
                     .unwrap(),
                 digest('3'),
                 CheckpointFormat::new("native-linux-criu", 1).unwrap(),

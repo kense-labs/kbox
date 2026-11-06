@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ContainerTarget, ErrorCode, OperationContext, Result};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ContainerTarget, ErrorCode, OperationContext, Result};
 
 use super::state::ContainerKey;
 use super::{executor_error, validate_deadline, LinuxExecutor};

@@ -17,7 +17,7 @@ pub fn delivery_required(workload_already_finished: bool, provider_already_exite
     !workload_already_finished && !provider_already_exited
 }
 
-use krun_box_core::exec::{WINDOWS_STOP_REQUEST_FILE, WINDOWS_STOP_REQUEST_TEMP_FILE};
+use kbox_core::exec::{WINDOWS_STOP_REQUEST_FILE, WINDOWS_STOP_REQUEST_TEMP_FILE};
 
 pub fn request_path(socket_dir: &Path) -> PathBuf {
     socket_dir.join(WINDOWS_STOP_REQUEST_FILE)
@@ -61,7 +61,7 @@ pub fn stage(socket_dir: &Path, signal: i32) -> io::Result<PathBuf> {
     let request = request_path(socket_dir);
     let temporary = temporary_path(socket_dir);
     if let Err(error) =
-        krun_box_core::fs_atomic::write_durable(&temporary, &request, signal.to_string().as_bytes())
+        kbox_core::fs_atomic::write_durable(&temporary, &request, signal.to_string().as_bytes())
     {
         let _ = remove_control_file(&temporary);
         return Err(error);
@@ -109,7 +109,7 @@ pub fn finalize_box_terminal_rootfs_metadata(box_dir: &Path) -> bool {
             Ok(metadata) if metadata.is_dir() => {}
             _ => continue,
         }
-        match krun_box_core::rootfs_metadata::finalize_terminal_rootfs_metadata(&root) {
+        match kbox_core::rootfs_metadata::finalize_terminal_rootfs_metadata(&root) {
             Ok(true) => finalized_any = true,
             Ok(false) => {}
             Err(error) => tracing::warn!(
@@ -210,9 +210,9 @@ mod tests {
         let directory = tempfile::tempdir().unwrap();
         let rootfs = directory.path().join("rootfs");
         std::fs::create_dir_all(&rootfs).unwrap();
-        let temporary = rootfs.join(".krun_rootfs_metadata_v1.json.tmp");
-        let terminal = rootfs.join(".krun_rootfs_metadata_v1.json");
-        let manifest = krun_box_core::rootfs_metadata::RootfsMetadataManifest::new(Vec::new());
+        let temporary = rootfs.join(".krootfs_metadata_v1.json.tmp");
+        let terminal = rootfs.join(".krootfs_metadata_v1.json");
+        let manifest = kbox_core::rootfs_metadata::RootfsMetadataManifest::new(Vec::new());
         std::fs::write(&temporary, serde_json::to_vec(&manifest).unwrap()).unwrap();
 
         assert!(finalize_box_terminal_rootfs_metadata(directory.path()));

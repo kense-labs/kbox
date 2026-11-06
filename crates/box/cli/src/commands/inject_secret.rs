@@ -1,4 +1,4 @@
-//! `krun-box inject-secret` command — Inject secrets into a TEE via RA-TLS.
+//! `kbox inject-secret` command — Inject secrets into a TEE via RA-TLS.
 //!
 //! Connects to a running box's RA-TLS attestation server, verifies the TEE,
 //! then injects secrets over the encrypted channel. Secrets are stored in
@@ -12,7 +12,7 @@ use crate::resolve;
 use crate::state::StateFile;
 
 #[cfg(not(windows))]
-use krun_box_runtime::{tee::AttestationPolicy, SecretEntry, SecretInjector};
+use kbox_runtime::{tee::AttestationPolicy, SecretEntry, SecretInjector};
 
 #[derive(Args)]
 pub struct InjectSecretArgs {

@@ -1,12 +1,12 @@
 use async_trait::async_trait;
 use fs2::FileExt;
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     IsolationLevel, NetworkMode, ResourceControl, RuntimeActionRequest, RuntimeCapabilities,
     RuntimeExecRequest, RuntimeExecResult, RuntimeFailure, RuntimeFeature, RuntimeInspection,
     RuntimeLogChunk, RuntimeLogQuery, RuntimeObservation, RuntimeRemoval, RuntimeUnitClass,
     RuntimeUnitSpec, RuntimeUnitState,
 };
-use krun_runtime::{ProviderId, RuntimeDriver, RuntimeError, RuntimeResult, RuntimeUnitRecord};
+use kbox_contract::{ProviderId, RuntimeDriver, RuntimeError, RuntimeResult, RuntimeUnitRecord};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::fs::{File, OpenOptions};
@@ -16,8 +16,8 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 pub const IMAGE_MEDIA_TYPE: &str = "application/vnd.oci.image.manifest.v1+json";
 const PROVIDER_BUILD: &str = "process-race-driver/1";
-const FAILPOINT_ENV: &str = "KRUN_RUNTIME_PROCESS_DRIVER_FAILPOINT";
-const FAILPOINT_READY_ENV: &str = "KRUN_RUNTIME_PROCESS_DRIVER_FAILPOINT_READY";
+const FAILPOINT_ENV: &str = "K_RUNTIME_PROCESS_DRIVER_FAILPOINT";
+const FAILPOINT_READY_ENV: &str = "K_RUNTIME_PROCESS_DRIVER_FAILPOINT_READY";
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -255,7 +255,7 @@ impl RuntimeDriver for ProcessRaceDriver {
 
     async fn apply(
         &self,
-        request: &krun_runtime::contract::RuntimeApplyRequest,
+        request: &kbox_contract::contract::RuntimeApplyRequest,
         current: &RuntimeObservation,
     ) -> RuntimeResult<RuntimeObservation> {
         let driver = self.clone();

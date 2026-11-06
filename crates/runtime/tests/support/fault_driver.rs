@@ -1,11 +1,11 @@
 use async_trait::async_trait;
-use krun_runtime::contract::{
+use kbox_contract::contract::{
     IsolationLevel, NetworkMode, ResourceControl, RuntimeActionRequest, RuntimeCapabilities,
     RuntimeExecRequest, RuntimeExecResult, RuntimeFeature, RuntimeInspection, RuntimeLogChunk,
     RuntimeLogQuery, RuntimeLogStream, RuntimeObservation, RuntimeRemoval, RuntimeUnitClass,
     RuntimeUnitSpec, RuntimeUnitState,
 };
-use krun_runtime::{ProviderId, RuntimeDriver, RuntimeError, RuntimeResult, RuntimeUnitRecord};
+use kbox_contract::{ProviderId, RuntimeDriver, RuntimeError, RuntimeResult, RuntimeUnitRecord};
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Mutex;
 
@@ -241,7 +241,7 @@ impl RuntimeDriver for DeterministicFaultDriver {
 
     async fn apply(
         &self,
-        request: &krun_runtime::contract::RuntimeApplyRequest,
+        request: &kbox_contract::contract::RuntimeApplyRequest,
         current: &RuntimeObservation,
     ) -> RuntimeResult<RuntimeObservation> {
         self.boundary(FaultOperation::Apply, FaultBoundary::BeforeEffect)

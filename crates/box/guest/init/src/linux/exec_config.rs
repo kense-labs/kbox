@@ -161,7 +161,7 @@ impl ExecConfig {
     pub(super) fn materialize_secret_environment(
         &mut self,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        self.materialize_secret_environment_from(std::path::Path::new("/.krun-box-secrets"))
+        self.materialize_secret_environment_from(std::path::Path::new("/.kbox-secrets"))
     }
 
     pub(super) fn materialize_secret_environment_from(

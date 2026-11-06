@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
 use base64::{engine::general_purpose::STANDARD, Engine as _};
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{
     ContainerTarget, CreateRequest, FileOp, FileRequest, FilesystemOp, FilesystemRequest,
     IsolationRequest, OciBundle, OperationContext,
 };
@@ -52,7 +52,7 @@ pub async fn linux_kvm_file_reopen_replacement(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let container_id = match krun_oci_sdk::ContainerId::new(format!("kvm-file-reopen-{nonce}")) {
+    let container_id = match koci_sdk::ContainerId::new(format!("kvm-file-reopen-{nonce}")) {
         Ok(id) => id,
         Err(error) => return failed(report, format!("failed to construct container ID: {error}")),
     };
@@ -128,8 +128,8 @@ pub async fn linux_kvm_file_reopen_replacement(
         Err(reason) => return failed(report, reason),
     };
 
-    let path = format!("/tmp/.krun-oci-file-reopen-{nonce}.bin");
-    let expected_payload = format!("krun-oci-file-reopen-{nonce}\0binary\n").into_bytes();
+    let path = format!("/tmp/.koci-file-reopen-{nonce}.bin");
+    let expected_payload = format!("koci-file-reopen-{nonce}\0binary\n").into_bytes();
     let encoded_payload = STANDARD.encode(&expected_payload);
     let current_target = ContainerTarget::current(container_id.clone());
     let file = FileRequest {
@@ -186,7 +186,7 @@ pub async fn linux_kvm_file_reopen_replacement(
             cleanup,
             expected_payload,
         },
-        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
+        init_marker_contents: format!("koci-exec-init-{nonce}\n").into_bytes(),
         stage: config.stage,
     };
     let state_root = prepared.runtime_root.join("operation-reopen-state");

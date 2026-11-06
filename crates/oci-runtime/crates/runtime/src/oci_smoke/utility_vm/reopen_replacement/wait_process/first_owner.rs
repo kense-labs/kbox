@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentOperation, AgentTransportFaultInjector, AgentTransportFaultStage,
     AgentTransportOperationStage, AGENT_PROTOCOL_VERSION_MAX,
 };
-use krun_oci_core::IsolationClass;
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ListRequest, OciRuntimeService, StateRequest};
+use koci_core::IsolationClass;
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ListRequest, OciRuntimeService, StateRequest};
 use tokio::time::timeout;
 
 use super::super::super::transport_fault_cleanup::{

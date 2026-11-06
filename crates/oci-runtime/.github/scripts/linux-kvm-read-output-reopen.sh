@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-: "${KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
+: "${K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST:?set the exact Linux KVM system-image manifest}"
 
 source .github/scripts/lib/linux-kvm-provenance.sh
 
@@ -42,34 +42,34 @@ target_dir="${CARGO_TARGET_DIR:-target}"
 if [[ "$target_dir" != /* ]]; then
   target_dir="$PWD/$target_dir"
 fi
-profile="${KRUN_OCI_BUILD_PROFILE:-debug}"
-build_arguments=(build -p krun-oci-cli -p krun-oci-krun)
+profile="${K_OCI_BUILD_PROFILE:-debug}"
+build_arguments=(build -p koci-cli -p koci-kbox)
 case "$profile" in
   debug) ;;
   release) build_arguments+=(--release) ;;
   *) build_arguments+=(--profile "$profile") ;;
 esac
 binary_dir="$target_dir/$profile"
-source_cli="$binary_dir/krun-oci"
-source_shim="$binary_dir/krun-oci-krun-shim"
-source_runtime_dir="$binary_dir/krun-oci-krun-runtime"
-runtime_assets_manifest="crates/krun/runtime/runtime-assets.json"
+source_cli="$binary_dir/koci"
+source_shim="$binary_dir/koci-kshim"
+source_runtime_dir="$binary_dir/koci-kbox-runtime"
+runtime_assets_manifest="crates/kbox/runtime/runtime-assets.json"
 
 temporary_root="${RUNNER_TEMP:-/tmp}"
 test -d "$temporary_root"
-work="$(mktemp -d "$temporary_root/krun-oci-kvm-read-output-reopen.XXXXXX")"
+work="$(mktemp -d "$temporary_root/koci-kvm-read-output-reopen.XXXXXX")"
 current_stage="setup"
 case_report=""
 case_stderr=""
 cleanup() {
   local status=$?
-  if [[ "$status" -ne 0 && "${KRUN_OCI_KEEP_FAILED_WORK:-0}" == "1" ]]; then
+  if [[ "$status" -ne 0 && "${K_OCI_KEEP_FAILED_WORK:-0}" == "1" ]]; then
     printf 'preserving failed Linux KVM ReadOutput reopen work directory: %s\n' \
       "$work" >&2
     return 0
   fi
   case "$work" in
-    "$temporary_root"/krun-oci-kvm-read-output-reopen.*)
+    "$temporary_root"/koci-kvm-read-output-reopen.*)
       rm -rf -- "$work"
       ;;
     *)
@@ -108,15 +108,15 @@ on_error() {
 }
 trap on_error ERR
 
-report_path="${KRUN_OCI_LINUX_KVM_READ_OUTPUT_REOPEN_REPORT:-$work/report.json}"
+report_path="${K_OCI_LINUX_KVM_READ_OUTPUT_REOPEN_REPORT:-$work/report.json}"
 if [[ -e "$report_path" || -L "$report_path" ]]; then
   printf 'refusing to overwrite Linux KVM ReadOutput reopen report: %s\n' \
     "$report_path" >&2
   exit 1
 fi
 test -d "$(dirname "$report_path")"
-test -f "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
-test ! -L "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test -f "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+test ! -L "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 
 cargo "${build_arguments[@]}"
 test -x "$source_cli"
@@ -126,31 +126,31 @@ test -d "$source_runtime_dir"
 binary_stage="$work/bin"
 mkdir "$binary_stage"
 chmod 0700 "$work" "$binary_stage"
-cp -p "$source_cli" "$binary_stage/krun-oci"
-cp -p "$source_shim" "$binary_stage/krun-oci-krun-shim"
-cp -a "$source_runtime_dir" "$binary_stage/krun-oci-krun-runtime"
-cli="$binary_stage/krun-oci"
-shim="$binary_stage/krun-oci-krun-shim"
-runtime_dir="$binary_stage/krun-oci-krun-runtime"
+cp -p "$source_cli" "$binary_stage/koci"
+cp -p "$source_shim" "$binary_stage/koci-kshim"
+cp -a "$source_runtime_dir" "$binary_stage/koci-kbox-runtime"
+cli="$binary_stage/koci"
+shim="$binary_stage/koci-kshim"
+runtime_dir="$binary_stage/koci-kbox-runtime"
 
 provenance="$(
   linux_kvm_provenance \
     linux-kvm-read-output-reopen-9-stage-v1 "$profile" \
     "$cli" "$shim" "$runtime_dir" \
     "$runtime_assets_manifest" \
-    "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
+    "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST"
 )"
 
 features="$($cli features)"
 kvm_driver="$(
   jq --compact-output \
-    '.drivers[] | select(.driver == "libkrun-kvm")' \
+    '.drivers[] | select(.driver == "libkkvm")' \
     <<<"$features"
 )"
 test -n "$kvm_driver"
 kvm_status="$(jq --raw-output '.status' <<<"$kvm_driver")"
 manifest_sha256="$(
-  sha256sum "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" | cut -d ' ' -f 1
+  sha256sum "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" | cut -d ' ' -f 1
 )"
 
 if [[ "$kvm_status" == "unavailable" ]]; then
@@ -162,7 +162,7 @@ if [[ "$kvm_status" == "unavailable" ]]; then
     --argjson kvm_driver "$kvm_driver" \
     --argjson provenance "$provenance" \
     '{
-      schema_version: "krun.oci.linux-kvm-read-output-reopen-matrix.v1",
+      schema_version: "koci.linux-kvm-read-output-reopen-matrix.v1",
       platform: "linux",
       architecture: $architecture,
       status: "unavailable",
@@ -177,12 +177,12 @@ if [[ "$kvm_status" == "unavailable" ]]; then
       reason: $reason
     }' | tee "$report_path"
   jq --exit-status \
-    '.schema_version == "krun.oci.linux-kvm-read-output-reopen-matrix.v1"
+    '.schema_version == "koci.linux-kvm-read-output-reopen-matrix.v1"
      and .platform == "linux" and .status == "unavailable"
      and .qualification_scope
        == "linux-kvm-operation-stage-reopen-only-v1"
      and .kvm_required and .expected_case_count == 9 and .case_count == 0
-     and .provenance.schema_version == "krun.oci.linux-kvm-provenance.v1"
+     and .provenance.schema_version == "koci.linux-kvm-provenance.v1"
      and .provenance.qualification_profile
        == "linux-kvm-read-output-reopen-9-stage-v1"
      and .provenance.source_tree_clean
@@ -205,9 +205,9 @@ scripts/prepare-utility-vm-bundle.sh \
   --alpine-archive "$alpine_archive" \
   --config fixtures/utility-vm/config.linux-kvm.json \
   --bundle "$bundle" \
-  --cgroups-path krun-oci-kvm-read-output-reopen
-init_marker="$bundle/rootfs/.krun-oci-create-start-smoke"
-exec_marker="$bundle/rootfs/.krun-oci-read-output-reopen-smoke"
+  --cgroups-path koci-kvm-read-output-reopen
+init_marker="$bundle/rootfs/.koci-create-start-smoke"
+exec_marker="$bundle/rootfs/.koci-read-output-reopen-smoke"
 test ! -e "$init_marker"
 test ! -e "$exec_marker"
 
@@ -219,12 +219,12 @@ cases_path="$work/cases.ndjson"
 
 endpoint_inventory() {
   find /tmp -maxdepth 1 -type d -uid "$(id -u)" \
-    -name 'krun-oci-agent-*' -print 2>/dev/null | sort
+    -name 'koci-agent-*' -print 2>/dev/null | sort
 }
 
 shim_process_inventory() {
   ps -eo pid=,comm= | \
-    awk 'index($2, "krun-oci-krun") == 1 {print $1 " " $2}' | sort
+    awk 'index($2, "koci-kbox") == 1 {print $1 " " $2}' | sort
 }
 
 endpoint_baseline="$(endpoint_inventory)"
@@ -255,7 +255,7 @@ run_stage() {
   "$cli" linux-kvm-read-output-reopen \
     --shim "$shim" \
     --runtime-root "$runtime_root" \
-    --system-image-manifest "$KRUN_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
+    --system-image-manifest "$K_OCI_LINUX_KVM_SYSTEM_IMAGE_MANIFEST" \
     --bundle "$bundle" \
     --fault-at "$stage" \
     > "$case_report" 2> "$case_stderr"
@@ -269,7 +269,7 @@ run_stage() {
     --arg manifest_sha256 "$manifest_sha256" \
     '. as $report
      | .schema_version
-       == "krun.oci.oci-vm-operation-reopen-replacement.v14"
+       == "koci.oci-vm-operation-reopen-replacement.v14"
      and .platform == "linux" and .status == "available"
      and .bundle_loaded and .requested_operation == "read-output"
      and .requested_stage == $stage
@@ -494,7 +494,7 @@ jq --null-input \
   --argjson provenance "$provenance" \
   --slurpfile cases "$cases_path" \
   '{
-    schema_version: "krun.oci.linux-kvm-read-output-reopen-matrix.v1",
+    schema_version: "koci.linux-kvm-read-output-reopen-matrix.v1",
     platform: "linux",
     architecture: $architecture,
     status: "available",
@@ -511,16 +511,16 @@ jq --null-input \
   }' | tee "$report_path"
 
 jq --exit-status \
-  '.schema_version == "krun.oci.linux-kvm-read-output-reopen-matrix.v1"
+  '.schema_version == "koci.linux-kvm-read-output-reopen-matrix.v1"
    and .platform == "linux" and .status == "available"
    and .qualification_scope == "linux-kvm-operation-stage-reopen-only-v1"
    and .kvm_required and .expected_case_count == 9 and .case_count == 9
-   and .provenance.schema_version == "krun.oci.linux-kvm-provenance.v1"
+   and .provenance.schema_version == "koci.linux-kvm-provenance.v1"
    and .provenance.platform == .platform
    and .provenance.architecture == .architecture
    and .provenance.qualification_profile
      == "linux-kvm-read-output-reopen-9-stage-v1"
-   and .provenance.driver == "libkrun-kvm"
+   and .provenance.driver == "libkkvm"
    and .provenance.isolation == "dedicated-vm"
    and .provenance.source_tree_clean
    and .provenance.system_image_manifest_sha256

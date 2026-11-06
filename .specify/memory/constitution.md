@@ -1,4 +1,4 @@
-# krun Constitution
+# kbox Constitution
 
 This document is the enforceable engineering baseline for the repository. Actionable implementation rules live in `AGENTS.md` and `docs/development-standards.md`. A principle marked **NON-NEGOTIABLE** cannot be waived by a spec, plan, task or deadline.
 
@@ -12,7 +12,7 @@ New behavior has a hermetic test in the owning package. Backend claims also need
 
 ### Policy regime
 
-Paths: `apps/gateway`, `crates/sentry`, `crates/acl`.
+Paths: `crates/acl`.
 
 Policy changes have deterministic tests for allow, refuse and unsupported cases. Security tests include an adversarial case. Configuration stays in ACL and behavioral decisions remain separate from actual enforcement.
 
@@ -52,11 +52,11 @@ Admitted values use enums and invariant-bearing types. Unknown security-critical
 
 ### VI. One Workspace and Local APIs
 
-The root Cargo workspace and lockfile are shared. Internal `krun-*` dependencies resolve locally and remain `publish = false`. Cross-crate calls use public APIs. Submodule repositories keep their own build contracts. **NON-NEGOTIABLE.**
+The root Cargo workspace and lockfile are shared. Internal `k*` dependencies resolve locally and remain `publish = false`. Cross-crate calls use public APIs. Submodule repositories keep their own build contracts. **NON-NEGOTIABLE.**
 
 ### VII. One Configuration Language
 
-ACL parsed by `krun-acl` is the only product configuration language. Data schemas and manifests are versioned data contracts and cannot alter permission discovery or provider selection by themselves. **NON-NEGOTIABLE.**
+ACL parsed by `kacl` is the only product configuration language. Data schemas and manifests are versioned data contracts and cannot alter permission discovery or provider selection by themselves. **NON-NEGOTIABLE.**
 
 ### VIII. Replaceable Backends and Transports
 

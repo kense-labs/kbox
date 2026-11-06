@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_core::{CapabilityStatus, HostPlatform};
-use krun_oci_sdk::{
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_core::{CapabilityStatus, HostPlatform};
+use koci_sdk::{
     CreateRequest, IsolationRequest, OciBundle, OperationContext, ProcessIo, TerminalSize,
 };
 
@@ -30,14 +30,14 @@ pub struct LinuxKvmResizeReopenConfig {
 
 pub(super) struct Qualification {
     create: CreateRequest,
-    start_operation_id: krun_oci_sdk::OperationId,
-    exec_operation_id: krun_oci_sdk::OperationId,
-    resize_operation_id: krun_oci_sdk::OperationId,
-    delete_operation_id: krun_oci_sdk::OperationId,
-    stale_guest_operation_id: krun_oci_sdk::OperationId,
-    stale_host_operation_id: krun_oci_sdk::OperationId,
-    process_id: krun_oci_sdk::ProcessId,
-    process: krun_oci_sdk::oci_spec::runtime::Process,
+    start_operation_id: koci_sdk::OperationId,
+    exec_operation_id: koci_sdk::OperationId,
+    resize_operation_id: koci_sdk::OperationId,
+    delete_operation_id: koci_sdk::OperationId,
+    stale_guest_operation_id: koci_sdk::OperationId,
+    stale_host_operation_id: koci_sdk::OperationId,
+    process_id: koci_sdk::ProcessId,
+    process: koci_sdk::oci_spec::runtime::Process,
     io: ProcessIo,
     size: TerminalSize,
     init_marker_contents: Vec<u8>,
@@ -81,7 +81,7 @@ pub async fn linux_kvm_resize_reopen_replacement(
         Ok(nonce) => nonce,
         Err(reason) => return failed(report, reason),
     };
-    let container_id = match krun_oci_sdk::ContainerId::new(format!("kvm-resize-reopen-{nonce}")) {
+    let container_id = match koci_sdk::ContainerId::new(format!("kvm-resize-reopen-{nonce}")) {
         Ok(id) => id,
         Err(error) => {
             return failed(report, format!("failed to construct container ID: {error}"));
@@ -202,9 +202,9 @@ pub async fn linux_kvm_resize_reopen_replacement(
         process,
         io,
         size,
-        init_marker_contents: format!("krun-oci-exec-init-{nonce}\n").into_bytes(),
-        exec_marker_contents: format!("krun-oci-exec-process-{nonce}\n").into_bytes(),
-        resize_marker_contents: format!("krun-oci-resize-{nonce}:40 120\n").into_bytes(),
+        init_marker_contents: format!("koci-exec-init-{nonce}\n").into_bytes(),
+        exec_marker_contents: format!("koci-exec-process-{nonce}\n").into_bytes(),
+        resize_marker_contents: format!("koci-resize-{nonce}:40 120\n").into_bytes(),
         stage: config.stage,
     };
     let state_root = prepared.runtime_root.join("operation-reopen-state");

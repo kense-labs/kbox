@@ -6,7 +6,7 @@
 //! # Usage
 //!
 //! ```text
-//! krun-box build -t myimage:latest .
+//! kbox build -t myimage:latest .
 //! ```
 //!
 //! # Supported Instructions

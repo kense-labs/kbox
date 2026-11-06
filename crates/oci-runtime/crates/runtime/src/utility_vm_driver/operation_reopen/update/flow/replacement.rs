@@ -1,10 +1,10 @@
 use std::path::Path;
 use std::sync::Arc;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_core::{DriverKind, IsolationClass};
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ListRequest, OciRuntimeService};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_core::{DriverKind, IsolationClass};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ListRequest, OciRuntimeService};
 use tokio::time::timeout;
 
 use super::super::super::driver::QualificationKvmOperationDriver;
@@ -102,7 +102,7 @@ pub(super) async fn run(
             let record = &records[0];
             if record.state.id() != qualification.create.id.as_str()
                 || first.target.generation != Some(record.generation)
-                || record.driver != DriverKind::LibkrunKvm
+                || record.driver != DriverKind::LibkKvm
                 || record.isolation != IsolationClass::DedicatedVm
                 || *record.state.status() != ContainerState::Running
                 || record.is_paused()

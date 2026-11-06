@@ -8,7 +8,7 @@ pub enum OciSemanticRuleKind {
     Normative,
     /// The rule rejects an invalid kernel, syscall, or transport input.
     RuntimeConstraint,
-    /// The rule enforces the advertised Krun workload-platform boundary.
+    /// The rule enforces the advertised Kbox workload-platform boundary.
     PlatformPolicy,
 }
 

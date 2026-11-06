@@ -1,7 +1,7 @@
 use std::io;
 
-use krun_oci_sdk::oci_spec::runtime::{IOPriorityClass, LinuxIOPriority};
-use krun_oci_sdk::{Error, ErrorCode, Result};
+use koci_sdk::oci_spec::runtime::{IOPriorityClass, LinuxIOPriority};
+use koci_sdk::{Error, ErrorCode, Result};
 use serde::{Deserialize, Serialize};
 
 const IOPRIO_WHO_PROCESS: libc::c_int = 1;
@@ -165,12 +165,12 @@ mod tests {
     use std::io;
     use std::process::Command;
 
-    use krun_oci_sdk::oci_spec::runtime::LinuxIOPriority;
-    use krun_oci_sdk::ErrorCode;
+    use koci_sdk::oci_spec::runtime::LinuxIOPriority;
+    use koci_sdk::ErrorCode;
 
     use super::{apply, current_encoded, error_code_for_io, IoPriorityPlan};
 
-    const CHILD_PROBE: &str = "KRUN_OCI_IO_PRIORITY_CHILD_PROBE";
+    const CHILD_PROBE: &str = "K_OCI_IO_PRIORITY_CHILD_PROBE";
     const APPLY_TEST: &str =
         "executor::io_priority::tests::applies_best_effort_in_an_isolated_process";
 

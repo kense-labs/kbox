@@ -1,10 +1,8 @@
 use std::path::Path;
 
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::oci_spec::runtime::Process;
-use krun_oci_sdk::{
-    Error, ErrorCode, OperationId, ProcessId, ProcessIo, ProcessTarget, TerminalSize,
-};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::oci_spec::runtime::Process;
+use koci_sdk::{Error, ErrorCode, OperationId, ProcessId, ProcessIo, ProcessTarget, TerminalSize};
 
 use super::super::exec::support::dispatch_may_have_reached;
 use super::super::{append_failure, QualificationHvfDriver, FAULT_OPERATION};
@@ -28,7 +26,7 @@ pub(super) fn signalable_exec_process(
     let process_id = ProcessId::new(format!("signal-worker-{nonce}"))
         .map_err(|error| format!("failed to construct signalable Exec process ID: {error}"))?;
     let command = format!(
-        "set -eu; trap \"printf 'krun-oci-signal-process-{nonce}\\n' > /{SIGNAL_MARKER_NAME}\" USR1; printf 'krun-oci-exec-process-{nonce}\\n' > /{}; while :; do /bin/busybox sleep 1; done",
+        "set -eu; trap \"printf 'koci-signal-process-{nonce}\\n' > /{SIGNAL_MARKER_NAME}\" USR1; printf 'koci-exec-process-{nonce}\\n' > /{}; while :; do /bin/busybox sleep 1; done",
         super::super::exec::EXEC_MARKER_NAME,
     );
     let process: Process = serde_json::from_value(serde_json::json!({
@@ -41,9 +39,9 @@ pub(super) fn signalable_exec_process(
     }))
     .map_err(|error| format!("failed to construct signalable terminal Exec process: {error}"))?;
     let io = ProcessIo {
-        stdin: krun_oci_sdk::IoMode::Terminal,
-        stdout: krun_oci_sdk::IoMode::Terminal,
-        stderr: krun_oci_sdk::IoMode::Terminal,
+        stdin: koci_sdk::IoMode::Terminal,
+        stdout: koci_sdk::IoMode::Terminal,
+        stderr: koci_sdk::IoMode::Terminal,
         terminal_size: Some(TerminalSize {
             width: 80,
             height: 24,

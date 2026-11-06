@@ -1,5 +1,5 @@
-use krun_oci_agent_protocol::AgentTransportOperationStage;
-use krun_oci_sdk::{Error, ErrorCode};
+use koci_agent_protocol::AgentTransportOperationStage;
+use koci_sdk::{Error, ErrorCode};
 
 use super::super::{QualificationHvfDriver, FAULT_OPERATION};
 use crate::transport_cleanup_report::is_retryable_disconnect_operation;

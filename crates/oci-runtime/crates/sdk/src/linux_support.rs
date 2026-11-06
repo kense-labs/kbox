@@ -16,8 +16,8 @@ mod validation;
 
 use shape::validate_feature_shape;
 
-pub(super) const KRUN_CUSTOM_LINUX_MOUNT_OPTIONS: &[&str] = &["rnodev"];
-const KRUN_UNIMPLEMENTED_OPTIONAL_LINUX_MOUNT_OPTIONS: &[&str] = &["tmpcopyup"];
+pub(super) const K_CUSTOM_LINUX_MOUNT_OPTIONS: &[&str] = &["rnodev"];
+const K_UNIMPLEMENTED_OPTIONAL_LINUX_MOUNT_OPTIONS: &[&str] = &["tmpcopyup"];
 pub(super) const CONSTRUCT_OPERATION: &str = "construct-oci-linux-support";
 
 /// Immutable Linux configuration support published by one exact runtime driver.
@@ -64,8 +64,8 @@ impl OciLinuxSupport {
         let mut mount_options = OCI_LINUX_MOUNT_OPTIONS
             .iter()
             .map(|option| option.name())
-            .filter(|name| !KRUN_UNIMPLEMENTED_OPTIONAL_LINUX_MOUNT_OPTIONS.contains(name))
-            .chain(KRUN_CUSTOM_LINUX_MOUNT_OPTIONS.iter().copied())
+            .filter(|name| !K_UNIMPLEMENTED_OPTIONAL_LINUX_MOUNT_OPTIONS.contains(name))
+            .chain(K_CUSTOM_LINUX_MOUNT_OPTIONS.iter().copied())
             .map(str::to_string)
             .collect::<Vec<_>>();
         mount_options.sort_unstable();

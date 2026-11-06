@@ -11,23 +11,23 @@
 
 [package]
 edition = "2021"
-name = "krun-updater"
+name = "kupdater"
 version = "0.3.0"
 publish = false
-authors = ["Krun"]
+authors = ["Kbox"]
 build = false
 autolib = false
 autobins = false
 autoexamples = false
 autotests = false
 autobenches = false
-description = "Self-update library for Krun CLI binaries via GitHub Releases"
+description = "Self-update library for Kbox CLI binaries via GitHub Releases"
 readme = false
 license = "MIT"
-repository = "https://github.com/kense-labs/krun"
+repository = "https://github.com/kense-labs/kbox"
 
 [lib]
-name = "krun_updater"
+name = "kupdater"
 path = "src/lib.rs"
 
 [dependencies.anyhow]

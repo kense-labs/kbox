@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 use std::io;
 use std::path::Path;
 
-use krun_oci_sdk::{ErrorCode, Result};
+use koci_sdk::{ErrorCode, Result};
 
 use super::{operation_error, RdmaDevice, RdmaLimit, RdmaLimits, MAX_FILE};
 

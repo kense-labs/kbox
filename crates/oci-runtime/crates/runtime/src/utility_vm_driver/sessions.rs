@@ -1,7 +1,7 @@
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
-use krun_oci_sdk::{
+use koci_sdk::{
     ContainerId, ContainerTarget, ExitStatus, Generation, GuestSessionAttachment, GuestSessionId,
 };
 

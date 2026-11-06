@@ -5,7 +5,7 @@
 use std::path::{Path, PathBuf};
 
 use async_trait::async_trait;
-use krun_box_core::error::Result;
+use kbox_core::error::Result;
 
 use super::attestation::{AttestationReport, AttestationRequest};
 use super::policy::AttestationPolicy;

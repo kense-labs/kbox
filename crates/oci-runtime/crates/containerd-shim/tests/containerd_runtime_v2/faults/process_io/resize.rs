@@ -3,8 +3,8 @@ use std::os::unix::fs::OpenOptionsExt;
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{
     ContainerTarget, Generation, OperationContext, ProcessTarget, ResizeRequest, StateRequest,
     TerminalSize,
 };
@@ -161,11 +161,11 @@ pub(in super::super) async fn qualify_resize_effect_committed_shim_sigkill(
     let host_pid = super::super::find_runtime_host_pid(config).await?;
     let shim_pid = find_exact_shim_pid(config, &id).await?;
     let mut suspended_host =
-        SuspendedProcess::stop(host_pid, "committed-resize Krun OCI host service")?;
+        SuspendedProcess::stop(host_pid, "committed-resize Kbox OCI host service")?;
     let mut resize_call = spawn_resize(&shim_address, &id);
     wait_for_pending_resize(&bundle, &mut resize_call).await?;
     let suspended_shim = SuspendedProcess::stop(shim_pid, "committed-resize shim")?;
-    suspended_host.resume("committed-resize Krun OCI host service")?;
+    suspended_host.resume("committed-resize Kbox OCI host service")?;
 
     let process = exact_process_target(config, &id, &identity)?;
     commit_runtime_resize(config, &id, &identity, &process).await?;
@@ -254,7 +254,7 @@ async fn wait_for_pending_resize(
     bundle: &Path,
     resize_call: &mut tokio::task::JoinHandle<TestResult<()>>,
 ) -> TestResult<()> {
-    let path = bundle.join("krun-oci-shim-v1.json");
+    let path = bundle.join("koci-shim-v1.json");
     let deadline = tokio::time::Instant::now() + Duration::from_secs(2);
     loop {
         let document: MetadataDocument = serde_json::from_slice(

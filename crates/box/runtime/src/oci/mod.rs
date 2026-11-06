@@ -1,4 +1,4 @@
-//! OCI image support for Krun Box.
+//! OCI image support for Kbox Box.
 //!
 //! This module provides functionality to parse and extract OCI images
 //! for use as VM rootfs. It supports:

@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use krun_oci_sdk::oci_spec::runtime::Process;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::Process;
+use koci_sdk::{
     ErrorCode, IoMode, OciBundle, ProcessIo, TerminalSize, CONTROL_CGROUP_CPU_HEADROOM_ANNOTATION,
     CONTROL_CGROUP_MEMORY_HEADROOM_ANNOTATION, CONTROL_CGROUP_PIDS_HEADROOM_ANNOTATION,
     CONTROL_CGROUP_PROCS_FD, CONTROL_CGROUP_PROCS_FD_ENV,
@@ -34,11 +34,11 @@ const UTS_CONFIG: &str = r#"{
     "cwd": "/",
     "noNewPrivileges": true
   },
-  "hostname": "krun-smoke",
+  "hostname": "ksmoke",
   "domainname": "runtime.test",
   "linux": {"namespaces": [{"type": "uts"}]}
 }"#;
-const KRUN_BOX_CONFIG: &str = include_str!("../../../../fixtures/krun-box/config.json");
+const K_BOX_CONFIG: &str = include_str!("../../../../fixtures/kbox/config.json");
 
 fn bundle(config: &str) -> OciBundle {
     OciBundle::from_json(
@@ -171,7 +171,7 @@ fn plans_exact_common_process_fields_for_init_and_exec() {
     );
     process.insert(
         "env".to_string(),
-        serde_json::json!(["KRUN_EXACT=environment", "EMPTY="]),
+        serde_json::json!(["K_EXACT=environment", "EMPTY="]),
     );
     process.insert("cwd".to_string(), serde_json::json!("/workspace/task"));
     let encoded = serde_json::to_string(&config).expect("encode exact process configuration");
@@ -193,7 +193,7 @@ fn plans_exact_common_process_fields_for_init_and_exec() {
     for environment in [&init.environment, &exec.environment] {
         assert_eq!(
             environment,
-            &["KRUN_EXACT=environment", "EMPTY="],
+            &["K_EXACT=environment", "EMPTY="],
             "the configured environment must not inherit or lose entries"
         );
     }
@@ -219,7 +219,7 @@ fn plans_exact_common_process_fields_for_init_and_exec() {
 fn admits_a_backslash_inside_a_workspace_cwd_component() {
     let mut config: serde_json::Value =
         serde_json::from_str(FIXED_CONFIG).expect("decode fixed process configuration");
-    let cwd = r#"/private/var/tmp/krun-中文-"-\-work"#;
+    let cwd = r#"/private/var/tmp/k中文-"-\-work"#;
     config["process"]["cwd"] = serde_json::json!(cwd);
     let encoded = serde_json::to_string(&config).expect("encode backslash cwd");
     let plan = InitPlan::from_bundle(&bundle(&encoded), &null_io())
@@ -361,18 +361,18 @@ fn plans_all_oci_hook_phases_instead_of_rejecting_the_configuration() {
 }
 
 #[test]
-fn plans_the_exact_krun_box_compiler_output() {
+fn plans_the_exact_kbox_compiler_output() {
     let bundle = OciBundle::from_json(
-        std::path::PathBuf::from("/var/lib/krun/boxes/box-123"),
-        KRUN_BOX_CONFIG,
+        std::path::PathBuf::from("/var/lib/kbox/boxes/box-123"),
+        K_BOX_CONFIG,
     )
-    .expect("schema-valid Krun Box bundle");
+    .expect("schema-valid Kbox Box bundle");
     let plan = InitPlan::from_bundle(&bundle, &null_io())
-        .expect("Krun Box compiler output must be executable without translation");
+        .expect("Kbox Box compiler output must be executable without translation");
 
     assert_eq!(
         plan.rootfs,
-        std::path::PathBuf::from("/var/lib/krun/boxes/box-123/rootfs")
+        std::path::PathBuf::from("/var/lib/kbox/boxes/box-123/rootfs")
     );
     assert_eq!(plan.args, ["/sbin/init"]);
     assert_eq!(plan.mounts.len(), 10);
@@ -409,7 +409,7 @@ fn resolves_current_directory_rootfs_to_the_bundle() {
 #[test]
 fn plans_versioned_control_workload_cgroups_with_reserved_descriptors() {
     let mut config: serde_json::Value =
-        serde_json::from_str(KRUN_BOX_CONFIG).expect("decode Krun Box config");
+        serde_json::from_str(K_BOX_CONFIG).expect("decode Kbox Box config");
     config["annotations"][CONTROL_WORKLOAD_CGROUP_LAYOUT_ANNOTATION] =
         serde_json::json!(CONTROL_WORKLOAD_CGROUP_LAYOUT_V1);
     config["annotations"][CONTROL_CGROUP_MEMORY_HEADROOM_ANNOTATION] =
@@ -433,7 +433,7 @@ fn plans_versioned_control_workload_cgroups_with_reserved_descriptors() {
 #[test]
 fn rejects_control_workload_layout_without_new_namespace_or_with_spoofed_environment() {
     let mut config: serde_json::Value =
-        serde_json::from_str(KRUN_BOX_CONFIG).expect("decode Krun Box config");
+        serde_json::from_str(K_BOX_CONFIG).expect("decode Kbox Box config");
     config["annotations"][CONTROL_WORKLOAD_CGROUP_LAYOUT_ANNOTATION] =
         serde_json::json!(CONTROL_WORKLOAD_CGROUP_LAYOUT_V1);
     config["annotations"][CONTROL_CGROUP_MEMORY_HEADROOM_ANNOTATION] =
@@ -719,7 +719,7 @@ fn rejects_every_unimplemented_property_instead_of_ignoring_it() {
     let config = FIXED_CONFIG.replace(
         r#""noNewPrivileges": true"#,
         r#""noNewPrivileges": true,
-           "apparmorProfile": "krun-test""#,
+           "apparmorProfile": "ktest""#,
     );
     let error = InitPlan::from_bundle(&bundle(&config), &null_io())
         .expect_err("AppArmor profile remains unsupported");
@@ -1125,12 +1125,12 @@ fn accepts_a_new_uts_namespace_and_bounded_uts_names() {
         InitPlan::from_bundle(&bundle(UTS_CONFIG), &null_io()).expect("UTS namespace profile");
     assert!(plan.namespaces.new_uts());
     assert!(!plan.namespaces.new_mount());
-    assert_eq!(plan.hostname.as_deref(), Some("krun-smoke"));
+    assert_eq!(plan.hostname.as_deref(), Some("ksmoke"));
     assert_eq!(plan.domainname.as_deref(), Some("runtime.test"));
 
     let maximum = "h".repeat(64);
     let config = UTS_CONFIG
-        .replace("krun-smoke", &maximum)
+        .replace("ksmoke", &maximum)
         .replace("runtime.test", &maximum);
     let plan = InitPlan::from_bundle(&bundle(&config), &null_io()).expect("64-byte UTS names");
     assert_eq!(plan.hostname.as_deref(), Some(maximum.as_str()));
@@ -1481,7 +1481,7 @@ fn bounds_user_namespace_mapping_count() {
 
 #[test]
 fn rejects_uts_names_outside_the_supported_profile() {
-    let too_long = UTS_CONFIG.replace("krun-smoke", &"h".repeat(65));
+    let too_long = UTS_CONFIG.replace("ksmoke", &"h".repeat(65));
     let error =
         InitPlan::from_bundle(&bundle(&too_long), &null_io()).expect_err("65-byte hostname");
     assert_eq!(error.code, ErrorCode::InvalidArgument);

@@ -1,8 +1,8 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
-use krun_oci_sdk::oci_spec::runtime::Process;
-use krun_oci_sdk::{
+use koci_sdk::oci_spec::runtime::Process;
+use koci_sdk::{
     Error, ErrorCode, IoMode, OciBundle, ProcessIo, Result, CONTROL_CGROUP_PROCS_FD,
     CONTROL_CGROUP_PROCS_FD_ENV, WORKLOAD_CGROUP_PROCS_FD, WORKLOAD_CGROUP_PROCS_FD_ENV,
 };
@@ -849,9 +849,9 @@ fn linux_path(path: &Path, field: &str, require_absolute: bool) -> Result<String
     let value = path
         .to_str()
         .ok_or_else(|| invalid(format!("{field} is not valid UTF-8")))?;
-    match krun_oci_sdk::admit_workspace_path(value, require_absolute) {
+    match koci_sdk::admit_workspace_path(value, require_absolute) {
         Ok(()) => Ok(value.to_string()),
-        Err(krun_oci_sdk::WorkspacePathReject::Shape) => Err(invalid(format!(
+        Err(koci_sdk::WorkspacePathReject::Shape) => Err(invalid(format!(
             "{field} must be a normalized {} Linux path",
             if require_absolute {
                 "absolute"
@@ -859,7 +859,7 @@ fn linux_path(path: &Path, field: &str, require_absolute: bool) -> Result<String
                 "relative"
             }
         ))),
-        Err(krun_oci_sdk::WorkspacePathReject::Component) => Err(invalid(format!(
+        Err(koci_sdk::WorkspacePathReject::Component) => Err(invalid(format!(
             "{field} must not contain empty or dot components"
         ))),
     }

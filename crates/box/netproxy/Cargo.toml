@@ -1,17 +1,17 @@
 [package]
-name = "krun-box-netproxy"
+name = "kbox-netproxy"
 publish = false
 version = "3.2.7"
 edition = "2021"
 license = "MIT"
-description = "Userspace network proxy and bridge for Krun Box libkrun VMs"
+description = "Userspace network proxy and bridge for Kbox Box libkrun VMs"
 
 [lib]
-name = "krun_box_netproxy"
+name = "kbox_netproxy"
 path = "src/lib.rs"
 
 [target.'cfg(unix)'.dependencies]
-krun-box-core = { version = "3.2", path = "../core" }
+kbox-core = { version = "3.2", path = "../core" }
 libc = { workspace = true }
 tracing = { workspace = true }
 smoltcp = { version = "0.11", default-features = false, features = [

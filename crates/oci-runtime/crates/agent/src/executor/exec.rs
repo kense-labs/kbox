@@ -1,11 +1,11 @@
 use std::path::Path;
 use std::time::Duration;
 
-use krun_oci_agent_protocol::{
+use koci_agent_protocol::{
     AgentExecRequest, AgentProcess, AgentSignalProcessRequest, AgentWaitProcessRequest,
 };
-use krun_oci_sdk::oci_spec::runtime::ContainerState;
-use krun_oci_sdk::{ErrorCode, ExitStatus, Result};
+use koci_sdk::oci_spec::runtime::ContainerState;
+use koci_sdk::{ErrorCode, ExitStatus, Result};
 use tokio::time::{sleep, Instant};
 
 use super::exec_process::ExecProcess;
@@ -459,7 +459,7 @@ async fn wait_for_process_operation(
     }
 }
 
-fn missing_locked_container(key: &ContainerKey) -> krun_oci_sdk::Error {
+fn missing_locked_container(key: &ContainerKey) -> koci_sdk::Error {
     executor_error(
         ErrorCode::Internal,
         format!(

@@ -5,7 +5,7 @@ use std::os::unix::net::UnixDatagram;
 use std::path::{Path, PathBuf};
 use std::sync::{atomic::AtomicBool, Arc};
 
-use krun_box_core::error::{BoxError, Result};
+use kbox_core::error::{BoxError, Result};
 
 use super::device::{BridgePort, NetStats, NetStatsSnapshot};
 use super::{ParsedPortForwards, PortForward, ProxyEngine, ProxyEngineConfig, UdpPortForward};
@@ -24,7 +24,7 @@ pub struct NetProxyManager {
 
 impl NetProxyManager {
     /// Create a new manager. Socket will be placed at
-    /// `~/.krun/boxes/<box_id>/sockets/net.sock`.
+    /// `~/.kbox/boxes/<box_id>/sockets/net.sock`.
     pub fn new(box_dir: &Path) -> Self {
         let socket_dir = box_dir.join("sockets");
         Self {
@@ -63,8 +63,8 @@ impl NetProxyManager {
         _dns_servers: &[Ipv4Addr],
         _port_map: &[String],
     ) -> Result<()> {
-        let (proxy_socket, krun_fd) = socketpair_unixgram()?;
-        self.net_socket_fd = Some(krun_fd);
+        let (proxy_socket, kfd) = socketpair_unixgram()?;
+        self.net_socket_fd = Some(kfd);
         self.net_proxy_fd = Some(proxy_socket.into_raw_fd());
         Ok(())
     }
@@ -143,7 +143,7 @@ pub fn spawn_inherited_netproxy(fd: RawFd, config: InheritedNetProxyConfig<'_>) 
         })?;
 
     std::thread::Builder::new()
-        .name("krun-netproxy".to_string())
+        .name("knetproxy".to_string())
         .spawn(move || {
             tracing::info!(fd, gateway = %gateway, guest_ip = %guest_ip, stats = ?stats_path, "NetProxy thread started");
             if let Err(e) = socket.set_nonblocking(true) {
@@ -198,7 +198,7 @@ pub(super) fn write_stats_file(path: &Path, stats: NetStatsSnapshot) -> io::Resu
         .unwrap_or_default()
         .as_millis();
     let body = format!(
-        "{{\"schema\":\"krun-box.netproxy.stats.v1\",\"rx_bytes\":{},\"tx_bytes\":{},\"rx_packets\":{},\"tx_packets\":{},\"updated_at_ms\":{}}}\n",
+        "{{\"schema\":\"kbox.netproxy.stats.v1\",\"rx_bytes\":{},\"tx_bytes\":{},\"rx_packets\":{},\"tx_packets\":{},\"updated_at_ms\":{}}}\n",
         stats.rx_bytes, stats.tx_bytes, stats.rx_packets, stats.tx_packets, updated_at_ms
     );
     let tmp = path.with_extension("json.tmp");
@@ -220,7 +220,7 @@ pub(super) fn parse_port_forwards(
     let mut tcp = Vec::new();
     let mut udp = Vec::new();
     for entry in port_map {
-        let mapping = krun_box_core::parse_port_mapping(entry)?;
+        let mapping = kbox_core::parse_port_mapping(entry)?;
         if mapping.host_port == 0 {
             return Err(format!(
                 "netproxy published ports reject host_port=0 auto-assign in '{entry}'"
@@ -230,7 +230,7 @@ pub(super) fn parse_port_forwards(
         let guest_port = mapping.guest_port;
 
         match mapping.protocol {
-            krun_box_core::PortProtocol::Tcp => {
+            kbox_core::PortProtocol::Tcp => {
                 let listener =
                     TcpListener::bind(SocketAddrV4::new(Ipv4Addr::UNSPECIFIED, host_port))
                         .map_err(|e| format!("cannot bind TCP 0.0.0.0:{host_port}: {e}"))?;
@@ -252,7 +252,7 @@ pub(super) fn parse_port_forwards(
                     active: Vec::new(),
                 });
             }
-            krun_box_core::PortProtocol::Udp => {
+            kbox_core::PortProtocol::Udp => {
                 let socket = UdpSocket::bind(SocketAddrV4::new(Ipv4Addr::UNSPECIFIED, host_port))
                     .map_err(|e| format!("cannot bind UDP 0.0.0.0:{host_port}: {e}"))?;
                 socket

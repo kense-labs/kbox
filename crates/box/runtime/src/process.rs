@@ -39,20 +39,20 @@ pub fn is_process_alive(_pid: u32) -> bool {
     false
 }
 
-/// Remove a legacy MicroVM host cgroup `/sys/fs/cgroup/krun-box/<id>`.
+/// Remove a legacy MicroVM host cgroup `/sys/fs/cgroup/kbox/<id>`.
 ///
 /// Sandbox cgroups are owned by the OCI runtime delete path and must not be
 /// touched here. Absent is success. A still-busy cgroup is retried briefly,
 /// then the error is returned so stop/remove cannot invent a clean host.
-pub fn remove_legacy_microvm_cgroup(box_id: &str) -> krun_box_core::error::Result<()> {
+pub fn remove_legacy_microvm_cgroup(box_id: &str) -> kbox_core::error::Result<()> {
     #[cfg(target_os = "linux")]
     {
         if box_id.is_empty() || box_id.contains(['/', '\\']) || box_id.contains("..") {
-            return Err(krun_box_core::error::BoxError::Other(format!(
+            return Err(kbox_core::error::BoxError::Other(format!(
                 "refusing to remove a host cgroup for unsafe box id {box_id:?}"
             )));
         }
-        let path = std::path::PathBuf::from("/sys/fs/cgroup/krun-box").join(box_id);
+        let path = std::path::PathBuf::from("/sys/fs/cgroup/kbox").join(box_id);
         for attempt in 0..50 {
             match std::fs::remove_dir(&path) {
                 Ok(()) => return Ok(()),
@@ -61,7 +61,7 @@ pub fn remove_legacy_microvm_cgroup(box_id: &str) -> krun_box_core::error::Resul
                     std::thread::sleep(std::time::Duration::from_millis(20));
                 }
                 Err(error) => {
-                    return Err(krun_box_core::error::BoxError::Other(format!(
+                    return Err(kbox_core::error::BoxError::Other(format!(
                         "Failed to remove host cgroup {}: {error}",
                         path.display()
                     )));

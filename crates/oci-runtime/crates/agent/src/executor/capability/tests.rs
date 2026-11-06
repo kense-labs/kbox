@@ -1,4 +1,4 @@
-use krun_oci_sdk::oci_spec::runtime::LinuxCapabilities;
+use koci_sdk::oci_spec::runtime::LinuxCapabilities;
 
 use super::{
     ensure_exact_sets, probe_kernel_capabilities, CapabilityPlan, CapabilitySet,
@@ -26,9 +26,9 @@ fn bounding_set_mismatch_fails_closed() {
 }
 
 #[test]
-fn plans_the_exact_krun_box_capability_profile() {
+fn plans_the_exact_kbox_capability_profile() {
     let config: serde_json::Value =
-        serde_json::from_str(include_str!("../../../../../fixtures/krun-box/config.json"))
+        serde_json::from_str(include_str!("../../../../../fixtures/kbox/config.json"))
             .expect("decode fixture");
     let capabilities: LinuxCapabilities =
         serde_json::from_value(config["process"]["capabilities"].clone())

@@ -1,10 +1,10 @@
 {
-  "schema": "krun.runtime.unit-spec.v4",
+  "schema": "kbox_contract.unit-spec.v4",
   "unit_id": "workload:agent-harness:replica:1",
   "generation": 7,
   "class": "service",
   "artifact": {
-    "uri": "oci://registry.example/krun/agent-harness@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "uri": "oci://registry.example/kbox/agent-harness@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "media_type": "application/vnd.oci.image.manifest.v1+json"
   },

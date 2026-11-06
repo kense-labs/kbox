@@ -1,4 +1,4 @@
-//! Guest init process for krun-box VM.
+//! Guest init process for kbox VM.
 //!
 //! This process supervises workloads inside a MicroVM or private PID namespace:
 //! - Mounting essential filesystems (/proc, /sys, /dev)
@@ -11,16 +11,16 @@
 #[cfg(target_os = "linux")]
 mod linux {
 
-    use krun_box_core::guest_exec::{
+    use kbox_core::guest_exec::{
         GuestBootConfig, GuestBootMode, GuestExecConfig, GuestHostConfig, GUEST_BOOT_CONFIG_ENV,
         GUEST_BOOT_CONFIG_PATH, GUEST_BOOT_CONTROL_MOUNT_PATH, GUEST_BOOT_CONTROL_TAG,
         GUEST_ROOTFS_MAINTENANCE_ENV, GUEST_TERMINAL_CONTROL_MOUNT_PATH,
         GUEST_TERMINAL_CONTROL_TAG, GUEST_TERMINAL_STATUS_PATH, MAX_GUEST_BOOT_CONFIG_BYTES,
         MAX_RUNTIME_EXEC_CONFIG_BYTES, RUNTIME_EXEC_CONFIG_PATH,
     };
-    use krun_box_core::rootfs_baseline::GUEST_DIFF_BASELINE_PATH;
-    use krun_box_core::secret::{SecretEnvironmentBinding, SECRET_ENVIRONMENT_MANIFEST};
-    use krun_box_guest_init::{
+    use kbox_core::rootfs_baseline::GUEST_DIFF_BASELINE_PATH;
+    use kbox_core::secret::{SecretEnvironmentBinding, SECRET_ENVIRONMENT_MANIFEST};
+    use kbox_guest_init::{
         attest_server, diff_baseline, exec_server, host_config, namespace, network, port_forward,
         pty_server, root_transport, terminal_status, volume,
     };
@@ -40,12 +40,12 @@ mod linux {
             match value.map(str::trim).filter(|value| !value.is_empty()) {
                 None | Some("microvm") => Ok(Self::Microvm),
                 Some("host-sandbox") => Ok(Self::HostSandbox),
-                Some(value) => Err(format!("unsupported KRUN_BOOTSTRAP_MODE {value:?}").into()),
+                Some(value) => Err(format!("unsupported K_BOOTSTRAP_MODE {value:?}").into()),
             }
         }
 
         fn from_env() -> Result<Self, Box<dyn std::error::Error>> {
-            Self::from_value(std::env::var("KRUN_BOOTSTRAP_MODE").ok().as_deref())
+            Self::from_value(std::env::var("K_BOOTSTRAP_MODE").ok().as_deref())
         }
 
         fn is_host_sandbox(self) -> bool {
@@ -64,10 +64,10 @@ mod linux {
 
     /// Check if this VM is running in a TEE environment.
     ///
-    /// Delegates to `krun_box_core::tee::is_tee_available()` which checks
-    /// `KRUN_TEE_SIMULATE` env var and `/dev/sev-guest` or `/dev/sev` devices.
+    /// Delegates to `kbox_core::tee::is_tee_available()` which checks
+    /// `K_TEE_SIMULATE` env var and `/dev/sev-guest` or `/dev/sev` devices.
     fn is_tee_environment() -> bool {
-        krun_box_core::tee::is_tee_available()
+        kbox_core::tee::is_tee_available()
     }
 
     /// Raw fd of `/dev/kmsg`, opened ONCE before any chroot/pivot and kept open for
@@ -101,7 +101,7 @@ mod linux {
                     // priority and flatten embedded newlines so a formatted event
                     // stays a single kernel-log record.
                     let mut record = Vec::with_capacity(buf.len() + 13);
-                    record.extend_from_slice(b"<7>krun-init: ");
+                    record.extend_from_slice(b"<7>kinit: ");
                     record.extend(buf.iter().map(|&b| if b == b'\n' { b' ' } else { b }));
                     // SAFETY: *fd is a valid, process-lifetime fd to /dev/kmsg; a
                     // failed write is intentionally ignored (logging must never panic).
@@ -197,14 +197,14 @@ mod linux {
             .with_writer(make_init_log_writer)
             .init();
 
-        info!("krun-box guest init starting (PID {})", process::id());
+        info!("kbox guest init starting (PID {})", process::id());
 
         // Run init process
         if let Err(e) = run_init() {
             error!("Init process failed: {}", e);
             flush_stdio_relays();
             persist_exit_after_rootfs_handoff(1);
-            eprintln!("krun-box guest init failed: {e}");
+            eprintln!("kbox guest init failed: {e}");
             process::exit(1);
         }
 
@@ -225,13 +225,11 @@ mod linux {
         if rootfs_maintenance {
             info!("Skipping workload metadata replay for the trusted maintenance root");
         } else if bootstrap_mode.is_host_sandbox() {
-            krun_box_guest_init::rootfs_archive::restore_rootfs_metadata_around_mounts(
+            kbox_guest_init::rootfs_archive::restore_rootfs_metadata_around_mounts(
                 std::path::Path::new("/"),
             )?;
         } else {
-            krun_box_guest_init::rootfs_archive::restore_rootfs_metadata(std::path::Path::new(
-                "/",
-            ))?;
+            kbox_guest_init::rootfs_archive::restore_rootfs_metadata(std::path::Path::new("/"))?;
         }
 
         let (mut exec_config, boot_host_config, boot_mode): (
@@ -249,7 +247,7 @@ mod linux {
         } else if std::env::var_os(GUEST_BOOT_CONFIG_ENV).is_some() {
             // The MicroVM boot bundle lives on a private virtio-fs share, so
             // mount backend-owned shares before reading it. User mount targets
-            // cannot overlap /run/krun-box.
+            // cannot overlap /run/kbox.
             mount_essential_filesystems()
                 .map_err(|error| format!("failed to mount essential filesystems: {error}"))?;
             mount_default_shm()
@@ -316,8 +314,8 @@ mod linux {
         // exec/PTY startup race of issue #3. CLOEXEC on the fds keeps the forked
         // container from inheriting the listeners.
         let (exec_listener, pty_listener) = if bootstrap_mode.is_host_sandbox() {
-            let exec_fd = inherited_listener_fd("KRUN_EXEC_LISTENER_FD")?;
-            let pty_fd = inherited_listener_fd("KRUN_PTY_LISTENER_FD")?;
+            let exec_fd = inherited_listener_fd("K_EXEC_LISTENER_FD")?;
+            let pty_fd = inherited_listener_fd("K_PTY_LISTENER_FD")?;
             if exec_fd == pty_fd {
                 return Err("Sandbox exec and PTY listeners must use distinct descriptors".into());
             }
@@ -359,7 +357,7 @@ mod linux {
 
             // Make the unified hierarchy visible for nested runtimes in a VM.
             #[cfg(target_os = "linux")]
-            let _ = krun_box_guest_init::cgroup::ensure_cgroup2_ready();
+            let _ = kbox_guest_init::cgroup::ensure_cgroup2_ready();
 
             // Secret files are user-volume mounts and therefore resolve only
             // after the workload shares are present.
@@ -460,37 +458,37 @@ mod linux {
         #[cfg(target_os = "linux")]
         let container_cgroup = if bootstrap_mode.is_host_sandbox() {
             let control_descriptor =
-                inherited_listener_fd(krun_box_guest_init::cgroup::CONTROL_CGROUP_PROCS_FD_ENV)?;
+                inherited_listener_fd(kbox_guest_init::cgroup::CONTROL_CGROUP_PROCS_FD_ENV)?;
             let workload_descriptor =
-                inherited_listener_fd(krun_box_guest_init::cgroup::WORKLOAD_CGROUP_PROCS_FD_ENV)?;
-            let cgroup = krun_box_guest_init::cgroup::ContainerCgroup::adopt_runtime_delegation(
+                inherited_listener_fd(kbox_guest_init::cgroup::WORKLOAD_CGROUP_PROCS_FD_ENV)?;
+            let cgroup = kbox_guest_init::cgroup::ContainerCgroup::adopt_runtime_delegation(
                 control_descriptor,
                 workload_descriptor,
             )?;
-            std::env::remove_var(krun_box_guest_init::cgroup::CONTROL_CGROUP_PROCS_FD_ENV);
-            std::env::remove_var(krun_box_guest_init::cgroup::WORKLOAD_CGROUP_PROCS_FD_ENV);
+            std::env::remove_var(kbox_guest_init::cgroup::CONTROL_CGROUP_PROCS_FD_ENV);
+            std::env::remove_var(kbox_guest_init::cgroup::WORKLOAD_CGROUP_PROCS_FD_ENV);
             Some(cgroup)
         } else {
-            krun_box_guest_init::cgroup::ContainerCgroup::create_for_main(
-                std::env::var("KRUN_SEC_MEM_LIMIT")
+            kbox_guest_init::cgroup::ContainerCgroup::create_for_main(
+                std::env::var("K_SEC_MEM_LIMIT")
                     .ok()
                     .and_then(|value| value.parse::<u64>().ok()),
-                std::env::var("KRUN_SEC_MEM_LOW")
+                std::env::var("K_SEC_MEM_LOW")
                     .ok()
                     .and_then(|value| value.parse::<u64>().ok()),
-                std::env::var("KRUN_SEC_MEM_SWAP")
+                std::env::var("K_SEC_MEM_SWAP")
                     .ok()
                     .and_then(|value| value.parse::<i64>().ok()),
-                std::env::var("KRUN_SEC_CPU_QUOTA")
+                std::env::var("K_SEC_CPU_QUOTA")
                     .ok()
                     .and_then(|value| value.parse::<i64>().ok()),
-                std::env::var("KRUN_SEC_CPU_PERIOD")
+                std::env::var("K_SEC_CPU_PERIOD")
                     .ok()
                     .and_then(|value| value.parse::<u64>().ok()),
-                std::env::var("KRUN_SEC_CPU_SHARES")
+                std::env::var("K_SEC_CPU_SHARES")
                     .ok()
                     .and_then(|value| value.parse::<u64>().ok()),
-                std::env::var("KRUN_SEC_PIDS_LIMIT")
+                std::env::var("K_SEC_PIDS_LIMIT")
                     .ok()
                     .and_then(|value| value.parse::<u64>().ok()),
             )
@@ -677,7 +675,7 @@ mod linux {
         // The sidecar binary path: conventionally /usr/bin/sidecar or derived from image name.
         // Inside the VM the sidecar image is already extracted into the rootfs by the runtime.
         // We look for the binary at /usr/bin/<basename> where basename is the last component
-        // of the image reference (e.g., "safeclaw" from "ghcr.io/krun-lab/safeclaw:latest").
+        // of the image reference (e.g., "safeclaw" from "ghcr.io/klab/safeclaw:latest").
         let binary_name = config
             .image
             .split('/')
@@ -731,7 +729,7 @@ mod linux {
     /// Exec and PTY request handlers reap their OWN children (each `waitpid`s a
     /// specific pid) to read the real exit status, so this loop must not steal them
     /// with a blind `waitpid(-1)`. It peeks exited children non-destructively with
-    /// `waitid(WNOWAIT)` and, via the [`reaper`](krun_box_guest_init::reaper)
+    /// `waitid(WNOWAIT)` and, via the [`reaper`](kbox_guest_init::reaper)
     /// registry, reaps only the container (→ VM lifecycle / exit code) and UNMANAGED
     /// children — reparented grandchildren and the sidecar — leaving handler-managed
     /// children for their handler. This propagates the container exit code AND fixes
@@ -741,7 +739,7 @@ mod linux {
         container_pid: nix::unistd::Pid,
         bootstrap_mode: BootstrapMode,
     ) -> Result<(), Box<dyn std::error::Error>> {
-        use krun_box_guest_init::reaper;
+        use kbox_guest_init::reaper;
         use nix::sys::wait::{waitid, waitpid, Id, WaitPidFlag, WaitStatus};
 
         /// Maximum time to wait for children after forwarding SIGTERM (5 seconds).
@@ -854,7 +852,7 @@ mod linux {
             return;
         }
         if let Err(error) =
-            krun_box_guest_init::rootfs_archive::persist_rootfs_metadata(std::path::Path::new("/"))
+            kbox_guest_init::rootfs_archive::persist_rootfs_metadata(std::path::Path::new("/"))
         {
             warn!(%error, "Failed to persist terminal rootfs metadata");
         }
@@ -905,8 +903,7 @@ mod linux {
         if let Err(error) = terminal_status::persist(code) {
             warn!(%error, "Failed to persist guest terminal status");
         }
-        if let Ok(mut file) = std::fs::File::create(krun_box_core::rootfs_metadata::EXIT_CODE_PATH)
-        {
+        if let Ok(mut file) = std::fs::File::create(kbox_core::rootfs_metadata::EXIT_CODE_PATH) {
             let _ = write!(file, "{code}");
             let _ = file.sync_all();
         }
@@ -939,8 +936,7 @@ mod linux {
             info!("Published guest-owned rootfs handoff acknowledgement");
         }
 
-        if let Ok(mut file) = std::fs::File::create(krun_box_core::rootfs_metadata::EXIT_CODE_PATH)
-        {
+        if let Ok(mut file) = std::fs::File::create(kbox_core::rootfs_metadata::EXIT_CODE_PATH) {
             let _ = write!(file, "{code}");
             let _ = file.sync_all();
         }
@@ -1054,6 +1050,6 @@ fn main() {
 
 #[cfg(not(target_os = "linux"))]
 fn main() {
-    eprintln!("krun-box-guest-init is a Linux guest binary");
+    eprintln!("kbox-guest-init is a Linux guest binary");
     std::process::exit(1);
 }

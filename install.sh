@@ -1,7 +1,7 @@
 #!/bin/sh
 # kbox one-line installer (macOS / Linux, POSIX sh).
 #
-#   curl -fsSL https://raw.githubusercontent.com/kense-labs/kbox/main/install.sh | sh
+#   curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.2.7/install.sh | sh
 #
 # Environment overrides:
 #   KBOX_VERSION   release tag version, default 3.2.7

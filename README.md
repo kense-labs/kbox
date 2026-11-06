@@ -9,7 +9,7 @@ kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔�
 ### 1.1 一键安装（macOS / Linux）
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/kense-labs/kbox/main/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.2.7/install.sh | sh
 ```
 
 脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。

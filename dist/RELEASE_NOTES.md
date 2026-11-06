@@ -65,6 +65,7 @@ RUNS=1 bash -o pipefail -c \
 - `cargo fmt`, focused Clippy, locked release-dist build, and installer shell syntax checks passed.
 - Isolated-prefix installation and `kbox version` reported 3.3.0.
 - Live update discovery correctly selected the latest published stable kbox release.
-- A release-built CLI ran process-prewarmed dsh-acp end to end with a real DeepSeek ACP session, returned text with `end_turn`, and exited 0.
+- The public Release installer and a real `kbox update --force` completed download, SHA-256 verification, atomic replacement, and post-install checks. A pseudo-terminal run displayed download progress from 0 to 100%.
+- The officially installed and self-updated CLI ran the complete HTTPS benchmark with an isolated `K_HOME`, returned real DeepSeek text with `end_turn`, and exited 0.
 
 Not covered: the full CLI test matrix on this archive, TEE features, Linux/Windows packages, and non-arm64 platforms.

@@ -28,6 +28,8 @@ kbox update 3.3.0      # 安装指定版本
 
 `kbox update` 只选择 `kense-labs/kense` 中以 `kbox-v` 开头的稳定 Release，忽略草稿、预发布和其他产品的 Release。交互式终端显示下载进度；安装包通过 SHA-256 校验，文件原子替换，完成后自动执行版本自检。自定义安装目录可用 `--prefix <PATH>` 指定，`--force` 可重装当前版本以修复安装。
 
+3.2.7 及更早版本没有 `update` 命令，请先执行第 1.1 节的一键安装脚本升级到 3.3.0；之后的版本可直接使用 `kbox update`。
+
 ### 1.3 手动安装
 
 从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.3.0) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
@@ -460,7 +462,7 @@ BASH
 
 `DSH_MODEL` 支持模型 ID 或 `provider/model`，`DSH_REASONING_EFFORT` 使用所选模型公布的值；`GREETING` 可覆盖默认中文问候。下方基准的原始样本分别记录 CLI 启动到 initialize 响应、initialize RTT 和模型 prompt RTT，模型网络耗时不计入启动加速。
 
-2026-11-06 本机实测：macOS arm64、kbox 3.3.0、`deepseek-flash`＋`low`，5 次真实 DeepSeek API 会话均返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
+下列五次基准于 2026-11-06 在 macOS arm64、kbox 3.2.7 release build 环境实测，均使用 `deepseek-flash`＋`low`，返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
 
 | 指标 | 最小值 | 中位数 | 最大值 |
 | --- | ---: | ---: | ---: |
@@ -468,6 +470,8 @@ BASH
 | initialize 请求 RTT | 13.822 ms | 17.642 ms | 27.502 ms |
 | 守护进程内部接管（不含 CLI 与协议） | 0.222 ms | 0.251 ms | 0.313 ms |
 | 模型 prompt RTT（网络请求，非启动指标） | 676.883 ms | 1436.499 ms | 1676.068 ms |
+
+kbox 3.3.0 官方 Release 经线上安装和自更新后，也通过完整 HTTPS 脚本完成一次真实 DeepSeek 会话，返回文本、`end_turn` 和退出码 0。
 
 守护进程内部接管低于 1 ms，不代表完整 CLI 启动或 initialize 为 1 ms。原始样本与验证边界见[实测证据](docs/evidence/box/20261106-process-prewarm-attach/OUTCOME.md)。
 
@@ -479,6 +483,7 @@ BASH
 | `kbox prune [OPTIONS]` | 删除全部已停止 Box |
 | `kbox system-prune [OPTIONS]` | 删除已停止 Box 和未使用镜像 |
 | `kbox version` | 查看版本信息 |
+| `kbox update [OPTIONS] [VERSION]` | 检查更新并安装最新或指定稳定版本；支持 `--check`、`--force`、`--prefix` |
 | `kbox info` | 查看系统信息 |
 | `kbox monitor [OPTIONS]` | 启动后台监控并重启异常 Box |
 

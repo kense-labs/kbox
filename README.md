@@ -191,7 +191,7 @@ kbox compose [OPTIONS] <COMMAND>
 -p, --project-name <PROJECT_NAME>  Compose 项目名称
 ```
 
-### 8.1 三级命令
+### 10.1 三级命令
 
 | 三级命令 | 说明 |
 | --- | --- |
@@ -223,7 +223,7 @@ kbox compose [OPTIONS] <COMMAND>
 kbox snapshot <COMMAND>
 ```
 
-### 9.1 三级命令
+### 11.1 三级命令
 
 | 三级命令 | 说明 |
 | --- | --- |
@@ -240,7 +240,7 @@ kbox snapshot <COMMAND>
 kbox network <COMMAND>
 ```
 
-### 10.1 三级命令
+### 12.1 三级命令
 
 | 三级命令 | 说明 |
 | --- | --- |
@@ -258,7 +258,7 @@ kbox network <COMMAND>
 kbox volume <COMMAND>
 ```
 
-### 11.1 三级命令
+### 13.1 三级命令
 
 | 三级命令 | 说明 |
 | --- | --- |
@@ -274,7 +274,7 @@ kbox volume <COMMAND>
 kbox pool <COMMAND>
 ```
 
-### 12.1 三级命令
+### 14.1 三级命令
 
 | 三级命令 | 说明 |
 | --- | --- |
@@ -282,6 +282,37 @@ kbox pool <COMMAND>
 | `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Sandbox 中执行命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
 | `kbox pool stop [OPTIONS]` | 排空并停止预热池。支持 `--socket`、`--json` |
 | `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json` |
+
+### 14.2 示例：用预热池加速 dsh-acp 启动
+
+以 `--deferred` 启动守护进程，再用 `pool run --exec` 执行命令，可直接复用已启动的 VM：
+
+```sh
+# 启动预热池，预启动 1 个 dsh-acp VM（镜像公开，匿名拉取）
+kbox pool start --deferred \
+  --image ghcr.io/kense-labs/dsh-acp:latest --size 1 --max 2
+
+# 等待预热就绪（idle >= 1）
+kbox pool status --json
+
+# 在预热 VM 中执行 dsh-acp 命令
+kbox pool run --exec -- node /app/apps/cli/lib/bin.js --version
+```
+
+macOS arm64 本机实测（2026-11-06，dsh-acp `--version` 命令，5 次预热命中）：
+
+| 启动方式 | 耗时 |
+| --- | --- |
+| 冷启动 `kbox run` | 约 22 秒 |
+| 预热池命中（`--deferred` + `--exec`） | **0.19–0.26 秒** |
+| 预热池未命中（等待新 VM 启动） | 与冷启动相当 |
+
+预热命中时启动加速约 100 倍。`--size` 决定待命 VM 数量；每次 `pool run` 占用的 VM 需要回收重置后才能再次命中，连续调用超过池容量时会退化为冷启动耗时。
+
+当前限制：
+
+- `pool run` 面向一次性命令，不转发交互式 stdin。ACP 客户端（TUI/GUI）的 stdio 会话请使用 `kbox run -i --rm`（见第 2 章），不要走预热池。
+- 不加 `--deferred` 的守护进程按完整 Box 主进程语义执行 `pool run`，没有上述加速效果。
 
 ## 15. 系统与维护
 

@@ -287,3 +287,5 @@ panic = "abort"
 
 [profile.release-dist]
 inherits = "release"
+opt-level = "z"
+lto = "fat"

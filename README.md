@@ -315,13 +315,13 @@ kbox pool attach
 
 每次 `attach` 消耗一个独立的 VM＋进程；客户端断开后销毁该 VM，守护进程自动补充新的预热实例。一个进程不能跨客户端会话复用。未命中空闲实例时会等待新实例完成启动和预热。`pool run` 仍用于一次性命令，不转发交互式 stdin；不需要后台池时，使用 `kbox run -i --rm`。
 
-**方式一：直接运行仓库 `.sh` 脚本。** 脚本源码已发布在 GitHub：[dist/bench-pool-dsh-acp.sh](https://github.com/kense-labs/kbox/blob/main/dist/bench-pool-dsh-acp.sh)。在 kbox 源码目录执行（需要 Python 3；脚本使用默认 pool socket，并在结束后停止该池）：
+**方式一：直接运行 dsh-acp 仓库的 `.sh` 脚本。** 脚本源码已发布在 GitHub：[scripts/bench-pool-dsh-acp.sh](https://github.com/kense-labs/dsh-acp/blob/main/scripts/bench-pool-dsh-acp.sh)。在 dsh-acp 源码根目录执行（需要 Python 3；`$PWD` 展开为绝对路径；脚本使用默认 pool socket，并在结束后停止该池）：
 
 ```sh
 DEEPSEEK_API_KEY=你的密钥 \
 DSH_MODEL=deepseek-flash \
 DSH_REASONING_EFFORT=low \
-RUNS=1 sh dist/bench-pool-dsh-acp.sh
+RUNS=1 sh "$PWD/scripts/bench-pool-dsh-acp.sh"
 ```
 
 **方式二：复制完整内联命令。** 只需要 Bash、`jq` 和已安装的 kbox。它使用独立的临时 pool socket，完成真实 ACP `initialize → session/new → session/set_config_option → session/prompt`，打印模型回复并验证 `stopReason` 和退出码，最后清理临时池，不影响已有默认池：

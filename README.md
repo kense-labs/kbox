@@ -2,9 +2,52 @@
 
 kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔离执行环境、资源生命周期和 Task／Service 合同。
 
-本文先说明如何构建和验证，再列出 `kbox` 的完整命令层级。命令内容以当前源码的 `--help` 输出为准。
+本文先介绍安装与快速开始，再列出 `kbox` 的完整命令层级。命令内容以当前源码的 `--help` 输出为准。
 
-## 1. 工程结构
+## 1. 安装
+
+### 1.1 一键安装（macOS / Linux）
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/kense-labs/kbox/main/install.sh | sh
+```
+
+脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。
+
+可选环境变量：`KBOX_VERSION`（默认 `3.2.7`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
+
+预编译包支持矩阵：macOS arm64（Apple Silicon，Hypervisor Framework）。其他平台会给出明确提示，请改用源码构建。
+
+### 1.2 手动安装
+
+从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.2.7) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+
+```sh
+tar -xzf kbox-3.2.7-macos-arm64.tar.gz
+sh kbox-3.2.7-macos-arm64/install.sh
+```
+
+安装包包含 `kbox` CLI、`kbox-shim`、静态 Linux guest init、libkrun 与 libkrunfw（含客体内核）。压缩包约 23 MB，安装后约 42 MB。
+
+## 2. 快速开始
+
+```sh
+# 运行一个 alpine MicroVM
+kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
+
+# 运行 dsh-acp（公开镜像，匿名拉取），接入 ACP 客户端
+export DEEPSEEK_API_KEY=your_key
+kbox run -i --rm \
+  --memory 2g \
+  -v dsh-acp-data:/data \
+  -v "$PWD:/workspace" \
+  -e DEEPSEEK_API_KEY \
+  ghcr.io/kense-labs/dsh-acp:latest
+```
+
+`kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。完整命令见第 6 章起。
+
+## 3. 工程结构
 
 ```text
 kbox/
@@ -17,15 +60,15 @@ kbox/
 
 `libkrun` 和 `libkrunfw` 是独立 Git submodule。修改原生依赖时，先在对应子仓库提交并验证，再更新父仓库的 gitlink。
 
-## 2. 当前能力与目标边界
+## 4. 当前能力与目标边界
 
 当前代码包含 Box、OCI Runtime、Task／Service 合同和多个命令行工具。
 
 `docs/architecture/agent-paas-runtime.md` 中的 Agent Runtime v1.1 是目标架构。文档中的新增能力不代表已经实现。实际支持范围以源码、测试和原生平台资格化结果为准。
 
-## 3. 克隆与构建
+## 5. 从源码构建
 
-### 3.1 克隆
+### 5.1 克隆
 
 ```bash
 git clone --recursive https://github.com/kense-labs/kbox
@@ -38,11 +81,11 @@ cd kbox
 git submodule update --init --recursive
 ```
 
-### 3.2 工具链
+### 5.2 工具链
 
 Rust 版本见 `rust-toolchain.toml`。`publish = false` 的包只通过本地路径解析。
 
-### 3.3 构建 CLI
+### 5.3 构建 CLI
 
 ```bash
 cargo build --locked -p kbox-cli
@@ -54,7 +97,7 @@ cargo build --locked -p kbox-cli
 target/debug/kbox
 ```
 
-### 3.4 验证
+### 5.4 验证
 
 ```bash
 cargo fmt --all -- --check
@@ -65,7 +108,7 @@ cargo clippy --locked -p klibksys --all-targets --no-deps
 
 Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原生测试。交叉编译不能替代运行时资格化。
 
-## 4. `kbox` 命令入口
+## 6. `kbox` 命令入口
 
 ```bash
 ./target/debug/kbox <COMMAND>
@@ -73,7 +116,7 @@ Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原�
 
 `kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。
 
-## 5. 生命周期与执行
+## 7. 生命周期与执行
 
 | 二级命令 | 说明 |
 | --- | --- |
@@ -100,7 +143,7 @@ Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原�
 | `kbox shell [OPTIONS] <BOX>` | 在运行中的 Box 内打开交互 Shell |
 | `kbox scale-api [OPTIONS]` | 提供面向 Gateway 的扩缩容接口 |
 
-## 6. TEE、审计与安全
+## 8. TEE、审计与安全
 
 | 二级命令 | 说明 |
 | --- | --- |
@@ -110,7 +153,7 @@ Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原�
 | `kbox unseal [OPTIONS] --blob <BLOB> <BOX>` | 在 TEE 内解密数据 |
 | `kbox inject-secret [OPTIONS] <BOX>` | 通过 RA-TLS 向运行中的 TEE Box 注入 Secret |
 
-## 7. 文件系统与镜像
+## 9. 文件系统与镜像
 
 | 二级命令 | 说明 |
 | --- | --- |
@@ -135,7 +178,7 @@ Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原�
 | `kbox import [OPTIONS] <FILE> [REFERENCE]` | 将 rootfs tar 包导入为单层镜像 |
 | `kbox cp <SRC> <DST>` | 在宿主与运行中的 Box 间复制文件 |
 
-## 8. `kbox compose`
+## 10. `kbox compose`
 
 ```bash
 kbox compose [OPTIONS] <COMMAND>
@@ -174,7 +217,7 @@ kbox compose [OPTIONS] <COMMAND>
 | `kbox compose ls [OPTIONS]` | 列出 Compose 项目。`-q` 仅输出项目名 |
 | `kbox compose volumes` | 列出项目声明的命名卷 |
 
-## 9. `kbox snapshot`
+## 11. `kbox snapshot`
 
 ```bash
 kbox snapshot <COMMAND>
@@ -191,7 +234,7 @@ kbox snapshot <COMMAND>
 | `kbox snapshot inspect <ID>` | 查看快照详情 |
 | `kbox snapshot prune [OPTIONS]` | 清理旧快照。支持 `--keep`、`--max-bytes` |
 
-## 10. `kbox network`
+## 12. `kbox network`
 
 ```bash
 kbox network <COMMAND>
@@ -209,7 +252,7 @@ kbox network <COMMAND>
 | `kbox network disconnect [OPTIONS] <NETWORK> <CONTAINER>` | 将 Box 从网络断开。支持 `-f` |
 | `kbox network prune [OPTIONS]` | 删除未使用网络。`-f` 跳过确认 |
 
-## 11. `kbox volume`
+## 13. `kbox volume`
 
 ```bash
 kbox volume <COMMAND>
@@ -225,7 +268,7 @@ kbox volume <COMMAND>
 | `kbox volume inspect <NAME>` | 查看卷详情 |
 | `kbox volume prune [OPTIONS]` | 删除未使用卷。`-f` 跳过确认 |
 
-## 12. `kbox pool`
+## 14. `kbox pool`
 
 ```bash
 kbox pool <COMMAND>
@@ -240,7 +283,7 @@ kbox pool <COMMAND>
 | `kbox pool stop [OPTIONS]` | 排空并停止预热池。支持 `--socket`、`--json` |
 | `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json` |
 
-## 13. 系统与维护
+## 15. 系统与维护
 
 | 二级命令 | 说明 |
 | --- | --- |
@@ -251,7 +294,7 @@ kbox pool <COMMAND>
 | `kbox info` | 查看系统信息 |
 | `kbox monitor [OPTIONS]` | 启动后台监控并重启异常 Box |
 
-## 14. 工程文档
+## 16. 工程文档
 
 - [Agent Runtime 架构](docs/architecture/agent-paas-runtime.md)
 - [kbox Box 优化与 Agent Runtime 开发计划](docs/kbox-smolvm-inspired-development-plan.md)
@@ -262,6 +305,6 @@ kbox pool <COMMAND>
 - [Spec-Driven Development](docs/spec-driven-development.md)
 - [Speckit 宪法](.specify/memory/constitution.md)
 
-## 15. 许可
+## 17. 许可
 
 见 [LICENSE](LICENSE)。第三方组件保留各自许可和源码说明。

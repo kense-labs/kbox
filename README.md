@@ -9,22 +9,32 @@ kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔�
 ### 1.1 一键安装（macOS / Linux）
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.2.7/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/install.sh | sh
 ```
 
 脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。
 
-可选环境变量：`KBOX_VERSION`（默认 `3.2.7`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
+可选环境变量：`KBOX_VERSION`（默认 `3.3.0`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
 
 预编译包支持矩阵：macOS arm64（Apple Silicon，Hypervisor Framework）。其他平台会给出明确提示，请改用源码构建。
 
-### 1.2 手动安装
-
-从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.2.7) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+### 1.2 检查更新与自更新
 
 ```sh
-tar -xzf kbox-3.2.7-macos-arm64.tar.gz
-sh kbox-3.2.7-macos-arm64/install.sh
+kbox update --check    # 只检查最新稳定版，不安装
+kbox update            # 下载、校验并更新到最新稳定版
+kbox update 3.3.0      # 安装指定版本
+```
+
+`kbox update` 只选择 `kense-labs/kense` 中以 `kbox-v` 开头的稳定 Release，忽略草稿、预发布和其他产品的 Release。交互式终端显示下载进度；安装包通过 SHA-256 校验，文件原子替换，完成后自动执行版本自检。自定义安装目录可用 `--prefix <PATH>` 指定，`--force` 可重装当前版本以修复安装。
+
+### 1.3 手动安装
+
+从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.3.0) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+
+```sh
+tar -xzf kbox-3.3.0-macos-arm64.tar.gz
+sh kbox-3.3.0-macos-arm64/install.sh
 ```
 
 安装包包含 `kbox` CLI、`kbox-shim`、静态 Linux guest init、libkrun 与 libkrunfw（含客体内核）。压缩包约 23 MB，安装后约 42 MB。
@@ -450,7 +460,7 @@ BASH
 
 `DSH_MODEL` 支持模型 ID 或 `provider/model`，`DSH_REASONING_EFFORT` 使用所选模型公布的值；`GREETING` 可覆盖默认中文问候。下方基准的原始样本分别记录 CLI 启动到 initialize 响应、initialize RTT 和模型 prompt RTT，模型网络耗时不计入启动加速。
 
-2026-11-06 本机实测：macOS arm64、kbox 3.2.7、`deepseek-flash`＋`low`，5 次真实 DeepSeek API 会话均返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
+2026-11-06 本机实测：macOS arm64、kbox 3.3.0、`deepseek-flash`＋`low`，5 次真实 DeepSeek API 会话均返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
 
 | 指标 | 最小值 | 中位数 | 最大值 |
 | --- | ---: | ---: | ---: |

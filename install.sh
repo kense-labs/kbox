@@ -1,15 +1,15 @@
 #!/bin/sh
 # kbox one-line installer (macOS / Linux, POSIX sh).
 #
-#   curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.2.7/install.sh | sh
+#   curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/install.sh | sh
 #
 # Environment overrides:
-#   KBOX_VERSION   release tag version, default 3.2.7
+#   KBOX_VERSION   release tag version, default 3.3.0
 #   KBOX_PREFIX    install prefix, default ~/.kbox
 set -eu
 
 REPO="kense-labs/kense"
-VERSION="${KBOX_VERSION:-3.2.7}"
+VERSION="${KBOX_VERSION:-3.3.0}"
 TAG="kbox-v${VERSION}"
 PREFIX="${KBOX_PREFIX:-$HOME/.kbox}"
 
@@ -41,7 +41,12 @@ trap 'rm -rf "$WORK"' EXIT INT TERM
 
 download() {
   # $1 = url, $2 = output file; returns 1 on HTTP failure.
-  curl -fsSL --retry 3 -o "$2" "$1" 2>/dev/null
+  # Interactive terminals get a compact progress bar; pipelines stay quiet.
+  if [ -t 2 ]; then
+    curl -fL --retry 3 --progress-bar -o "$2" "$1"
+  else
+    curl -fsSL --retry 3 -o "$2" "$1"
+  fi
 }
 
 if ! download "${BASE}/${ASSET}" "$WORK/$ASSET"; then
@@ -50,18 +55,16 @@ if ! download "${BASE}/${ASSET}" "$WORK/$ASSET"; then
   Or build from source: https://github.com/kense-labs/kbox#33-%E6%9E%84%E5%BB%BA-cli"
 fi
 
-if download "${BASE}/${ASSET}.sha256" "$WORK/$ASSET.sha256"; then
-  EXPECTED=$(awk '{print $1}' "$WORK/$ASSET.sha256")
-  if command -v sha256sum >/dev/null 2>&1; then
-    ACTUAL=$(sha256sum "$WORK/$ASSET" | awk '{print $1}')
-  else
-    ACTUAL=$(shasum -a 256 "$WORK/$ASSET" | awk '{print $1}')
-  fi
-  [ "$EXPECTED" = "$ACTUAL" ] || fail "SHA-256 mismatch: expected $EXPECTED, got $ACTUAL"
-  log "checksum verified"
+download "${BASE}/${ASSET}.sha256" "$WORK/$ASSET.sha256" || \
+  fail "no SHA-256 asset published for $ASSET; refusing unverified installation"
+EXPECTED=$(awk '{print $1}' "$WORK/$ASSET.sha256")
+if command -v sha256sum >/dev/null 2>&1; then
+  ACTUAL=$(sha256sum "$WORK/$ASSET" | awk '{print $1}')
 else
-  log "warning: no .sha256 asset published for $ASSET; skipping checksum verification"
+  ACTUAL=$(shasum -a 256 "$WORK/$ASSET" | awk '{print $1}')
 fi
+[ "$EXPECTED" = "$ACTUAL" ] || fail "SHA-256 mismatch: expected $EXPECTED, got $ACTUAL"
+log "checksum verified"
 
 tar -xzf "$WORK/$ASSET" -C "$WORK"
 PKG_DIR="$WORK/kbox-${VERSION}-${PLATFORM}-${ARCH}"

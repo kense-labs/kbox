@@ -1,41 +1,70 @@
-# kbox 3.2.7 — macOS (Apple Silicon)
+# kbox 3.3.0 — macOS (Apple Silicon)
 
-Local Agent Runtime and OCI workload execution: MicroVM lifecycle, images, volumes, networks, snapshots, and a Docker-compatible CLI.
+Local Agent Runtime and OCI workload execution with MicroVM lifecycle, images, volumes, networks, snapshots, warm pools, and a Docker-compatible CLI.
+
+## Highlights
+
+- `kbox update --check` checks the latest stable kbox Release without installing it.
+- `kbox update` downloads and installs the latest stable release; `kbox update 3.3.0` selects a version and `--force` repairs an existing installation.
+- Interactive downloads show a progress bar. SHA-256 verification is mandatory, installed files are replaced atomically, and a post-install version check must pass.
+- `kbox pool start --prewarm` initializes the application before advertising an idle VM; `kbox pool attach` connects ACP stdio to that prewarmed process.
+- The public `ghcr.io/kense-labs/dsh-acp:latest` image can be pulled anonymously.
 
 ## Install
 
 ```sh
-curl -LO https://github.com/kense-labs/kense/releases/download/kbox-v3.2.7/kbox-3.2.7-macos-arm64.tar.gz
-tar -xzf kbox-3.2.7-macos-arm64.tar.gz
-sh kbox-3.2.7-macos-arm64/install.sh        # installs into ~/.kbox, no sudo
-export PATH="$HOME/.kbox/bin:$PATH"         # add to your shell profile
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/install.sh | sh
+export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```
 
-Quick start with the public dsh-acp image (no registry login required):
+Or download and install manually:
 
 ```sh
-export DEEPSEEK_API_KEY=your_key
-kbox run -i --rm -e DEEPSEEK_API_KEY ghcr.io/kense-labs/dsh-acp:latest
+curl -LO https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/kbox-3.3.0-macos-arm64.tar.gz
+tar -xzf kbox-3.3.0-macos-arm64.tar.gz
+sh kbox-3.3.0-macos-arm64/install.sh
+```
+
+## Update
+
+```sh
+kbox update --check
+kbox update
+```
+
+By default, update installs beside the running binary under its prefix. Use `--prefix <PATH>` for a custom installation directory.
+
+## Live dsh-acp greeting
+
+```sh
+DEEPSEEK_API_KEY=your_key \
+DSH_MODEL=deepseek-flash \
+DSH_REASONING_EFFORT=low \
+RUNS=1 bash -o pipefail -c \
+  'curl -fsSL https://raw.githubusercontent.com/kense-labs/dsh-acp/main/scripts/bench-pool-dsh-acp.sh | sh'
 ```
 
 ## Package contents
 
 | Component | Purpose |
 | --- | --- |
-| `bin/kbox` | CLI (7.8 MB, stripped, fat LTO, opt-level=z) |
+| `bin/kbox` | CLI with update and process-prewarmed pool support (7.9 MB, stripped, fat LTO, opt-level=z) |
 | `bin/kbox-shim` | Per-VM host shim (3.4 MB) |
 | `bin/kbox-guest-init` | Static aarch64 Linux guest PID 1 (5.3 MB) |
 | `lib/libkrun*` | HVF virtualization library (4.5 MB) |
 | `lib/libkrunfw*` | Guest kernel bundle (22.8 MB) |
 
-- Compressed archive: **22.9 MB** (21.8 MiB); installed on disk: **42 MB**.
-- Platform: macOS arm64, Apple Hypervisor Framework. Linux KVM / Windows WHPX are not included in this archive.
-- SHA-256: `4c3895096c2731bc86c8703550f759635d099a77f5a4652315d3f17d85152a0f`
+- Compressed archive: **22.9 MB** (21.9 MiB); installed on disk: approximately **42 MB**.
+- Platform: macOS arm64, Apple Hypervisor Framework.
+- SHA-256: `c75ee78e9be922ed19910ae3d4e1a68bd9012b58b350ba14f4070babf6b967ac`
 
 ## Verified
 
-- Isolated-prefix install, `kbox version`, and a MicroVM launch (`alpine` echo) on macOS arm64.
-- The same source tree built and ran `dsh-acp` end to end with a live DeepSeek ACP session.
+- Update unit tests: 4 passed; CLI command-coverage tests: 16 passed.
+- `cargo fmt`, focused Clippy, locked release-dist build, and installer shell syntax checks passed.
+- Isolated-prefix installation and `kbox version` reported 3.3.0.
+- Live update discovery correctly selected the latest published stable kbox release.
+- A release-built CLI ran process-prewarmed dsh-acp end to end with a real DeepSeek ACP session, returned text with `end_turn`, and exited 0.
 
-Not covered: the full CLI test matrix on this archive, TEE features, and non-arm64 platforms.
+Not covered: the full CLI test matrix on this archive, TEE features, Linux/Windows packages, and non-arm64 platforms.

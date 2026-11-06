@@ -61,6 +61,7 @@ mod system_prune;
 mod top;
 mod unpause;
 mod unseal;
+mod update;
 mod version;
 pub mod volume;
 mod wait;
@@ -194,6 +195,8 @@ pub enum Command {
     SystemPrune(system_prune::SystemPruneArgs),
     /// Show version information
     Version(version::VersionArgs),
+    /// Check for updates and install the latest or a selected release
+    Update(update::UpdateArgs),
     /// Show system information
     Info(info::InfoArgs),
     /// Background daemon that monitors and restarts dead boxes
@@ -694,6 +697,7 @@ pub async fn dispatch(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
         Command::Prune(args) => Box::pin(prune::execute(args)),
         Command::SystemPrune(args) => Box::pin(system_prune::execute(args)),
         Command::Version(args) => Box::pin(version::execute(args)),
+        Command::Update(args) => Box::pin(update::execute(args)),
         Command::Info(args) => Box::pin(info::execute(args)),
         Command::Monitor(args) => Box::pin(monitor::execute(args)),
         Command::Pool(args) => Box::pin(pool::execute(args)),

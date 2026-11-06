@@ -941,6 +941,7 @@ impl WarmPool {
                                     hint: None,
                                 });
                             }
+                            vm.start_prewarmed_exec().await?;
                             Ok(())
                         }
                         .await;
@@ -975,6 +976,10 @@ impl WarmPool {
                     message: "pool VM exec authenticated but Ready was not published".to_string(),
                     hint: None,
                 });
+            }
+            if let Err(error) = vm.start_prewarmed_exec().await {
+                let _ = Self::destroy_manager_or_reap(&mut vm, Some(2000)).await;
+                return Err(error);
             }
             Ok(vm)
         })

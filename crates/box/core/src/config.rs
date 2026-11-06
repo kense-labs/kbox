@@ -116,12 +116,46 @@ impl Default for CacheConfig {
     }
 }
 
+/// Process-level prewarming for workloads that expose a readiness marker.
+///
+/// Environment values are runtime-only: they are never serialized into Box
+/// metadata and their values are redacted from `Debug` output.
+#[derive(Clone, Default, Serialize, Deserialize)]
+pub struct PrewarmConfig {
+    /// User override for the prewarmed image entrypoint.
+    #[serde(default)]
+    pub user: Option<String>,
+    /// Working-directory override for the prewarmed image entrypoint.
+    #[serde(default)]
+    pub workdir: Option<String>,
+    /// Extra environment for the prewarmed process (runtime-only).
+    #[serde(default, skip)]
+    pub env: Vec<(String, String)>,
+}
+
+impl std::fmt::Debug for PrewarmConfig {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let env_keys: Vec<&str> = self.env.iter().map(|(key, _)| key.as_str()).collect();
+        formatter
+            .debug_struct("PrewarmConfig")
+            .field("user", &self.user)
+            .field("workdir", &self.workdir)
+            .field("env_keys", &env_keys)
+            .finish()
+    }
+}
+
 /// Warm pool configuration for pre-booted VMs.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PoolConfig {
     /// Enable warm pool (default: false)
     #[serde(default)]
     pub enabled: bool,
+
+    /// Start the image entrypoint before publishing each VM as idle. The VM is
+    /// published only after the process writes kbox's readiness marker.
+    #[serde(default)]
+    pub prewarm: Option<PrewarmConfig>,
 
     /// Minimum number of pre-warmed idle VMs to maintain
     #[serde(default = "default_min_idle")]
@@ -233,6 +267,7 @@ impl Default for PoolConfig {
     fn default() -> Self {
         Self {
             enabled: false,
+            prewarm: None,
             min_idle: 1,
             max_size: 5,
             max_concurrent_boots: 2,

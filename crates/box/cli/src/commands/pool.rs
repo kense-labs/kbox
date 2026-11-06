@@ -39,6 +39,8 @@ use kbox_runtime::vm::reap::reap_orphaned_boxes_for_home;
 #[cfg(not(windows))]
 use tokio::task::JoinSet;
 
+mod attach;
+
 /// Default Unix socket the `pool` daemon listens on.
 pub(crate) const DEFAULT_SOCKET: &str = "/tmp/kbox-pool.sock";
 const DEFAULT_POOL_VCPUS: u32 = 2;
@@ -197,6 +199,8 @@ pub enum PoolAction {
     Start(PoolStartArgs),
     /// Run a command in a fresh warm sandbox (client of `pool start`)
     Run(PoolRunArgs),
+    /// Attach stdio to an application-prewarmed process (requires `start --prewarm`)
+    Attach(attach::PoolAttachArgs),
     /// Drain and stop the warm pool
     Stop(PoolStopArgs),
     /// Show warm pool statistics
@@ -248,6 +252,27 @@ pub struct PoolStartArgs {
     /// exec-into-keepalive.
     #[arg(long)]
     pub deferred: bool,
+
+    /// Initialize the OCI entrypoint before advertising each VM as idle. The
+    /// workload must honor KBOX_PREWARM_READY=1 with kbox's stderr ready marker.
+    #[arg(long)]
+    pub prewarm: bool,
+
+    /// Environment for the prewarmed process, KEY=VALUE or KEY to inherit.
+    #[arg(long = "env", short = 'e')]
+    pub env: Vec<String>,
+
+    /// User for the prewarmed process (uid[:gid] or a guest user name).
+    #[arg(long, short = 'u')]
+    pub user: Option<String>,
+
+    /// Working-directory override for the prewarmed process.
+    #[arg(long, short = 'w')]
+    pub workdir: Option<String>,
+
+    /// Default boot-time mounts for `pool attach`, HOST:CONTAINER[:ro|rw].
+    #[arg(long = "volume", short = 'v')]
+    pub volumes: Vec<String>,
 
     /// Mark pooled VM memory KSM-mergeable so the host dedups identical pages
     /// across same-image VMs (Linux 6.4+; needs /sys/kernel/mm/ksm/run=1).
@@ -349,6 +374,7 @@ pub async fn execute(args: PoolArgs) -> Result<(), Box<dyn std::error::Error>> {
     match args.action {
         PoolAction::Start(a) => execute_start(a).await,
         PoolAction::Run(a) => execute_run(a).await,
+        PoolAction::Attach(a) => attach::execute(a).await,
         PoolAction::Stop(a) => execute_stop(a).await,
         PoolAction::Status(a) => execute_status(a).await,
     }
@@ -560,6 +586,10 @@ struct PoolRegistry {
     /// When true, pooled VMs boot IDLE and `pool run` spawns the command as the
     /// box's real MAIN (full box semantics), instead of exec-into-keepalive.
     deferred: bool,
+    /// Optional application-process prewarm settings, explicitly enabled by the user.
+    prewarm: Option<kbox_core::config::PrewarmConfig>,
+    /// Default mount key used by process-prewarmed attachment requests.
+    default_volumes: Vec<String>,
     /// Mark pooled VM memory KSM-mergeable (host page dedup across same-image VMs).
     ksm: bool,
     /// Fill the pool by snapshot-fork (one template, restore the rest).
@@ -649,6 +679,7 @@ impl PoolRegistry {
         let max_size = self.max.max(size);
         let pool_config = PoolConfig {
             enabled: true,
+            prewarm: self.prewarm.clone(),
             min_idle: size,
             max_size,
             max_concurrent_boots: self.boot_concurrency,
@@ -1044,6 +1075,22 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
     if args.boot_concurrency == 0 {
         return Err("--boot-concurrency must be greater than 0".into());
     }
+    if args.prewarm && args.snapshot_fork {
+        return Err(
+            "--prewarm cannot be combined with --snapshot-fork: process prewarming already initializes the workload after VM restore; select one startup strategy"
+                .into(),
+        );
+    }
+    if !args.prewarm
+        && (!args.env.is_empty()
+            || args.user.is_some()
+            || args.workdir.is_some()
+            || !args.volumes.is_empty())
+    {
+        return Err(
+            "--env, --user, --workdir, and --volume on `pool start` require --prewarm".into(),
+        );
+    }
 
     #[cfg(windows)]
     {
@@ -1079,6 +1126,11 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
         } else {
             None
         };
+        let prewarm = args.prewarm.then(|| kbox_core::config::PrewarmConfig {
+            user: args.user.clone(),
+            workdir: args.workdir.clone(),
+            env: kbox_core::env::parse_runtime_env_vars(&args.env),
+        });
 
         let registry = std::sync::Arc::new(PoolRegistry {
             pools: tokio::sync::Mutex::new(std::collections::HashMap::new()),
@@ -1097,6 +1149,8 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
             #[cfg(not(windows))]
             lease_ttl: args.lease_ttl,
             deferred: args.deferred,
+            prewarm,
+            default_volumes: args.volumes.clone(),
             ksm: args.ksm,
             snapshot_fork: args.snapshot_fork,
             metrics: metrics.clone(),
@@ -1153,7 +1207,11 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
             // Pre-warm the default image, if one was given.
             let default_stats = if let Some(ref image) = args.image {
                 let entry = registry
-                    .get_or_create(PoolKey::default_for_image(image.clone()))
+                    .get_or_create(PoolKey {
+                        image: image.clone(),
+                        volumes: args.volumes.clone(),
+                        ..PoolKey::default_for_image(image.clone())
+                    })
                     .await?;
                 Some((image.clone(), entry.pool.stats().await))
             } else {
@@ -1163,7 +1221,14 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
             // Pre-warm any extra images requested via --warm.
             for (image, count) in &warm_specs {
                 registry
-                    .get_or_create_with_size(PoolKey::default_for_image(image), *count)
+                    .get_or_create_with_size(
+                        PoolKey {
+                            image: image.clone(),
+                            volumes: args.volumes.clone(),
+                            ..PoolKey::default_for_image(image)
+                        },
+                        *count,
+                    )
                     .await?;
             }
 
@@ -1478,6 +1543,7 @@ async fn handle_conn(
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
 
     let run = match req {
+        PoolRequest::Attach(request) => return attach::handle(registry, request, stream).await,
         PoolRequest::Status => {
             let resp = PoolStatusResponse {
                 images: registry.stats().await,
@@ -1541,6 +1607,7 @@ async fn handle_conn(
             Err(e) => err_resp(format!("pool for {image}: {e}")),
             Ok(entry) => {
                 // Backpressure: wait for a slot so a burst doesn't boot unbounded VMs.
+                let run_start = std::time::Instant::now();
                 let permit = entry
                     .sem
                     .clone()
@@ -1550,6 +1617,11 @@ async fn handle_conn(
                 match entry.pool.acquire().await {
                     Err(e) => err_resp(format!("acquire failed: {e}")),
                     Ok(mut vm) => {
+                        tracing::debug!(
+                            acquire_ms = run_start.elapsed().as_millis(),
+                            "pool-run acquire stage"
+                        );
+                        let exec_start = std::time::Instant::now();
                         // Deferred-main: run the command as the box's real MAIN
                         // (full box semantics — exit code + json-file console logs).
                         // Otherwise exec it (output via the exec stream); `exec:
@@ -1590,6 +1662,10 @@ async fn handle_conn(
                             },
                             Err(e) => err_resp(e.to_string()),
                         };
+                        tracing::debug!(
+                            exec_ms = exec_start.elapsed().as_millis(),
+                            "pool-run exec stage"
+                        );
                         used = Some((vm, permit));
                         resp
                     }
@@ -2056,6 +2132,8 @@ mod tests {
             ttl: 0,
             lease_ttl,
             deferred: false,
+            prewarm: None,
+            default_volumes: Vec::new(),
             ksm: false,
             snapshot_fork: false,
             boot_concurrency: DEFAULT_POOL_BOOT_CONCURRENCY,
@@ -2358,6 +2436,11 @@ mod tests {
             image: Some("alpine:latest".to_string()),
             size: 0,
             max: 5,
+            prewarm: false,
+            env: Vec::new(),
+            user: None,
+            workdir: None,
+            volumes: Vec::new(),
             ttl: 300,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             socket: DEFAULT_SOCKET.to_string(),
@@ -2380,6 +2463,11 @@ mod tests {
             image: Some("alpine:latest".to_string()),
             size: 10,
             max: 5,
+            prewarm: false,
+            env: Vec::new(),
+            user: None,
+            workdir: None,
+            volumes: Vec::new(),
             ttl: 300,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             socket: DEFAULT_SOCKET.to_string(),
@@ -2406,6 +2494,11 @@ mod tests {
             size: 1,
             max: 1,
             boot_concurrency: 0,
+            prewarm: false,
+            env: Vec::new(),
+            user: None,
+            workdir: None,
+            volumes: Vec::new(),
             ttl: 300,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             socket: DEFAULT_SOCKET.to_string(),
@@ -2432,6 +2525,11 @@ mod tests {
             image: None,
             size: 1,
             max: 1,
+            prewarm: false,
+            env: Vec::new(),
+            user: None,
+            workdir: None,
+            volumes: Vec::new(),
             ttl: 300,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             socket: socket.display().to_string(),
@@ -2462,6 +2560,11 @@ mod tests {
             image: Some("alpine:latest".to_string()),
             size: 1,
             max: 1,
+            prewarm: false,
+            env: Vec::new(),
+            user: None,
+            workdir: None,
+            volumes: Vec::new(),
             ttl: 300,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             socket: socket.display().to_string(),
@@ -2526,6 +2629,8 @@ mod tests {
             ttl: 0,
             lease_ttl: DEFAULT_POOL_LEASE_TTL_SECS,
             deferred: false,
+            prewarm: None,
+            default_volumes: Vec::new(),
             ksm: false,
             snapshot_fork: false,
             boot_concurrency: DEFAULT_POOL_BOOT_CONCURRENCY,

@@ -849,7 +849,6 @@ pub(crate) fn handle_connection(
         Some(f) => f,
         None => return Ok(()),
     };
-
     if frame_type != FrameType::Data as u8 {
         // Heartbeat: respond with Heartbeat frame (health check)
         if frame_type == FrameType::Heartbeat as u8 {
@@ -2476,9 +2475,12 @@ fn execute_command(
     let output_readers = ChildOutputReaders::start(&mut child);
     write_child_stdin(&mut child, stdin_data, false);
 
-    // Wait with timeout using a polling loop
+    // Wait with timeout using a polling loop. Start with a short 1 ms delay so
+    // fast commands return immediately; back off exponentially to 50 ms to keep
+    // long-running commands cheap.
     let start = std::time::Instant::now();
-    let poll_interval = Duration::from_millis(50);
+    let max_interval = Duration::from_millis(50);
+    let mut poll_interval = Duration::from_millis(1);
 
     loop {
         match child.try_wait() {
@@ -2505,6 +2507,7 @@ fn execute_command(
                     return bounded_exec_output_with_truncation(stdout, stderr, 137, truncated);
                 };
                 std::thread::sleep(delay);
+                poll_interval = (poll_interval * 2).min(max_interval);
             }
             Err(ref e) if e.raw_os_error() == Some(libc::ECHILD) => {
                 // Child already reaped (timing race in microVM PID 1 context).

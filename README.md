@@ -285,41 +285,55 @@ kbox pool <COMMAND>
 
 | 三级命令 | 说明 |
 | --- | --- |
-| `kbox pool start [OPTIONS]` | 启动预热池守护进程。支持 `--image`、`--size`、`--max`、`--boot-concurrency`、`--ttl`、`--lease-ttl`、`--socket`、`--warm`、`--deferred`、`--ksm`、`--snapshot-fork`、`--metrics-addr`、`--json` |
-| `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Sandbox 中执行命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
+| `kbox pool start [OPTIONS]` | 启动预热池守护进程。支持 `--image`、`--size`、`--max`、`--ttl`、`--socket`、`--deferred`、`--prewarm` 等选项；`--prewarm` 支持 `-e/--env`、`-u/--user`、`-w/--workdir`、`-v/--volume` |
+| `kbox pool attach [OPTIONS]` | 接管一个已初始化的进程，双向转发 stdin/stdout，并返回应用真实退出码；要求守护进程使用 `--prewarm` |
+| `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Sandbox 中执行一次性命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
 | `kbox pool stop [OPTIONS]` | 排空并停止预热池。支持 `--socket`、`--json` |
-| `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json` |
+| `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json`；进程预热模式下 `idle >= 1` 表示已有 ready 的 VM 和应用进程 |
 
-### 14.2 示例：用预热池加速 dsh-acp 启动
+### 14.2 示例：用进程预热加速 dsh-acp ACP 会话
 
-以 `--deferred` 启动守护进程，再用 `pool run --exec` 执行命令，可直接复用已启动的 VM：
+进程预热由用户显式启用。以下命令启动一个独立 VM，预先运行镜像的 `ENTRYPOINT + CMD`，待 ACP 连接和模型能力解析完成后才标记 ready。`--ttl 0` 禁止空闲 VM 到期回收；在单独终端运行守护进程：
 
 ```sh
-# 启动预热池，预启动 1 个 dsh-acp VM（镜像公开，匿名拉取）
-kbox pool start --deferred \
-  --image ghcr.io/kense-labs/dsh-acp:latest --size 1 --max 2
+export DEEPSEEK_API_KEY=你的密钥
 
-# 等待预热就绪（idle >= 1）
-kbox pool status --json
-
-# 在预热 VM 中执行 dsh-acp 命令
-kbox pool run --exec -- node /app/apps/cli/lib/bin.js --version
+kbox pool start --deferred --prewarm \
+  --image ghcr.io/kense-labs/dsh-acp:latest \
+  --size 1 --max 2 --ttl 0 \
+  -u root \
+  -v dsh-acp-data:/data \
+  -v "$PWD:/workspace" \
+  -e DEEPSEEK_API_KEY
 ```
 
-macOS arm64 本机实测（2026-11-06，dsh-acp `--version` 命令，5 次预热命中）：
+等待 `pool status --json` 显示 `idle >= 1`，然后将 TUI/GUI 的 ACP agent 命令配置为 `kbox pool attach`。也可以直接在终端运行：
 
-| 启动方式 | 耗时 |
-| --- | --- |
-| 冷启动 `kbox run` | 约 22 秒 |
-| 预热池命中（`--deferred` + `--exec`） | **0.19–0.26 秒** |
-| 预热池未命中（等待新 VM 启动） | 与冷启动相当 |
+```sh
+kbox pool attach
+```
 
-预热命中时启动加速约 100 倍。`--size` 决定待命 VM 数量；每次 `pool run` 占用的 VM 需要回收重置后才能再次命中，连续调用超过池容量时会退化为冷启动耗时。
+每次 `attach` 消耗一个独立的 VM＋进程；客户端断开后销毁该 VM，守护进程自动补充新的预热实例。一个进程不能跨客户端会话复用。未命中空闲实例时会等待新实例完成启动和预热。`pool run` 仍用于一次性命令，不转发交互式 stdin；不需要后台池时，使用 `kbox run -i --rm`。
 
-当前限制：
+在 kbox 源码目录运行真实模型端到端基准（复用上述池，不会停止它）：
 
-- `pool run` 面向一次性命令，不转发交互式 stdin。ACP 客户端（TUI/GUI）的 stdio 会话请使用 `kbox run -i --rm`（见第 2 章），不要走预热池。
-- 不加 `--deferred` 的守护进程按完整 Box 主进程语义执行 `pool run`，没有上述加速效果。
+```sh
+DSH_MODEL=deepseek-flash DSH_REASONING_EFFORT=low \
+REUSE_POOL=1 RUNS=5 sh dist/bench-pool-dsh-acp.sh
+```
+
+脚本默认发送“你好！请用一句话介绍你自己。”，完成真实 ACP `initialize → session/new → session/prompt`，验证模型回复、`stopReason` 和进程退出码。可传入自定义问候；原始样本分别记录 CLI 启动到 initialize 响应、initialize RTT 和模型 prompt RTT，模型网络耗时不计入启动加速。
+
+2026-11-06 本机实测：macOS arm64、kbox 3.2.7、`deepseek-flash`＋`low`，5 次真实 DeepSeek API 会话均返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
+
+| 指标 | 最小值 | 中位数 | 最大值 |
+| --- | ---: | ---: | ---: |
+| 完整 CLI 启动到 initialize 响应 | 15.066 ms | 19.368 ms | 28.955 ms |
+| initialize 请求 RTT | 13.822 ms | 17.642 ms | 27.502 ms |
+| 守护进程内部接管（不含 CLI 与协议） | 0.222 ms | 0.251 ms | 0.313 ms |
+| 模型 prompt RTT（网络请求，非启动指标） | 676.883 ms | 1436.499 ms | 1676.068 ms |
+
+守护进程内部接管低于 1 ms，不代表完整 CLI 启动或 initialize 为 1 ms。原始样本与验证边界见[实测证据](docs/evidence/box/20261106-process-prewarm-attach/OUTCOME.md)。
 
 ## 15. 系统与维护
 

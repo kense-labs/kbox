@@ -437,6 +437,9 @@ pub struct VmManager {
     /// auth proof for Ready on Unix and Windows).
     pub(crate) exec_client: Option<ExecClient>,
 
+    /// Application process initialized while this VM was idle in a warm pool.
+    pub(crate) prewarmed_exec: Option<crate::pool::PrewarmedExec>,
+
     /// Network backend manager for bridge networking (None if TSI mode).
     /// Platform-specific: passt on Linux, gvproxy on macOS.
     pub(crate) net_manager: Option<Box<dyn crate::network::NetworkBackend>>,
@@ -539,6 +542,7 @@ impl VmManager {
             provider: None,
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            prewarmed_exec: None,
             net_manager: None,
             home_dir,
             anonymous_volumes: Vec::new(),
@@ -583,6 +587,7 @@ impl VmManager {
             provider: None,
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            prewarmed_exec: None,
             net_manager: None,
             home_dir,
             anonymous_volumes: Vec::new(),
@@ -945,6 +950,7 @@ impl VmManager {
             provider: Some(provider),
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            prewarmed_exec: None,
             net_manager: None,
             home_dir,
             anonymous_volumes: Vec::new(),

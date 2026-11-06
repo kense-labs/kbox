@@ -23,6 +23,7 @@ pub const FRAME_READ_TIMEOUT: std::time::Duration = std::time::Duration::from_se
 #[serde(tag = "op", rename_all = "snake_case")]
 pub enum PoolRequest {
     Run(PoolRunRequest),
+    Attach(crate::pool::PoolAttachRequest),
     Status,
     Stop,
     Lease(PoolLeaseRequest),

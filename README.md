@@ -39,10 +39,17 @@ kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
 export DEEPSEEK_API_KEY=your_key
 kbox run -i --rm \
   --memory 2g \
+  -u root \
   -v dsh-acp-data:/data \
   -v "$PWD:/workspace" \
   -e DEEPSEEK_API_KEY \
   ghcr.io/kense-labs/dsh-acp:latest
+```
+
+也可以直接运行 dsh-acp 仓库的问候示例（启动 VM → 发送问候 → 打印模型回复）：
+
+```sh
+python3 examples/acp_hello.py   # 见 https://github.com/kense-labs/dsh-acp
 ```
 
 `kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。完整命令见第 6 章起。

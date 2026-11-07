@@ -672,15 +672,13 @@ async fn cleanup_managed_execution(
             )?;
         }
         let home = kbox_core::dirs_home();
-        kbox_runtime::teardown_sandbox_host_netdevice_lease(&home, &ctx.box_id).map_err(
-            |error| {
-                format!(
-                    "removed box {} state but refused to wipe {}: host netdevice lease teardown failed: {error}",
-                    ctx.box_id,
-                    ctx.box_dir.display()
-                )
-            },
-        )?;
+        kbox_runtime::cleanup_host_netdevice_lease(&home, &ctx.box_id).map_err(|error| {
+            format!(
+                "removed box {} state but refused to wipe {}: host netdevice lease teardown failed: {error}",
+                ctx.box_id,
+                ctx.box_dir.display()
+            )
+        })?;
         kbox_runtime::cleanup_microvm_virtiofs_ro_shares(&ctx.box_dir).map_err(|error| {
             format!(
                 "removed box {} state but refused to wipe {}: MicroVM :ro virtio-fs alias detach failed: {error}",

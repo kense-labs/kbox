@@ -83,7 +83,7 @@ API 接收成功不代表生命周期完成。调用方以 ResourceObservation �
 
 每个 Harness 或 Plugin Replica 默认使用独立 MicroVM。沙箱提供独立客体内核、OCI rootfs、显式挂载、受控网络、Secret 引用、取消和资源回收。
 
-Sandbox／guest-init PEP 按 DataSecurityDecision 限制文件、进程、exec、挂载和网络出口。共享内核路径不承担敌对多租户隔离。
+Sandbox／guest-init PEP 在独立内核 MicroVM 内按 DataSecurityDecision 限制文件、进程、exec、挂载和网络出口。Box 产品路径不包含共享宿主内核隔离；进程命令沙箱见 [ksandbox](https://github.com/kense-labs/ksandbox)。
 
 ### 2.4 能力数据面
 

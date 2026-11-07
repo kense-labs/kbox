@@ -1,21 +1,14 @@
-use clap::ValueEnum;
 use kbox_core::config::ExecutionIsolation;
 use kbox_runtime::hardware_vm::{
     open_vm_only, select_isolation, stored_profile_bytes, ContractError, IsolationSelection,
     VmOnlyFeature,
 };
 
-use super::{resolve_isolation, IsolationArg};
+use super::resolve_isolation;
 
 #[test]
-fn omitted_isolation_selects_hardware_vm_and_microvm_stays_rejected() {
+fn omitted_isolation_selects_hardware_vm_and_legacy_selectors_are_rejected() {
     assert_eq!(resolve_isolation(None), ExecutionIsolation::Microvm);
-    assert_eq!(
-        resolve_isolation(Some(IsolationArg::Sandbox)),
-        ExecutionIsolation::Sandbox
-    );
-    assert!(IsolationArg::from_str("microvm", true).is_err());
-    assert!(IsolationArg::from_str("sandbox", true).is_ok());
 
     let live = std::env::var("K_BOX_OCI_MIGRATION").ok();
     let baseline = stored_profile_bytes(None);
@@ -30,15 +23,18 @@ fn omitted_isolation_selects_hardware_vm_and_microvm_stays_rejected() {
             select_isolation(Some("microvm"), migration),
             Err(ContractError::MicrovmSpellingRejected)
         );
-        let sandbox = select_isolation(Some("sandbox"), migration).expect("sandbox");
+        assert_eq!(
+            select_isolation(Some("sandbox"), migration),
+            Err(ContractError::UnknownIsolation)
+        );
         for feature in [
             VmOnlyFeature::Profile,
             VmOnlyFeature::Snapshot,
             VmOnlyFeature::ControlChannel,
         ] {
             assert_eq!(
-                open_vm_only(sandbox, feature),
-                Err(ContractError::SandboxRejectsVmOnly)
+                open_vm_only(IsolationSelection::HardwareVm, feature),
+                Ok(())
             );
         }
     }

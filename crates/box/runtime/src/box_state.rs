@@ -303,7 +303,7 @@ mod tests {
         let mut record = record(id);
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: kbox_core::ExecutionIsolation::Sandbox,
+            isolation: kbox_core::ExecutionIsolation::Microvm,
             ..Default::default()
         };
         record.managed_execution = Some(

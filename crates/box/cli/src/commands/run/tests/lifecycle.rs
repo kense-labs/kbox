@@ -162,7 +162,7 @@ fn test_completed_managed_start_requires_stopped_state_and_exact_exit_code() {
             status.as_status(),
             None,
         );
-        record.isolation = kbox_core::ExecutionIsolation::Sandbox;
+        record.isolation = kbox_core::ExecutionIsolation::Microvm;
         record.managed_execution = Some(
             kbox_runtime::ManagedExecutionMetadata::new(
                 OperationId::new("operation-startup-completion").unwrap(),
@@ -170,7 +170,7 @@ fn test_completed_managed_start_requires_stopped_state_and_exact_exit_code() {
                 CreateExecutionRequest {
                     external_sandbox_id: "startup-completion".to_string(),
                     config: BoxConfig {
-                        isolation: kbox_core::ExecutionIsolation::Sandbox,
+                        isolation: kbox_core::ExecutionIsolation::Microvm,
                         image: record.image.clone(),
                         ..Default::default()
                     },
@@ -293,7 +293,7 @@ fn test_foreground_sandbox_trusts_provider_exit_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(0),
-            kbox_core::ExecutionIsolation::Sandbox,
+            kbox_core::ExecutionIsolation::Microvm,
             false,
         ),
         Some(0)

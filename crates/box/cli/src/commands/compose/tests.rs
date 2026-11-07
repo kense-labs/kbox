@@ -81,7 +81,7 @@ fn service_config_hash_tracks_runtime_isolation() {
         ..Default::default()
     };
     let mut sandbox = microvm.clone();
-    sandbox.isolation = kbox_core::ExecutionIsolation::Sandbox;
+    sandbox.isolation = kbox_core::ExecutionIsolation::Microvm;
 
     assert_ne!(
         service_config_hash(&service, &microvm).unwrap(),

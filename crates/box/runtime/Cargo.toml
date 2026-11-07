@@ -10,10 +10,6 @@ description = "MicroVM runtime engine — VM lifecycle, OCI images, attestation,
 name = "kbox_runtime"
 path = "src/lib.rs"
 
-[[example]]
-name = "managed-sandbox-smoke"
-path = "examples/managed_sandbox_smoke.rs"
-required-features = ["vm"]
 
 [[example]]
 name = "windows-whpx-oci-qualification"
@@ -25,10 +21,6 @@ name = "linux-kvm-oci-qualification"
 path = "examples/linux_kvm_oci_qualification.rs"
 required-features = ["vm"]
 
-[[example]]
-name = "linux-native-live-session-qualification"
-path = "examples/linux_native_live_session_qualification.rs"
-required-features = ["vm"]
 
 [[example]]
 name = "linux-kvm-live-session-qualification"

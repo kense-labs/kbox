@@ -1,15 +1,13 @@
 //! `kbox port-forward` command — forward host loopback TCP to a Sandbox box.
 
 use std::num::{NonZeroU16, NonZeroU64, NonZeroUsize};
-#[cfg(target_os = "linux")]
-use std::sync::Arc;
-#[cfg(any(target_os = "linux", test))]
+#[cfg(any(test))]
 use std::time::Duration;
 
 use clap::Args;
-#[cfg(any(target_os = "linux", test))]
+#[cfg(test)]
 use kbox_core::{ExecutionId, ExecutionPortConnector};
-#[cfg(any(target_os = "linux", test))]
+#[cfg(test)]
 use tokio::io::{AsyncRead, AsyncWrite};
 
 #[cfg(target_os = "linux")]
@@ -46,93 +44,28 @@ pub async fn execute(_args: PortForwardArgs) -> Result<(), Box<dyn std::error::E
 
 #[cfg(target_os = "linux")]
 pub async fn execute(args: PortForwardArgs) -> Result<(), Box<dyn std::error::Error>> {
-    use std::io::Write as _;
-
-    use tokio::net::TcpListener;
-    use tokio::sync::Semaphore;
-
-    let (execution_id, generation, box_name) = {
-        let state = StateFile::load_default()?;
-        let record = resolve::resolve(&state, &args.r#box)?;
-        if record.status != "running" {
-            return Err(format!("Box {} is not running", record.name).into());
-        }
-        let metadata = record.managed_execution.as_ref().ok_or_else(|| {
-            format!(
-                "Box {} is not owned by the generation-fenced execution manager",
-                record.name
-            )
-        })?;
-        if !metadata.plan.backend.is_sandbox() {
-            return Err(format!(
-                "Box {} does not expose a Sandbox network namespace",
-                record.name
-            )
-            .into());
-        }
-
-        (
-            ExecutionId::new(record.id.clone())?,
-            metadata.generation,
-            record.name.clone(),
-        )
-    };
-
-    let home = kbox_core::dirs_home();
-    let connector = Arc::new(super::configured_local_execution_manager(&home).await?);
-    let bind_address =
-        std::net::SocketAddr::from((std::net::Ipv4Addr::LOCALHOST, args.host_port.get()));
-    let listener = TcpListener::bind(bind_address).await.map_err(|error| {
-        format!("Failed to bind Box port-forward listener at {bind_address}: {error}")
-    })?;
-    let connection_limit = Arc::new(Semaphore::new(args.max_connections.get()));
-    let connect_timeout = Duration::from_secs(args.connect_timeout_secs.get());
-
-    println!(
-        "Forwarding {bind_address} to {box_name}:{}",
-        args.guest_port
-    );
-    std::io::stdout().flush()?;
-
-    loop {
-        let permit = Arc::clone(&connection_limit)
-            .acquire_owned()
-            .await
-            .map_err(|_| "Box port-forward connection limiter closed")?;
-        let (host_stream, peer_address) = listener
-            .accept()
-            .await
-            .map_err(|error| format!("Failed to accept a Box port-forward connection: {error}"))?;
-        host_stream.set_nodelay(true)?;
-
-        let connector = Arc::clone(&connector);
-        let execution_id = execution_id.clone();
-        let guest_port = args.guest_port;
-        tokio::spawn(async move {
-            let _permit = permit;
-            if let Err(error) = proxy_connection(
-                connector.as_ref(),
-                &execution_id,
-                generation,
-                guest_port,
-                connect_timeout,
-                host_stream,
-            )
-            .await
-            {
-                tracing::warn!(
-                    peer = %peer_address,
-                    execution_id = %execution_id,
-                    guest_port = guest_port.get(),
-                    error = %error,
-                    "Sandbox port-forward connection failed"
-                );
-            }
-        });
+    // Sandbox netns port-forward was removed with the MicroVM-only cutover.
+    // Keep argument validation so the CLI still resolves a running managed box
+    // before refusing.
+    let state = StateFile::load_default()?;
+    let record = resolve::resolve(&state, &args.r#box)?;
+    if record.status != "running" {
+        return Err(format!("Box {} is not running", record.name).into());
     }
+    let _metadata = record.managed_execution.as_ref().ok_or_else(|| {
+        format!(
+            "Box {} is not owned by the generation-fenced execution manager",
+            record.name
+        )
+    })?;
+    Err(format!(
+        "Box {} does not expose a Sandbox network namespace",
+        record.name
+    )
+    .into())
 }
 
-#[cfg(any(target_os = "linux", test))]
+#[cfg(test)]
 async fn proxy_connection<C, S>(
     connector: &C,
     execution_id: &ExecutionId,

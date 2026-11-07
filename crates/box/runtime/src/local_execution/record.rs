@@ -117,7 +117,7 @@ fn validate_execution_config(config: &kbox_core::BoxConfig) -> ExecutionManagerR
     }
 
     #[cfg(windows)]
-    if config.isolation == kbox_core::ExecutionIsolation::Sandbox {
+    if config.isolation == kbox_core::ExecutionIsolation::Microvm {
         return Err(ExecutionManagerError::InvalidRequest(
             "Sandbox isolation is supported only on Linux; use MicroVM isolation on Windows"
                 .to_string(),

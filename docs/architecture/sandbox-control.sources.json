@@ -30,8 +30,8 @@
       "Image-based isolated code environment"
     ],
     "kernel_boundaries": [
-      "Shared host kernel",
-      "Independent guest kernel / DedicatedVm"
+      "Process command sandbox may share host kernel (external ksandbox)",
+      "Box product path: Independent guest kernel / DedicatedVm MicroVM only"
     ],
     "observation": [
       "External Linux Observer",
@@ -49,14 +49,15 @@
     ]
   },
   "isolation_scope": {
-    "process_command": "One command and descendants; native implementations share the host kernel. Core may also execute a command in a VM.",
-    "code_environment": "Box owns an image-based runtime environment. The shared-kernel sequence selects ExecutionIsolation::Sandbox and OCI SharedHostKernel explicitly.",
-    "dedicated_vm": "Independent guest kernel; OCI route maps Microvm to DedicatedVm. These are management-granularity and kernel-boundary dimensions, not three mutually exclusive product types.",
+    "process_command": "One command and descendants; implemented by external https://github.com/kense-labs/ksandbox (ksandbox). Native backends may share the host kernel. Core may also execute a command in a VM.",
+    "code_environment": "Box owns an image-based MicroVM runtime environment. Product path is ExecutionIsolation::Microvm mapped to OCI DedicatedVm. Shared-host-kernel / ExecutionIsolation::Sandbox is not a kbox Box product route.",
+    "dedicated_vm": "Independent guest kernel; OCI route maps Microvm to DedicatedVm. Box isolation product = dedicated-kernel MicroVM only.",
     "mapping_sources": [
       "crates/box/core/src/config.rs",
       "crates/box/core/src/execution.rs",
       "crates/box/runtime/src/local_execution/oci_backend.rs",
-      "crates/oci-runtime/crates/core/src/capability.rs"
+      "crates/oci-runtime/crates/core/src/capability.rs",
+      "https://github.com/kense-labs/ksandbox"
     ]
   },
   "integration_boundaries": {
@@ -68,54 +69,6 @@
     "enforcement": "block decision, deny-file write, guard reload and kernel refusal are distinct states"
   },
   "source_files": [
-    {
-      "path": "apps/gateway/src/entrypoint/inference_dispatch.rs",
-      "bytes": 40375,
-      "sha256": "a6ea716f67afbd20c5acc202b3684710562f26f1bc25b4541375e0e511e5dbbc",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "apps/gateway/src/entrypoint/protocol/http_handler.rs",
-      "bytes": 56592,
-      "sha256": "54a4fa966b5a8089ee3392f9c90198fe3fb9d82059ecc01d479e4dc8df92d13b",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "apps/gateway/src/entrypoint/protocol/streaming_handler.rs",
-      "bytes": 38193,
-      "sha256": "ee8e253d181fbfa7e647692cb5ab6eaa79ca7d94f9ad1f010127fe87880f8aa5",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "apps/gateway/src/inference/authorization.rs",
-      "bytes": 52787,
-      "sha256": "432339656c392cf990f03c686e15937b81d3dd7e1d5dd6f616b0f1d93d03fcf6",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "apps/gateway/src/wire.rs",
-      "bytes": 32549,
-      "sha256": "76c1245073496577e3ab4ca3e10b57af4a64dfb8c1fc6e9f8d25b0ffa56eaa43",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "apps/studio/src/renderer/services/sentry.ts",
-      "bytes": 190,
-      "sha256": "b712cc080da827c1bccca909c136e3ef0516a6c7f14e16f42af08558eb26995a",
-      "repository": "studio",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
     {
       "path": "crates/box/core/src/config.rs",
       "bytes": 43805,
@@ -157,54 +110,6 @@
       "matches_head": false
     },
     {
-      "path": "crates/browser/src/pool.rs",
-      "bytes": 15549,
-      "sha256": "c77159baaf5b3296d9c861caf550002093a7f2779e79045db34224f981c377fb",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/agent_api/session_facade.rs",
-      "bytes": 36402,
-      "sha256": "fc4318950dc8c859d3a27c9a8ae52b7b1c9558d8129d3e5fad740f9b688d1e82",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/code/core/src/agent_api/session_sandbox.rs",
-      "bytes": 65528,
-      "sha256": "21da1444dedfe0a4a5dbc13939a9268214c876dfac8cdcf110b13b735e61030e",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/sandbox/native.rs",
-      "bytes": 15159,
-      "sha256": "677511c1a88b6be356caebe1fc3ae04afce0d82c68ac96a9f26f007f6e477203",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/sandbox/oci.rs",
-      "bytes": 18119,
-      "sha256": "2138e3f5982d31f6871dba69158bc89ac46385cd167fd018e8d080cedf78aeda",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/tools/builtin/bash.rs",
-      "bytes": 46146,
-      "sha256": "cc0370cf99e5690a28f9849340728e678aebd5e467cbb26fc3a7df118d437209",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
       "path": "crates/oci-runtime/crates/core/src/capability.rs",
       "bytes": 5968,
       "sha256": "112a6d86b5833320a8214c339a865e336e890d3474221170db2febf0f3cacf59",
@@ -221,124 +126,10 @@
       "matches_head": true
     },
     {
-      "path": "crates/sandbox/src/lib.rs",
-      "bytes": 28152,
-      "sha256": "cf2705ce21a66d4f2620bf6f568d25b25c3f247c0a7608cd9916581c858dd228",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sandbox/src/observability/mod.rs",
-      "bytes": 6838,
-      "sha256": "0ac262aa2bf1d85146fba0003fa49e2ae16142a62112e0f2eac2f6c9f03d25ad",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/deploy/daemonset.yaml",
-      "bytes": 4210,
-      "sha256": "1cce0e69af90b722a6b8edec173eab7a6f58885bbdc4638324a81fcb6a0fc2e7",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/docs/RUNBOOK.md",
-      "bytes": 5775,
-      "sha256": "431d9b5fdd756e536474d2d0701fcdca72c3edfd2449f4e8d82ddbc2d89a8db9",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/bin/sentry.rs",
-      "bytes": 15676,
-      "sha256": "7bf4efa0b80e028d6d524d7624ba7203d3bcb833df3bacaf8524541e50477d28",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/sentry/src/config.rs",
-      "bytes": 7297,
-      "sha256": "7c3cb304731b720d7ef4dbf53671a10e8c74091f3c927a93aa7379ef3da51368",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/enforce.rs",
-      "bytes": 10341,
-      "sha256": "401b7a07308ee5b0f8288ceaae85b1cf8cd3c0134f55af3d7abe27e3637d0245",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/event.rs",
-      "bytes": 8798,
-      "sha256": "afcaeca941caf16f4497da80526dfb970866134ccc5fb21578477ec376bac3ef",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/metrics.rs",
-      "bytes": 5056,
-      "sha256": "f86c0c3f8c060c0adbd6ed35ebbae687e9154fcfa4c24f4f27b210e92ffd76c0",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/pipeline.rs",
-      "bytes": 15360,
-      "sha256": "f55e41b5c2005a799e7cbfd046d7b0016f54fb2099548e3040922d249d528310",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/rules.rs",
-      "bytes": 19687,
-      "sha256": "2a14b4e5efea673e73821ffba04d7a15c9e23894d724bbc5c6c6d0404e225913",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/sae.rs",
-      "bytes": 9898,
-      "sha256": "520d5f3b0e0d2c6333fb5fbf505924569687bc87f58860faadce8b117b03ed8c",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sentry/src/verdict.rs",
-      "bytes": 9114,
-      "sha256": "7eb365873315039700c1bf80003ae17e6efb0ca4d49f22457a71684c2a3ca7e7",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/terminal/crates/codegen/ksandbox/src/lib.rs",
-      "bytes": 45437,
-      "sha256": "7d11e828b5ca261688a3a611fd57c738feb412c0baec0a6c4ac6418d0bf41f78",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/terminal/crates/codegen/ktelemetry/src/sentry.rs",
-      "bytes": 14787,
-      "sha256": "9f4cfbbc922ee804149f569e541b02f9afaf00987c0d2a213a9e7b2dadd17a60",
-      "repository": "krun",
-      "tracked_at_head": true,
-      "matches_head": true
+      "path": "https://github.com/kense-labs/ksandbox",
+      "external": true,
+      "role": "Process command sandbox (ksandbox); replaces in-tree crates/sandbox",
+      "repository": "kense-labs/ksandbox"
     },
     {
       "path": "docs/architecture/harness-gateway.md",
@@ -428,8 +219,9 @@
     }
   ],
   "editorial_revision": {
-    "revised_at": "2026-11-04T09:19:24+08:00",
-    "scope": "STC prose revision of sandbox-control.md and regenerated artifact metadata; SVG and PNG unchanged; no HTML generated.",
+    "revised_at": "2026-11-07T14:43:00+08:00",
+    "scope": "MicroVM-only Box cutover: drop in-tree crates/sandbox links; process command sandbox → https://github.com/kense-labs/ksandbox; remove shared-kernel Box product route. SVG and PNG unchanged.",
+    "prior_stc_revision": "2026-11-04T09:19:24+08:00 STC prose revision; SVG and PNG unchanged; no HTML generated.",
     "writing_reference": "https://github.com/Kense Labs/stc-answer/blob/main/skills/stc-answer/stc/规范.md",
     "skill": "/Users/roylin/.agents/skills/stc-answer/SKILL.md",
     "source_analysis_checked_at": "2026-11-03T20:10:21.783322+08:00",

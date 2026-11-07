@@ -73,7 +73,7 @@ async fn private_read_only_artifact(
 
     require_bind_config(&record, TARGET, true)?;
     let attachment_alias = match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Sandbox => {
+        ExecutionIsolation::Microvm => {
             Some(sandbox_private_artifact_alias(fixture, &record, TARGET)?)
         }
         ExecutionIsolation::Microvm => None,
@@ -312,7 +312,7 @@ async fn mount_cleanup(
         .pid
         .ok_or_else(|| super::protocol("tmpfs cleanup fixture has no provider owner PID"))?;
     let log_worker = match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Sandbox => {
+        ExecutionIsolation::Microvm => {
             let mountinfo =
                 std::fs::read_to_string(Path::new("/proc").join(pid.to_string()).join("mountinfo"))
                     .map_err(|error| {

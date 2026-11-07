@@ -14,7 +14,7 @@ pub struct SnapshotArgs {
 /// Snapshot subcommands.
 #[derive(Subcommand)]
 pub enum SnapshotAction {
-    /// Create a snapshot from a stopped box, or a live managed Sandbox
+    /// Create a snapshot from a stopped box
     Create(SnapshotCreateArgs),
     /// Restore a box from a snapshot
     Restore(SnapshotRestoreArgs),
@@ -131,7 +131,6 @@ async fn execute_prune(args: SnapshotPruneArgs) -> Result<(), Box<dyn std::error
 async fn execute_create(args: SnapshotCreateArgs) -> Result<(), Box<dyn std::error::Error>> {
     use crate::state::StateFile;
     use kbox_core::snapshot::SnapshotMetadata;
-    use kbox_core::{ExecutionId, ExecutionManager, ExecutionSnapshotId};
     use kbox_runtime::SnapshotStore;
 
     // Resolve once to a stable ID, then serialize with every lifecycle command
@@ -146,35 +145,6 @@ async fn execute_create(args: SnapshotCreateArgs) -> Result<(), Box<dyn std::err
         .ok_or_else(|| format!("Box '{box_id}' was removed while waiting to snapshot it"))?;
     validate_snapshot_source_state(record)
         .map_err(|error| -> Box<dyn std::error::Error> { error.into() })?;
-
-    // Running managed Sandbox uses LocalExecutionManager quiesce + save_managed
-    // (same host-rootfs path as commit). Release the CLI lock first so fencing
-    // stays single-owner.
-    if record.is_active() {
-        let metadata = record.managed_execution.as_ref().ok_or_else(|| {
-            format!(
-                "Cannot snapshot running Sandbox box '{}' because managed lifecycle metadata is missing",
-                record.name
-            )
-        })?;
-        let execution_id = ExecutionId::new(record.id.clone())?;
-        let generation = metadata.generation;
-        let snap_id = snapshot_create_id(args.name.as_deref())?;
-        let snapshot_id = ExecutionSnapshotId::new(snap_id.clone())?;
-        drop(lifecycle_lock);
-        let home = kbox_core::dirs_home();
-        let manager = super::configured_local_execution_manager(&home).await?;
-        let created = manager
-            .create_filesystem_snapshot(&execution_id, generation, &snapshot_id)
-            .await?;
-        if args.description.is_some() {
-            eprintln!(
-                "warning: --description is ignored for live Sandbox snapshots; managed create stores the snapshot id as the name"
-            );
-        }
-        println!("{}", created.snapshot_id);
-        return Ok(());
-    }
 
     // Generate snapshot ID and name
     let snap_id = format!(
@@ -235,27 +205,15 @@ async fn execute_create(args: SnapshotCreateArgs) -> Result<(), Box<dyn std::err
     #[cfg(target_os = "linux")]
     let saved = {
         let _attached_rootfs = kbox_runtime::rootfs::attach_persistent_rootfs(&record.box_dir)?;
-        if stopped_sandbox_uses_managed_metadata(record) {
-            let (rootfs_path, rootfs_metadata) =
-                kbox_runtime::capture_sandbox_host_rootfs_for_commit(record).map_err(|error| {
-                    format!(
-                        "Cannot capture Sandbox host rootfs for stopped snapshot of '{}': {error}",
-                        record.name
-                    )
-                })?;
-            meta.mark_managed_sandbox_oci_capture();
-            store.save_managed(meta, &rootfs_path, &rootfs_metadata)?
-        } else {
-            let rootfs_path = super::resolve_box_rootfs(&record.box_dir).ok_or_else(|| {
-                format!(
-                    "Rootfs not found for box '{}' under {} (looked for merged/ and rootfs/); \
-                     snapshot a stopped box",
-                    record.name,
-                    record.box_dir.display()
-                )
-            })?;
-            store.save(meta, &rootfs_path)?
-        }
+        let rootfs_path = super::resolve_box_rootfs(&record.box_dir).ok_or_else(|| {
+            format!(
+                "Rootfs not found for box '{}' under {} (looked for merged/ and rootfs/); \
+                 snapshot a stopped box",
+                record.name,
+                record.box_dir.display()
+            )
+        })?;
+        store.save(meta, &rootfs_path)?
     };
     #[cfg(all(not(target_os = "macos"), not(target_os = "linux")))]
     let saved = {
@@ -308,38 +266,9 @@ fn validate_snapshot_source_state(record: &crate::state::BoxRecord) -> Result<()
     if !record.is_active() {
         return Ok(());
     }
-    // Managed SandboxViaOci snapshots quiesce through LocalExecutionManager and
-    // walk the prepared host rootfs with OCI mappings — the same path as live
-    // commit. MicroVM / legacy live host walks stay refused.
-    if record.isolation.is_sandbox() && record.managed_execution.is_some() {
-        return Ok(());
-    }
     Err(format!(
         "Cannot snapshot active box '{}': stop it first. Live host-path snapshots are disabled because a running guest can race filesystem traversal.",
         record.name
-    ))
-}
-
-/// Stopped managed Sandbox snapshots must persist OCI-mapped terminal metadata
-/// via `save_managed`, not host subordinate UIDs from a bare `save`.
-#[cfg(target_os = "linux")]
-fn stopped_sandbox_uses_managed_metadata(record: &crate::state::BoxRecord) -> bool {
-    super::rootfs_capture::stopped_sandbox_uses_managed_host_rootfs(record)
-}
-
-fn snapshot_create_id(requested_name: Option<&str>) -> Result<String, Box<dyn std::error::Error>> {
-    if let Some(name) = requested_name {
-        // Live managed create uses the product id as ExecutionSnapshotId.
-        kbox_core::ExecutionSnapshotId::new(name.to_string()).map_err(|error| {
-            Box::<dyn std::error::Error>::from(format!(
-                "Invalid --name '{name}' for a live Sandbox snapshot: {error}"
-            ))
-        })?;
-        return Ok(name.to_string());
-    }
-    Ok(format!(
-        "snap-{}",
-        chrono::Utc::now().timestamp_nanos_opt().unwrap_or(0)
     ))
 }
 
@@ -712,79 +641,9 @@ mod tests {
     }
 
     #[test]
-    fn snapshot_source_state_allows_active_managed_sandbox() {
-        use kbox_core::{
-            BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, OperationId,
-        };
-        use kbox_runtime::ManagedExecutionMetadata;
-        use std::collections::BTreeMap;
-
-        let id = "11111111-1111-4111-8111-111111111111";
-        let mut record = make_record(id, "sandbox", "running", Some(std::process::id()));
-        record.isolation = ExecutionIsolation::Sandbox;
-        record.managed_execution = Some(
-            ManagedExecutionMetadata::new(
-                OperationId::new("operation-create").unwrap(),
-                ExecutionGeneration::INITIAL,
-                CreateExecutionRequest {
-                    external_sandbox_id: "external-1".to_string(),
-                    config: BoxConfig {
-                        isolation: ExecutionIsolation::Sandbox,
-                        image: record.image.clone(),
-                        ..Default::default()
-                    },
-                    labels: BTreeMap::new(),
-                    policy: Default::default(),
-                    rootfs_snapshot_id: None,
-                },
-            )
-            .unwrap(),
-        );
-        validate_snapshot_source_state(&record).unwrap();
-    }
-
-    #[test]
     fn snapshot_source_state_accepts_stopped_boxes() {
         let record = make_record("id", "box", "stopped", None);
         validate_snapshot_source_state(&record).unwrap();
-    }
-
-    #[cfg(target_os = "linux")]
-    #[test]
-    fn stopped_sandbox_selects_managed_metadata_capture() {
-        use kbox_core::{
-            BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, OperationId,
-        };
-        use kbox_runtime::ManagedExecutionMetadata;
-        use std::collections::BTreeMap;
-
-        let microvm = make_record("id", "vm", "stopped", None);
-        assert!(!stopped_sandbox_uses_managed_metadata(&microvm));
-
-        let id = "11111111-1111-4111-8111-111111111111";
-        let mut sandbox = make_record(id, "sandbox", "stopped", None);
-        sandbox.isolation = ExecutionIsolation::Sandbox;
-        assert!(!stopped_sandbox_uses_managed_metadata(&sandbox));
-
-        sandbox.managed_execution = Some(
-            ManagedExecutionMetadata::new(
-                OperationId::new("operation-create").unwrap(),
-                ExecutionGeneration::INITIAL,
-                CreateExecutionRequest {
-                    external_sandbox_id: "external-1".to_string(),
-                    config: BoxConfig {
-                        isolation: ExecutionIsolation::Sandbox,
-                        image: sandbox.image.clone(),
-                        ..Default::default()
-                    },
-                    labels: BTreeMap::new(),
-                    policy: Default::default(),
-                    rootfs_snapshot_id: None,
-                },
-            )
-            .unwrap(),
-        );
-        assert!(stopped_sandbox_uses_managed_metadata(&sandbox));
     }
 
     #[test]

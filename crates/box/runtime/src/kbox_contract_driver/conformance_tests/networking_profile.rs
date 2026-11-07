@@ -125,7 +125,7 @@ pub(super) async fn run(
             .config;
         let expected_mode = if matches!(
             outbound_config.isolation,
-            kbox_core::ExecutionIsolation::Sandbox
+            kbox_core::ExecutionIsolation::Microvm
         ) {
             BoxNetworkMode::Host
         } else {

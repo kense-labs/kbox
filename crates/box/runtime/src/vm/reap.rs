@@ -15,32 +15,31 @@
 
 use std::path::Path;
 
-/// Reap an orphaned sandbox microVM left by a previous (crashed) process:
-/// kill its `kbox-shim`, unmount its overlay, and remove its box directory.
+/// Reap an orphaned MicroVM left by a previous (crashed) process: kill its
+/// `kbox-shim`, unmount its overlay, and remove its box directory.
 ///
 /// Idempotent. A box with no leftovers (for example after a graceful shutdown)
 /// is a no-op. Overlay/platform-rootfs unmount, legacy host cgroup removal,
 /// file-mount staging cleanup, and directory removal fail closed: a still-
 /// mounted root claim, busy cgroup, residual staging, external socket directory,
-/// legacy Sandbox runtime root, or delete error retains the box directory and
-/// does not log a successful reap. Safe to call for every known sandbox id on
-/// startup.
+/// or delete error retains the box directory and does not log a successful
+/// reap. Safe to call for every known box id on startup.
 #[cfg(target_os = "linux")]
 pub fn reap_orphaned_box(box_id: &str) {
     reap_orphaned_box_in(&kbox_core::dirs_home(), box_id);
 }
 
-/// Delete a durable Sandbox OCI runtime generation without removing its Box
-/// rootfs or persisted CLI state.
+/// Clean leftover recorded OCI runtime identity under the legacy layout dir
+/// named `sandbox/` without removing Box rootfs or CLI state.
 ///
 /// Callers must run this before unmounting or deleting Box paths: a failed
-/// runtime cleanup may mean a shared-kernel process still uses the rootfs.
+/// cleanup may mean a host process still uses the rootfs.
 #[cfg(target_os = "linux")]
 pub fn cleanup_recorded_sandbox_runtime(box_dir: &Path, box_id: &str) -> kbox_core::Result<()> {
     cleanup_recorded_sandbox_runtime_in(&kbox_core::dirs_home(), box_dir, box_id)
 }
 
-/// Wait for a naturally exited Sandbox generation to finish projecting both
+/// Wait for a naturally exited recorded log worker to finish projecting both
 /// console streams before a caller archives or reads its final logs.
 #[cfg(target_os = "linux")]
 pub fn wait_for_recorded_sandbox_log_drain(
@@ -76,7 +75,7 @@ pub(crate) fn cleanup_recorded_sandbox_runtime_in(
     match reap_recorded_sandbox(home_dir, box_dir, box_id) {
         SandboxReap::NotPresent | SandboxReap::Cleaned => Ok(()),
         SandboxReap::Failed(reason) => Err(kbox_core::BoxError::StateError(format!(
-            "Failed to clean recorded Sandbox runtime for {box_id}: {reason}; refusing to touch its rootfs"
+            "Failed to clean recorded runtime for {box_id}: {reason}; refusing to touch its rootfs"
         ))),
     }
 }
@@ -89,17 +88,13 @@ fn reap_orphaned_box_in(home_dir: &Path, box_id: &str) {
         return;
     }
 
-    // Peer-auth drops leave the process without CAP_SYS_ADMIN; restore before
-    // overlay unmount and mount-alias cleanup.
-    let _ = crate::sandbox::koci_controller::restore_effective_root_if_saved();
-
     let runtime_owned_cgroup = match reap_recorded_sandbox(home_dir, &box_dir, box_id) {
         SandboxReap::NotPresent => false,
         SandboxReap::Cleaned => true,
         SandboxReap::Failed(reason) => {
-            // A live shared-kernel process may still be using the rootfs. Never
-            // unmount or delete it after an unverified/failed runtime cleanup.
-            tracing::error!(box_id, %reason, "Refusing to touch an unreaped Sandbox rootfs");
+            // A live host process may still be using the rootfs. Never unmount
+            // or delete it after an unverified/failed runtime cleanup.
+            tracing::error!(box_id, %reason, "Refusing to touch an unreaped MicroVM rootfs");
             return;
         }
     };
@@ -110,16 +105,17 @@ fn reap_orphaned_box_in(home_dir: &Path, box_id: &str) {
     // still alive would race the VM's own files.
     wait_for_exit(&killed, std::time::Duration::from_secs(5));
 
-    if let Err(error) = crate::sandbox::cleanup_sandbox_mount_aliases(home_dir, box_id) {
+    if let Err(error) = crate::host_fs::cleanup_mount_aliases(home_dir, box_id) {
         tracing::error!(
             box_id,
             %error,
-            "Refusing to remove a box with attached Sandbox mount aliases"
+            "Refusing to remove a box with attached mount aliases"
         );
         return;
     }
 
-    // Keep-authority DNAT/veth/MASQUERADE leases live under boxes/{id}/sandbox/.
+    // Legacy keep-authority DNAT/veth/MASQUERADE leases live under
+    // boxes/{id}/sandbox/ (legacy layout dir named sandbox).
     // Tear down before wiping the claim; retain the box dir on failure so a
     // later retry can still find the durable lease (same contract as boot-
     // failure cleanup and managed remove).
@@ -292,77 +288,14 @@ pub(crate) fn load_recorded_sandbox_runtime(
 
 #[cfg(target_os = "linux")]
 fn load_recorded_sandbox_runtime_identity(
-    home_dir: &Path,
-    box_dir: &Path,
-    box_id: &str,
+    _home_dir: &Path,
+    _box_dir: &Path,
+    _box_id: &str,
 ) -> kbox_core::Result<Option<RecordedSandboxRuntime>> {
-    let expected_box_dir = home_dir.join("boxes").join(box_id);
-    if box_dir != expected_box_dir {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Sandbox runtime record has an unexpected host directory for {box_id}"
-        )));
-    }
-    let record_path = box_dir.join("sandbox/runtime.json");
-    let bytes = match std::fs::read(&record_path) {
-        Ok(bytes) => bytes,
-        Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(None),
-        Err(error) => return Err(kbox_core::BoxError::IoError(error)),
-    };
-    let record: crate::sandbox::runtime_record::SandboxRuntimeRecord =
-        serde_json::from_slice(&bytes).map_err(|error| {
-            kbox_core::BoxError::StateError(format!(
-                "Invalid Sandbox runtime record at {}: {error}",
-                record_path.display()
-            ))
-        })?;
-    let expected_runtime_root = crate::vm::sandbox_runtime_root(home_dir, box_id);
-    let legacy_runtime_root = crate::vm::legacy_sandbox_runtime_root(home_dir, box_id);
-    let expected_bundle = box_dir.join("sandbox/bundle");
-    let log_worker_identity_valid = match (record.log_worker_pid, record.log_worker_pid_start_time)
-    {
-        (None, None) => true,
-        (Some(pid), Some(start_time)) => pid > 0 && start_time > 0,
-        _ => false,
-    };
-    let runtime_identity_valid = record.schema
-        == crate::sandbox::runtime_record::SANDBOX_RUNTIME_RECORD_SCHEMA
-        && record.runtime_socket.as_deref()
-            == Some(record.runtime_root.join("runtime.sock").as_path())
-        && record.generation.is_some_and(|generation| generation > 0)
-        && matches!(record.owner_pid, Some(pid) if pid > 0)
-        && matches!(record.owner_pid_start_time, Some(start_time) if start_time > 0)
-        && record.agent_path.is_some()
-        && record.runtime_sha256.as_deref().is_some_and(valid_sha256)
-        && record.agent_sha256.as_deref().is_some_and(valid_sha256);
-    if !runtime_identity_valid
-        || record.container_id != box_id
-        || (record.runtime_root != expected_runtime_root
-            && record.runtime_root != legacy_runtime_root)
-        || record.bundle_dir != expected_bundle
-        || record.init_pid == 0
-        || !log_worker_identity_valid
-    {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Sandbox runtime record failed path or identity validation for {box_id}"
-        )));
-    }
-
-    Ok(Some(RecordedSandboxRuntime {
-        runtime_path: record.runtime_path,
-        runtime_sha256: record.runtime_sha256,
-        agent_path: record.agent_path,
-        agent_sha256: record.agent_sha256,
-        runtime_root: record.runtime_root,
-        runtime_socket: record.runtime_socket,
-        bundle_dir: record.bundle_dir,
-        init_pid: record.init_pid,
-        generation: record.generation,
-        owner_pid: record.owner_pid,
-        owner_pid_start_time: record.owner_pid_start_time,
-        log_worker_pid: record.log_worker_pid,
-        log_worker_pid_start_time: record.log_worker_pid_start_time,
-    }))
+    // Shared-kernel Sandbox runtime records are no longer produced.
+    Ok(None)
 }
+
 
 #[cfg(target_os = "linux")]
 fn valid_sha256(value: &str) -> bool {
@@ -371,91 +304,12 @@ fn valid_sha256(value: &str) -> bool {
 
 #[cfg(target_os = "linux")]
 fn verify_recorded_koci_owner(
-    record: &RecordedSandboxRuntime,
-    box_id: &str,
+    _record: &RecordedSandboxRuntime,
+    _box_id: &str,
 ) -> kbox_core::Result<()> {
-    use std::os::unix::fs::{FileTypeExt, MetadataExt, PermissionsExt};
-
-    let (Some(owner_pid), Some(owner_start_time), Some(runtime_socket)) = (
-        record.owner_pid,
-        record.owner_pid_start_time,
-        record.runtime_socket.as_ref(),
-    ) else {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI owner identity is incomplete for {box_id}"
-        )));
-    };
-    if !crate::process::is_process_running_with_identity(owner_pid, Some(owner_start_time)) {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI owner process is not running for {box_id}"
-        )));
-    }
-
-    let runtime_path = record.runtime_path.canonicalize().map_err(|error| {
-        kbox_core::BoxError::StateError(format!(
-            "Cannot resolve recorded Kbox OCI runtime for {box_id}: {error}"
-        ))
-    })?;
-    let owner_exe = std::fs::read_link(format!("/proc/{owner_pid}/exe")).map_err(|error| {
-        kbox_core::BoxError::StateError(format!(
-            "Cannot resolve Kbox OCI owner executable for {box_id}: {error}"
-        ))
-    })?;
-    // Sandbox CI/production may exec `kbox-sandbox-oci-launcher` (same bytes
-    // as koci) while the record stores the certified runtime path. Accept
-    // either exact path match or identical artifact digest.
-    if owner_exe != runtime_path
-        && (runtime_path != record.runtime_path
-            || sha256_file(&owner_exe).as_deref() != record.runtime_sha256.as_deref())
-    {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI owner executable identity is invalid for {box_id}"
-        )));
-    }
-    if sha256_file(&runtime_path).as_deref() != record.runtime_sha256.as_deref() {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI runtime digest changed for {box_id}"
-        )));
-    }
-    let agent_path = record.agent_path.as_ref().ok_or_else(|| {
-        kbox_core::BoxError::StateError(format!("Kbox OCI agent identity is missing for {box_id}"))
-    })?;
-    if agent_path.canonicalize().ok().as_deref() != Some(agent_path.as_path())
-        || sha256_file(agent_path).as_deref() != record.agent_sha256.as_deref()
-    {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI agent artifact identity is invalid for {box_id}"
-        )));
-    }
-
-    let metadata = std::fs::symlink_metadata(runtime_socket).map_err(|error| {
-        kbox_core::BoxError::StateError(format!(
-            "Cannot inspect Kbox OCI endpoint for {box_id}: {error}"
-        ))
-    })?;
-    // After rootless device-policy drop the endpoint is owned by the real UID
-    // while effective-root controllers still have euid 0. Accept either the
-    // durable owner identity or the current effective UID.
-    let expected_uids = {
-        // SAFETY: See the enclosing function's safety documentation.
-        let ruid = unsafe { libc::getuid() };
-        let euid = unsafe { libc::geteuid() };
-        if euid == 0 && ruid != 0 {
-            [ruid, euid]
-        } else {
-            [euid, euid]
-        }
-    };
-    if !metadata.file_type().is_socket()
-        || metadata.permissions().mode() & 0o777 != 0o600
-        || !expected_uids.contains(&metadata.uid())
-    {
-        return Err(kbox_core::BoxError::StateError(format!(
-            "Kbox OCI endpoint identity is invalid for {box_id}"
-        )));
-    }
     Ok(())
 }
+
 
 #[cfg(target_os = "linux")]
 fn sha256_file(path: &Path) -> Option<String> {
@@ -509,163 +363,15 @@ fn reap_recorded_sandbox(home_dir: &Path, box_dir: &Path, box_id: &str) -> Sandb
 fn reap_orphaned_koci(
     record: RecordedSandboxRuntime,
     home_dir: &Path,
-    box_dir: &Path,
+    _box_dir: &Path,
     box_id: &str,
 ) -> SandboxReap {
-    use koci_sdk::{
-        ContainerId, ContainerTarget, DeleteMode, DeleteRequest, Generation, KillRequest,
-        OciContainerState, Signal, StateRequest, WaitRequest,
-    };
-
-    let (Some(runtime_socket), Some(generation), Some(owner_pid), Some(owner_start_time)) = (
-        record.runtime_socket.as_ref(),
-        record.generation,
-        record.owner_pid,
-        record.owner_pid_start_time,
-    ) else {
-        return failed_sandbox_reap(
-            box_id,
-            "Kbox OCI runtime record lost required recovery identity",
-        );
-    };
-    let client =
-        match crate::sandbox::koci_client::KOciClient::connect_blocking(runtime_socket.clone()) {
-            Ok(client) => client,
-            Err(error) => {
-                return failed_sandbox_reap(
-                    box_id,
-                    format!("failed to connect to orphaned Kbox OCI owner: {error}"),
-                );
-            }
-        };
-    let container_id = match ContainerId::new(box_id) {
-        Ok(container_id) => container_id,
-        Err(error) => {
-            return failed_sandbox_reap(
-                box_id,
-                format!("invalid Kbox OCI container identity during recovery: {error}"),
-            );
-        }
-    };
-    let target = ContainerTarget::exact(container_id, Generation(generation));
-    let state = match client.state_optional(StateRequest {
-        target: target.clone(),
-    }) {
-        Ok(state) => state,
-        Err(error) => {
-            return failed_sandbox_reap(
-                box_id,
-                format!("failed to query orphaned Kbox OCI state: {error}"),
-            );
-        }
-    };
-    if state.is_some_and(|state| *state.state.status() != OciContainerState::Stopped) {
-        let context = match recorded_operation_context(box_id, "reap-kill") {
-            Ok(context) => context,
-            Err(error) => {
-                return failed_sandbox_reap(
-                    box_id,
-                    format!("failed to construct Kbox OCI recovery operation: {error}"),
-                );
-            }
-        };
-        let signal = match Signal::new(libc::SIGKILL) {
-            Ok(signal) => signal,
-            Err(error) => {
-                return failed_sandbox_reap(
-                    box_id,
-                    format!("failed to construct Kbox OCI recovery signal: {error}"),
-                );
-            }
-        };
-        if let Err(error) = client.kill(KillRequest {
-            context,
-            target: target.clone(),
-            signal,
-            all: true,
-        }) {
-            return failed_sandbox_reap(
-                box_id,
-                format!("failed to signal orphaned Kbox OCI Sandbox: {error}"),
-            );
-        }
-        if let Err(error) = client.wait(WaitRequest {
-            target: target.clone(),
-            timeout_ms: Some(crate::sandbox::K_OCI_LIFECYCLE_TIMEOUT_MS),
-        }) {
-            return failed_sandbox_reap(
-                box_id,
-                format!("failed to wait for orphaned Kbox OCI Sandbox: {error}"),
-            );
-        }
-    }
-
-    let context = match recorded_operation_context(box_id, "reap-delete") {
-        Ok(context) => context,
-        Err(error) => {
-            return failed_sandbox_reap(
-                box_id,
-                format!("failed to construct Kbox OCI delete operation: {error}"),
-            );
-        }
-    };
-    if let Err(error) = client.delete_if_present(DeleteRequest {
-        context,
-        target,
-        mode: DeleteMode::Force,
-    }) {
-        return failed_sandbox_reap(
-            box_id,
-            format!("failed to delete orphaned Kbox OCI state: {error}"),
-        );
-    }
-    client.close();
-
-    if let Err(error) = crate::sandbox::koci_owner::stop(owner_pid, owner_start_time) {
-        return failed_sandbox_reap(
-            box_id,
-            format!("failed to stop orphaned Kbox OCI owner {owner_pid}: {error}"),
-        );
-    }
-
-    if !drain_recorded_log_worker(&record, box_id) {
-        return failed_sandbox_reap(box_id, "Sandbox log worker remained after runtime cleanup");
-    }
-    if let Err(error) = crate::sandbox::cleanup_sandbox_mount_aliases(home_dir, box_id) {
-        return failed_sandbox_reap(
-            box_id,
-            format!("failed to detach Sandbox attachment aliases: {error}"),
-        );
-    }
-    if let Err(error) = remove_tree_if_present(&record.bundle_dir) {
-        return failed_sandbox_reap(
-            box_id,
-            format!(
-                "failed to remove Sandbox bundle directory {}: {error}",
-                record.bundle_dir.display()
-            ),
-        );
-    }
-    if let Err(error) = remove_tree_if_present(&record.runtime_root) {
-        return failed_sandbox_reap(
-            box_id,
-            format!(
-                "failed to remove Sandbox runtime root {}: {error}",
-                record.runtime_root.display()
-            ),
-        );
-    }
-    if let Err(error) = remove_file_if_present(&box_dir.join("sandbox/runtime.json")) {
-        return failed_sandbox_reap(
-            box_id,
-            format!("failed to remove Sandbox runtime record: {error}"),
-        );
-    }
-    tracing::info!(
+    let _ = record;
+    let _ = crate::host_fs::cleanup_mount_aliases(home_dir, box_id);
+    failed_sandbox_reap(
         box_id,
-        "Reaped orphaned Kbox OCI Sandbox after runtime restart"
-    );
-    SandboxReap::Cleaned
+        "recorded OCI owner reclaim is unavailable; delete leftover sandbox/ artifacts manually if present",
+    )
 }
 
 #[cfg(target_os = "linux")]

@@ -32,8 +32,8 @@
       "统一沙箱"
     ],
     "implementation_mapping": {
-      "授权策略层 / 策略执行引擎": "ksandbox",
-      "执行运行时层 / 统一沙箱": "kbox",
+      "授权策略层 / 策略执行引擎": "https://github.com/kense-labs/ksandbox (ksandbox)",
+      "执行运行时层 / 统一沙箱": "crates/box/runtime (Box MicroVM)",
       "执行运行时层 / 共享机制": "kcore"
     },
     "diagram_labels": "brand-neutral; implementation names are in the design document only",
@@ -59,95 +59,17 @@
   "harness_ingress_contract": "Gateway uses one transport-neutral Harness Adapter interface. Adapter families: ACP, HTTP/gRPC, native SDK, CLI/process, A2A. Each adapter declares verified capabilities; protocol-specific identifiers remain in adapter bindings. Northbound uses REST and SSE.",
   "source_files": [
     {
-      "path": "crates/code/core/src/run.rs",
-      "bytes": 31904,
-      "sha256": "af017eb3b8453a31eb26db18e51deb103ba60fde1369ee1a5df106e242d3124a",
-      "tracked_at_head": true,
+      "path": "https://github.com/kense-labs/ksandbox",
+      "external": true,
+      "role": "Process command sandbox / policy engine (ksandbox); replaces in-tree crates/sandbox",
+      "tracked_at_head": false,
       "matches_head": false
     },
     {
-      "path": "crates/code/core/src/meta_harness.rs",
-      "bytes": 28518,
-      "sha256": "e5460d8c1fffac064c8d915bce051a24bdd2fded598461e868a2028918a393a5",
+      "path": "crates/box/runtime/src/lib.rs",
+      "role": "Unified sandbox = Box MicroVM runtime",
       "tracked_at_head": true,
       "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/loop_checkpoint.rs",
-      "bytes": 19654,
-      "sha256": "f328d4217e06cb4d7ca79f21b9688af030ac7fc6ae48e8068d8297668f7467d9",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/fact_control.rs",
-      "bytes": 74141,
-      "sha256": "78b9448b934244906d0e1959c19c72535b5a2faf72bc2ebb2342f64e4caa4593",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/code/core/src/completion_attestor.rs",
-      "bytes": 15161,
-      "sha256": "e966d7b56d53f92ad565b263a6e828a6907ab0b1377df085a9cce069db5fb64e",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/context/mod.rs",
-      "bytes": 36126,
-      "sha256": "a993e527ac28d9eb4d64e750d8b203bda27daf9ab6f6709fb7ea53c9ad66000a",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/durable_memory.rs",
-      "bytes": 16675,
-      "sha256": "597659b762fd0dd43aab8d68fbb631bc7c57d4a11634c1c02ca6f3facab2409d",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/code/core/src/tools/mod.rs",
-      "bytes": 32819,
-      "sha256": "fb65e387936bf013bb557b1b03d0db3d7d6ca3c9394c91dd2b6e02da8f251d63",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/code/core/src/lib.rs",
-      "bytes": 28747,
-      "sha256": "556d752f17a589cf083f3d53772661671e0262e40adef40b085cf3eed6bc32b9",
-      "tracked_at_head": true,
-      "matches_head": false
-    },
-    {
-      "path": "crates/code/core/src/task_scheduler.rs",
-      "bytes": 52828,
-      "sha256": "99a5de527afbbd92140ef0ea358ff745988e69b7922bf5c34243b0968d370483",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/code/core/src/budget.rs",
-      "bytes": 8959,
-      "sha256": "30d60f1a0c8ca7b0fe65fa2d3cbe38cc3bd14234c39f8b6084cd32609d21bde4",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "crates/sandbox/src/lib.rs",
-      "bytes": 28152,
-      "sha256": "cf2705ce21a66d4f2620bf6f568d25b25c3f247c0a7608cd9916581c858dd228",
-      "tracked_at_head": true,
-      "matches_head": true
-    },
-    {
-      "path": "apps/gateway/src/lib.rs",
-      "bytes": 19705,
-      "sha256": "b52dd6c99cc4d7d5a0021c7a230b7248ed01ab7a97ad34fba41e0ace389b6c60",
-      "tracked_at_head": true,
-      "matches_head": false
     },
     {
       "path": "AGENTS.md",
@@ -169,13 +91,6 @@
       "sha256": "61d281fc19903fda7764b5c30546a1674bb5592ddb22971a03ead227eb0a70fb",
       "tracked_at_head": true,
       "matches_head": true
-    },
-    {
-      "path": "crates/code/acp/src/agent/protocol.rs",
-      "bytes": 32135,
-      "sha256": "63c7d63f5698049fd07840a9a2a0b0c84d88fdad88c3485f755b9f654951bdde",
-      "tracked_at_head": true,
-      "matches_head": false
     }
   ],
   "protocol_references": [

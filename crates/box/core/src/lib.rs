@@ -51,15 +51,14 @@ pub use exec::{
 };
 pub use exec::{EXEC_VSOCK_PORT, PORT_FWD_VSOCK_PORT};
 pub use execution::{
-    resolve_execution, validate_microvm_compatibility, validate_sandbox_compatibility,
-    ExecutionBackend, IsolationClass, ResolvedExecutionPlan,
+    resolve_execution, validate_microvm_compatibility, ExecutionBackend, IsolationClass,
+    ResolvedExecutionPlan,
 };
 pub use host_service::{validate_host_service_sockets, HostServiceSocket};
 pub use network::{
     ipv4_in_prefix, load_network_egress_allowed_names, load_network_egress_rules, lookup_network_a,
-    parse_ipv4_cidr, parse_keep_network_device_authority, sandbox_named_bridge_opt_in_enabled,
-    EgressMatchRule, IsolationMode, KeepNetworkAuthorityFlag, NetworkConfig, NetworkEndpoint,
-    NetworkMode, NetworkPolicy, PolicyAction, OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY_ENV,
+    parse_ipv4_cidr, EgressMatchRule, IsolationMode, NetworkConfig, NetworkEndpoint, NetworkMode,
+    NetworkPolicy, PolicyAction,
 };
 pub use operator::{BoxAutoscaler, BoxAutoscalerSpec, BoxAutoscalerStatus, MetricType};
 pub use platform::{

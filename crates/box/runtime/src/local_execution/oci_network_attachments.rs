@@ -14,7 +14,7 @@ use crate::BoxRecord;
 
 /// Attach every prepared `linux.netDevices` entry into `koci.attachments.v3`.
 ///
-/// Bundles without `netDevices` (today's SandboxViaOci shape) stay at v1/v2.
+/// Bundles without `netDevices` (loopback-only / no keep-authority shape) stay at v1/v2.
 /// When devices are present, all of them must classify against the single OCI
 /// network namespace; partial classification fails closed.
 pub(super) fn attach_box_owned_linux_network(

@@ -200,25 +200,11 @@ pub(super) async fn run_foreground(
     );
 
     let natural_exit = stop_reason == ForegroundStopReason::ProcessExited;
-    let sandbox_natural_exit = natural_exit && ctx.record.isolation.is_sandbox();
-    if sandbox_natural_exit {
-        // The generation-owned worker exits only after the Kbox OCI owner has closed both
-        // raw console streams and projected their final records. Once it is
-        // gone, the terminal tailers can catch up to immutable file lengths
-        // without an additional writer-quiet grace period.
-        let structured_log_drain_start = std::time::Instant::now();
-        wait_for_sandbox_structured_log_drain(&ctx).await?;
-        kbox_core::lifecycle_profile::record_lifecycle_phase(
-            "foreground.structured_log_drain",
-            structured_log_drain_start.elapsed(),
-        );
-    }
 
     let raw_log_drain_start = std::time::Instant::now();
-    // A natural Sandbox completion is published only after its generation-owned
-    // log worker exits. A natural MicroVM completion is published only after the
-    // shim closes the raw streams and joins its log processor. In both cases the
-    // lengths are immutable, so wait only for the terminal tailers to catch up.
+    // A natural MicroVM completion is published only after the shim closes the
+    // raw streams and joins its log processor. Lengths are then immutable, so
+    // wait only for the terminal tailers to catch up.
     wait_for_foreground_log_drain(
         &[(&console_log, &stdout_pos), (&console_err, &stderr_pos)],
         natural_exit,
@@ -234,15 +220,6 @@ pub(super) async fn run_foreground(
         .is_err()
     {
         log_handle.abort();
-    }
-
-    if stop_reason == ForegroundStopReason::ProcessExited && !sandbox_natural_exit {
-        let structured_log_drain_start = std::time::Instant::now();
-        wait_for_sandbox_structured_log_drain(&ctx).await?;
-        kbox_core::lifecycle_profile::record_lifecycle_phase(
-            "foreground.structured_log_drain",
-            structured_log_drain_start.elapsed(),
-        );
     }
 
     let persisted_exit_code = foreground_workload_exit_code(
@@ -277,33 +254,6 @@ pub(super) async fn run_foreground(
         }
     }
 
-    Ok(())
-}
-
-async fn wait_for_sandbox_structured_log_drain(
-    ctx: &RunContext,
-) -> Result<(), Box<dyn std::error::Error>> {
-    if !ctx.record.isolation.is_sandbox() || run_context_uses_oci(ctx) {
-        return Ok(());
-    }
-    let box_dir = ctx.box_dir.clone();
-    let box_id = ctx.box_id.clone();
-    let drained = tokio::task::spawn_blocking(move || {
-        kbox_runtime::vm::reap::wait_for_recorded_sandbox_log_drain(
-            &box_dir,
-            &box_id,
-            std::time::Duration::from_secs(3),
-        )
-    })
-    .await
-    .map_err(|error| format!("Sandbox log drain task failed for {}: {error}", ctx.box_id))??;
-    if !drained {
-        return Err(format!(
-            "Sandbox logs did not finish draining for {}; state was preserved for recovery",
-            ctx.box_id
-        )
-        .into());
-    }
     Ok(())
 }
 
@@ -389,13 +339,13 @@ pub(super) fn foreground_health_stop_reason(exit_code: Option<i32>) -> Foregroun
 pub(super) fn foreground_workload_exit_code(
     box_dir: &std::path::Path,
     recorded_exit_code: Option<i32>,
-    isolation: kbox_core::ExecutionIsolation,
+    _isolation: kbox_core::ExecutionIsolation,
     trust_oci_wait: bool,
 ) -> Option<i32> {
-    // Sandbox and OCI-routed DedicatedVm/MicroVM publish an authenticated
-    // container wait status. Trust that provider exit; do not require a second
-    // guest `.kexit_code` proof (legacy libkrun MicroVM still does).
-    let policy = if trust_oci_wait || isolation.is_sandbox() {
+    // OCI-routed DedicatedVm/MicroVM publish an authenticated container wait
+    // status. Trust that provider exit; do not require a second guest
+    // `.kexit_code` proof (legacy libkrun MicroVM still does).
+    let policy = if trust_oci_wait {
         kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
     } else {
         kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
@@ -466,16 +416,12 @@ async fn managed_runtime_healthy(ctx: &RunContext) -> bool {
 }
 
 pub(super) fn run_context_uses_oci(ctx: &RunContext) -> bool {
-    // Linux Sandbox executions are hosted by the Kbox OCI runtime through the
-    // VM backend. Their durable route remains `BoxVm` for compatibility, so
-    // the route field alone cannot identify the live owner or its log worker.
-    // Treat the isolation mode as OCI-backed on Linux as well as honoring the
-    // explicit OCI route used by managed executions.
+    // Honor the explicit OCI route used by managed DedicatedVm/MicroVM
+    // executions.
     ctx.record
         .managed_execution
         .as_ref()
         .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
-        || (cfg!(target_os = "linux") && ctx.record.isolation.is_sandbox())
 }
 
 pub(super) fn foreground_completion_message(

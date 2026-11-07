@@ -160,7 +160,7 @@ impl BoxRuntimeDriver {
             None,
             None,
             Some(broker),
-            execution_isolation == ExecutionIsolation::Sandbox
+            execution_isolation == ExecutionIsolation::Microvm
                 && crate::rootfs::writable_layer_quota_supported(),
         )
     }
@@ -440,25 +440,6 @@ fn probe_provider_build(
                 "kbox/{} isolation/microvm hypervisor/{}",
                 env!("CARGO_PKG_VERSION"),
                 support.backend
-            )
-        }
-        ExecutionIsolation::Sandbox => {
-            let snapshot = crate::sandbox::probe_sandbox_capabilities_for(
-                kbox_core::ExecutionBackend::KOci,
-                None,
-                None,
-            );
-            snapshot
-                .require_ready()
-                .map_err(|error| format!("shared-kernel backend unavailable: {error}"))?;
-            let runtime = snapshot.koci.ok_or_else(|| {
-                "shared-kernel capability probe returned no Kbox OCI artifacts".to_string()
-            })?;
-            format!(
-                "kbox/{} isolation/sandbox koci/sha256:{} agent/sha256:{}",
-                env!("CARGO_PKG_VERSION"),
-                &runtime.runtime_sha256[..16],
-                &runtime.agent_sha256[..16]
             )
         }
     };

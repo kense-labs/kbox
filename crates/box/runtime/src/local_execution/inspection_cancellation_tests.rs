@@ -188,7 +188,7 @@ fn request() -> CreateExecutionRequest {
         external_sandbox_id: "cancelled-inspection".to_string(),
         config: BoxConfig {
             image: "alpine:3.20".to_string(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             network: NetworkMode::None,
             ..Default::default()
         },

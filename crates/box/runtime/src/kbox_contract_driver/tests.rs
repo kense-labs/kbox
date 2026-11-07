@@ -111,11 +111,11 @@ fn driver_allows_explicit_shared_kernel_selection() {
             control_timeout: Duration::from_secs(2),
             task_poll_interval: Duration::from_millis(5),
         },
-        ExecutionIsolation::Sandbox,
+        ExecutionIsolation::Microvm,
     )
     .unwrap();
 
-    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Sandbox);
+    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Microvm);
 }
 
 #[tokio::test]
@@ -129,7 +129,7 @@ async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
             control_timeout: Duration::from_secs(2),
             task_poll_interval: Duration::from_millis(5),
         },
-        ExecutionIsolation::Sandbox,
+        ExecutionIsolation::Microvm,
     )
     .unwrap();
     driver
@@ -149,7 +149,7 @@ async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
     let mut outbound = spec(RuntimeUnitClass::Task);
     outbound.network.mode = NetworkMode::Outbound;
     assert_eq!(
-        creation_request(&outbound, ExecutionIsolation::Sandbox)
+        creation_request(&outbound, ExecutionIsolation::Microvm)
             .unwrap()
             .config
             .network,
@@ -177,7 +177,7 @@ async fn qualification_constructor_freezes_explicit_provider_build() {
         },
         backend,
         connector,
-        ExecutionIsolation::Sandbox,
+        ExecutionIsolation::Microvm,
         "kbox/qualification real-process/v1",
     )
     .unwrap();
@@ -187,7 +187,7 @@ async fn qualification_constructor_freezes_explicit_provider_build() {
         capabilities.provider_build,
         "kbox/qualification real-process/v1"
     );
-    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Sandbox);
+    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Microvm);
 }
 
 #[test]
@@ -210,7 +210,7 @@ fn qualification_constructor_rejects_unbounded_provider_build() {
         },
         backend,
         connector,
-        ExecutionIsolation::Sandbox,
+        ExecutionIsolation::Microvm,
         " qualification\n",
     ) {
         Ok(_) => panic!("invalid qualification provider build was accepted"),
@@ -603,9 +603,9 @@ fn lifecycle_bound_reserves_the_full_grace_before_provider_timeout() {
 #[test]
 fn mapping_honors_an_explicit_shared_kernel_backend() {
     let spec = spec(RuntimeUnitClass::Service);
-    let request = creation_request(&spec, ExecutionIsolation::Sandbox).unwrap();
+    let request = creation_request(&spec, ExecutionIsolation::Microvm).unwrap();
 
-    assert_eq!(request.config.isolation, ExecutionIsolation::Sandbox);
+    assert_eq!(request.config.isolation, ExecutionIsolation::Microvm);
     assert_eq!(
         request.config.resource_limits.sandbox_memory_limit_bytes,
         Some(spec.resources.memory_bytes)
@@ -980,7 +980,7 @@ async fn metadata_rejects_a_record_created_for_another_box_isolation_backend() {
         validate_record_for_spec(
             &record,
             &spec,
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
             None,
             &driver.config.secret_root,
         ),

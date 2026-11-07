@@ -8,7 +8,6 @@ mod args;
 mod lifecycle;
 mod operations;
 mod read;
-mod sandbox_managed;
 pub(crate) mod secrets;
 #[cfg(test)]
 mod tests;
@@ -346,7 +345,7 @@ async fn execute_up(
     compose_path: PathBuf,
     up_args: ComposeUpArgs,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let isolation = common::resolve_isolation(up_args.isolation);
+    let isolation = common::resolve_isolation(None);
     let config = operations::select_up_config(config, &up_args.services)?;
     let base_dir = compose_path
         .parent()
@@ -365,25 +364,10 @@ async fn execute_up(
     // avoid serial image-download latency without leaving partial resources on
     // a failed registry operation.
     prefetch_compose_images(&project.config).await?;
-    if isolation.is_sandbox() {
-        sandbox_managed::preflight_sandbox_compose(&project)?;
-        let default_network = project.default_network_name();
-        for service_name in &project.service_order {
-            let mut config = project.build_box_config(service_name, Some(&default_network))?;
-            config = sandbox_managed::sandbox_box_config(config);
-            config.isolation = isolation;
-            kbox_core::resolve_execution(&config)?;
-        }
-    }
     let mut state = StateFile::load_default()?;
 
-    // Step 1: Create networks (MicroVM always; SandboxViaOci under keep-authority).
-    let networks = if isolation.is_sandbox() && !sandbox_managed::sandbox_compose_creates_networks()
-    {
-        Vec::new()
-    } else {
-        project.required_networks()
-    };
+    // Step 1: Create networks for MicroVM compose services.
+    let networks = project.required_networks();
     let net_store = NetworkStore::default_path()?;
     let mut created_networks = Vec::new();
     let mut started_services = Vec::new();
@@ -570,83 +554,6 @@ async fn execute_up(
             }
         };
         box_config.volumes = resolved_volumes.clone();
-
-        if isolation.is_sandbox() {
-            let mut labels = service.labels.to_map();
-            labels.remove(LABEL_SECRET_ID);
-            labels.insert(LABEL_PROJECT.to_string(), project_name.to_string());
-            labels.insert(LABEL_SERVICE.to_string(), svc_name.to_string());
-            labels.insert(LABEL_CONFIG_HASH.to_string(), config_hash);
-            if let Some(lease) = secret_lease.as_ref() {
-                labels.insert(LABEL_SECRET_ID.to_string(), lease.identity().to_string());
-            }
-            let (restart_policy, max_restart_count) =
-                service_restart_policy(svc_name, Some(service))
-                    .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-            let restart_policy = sandbox_managed::execution_restart_policy(&restart_policy)?;
-            let healthcheck_disabled = project.healthcheck_disabled(svc_name);
-            let service_health_check = project.healthcheck(svc_name)?.map(|hc| HealthCheck {
-                cmd: hc.cmd,
-                interval_secs: hc.interval_secs,
-                timeout_secs: hc.timeout_secs,
-                retries: hc.retries,
-                start_period_secs: hc.start_period_secs,
-            });
-            let health_check = if healthcheck_disabled {
-                None
-            } else {
-                service_health_check
-            };
-            let box_config = sandbox_managed::sandbox_box_config(box_config);
-            let image = box_config.image.clone();
-            match sandbox_managed::boot_sandbox_service(
-                sandbox_managed::SandboxServiceBootRequest {
-                    project_name,
-                    svc_name,
-                    box_config,
-                    labels: labels.into_iter().collect(),
-                    restart_policy,
-                    max_restart_count,
-                    volume_names,
-                    secret_root: sandbox_managed::lease_secret_root(secret_lease.as_ref()),
-                    health_check,
-                    healthcheck_disabled,
-                },
-            )
-            .await
-            {
-                Ok(record) => {
-                    if let Some(lease) = secret_lease.as_mut() {
-                        lease.persist();
-                    }
-                    if let Err(error) = crate::health::spawn_detached_health_checker(&record) {
-                        let service_box = ServiceBox::from_record(&record);
-                        let rollback_services =
-                            rollback_with_current(&started_services, service_box);
-                        return rollback_compose_up(
-                            &mut state,
-                            &rollback_services,
-                            &created_networks,
-                            error,
-                        )
-                        .await;
-                    }
-                    let service_box = ServiceBox::from_record(&record);
-                    started_services.push(service_box);
-                    println!("  [+] {} (image={}, sandbox)", svc_name, image);
-                    continue;
-                }
-                Err(error) => {
-                    return rollback_compose_up(
-                        &mut state,
-                        &started_services,
-                        &created_networks,
-                        error,
-                    )
-                    .await;
-                }
-            }
-        }
 
         let image = box_config.image.clone();
         let record_env: HashMap<String, String> = box_config.extra_env.iter().cloned().collect();

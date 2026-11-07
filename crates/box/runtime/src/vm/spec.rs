@@ -145,7 +145,6 @@ impl VmManager {
             .map(|config| self.plan_anonymous_volumes(config))
             .transpose()?
             .unwrap_or_default();
-        let durable_anonymous_volumes = self.anonymous_volumes.clone();
         let mut seen_anonymous_volumes = std::collections::HashSet::new();
         let mut materialized_anonymous_destinations = Vec::new();
         self.anonymous_volumes
@@ -163,26 +162,6 @@ impl VmManager {
                 (planned, name)
             })
             .collect::<Vec<_>>();
-
-        if self.config.isolation.is_sandbox() {
-            let planned_names = materialization_plan
-                .iter()
-                .map(|(_, name)| name.as_str())
-                .collect::<std::collections::HashSet<_>>();
-            let durable_names = durable_anonymous_volumes
-                .iter()
-                .map(String::as_str)
-                .collect::<std::collections::HashSet<_>>();
-            if planned_names.len() != materialization_plan.len()
-                || durable_names.len() != durable_anonymous_volumes.len()
-                || planned_names != durable_names
-            {
-                return Err(BoxError::ConfigError(
-                    "OCI image-declared anonymous volumes drifted from the durable Box ownership plan"
-                        .to_string(),
-                ));
-            }
-        }
 
         for (planned, anon_name) in materialization_plan {
             // Image-declared anonymous volumes are part of the durable Box

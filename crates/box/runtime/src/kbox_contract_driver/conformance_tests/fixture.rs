@@ -515,16 +515,7 @@ impl BoxRuntimeConformanceFixture {
         entry.unit_id = record.labels.get(UNIT_LABEL).cloned();
         entry.pid = record.pid;
         entry.pid_start_time = record.pid_start_time;
-        if record.isolation.is_sandbox() {
-            #[cfg(target_os = "linux")]
-            if let Some(pid) = record.pid {
-                if let Some(path) = crate::sandbox::capability::process_cgroup_v2_path(pid) {
-                    entry.cgroup_path = Some(path);
-                }
-            }
-        } else {
-            entry.cgroup_path = Some(PathBuf::from("/sys/fs/cgroup/kbox").join(&record.id));
-        }
+        entry.cgroup_path = Some(PathBuf::from("/sys/fs/cgroup/kbox").join(&record.id));
         #[cfg(target_os = "linux")]
         if let Ok(Some(runtime)) =
             crate::vm::reap::load_recorded_sandbox_runtime(home, &record.box_dir, &record.id)
@@ -652,14 +643,6 @@ impl BoxRuntimeConformanceFixture {
                     failures.push(format!("retire {unit_id}: {error}"));
                 }
             }
-        }
-
-        // Sandbox controller drops euid to the real UID for SO_PEERCRED after
-        // owner spawn (saved UID stays 0). Restore before deleting any
-        // prepare-time trees that remain root-owned.
-        #[cfg(target_os = "linux")]
-        if let Err(error) = crate::sandbox::koci_controller::restore_effective_root_if_saved() {
-            failures.push(format!("restore effective root for R17 cleanup: {error}"));
         }
 
         for root in self.state_roots.lock().unwrap().iter() {
@@ -858,40 +841,7 @@ fn validate_runtime_assets(home_dir: &Path, execution_isolation: ExecutionIsolat
                 .map_err(|error| failure(format!("R17 MicroVM preflight failed: {error}")))?;
             Ok(())
         }
-        ExecutionIsolation::Sandbox => validate_sandbox_runtime_assets(home_dir),
     }
-}
-
-fn validate_sandbox_runtime_assets(home_dir: &Path) -> Result<()> {
-    let mut artifacts = Vec::new();
-    for (variable, binary) in [
-        ("K_BOX_OCI_RUNTIME_PATH", "koci"),
-        ("K_BOX_OCI_AGENT_PATH", "koci-agent"),
-    ] {
-        let configured = std::env::var_os(variable)
-            .map(PathBuf::from)
-            .ok_or_else(|| failure(format!("{variable} must select {binary}")))?;
-        let expected = home_dir.join("bin").join(binary);
-        let canonical_configured = configured
-            .canonicalize()
-            .map_err(|error| external(variable, error))?;
-        let canonical_expected = expected
-            .canonicalize()
-            .map_err(|error| external("canonicalize packaged Kbox OCI artifact", error))?;
-        require(
-            canonical_configured == canonical_expected,
-            format!("{variable} must equal K_HOME/bin/{binary}"),
-        )?;
-        artifacts.push(canonical_configured);
-    }
-    let snapshot = crate::sandbox::probe_sandbox_capabilities_for(
-        kbox_core::ExecutionBackend::KOci,
-        artifacts.first().map(PathBuf::as_path),
-        artifacts.get(1).map(PathBuf::as_path),
-    );
-    snapshot
-        .require_ready()
-        .map_err(|error| failure(error.to_string()))
 }
 
 fn directory_shape(path: &Path) -> Result<String> {

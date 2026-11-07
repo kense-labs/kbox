@@ -41,6 +41,11 @@ __pycache__/
 /artifacts/
 /segments/
 
+# E2E isolated K_HOME trees and pool sockets (keep OUTCOME/results only).
+docs/evidence/**/k-home/
+docs/evidence/**/*.sock
+docs/evidence/**/rootfs*/
+
 # Generated artifacts: the WorkBuddy desktop agent's repo-local memory and
 # the T01 harness output directory.
 /.workbuddy/

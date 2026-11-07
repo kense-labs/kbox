@@ -110,7 +110,7 @@ async fn uncached_sandbox_registry_credentials_are_staged_before_resource_planni
     spec.secrets.push(registry_secret(reference));
 
     let request =
-        super::mapping::creation_request(&spec, kbox_core::ExecutionIsolation::Sandbox).unwrap();
+        super::mapping::creation_request(&spec, kbox_core::ExecutionIsolation::Microvm).unwrap();
     let operation_id = super::mapping::operation(&spec).unwrap();
     let staged = driver
         .secret_materialization

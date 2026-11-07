@@ -81,9 +81,6 @@ pub struct ComposeUpArgs {
     #[arg(long, default_value = "120")]
     pub timeout: u64,
 
-    /// Use the shared-kernel sandbox backend (omit for MicroVM isolation)
-    #[arg(long, value_enum)]
-    pub isolation: Option<common::IsolationArg>,
 
     /// Limit convergence to these services and their dependencies
     #[arg(value_name = "SERVICE")]

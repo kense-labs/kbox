@@ -59,15 +59,8 @@ pub async fn execute(args: DiffArgs) -> Result<(), Box<dyn std::error::Error>> {
 
     // A guest-native block root has no host directory after ownership handoff.
     // Running MicroVMs stream one coherent guest-metadata archive over the exec
-    // channel; SandboxViaOci walks the prepared host rootfs instead (Running or
-    // freezer-Paused). Directory-backed and stopped compatibility roots keep
-    // the local walk path.
-    // Managed Sandbox pause uses the same lifecycle lock — release before that path.
-    let release_for_sandbox_host = uses_live_sandbox_host_rootfs(record);
-    let mut lifecycle_lock = Some(lifecycle_lock);
-    if release_for_sandbox_host {
-        drop(lifecycle_lock.take());
-    }
+    // channel. Directory-backed and stopped compatibility roots keep the local
+    // walk path.
     let current = current_rootfs(record, &args.name).await?;
     drop(lifecycle_lock);
 
@@ -113,20 +106,6 @@ async fn current_rootfs(
     record: &crate::state::BoxRecord,
     display_name: &str,
 ) -> Result<HashMap<String, RootfsFileInfo>, Box<dyn std::error::Error>> {
-    if uses_live_sandbox_host_rootfs(record) {
-        let live_pid = record.pid.is_some_and(|pid| {
-            crate::process::is_process_alive_with_identity(pid, record.pid_start_time)
-        });
-        if !live_pid {
-            return Err(format!(
-                "Cannot diff box '{}' because its host process is not live",
-                record.name
-            )
-            .into());
-        }
-        return current_sandbox_host_rootfs(record).await;
-    }
-
     if record.status == "running" {
         let live_pid = record.pid.is_some_and(|pid| {
             crate::process::is_process_alive_with_identity(pid, record.pid_start_time)
@@ -171,15 +150,10 @@ async fn current_rootfs(
 
     if record.status == "paused" {
         return Err(format!(
-            "Cannot diff paused MicroVM box '{}'; resume it first, or use a Sandbox",
+            "Cannot diff paused MicroVM box '{}'; resume it first",
             record.name
         )
         .into());
-    }
-
-    if super::rootfs_capture::stopped_sandbox_uses_managed_host_rootfs(record) {
-        super::rootfs_capture::ensure_stopped_rootfs_is_unowned(record)?;
-        return current_stopped_sandbox_host_rootfs(record).await;
     }
 
     if kbox_runtime::rootfs::guest_native_ext4_generation_exists(&record.box_dir)? {
@@ -214,53 +188,6 @@ async fn current_rootfs(
     let rootfs_metadata = super::commit::read_guest_rootfs_metadata(&rootfs_dir)
         .map_err(|error| format!("Cannot diff stopped box '{display_name}': {error}"))?;
     walk_guest_rootfs_metadata(&rootfs_metadata)
-}
-
-/// SandboxViaOci host-rootfs capture works while Running or freezer-Paused.
-fn uses_live_sandbox_host_rootfs(record: &crate::state::BoxRecord) -> bool {
-    record.isolation.is_sandbox() && matches!(record.status.as_str(), "running" | "paused")
-}
-
-#[cfg(all(unix, target_os = "linux"))]
-async fn current_sandbox_host_rootfs(
-    record: &crate::state::BoxRecord,
-) -> Result<HashMap<String, RootfsFileInfo>, Box<dyn std::error::Error>> {
-    let temporary = tempfile::tempdir()?;
-    let archive_path = temporary.path().join("rootfs.tar");
-    super::commit::capture_live_host_rootfs_tar(record, &archive_path, true).await?;
-    walk_tar_archive(&archive_path)
-}
-
-#[cfg(not(all(unix, target_os = "linux")))]
-async fn current_sandbox_host_rootfs(
-    record: &crate::state::BoxRecord,
-) -> Result<HashMap<String, RootfsFileInfo>, Box<dyn std::error::Error>> {
-    Err(format!(
-        "Live Sandbox host-rootfs diff is unavailable for box '{}' on this platform",
-        record.name
-    )
-    .into())
-}
-
-#[cfg(all(unix, target_os = "linux"))]
-async fn current_stopped_sandbox_host_rootfs(
-    record: &crate::state::BoxRecord,
-) -> Result<HashMap<String, RootfsFileInfo>, Box<dyn std::error::Error>> {
-    let temporary = tempfile::tempdir()?;
-    let archive_path = temporary.path().join("rootfs.tar");
-    super::commit::capture_live_host_rootfs_tar(record, &archive_path, false).await?;
-    walk_tar_archive(&archive_path)
-}
-
-#[cfg(not(all(unix, target_os = "linux")))]
-async fn current_stopped_sandbox_host_rootfs(
-    record: &crate::state::BoxRecord,
-) -> Result<HashMap<String, RootfsFileInfo>, Box<dyn std::error::Error>> {
-    Err(format!(
-        "Stopped Sandbox host-rootfs diff is unavailable for box '{}' on this platform",
-        record.name
-    )
-    .into())
 }
 
 /// Build a diff map from guest terminal rootfs metadata (not host NTFS mode bits).
@@ -424,10 +351,8 @@ fn ensure_diff_baseline_present(snapshot_path: &Path) -> Result<(), Box<dyn std:
 /// Create the per-box baseline snapshot used by `kbox diff`.
 ///
 /// The caller should invoke this after the rootfs is prepared and before user
-/// mutations that should appear in later diff output. Managed Linux
-/// SandboxViaOci prefers an OCI-mapped metadata baseline when mapping
-/// artifacts exist (same contract as live/stopped `diff`); otherwise falls
-/// back to a host walk for compatibility roots.
+/// mutations that should appear in later diff output. MicroVM and compatibility
+/// roots use a host walk (or guest-published baseline where no host tree exists).
 ///
 /// Guest-native macOS ext4 has no durable host-visible `rootfs/`/`merged/`
 /// tree: the guest publishes the pristine baseline during boot. Short-lived
@@ -444,7 +369,7 @@ pub(crate) fn create_box_baseline_snapshot(
     if let Some(rootfs_dir) = super::resolve_box_rootfs(box_dir) {
         #[cfg(target_os = "linux")]
         {
-            if kbox_runtime::sandbox::rootfs::try_create_managed_sandbox_diff_baseline_if_absent(
+            if kbox_runtime::host_fs::rootfs::try_create_managed_diff_baseline_if_absent(
                 box_dir,
                 &rootfs_dir,
             )? {
@@ -563,22 +488,6 @@ mod tests {
                 .contains("refusing to invent a rootfs diff baseline"),
             "unexpected message: {err}"
         );
-    }
-
-    #[test]
-    fn live_sandbox_host_rootfs_accepts_running_and_paused() {
-        let mut running =
-            crate::test_helpers::fixtures::make_record("id", "box", "running", Some(1));
-        running.isolation = kbox_core::ExecutionIsolation::Sandbox;
-        let mut paused = crate::test_helpers::fixtures::make_record("id", "box", "paused", Some(1));
-        paused.isolation = kbox_core::ExecutionIsolation::Sandbox;
-        let mut microvm_paused =
-            crate::test_helpers::fixtures::make_record("id", "box", "paused", Some(1));
-        microvm_paused.isolation = kbox_core::ExecutionIsolation::Microvm;
-
-        assert!(uses_live_sandbox_host_rootfs(&running));
-        assert!(uses_live_sandbox_host_rootfs(&paused));
-        assert!(!uses_live_sandbox_host_rootfs(&microvm_paused));
     }
 
     #[test]

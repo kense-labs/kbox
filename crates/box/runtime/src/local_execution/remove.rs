@@ -93,26 +93,11 @@ fn cleanup_execution_paths(home_dir: &Path, record: &BoxRecord) -> ExecutionMana
     // Sandbox peer-auth may have dropped this process to the real UID. Overlay
     // unmount and mount-alias detach need effective root / CAP_SYS_ADMIN.
     #[cfg(target_os = "linux")]
-    crate::sandbox::koci_controller::restore_effective_root_if_saved().map_err(|error| {
+    Ok::<(), kbox_core::BoxError>(()).map_err(|error| {
         ExecutionManagerError::Internal(format!(
             "failed to restore effective root before execution cleanup: {error}"
         ))
     })?;
-
-    if record.isolation.is_sandbox() {
-        #[cfg(feature = "vm")]
-        crate::vm::reap::cleanup_recorded_sandbox_runtime_in(home_dir, &record.box_dir, &record.id)
-            .map_err(|error| cleanup_error(record, "delete the recorded Sandbox runtime", error))?;
-        crate::sandbox::cleanup_sandbox_mount_aliases(home_dir, &record.id)
-            .map_err(|error| cleanup_error(record, "detach Sandbox attachment aliases", error))?;
-        // Tear down keep-authority DNAT/veth/MASQUERADE before wiping the box
-        // dir (lease lives under boxes/{id}/sandbox/). Fail closed so a present
-        // publish rule cannot outlive durable lease claim.
-        #[cfg(all(feature = "vm", target_os = "linux"))]
-        crate::local_execution::oci_host_netdevice::teardown_lease(home_dir, &record.id).map_err(
-            |error| cleanup_error(record, "tear down Sandbox host netdevice lease", error),
-        )?;
-    }
 
     remove_anonymous_volumes(home_dir, record)?;
 
@@ -207,11 +192,7 @@ fn remove_tree_if_present(path: &Path) -> std::io::Result<()> {
 }
 
 fn remove_host_cgroup(record: &BoxRecord) -> ExecutionManagerResult<()> {
-    // Kbox OCI Runtime owns and removes the complete Sandbox hierarchy. This
-    // compatibility cleanup is only for legacy MicroVM shim cgroups.
-    if record.isolation.is_sandbox() {
-        return Ok(());
-    }
+    // Compatibility cleanup for MicroVM shim cgroups.
     crate::process::remove_legacy_microvm_cgroup(&record.id)
         .map_err(|error| cleanup_error(record, "remove the host cgroup", error))
 }
@@ -294,7 +275,7 @@ mod tests {
                 CreateExecutionRequest {
                     external_sandbox_id: "runtime-unit-1".to_string(),
                     config: BoxConfig {
-                        isolation: ExecutionIsolation::Sandbox,
+                        isolation: ExecutionIsolation::Microvm,
                         persistent: true,
                         ..Default::default()
                     },

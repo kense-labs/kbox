@@ -1,8 +1,5 @@
 //! Production local execution backend backed by [`crate::VmManager`].
 
-#[path = "vm_sandbox.rs"]
-mod sandbox;
-
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
@@ -476,11 +473,8 @@ impl VmLocalExecutionBackend {
         let authenticated = crate::rootfs::resolve_workload_exit_code_for(
             &record.box_dir,
             exit_code,
-            if record.isolation.is_sandbox() {
-                crate::rootfs::ProviderExitPolicy::TrustProvider
-            } else {
-                crate::rootfs::ProviderExitPolicy::RequireGuestProof
-            },
+            crate::rootfs::ProviderExitPolicy::RequireGuestProof,
+
         );
         #[cfg(target_os = "windows")]
         let authenticated = authenticate_windows_managed_terminal_exit(
@@ -835,10 +829,6 @@ impl VmLocalExecutionBackend {
                 .await;
         }
         match metadata.plan.backend {
-            ExecutionBackend::KOci => {
-                self.destroy_detached_sandbox(record, remove_anonymous_volumes, false, timeout_secs)
-                    .await
-            }
             ExecutionBackend::Kbox => {
                 let manager = self.recover_microvm(record).await?;
                 self.destroy_registered(
@@ -969,37 +959,10 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         record: &BoxRecord,
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         self.require_legacy_lineage(&record.id)?;
-        let metadata = self.metadata(record)?;
-        if !metadata.plan.backend.is_sandbox() {
-            return Ok(LocalExecutionResourcePlan::default());
-        }
-
-        // Resolve only the immutable image metadata needed to derive stable
-        // anonymous-volume identities. The actual VolumeStore claims remain
-        // in `start`, after the reservation has durably recorded ownership.
-        let mut manager = self.new_manager(record)?;
-        #[cfg(any(target_os = "linux", target_os = "macos"))]
-        {
-            // A Runtime registry credential is staged under the idempotent
-            // create operation before this pre-reservation pass. Clone it for
-            // the metadata pull, while leaving the broker entry available for
-            // the later boot pull. The credential never enters the durable
-            // BoxRecord.
-            if let Some(broker) = &self.transient_registry_auth {
-                manager.transient_registry_auth = broker.clone_auth(metadata.operation_id.as_str());
-            }
-        }
-        let anonymous_volumes = manager
-            .plan_image_anonymous_volumes()
-            .await
-            .map_err(|error| match error {
-                BoxError::ConfigError(message) => ExecutionManagerError::InvalidRequest(message),
-                error => ExecutionManagerError::Unavailable(format!(
-                    "Box image resource planning failed for {}: {error}",
-                    record.id
-                )),
-            })?;
-        Ok(LocalExecutionResourcePlan { anonymous_volumes })
+        let _metadata = self.metadata(record)?;
+        // MicroVM create does not pre-resolve Sandbox-style anonymous volume
+        // identities; VolumeStore claims remain in `start`.
+        Ok(LocalExecutionResourcePlan::default())
     }
 
     async fn preflight_isolation(
@@ -1188,9 +1151,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<LocalExecutionObservation> {
         self.require_legacy_lineage(&record.id)?;
         let metadata = self.metadata(record)?;
-        if metadata.plan.backend.is_sandbox() {
-            return self.inspect_sandbox(record).await;
-        }
         if let Some(manager) = self.manager(&record.id)? {
             return self.inspect_registered(record, manager).await;
         }
@@ -1205,16 +1165,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<LocalExecutionHandle> {
         self.require_legacy_lineage(&record.id)?;
         let metadata = self.metadata(record)?;
-        if metadata.plan.backend.is_sandbox() {
-            if !keep_memory {
-                return Err(unsupported(
-                    record,
-                    "pause without memory retention",
-                    "the Sandbox backend",
-                ));
-            }
-            return self.pause_sandbox(record).await;
-        }
         if !keep_memory {
             return Err(unsupported(
                 record,
@@ -1246,9 +1196,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
     async fn resume(&self, record: &BoxRecord) -> ExecutionManagerResult<LocalExecutionHandle> {
         self.require_legacy_lineage(&record.id)?;
         let metadata = self.metadata(record)?;
-        if metadata.plan.backend.is_sandbox() {
-            return self.resume_sandbox(record).await;
-        }
         #[cfg(windows)]
         {
             Err(unsupported(
@@ -1305,10 +1252,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<KillOutcome> {
         self.require_legacy_lineage(&record.id)?;
         let metadata = self.metadata(record)?;
-        #[cfg(target_os = "linux")]
-        if metadata.plan.backend.is_sandbox() {
-            super::snapshot::persist_sandbox_snapshot_mappings(record)?;
-        }
         let timeout_secs = timeout_secs.or(record.stop_timeout);
         if let Some(manager) = self.manager(&record.id)? {
             return Ok(self
@@ -1317,10 +1260,6 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
                 .outcome);
         }
         match metadata.plan.backend {
-            ExecutionBackend::KOci => Ok(self
-                .destroy_detached_sandbox(record, false, true, timeout_secs)
-                .await?
-                .outcome),
             ExecutionBackend::Kbox => {
                 let manager = self.recover_microvm(record).await?;
                 Ok(self

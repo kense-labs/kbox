@@ -45,7 +45,7 @@
 | 组件 | 所有权 | 复用与扩展 |
 | --- | --- | --- |
 | `kbox_contract` | Task／Service 合同、Run／Service Binding、操作回执和最后观测 | 扩展现有 contract、ManagedRuntimeClient 和 conformance |
-| Kbox Box | MicroVM、Sandbox、ExecutionId、ExecutionGeneration 和实际资源生命周期 | 扩展现有 ExecutionManager、后端路由和 CLI |
+| Kbox Box | MicroVM、ExecutionId、ExecutionGeneration 和实际资源生命周期 | 扩展现有 ExecutionManager、后端路由和 CLI；进程命令沙箱见 ksandbox |
 | ACP Session Manager | ACP 会话、权限请求、取消和代次映射 | 放在 `crates/runtime`，不依赖具体 Harness 业务代码 |
 | Lifecycle Controller | 将 ResourceSpec 转为 Box 或 Cloud Adapter 操作 | 复用 RuntimeClient，不直接操作 VMM |
 | Service Registry | Plugin endpoint、readiness、liveness、版本和流量 | 与 Box 健康证据对账 |
@@ -259,13 +259,13 @@ M0 的 B001–B005 阻断后续新 execution 入口。B006–B007 可并行，�
 | --- | --- | --- |
 | R401 | 实现统一 ObservedEvent | 关联 tenant、run、replica、generation 和 DataRef |
 | R402 | 接入 ACP、Lifecycle、Gateway 和 Registry 事件 | 来源归属和顺序经过校验 |
-| R403 | 接入 Sandbox 和 guest-init／VMM 事件 | 内部事件只声明实际钩子覆盖范围 |
+| R403 | 接入 MicroVM／guest-init／VMM 事件 | 内部事件只声明实际钩子覆盖范围 |
 | R404 | 接入 Cloud Adapter 证据 | 云端回执与本地事件分别标识 |
 | R405 | 实现有界 Evidence Store | 默认不保存 CoT、Secret 和敏感正文 |
 | R406 | 实现 EnvironmentSnapshot 和 ExecutionTrace | 环境、调用、产物和清理可关联 |
 | R407 | 实现 TraceQuery | scope、游标、大小限制和脱敏生效 |
 | R408 | 将 Sentry 接入行为决策 | L1 优先，L2／L3 可选，不替代同步授权 |
-| R409 | 实现分布式 Intervention | ACP、Lifecycle、Gateway、Sandbox 和 Cloud PEP 执行 |
+| R409 | 实现分布式 Intervention | ACP、Lifecycle、Gateway、MicroVM／guest-init 和 Cloud PEP 执行 |
 | R410 | 回写 PEP 实际效果 | Decision.block 不被记录为已阻断 |
 | R411 | 完成干预和证据对抗测试 | 伪造事件、晚到事件和未知结果正确处理 |
 

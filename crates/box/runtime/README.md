@@ -4,8 +4,7 @@
 
 MicroVM runtime engine — VM lifecycle, OCI images, attestation, networking
 
-Local MicroVM, Sandbox, and shared Kbox Runtime provider implementation for Kbox
-Box.
+Local MicroVM and shared Kbox Runtime provider implementation for Kbox Box.
 
 ## Overview
 
@@ -18,7 +17,7 @@ This package provides the actual runtime implementation for Kbox Box, including:
 - **Filesystem Operations**: virtio-fs mount management
 - **Metrics Collection**: Runtime metrics and monitoring
 - **Kbox Runtime Provider**: generation-fenced Tasks and Services over Linux
-  MicroVM and explicit Sandbox backends
+  MicroVM backends (Box-libkrun and DedicatedVm OCI)
 - **Transient Secrets**: caller-authorized environment and file Secret
   materialization without durable plaintext
 
@@ -65,18 +64,14 @@ one-restart generation advancement, exact policy mapping, and timeout
 reservation. Advertising the feature also activates the real-provider
 readiness/liveness separation, liveness transition, graceful stop, and forced
 deadline cases; those ignored-by-default cases require the dedicated Linux
-Sandbox or KVM certification environment.
+KVM certification environment.
 
-Both Linux isolation paths implement the shared Runtime contract for the modes
-they advertise. `NetworkMode::None` and `NetworkMode::Service` remain
-loopback-only and do not grant workload egress: Sandbox uses a private netns
-with host→guest Service relays; MicroVM keeps explicit vsock IPC without
-libkrun TSI socket interception for those modes. `NetworkMode::Outbound` is
-advertised for both isolation backends: MicroVM maps it to default TSI
-socket-proxy egress; Sandbox maps it to `NetworkMode::Host`
-(`share_host_network`: omit the OCI network namespace, bind selected host
-`/sys` subtrees read-only, and skip guest-init host-`lo` bring-up). Neither
-Outbound path grants Service loopback publication.
+Box implements the shared Runtime contract on MicroVM isolation.
+`NetworkMode::None` and `NetworkMode::Service` remain loopback-only and do
+not grant workload egress: MicroVM keeps explicit vsock IPC without libkrun
+TSI socket interception for those modes. `NetworkMode::Outbound` maps to
+default TSI socket-proxy egress and does not grant Service loopback
+publication.
 
 Callers that need Runtime Secrets compose the driver with exactly one
 `BoxSecretMaterializer`:
@@ -91,7 +86,7 @@ let config = BoxRuntimeDriverConfig {
     secret_root: "/run/kbox/runtime-secrets".into(),
     ..Default::default()
 };
-let driver = BoxRuntimeDriver::new_with_isolation(config, ExecutionIsolation::Sandbox)?
+let driver = BoxRuntimeDriver::new_with_isolation(config, ExecutionIsolation::Microvm)?
     .with_secret_materializer(Arc::new(node_secret_materializer));
 ```
 

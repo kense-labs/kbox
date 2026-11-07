@@ -184,11 +184,12 @@ Skill 声明所需能力，授权域决定实际授予范围。
 
 | 图中组件 | 归属 | 实现映射 |
 | --- | --- | --- |
-| 策略执行引擎 | 授权策略层。编译命令、文件、网络和进程约束，探测后端能力。 | [Kbox Sandbox](../../crates/sandbox/src/lib.rs)。 |
-| 统一沙箱 | 执行运行时层。管理隔离环境、工作区、资源、租约和生命周期。 | [Kbox Box Runtime](../../crates/box/runtime/src/lib.rs)、[CLI](../../crates/box/cli/src/commands/mod.rs)。 |
+| 策略执行引擎 | 授权策略层。编译命令、文件、网络和进程约束，探测后端能力。 | [ksandbox](https://github.com/kense-labs/ksandbox)。 |
+| 统一沙箱 | 执行运行时层。管理 Box MicroVM 隔离环境、工作区、资源、租约和生命周期。 | [Kbox Box Runtime](../../crates/box/runtime/src/lib.rs)、[CLI](../../crates/box/cli/src/commands/mod.rs)。 |
 | 模型服务接入 | 服务层。处理模型路由、限流、流式传输和用量。 | [Kbox Gateway](../../apps/gateway/src/lib.rs)。 |
 
-Sandbox 的策略约束由执行节点和平台后端落实。
+ksandbox 的策略约束由执行节点和平台后端落实。
+统一沙箱对应 Box MicroVM 运行时；共享宿主内核不是 kbox Box 产品路径。
 Box 保存环境的实际生命周期与执行代次。
 Run 通过租约引用环境，不另建一套环境状态机。
 每个 Run 使用独立授权和工作区绑定。
@@ -204,7 +205,7 @@ Run 通过租约引用环境，不另建一套环境状态机。
 后端无法实施约束时拒绝启动。
 
 撤权先阻止新操作，再处理活动执行。
-现有 Sandbox 策略替换只影响后续命令的策略快照。
+现有进程沙箱策略替换只影响后续命令的策略快照。
 活动进程无法热收紧时，运行时停止对应执行实例。
 撤权、停止和执行结果分别记录。
 

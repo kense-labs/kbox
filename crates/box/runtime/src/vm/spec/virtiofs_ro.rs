@@ -2,7 +2,7 @@
 //!
 //! Guest `MS_RDONLY` alone is not host write denial: libkrun's virtio-fs path
 //! shares the host directory writable. Linux stages a private bind remounted
-//! `MS_RDONLY` (same honesty contract as SandboxViaOci attachment aliases) and
+//! `MS_RDONLY` (same honesty contract as OCI bind attachment aliases) and
 //! points virtio-fs at that alias. Windows stages a BindFlt read-only mapping
 //! with the same live-view / source-stays-writable contract. Other hosts refuse
 //! `:ro` until a native host denial exists (guest-honor-only is not

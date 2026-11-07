@@ -1,0 +1,16 @@
+{"id": "P0-1", "status": "PASS", "message": "bench RUNS=1 succeeded", "detail": {"pool_log": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261107-dsh-acp-e2e-deepseek/p0-bench-pool.log"}, "ts": "2026-11-07T08:14:57Z"}
+{"id": "P0-2", "status": "PASS", "message": "initialize ok agent=deepseek-harness-acp protocol=1", "detail": {"agent": "deepseek-harness-acp", "protocolVersion": "1"}, "ts": "2026-11-07T08:15:19Z"}
+{"id": "P1-6", "status": "PASS", "message": "idle>=1 after prewarm", "detail": null, "ts": "2026-11-07T08:15:27Z"}
+{"id": "P1-1", "status": "PASS", "message": "initialize (+repeat) agent=deepseek-harness-acp protocol=1", "detail": null, "ts": "2026-11-07T08:15:31Z"}
+{"id": "P1-2", "status": "PASS", "message": "sessionId=cd125196-6ae7-4515-83e3-a55ebf8431da", "detail": null, "ts": "2026-11-07T08:15:31Z"}
+{"id": "P1-3", "status": "PASS", "message": "model config echoed", "detail": null, "ts": "2026-11-07T08:15:31Z"}
+{"id": "P1-4", "status": "PASS", "message": "prompt end_turn reply_len=59 stop=end_turn", "detail": null, "ts": "2026-11-07T08:15:31Z"}
+{"id": "P1-5", "status": "PASS", "message": "three sequential attaches succeeded", "detail": null, "ts": "2026-11-07T08:16:41Z"}
+{"id": "P2-3", "status": "PASS", "message": "prompt/session failed closed without DEEPSEEK_API_KEY", "detail": null, "ts": "2026-11-07T08:17:02Z"}
+{"id": "P2-1", "status": "PASS", "message": "workspace marker echoed", "detail": null, "ts": "2026-11-07T08:17:31Z"}
+{"id": "P2-2", "status": "PASS", "message": "named volume dsh-acp-data-e2e-20261107-161148-21147 present (cross-attach file persistence not asserted without tools)", "detail": null, "ts": "2026-11-07T08:17:31Z"}
+{"id": "P2-4", "status": "PASS", "message": "pool stopped; no running boxes", "detail": null, "ts": "2026-11-07T08:17:47Z"}
+{"id": "P3-3", "status": "PASS", "message": "bad image did not become idle within timeout", "detail": null, "ts": "2026-11-07T08:18:04Z"}
+{"id": "P3-1", "status": "PASS", "message": "disconnect destroyed session; pool replenished", "detail": null, "ts": "2026-11-07T08:18:49Z"}
+{"id": "P3-2", "status": "PASS", "message": "second attach blocked while size=1 busy", "detail": null, "ts": "2026-11-07T08:18:59Z"}
+{"id": "P3-4", "status": "SKIP", "message": "capabilities present but minimal tool round-trip not automated yet", "detail": {"capabilities": {"mcpCapabilities": {"http": true}, "promptCapabilities": {"image": false, "audio": false, "embeddedContext": false}, "sessionCapabilities": {"close": {}, "list": {}, "resume": {}}}}, "ts": "2026-11-07T08:19:35Z"}

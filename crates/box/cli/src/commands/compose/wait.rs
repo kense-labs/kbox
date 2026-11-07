@@ -116,11 +116,7 @@ pub(super) async fn wait_for_completed(
             let exit_code = kbox_runtime::rootfs::resolve_workload_exit_code_for(
                 &record.box_dir,
                 record.exit_code,
-                if record.isolation.is_sandbox() {
-                    kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
-                } else {
-                    kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
-                },
+                kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof,
             );
             let Some(code) = exit_code else {
                 all_done = false;

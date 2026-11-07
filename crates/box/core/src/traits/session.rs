@@ -16,8 +16,8 @@ use super::execution::{
 
 /// Signals supported by the backend-neutral managed process channel.
 ///
-/// Kbox workloads always execute in a Linux guest or Linux OCI Sandbox, so the
-/// numeric values are stable even when the host itself is macOS or Windows.
+/// Kbox Box workloads execute in a Linux MicroVM guest, so the numeric values
+/// are stable even when the host itself is macOS or Windows.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ExecutionProcessSignal {
     Terminate,

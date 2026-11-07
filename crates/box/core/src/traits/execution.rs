@@ -292,7 +292,7 @@ pub struct ExecutionRecordPolicy {
     ///
     /// This path is persisted only so a reconstructed backend can distinguish
     /// caller-owned bind mounts from transient files that Kbox Box is allowed to
-    /// prepare for the Sandbox user namespace. Secret values never enter this
+    /// prepare for the guest user namespace. Secret values never enter this
     /// policy or the creation request.
     #[serde(default)]
     pub managed_secret_root: Option<PathBuf>,

@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 use kbox_core::error::{BoxError, Result};
 
-/// Directory and marker names used for a bounded Linux Sandbox writable layer.
+/// Directory and marker names used for a bounded writable overlay layer.
 ///
 /// The layer itself is a private, size-limited tmpfs. `upper` and `work` are
 /// bind-mounted aliases kept at the historical Box paths so metadata and
@@ -320,7 +320,7 @@ pub(crate) struct BoundedWritableLayer {
     pub mount: PathBuf,
 }
 
-/// Prepare a size-limited writable layer for the Linux Sandbox provider.
+/// Prepare a size-limited writable overlay layer for Box rootfs.
 ///
 /// A tmpfs parent owns `upper` and `work`; bind aliases preserve the existing
 /// Box layout (`box_dir/upper` and `box_dir/work`). This gives overlayfs a
@@ -333,12 +333,12 @@ pub(crate) fn prepare_bounded_writable_layer(
 ) -> Result<BoundedWritableLayer> {
     if bytes == 0 {
         return Err(BoxError::ConfigError(
-            "Sandbox writable-layer quota must be greater than zero".into(),
+            "writable-layer quota must be greater than zero".into(),
         ));
     }
     if !writable_layer_quota_supported() {
         return Err(BoxError::ConfigError(
-            "Linux Sandbox writable-layer quotas require root tmpfs and overlayfs support".into(),
+            "writable-layer quotas require root tmpfs and overlayfs support".into(),
         ));
     }
 

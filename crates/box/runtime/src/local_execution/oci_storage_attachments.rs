@@ -81,7 +81,7 @@ pub(super) fn attach_staged_caller_bind_aliases(
         }
         let slot = bind_alias_slot(&alias_root, &canonical).ok_or_else(|| {
             ExecutionManagerError::InvalidRequest(format!(
-                "SandboxViaOci bind alias {} is not a direct slot under {}",
+                "OCI bind alias {} is not a direct slot under {}",
                 canonical.display(),
                 alias_root.display()
             ))
@@ -116,7 +116,7 @@ pub(super) fn reject_unclassified_bind_mounts(
             .map(|path| path.display().to_string())
             .unwrap_or_else(|| format!("mount index {index}"));
         return Err(ExecutionManagerError::InvalidRequest(format!(
-            "SandboxViaOci rejects unclassified external bind mount at {destination}; \
+            "OCI rejects unclassified external bind mount at {destination}; \
              use a Box-owned named/anonymous volume, the /workspace bind, a managed Secret, \
              or a prepare-staged caller bind alias under sandbox/attachments"
         )));
@@ -143,7 +143,7 @@ fn bind_alias_slot(alias_root: &Path, canonical: &Path) -> Option<String> {
 
 /// Box-owned alias directory for prepare-rewritten caller binds.
 ///
-/// Mirrors `sandbox::sandbox_mount_alias_root` so attachment classification
+/// Mirrors `host_fs::mount_alias_root` so attachment classification
 /// compiles on non-Linux hosts even though alias staging itself is Linux-only.
 fn staged_caller_bind_alias_root(home_dir: &Path, box_id: &str) -> PathBuf {
     home_dir

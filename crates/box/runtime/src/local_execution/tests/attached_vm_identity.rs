@@ -303,7 +303,7 @@ async fn handle_preserves_record_token_and_refuses_mismatch() {
 
     // Sandbox retains its existing sample/handle contract, not this MicroVM
     // attachment qualification. No Sandbox launch or external adapter runs.
-    let mut sandbox = self::record(temporary.path(), ExecutionIsolation::Sandbox);
+    let mut sandbox = self::record(temporary.path(), ExecutionIsolation::Microvm);
     sandbox.pid = Some(pid.wrapping_add(1));
     sandbox.pid_start_time = None;
     let sandbox_manager = paused_manager(&backend, &sandbox).await;

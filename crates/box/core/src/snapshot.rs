@@ -94,9 +94,11 @@ impl SnapshotImageHealthCheck {
     }
 }
 
-/// Label key stamped on managed SandboxViaOci filesystem captures.
+/// Legacy shared-kernel capture label key (`kbox.snapshot.capture`).
+///
+/// New snapshots are not stamped. Old captures still fail closed on CLI/SDK restore.
 pub const MANAGED_SANDBOX_OCI_CAPTURE_LABEL: &str = "kbox.snapshot.capture";
-/// Label value for captures that must not restore onto the MicroVM CLI/SDK path.
+/// Legacy shared-kernel capture label value (`managed-sandbox-oci`).
 pub const MANAGED_SANDBOX_OCI_CAPTURE_VALUE: &str = "managed-sandbox-oci";
 
 /// Metadata for a saved VM snapshot.
@@ -232,10 +234,9 @@ impl SnapshotMetadata {
                     .is_some_and(SnapshotImageHealthCheck::is_enabled))
     }
 
-    /// Mark this snapshot as a managed SandboxViaOci filesystem capture.
+    /// Stamp the legacy shared-kernel capture label (tests / migration only).
     ///
-    /// CLI/SDK `snapshot restore` still stamps MicroVM + no managed lifecycle.
-    /// Fail closed there until restore can recreate SandboxViaOci authority.
+    /// Production snapshot paths must not call this; new captures are MicroVM-only.
     pub fn mark_managed_sandbox_oci_capture(&mut self) {
         self.labels.insert(
             MANAGED_SANDBOX_OCI_CAPTURE_LABEL.to_string(),
@@ -243,7 +244,7 @@ impl SnapshotMetadata {
         );
     }
 
-    /// True when restore must not invent a MicroVM box from a managed Sandbox capture.
+    /// True when this snapshot carries the legacy shared-kernel capture label.
     pub fn is_managed_sandbox_oci_capture(&self) -> bool {
         self.labels
             .get(MANAGED_SANDBOX_OCI_CAPTURE_LABEL)
@@ -251,15 +252,14 @@ impl SnapshotMetadata {
             == Some(MANAGED_SANDBOX_OCI_CAPTURE_VALUE)
     }
 
-    /// Refuse MicroVM-shaped restore for managed SandboxViaOci captures.
+    /// Refuse MicroVM CLI/SDK restore for leftover legacy shared-kernel captures.
     pub fn require_restorable_via_cli_or_sdk(&self) -> Result<()> {
         if !self.is_managed_sandbox_oci_capture() {
             return Ok(());
         }
         Err(BoxError::ConfigError(format!(
-            "Snapshot '{}' is a managed SandboxViaOci capture and cannot be restored through \
-             `snapshot restore` (that path still creates MicroVM boxes without managed lifecycle). \
-             Recreate via Sandbox create with rootfs_snapshot_id / the managed execution API instead.",
+            "Snapshot '{}' carries a legacy shared-kernel capture label and cannot be \
+             restored through `snapshot restore` (MicroVM-only restore path).",
             self.id
         )))
     }
@@ -500,10 +500,13 @@ mod tests {
         assert!(meta.is_managed_sandbox_oci_capture());
         let error = meta.require_restorable_via_cli_or_sdk().unwrap_err();
         assert!(
-            error.to_string().contains("managed SandboxViaOci capture"),
+            error.to_string().contains("legacy shared-kernel capture"),
             "{error}"
         );
-        assert!(error.to_string().contains("rootfs_snapshot_id"), "{error}");
+        assert!(
+            error.to_string().contains("snapshot restore"),
+            "{error}"
+        );
     }
 
     #[test]

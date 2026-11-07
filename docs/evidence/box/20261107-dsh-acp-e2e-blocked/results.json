@@ -1,0 +1,28 @@
+{
+  "kbox": "kbox version 3.3.0",
+  "image": "ghcr.io/kense-labs/dsh-acp:latest",
+  "summary": {
+    "pass": 0,
+    "fail": 0,
+    "skip": 0,
+    "blocked": 2
+  },
+  "cases": [
+    {
+      "id": "P0-1",
+      "status": "BLOCKED",
+      "message": "DEEPSEEK_API_KEY not set",
+      "detail": null,
+      "ts": "2026-11-07T07:31:44Z"
+    },
+    {
+      "id": "P0-2",
+      "status": "BLOCKED",
+      "message": "DEEPSEEK_API_KEY not set",
+      "detail": null,
+      "ts": "2026-11-07T07:31:44Z"
+    }
+  ],
+  "image_digest": "tag-only:ghcr.io/kense-labs/dsh-acp:latest",
+  "tier": "p0"
+}

@@ -13,6 +13,7 @@ pub mod exec_request_id;
 pub mod image_service;
 pub mod persistent_store;
 pub mod runtime_service;
+/// Kubernetes CRI PodSandbox state (one MicroVM per pod).
 pub mod sandbox;
 pub mod server;
 pub mod spdy;

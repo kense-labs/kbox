@@ -17,7 +17,7 @@
 | 测试道 | 真实边界 | 执行要求 |
 | --- | --- | --- |
 | E0 本地合同 | CLI 进程 → 本地状态／OCI 制品／测试服务 | 隔离 `K_HOME`，无外部网络，可在 PR CI 运行 |
-| E1 原生执行 | CLI 进程 → ExecutionManager → 真实 MicroVM／Sandbox → 客体进程 | 在对应 HVF／KVM／WHPX 主机执行 |
+| E1 原生执行 | CLI 进程 → ExecutionManager → 真实 MicroVM → 客体进程 | 在对应 HVF／KVM／WHPX 主机执行 |
 | E2 专项集成 | CLI 进程 → PTY／回环网络／本地 Registry／守护进程 | 使用测试专用资源和合成凭据 |
 | E3 TEE 模拟 | CLI 进程 → 模拟 SEV-SNP／RA-TLS → 客体 Secret | 仅证明模拟协议链，不证明硬件信任 |
 | E4 TEE 硬件 | CLI 进程 → 真实 SEV-SNP 硬件和证明链 | 独立资格化，未执行时不得声明硬件支持 |
@@ -52,7 +52,7 @@
 - Nginx、Alpine、Compose、暖池和客体原生 rootfs 场景均在 macOS HVF 上实际执行。
 - 执行证据明确区分真实通过、ignored、环境跳过和未验证平台。
 
-仍需独立资格化的范围：TEE、Linux KVM／Sandbox／chroot／port-forward、Windows WHPX、外部 Registry 和最终发布归档。
+仍需独立资格化的范围：TEE、Linux KVM／chroot／port-forward、Windows WHPX、外部 Registry 和最终发布归档。进程命令沙箱见 [ksandbox](https://github.com/kense-labs/ksandbox)，不在 Box E1 产品路径内。
 
 ## 3. 测试底座
 
@@ -101,7 +101,7 @@
 
 | 命令 | 测试道 | 端到端场景与关键断言 |
 | --- | --- | --- |
-| `run` | E1／E2 | 前台输出和退出码一致；detached 可观察运行；`--rm` 自动回收；覆盖 VM、Linux Sandbox 和 `run --pool` 路由 |
+| `run` | E1／E2 | 前台输出和退出码一致；detached 可观察运行；`--rm` 自动回收；覆盖 MicroVM 和 `run --pool` 路由 |
 | `create` | E0＋E1 | 只预约配置，不启动 VM；`inspect` 保留完整命令与资源；随后 `start` 使用同一代次和配置 |
 | `start` | E1 | created／stopped Box 实际启动，PID 身份、generation、状态和控制通道更新；重复启动不复制 VM |
 | `stop` | E1 | 优雅退出和超时强停均回收客体与宿主进程，保留退出码和最终日志 |
@@ -125,7 +125,7 @@
 | `wait` | E0＋E1 | 多 Box 按顺序返回真实退出码；超时不停止 Box；auto-remove 后读取归档终态 |
 | `rename` | E0＋E1 | 新旧名称解析、inspect 和后续生命周期正确，ID 不变，冲突时不覆盖 |
 | `port` | E0＋E1 | 端口映射与实际 listener 一致，删除或停止后不再显示失效映射 |
-| `port-forward` | E2 Linux Sandbox | 回环 TCP 双向传输真实字节；并发连接、停止和断开后无 listener／socket 泄漏 |
+| `port-forward` | E2 MicroVM | 回环 TCP 双向传输真实字节；并发连接、停止和断开后无 listener／socket 泄漏 |
 | `export` | E1 | rootfs tar 包含新增、修改、删除和权限变化，路径安全且可解包核对 |
 | `commit` | E1 | 变更形成可 inspect、save、run 的新镜像，内容、模式、所有权和 whiteout 正确 |
 | `diff` | E1 | 新增／修改／删除分类与客体实际变更一致，无运行时内部文件误报 |
@@ -190,7 +190,7 @@
 
 | 命令 | 测试道 | 关键断言 |
 | --- | --- | --- |
-| `snapshot create` | E1 | stopped MicroVM 和受管 live Sandbox 分别创建；元数据、rootfs 和所有权一致；运行中不支持路径拒绝 |
+| `snapshot create` | E1 | stopped MicroVM 创建；元数据、rootfs 和所有权一致；运行中 live filesystem snapshot 拒绝 |
 | `snapshot restore` | E1 | 恢复独立 Box，文件回到快照点，后续写入不污染源快照和其他分支 |
 | `snapshot ls` | E0＋E1 | 表格／JSON 与实际快照元数据一致 |
 | `snapshot rm` | E1 | 被引用快照受保护，force 只解除允许的 COW 引用，不误删源 Box |
@@ -209,7 +209,7 @@
 | `network disconnect` | E1 | 端点和 listener 回收，Box 回到声明的默认网络；force 行为明确 |
 | `network prune` | E0＋E1 | 只删除未使用网络，项目或 Box 使用中的网络保留 |
 
-Linux 验证真实 Bridge／TSI／Sandbox 数据面和 egress 拒绝。Windows 验证不支持的 Bridge 在创建 Box 或网络副作用前失败。
+Linux 验证真实 Bridge／TSI MicroVM 数据面和 egress 拒绝。Windows 验证不支持的 Bridge 在创建 Box 或网络副作用前失败。
 
 ## 8. `volume` 矩阵
 
@@ -239,7 +239,6 @@ Windows 对 `start` 和不支持操作执行拒绝测试。E3／E4 不使用暖�
 | 平台 | 必跑成功路径 | 必跑拒绝／边界路径 |
 | --- | --- | --- |
 | Linux KVM | MicroVM 全生命周期、exec、文件、镜像、Compose、快照、网络、暖池、监控 | KVM／guest companion 缺失、旧 generation、取消、SIGKILL、后端故障 |
-| Linux OCI Sandbox | Sandbox 生命周期、port-forward、live managed snapshot、资源 stats、共享内核限制 | 不支持 VM-only 能力、seccomp／capability 越权、网络 egress、旧代次 |
 | macOS HVF Apple Silicon | MicroVM 全生命周期、rootfs、virtio-fs、TSI、Compose、快照、暖池、模拟 TEE | 非 ARM64／错误镜像、宿主挂载清理、HVF 或同伴缺失 |
 | Windows WHPX | 支持的 MicroVM 生命周期、exec、文件、镜像和资源读取 | pause／unpause、Bridge、交互 PTY、pool、健康检查、TEE 等按源码合同拒绝 |
 
@@ -270,7 +269,7 @@ TEE 分为模拟与真实硬件两条证据链。TDX 等未资格化入口只验
 ### P3：核心原生执行
 
 - 拆分真实 VM 长场景，完成生命周期、exec／shell／attach、stats／logs／top、cp、export／commit／diff。
-- 完成 Linux Sandbox、port-forward、container-update、events／audit 和 monitor。
+- 完成 MicroVM port-forward、container-update、events／audit 和 monitor。
 - 每个平台独立记录，不用 Linux 结果替代 macOS／Windows。
 
 ### P4：组合资源与守护进程
@@ -289,7 +288,7 @@ TEE 分为模拟与真实硬件两条证据链。TDX 等未资格化入口只验
 | 触发 | 必跑内容 | 通过条件 |
 | --- | --- | --- |
 | PR | 格式、Clippy、CLI 库测试、全部 E0、Clap 命令树 | 无失败、无命令遗漏、无未解释跳过 |
-| Linux 原生 CI | KVM＋OCI Sandbox E1／E2、Linux 专项 | 两后端分别通过并清理，不共享支持结论 |
+| Linux 原生 CI | KVM MicroVM E1／E2、Linux 专项 | 通过并清理，不与其它平台共享支持结论 |
 | macOS 原生 CI | HVF E1／E2／E3、rootfs 专项 | Apple Silicon 实机通过，模拟 TEE 标识清楚 |
 | Windows 原生 CI | WHPX 支持路径和全部拒绝路径 | 无静默降级、无前置副作用 |
 | TEE 资格化 | 真实 SEV-SNP E4 | 硬件、测量、证明和 Secret 链全部有证据 |
@@ -300,7 +299,7 @@ TEE 分为模拟与真实硬件两条证据链。TDX 等未资格化入口只验
 - [ ] 59 个一级入口、43 个三级子命令和 `container-prune` 别名均有结果记录。
 - [ ] 每条命令都有实际结果断言、至少一个失败边界和清理断言。
 - [ ] 未把 `--help`、单元测试、mock 成功或进程启动计入端到端成功覆盖。
-- [ ] Linux KVM、Linux Sandbox、macOS HVF、Windows WHPX 分别有原生结果。
+- [ ] Linux KVM、macOS HVF、Windows WHPX 分别有原生 MicroVM 结果。
 - [ ] 模拟 TEE 与真实硬件 TEE 结论分开。
 - [ ] 无真实凭据、无共享 Home、无固定端口、无跨测试资源依赖。
 - [ ] 无未解释的 ignored／skip；未执行项目明确列入 **Explicitly not claimed**。

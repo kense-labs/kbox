@@ -78,17 +78,13 @@ pub fn cleanup_record_resources(record: &BoxRecord) -> kbox_core::error::Result<
 /// Remove a MicroVM's host cgroup `/sys/fs/cgroup/kbox/<id>`. The shim creates
 /// it for CPU/memory limits and, taking over the process via libkrun, cannot
 /// remove it. Absent is success. A still-busy cgroup fails closed after a short
-/// retry. Kbox OCI Runtime owns Sandbox cgroups and removes them through delete.
+/// retry.
 pub(crate) fn remove_host_cgroup(record: &BoxRecord) -> kbox_core::error::Result<()> {
-    if record.isolation.is_sandbox() {
-        return Ok(());
-    }
     kbox_runtime::process::remove_legacy_microvm_cgroup(&record.id)
 }
 
 /// Remove transient host resources for a stopped box while keeping its state.
 pub fn cleanup_stopped_box(record: &BoxRecord) -> kbox_core::error::Result<()> {
-    cleanup_sandbox_runtime(record)?;
     // Detach volumes but KEEP the network endpoint (network_name = None): a
     // persistent (non---rm) box must retain its IP/MAC across stop/start, the
     // same way `restart.rs` does (it skips this cleanup). Releasing it on stop
@@ -168,11 +164,6 @@ pub fn cleanup_external_socket_dir(
 
 /// Remove all host-side resources owned by a box record.
 pub fn cleanup_removed_box(record: &BoxRecord) -> kbox_core::error::Result<()> {
-    // A Sandbox log worker exits only after the Kbox OCI owner closes both output streams.
-    // Reconcile that runtime first so the archive includes final stderr and a
-    // complete structured projection. This does not remove the box log dir.
-    cleanup_sandbox_runtime(record)?;
-
     if record.auto_remove {
         if let Err(err) = crate::log_archive::archive_removed_logs(record) {
             tracing::debug!(
@@ -194,18 +185,17 @@ pub fn cleanup_removed_box(record: &BoxRecord) -> kbox_core::error::Result<()> {
     remove_host_cgroup(record)?;
 
     if record.box_dir.exists() {
-        // Keep-authority DNAT/veth/MASQUERADE leases live under boxes/{id}/sandbox/.
-        // Tear down before wiping the claim; fail closed so present publish rules
-        // cannot outlive durable lease state (same contract as managed remove).
+        // Legacy keep-authority DNAT/veth/MASQUERADE leases live under
+        // boxes/{id}/sandbox/ (legacy layout dir named sandbox). Tear down
+        // before wipe; fail closed so present publish rules cannot outlive
+        // durable lease state (same contract as MicroVM destroy/reap).
         let home = kbox_core::dirs_home();
-        kbox_runtime::teardown_sandbox_host_netdevice_lease(&home, &record.id).map_err(
-            |error| {
-                kbox_core::error::BoxError::Other(format!(
-                    "Failed to tear down SandboxViaOci host netdevice lease for {}: {error}",
-                    record.id
-                ))
-            },
-        )?;
+        kbox_runtime::cleanup_host_netdevice_lease(&home, &record.id).map_err(|error| {
+            kbox_core::error::BoxError::Other(format!(
+                "Failed to tear down host netdevice lease for {}: {error}",
+                record.id
+            ))
+        })?;
 
         // MicroVM :ro virtio-fs RO-bind aliases must be detached before wipe.
         kbox_runtime::cleanup_microvm_virtiofs_ro_shares(&record.box_dir).map_err(|error| {
@@ -238,14 +228,6 @@ pub fn cleanup_removed_box(record: &BoxRecord) -> kbox_core::error::Result<()> {
     // libkrun takes over. Match that identity and fail closed if any remain.
     kbox_runtime::fs::remove_file_mount_staging(&record.id)?;
     Ok(())
-}
-
-fn cleanup_sandbox_runtime(record: &BoxRecord) -> kbox_core::error::Result<()> {
-    if !record.isolation.is_sandbox() {
-        return Ok(());
-    }
-
-    kbox_runtime::vm::reap::cleanup_recorded_sandbox_runtime(&record.box_dir, &record.id)
 }
 
 /// Roll back a box record that was partially created.

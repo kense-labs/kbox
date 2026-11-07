@@ -402,7 +402,7 @@ async fn delete_external_resource(
     record: &BoxRecord,
 ) -> Result<()> {
     match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Sandbox => {
+        ExecutionIsolation::Microvm => {
             let home = fixture.home_dir.clone();
             let box_dir = record.box_dir.clone();
             let cleanup_id = record.id.clone();

@@ -353,27 +353,6 @@ async fn apply_legacy_live_tier2_update(
     update: &ResourceUpdate,
     request_id: &str,
 ) -> Result<(), String> {
-    if record.isolation.is_sandbox() {
-        let config = crate::boot::config_from_record(record)?;
-        let box_dir = record.box_dir.clone();
-        let box_id = record.id.clone();
-        let box_name = record.name.clone();
-        return tokio::task::spawn_blocking(move || {
-            kbox_runtime::sandbox::update_recorded_resources(&box_dir, &box_id, &config)
-        })
-        .await
-        .map_err(|error| {
-            format!(
-                "Kbox OCI resource update worker failed for {box_name}: {error}; no state changes were persisted"
-            )
-        })?
-        .map_err(|error| {
-            format!(
-                "failed to apply Kbox OCI resource update to {box_name}: {error}; no state changes were persisted"
-            )
-        });
-    }
-
     let exec_socket_path =
         crate::socket_paths::runtime_socket(record, crate::socket_paths::RuntimeSocket::Exec);
     if !exec_socket_path.exists() {

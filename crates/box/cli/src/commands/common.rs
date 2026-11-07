@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use clap::{Args, ValueEnum};
 use kbox_core::config::{validate_vcpu_count, ExecutionIsolation, ResourceLimits, DEFAULT_VCPUS};
 use kbox_core::network::NetworkMode;
-use kbox_runtime::hardware_vm::{self, IsolationSelection};
+use kbox_runtime::hardware_vm;
 use kbox_runtime::oci::{OciHealthCheck, OciImageConfig};
 
 use crate::image_usage;
@@ -34,32 +34,9 @@ impl VirtiofsCacheMode {
     }
 }
 
-/// Explicit isolation choices exposed by the CLI.
-///
-/// MicroVM is selected by omitting `--isolation`; only the opt-in sandbox
-/// value is accepted explicitly.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum)]
-pub enum IsolationArg {
-    Sandbox,
-}
-
-/// Resolve the optional CLI selector without exposing an explicit MicroVM
-/// spelling. Omitting the option preserves the historical MicroVM default.
-/// `K_BOX_OCI_MIGRATION` is forwarded and does not change the selection.
-pub(crate) fn resolve_isolation(value: Option<IsolationArg>) -> ExecutionIsolation {
-    let selector = match value {
-        Some(IsolationArg::Sandbox) => Some("sandbox"),
-        None => None,
-    };
-    let migration = std::env::var("K_BOX_OCI_MIGRATION").ok();
-    match hardware_vm::select_isolation(selector, migration.as_deref()) {
-        Ok(IsolationSelection::HardwareVm) => ExecutionIsolation::Microvm,
-        Ok(IsolationSelection::Sandbox) => ExecutionIsolation::Sandbox,
-        Err(_) => match value {
-            Some(IsolationArg::Sandbox) => ExecutionIsolation::Sandbox,
-            None => ExecutionIsolation::Microvm,
-        },
-    }
+/// MicroVM is the only Box isolation; omit any legacy isolation selector.
+pub(crate) fn resolve_isolation(_value: Option<()>) -> ExecutionIsolation {
+    ExecutionIsolation::Microvm
 }
 
 /// Resolve the optional Docker-compatible CLI network selector.
@@ -79,9 +56,6 @@ pub struct CommonBoxArgs {
     /// OCI image reference
     pub image: String,
 
-    /// Use the shared-kernel sandbox backend (omit for MicroVM isolation)
-    #[arg(long, value_enum)]
-    pub isolation: Option<IsolationArg>,
 
     /// Assign a name to the box
     #[arg(long)]
@@ -415,14 +389,6 @@ pub(crate) fn normalize_port_maps(entries: &[String]) -> Result<Vec<String>, Str
 /// Reject runtime options that kbox cannot enforce yet.
 pub(crate) fn validate_runtime_options(common: &CommonBoxArgs) -> Result<(), String> {
     #[cfg(windows)]
-    if matches!(common.isolation, Some(IsolationArg::Sandbox)) {
-        return Err(
-            "Sandbox isolation is supported only on Linux; omit --isolation to use the Windows WHPX MicroVM path"
-                .to_string(),
-        );
-    }
-
-    #[cfg(windows)]
     if common.health_cmd.is_some()
         || common.health_interval != 30
         || common.health_timeout != 5
@@ -525,8 +491,8 @@ pub(crate) fn validate_health_check_support(
 }
 
 /// Resolve the CLI's opt-in selector to the persisted execution isolation.
-pub(crate) fn execution_isolation(common: &CommonBoxArgs) -> ExecutionIsolation {
-    resolve_isolation(common.isolation)
+pub(crate) fn execution_isolation(_common: &CommonBoxArgs) -> ExecutionIsolation {
+    resolve_isolation(None)
 }
 
 /// Normalize a user option into the runtime-supported numeric format.
@@ -821,18 +787,6 @@ mod tests {
             .contains("WHPX"));
     }
 
-    #[cfg(target_os = "windows")]
-    #[test]
-    fn test_validate_rejects_windows_sandbox_isolation() {
-        let mut args = default_common_args();
-        args.isolation = Some(IsolationArg::Sandbox);
-        let err = validate_runtime_options(&args).unwrap_err();
-        assert!(
-            err.contains("Sandbox isolation is supported only on Linux"),
-            "got: {err}"
-        );
-    }
-
     #[test]
     fn test_validate_rejects_out_of_range_oom_score_adj() {
         let mut args = default_common_args();
@@ -978,7 +932,6 @@ mod tests {
     fn default_common_args() -> CommonBoxArgs {
         CommonBoxArgs {
             image: "test".to_string(),
-            isolation: None,
             name: None,
             cpus: DEFAULT_VCPUS,
             memory: "512m".to_string(),

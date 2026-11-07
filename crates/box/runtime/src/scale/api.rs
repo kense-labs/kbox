@@ -404,7 +404,7 @@ mod tests {
         if cfg!(windows) {
             ExecutionIsolation::Microvm
         } else {
-            ExecutionIsolation::Sandbox
+            ExecutionIsolation::Microvm
         }
     }
 

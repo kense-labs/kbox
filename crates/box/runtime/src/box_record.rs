@@ -869,7 +869,7 @@ mod tests {
     fn managed_execution_metadata_round_trips_recovery_intent() {
         let mut config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         config.resources.vcpus = 1;
@@ -908,7 +908,7 @@ mod tests {
         assert!(managed.paused_with_memory);
         assert_eq!(
             managed.request.config.isolation,
-            ExecutionIsolation::Sandbox
+            ExecutionIsolation::Microvm
         );
         assert_eq!(encoded["managed_execution"]["generation"], 1);
         assert_eq!(encoded["managed_execution"]["paused_with_memory"], true);
@@ -925,7 +925,7 @@ mod tests {
                 external_sandbox_id: "sandbox-route".to_string(),
                 config: kbox_core::BoxConfig {
                     image: "alpine:latest".to_string(),
-                    isolation: ExecutionIsolation::Sandbox,
+                    isolation: ExecutionIsolation::Microvm,
                     ..Default::default()
                 },
                 labels: Default::default(),
@@ -1005,7 +1005,7 @@ mod tests {
     fn managed_execution_rejects_a_cold_pause_marker_in_running_state() {
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         let mut metadata = ManagedExecutionMetadata::new(
@@ -1033,7 +1033,7 @@ mod tests {
     fn managed_execution_validation_rejects_plan_drift() {
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         let mut metadata = ManagedExecutionMetadata::new(

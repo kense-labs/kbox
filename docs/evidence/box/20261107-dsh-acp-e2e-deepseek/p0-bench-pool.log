@@ -1,0 +1,10 @@
+Listening on /tmp/kbox-pool.sock (Ctrl-C or SIGTERM to drain and stop)
+Warm pool started
+  default image: ghcr.io/kense-labs/dsh-acp:latest (pre-warming 1)
+  max:      2
+  boot concurrency: 2 (daemon-wide)
+  ttl:      300s
+  lease ttl: 3600s
+  socket:   /tmp/kbox-pool.sock
+Draining warm pools...
+Done.

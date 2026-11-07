@@ -1,36 +1,19 @@
-//! Explicit production composition for Sandbox migration to Kbox OCI Runtime.
+//! Explicit production composition for MicroVM DedicatedVm OCI qualification.
 
 use std::ffi::OsString;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
 
-#[cfg(target_os = "linux")]
-use async_trait::async_trait;
-#[cfg(target_os = "linux")]
-use kbox_core::ExecutionBackend;
-#[cfg(target_os = "linux")]
-use kbox_core::{ExecutionIsolation, ExecutionState, KillOutcome};
 use kbox_core::{ExecutionManagerError, ExecutionManagerResult};
 #[cfg(target_os = "linux")]
 use sha2::{Digest, Sha256};
 
-#[cfg(target_os = "linux")]
-mod isolation_split;
-
 use super::LocalExecutionManager;
 #[cfg(target_os = "linux")]
-use super::{
-    LinuxKvmOciBundleProvider, LocalExecutionBackend, LocalExecutionHandle,
-    LocalExecutionObservation, NativeLinuxOciBundleProvider, OciLocalExecutionBackend,
-    OciMigrationPolicy,
-};
-#[cfg(target_os = "linux")]
-use crate::{BoxRecord, ManagedRuntimeRoute};
+use super::{LinuxKvmOciBundleProvider, OciLocalExecutionBackend, OciMigrationPolicy};
 
 pub const OCI_MIGRATION_ENV: &str = "K_BOX_OCI_MIGRATION";
 pub const OCI_HOST_ROOT_ENV: &str = "K_BOX_OCI_HOST_ROOT";
-pub const OCI_RUNTIME_PATH_ENV: &str = "K_BOX_OCI_RUNTIME_PATH";
-pub const OCI_AGENT_PATH_ENV: &str = "K_BOX_OCI_AGENT_PATH";
 pub const OCI_WHPX_ENDPOINT_ENV: &str = "K_BOX_OCI_WHPX_ENDPOINT";
 pub const OCI_KVM_ENDPOINT_ENV: &str = "K_BOX_OCI_KVM_ENDPOINT";
 pub const OCI_KVM_BOX_OWNED_ENV: &str = "K_BOX_KVM_OCI_BOX_OWNED";
@@ -46,14 +29,6 @@ pub const OCI_WHPX_SERVICE_VM_ROOTFS_ENV: &str = "K_BOX_WHPX_OCI_SERVICE_VM_ROOT
 pub const OCI_WHPX_SERVICE_MANIFEST_ENV: &str = "K_BOX_WHPX_OCI_SERVICE_MANIFEST";
 #[cfg(test)]
 const DEFAULT_OCI_WHPX_ENDPOINT: &str = r"\\.\pipe\koci-box-qualification";
-
-/// Explicit native-Linux owner and artifact selection for Sandbox migration.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct NativeLinuxOciMigrationConfig {
-    service_root: PathBuf,
-    runtime_path: Option<PathBuf>,
-    agent_path: Option<PathBuf>,
-}
 
 /// Explicit connection to an externally owned qualification-only WHPX service.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -332,123 +307,7 @@ impl WindowsWhpxOciMigrationConfig {
     }
 }
 
-impl NativeLinuxOciMigrationConfig {
-    pub fn new(service_root: impl Into<PathBuf>) -> ExecutionManagerResult<Self> {
-        let config = Self {
-            service_root: service_root.into(),
-            runtime_path: None,
-            agent_path: None,
-        };
-        config.validate()?;
-        Ok(config)
-    }
-
-    pub fn with_artifacts(
-        mut self,
-        runtime_path: impl Into<PathBuf>,
-        agent_path: impl Into<PathBuf>,
-    ) -> ExecutionManagerResult<Self> {
-        self.runtime_path = Some(runtime_path.into());
-        self.agent_path = Some(agent_path.into());
-        self.validate()?;
-        Ok(self)
-    }
-
-    pub fn service_root(&self) -> &Path {
-        &self.service_root
-    }
-
-    pub fn runtime_path(&self) -> Option<&Path> {
-        self.runtime_path.as_deref()
-    }
-
-    pub fn agent_path(&self) -> Option<&Path> {
-        self.agent_path.as_deref()
-    }
-
-    /// Parse the process-wide migration selection.
-    ///
-    /// On Linux, an absent value selects the Sandbox GA default (`SandboxViaOci`).
-    /// Explicit `off`/`legacy` preserves the VM-only backend. Explicit
-    /// `sandbox`/`on` selects the same composition but hard-fails construction
-    /// when the OCI owner is not launch-ready.
-    pub fn from_environment(home_dir: &Path) -> ExecutionManagerResult<Option<Self>> {
-        Ok(parse_environment(
-            std::env::var_os(OCI_MIGRATION_ENV),
-            std::env::var_os(OCI_HOST_ROOT_ENV),
-            std::env::var_os(OCI_RUNTIME_PATH_ENV),
-            std::env::var_os(OCI_AGENT_PATH_ENV),
-            home_dir,
-        )?
-        .map(|(_, config)| config))
-    }
-
-    fn validate(&self) -> ExecutionManagerResult<()> {
-        validate_absolute_normalized(&self.service_root, "OCI host root")?;
-        match (&self.runtime_path, &self.agent_path) {
-            (Some(runtime), Some(agent)) => {
-                validate_absolute_normalized(runtime, "OCI runtime path")?;
-                validate_absolute_normalized(agent, "OCI agent path")?;
-            }
-            (None, None) => {}
-            _ => {
-                return Err(ExecutionManagerError::InvalidRequest(
-                    "OCI runtime and agent paths must be supplied together".to_string(),
-                ))
-            }
-        }
-        Ok(())
-    }
-}
-
 impl LocalExecutionManager {
-    /// Compose the retained VM backend with the production native-Linux OCI
-    /// owner and bundle provider. Only new Sandbox reservations use OCI.
-    pub async fn with_native_linux_oci_migration(
-        state_path: impl Into<PathBuf>,
-        home_dir: impl Into<PathBuf>,
-        config: NativeLinuxOciMigrationConfig,
-    ) -> ExecutionManagerResult<Self> {
-        Self::with_native_linux_oci_migration_and_pull_progress(
-            state_path.into(),
-            home_dir.into(),
-            config,
-            None,
-        )
-        .await
-    }
-
-    async fn with_native_linux_oci_migration_and_pull_progress(
-        state_path: PathBuf,
-        home_dir: PathBuf,
-        config: NativeLinuxOciMigrationConfig,
-        pull_progress_fn: Option<crate::PullProgressFn>,
-    ) -> ExecutionManagerResult<Self> {
-        config.validate()?;
-
-        #[cfg(target_os = "linux")]
-        {
-            let oci =
-                connect_native_linux_sandbox_backend(&home_dir, &config, pull_progress_fn.as_ref())
-                    .await?;
-            Ok(Self::with_oci_migration_backend_and_pull_progress(
-                state_path,
-                home_dir,
-                oci,
-                OciMigrationPolicy::SandboxViaOci,
-                pull_progress_fn,
-            ))
-        }
-
-        #[cfg(not(target_os = "linux"))]
-        {
-            let _ = (state_path, home_dir, config, pull_progress_fn);
-            Err(ExecutionManagerError::Unavailable(
-                "native Linux OCI migration is supported only on Linux".to_string(),
-            ))
-        }
-    }
-
     /// Compose the retained backend with the externally launched Box/WHPX OCI service.
     pub async fn with_windows_whpx_oci_qualification(
         state_path: impl Into<PathBuf>,
@@ -597,13 +456,9 @@ impl LocalExecutionManager {
             };
             Ok(Self::with_oci_migration_backend_and_pull_progress(
                 state_path,
-                home_dir.clone(),
-                Arc::new(isolation_split::IsolationSplitBackend::new(
-                    sandbox_backend_beside_kvm_qualification(&home_dir, pull_progress_fn.as_ref())
-                        .await?,
-                    oci,
-                )),
-                OciMigrationPolicy::AllViaOci,
+                home_dir,
+                oci,
+                OciMigrationPolicy::MicrovmViaOci,
                 pull_progress_fn,
             ))
         }
@@ -620,19 +475,16 @@ impl LocalExecutionManager {
         }
     }
 
-    /// Select the production Sandbox migration composition.
+    /// Select the configured local-execution backend composition.
     ///
-    /// On Linux, an absent `K_BOX_OCI_MIGRATION` prefers packaged KVM
-    /// DedicatedVm when artifacts are discoverable (gate 5), otherwise defaults
-    /// to `SandboxViaOci`. Explicit `off` keeps the legacy VM backend. Explicit
-    /// `sandbox` hard-fails when the OCI owner is not launch-ready; the Linux
-    /// soft path composes a fail-closed unavailable OCI backend so MicroVM can
-    /// continue on Box-libkrun when packaged KVM artifacts are absent.
+    /// MicroVM is the product path. On Linux, packaged KVM DedicatedVm is
+    /// preferred when artifacts are discoverable; otherwise Box-libkrun.
+    /// Explicit `off`/`legacy` keeps the legacy VM backend. Historical
+    /// Sandbox migration values are rejected.
     ///
-    /// On Windows x86_64, an absent `K_BOX_OCI_MIGRATION` prefers packaged
-    /// WHPX DedicatedVm when Host artifacts are discoverable (gate 5); missing
-    /// packages soft-fall to Box-libkrun/WHPX. Explicit `off`/`legacy` keeps
-    /// the legacy VM backend. Sandbox migration values remain rejected.
+    /// On Windows x86_64, packaged WHPX DedicatedVm is preferred when Host
+    /// artifacts are discoverable; missing packages soft-fall to Box-libkrun.
+    /// Explicit `off`/`legacy` keeps the legacy VM backend.
     pub async fn with_configured_backend(
         state_path: impl Into<PathBuf>,
         home_dir: impl Into<PathBuf>,
@@ -677,42 +529,8 @@ impl LocalExecutionManager {
                 )
                 .await;
             }
-            match parse_environment(
-                std::env::var_os(OCI_MIGRATION_ENV),
-                std::env::var_os(OCI_HOST_ROOT_ENV),
-                std::env::var_os(OCI_RUNTIME_PATH_ENV),
-                std::env::var_os(OCI_AGENT_PATH_ENV),
-                &home_dir,
-            )? {
-                Some((selection, config)) => {
-                    match Self::with_native_linux_oci_migration_and_pull_progress(
-                        state_path.clone(),
-                        home_dir.clone(),
-                        config,
-                        pull_progress_fn.clone(),
-                    )
-                    .await
-                    {
-                        Ok(manager) => Ok(manager),
-                        Err(error)
-                            if matches!(
-                                selection,
-                                NativeLinuxMigrationSelection::DefaultSandbox
-                            ) =>
-                        {
-                            Ok(Self::with_oci_migration_backend_and_pull_progress(
-                                state_path,
-                                home_dir,
-                                Arc::new(UnavailableOciMigrationBackend::new(error)),
-                                OciMigrationPolicy::SandboxViaOci,
-                                pull_progress_fn,
-                            ))
-                        }
-                        Err(error) => Err(error),
-                    }
-                }
-                None => legacy_backend(state_path, home_dir, pull_progress_fn),
-            }
+            reject_removed_sandbox_migration_env()?;
+            legacy_backend(state_path, home_dir, pull_progress_fn)
         }
 
         #[cfg(not(any(
@@ -720,18 +538,8 @@ impl LocalExecutionManager {
             all(target_os = "windows", target_arch = "x86_64")
         )))]
         {
-            match NativeLinuxOciMigrationConfig::from_environment(&home_dir)? {
-                Some(config) => {
-                    Self::with_native_linux_oci_migration_and_pull_progress(
-                        state_path,
-                        home_dir,
-                        config,
-                        pull_progress_fn,
-                    )
-                    .await
-                }
-                None => legacy_backend(state_path, home_dir, pull_progress_fn),
-            }
+            reject_removed_sandbox_migration_env()?;
+            legacy_backend(state_path, home_dir, pull_progress_fn)
         }
     }
 }
@@ -752,246 +560,27 @@ fn legacy_backend(
     ))
 }
 
-/// How Linux selected the native Sandbox OCI composition.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[allow(dead_code)] // DefaultSandbox is selected only on Linux host paths.
-enum NativeLinuxMigrationSelection {
-    /// Env absent on Linux: default SandboxViaOci; soft if owner not ready.
-    DefaultSandbox,
-    /// Explicit sandbox/on: hard-fail when the owner is not launch-ready.
-    ExplicitSandbox,
-}
-
-/// Fail-closed OCI side of `SandboxViaOci` when default activation cannot start
-/// the owner. MicroVM continues on the legacy backend; Sandbox preflight fails.
-#[cfg(target_os = "linux")]
-#[derive(Debug, Clone)]
-struct UnavailableOciMigrationBackend {
-    message: String,
-}
-
-#[cfg(target_os = "linux")]
-impl UnavailableOciMigrationBackend {
-    fn new(error: ExecutionManagerError) -> Self {
-        Self {
-            message: format!(
-                "Linux Sandbox OCI owner is not launch-ready ({error}); install the Kbox OCI Runtime package or set {OCI_MIGRATION_ENV}=off for MicroVM-only hosts"
-            ),
-        }
-    }
-
-    fn unavailable(&self) -> ExecutionManagerError {
-        ExecutionManagerError::Unavailable(self.message.clone())
-    }
-}
-
-#[cfg(target_os = "linux")]
-#[async_trait]
-impl LocalExecutionBackend for UnavailableOciMigrationBackend {
-    async fn preflight_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
-        if isolation.is_sandbox() {
-            Err(self.unavailable())
-        } else {
-            Ok(())
-        }
-    }
-
-    fn route_for_create(&self, _record: &BoxRecord) -> ExecutionManagerResult<ManagedRuntimeRoute> {
-        Ok(ManagedRuntimeRoute::OciSdk)
-    }
-
-    async fn preflight(&self, _record: &BoxRecord) -> ExecutionManagerResult<()> {
-        Err(self.unavailable())
-    }
-
-    async fn start(&self, _record: &BoxRecord) -> ExecutionManagerResult<LocalExecutionHandle> {
-        Err(self.unavailable())
-    }
-
-    async fn inspect(
-        &self,
-        _record: &BoxRecord,
-    ) -> ExecutionManagerResult<LocalExecutionObservation> {
-        Ok(LocalExecutionObservation {
-            state: ExecutionState::Created,
-            handle: None,
-            exit_code: None,
-        })
-    }
-
-    async fn pause(
-        &self,
-        _record: &BoxRecord,
-        _keep_memory: bool,
-    ) -> ExecutionManagerResult<LocalExecutionHandle> {
-        Err(self.unavailable())
-    }
-
-    async fn resume(&self, _record: &BoxRecord) -> ExecutionManagerResult<LocalExecutionHandle> {
-        Err(self.unavailable())
-    }
-
-    async fn kill(&self, _record: &BoxRecord) -> ExecutionManagerResult<KillOutcome> {
-        Err(self.unavailable())
-    }
-}
-
-#[cfg(target_os = "linux")]
-async fn connect_native_linux_sandbox_backend(
-    home_dir: &Path,
-    config: &NativeLinuxOciMigrationConfig,
-    pull_progress_fn: Option<&crate::PullProgressFn>,
-) -> ExecutionManagerResult<Arc<dyn LocalExecutionBackend>> {
-    config.validate()?;
-    let capabilities = crate::sandbox::probe_sandbox_capabilities_for(
-        ExecutionBackend::KOci,
-        config.runtime_path(),
-        config.agent_path(),
-    );
-    capabilities.require_ready().map_err(|error| {
-        ExecutionManagerError::Unavailable(format!(
-            "native Linux OCI migration preflight failed: {error}"
+fn reject_removed_sandbox_migration_env() -> ExecutionManagerResult<()> {
+    let Some(mode) = std::env::var_os(OCI_MIGRATION_ENV).filter(|value| !value.is_empty()) else {
+        return Ok(());
+    };
+    let mode = mode.to_str().ok_or_else(|| {
+        ExecutionManagerError::InvalidRequest(format!(
+            "{OCI_MIGRATION_ENV} must contain UTF-8 text"
         ))
     })?;
-    let artifacts = capabilities.koci.as_ref().ok_or_else(|| {
-        ExecutionManagerError::Unavailable(
-            "native Linux OCI migration preflight returned no runtime artifacts".to_string(),
-        )
-    })?;
-    // Fresh SandboxViaOci construction: reclaiming a dead Host must tear down
-    // Live-survivable supervised orphans so stopped-only reconcile sees a
-    // tombstone. Retained-manager Live reopen keeps the default (no reap).
-    let endpoint = super::oci_owner::ensure_native_linux_oci_owner_with_options(
-        config.service_root(),
-        artifacts,
-        super::oci_owner::EnsureNativeLinuxOwnerOptions {
-            reap_orphaned_supervised_sessions: true,
-        },
-    )
-    .await?;
-    let mut provider = NativeLinuxOciBundleProvider::new(
-        home_dir.to_path_buf(),
-        artifacts.runtime_path.clone(),
-        artifacts.agent_path.clone(),
-    );
-    if let Some(progress) = pull_progress_fn {
-        provider = provider.with_pull_progress_fn(progress.clone());
-    }
-    let backend = OciLocalExecutionBackend::connect(endpoint, Arc::new(provider))
-        .await?
-        .with_native_linux_owner_recovery(config.service_root(), artifacts.clone());
-    Ok(Arc::new(backend))
-}
-
-/// `all` asks for both isolations on OCI, so a missing Sandbox owner fails the
-/// process. `microvm`/`kvm` keep qualification alive and fail Sandbox closed
-/// through [`UnavailableOciMigrationBackend`].
-#[cfg(target_os = "linux")]
-fn migration_mode_requires_ready_sandbox() -> bool {
-    std::env::var_os(OCI_MIGRATION_ENV)
-        .and_then(|value| value.into_string().ok())
-        .is_some_and(|value| {
-            matches!(
-                value.trim().to_ascii_lowercase().as_str(),
-                "all" | "all-via-oci"
-            )
-        })
-}
-
-#[cfg(target_os = "linux")]
-async fn sandbox_backend_beside_kvm_qualification(
-    home_dir: &Path,
-    pull_progress_fn: Option<&crate::PullProgressFn>,
-) -> ExecutionManagerResult<Arc<dyn LocalExecutionBackend>> {
-    let Some((_, config)) = parse_environment(
-        None,
-        std::env::var_os(OCI_HOST_ROOT_ENV),
-        std::env::var_os(OCI_RUNTIME_PATH_ENV),
-        std::env::var_os(OCI_AGENT_PATH_ENV),
-        home_dir,
-    )?
-    else {
-        return Err(ExecutionManagerError::Internal(
-            "Linux default Sandbox OCI config was not selected beside KVM qualification"
-                .to_string(),
-        ));
-    };
-    match connect_native_linux_sandbox_backend(home_dir, &config, pull_progress_fn).await {
-        Ok(backend) => Ok(backend),
-        Err(error) if !migration_mode_requires_ready_sandbox() => {
-            Ok(Arc::new(UnavailableOciMigrationBackend::new(error)))
-        }
-        Err(error) => Err(error),
-    }
-}
-
-fn parse_environment(
-    mode: Option<OsString>,
-    service_root: Option<OsString>,
-    runtime_path: Option<OsString>,
-    agent_path: Option<OsString>,
-    home_dir: &Path,
-) -> ExecutionManagerResult<Option<(NativeLinuxMigrationSelection, NativeLinuxOciMigrationConfig)>>
-{
-    let selection = match mode.filter(|value| !value.is_empty()) {
-        None => {
-            #[cfg(target_os = "linux")]
-            {
-                NativeLinuxMigrationSelection::DefaultSandbox
-            }
-            #[cfg(not(target_os = "linux"))]
-            {
-                return Ok(None);
-            }
-        }
-        Some(mode) => {
-            let mode = mode.to_str().ok_or_else(|| {
-                ExecutionManagerError::InvalidRequest(format!(
-                    "{OCI_MIGRATION_ENV} must contain UTF-8 text"
-                ))
-            })?;
-            match mode.trim().to_ascii_lowercase().as_str() {
-                "" | "0" | "false" | "off" | "disabled" | "legacy" => return Ok(None),
-                "1" | "true" | "on" | "sandbox" | "sandbox-via-oci" => {
-                    NativeLinuxMigrationSelection::ExplicitSandbox
-                }
-                "all" | "all-via-oci" | "microvm" | "microvm-via-oci" | "kvm" => {
-                    return Err(ExecutionManagerError::InvalidRequest(format!(
-                        "MicroVM OCI qualification uses {OCI_KVM_ENDPOINT_ENV} with LinuxKvmOciMigrationConfig; NativeLinuxOciMigrationConfig accepts only sandbox"
-                    )))
-                }
-                value => {
-                    return Err(ExecutionManagerError::InvalidRequest(format!(
-                        "unsupported {OCI_MIGRATION_ENV} value {value:?}; expected off or sandbox"
-                    )))
-                }
-            }
-        }
-    };
-
-    let root = service_root
-        .filter(|value| !value.is_empty())
-        .map(PathBuf::from)
-        .unwrap_or_else(|| default_service_root(home_dir));
-    let mut config = NativeLinuxOciMigrationConfig::new(root)?;
-    match (
-        runtime_path.filter(|value| !value.is_empty()),
-        agent_path.filter(|value| !value.is_empty()),
-    ) {
-        (Some(runtime), Some(agent)) => {
-            config = config.with_artifacts(PathBuf::from(runtime), PathBuf::from(agent))?;
-        }
-        (None, None) => {}
-        _ => {
-            return Err(ExecutionManagerError::InvalidRequest(format!(
-                "{OCI_RUNTIME_PATH_ENV} and {OCI_AGENT_PATH_ENV} must be set together"
+    match mode.trim().to_ascii_lowercase().as_str() {
+        "" | "0" | "false" | "off" | "disabled" | "legacy" => Ok(()),
+        "1" | "true" | "on" | "sandbox" | "sandbox-via-oci" | "all" | "all-via-oci" => {
+            Err(ExecutionManagerError::InvalidRequest(format!(
+                "legacy shared-kernel OCI migration was removed; set {OCI_MIGRATION_ENV}=off for MicroVM-only or use {OCI_KVM_ENDPOINT_ENV} / LinuxKvmOciMigrationConfig for DedicatedVm"
             )))
         }
+        "microvm" | "microvm-via-oci" | "kvm" => Ok(()),
+        value => Err(ExecutionManagerError::InvalidRequest(format!(
+            "unsupported {OCI_MIGRATION_ENV} value {value:?}; expected off or MicroVM DedicatedVm qualification"
+        ))),
     }
-    Ok(Some((selection, config)))
 }
 
 /// Explicit on/off flag for qualification Host ownership.
@@ -1361,8 +950,8 @@ fn parse_linux_kvm_environment(
     let Some(mode) = mode.filter(|value| !value.is_empty()) else {
         // Gate 5: absent `K_BOX_OCI_MIGRATION` selects packaged DedicatedVm
         // when runtime/shim/system-image are discoverable. Missing packages
-        // soft-fall through to SandboxViaOci / legacy (MicroVM stays
-        // Box-libkrun) instead of hard-failing hosts without the KVM package.
+        // soft-fall through to MicroVM / legacy (Box-libkrun) instead of
+        // hard-failing hosts without the KVM package.
         #[cfg(target_os = "linux")]
         {
             let _ = (endpoint, box_owned);
@@ -1614,58 +1203,6 @@ mod tests {
 
     fn absolute(name: &str) -> PathBuf {
         std::env::temp_dir().join(name)
-    }
-
-    #[test]
-    fn environment_defaults_on_linux_and_rejects_unqualified_all_policy() {
-        let home = absolute("koci-config-home");
-        #[cfg(target_os = "linux")]
-        {
-            let (selection, config) = parse_environment(None, None, None, None, &home)
-                .unwrap()
-                .unwrap();
-            assert_eq!(selection, NativeLinuxMigrationSelection::DefaultSandbox);
-            assert!(config.runtime_path().is_none());
-        }
-        #[cfg(not(target_os = "linux"))]
-        {
-            assert_eq!(
-                parse_environment(None, None, None, None, &home).unwrap(),
-                None
-            );
-        }
-        assert_eq!(
-            parse_environment(Some(OsString::from("off")), None, None, None, &home).unwrap(),
-            None
-        );
-        assert!(parse_environment(Some(OsString::from("all")), None, None, None, &home).is_err());
-    }
-
-    #[test]
-    fn environment_requires_artifact_pair_and_accepts_sandbox() {
-        let home = absolute("koci-config-home");
-        let runtime = absolute("koci");
-        let agent = absolute("koci-agent");
-        assert!(parse_environment(
-            Some(OsString::from("sandbox")),
-            None,
-            Some(runtime.clone().into_os_string()),
-            None,
-            &home
-        )
-        .is_err());
-        let (selection, config) = parse_environment(
-            Some(OsString::from("sandbox")),
-            Some(absolute("koci-root").into_os_string()),
-            Some(runtime.clone().into_os_string()),
-            Some(agent.clone().into_os_string()),
-            &home,
-        )
-        .unwrap()
-        .unwrap();
-        assert_eq!(selection, NativeLinuxMigrationSelection::ExplicitSandbox);
-        assert_eq!(config.runtime_path(), Some(runtime.as_path()));
-        assert_eq!(config.agent_path(), Some(agent.as_path()));
     }
 
     #[test]

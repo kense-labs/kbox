@@ -1,0 +1,13 @@
+Listening on /Users/roylin/code/kense/kbox/docs/evidence/box/20261107-dsh-acp-e2e-deepseek/p3/bad.sock (Ctrl-C or SIGTERM to drain and stop)
+2026-11-07T08:17:50.163893Z  WARN Failed to boot VM for warm pool error=Registry error: ghcr.io - Failed to pull manifest: Not authorized: url https://ghcr.io/v2/kense-labs/does-not-exist-e2e/manifests/latest
+Warm pool started
+  default image: ghcr.io/kense-labs/does-not-exist-e2e:latest (pre-warming 1)
+  max:      1
+  boot concurrency: 2 (daemon-wide)
+  ttl:      300s
+  lease ttl: 3600s
+  socket:   /Users/roylin/code/kense/kbox/docs/evidence/box/20261107-dsh-acp-e2e-deepseek/p3/bad.sock
+2026-11-07T08:17:52.359045Z  WARN Failed to replenish warm pool error=Registry error: ghcr.io - Failed to pull manifest: Not authorized: url https://ghcr.io/v2/kense-labs/does-not-exist-e2e/manifests/latest
+2026-11-07T08:17:52.359079Z  WARN Backing off warm-pool replenishment after boot failure failures=1 retry_in_secs=60
+Draining warm pools...
+Done.

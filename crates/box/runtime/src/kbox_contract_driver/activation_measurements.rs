@@ -26,25 +26,12 @@ use kbox_contract::RuntimeDriver as _;
 async fn lane_driver(directory: &tempfile::TempDir) -> BoxRuntimeDriver {
     let home_dir = directory.path().join("home");
     std::fs::create_dir_all(&home_dir).expect("home dir");
-    let mut config = crate::local_execution::NativeLinuxOciMigrationConfig::new(
-        home_dir.join("oci-service-root"),
-    )
-    .expect("native linux OCI migration config");
-    if let (Some(runtime), Some(agent)) = (
-        std::env::var_os("K_BOX_OCI_RUNTIME_PATH"),
-        std::env::var_os("K_BOX_OCI_AGENT_PATH"),
-    ) {
-        config = config
-            .with_artifacts(runtime, agent)
-            .expect("native linux OCI migration artifacts");
-    }
-    let manager = crate::LocalExecutionManager::with_native_linux_oci_migration(
+    let manager = crate::LocalExecutionManager::with_configured_backend(
         home_dir.join("boxes.json"),
         &home_dir,
-        config,
     )
     .await
-    .expect("GA Sandbox engine manager");
+    .expect("MicroVM engine manager");
     let connector: Arc<dyn kbox_core::ExecutionPortConnector> = Arc::new(manager.clone());
     BoxRuntimeDriver::with_manager_connector_and_materializer(
         BoxRuntimeDriverConfig {
@@ -56,7 +43,7 @@ async fn lane_driver(directory: &tempfile::TempDir) -> BoxRuntimeDriver {
         },
         manager,
         connector,
-        kbox_core::ExecutionIsolation::Sandbox,
+        kbox_core::ExecutionIsolation::Microvm,
         None,
         None,
         None,

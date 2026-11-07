@@ -89,7 +89,7 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
         .preflight_isolation(ExecutionIsolation::Microvm)
         .await;
     let sandbox = backend
-        .preflight_isolation(ExecutionIsolation::Sandbox)
+        .preflight_isolation(ExecutionIsolation::Microvm)
         .await;
 
     assert!(
@@ -138,7 +138,7 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
 async fn sandbox_resource_planning_persists_image_volume_ownership_without_runtime_side_effects() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Sandbox);
+    let record = record(temporary.path(), ExecutionIsolation::Microvm);
     std::fs::create_dir_all(&record.box_dir).unwrap();
     crate::resolved_image::persist_resolved_image_config(
         &record.box_dir,
@@ -537,7 +537,7 @@ async fn terminal_observation_accepts_cached_shim_zero_with_durable_guest_exit()
 async fn terminal_health_probe_waits_for_delayed_durable_exit_status_before_cleanup() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Sandbox);
+    let record = record(temporary.path(), ExecutionIsolation::Microvm);
     let rootfs = record.box_dir.join("rootfs");
     std::fs::create_dir_all(&rootfs).unwrap();
     let durable_exit_path = rootfs.join(".kexit_code");
@@ -573,7 +573,7 @@ async fn terminal_health_probe_waits_for_delayed_durable_exit_status_before_clea
 async fn terminal_observation_retains_runtime_without_an_exact_exit_status() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Sandbox);
+    let record = record(temporary.path(), ExecutionIsolation::Microvm);
     let exit_polls = Arc::new(AtomicUsize::new(0));
     let stop_calls = Arc::new(AtomicUsize::new(0));
     let manager = Arc::new(Mutex::new(backend.new_manager(&record).unwrap()));
@@ -682,7 +682,7 @@ fn restart_teardown_preserves_old_runtime_visibility_until_generation_advance() 
 async fn filesystem_only_pause_fails_before_starting_a_runtime() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let sandbox = record(temporary.path(), ExecutionIsolation::Sandbox);
+    let sandbox = record(temporary.path(), ExecutionIsolation::Microvm);
     let microvm = record(temporary.path(), ExecutionIsolation::Microvm);
 
     let sandbox_error = backend.pause(&sandbox, false).await.unwrap_err();

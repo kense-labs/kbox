@@ -6,8 +6,6 @@ use kbox_contract::contract::{
 };
 use kbox_contract::RuntimeClient;
 use kbox_core::ExecutionIsolation;
-#[cfg(target_os = "linux")]
-use koci_sdk::CONTROL_CGROUP_NAME;
 use koci_sdk::WORKLOAD_CGROUP_NAME;
 
 use super::cases::ResourceShape;
@@ -65,11 +63,6 @@ pub(super) async fn run(
         "CPU limits changed before provider launch",
     )?;
     match execution_isolation {
-        ExecutionIsolation::Sandbox => require(
-            config.resource_limits.sandbox_memory_limit_bytes == Some(MEMORY_BYTES)
-                && config.resource_limits.memory_swap == Some(MEMORY_BYTES as i64),
-            "Sandbox memory limits changed before provider launch",
-        )?,
         ExecutionIsolation::Microvm => require(
             config.resources.memory_mb == (MEMORY_BYTES / (1024 * 1024)) as u32
                 && record.memory_mb == config.resources.memory_mb
@@ -84,14 +77,13 @@ pub(super) async fn run(
     )?;
     if ephemeral_supported {
         require(
-            execution_isolation == ExecutionIsolation::Sandbox
+            execution_isolation == ExecutionIsolation::Microvm
                 && config.resources.ephemeral_storage_bytes == Some(EPHEMERAL_STORAGE_BYTES),
-            "ephemeral storage quota did not reach the Sandbox provider",
+            "ephemeral storage quota did not reach the MicroVM provider",
         )?;
     }
 
     let sandbox_management = match execution_isolation {
-        ExecutionIsolation::Sandbox => Some(sandbox_management_cgroup(&record)?),
         ExecutionIsolation::Microvm => None,
     };
 
@@ -146,15 +138,11 @@ pub(super) async fn run(
     let visible_pids_max = visible_lines.next();
     let expected_cpu_max = format!("{CPU_QUOTA_US} {CPU_PERIOD_US}");
     let expected_memory_max = match execution_isolation {
-        ExecutionIsolation::Sandbox => MEMORY_BYTES.to_string(),
         ExecutionIsolation::Microvm => "max".into(),
     };
     let expected_pids_max = PIDS.to_string();
     require(
         match execution_isolation {
-            ExecutionIsolation::Sandbox => {
-                workload_namespace_path == format!("/{WORKLOAD_CGROUP_NAME}")
-            }
             ExecutionIsolation::Microvm => workload_namespace_path
                 .strip_prefix("/box-")
                 .is_some_and(|suffix| !suffix.is_empty() && !suffix.contains('/')),
@@ -262,17 +250,6 @@ pub(super) async fn run(
     )?;
 
     let oom_before = match execution_isolation {
-        ExecutionIsolation::Sandbox => Some(
-            guest_counter(
-                fixture,
-                client,
-                &service.spec,
-                "resources-memory-before",
-                "memory.events",
-                "oom_kill",
-            )
-            .await?,
-        ),
         ExecutionIsolation::Microvm => None,
     };
     let memory = client
@@ -381,80 +358,6 @@ fn read_trimmed(path: &Path) -> Result<String> {
         .map_err(|error| super::external(&format!("read {}", path.display()), error))
 }
 
-#[cfg(target_os = "linux")]
-fn sandbox_management_cgroup(record: &crate::BoxRecord) -> Result<PathBuf> {
-    let pid = record
-        .pid
-        .ok_or_else(|| super::protocol("resource fixture lost its Sandbox PID"))?;
-    let control_cgroup =
-        crate::sandbox::capability::process_cgroup_v2_path(pid).ok_or_else(|| {
-            super::protocol(format!(
-                "could not resolve cgroup v2 path for Sandbox PID {pid}"
-            ))
-        })?;
-    let expected_management_suffix = Path::new("kbox").join(&record.id);
-    let expected_control_suffix = expected_management_suffix.join(CONTROL_CGROUP_NAME);
-    require(
-        control_cgroup.ends_with(&expected_control_suffix),
-        format!(
-            "Sandbox PID {pid} does not belong to the runtime-owned control cgroup: {}",
-            control_cgroup.display()
-        ),
-    )?;
-    require(
-        control_cgroup.is_dir(),
-        "Sandbox control cgroup was not created",
-    )?;
-    let management_cgroup = control_cgroup.parent().ok_or_else(|| {
-        super::protocol(format!(
-            "Sandbox control cgroup has no management parent: {}",
-            control_cgroup.display()
-        ))
-    })?;
-    require(
-        management_cgroup.ends_with(&expected_management_suffix) && management_cgroup.is_dir(),
-        format!(
-            "Sandbox management cgroup was not created at the expected path: {}",
-            management_cgroup.display()
-        ),
-    )?;
-    require(
-        read_trimmed(&management_cgroup.join("cgroup.procs"))?.is_empty(),
-        "Sandbox management cgroup retained processes after staged activation",
-    )?;
-    let outer_cpu_max = read_trimmed(&management_cgroup.join("cpu.max"))?;
-    let mut outer_cpu_fields = outer_cpu_max.split_whitespace();
-    let outer_cpu_quota = outer_cpu_fields
-        .next()
-        .and_then(|value| value.parse::<u64>().ok())
-        .ok_or_else(|| super::protocol("Sandbox management cpu.max quota is invalid"))?;
-    let outer_cpu_period = outer_cpu_fields
-        .next()
-        .and_then(|value| value.parse::<u64>().ok())
-        .ok_or_else(|| super::protocol("Sandbox management cpu.max period is invalid"))?;
-    require(
-        outer_cpu_quota > CPU_QUOTA_US && outer_cpu_period == CPU_PERIOD_US,
-        "Sandbox management cpu.max does not reserve control-plane headroom",
-    )?;
-    require(
-        read_trimmed(&management_cgroup.join("memory.max"))?
-            .parse::<u64>()
-            .is_ok_and(|value| value > MEMORY_BYTES),
-        "Sandbox management memory.max does not reserve control-plane headroom",
-    )?;
-    require(
-        read_trimmed(&management_cgroup.join("pids.max"))?
-            .parse::<u64>()
-            .is_ok_and(|value| value > u64::from(PIDS)),
-        "Sandbox management pids.max does not reserve control-plane headroom",
-    )?;
-    Ok(management_cgroup.to_path_buf())
-}
-
-#[cfg(not(target_os = "linux"))]
-fn sandbox_management_cgroup(_record: &crate::BoxRecord) -> Result<PathBuf> {
-    Err(super::protocol("sandbox management cgroup requires linux"))
-}
 
 async fn guest_counter(
     fixture: &BoxRuntimeConformanceFixture,

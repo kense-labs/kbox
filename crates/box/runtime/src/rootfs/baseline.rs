@@ -34,8 +34,8 @@ pub fn walk_rootfs(root: &Path) -> Result<HashMap<String, RootfsFileInfo>> {
 /// the workload starts. Later starts and monitor recovery therefore preserve the
 /// original generation's baseline instead of racing a fast container command.
 ///
-/// Prefer [`create_diff_baseline_from_metadata_if_absent`] for managed Linux
-/// SandboxViaOci so baseline modes match live/stopped OCI-mapped `diff`.
+/// Prefer [`create_diff_baseline_from_metadata_if_absent`] when OCI-mapped
+/// metadata is available so baseline modes match live/stopped mapped `diff`.
 pub fn create_diff_baseline_if_absent(box_dir: &Path, rootfs: &Path) -> Result<()> {
     if existing_baseline_is_regular(&box_dir.join(DIFF_BASELINE_FILE))? {
         return Ok(());
@@ -111,7 +111,7 @@ pub fn rootfs_file_info_map_from_metadata(
     Ok(entries)
 }
 
-/// Install a diff baseline from OCI-mapped rootfs metadata (SandboxViaOci).
+/// Install a diff baseline from OCI-mapped rootfs metadata.
 ///
 /// Converts the manifest with the same mode/size contract as
 /// `kbox diff`'s tar walk of commit/snapshot capture, so baseline and

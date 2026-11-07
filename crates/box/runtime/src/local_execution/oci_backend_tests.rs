@@ -1652,7 +1652,7 @@ fn maps_product_isolation_without_selecting_a_driver() {
         IsolationRequest::DedicatedVm
     );
     assert_eq!(
-        oci_isolation_request(ExecutionIsolation::Sandbox),
+        oci_isolation_request(ExecutionIsolation::Microvm),
         IsolationRequest::SharedHostKernel
     );
 }
@@ -1845,7 +1845,7 @@ fn durable_state_rejects_a_runtime_binding_owned_by_another_product_execution() 
         &directory.path().join("home"),
         &execution_id,
         box_operation("durable-product-operation"),
-        request("durable-product", ExecutionIsolation::Sandbox),
+        request("durable-product", ExecutionIsolation::Microvm),
         Utc::now(),
     )
     .expect("managed record");
@@ -1919,7 +1919,7 @@ async fn create_persists_provider_resource_plan_before_any_runtime_preparation()
 
     let reservation = manager
         .create(
-            request("planned-resources", ExecutionIsolation::Sandbox),
+            request("planned-resources", ExecutionIsolation::Microvm),
             &box_operation("planned-resources-create"),
         )
         .await
@@ -2014,7 +2014,7 @@ async fn preflight_requires_attachment_v1_before_store_or_preparation() {
 
     let error = manager
         .create(
-            request("missing-attachment-schema", ExecutionIsolation::Sandbox),
+            request("missing-attachment-schema", ExecutionIsolation::Microvm),
             &operation,
         )
         .await
@@ -2168,7 +2168,7 @@ async fn snapshot_restore_prepares_the_managed_lower_before_oci_bundle_creation(
         .lock()
         .expect("expected snapshot lower lock") = Some(expected_lower.clone());
     let manager = manager(&directory, test_endpoint(), service, provider.clone());
-    let mut restore = request("snapshot-restore", ExecutionIsolation::Sandbox);
+    let mut restore = request("snapshot-restore", ExecutionIsolation::Microvm);
     restore.rootfs_snapshot_id = Some(snapshot_id);
 
     let lease = manager
@@ -2212,7 +2212,7 @@ async fn invalid_preparation_is_cleaned_before_runtime_create() {
         service.clone(),
         provider.clone(),
     );
-    let mut restore = request("invalid-preparation", ExecutionIsolation::Sandbox);
+    let mut restore = request("invalid-preparation", ExecutionIsolation::Microvm);
     restore.rootfs_snapshot_id = Some(snapshot_id);
 
     let error = manager
@@ -2256,7 +2256,7 @@ async fn mismatched_runtime_config_evidence_forces_exact_cleanup() {
 
     let error = manager
         .create_and_start(
-            request("digest-drift", ExecutionIsolation::Sandbox),
+            request("digest-drift", ExecutionIsolation::Microvm),
             &box_operation("digest-drift-operation"),
         )
         .await
@@ -2291,7 +2291,7 @@ async fn mismatched_runtime_attachment_evidence_forces_exact_cleanup() {
 
     let error = manager
         .create_and_start(
-            request("attachment-drift", ExecutionIsolation::Sandbox),
+            request("attachment-drift", ExecutionIsolation::Microvm),
             &box_operation("attachment-drift-operation"),
         )
         .await
@@ -2312,7 +2312,7 @@ async fn launch_persists_exact_runtime_binding_for_both_product_isolations() {
     for (index, isolation, expected_request, expected_driver) in [
         (
             0,
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
             IsolationRequest::SharedHostKernel,
             DriverKind::NativeLinux,
         ),
@@ -2399,7 +2399,7 @@ async fn launch_persists_exact_runtime_binding_for_both_product_isolations() {
                 .digest()
                 .expect("submitted attachment digest")
         );
-        if isolation == ExecutionIsolation::Sandbox {
+        if isolation == ExecutionIsolation::Microvm {
             assert_eq!(persisted.pid, Some(std::process::id()));
             assert_eq!(
                 persisted.pid_start_time,
@@ -2421,7 +2421,7 @@ async fn captured_exec_replays_after_lost_response_within_one_execute() {
     let service = Arc::new(FakeRuntimeService::launch_ready());
     let provider = Arc::new(FakeBundleProvider::default());
     let endpoint = test_endpoint();
-    let mut create = request("captured-exec", ExecutionIsolation::Sandbox);
+    let mut create = request("captured-exec", ExecutionIsolation::Microvm);
     create.config.extra_env = vec![
         ("ALPHA".to_string(), "container".to_string()),
         ("BETA".to_string(), "container".to_string()),
@@ -2533,7 +2533,7 @@ async fn omit_path_captured_exec_inner_retry_reuses_minted_process_identity() {
     );
     let lease = manager
         .create_and_start(
-            request("omit-path-exec-retry", ExecutionIsolation::Sandbox),
+            request("omit-path-exec-retry", ExecutionIsolation::Microvm),
             &box_operation("omit-path-exec-retry-create"),
         )
         .await
@@ -2583,7 +2583,7 @@ async fn relative_exec_tracks_the_prepared_rootfs_layout() {
     );
     let lease = manager
         .create_and_start(
-            request("relative-exec", ExecutionIsolation::Sandbox),
+            request("relative-exec", ExecutionIsolation::Microvm),
             &box_operation("relative-exec-create"),
         )
         .await
@@ -2649,7 +2649,7 @@ async fn file_and_filesystem_sessions_preserve_exact_targets_and_replay_mutation
     );
     let lease = manager
         .create_and_start(
-            request("filesystem-sessions", ExecutionIsolation::Sandbox),
+            request("filesystem-sessions", ExecutionIsolation::Microvm),
             &box_operation("filesystem-sessions-create"),
         )
         .await
@@ -2949,7 +2949,7 @@ async fn file_sessions_reject_invalid_download_limits_before_dispatch() {
     );
     let lease = manager
         .create_and_start(
-            request("file-limits", ExecutionIsolation::Sandbox),
+            request("file-limits", ExecutionIsolation::Microvm),
             &box_operation("file-limits-create"),
         )
         .await
@@ -3004,7 +3004,7 @@ async fn file_and_filesystem_capabilities_and_box_generation_fail_before_dispatc
     );
     let file_lease = file_manager
         .create_and_start(
-            request("missing-file", ExecutionIsolation::Sandbox),
+            request("missing-file", ExecutionIsolation::Microvm),
             &box_operation("missing-file-create"),
         )
         .await
@@ -3054,7 +3054,7 @@ async fn file_and_filesystem_capabilities_and_box_generation_fail_before_dispatc
     );
     let filesystem_lease = filesystem_manager
         .create_and_start(
-            request("missing-filesystem", ExecutionIsolation::Sandbox),
+            request("missing-filesystem", ExecutionIsolation::Microvm),
             &box_operation("missing-filesystem-create"),
         )
         .await
@@ -3108,7 +3108,7 @@ async fn file_and_filesystem_sessions_reject_runtime_target_drift() {
     );
     let lease = manager
         .create_and_start(
-            request("filesystem-drift", ExecutionIsolation::Sandbox),
+            request("filesystem-drift", ExecutionIsolation::Microvm),
             &box_operation("filesystem-drift-create"),
         )
         .await
@@ -3174,7 +3174,7 @@ async fn keyed_exec_rejects_changed_content_without_starting_a_second_process() 
     );
     let lease = manager
         .create_and_start(
-            request("keyed-conflict", ExecutionIsolation::Sandbox),
+            request("keyed-conflict", ExecutionIsolation::Microvm),
             &box_operation("keyed-conflict-create"),
         )
         .await
@@ -3262,7 +3262,7 @@ async fn exec_rejects_a_second_rootfs_before_runtime_mutation() {
     );
     let lease = manager
         .create_and_start(
-            request("second-rootfs", ExecutionIsolation::Sandbox),
+            request("second-rootfs", ExecutionIsolation::Microvm),
             &box_operation("second-rootfs-create"),
         )
         .await
@@ -3295,7 +3295,7 @@ async fn invalid_exec_identity_and_empty_command_fail_before_runtime_mutation() 
     );
     let lease = manager
         .create_and_start(
-            request("invalid-exec", ExecutionIsolation::Sandbox),
+            request("invalid-exec", ExecutionIsolation::Microvm),
             &box_operation("invalid-exec-create"),
         )
         .await
@@ -3344,7 +3344,7 @@ async fn session_mode_capabilities_are_checked_before_exec_dispatch() {
         );
         let lease = manager
             .create_and_start(
-                request("missing-output", ExecutionIsolation::Sandbox),
+                request("missing-output", ExecutionIsolation::Microvm),
                 &box_operation("missing-output-create"),
             )
             .await
@@ -3374,7 +3374,7 @@ async fn session_mode_capabilities_are_checked_before_exec_dispatch() {
         );
         let lease = manager
             .create_and_start(
-                request("missing-stdin", ExecutionIsolation::Sandbox),
+                request("missing-stdin", ExecutionIsolation::Microvm),
                 &box_operation("missing-stdin-create"),
             )
             .await
@@ -3443,7 +3443,7 @@ async fn streaming_exec_retries_lost_stdin_and_preserves_exact_process_control()
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("streaming-exec", ExecutionIsolation::Sandbox),
+            request("streaming-exec", ExecutionIsolation::Microvm),
             &box_operation("streaming-exec-create"),
         )
         .await
@@ -3531,7 +3531,7 @@ async fn streaming_close_stdin_inner_retry_reuses_mutation_sequence() {
     );
     let lease = manager
         .create_and_start(
-            request("close-stdin-retry", ExecutionIsolation::Sandbox),
+            request("close-stdin-retry", ExecutionIsolation::Microvm),
             &box_operation("close-stdin-retry-create"),
         )
         .await
@@ -3588,7 +3588,7 @@ async fn streaming_signal_inner_retry_reuses_mutation_sequence() {
     );
     let lease = manager
         .create_and_start(
-            request("signal-retry", ExecutionIsolation::Sandbox),
+            request("signal-retry", ExecutionIsolation::Microvm),
             &box_operation("signal-retry-create"),
         )
         .await
@@ -3636,7 +3636,7 @@ async fn stdin_journal_rejects_payload_drift_on_the_same_operation() {
     );
     let lease = manager
         .create_and_start(
-            request("stdin-journal", ExecutionIsolation::Sandbox),
+            request("stdin-journal", ExecutionIsolation::Microvm),
             &box_operation("stdin-journal-create"),
         )
         .await
@@ -3766,7 +3766,7 @@ async fn captured_exec_timeout_kills_and_returns_legacy_terminal_shape() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("timed-exec", ExecutionIsolation::Sandbox),
+            request("timed-exec", ExecutionIsolation::Microvm),
             &box_operation("timed-exec-create"),
         )
         .await
@@ -3798,7 +3798,7 @@ async fn dropped_exec_future_keeps_its_exact_timeout_watchdog() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("detached-timeout", ExecutionIsolation::Sandbox),
+            request("detached-timeout", ExecutionIsolation::Microvm),
             &box_operation("detached-timeout-create"),
         )
         .await
@@ -3837,7 +3837,7 @@ async fn pause_resume_use_exact_runtime_target_and_unique_box_generations() {
     let operation = box_operation("freezer-cycle-operation");
     let running = manager
         .create_and_start(
-            request("freezer-cycle", ExecutionIsolation::Sandbox),
+            request("freezer-cycle", ExecutionIsolation::Microvm),
             &operation,
         )
         .await
@@ -3914,7 +3914,7 @@ async fn running_snapshot_uses_a_durable_freezer_identity_per_attempt() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let running = manager
         .create_and_start(
-            request("snapshot-freezer", ExecutionIsolation::Sandbox),
+            request("snapshot-freezer", ExecutionIsolation::Microvm),
             &box_operation("snapshot-freezer-create"),
         )
         .await
@@ -3979,7 +3979,7 @@ async fn snapshot_recovery_does_not_replay_a_completed_pause_after_thaw() {
     let create_operation = box_operation("snapshot-thaw-recovery-create");
     let running = first
         .create_and_start(
-            request("snapshot-thaw-recovery", ExecutionIsolation::Sandbox),
+            request("snapshot-thaw-recovery", ExecutionIsolation::Microvm),
             &create_operation,
         )
         .await
@@ -4097,7 +4097,7 @@ async fn pause_retry_after_rollback_uses_a_new_durable_mutation_identity() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let running = manager
         .create_and_start(
-            request("pause-retry", ExecutionIsolation::Sandbox),
+            request("pause-retry", ExecutionIsolation::Microvm),
             &box_operation("pause-retry-operation"),
         )
         .await
@@ -4144,7 +4144,7 @@ async fn resume_requires_advertised_sdk_operation_before_runtime_mutation() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let running = manager
         .create_and_start(
-            request("missing-resume", ExecutionIsolation::Sandbox),
+            request("missing-resume", ExecutionIsolation::Microvm),
             &box_operation("missing-resume-operation"),
         )
         .await
@@ -4192,7 +4192,7 @@ async fn reopened_backend_reconciles_lost_pause_and_resume_responses_without_rep
     );
     let running = first
         .create_and_start(
-            request("interrupted-freezer", ExecutionIsolation::Sandbox),
+            request("interrupted-freezer", ExecutionIsolation::Microvm),
             &operation,
         )
         .await
@@ -4321,7 +4321,7 @@ async fn retained_backend_reconnects_and_reconciles_after_local_runtime_server_r
     let operation = box_operation("runtime-server-restart-operation");
     let running = manager
         .create_and_start(
-            request("runtime-server-restart", ExecutionIsolation::Sandbox),
+            request("runtime-server-restart", ExecutionIsolation::Microvm),
             &operation,
         )
         .await
@@ -4375,7 +4375,7 @@ async fn lost_start_response_reconciles_the_existing_generation_without_duplicat
 
     let lease = manager
         .create_and_start(
-            request("lost-start", ExecutionIsolation::Sandbox),
+            request("lost-start", ExecutionIsolation::Microvm),
             &box_operation("lost-start-operation"),
         )
         .await
@@ -4411,7 +4411,7 @@ async fn log_projection_is_ready_before_start_and_created_state_recovers_without
 
     let error = manager
         .create_and_start(
-            request("projection-before-start", ExecutionIsolation::Sandbox),
+            request("projection-before-start", ExecutionIsolation::Microvm),
             &operation,
         )
         .await
@@ -4717,7 +4717,7 @@ async fn reopened_backend_observes_natural_terminal_status_before_stopped_only_d
     );
     let lease = first
         .create_and_start(
-            request("natural-exit", ExecutionIsolation::Sandbox),
+            request("natural-exit", ExecutionIsolation::Microvm),
             &box_operation("natural-exit-operation"),
         )
         .await
@@ -4760,7 +4760,7 @@ async fn reopened_backend_cleans_stopped_generation_without_inventing_exit_statu
     );
     let lease = first
         .create_and_start(
-            request("owner-death", ExecutionIsolation::Sandbox),
+            request("owner-death", ExecutionIsolation::Microvm),
             &box_operation("owner-death-operation"),
         )
         .await
@@ -4806,7 +4806,7 @@ async fn reopened_backend_treats_undrained_projection_death_as_owner_loss() {
     );
     let lease = first
         .create_and_start(
-            request("projection-owner-loss", ExecutionIsolation::Sandbox),
+            request("projection-owner-loss", ExecutionIsolation::Microvm),
             &box_operation("projection-owner-loss-operation"),
         )
         .await
@@ -4846,7 +4846,7 @@ async fn graceful_kill_timeout_escalates_through_a_distinct_sdk_signal() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("kill-escalation", ExecutionIsolation::Sandbox),
+            request("kill-escalation", ExecutionIsolation::Microvm),
             &box_operation("kill-escalation-operation"),
         )
         .await
@@ -4894,7 +4894,7 @@ async fn exact_generation_processes_stats_and_events_use_the_public_sdk() {
     );
     let lease = manager
         .create_and_start(
-            request("observable", ExecutionIsolation::Sandbox),
+            request("observable", ExecutionIsolation::Microvm),
             &box_operation("observable-create"),
         )
         .await
@@ -4967,7 +4967,7 @@ async fn paused_exact_generation_remains_observable() {
     );
     let lease = manager
         .create_and_start(
-            request("paused-observable", ExecutionIsolation::Sandbox),
+            request("paused-observable", ExecutionIsolation::Microvm),
             &box_operation("paused-observable-create"),
         )
         .await
@@ -5120,7 +5120,7 @@ async fn lost_resource_update_response_recovers_within_one_update() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("lost-update", ExecutionIsolation::Sandbox),
+            request("lost-update", ExecutionIsolation::Microvm),
             &create_operation,
         )
         .await
@@ -5182,7 +5182,7 @@ async fn interrupted_resource_update_claim_replays_after_backend_reopen() {
     );
     let lease = first
         .create_and_start(
-            request("interrupted-update", ExecutionIsolation::Sandbox),
+            request("interrupted-update", ExecutionIsolation::Microvm),
             &create_operation,
         )
         .await
@@ -5229,7 +5229,7 @@ async fn resource_update_racing_natural_exit_settles_the_terminal_record() {
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
         .create_and_start(
-            request("terminal-update", ExecutionIsolation::Sandbox),
+            request("terminal-update", ExecutionIsolation::Microvm),
             &create_operation,
         )
         .await
@@ -5282,7 +5282,7 @@ async fn observability_rejects_runtime_target_and_event_order_drift() {
     );
     let lease = manager
         .create_and_start(
-            request("drift-observation", ExecutionIsolation::Sandbox),
+            request("drift-observation", ExecutionIsolation::Microvm),
             &box_operation("drift-observation-create"),
         )
         .await
@@ -5339,7 +5339,7 @@ async fn new_runtime_operations_require_advertised_capabilities_before_dispatch(
         let create_operation = box_operation(&format!("missing-{operation:?}-create"));
         let lease = manager
             .create_and_start(
-                request("missing-observation", ExecutionIsolation::Sandbox),
+                request("missing-observation", ExecutionIsolation::Microvm),
                 &create_operation,
             )
             .await

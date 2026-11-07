@@ -5,7 +5,10 @@ use std::path::{Path, PathBuf};
 use kbox_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
 
 use super::VmManager;
-use crate::sandbox::{compile_portable_microvm_oci_spec, SandboxRuntimeProcess};
+use crate::oci_portable_spec::{compile_portable_microvm_oci_spec, MicrovmRuntimeProcess};
+use crate::process_path::{
+    normalize_linux_guest_path, resolve_runtime_executable, DEFAULT_CONTAINER_PATH,
+};
 
 /// Portable handoff produced without starting a Box-owned VM.
 #[derive(Debug, Clone)]
@@ -49,8 +52,8 @@ impl VmManager {
                         .to_string(),
                 ));
             }
-            let runtime_process: SandboxRuntimeProcess =
-                crate::vm::sandbox::resolve_runtime_owned_process(
+            let runtime_process: MicrovmRuntimeProcess =
+                resolve_runtime_owned_process(
                     &layout.rootfs_path,
                     &instance_spec,
                     &self.config.cap_drop,
@@ -95,5 +98,270 @@ impl VmManager {
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
             Err(error) => Err(BoxError::IoError(error)),
         }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct RuntimePasswdEntry {
+    name: String,
+    uid: u32,
+    gid: u32,
+    home: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+struct RuntimeGroupEntry {
+    name: String,
+    gid: u32,
+    members: Vec<String>,
+}
+
+pub(crate) fn resolve_runtime_owned_process(
+    rootfs: &Path,
+    instance_spec: &crate::vmm::InstanceSpec,
+    dropped_capabilities: &[String],
+) -> Result<MicrovmRuntimeProcess> {
+    let cwd = normalize_linux_guest_path("/", &instance_spec.workdir, "working directory")?;
+    crate::oci::rootfs::ensure_guest_directory(rootfs, cwd.trim_start_matches('/'))?;
+
+    let mut environment = instance_spec.entrypoint.env.clone();
+    let path = environment
+        .iter()
+        .rev()
+        .find_map(|(key, value)| (key == "PATH").then_some(value.as_str()))
+        .unwrap_or(DEFAULT_CONTAINER_PATH);
+    let executable =
+        resolve_runtime_executable(rootfs, &cwd, path, &instance_spec.entrypoint.executable)?;
+    let identity = resolve_runtime_identity(rootfs, instance_spec.user.as_deref())?;
+    if !environment.iter().any(|(key, _)| key == "HOME") {
+        if let Some(home) = identity.home.as_ref() {
+            environment.push(("HOME".to_string(), home.clone()));
+        }
+    }
+    let mut args = Vec::with_capacity(instance_spec.entrypoint.args.len() + 1);
+    args.push(executable);
+    args.extend(instance_spec.entrypoint.args.iter().cloned());
+
+    Ok(MicrovmRuntimeProcess {
+        args,
+        environment,
+        cwd: PathBuf::from(cwd),
+        uid: identity.uid,
+        gid: identity.gid,
+        additional_gids: identity.additional_gids,
+        dropped_capabilities: dropped_capabilities.to_vec(),
+    })
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct RuntimeIdentity {
+    uid: u32,
+    gid: u32,
+    additional_gids: Vec<u32>,
+    home: Option<String>,
+}
+
+fn resolve_runtime_identity(rootfs: &Path, requested: Option<&str>) -> Result<RuntimeIdentity> {
+    let passwd = runtime_passwd_entries(rootfs)?;
+    let groups = runtime_group_entries(rootfs)?;
+    let Some(requested) = requested.map(str::trim).filter(|value| !value.is_empty()) else {
+        return Ok(RuntimeIdentity {
+            uid: 0,
+            gid: 0,
+            additional_gids: Vec::new(),
+            home: None,
+        });
+    };
+    if requested.matches(':').count() > 1 {
+        return Err(BoxError::ConfigError(format!(
+            "Invalid MicroVM user {requested:?}; expected user[:group]"
+        )));
+    }
+    let (user_part, group_part) = requested
+        .split_once(':')
+        .map_or((requested, None), |(user, group)| (user, Some(group)));
+    if user_part.is_empty() || group_part.is_some_and(str::is_empty) {
+        return Err(BoxError::ConfigError(format!(
+            "Invalid MicroVM user {requested:?}; user and group must be non-empty"
+        )));
+    }
+
+    let passwd_entry = if user_part == "root" {
+        passwd.iter().find(|entry| entry.uid == 0)
+    } else if let Ok(uid) = user_part.parse::<u32>() {
+        passwd.iter().find(|entry| entry.uid == uid)
+    } else {
+        Some(
+            passwd
+                .iter()
+                .find(|entry| entry.name == user_part)
+                .ok_or_else(|| {
+                    BoxError::ConfigError(format!(
+                "MicroVM user {user_part:?} is not present in the prepared rootfs /etc/passwd"
+            ))
+                })?,
+        )
+    };
+    let uid = if user_part == "root" {
+        0
+    } else {
+        user_part
+            .parse::<u32>()
+            .ok()
+            .or_else(|| passwd_entry.map(|entry| entry.uid))
+            .ok_or_else(|| {
+                BoxError::ConfigError(format!("MicroVM user {user_part:?} cannot be resolved"))
+            })?
+    };
+    let gid = match group_part {
+        Some("root") => 0,
+        Some(group) => group
+            .parse::<u32>()
+            .ok()
+            .or_else(|| {
+                groups
+                    .iter()
+                    .find(|entry| entry.name == group)
+                    .map(|entry| entry.gid)
+            })
+            .ok_or_else(|| {
+                BoxError::ConfigError(format!(
+                    "MicroVM group {group:?} is not present in the prepared rootfs /etc/group"
+                ))
+            })?,
+        None => passwd_entry.map(|entry| entry.gid).unwrap_or(0),
+    };
+    let username = if user_part.parse::<u32>().is_ok() || user_part == "root" {
+        passwd_entry.map(|entry| entry.name.as_str())
+    } else {
+        Some(user_part)
+    };
+    let mut additional_gids = groups
+        .iter()
+        .filter(|entry| {
+            entry.gid != gid
+                && username
+                    .is_some_and(|username| entry.members.iter().any(|member| member == username))
+        })
+        .map(|entry| entry.gid)
+        .collect::<Vec<_>>();
+    additional_gids.sort_unstable();
+    additional_gids.dedup();
+
+    let home = passwd_entry
+        .and_then(|entry| entry.home.as_deref())
+        .map(|home| normalize_linux_guest_path("/", home, "user home"))
+        .transpose()?;
+    Ok(RuntimeIdentity {
+        uid,
+        gid,
+        additional_gids,
+        home,
+    })
+}
+
+fn runtime_passwd_entries(rootfs: &Path) -> Result<Vec<RuntimePasswdEntry>> {
+    let Some(contents) = crate::oci::rootfs::read_guest_file_to_string(rootfs, "etc/passwd")?
+    else {
+        return Ok(Vec::new());
+    };
+    Ok(contents
+        .lines()
+        .filter(|line| !line.starts_with('#'))
+        .filter_map(|line| {
+            let fields = line.split(':').collect::<Vec<_>>();
+            if fields.len() < 7 || fields[0].is_empty() {
+                return None;
+            }
+            Some(RuntimePasswdEntry {
+                name: fields[0].to_string(),
+                uid: fields[2].parse().ok()?,
+                gid: fields[3].parse().ok()?,
+                home: (!fields[5].is_empty()).then(|| fields[5].to_string()),
+            })
+        })
+        .collect())
+}
+
+fn runtime_group_entries(rootfs: &Path) -> Result<Vec<RuntimeGroupEntry>> {
+    let Some(contents) = crate::oci::rootfs::read_guest_file_to_string(rootfs, "etc/group")? else {
+        return Ok(Vec::new());
+    };
+    Ok(contents
+        .lines()
+        .filter(|line| !line.starts_with('#'))
+        .filter_map(|line| {
+            let fields = line.split(':').collect::<Vec<_>>();
+            if fields.len() < 4 || fields[0].is_empty() {
+                return None;
+            }
+            Some(RuntimeGroupEntry {
+                name: fields[0].to_string(),
+                gid: fields[2].parse().ok()?,
+                members: fields[3]
+                    .split(',')
+                    .map(str::trim)
+                    .filter(|member| !member.is_empty())
+                    .map(ToString::to_string)
+                    .collect(),
+            })
+        })
+        .collect())
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn runtime_owned_process_resolves_path_and_named_identity_from_rootfs() {
+        let rootfs = tempfile::tempdir().unwrap();
+        std::fs::create_dir_all(rootfs.path().join("usr/local/bin")).unwrap();
+        std::fs::create_dir_all(rootfs.path().join("etc")).unwrap();
+        let executable = rootfs.path().join("usr/local/bin/example");
+        std::fs::write(&executable, b"#!/bin/sh\n").unwrap();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            std::fs::set_permissions(&executable, std::fs::Permissions::from_mode(0o755)).unwrap();
+        }
+        std::fs::write(
+            rootfs.path().join("etc/passwd"),
+            "root:x:0:0:root:/root:/bin/sh\napp:x:1001:1002:App:/home/app:/bin/sh\n",
+        )
+        .unwrap();
+        std::fs::write(
+            rootfs.path().join("etc/group"),
+            "app:x:1002:\nmetrics:x:1003:app\n",
+        )
+        .unwrap();
+
+        assert_eq!(
+            resolve_runtime_executable(
+                rootfs.path(),
+                "/workspace",
+                "/usr/local/bin:/bin",
+                "example"
+            )
+            .unwrap(),
+            "/usr/local/bin/example"
+        );
+        assert_eq!(
+            resolve_runtime_identity(rootfs.path(), Some("app")).unwrap(),
+            RuntimeIdentity {
+                uid: 1001,
+                gid: 1002,
+                additional_gids: vec![1003],
+                home: Some("/home/app".to_string()),
+            }
+        );
+    }
+
+    #[test]
+    fn runtime_owned_process_rejects_root_escape_and_unknown_named_user() {
+        let rootfs = tempfile::tempdir().unwrap();
+        assert!(normalize_linux_guest_path("/", "../../host", "test").is_err());
+        assert!(resolve_runtime_identity(rootfs.path(), Some("missing")).is_err());
     }
 }

@@ -182,7 +182,7 @@ fn stored_profile_ignores_oci_migration_and_isolation_selector() {
         );
         assert_eq!(
             select_isolation(Some("sandbox"), migration),
-            Ok(IsolationSelection::Sandbox)
+            Ok(IsolationSelection::HardwareVm)
         );
     }
     assert_eq!(

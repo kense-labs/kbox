@@ -1197,12 +1197,12 @@ fn test_box_record_backward_compat_no_health() {
 #[test]
 fn test_box_record_round_trips_sandbox_isolation() {
     let mut record = sample_record("sandbox-id", "sandbox", "created");
-    record.isolation = kbox_core::ExecutionIsolation::Sandbox;
+    record.isolation = kbox_core::ExecutionIsolation::Microvm;
 
     let json = serde_json::to_string(&record).unwrap();
     let parsed: BoxRecord = serde_json::from_str(&json).unwrap();
 
-    assert_eq!(parsed.isolation, kbox_core::ExecutionIsolation::Sandbox);
+    assert_eq!(parsed.isolation, kbox_core::ExecutionIsolation::Microvm);
 }
 
 // --- Restart policy validation tests ---

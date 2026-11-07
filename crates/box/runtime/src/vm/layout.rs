@@ -106,61 +106,57 @@ impl VmManager {
         let rootfs_prepare_options = crate::rootfs::RootfsPrepareOptions {
             writable_layer_bytes: self.config.resources.ephemeral_storage_bytes,
         };
-        if rootfs_prepare_options.writable_layer_bytes.is_some()
-            && !self.config.isolation.is_sandbox()
-        {
+        if rootfs_prepare_options.writable_layer_bytes.is_some() {
             return Err(BoxError::ConfigError(
-                "Ephemeral storage quotas are supported only for Sandbox isolation".into(),
+                "Ephemeral storage quotas are not supported for MicroVM isolation".into(),
             ));
         }
-        if !self.config.isolation.is_sandbox() {
-            let resume = self.rootfs_provider.resume_for_boot(
-                &box_dir,
-                crate::rootfs::RootfsResumeOptions {
-                    disk_mib: self.config.resources.disk_mb,
-                    persistent: self.config.persistent,
-                    snapshot: snapshot_requested,
-                },
+        let resume = self.rootfs_provider.resume_for_boot(
+            &box_dir,
+            crate::rootfs::RootfsResumeOptions {
+                disk_mib: self.config.resources.disk_mb,
+                persistent: self.config.persistent,
+                snapshot: snapshot_requested,
+            },
+        )?;
+        if let Some(resumed_rootfs) = resume {
+            let persisted = crate::resolved_image::load_resolved_image_config(&box_dir)?
+                .ok_or_else(|| {
+                    BoxError::StateError(format!(
+                        "Persistent guest-native rootfs for {} has no resolved image configuration",
+                        self.box_id
+                    ))
+                })?;
+            let oci_config = Some(crate::oci::OciImageConfig::from(persisted));
+            validate_image_health_support(
+                oci_config
+                    .as_ref()
+                    .and_then(|config| config.health_check.as_ref()),
+                self.healthcheck_disabled,
             )?;
-            if let Some(resumed_rootfs) = resume {
-                let persisted = crate::resolved_image::load_resolved_image_config(&box_dir)?
-                    .ok_or_else(|| {
-                        BoxError::StateError(format!(
-                            "Persistent guest-native rootfs for {} has no resolved image configuration",
-                            self.box_id
-                        ))
-                    })?;
-                let oci_config = Some(crate::oci::OciImageConfig::from(persisted));
-                validate_image_health_support(
-                    oci_config
-                        .as_ref()
-                        .and_then(|config| config.health_check.as_ref()),
-                    self.healthcheck_disabled,
-                )?;
-                tracing::info!(
-                    rootfs = %resumed_rootfs.source,
-                    "Reusing authoritative guest-native persistent rootfs"
-                );
-                let tee_instance_config = self.generate_tee_config(&box_dir)?;
-                return Ok(BoxLayout {
-                    // No code may inspect this compatibility mountpoint while
-                    // `resumed_rootfs` is present. It remains only to avoid
-                    // conflating the raw disk path with a directory path.
-                    rootfs_path: box_dir.join("rootfs"),
-                    resumed_rootfs: Some(resumed_rootfs),
-                    exec_socket_path: socket_dir.join("exec.sock"),
-                    pty_socket_path: socket_dir.join("pty.sock"),
-                    attest_socket_path: socket_dir.join("attest.sock"),
-                    port_forward_socket_path: socket_dir.join("portfwd.sock"),
-                    workspace_path,
-                    console_output: Some(logs_dir.join("console.log")),
-                    oci_config,
-                    #[cfg(target_os = "macos")]
-                    oci_manifest_digest: None,
-                    prefer_image_rootfs_metadata: false,
-                    tee_instance_config,
-                });
-            }
+            tracing::info!(
+                rootfs = %resumed_rootfs.source,
+                "Reusing authoritative guest-native persistent rootfs"
+            );
+            let tee_instance_config = self.generate_tee_config(&box_dir)?;
+            return Ok(BoxLayout {
+                // No code may inspect this compatibility mountpoint while
+                // `resumed_rootfs` is present. It remains only to avoid
+                // conflating the raw disk path with a directory path.
+                rootfs_path: box_dir.join("rootfs"),
+                resumed_rootfs: Some(resumed_rootfs),
+                exec_socket_path: socket_dir.join("exec.sock"),
+                pty_socket_path: socket_dir.join("pty.sock"),
+                attest_socket_path: socket_dir.join("attest.sock"),
+                port_forward_socket_path: socket_dir.join("portfwd.sock"),
+                workspace_path,
+                console_output: Some(logs_dir.join("console.log")),
+                oci_config,
+                #[cfg(target_os = "macos")]
+                oci_manifest_digest: None,
+                prefer_image_rootfs_metadata: false,
+                tee_instance_config,
+            });
         }
 
         // Snapshot restore (copy-on-write): `snapshot restore` writes a
@@ -585,13 +581,10 @@ impl VmManager {
     }
 
     /// Fail closed for unprivileged directory MicroVM when image metadata
-    /// declares foreign UIDs (#562). Sandbox userns and guest-native
-    /// ext4/WHPX paths must not use this gate. Foreign gids with uid 0 are
-    /// admitted (alpine shadow); guest-init skips virtio-fs lchown EPERM.
+    /// declares foreign UIDs (#562). Guest-native ext4/WHPX paths must not use
+    /// this gate. Foreign gids with uid 0 are admitted (alpine shadow);
+    /// guest-init skips virtio-fs lchown EPERM.
     fn admit_unprivileged_microvm_directory_rootfs(&self, rootfs_path: &Path) -> Result<()> {
-        if self.config.isolation.is_sandbox() {
-            return Ok(());
-        }
         crate::oci::admit_unprivileged_same_uid_directory_rootfs(rootfs_path)
     }
 

@@ -267,14 +267,14 @@ mod tests {
     fn managed_record(status: ManagedExecutionState) -> crate::state::BoxRecord {
         let id = "11111111-1111-4111-8111-111111111111";
         let mut record = make_record(id, "web", status.as_status(), None);
-        record.isolation = ExecutionIsolation::Sandbox;
+        record.isolation = ExecutionIsolation::Microvm;
         let mut metadata = ManagedExecutionMetadata::new(
             OperationId::new("operation-1").unwrap(),
             ExecutionGeneration::INITIAL,
             CreateExecutionRequest {
                 external_sandbox_id: "external-1".to_string(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Sandbox,
+                    isolation: ExecutionIsolation::Microvm,
                     image: record.image.clone(),
                     ..Default::default()
                 },

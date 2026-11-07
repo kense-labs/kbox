@@ -9,55 +9,6 @@ use std::fmt;
 use std::net::Ipv4Addr;
 use std::path::Path;
 
-/// Opt-in env for SandboxViaOci Privileged network-device authority and named
-/// bridge staging. Only `1`/`true`/`on`/`yes` opt in. `off`/`no` stay off.
-/// Unknown text fails closed. Requires matched root at owner spawn; unset
-/// keeps GA rootless.
-pub const OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY_ENV: &str =
-    "K_BOX_OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY";
-
-/// Parsed `K_BOX_OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY`.
-///
-/// Absent or empty is off. Unknown text is an error so a typo cannot select
-/// the Privileged keep-authority owner.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum KeepNetworkAuthorityFlag {
-    Off,
-    On,
-}
-
-/// Parse one keep-authority value. `None` and empty are off.
-pub fn parse_keep_network_device_authority(
-    value: Option<&str>,
-) -> std::result::Result<KeepNetworkAuthorityFlag, String> {
-    let Some(value) = value.map(str::trim).filter(|value| !value.is_empty()) else {
-        return Ok(KeepNetworkAuthorityFlag::Off);
-    };
-    match value.to_ascii_lowercase().as_str() {
-        "0" | "false" | "off" | "no" => Ok(KeepNetworkAuthorityFlag::Off),
-        "1" | "true" | "on" | "yes" => Ok(KeepNetworkAuthorityFlag::On),
-        other => Err(format!(
-            "unsupported {OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY_ENV} value {other:?}; expected 0/1, false/true, off/on, or no/yes"
-        )),
-    }
-}
-
-/// Whether named-bridge Sandbox intent is allowed past `validate_sandbox_compatibility`.
-///
-/// Only an explicit on value passes. Unknown text is not an opt-in; owner spawn
-/// rejects that same text instead of becoming Privileged. Matched-root is
-/// enforced at Native Linux owner spawn.
-pub fn sandbox_named_bridge_opt_in_enabled() -> bool {
-    matches!(
-        std::env::var(OCI_NATIVE_KEEP_NETWORK_DEVICE_AUTHORITY_ENV),
-        Ok(value)
-            if matches!(
-                parse_keep_network_device_authority(Some(&value)),
-                Ok(KeepNetworkAuthorityFlag::On)
-            )
-    )
-}
-
 /// Network mode for a box.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
 #[serde(rename_all = "snake_case")]
@@ -74,9 +25,8 @@ pub enum NetworkMode {
 
     /// Share the host network namespace (omit OCI `network` ns).
     ///
-    /// Used by Sandbox Runtime `Outbound` Tasks that need real host egress
-    /// (for example Durable Cell publication to S0). Weaker network isolation
-    /// than a private netns; never combine with published ports or Bridge.
+    /// Share the host network namespace. Weaker isolation than a private
+    /// netns; never combine with published ports or Bridge.
     Host,
 
     /// No networking at all.
@@ -888,34 +838,6 @@ fn dns_names_equal(stored: &str, needle: &str) -> bool {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn keep_network_authority_rejects_unknown_and_treats_off_as_off() {
-        assert_eq!(
-            parse_keep_network_device_authority(None).unwrap(),
-            KeepNetworkAuthorityFlag::Off
-        );
-        assert_eq!(
-            parse_keep_network_device_authority(Some("  ")).unwrap(),
-            KeepNetworkAuthorityFlag::Off
-        );
-        for off in ["0", "false", "OFF", "no"] {
-            assert_eq!(
-                parse_keep_network_device_authority(Some(off)).unwrap(),
-                KeepNetworkAuthorityFlag::Off,
-                "{off}"
-            );
-        }
-        for on in ["1", "true", "on", "YES"] {
-            assert_eq!(
-                parse_keep_network_device_authority(Some(on)).unwrap(),
-                KeepNetworkAuthorityFlag::On,
-                "{on}"
-            );
-        }
-        let error = parse_keep_network_device_authority(Some("maybe")).unwrap_err();
-        assert!(error.contains("unsupported"), "{error}");
-    }
 
     // --- NetworkMode tests ---
 

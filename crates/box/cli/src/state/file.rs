@@ -268,11 +268,7 @@ impl StateFile {
                     record.exit_code = kbox_runtime::rootfs::resolve_workload_exit_code_for(
                         &record.box_dir,
                         record.exit_code,
-                        if record.isolation.is_sandbox() {
-                            kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
-                        } else {
-                            kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
-                        },
+                        kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof,
                     );
                 }
                 record.status = "dead".to_string();

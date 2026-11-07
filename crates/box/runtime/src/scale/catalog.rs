@@ -209,7 +209,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
         assert_eq!(catalog.services(), vec!["api", "worker"]);
@@ -221,7 +221,7 @@ mod tests {
             serde_json::to_value(&replay).unwrap()
         );
         assert_eq!(first.external_sandbox_id, "scale-worker-3");
-        assert_eq!(first.config.isolation, ExecutionIsolation::Sandbox);
+        assert_eq!(first.config.isolation, ExecutionIsolation::Microvm);
         assert_eq!(first.config.resources.vcpus, 2);
         assert_eq!(first.config.resources.memory_mb, 768);
         assert_eq!(first.labels[SCALE_SERVICE_LABEL], "worker");
@@ -268,7 +268,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             r#"service "api" { image = "api:v1"; ports = ["0:8080"] }"#,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
 

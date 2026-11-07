@@ -18,9 +18,9 @@ pub struct VirtualizationSupport {
 
 /// Reject an isolation class this host cannot launch.
 ///
-/// The requested class is unchanged. A missing MicroVM hypervisor or a missing
-/// Sandbox driver fails here, before a box directory or VM exists. Windows
-/// never substitutes KVM or a WSL distro, and Linux never substitutes WHPX.
+/// Box product isolation is MicroVM-only. A missing hypervisor fails here,
+/// before a box directory or VM exists. Windows never substitutes KVM or a WSL
+/// distro, and Linux never substitutes WHPX.
 ///
 /// This is the launch-ready probe: Linux opens `/dev/kvm`, Windows queries WHPX.
 /// Call it from CLI `preflight_isolation` and from `start`, not from durable
@@ -28,10 +28,6 @@ pub struct VirtualizationSupport {
 pub fn admit_requested_isolation(isolation: kbox_core::ExecutionIsolation) -> Result<()> {
     match isolation {
         kbox_core::ExecutionIsolation::Microvm => check_virtualization_support().map(|_| ()),
-        kbox_core::ExecutionIsolation::Sandbox => {
-            crate::sandbox::probe_sandbox_capabilities(None).require_ready()?;
-            Ok(())
-        }
     }
 }
 
@@ -39,23 +35,10 @@ pub fn admit_requested_isolation(isolation: kbox_core::ExecutionIsolation) -> Re
 ///
 /// Used by durable create reservation so metadata/unit tests can stamp a
 /// MicroVM route when `/dev/kvm` exists but is not group-accessible. Launch
-/// still requires [`admit_requested_isolation`]. Sandbox stays Linux-only.
+/// still requires [`admit_requested_isolation`].
 pub fn admit_isolation_class(isolation: kbox_core::ExecutionIsolation) -> Result<()> {
     match isolation {
         kbox_core::ExecutionIsolation::Microvm => admit_microvm_host_class(),
-        kbox_core::ExecutionIsolation::Sandbox => {
-            #[cfg(target_os = "linux")]
-            {
-                Ok(())
-            }
-            #[cfg(not(target_os = "linux"))]
-            {
-                Err(BoxError::ConfigError(
-                    "Sandbox isolation is supported only on Linux; use MicroVM isolation on this host"
-                        .to_string(),
-                ))
-            }
-        }
     }
 }
 
@@ -320,31 +303,26 @@ mod tests {
     }
 
     #[test]
-    fn sandbox_admission_keeps_the_requested_class() {
-        let isolation = kbox_core::ExecutionIsolation::Sandbox;
+    fn microvm_admission_keeps_the_requested_class() {
+        let isolation = kbox_core::ExecutionIsolation::Microvm;
         let result = admit_requested_isolation(isolation);
-        assert_eq!(isolation, kbox_core::ExecutionIsolation::Sandbox);
+        assert_eq!(isolation, kbox_core::ExecutionIsolation::Microvm);
         match result {
-            Ok(()) => {
-                #[cfg(not(target_os = "linux"))]
-                panic!("shared-kernel Sandbox must fail closed off Linux");
-            }
+            Ok(()) => {}
             Err(error) => {
                 let message = error.to_string();
                 rejects_wsl_wording(&message);
-                assert!(
-                    !message.contains("WHPX"),
-                    "Sandbox admission must not select WHPX: {message}"
-                );
-                #[cfg(not(target_os = "linux"))]
-                assert!(
-                    message.contains("only on Linux"),
-                    "missing Sandbox support must name Linux: {message}"
-                );
                 #[cfg(target_os = "linux")]
                 assert!(
-                    message.contains("Sandbox"),
-                    "missing Sandbox driver must name the Sandbox probe: {message}"
+                    message.contains("KVM") || message.contains("/dev/kvm"),
+                    "missing MicroVM support must name KVM: {message}"
+                );
+                #[cfg(windows)]
+                assert!(
+                    message.contains("WHPX")
+                        || message.to_lowercase().contains("hypervisor")
+                        || message.contains("x86_64"),
+                    "missing MicroVM support must name WHPX: {message}"
                 );
             }
         }
@@ -371,7 +349,7 @@ mod tests {
         assert_eq!(isolation, kbox_core::ExecutionIsolation::Microvm);
         #[cfg(not(target_os = "linux"))]
         {
-            let sandbox = kbox_core::ExecutionIsolation::Sandbox;
+            let sandbox = kbox_core::ExecutionIsolation::Microvm;
             let error = admit_isolation_class(sandbox).expect_err("Sandbox off Linux");
             assert!(error.to_string().contains("only on Linux"));
         }

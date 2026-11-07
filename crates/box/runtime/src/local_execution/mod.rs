@@ -83,8 +83,6 @@ mod oci_whpx_owner {
 pub(crate) mod oci_host_netdevice;
 #[cfg(feature = "vm")]
 mod oci_network_attachments;
-#[cfg(all(feature = "vm", target_os = "linux"))]
-mod oci_owner;
 #[cfg(feature = "vm")]
 pub(crate) mod oci_portable_rootfs;
 #[cfg(feature = "vm")]
@@ -94,7 +92,6 @@ mod oci_secret_attachments;
 mod oci_session;
 mod oci_storage_attachments;
 mod operations;
-pub(crate) mod operator_cgroup;
 mod port;
 mod prepared_rootfs;
 mod record;
@@ -139,17 +136,15 @@ pub use oci_backend::{
 };
 #[cfg(feature = "vm")]
 pub use oci_migration::{
-    LinuxKvmBoxOwnedOwner, LinuxKvmOciMigrationConfig, NativeLinuxOciMigrationConfig,
-    WindowsWhpxBoxOwnedOwner, WindowsWhpxOciMigrationConfig,
+    LinuxKvmBoxOwnedOwner, LinuxKvmOciMigrationConfig, WindowsWhpxBoxOwnedOwner,
+    WindowsWhpxOciMigrationConfig,
 };
 #[cfg(feature = "vm")]
 pub use oci_production::{
-    LinuxKvmOciBundleProvider, NativeLinuxOciBundleProvider, WindowsWhpxOciBundleProvider,
+    LinuxKvmOciBundleProvider, WindowsWhpxOciBundleProvider,
 };
 use record::{build_managed_record, status_from_record};
 pub use router::{LocalExecutionBackendRouter, OciMigrationPolicy};
-#[cfg(target_os = "linux")]
-pub use snapshot::capture_sandbox_host_rootfs_for_commit;
 use store::RuntimeUpdate;
 pub use store::{FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleRequest};
 #[cfg(all(feature = "vm", any(target_os = "linux", target_os = "macos")))]

@@ -103,10 +103,10 @@ pub(super) fn cleanup_partial_service_box(
             format!("anonymous volume cleanup failed for Compose service {box_id}: {error}"),
         ));
     }
-    // Keep-authority host-netdevice lease may exist after a partial prepare.
-    // Tear down before wiping boxes/{id}; retain the dir when teardown fails.
+    // Legacy host-netdevice lease may exist under boxes/{id}/sandbox/ after a
+    // partial prepare. Tear down before wipe; retain the dir when teardown fails.
     let home = kbox_core::dirs_home();
-    if let Err(error) = kbox_runtime::teardown_sandbox_host_netdevice_lease(&home, box_id) {
+    if let Err(error) = kbox_runtime::cleanup_host_netdevice_lease(&home, box_id) {
         tracing::error!(
             box_id,
             %error,
@@ -344,16 +344,6 @@ async fn teardown_service_box_inner(
         state.forget(&discovered.box_id);
         return Ok(());
     };
-
-    if super::sandbox_managed::teardown_managed_service(&service).await? {
-        crate::cleanup::cleanup_transient_secret_identity(service.secret_identity.as_deref())?;
-        let removal = StateFile::remove_record(&discovered.box_id);
-        if removal.is_ok() {
-            state.forget(&discovered.box_id);
-        }
-        removal?;
-        return Ok(());
-    }
 
     stop_service_process(&service).await;
     crate::cleanup::cleanup_transient_secret_identity(service.secret_identity.as_deref())?;

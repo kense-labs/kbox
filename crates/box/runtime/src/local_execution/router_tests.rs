@@ -150,7 +150,7 @@ impl LocalExecutionBackend for RoutedProbeBackend {
 fn migration_policies_stay_the_existing_set() {
     let policies = [
         OciMigrationPolicy::LegacyOnly,
-        OciMigrationPolicy::SandboxViaOci,
+        OciMigrationPolicy::MicrovmViaOci,
         OciMigrationPolicy::AllViaOci,
         OciMigrationPolicy::MicrovmViaOci,
     ];
@@ -169,7 +169,7 @@ fn migration_policies_stay_the_existing_set() {
 fn policy_name(policy: OciMigrationPolicy) -> &'static str {
     match policy {
         OciMigrationPolicy::LegacyOnly => "legacy-only",
-        OciMigrationPolicy::SandboxViaOci => "sandbox-via-oci",
+        OciMigrationPolicy::MicrovmViaOci => "sandbox-via-oci",
         OciMigrationPolicy::AllViaOci => "all-via-oci",
         OciMigrationPolicy::MicrovmViaOci => "microvm-via-oci",
     }
@@ -188,17 +188,17 @@ async fn sandbox_preflight_error_does_not_retarget_to_microvm() {
         Arc::new(LocalExecutionBackendRouter::new(
             legacy.clone(),
             oci.clone(),
-            OciMigrationPolicy::SandboxViaOci,
+            OciMigrationPolicy::MicrovmViaOci,
         )),
     );
 
     let error = manager
-        .preflight_isolation(ExecutionIsolation::Sandbox)
+        .preflight_isolation(ExecutionIsolation::Microvm)
         .await
         .expect_err("sandbox preflight must fail on the selected backend");
     assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
     assert_eq!(legacy.isolation_preflights(), 0);
-    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Sandbox]);
+    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Microvm]);
 
     manager
         .preflight_isolation(ExecutionIsolation::Microvm)
@@ -208,7 +208,7 @@ async fn sandbox_preflight_error_does_not_retarget_to_microvm() {
         legacy.observed_isolations(),
         vec![ExecutionIsolation::Microvm]
     );
-    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Sandbox]);
+    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Microvm]);
     assert!(!state_path.exists());
     assert!(!temporary.path().join("boxes").exists());
 }
@@ -242,7 +242,7 @@ async fn microvm_preflight_error_does_not_retarget_to_sandbox() {
     );
 
     let sandbox_error = manager
-        .preflight_isolation(ExecutionIsolation::Sandbox)
+        .preflight_isolation(ExecutionIsolation::Microvm)
         .await
         .expect_err("sandbox stays on the legacy backend after the microvm error");
     assert!(matches!(
@@ -252,7 +252,7 @@ async fn microvm_preflight_error_does_not_retarget_to_sandbox() {
     assert_eq!(oci.isolation_preflights(), 0);
     assert_eq!(
         legacy.observed_isolations(),
-        vec![ExecutionIsolation::Microvm, ExecutionIsolation::Sandbox]
+        vec![ExecutionIsolation::Microvm, ExecutionIsolation::Microvm]
     );
     assert!(!state_path.exists());
     assert!(!temporary.path().join("boxes").exists());
@@ -296,7 +296,7 @@ async fn sandbox_policy_stamps_oci_route_before_preflight_and_reservation() {
     let router = LocalExecutionBackendRouter::new(
         legacy.clone(),
         oci.clone(),
-        OciMigrationPolicy::SandboxViaOci,
+        OciMigrationPolicy::MicrovmViaOci,
     );
     let manager = LocalExecutionManager::new(
         temporary.path().join("boxes.json"),
@@ -306,7 +306,7 @@ async fn sandbox_policy_stamps_oci_route_before_preflight_and_reservation() {
 
     let reservation = manager
         .create(
-            request(ExecutionIsolation::Sandbox),
+            request(ExecutionIsolation::Microvm),
             &OperationId::new("route-sandbox").unwrap(),
         )
         .await
@@ -347,7 +347,7 @@ async fn microvm_qualification_policy_keeps_sandbox_on_box_backend() {
 
     let sandbox = manager
         .create(
-            request(ExecutionIsolation::Sandbox),
+            request(ExecutionIsolation::Microvm),
             &OperationId::new("route-sandbox-kept").unwrap(),
         )
         .await
@@ -410,7 +410,7 @@ async fn invalid_backend_resource_plan_is_never_reserved() {
 
     let error = manager
         .create(
-            request(ExecutionIsolation::Sandbox),
+            request(ExecutionIsolation::Microvm),
             &OperationId::new("invalid-resource-plan").unwrap(),
         )
         .await
@@ -431,7 +431,7 @@ async fn sandbox_policy_keeps_microvm_on_the_persisted_legacy_route() {
         Arc::new(LocalExecutionBackendRouter::new(
             legacy.clone(),
             oci.clone(),
-            OciMigrationPolicy::SandboxViaOci,
+            OciMigrationPolicy::MicrovmViaOci,
         )),
     );
 
@@ -502,7 +502,7 @@ async fn persisted_routes_ignore_a_later_policy_change() {
         oci.clone(),
         OciMigrationPolicy::LegacyOnly,
     );
-    let mut legacy_record = record(temporary.path(), ExecutionIsolation::Sandbox, "legacy");
+    let mut legacy_record = record(temporary.path(), ExecutionIsolation::Microvm, "legacy");
     legacy_record
         .managed_execution
         .as_mut()
@@ -528,8 +528,8 @@ async fn pre_routing_records_use_durable_runtime_evidence_not_current_policy() {
         oci.clone(),
         OciMigrationPolicy::AllViaOci,
     );
-    let legacy_record = record(temporary.path(), ExecutionIsolation::Sandbox, "old-legacy");
-    let mut stopped_oci_record = record(temporary.path(), ExecutionIsolation::Sandbox, "old-oci");
+    let legacy_record = record(temporary.path(), ExecutionIsolation::Microvm, "old-legacy");
+    let mut stopped_oci_record = record(temporary.path(), ExecutionIsolation::Microvm, "old-oci");
     stopped_oci_record.exec_socket_path.clear();
 
     router.kill(&legacy_record).await.unwrap();

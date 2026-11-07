@@ -11,7 +11,6 @@ mod network;
 mod oci_microvm;
 mod ready;
 pub mod reap;
-mod sandbox;
 mod spec;
 #[cfg(windows)]
 mod windows_stop;
@@ -620,7 +619,7 @@ impl VmManager {
         // Sandbox peer-auth may have dropped this process to the real UID.
         // Overlay unmount needs effective root / CAP_SYS_ADMIN.
         #[cfg(target_os = "linux")]
-        if let Err(error) = crate::sandbox::koci_controller::restore_effective_root_if_saved() {
+        if let Err(error) = Ok::<(), kbox_core::BoxError>(()) {
             tracing::warn!(
                 box_id = %self.box_id,
                 %error,
@@ -788,7 +787,7 @@ impl VmManager {
     fn cleanup_box_dir(&self, anon_volumes_clean: bool) {
         let box_dir = self.home_dir.join("boxes").join(&self.box_id);
         let socket_dir = self.socket_dir();
-        let mount_aliases_clean = match self.cleanup_sandbox_mount_aliases() {
+        let mount_aliases_clean = match self.cleanup_mount_aliases() {
             Ok(()) => true,
             Err(error) => {
                 tracing::warn!(
@@ -804,7 +803,7 @@ impl VmManager {
         // lease file under boxes/{id}/sandbox/ is wiped. Soft-deleting the box
         // dir first would drop durable claim while host publish rules remain.
         #[cfg(all(feature = "vm", target_os = "linux"))]
-        let host_net_clean = if self.config.isolation.is_sandbox() {
+        let host_net_clean = if false {
             match crate::local_execution::oci_host_netdevice::teardown_lease(
                 &self.home_dir,
                 &self.box_id,
@@ -923,12 +922,9 @@ impl VmManager {
         }
     }
 
-    fn cleanup_sandbox_mount_aliases(&self) -> Result<()> {
-        if self.config.isolation.is_sandbox() {
-            crate::sandbox::cleanup_sandbox_mount_aliases(&self.home_dir, &self.box_id)
-        } else {
-            Ok(())
-        }
+    fn cleanup_mount_aliases(&self) -> Result<()> {
+        // Shared-kernel aliases are no longer staged; cleanup remains idempotent.
+        crate::host_fs::cleanup_mount_aliases(&self.home_dir, &self.box_id)
     }
 
     /// Create a new VM manager with a custom VMM provider.

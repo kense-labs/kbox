@@ -432,7 +432,7 @@ impl VmManager {
         }
         self.net_manager = None;
 
-        let mount_aliases_clean = match self.cleanup_sandbox_mount_aliases() {
+        let mount_aliases_clean = match self.cleanup_mount_aliases() {
             Ok(()) => true,
             Err(error) => {
                 tracing::error!(
@@ -506,7 +506,7 @@ impl VmManager {
         // Keep-authority host-netdevice lease must be torn down before wipe;
         // retain the dir when teardown fails so durable claim survives.
         #[cfg(all(feature = "vm", target_os = "linux"))]
-        let host_net_clean = if self.config.isolation.is_sandbox() {
+        let host_net_clean = if false {
             match crate::local_execution::oci_host_netdevice::teardown_lease(
                 &self.home_dir,
                 &self.box_id,
@@ -521,7 +521,7 @@ impl VmManager {
                     if stop_error.is_none() {
                         stop_error = Some(BoxError::BoxBootError {
                             message: format!(
-                                "Failed to tear down SandboxViaOci host netdevice lease during destroy: {error}"
+                                "Failed to tear down host netdevice lease during destroy: {error}"
                             ),
                             hint: Some(
                                 "Reconcile keep-authority iptables publish rules before retrying destroy"
@@ -738,17 +738,6 @@ impl VmManager {
         }
         drop(state);
 
-        if self
-            .resolved_execution_plan
-            .as_ref()
-            .is_some_and(|plan| plan.backend.is_sandbox())
-            || self.config.isolation.is_sandbox()
-        {
-            return Err(BoxError::StateError(
-                "Pause is not supported by the Sandbox backend yet".to_string(),
-            ));
-        }
-
         if let Some(pid) = self.pid().await {
             // Safety: sending SIGSTOP to pause the process
             let ret = unsafe { libc::kill(pid as i32, libc::SIGSTOP) };
@@ -776,16 +765,6 @@ impl VmManager {
     /// must not invent operable Ready (#424 / #421).
     #[cfg(unix)]
     pub async fn resume(&self) -> Result<()> {
-        if self
-            .resolved_execution_plan
-            .as_ref()
-            .is_some_and(|plan| plan.backend.is_sandbox())
-            || self.config.isolation.is_sandbox()
-        {
-            return Err(BoxError::StateError(
-                "Resume is not supported by the Sandbox backend yet".to_string(),
-            ));
-        }
         {
             let state = self.state.read().await;
             if *state != BoxState::Paused {
@@ -988,36 +967,6 @@ impl VmManager {
         };
 
         if !update.has_tier2_changes() {
-            return Ok(result);
-        }
-
-        let sandbox = self
-            .resolved_execution_plan
-            .as_ref()
-            .is_some_and(|plan| plan.backend.is_sandbox())
-            || self.config.isolation.is_sandbox();
-        if sandbox {
-            let mut next_config = self.config.clone();
-            update.apply_to_config(&mut next_config);
-            let runtime_config = next_config.clone();
-            let box_dir = self.home_dir.join("boxes").join(&self.box_id);
-            let box_id = self.box_id.clone();
-            tokio::task::spawn_blocking(move || {
-                crate::sandbox::update_recorded_resources(&box_dir, &box_id, &runtime_config)
-            })
-            .await
-            .map_err(|error| {
-                BoxError::StateError(format!(
-                    "Kbox OCI resource update worker failed for {}: {error}",
-                    self.box_id
-                ))
-            })??;
-            self.config = next_config;
-            result.applied = update
-                .tier2_change_names()
-                .into_iter()
-                .map(str::to_string)
-                .collect();
             return Ok(result);
         }
 

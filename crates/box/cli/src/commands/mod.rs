@@ -215,9 +215,9 @@ pub(crate) fn images_dir() -> PathBuf {
     kbox_core::dirs_home().join("images")
 }
 
-/// Construct the canonical local lifecycle facade. On Linux, an absent
-/// `K_BOX_OCI_MIGRATION` defaults to SandboxViaOci; explicit `off` keeps the
-/// VM-only backend.
+/// Construct the canonical local lifecycle facade. MicroVM is the product
+/// path; `K_BOX_OCI_MIGRATION` selects optional OCI/DedicatedVm qualification
+/// overlays where configured.
 pub(crate) async fn configured_local_execution_manager(
     home: &Path,
 ) -> Result<kbox_runtime::LocalExecutionManager, Box<dyn std::error::Error>> {
@@ -738,17 +738,6 @@ mod isolation_cli_tests {
     }
 
     #[test]
-    fn run_accepts_explicit_sandbox_isolation() {
-        let cli = Cli::try_parse_from(["kbox", "run", "--isolation", "sandbox", "alpine:latest"])
-            .unwrap();
-
-        let Command::Run(args) = cli.command else {
-            panic!("expected run command");
-        };
-        assert_eq!(args.common.isolation, Some(common::IsolationArg::Sandbox));
-    }
-
-    #[test]
     fn run_omission_preserves_microvm_default() {
         let cli = Cli::try_parse_from(["kbox", "run", "alpine:latest"]).unwrap();
 
@@ -762,25 +751,18 @@ mod isolation_cli_tests {
     }
 
     #[test]
-    fn cli_rejects_explicit_microvm_spelling() {
-        let error = Cli::try_parse_from(["kbox", "run", "--isolation", "microvm", "alpine:latest"])
-            .err()
-            .expect("explicit microvm spelling must be rejected");
-
-        assert!(error.to_string().contains("invalid value 'microvm'"));
-    }
-
-    #[test]
-    fn compose_up_accepts_sandbox_isolation() {
-        let cli = Cli::try_parse_from(["kbox", "compose", "up", "--isolation", "sandbox"]).unwrap();
-
-        let Command::Compose(args) = cli.command else {
-            panic!("expected compose command");
-        };
-        let compose::ComposeCommand::Up(args) = args.command else {
-            panic!("expected compose up command");
-        };
-        assert_eq!(args.isolation, Some(common::IsolationArg::Sandbox));
-        assert!(args.services.is_empty());
+    fn cli_rejects_legacy_isolation_flag() {
+        for value in ["sandbox", "microvm"] {
+            let error = Cli::try_parse_from(["kbox", "run", "--isolation", value, "alpine:latest"])
+                .err()
+                .unwrap_or_else(|| panic!("--isolation {value} must be rejected"));
+            let message = error.to_string();
+            assert!(
+                message.contains("unexpected argument")
+                    || message.contains("isolation")
+                    || message.contains("invalid"),
+                "unexpected rejection for {value}: {message}"
+            );
+        }
     }
 }

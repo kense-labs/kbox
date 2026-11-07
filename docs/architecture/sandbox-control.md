@@ -6,7 +6,7 @@ Gateway、Observer Guard 和宿主分别执行干预。
 阻断判定、控制文件写入和实际拒绝是 3 种结果。
 
 源码核对日期：2026-11-03。
-文字修订日期：2026-11-04。
+文字修订日期：2026-11-07。
 文中的 Sentry 专指安全控制引擎 `ksentry`。
 
 [架构图 PNG](sandbox-control.png) · [可编辑 SVG](sandbox-control.svg) ·
@@ -43,31 +43,27 @@ Observer 是外部依赖。
 
 ## 2. 执行与平台边界
 
-### 2.1 三类沙箱的区别
+### 2.1 两类边界
 
 进程命令沙箱管理一次命令及后代进程。
-代码隔离执行沙箱管理一套代码运行环境。
-独立内核虚拟机（Virtual Machine，VM）提供客体与宿主的内核边界。
-前 2 项描述管理单位，第 3 项描述隔离方式。
-命令和代码环境都支持在 VM 中运行。
+实现位于独立仓库 [ksandbox](https://github.com/kense-labs/ksandbox)。
 
-本文的代码隔离执行沙箱指 Box 的镜像化环境。
-Box 支持共享宿主内核或使用 MicroVM。
-共享内核路线必须显式选择。
-这 3 类机制支持组合使用。
+kbox Box 管理镜像化执行环境。
+产品隔离只有独立内核 MicroVM（`ExecutionIsolation::Microvm` → OCI `DedicatedVm`）。
+共享宿主内核不是 Box 产品路径。
 
-| 对比项 | 进程命令沙箱 | 代码隔离执行沙箱：共享内核路线 | 独立内核虚拟机 |
-| --- | --- | --- | --- |
-| 管理单位 | 一次命令及后代进程。 | 镜像根文件系统、进程、资源与环境句柄。 | VM、客体内核、客体 Agent 与工作负载。 |
-| 内核 | 原生路径共享宿主内核。 | 共享 Linux 宿主内核。 | 客体内核与宿主内核分离。 |
-| 文件系统 | 策略允许访问的宿主目录。 | 镜像根文件系统与显式挂载。 | 客体文件系统与显式共享目录。 |
-| 网络 | 操作系统拒绝访问，或授权中介转发。 | 网络命名空间与配置的网络连接。 | 虚拟网络与配置的网络连接。 |
-| 身份 | 平台进程权限、访问控制列表（Access Control List，ACL）或命名空间。 | 用户命名空间、身份映射与内核能力限制。 | 客体身份与宿主共享资源的访问契约。 |
-| 资源限制 | 命令超时、输出上限与后端支持的资源策略。 | 控制组（cgroup v2）、进程与环境资源限制。 | 虚拟处理器、客体内存与客体内进程限制。 |
-| 复用 | 每次调用启动命令。 | 同一环境支持后续代码子进程。 | VM 所有者决定复用或销毁时间。 |
-| 结束 | 收集退出状态，终止受管后代进程。 | 停止环境，按资源所有权移除资源。 | 停止工作负载，停止 VM，释放受管资源。 |
-| 剩余风险边界 | 共享内核与已授权的宿主资源。 | 共享内核、挂载、设备与网络授权。 | 虚拟机监控器、虚拟设备、共享挂载与控制通道。 |
-| Sentry 观测 | 命令、文件、网络与正文事件。 | 事件需关联命名空间和环境身份。 | 宿主事件与客体事件需分别接入。 |
+| 对比项 | 进程命令沙箱（ksandbox） | kbox Box MicroVM |
+| --- | --- | --- |
+| 管理单位 | 一次命令及后代进程。 | VM、客体内核、镜像 rootfs、资源与环境句柄。 |
+| 内核 | 原生路径可共享宿主内核。 | 客体内核与宿主内核分离。 |
+| 文件系统 | 策略允许访问的宿主目录。 | 客体文件系统与显式共享目录。 |
+| 网络 | 操作系统拒绝访问，或授权中介转发。 | 虚拟网络与配置的网络连接。 |
+| 身份 | 平台进程权限、ACL 或命名空间。 | 客体身份与宿主共享资源的访问契约。 |
+| 资源限制 | 命令超时、输出上限与后端支持的资源策略。 | 虚拟处理器、客体内存与客体内进程限制。 |
+| 复用 | 每次调用启动命令。 | VM 所有者决定复用或销毁时间。 |
+| 结束 | 收集退出状态，终止受管后代进程。 | 停止工作负载，停止 VM，释放受管资源。 |
+| 剩余风险边界 | 共享内核与已授权的宿主资源。 | 虚拟机监控器、虚拟设备、共享挂载与控制通道。 |
+| Sentry 观测 | 命令、文件、网络与正文事件。 | 宿主事件与客体事件需分别接入。 |
 
 上表比较管理单位与隔离机制。
 实际可用能力取决于平台、后端和配置。
@@ -75,9 +71,10 @@ Box 支持共享宿主内核或使用 MicroVM。
 
 ### 2.2 进程命令沙箱
 
+进程命令沙箱实现位于外部仓库 [ksandbox](https://github.com/kense-labs/ksandbox)，不在本仓库的 `crates/` 树内。
 `BashSandbox` 定义 Core 的命令执行接口。
 调用者提交命令、环境变量、超时和输出观察者。
-`NativeBashSandbox` 把请求交给 `kcmd-sandbox`。
+原生适配器把请求交给 ksandbox 执行器。
 执行器按本次调用的策略快照准备受限进程。
 操作系统在资源访问时执行限制。
 
@@ -88,7 +85,7 @@ Box 支持共享宿主内核或使用 MicroVM。
 
 Linux 原生路径使用 Bubblewrap 命名空间与系统调用过滤（seccomp）。
 Windows 路径使用 AppContainer、ACL 与 Job Object。
-`kcmd-sandbox` 还提供 macOS Seatbelt 后端。
+ksandbox 还提供 macOS Seatbelt 后端。
 Core 的 macOS 原生适配器仍拒绝执行命令。
 拒绝原因是后代进程生命周期约束未满足。
 
@@ -97,9 +94,8 @@ Core 在每次命令调用时启动独立 Linux 客体。
 命令使用的解释器必须存在于客体内。
 宿主安装的解释器不会自动出现在客体内。
 
-来源：[原生适配器](../../crates/code/core/src/sandbox/native.rs)、
-[命令沙箱](../../crates/sandbox/src/lib.rs)、
-[会话选择](../../crates/code/core/src/agent_api/session_sandbox.rs)。
+来源：[命令沙箱（ksandbox）](https://github.com/kense-labs/ksandbox)。
+Core 原生 / OCI 命令适配器不在本仓库树内。
 
 ### 2.3 代码隔离执行沙箱
 
@@ -108,42 +104,20 @@ Box 管理镜像根文件系统（rootfs）与执行环境。
 调用者配置挂载、环境变量与资源限制。
 同一环境支持在生命周期内执行代码子进程。
 
-共享内核路线使用 `ExecutionIsolation::Sandbox`。
-OCI 适配器把隔离选择映射为 `SharedHostKernel`。
-这条路线共享 Linux 宿主内核。
-独立 rootfs 只提供文件视图边界。
+kbox Box 的代码隔离只走独立内核 MicroVM。
+隔离选择为 `ExecutionIsolation::Microvm`。
+OCI 适配器把该选择映射为 `DedicatedVm`。
+共享宿主内核路线（历史上的 `ExecutionIsolation::Sandbox` / `SharedHostKernel`）不再作为 Box 产品路径。
 
-Box 的共享内核执行计划要求 10 项控制。
-启动前，执行后端必须确认宿主能力与配置支持。
-容器 root 的身份映射不能直接指向宿主 root。
-
-| 控制 | 作用 |
-| --- | --- |
-| 用户命名空间（`user`） | 管理容器身份与宿主身份的映射。 |
-| 挂载命名空间（`mount`） | 隔离挂载视图。 |
-| 进程命名空间（`PID`） | 隔离进程编号与可见范围。 |
-| 进程间通信命名空间（`IPC`） | 隔离进程间通信资源。 |
-| 主机标识命名空间（`UTS`） | 隔离主机名与域名。 |
-| 网络命名空间（`network`） | 隔离网络栈与网络接口。 |
-| seccomp | 限制系统调用。 |
-| capability bounding | 限制进程可持有的内核能力。 |
-| no-new-privileges | 阻止执行程序时取得额外权限。 |
-| cgroup v2 | 执行已配置的资源限制。 |
-
-共享内核仍是这条路线的安全边界。
-网络命名空间只隔离网络栈，不授予外部目标访问权。
-挂载与网络访问分别受授权契约约束。
-环境停止后，宿主挂载目录中的写入仍然保留。
-持久卷按资源所有权规则保留或移除。
-
-Linux 共享内核路线支持 Box 到 OCI 的执行绑定。
 创建环境、启动初始进程和后续执行分别使用对应接口。
 终止与删除沿用已选定的后端和执行代次。
 后端遇到不支持的操作时返回错误。
+环境停止后，宿主挂载目录中的写入仍然保留。
+持久卷按资源所有权规则保留或移除。
+内核边界、平台驱动与剩余风险见第 2.4 节。
 
 来源：[隔离选择](../../crates/box/core/src/config.rs)、
-[必要控制](../../crates/box/core/src/execution.rs)、
-[身份映射](../../crates/box/runtime/src/sandbox/capability.rs)、
+[执行计划](../../crates/box/core/src/execution.rs)、
 [OCI 映射](../../crates/box/runtime/src/local_execution/oci_backend.rs)、
 [生命周期接口](../../crates/box/core/src/traits/execution.rs)。
 
@@ -154,7 +128,7 @@ MicroVM 启动独立客体内核与客体用户空间。
 虚拟机监控器（Hypervisor）与虚拟设备隔离宿主和客体。
 客体进程在客体系统内执行。
 
-Box 默认选择 `ExecutionIsolation::Microvm`。
+Box 产品路径固定为 `ExecutionIsolation::Microvm`。
 OCI 适配器把隔离选择映射为 `DedicatedVm`。
 驱动分别使用 3 个平台的虚拟化接口。
 
@@ -194,37 +168,23 @@ Windows/WHPX 的初始执行入口遵循 ExecutionManager 契约。
 
 来源：[OCI 隔离类型](../../crates/oci-runtime/crates/core/src/capability.rs)、
 [Box 到 OCI 的映射](../../crates/box/runtime/src/local_execution/oci_backend.rs)、
-[Core OCI 命令](../../crates/code/core/src/sandbox/oci.rs)、
 [生命周期接口](../../crates/box/core/src/traits/execution.rs)。
 
 ### 2.5 当前默认与平台选择
 
-Core 通过 `BashSandbox` 绑定命令执行器。
-自定义执行器与远端命令执行器保留各自契约。
-本地默认执行器按平台选择隔离后端。
-Box 独立管理环境与后端路由。
+进程命令执行默认走外部 [ksandbox](https://github.com/kense-labs/ksandbox)。
+Box 环境只走 MicroVM。
 
 | 路径 | 当前实现 | 主要边界 |
 | --- | --- | --- |
-| Linux Core 命令 | `NativeBashSandbox` → `kcmd-sandbox` | Bubblewrap 命名空间与 seccomp。 |
-| Windows Core 命令 | `NativeBashSandbox` → `kcmd-sandbox` | AppContainer、ACL、PowerShell 7 与 Job Object。 |
-| macOS ARM64，`deny` | `OciBashSandbox` → OCI SDK | 每次命令使用独立 VM。 |
-| macOS Core 原生适配器 | 拒绝执行 | 后代进程生命周期约束未满足。 |
-| Box 环境 | `ExecutionManager` 与持久后端路由 | 环境、资源、隔离要求与执行代次。 |
-| 终端进程配置 | 终端的 `ksandbox` | Unix 内核约束与已接入的子进程入口。 |
+| Linux / Windows / macOS 进程命令 | [ksandbox](https://github.com/kense-labs/ksandbox) | Seatbelt、Bubblewrap+seccomp 或 AppContainer+Job。 |
+| Box 环境 | `ExecutionManager` → MicroVM（`DedicatedVm`） | 镜像环境、资源、执行代次与客体生命周期。 |
 
-终端 `ksandbox` 与 `kcmd-sandbox` 是不同组件。
-终端进程配置应用失败时，底层可能记录警告后继续。
-显式 `ProcessHost` 降级依赖宿主提供外层隔离。
-Browser 的启动参数包含 `--no-sandbox`。
 Sentry 观测不能代替执行入口所需的隔离。
 
-来源：[会话绑定](../../crates/code/core/src/agent_api/session_sandbox.rs)、
-[OCI 适配器](../../crates/code/core/src/sandbox/oci.rs)、
-[原生适配器](../../crates/code/core/src/sandbox/native.rs)、
+来源：[命令沙箱（ksandbox）](https://github.com/kense-labs/ksandbox)、
 [Box 路由](../../crates/box/runtime/src/local_execution/router.rs)、
-[终端进程配置](../../crates/terminal/crates/codegen/ksandbox/src/lib.rs)、
-[Browser](../../crates/browser/src/pool.rs)。
+[隔离选择](../../crates/box/core/src/config.rs)。
 
 ## 3. 观测信号
 
@@ -303,7 +263,7 @@ SDK 或宿主必须显式组装包含 SAE 的 Pipeline。
 
 ### 3.4 沙箱审计
 
-`kcmd-sandbox` 输出结构化审计记录。
+[ksandbox](https://github.com/kense-labs/ksandbox) 输出结构化审计记录。
 审计对象包括文件、网络、进程、策略编译与环境。
 原因码区分拒绝、能力缺失、超时和授权应用。
 Core 与 Box 还保存输出、退出状态和执行代次。
@@ -313,7 +273,7 @@ Core 与 Box 还保存输出、退出状态和执行代次。
 Observer 事件与 Core 事件使用不同格式。
 跨日志关联需要明确的身份与字段映射。
 
-来源：[沙箱审计](../../crates/sandbox/src/observability/mod.rs)。
+来源：[沙箱审计（ksandbox）](https://github.com/kense-labs/ksandbox)。
 
 ## 4. Sentry 分级判定
 
@@ -414,10 +374,8 @@ Box 的 `stop` 与 `remove` 受执行代次约束。
 自动干预接入需要绑定身份、授权范围与执行代次。
 告警本身不授予停止运行的权限。
 
-来源：[Bash 权限](../../crates/code/core/src/tools/builtin/bash.rs)、
-[会话取消](../../crates/code/core/src/agent_api/session_facade.rs)、
-[Box 生命周期](../../crates/box/core/src/traits/execution.rs)、
-[策略替换](../../crates/sandbox/src/lib.rs)。
+来源：[Box 生命周期](../../crates/box/core/src/traits/execution.rs)、
+[策略替换（ksandbox）](https://github.com/kense-labs/ksandbox)。
 
 ## 6. 观测 Sentry 自身
 
@@ -465,8 +423,7 @@ Observer Guard 仍是外部依赖。
 Studio 当前的 `initSentry()` 是空实现。
 错误上报 SDK 不提供本文的安全干预能力。
 
-来源：[命令行 Sentry](../../crates/terminal/crates/codegen/ktelemetry/src/sentry.rs)、
-[Studio Sentry](../../apps/studio/src/renderer/services/sentry.ts)。
+命令行 / Studio 的错误上报 Sentry SDK 不在本仓库当前树内。
 
 [多 Harness 设计](harness-gateway.md)中的 Sentry 对应安全判定能力。
 Observer 提供运行时事件，Wire 提供通信检查入口。

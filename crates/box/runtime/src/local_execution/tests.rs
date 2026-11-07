@@ -401,9 +401,9 @@ fn request(external_id: &str) -> CreateExecutionRequest {
         external_sandbox_id: external_id.to_string(),
         config: BoxConfig {
             image: "alpine:3.20".to_string(),
-            // FakeBackend lifecycle contracts are isolation-policy checks, not
-            // Linux Sandbox drivers. Default MicroVM so Windows hosts execute
-            // the same honesty/recovery assertions instead of failing create.
+            // FakeBackend lifecycle contracts are isolation-policy checks.
+            // Default MicroVM so Windows hosts execute the same
+            // honesty/recovery assertions instead of failing create.
             isolation: ExecutionIsolation::Microvm,
             network: NetworkMode::None,
             resources: kbox_core::ResourceConfig {
@@ -427,7 +427,7 @@ fn operation(value: &str) -> OperationId {
 
 fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
     let mut request = request(external_id);
-    request.config.isolation = ExecutionIsolation::Sandbox;
+    request.config.isolation = ExecutionIsolation::Microvm;
     request
 }
 
@@ -513,7 +513,7 @@ fn managed_record_rejects_sandbox_isolation_on_windows() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-windows-sandbox").unwrap();
     let mut request = request("invalid-windows-sandbox");
-    request.config.isolation = ExecutionIsolation::Sandbox;
+    request.config.isolation = ExecutionIsolation::Microvm;
 
     let error = build_managed_record(
         directory.path(),
@@ -3553,16 +3553,6 @@ async fn microvm_snapshot_reconcile_refuses_sandbox_only_publish() {
     populate_rootfs(&manager, &running.execution_id, "must-not-snapshot");
     let snapshot_id = ExecutionSnapshotId::new("microvm-refused-snapshot").unwrap();
     let record = persisted(&manager, &running.execution_id);
-    assert!(
-        !record
-            .managed_execution
-            .as_ref()
-            .unwrap()
-            .plan
-            .backend
-            .is_sandbox(),
-        "test requires a non-Sandbox generation"
-    );
     let claimed = manager
         .transition(
             &record,
@@ -3628,16 +3618,6 @@ async fn microvm_cold_paused_snapshot_reconcile_restores_paused_not_failed() {
         .unwrap();
     let snapshot_id = ExecutionSnapshotId::new("microvm-cold-refused-snapshot").unwrap();
     let record = persisted(&manager, &paused.execution_id);
-    assert!(
-        !record
-            .managed_execution
-            .as_ref()
-            .unwrap()
-            .plan
-            .backend
-            .is_sandbox(),
-        "test requires a non-Sandbox generation"
-    );
     assert!(
         !record
             .managed_execution

@@ -1,15 +1,10 @@
 [workspace]
 resolver = "3"
-exclude = [
-    "crates/code/fixtures/s3-compat",
-    "apps/api",
-    "apps/cloud",
-    "apps/control-plane",
-]
 members = [
     "crates/acl",
     "crates/box/cli",
     "crates/box/core",
+    "crates/box/cri",
     "crates/box/deps/libksys",
     "crates/box/guest/init",
     "crates/box/netproxy",
@@ -25,17 +20,6 @@ members = [
     "crates/oci-runtime/crates/runtime",
     "crates/oci-runtime/crates/sdk",
     "crates/runtime",
-    "crates/sandbox",
-    "crates/terminal/crates/codegen/kconfig",
-    "crates/terminal/crates/codegen/kdirs",
-    "crates/terminal/crates/codegen/kenv",
-    "crates/terminal/crates/codegen/ktty-utils",
-    "crates/terminal/crates/codegen/kversion",
-    "crates/terminal/prod/mc/cli-chat-proxy-types",
-    "crates/third-party/crossterm",
-    "crates/third-party/saphyr-parser-bw",
-    "crates/third-party/serde-saphyr",
-    "crates/updater",
 ]
 default-members = ["crates/runtime", "crates/box/cli"]
 
@@ -49,7 +33,6 @@ license = "MIT"
 agent-client-protocol = {features = ["unstable"], version = "0.10.4"}
 anyhow = {features = ["backtrace"], version = "1"}
 arc-swap = {version = "1.7"}
-async-openai = {features = ["responses"], version = "0.33.0"}
 async-stream = {version = "0.3"}
 async-trait = {version = "0.1"}
 axum = {features = ["macros", "ws"], version = "0.8"}
@@ -61,7 +44,6 @@ bytes = {features = ["serde"], version = "1"}
 chrono = {version = "0.4"}
 clap = {features = ["derive", "env"], version = "4"}
 criterion = {version = "0.6"}
-crossterm = {features = ["event-stream", "bracketed-paste"], version = "0.28"}
 dashmap = {version = "6"}
 dirs = {version = "5.0"}
 dunce = {version = "1"}
@@ -92,7 +74,6 @@ prometheus = {features = ["process"], version = "0.14"}
 prost = {version = "0.14"}
 pulldown-cmark = {version = "0.13"}
 rand = {version = "0.9"}
-ratatui = {features = ["crossterm", "unstable-widget-ref"], version = "0.29"}
 rcgen = {features = ["pem", "x509-parser"], version = "0.13"}
 regex = {version = "1"}
 reqwest = {default-features = false, features = ["rustls-tls", "stream", "json", "multipart", "http2", "blocking", "socks"], version = "0.12"}
@@ -214,7 +195,8 @@ comfy-table = { version = "7", default-features = false }
 # Random
 olpc-cjson = "0.1"
 rmcp = { version = "=0.8.5", default-features = false, features = ["base64", "client", "macros", "server", "transport-io", "transport-streamable-http-client-reqwest", "transport-streamable-http-server"] }
-tonic-build = "0.11"
+tonic-prost = "0.14"
+tonic-prost-build = "0.14"
 
 klibksys = { path = "crates/box/deps/libksys" }
 cap-fs-ext = "=4.0.2"
@@ -235,9 +217,6 @@ windows-sys = { version = "0.59", features = [
     "Win32_System_SystemServices",
     "Win32_System_Threading",
 ] }
-
-[workspace.dependencies.koffice-formula-parser]
-path = "crates/office/crates/formula-parser"
 
 [workspace.lints.clippy]
 # prost 0.14 renders proto doc-comment bullet lists in a way that trips this
@@ -266,13 +245,8 @@ uninlined_format_args = "allow"
 useless_format = "allow"
 
 [patch.crates-io]
-crossterm = { path = "crates/third-party/crossterm" }
 oci-spec = { path = "crates/oci-runtime/vendor/oci-spec-0.10.0" }
-serde-saphyr = { path = "crates/third-party/serde-saphyr" }
-saphyr-parser-bw = { path = "crates/third-party/saphyr-parser-bw" }
 
-[patch.crates-io.async-openai]
-path = "crates/third-party/async-openai"
 [profile.dev]
 debug = "line-tables-only"
 

@@ -703,10 +703,10 @@ mod tests {
         record.network_name = None;
         let config = kbox_core::BoxConfig {
             image: record.image.clone(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
-        record.isolation = ExecutionIsolation::Sandbox;
+        record.isolation = ExecutionIsolation::Microvm;
         record.managed_execution = Some(
             crate::ManagedExecutionMetadata::new(
                 OperationId::new("snapshot-restore-operation").unwrap(),

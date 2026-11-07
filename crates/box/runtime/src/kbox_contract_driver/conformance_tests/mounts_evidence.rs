@@ -126,7 +126,7 @@ pub(super) fn sandbox_private_artifact_alias(
     record: &crate::BoxRecord,
     target: &str,
 ) -> Result<(PathBuf, PathBuf)> {
-    let alias_root = crate::sandbox::sandbox_mount_alias_root(&fixture.home_dir, &record.id);
+    let alias_root = crate::host_fs::mount_alias_root(&fixture.home_dir, &record.id);
     let bundle: serde_json::Value = serde_json::from_slice(
         &std::fs::read(record.box_dir.join("sandbox/bundle/config.json"))
             .map_err(|error| super::external("read private Artifact OCI bundle", error))?,

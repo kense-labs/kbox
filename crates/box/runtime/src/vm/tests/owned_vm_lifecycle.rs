@@ -499,7 +499,7 @@ async fn finalization_failure_keeps_exact_provider_paths_and_direct_managers_unq
             .pid(),
         proof.pid()
     );
-    for isolation in [ExecutionIsolation::Microvm, ExecutionIsolation::Sandbox] {
+    for isolation in [ExecutionIsolation::Microvm, ExecutionIsolation::Microvm] {
         let mut direct = VmManager::new(
             BoxConfig {
                 isolation,

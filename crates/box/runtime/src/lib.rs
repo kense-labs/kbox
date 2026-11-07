@@ -40,7 +40,8 @@ pub mod prom;
 pub mod resize;
 mod resolved_image;
 pub mod rootfs;
-pub mod sandbox;
+pub mod host_fs;
+pub mod oci_portable_spec;
 pub mod snapshot;
 mod store_io;
 #[cfg(unix)]
@@ -82,8 +83,6 @@ pub use box_record::{
 };
 pub use box_state::BoxStateStore;
 pub use koci_sdk::{IO_READ_BYTES_METRIC, IO_WRITE_BYTES_METRIC};
-#[cfg(target_os = "linux")]
-pub use local_execution::capture_sandbox_host_rootfs_for_commit;
 pub use local_execution::{
     acquire_execution_lifecycle_lock, ExecutionLifecycleLock, FreshOwnerAdmission,
     LocalExecutionBackend, LocalExecutionBackendRouter, LocalExecutionHandle,
@@ -111,30 +110,29 @@ pub fn cleanup_microvm_virtiofs_ro_shares(
     }
 }
 
-/// Tear down a keep-authority SandboxViaOci host-netdevice lease under
-/// `home_dir/boxes/{box_id}/sandbox/`. Absent lease is success; present
-/// rule/link delete failures retain the lease file for retry.
-#[cfg(all(feature = "vm", target_os = "linux"))]
-pub fn teardown_sandbox_host_netdevice_lease(
+/// Tear down a leftover host-netdevice lease under `boxes/{id}/sandbox/`
+/// (legacy layout dir named `sandbox`). Absent lease is success. Present
+/// decode / DNAT / veth teardown failures fail closed.
+pub fn cleanup_host_netdevice_lease(
     home_dir: &std::path::Path,
     box_id: &str,
 ) -> kbox_core::ExecutionManagerResult<()> {
-    local_execution::oci_host_netdevice::teardown_lease(home_dir, box_id)
+    #[cfg(all(feature = "vm", target_os = "linux"))]
+    {
+        local_execution::oci_host_netdevice::teardown_lease(home_dir, box_id)
+    }
+    #[cfg(not(all(feature = "vm", target_os = "linux")))]
+    {
+        let _ = (home_dir, box_id);
+        Ok(())
+    }
 }
 
-/// Non-Linux / no-vm: keep-authority host netdevice leases are not staged.
-#[cfg(not(all(feature = "vm", target_os = "linux")))]
-pub fn teardown_sandbox_host_netdevice_lease(
-    _home_dir: &std::path::Path,
-    _box_id: &str,
-) -> kbox_core::ExecutionManagerResult<()> {
-    Ok(())
-}
+
 #[cfg(feature = "vm")]
 pub use local_execution::{
-    LinuxKvmOciBundleProvider, LinuxKvmOciMigrationConfig, NativeLinuxOciBundleProvider,
-    NativeLinuxOciMigrationConfig, VmLocalExecutionBackend, WindowsWhpxOciBundleProvider,
-    WindowsWhpxOciMigrationConfig,
+    LinuxKvmOciBundleProvider, LinuxKvmOciMigrationConfig, VmLocalExecutionBackend,
+    WindowsWhpxOciBundleProvider, WindowsWhpxOciMigrationConfig,
 };
 pub use managed_execution_store::{
     ManagedExecutionReservation, ManagedExecutionStore, ManagedExecutionStoreError,

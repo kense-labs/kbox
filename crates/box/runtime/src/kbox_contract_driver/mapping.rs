@@ -162,9 +162,7 @@ pub(super) fn creation_request_for(
             cpu_quota: Some(cpu_quota),
             cpu_period: Some(CPU_PERIOD_US),
             memory_swap: Some(memory_swap),
-            sandbox_memory_limit_bytes: execution_isolation
-                .is_sandbox()
-                .then_some(spec.resources.memory_bytes),
+            sandbox_memory_limit_bytes: None,
             ..Default::default()
         },
         deferred_main: spec.isolation == kbox_contract::contract::IsolationLevel::Confidential,
@@ -310,7 +308,7 @@ fn validate_supported_shape(
                 "Runtime ephemeral storage limit must be greater than zero".into(),
             ));
         }
-        if execution_isolation != ExecutionIsolation::Sandbox
+        if execution_isolation != ExecutionIsolation::Microvm
             || !crate::rootfs::writable_layer_quota_supported()
         {
             return Err(RuntimeError::UnsupportedCapabilities(vec![
@@ -336,13 +334,9 @@ fn compile_network_mode(
         // vsock connector. Enabling TSI here would redirect the guest-side
         // loopback connection to the host instead of the local workload.
         RuntimeNetworkMode::None | RuntimeNetworkMode::Service => Ok(NetworkMode::None),
-        // Outbound egress:
-        // - MicroVM → libkrun TSI socket-proxy
-        // - Sandbox → host netns (`NetworkMode::Host`); private loopback netns
-        //   has no TSI, so host-netns is the honest Sandbox egress path.
+        // Outbound egress: MicroVM → libkrun TSI socket-proxy.
         RuntimeNetworkMode::Outbound => match execution_isolation {
             ExecutionIsolation::Microvm => Ok(NetworkMode::Tsi),
-            ExecutionIsolation::Sandbox => Ok(NetworkMode::Host),
         },
     }
 }

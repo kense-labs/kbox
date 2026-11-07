@@ -674,14 +674,14 @@ mod tests {
         let id = "11111111-1111-4111-8111-111111111111";
         let mut record =
             crate::test_helpers::fixtures::make_record(id, "managed-copy", status, Some(1));
-        record.isolation = ExecutionIsolation::Sandbox;
+        record.isolation = ExecutionIsolation::Microvm;
         let mut metadata = ManagedExecutionMetadata::new(
             OperationId::new("copy-route-create").unwrap(),
             generation,
             CreateExecutionRequest {
                 external_sandbox_id: "managed-copy-external".to_string(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Sandbox,
+                    isolation: ExecutionIsolation::Microvm,
                     image: record.image.clone(),
                     ..Default::default()
                 },

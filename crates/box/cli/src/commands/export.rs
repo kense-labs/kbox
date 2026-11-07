@@ -27,45 +27,35 @@ pub async fn execute(args: ExportArgs) -> Result<(), Box<dyn std::error::Error>>
         )
     })?;
 
-    if uses_live_sandbox_host_rootfs(record) {
-        // Managed Sandbox pause/resume uses the same lifecycle lock; release the
-        // CLI guard before host-rootfs capture so generation fencing stays exclusive.
-        drop(lifecycle_lock);
-        export_live_sandbox_host(record, &args.output).await?;
-    } else if record.status == "running" {
+    if record.status == "running" {
         export_live_guest(record, &args.output).await?;
         drop(lifecycle_lock);
     } else if record.status == "paused" {
         return Err(format!(
-            "Cannot export paused MicroVM box '{}'; resume it first, or use a Sandbox",
+            "Cannot export paused MicroVM box '{}'; resume it first",
             record.name
         )
         .into());
+    } else if kbox_runtime::rootfs::guest_native_ext4_generation_exists(&record.box_dir)? {
+        let mut file = tokio::fs::File::create(&args.output)
+            .await
+            .map_err(|error| format!("Failed to create {}: {error}", args.output))?;
+        super::rootfs_capture::archive_stopped_guest_native_rootfs(record, &mut file).await?;
+        file.sync_all().await?;
+        drop(lifecycle_lock);
     } else {
-        if super::rootfs_capture::stopped_sandbox_uses_managed_host_rootfs(record) {
-            drop(lifecycle_lock);
-            export_stopped_sandbox_host(record, &args.output).await?;
-        } else if kbox_runtime::rootfs::guest_native_ext4_generation_exists(&record.box_dir)? {
-            let mut file = tokio::fs::File::create(&args.output)
-                .await
-                .map_err(|error| format!("Failed to create {}: {error}", args.output))?;
-            super::rootfs_capture::archive_stopped_guest_native_rootfs(record, &mut file).await?;
-            file.sync_all().await?;
-            drop(lifecycle_lock);
-        } else {
-            let rootfs_dir = super::resolve_box_rootfs(&record.box_dir)
-                .ok_or_else(|| rootfs_not_found_message(&args.name, &record.box_dir))?;
-            // Match stopped commit: fail closed without guest rootfs metadata so
-            // NTFS host mode/ownership is never archived as guest filesystem truth.
-            let rootfs_metadata = super::commit::read_guest_rootfs_metadata(&rootfs_dir)
-                .map_err(|error| format!("Cannot export stopped box '{}': {error}", record.name))?;
-            super::commit::create_tar_from_guest_metadata(
-                &rootfs_dir,
-                &rootfs_metadata,
-                std::path::Path::new(&args.output),
-            )?;
-            drop(lifecycle_lock);
-        }
+        let rootfs_dir = super::resolve_box_rootfs(&record.box_dir)
+            .ok_or_else(|| rootfs_not_found_message(&args.name, &record.box_dir))?;
+        // Match stopped commit: fail closed without guest rootfs metadata so
+        // NTFS host mode/ownership is never archived as guest filesystem truth.
+        let rootfs_metadata = super::commit::read_guest_rootfs_metadata(&rootfs_dir)
+            .map_err(|error| format!("Cannot export stopped box '{}': {error}", record.name))?;
+        super::commit::create_tar_from_guest_metadata(
+            &rootfs_dir,
+            &rootfs_metadata,
+            std::path::Path::new(&args.output),
+        )?;
+        drop(lifecycle_lock);
     }
 
     let size = std::fs::metadata(&args.output)
@@ -74,66 +64,6 @@ pub async fn execute(args: ExportArgs) -> Result<(), Box<dyn std::error::Error>>
 
     println!("{}", export_success_line(&args.name, &args.output, size));
     Ok(())
-}
-
-/// SandboxViaOci host-rootfs capture works while Running or freezer-Paused
-/// (same quiesce surface as live commit/snapshot). MicroVM guest archives stay
-/// Running-only.
-fn uses_live_sandbox_host_rootfs(record: &crate::state::BoxRecord) -> bool {
-    record.isolation.is_sandbox() && matches!(record.status.as_str(), "running" | "paused")
-}
-
-#[cfg(all(unix, target_os = "linux"))]
-async fn export_live_sandbox_host(
-    record: &crate::state::BoxRecord,
-    output: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let live_pid = record.pid.is_some_and(|pid| {
-        crate::process::is_process_alive_with_identity(pid, record.pid_start_time)
-    });
-    if !live_pid {
-        return Err(format!(
-            "Cannot export box '{}' because its host process is not live",
-            record.name
-        )
-        .into());
-    }
-    // Quiesce via managed pause when Running; already-Paused captures in place.
-    super::commit::capture_live_host_rootfs_tar(record, std::path::Path::new(output), true).await
-}
-
-#[cfg(not(all(unix, target_os = "linux")))]
-async fn export_live_sandbox_host(
-    record: &crate::state::BoxRecord,
-    _output: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    Err(format!(
-        "Live Sandbox host-rootfs export is unavailable for box '{}' on this platform",
-        record.name
-    )
-    .into())
-}
-
-#[cfg(all(unix, target_os = "linux"))]
-async fn export_stopped_sandbox_host(
-    record: &crate::state::BoxRecord,
-    output: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    super::rootfs_capture::ensure_stopped_rootfs_is_unowned(record)?;
-    // Already stopped: capture OCI-mapped host rootfs without pause/resume.
-    super::commit::capture_live_host_rootfs_tar(record, std::path::Path::new(output), false).await
-}
-
-#[cfg(not(all(unix, target_os = "linux")))]
-async fn export_stopped_sandbox_host(
-    record: &crate::state::BoxRecord,
-    _output: &str,
-) -> Result<(), Box<dyn std::error::Error>> {
-    Err(format!(
-        "Stopped Sandbox host-rootfs export is unavailable for box '{}' on this platform",
-        record.name
-    )
-    .into())
 }
 
 #[cfg(unix)]
@@ -222,24 +152,5 @@ mod tests {
             export_success_line("web", "web.tar", 1536),
             "Exported web to web.tar (1.5 KB)"
         );
-    }
-
-    #[test]
-    fn live_sandbox_host_rootfs_accepts_running_and_paused() {
-        let mut running =
-            crate::test_helpers::fixtures::make_record("id", "box", "running", Some(1));
-        running.isolation = kbox_core::ExecutionIsolation::Sandbox;
-        let mut paused = crate::test_helpers::fixtures::make_record("id", "box", "paused", Some(1));
-        paused.isolation = kbox_core::ExecutionIsolation::Sandbox;
-        let mut stopped = crate::test_helpers::fixtures::make_record("id", "box", "stopped", None);
-        stopped.isolation = kbox_core::ExecutionIsolation::Sandbox;
-        let mut microvm_paused =
-            crate::test_helpers::fixtures::make_record("id", "box", "paused", Some(1));
-        microvm_paused.isolation = kbox_core::ExecutionIsolation::Microvm;
-
-        assert!(uses_live_sandbox_host_rootfs(&running));
-        assert!(uses_live_sandbox_host_rootfs(&paused));
-        assert!(!uses_live_sandbox_host_rootfs(&stopped));
-        assert!(!uses_live_sandbox_host_rootfs(&microvm_paused));
     }
 }

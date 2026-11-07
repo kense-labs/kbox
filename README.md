@@ -9,12 +9,12 @@ kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔�
 ### 1.1 一键安装（macOS / Linux）
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.0/install.sh | sh
 ```
 
 脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。
 
-可选环境变量：`KBOX_VERSION`（默认 `3.3.0`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
+可选环境变量：`KBOX_VERSION`（默认 `3.4.0`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
 
 预编译包支持矩阵：macOS arm64（Apple Silicon，Hypervisor Framework）。其他平台会给出明确提示，请改用源码构建。
 
@@ -23,7 +23,7 @@ curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.3.0/ins
 ```sh
 kbox update --check    # 只检查最新稳定版，不安装
 kbox update            # 下载、校验并更新到最新稳定版
-kbox update 3.3.0      # 安装指定版本
+kbox update 3.4.0      # 安装指定版本
 ```
 
 `kbox update` 只选择 `kense-labs/kense` 中以 `kbox-v` 开头的稳定 Release，忽略草稿、预发布和其他产品的 Release。交互式终端显示下载进度；安装包通过 SHA-256 校验，文件原子替换，完成后自动执行版本自检。自定义安装目录可用 `--prefix <PATH>` 指定，`--force` 可重装当前版本以修复安装。
@@ -34,11 +34,11 @@ kbox update 3.3.0      # 安装指定版本
 
 ### 1.3 手动安装
 
-从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.3.0) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.4.0) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
 
 ```sh
-tar -xzf kbox-3.3.0-macos-arm64.tar.gz
-sh kbox-3.3.0-macos-arm64/install.sh
+tar -xzf kbox-3.4.0-macos-arm64.tar.gz
+sh kbox-3.4.0-macos-arm64/install.sh
 ```
 
 安装包包含 `kbox` CLI、`kbox-shim`、静态 Linux guest init、libkrun 与 libkrunfw（含客体内核）。压缩包约 23 MB，安装后约 42 MB。
@@ -61,6 +61,12 @@ RUNS=1 bash -o pipefail -c \
 ```
 
 脚本源码见 [dsh-acp/scripts/bench-pool-dsh-acp.sh](https://github.com/kense-labs/dsh-acp/blob/main/scripts/bench-pool-dsh-acp.sh)。
+
+完整分层端到端（隔离 `K_HOME`、分 TIER、输出 `results.json`）见计划 [docs/e2e-dsh-acp/TEST-PLAN.md](docs/e2e-dsh-acp/TEST-PLAN.md)，本地冒烟：
+
+```sh
+DEEPSEEK_API_KEY=你的密钥 TIER=p0 ./scripts/e2e-dsh-acp/run.sh
+```
 
 下面的 `kbox run -i` **仅供 ACP 客户端启动 dsh-acp，不是终端聊天命令**。直接在终端执行会等待 JSON-RPC `initialize`，不会接受普通聊天文字；需要停止时按 Ctrl-C：
 
@@ -88,11 +94,13 @@ kbox/
 └── libkrunfw/             libkrunfw 子模块
 ```
 
+kbox 的 Box 隔离只交付独立内核 MicroVM。进程命令沙箱（ksandbox）在独立仓库 [kense-labs/ksandbox](https://github.com/kense-labs/ksandbox)，不在本仓库树内。
+
 `libkrun` 和 `libkrunfw` 是独立 Git submodule。修改原生依赖时，先在对应子仓库提交并验证，再更新父仓库的 gitlink。
 
 ## 4. 当前能力与目标边界
 
-当前代码包含 Box、OCI Runtime、Task／Service 合同和多个命令行工具。
+当前代码包含 Box（MicroVM）、OCI Runtime、Task／Service 合同和多个命令行工具。共享宿主内核不是 Box 产品路径。
 
 `docs/architecture/agent-paas-runtime.md` 中的 Agent Runtime v1.1 是目标架构。文档中的新增能力不代表已经实现。实际支持范围以源码、测试和原生平台资格化结果为准。
 
@@ -225,7 +233,7 @@ kbox compose [OPTIONS] <COMMAND>
 
 | 三级命令 | 说明 |
 | --- | --- |
-| `kbox compose up [OPTIONS] [SERVICE]...` | 创建并启动全部或指定服务。支持 `-d`、`--timeout`、`--isolation sandbox` |
+| `kbox compose up [OPTIONS] [SERVICE]...` | 创建并启动全部或指定服务（MicroVM）。支持 `-d`、`--timeout` |
 | `kbox compose down [OPTIONS]` | 停止并删除全部服务。`--volumes` 同时删除命名卷 |
 | `kbox compose ps [SERVICE]...` | 列出服务及状态 |
 | `kbox compose config` | 校验并显示 Compose 配置 |
@@ -257,7 +265,7 @@ kbox snapshot <COMMAND>
 
 | 三级命令 | 说明 |
 | --- | --- |
-| `kbox snapshot create [OPTIONS] <BOX_ID>` | 从已停止 Box 或受管 Sandbox 创建快照。支持 `--name`、`--description` |
+| `kbox snapshot create [OPTIONS] <BOX_ID>` | 从已停止 Box（MicroVM）创建快照。支持 `--name`、`--description` |
 | `kbox snapshot restore [OPTIONS] <SNAPSHOT>` | 从快照恢复 Box。支持 `--name` |
 | `kbox snapshot ls [OPTIONS]` | 列出全部快照。支持 `--json` |
 | `kbox snapshot rm [OPTIONS] <IDS>...` | 删除一个或多个快照。`-f` 强制解除 copy-on-write 引用 |
@@ -310,7 +318,7 @@ kbox pool <COMMAND>
 | --- | --- |
 | `kbox pool start [OPTIONS]` | 启动预热池守护进程。支持 `--image`、`--size`、`--max`、`--ttl`、`--socket`、`--deferred`、`--prewarm` 等选项；`--prewarm` 支持 `-e/--env`、`-u/--user`、`-w/--workdir`、`-v/--volume` |
 | `kbox pool attach [OPTIONS]` | 接管一个已初始化的进程，双向转发 stdin/stdout，并返回应用真实退出码；要求守护进程使用 `--prewarm` |
-| `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Sandbox 中执行一次性命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
+| `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Box／MicroVM 中执行一次性命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
 | `kbox pool stop [OPTIONS]` | 排空并停止预热池。支持 `--socket`、`--json` |
 | `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json`；进程预热模式下 `idle >= 1` 表示已有 ready 的 VM 和应用进程 |
 
@@ -481,6 +489,8 @@ kbox 3.3.0 官方 Release 经线上安装和自更新后，使用全新隔离 `K
 - 模型与思考强度：`deepseek-flash`＋`low`；返回非空中文文本、`end_turn` 和退出码 0，随后自动清理预热池。
 
 守护进程内部接管低于 1 ms，不代表完整 CLI 启动或 initialize 为 1 ms。原始样本与验证边界见[实测证据](docs/evidence/box/20261106-process-prewarm-attach/OUTCOME.md)。
+
+分层 E2E 计划与编排：[`docs/e2e-dsh-acp/TEST-PLAN.md`](docs/e2e-dsh-acp/TEST-PLAN.md)、[`scripts/e2e-dsh-acp/run.sh`](scripts/e2e-dsh-acp/run.sh)。证据模板见 [`docs/evidence/box/TEMPLATE-dsh-acp-e2e/OUTCOME.md`](docs/evidence/box/TEMPLATE-dsh-acp-e2e/OUTCOME.md)。
 
 ## 15. 系统与维护
 

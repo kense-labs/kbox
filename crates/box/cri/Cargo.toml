@@ -24,6 +24,7 @@ async-trait = { workspace = true }
 
 # gRPC
 tonic = { workspace = true }
+tonic-prost = { workspace = true }
 prost = { workspace = true }
 
 # Serialization
@@ -58,7 +59,7 @@ flate2 = "1"
 dirs = { workspace = true }
 
 [build-dependencies]
-tonic-build = { workspace = true }
+tonic-prost-build = { workspace = true }
 
 [dev-dependencies]
 tempfile = { workspace = true }

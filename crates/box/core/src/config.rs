@@ -4,23 +4,14 @@ use std::path::PathBuf;
 
 /// Execution isolation selected for a box.
 ///
-/// MicroVM remains the implicit default. Host sandbox execution must always be
-/// selected explicitly by the caller and never acts as an automatic fallback.
+/// MicroVM is the only Box product isolation. Shared-kernel Sandbox is no
+/// longer a Box product surface (OCI Runtime may still expose SharedHostKernel).
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ExecutionIsolation {
     /// Hardware-backed MicroVM isolation.
     #[default]
     Microvm,
-    /// Shared-kernel OCI sandbox isolation.
-    Sandbox,
-}
-
-impl ExecutionIsolation {
-    /// Whether this request selects the shared-kernel sandbox backend.
-    pub fn is_sandbox(self) -> bool {
-        matches!(self, Self::Sandbox)
-    }
 }
 
 /// TEE (Trusted Execution Environment) configuration.
@@ -323,7 +314,7 @@ pub struct ResourceLimits {
     #[serde(default)]
     pub memory_swap: Option<i64>,
 
-    /// Exact hard memory limit for the shared-kernel Sandbox backend.
+    /// Exact hard memory limit in bytes (legacy field name).
     ///
     /// `None` preserves the CLI's historical MiB-based `resources.memory_mb`
     /// value. Provider adapters use this field when their public contract is
@@ -663,9 +654,9 @@ pub struct ResourceConfig {
     ///
     /// This is distinct from `disk_mb`: the latter describes the logical
     /// capacity of a MicroVM root disk, while this bound applies to the
-    /// mutable overlay layer used by the Linux Sandbox provider. Providers
-    /// that cannot enforce the byte-precise limit must reject the request
-    /// rather than silently treating it as an unbounded filesystem.
+    /// mutable overlay layer. Providers that cannot enforce the byte-precise
+    /// limit must reject the request rather than silently treating it as an
+    /// unbounded filesystem.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub ephemeral_storage_bytes: Option<u64>,
 

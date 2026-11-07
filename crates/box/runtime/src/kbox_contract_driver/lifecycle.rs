@@ -56,11 +56,6 @@ impl BoxRuntimeDriver {
             }
         }
 
-        // A legacy Sandbox planner may need authenticated image metadata before
-        // Box allocates an execution ID. Keep the promoted handoff alive until
-        // the create/start path has either claimed it or failed, so an error
-        // before boot cannot leave an in-memory credential behind.
-        let mut _promoted_registry_auth = None;
         let record = match record {
             Some(record) => record,
             None => {
@@ -85,19 +80,6 @@ impl BoxRuntimeDriver {
                 let mut request = creation;
                 attach_host_services(spec, &mut request, &host_services)?;
                 let operation_id = operation(spec)?;
-                let staged_registry_auth = if request.config.isolation.is_sandbox() {
-                    self.secret_materialization
-                        .prepare_registry_auth_for_create(
-                            spec,
-                            &request,
-                            &operation_id,
-                            &self.config.home_dir,
-                            self.transient_registry_auth.as_ref(),
-                        )
-                        .await?
-                } else {
-                    None
-                };
                 let reservation = self
                     .bounded("reservation", async {
                         self.manager
@@ -106,27 +88,6 @@ impl BoxRuntimeDriver {
                             .map_err(|error| map_execution_error(&spec.unit_id, error))
                     })
                     .await?;
-                if staged_registry_auth.is_some() {
-                    let broker = self.transient_registry_auth.as_ref().ok_or_else(|| {
-                        RuntimeError::Protocol(
-                            "Box lost the transient registry authorization broker after staging"
-                                .into(),
-                        )
-                    })?;
-                    _promoted_registry_auth = Some(
-                        broker
-                            .promote(operation_id.as_str(), reservation.execution_id.as_str())
-                            .map_err(|error| {
-                                RuntimeError::ProviderUnavailable(format!(
-                                    "Box transient registry credential handoff failed: {error}"
-                                ))
-                            })?,
-                    );
-                }
-                // The source lease only guards the pre-reservation key. The
-                // target lease above owns cleanup for the durable execution
-                // key until boot claims its authorization.
-                drop(staged_registry_auth);
                 let record = self
                     .manager
                     .managed_record(&reservation.execution_id)
@@ -884,7 +845,6 @@ impl BoxRuntimeDriver {
                 "kbox.execution-isolation".into(),
                 match self.execution_isolation {
                     kbox_core::ExecutionIsolation::Microvm => "microvm".into(),
-                    kbox_core::ExecutionIsolation::Sandbox => "sandbox".into(),
                 },
             ),
             (
@@ -1188,7 +1148,7 @@ mod runtime_state_honesty_tests {
             CreateExecutionRequest {
                 external_sandbox_id: "ext".into(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Sandbox,
+                    isolation: ExecutionIsolation::Microvm,
                     image: "alpine:latest".into(),
                     ..Default::default()
                 },
@@ -1203,7 +1163,7 @@ mod runtime_state_honesty_tests {
             short_id: BoxRecord::make_short_id(id),
             name: "runtime-state".into(),
             image: "alpine:latest".into(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             managed_execution: Some(metadata),
             status: status.into(),
             pid: None,

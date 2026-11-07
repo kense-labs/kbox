@@ -200,7 +200,7 @@ pub enum ContractError {
     CrossHypervisorRestore,
     #[error("snapshot destination already exists")]
     SnapshotDestinationExists,
-    #[error("shared-kernel sandbox rejects hardware-vm operations")]
+    #[error("SharedHostKernel rejects hardware-vm operations")]
     SandboxRejectsVmOnly,
     #[error("network policy digest does not match the snapshot")]
     NetworkDigestMismatch,
@@ -247,7 +247,6 @@ pub fn restore_permitted(
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IsolationSelection {
     HardwareVm,
-    Sandbox,
 }
 
 /// `migration` is accepted and ignored. The stored hardware-vm profile does
@@ -259,7 +258,7 @@ pub fn select_isolation(
     let _ = migration;
     match selector {
         None => Ok(IsolationSelection::HardwareVm),
-        Some("sandbox") => Ok(IsolationSelection::Sandbox),
+        Some("sandbox") => Err(ContractError::UnknownIsolation),
         Some("microvm") => Err(ContractError::MicrovmSpellingRejected),
         Some(_) => Err(ContractError::UnknownIsolation),
     }
@@ -885,7 +884,6 @@ pub fn open_vm_only(
 ) -> Result<(), ContractError> {
     let isolation = match selection {
         IsolationSelection::HardwareVm => IsolationClass::DedicatedVm,
-        IsolationSelection::Sandbox => IsolationClass::SharedHostKernel,
     };
     core_vm::vm_only_permitted(isolation).map_err(map_contract)
 }

@@ -768,7 +768,7 @@ mod tests {
         .unwrap();
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Sandbox,
+            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         record.managed_execution = Some(

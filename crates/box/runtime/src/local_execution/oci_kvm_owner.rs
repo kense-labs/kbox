@@ -1,6 +1,6 @@
 //! Identity-fenced startup and reuse of the Linux KVM OCI qualification owner.
 //!
-//! Qualification-only: this mirrors native Linux Sandbox owner fencing for the
+//! Qualification-only: this mirrors NativeLinux owner fencing for the
 //! `box-kvm-qualification-service` Host. It does not claim MicroVM production
 //! cutover, B2 close, or default omit→OCI routing.
 

@@ -1,9 +1,8 @@
 use super::*;
 
 #[test]
-fn test_build_box_config_selects_requested_sandbox_isolation() {
-    let mut args = default_run_args();
-    args.common.isolation = Some(common::IsolationArg::Sandbox);
+fn test_build_box_config_defaults_to_microvm_isolation() {
+    let args = default_run_args();
 
     let config = build_box_config(
         &args,
@@ -19,7 +18,7 @@ fn test_build_box_config_selects_requested_sandbox_isolation() {
     )
     .unwrap();
 
-    assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Sandbox);
+    assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Microvm);
 }
 
 #[test]

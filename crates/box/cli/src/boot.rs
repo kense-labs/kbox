@@ -545,15 +545,15 @@ mod tests {
     #[test]
     fn test_config_from_record_preserves_sandbox_isolation() {
         let mut record = sample_record();
-        record.isolation = kbox_core::ExecutionIsolation::Sandbox;
+        record.isolation = kbox_core::ExecutionIsolation::Microvm;
         record.port_map.clear();
 
         let config = config_from_record(&record).unwrap();
 
-        assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Sandbox);
+        assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Microvm);
         assert_eq!(
             kbox_core::resolve_execution(&config).unwrap().backend,
-            kbox_core::ExecutionBackend::KOci
+            kbox_core::ExecutionBackend::Kbox
         );
     }
 

@@ -61,7 +61,7 @@ pub(super) fn install_rootfs_metadata(
     Ok(())
 }
 
-/// Recursively clone a rootfs without following symlinks. Linux Sandbox
+/// Recursively clone a rootfs without following symlinks. Managed rootfs
 /// snapshots preserve hardlink identity, ownership, modes, timestamps, and
 /// xattrs. Unsupported special files fail closed instead of being opened as
 /// regular files (which would block forever for a FIFO).

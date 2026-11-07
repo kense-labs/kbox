@@ -862,7 +862,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
         LocalScaleReconciler::with_lifecycle(catalog, lifecycle)
@@ -893,7 +893,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = Arc::new(LocalScaleReconciler::with_lifecycle_and_endpoint(
@@ -938,7 +938,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle_and_endpoint(
@@ -1022,7 +1022,7 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_acl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Sandbox,
+            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle(catalog, lifecycle.clone());

@@ -81,7 +81,7 @@ fn box_runtime_passes_all_advertised_profiles() {
                 .build()
                 .expect("R17 Tokio runtime must start");
             runtime.block_on(run_all_advertised_profiles(
-                ExecutionIsolation::Sandbox,
+                ExecutionIsolation::Microvm,
                 None,
             ));
         })

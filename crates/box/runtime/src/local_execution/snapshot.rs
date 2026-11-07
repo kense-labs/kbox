@@ -7,7 +7,7 @@ use kbox_core::snapshot::SnapshotMetadata;
 use kbox_core::ExecutionIsolation;
 use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionLease, ExecutionManagerError,
-    ExecutionManagerResult, ExecutionSnapshot, ExecutionSnapshotId, ExecutionState, OperationId,
+    ExecutionManagerResult, ExecutionSnapshot, ExecutionSnapshotId, ExecutionState,
 };
 
 use super::create::startup_terminal_state;
@@ -47,51 +47,17 @@ impl LocalExecutionManager {
         ) {
             return Err(state_conflict(&record, execution_id, "snapshot"));
         }
-        let metadata = record.managed_execution.as_ref().ok_or_else(|| {
+        let _metadata = record.managed_execution.as_ref().ok_or_else(|| {
             ExecutionManagerError::Internal(format!(
                 "execution {execution_id} lost managed lifecycle metadata"
             ))
         })?;
-        if !metadata.plan.backend.is_sandbox() {
-            return Err(ExecutionManagerError::Conflict {
-                execution_id: execution_id.clone(),
-                message: "filesystem snapshots currently require the Sandbox backend".to_string(),
-            });
-        }
-        if let Some(existing) = self.load_snapshot(snapshot_id).await? {
-            if existing.source_box_id != record.id {
-                return Err(ExecutionManagerError::Conflict {
-                    execution_id: execution_id.clone(),
-                    message: format!(
-                        "filesystem snapshot {snapshot_id} belongs to another execution"
-                    ),
-                });
-            }
-            return Ok(ExecutionSnapshot {
-                snapshot_id: snapshot_id.clone(),
-                size_bytes: existing.size_bytes,
-                state: execution_state(source_state)?,
-                lease: lease_from_record(&record)?,
-            });
-        }
-
-        let backend_operation_id = OperationId::new(format!(
-            "managed-snapshot-{}",
-            uuid::Uuid::new_v4().simple()
-        ))?;
-        let claimed = self
-            .transition(
-                &record,
-                source_state,
-                ManagedExecutionState::Snapshotting,
-                RuntimeUpdate::SnapshotClaim {
-                    snapshot_id: snapshot_id.clone(),
-                    source_state,
-                    operation_id: backend_operation_id,
-                },
-            )
-            .await?;
-        self.drive_snapshot(claimed).await
+        // Managed live filesystem snapshots are not offered on MicroVM-only Box.
+        Err(ExecutionManagerError::Conflict {
+            execution_id: execution_id.clone(),
+            message: "live filesystem snapshots are not supported for MicroVM executions"
+                .to_string(),
+        })
     }
 
     pub(super) async fn recover_snapshot(
@@ -157,13 +123,6 @@ impl LocalExecutionManager {
         if managed_state(&record)? != ManagedExecutionState::Snapshotting {
             return Ok(None);
         }
-        if record
-            .managed_execution
-            .as_ref()
-            .is_some_and(|metadata| metadata.plan.backend.is_sandbox())
-        {
-            return Ok(None);
-        }
         let (_, source_state, _) = snapshot_operation(&record)?;
         self.abort_non_sandbox_snapshot(&record, source_state)
             .await?;
@@ -176,133 +135,16 @@ impl LocalExecutionManager {
     }
 
     async fn drive_snapshot(&self, record: BoxRecord) -> ExecutionManagerResult<ExecutionSnapshot> {
-        let (snapshot_id, source_state, freezer_applied) = snapshot_operation(&record)?;
-        let mut record = record;
+        let (_snapshot_id, source_state, _freezer_applied) = snapshot_operation(&record)?;
         let execution_id = ExecutionId::new(record.id.clone())?;
-        if !record
-            .managed_execution
-            .as_ref()
-            .is_some_and(|metadata| metadata.plan.backend.is_sandbox())
-        {
-            // create_snapshot refuses non-Sandbox backends before claiming.
-            // Recover/reconcile must not invent a published snapshot either.
-            self.abort_non_sandbox_snapshot(&record, source_state)
-                .await?;
-            return Err(ExecutionManagerError::Conflict {
-                execution_id,
-                message: "filesystem snapshots currently require the Sandbox backend".to_string(),
-            });
-        }
-        if source_state == ManagedExecutionState::Paused
-            && !paused_with_memory(&record, &execution_id)?
-        {
-            return self.drive_cold_paused_snapshot(record, snapshot_id).await;
-        }
-        let observation = match self.backend.inspect(&record).await {
-            Ok(observation) => observation,
-            Err(ExecutionManagerError::NotFound(_)) => {
-                // Abandoned Snapshotting (no backend): retire without inventing
-                // a published filesystem snapshot. Same NotFound-honest class as
-                // Pausing/Resuming → Failed on inspect.
-                self.release_execution_resources(&record).await?;
-                self.transition(
-                    &record,
-                    ManagedExecutionState::Snapshotting,
-                    ManagedExecutionState::Failed,
-                    RuntimeUpdate::Terminal(None),
-                )
-                .await?;
-                return Err(ExecutionManagerError::NotFound(execution_id));
-            }
-            Err(error) => return Err(error),
-        };
-        observation.validate(&execution_id)?;
-        let mut handle = required_handle(&observation, &execution_id)?;
-
-        match (source_state, observation.state, freezer_applied) {
-            (ManagedExecutionState::Running, ExecutionState::Running, true) => {
-                let published = self.load_snapshot(&snapshot_id).await?;
-                if published
-                    .as_ref()
-                    .is_some_and(|snapshot| snapshot.source_box_id != record.id)
-                {
-                    return Err(ExecutionManagerError::Unavailable(format!(
-                        "filesystem snapshot {snapshot_id} belongs to another execution"
-                    )));
-                }
-                let completed = self
-                    .complete_with_handle(
-                        &record,
-                        ManagedExecutionState::Snapshotting,
-                        ManagedExecutionState::Running,
-                        handle,
-                    )
-                    .await?;
-                return match published {
-                    Some(published) => Ok(ExecutionSnapshot {
-                        snapshot_id,
-                        size_bytes: published.size_bytes,
-                        state: ExecutionState::Running,
-                        lease: lease_from_record(&completed)?,
-                    }),
-                    None => Err(ExecutionManagerError::Unavailable(format!(
-                        "execution {execution_id} was thawed before filesystem snapshot {snapshot_id} was published; the snapshot claim was rolled back"
-                    ))),
-                };
-            }
-            (ManagedExecutionState::Running, ExecutionState::Running, false) => {
-                handle = self.pause_for_snapshot(&record, &execution_id).await?;
-                record = self.mark_snapshot_freezer_applied(&record).await?;
-            }
-            (ManagedExecutionState::Running, ExecutionState::Paused, false) => {
-                record = self.mark_snapshot_freezer_applied(&record).await?;
-            }
-            (ManagedExecutionState::Running, ExecutionState::Paused, true)
-            | (ManagedExecutionState::Paused, ExecutionState::Paused, false) => {}
-            (ManagedExecutionState::Paused, ExecutionState::Running, false) => {
-                return Err(ExecutionManagerError::Conflict {
-                    execution_id,
-                    message: "a paused execution resumed while its filesystem snapshot was pending"
-                        .to_string(),
-                })
-            }
-            (_, state, _) => {
-                return Err(ExecutionManagerError::Conflict {
-                    execution_id,
-                    message: format!(
-                        "execution entered {state:?} while its filesystem snapshot was pending"
-                    ),
-                })
-            }
-        }
-
-        let capture = self
-            .capture_snapshot_rootfs(record.clone(), snapshot_id.clone())
-            .await;
-        let size_bytes = match capture {
-            Ok(size_bytes) => size_bytes,
-            Err(capture_error) => {
-                let restored = self
-                    .restore_snapshot_source_state(&record, source_state, handle)
-                    .await;
-                return match restored {
-                    Ok(_) => Err(capture_error),
-                    Err(restore_error) => Err(ExecutionManagerError::Internal(format!(
-                        "{capture_error}; failed to restore execution {} after snapshot failure: {restore_error}",
-                        record.id
-                    ))),
-                };
-            }
-        };
-
-        let completed = self
-            .restore_snapshot_source_state(&record, source_state, handle)
+        // create_snapshot refuses live filesystem captures on MicroVM-only Box.
+        // Recover/reconcile must not invent a published snapshot either.
+        self.abort_non_sandbox_snapshot(&record, source_state)
             .await?;
-        Ok(ExecutionSnapshot {
-            snapshot_id,
-            size_bytes,
-            state: execution_state(source_state)?,
-            lease: lease_from_record(&completed)?,
+        Err(ExecutionManagerError::Conflict {
+            execution_id,
+            message: "live filesystem snapshots are not supported for MicroVM executions"
+                .to_string(),
         })
     }
 
@@ -521,7 +363,7 @@ impl LocalExecutionManager {
                 })?;
             let metadata = build_snapshot_metadata(&record, &snapshot_id)?;
             #[cfg(target_os = "linux")]
-            let rootfs_metadata = capture_sandbox_rootfs_metadata(&record, &rootfs)?;
+            let rootfs_metadata = capture_rootfs_metadata(&record, &rootfs)?;
             #[cfg(target_os = "linux")]
             let saved = store.save_managed(metadata, &rootfs, &rootfs_metadata);
             #[cfg(not(target_os = "linux"))]
@@ -689,55 +531,19 @@ fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<Execu
     }
 }
 
-/// Capture host-visible Sandbox rootfs metadata for commit / product snapshot.
-///
-/// Used when SandboxViaOci has no guest archive socket: the prepared host
-/// rootfs is the authoritative filesystem, walked with the exact OCI UID/GID
-/// mappings (same path as managed filesystem snapshots). Works for running
-/// (quiesced) and stopped boxes that still retain mapping artifacts.
 #[cfg(target_os = "linux")]
-pub fn capture_sandbox_host_rootfs_for_commit(
-    record: &BoxRecord,
-) -> ExecutionManagerResult<(
-    std::path::PathBuf,
-    kbox_core::rootfs_metadata::RootfsMetadataManifest,
-)> {
-    if record.isolation != ExecutionIsolation::Sandbox {
-        return Err(ExecutionManagerError::Unavailable(format!(
-            "execution {} is not a Sandbox isolation host-rootfs capture target",
-            record.id
-        )));
-    }
-    if record.managed_execution.is_none() {
-        return Err(ExecutionManagerError::Unavailable(format!(
-            "execution {} has no managed Sandbox metadata for host-rootfs capture",
-            record.id
-        )));
-    }
-    let rootfs =
-        super::prepared_rootfs::resolve_prepared_rootfs(&record.box_dir).ok_or_else(|| {
-            ExecutionManagerError::Unavailable(format!(
-                "execution {} has no populated managed rootfs for host-rootfs capture",
-                record.id
-            ))
-        })?;
-    let manifest = capture_sandbox_rootfs_metadata(record, &rootfs)?;
-    Ok((rootfs, manifest))
-}
-
-#[cfg(target_os = "linux")]
-fn capture_sandbox_rootfs_metadata(
+fn capture_rootfs_metadata(
     record: &BoxRecord,
     rootfs: &Path,
 ) -> ExecutionManagerResult<kbox_core::rootfs_metadata::RootfsMetadataManifest> {
     let plan = if sandbox_bundle_config_present(record)? {
         let plan = sandbox_id_mapping_plan_from_bundle(record, Some(rootfs))?;
-        crate::sandbox::rootfs::persist_rootfs_id_mappings(&record.box_dir, &plan).map_err(
+        crate::host_fs::rootfs::persist_rootfs_id_mappings(&record.box_dir, &plan).map_err(
             |error| snapshot_error(record, "persist Sandbox snapshot ID mappings", error),
         )?;
         plan
     } else {
-        let plan = crate::sandbox::rootfs::load_rootfs_id_mappings(&record.box_dir)
+        let plan = crate::host_fs::rootfs::load_rootfs_id_mappings(&record.box_dir)
             .map_err(|error| snapshot_error(record, "load Sandbox snapshot ID mappings", error))?
             .ok_or_else(|| {
                 snapshot_error(
@@ -749,7 +555,7 @@ fn capture_sandbox_rootfs_metadata(
         validate_id_mapping_plan(record, &plan)?;
         plan
     };
-    crate::sandbox::rootfs::capture_rootfs_metadata(rootfs, &plan)
+    crate::host_fs::rootfs::capture_rootfs_metadata(rootfs, &plan)
         .map_err(|error| snapshot_error(record, "capture Sandbox rootfs metadata", error))
 }
 
@@ -757,11 +563,11 @@ fn capture_sandbox_rootfs_metadata(
 pub(super) fn persist_sandbox_snapshot_mappings(record: &BoxRecord) -> ExecutionManagerResult<()> {
     if sandbox_bundle_config_present(record)? {
         let plan = sandbox_id_mapping_plan_from_bundle(record, None)?;
-        return crate::sandbox::rootfs::persist_rootfs_id_mappings(&record.box_dir, &plan).map_err(
+        return crate::host_fs::rootfs::persist_rootfs_id_mappings(&record.box_dir, &plan).map_err(
             |error| snapshot_error(record, "persist Sandbox snapshot ID mappings", error),
         );
     }
-    if let Some(plan) = crate::sandbox::rootfs::load_rootfs_id_mappings(&record.box_dir)
+    if let Some(plan) = crate::host_fs::rootfs::load_rootfs_id_mappings(&record.box_dir)
         .map_err(|error| snapshot_error(record, "load Sandbox snapshot ID mappings", error))?
     {
         return validate_id_mapping_plan(record, &plan);
@@ -799,7 +605,7 @@ fn sandbox_bundle_config_present(record: &BoxRecord) -> ExecutionManagerResult<b
 fn sandbox_id_mapping_plan_from_bundle(
     record: &BoxRecord,
     expected_rootfs: Option<&Path>,
-) -> ExecutionManagerResult<crate::sandbox::SandboxIdMappingPlan> {
+) -> ExecutionManagerResult<crate::host_fs::IdMappingPlan> {
     let config_path = record.box_dir.join("sandbox/bundle/config.json");
     let spec = oci_spec::runtime::Spec::load(&config_path).map_err(|error| {
         snapshot_error(
@@ -843,7 +649,7 @@ fn sandbox_id_mapping_plan_from_bundle(
     let gid_mappings = convert_id_mappings(record, "GID", linux.gid_mappings())?;
     let maximum_container_uid = maximum_container_id(record, "UID", &uid_mappings)?;
     let maximum_container_gid = maximum_container_id(record, "GID", &gid_mappings)?;
-    let plan = crate::sandbox::SandboxIdMappingPlan {
+    let plan = crate::host_fs::IdMappingPlan {
         uid_mappings,
         gid_mappings,
         maximum_container_uid,
@@ -856,7 +662,7 @@ fn sandbox_id_mapping_plan_from_bundle(
 #[cfg(target_os = "linux")]
 fn validate_id_mapping_plan(
     record: &BoxRecord,
-    plan: &crate::sandbox::SandboxIdMappingPlan,
+    plan: &crate::host_fs::IdMappingPlan,
 ) -> ExecutionManagerResult<()> {
     validate_id_mappings(record, "UID", &plan.uid_mappings)?;
     validate_id_mappings(record, "GID", &plan.gid_mappings)?;
@@ -877,7 +683,7 @@ fn convert_id_mappings(
     record: &BoxRecord,
     kind: &str,
     mappings: &Option<Vec<oci_spec::runtime::LinuxIdMapping>>,
-) -> ExecutionManagerResult<Vec<crate::sandbox::IdMapping>> {
+) -> ExecutionManagerResult<Vec<crate::host_fs::IdMapping>> {
     let mappings = mappings.as_ref().ok_or_else(|| {
         snapshot_error(
             record,
@@ -894,7 +700,7 @@ fn convert_id_mappings(
     }
     let converted: Vec<_> = mappings
         .iter()
-        .map(|mapping| crate::sandbox::IdMapping {
+        .map(|mapping| crate::host_fs::IdMapping {
             container_id: mapping.container_id(),
             host_id: mapping.host_id(),
             size: mapping.size(),
@@ -908,7 +714,7 @@ fn convert_id_mappings(
 fn validate_id_mappings(
     record: &BoxRecord,
     kind: &str,
-    mappings: &[crate::sandbox::IdMapping],
+    mappings: &[crate::host_fs::IdMapping],
 ) -> ExecutionManagerResult<()> {
     for (index, mapping) in mappings.iter().enumerate() {
         let (Some(container_end), Some(host_end)) = (
@@ -966,7 +772,7 @@ fn validate_id_mappings(
 fn maximum_container_id(
     record: &BoxRecord,
     kind: &str,
-    mappings: &[crate::sandbox::IdMapping],
+    mappings: &[crate::host_fs::IdMapping],
 ) -> ExecutionManagerResult<u32> {
     mappings
         .iter()
@@ -1020,7 +826,6 @@ fn build_snapshot_metadata(
             ),
         ));
     }
-    metadata.mark_managed_sandbox_oci_capture();
     Ok(metadata)
 }
 

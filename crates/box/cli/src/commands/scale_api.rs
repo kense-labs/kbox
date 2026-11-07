@@ -12,7 +12,7 @@ use kbox_runtime::{
     ScaleEndpointConfig, ScaleServiceCatalog,
 };
 
-use super::common::{resolve_isolation, IsolationArg};
+use super::common::resolve_isolation;
 
 #[derive(Args)]
 pub struct ScaleApiArgs {
@@ -36,9 +36,6 @@ pub struct ScaleApiArgs {
     #[arg(long, conflicts_with = "services")]
     desired_state_only: bool,
 
-    /// Use shared-kernel Sandbox isolation for generated replicas.
-    #[arg(long, value_enum)]
-    isolation: Option<IsolationArg>,
 
     /// Address used for runtime-owned replica endpoint listeners.
     #[arg(long, default_value_t = IpAddr::V4(Ipv4Addr::LOCALHOST))]
@@ -66,7 +63,7 @@ pub async fn execute(args: ScaleApiArgs) -> Result<(), Box<dyn std::error::Error
         let catalog = ScaleServiceCatalog::from_acl_file(
             &services,
             "gateway-scale",
-            resolve_isolation(args.isolation),
+            resolve_isolation(None),
         )?;
         let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;

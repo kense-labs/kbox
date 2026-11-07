@@ -31,9 +31,9 @@ pub(super) fn verify_provider_least_privilege(
         "security execution persisted a plan that drifted from its creation intent",
     )?;
     let exact_boundary = match execution_isolation {
-        ExecutionIsolation::Sandbox => {
-            metadata.plan.backend == ExecutionBackend::KOci
-                && metadata.plan.isolation_class == IsolationClass::SharedKernel
+        ExecutionIsolation::Microvm => {
+            metadata.plan.backend == ExecutionBackend::Kbox
+                && metadata.plan.isolation_class == IsolationClass::HardwareVm
                 && !metadata.plan.required_controls.is_empty()
         }
         ExecutionIsolation::Microvm => {
@@ -63,7 +63,7 @@ pub(super) fn verify_provider_least_privilege(
         .as_deref()
         .ok_or_else(|| super::protocol("security observation omitted provider build identity"))?;
     match execution_isolation {
-        ExecutionIsolation::Sandbox => {
+        ExecutionIsolation::Microvm => {
             require(
                 provider_build.starts_with("kbox/")
                     && provider_build.contains(" isolation/sandbox koci/sha256:")
@@ -92,7 +92,7 @@ pub(super) fn verify_secret_persistence(
     verify_no_plaintext("boxes.json", boxes)?;
 
     match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Sandbox => verify_sandbox_secret_persistence(record),
+        ExecutionIsolation::Microvm => verify_sandbox_secret_persistence(record),
         ExecutionIsolation::Microvm => verify_microvm_secret_persistence(record),
     }
 }

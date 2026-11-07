@@ -49,7 +49,7 @@ fn fixture_isolation() -> ExecutionIsolation {
     if cfg!(windows) {
         ExecutionIsolation::Microvm
     } else {
-        ExecutionIsolation::Sandbox
+        ExecutionIsolation::Microvm
     }
 }
 

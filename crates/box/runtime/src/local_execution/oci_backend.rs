@@ -1337,15 +1337,6 @@ impl OciLifecycleAdapter {
     }
 }
 
-/// Retained-manager recovery: respawn the identity-fenced native Linux OCI owner
-/// when the Host process dies without dropping the Box manager.
-#[cfg(all(feature = "vm", target_os = "linux"))]
-#[derive(Debug, Clone)]
-pub struct NativeLinuxOwnerRecovery {
-    service_root: PathBuf,
-    artifacts: crate::sandbox::CertifiedKOci,
-}
-
 /// Retained-manager recovery for the qualification-only Linux KVM OCI owner.
 #[cfg(all(feature = "vm", target_os = "linux"))]
 #[derive(Debug, Clone)]
@@ -1368,8 +1359,6 @@ pub struct OciLocalExecutionBackend {
     adapter: OciLifecycleAdapter,
     provider: Arc<dyn OciBundleProvider>,
     #[cfg(all(feature = "vm", target_os = "linux"))]
-    native_linux_owner: Option<Arc<NativeLinuxOwnerRecovery>>,
-    #[cfg(all(feature = "vm", target_os = "linux"))]
     linux_kvm_owner: Option<Arc<LinuxKvmOwnerRecovery>>,
     #[cfg(all(feature = "vm", target_os = "windows", target_arch = "x86_64"))]
     windows_whpx_owner: Option<Arc<WindowsWhpxOwnerRecovery>>,
@@ -1386,8 +1375,6 @@ impl OciLocalExecutionBackend {
             adapter: OciLifecycleAdapter::from_client(endpoint, client)?,
             provider,
             #[cfg(all(feature = "vm", target_os = "linux"))]
-            native_linux_owner: None,
-            #[cfg(all(feature = "vm", target_os = "linux"))]
             linux_kvm_owner: None,
             #[cfg(all(feature = "vm", target_os = "windows", target_arch = "x86_64"))]
             windows_whpx_owner: None,
@@ -1403,42 +1390,10 @@ impl OciLocalExecutionBackend {
             adapter: OciLifecycleAdapter::connect(endpoint).await?,
             provider,
             #[cfg(all(feature = "vm", target_os = "linux"))]
-            native_linux_owner: None,
-            #[cfg(all(feature = "vm", target_os = "linux"))]
             linux_kvm_owner: None,
             #[cfg(all(feature = "vm", target_os = "windows", target_arch = "x86_64"))]
             windows_whpx_owner: None,
         })
-    }
-
-    /// Enable identity-fenced owner respawn for retained-manager Live reopen.
-    ///
-    /// Construction already calls
-    /// [`super::oci_owner::ensure_native_linux_oci_owner_with_options`] with
-    /// orphan reap enabled. Retained-manager Live reopen calls the default
-    /// ensure (no reap) so supervised children survive Host SIGKILL.
-    #[cfg(all(feature = "vm", target_os = "linux"))]
-    pub fn with_native_linux_owner_recovery(
-        mut self,
-        service_root: impl Into<PathBuf>,
-        artifacts: crate::sandbox::CertifiedKOci,
-    ) -> Self {
-        self.native_linux_owner = Some(Arc::new(NativeLinuxOwnerRecovery {
-            service_root: service_root.into(),
-            artifacts,
-        }));
-        self.linux_kvm_owner = None;
-        self
-    }
-
-    /// No-op off Linux+vm: native Host owner respawn is Linux Sandbox only.
-    #[cfg(not(all(feature = "vm", target_os = "linux")))]
-    pub fn with_native_linux_owner_recovery(
-        self,
-        _service_root: impl Into<PathBuf>,
-        _artifacts: crate::sandbox::CertifiedKOci,
-    ) -> Self {
-        self
     }
 
     /// Enable identity-fenced KVM qualification Host respawn for retained-manager Live reopen.
@@ -1456,7 +1411,6 @@ impl OciLocalExecutionBackend {
             service_root: service_root.into(),
             artifacts,
         }));
-        self.native_linux_owner = None;
         self
     }
 
@@ -1492,57 +1446,6 @@ impl OciLocalExecutionBackend {
         _artifacts: super::oci_whpx_owner::WindowsWhpxOwnerArtifacts,
     ) -> Self {
         self
-    }
-
-    #[cfg(all(feature = "vm", target_os = "linux"))]
-    async fn reclaim_owner_after_dead_device_policy_helper(
-        &self,
-        error: ExecutionManagerError,
-    ) -> ExecutionManagerError {
-        let ExecutionManagerError::Unavailable(message) = &error else {
-            return error;
-        };
-        if !super::oci_owner::is_rootless_device_policy_helper_dead(message) {
-            return error;
-        }
-        let Some(recovery) = self.native_linux_owner.as_ref() else {
-            return error;
-        };
-        match super::oci_owner::force_reclaim_unusable_native_linux_owner(&recovery.service_root) {
-            Ok(()) => ExecutionManagerError::Unavailable(format!(
-                "{message}; reclaimed native Linux OCI owner after rootless device-policy helper death — retry create"
-            )),
-            Err(reclaim_error) => ExecutionManagerError::Unavailable(format!(
-                "{message}; also failed to reclaim native Linux OCI owner after device-policy helper death: {reclaim_error}"
-            )),
-        }
-    }
-
-    #[cfg(all(feature = "vm", target_os = "linux"))]
-    async fn ensure_native_linux_owner(&self) -> ExecutionManagerResult<()> {
-        let Some(recovery) = self.native_linux_owner.as_ref() else {
-            return Ok(());
-        };
-        // Retained-manager Live reopen: do not reap supervised orphans.
-        // Fresh SandboxViaOci construction uses
-        // `ensure_native_linux_oci_owner_with_options(..., reap: true)`.
-        let endpoint = super::oci_owner::ensure_native_linux_oci_owner(
-            &recovery.service_root,
-            &recovery.artifacts,
-        )
-        .await?;
-        if endpoint != self.adapter.endpoint {
-            return Err(ExecutionManagerError::Internal(format!(
-                "native Linux OCI owner recovery returned a different endpoint ({endpoint:?}) than the retained SDK binding ({:?})",
-                self.adapter.endpoint
-            )));
-        }
-        Ok(())
-    }
-
-    #[cfg(not(all(feature = "vm", target_os = "linux")))]
-    async fn ensure_native_linux_owner(&self) -> ExecutionManagerResult<()> {
-        Ok(())
     }
 
     #[cfg(all(feature = "vm", target_os = "linux"))]
@@ -1596,7 +1499,6 @@ impl OciLocalExecutionBackend {
     }
 
     async fn ensure_owner_recovery(&self) -> ExecutionManagerResult<()> {
-        self.ensure_native_linux_owner().await?;
         self.ensure_linux_kvm_owner().await?;
         self.ensure_windows_whpx_owner().await
     }
@@ -1990,10 +1892,6 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                 )))
             }
             Err(error) => {
-                #[cfg(all(feature = "vm", target_os = "linux"))]
-                let error = self
-                    .reclaim_owner_after_dead_device_policy_helper(error)
-                    .await;
                 // Unknown create/start outcomes must be reconciled, not erased.
                 // Cleanup product preparation only when the runtime proves no
                 // current generation exists for the deterministic ID.
@@ -2446,7 +2344,6 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
 pub const fn oci_isolation_request(isolation: ExecutionIsolation) -> IsolationRequest {
     match isolation {
         ExecutionIsolation::Microvm => IsolationRequest::DedicatedVm,
-        ExecutionIsolation::Sandbox => IsolationRequest::SharedHostKernel,
     }
 }
 
@@ -2653,7 +2550,7 @@ fn compile_resource_update(
     }
     let mut config = metadata.request.config.clone();
     update.apply_to(&mut config.resource_limits);
-    let effective = crate::sandbox::oci::SandboxResources::from_box_config(&config)
+    let effective = crate::host_fs::oci::OciResources::from_box_config(&config)
         .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
 
     // OCI Runtime treats linux.resources as a partial live update. Recompiling

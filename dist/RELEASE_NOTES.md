@@ -1,17 +1,17 @@
-# kbox 3.4.1 — macOS (Apple Silicon)
+# kbox 3.4.2 — macOS (Apple Silicon)
 
-Packaging fix over 3.4.0: restore soname symlinks for `libkrun*` / `libkrunfw*` so the release archive is not inflated by duplicate dylib bodies.
+Packaging and installer fix so soname symlinks stay symlinks end-to-end.
 
 ## Highlights
 
-- Release archive returns to ~22 MB compressed / ~42 MB installed (was ~37 MB / ~72 MB in 3.4.0).
-- `scripts/package-macos-arm64.sh` stages versioned dylibs once and links aliases (`libkrun.dylib` → `libkrun.1.17.0.dylib`, `libkrunfw.dylib` → `libkrunfw.5.dylib`).
-- Product surface unchanged from 3.4.0 (MicroVM-focused runtime; process sandbox lives in `kense-labs/sandbox`).
+- Archive stays ~**22 MB** compressed (same as 3.3.0 / 3.4.1).
+- Installed prefix is ~**42 MB** again: `dist/install.sh` preserves `libkrun*.dylib` / `libkrunfw*.dylib` soname links instead of copying each target body three times (~72 MB).
+- `scripts/package-macos-arm64.sh` continues to stage one real dylib per library family plus relative symlinks.
 
 ## Install
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.1/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.2/install.sh | sh
 export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```
@@ -29,16 +29,16 @@ kbox update
 | `bin/kbox` | CLI (7.4 MB, stripped, fat LTO, opt-level=z) |
 | `bin/kbox-shim` | Per-VM host shim (3.2 MB) |
 | `bin/kbox-guest-init` | Static aarch64 Linux guest PID 1 (5.1 MB) |
-| `lib/libkrun.1.17.0.dylib` | HVF virtualization library (4.3 MB); `libkrun.1.dylib` / `libkrun.dylib` are symlinks |
-| `lib/libkrunfw.5.dylib` | Guest kernel bundle (22 MB); `libkrunfw.dylib` is a symlink |
+| `lib/libkrun.1.17.0.dylib` | HVF library (4.3 MB); aliases are symlinks |
+| `lib/libkrunfw.5.dylib` | Guest kernel bundle (22 MB); alias is a symlink |
 
 - Platform: macOS arm64, Apple Hypervisor Framework.
 - Compressed archive: **22 MB**.
-- SHA-256: `5f04825adfeefd0673145d6aa97172965bf0291a973340d744786b2fb0f4909b`
+- SHA-256: `03493b7db00b0189350e5a2d159616954669cc5f5084db1a79fd469cd5accbc7`
 
 ## Verified
 
-- Isolated-prefix install prints `kbox version 3.4.1`.
-- Staged `lib/` contains three symlinks and two real dylibs (`du` ≈ 26 MB).
+- Isolated-prefix install prints `kbox version 3.4.2`.
+- Installed `lib/` retains three symlinks; `du -sh` prefix ≈ 42 MB / lib ≈ 26 MB.
 
 Not covered: Linux/Windows packages, non-arm64 platforms.

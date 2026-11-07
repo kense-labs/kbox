@@ -9,12 +9,12 @@ kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔�
 ### 1.1 一键安装（macOS / Linux）
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.1/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.2/install.sh | sh
 ```
 
 脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。
 
-可选环境变量：`KBOX_VERSION`（默认 `3.4.1`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
+可选环境变量：`KBOX_VERSION`（默认 `3.4.2`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
 
 预编译包支持矩阵：macOS arm64（Apple Silicon，Hypervisor Framework）。其他平台会给出明确提示，请改用源码构建。
 
@@ -23,7 +23,7 @@ curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.1/ins
 ```sh
 kbox update --check    # 只检查最新稳定版，不安装
 kbox update            # 下载、校验并更新到最新稳定版
-kbox update 3.4.1      # 安装指定版本
+kbox update 3.4.2      # 安装指定版本
 ```
 
 `kbox update` 只选择 `kense-labs/kense` 中以 `kbox-v` 开头的稳定 Release，忽略草稿、预发布和其他产品的 Release。交互式终端显示下载进度；安装包通过 SHA-256 校验，文件原子替换，完成后自动执行版本自检。自定义安装目录可用 `--prefix <PATH>` 指定，`--force` 可重装当前版本以修复安装。
@@ -34,11 +34,11 @@ kbox update 3.4.1      # 安装指定版本
 
 ### 1.3 手动安装
 
-从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.4.1) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.4.2) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
 
 ```sh
-tar -xzf kbox-3.4.1-macos-arm64.tar.gz
-sh kbox-3.4.1-macos-arm64/install.sh
+tar -xzf kbox-3.4.2-macos-arm64.tar.gz
+sh kbox-3.4.2-macos-arm64/install.sh
 ```
 
 安装包包含 `kbox` CLI、`kbox-shim`、静态 Linux guest init、libkrun 与 libkrunfw（含客体内核）。压缩包约 23 MB，安装后约 42 MB。

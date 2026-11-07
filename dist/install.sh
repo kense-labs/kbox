@@ -20,7 +20,12 @@ install_file() {
   DEST_DIR=$2
   DEST="$DEST_DIR/${SRC##*/}"
   TMP="$DEST$TMP_SUFFIX"
-  cp -f "$SRC" "$TMP"
+  # Preserve soname symlinks (cp without -R/-P follows and duplicates dylibs).
+  if [ -L "$SRC" ]; then
+    ln -sfn "$(readlink "$SRC")" "$TMP"
+  else
+    cp -f "$SRC" "$TMP"
+  fi
   mv -f "$TMP" "$DEST"
 }
 for SRC in "$SRC_DIR"/bin/*; do

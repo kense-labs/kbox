@@ -6,14 +6,14 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-mod acl;
+mod kcl;
 mod diagnostic;
 mod interpolation;
 mod normalization;
 mod normalized;
 mod schema;
 
-pub use acl::ComposeAclError;
+pub use kcl::ComposeKclError;
 pub use diagnostic::{ComposeDiagnostic, ComposeDiagnosticCode, ComposeNormalizationError};
 pub use interpolation::{interpolate_compose_yaml, ComposeInterpolationError};
 pub use normalization::{normalize_compose, normalize_compose_config, ComposeSourceFormat};
@@ -401,17 +401,17 @@ impl DnsConfig {
 impl ComposeConfig {
     /// Parse an Kbox Compose ACL document using the process environment for
     /// `env("NAME")` calls.
-    pub fn from_acl_str(source: &str) -> Result<Self, ComposeAclError> {
+    pub fn from_kcl_str(source: &str) -> Result<Self, ComposeKclError> {
         let environment = std::env::vars().collect();
-        Self::from_acl_str_with_environment(source, &environment)
+        Self::from_kcl_str_with_environment(source, &environment)
     }
 
     /// Parse an Kbox Compose ACL document using an explicit environment.
-    pub fn from_acl_str_with_environment(
+    pub fn from_kcl_str_with_environment(
         source: &str,
         environment: &HashMap<String, String>,
-    ) -> Result<Self, ComposeAclError> {
-        acl::parse_compose_acl(source, environment)
+    ) -> Result<Self, ComposeKclError> {
+        kcl::parse_compose_kcl(source, environment)
     }
 
     /// Parse a compose config from YAML bytes.

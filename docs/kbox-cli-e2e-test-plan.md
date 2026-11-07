@@ -167,7 +167,7 @@
 | `compose up` | E1 | 依赖顺序、readiness、服务 Box、网络和卷实际创建；重复 up 保持幂等；部分失败整批回收 |
 | `compose down` | E1 | 只删除项目拥有的资源；`--volumes` 删除项目卷，前缀相似的非项目资源不受影响 |
 | `compose ps` | E0＋E1 | 服务筛选、状态和端口与 Box inspect 一致 |
-| `compose config` | E0 | ACL／YAML、环境插值、默认值、依赖、卷和非法输入结果正确，不启动运行时 |
+| `compose config` | E0 | KCL／YAML、环境插值、默认值、依赖、卷和非法输入结果正确，不启动运行时 |
 | `compose logs` | E1 | 多服务输出归属、tail 和 follow 正确，停止后最终日志完整 |
 | `compose start` | E1 | 指定已停止服务启动，依赖和配置保持一致 |
 | `compose stop` | E1 | 服务停止但不删除记录，支持超时，其他服务不受影响 |

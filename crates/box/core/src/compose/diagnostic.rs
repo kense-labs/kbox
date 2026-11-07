@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 /// Stable machine-readable category for a Compose diagnostic.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 pub enum ComposeDiagnosticCode {
-    /// The source is not syntactically valid YAML or ACL.
+    /// The source is not syntactically valid YAML or KCL.
     #[serde(rename = "compose.syntax")]
     Syntax,
     /// Environment interpolation could not be completed.
@@ -47,7 +47,7 @@ impl fmt::Display for ComposeDiagnosticCode {
 /// One actionable Compose parsing or normalization failure.
 ///
 /// `path` uses JSON Pointer-style segments so callers do not need to parse a
-/// human error string. ACL blocks are projected onto the equivalent Compose
+/// human error string. KCL blocks are projected onto the equivalent Compose
 /// object path (for example, `service "api"` becomes `/services/api`).
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ComposeDiagnostic {

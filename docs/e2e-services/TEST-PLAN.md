@@ -7,7 +7,7 @@
 | 项 | 值 |
 | --- | --- |
 | 平台 | macOS arm64（HVF） |
-| kbox | ≥ 3.4.2 |
+| kbox | ≥ 3.4.3 |
 | 隔离 | 每次运行独立 `K_HOME`（`$E2E_OUT/k-home`） |
 | 网络 | 需能拉取 Docker Hub / GHCR 镜像 |
 

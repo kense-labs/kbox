@@ -35,14 +35,14 @@ pub struct ScaleServiceCatalog {
 }
 
 impl ScaleServiceCatalog {
-    pub fn from_acl_file(
+    pub fn from_kcl_file(
         path: &Path,
         project_name: impl Into<String>,
         isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
-        if path.extension().and_then(|extension| extension.to_str()) != Some("acl") {
+        if path.extension().and_then(|extension| extension.to_str()) != Some("kcl") {
             return Err(ScaleCatalogError::Invalid(format!(
-                "scale service catalog {} must use the .acl format",
+                "scale service catalog {} must use the .kcl format",
                 path.display()
             )));
         }
@@ -50,7 +50,7 @@ impl ScaleServiceCatalog {
             path: path.display().to_string(),
             source,
         })?;
-        Self::from_acl_str_with_base_dir(
+        Self::from_kcl_str_with_base_dir(
             &source,
             project_name,
             path.parent().unwrap_or_else(|| Path::new(".")),
@@ -58,21 +58,21 @@ impl ScaleServiceCatalog {
         )
     }
 
-    pub fn from_acl_str(
+    pub fn from_kcl_str(
         source: &str,
         project_name: impl Into<String>,
         isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
-        Self::from_acl_str_with_base_dir(source, project_name, Path::new("."), isolation)
+        Self::from_kcl_str_with_base_dir(source, project_name, Path::new("."), isolation)
     }
 
-    fn from_acl_str_with_base_dir(
+    fn from_kcl_str_with_base_dir(
         source: &str,
         project_name: impl Into<String>,
         base_dir: &Path,
         isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
-        let config = ComposeConfig::from_acl_str(source)
+        let config = ComposeConfig::from_kcl_str(source)
             .map_err(|error| ScaleCatalogError::Invalid(error.to_string()))?;
         validate_stateless_templates(&config)?;
         let plan = ComposeRuntimePlan::with_base_dir(project_name, config, base_dir)
@@ -206,7 +206,7 @@ mod tests {
 
     #[test]
     fn catalog_builds_deterministic_labeled_execution_templates() {
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -241,7 +241,7 @@ mod tests {
             let source = format!(
                 "service \"api\" {{ image = \"api:v1\"; {field} }}\nservice \"db\" {{ image = \"db:v1\" }}"
             );
-            let error = ScaleServiceCatalog::from_acl_str(
+            let error = ScaleServiceCatalog::from_kcl_str(
                 &source,
                 "gateway-scale",
                 ExecutionIsolation::Microvm,
@@ -253,7 +253,7 @@ mod tests {
 
     #[test]
     fn unknown_service_fails_without_fabricating_a_template() {
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -265,7 +265,7 @@ mod tests {
 
     #[test]
     fn catalog_converts_one_dynamic_port_into_endpoint_metadata() {
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             r#"service "api" { image = "api:v1"; ports = ["0:8080"] }"#,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -279,15 +279,15 @@ mod tests {
     }
 
     #[test]
-    fn file_catalog_requires_an_acl_extension() {
+    fn file_catalog_requires_a_kcl_extension() {
         let directory = tempfile::tempdir().unwrap();
         let path = directory.path().join("services.yaml");
         std::fs::write(&path, CATALOG).unwrap();
 
         let error =
-            ScaleServiceCatalog::from_acl_file(&path, "gateway-scale", ExecutionIsolation::Microvm)
+            ScaleServiceCatalog::from_kcl_file(&path, "gateway-scale", ExecutionIsolation::Microvm)
                 .unwrap_err();
 
-        assert!(error.to_string().contains(".acl format"), "{error}");
+        assert!(error.to_string().contains(".kcl format"), "{error}");
     }
 }

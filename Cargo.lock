@@ -1738,18 +1738,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "kacl"
-version = "0.3.0"
-dependencies = [
- "ryu-js",
- "serde",
- "serde_json",
- "sha2",
-]
-
-[[package]]
 name = "kbox-cli"
-version = "3.4.2"
+version = "3.4.3"
 dependencies = [
  "async-trait",
  "axum",
@@ -1798,15 +1788,15 @@ dependencies = [
 
 [[package]]
 name = "kbox-core"
-version = "3.4.2"
+version = "3.4.3"
 dependencies = [
  "async-trait",
  "base64 0.22.1",
  "chrono",
  "dirs",
  "flate2",
- "kacl",
  "kcommon",
+ "kense-kcl",
  "serde",
  "serde_json",
  "serde_yaml",
@@ -1913,12 +1903,12 @@ dependencies = [
  "flate2",
  "futures",
  "hex",
- "kacl",
  "kbox-contract",
  "kbox-core",
  "kbox-mkext4",
  "kbox-netproxy",
  "kcommon",
+ "kense-kcl",
  "koci-core",
  "koci-sdk",
  "libc",
@@ -1991,6 +1981,14 @@ dependencies = [
  "tokio",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "kense-kcl"
+version = "0.3.0"
+dependencies = [
+ "ryu-js",
+ "sha2",
 ]
 
 [[package]]

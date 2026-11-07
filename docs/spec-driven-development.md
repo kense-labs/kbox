@@ -89,4 +89,4 @@ Do not commit unless the user asks. Stage only the task's files and inspect `git
 
 ## Non-waivable constraints
 
-Fail closed. Preserve one resource authority. Retain evidence. Use typed closed sets. Keep one workspace and ACL. Protect data and credentials. Separate decisions from effects. Preserve submodule boundaries. Require native evidence for native claims. Never weaken a gate to pass.
+Fail closed. Preserve one resource authority. Retain evidence. Use typed closed sets. Keep one workspace and KCL. Protect data and credentials. Separate decisions from effects. Preserve submodule boundaries. Require native evidence for native claims. Never weaken a gate to pass.

@@ -1142,11 +1142,11 @@ fn test_compose_config_interpolates_shell_over_project_dotenv() {
 }
 
 #[test]
-fn test_compose_config_accepts_kacl() {
+fn test_compose_config_accepts_kcl() {
     let cli = CliTest::new();
-    let project = cli.home_path().join("compose-acl");
-    std::fs::create_dir_all(&project).expect("create Compose ACL project directory");
-    let compose = project.join("compose.acl");
+    let project = cli.home_path().join("compose-kcl");
+    std::fs::create_dir_all(&project).expect("create Compose KCL project directory");
+    let compose = project.join("compose.kcl");
     std::fs::write(
         &compose,
         r#"service "api" {
@@ -1161,7 +1161,7 @@ fn test_compose_config_accepts_kacl() {
 }
 "#,
     )
-    .expect("write Compose ACL file");
+    .expect("write Compose KCL file");
     let compose_arg = compose.to_string_lossy().to_string();
 
     let output = cli.ok_with_env(

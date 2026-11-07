@@ -563,7 +563,7 @@ fn test_real_vm_command_matrix() {
 
 #[test]
 #[ignore]
-fn test_real_compose_acl_smoke() {
+fn test_real_compose_kcl_smoke() {
     let cli = CliTest::new();
     let image = host_smoke_image();
     let boot_timeout = host_smoke_timeout(45);
@@ -588,7 +588,7 @@ fn test_real_compose_acl_smoke() {
 
     let compose_dir = cli.home_path().join("compose");
     std::fs::create_dir_all(&compose_dir).expect("create compose dir");
-    let compose_file = compose_dir.join("compose.acl");
+    let compose_file = compose_dir.join("compose.kcl");
     std::fs::write(
         &compose_file,
         format!(

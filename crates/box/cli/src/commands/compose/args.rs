@@ -4,7 +4,6 @@ use std::path::PathBuf;
 
 use clap::{Args, Subcommand};
 
-use super::super::common;
 use super::operations::{
     ComposeCpArgs, ComposeExecArgs, ComposeKillArgs, ComposeLsArgs, ComposePortArgs,
     ComposePullArgs, ComposeRestartArgs, ComposeRmArgs, ComposeStopArgs, ComposeTopArgs,
@@ -13,7 +12,7 @@ use super::operations::{
 
 #[derive(Args)]
 pub struct ComposeArgs {
-    /// Path to compose file (default: compose.acl, then Compose YAML names)
+    /// Path to compose file (default: compose.kcl, then Compose YAML names)
     #[arg(short = 'f', long = "file")]
     pub file: Option<PathBuf>,
 

@@ -1,7 +1,6 @@
 [workspace]
 resolver = "3"
 members = [
-    "crates/acl",
     "crates/box/cli",
     "crates/box/core",
     "crates/box/cri",
@@ -114,7 +113,7 @@ windows = {features = ["Win32_Security", "Win32_Security_Authorization", "Win32_
 wiremock = {version = "0.6"}
 zstd = {version = "0.13"}
 
-kacl = { path = "crates/acl" }
+kcl = { package = "kense-kcl", path = "../kcl" }
 kboot = { path = "crates/boot", features = [
     "auth",
     "axum",

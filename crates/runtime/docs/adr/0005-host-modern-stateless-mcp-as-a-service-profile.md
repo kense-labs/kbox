@@ -34,7 +34,7 @@ provider discovery, or reconciliation.
 
 ### 2. The MCP profile stays outside the Runtime wire protocol
 
-Kbox Cloud owns an immutable Service-profile ACL for the MCP release and a
+Kbox Cloud owns an immutable Service-profile KCL for the MCP release and a
 separate mutable Gateway route-policy ACL. The Service profile covers protocol
 versions, server endpoint path, capability expectations, and server bounds;
 the route policy covers public Origin, authorization, grants, effective

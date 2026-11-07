@@ -20,7 +20,7 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 | `crates/box` | Execution resources, MicroVM lifecycle, images, volumes, networks, snapshots and credentials | Preserve ExecutionManager ownership and generation fencing |
 | `crates/oci-runtime` | OCI execution and guest/host integration | Preserve backend routing and platform-specific behavior |
 | `crates/runtime` | Provider-neutral Task／Service contracts and lifecycle clients | Do not create a second execution state machine |
-| `crates/acl` | ACL parsing and typed configuration | Keep product configuration in ACL |
+| `../kcl` | KCL parsing and typed configuration | Keep product configuration in KCL |
 | `libkrun` | Native virtualization source submodule | Edit in `kense-labs/libkrun`, test, then update the gitlink |
 | `libkrunfw` | Guest kernel bundle submodule | Edit in `kense-labs/libkrunfw`, preserve version and provenance, then update the gitlink |
 | `specs` | Bounded-epic planning | Planning is not acceptance evidence |
@@ -64,7 +64,7 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 
 ## Configuration, identity and data security
 
-- ACL is the only product configuration language, parsed by `kacl`. Manifests, evidence and protocol schemas are data contracts, not a second configuration system.
+- KCL is the only product configuration language, parsed by `kcl`. Manifests, evidence and protocol schemas are data contracts, not a second configuration system.
 - Use closed enums with `parse()` and `as_str()` for admitted values. Unknown security-critical values are refused.
 - Bind workload credentials to the principal, Run, Capability, DataRef and generation. Delegated permissions may only narrow.
 - Keep real secrets out of images, prompts, memory, checkpoints, events, logs and evidence. Store only typed references.

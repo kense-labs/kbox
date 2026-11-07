@@ -24,7 +24,7 @@ async fn execution_returns_a_plan_bound_typed_oci_output() {
     } else {
         "linux/amd64"
     };
-    let plan = BoxBuildPlan::parse_acl(&format!(
+    let plan = BoxBuildPlan::parse_kcl(&format!(
         r#"
 build "oci" {{
   cache = "disabled"
@@ -90,7 +90,7 @@ async fn image_commit_permit_serializes_cancellation_on_the_operation_journal() 
         format!("sha256:{}", "a".repeat(64)),
     )
     .unwrap();
-    let plan = BoxBuildPlan::parse_acl(&format!(
+    let plan = BoxBuildPlan::parse_kcl(&format!(
         r#"
 build "oci" {{
   cache = "disabled"

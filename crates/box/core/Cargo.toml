@@ -1,13 +1,13 @@
 [package]
 name = "kbox-core"
 publish = false
-version = "3.4.2"
+version = "3.4.3"
 edition = "2021"
 license = "MIT"
 description = "Core types, config, and error handling for Kbox Box MicroVM runtime"
 
 [dependencies]
-kacl = { workspace = true }
+kcl = { workspace = true }
 ktransport = { workspace = true }
 async-trait = { workspace = true }
 tokio = { workspace = true }

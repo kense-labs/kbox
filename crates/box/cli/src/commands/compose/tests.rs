@@ -74,18 +74,19 @@ fn service_config_hash_is_stable_across_environment_order() {
 }
 
 #[test]
-fn service_config_hash_tracks_runtime_isolation() {
+fn service_config_hash_tracks_runtime_image() {
     let service = ServiceConfig::default();
-    let microvm = kbox_core::BoxConfig {
+    let first = kbox_core::BoxConfig {
         image: "example:latest".to_string(),
+        isolation: kbox_core::ExecutionIsolation::Microvm,
         ..Default::default()
     };
-    let mut sandbox = microvm.clone();
-    sandbox.isolation = kbox_core::ExecutionIsolation::Microvm;
+    let mut second = first.clone();
+    second.image = "example:edge".to_string();
 
     assert_ne!(
-        service_config_hash(&service, &microvm).unwrap(),
-        service_config_hash(&service, &sandbox).unwrap()
+        service_config_hash(&service, &first).unwrap(),
+        service_config_hash(&service, &second).unwrap()
     );
 }
 
@@ -182,7 +183,7 @@ fn test_load_compose_file_rejects_unknown_yaml_fields_with_structured_path() {
 #[test]
 fn test_compose_files_constant() {
     assert_eq!(COMPOSE_FILES.len(), 5);
-    assert_eq!(COMPOSE_FILES[0], "compose.acl");
+    assert_eq!(COMPOSE_FILES[0], "compose.kcl");
     assert!(COMPOSE_FILES.contains(&"compose.yaml"));
     assert!(COMPOSE_FILES.contains(&"docker-compose.yml"));
 }
@@ -216,22 +217,22 @@ fn test_compose_image_references_deduplicates_and_skips_build_only_services() {
 }
 
 #[test]
-fn test_default_discovery_prefers_compose_acl() {
+fn test_default_discovery_prefers_compose_kcl() {
     let directory = tempfile::TempDir::new().unwrap();
-    let acl_path = directory.path().join("compose.acl");
+    let kcl_path = directory.path().join("compose.kcl");
     let yaml_path = directory.path().join("compose.yaml");
-    std::fs::write(&acl_path, "service \"api\" { image = \"api:latest\" }").unwrap();
+    std::fs::write(&kcl_path, "service \"api\" { image = \"api:latest\" }").unwrap();
     std::fs::write(&yaml_path, "services: {}\n").unwrap();
 
     let selected = resolve_compose_path(None, directory.path()).unwrap();
 
-    assert_eq!(selected, acl_path);
+    assert_eq!(selected, kcl_path);
 }
 
 #[test]
-fn test_load_compose_acl_uses_dotenv_and_shell_environment() {
+fn test_load_compose_kcl_uses_dotenv_and_shell_environment() {
     let directory = tempfile::TempDir::new().unwrap();
-    let compose_path = directory.path().join("compose.acl");
+    let compose_path = directory.path().join("compose.kcl");
     std::fs::write(
         &compose_path,
         r#"service "api" {

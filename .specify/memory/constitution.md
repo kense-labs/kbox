@@ -12,9 +12,9 @@ New behavior has a hermetic test in the owning package. Backend claims also need
 
 ### Policy regime
 
-Paths: `crates/acl`.
+Paths: `../kcl`.
 
-Policy changes have deterministic tests for allow, refuse and unsupported cases. Security tests include an adversarial case. Configuration stays in ACL and behavioral decisions remain separate from actual enforcement.
+Policy changes have deterministic tests for allow, refuse and unsupported cases. Security tests include an adversarial case. Configuration stays in KCL and behavioral decisions remain separate from actual enforcement.
 
 ### Native dependency regime
 
@@ -56,7 +56,7 @@ The root Cargo workspace and lockfile are shared. Internal `k*` dependencies res
 
 ### VII. One Configuration Language
 
-ACL parsed by `kacl` is the only product configuration language. Data schemas and manifests are versioned data contracts and cannot alter permission discovery or provider selection by themselves. **NON-NEGOTIABLE.**
+KCL parsed by `kcl` is the only product configuration language. Data schemas and manifests are versioned data contracts and cannot alter permission discovery or provider selection by themselves. **NON-NEGOTIABLE.**
 
 ### VIII. Replaceable Backends and Transports
 

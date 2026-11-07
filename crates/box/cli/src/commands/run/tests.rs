@@ -8,7 +8,6 @@ fn default_run_args() -> RunArgs {
     RunArgs {
         common: common::CommonBoxArgs {
             image: "test".to_string(),
-            isolation: None,
             name: None,
             cpus: 2,
             memory: "512m".to_string(),

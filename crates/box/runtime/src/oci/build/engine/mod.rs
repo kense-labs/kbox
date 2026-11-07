@@ -67,15 +67,15 @@ pub enum BuildNetworkPolicy {
 }
 
 impl BuildNetworkPolicy {
-    /// Stable ACL representation.
-    pub const fn as_acl(self) -> &'static str {
+    /// Stable KCL representation.
+    pub const fn as_str(self) -> &'static str {
         match self {
             Self::Outbound => "outbound",
             Self::None => "none",
         }
     }
 
-    pub(crate) fn parse_acl(value: &str) -> Option<Self> {
+    pub(crate) fn parse(value: &str) -> Option<Self> {
         match value {
             "outbound" => Some(Self::Outbound),
             "none" => Some(Self::None),
@@ -1614,7 +1614,7 @@ fn run_instruction_cache_repr(instruction: &Instruction, network: BuildNetworkPo
     format!(
         "{}\n#kbox.build.network={}",
         instruction_to_string(instruction),
-        network.as_acl()
+        network.as_str()
     )
 }
 

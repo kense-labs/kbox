@@ -44,7 +44,7 @@ Data Lineage Controller owns DataRef relationships and deletion state. Actual Pr
 
 ## 5. Configuration and data contracts
 
-Product behavior is configured in ACL parsed by `kacl`. Image manifests, AI-BOM, event schemas and ProviderBinding records are versioned data, not a second configuration format.
+Product behavior is configured in KCL parsed by `kcl`. Image manifests, AI-BOM, event schemas and ProviderBinding records are versioned data, not a second configuration format.
 
 New enums implement a closed parse and representation contract. Schema compatibility rules state which optional fields can be ignored and which unknown fields must fail. Secrets are represented by references only.
 

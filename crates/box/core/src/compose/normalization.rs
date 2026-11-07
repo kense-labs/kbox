@@ -19,8 +19,8 @@ use super::{
 /// Syntax used by one in-memory Compose source.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ComposeSourceFormat {
-    /// Canonical Kbox Agent Configuration Language.
-    Acl,
+    /// Canonical Kbox Configuration Language.
+    Kcl,
     /// Bounded Docker Compose-compatible YAML.
     Yaml,
 }
@@ -35,8 +35,8 @@ pub fn normalize_compose(
     environment: &HashMap<String, String>,
 ) -> Result<NormalizedComposeConfig, ComposeNormalizationError> {
     let config = match format {
-        ComposeSourceFormat::Acl => {
-            ComposeConfig::from_acl_str_with_environment(source, environment)
+        ComposeSourceFormat::Kcl => {
+            ComposeConfig::from_kcl_str_with_environment(source, environment)
                 .map_err(|error| ComposeNormalizationError::one(error.diagnostic().clone()))?
         }
         ComposeSourceFormat::Yaml => parse_yaml(source, environment)?,

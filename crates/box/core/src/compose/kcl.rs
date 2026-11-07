@@ -1,8 +1,8 @@
-//! Closed-schema Kbox ACL parser for Compose applications.
+//! Closed-schema Kbox KCL parser for Compose applications.
 
 use std::collections::HashMap;
 
-use kacl::{Block, Document, Lexer, Token, Value};
+use kcl::{Block, Document, Lexer, Token, Value};
 use thiserror::Error;
 
 use super::diagnostic::{child_path, pointer_segment, ComposeDiagnostic};
@@ -17,14 +17,14 @@ use super::{
     ServiceNetworks, StringOrList, VolumeDeclaration,
 };
 
-/// An invalid Kbox Compose ACL document.
+/// An invalid Kbox Compose KCL document.
 #[derive(Debug, Clone, PartialEq, Eq, Error)]
 #[error("{diagnostic}")]
-pub struct ComposeAclError {
+pub struct ComposeKclError {
     diagnostic: ComposeDiagnostic,
 }
 
-impl ComposeAclError {
+impl ComposeKclError {
     fn invalid(message: impl Into<String>) -> Self {
         Self {
             diagnostic: ComposeDiagnostic::new(ComposeDiagnosticCode::InvalidValue, "/", message),
@@ -65,26 +65,26 @@ impl ComposeAclError {
     }
 }
 
-pub(super) fn parse_compose_acl(
+pub(super) fn parse_compose_kcl(
     source: &str,
     environment: &HashMap<String, String>,
-) -> Result<ComposeConfig, ComposeAclError> {
+) -> Result<ComposeConfig, ComposeKclError> {
     validate_balanced_braces(source)?;
-    let mut document = kacl::parse(source)
-        .map_err(|error| ComposeAclError::syntax(format!("invalid Kbox ACL: {error}")))?;
+    let mut document = kcl::parse(source)
+        .map_err(|error| ComposeKclError::syntax(format!("invalid Kbox KCL: {error}")))?;
     interpolate_document_values(&mut document, environment)?;
     resolve_environment_calls(&mut document, environment)?;
     convert_document(document)
 }
 
-fn validate_balanced_braces(source: &str) -> Result<(), ComposeAclError> {
+fn validate_balanced_braces(source: &str) -> Result<(), ComposeKclError> {
     let mut depth = 0usize;
     for token in Lexer::new(source).tokenize() {
         match token.token {
             Token::LeftBrace => depth += 1,
             Token::RightBrace if depth == 0 => {
-                return Err(ComposeAclError::syntax(
-                    "compose ACL contains an unmatched closing brace",
+                return Err(ComposeKclError::syntax(
+                    "compose KCL contains an unmatched closing brace",
                 ));
             }
             Token::RightBrace => depth -= 1,
@@ -92,8 +92,8 @@ fn validate_balanced_braces(source: &str) -> Result<(), ComposeAclError> {
         }
     }
     if depth != 0 {
-        return Err(ComposeAclError::syntax(
-            "compose ACL contains an unclosed block or object",
+        return Err(ComposeKclError::syntax(
+            "compose KCL contains an unclosed block or object",
         ));
     }
     Ok(())
@@ -102,7 +102,7 @@ fn validate_balanced_braces(source: &str) -> Result<(), ComposeAclError> {
 fn interpolate_document_values(
     document: &mut Document,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     for block in &mut document.blocks {
         interpolate_block_values(block, environment)?;
     }
@@ -112,7 +112,7 @@ fn interpolate_document_values(
 fn interpolate_block_values(
     block: &mut Block,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     for (name, value) in &mut block.attributes {
         // Secret references are names, not scalar values. Expanding them here
         // could turn caller-owned Secret bytes into durable Compose data.
@@ -130,11 +130,11 @@ fn interpolate_block_values(
 fn interpolate_value(
     value: &mut Value,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     match value {
         Value::String(text) => {
             *text = interpolate_compose_scalar(text, environment).map_err(|error| {
-                ComposeAclError::interpolation(format!("invalid Compose interpolation: {error}"))
+                ComposeKclError::interpolation(format!("invalid Compose interpolation: {error}"))
             })?;
         }
         Value::List(values) | Value::Call(_, values) => {
@@ -155,7 +155,7 @@ fn interpolate_value(
 fn resolve_environment_calls(
     document: &mut Document,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     for block in &mut document.blocks {
         resolve_block_environment(block, environment)?;
     }
@@ -165,7 +165,7 @@ fn resolve_environment_calls(
 fn resolve_block_environment(
     block: &mut Block,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     for (name, value) in &mut block.attributes {
         // `env()` resolves a literal value. Secret references must remain
         // non-sensitive names and are validated as plain strings later.
@@ -183,22 +183,22 @@ fn resolve_block_environment(
 fn resolve_value_environment(
     value: &mut Value,
     environment: &HashMap<String, String>,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     match value {
         Value::Call(name, arguments) => {
             if name != "env" {
-                return Err(ComposeAclError::unsupported_value(
+                return Err(ComposeKclError::unsupported_value(
                     "/",
-                    format!("unsupported ACL function {name:?}; only env(\"NAME\") is supported"),
+                    format!("unsupported KCL function {name:?}; only env(\"NAME\") is supported"),
                 ));
             }
             let [Value::String(variable)] = arguments.as_slice() else {
-                return Err(ComposeAclError::invalid(
+                return Err(ComposeKclError::invalid(
                     "env() must receive exactly one string environment variable name",
                 ));
             };
             let resolved = environment.get(variable).cloned().ok_or_else(|| {
-                ComposeAclError::invalid(format!(
+                ComposeKclError::invalid(format!(
                     "environment variable {variable:?} referenced by env() is not set"
                 ))
             })?;
@@ -219,7 +219,7 @@ fn resolve_value_environment(
     Ok(())
 }
 
-fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError> {
+fn convert_document(document: Document) -> Result<ComposeConfig, ComposeKclError> {
     let mut services = HashMap::new();
     let mut volumes = HashMap::new();
     let mut networks = HashMap::new();
@@ -231,7 +231,7 @@ fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError
                 validate_compose_name("service", &name)?;
                 let config = parse_service(&block, &name)?;
                 if services.insert(name.clone(), config).is_some() {
-                    return Err(ComposeAclError::invalid(format!(
+                    return Err(ComposeKclError::invalid(format!(
                         "duplicate service block {name:?}"
                     )));
                 }
@@ -245,7 +245,7 @@ fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError
                     driver: optional_string(&block, "driver", &path)?,
                 };
                 if volumes.insert(name.clone(), Some(declaration)).is_some() {
-                    return Err(ComposeAclError::invalid(format!(
+                    return Err(ComposeKclError::invalid(format!(
                         "duplicate volume block {name:?}"
                     )));
                 }
@@ -259,13 +259,13 @@ fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError
                     driver: optional_string(&block, "driver", &path)?,
                 };
                 if networks.insert(name.clone(), Some(declaration)).is_some() {
-                    return Err(ComposeAclError::invalid(format!(
+                    return Err(ComposeKclError::invalid(format!(
                         "duplicate network block {name:?}"
                     )));
                 }
             }
             name => {
-                return Err(ComposeAclError::unsupported_field(
+                return Err(ComposeKclError::unsupported_field(
                     format!("/{}", pointer_segment(name)),
                     name,
                 ));
@@ -274,8 +274,8 @@ fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError
     }
 
     if services.is_empty() {
-        return Err(ComposeAclError::invalid(
-            "compose.acl must contain at least one service block",
+        return Err(ComposeKclError::invalid(
+            "compose.kcl must contain at least one service block",
         ));
     }
 
@@ -287,7 +287,7 @@ fn convert_document(document: Document) -> Result<ComposeConfig, ComposeAclError
     })
 }
 
-fn parse_service(block: &Block, name: &str) -> Result<ServiceConfig, ComposeAclError> {
+fn parse_service(block: &Block, name: &str) -> Result<ServiceConfig, ComposeKclError> {
     let path = format!("/services/{}", pointer_segment(name));
     validate_attributes(block, SERVICE_FIELDS, &path)?;
     let healthcheck = parse_service_healthcheck(block, &path)?;
@@ -322,17 +322,17 @@ fn parse_service(block: &Block, name: &str) -> Result<ServiceConfig, ComposeAclE
 fn parse_service_healthcheck(
     service: &Block,
     service_path: &str,
-) -> Result<Option<HealthcheckConfig>, ComposeAclError> {
+) -> Result<Option<HealthcheckConfig>, ComposeKclError> {
     let mut nested_healthcheck = None;
     for nested in &service.blocks {
         if nested.name != "healthcheck" {
-            return Err(ComposeAclError::unsupported_field(
+            return Err(ComposeKclError::unsupported_field(
                 child_path(service_path, &nested.name),
                 &nested.name,
             ));
         }
         if nested_healthcheck.replace(nested).is_some() {
-            return Err(ComposeAclError::invalid(format!(
+            return Err(ComposeKclError::invalid(format!(
                 "{service_path} contains more than one healthcheck block"
             )));
         }
@@ -340,7 +340,7 @@ fn parse_service_healthcheck(
 
     let attribute_healthcheck = service.attributes.get("healthcheck");
     if attribute_healthcheck.is_some() && nested_healthcheck.is_some() {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{service_path} declares healthcheck both as an attribute and a block"
         )));
     }
@@ -357,10 +357,10 @@ fn parse_service_healthcheck(
 fn parse_healthcheck(
     value: &Value,
     service_path: &str,
-) -> Result<HealthcheckConfig, ComposeAclError> {
+) -> Result<HealthcheckConfig, ComposeKclError> {
     let path = child_path(service_path, "healthcheck");
     let Value::Object(entries) = value else {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} must be an object or a healthcheck block"
         )));
     };
@@ -371,10 +371,10 @@ fn parse_healthcheck(
 fn parse_healthcheck_block(
     block: &Block,
     service_path: &str,
-) -> Result<HealthcheckConfig, ComposeAclError> {
+) -> Result<HealthcheckConfig, ComposeKclError> {
     let path = child_path(service_path, "healthcheck");
     if !block.labels.is_empty() {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} block cannot have labels"
         )));
     }
@@ -390,7 +390,7 @@ fn parse_healthcheck_block(
 fn parse_healthcheck_fields(
     fields: &HashMap<&str, &Value>,
     path: &str,
-) -> Result<HealthcheckConfig, ComposeAclError> {
+) -> Result<HealthcheckConfig, ComposeKclError> {
     Ok(HealthcheckConfig {
         test: fields
             .get("test")
@@ -421,23 +421,23 @@ fn parse_healthcheck_fields(
     })
 }
 
-fn named_block_label(block: &Block, kind: &str) -> Result<String, ComposeAclError> {
+fn named_block_label(block: &Block, kind: &str) -> Result<String, ComposeKclError> {
     let [name] = block.labels.as_slice() else {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{kind} blocks require exactly one string label"
         )));
     };
     Ok(name.clone())
 }
 
-fn validate_compose_name(kind: &str, name: &str) -> Result<(), ComposeAclError> {
+fn validate_compose_name(kind: &str, name: &str) -> Result<(), ComposeKclError> {
     let mut bytes = name.bytes();
     let valid = bytes
         .next()
         .is_some_and(|byte| byte.is_ascii_alphanumeric())
         && bytes.all(|byte| byte.is_ascii_alphanumeric() || matches!(byte, b'.' | b'_' | b'-'));
     if !valid {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{kind} name {name:?} must start with an ASCII letter or digit and contain only letters, digits, '.', '_', or '-'"
         )));
     }
@@ -448,16 +448,16 @@ fn validate_plain_block(
     block: &Block,
     attributes: &[&str],
     path: &str,
-) -> Result<(), ComposeAclError> {
+) -> Result<(), ComposeKclError> {
     if !block.blocks.is_empty() {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} cannot contain nested blocks"
         )));
     }
     validate_attributes(block, attributes, path)
 }
 
-fn validate_attributes(block: &Block, allowed: &[&str], path: &str) -> Result<(), ComposeAclError> {
+fn validate_attributes(block: &Block, allowed: &[&str], path: &str) -> Result<(), ComposeKclError> {
     let mut unknown = block
         .attributes
         .keys()
@@ -467,7 +467,7 @@ fn validate_attributes(block: &Block, allowed: &[&str], path: &str) -> Result<()
     unknown.sort();
     if !unknown.is_empty() {
         let first = &unknown[0];
-        return Err(ComposeAclError {
+        return Err(ComposeKclError {
             diagnostic: ComposeDiagnostic::new(
                 ComposeDiagnosticCode::UnsupportedField,
                 child_path(path, first),
@@ -482,7 +482,7 @@ fn optional_string(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<Option<String>, ComposeAclError> {
+) -> Result<Option<String>, ComposeKclError> {
     block
         .attributes
         .get(field)
@@ -490,18 +490,18 @@ fn optional_string(
         .transpose()
 }
 
-fn string_value(value: &Value, path: &str) -> Result<String, ComposeAclError> {
+fn string_value(value: &Value, path: &str) -> Result<String, ComposeKclError> {
     value
         .as_str()
         .map(str::to_owned)
-        .ok_or_else(|| ComposeAclError::invalid(format!("{path} must be a string")))
+        .ok_or_else(|| ComposeKclError::invalid(format!("{path} must be a string")))
 }
 
 fn optional_string_list(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<Option<Vec<String>>, ComposeAclError> {
+) -> Result<Option<Vec<String>>, ComposeKclError> {
     block
         .attributes
         .get(field)
@@ -509,9 +509,9 @@ fn optional_string_list(
         .transpose()
 }
 
-fn string_list_value(value: &Value, path: &str) -> Result<Vec<String>, ComposeAclError> {
+fn string_list_value(value: &Value, path: &str) -> Result<Vec<String>, ComposeKclError> {
     let Value::List(values) = value else {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} must be a list of strings"
         )));
     };
@@ -525,7 +525,7 @@ fn optional_string_or_list(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<Option<StringOrList>, ComposeAclError> {
+) -> Result<Option<StringOrList>, ComposeKclError> {
     block
         .attributes
         .get(field)
@@ -533,17 +533,17 @@ fn optional_string_or_list(
         .transpose()
 }
 
-fn string_or_list_value(value: &Value, path: &str) -> Result<StringOrList, ComposeAclError> {
+fn string_or_list_value(value: &Value, path: &str) -> Result<StringOrList, ComposeKclError> {
     match value {
         Value::String(value) => Ok(StringOrList::Single(value.clone())),
         Value::List(_) => string_list_value(value, path).map(StringOrList::List),
-        _ => Err(ComposeAclError::invalid(format!(
+        _ => Err(ComposeKclError::invalid(format!(
             "{path} must be a string or a list of strings"
         ))),
     }
 }
 
-fn optional_integer<T>(block: &Block, field: &str, path: &str) -> Result<Option<T>, ComposeAclError>
+fn optional_integer<T>(block: &Block, field: &str, path: &str) -> Result<Option<T>, ComposeKclError>
 where
     T: TryFrom<u64>,
 {
@@ -554,25 +554,25 @@ where
         .transpose()
 }
 
-fn integer_value<T>(value: &Value, path: &str) -> Result<T, ComposeAclError>
+fn integer_value<T>(value: &Value, path: &str) -> Result<T, ComposeKclError>
 where
     T: TryFrom<u64>,
 {
     let Value::Number(number) = value else {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} must be a nonnegative integer"
         )));
     };
     if !number.is_finite() || *number < 0.0 || number.fract() != 0.0 || *number > u64::MAX as f64 {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path} must be a nonnegative integer"
         )));
     }
     T::try_from(*number as u64)
-        .map_err(|_| ComposeAclError::invalid(format!("{path} is out of range")))
+        .map_err(|_| ComposeKclError::invalid(format!("{path} is out of range")))
 }
 
-fn optional_bool(block: &Block, field: &str, path: &str) -> Result<Option<bool>, ComposeAclError> {
+fn optional_bool(block: &Block, field: &str, path: &str) -> Result<Option<bool>, ComposeKclError> {
     block
         .attributes
         .get(field)
@@ -580,13 +580,13 @@ fn optional_bool(block: &Block, field: &str, path: &str) -> Result<Option<bool>,
         .transpose()
 }
 
-fn bool_value(value: &Value, path: &str) -> Result<bool, ComposeAclError> {
+fn bool_value(value: &Value, path: &str) -> Result<bool, ComposeKclError> {
     value
         .as_bool()
-        .ok_or_else(|| ComposeAclError::invalid(format!("{path} must be a boolean")))
+        .ok_or_else(|| ComposeKclError::invalid(format!("{path} must be a boolean")))
 }
 
-fn optional_env_vars(block: &Block, field: &str, path: &str) -> Result<EnvVars, ComposeAclError> {
+fn optional_env_vars(block: &Block, field: &str, path: &str) -> Result<EnvVars, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(EnvVars::Empty);
     };
@@ -595,13 +595,13 @@ fn optional_env_vars(block: &Block, field: &str, path: &str) -> Result<EnvVars, 
         Value::Object(entries) => {
             string_map_value(entries, &format!("{path}.{field}")).map(EnvVars::Map)
         }
-        _ => Err(ComposeAclError::invalid(format!(
+        _ => Err(ComposeKclError::invalid(format!(
             "{path}.{field} must be an object or a list of KEY=value strings"
         ))),
     }
 }
 
-fn optional_labels(block: &Block, field: &str, path: &str) -> Result<Labels, ComposeAclError> {
+fn optional_labels(block: &Block, field: &str, path: &str) -> Result<Labels, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(Labels::Empty);
     };
@@ -610,7 +610,7 @@ fn optional_labels(block: &Block, field: &str, path: &str) -> Result<Labels, Com
         Value::Object(entries) => {
             string_map_value(entries, &format!("{path}.{field}")).map(Labels::Map)
         }
-        _ => Err(ComposeAclError::invalid(format!(
+        _ => Err(ComposeKclError::invalid(format!(
             "{path}.{field} must be an object or a list of label strings"
         ))),
     }
@@ -620,12 +620,12 @@ fn optional_string_map(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<HashMap<String, String>, ComposeAclError> {
+) -> Result<HashMap<String, String>, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(HashMap::new());
     };
     let Value::Object(entries) = value else {
-        return Err(ComposeAclError::invalid(format!(
+        return Err(ComposeKclError::invalid(format!(
             "{path}.{field} must be an object of string references"
         )));
     };
@@ -635,12 +635,12 @@ fn optional_string_map(
 fn string_map_value(
     entries: &[(String, Value)],
     path: &str,
-) -> Result<HashMap<String, String>, ComposeAclError> {
+) -> Result<HashMap<String, String>, ComposeKclError> {
     let mut output = HashMap::new();
     for (key, value) in entries {
         let value = string_value(value, &format!("{path}.{key}"))?;
         if output.insert(key.clone(), value).is_some() {
-            return Err(ComposeAclError::invalid(format!(
+            return Err(ComposeKclError::invalid(format!(
                 "{path} contains duplicate key {key:?}"
             )));
         }
@@ -648,7 +648,7 @@ fn string_map_value(
     Ok(output)
 }
 
-fn optional_dns(block: &Block, field: &str, path: &str) -> Result<DnsConfig, ComposeAclError> {
+fn optional_dns(block: &Block, field: &str, path: &str) -> Result<DnsConfig, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(DnsConfig::Empty);
     };
@@ -657,7 +657,7 @@ fn optional_dns(block: &Block, field: &str, path: &str) -> Result<DnsConfig, Com
         Value::String(value) => DnsConfig::Single(value.clone()),
         Value::List(_) => string_list_value(value, &field_path).map(DnsConfig::List)?,
         _ => {
-            return Err(ComposeAclError::invalid(format!(
+            return Err(ComposeKclError::invalid(format!(
                 "{field_path} must be a string or a list of strings"
             )))
         }
@@ -666,7 +666,7 @@ fn optional_dns(block: &Block, field: &str, path: &str) -> Result<DnsConfig, Com
     // cannot disagree with the host path. IPv6 stays valid for TSI; Bridge
     // still requires IPv4 at network setup.
     crate::dns::parse_dns_servers(&dns.to_vec())
-        .map_err(|error| ComposeAclError::invalid(format!("{field_path}: {error}")))?;
+        .map_err(|error| ComposeKclError::invalid(format!("{field_path}: {error}")))?;
     Ok(dns)
 }
 
@@ -674,7 +674,7 @@ fn optional_depends_on(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<DependsOn, ComposeAclError> {
+) -> Result<DependsOn, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(DependsOn::Empty);
     };
@@ -699,7 +699,7 @@ fn optional_depends_on(
                             .unwrap_or_else(|| "service_started".to_string())
                     }
                     _ => {
-                        return Err(ComposeAclError::invalid(format!(
+                        return Err(ComposeKclError::invalid(format!(
                             "{} must be an object or null",
                             child_path(&field_path, name)
                         )));
@@ -709,7 +709,7 @@ fn optional_depends_on(
                     condition.as_str(),
                     "service_started" | "service_healthy" | "service_completed_successfully"
                 ) {
-                    return Err(ComposeAclError::unsupported_value(
+                    return Err(ComposeKclError::unsupported_value(
                         child_path(&child_path(&field_path, name), "condition"),
                         format!("unsupported depends_on condition {condition:?}"),
                     ));
@@ -718,14 +718,14 @@ fn optional_depends_on(
                     .insert(name.clone(), DependsOnCondition { condition })
                     .is_some()
                 {
-                    return Err(ComposeAclError::invalid(format!(
+                    return Err(ComposeKclError::invalid(format!(
                         "{field_path} contains duplicate service {name:?}"
                     )));
                 }
             }
             Ok(DependsOn::Map(dependencies))
         }
-        _ => Err(ComposeAclError::invalid(format!(
+        _ => Err(ComposeKclError::invalid(format!(
             "{field_path} must be a list of service names or an object"
         ))),
     }
@@ -735,7 +735,7 @@ fn optional_service_networks(
     block: &Block,
     field: &str,
     path: &str,
-) -> Result<ServiceNetworks, ComposeAclError> {
+) -> Result<ServiceNetworks, ComposeKclError> {
     let Some(value) = block.attributes.get(field) else {
         return Ok(ServiceNetworks::Empty);
     };
@@ -761,21 +761,21 @@ fn optional_service_networks(
                         Some(ServiceNetworkConfig { aliases })
                     }
                     _ => {
-                        return Err(ComposeAclError::invalid(format!(
+                        return Err(ComposeKclError::invalid(format!(
                             "{} must be an object or null",
                             child_path(&field_path, name)
                         )));
                     }
                 };
                 if networks.insert(name.clone(), config).is_some() {
-                    return Err(ComposeAclError::invalid(format!(
+                    return Err(ComposeKclError::invalid(format!(
                         "{field_path} contains duplicate network {name:?}"
                     )));
                 }
             }
             Ok(ServiceNetworks::Map(networks))
         }
-        _ => Err(ComposeAclError::invalid(format!(
+        _ => Err(ComposeKclError::invalid(format!(
             "{field_path} must be a list of network names or an object"
         ))),
     }
@@ -785,17 +785,17 @@ fn object_fields<'a>(
     entries: &'a [(String, Value)],
     allowed: &[&str],
     path: &str,
-) -> Result<HashMap<&'a str, &'a Value>, ComposeAclError> {
+) -> Result<HashMap<&'a str, &'a Value>, ComposeKclError> {
     let mut output = HashMap::new();
     for (key, value) in entries {
         if !allowed.contains(&key.as_str()) {
-            return Err(ComposeAclError::unsupported_field(
+            return Err(ComposeKclError::unsupported_field(
                 child_path(path, key),
                 key,
             ));
         }
         if output.insert(key.as_str(), value).is_some() {
-            return Err(ComposeAclError::invalid(format!(
+            return Err(ComposeKclError::invalid(format!(
                 "{path} contains duplicate attribute {key:?}"
             )));
         }
@@ -861,9 +861,9 @@ network "backend" {
 "#;
 
     #[test]
-    fn parses_complete_closed_acl_schema() {
+    fn parses_complete_closed_kcl_schema() {
         let environment = HashMap::from([("API_TOKEN".to_string(), "secret".to_string())]);
-        let config = parse_compose_acl(COMPLETE, &environment).expect("valid compose ACL");
+        let config = parse_compose_kcl(COMPLETE, &environment).expect("valid compose KCL");
 
         assert_eq!(config.services.len(), 2);
         let api = &config.services["api"];
@@ -906,7 +906,7 @@ network "backend" {
             "service \"api\" { image = \"api\" } }",
         ] {
             assert!(
-                parse_compose_acl(source, &HashMap::new()).is_err(),
+                parse_compose_kcl(source, &HashMap::new()).is_err(),
                 "source should fail: {source}"
             );
         }
@@ -914,14 +914,14 @@ network "backend" {
 
     #[test]
     fn accepts_ipv4_and_ipv6_dns_rejects_garbage() {
-        let ipv4 = parse_compose_acl(
+        let ipv4 = parse_compose_kcl(
             r#"service "api" { image = "api" dns = "8.8.8.8" }"#,
             &HashMap::new(),
         )
         .expect("IPv4 DNS");
         assert_eq!(ipv4.services["api"].dns.to_vec(), ["8.8.8.8"]);
 
-        let ipv6 = parse_compose_acl(
+        let ipv6 = parse_compose_kcl(
             r#"service "api" { image = "api" dns = ["2001:4860:4860::8888"] }"#,
             &HashMap::new(),
         )
@@ -933,7 +933,7 @@ network "backend" {
             r#"service "api" { image = "api" dns = ["8.8.8.8", "dns.google"] }"#,
             r#"service "api" { image = "api" dns = "" }"#,
         ] {
-            let error = parse_compose_acl(source, &HashMap::new()).unwrap_err();
+            let error = parse_compose_kcl(source, &HashMap::new()).unwrap_err();
             assert!(
                 error.to_string().contains("dns"),
                 "source={source} error={error}"
@@ -952,7 +952,7 @@ network "backend" {
             "service \"api\" { image = concat(\"a\", \"b\") }",
         ] {
             assert!(
-                parse_compose_acl(source, &HashMap::new()).is_err(),
+                parse_compose_kcl(source, &HashMap::new()).is_err(),
                 "source should fail: {source}"
             );
         }
@@ -960,7 +960,7 @@ network "backend" {
 
     #[test]
     fn reports_missing_environment_values() {
-        let error = parse_compose_acl(
+        let error = parse_compose_kcl(
             "service \"api\" { environment = { TOKEN = env(\"MISSING\") } }",
             &HashMap::new(),
         )
@@ -983,7 +983,7 @@ service "api" {
 }
 "#;
 
-        let config = parse_compose_acl(source, &HashMap::new()).expect("valid Unicode ACL");
+        let config = parse_compose_kcl(source, &HashMap::new()).expect("valid Unicode KCL");
 
         assert_eq!(
             config.services["api"]

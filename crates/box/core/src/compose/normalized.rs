@@ -27,7 +27,7 @@ pub struct NormalizedComposeConfig {
     pub networks: BTreeMap<String, NormalizedNetworkDeclaration>,
 }
 
-/// Canonical service definition independent of ACL/YAML spelling.
+/// Canonical service definition independent of KCL/YAML spelling.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct NormalizedServiceConfig {
     /// OCI image reference.

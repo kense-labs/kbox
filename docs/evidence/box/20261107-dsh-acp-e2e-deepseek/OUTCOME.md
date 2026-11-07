@@ -1,6 +1,6 @@
 # dsh-acp × kbox E2E — DeepSeek live
 
-Live run using `deepseek-flash` + key from repo-root `config.acl` (`providers "deepseek"`).
+Live run using `deepseek-flash` + key from repo-root `config.kcl` (`providers "deepseek"`).
 **Secrets are not recorded** in this file or in `results.json`.
 
 ## Outcome
@@ -11,7 +11,7 @@ Live run using `deepseek-flash` + key from repo-root `config.acl` (`providers "d
 - Command:
 
 ```sh
-# Key loaded from ../config.acl (not echoed). Model: deepseek-flash.
+# Key loaded from ../config.kcl (not echoed). Model: deepseek-flash.
 TIER=all DSH_MODEL=deepseek-flash DSH_PROVIDER=deepseek-official \
   DSH_REASONING_EFFORT=low E2E_OUT=docs/evidence/box/20261107-dsh-acp-e2e-deepseek \
   ./scripts/e2e-dsh-acp/run.sh
@@ -28,7 +28,7 @@ TIER=all DSH_MODEL=deepseek-flash DSH_PROVIDER=deepseek-official \
 | Image digest | tag-only (local inspect unavailable) |
 | Model / effort | `deepseek-official` / `deepseek-flash` / `low` |
 | Isolated `K_HOME` | yes (`E2E_OUT/k-home`) |
-| Credentials source | `config.acl` → `DEEPSEEK_API_KEY` (length only in operator log) |
+| Credentials source | `config.kcl` → `DEEPSEEK_API_KEY` (length only in operator log) |
 
 ## Case results
 

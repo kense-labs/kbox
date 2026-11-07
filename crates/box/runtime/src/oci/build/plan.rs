@@ -7,7 +7,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use kacl::{
+use kcl::{
     canonical_bytes_with_schema, canonical_digest_with_schema, parse_with_limits,
     validate_document, AttributeSchema, Block, BlockSchema, CanonicalError, Cardinality, Document,
     ParseLimits, Schema, SchemaDiagnosticCode, Value, ValueSchema,
@@ -51,7 +51,7 @@ impl BuildCachePolicy {
         }
     }
 
-    /// Stable ACL representation.
+    /// Stable KCL representation.
     pub const fn as_str(self) -> &'static str {
         match self {
             Self::ContentAddressed => "content-addressed",
@@ -81,13 +81,13 @@ pub struct BoxBuildPlan {
 }
 
 impl BoxBuildPlan {
-    /// Current closed ACL schema identity.
+    /// Current closed KCL schema identity.
     pub const SCHEMA: &'static str = "kbox.build-plan.v1";
 
     /// Parse and validate one bounded Kbox ACL build plan.
-    pub fn parse_acl(source: &str) -> Result<Self, BoxBuildPlanError> {
+    pub fn parse_kcl(source: &str) -> Result<Self, BoxBuildPlanError> {
         let document = parse_with_limits(source, BUILD_PLAN_LIMITS).map_err(|error| {
-            BoxBuildPlanError::AclParse {
+            BoxBuildPlanError::KclParse {
                 message: error.message,
                 line: error.line,
                 column: error.column,
@@ -124,7 +124,7 @@ impl BoxBuildPlan {
         let file = normalize_repository_path(required_string(block, "file")?, false)
             .map_err(|reason| BoxBuildPlanError::invalid("file", reason))?;
         let platform = parse_platform(required_string(block, "platform")?)?;
-        let network = BuildNetworkPolicy::parse_acl(required_string(block, "network")?)
+        let network = BuildNetworkPolicy::parse(required_string(block, "network")?)
             .ok_or_else(|| BoxBuildPlanError::invalid("network", "must be none or outbound"))?;
         let cache = BuildCachePolicy::parse(required_string(block, "cache")?)?;
         let target = block
@@ -151,7 +151,7 @@ impl BoxBuildPlan {
     }
 
     /// Canonical Kbox ACL bytes represented as UTF-8 text with one final LF.
-    pub fn canonical_acl(&self) -> Result<String, BoxBuildPlanError> {
+    pub fn canonical_kcl(&self) -> Result<String, BoxBuildPlanError> {
         let bytes = canonical_bytes_with_schema(&self.document(), &build_plan_schema())?;
         String::from_utf8(bytes).map_err(|_| BoxBuildPlanError::CanonicalEncoding)
     }
@@ -239,7 +239,7 @@ impl BoxBuildPlan {
             ("file".to_string(), Value::String(self.file.clone())),
             (
                 "network".to_string(),
-                Value::String(self.network.as_acl().to_string()),
+                Value::String(self.network.as_str().to_string()),
             ),
             (
                 "platform".to_string(),
@@ -267,9 +267,9 @@ impl BoxBuildPlan {
 /// Stable failures from build-plan admission and source resolution.
 #[derive(Debug, Error)]
 pub enum BoxBuildPlanError {
-    /// The bounded ACL parser rejected the source.
-    #[error("Box build plan ACL is invalid at {line}:{column}: {message}")]
-    AclParse {
+    /// The bounded KCL parser rejected the source.
+    #[error("Box build plan KCL is invalid at {line}:{column}: {message}")]
+    KclParse {
         message: String,
         line: usize,
         column: usize,
@@ -298,7 +298,7 @@ pub enum BoxBuildPlanError {
     /// The validated AST could not be canonicalized.
     #[error("Box build plan canonicalization failed: {0}")]
     Canonical(#[from] CanonicalError),
-    /// ACL canonical bytes must always be UTF-8.
+    /// KCL canonical bytes must always be UTF-8.
     #[error("Box build plan canonical output was not UTF-8")]
     CanonicalEncoding,
 }

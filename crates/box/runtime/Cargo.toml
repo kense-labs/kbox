@@ -34,7 +34,7 @@ pool = ["vm"]
 scale = ["dep:axum", "compose"]
 compose = ["vm"]
 operator = []
-build = ["dep:kacl"]
+build = ["dep:kcl"]
 # Downstream product qualification may inject a real-process execution backend
 # and generation-fenced connector without enabling that seam in release builds.
 runtime-provider-qualification = ["vm"]
@@ -101,7 +101,7 @@ zstd = "0.13"
 
 # Build support
 tempfile = { workspace = true }
-kacl = { workspace = true, optional = true }
+kcl = { workspace = true, optional = true }
 
 # Metrics
 prometheus = { workspace = true }

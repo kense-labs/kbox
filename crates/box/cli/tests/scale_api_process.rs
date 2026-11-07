@@ -172,7 +172,7 @@ fn reconciles_real_replicas_and_rejects_stale_revisions() {
     let cli = CliTest::new();
     let image = "docker.io/library/alpine:latest";
     seed_runnable_alpine_image(&cli, image);
-    let services = cli.home_path().join("services.acl");
+    let services = cli.home_path().join("services.kcl");
     std::fs::write(
         &services,
         format!(

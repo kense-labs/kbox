@@ -416,7 +416,7 @@ mod tests {
     ) -> SharedScaleAuthority {
         let authority = DurableScaleAuthority::open(authority_path, 10).unwrap();
         let manager = LocalExecutionManager::new(box_state_path, home, backend);
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             r#"service "api" { image = "api:v1" }"#,
             "gateway-scale",
             facade_isolation(),

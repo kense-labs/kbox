@@ -22,7 +22,7 @@ fn plan(platform: &str) -> BoxBuildPlan {
 }
 
 fn plan_with_cache(platform: &str, cache: &str) -> BoxBuildPlan {
-    BoxBuildPlan::parse_acl(&format!(
+    BoxBuildPlan::parse_kcl(&format!(
         r#"
 build "oci" {{
   cache = "{cache}"

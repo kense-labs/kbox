@@ -29,7 +29,7 @@ Guest Linux MicroVM  ──►  your process (nginx, redis, agent, …)
 macOS arm64 (Apple Silicon):
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.2/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.3/install.sh | sh
 export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```

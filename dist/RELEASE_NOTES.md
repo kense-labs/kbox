@@ -1,17 +1,18 @@
-# kbox 3.4.2 — macOS (Apple Silicon)
+# kbox 3.4.3 — macOS (Apple Silicon)
 
-Packaging and installer fix so soname symlinks stay symlinks end-to-end.
+Product configuration now uses external **KCL** (`.kcl`) via `kense-kcl` instead of the in-tree ACL crate.
 
 ## Highlights
 
-- Archive stays ~**22 MB** compressed (same as 3.3.0 / 3.4.1).
-- Installed prefix is ~**42 MB** again: `dist/install.sh` preserves `libkrun*.dylib` / `libkrunfw*.dylib` soname links instead of copying each target body three times (~72 MB).
-- `scripts/package-macos-arm64.sh` continues to stage one real dylib per library family plus relative symlinks.
+- Removed `crates/acl`; kbox depends on `../kcl` (`package = "kense-kcl"`).
+- Compose / Scale / OCI build-plan APIs and discovery prefer `.kcl` (`compose.kcl`, `services.kcl`).
+- Windows DACL / filesystem ACL paths are unchanged.
+- Packaging still stages one real dylib per library family plus soname symlinks (~22 MB archive / ~42 MB installed).
 
 ## Install
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.2/install.sh | sh
+curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.3/install.sh | sh
 export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```
@@ -26,19 +27,20 @@ kbox update
 
 | Component | Purpose |
 | --- | --- |
-| `bin/kbox` | CLI (7.4 MB, stripped, fat LTO, opt-level=z) |
-| `bin/kbox-shim` | Per-VM host shim (3.2 MB) |
-| `bin/kbox-guest-init` | Static aarch64 Linux guest PID 1 (5.1 MB) |
-| `lib/libkrun.1.17.0.dylib` | HVF library (4.3 MB); aliases are symlinks |
-| `lib/libkrunfw.5.dylib` | Guest kernel bundle (22 MB); alias is a symlink |
+| `bin/kbox` | CLI (stripped, fat LTO, opt-level=z) |
+| `bin/kbox-shim` | Per-VM host shim |
+| `bin/kbox-guest-init` | Static aarch64 Linux guest PID 1 |
+| `lib/libkrun.1.17.0.dylib` | HVF library; aliases are symlinks |
+| `lib/libkrunfw.5.dylib` | Guest kernel bundle; alias is a symlink |
 
 - Platform: macOS arm64, Apple Hypervisor Framework.
-- Compressed archive: **22 MB**.
-- SHA-256: `03493b7db00b0189350e5a2d159616954669cc5f5084db1a79fd469cd5accbc7`
+- Compressed archive: **ARCHIVE_SIZE**.
+- SHA-256: `ARCHIVE_SHA256`
 
 ## Verified
 
-- Isolated-prefix install prints `kbox version 3.4.2`.
-- Installed `lib/` retains three symlinks; `du -sh` prefix ≈ 42 MB / lib ≈ 26 MB.
+- Isolated-prefix install prints `kbox version 3.4.3`.
+- Compose KCL MicroVM smoke (`test_real_compose_kcl_smoke`) passed on this host.
+- Installed `lib/` retains soname symlinks.
 
 Not covered: Linux/Windows packages, non-arm64 platforms.

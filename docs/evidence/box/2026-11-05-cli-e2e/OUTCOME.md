@@ -21,7 +21,7 @@ Implemented and executed the planned CLI end-to-end matrix on the current host. 
 - Real MicroVM lifecycle, Nginx HTTP, exported-rootfs import and run, and Scale API `0 → 2 → 1 → 0` reconciliation with stale-revision rejection.
 - Named-volume creation rollback only removes volumes created by the failed call; existing volumes are retained.
 - Unified libkrun FFI symbol prefix and current block-root environment key; retained startup diagnostics before Box directory removal.
-- Corrected stale test fixtures: Nginx binary discovery, structured label assertions, Compose ACL service syntax, and PostgreSQL startup username.
+- Corrected stale test fixtures: Nginx binary discovery, structured label assertions, Compose KCL service syntax, and PostgreSQL startup username.
 
 ## Actual commands and results
 
@@ -64,7 +64,7 @@ Counts above describe suite invocations, not a deduplicated total; several focus
 
 - The legacy Nginx helper derived a nonexistent target directory and fell back to PATH. It now uses the shared binary/helper and isolated Home.
 - A label assertion expected Docker-style `app=test` text inside JSON. It now parses and checks `labels.app` and `labels.env`.
-- The Scale API fixture initially used YAML-style `services`; it now uses the supported ACL `service "api"` block. Server stderr is retained for diagnosis.
+- The Scale API fixture initially used YAML-style `services`; it now uses the supported KCL `service "api"` block. Server stderr is retained for diagnosis.
 - The PostgreSQL wire fixture expected a stale username instead of the `kcloud` value passed by the test; corrected and rerun successfully.
 - A host-wide transient prevented newly linked C and Rust executables from leaving `_dyld_start`. After it cleared, the minimal executables, `krun --version`, and all reported test suites were actually executed; no timeout is counted as a pass.
 

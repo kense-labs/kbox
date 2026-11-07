@@ -1,5 +1,5 @@
 use super::*;
-use kacl::SchemaDiagnosticCode;
+use kcl::SchemaDiagnosticCode;
 use kbox_core::platform::Platform;
 
 const PLAN: &str = r#"
@@ -15,7 +15,7 @@ build "oci" {
 "#;
 
 #[test]
-fn canonical_acl_and_digest_are_stable() {
+fn canonical_kcl_and_digest_are_stable() {
     let reordered = r#"
       # Input order and comments do not define build identity.
       build "oci" {
@@ -40,11 +40,11 @@ fn canonical_acl_and_digest_are_stable() {
         "}\n",
     );
 
-    let first = BoxBuildPlan::parse_acl(PLAN).expect("valid build plan");
-    let second = BoxBuildPlan::parse_acl(reordered).expect("valid reordered build plan");
+    let first = BoxBuildPlan::parse_kcl(PLAN).expect("valid build plan");
+    let second = BoxBuildPlan::parse_kcl(reordered).expect("valid reordered build plan");
 
     assert_eq!(first, second);
-    assert_eq!(first.canonical_acl().unwrap(), expected);
+    assert_eq!(first.canonical_kcl().unwrap(), expected);
     assert_eq!(
         first.canonical_digest().unwrap(),
         "sha256:f8f1fbacf18535adbf39217cacf7eec46d415c607ecceefeeae37f0e16b1d816"
@@ -56,8 +56,8 @@ fn parser_applies_a_bounded_document_limit() {
     let oversized = format!("{PLAN}\n# {}", "x".repeat(16 * 1024));
 
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&oversized),
-        Err(BoxBuildPlanError::AclParse { .. })
+        BoxBuildPlan::parse_kcl(&oversized),
+        Err(BoxBuildPlanError::KclParse { .. })
     ));
 }
 
@@ -68,7 +68,7 @@ fn schema_is_closed_and_identity_values_are_exact() {
         "  cache = \"content-addressed\"\n  extra = \"rejected\"",
     );
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&unknown),
+        BoxBuildPlan::parse_kcl(&unknown),
         Err(BoxBuildPlanError::Schema {
             code: SchemaDiagnosticCode::UnknownAttribute,
             ..
@@ -77,13 +77,13 @@ fn schema_is_closed_and_identity_values_are_exact() {
 
     let wrong_label = PLAN.replace("build \"oci\"", "build \"container\"");
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&wrong_label),
+        BoxBuildPlan::parse_kcl(&wrong_label),
         Err(BoxBuildPlanError::InvalidValue { field: "label", .. })
     ));
 
     let wrong_schema = PLAN.replace("kbox.build-plan.v1", "kbox.build-plan.experimental");
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&wrong_schema),
+        BoxBuildPlan::parse_kcl(&wrong_schema),
         Err(BoxBuildPlanError::InvalidValue {
             field: "schema",
             ..
@@ -93,7 +93,7 @@ fn schema_is_closed_and_identity_values_are_exact() {
 
 #[test]
 fn cache_and_network_policies_are_closed() {
-    let outbound = BoxBuildPlan::parse_acl(
+    let outbound = BoxBuildPlan::parse_kcl(
         &PLAN
             .replace("network = \"none\"", "network = \"outbound\"")
             .replace("content-addressed", "disabled"),
@@ -104,13 +104,13 @@ fn cache_and_network_policies_are_closed() {
 
     let bad_cache = PLAN.replace("content-addressed", "shared-directory");
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&bad_cache),
+        BoxBuildPlan::parse_kcl(&bad_cache),
         Err(BoxBuildPlanError::InvalidValue { field: "cache", .. })
     ));
 
     let bad_network = PLAN.replace("network = \"none\"", "network = \"host\"");
     assert!(matches!(
-        BoxBuildPlan::parse_acl(&bad_network),
+        BoxBuildPlan::parse_kcl(&bad_network),
         Err(BoxBuildPlanError::InvalidValue {
             field: "network",
             ..
@@ -129,7 +129,7 @@ fn repository_paths_and_target_are_bounded_posix_values() {
     ] {
         assert!(
             matches!(
-                BoxBuildPlan::parse_acl(&invalid),
+                BoxBuildPlan::parse_kcl(&invalid),
                 Err(BoxBuildPlanError::InvalidValue { .. })
             ),
             "unsafe plan was admitted:\n{invalid}"
@@ -146,7 +146,7 @@ fn compiles_exactly_into_the_existing_build_engine() {
     std::fs::create_dir_all(&recipe).unwrap();
     std::fs::write(recipe.join("Containerfile"), "FROM scratch\n").unwrap();
 
-    let plan = BoxBuildPlan::parse_acl(
+    let plan = BoxBuildPlan::parse_kcl(
         r#"
 build "oci" {
   schema = "kbox.build-plan.v1"
@@ -188,7 +188,7 @@ build "oci" {
 
 #[test]
 fn compilation_requires_an_absolute_existing_source_root() {
-    let plan = BoxBuildPlan::parse_acl(PLAN).unwrap();
+    let plan = BoxBuildPlan::parse_kcl(PLAN).unwrap();
 
     assert!(matches!(
         plan.compile(
@@ -214,7 +214,7 @@ fn compilation_rejects_context_and_file_symlink_escapes() {
 
     symlink(&outside, source.join("context-link")).unwrap();
     let context_plan =
-        BoxBuildPlan::parse_acl(&PLAN.replace("context = \".\"", "context = \"context-link\""))
+        BoxBuildPlan::parse_kcl(&PLAN.replace("context = \".\"", "context = \"context-link\""))
             .unwrap();
     assert!(matches!(
         context_plan.compile(&source, BoxBuildOptions::default()),
@@ -226,7 +226,7 @@ fn compilation_rejects_context_and_file_symlink_escapes() {
 
     symlink(outside.join("Containerfile"), source.join("file-link")).unwrap();
     let file_plan =
-        BoxBuildPlan::parse_acl(&PLAN.replace("file = \"Dockerfile\"", "file = \"file-link\""))
+        BoxBuildPlan::parse_kcl(&PLAN.replace("file = \"Dockerfile\"", "file = \"file-link\""))
             .unwrap();
     assert!(matches!(
         file_plan.compile(&source, BoxBuildOptions::default()),

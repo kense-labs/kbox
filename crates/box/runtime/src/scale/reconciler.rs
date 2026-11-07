@@ -859,7 +859,7 @@ mod tests {
     }
 
     fn reconciler(lifecycle: Arc<FakeLifecycle>) -> LocalScaleReconciler {
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -890,7 +890,7 @@ mod tests {
     #[tokio::test]
     async fn downscale_waits_for_endpoint_relays_before_removing_the_execution() {
         let lifecycle = Arc::new(FakeLifecycle::new());
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -935,7 +935,7 @@ mod tests {
     #[tokio::test]
     async fn declared_endpoints_are_not_ready_until_the_advertised_url_works() {
         let lifecycle = Arc::new(FakeLifecycle::new());
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -1019,7 +1019,7 @@ mod tests {
             execution: Mutex::new(None),
             ensure_calls: AtomicUsize::new(0),
         });
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -1159,7 +1159,7 @@ mod tests {
             .lose_next_start_response
             .store(true, Ordering::SeqCst);
         let manager = LocalExecutionManager::new(&state, &home, backend.clone());
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,
@@ -1191,7 +1191,7 @@ mod tests {
         let state = directory.path().join("boxes.json");
         let backend = Arc::new(RecordingBackend::new());
         let manager = LocalExecutionManager::new(&state, &home, backend);
-        let catalog = ScaleServiceCatalog::from_acl_str(
+        let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
             ExecutionIsolation::Microvm,

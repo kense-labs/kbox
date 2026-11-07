@@ -60,7 +60,7 @@ pub async fn execute(args: ScaleApiArgs) -> Result<(), Box<dyn std::error::Error
         .unwrap_or_else(|| kbox_core::dirs_home().join("scale-authority.json"));
     let authority = DurableScaleAuthority::open(state, args.max_instances)?;
     let authority = if let Some(services) = args.services {
-        let catalog = ScaleServiceCatalog::from_acl_file(
+        let catalog = ScaleServiceCatalog::from_kcl_file(
             &services,
             "gateway-scale",
             resolve_isolation(None),
@@ -132,7 +132,7 @@ mod tests {
             "kbox",
             "scale-api",
             "--services",
-            "services.acl",
+            "services.kcl",
             "--endpoint-bind-address",
             "10.0.0.7",
             "--endpoint-advertise-host",
@@ -155,7 +155,7 @@ mod tests {
         assert_eq!(args.endpoint_drain_timeout_secs, 4);
         assert_eq!(
             args.services.as_deref(),
-            Some(std::path::Path::new("services.acl"))
+            Some(std::path::Path::new("services.kcl"))
         );
     }
 }

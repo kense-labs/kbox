@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use kbox_core::compose::{normalize_compose, ComposeDiagnosticCode, ComposeSourceFormat};
 
 const YAML_FIXTURE: &str = include_str!("fixtures/compose/canonical.yaml");
-const ACL_FIXTURE: &str = include_str!("fixtures/compose/canonical.acl");
+const ACL_FIXTURE: &str = include_str!("fixtures/compose/canonical.kcl");
 const NORMALIZED_FIXTURE: &str = include_str!("fixtures/compose/canonical.normalized.json");
 
 fn environment() -> HashMap<String, String> {
@@ -14,14 +14,14 @@ fn environment() -> HashMap<String, String> {
 }
 
 #[test]
-fn yaml_and_acl_normalize_to_the_same_golden_document() {
+fn yaml_and_kcl_normalize_to_the_same_golden_document() {
     let environment = environment();
     let yaml = normalize_compose(YAML_FIXTURE, ComposeSourceFormat::Yaml, &environment)
         .expect("normalize YAML fixture");
-    let acl = normalize_compose(ACL_FIXTURE, ComposeSourceFormat::Acl, &environment)
-        .expect("normalize ACL fixture");
+    let kcl = normalize_compose(ACL_FIXTURE, ComposeSourceFormat::Kcl, &environment)
+        .expect("normalize KCL fixture");
 
-    assert_eq!(yaml, acl);
+    assert_eq!(yaml, kcl);
     assert_eq!(
         yaml.to_canonical_json().expect("serialize normalized YAML"),
         NORMALIZED_FIXTURE.replace("\r\n", "\n"),
@@ -105,13 +105,13 @@ networks:
 }
 
 #[test]
-fn acl_unknown_fields_return_a_structured_diagnostic() {
+fn kcl_unknown_fields_return_a_structured_diagnostic() {
     let error = normalize_compose(
         r#"service "api" { image = "api:latest" build = "." }"#,
-        ComposeSourceFormat::Acl,
+        ComposeSourceFormat::Kcl,
         &HashMap::new(),
     )
-    .expect_err("unsupported ACL field must fail normalization");
+    .expect_err("unsupported KCL field must fail normalization");
 
     assert_eq!(error.diagnostics().len(), 1);
     assert_eq!(
@@ -186,7 +186,7 @@ services:
 }
 
 #[test]
-fn acl_transient_secret_references_never_resolve_into_configuration() {
+fn kcl_transient_secret_references_never_resolve_into_configuration() {
     let source = r#"
 service "api" {
   image = "api:latest"
@@ -198,7 +198,7 @@ service "api" {
     let plaintext = "postgres://must-not-enter-compose-data";
     let environment = HashMap::from([("DATABASE_URL_SECRET".to_string(), plaintext.to_string())]);
 
-    let normalized = normalize_compose(source, ComposeSourceFormat::Acl, &environment)
+    let normalized = normalize_compose(source, ComposeSourceFormat::Kcl, &environment)
         .expect("normalize transient Secret reference");
     assert_eq!(
         normalized.services["api"].secret_environment["DATABASE_URL"],
@@ -226,7 +226,7 @@ fn transient_secret_references_reject_value_expansion_and_literal_collisions() {
     ] {
         let error = normalize_compose(
             source,
-            ComposeSourceFormat::Acl,
+            ComposeSourceFormat::Kcl,
             &HashMap::from([("TOKEN_SECRET".to_string(), "plaintext".to_string())]),
         )
         .expect_err("Secret references must remain non-sensitive names");

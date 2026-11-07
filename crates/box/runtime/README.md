@@ -134,7 +134,7 @@ the workload and therefore never become log-redaction inputs.
 
 `BoxBuildPlan` is the closed Kbox ACL admission contract for Cloud-owned image
 build intent. It validates one `build "oci"` block, produces canonical ACL
-bytes and a stable SHA-256 digest through `kacl`, confines both the context
+bytes and a stable SHA-256 digest through `kcl`, confines both the context
 and build file to one canonical source root, and compiles into the existing
 `BuildConfig`. The recorded-build API adds supervision by extending the same
 native engine, receipt journal, and `ImageStore`; it does not introduce another
@@ -143,7 +143,7 @@ image authority. Content-changing build arguments are deliberately absent from
 version 1; adding them requires a new closed schema so they cannot alter output
 behind an unchanged plan digest.
 
-```acl
+```kcl
 build "oci" {
   cache = "content-addressed"
   context = "."
@@ -171,7 +171,7 @@ use kbox_runtime::{
     execute_recorded_build_plan, BoxBuildPlan, BuildOperationIdentity,
 };
 
-let plan = BoxBuildPlan::parse_acl(plan_acl)?;
+let plan = BoxBuildPlan::parse_kcl(plan_kcl)?;
 let identity = BuildOperationIdentity::new(
     OperationId::new("cloud-build-018f")?,
     source_artifact_digest,

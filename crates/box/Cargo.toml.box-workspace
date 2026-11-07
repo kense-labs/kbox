@@ -123,7 +123,7 @@ base64 = "0.22"
 ring = "0.17"
 
 # Shared types (transport protocol, privacy, tools)
-kacl = { path = "../acl" }
+kcl = { package = "kense-kcl", path = "../../../kcl" }
 ktransport = { version = "0.1.1", package = "kcommon", path = "../common" }
 kbox-contract = { path = "../runtime" }
 koci-sdk = { path = "../oci-runtime/crates/sdk" }

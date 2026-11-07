@@ -24,7 +24,7 @@ real-provider evidence is absent.
 - Kbox OS obtains every repository through Git at an exact commit.
 - Shared production nodes run only the bounded canary defined by the deep test
   plan. Destructive tests require a disposable production-equivalent worker.
-- Code and documentation are English, and product configuration remains ACL.
+- Code and documentation are English, and product configuration remains KCL.
 
 ## Task graph
 

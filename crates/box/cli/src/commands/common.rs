@@ -5,7 +5,6 @@ use std::collections::HashMap;
 use clap::{Args, ValueEnum};
 use kbox_core::config::{validate_vcpu_count, ExecutionIsolation, ResourceLimits, DEFAULT_VCPUS};
 use kbox_core::network::NetworkMode;
-use kbox_runtime::hardware_vm;
 use kbox_runtime::oci::{OciHealthCheck, OciImageConfig};
 
 use crate::image_usage;

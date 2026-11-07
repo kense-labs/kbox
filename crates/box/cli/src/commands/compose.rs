@@ -50,7 +50,7 @@ const COMPOSE_PULL_CONCURRENCY: usize = 2;
 
 /// Default compose file names to search for.
 const COMPOSE_FILES: &[&str] = &[
-    "compose.acl",
+    "compose.kcl",
     "compose.yaml",
     "compose.yml",
     "docker-compose.yaml",
@@ -180,9 +180,9 @@ fn load_compose_file_with_environment(
     let format = if path
         .extension()
         .and_then(|extension| extension.to_str())
-        .is_some_and(|extension| extension.eq_ignore_ascii_case("acl"))
+        .is_some_and(|extension| extension.eq_ignore_ascii_case("kcl"))
     {
-        ComposeSourceFormat::Acl
+        ComposeSourceFormat::Kcl
     } else {
         ComposeSourceFormat::Yaml
     };

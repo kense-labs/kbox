@@ -141,7 +141,7 @@ server implements `server/discover`.
 This protocol change does not require a new Runtime unit class:
 
 ```text
-Cloud MCP AssetRelease + ACL profile
+Cloud MCP AssetRelease + KCL profile
   -> immutable Runtime Service spec + semantics profile digest
   -> Box starts one generation-fenced Service replica
   -> Runtime publishes one typed loopback TCP endpoint

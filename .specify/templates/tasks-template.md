@@ -21,7 +21,7 @@ description: "Task list template for feature implementation"
 
 - Execution: `crates/box/`, `crates/oci-runtime/`
 - Runtime contracts: `crates/runtime/`
-- Policy: `crates/acl/`
+- Policy: `../kcl/`
 - Native dependencies: root `libkrun` and `libkrunfw` gitlinks
 - Evidence: `docs/evidence/<domain>/<date-slug>/OUTCOME.md`
 
@@ -49,6 +49,6 @@ description: "Task list template for feature implementation"
 - [ ] `cargo fmt --all -- --check` passes for Rust edits
 - [ ] Applicable native and workspace checks pass
 - [ ] Internal dependencies stay on local paths
-- [ ] Product configuration remains ACL
+- [ ] Product configuration remains KCL
 - [ ] No decision is reported as an actual effect without PEP evidence
 - [ ] Support claims match actual native results

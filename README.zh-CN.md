@@ -22,7 +22,6 @@ Guest Linux MicroVM  ──►  你的进程（nginx、redis、agent…）
 ```
 
 - **镜像进、MicroVM 出** — alpine、nginx、postgres、自定义 agent 同一路径。
-- **进程命令沙箱** 在独立仓库 [ksandbox](https://github.com/kense-labs/ksandbox)，不在本树。
 - **无 Docker Engine API** — 只有 CLI（及可选 CRI）；默认网络为 TSI。
 
 ## 安装

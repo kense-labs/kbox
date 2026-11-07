@@ -22,7 +22,6 @@ Guest Linux MicroVM  ──►  your process (nginx, redis, agent, …)
 ```
 
 - **OCI images in, MicroVMs out** — alpine, nginx, postgres, custom agents all use the same path.
-- **Process command sandbox** lives in [ksandbox](https://github.com/kense-labs/ksandbox); it is not part of this tree.
 - **No Docker Engine API** — CLI (and optional CRI) only; default networking is TSI, not Docker bridge.
 
 ## Install

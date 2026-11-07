@@ -1,7 +1,7 @@
 [package]
 name = "kbox-core"
 publish = false
-version = "3.4.0"
+version = "3.4.1"
 edition = "2021"
 license = "MIT"
 description = "Core types, config, and error handling for Kbox Box MicroVM runtime"

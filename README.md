@@ -1,4 +1,4 @@
-# kbox
+# KBox
 
 A **Docker-shaped MicroVM runtime** for local agents and OCI workloads. Pull public images, run each box in its own guest Linux kernel (libkrun), and manage lifecycle, volumes, networks, compose, snapshots, and warm pools from one CLI.
 
@@ -12,7 +12,7 @@ Every `kbox run` starts a **DedicatedVm**: OCI rootfs + guest init inside an HVF
 Host (macOS arm64)
     │
     ▼
-kbox CLI  ──►  image store / volumes / networks
+KBox CLI  ──►  image store / volumes / networks
     │
     ▼
 kbox-shim + libkrun / libkrunfw
@@ -127,4 +127,4 @@ libkrun/ libkrunfw/ virtualization submodules
 
 ## License
 
-See repository `LICENSE` / crate manifests. Submodules retain their upstream licenses.
+MIT. See [LICENSE](LICENSE). Submodules retain their upstream licenses.

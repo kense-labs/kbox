@@ -76,4 +76,4 @@ cargo build --locked -p kbox-cli
 
 ## 许可
 
-见仓库 `LICENSE` / crate 清单；子模块保留各自上游许可。
+MIT。见 [LICENSE](LICENSE)。子模块保留各自上游许可。

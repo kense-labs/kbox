@@ -1,520 +1,131 @@
 # kbox
 
-kbox 是本地 Agent Runtime 与 OCI 工作负载执行工作区。它提供隔离执行环境、资源生命周期和 Task／Service 合同。
+A **Docker-shaped MicroVM runtime** for local agents and OCI workloads. Pull public images, run each box in its own guest Linux kernel (libkrun), and manage lifecycle, volumes, networks, compose, snapshots, and warm pools from one CLI.
 
-本文先介绍安装与快速开始，再列出 `kbox` 的完整命令层级。命令内容以当前源码的 `--help` 输出为准。
+English | [简体中文](README.zh-CN.md)
 
-## 1. 安装
+## How it works
 
-### 1.1 一键安装（macOS / Linux）
+Every `kbox run` starts a **DedicatedVm**: OCI rootfs + guest init inside an HVF MicroVM—not a shared-host-kernel container.
+
+```text
+Host (macOS arm64)
+    │
+    ▼
+kbox CLI  ──►  image store / volumes / networks
+    │
+    ▼
+kbox-shim + libkrun / libkrunfw
+    │
+    ▼
+Guest Linux MicroVM  ──►  your process (nginx, redis, agent, …)
+```
+
+- **OCI images in, MicroVMs out** — alpine, nginx, postgres, custom agents all use the same path.
+- **Process command sandbox** lives in [ksandbox](https://github.com/kense-labs/ksandbox); it is not part of this tree.
+- **No Docker Engine API** — CLI (and optional CRI) only; default networking is TSI, not Docker bridge.
+
+## Install
+
+macOS arm64 (Apple Silicon):
 
 ```sh
 curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.2/install.sh | sh
+export PATH="$HOME/.kbox/bin:$PATH"
+kbox version
 ```
 
-脚本自动检测操作系统与架构，从 GitHub Releases 下载对应安装包、校验 SHA-256，并安装到 `~/.kbox`（无需 sudo）。按输出提示把 `~/.kbox/bin` 加入 `PATH` 即可。
-
-可选环境变量：`KBOX_VERSION`（默认 `3.4.2`）、`KBOX_PREFIX`（默认 `~/.kbox`）。
-
-预编译包支持矩阵：macOS arm64（Apple Silicon，Hypervisor Framework）。其他平台会给出明确提示，请改用源码构建。
-
-### 1.2 检查更新与自更新
-
 ```sh
-kbox update --check    # 只检查最新稳定版，不安装
-kbox update            # 下载、校验并更新到最新稳定版
-kbox update 3.4.2      # 安装指定版本
+kbox update --check
+kbox update
 ```
 
-`kbox update` 只选择 `kense-labs/kense` 中以 `kbox-v` 开头的稳定 Release，忽略草稿、预发布和其他产品的 Release。交互式终端显示下载进度；安装包通过 SHA-256 校验，文件原子替换，完成后自动执行版本自检。自定义安装目录可用 `--prefix <PATH>` 指定，`--force` 可重装当前版本以修复安装。
+Package ≈ **22 MB** compressed / **≈ 42 MB** installed (`kbox`, `kbox-shim`, `kbox-guest-init`, libkrun, libkrunfw). Other platforms: build from source below.
 
-3.2.7 及更早版本没有 `update` 命令，请先执行第 1.1 节的一键安装脚本升级到 3.3.0；之后的版本可直接使用 `kbox update`。
-
-3.3.0 官方 Release 已在 macOS arm64 通过完整自更新验证：官方安装器完成隔离安装后，安装后的 kbox 成功执行 `update --force`，终端下载进度达到 100%，SHA-256 校验、自身文件替换和安装后版本检查均通过；随后 `update --check` 正确报告 `kbox is up to date.`。完整记录见[自更新实测证据](docs/evidence/box/20261106-self-update/OUTCOME.md)。
-
-### 1.3 手动安装
-
-从 [kense Releases](https://github.com/kense-labs/kense/releases/tag/kbox-v3.4.2) 下载对应平台的 tar.gz，解压后运行包内 `install.sh`：
+## Quick start
 
 ```sh
-tar -xzf kbox-3.4.2-macos-arm64.tar.gz
-sh kbox-3.4.2-macos-arm64/install.sh
-```
-
-安装包包含 `kbox` CLI、`kbox-shim`、静态 Linux guest init、libkrun 与 libkrunfw（含客体内核）。压缩包约 23 MB，安装后约 42 MB。
-
-## 2. 快速开始
-
-```sh
-# 运行一个 alpine MicroVM
 kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
 ```
 
-无需克隆仓库，直接通过完整 HTTPS 地址运行真实模型问候测试（启动预热池 → 发送问候 → 打印模型回复 → 自动清理）：
+Detached service with host port publish:
 
 ```sh
-DEEPSEEK_API_KEY=你的密钥 \
-DSH_MODEL=deepseek-flash \
-DSH_REASONING_EFFORT=low \
-RUNS=1 bash -o pipefail -c \
-  'curl -fsSL https://raw.githubusercontent.com/kense-labs/dsh-acp/main/scripts/bench-pool-dsh-acp.sh | sh'
+kbox run -d --name web -p 8080:80 docker.io/library/nginx:alpine
+curl -fsS http://127.0.0.1:8080/ | head
+kbox rm -f web
 ```
 
-脚本源码见 [dsh-acp/scripts/bench-pool-dsh-acp.sh](https://github.com/kense-labs/dsh-acp/blob/main/scripts/bench-pool-dsh-acp.sh)。
-
-完整分层端到端（隔离 `K_HOME`、分 TIER、输出 `results.json`）见计划 [docs/e2e-dsh-acp/TEST-PLAN.md](docs/e2e-dsh-acp/TEST-PLAN.md)，本地冒烟：
-
-```sh
-DEEPSEEK_API_KEY=你的密钥 TIER=p0 ./scripts/e2e-dsh-acp/run.sh
-```
-
-下面的 `kbox run -i` **仅供 ACP 客户端启动 dsh-acp，不是终端聊天命令**。直接在终端执行会等待 JSON-RPC `initialize`，不会接受普通聊天文字；需要停止时按 Ctrl-C：
+ACP agent (stdio launcher—not a terminal chat):
 
 ```sh
 export DEEPSEEK_API_KEY=your_key
-kbox run -i --rm \
-  --memory 2g \
-  -u root \
-  -v dsh-acp-data:/data \
-  -v "$PWD:/workspace" \
+kbox run -i --rm --memory 2g -u root \
+  -v dsh-acp-data:/data -v "$PWD:/workspace" \
   -e DEEPSEEK_API_KEY \
   ghcr.io/kense-labs/dsh-acp:latest
 ```
 
-`kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。完整命令见第 6 章起。
-
-## 3. 工程结构
-
-```text
-kbox/
-├── crates/box/            执行资源、MicroVM 与生命周期
-├── crates/oci-runtime/    OCI 工作负载运行时
-├── crates/runtime/        Task／Service 合同与控制接口
-├── libkrun/               libkrun 子模块
-└── libkrunfw/             libkrunfw 子模块
-```
-
-kbox 的 Box 隔离只交付独立内核 MicroVM。进程命令沙箱（ksandbox）在独立仓库 [kense-labs/ksandbox](https://github.com/kense-labs/ksandbox)，不在本仓库树内。
-
-`libkrun` 和 `libkrunfw` 是独立 Git submodule。修改原生依赖时，先在对应子仓库提交并验证，再更新父仓库的 gitlink。
-
-## 4. 当前能力与目标边界
-
-当前代码包含 Box（MicroVM）、OCI Runtime、Task／Service 合同和多个命令行工具。共享宿主内核不是 Box 产品路径。
-
-`docs/architecture/agent-paas-runtime.md` 中的 Agent Runtime v1.1 是目标架构。文档中的新增能力不代表已经实现。实际支持范围以源码、测试和原生平台资格化结果为准。
-
-## 5. 从源码构建
-
-### 5.1 克隆
-
-```bash
-git clone --recursive https://github.com/kense-labs/kbox
-cd kbox
-```
-
-已有检出使用：
-
-```bash
-git submodule update --init --recursive
-```
-
-### 5.2 工具链
-
-Rust 版本见 `rust-toolchain.toml`。`publish = false` 的包只通过本地路径解析。
-
-### 5.3 构建 CLI
-
-```bash
-cargo build --locked -p kbox-cli
-```
-
-生成的入口位于：
-
-```text
-target/debug/kbox
-```
-
-### 5.4 验证
-
-```bash
-cargo fmt --all -- --check
-cargo check --workspace --all-targets --locked
-cargo test --locked -p kbox_contract -p kbox-core -p klibksys --lib
-cargo clippy --locked -p klibksys --all-targets --no-deps
-```
-
-Linux KVM、macOS HVF 和 Windows WHPX 的运行时支持声明需要对应原生测试。交叉编译不能替代运行时资格化。
-
-## 6. `kbox` 命令入口
-
-```bash
-./target/debug/kbox <COMMAND>
-```
-
-`kbox` 管理 Box 生命周期、执行、镜像、网络、卷、Compose 项目、快照和预热池。
-
-## 7. 生命周期与执行
-
-| 二级命令 | 说明 |
-| --- | --- |
-| `kbox run [OPTIONS] <IMAGE> [-- <CMD>...]` | 拉取镜像、创建并启动 Box |
-| `kbox create [OPTIONS] <IMAGE> [-- <CMD>...]` | 创建 Box，但不启动 |
-| `kbox start <BOXES>...` | 启动一个或多个 Box |
-| `kbox stop [OPTIONS] <BOXES>...` | 停止运行中的 Box |
-| `kbox restart [OPTIONS] <BOXES>...` | 重启 Box |
-| `kbox rm [OPTIONS] <BOXES>...` | 删除 Box |
-| `kbox kill [OPTIONS] <BOXES>...` | 强制终止运行中的 Box |
-| `kbox pause <BOXES>...` | 暂停运行中的 Box |
-| `kbox unpause <BOXES>...` | 恢复已暂停的 Box |
-| `kbox ps [OPTIONS]` | 列出 Box |
-| `kbox stats [OPTIONS] [BOX]` | 查看 CPU、内存和资源统计 |
-| `kbox logs [OPTIONS] <BOX>` | 查看 Box 日志 |
-| `kbox exec [OPTIONS] <BOX> -- <CMD>...` | 在运行中的 Box 内执行命令 |
-| `kbox top [OPTIONS] <BOX> [-- <PS_ARGS>...]` | 查看 Box 内运行进程 |
-| `kbox inspect <BOX>` | 查看 Box 详细信息 |
-| `kbox attach [OPTIONS] <BOX>` | 连接 Box 控制台输出 |
-| `kbox wait [OPTIONS] <BOXES>...` | 等待一个或多个 Box 停止 |
-| `kbox rename <BOX> <NEW_NAME>` | 重命名 Box |
-| `kbox port <BOX>` | 查看端口映射 |
-| `kbox port-forward [OPTIONS] --host-port <HOST_PORT> --guest-port <GUEST_PORT> <BOX>` | 将宿主回环 TCP 端口转发到 Box |
-| `kbox shell [OPTIONS] <BOX>` | 在运行中的 Box 内打开交互 Shell |
-| `kbox scale-api [OPTIONS]` | 提供面向 Gateway 的扩缩容接口 |
-
-## 8. TEE、审计与安全
-
-| 二级命令 | 说明 |
-| --- | --- |
-| `kbox attest [OPTIONS] <BOX>` | 获取并验证 TEE 证明报告 |
-| `kbox audit [OPTIONS]` | 查询审计日志 |
-| `kbox seal [OPTIONS] --data <DATA> <BOX>` | 使用 TEE 身份加密数据 |
-| `kbox unseal [OPTIONS] --blob <BLOB> <BOX>` | 在 TEE 内解密数据 |
-| `kbox inject-secret [OPTIONS] <BOX>` | 通过 RA-TLS 向运行中的 TEE Box 注入 Secret |
-
-## 9. 文件系统与镜像
-
-| 二级命令 | 说明 |
-| --- | --- |
-| `kbox export --output <OUTPUT> <NAME>` | 将 Box 文件系统导出为 tar 包 |
-| `kbox commit [OPTIONS] <NAME> [REPOSITORY]` | 将 Box 修改提交为镜像 |
-| `kbox diff <NAME>` | 查看 Box 文件系统变化 |
-| `kbox events [OPTIONS]` | 查看实时系统事件 |
-| `kbox container-update [OPTIONS] <NAME>` | 更新 Box 资源限制 |
-| `kbox build [OPTIONS] [PATH]` | 从 Dockerfile 或 Containerfile 构建镜像 |
-| `kbox images [OPTIONS]` | 列出缓存镜像 |
-| `kbox pull [OPTIONS] <IMAGE>` | 从镜像仓库拉取镜像 |
-| `kbox push [OPTIONS] <IMAGE>` | 将镜像推送到仓库 |
-| `kbox login [OPTIONS] [SERVER]` | 登录镜像仓库 |
-| `kbox logout [SERVER]` | 退出镜像仓库 |
-| `kbox rmi [OPTIONS] <IMAGES>...` | 删除一个或多个缓存镜像 |
-| `kbox image-inspect <IMAGE>` | 以 JSON 查看镜像详情 |
-| `kbox history [OPTIONS] <IMAGE>` | 查看镜像层历史 |
-| `kbox image-prune [OPTIONS]` | 清理未使用镜像 |
-| `kbox tag <SOURCE> <TARGET>` | 为现有镜像创建新标签 |
-| `kbox save --output <OUTPUT> <IMAGE>` | 将镜像保存为 tar 包 |
-| `kbox load [OPTIONS] --input <INPUT>` | 从 tar 包导入镜像 |
-| `kbox import [OPTIONS] <FILE> [REFERENCE]` | 将 rootfs tar 包导入为单层镜像 |
-| `kbox cp <SRC> <DST>` | 在宿主与运行中的 Box 间复制文件 |
-
-## 10. `kbox compose`
-
-```bash
-kbox compose [OPTIONS] <COMMAND>
-```
-
-公共参数：
-
-```text
--f, --file <FILE>                  Compose 文件路径
--p, --project-name <PROJECT_NAME>  Compose 项目名称
-```
-
-### 10.1 三级命令
-
-| 三级命令 | 说明 |
-| --- | --- |
-| `kbox compose up [OPTIONS] [SERVICE]...` | 创建并启动全部或指定服务（MicroVM）。支持 `-d`、`--timeout` |
-| `kbox compose down [OPTIONS]` | 停止并删除全部服务。`--volumes` 同时删除命名卷 |
-| `kbox compose ps [SERVICE]...` | 列出服务及状态 |
-| `kbox compose config` | 校验并显示 Compose 配置 |
-| `kbox compose logs [OPTIONS] [SERVICE]...` | 查看服务日志。支持 `-f`、`--tail` |
-| `kbox compose start [SERVICE]...` | 启动已有服务 Box |
-| `kbox compose stop [OPTIONS] [SERVICE]...` | 停止服务 Box，但不删除。支持 `-t` |
-| `kbox compose restart [OPTIONS] [SERVICE]...` | 重启服务 Box。支持 `-t` |
-| `kbox compose rm [OPTIONS] [SERVICE]...` | 删除已停止服务 Box。支持 `-s`、`-f` |
-| `kbox compose kill [OPTIONS] [SERVICE]...` | 向服务 Box 发送终止信号。支持 `-s` |
-| `kbox compose pause [SERVICE]...` | 暂停运行中的服务 Box |
-| `kbox compose unpause [SERVICE]...` | 恢复已暂停的服务 Box |
-| `kbox compose wait [OPTIONS] [SERVICE]...` | 等待服务停止。支持心跳间隔和总超时 |
-| `kbox compose exec [OPTIONS] <SERVICE> -- <COMMAND>...` | 在指定服务内执行命令。支持环境变量、工作目录、TTY、用户和请求 ID |
-| `kbox compose top [SERVICE]...` | 查看服务内运行进程 |
-| `kbox compose port <SERVICE> [PRIVATE_PORT]` | 查看服务发布端口 |
-| `kbox compose cp <SRC> <DST>` | 在服务 Box 与宿主间复制文件 |
-| `kbox compose images [SERVICE]...` | 列出服务声明的镜像 |
-| `kbox compose pull [OPTIONS] [SERVICE]...` | 拉取服务镜像。支持 `-q`、`--platform` |
-| `kbox compose ls [OPTIONS]` | 列出 Compose 项目。`-q` 仅输出项目名 |
-| `kbox compose volumes` | 列出项目声明的命名卷 |
-
-## 11. `kbox snapshot`
-
-```bash
-kbox snapshot <COMMAND>
-```
-
-### 11.1 三级命令
-
-| 三级命令 | 说明 |
-| --- | --- |
-| `kbox snapshot create [OPTIONS] <BOX_ID>` | 从已停止 Box（MicroVM）创建快照。支持 `--name`、`--description` |
-| `kbox snapshot restore [OPTIONS] <SNAPSHOT>` | 从快照恢复 Box。支持 `--name` |
-| `kbox snapshot ls [OPTIONS]` | 列出全部快照。支持 `--json` |
-| `kbox snapshot rm [OPTIONS] <IDS>...` | 删除一个或多个快照。`-f` 强制解除 copy-on-write 引用 |
-| `kbox snapshot inspect <ID>` | 查看快照详情 |
-| `kbox snapshot prune [OPTIONS]` | 清理旧快照。支持 `--keep`、`--max-bytes` |
-
-## 12. `kbox network`
-
-```bash
-kbox network <COMMAND>
-```
-
-### 12.1 三级命令
-
-| 三级命令 | 说明 |
-| --- | --- |
-| `kbox network create [OPTIONS] <NAME>` | 创建网络。支持 `--subnet`、`--driver`、`--isolation`、`--egress`、`--label` |
-| `kbox network ls [OPTIONS]` | 列出网络。`-q` 仅输出名称 |
-| `kbox network rm [OPTIONS] [NAMES]...` | 删除网络。`-f` 先断开所有端点 |
-| `kbox network inspect <NAME>` | 查看网络详情 |
-| `kbox network connect <NETWORK> <CONTAINER>` | 将 Box 接入网络 |
-| `kbox network disconnect [OPTIONS] <NETWORK> <CONTAINER>` | 将 Box 从网络断开。支持 `-f` |
-| `kbox network prune [OPTIONS]` | 删除未使用网络。`-f` 跳过确认 |
-
-## 13. `kbox volume`
-
-```bash
-kbox volume <COMMAND>
-```
-
-### 13.1 三级命令
-
-| 三级命令 | 说明 |
-| --- | --- |
-| `kbox volume create [OPTIONS] <NAME>` | 创建命名卷。支持 `--driver`、`--label` |
-| `kbox volume ls [OPTIONS]` | 列出卷。`-q` 仅输出名称 |
-| `kbox volume rm [OPTIONS] [NAMES]...` | 删除一个或多个卷。`-f` 强制删除 |
-| `kbox volume inspect <NAME>` | 查看卷详情 |
-| `kbox volume prune [OPTIONS]` | 删除未使用卷。`-f` 跳过确认 |
-
-## 14. `kbox pool`
-
-```bash
-kbox pool <COMMAND>
-```
-
-### 14.1 三级命令
-
-| 三级命令 | 说明 |
-| --- | --- |
-| `kbox pool start [OPTIONS]` | 启动预热池守护进程。支持 `--image`、`--size`、`--max`、`--ttl`、`--socket`、`--deferred`、`--prewarm` 等选项；`--prewarm` 支持 `-e/--env`、`-u/--user`、`-w/--workdir`、`-v/--volume` |
-| `kbox pool attach [OPTIONS]` | 接管一个已初始化的进程，双向转发 stdin/stdout，并返回应用真实退出码；要求守护进程使用 `--prewarm` |
-| `kbox pool run [OPTIONS] -- <CMD>...` | 在预热 Box／MicroVM 中执行一次性命令。支持 `--socket`、`--image`、用户、工作目录、环境变量、挂载、CPU、内存和 `--exec` |
-| `kbox pool stop [OPTIONS]` | 排空并停止预热池。支持 `--socket`、`--json` |
-| `kbox pool status [OPTIONS]` | 查看预热池统计。支持 `--socket`、`--json`；进程预热模式下 `idle >= 1` 表示已有 ready 的 VM 和应用进程 |
-
-### 14.2 示例：用进程预热加速 dsh-acp ACP 会话
-
-进程预热由用户显式启用。以下命令启动一个独立 VM，预先运行镜像的 `ENTRYPOINT + CMD`，待 ACP 连接和模型能力解析完成后才标记 ready。`--ttl 0` 禁止空闲 VM 到期回收；在单独终端运行守护进程：
+Live greeting bench (no clone):
 
 ```sh
-export DEEPSEEK_API_KEY=你的密钥
-
-kbox pool start --deferred --prewarm \
-  --image ghcr.io/kense-labs/dsh-acp:latest \
-  --size 1 --max 2 --ttl 0 \
-  -u root \
-  -v dsh-acp-data:/data \
-  -v "$PWD:/workspace" \
-  -e DEEPSEEK_API_KEY
-```
-
-等待 `pool status --json` 显示 `idle >= 1`，然后将 TUI/GUI 的 ACP agent 命令配置为 `kbox pool attach`。也可以直接在终端运行：
-
-```sh
-kbox pool attach
-```
-
-每次 `attach` 消耗一个独立的 VM＋进程；客户端断开后销毁该 VM，守护进程自动补充新的预热实例。一个进程不能跨客户端会话复用。未命中空闲实例时会等待新实例完成启动和预热。`pool run` 仍用于一次性命令，不转发交互式 stdin；不需要后台池时，使用 `kbox run -i --rm`。
-
-**方式一：通过完整 HTTPS 地址运行 dsh-acp 仓库的 `.sh` 脚本。** 脚本源码已发布在 GitHub：[scripts/bench-pool-dsh-acp.sh](https://github.com/kense-labs/dsh-acp/blob/main/scripts/bench-pool-dsh-acp.sh)。无需克隆仓库（需要 Bash、curl、Python 3；脚本使用默认 pool socket，并在结束后停止该池）：
-
-```sh
-DEEPSEEK_API_KEY=你的密钥 \
-DSH_MODEL=deepseek-flash \
-DSH_REASONING_EFFORT=low \
-RUNS=1 bash -o pipefail -c \
+DEEPSEEK_API_KEY=your_key DSH_MODEL=deepseek-flash DSH_REASONING_EFFORT=low RUNS=1 \
+  bash -o pipefail -c \
   'curl -fsSL https://raw.githubusercontent.com/kense-labs/dsh-acp/main/scripts/bench-pool-dsh-acp.sh | sh'
 ```
 
-**方式二：复制完整内联命令。** 只需要 Bash、`jq` 和已安装的 kbox。它使用独立的临时 pool socket，完成真实 ACP `initialize → session/new → session/set_config_option → session/prompt`，打印模型回复并验证 `stopReason` 和退出码，最后清理临时池，不影响已有默认池：
+## What you get
 
-```bash
-DEEPSEEK_API_KEY=你的密钥 \
-DSH_MODEL=deepseek-flash \
-DSH_REASONING_EFFORT=low \
-bash <<'BASH'
-set -euo pipefail
+| Area | Support |
+| --- | --- |
+| Images | `pull` / `build` / `commit` / `export` / `import` / registry login |
+| Run | `-d`, `-i`, `-v`, `-e`, `-p`, `-u`, `--entrypoint`, `--rm`, resource limits |
+| Compose / pool | Multi-service MicroVMs; `pool start --prewarm` + `pool attach` |
+| Snapshot / network / volume | First-class CLI groups |
 
-KBOX="${KBOX:-kbox}"
-IMAGE="ghcr.io/kense-labs/dsh-acp:latest"
-DSH_PROVIDER="${DSH_PROVIDER:-deepseek-official}"
-DSH_MODEL="${DSH_MODEL:-deepseek-flash}"
-DSH_REASONING_EFFORT="${DSH_REASONING_EFFORT:-low}"
-GREETING="${GREETING:-你好！请用一句话介绍你自己。}"
-: "${DEEPSEEK_API_KEY:?Set DEEPSEEK_API_KEY first}"
-command -v jq >/dev/null || { echo "jq is required" >&2; exit 1; }
-case "$DSH_MODEL" in
-  */*) DSH_PROVIDER="${DSH_MODEL%%/*}"; DSH_MODEL="${DSH_MODEL#*/}" ;;
-esac
+Command details: `kbox --help` and `kbox <command> --help` (source of truth).
 
-WORK="$(mktemp -d "${TMPDIR:-/tmp}/dsh-acp-hello.XXXXXX")"
-POOL_SOCKET="$WORK/pool.sock"
-mkfifo "$WORK/acp.in" "$WORK/acp.out"
-POOL_PID=""
-ACP_PID=""
-cleanup() {
-  set +e
-  exec 3>&- 2>/dev/null
-  exec 4>&- 2>/dev/null
-  [[ -z "$ACP_PID" ]] || kill "$ACP_PID" 2>/dev/null
-  [[ -z "$ACP_PID" ]] || wait "$ACP_PID" 2>/dev/null
-  "$KBOX" pool stop --socket "$POOL_SOCKET" >/dev/null 2>&1
-  [[ -z "$POOL_PID" ]] || kill "$POOL_PID" 2>/dev/null
-  [[ -z "$POOL_PID" ]] || wait "$POOL_PID" 2>/dev/null
-  rm -rf -- "$WORK"
-}
-trap cleanup EXIT
+## Platforms
 
-"$KBOX" pool start --deferred --prewarm \
-  --socket "$POOL_SOCKET" --image "$IMAGE" \
-  --size 1 --max 1 -u root -e DEEPSEEK_API_KEY \
-  >"$WORK/pool.log" 2>&1 &
-POOL_PID=$!
+| Host | Runtime | Prebuilt package |
+| --- | --- | --- |
+| macOS arm64 | Apple HVF + libkrun | Yes (`kbox-v*` on [kense Releases](https://github.com/kense-labs/kense/releases)) |
+| Linux | KVM path in-tree | Build + qualify locally |
+| Windows | WHPX path in-tree | Build + qualify locally |
 
-READY=0
-for ((attempt = 0; attempt < 90; attempt++)); do
-  if "$KBOX" pool status --socket "$POOL_SOCKET" --json 2>/dev/null |
-    jq -e '.[0].idle >= 1' >/dev/null 2>&1; then
-    READY=1
-    break
-  fi
-  sleep 2
-done
-[[ "$READY" == 1 ]] || { echo "dsh-acp did not become ready" >&2; exit 1; }
+Shared-host-kernel is **not** a Box product path.
 
-exec 3<>"$WORK/acp.in"
-exec 4<>"$WORK/acp.out"
-"$KBOX" pool attach --socket "$POOL_SOCKET" <"$WORK/acp.in" >"$WORK/acp.out" 3>&- 4>&- &
-ACP_PID=$!
+## Development
 
-RPC_RESPONSE=""
-REPLY=""
-rpc() {
-  local id="$1" payload="$2" timeout="$3" line chunk
-  printf '%s\n' "$payload" >&3
-  while IFS= read -r -t "$timeout" -u 4 line; do
-    [[ "$line" == \{* ]] || continue
-    if jq -e --argjson id "$id" '.id? == $id' >/dev/null 2>&1 <<<"$line"; then
-      if jq -e 'has("error")' >/dev/null 2>&1 <<<"$line"; then
-        jq -r '.error.message // "ACP request failed"' >&2 <<<"$line"
-        return 1
-      fi
-      RPC_RESPONSE="$line"
-      return 0
-    fi
-    chunk="$(jq -rj 'select(.method? == "session/update") |
-      .params.update | select(.sessionUpdate == "agent_message_chunk") |
-      .content | select(.type == "text") | .text // empty' <<<"$line")"
-    [[ -z "$chunk" ]] || { printf '%s' "$chunk"; REPLY="$REPLY$chunk"; }
-  done
-  echo "ACP request $id timed out or disconnected" >&2
-  return 1
-}
-
-rpc 1 '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":1,"clientCapabilities":{}}}' 30
-AGENT="$(jq -r '.result.agentInfo.name' <<<"$RPC_RESPONSE")"
-rpc 2 "$(jq -nc '{jsonrpc:"2.0",id:2,method:"session/new",params:{cwd:"/workspace",mcpServers:[]}}')" 30
-SESSION_ID="$(jq -r '.result.sessionId' <<<"$RPC_RESPONSE")"
-MODEL_VALUE="$(jq -nc --arg provider "$DSH_PROVIDER" --arg model "$DSH_MODEL" '[$provider,$model]')"
-rpc 3 "$(jq -nc --arg session "$SESSION_ID" --arg value "$MODEL_VALUE" \
-  '{jsonrpc:"2.0",id:3,method:"session/set_config_option",params:{sessionId:$session,configId:"model",value:$value}}')" 30
-jq -e --arg value "$MODEL_VALUE" \
-  '[.result.configOptions[] | select(.id == "model" and .currentValue == $value)] | length == 1' \
-  >/dev/null <<<"$RPC_RESPONSE"
-rpc 4 "$(jq -nc --arg session "$SESSION_ID" --arg value "$DSH_REASONING_EFFORT" \
-  '{jsonrpc:"2.0",id:4,method:"session/set_config_option",params:{sessionId:$session,configId:"reasoning_effort",value:$value}}')" 30
-jq -e --arg value "$DSH_REASONING_EFFORT" \
-  '[.result.configOptions[] | select(.id == "reasoning_effort" and .currentValue == $value)] | length == 1' \
-  >/dev/null <<<"$RPC_RESPONSE"
-
-printf 'Connected: %s\nModel: %s/%s (reasoning: %s)\nYou: %s\n%s: ' \
-  "$AGENT" "$DSH_PROVIDER" "$DSH_MODEL" "$DSH_REASONING_EFFORT" "$GREETING" "$AGENT"
-rpc 5 "$(jq -nc --arg session "$SESSION_ID" --arg text "$GREETING" \
-  '{jsonrpc:"2.0",id:5,method:"session/prompt",params:{sessionId:$session,prompt:[{type:"text",text:$text}]}}')" 240
-STOP_REASON="$(jq -r '.result.stopReason' <<<"$RPC_RESPONSE")"
-[[ -n "$REPLY" && "$STOP_REASON" == "end_turn" ]] || { echo "invalid model response" >&2; exit 1; }
-printf '\n(stop: %s)\n' "$STOP_REASON"
-exec 3>&-
-wait "$ACP_PID"
-printf 'ACP exit code: 0\n'
-BASH
+```sh
+git clone --recursive https://github.com/kense-labs/kbox
+cd kbox
+cargo build --locked -p kbox-cli
+cargo fmt --all -- --check
+cargo check --workspace --all-targets --locked
 ```
 
-`DSH_MODEL` 支持模型 ID 或 `provider/model`，`DSH_REASONING_EFFORT` 使用所选模型公布的值；`GREETING` 可覆盖默认中文问候。下方基准的原始样本分别记录 CLI 启动到 initialize 响应、initialize RTT 和模型 prompt RTT，模型网络耗时不计入启动加速。
+E2E (isolated `K_HOME`):
 
-下列五次基准于 2026-11-06 在 macOS arm64、kbox 3.2.7 release build 环境实测，均使用 `deepseek-flash`＋`low`，返回文本、`end_turn` 和退出码 0。镜像 digest 为 `sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5`。
+```sh
+# dsh-acp × pool
+DEEPSEEK_API_KEY=… TIER=p0 ./scripts/e2e-dsh-acp/run.sh
 
-| 指标 | 最小值 | 中位数 | 最大值 |
-| --- | ---: | ---: | ---: |
-| 完整 CLI 启动到 initialize 响应 | 15.066 ms | 19.368 ms | 28.955 ms |
-| initialize 请求 RTT | 13.822 ms | 17.642 ms | 27.502 ms |
-| 守护进程内部接管（不含 CLI 与协议） | 0.222 ms | 0.251 ms | 0.313 ms |
-| 模型 prompt RTT（网络请求，非启动指标） | 676.883 ms | 1436.499 ms | 1676.068 ms |
+# nginx / redis / postgres / rustfs functional deploy
+TIER=all ./scripts/e2e-services/run.sh
+```
 
-kbox 3.3.0 官方 Release 经线上安装和自更新后，使用全新隔离 `K_HOME` 执行上述完整 HTTPS 脚本，成功拉取公开镜像、预热 VM 与 dsh-acp 进程，并完成真实 DeepSeek 会话：
+Plans and evidence: [docs/e2e-dsh-acp/](docs/e2e-dsh-acp/), [docs/e2e-services/](docs/e2e-services/), [docs/evidence/box/](docs/evidence/box/).
 
-- 完整 CLI 启动到 initialize 响应：15.031 ms。
-- initialize 请求 RTT：13.402 ms。
-- 模型 prompt RTT：963.367 ms（网络请求，非启动指标）。
-- 模型与思考强度：`deepseek-flash`＋`low`；返回非空中文文本、`end_turn` 和退出码 0，随后自动清理预热池。
+Layout:
 
-守护进程内部接管低于 1 ms，不代表完整 CLI 启动或 initialize 为 1 ms。原始样本与验证边界见[实测证据](docs/evidence/box/20261106-process-prewarm-attach/OUTCOME.md)。
+```text
+crates/box/         MicroVM Box CLI + runtime
+crates/oci-runtime/ OCI / DedicatedVm platform stack
+crates/runtime/     Task / Service contracts
+libkrun/ libkrunfw/ virtualization submodules
+```
 
-分层 E2E 计划与编排：[`docs/e2e-dsh-acp/TEST-PLAN.md`](docs/e2e-dsh-acp/TEST-PLAN.md)、[`scripts/e2e-dsh-acp/run.sh`](scripts/e2e-dsh-acp/run.sh)。证据模板见 [`docs/evidence/box/TEMPLATE-dsh-acp-e2e/OUTCOME.md`](docs/evidence/box/TEMPLATE-dsh-acp-e2e/OUTCOME.md)。
+## License
 
-## 15. 系统与维护
-
-| 二级命令 | 说明 |
-| --- | --- |
-| `kbox df [OPTIONS]` | 查看磁盘使用。`-v` 显示逐项占用 |
-| `kbox prune [OPTIONS]` | 删除全部已停止 Box |
-| `kbox system-prune [OPTIONS]` | 删除已停止 Box 和未使用镜像 |
-| `kbox version` | 查看版本信息 |
-| `kbox update [OPTIONS] [VERSION]` | 检查更新并安装最新或指定稳定版本；支持 `--check`、`--force`、`--prefix` |
-| `kbox info` | 查看系统信息 |
-| `kbox monitor [OPTIONS]` | 启动后台监控并重启异常 Box |
-
-## 16. 工程文档
-
-- [Agent Runtime 架构](docs/architecture/agent-paas-runtime.md)
-- [kbox Box 优化与 Agent Runtime 开发计划](docs/kbox-smolvm-inspired-development-plan.md)
-- [kbox CLI 端到端测试计划](docs/kbox-cli-e2e-test-plan.md)
-- [多 Harness 协作架构](docs/architecture/harness-gateway.md)
-- [沙箱、观测与干预架构](docs/architecture/sandbox-control.md)
-- [开发标准](docs/development-standards.md)
-- [Spec-Driven Development](docs/spec-driven-development.md)
-- [Speckit 宪法](.specify/memory/constitution.md)
-
-## 17. 许可
-
-见 [LICENSE](LICENSE)。第三方组件保留各自许可和源码说明。
+See repository `LICENSE` / crate manifests. Submodules retain their upstream licenses.

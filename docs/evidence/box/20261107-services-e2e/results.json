@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "pass": 4,
+    "fail": 0,
+    "skip": 0,
+    "blocked": 0
+  },
+  "cases": [
+    {
+      "id": "S-NGINX",
+      "status": "PASS",
+      "message": "host GET :58020 returned bind-mounted marker; ports=80/tcp -> 0.0.0.0:58020",
+      "detail": {
+        "port": "58020",
+        "image": "docker.io/library/nginx:alpine",
+        "marker": "kbox-e2e-nginx-95560-1794043547"
+      },
+      "ts": "2026-11-07T09:26:06Z"
+    },
+    {
+      "id": "S-REDIS",
+      "status": "PASS",
+      "message": "host SET/GET/DEL + AOF restart persistence ok on :58145 (volume e2e-redis-data-95831)",
+      "detail": {
+        "port": "58145",
+        "image": "docker.io/library/redis:7-alpine",
+        "volume": "e2e-redis-data-95831",
+        "key": "e2e:kbox:95831",
+        "del": 1
+      },
+      "ts": "2026-11-07T09:26:26Z"
+    },
+    {
+      "id": "S-PG",
+      "status": "PASS",
+      "message": "host TCP :58414 + CREATE/INSERT/SELECT + volume restart ok",
+      "detail": {
+        "port": "58414",
+        "image": "docker.io/library/postgres:16-alpine",
+        "volume": "e2e-pg-data-96420",
+        "note": "pg-note-96420-1794043587"
+      },
+      "ts": "2026-11-07T09:27:07Z"
+    },
+    {
+      "id": "S-RUSTFS",
+      "status": "PASS",
+      "message": "host /health + S3 CreateBucket/Put/Get ok on :58574 (volume e2e-rustfs-data-98162)",
+      "detail": {
+        "api_port": "58574",
+        "console_port": "58575",
+        "image": "docker.io/rustfs/rustfs:latest",
+        "volume": "e2e-rustfs-data-98162",
+        "bucket": "e2ebucket98162",
+        "key": "hello.txt"
+      },
+      "ts": "2026-11-07T09:27:39Z"
+    }
+  ],
+  "kbox": "kbox version 3.4.2",
+  "tier": "all"
+}

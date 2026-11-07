@@ -34,8 +34,8 @@ kbox update
 | `lib/libkrunfw.5.dylib` | Guest kernel bundle; alias is a symlink |
 
 - Platform: macOS arm64, Apple Hypervisor Framework.
-- Compressed archive: **ARCHIVE_SIZE**.
-- SHA-256: `ARCHIVE_SHA256`
+- Compressed archive: **22 MB**.
+- SHA-256: `44771882345f469478919da8ea016fa5ff60eab5f47ecd542861ea7a85e5d656`
 
 ## Verified
 

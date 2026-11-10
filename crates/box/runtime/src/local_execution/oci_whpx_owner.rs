@@ -8,7 +8,7 @@ use std::path::{Component, Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
-use kbox_core::{ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult};
+use kbox_core::{ExecutionManagerError, ExecutionManagerResult};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
@@ -380,7 +380,7 @@ async fn wait_until_ready(
 
         let last_error = if ready_ok {
             match OciLifecycleAdapter::connect(endpoint.clone()).await {
-                Ok(adapter) => match adapter.require_isolation(ExecutionIsolation::Microvm).await {
+                Ok(adapter) => match adapter.require_isolation(kbox_core::ExecutionBoundary::Microvm).await {
                     Ok(_) => return Ok(()),
                     Err(error) => error.to_string(),
                 },

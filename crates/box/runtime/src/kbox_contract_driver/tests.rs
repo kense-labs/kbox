@@ -11,14 +11,14 @@ use kbox_contract::contract::{
 use kbox_contract::RuntimeDriver;
 use kbox_core::config::{SevSnpGeneration, TeeConfig};
 use kbox_core::secret::{SecretEnvironmentBinding, SECRET_ENVIRONMENT_MANIFEST};
-use kbox_core::{ExecutionIsolation, ExecutionManager};
+use kbox_core::{ExecutionBoundary, ExecutionManager};
 
 use super::mapping::{creation_request, creation_request_with_sev_snp, operation};
 use super::metadata::validate_record_for_spec;
 use super::test_support::DriverFakeBackend;
 use super::*;
 
-const TEST_EXECUTION_ISOLATION: ExecutionIsolation = ExecutionIsolation::Microvm;
+const TEST_EXECUTION_BOUNDARY: ExecutionBoundary = ExecutionBoundary::Microvm;
 
 fn spec(class: RuntimeUnitClass) -> RuntimeUnitSpec {
     RuntimeUnitSpec {
@@ -95,15 +95,15 @@ fn simulated_sev_snp() -> BoxRuntimeSevSnpConfig {
 fn driver_defaults_to_microvm_without_shared_kernel_fallback() {
     let directory = tempfile::tempdir().unwrap();
     assert_eq!(
-        driver(&directory).execution_isolation(),
-        ExecutionIsolation::Microvm
+        driver(&directory).execution_boundary(),
+        ExecutionBoundary::Microvm
     );
 }
 
 #[test]
 fn driver_allows_explicit_shared_kernel_selection() {
     let directory = tempfile::tempdir().unwrap();
-    let driver = BoxRuntimeDriver::new_with_isolation(
+    let driver = BoxRuntimeDriver::new_with_boundary(
         BoxRuntimeDriverConfig {
             state_snapshot: false,
             home_dir: directory.path().join("home"),
@@ -111,17 +111,17 @@ fn driver_allows_explicit_shared_kernel_selection() {
             control_timeout: Duration::from_secs(2),
             task_poll_interval: Duration::from_millis(5),
         },
-        ExecutionIsolation::Microvm,
+        ExecutionBoundary::Microvm,
     )
     .unwrap();
 
-    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Microvm);
+    assert_eq!(driver.execution_boundary(), ExecutionBoundary::Microvm);
 }
 
 #[tokio::test]
 async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
     let directory = tempfile::tempdir().unwrap();
-    let driver = BoxRuntimeDriver::new_with_isolation(
+    let driver = BoxRuntimeDriver::new_with_boundary(
         BoxRuntimeDriverConfig {
             state_snapshot: false,
             home_dir: directory.path().join("home"),
@@ -129,7 +129,7 @@ async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
             control_timeout: Duration::from_secs(2),
             task_poll_interval: Duration::from_millis(5),
         },
-        ExecutionIsolation::Microvm,
+        ExecutionBoundary::Microvm,
     )
     .unwrap();
     driver
@@ -149,7 +149,7 @@ async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
     let mut outbound = spec(RuntimeUnitClass::Task);
     outbound.network.mode = NetworkMode::Outbound;
     assert_eq!(
-        creation_request(&outbound, ExecutionIsolation::Microvm)
+        creation_request(&outbound, ExecutionBoundary::Microvm)
             .unwrap()
             .config
             .network,
@@ -177,7 +177,7 @@ async fn qualification_constructor_freezes_explicit_provider_build() {
         },
         backend,
         connector,
-        ExecutionIsolation::Microvm,
+        ExecutionBoundary::Microvm,
         "kbox/qualification real-process/v1",
     )
     .unwrap();
@@ -187,7 +187,7 @@ async fn qualification_constructor_freezes_explicit_provider_build() {
         capabilities.provider_build,
         "kbox/qualification real-process/v1"
     );
-    assert_eq!(driver.execution_isolation(), ExecutionIsolation::Microvm);
+    assert_eq!(driver.execution_boundary(), ExecutionBoundary::Microvm);
 }
 
 #[test]
@@ -210,7 +210,7 @@ fn qualification_constructor_rejects_unbounded_provider_build() {
         },
         backend,
         connector,
-        ExecutionIsolation::Microvm,
+        ExecutionBoundary::Microvm,
         " qualification\n",
     ) {
         Ok(_) => panic!("invalid qualification provider build was accepted"),
@@ -383,9 +383,8 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
     confidential_spec.isolation = IsolationLevel::Confidential;
 
     let request =
-        creation_request_with_sev_snp(&confidential_spec, TEST_EXECUTION_ISOLATION, &confidential)
+        creation_request_with_sev_snp(&confidential_spec, TEST_EXECUTION_BOUNDARY, &confidential)
             .unwrap();
-    assert_eq!(request.config.isolation, ExecutionIsolation::Microvm);
     assert!(request.config.deferred_main);
     assert_eq!(
         request.config.tee,
@@ -407,7 +406,7 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
 
     let sandbox_spec = spec(RuntimeUnitClass::Service);
     let request =
-        creation_request_with_sev_snp(&sandbox_spec, TEST_EXECUTION_ISOLATION, &confidential)
+        creation_request_with_sev_snp(&sandbox_spec, TEST_EXECUTION_BOUNDARY, &confidential)
             .unwrap();
     assert_eq!(request.config.tee, TeeConfig::None);
     assert!(!request.config.deferred_main);
@@ -423,7 +422,7 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
         "caller-controlled".into(),
     );
     assert!(matches!(
-        creation_request_with_sev_snp(&reserved, TEST_EXECUTION_ISOLATION, &confidential),
+        creation_request_with_sev_snp(&reserved, TEST_EXECUTION_BOUNDARY, &confidential),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("reserved Box key")
     ));
 
@@ -438,14 +437,14 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
     assert!(matches!(
         creation_request_with_sev_snp(
             &reserved_secret,
-            TEST_EXECUTION_ISOLATION,
+            TEST_EXECUTION_BOUNDARY,
             &confidential
         ),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("reserved Box key")
     ));
 
     assert!(matches!(
-        creation_request(&confidential_spec, TEST_EXECUTION_ISOLATION),
+        creation_request(&confidential_spec, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::UnsupportedCapabilities(missing))
             if missing == vec!["isolation:Confidential"]
     ));
@@ -454,8 +453,7 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
 #[test]
 fn mapping_preserves_digest_resources_timeout_and_hardening() {
     let spec = spec(RuntimeUnitClass::Task);
-    let request = creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap();
-    assert_eq!(request.config.isolation, ExecutionIsolation::Microvm);
+    let request = creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap();
     assert_eq!(
         request.config.image,
         format!("registry.example/kbox/runtime@sha256:{}", "a".repeat(64))
@@ -483,7 +481,7 @@ fn mapping_preserves_digest_resources_timeout_and_hardening() {
 fn mapping_keeps_none_and_service_on_the_isolated_vsock_path() {
     let none = spec(RuntimeUnitClass::Task);
     assert_eq!(
-        creation_request(&none, TEST_EXECUTION_ISOLATION)
+        creation_request(&none, TEST_EXECUTION_BOUNDARY)
             .unwrap()
             .config
             .network,
@@ -493,7 +491,7 @@ fn mapping_keeps_none_and_service_on_the_isolated_vsock_path() {
     let mut service = spec(RuntimeUnitClass::Service);
     service.network.mode = NetworkMode::Service;
     assert_eq!(
-        creation_request(&service, TEST_EXECUTION_ISOLATION)
+        creation_request(&service, TEST_EXECUTION_BOUNDARY)
             .unwrap()
             .config
             .network,
@@ -506,7 +504,7 @@ fn mapping_outbound_uses_tsi_socket_proxy_egress() {
     let mut outbound = spec(RuntimeUnitClass::Task);
     outbound.network.mode = NetworkMode::Outbound;
     assert_eq!(
-        creation_request(&outbound, TEST_EXECUTION_ISOLATION)
+        creation_request(&outbound, TEST_EXECUTION_BOUNDARY)
             .unwrap()
             .config
             .network,
@@ -540,7 +538,7 @@ fn runtime_health_does_not_enable_cli_or_image_health_policy() {
         failure_threshold: 3,
     });
 
-    let request = creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap();
+    let request = creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap();
 
     assert!(request.policy.health_check.is_none());
     assert!(request.policy.healthcheck_disabled);
@@ -567,7 +565,7 @@ fn service_lifecycle_maps_to_sigterm_and_the_exact_grace_deadline() {
         shutdown_grace_seconds: 17,
     });
 
-    let request = creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap();
+    let request = creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap();
 
     assert_eq!(request.policy.stop_signal.as_deref(), Some("SIGTERM"));
     assert_eq!(request.policy.stop_timeout, Some(17));
@@ -603,9 +601,8 @@ fn lifecycle_bound_reserves_the_full_grace_before_provider_timeout() {
 #[test]
 fn mapping_honors_an_explicit_shared_kernel_backend() {
     let spec = spec(RuntimeUnitClass::Service);
-    let request = creation_request(&spec, ExecutionIsolation::Microvm).unwrap();
+    let request = creation_request(&spec, ExecutionBoundary::Microvm).unwrap();
 
-    assert_eq!(request.config.isolation, ExecutionIsolation::Microvm);
     assert_eq!(
         request.config.resource_limits.sandbox_memory_limit_bytes,
         Some(spec.resources.memory_bytes)
@@ -623,7 +620,7 @@ fn mapping_rejects_path_like_unit_identity_before_mutation() {
         let mut spec = spec(RuntimeUnitClass::Service);
         spec.unit_id = unit_id.into();
         assert!(matches!(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY),
             Err(RuntimeError::InvalidRequest(message))
                 if message.contains("path traversal")
         ));
@@ -631,7 +628,7 @@ fn mapping_rejects_path_like_unit_identity_before_mutation() {
 
     let mut namespaced = spec(RuntimeUnitClass::Service);
     namespaced.unit_id = "tenant/provider-id".into();
-    assert!(creation_request(&namespaced, TEST_EXECUTION_ISOLATION).is_ok());
+    assert!(creation_request(&namespaced, TEST_EXECUTION_BOUNDARY).is_ok());
 }
 
 #[test]
@@ -656,7 +653,7 @@ fn mapping_compiles_bounded_tmpfs_mounts_and_read_only_intent() {
         },
     ];
 
-    let request = creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap();
+    let request = creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap();
 
     assert_eq!(
         request.config.tmpfs,
@@ -690,7 +687,7 @@ fn mapping_compiles_deterministic_non_secret_environment_and_file_bindings() {
         },
     ];
 
-    let request = creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap();
+    let request = creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap();
     let digest = spec.digest().unwrap();
     let digest = digest.strip_prefix("sha256:").unwrap();
     assert_eq!(
@@ -743,7 +740,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
         .insert("K_PROVIDER_TOKEN".into(), "literal".into());
     literal_collision.secrets.push(environment_secret.clone());
     assert!(matches!(
-        creation_request(&literal_collision, TEST_EXECUTION_ISOLATION),
+        creation_request(&literal_collision, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("conflicts")
     ));
 
@@ -754,7 +751,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
     );
     reserved.secrets.push(environment_secret);
     assert!(matches!(
-        creation_request(&reserved, TEST_EXECUTION_ISOLATION),
+        creation_request(&reserved, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("reserved")
     ));
 
@@ -775,7 +772,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
             },
         });
         assert!(matches!(
-            creation_request(&invalid, TEST_EXECUTION_ISOLATION),
+            creation_request(&invalid, TEST_EXECUTION_BOUNDARY),
             Err(RuntimeError::InvalidRequest(message)) if message.contains("Secret file target")
         ));
     }
@@ -796,7 +793,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
         },
     });
     assert!(matches!(
-        creation_request(&overlap, TEST_EXECUTION_ISOLATION),
+        creation_request(&overlap, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("overlaps")
     ));
 
@@ -806,7 +803,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
         reference: "secret://registry/credential/v2".into(),
         target: SecretTarget::RegistryCredential,
     });
-    let request = creation_request(&registry, TEST_EXECUTION_ISOLATION).unwrap();
+    let request = creation_request(&registry, TEST_EXECUTION_BOUNDARY).unwrap();
     assert!(request.config.volumes.is_empty());
     assert!(request.policy.managed_secret_root.is_none());
 
@@ -816,7 +813,7 @@ fn mapping_rejects_secret_collisions_and_unencodable_targets() {
         target: SecretTarget::RegistryCredential,
     });
     assert!(matches!(
-        creation_request(&registry, TEST_EXECUTION_ISOLATION),
+        creation_request(&registry, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("unique")
     ));
 }
@@ -832,7 +829,7 @@ fn mapping_rejects_protected_or_unencodable_tmpfs_targets() {
             read_only: false,
         });
         assert!(matches!(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY),
             Err(RuntimeError::InvalidRequest(message)) if message.contains("protected")
         ));
     }
@@ -851,7 +848,7 @@ fn mapping_rejects_protected_or_unencodable_tmpfs_targets() {
             read_only: false,
         });
         assert!(matches!(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY),
             Err(RuntimeError::InvalidRequest(message)) if message.contains("encodable")
         ));
     }
@@ -861,23 +858,23 @@ fn mapping_rejects_protected_or_unencodable_tmpfs_targets() {
 fn mapping_accepts_oci_indexes_and_rejects_unpinned_mismatched_or_unsupported_artifacts() {
     let mut value = spec(RuntimeUnitClass::Service);
     value.artifact.uri = "oci://registry.example/kbox/runtime:latest".into();
-    assert!(creation_request(&value, TEST_EXECUTION_ISOLATION).is_err());
+    assert!(creation_request(&value, TEST_EXECUTION_BOUNDARY).is_err());
 
     let mut value = spec(RuntimeUnitClass::Service);
     value.artifact.uri = format!(
         "oci://registry.example/kbox/runtime@sha256:{}",
         "b".repeat(64)
     );
-    assert!(creation_request(&value, TEST_EXECUTION_ISOLATION).is_err());
+    assert!(creation_request(&value, TEST_EXECUTION_BOUNDARY).is_err());
 
     let mut value = spec(RuntimeUnitClass::Service);
     value.artifact.media_type = OCI_IMAGE_INDEX.into();
-    assert!(creation_request(&value, TEST_EXECUTION_ISOLATION).is_ok());
+    assert!(creation_request(&value, TEST_EXECUTION_BOUNDARY).is_ok());
 
     let mut value = spec(RuntimeUnitClass::Service);
     value.artifact.media_type = "application/vnd.docker.distribution.manifest.v2+json".into();
     assert!(matches!(
-        creation_request(&value, TEST_EXECUTION_ISOLATION),
+        creation_request(&value, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::UnsupportedCapabilities(_))
     ));
 
@@ -886,7 +883,7 @@ fn mapping_accepts_oci_indexes_and_rejects_unpinned_mismatched_or_unsupported_ar
         "oci://user:secret@registry.example/kbox/runtime@sha256:{}",
         "a".repeat(64)
     );
-    assert!(creation_request(&value, TEST_EXECUTION_ISOLATION).is_err());
+    assert!(creation_request(&value, TEST_EXECUTION_BOUNDARY).is_err());
 }
 
 #[test]
@@ -894,14 +891,14 @@ fn mapping_rejects_numeric_overflow_before_mutation() {
     let mut value = spec(RuntimeUnitClass::Service);
     value.resources.memory_bytes = i64::MAX as u64 + 1;
     assert!(matches!(
-        creation_request(&value, TEST_EXECUTION_ISOLATION),
+        creation_request(&value, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("memory")
     ));
 
     let mut value = spec(RuntimeUnitClass::Service);
     value.resources.cpu_millis = u64::MAX;
     assert!(matches!(
-        creation_request(&value, TEST_EXECUTION_ISOLATION),
+        creation_request(&value, TEST_EXECUTION_BOUNDARY),
         Err(RuntimeError::InvalidRequest(message)) if message.contains("CPU")
     ));
 }
@@ -916,7 +913,7 @@ async fn metadata_tamper_is_rejected_fail_closed() {
     let reservation = driver
         .manager
         .create(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap(),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap(),
             &operation_id,
         )
         .await
@@ -930,7 +927,7 @@ async fn metadata_tamper_is_rejected_fail_closed() {
     validate_record_for_spec(
         &record,
         &spec,
-        TEST_EXECUTION_ISOLATION,
+        TEST_EXECUTION_BOUNDARY,
         None,
         &driver.config.secret_root,
     )
@@ -943,7 +940,7 @@ async fn metadata_tamper_is_rejected_fail_closed() {
         validate_record_for_spec(
             &record,
             &spec,
-            TEST_EXECUTION_ISOLATION,
+            TEST_EXECUTION_BOUNDARY,
             None,
             &driver.config.secret_root,
         ),
@@ -964,7 +961,7 @@ async fn metadata_rejects_a_record_created_for_another_box_isolation_backend() {
             // planning does not need to resolve the deliberately synthetic
             // registry digest. The validation below still asks whether that
             // record can be treated as a Sandbox execution and must reject it.
-            creation_request(&spec, ExecutionIsolation::Microvm).unwrap(),
+            creation_request(&spec, ExecutionBoundary::Microvm).unwrap(),
             &operation_id,
         )
         .await
@@ -980,7 +977,7 @@ async fn metadata_rejects_a_record_created_for_another_box_isolation_backend() {
         validate_record_for_spec(
             &record,
             &spec,
-            ExecutionIsolation::Microvm,
+            ExecutionBoundary::Microvm,
             None,
             &driver.config.secret_root,
         ),
@@ -997,7 +994,7 @@ async fn discovery_rejects_a_runtime_record_hidden_by_unit_label_tamper() {
     let reservation = driver
         .manager
         .create(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap(),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap(),
             &operation(&spec).unwrap(),
         )
         .await
@@ -1024,7 +1021,7 @@ async fn discovery_rejects_a_runtime_operation_that_lost_all_labels() {
     let reservation = driver
         .manager
         .create(
-            creation_request(&spec, TEST_EXECUTION_ISOLATION).unwrap(),
+            creation_request(&spec, TEST_EXECUTION_BOUNDARY).unwrap(),
             &operation(&spec).unwrap(),
         )
         .await

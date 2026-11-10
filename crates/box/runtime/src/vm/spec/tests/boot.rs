@@ -672,7 +672,6 @@ fn sandbox_rejects_anonymous_plan_drift_before_volume_materialization() {
     oci_config.volumes = vec!["/data".to_string()];
     let layout = test_layout(layout_dir.path(), Some(oci_config), true);
     let mut vm = test_vm_manager(BoxConfig {
-        isolation: kbox_core::ExecutionIsolation::Microvm,
         ..Default::default()
     });
     vm.home_dir = home.path().to_path_buf();

@@ -651,7 +651,7 @@ impl ExecutionResourceGuard {
 mod tests {
     use kbox_core::{
         network::NetworkConfig, snapshot::SnapshotMetadata, volume::VolumeConfig,
-        CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, ExecutionSnapshotId,
+        CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, ExecutionSnapshotId,
         OperationId,
     };
 
@@ -703,10 +703,8 @@ mod tests {
         record.network_name = None;
         let config = kbox_core::BoxConfig {
             image: record.image.clone(),
-            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
-        record.isolation = ExecutionIsolation::Microvm;
         record.managed_execution = Some(
             crate::ManagedExecutionMetadata::new(
                 OperationId::new("snapshot-restore-operation").unwrap(),

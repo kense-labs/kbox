@@ -6,7 +6,6 @@ use super::*;
 async fn stop_failure_preserves_owner_if_backend_becomes_unready() {
     let (_directory, manager, backend) = harness();
     let mut create = request("stop-unready-owner");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("stop-unready-owner-create"))
         .await

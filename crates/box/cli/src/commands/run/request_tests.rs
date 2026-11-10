@@ -18,7 +18,6 @@ fn test_build_box_config_defaults_to_microvm_isolation() {
     )
     .unwrap();
 
-    assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Microvm);
 }
 
 #[test]

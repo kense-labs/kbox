@@ -282,7 +282,7 @@ mod tests {
     use async_trait::async_trait;
     use chrono::{TimeZone, Utc};
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation,
+        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary,
         ExecutionManagerError, ExecutionManagerResult, ExecutionResourceUpdate,
         ExecutionSnapshotId, KillOutcome, OperationId,
     };
@@ -346,7 +346,6 @@ mod tests {
     ) -> BoxRecord {
         let mut record = make_record(id, "abandoned", status, None);
         record.box_dir = box_dir.join(id);
-        record.isolation = ExecutionIsolation::Microvm;
         std::fs::create_dir_all(&record.box_dir).unwrap();
         let mut metadata = ManagedExecutionMetadata::new(
             OperationId::new("operation-abandoned").unwrap(),
@@ -354,7 +353,6 @@ mod tests {
             CreateExecutionRequest {
                 external_sandbox_id: "external-abandoned".to_string(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Microvm,
                     image: record.image.clone(),
                     ..Default::default()
                 },

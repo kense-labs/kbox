@@ -1,15 +1,10 @@
-use kbox_core::config::ExecutionIsolation;
 use kbox_runtime::hardware_vm::{
     open_vm_only, select_isolation, stored_profile_bytes, ContractError, IsolationSelection,
     VmOnlyFeature,
 };
 
-use super::resolve_isolation;
-
 #[test]
-fn omitted_isolation_selects_hardware_vm_and_legacy_selectors_are_rejected() {
-    assert_eq!(resolve_isolation(None), ExecutionIsolation::Microvm);
-
+fn legacy_isolation_selectors_are_explicitly_rejected() {
     let live = std::env::var("K_BOX_OCI_MIGRATION").ok();
     let baseline = stored_profile_bytes(None);
     assert_eq!(stored_profile_bytes(live.as_deref()), baseline);

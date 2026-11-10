@@ -45,7 +45,7 @@ async fn unhealthy_liveness_restarts_once_and_returns_new_generation_health() {
     let reservation = driver
         .manager
         .create(
-            creation_request(&spec, driver.execution_isolation()).unwrap(),
+            creation_request(&spec, driver.execution_boundary()).unwrap(),
             &operation(&spec).unwrap(),
         )
         .await

@@ -585,9 +585,12 @@ fn test_create_persists_health_options_on_supported_hosts() {
 
 #[cfg(target_os = "windows")]
 #[test]
-fn test_windows_sandbox_and_tee_fail_before_creating_box() {
+fn test_windows_rejects_retired_isolation_selector_and_tee_before_creating_box() {
     let cli = CliTest::new();
 
+    // `--isolation` is a retired contract: Box has one MicroVM boundary and no
+    // isolation selector. The flag must be rejected outright, never silently
+    // downgraded into a hardware-isolated box.
     let (stdout, stderr, success) = cli.output(&[
         "run",
         "--rm",
@@ -599,15 +602,15 @@ fn test_windows_sandbox_and_tee_fail_before_creating_box() {
     ]);
     assert!(
         !success,
-        "sandbox run unexpectedly succeeded: {stdout}\n{stderr}"
+        "retired --isolation flag unexpectedly succeeded: {stdout}\n{stderr}"
     );
     assert!(
-        stderr.contains("Sandbox isolation is supported only on Linux"),
-        "missing sandbox fail-closed diagnostic: {stderr}"
+        stderr.contains("--isolation"),
+        "missing retired selector diagnostic: {stderr}"
     );
     assert!(
         !stderr.contains("Creating box") && !stdout.contains("Creating box"),
-        "sandbox must fail before Creating box: stdout={stdout:?} stderr={stderr:?}"
+        "retired selector must fail before Creating box: stdout={stdout:?} stderr={stderr:?}"
     );
 
     let (stdout, stderr, success) = cli.output(&[

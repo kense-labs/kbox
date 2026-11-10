@@ -121,7 +121,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use kbox_core::{
-    ExecutionGeneration, ExecutionId, ExecutionIsolation, ExecutionManagerError,
+    ExecutionGeneration, ExecutionId, ExecutionManagerError,
     ExecutionManagerResult,
 };
 
@@ -182,11 +182,8 @@ impl LocalExecutionManager {
     /// Probe the backend selected by the current creation policy before an
     /// image pull or other product preparation. Record creation repeats all
     /// mutable capability checks before publishing durable state.
-    pub async fn preflight_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
-        self.backend.preflight_isolation(isolation).await
+    pub async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
+        self.backend.preflight_launch().await
     }
 
     pub(super) async fn require_running_record(

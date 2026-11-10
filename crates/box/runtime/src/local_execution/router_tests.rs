@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 
 use async_trait::async_trait;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
+    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, OperationId,
 };
 
@@ -23,7 +23,7 @@ struct RoutedProbeBackend {
     isolation_preflights: AtomicUsize,
     preflights: AtomicUsize,
     kills: AtomicUsize,
-    observed_isolations: Mutex<Vec<ExecutionIsolation>>,
+    observed_isolations: Mutex<Vec<ExecutionBoundary>>,
     observed_routes: Mutex<Vec<ManagedRuntimeRoute>>,
     planned_anonymous_volumes: Mutex<Vec<String>>,
 }
@@ -53,7 +53,7 @@ impl RoutedProbeBackend {
         self.observed_routes.lock().unwrap().clone()
     }
 
-    fn observed_isolations(&self) -> Vec<ExecutionIsolation> {
+    fn observed_isolations(&self) -> Vec<ExecutionBoundary> {
         self.observed_isolations.lock().unwrap().clone()
     }
 
@@ -65,12 +65,12 @@ impl RoutedProbeBackend {
 
 #[async_trait]
 impl LocalExecutionBackend for RoutedProbeBackend {
-    async fn preflight_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
+    async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
         self.isolation_preflights.fetch_add(1, Ordering::Relaxed);
-        self.observed_isolations.lock().unwrap().push(isolation);
+        self.observed_isolations
+            .lock()
+            .unwrap()
+            .push(ExecutionBoundary::Microvm);
         if self.fail_isolation_preflight.load(Ordering::Relaxed) {
             Err(ExecutionManagerError::Unavailable(
                 "selected isolation is unavailable".to_string(),
@@ -169,9 +169,8 @@ fn migration_policies_stay_the_existing_set() {
 fn policy_name(policy: OciMigrationPolicy) -> &'static str {
     match policy {
         OciMigrationPolicy::LegacyOnly => "legacy-only",
-        OciMigrationPolicy::MicrovmViaOci => "sandbox-via-oci",
-        OciMigrationPolicy::AllViaOci => "all-via-oci",
         OciMigrationPolicy::MicrovmViaOci => "microvm-via-oci",
+        OciMigrationPolicy::AllViaOci => "all-via-oci",
     }
 }
 
@@ -193,22 +192,22 @@ async fn sandbox_preflight_error_does_not_retarget_to_microvm() {
     );
 
     let error = manager
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await
         .expect_err("sandbox preflight must fail on the selected backend");
     assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
     assert_eq!(legacy.isolation_preflights(), 0);
-    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Microvm]);
+    assert_eq!(oci.observed_isolations(), vec![ExecutionBoundary::Microvm]);
 
     manager
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await
         .expect("microvm stays on the legacy backend after the sandbox error");
     assert_eq!(
         legacy.observed_isolations(),
-        vec![ExecutionIsolation::Microvm]
+        vec![ExecutionBoundary::Microvm]
     );
-    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Microvm]);
+    assert_eq!(oci.observed_isolations(), vec![ExecutionBoundary::Microvm]);
     assert!(!state_path.exists());
     assert!(!temporary.path().join("boxes").exists());
 }
@@ -231,18 +230,18 @@ async fn microvm_preflight_error_does_not_retarget_to_sandbox() {
     );
 
     let error = manager
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await
         .expect_err("microvm preflight must fail on the selected backend");
     assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
     assert_eq!(oci.isolation_preflights(), 0);
     assert_eq!(
         legacy.observed_isolations(),
-        vec![ExecutionIsolation::Microvm]
+        vec![ExecutionBoundary::Microvm]
     );
 
     let sandbox_error = manager
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await
         .expect_err("sandbox stays on the legacy backend after the microvm error");
     assert!(matches!(
@@ -252,7 +251,7 @@ async fn microvm_preflight_error_does_not_retarget_to_sandbox() {
     assert_eq!(oci.isolation_preflights(), 0);
     assert_eq!(
         legacy.observed_isolations(),
-        vec![ExecutionIsolation::Microvm, ExecutionIsolation::Microvm]
+        vec![ExecutionBoundary::Microvm, ExecutionBoundary::Microvm]
     );
     assert!(!state_path.exists());
     assert!(!temporary.path().join("boxes").exists());
@@ -276,14 +275,14 @@ async fn selected_oci_isolation_preflight_fails_closed_without_fallback_or_state
     );
 
     let error = manager
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await
         .expect_err("selected OCI isolation must fail closed");
 
     assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
     assert_eq!(legacy.isolation_preflights(), 0);
     assert_eq!(oci.isolation_preflights(), 1);
-    assert_eq!(oci.observed_isolations(), vec![ExecutionIsolation::Microvm]);
+    assert_eq!(oci.observed_isolations(), vec![ExecutionBoundary::Microvm]);
     assert!(!state_path.exists());
 }
 
@@ -306,7 +305,7 @@ async fn sandbox_policy_stamps_oci_route_before_preflight_and_reservation() {
 
     let reservation = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("route-sandbox").unwrap(),
         )
         .await
@@ -347,14 +346,14 @@ async fn microvm_qualification_policy_keeps_sandbox_on_box_backend() {
 
     let sandbox = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("route-sandbox-kept").unwrap(),
         )
         .await
         .unwrap();
     let microvm = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("route-microvm-oci").unwrap(),
         )
         .await
@@ -410,7 +409,7 @@ async fn invalid_backend_resource_plan_is_never_reserved() {
 
     let error = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("invalid-resource-plan").unwrap(),
         )
         .await
@@ -437,7 +436,7 @@ async fn sandbox_policy_keeps_microvm_on_the_persisted_legacy_route() {
 
     let reservation = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("route-microvm").unwrap(),
         )
         .await
@@ -475,7 +474,7 @@ async fn selected_oci_preflight_failure_never_falls_back_or_reserves() {
 
     let error = manager
         .create(
-            request(ExecutionIsolation::Microvm),
+            request(),
             &OperationId::new("route-no-fallback").unwrap(),
         )
         .await
@@ -502,13 +501,13 @@ async fn persisted_routes_ignore_a_later_policy_change() {
         oci.clone(),
         OciMigrationPolicy::LegacyOnly,
     );
-    let mut legacy_record = record(temporary.path(), ExecutionIsolation::Microvm, "legacy");
+    let mut legacy_record = record(temporary.path(), "legacy");
     legacy_record
         .managed_execution
         .as_mut()
         .unwrap()
         .runtime_route = ManagedRuntimeRoute::BoxVm;
-    let mut oci_record = record(temporary.path(), ExecutionIsolation::Microvm, "oci");
+    let mut oci_record = record(temporary.path(), "oci");
     oci_record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::OciSdk;
 
     all_oci.kill(&legacy_record).await.unwrap();
@@ -528,8 +527,8 @@ async fn pre_routing_records_use_durable_runtime_evidence_not_current_policy() {
         oci.clone(),
         OciMigrationPolicy::AllViaOci,
     );
-    let legacy_record = record(temporary.path(), ExecutionIsolation::Microvm, "old-legacy");
-    let mut stopped_oci_record = record(temporary.path(), ExecutionIsolation::Microvm, "old-oci");
+    let legacy_record = record(temporary.path(), "old-legacy");
+    let mut stopped_oci_record = record(temporary.path(), "old-oci");
     stopped_oci_record.exec_socket_path.clear();
 
     router.kill(&legacy_record).await.unwrap();
@@ -539,12 +538,11 @@ async fn pre_routing_records_use_durable_runtime_evidence_not_current_policy() {
     assert_eq!(oci.kills(), 1);
 }
 
-fn request(isolation: ExecutionIsolation) -> CreateExecutionRequest {
+fn request() -> CreateExecutionRequest {
     CreateExecutionRequest {
-        external_sandbox_id: format!("router-{isolation:?}"),
+        external_sandbox_id: "router".to_string(),
         config: BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation,
             ..Default::default()
         },
         labels: Default::default(),
@@ -553,12 +551,12 @@ fn request(isolation: ExecutionIsolation) -> CreateExecutionRequest {
     }
 }
 
-fn record(home_dir: &Path, isolation: ExecutionIsolation, operation_suffix: &str) -> BoxRecord {
+fn record(home_dir: &Path, operation_suffix: &str) -> BoxRecord {
     build_managed_record(
         home_dir,
         &ExecutionId::new(format!("00000000-0000-4000-8000-{operation_suffix:0>12}")).unwrap(),
         OperationId::new(format!("route-{operation_suffix}")).unwrap(),
-        request(isolation),
+        request(),
         chrono::Utc::now(),
     )
     .unwrap()

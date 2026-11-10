@@ -16,7 +16,7 @@ use kbox_contract::{
 };
 use sha2::{Digest, Sha256};
 
-use kbox_core::ExecutionIsolation;
+use kbox_core::ExecutionBoundary;
 
 use super::super::metadata::{local_identity, UNIT_LABEL};
 use super::super::{
@@ -226,7 +226,7 @@ pub(super) struct BoxRuntimeConformanceFixture {
     pub(super) driver: Arc<BoxRuntimeDriver>,
     pub(super) state: Arc<FileRuntimeStateStore>,
     pub(super) cases: CaseFactory,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<BoxRuntimeSevSnpConfig>,
     base_case: kbox_contract::RuntimeBaseConformanceCase,
     secret_materializer: Arc<ConformanceSecretMaterializer>,
@@ -240,12 +240,12 @@ pub(super) struct BoxRuntimeConformanceFixture {
 }
 
 impl BoxRuntimeConformanceFixture {
-    pub(super) fn from_environment(execution_isolation: ExecutionIsolation) -> Result<Self> {
-        Self::from_environment_with_sev_snp(execution_isolation, None)
+    pub(super) fn from_environment(execution_boundary: ExecutionBoundary) -> Result<Self> {
+        Self::from_environment_with_sev_snp(execution_boundary, None)
     }
 
     pub(super) fn from_environment_with_sev_snp(
-        execution_isolation: ExecutionIsolation,
+        execution_boundary: ExecutionBoundary,
         sev_snp: Option<BoxRuntimeSevSnpConfig>,
     ) -> Result<Self> {
         require(
@@ -270,9 +270,9 @@ impl BoxRuntimeConformanceFixture {
             canonical_home == home_dir,
             "K_HOME must already be canonical and must not be a symlink",
         )?;
-        validate_runtime_assets(&home_dir, execution_isolation)?;
+        validate_runtime_assets(&home_dir, execution_boundary)?;
         require(
-            sev_snp.is_none() || execution_isolation == ExecutionIsolation::Microvm,
+            sev_snp.is_none() || execution_boundary == ExecutionBoundary::Microvm,
             "SEV-SNP Runtime conformance requires the MicroVM execution backend",
         )?;
 
@@ -314,7 +314,7 @@ impl BoxRuntimeConformanceFixture {
             cleanups: Mutex::new(Vec::new()),
         });
         let driver = Arc::new(
-            runtime_driver(config, execution_isolation, sev_snp.as_ref())?
+            runtime_driver(config, execution_boundary, sev_snp.as_ref())?
                 .with_secret_materializer(secret_materializer.clone())
                 .with_artifact_port(artifact_port.clone()),
         );
@@ -324,7 +324,7 @@ impl BoxRuntimeConformanceFixture {
             driver: driver.clone(),
             state,
             cases,
-            execution_isolation,
+            execution_boundary,
             sev_snp,
             base_case,
             secret_materializer,
@@ -354,7 +354,7 @@ impl BoxRuntimeConformanceFixture {
         let driver = Arc::new(
             runtime_driver(
                 driver_config(self.home_dir.clone()),
-                self.execution_isolation,
+                self.execution_boundary,
                 self.sev_snp.as_ref(),
             )?
             .with_secret_materializer(self.secret_materializer.clone())
@@ -419,7 +419,7 @@ impl BoxRuntimeConformanceFixture {
                     control_timeout: Duration::from_secs(120),
                     task_poll_interval: Duration::from_millis(25),
                 },
-                self.execution_isolation,
+                self.execution_boundary,
                 self.sev_snp.as_ref(),
             )?
             .with_secret_materializer(self.secret_materializer.clone()),
@@ -800,12 +800,12 @@ fn driver_config(home_dir: PathBuf) -> BoxRuntimeDriverConfig {
 
 fn runtime_driver(
     config: BoxRuntimeDriverConfig,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<&BoxRuntimeSevSnpConfig>,
 ) -> Result<BoxRuntimeDriver> {
     match sev_snp {
         Some(configured) => BoxRuntimeDriver::new_confidential(config, configured.clone()),
-        None => BoxRuntimeDriver::new_with_isolation(config, execution_isolation),
+        None => BoxRuntimeDriver::new_with_boundary(config, execution_boundary),
     }
 }
 
@@ -826,7 +826,7 @@ fn set_private_artifact_modes(_root: &Path, _source: &Path) -> Result<()> {
     ))
 }
 
-fn validate_runtime_assets(home_dir: &Path, execution_isolation: ExecutionIsolation) -> Result<()> {
+fn validate_runtime_assets(home_dir: &Path, _execution_boundary: ExecutionBoundary) -> Result<()> {
     for binary in ["kbox-guest-init", "kbox-shim"] {
         let path = home_dir.join("bin").join(binary);
         require(
@@ -835,13 +835,9 @@ fn validate_runtime_assets(home_dir: &Path, execution_isolation: ExecutionIsolat
         )?;
     }
 
-    match execution_isolation {
-        ExecutionIsolation::Microvm => {
-            crate::host_check::check_virtualization_support()
-                .map_err(|error| failure(format!("R17 MicroVM preflight failed: {error}")))?;
-            Ok(())
-        }
-    }
+    crate::host_check::check_virtualization_support()
+        .map_err(|error| failure(format!("R17 MicroVM preflight failed: {error}")))?;
+    Ok(())
 }
 
 fn directory_shape(path: &Path) -> Result<String> {

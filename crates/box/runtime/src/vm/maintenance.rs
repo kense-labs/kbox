@@ -62,7 +62,6 @@ where
 
 #[cfg(target_os = "macos")]
 fn sanitize_maintenance_config(config: &mut BoxConfig) {
-    config.isolation = kbox_core::ExecutionIsolation::Microvm;
     config.workspace = PathBuf::new();
     config.volumes.clear();
     config.extra_env.clear();

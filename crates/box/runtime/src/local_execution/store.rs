@@ -6,7 +6,7 @@ use std::sync::Weak;
 use std::sync::{Arc, Mutex};
 
 use kbox_core::{
-    ExecutionGeneration, ExecutionId, ExecutionIsolation, ExecutionManagerError,
+    ExecutionGeneration, ExecutionId, ExecutionManagerError,
     ExecutionManagerResult, ExecutionResourceUpdate, ExecutionSnapshotId, KillExecutionOptions,
     OperationId, RestartExecutionOptions,
 };
@@ -172,8 +172,6 @@ impl OwnerBinding {
             .validate()
             .map_err(|_| owner_binding_error(record))?;
         if metadata.runtime_route != ManagedRuntimeRoute::BoxVm
-            || record.isolation != ExecutionIsolation::Microvm
-            || metadata.request.config.isolation != ExecutionIsolation::Microvm
             || metadata.pending_operation.is_some()
             || managed_state(record)? != ManagedExecutionState::Created
             || record.box_dir.as_os_str() != home.join("boxes").join(&record.id).as_os_str()
@@ -263,10 +261,9 @@ impl LocalExecutionManager {
         let reservation = self.reserve(record).await?;
         let admission = match &reservation {
             ManagedExecutionReservation::Reserved(record)
-                if record.isolation == ExecutionIsolation::Microvm
-                    && record.managed_execution.as_ref().is_some_and(|metadata| {
-                        metadata.runtime_route == ManagedRuntimeRoute::BoxVm
-                    }) =>
+                if record.managed_execution.as_ref().is_some_and(|metadata| {
+                    metadata.runtime_route == ManagedRuntimeRoute::BoxVm
+                }) =>
             {
                 Some(FreshOwnerAdmission::from_observed_reserved(
                     record.clone(),

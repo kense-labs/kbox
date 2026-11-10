@@ -24,7 +24,7 @@ impl VmHandler for RefusingStop {
 async fn stop_failure_retains_registered_vm_owner() {
     let directory = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(directory.path());
-    let record = record(directory.path(), ExecutionIsolation::Microvm);
+    let record = record(directory.path());
     let manager = backend.new_manager(&record).unwrap();
     *manager.state.write().await = crate::BoxState::Ready;
     *manager.handler.write().await = Some(Box::new(RefusingStop));

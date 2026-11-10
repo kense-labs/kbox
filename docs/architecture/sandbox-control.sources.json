@@ -50,7 +50,7 @@
   },
   "isolation_scope": {
     "process_command": "One command and descendants; implemented by external https://github.com/kense-labs/ksandbox (ksandbox). Native backends may share the host kernel. Core may also execute a command in a VM.",
-    "code_environment": "Box owns an image-based MicroVM runtime environment. Product path is ExecutionIsolation::Microvm mapped to OCI DedicatedVm. Shared-host-kernel / ExecutionIsolation::Sandbox is not a kbox Box product route.",
+    "code_environment": "Box owns an image-based MicroVM runtime environment with exactly one hardware isolation boundary: ExecutionBoundary::Microvm mapped to OCI DedicatedVm. The request model has no isolation selector; retired selectors are rejected explicitly. Shared-host-kernel sandboxing is not a kbox Box product route.",
     "dedicated_vm": "Independent guest kernel; OCI route maps Microvm to DedicatedVm. Box isolation product = dedicated-kernel MicroVM only.",
     "mapping_sources": [
       "crates/box/core/src/config.rs",

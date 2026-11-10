@@ -63,7 +63,7 @@ mod qualification {
     use base64::Engine;
     use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecEvent, ExecRequest, ExecutionBackend,
-        ExecutionGeneration, ExecutionId, ExecutionIsolation, ExecutionManager,
+        ExecutionGeneration, ExecutionId, ExecutionBoundary, ExecutionManager,
         ExecutionManagerError, ExecutionProcessSignal, ExecutionProcessStream,
         ExecutionSessionManager, ExecutionState, FileOp, FileRequest, FileResponse,
         FilesystemEntryKind, FilesystemOp, FilesystemRequest, FilesystemResponse,
@@ -1461,7 +1461,6 @@ mod qualification {
         CreateExecutionRequest {
             external_sandbox_id: "linux-kvm-live-session".to_string(),
             config: BoxConfig {
-                isolation: ExecutionIsolation::Microvm,
                 image: image.to_string(),
                 resources: ResourceConfig {
                     vcpus: 1,

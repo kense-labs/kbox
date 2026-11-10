@@ -178,14 +178,13 @@ fn pause_plan(record: &crate::state::BoxRecord) -> Result<PausePlan, Box<dyn std
 mod tests {
     use super::*;
     use crate::test_helpers::fixtures::{make_record, setup_state};
-    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId};
+    use kbox_core::{BoxConfig, CreateExecutionRequest, OperationId};
     use kbox_runtime::ManagedExecutionMetadata;
     use std::collections::BTreeMap;
 
     fn managed_record(state: ManagedExecutionState) -> crate::state::BoxRecord {
         let id = "11111111-1111-4111-8111-111111111111";
         let mut record = make_record(id, "managed", state.as_status(), None);
-        record.isolation = ExecutionIsolation::Microvm;
         record.managed_execution = Some(
             ManagedExecutionMetadata::new(
                 OperationId::new("operation-create").unwrap(),
@@ -193,7 +192,6 @@ mod tests {
                 CreateExecutionRequest {
                     external_sandbox_id: "external-1".to_string(),
                     config: BoxConfig {
-                        isolation: ExecutionIsolation::Microvm,
                         image: record.image.clone(),
                         ..Default::default()
                     },

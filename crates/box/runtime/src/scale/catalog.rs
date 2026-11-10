@@ -3,7 +3,7 @@
 use std::{collections::BTreeMap, path::Path};
 
 use kbox_core::{
-    compose::ComposeConfig, CreateExecutionRequest, ExecutionIsolation, ExecutionRecordPolicy,
+    compose::ComposeConfig, CreateExecutionRequest, ExecutionRecordPolicy,
 };
 use sha2::{Digest, Sha256};
 use thiserror::Error;
@@ -31,14 +31,12 @@ pub enum ScaleCatalogError {
 #[derive(Debug, Clone)]
 pub struct ScaleServiceCatalog {
     plan: ComposeRuntimePlan,
-    isolation: ExecutionIsolation,
 }
 
 impl ScaleServiceCatalog {
     pub fn from_kcl_file(
         path: &Path,
         project_name: impl Into<String>,
-        isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
         if path.extension().and_then(|extension| extension.to_str()) != Some("kcl") {
             return Err(ScaleCatalogError::Invalid(format!(
@@ -54,30 +52,27 @@ impl ScaleServiceCatalog {
             &source,
             project_name,
             path.parent().unwrap_or_else(|| Path::new(".")),
-            isolation,
         )
     }
 
     pub fn from_kcl_str(
         source: &str,
         project_name: impl Into<String>,
-        isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
-        Self::from_kcl_str_with_base_dir(source, project_name, Path::new("."), isolation)
+        Self::from_kcl_str_with_base_dir(source, project_name, Path::new("."))
     }
 
     fn from_kcl_str_with_base_dir(
         source: &str,
         project_name: impl Into<String>,
         base_dir: &Path,
-        isolation: ExecutionIsolation,
     ) -> Result<Self, ScaleCatalogError> {
         let config = ComposeConfig::from_kcl_str(source)
             .map_err(|error| ScaleCatalogError::Invalid(error.to_string()))?;
         validate_stateless_templates(&config)?;
         let plan = ComposeRuntimePlan::with_base_dir(project_name, config, base_dir)
             .map_err(|error| ScaleCatalogError::Invalid(error.to_string()))?;
-        Ok(Self { plan, isolation })
+        Ok(Self { plan })
     }
 
     pub fn contains(&self, service: &str) -> bool {
@@ -112,7 +107,6 @@ impl ScaleServiceCatalog {
             .plan
             .build_box_config(service, None)
             .map_err(|error| ScaleCatalogError::Invalid(error.to_string()))?;
-        config.isolation = self.isolation;
         let guest_port = self.guest_port(service)?;
         // Scale endpoints are owned by a generation-fenced host relay. Do not
         // also ask the VM backend to publish the Compose marker port.
@@ -208,9 +202,7 @@ mod tests {
     fn catalog_builds_deterministic_labeled_execution_templates() {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
-            "gateway-scale",
-            ExecutionIsolation::Microvm,
-        )
+            "gateway-scale")
         .unwrap();
         assert_eq!(catalog.services(), vec!["api", "worker"]);
 
@@ -221,7 +213,6 @@ mod tests {
             serde_json::to_value(&replay).unwrap()
         );
         assert_eq!(first.external_sandbox_id, "scale-worker-3");
-        assert_eq!(first.config.isolation, ExecutionIsolation::Microvm);
         assert_eq!(first.config.resources.vcpus, 2);
         assert_eq!(first.config.resources.memory_mb, 768);
         assert_eq!(first.labels[SCALE_SERVICE_LABEL], "worker");
@@ -243,9 +234,7 @@ mod tests {
             );
             let error = ScaleServiceCatalog::from_kcl_str(
                 &source,
-                "gateway-scale",
-                ExecutionIsolation::Microvm,
-            )
+                "gateway-scale")
             .unwrap_err();
             assert!(error.to_string().contains(expected), "{error}");
         }
@@ -255,9 +244,7 @@ mod tests {
     fn unknown_service_fails_without_fabricating_a_template() {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
-            "gateway-scale",
-            ExecutionIsolation::Microvm,
-        )
+            "gateway-scale")
         .unwrap();
         let error = catalog.create_request("missing", 0).unwrap_err();
         assert!(error.to_string().contains("not found"));
@@ -268,7 +255,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             r#"service "api" { image = "api:v1"; ports = ["0:8080"] }"#,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
 
@@ -284,9 +270,7 @@ mod tests {
         let path = directory.path().join("services.yaml");
         std::fs::write(&path, CATALOG).unwrap();
 
-        let error =
-            ScaleServiceCatalog::from_kcl_file(&path, "gateway-scale", ExecutionIsolation::Microvm)
-                .unwrap_err();
+        let error = ScaleServiceCatalog::from_kcl_file(&path, "gateway-scale").unwrap_err();
 
         assert!(error.to_string().contains(".kcl format"), "{error}");
     }

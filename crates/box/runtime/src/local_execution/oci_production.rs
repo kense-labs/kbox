@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use async_trait::async_trait;
 use kbox_core::config::{ResourceConfig, TeeConfig};
 use kbox_core::{
-    BoxError, ExecutionBackend, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
+    BoxError, ExecutionBackend, ExecutionManagerError, ExecutionManagerResult,
     NetworkMode,
 };
 use koci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
@@ -249,9 +249,7 @@ impl OciBundleProvider for DedicatedVmOciBundleProvider {
                 self.profile.host_requirement()
             )));
         }
-        if record.isolation != ExecutionIsolation::Microvm
-            || !matches!(context.isolation(), IsolationRequest::DedicatedVm)
-        {
+        if !matches!(context.isolation(), IsolationRequest::DedicatedVm) {
             return Err(ExecutionManagerError::InvalidRequest(format!(
                 "Box/{} OCI qualification requires dedicated MicroVM isolation",
                 self.profile.label()

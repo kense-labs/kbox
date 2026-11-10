@@ -22,7 +22,7 @@ use crate::{BoxRuntimeDriver, BoxRuntimeDriverConfig};
 use kbox_contract::RuntimeDriver as _;
 
 /// Wires the native Linux OCI owner composition used by snapshot-lane tests
-/// on KVM-less hosts. `BoxRuntimeDriver::new_with_isolation` wires the legacy
+/// on KVM-less hosts. `BoxRuntimeDriver::new_with_boundary` wires the legacy
 /// VM backend, which requires /dev/kvm and times out on CI runners.
 async fn lane_driver_async(
     directory: &tempfile::TempDir,
@@ -48,7 +48,7 @@ async fn lane_driver_async(
         },
         manager,
         connector,
-        kbox_core::ExecutionIsolation::Microvm,
+        kbox_core::ExecutionBoundary::Microvm,
         None,
         None,
         None,

@@ -43,7 +43,7 @@ async fn lane_driver(directory: &tempfile::TempDir) -> BoxRuntimeDriver {
         },
         manager,
         connector,
-        kbox_core::ExecutionIsolation::Microvm,
+        kbox_core::ExecutionBoundary::Microvm,
         None,
         None,
         None,

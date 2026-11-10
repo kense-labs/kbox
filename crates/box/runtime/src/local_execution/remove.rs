@@ -214,7 +214,7 @@ mod tests {
 
     use async_trait::async_trait;
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionIsolation, ExecutionManager,
+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionManager,
         ExecutionRecordPolicy, OperationId,
     };
 
@@ -275,7 +275,6 @@ mod tests {
                 CreateExecutionRequest {
                     external_sandbox_id: "runtime-unit-1".to_string(),
                     config: BoxConfig {
-                        isolation: ExecutionIsolation::Microvm,
                         persistent: true,
                         ..Default::default()
                     },

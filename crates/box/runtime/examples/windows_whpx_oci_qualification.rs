@@ -31,7 +31,7 @@ mod qualification {
 
     use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
-        ExecutionIsolation, ExecutionManager, ExecutionState, IsolationClass as BoxIsolationClass,
+        ExecutionBoundary, ExecutionManager, ExecutionState, IsolationClass as BoxIsolationClass,
         NetworkMode, OperationId, ReconcileOutcome, ResourceConfig,
     };
     use kbox_runtime::{
@@ -541,7 +541,6 @@ mod qualification {
         CreateExecutionRequest {
             external_sandbox_id: "windows-whpx-oci-qualification".to_string(),
             config: BoxConfig {
-                isolation: ExecutionIsolation::Microvm,
                 image: image.to_string(),
                 resources: ResourceConfig {
                     vcpus: 1,

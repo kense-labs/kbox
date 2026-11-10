@@ -7,7 +7,7 @@ use async_trait::async_trait;
 use kbox_core::vmm::OwnedCloseBudget;
 use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
-    ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+    ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
     ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse,
     FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
 };
@@ -34,12 +34,10 @@ pub enum OciMigrationPolicy {
 }
 
 impl OciMigrationPolicy {
-    const fn route(self, isolation: ExecutionIsolation) -> ManagedRuntimeRoute {
-        match (self, isolation) {
-            (Self::LegacyOnly, _) => ManagedRuntimeRoute::BoxVm,
-            (Self::AllViaOci | Self::MicrovmViaOci, ExecutionIsolation::Microvm) => {
-                ManagedRuntimeRoute::OciSdk
-            }
+    const fn route(self) -> ManagedRuntimeRoute {
+        match self {
+            Self::LegacyOnly => ManagedRuntimeRoute::BoxVm,
+            Self::AllViaOci | Self::MicrovmViaOci => ManagedRuntimeRoute::OciSdk,
         }
     }
 }
@@ -75,11 +73,8 @@ impl LocalExecutionBackendRouter {
         self.policy
     }
 
-    fn backend_for_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> &Arc<dyn LocalExecutionBackend> {
-        match self.policy.route(isolation) {
+    fn backend_for_creation(&self) -> &Arc<dyn LocalExecutionBackend> {
+        match self.policy.route() {
             ManagedRuntimeRoute::BoxVm => &self.legacy,
             ManagedRuntimeRoute::OciSdk => &self.oci,
             ManagedRuntimeRoute::Unspecified => {
@@ -185,13 +180,8 @@ impl LocalExecutionBackend for LocalExecutionBackendRouter {
             .await
     }
 
-    async fn preflight_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
-        self.backend_for_isolation(isolation)
-            .preflight_isolation(isolation)
-            .await
+    async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
+        self.backend_for_creation().preflight_launch().await
     }
 
     fn route_for_create(&self, record: &BoxRecord) -> ExecutionManagerResult<ManagedRuntimeRoute> {
@@ -201,7 +191,7 @@ impl LocalExecutionBackend for LocalExecutionBackendRouter {
                 record.id
             )));
         }
-        Ok(self.policy.route(record.isolation))
+        Ok(self.policy.route())
     }
 
     async fn preflight(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {

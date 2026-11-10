@@ -5,7 +5,7 @@ use std::time::Duration;
 
 use async_trait::async_trait;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionIsolation, ExecutionManager,
+    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, NetworkMode,
     OperationId,
 };
@@ -188,7 +188,6 @@ fn request() -> CreateExecutionRequest {
         external_sandbox_id: "cancelled-inspection".to_string(),
         config: BoxConfig {
             image: "alpine:3.20".to_string(),
-            isolation: ExecutionIsolation::Microvm,
             network: NetworkMode::None,
             ..Default::default()
         },

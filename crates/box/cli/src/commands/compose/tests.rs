@@ -78,7 +78,6 @@ fn service_config_hash_tracks_runtime_image() {
     let service = ServiceConfig::default();
     let first = kbox_core::BoxConfig {
         image: "example:latest".to_string(),
-        isolation: kbox_core::ExecutionIsolation::Microvm,
         ..Default::default()
     };
     let mut second = first.clone();

@@ -114,24 +114,8 @@ wiremock = {version = "0.6"}
 zstd = {version = "0.13"}
 
 kcl = { package = "kense-kcl", path = "../kcl" }
-kboot = { path = "crates/boot", features = [
-    "auth",
-    "axum",
-    "cqrs",
-    "health",
-    "logging",
-    "macros",
-    "openapi-schemas",
-    "queue-postgres",
-    "security",
-], default-features = false }
 kbox-core = { path = "crates/box/core" }
 kbox-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
-kcore = { path = "crates/code/core", default-features = false }
-kevent = { path = "crates/event", features = ["nats", "iggy"], default-features = false }
-kflow = { path = "crates/flow", features = ["boot", "postgres"], default-features = false }
-kform-core = { path = "crates/form-core" }
-korm = { path = "crates/orm", features = ["postgres"], default-features = false }
 kbox-contract = { path = "crates/runtime" }
 aes-gcm = "0.10"
 argon2 = "0.5"

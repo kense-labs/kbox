@@ -759,7 +759,7 @@ async fn run_due_health_checks(state: &StateFile) -> Result<(), Box<dyn std::err
 #[cfg(test)]
 mod tests {
     use super::*;
-    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionIsolation};
+    use kbox_core::{BoxConfig, CreateExecutionRequest};
     use kbox_runtime::{ManagedExecutionMetadata, ManagedRestartCompletion};
     use std::collections::BTreeMap;
 
@@ -771,14 +771,12 @@ mod tests {
     ) -> BoxRecord {
         let id = "11111111-1111-4111-8111-111111111111";
         let mut record = make_record(id, "managed", "running", Some(123));
-        record.isolation = ExecutionIsolation::Microvm;
         let mut metadata = ManagedExecutionMetadata::new(
             OperationId::new("create-operation").unwrap(),
             ExecutionGeneration::INITIAL,
             CreateExecutionRequest {
                 external_sandbox_id: "external-managed".to_string(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Microvm,
                     image: record.image.clone(),
                     ..Default::default()
                 },

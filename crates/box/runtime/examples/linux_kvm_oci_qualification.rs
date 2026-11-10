@@ -49,7 +49,7 @@ mod qualification {
 
     use kbox_core::{
         BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
-        ExecutionIsolation, ExecutionManager, ExecutionManagerError, ExecutionState,
+        ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionState,
         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
         ResourceConfig,
     };
@@ -898,7 +898,6 @@ mod qualification {
                 "linux-kvm-oci-qualification".to_string()
             },
             config: BoxConfig {
-                isolation: ExecutionIsolation::Microvm,
                 image: image.to_string(),
                 resources: ResourceConfig {
                     vcpus: 1,

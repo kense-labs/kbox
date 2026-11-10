@@ -114,7 +114,7 @@ pub(super) async fn setup_and_boot(
         Some(std::sync::Arc::clone(&pull_progress_fn)),
     )
     .await?;
-    manager.preflight_isolation(config.isolation).await?;
+    manager.preflight_launch().await?;
 
     // Image config is cache-first and happens after preflight so an image
     // HEALTHCHECK can be rejected before named-volume creation.
@@ -437,7 +437,6 @@ pub(super) fn build_box_config(
     };
 
     Ok(BoxConfig {
-        isolation: common::execution_isolation(&args.common),
         image: args.common.image.clone(),
         resources: ResourceConfig {
             vcpus: args.common.cpus,

@@ -740,7 +740,7 @@ mod tests {
     #[cfg(unix)]
     use std::sync::{Arc, Barrier};
 
-    use kbox_core::{CreateExecutionRequest, ExecutionIsolation, ExecutionSnapshotId};
+    use kbox_core::{CreateExecutionRequest, ExecutionSnapshotId};
 
     use super::*;
     use crate::ManagedExecutionMetadata;
@@ -751,7 +751,6 @@ mod tests {
             "short_id": BoxRecord::make_short_id(id),
             "name": format!("box-{id}"),
             "image": "alpine:latest",
-            "isolation": "sandbox",
             "status": "created",
             "pid": null,
             "cpus": 1,
@@ -768,7 +767,6 @@ mod tests {
         .unwrap();
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         record.managed_execution = Some(

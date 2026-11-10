@@ -16,33 +16,27 @@ pub struct VirtualizationSupport {
     pub details: String,
 }
 
-/// Reject an isolation class this host cannot launch.
+/// Reject a launch on a host that cannot run the MicroVM backend.
 ///
-/// Box product isolation is MicroVM-only. A missing hypervisor fails here,
-/// before a box directory or VM exists. Windows never substitutes KVM or a WSL
-/// distro, and Linux never substitutes WHPX.
+/// Box has exactly one isolation boundary: a hardware-backed MicroVM. There is
+/// no isolation selector to validate — only host capability. A missing
+/// hypervisor fails here, before a box directory or VM exists. Windows never
+/// substitutes KVM or a WSL distro, and Linux never substitutes WHPX.
 ///
 /// This is the launch-ready probe: Linux opens `/dev/kvm`, Windows queries WHPX.
-/// Call it from CLI `preflight_isolation` and from `start`, not from durable
+/// Call it from CLI `preflight_launch` and from `start`, not from durable
 /// create reservation (unit tests and stub CI often lack kvm-group access).
-pub fn admit_requested_isolation(isolation: kbox_core::ExecutionIsolation) -> Result<()> {
-    match isolation {
-        kbox_core::ExecutionIsolation::Microvm => check_virtualization_support().map(|_| ()),
-    }
+pub fn admit_microvm_launch() -> Result<()> {
+    check_virtualization_support().map(|_| ())
 }
 
-/// Reject an isolation class this OS cannot host, without opening the device.
+/// Reject an OS that cannot host the MicroVM backend, without opening the
+/// device.
 ///
 /// Used by durable create reservation so metadata/unit tests can stamp a
 /// MicroVM route when `/dev/kvm` exists but is not group-accessible. Launch
-/// still requires [`admit_requested_isolation`].
-pub fn admit_isolation_class(isolation: kbox_core::ExecutionIsolation) -> Result<()> {
-    match isolation {
-        kbox_core::ExecutionIsolation::Microvm => admit_microvm_host_class(),
-    }
-}
-
-fn admit_microvm_host_class() -> Result<()> {
+/// still requires [`admit_microvm_launch`].
+pub fn admit_microvm_host_class() -> Result<()> {
     #[cfg(target_os = "linux")]
     {
         if !std::path::Path::new("/dev/kvm").exists() {
@@ -303,11 +297,8 @@ mod tests {
     }
 
     #[test]
-    fn microvm_admission_keeps_the_requested_class() {
-        let isolation = kbox_core::ExecutionIsolation::Microvm;
-        let result = admit_requested_isolation(isolation);
-        assert_eq!(isolation, kbox_core::ExecutionIsolation::Microvm);
-        match result {
+    fn microvm_launch_probe_reports_host_capability() {
+        match admit_microvm_launch() {
             Ok(()) => {}
             Err(error) => {
                 let message = error.to_string();
@@ -330,42 +321,29 @@ mod tests {
 
     #[test]
     fn create_class_admission_does_not_require_opening_the_hypervisor() {
-        let isolation = kbox_core::ExecutionIsolation::Microvm;
-        match admit_isolation_class(isolation) {
-            Ok(()) => {}
-            Err(error) => {
-                let message = error.to_string();
-                rejects_wsl_wording(&message);
-                assert!(
-                    !message.to_lowercase().contains("access denied"),
-                    "class admit must not open /dev/kvm: {message}"
-                );
-                assert!(
-                    !message.to_lowercase().contains("kvm group"),
-                    "class admit must not require kvm group: {message}"
-                );
-            }
-        }
-        assert_eq!(isolation, kbox_core::ExecutionIsolation::Microvm);
-        #[cfg(not(target_os = "linux"))]
-        {
-            let sandbox = kbox_core::ExecutionIsolation::Microvm;
-            let error = admit_isolation_class(sandbox).expect_err("Sandbox off Linux");
-            assert!(error.to_string().contains("only on Linux"));
+        if let Err(error) = admit_microvm_host_class() {
+            let message = error.to_string();
+            rejects_wsl_wording(&message);
+            assert!(
+                !message.to_lowercase().contains("access denied"),
+                "class admit must not open /dev/kvm: {message}"
+            );
+            assert!(
+                !message.to_lowercase().contains("kvm group"),
+                "class admit must not require kvm group: {message}"
+            );
         }
     }
 
     #[test]
-    fn microvm_admission_does_not_rewrite_to_sandbox() {
-        let isolation = kbox_core::ExecutionIsolation::Microvm;
-        if let Err(error) = admit_requested_isolation(isolation) {
+    fn microvm_admission_never_offers_a_shared_kernel_fallback() {
+        if let Err(error) = admit_microvm_launch() {
             let message = error.to_string().to_lowercase();
             assert!(
                 !message.contains("sandbox"),
-                "MicroVM preflight must not offer Sandbox as a replacement: {message}"
+                "MicroVM preflight must not offer a shared-kernel fallback: {message}"
             );
             rejects_wsl_wording(&message);
         }
-        assert_eq!(isolation, kbox_core::ExecutionIsolation::Microvm);
     }
 }

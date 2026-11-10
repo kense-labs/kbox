@@ -187,7 +187,6 @@ pub(super) async fn run_foreground(
                     break foreground_health_stop_reason(foreground_workload_exit_code(
                         &ctx.box_dir,
                         ctx.record.exit_code,
-                        ctx.record.isolation,
                         run_context_uses_oci(&ctx),
                     ));
                 }
@@ -225,7 +224,6 @@ pub(super) async fn run_foreground(
     let persisted_exit_code = foreground_workload_exit_code(
         &ctx.box_dir,
         ctx.record.exit_code,
-        ctx.record.isolation,
         run_context_uses_oci(&ctx),
     );
     let exit_code = foreground_exit_code(stop_reason, persisted_exit_code);
@@ -339,7 +337,6 @@ pub(super) fn foreground_health_stop_reason(exit_code: Option<i32>) -> Foregroun
 pub(super) fn foreground_workload_exit_code(
     box_dir: &std::path::Path,
     recorded_exit_code: Option<i32>,
-    _isolation: kbox_core::ExecutionIsolation,
     trust_oci_wait: bool,
 ) -> Option<i32> {
     // OCI-routed DedicatedVm/MicroVM publish an authenticated container wait

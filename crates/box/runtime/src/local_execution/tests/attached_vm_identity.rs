@@ -4,7 +4,7 @@
 use super::*;
 use futures::FutureExt;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionIsolation, OperationId, VmHandler, VmMetrics,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, OperationId, VmHandler, VmMetrics,
 };
 use std::cell::Cell;
 use std::collections::BTreeMap;
@@ -13,7 +13,7 @@ use std::time::Instant;
 use tokio::io::AsyncWriteExt;
 use tokio::net::UnixListener;
 
-fn record(home_dir: &Path, isolation: ExecutionIsolation) -> BoxRecord {
+fn record(home_dir: &Path) -> BoxRecord {
     let id = ExecutionId::new(uuid::Uuid::new_v4().to_string()).unwrap();
     super::super::record::build_managed_record(
         home_dir,
@@ -22,7 +22,6 @@ fn record(home_dir: &Path, isolation: ExecutionIsolation) -> BoxRecord {
         CreateExecutionRequest {
             external_sandbox_id: "attached-identity-fixture".to_string(),
             config: BoxConfig {
-                isolation,
                 image: "alpine:latest".to_string(),
                 ..Default::default()
             },
@@ -109,7 +108,7 @@ impl Drop for ControlledChild {
 async fn recovery_refuses_missing_original_binding() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     for (pid, start_time) in [
         (None, None),
         (Some(std::process::id()), None),
@@ -134,7 +133,7 @@ async fn recovery_refuses_missing_original_binding() {
 async fn attach_refuses_located_record_mismatch() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let mut fixture = ControlledChild::sleeping();
     let original = fixture.bind(&mut record);
     let socket_dir = SocketDirectory::create(temporary.path(), &record);
@@ -168,7 +167,7 @@ async fn attach_refuses_located_record_mismatch() {
 async fn attach_rechecks_original_identity_after_heartbeat_await() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let mut fixture = ControlledChild::sleeping();
     let located = fixture.bind(&mut record);
     let socket_dir = SocketDirectory::create(temporary.path(), &record);
@@ -264,7 +263,7 @@ async fn paused_manager(backend: &VmLocalExecutionBackend, record: &BoxRecord) -
 async fn handle_preserves_record_token_and_refuses_mismatch() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let pid = std::process::id();
     let start_time = crate::process::pid_start_time(pid).unwrap();
     record.pid = Some(pid);
@@ -303,7 +302,7 @@ async fn handle_preserves_record_token_and_refuses_mismatch() {
 
     // Sandbox retains its existing sample/handle contract, not this MicroVM
     // attachment qualification. No Sandbox launch or external adapter runs.
-    let mut sandbox = self::record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut sandbox = self::record(temporary.path());
     sandbox.pid = Some(pid.wrapping_add(1));
     sandbox.pid_start_time = None;
     let sandbox_manager = paused_manager(&backend, &sandbox).await;

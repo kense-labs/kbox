@@ -56,7 +56,6 @@ pub async fn execute(args: CreateArgs) -> Result<(), Box<dyn std::error::Error>>
         None => None,
     };
 
-    let isolation = common::execution_isolation(&args.common);
     let entrypoint = args
         .common
         .entrypoint
@@ -67,7 +66,6 @@ pub async fn execute(args: CreateArgs) -> Result<(), Box<dyn std::error::Error>>
     extra_env.sort_by(|left, right| left.0.cmp(&right.0));
 
     let mut config = BoxConfig {
-        isolation,
         image: args.common.image.clone(),
         resources: ResourceConfig {
             vcpus: args.common.cpus,
@@ -105,7 +103,7 @@ pub async fn execute(args: CreateArgs) -> Result<(), Box<dyn std::error::Error>>
 
     let home = kbox_core::dirs_home();
     let manager = super::configured_local_execution_manager(&home).await?;
-    manager.preflight_isolation(isolation).await?;
+    manager.preflight_launch().await?;
 
     // Cached image metadata is read after preflight and before named-volume
     // creation so an image HEALTHCHECK is rejected without creating the volume.

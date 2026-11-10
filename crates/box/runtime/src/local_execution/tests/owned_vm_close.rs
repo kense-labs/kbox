@@ -7,7 +7,7 @@ use std::time::Instant;
 
 use kbox_core::vmm::OwnedCloseBudget;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode,
+    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
     OperationId,
 };
 
@@ -28,7 +28,6 @@ fn record(home: &Path) -> BoxRecord {
         CreateExecutionRequest {
             external_sandbox_id: "untrusted-display-only".to_string(),
             config: BoxConfig {
-                isolation: ExecutionIsolation::Microvm,
                 image: "alpine:latest".to_string(),
                 network: NetworkMode::None,
                 ..Default::default()

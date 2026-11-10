@@ -3,11 +3,8 @@ use std::time::Duration;
 
 use kbox_contract::contract::{RestartPolicy, RuntimeMount, RuntimeMountSource, RuntimeUnitState};
 use kbox_contract::RuntimeClient;
-use kbox_core::ExecutionIsolation;
 
 use super::fixture::BoxRuntimeConformanceFixture;
-#[cfg(target_os = "linux")]
-use super::mounts_evidence::sandbox_private_artifact_alias;
 use super::mounts_evidence::{
     require_bind_config, require_live_tmpfs_mount, require_tmpfs_config, TMPFS_SIZE_BYTES,
 };
@@ -72,25 +69,12 @@ async fn private_read_only_artifact(
     )?;
 
     require_bind_config(&record, TARGET, true)?;
-    let attachment_alias = match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Microvm => {
-            Some(sandbox_private_artifact_alias(fixture, &record, TARGET)?)
-        }
-        ExecutionIsolation::Microvm => None,
-    };
 
+    // A MicroVM owns its private Artifact mounts inside the guest. There is no
+    // host-side shared-kernel attachment alias to inspect or clean up.
     fixture
         .remove_unit(client, &service.spec, "mount-private-artifact")
         .await?;
-    if let Some((alias_root, alias)) = attachment_alias {
-        require(
-            !alias_root.exists()
-                && !std::fs::read_to_string("/proc/self/mountinfo")
-                    .map_err(|error| super::external("re-read private Artifact mountinfo", error))?
-                    .contains(&*alias.to_string_lossy()),
-            "private Artifact removal retained a Box attachment alias",
-        )?;
-    }
     Ok(())
 }
 
@@ -311,46 +295,27 @@ async fn mount_cleanup(
     let pid = record
         .pid
         .ok_or_else(|| super::protocol("tmpfs cleanup fixture has no provider owner PID"))?;
-    let log_worker = match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Microvm => {
-            let mountinfo =
-                std::fs::read_to_string(Path::new("/proc").join(pid.to_string()).join("mountinfo"))
-                    .map_err(|error| {
-                        super::external("read tmpfs cleanup mount namespace", error)
-                    })?;
-            require(
-                mountinfo.lines().any(|line| {
-                    line.contains(&format!(" {TARGET} ")) && line.contains(" - tmpfs ")
-                }),
-                "running Sandbox did not expose the requested tmpfs mount",
-            )?;
-            Some(require_log_worker_identity(fixture, &record)?)
-        }
-        ExecutionIsolation::Microvm => {
-            let visible = client
-                .exec(&fixture.cases.exec(
-                    "mount-cleanup-visible",
-                    &service.spec,
-                    vec![
-                        "/bin/sh".into(),
-                        "-c".into(),
-                        format!(
-                            "awk '$5 == \"{TARGET}\" && $0 ~ / - tmpfs / {{ found=1 }} END {{ exit found ? 0 : 1 }}' /proc/self/mountinfo"
-                        ),
-                    ],
-                    5_000,
-                ))
-                .await?;
-            require(
-                visible.exit_code == 0 && visible.stderr.is_empty(),
+    let visible = client
+        .exec(&fixture.cases.exec(
+            "mount-cleanup-visible",
+            &service.spec,
+            vec![
+                "/bin/sh".into(),
+                "-c".into(),
                 format!(
-                    "running MicroVM did not expose the requested tmpfs mount: exit_code={} stdout={:?} stderr={:?}",
-                    visible.exit_code, visible.stdout, visible.stderr
+                    "awk '$5 == \"{TARGET}\" && $0 ~ / - tmpfs / {{ found=1 }} END {{ exit found ? 0 : 1 }}' /proc/self/mountinfo"
                 ),
-            )?;
-            None
-        }
-    };
+            ],
+            5_000,
+        ))
+        .await?;
+    require(
+        visible.exit_code == 0 && visible.stderr.is_empty(),
+        format!(
+            "running MicroVM did not expose the requested tmpfs mount: exit_code={} stdout={:?} stderr={:?}",
+            visible.exit_code, visible.stdout, visible.stderr
+        ),
+    )?;
     let pid_start_time = record
         .pid_start_time
         .ok_or_else(|| super::protocol("tmpfs cleanup fixture has no owner PID start time"))?;
@@ -363,15 +328,6 @@ async fn mount_cleanup(
         !crate::process::is_process_alive_with_identity(pid, Some(pid_start_time)),
         "tmpfs owner process survived Runtime removal",
     )?;
-    if let Some((log_worker_pid, log_worker_pid_start_time)) = log_worker {
-        require(
-            !crate::process::is_process_alive_with_identity(
-                log_worker_pid,
-                Some(log_worker_pid_start_time),
-            ),
-            "tmpfs log worker survived Runtime removal",
-        )?;
-    }
     require(
         fixture
             .driver
@@ -384,37 +340,6 @@ async fn mount_cleanup(
         !box_dir.exists(),
         "tmpfs cleanup left its provider filesystem",
     )
-}
-
-#[cfg(target_os = "linux")]
-fn require_log_worker_identity(
-    fixture: &BoxRuntimeConformanceFixture,
-    record: &crate::BoxRecord,
-) -> Result<(u32, u64)> {
-    let runtime = crate::vm::reap::load_recorded_sandbox_runtime(
-        &fixture.home_dir,
-        &record.box_dir,
-        &record.id,
-    )
-    .map_err(|error| super::external("load tmpfs cleanup runtime", error))?
-    .ok_or_else(|| super::protocol("tmpfs cleanup runtime record disappeared"))?;
-    let pid = runtime
-        .log_worker_pid
-        .ok_or_else(|| super::protocol("tmpfs cleanup fixture has no log-worker PID"))?;
-    let start_time = runtime
-        .log_worker_pid_start_time
-        .ok_or_else(|| super::protocol("tmpfs cleanup fixture has no log-worker start time"))?;
-    Ok((pid, start_time))
-}
-
-#[cfg(not(target_os = "linux"))]
-fn require_log_worker_identity(
-    _fixture: &BoxRuntimeConformanceFixture,
-    _record: &crate::BoxRecord,
-) -> Result<(u32, u64)> {
-    Err(super::protocol(
-        "tmpfs cleanup log-worker identity requires linux",
-    ))
 }
 
 fn tmpfs(name: &str, target: &str, read_only: bool) -> RuntimeMount {

@@ -7,7 +7,7 @@ use chrono::{DateTime, Utc};
 use kbox_core::config::ResourceLimits;
 use kbox_core::log::LogConfig;
 use kbox_core::{
-    CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, ExecutionResourceUpdate,
+    CreateExecutionRequest, ExecutionGeneration, ExecutionResourceUpdate,
     ExecutionSnapshotId, NetworkMode, OperationId, ResolvedExecutionPlan,
 };
 use serde::{Deserialize, Serialize};
@@ -26,9 +26,6 @@ pub struct BoxRecord {
     pub name: String,
     /// OCI image reference.
     pub image: String,
-    /// Requested execution isolation. Records written before this field default to MicroVM.
-    #[serde(default)]
-    pub isolation: ExecutionIsolation,
     /// Runtime lifecycle identity and recoverable creation intent.
     ///
     /// Legacy CLI-created records omit this field. Managed executions persist
@@ -559,9 +556,10 @@ impl ManagedExecutionMetadata {
             binding
                 .validate()
                 .map_err(|error| kbox_core::BoxError::StateError(error.to_string()))?;
-            let expected_isolation =
-                crate::local_execution::oci_isolation_request(self.request.config.isolation)
-                    .class();
+            let expected_isolation = crate::local_execution::oci_isolation_request(
+                kbox_core::ExecutionBoundary::Microvm,
+            )
+            .class();
             if binding.isolation != expected_isolation {
                 return Err(kbox_core::BoxError::StateError(
                     "Kbox OCI binding weakens or changes the requested isolation".to_string(),
@@ -854,7 +852,6 @@ mod tests {
         value["virtiofs_cache"] = serde_json::json!("always");
         let record: BoxRecord = serde_json::from_value(value).unwrap();
 
-        assert_eq!(record.isolation, ExecutionIsolation::Microvm);
         assert!(record.managed_execution.is_none());
         assert_eq!(record.virtiofs_cache.as_deref(), Some("always"));
         assert_eq!(record.restart_policy, "no");
@@ -869,7 +866,6 @@ mod tests {
     fn managed_execution_metadata_round_trips_recovery_intent() {
         let mut config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         config.resources.vcpus = 1;
@@ -906,9 +902,10 @@ mod tests {
         assert_eq!(managed.generation, ExecutionGeneration::INITIAL);
         assert_eq!(managed.request.external_sandbox_id, "sandbox-1");
         assert!(managed.paused_with_memory);
-        assert_eq!(
-            managed.request.config.isolation,
-            ExecutionIsolation::Microvm
+        let config_json = serde_json::to_value(&managed.request.config).unwrap();
+        assert!(
+            config_json.get("isolation").is_none(),
+            "the request model must not serialize an isolation selector"
         );
         assert_eq!(encoded["managed_execution"]["generation"], 1);
         assert_eq!(encoded["managed_execution"]["paused_with_memory"], true);
@@ -925,7 +922,6 @@ mod tests {
                 external_sandbox_id: "sandbox-route".to_string(),
                 config: kbox_core::BoxConfig {
                     image: "alpine:latest".to_string(),
-                    isolation: ExecutionIsolation::Microvm,
                     ..Default::default()
                 },
                 labels: Default::default(),
@@ -1005,7 +1001,6 @@ mod tests {
     fn managed_execution_rejects_a_cold_pause_marker_in_running_state() {
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         let mut metadata = ManagedExecutionMetadata::new(
@@ -1033,7 +1028,6 @@ mod tests {
     fn managed_execution_validation_rejects_plan_drift() {
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: ExecutionIsolation::Microvm,
             ..Default::default()
         };
         let mut metadata = ManagedExecutionMetadata::new(

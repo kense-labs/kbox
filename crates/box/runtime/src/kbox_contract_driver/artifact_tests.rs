@@ -238,7 +238,7 @@ async fn artifact_and_volume_bindings_precede_secrets_and_artifacts_are_read_onl
 
     let request = creation_request_for(
         &spec,
-        driver.execution_isolation,
+        driver.execution_boundary,
         driver.sev_snp_config(),
         &driver.config.secret_root,
         &plan,

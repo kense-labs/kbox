@@ -383,10 +383,9 @@ fn offline_commit_rejects_transitional_state_and_live_pid() {
 #[test]
 fn running_box_selects_guest_archive_commit_after_microvm_cutover() {
     use crate::test_helpers::fixtures::make_record;
-    use kbox_core::ExecutionIsolation;
+    use kbox_core::ExecutionBoundary;
 
     let mut box_record = make_record("id", "box", "running", Some(std::process::id()));
-    box_record.isolation = ExecutionIsolation::Microvm;
 
     assert_eq!(
         commit_capture_mode(&box_record).unwrap(),
@@ -398,10 +397,9 @@ fn running_box_selects_guest_archive_commit_after_microvm_cutover() {
 #[test]
 fn paused_box_commit_fails_closed_after_microvm_cutover() {
     use crate::test_helpers::fixtures::make_record;
-    use kbox_core::ExecutionIsolation;
+    use kbox_core::ExecutionBoundary;
 
     let mut box_record = make_record("id", "box", "paused", Some(std::process::id()));
-    box_record.isolation = ExecutionIsolation::Microvm;
 
     let error = commit_capture_mode(&box_record).unwrap_err().to_string();
     assert!(error.contains("paused MicroVM"));
@@ -411,10 +409,9 @@ fn paused_box_commit_fails_closed_after_microvm_cutover() {
 #[test]
 fn paused_microvm_commit_fails_closed() {
     use crate::test_helpers::fixtures::make_record;
-    use kbox_core::ExecutionIsolation;
+    use kbox_core::ExecutionBoundary;
 
     let mut microvm = make_record("id", "vm", "paused", Some(std::process::id()));
-    microvm.isolation = ExecutionIsolation::Microvm;
 
     let error = commit_capture_mode(&microvm).unwrap_err().to_string();
     assert!(error.contains("paused MicroVM"));
@@ -425,14 +422,13 @@ fn paused_microvm_commit_fails_closed() {
 fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
     use crate::test_helpers::fixtures::make_record;
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, OperationId,
+        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, OperationId,
     };
     use kbox_runtime::ManagedExecutionMetadata;
     use std::collections::BTreeMap;
 
     let id = "11111111-1111-4111-8111-111111111111";
     let mut box_record = make_record(id, "box", "stopped", None);
-    box_record.isolation = ExecutionIsolation::Microvm;
     box_record.exec_socket_path = std::path::PathBuf::new();
     box_record.managed_execution = Some(
         ManagedExecutionMetadata::new(
@@ -441,7 +437,6 @@ fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
             CreateExecutionRequest {
                 external_sandbox_id: "external-1".to_string(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Microvm,
                     image: box_record.image.clone(),
                     ..Default::default()
                 },
@@ -463,10 +458,9 @@ fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
 #[test]
 fn running_microvm_selects_guest_archive_commit() {
     use crate::test_helpers::fixtures::make_record;
-    use kbox_core::ExecutionIsolation;
+    use kbox_core::ExecutionBoundary;
 
     let mut microvm = make_record("id", "vm", "running", Some(std::process::id()));
-    microvm.isolation = ExecutionIsolation::Microvm;
 
     assert_eq!(
         commit_capture_mode(&microvm).unwrap(),

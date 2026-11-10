@@ -3,6 +3,7 @@
 use kbox_core::error::{BoxError, Result};
 use serde::{Deserialize, Serialize};
 
+#[cfg(not(windows))]
 use super::client::{read_frame, write_frame};
 
 const ATTACH_STDIN: u8 = 0;

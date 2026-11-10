@@ -40,7 +40,7 @@ impl BoxRuntimeDriver {
         // preparation can materialize a caller view or create a named Volume.
         validate_creation_spec(
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -71,7 +71,7 @@ impl BoxRuntimeDriver {
                 };
                 let creation = creation_request_for(
                     spec,
-                    self.execution_isolation,
+                    self.execution_boundary,
                     self.sev_snp_config(),
                     &self.config.secret_root,
                     &storage,
@@ -101,7 +101,7 @@ impl BoxRuntimeDriver {
                 validate_record_for_spec(
                     &record,
                     spec,
-                    self.execution_isolation,
+                    self.execution_boundary,
                     self.sev_snp_config(),
                     &self.config.secret_root,
                 )?;
@@ -317,7 +317,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -505,7 +505,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -643,7 +643,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &remaining[0],
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -793,7 +793,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             record,
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -843,9 +843,7 @@ impl BoxRuntimeDriver {
         let mut claims = BTreeMap::from([
             (
                 "kbox.execution-isolation".into(),
-                match self.execution_isolation {
-                    kbox_core::ExecutionIsolation::Microvm => "microvm".into(),
-                },
+                "microvm".into(),
             ),
             (
                 "kbox.execution-generation".into(),
@@ -1132,7 +1130,7 @@ mod runtime_state_honesty_tests {
 
     use kbox_contract::contract::{RuntimeUnitClass, RuntimeUnitState};
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, OperationId,
+        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, OperationId,
     };
 
     use super::super::test_support::runtime_spec;
@@ -1148,7 +1146,6 @@ mod runtime_state_honesty_tests {
             CreateExecutionRequest {
                 external_sandbox_id: "ext".into(),
                 config: BoxConfig {
-                    isolation: ExecutionIsolation::Microvm,
                     image: "alpine:latest".into(),
                     ..Default::default()
                 },
@@ -1163,7 +1160,6 @@ mod runtime_state_honesty_tests {
             short_id: BoxRecord::make_short_id(id),
             name: "runtime-state".into(),
             image: "alpine:latest".into(),
-            isolation: ExecutionIsolation::Microvm,
             managed_execution: Some(metadata),
             status: status.into(),
             pid: None,

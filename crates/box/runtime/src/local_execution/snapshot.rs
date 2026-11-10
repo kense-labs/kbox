@@ -4,7 +4,7 @@ use std::path::Path;
 
 use kbox_core::snapshot::SnapshotMetadata;
 #[cfg(target_os = "linux")]
-use kbox_core::ExecutionIsolation;
+use kbox_core::ExecutionBoundary;
 use kbox_core::{
     ExecutionGeneration, ExecutionId, ExecutionLease, ExecutionManagerError,
     ExecutionManagerResult, ExecutionSnapshot, ExecutionSnapshotId, ExecutionState,

@@ -12,7 +12,6 @@ use kbox_runtime::{
     ScaleEndpointConfig, ScaleServiceCatalog,
 };
 
-use super::common::resolve_isolation;
 
 #[derive(Args)]
 pub struct ScaleApiArgs {
@@ -60,11 +59,7 @@ pub async fn execute(args: ScaleApiArgs) -> Result<(), Box<dyn std::error::Error
         .unwrap_or_else(|| kbox_core::dirs_home().join("scale-authority.json"));
     let authority = DurableScaleAuthority::open(state, args.max_instances)?;
     let authority = if let Some(services) = args.services {
-        let catalog = ScaleServiceCatalog::from_kcl_file(
-            &services,
-            "gateway-scale",
-            resolve_isolation(None),
-        )?;
+        let catalog = ScaleServiceCatalog::from_kcl_file(&services, "gateway-scale")?;
         let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
         let advertise_host =

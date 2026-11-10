@@ -4,7 +4,7 @@ use super::*;
 #[cfg(unix)]
 use crate::vmm::VmHandler;
 use kbox_core::vmm::{OwnedCleanupBudget, OwnedCloseBudget};
-use kbox_core::{CreateExecutionRequest, ExecutionIsolation, NetworkMode, OperationId};
+use kbox_core::{CreateExecutionRequest, NetworkMode, OperationId};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Barrier, Mutex as StdMutex};
 use std::time::Instant;
@@ -46,7 +46,6 @@ fn record(home: &Path) -> BoxRecord {
     let mut request = CreateExecutionRequest {
         external_sandbox_id: "owned-jobs-component".into(),
         config: kbox_core::BoxConfig {
-            isolation: ExecutionIsolation::Microvm,
             network: NetworkMode::None,
             image: "alpine:latest".into(),
             ..Default::default()

@@ -204,7 +204,6 @@ mod tests {
             short_id,
             name: name.to_string(),
             image: "alpine:latest".to_string(),
-            isolation: Default::default(),
             managed_execution: None,
             status: status.to_string(),
             pid: None,

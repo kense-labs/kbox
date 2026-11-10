@@ -162,7 +162,6 @@ fn test_completed_managed_start_requires_stopped_state_and_exact_exit_code() {
             status.as_status(),
             None,
         );
-        record.isolation = kbox_core::ExecutionIsolation::Microvm;
         record.managed_execution = Some(
             kbox_runtime::ManagedExecutionMetadata::new(
                 OperationId::new("operation-startup-completion").unwrap(),
@@ -170,7 +169,6 @@ fn test_completed_managed_start_requires_stopped_state_and_exact_exit_code() {
                 CreateExecutionRequest {
                     external_sandbox_id: "startup-completion".to_string(),
                     config: BoxConfig {
-                        isolation: kbox_core::ExecutionIsolation::Microvm,
                         image: record.image.clone(),
                         ..Default::default()
                     },
@@ -266,7 +264,6 @@ fn test_foreground_workload_exit_code_refuses_invented_provider_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(0),
-            kbox_core::ExecutionIsolation::Microvm,
             false,
         ),
         None
@@ -279,7 +276,6 @@ fn test_foreground_workload_exit_code_refuses_invented_provider_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(1),
-            kbox_core::ExecutionIsolation::Microvm,
             false,
         ),
         Some(7)
@@ -293,7 +289,6 @@ fn test_foreground_sandbox_trusts_provider_exit_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(0),
-            kbox_core::ExecutionIsolation::Microvm,
             false,
         ),
         Some(0)
@@ -310,7 +305,6 @@ fn test_foreground_oci_routed_microvm_trusts_provider_exit_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(0),
-            kbox_core::ExecutionIsolation::Microvm,
             true,
         ),
         Some(0)
@@ -319,7 +313,6 @@ fn test_foreground_oci_routed_microvm_trusts_provider_exit_zero() {
         foreground_workload_exit_code(
             temporary.path(),
             Some(17),
-            kbox_core::ExecutionIsolation::Microvm,
             true,
         ),
         Some(17)

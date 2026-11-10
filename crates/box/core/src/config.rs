@@ -2,13 +2,16 @@ use crate::network::NetworkMode;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-/// Execution isolation selected for a box.
+/// The single hardware-backed isolation boundary Box provides.
 ///
-/// MicroVM is the only Box product isolation. Shared-kernel Sandbox is no
-/// longer a Box product surface (OCI Runtime may still expose SharedHostKernel).
+/// This is a boundary *marker*, not a selector. Box never accepts an isolation
+/// mode from a request, and no product code branches on this value to choose a
+/// backend. It exists so contract/qualification fixtures can state the
+/// expected boundary explicitly. Shared-kernel sandboxing is not a Box product
+/// surface (the OCI Runtime has its own independent `IsolationRequest`).
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
-pub enum ExecutionIsolation {
+pub enum ExecutionBoundary {
     /// Hardware-backed MicroVM isolation.
     #[default]
     Microvm,
@@ -326,10 +329,6 @@ pub struct ResourceLimits {
 /// Box configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BoxConfig {
-    /// Execution isolation. MicroVM is the backwards-compatible default.
-    #[serde(default)]
-    pub isolation: ExecutionIsolation,
-
     /// OCI image reference (e.g., "nginx:alpine", "ghcr.io/org/app:latest")
     #[serde(default)]
     pub image: String,
@@ -519,7 +518,6 @@ pub struct BoxConfig {
 impl Default for BoxConfig {
     fn default() -> Self {
         Self {
-            isolation: ExecutionIsolation::default(),
             image: String::new(),
             // Empty path signals the runtime to create a per-box workspace
             // under ~/.kbox/boxes/<box_id>/workspace/ at boot time.

@@ -1,12 +1,10 @@
-use std::path::{Component, Path, PathBuf};
+use std::path::Path;
 use std::time::Instant;
 
 use kbox_contract::contract::{
     ResourceControl, RuntimeCapabilities, RuntimeInspection, RuntimeUnitState,
 };
 use kbox_contract::RuntimeClient;
-use kbox_core::ExecutionIsolation;
-use koci_sdk::WORKLOAD_CGROUP_NAME;
 
 use super::cases::ResourceShape;
 use super::fixture::BoxRuntimeConformanceFixture;
@@ -29,7 +27,6 @@ pub(super) async fn run(
     let ephemeral_supported = capabilities
         .resource_controls
         .contains(&ResourceControl::EphemeralStorage);
-    let execution_isolation = fixture.driver.execution_isolation();
     let mut service = fixture.cases.apply(
         "resources-service",
         kbox_contract::contract::RuntimeUnitClass::Service,
@@ -62,30 +59,23 @@ pub(super) async fn run(
             && config.resource_limits.cpu_period == Some(CPU_PERIOD_US),
         "CPU limits changed before provider launch",
     )?;
-    match execution_isolation {
-        ExecutionIsolation::Microvm => require(
-            config.resources.memory_mb == (MEMORY_BYTES / (1024 * 1024)) as u32
-                && record.memory_mb == config.resources.memory_mb
-                && config.resource_limits.sandbox_memory_limit_bytes.is_none()
-                && config.resource_limits.memory_swap == Some(MEMORY_BYTES as i64),
-            "MicroVM memory sizing changed before provider launch",
-        )?,
-    }
+    require(
+        config.resources.memory_mb == (MEMORY_BYTES / (1024 * 1024)) as u32
+            && record.memory_mb == config.resources.memory_mb
+            && config.resource_limits.sandbox_memory_limit_bytes.is_none()
+            && config.resource_limits.memory_swap == Some(MEMORY_BYTES as i64),
+        "MicroVM memory sizing changed before provider launch",
+    )?;
     require(
         config.resource_limits.pids_limit == Some(u64::from(PIDS)),
         "PID limit changed before provider launch",
     )?;
     if ephemeral_supported {
         require(
-            execution_isolation == ExecutionIsolation::Microvm
-                && config.resources.ephemeral_storage_bytes == Some(EPHEMERAL_STORAGE_BYTES),
+            config.resources.ephemeral_storage_bytes == Some(EPHEMERAL_STORAGE_BYTES),
             "ephemeral storage quota did not reach the MicroVM provider",
         )?;
     }
-
-    let sandbox_management = match execution_isolation {
-        ExecutionIsolation::Microvm => None,
-    };
 
     if ephemeral_supported {
         let quota = client
@@ -137,19 +127,13 @@ pub(super) async fn run(
     let visible_memory_max = visible_lines.next();
     let visible_pids_max = visible_lines.next();
     let expected_cpu_max = format!("{CPU_QUOTA_US} {CPU_PERIOD_US}");
-    let expected_memory_max = match execution_isolation {
-        ExecutionIsolation::Microvm => "max".into(),
-    };
+    let expected_memory_max = "max".to_string();
     let expected_pids_max = PIDS.to_string();
     require(
-        match execution_isolation {
-            ExecutionIsolation::Microvm => workload_namespace_path
-                .strip_prefix("/box-")
-                .is_some_and(|suffix| !suffix.is_empty() && !suffix.contains('/')),
-        },
-        format!(
-            "workload joined an unexpected {execution_isolation:?} cgroup path: {workload_namespace_path:?}"
-        ),
+        workload_namespace_path
+            .strip_prefix("/box-")
+            .is_some_and(|suffix| !suffix.is_empty() && !suffix.contains('/')),
+        format!("workload joined an unexpected cgroup path: {workload_namespace_path:?}"),
     )?;
     require(
         visible_cpu_max == Some(expected_cpu_max.as_str())
@@ -160,18 +144,6 @@ pub(super) async fn run(
             visible.stdout
         ),
     )?;
-    if let Some(management_cgroup) = sandbox_management.as_deref() {
-        let workload_cgroup = descendant_cgroup_path(management_cgroup, workload_namespace_path)?;
-        let expected_workload_cgroup = management_cgroup.join(WORKLOAD_CGROUP_NAME);
-        require(
-            workload_cgroup == expected_workload_cgroup && workload_cgroup.is_dir(),
-            format!(
-                "workload cgroup is not the runtime-owned workload leaf: {}",
-                workload_cgroup.display()
-            ),
-        )?;
-    }
-
     let throttled_before = guest_counter(
         fixture,
         client,
@@ -249,9 +221,6 @@ pub(super) async fn run(
         "PID-heavy workload did not hit the configured pids.max",
     )?;
 
-    let oom_before = match execution_isolation {
-        ExecutionIsolation::Microvm => None,
-    };
     let memory = client
         .exec(&fixture.cases.exec(
             "resources-memory-behavior",
@@ -265,26 +234,10 @@ pub(super) async fn run(
             15_000,
         ))
         .await?;
-    if let Some(oom_before) = oom_before {
-        let oom_after = guest_counter(
-            fixture,
-            client,
-            &service.spec,
-            "resources-memory-after",
-            "memory.events",
-            "oom_kill",
-        )
-        .await?;
-        require(
-            oom_after > oom_before && memory.exit_code != 0,
-            "memory-heavy Sandbox workload was not killed by the exact memory limit",
-        )?;
-    } else {
-        require(
-            memory.exit_code != 0,
-            "memory-heavy MicroVM workload escaped the configured VM memory boundary",
-        )?;
-    }
+    require(
+        memory.exit_code != 0,
+        "memory-heavy MicroVM workload escaped the configured VM memory boundary",
+    )?;
     let RuntimeInspection::Found { observation, .. } =
         client.inspect(&service.spec.unit_id).await?
     else {
@@ -390,23 +343,3 @@ async fn guest_counter(
     })
 }
 
-fn descendant_cgroup_path(sandbox_cgroup: &Path, namespace_path: &str) -> Result<PathBuf> {
-    let namespace_path = Path::new(namespace_path);
-    require(
-        namespace_path.is_absolute(),
-        format!("workload cgroup path is not absolute: {namespace_path:?}"),
-    )?;
-    let mut relative = PathBuf::new();
-    for component in namespace_path.components() {
-        match component {
-            Component::RootDir => {}
-            Component::Normal(value) => relative.push(value),
-            _ => {
-                return Err(super::protocol(format!(
-                    "workload cgroup path contains an unsafe component: {namespace_path:?}"
-                )))
-            }
-        }
-    }
-    Ok(sandbox_cgroup.join(relative))
-}

@@ -738,15 +738,15 @@ mod isolation_cli_tests {
     }
 
     #[test]
-    fn run_omission_preserves_microvm_default() {
+    fn run_has_no_isolation_selector_and_resolves_to_microvm() {
         let cli = Cli::try_parse_from(["kbox", "run", "alpine:latest"]).unwrap();
-
-        let Command::Run(args) = cli.command else {
-            panic!("expected run command");
-        };
+        assert!(matches!(cli.command, Command::Run(_)));
+        // There is no selector to preserve: resolution is a constant.
+        let plan = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
+        assert_eq!(plan.backend, kbox_core::ExecutionBackend::Kbox);
         assert_eq!(
-            common::execution_isolation(&args.common),
-            kbox_core::ExecutionIsolation::Microvm
+            plan.isolation_class,
+            kbox_core::execution::IsolationClass::HardwareVm
         );
     }
 

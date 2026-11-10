@@ -46,7 +46,6 @@ mod tests {
             short_id,
             name: name.to_string(),
             image: "alpine:latest".to_string(),
-            isolation: Default::default(),
             managed_execution: None,
             status: "created".to_string(),
             pid: None,

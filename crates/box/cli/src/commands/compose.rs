@@ -345,7 +345,6 @@ async fn execute_up(
     compose_path: PathBuf,
     up_args: ComposeUpArgs,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    let isolation = common::resolve_isolation(None);
     let config = operations::select_up_config(config, &up_args.services)?;
     let base_dir = compose_path
         .parent()
@@ -446,7 +445,6 @@ async fn execute_up(
             format!("Service '{svc_name}' disappeared from the resolved Compose project")
         })?;
         let mut desired_box_config = project.build_box_config(svc_name, Some(&default_net))?;
-        desired_box_config.isolation = isolation;
         // Hash the effective host paths so a Compose file is independent of
         // the caller's current working directory and stale generations are
         // recreated after this normalization is introduced. Named-volume and
@@ -560,7 +558,6 @@ async fn execute_up(
         let record_hostname = box_config.hostname.clone();
         let record_add_hosts = box_config.add_hosts.clone();
         let network_mode = box_config.network.clone();
-        let record_isolation = box_config.isolation;
         let network_name = match &network_mode {
             kbox_core::NetworkMode::Bridge { network } => Some(network.clone()),
             _ => None,
@@ -762,7 +759,6 @@ async fn execute_up(
             short_id: BoxRecord::make_short_id(&box_id),
             name: box_name,
             image,
-            isolation: record_isolation,
             managed_execution: None,
             status: "running".to_string(),
             pid,

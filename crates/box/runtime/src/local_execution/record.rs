@@ -48,7 +48,6 @@ pub(crate) fn build_managed_record(
             .clone()
             .unwrap_or_else(|| format!("managed-{short_id}")),
         image: config.image.clone(),
-        isolation: config.isolation,
         managed_execution: Some(metadata),
         status: ManagedExecutionState::Created.as_status().to_string(),
         pid: None,
@@ -111,18 +110,13 @@ fn validate_execution_config(config: &kbox_core::BoxConfig) -> ExecutionManagerR
         kbox_core::resolve_execution(config)
             .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
     }
-    if config.isolation == kbox_core::ExecutionIsolation::Microvm {
-        kbox_core::config::validate_vcpu_count(config.resources.vcpus)
-            .map_err(ExecutionManagerError::InvalidRequest)?;
-    }
+    kbox_core::config::validate_vcpu_count(config.resources.vcpus)
+        .map_err(ExecutionManagerError::InvalidRequest)?;
 
-    #[cfg(windows)]
-    if config.isolation == kbox_core::ExecutionIsolation::Microvm {
-        return Err(ExecutionManagerError::InvalidRequest(
-            "Sandbox isolation is supported only on Linux; use MicroVM isolation on Windows"
-                .to_string(),
-        ));
-    }
+    // Box has exactly one isolation boundary. Windows WHPX capability is
+    // admitted by host_check's launch probe, not by an isolation selector.
+    // Features the Windows backend cannot enforce (TEE, bridge, health
+    // checks) are rejected explicitly below, before any state is created.
 
     #[cfg(windows)]
     if !matches!(config.tee, kbox_core::config::TeeConfig::None) {

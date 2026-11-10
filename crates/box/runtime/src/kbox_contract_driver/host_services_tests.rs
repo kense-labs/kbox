@@ -168,7 +168,7 @@ async fn admitted_host_binding_is_persisted_detects_drift_and_can_retire_after_r
     assert!(validate_record_for_spec(
         &tampered,
         &spec,
-        driver.execution_isolation,
+        driver.execution_boundary,
         None,
         &driver.config.secret_root
     )

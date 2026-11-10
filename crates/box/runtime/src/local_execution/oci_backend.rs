@@ -11,7 +11,7 @@ use chrono::Utc;
 use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionCpuStats,
     ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
-    ExecutionId, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
+    ExecutionId, ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult,
     ExecutionMemoryStats, ExecutionProcess, ExecutionProcessInfo, ExecutionProcessInventory,
     ExecutionResourceUpdate, ExecutionRuntimeEvent, ExecutionState, ExecutionStats,
     FileOp as BoxFileOp, FileRequest as BoxFileRequest, FileResponse as BoxFileResponse,
@@ -620,7 +620,7 @@ impl OciLifecycleAdapter {
     /// the requested isolation and the exact lifecycle surface is advertised.
     pub async fn require_isolation(
         &self,
-        isolation: ExecutionIsolation,
+        isolation: ExecutionBoundary,
     ) -> ExecutionManagerResult<RuntimeInfo> {
         let info = self
             .client
@@ -843,7 +843,7 @@ impl OciLifecycleAdapter {
         execution_generation: ExecutionGeneration,
         operation_seed: &BoxOperationId,
         created: &ContainerRecord,
-        isolation: ExecutionIsolation,
+        isolation: ExecutionBoundary,
     ) -> ExecutionManagerResult<OciRuntimeLaunch> {
         let id = runtime_container_id(execution_id)?;
         let required = oci_isolation_request(isolation).class();
@@ -1558,7 +1558,7 @@ impl OciLocalExecutionBackend {
     ) -> ExecutionManagerResult<OciBundlePreparationContext> {
         let execution_id = self.execution_id(record)?;
         let metadata = self.metadata(record)?;
-        let isolation = oci_isolation_request(record.isolation);
+        let isolation = oci_isolation_request(ExecutionBoundary::Microvm);
         let runtime_container_id = runtime_container_id(&execution_id)?;
         let create_context = create_operation_context(
             metadata.operation_id.as_str(),
@@ -1611,12 +1611,14 @@ impl OciLocalExecutionBackend {
         let Some(runtime) = self.adapter.state_current(&execution_id).await? else {
             return Ok(None);
         };
-        let info = self.adapter.require_isolation(record.isolation).await?;
+        let info = self.adapter
+            .require_isolation(ExecutionBoundary::Microvm)
+            .await?;
         validate_recovered_record(
             &info,
             &runtime,
             &runtime_container_id(&execution_id)?,
-            oci_isolation_request(record.isolation).class(),
+            oci_isolation_request(ExecutionBoundary::Microvm).class(),
         )?;
         let binding = OciRuntimeBinding::from_record(
             self.adapter.endpoint.clone(),
@@ -1752,11 +1754,11 @@ fn chain_prepare_cleanup_and_resource_rollback(
 
 #[async_trait]
 impl LocalExecutionBackend for OciLocalExecutionBackend {
-    async fn preflight_isolation(
-        &self,
-        isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
-        self.adapter.require_isolation(isolation).await.map(|_| ())
+    async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
+        self.adapter
+            .require_isolation(ExecutionBoundary::Microvm)
+            .await
+            .map(|_| ())
     }
 
     fn route_for_create(
@@ -1773,7 +1775,9 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                 "Host service sockets are not supported by the OCI backend".into(),
             ));
         }
-        let info = self.adapter.require_isolation(record.isolation).await?;
+        let info = self.adapter
+            .require_isolation(ExecutionBoundary::Microvm)
+            .await?;
         let context = self.preparation_context(record, &info)?;
         self.provider.preflight(record, &context)
     }
@@ -1821,7 +1825,9 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
             });
         }
 
-        let info = self.adapter.require_isolation(record.isolation).await?;
+        let info = self.adapter
+            .require_isolation(ExecutionBoundary::Microvm)
+            .await?;
         let preparation = self.preparation_context(record, &info)?;
         self.provider.preflight(record, &preparation)?;
         let resource_home = managed_resource_home(record)?;
@@ -1952,7 +1958,10 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
             self.provider
                 .ensure_log_projection(record, &binding)
                 .await?;
-            let info = self.adapter.require_isolation(record.isolation).await?;
+            let info = self
+                .adapter
+                .require_isolation(ExecutionBoundary::Microvm)
+                .await?;
             let launch = self
                 .adapter
                 .start_existing(
@@ -1961,7 +1970,7 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                     metadata.generation,
                     &metadata.operation_id,
                     &runtime,
-                    record.isolation,
+                    ExecutionBoundary::Microvm,
                 )
                 .await?;
             runtime = launch.record;
@@ -2339,12 +2348,14 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
     }
 }
 
-/// Map product isolation to an OCI isolation requirement without selecting a driver.
+/// Map Box's single execution boundary to the OCI Runtime requirement.
+///
+/// Box has no isolation selector: every request requires a dedicated VM. The
+/// boundary argument is retained so contract fixtures can state the expected
+/// boundary explicitly, but it never selects a backend.
 #[must_use]
-pub const fn oci_isolation_request(isolation: ExecutionIsolation) -> IsolationRequest {
-    match isolation {
-        ExecutionIsolation::Microvm => IsolationRequest::DedicatedVm,
-    }
+pub const fn oci_isolation_request(_boundary: ExecutionBoundary) -> IsolationRequest {
+    IsolationRequest::DedicatedVm
 }
 
 fn runtime_container_id(execution_id: &ExecutionId) -> ExecutionManagerResult<ContainerId> {

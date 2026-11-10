@@ -249,7 +249,7 @@ mod tests {
     use chrono::Utc;
     use kbox_core::{
         scale::{ScaleDirection, ScaleOperationResponse, SCALE_OPERATION_SCHEMA_VERSION},
-        ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
+        ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
         KillOutcome,
     };
 
@@ -398,16 +398,6 @@ mod tests {
         }
     }
 
-    fn facade_isolation() -> ExecutionIsolation {
-        // RecordingBackend never launches a guest; isolation only has to pass
-        // host config validation so the HTTP facade can exercise reconcile.
-        if cfg!(windows) {
-            ExecutionIsolation::Microvm
-        } else {
-            ExecutionIsolation::Microvm
-        }
-    }
-
     fn reconciled_state(
         authority_path: &std::path::Path,
         box_state_path: &std::path::Path,
@@ -419,7 +409,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             r#"service "api" { image = "api:v1" }"#,
             "gateway-scale",
-            facade_isolation(),
         )
         .unwrap();
         ScaleApiState::with_reconciler(authority, LocalScaleReconciler::new(manager, catalog))

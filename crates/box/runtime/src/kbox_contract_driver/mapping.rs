@@ -13,7 +13,7 @@ use kbox_core::log::LogConfig;
 use kbox_core::secret::{SecretEnvironmentBinding, SECRET_ENVIRONMENT_MANIFEST, SECRET_GUEST_ROOT};
 use kbox_core::tee::RUNTIME_ATTESTATION_BINDING_ENV;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionIsolation, ExecutionRecordPolicy,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionRecordPolicy,
     ExecutionRestartPolicy, NetworkMode, ResourceConfig, ResourceLimits,
 };
 use url::Position;
@@ -60,7 +60,7 @@ pub(super) fn attach_host_services(
 
 pub(super) fn creation_request_for(
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<&BoxRuntimeSevSnpConfig>,
     secret_root: &Path,
     storage: &RuntimeStoragePlan,
@@ -69,7 +69,7 @@ pub(super) fn creation_request_for(
     spec.validate().map_err(RuntimeError::InvalidRequest)?;
     storage.validate_for(spec)?;
     validate_provider_unit_id(&spec.unit_id)?;
-    validate_supported_shape(spec, execution_isolation, sev_snp)?;
+    validate_supported_shape(spec, execution_boundary, sev_snp)?;
     let spec_digest = spec.digest().map_err(RuntimeError::InvalidRequest)?;
     let memory_mb = spec.resources.memory_bytes.div_ceil(BYTES_PER_MIB);
     let memory_mb = u32::try_from(memory_mb).map_err(|_| {
@@ -138,7 +138,6 @@ pub(super) fn creation_request_for(
     };
     let config = BoxConfig {
         image: image_reference(&spec.artifact)?,
-        isolation: execution_isolation,
         tee,
         resources: ResourceConfig {
             vcpus,
@@ -152,7 +151,7 @@ pub(super) fn creation_request_for(
         workdir: spec.process.working_directory.clone(),
         volumes,
         extra_env,
-        network: compile_network_mode(&spec.network.mode, execution_isolation)?,
+        network: compile_network_mode(&spec.network.mode, execution_boundary)?,
         // WI5 egress allowlist: DNS names the netproxy's mediation gate
         // resolves into dynamic /32 allow rules.
         egress_allowed_names: spec.network.egress_allowlist.clone().unwrap_or_default(),
@@ -206,12 +205,12 @@ pub(super) fn creation_request_for(
 #[cfg(test)]
 pub(super) fn creation_request(
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
 ) -> RuntimeResult<CreateExecutionRequest> {
     let storage = RuntimeStoragePlan::empty(spec)?;
     creation_request_for(
         spec,
-        execution_isolation,
+        execution_boundary,
         None,
         Path::new("/run/kbox/runtime-secrets"),
         &storage,
@@ -222,13 +221,13 @@ pub(super) fn creation_request(
 #[cfg(test)]
 pub(super) fn creation_request_with_sev_snp(
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: &BoxRuntimeSevSnpConfig,
 ) -> RuntimeResult<CreateExecutionRequest> {
     let storage = RuntimeStoragePlan::empty(spec)?;
     creation_request_for(
         spec,
-        execution_isolation,
+        execution_boundary,
         Some(sev_snp),
         Path::new("/run/kbox/runtime-secrets"),
         &storage,
@@ -241,14 +240,14 @@ pub(super) fn creation_request_with_sev_snp(
 /// plan only after this side-effect-free pass succeeds.
 pub(super) fn validate_creation_spec(
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<&BoxRuntimeSevSnpConfig>,
     secret_root: &Path,
 ) -> RuntimeResult<()> {
     let storage = RuntimeStoragePlan::empty(spec)?;
     creation_request_for(
         spec,
-        execution_isolation,
+        execution_boundary,
         sev_snp,
         secret_root,
         &storage,
@@ -267,7 +266,7 @@ pub(super) fn operation(spec: &RuntimeUnitSpec) -> RuntimeResult<kbox_core::Oper
 
 fn validate_supported_shape(
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<&BoxRuntimeSevSnpConfig>,
 ) -> RuntimeResult<()> {
     if spec
@@ -291,7 +290,7 @@ fn validate_supported_shape(
     let isolation_supported = match spec.isolation {
         kbox_contract::contract::IsolationLevel::Sandbox => true,
         kbox_contract::contract::IsolationLevel::Confidential => {
-            execution_isolation == ExecutionIsolation::Microvm && sev_snp.is_some()
+            execution_boundary == ExecutionBoundary::Microvm && sev_snp.is_some()
         }
         _ => false,
     };
@@ -301,14 +300,14 @@ fn validate_supported_shape(
             spec.isolation
         )]));
     }
-    compile_network_mode(&spec.network.mode, execution_isolation)?;
+    compile_network_mode(&spec.network.mode, execution_boundary)?;
     if let Some(bytes) = spec.resources.ephemeral_storage_bytes {
         if bytes == 0 {
             return Err(RuntimeError::InvalidRequest(
                 "Runtime ephemeral storage limit must be greater than zero".into(),
             ));
         }
-        if execution_isolation != ExecutionIsolation::Microvm
+        if execution_boundary != ExecutionBoundary::Microvm
             || !crate::rootfs::writable_layer_quota_supported()
         {
             return Err(RuntimeError::UnsupportedCapabilities(vec![
@@ -327,7 +326,7 @@ fn validate_supported_shape(
 
 fn compile_network_mode(
     mode: &RuntimeNetworkMode,
-    execution_isolation: ExecutionIsolation,
+    _execution_boundary: ExecutionBoundary,
 ) -> RuntimeResult<NetworkMode> {
     match mode {
         // Runtime Service reachability is provided by the generation-fenced
@@ -335,9 +334,7 @@ fn compile_network_mode(
         // loopback connection to the host instead of the local workload.
         RuntimeNetworkMode::None | RuntimeNetworkMode::Service => Ok(NetworkMode::None),
         // Outbound egress: MicroVM → libkrun TSI socket-proxy.
-        RuntimeNetworkMode::Outbound => match execution_isolation {
-            ExecutionIsolation::Microvm => Ok(NetworkMode::Tsi),
-        },
+        RuntimeNetworkMode::Outbound => Ok(NetworkMode::Tsi),
     }
 }
 

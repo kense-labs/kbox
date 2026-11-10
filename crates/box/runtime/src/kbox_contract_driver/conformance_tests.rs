@@ -28,7 +28,7 @@ use kbox_contract::{
     required_runtime_profiles, verify_runtime_profiles, RuntimeClient, RuntimeConformanceProfile,
     RuntimeError, RuntimeResult,
 };
-use kbox_core::{config::SevSnpGeneration, ExecutionIsolation};
+use kbox_core::{config::SevSnpGeneration, ExecutionBoundary};
 
 use self::fixture::BoxRuntimeConformanceFixture;
 use super::BoxRuntimeSevSnpConfig;
@@ -81,7 +81,7 @@ fn box_runtime_passes_all_advertised_profiles() {
                 .build()
                 .expect("R17 Tokio runtime must start");
             runtime.block_on(run_all_advertised_profiles(
-                ExecutionIsolation::Microvm,
+                ExecutionBoundary::Microvm,
                 None,
             ));
         })
@@ -90,16 +90,16 @@ fn box_runtime_passes_all_advertised_profiles() {
 }
 
 async fn run_all_advertised_profiles(
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<BoxRuntimeSevSnpConfig>,
 ) {
     let attestation_expected = sev_snp.is_some();
     let fixture = match sev_snp {
         Some(config) => BoxRuntimeConformanceFixture::from_environment_with_sev_snp(
-            execution_isolation,
+            execution_boundary,
             Some(config),
         ),
-        None => BoxRuntimeConformanceFixture::from_environment(execution_isolation),
+        None => BoxRuntimeConformanceFixture::from_environment(execution_boundary),
     }
     .expect("R17 Box conformance preflight must pass");
     let client = fixture.primary_client();
@@ -164,7 +164,7 @@ fn box_runtime_microvm_passes_all_advertised_profiles() {
                 .build()
                 .expect("R17 MicroVM Tokio runtime must start");
             runtime.block_on(run_all_advertised_profiles(
-                ExecutionIsolation::Microvm,
+                ExecutionBoundary::Microvm,
                 None,
             ));
         })
@@ -210,7 +210,7 @@ fn run_confidential_profiles(thread_name: &str, config: BoxRuntimeSevSnpConfig) 
                 .build()
                 .expect("R17 SEV-SNP Tokio runtime must start");
             runtime.block_on(run_all_advertised_profiles(
-                ExecutionIsolation::Microvm,
+                ExecutionBoundary::Microvm,
                 Some(config),
             ));
         })

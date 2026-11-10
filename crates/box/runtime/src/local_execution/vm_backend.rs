@@ -163,12 +163,6 @@ impl VmLocalExecutionBackend {
                 record.id, resolved_route, expected_route
             )));
         }
-        if record.isolation != metadata.request.config.isolation {
-            return Err(ExecutionManagerError::Internal(format!(
-                "managed execution {} has inconsistent isolation metadata",
-                record.id
-            )));
-        }
         Ok(metadata)
     }
 
@@ -292,8 +286,8 @@ impl VmLocalExecutionBackend {
                 "runtime returned no host PID for {execution_id}"
             ))
         })?;
-        let has_record_binding = record.isolation == kbox_core::ExecutionIsolation::Microvm
-            && (record.pid.is_some() || record.pid_start_time.is_some());
+        let has_record_binding =
+            record.pid.is_some() || record.pid_start_time.is_some();
         let pid_start_time = if has_record_binding {
             self.metadata(record)?;
             let (_, original_start_time) = require_attached_record_identity(
@@ -844,13 +838,13 @@ impl VmLocalExecutionBackend {
     }
 }
 
-fn admit_launch(isolation: kbox_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
-    crate::host_check::admit_requested_isolation(isolation)
+fn admit_launch() -> ExecutionManagerResult<()> {
+    crate::host_check::admit_microvm_launch()
         .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))
 }
 
-fn admit_create(isolation: kbox_core::ExecutionIsolation) -> ExecutionManagerResult<()> {
-    crate::host_check::admit_isolation_class(isolation)
+fn admit_create() -> ExecutionManagerResult<()> {
+    crate::host_check::admit_microvm_host_class()
         .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))
 }
 
@@ -965,22 +959,17 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         Ok(LocalExecutionResourcePlan::default())
     }
 
-    async fn preflight_isolation(
-        &self,
-        isolation: kbox_core::ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
+    async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
         // CLI and explicit readiness probes open the hypervisor.
-        admit_launch(isolation)
+        admit_launch()
     }
 
     async fn preflight(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {
         self.require_legacy_lineage(&record.id)?;
         if let Some(metadata) = record.managed_execution.as_ref() {
             #[cfg(not(any(target_os = "linux", target_os = "windows")))]
-            if record.isolation == kbox_core::ExecutionIsolation::Microvm {
-                VmManager::validate_virtiofs_mount_support(&metadata.request.config)
-                    .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
-            }
+            VmManager::validate_virtiofs_mount_support(&metadata.request.config)
+                .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
             if !metadata.request.config.host_services.is_empty() {
                 kbox_core::resolve_execution(&metadata.request.config)
                     .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
@@ -996,12 +985,12 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         }
         // Durable create only checks the host class so stub CI and metadata
         // tests can reserve without kvm-group access. `start` still opens it.
-        admit_create(record.isolation)
+        admit_create()
     }
 
     async fn start(&self, record: &BoxRecord) -> ExecutionManagerResult<LocalExecutionHandle> {
         self.require_legacy_lineage(&record.id)?;
-        admit_launch(record.isolation)?;
+        admit_launch()?;
         super::record::validate_record_health(record)?;
         self.metadata(record)?;
         let box_dir = record.box_dir.clone();

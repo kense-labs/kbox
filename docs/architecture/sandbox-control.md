@@ -49,7 +49,8 @@ Observer 是外部依赖。
 实现位于独立仓库 [ksandbox](https://github.com/kense-labs/ksandbox)。
 
 kbox Box 管理镜像化执行环境。
-产品隔离只有独立内核 MicroVM（`ExecutionIsolation::Microvm` → OCI `DedicatedVm`）。
+产品只有一个硬件隔离边界：独立内核 MicroVM（`ExecutionBoundary::Microvm` → OCI `DedicatedVm`）。
+`ExecutionBoundary` 是单值边界标记，不是隔离模式选择；Box 的请求模型不接受、不持久化，也不路由任何隔离 selector。
 共享宿主内核不是 Box 产品路径。
 
 | 对比项 | 进程命令沙箱（ksandbox） | kbox Box MicroVM |
@@ -105,9 +106,9 @@ Box 管理镜像根文件系统（rootfs）与执行环境。
 同一环境支持在生命周期内执行代码子进程。
 
 kbox Box 的代码隔离只走独立内核 MicroVM。
-隔离选择为 `ExecutionIsolation::Microvm`。
-OCI 适配器把该选择映射为 `DedicatedVm`。
-共享宿主内核路线（历史上的 `ExecutionIsolation::Sandbox` / `SharedHostKernel`）不再作为 Box 产品路径。
+执行边界固定为 `ExecutionBoundary::Microvm`。
+OCI 适配器把该边界映射为 `DedicatedVm`。
+共享宿主内核不是 Box 产品路径；历史 `isolation` selector 在 `boxes.json` 反序列化入口被明确拒绝，不静默降级为 MicroVM。OCI Runtime 自身保留独立的 `IsolationRequest` 分层，与 Box 产品边界无关。
 
 创建环境、启动初始进程和后续执行分别使用对应接口。
 终止与删除沿用已选定的后端和执行代次。
@@ -116,7 +117,7 @@ OCI 适配器把该选择映射为 `DedicatedVm`。
 持久卷按资源所有权规则保留或移除。
 内核边界、平台驱动与剩余风险见第 2.4 节。
 
-来源：[隔离选择](../../crates/box/core/src/config.rs)、
+来源：[执行边界](../../crates/box/core/src/config.rs)、
 [执行计划](../../crates/box/core/src/execution.rs)、
 [OCI 映射](../../crates/box/runtime/src/local_execution/oci_backend.rs)、
 [生命周期接口](../../crates/box/core/src/traits/execution.rs)。
@@ -128,8 +129,8 @@ MicroVM 启动独立客体内核与客体用户空间。
 虚拟机监控器（Hypervisor）与虚拟设备隔离宿主和客体。
 客体进程在客体系统内执行。
 
-Box 产品路径固定为 `ExecutionIsolation::Microvm`。
-OCI 适配器把隔离选择映射为 `DedicatedVm`。
+Box 产品边界固定为 `ExecutionBoundary::Microvm`。
+OCI 适配器把该边界映射为 `DedicatedVm`。
 驱动分别使用 3 个平台的虚拟化接口。
 
 | 平台 | 接口 |
@@ -184,7 +185,7 @@ Sentry 观测不能代替执行入口所需的隔离。
 
 来源：[命令沙箱（ksandbox）](https://github.com/kense-labs/ksandbox)、
 [Box 路由](../../crates/box/runtime/src/local_execution/router.rs)、
-[隔离选择](../../crates/box/core/src/config.rs)。
+[执行边界](../../crates/box/core/src/config.rs)。
 
 ## 3. 观测信号
 

@@ -81,7 +81,6 @@ fn host_services_reject_reserved_and_duplicate_ports_and_paths() {
 fn host_services_cannot_be_silently_dropped_by_snapshot_boot() {
     let config = crate::BoxConfig {
         host_services: vec![binding(61000, "/private/tmp/approved/gateway.sock")],
-        isolation: crate::ExecutionIsolation::Microvm,
         restore_from: Some("snapshot".into()),
         ..Default::default()
     };

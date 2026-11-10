@@ -5,7 +5,7 @@ use kbox_contract::contract::{RuntimeInspection, RuntimeUnitState};
 use kbox_contract::{
     RuntimeClient, RuntimeDriver, RuntimeError, RuntimeRequestState, RuntimeStateStore,
 };
-use kbox_core::{ExecutionIsolation, ExecutionManager, OperationId};
+use kbox_core::{ExecutionManager, OperationId};
 
 use crate::{BoxRecord, ManagedExecutionState};
 
@@ -46,7 +46,7 @@ async fn partial_creation_replays_same_provider_identity(
         .driver
         .manager
         .create(
-            creation_request(&request.spec, fixture.driver.execution_isolation())?,
+            creation_request(&request.spec, fixture.driver.execution_boundary())?,
             &operation(&request.spec)?,
         )
         .await
@@ -353,7 +353,7 @@ async fn duplicate_resource_detection(
         .driver
         .manager
         .create(
-            creation_request(&request.spec, fixture.driver.execution_isolation())?,
+            creation_request(&request.spec, fixture.driver.execution_boundary())?,
             &injection_operation,
         )
         .await
@@ -401,20 +401,9 @@ async fn delete_external_resource(
     fixture: &BoxRuntimeConformanceFixture,
     record: &BoxRecord,
 ) -> Result<()> {
-    match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Microvm => {
-            let home = fixture.home_dir.clone();
-            let box_dir = record.box_dir.clone();
-            let cleanup_id = record.id.clone();
-            tokio::task::spawn_blocking(move || {
-                crate::vm::reap::cleanup_recorded_sandbox_runtime_in(&home, &box_dir, &cleanup_id)
-            })
-            .await
-            .map_err(|error| super::external("join external Sandbox deletion", error))?
-            .map_err(|error| super::external("delete external Sandbox resource", error))
-        }
-        ExecutionIsolation::Microvm => delete_external_microvm(record).await,
-    }
+    // The only Box boundary is a MicroVM: external-loss cleanup always reaps
+    // the guest shim, never a shared-kernel sandbox runtime.
+    delete_external_microvm(record).await
 }
 
 #[cfg(target_os = "linux")]

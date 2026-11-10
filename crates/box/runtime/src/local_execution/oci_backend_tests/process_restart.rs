@@ -43,16 +43,6 @@ const FILESYSTEM_CHILD_TEST_NAME: &str = concat!(
     "retained_backend_recovers_filesystem_session_after_runtime_owner_process_restart"
 );
 
-fn fixture_isolation() -> ExecutionIsolation {
-    // Product policy rejects Sandbox on Windows; the durable fixture owner still
-    // models retained backend recovery for either isolation class.
-    if cfg!(windows) {
-        ExecutionIsolation::Microvm
-    } else {
-        ExecutionIsolation::Microvm
-    }
-}
-
 #[async_trait]
 impl OciRuntimeService for DurableFixtureService {
     async fn features(&self) -> OciResult<RuntimeInfo> {
@@ -1249,7 +1239,7 @@ async fn retained_backend_recovers_after_runtime_owner_process_restart() {
     let operation = box_operation("runtime-owner-process-restart-operation");
     let running = manager
         .create_and_start(
-            request("runtime-owner-process-restart", fixture_isolation()),
+            request("runtime-owner-process-restart"),
             &operation,
         )
         .await
@@ -1420,7 +1410,7 @@ async fn retained_backend_recovers_filesystem_session_after_runtime_owner_proces
     let operation = box_operation("runtime-owner-filesystem-restart-operation");
     let running = manager
         .create_and_start(
-            request("runtime-owner-filesystem-restart", fixture_isolation()),
+            request("runtime-owner-filesystem-restart"),
             &operation,
         )
         .await
@@ -1709,7 +1699,7 @@ async fn retained_backend_preserves_pause_state_across_runtime_owner_process_res
     let operation = box_operation("runtime-owner-pause-restart-operation");
     let running = manager
         .create_and_start(
-            request("runtime-owner-pause-restart", fixture_isolation()),
+            request("runtime-owner-pause-restart"),
             &operation,
         )
         .await

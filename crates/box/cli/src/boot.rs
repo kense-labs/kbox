@@ -373,7 +373,6 @@ pub(crate) fn config_from_record(record: &BoxRecord) -> Result<BoxConfig, String
         .unwrap_or_else(|| ResourceConfig::default().disk_mb);
 
     Ok(BoxConfig {
-        isolation: record.isolation,
         image: record.image.clone(),
         resources: ResourceConfig {
             vcpus: record.cpus,
@@ -425,7 +424,6 @@ mod tests {
             short_id,
             name: "test_box".to_string(),
             image: "alpine:latest".to_string(),
-            isolation: Default::default(),
             managed_execution: None,
             status: "stopped".to_string(),
             pid: None,
@@ -543,14 +541,12 @@ mod tests {
     }
 
     #[test]
-    fn test_config_from_record_preserves_sandbox_isolation() {
+    fn test_config_from_record_resolves_to_microvm_backend() {
         let mut record = sample_record();
-        record.isolation = kbox_core::ExecutionIsolation::Microvm;
         record.port_map.clear();
 
         let config = config_from_record(&record).unwrap();
 
-        assert_eq!(config.isolation, kbox_core::ExecutionIsolation::Microvm);
         assert_eq!(
             kbox_core::resolve_execution(&config).unwrap().backend,
             kbox_core::ExecutionBackend::Kbox

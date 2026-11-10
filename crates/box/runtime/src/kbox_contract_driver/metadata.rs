@@ -6,7 +6,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use kbox_contract::contract::{RuntimeObservation, RuntimeUnitSpec, RuntimeUnitState};
 use kbox_contract::{RuntimeError, RuntimeResult};
-use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionIsolation, OperationId};
+use kbox_core::{ExecutionBoundary, ExecutionGeneration, ExecutionId, OperationId};
 use sha2::{Digest, Sha256};
 
 use crate::{BoxRecord, ManagedExecutionState};
@@ -87,7 +87,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -158,7 +158,7 @@ fn has_runtime_ownership_marker(record: &BoxRecord) -> bool {
 pub(super) fn validate_record_for_spec(
     record: &BoxRecord,
     spec: &RuntimeUnitSpec,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     sev_snp: Option<&BoxRuntimeSevSnpConfig>,
     secret_root: &Path,
 ) -> RuntimeResult<()> {
@@ -176,7 +176,7 @@ pub(super) fn validate_record_for_spec(
     // restored successor validates exactly as it was created.
     let mut expected_request = creation_request_for(
         spec,
-        execution_isolation,
+        execution_boundary,
         sev_snp,
         secret_root,
         &storage,

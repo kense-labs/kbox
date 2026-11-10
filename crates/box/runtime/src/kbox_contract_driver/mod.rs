@@ -31,14 +31,14 @@ use kbox_contract::contract::{
 };
 use kbox_contract::{ProviderId, RuntimeDriver, RuntimeError, RuntimeResult, RuntimeUnitRecord};
 use kbox_core::config::SevSnpGeneration;
-use kbox_core::ExecutionPortConnector;
+use kbox_core::{ExecutionBoundary, ExecutionPortConnector};
 use tokio::sync::OnceCell;
 
 use crate::local_execution::TransientRegistryAuthBroker;
 use crate::tee::AttestationPolicy;
 #[cfg(any(test, feature = "runtime-provider-qualification"))]
 use crate::LocalExecutionBackend;
-use crate::{BoxRecord, ExecutionIsolation, LocalExecutionManager, VmLocalExecutionBackend};
+use crate::{BoxRecord, LocalExecutionManager, VmLocalExecutionBackend};
 
 use self::artifact::ArtifactStorageOwner;
 use self::attestation::AttestationArtifactOwner;
@@ -109,7 +109,7 @@ pub struct BoxRuntimeDriver {
     pub(super) manager: LocalExecutionManager,
     port_connector: Arc<dyn ExecutionPortConnector>,
     service_endpoints: ServiceEndpointOwner,
-    execution_isolation: ExecutionIsolation,
+    execution_boundary: ExecutionBoundary,
     /// Whether this concrete provider instance can enforce a byte-precise
     /// Sandbox writable-layer quota. Qualification backends deliberately do
     /// not inherit the production host probe.
@@ -128,7 +128,7 @@ impl BoxRuntimeDriver {
     ///
     /// Shared-kernel execution is never selected as an automatic fallback.
     pub fn new(config: BoxRuntimeDriverConfig) -> RuntimeResult<Self> {
-        Self::new_with_isolation(config, ExecutionIsolation::Microvm)
+        Self::new_with_boundary(config, ExecutionBoundary::Microvm)
     }
 
     /// Create a Runtime driver that explicitly supports AMD SEV-SNP
@@ -145,9 +145,9 @@ impl BoxRuntimeDriver {
 
     /// Create a Runtime driver with an explicit concrete Box isolation
     /// backend for Runtime's provider-neutral `IsolationLevel::Sandbox`.
-    pub fn new_with_isolation(
+    pub fn new_with_boundary(
         config: BoxRuntimeDriverConfig,
-        execution_isolation: ExecutionIsolation,
+        execution_boundary: ExecutionBoundary,
     ) -> RuntimeResult<Self> {
         validate_config(&config)?;
         let (manager, broker) = production_manager(&config);
@@ -156,11 +156,11 @@ impl BoxRuntimeDriver {
             config,
             manager,
             connector,
-            execution_isolation,
+            execution_boundary,
             None,
             None,
             Some(broker),
-            execution_isolation == ExecutionIsolation::Microvm
+            execution_boundary == ExecutionBoundary::Microvm
                 && crate::rootfs::writable_layer_quota_supported(),
         )
     }
@@ -183,7 +183,7 @@ impl BoxRuntimeDriver {
         config: BoxRuntimeDriverConfig,
         backend: Arc<dyn LocalExecutionBackend>,
         port_connector: Arc<dyn ExecutionPortConnector>,
-        execution_isolation: ExecutionIsolation,
+        execution_boundary: ExecutionBoundary,
         provider_build: impl Into<String>,
     ) -> RuntimeResult<Self> {
         let provider_build = provider_build.into();
@@ -197,7 +197,7 @@ impl BoxRuntimeDriver {
             config,
             manager,
             port_connector,
-            execution_isolation,
+            execution_boundary,
             None,
             None,
             Some(TransientRegistryAuthBroker::default()),
@@ -239,7 +239,7 @@ impl BoxRuntimeDriver {
         mut self,
         resolver: Arc<dyn BoxHostServiceResolver>,
     ) -> RuntimeResult<Self> {
-        if self.execution_isolation != ExecutionIsolation::Microvm {
+        if self.execution_boundary != ExecutionBoundary::Microvm {
             return Err(RuntimeError::UnsupportedCapabilities(vec![
                 "feature:HostServices".into(),
             ]));
@@ -253,7 +253,7 @@ impl BoxRuntimeDriver {
         config: BoxRuntimeDriverConfig,
         manager: LocalExecutionManager,
         connector: Arc<dyn ExecutionPortConnector>,
-        execution_isolation: ExecutionIsolation,
+        execution_boundary: ExecutionBoundary,
         materializer: Option<Arc<dyn BoxSecretMaterializer>>,
         artifact_port: Option<Arc<dyn BoxArtifactPort>>,
         transient_registry_auth: Option<TransientRegistryAuthBroker>,
@@ -270,7 +270,7 @@ impl BoxRuntimeDriver {
             manager,
             port_connector: connector,
             service_endpoints: ServiceEndpointOwner::new(endpoint_connector),
-            execution_isolation,
+            execution_boundary,
             supports_ephemeral_storage,
             sev_snp: None,
             attestation: AttestationArtifactOwner::default(),
@@ -283,8 +283,8 @@ impl BoxRuntimeDriver {
     }
 
     /// Concrete Box isolation backend selected for this provider instance.
-    pub const fn execution_isolation(&self) -> ExecutionIsolation {
-        self.execution_isolation
+    pub const fn execution_boundary(&self) -> ExecutionBoundary {
+        self.execution_boundary
     }
 
     pub(super) fn sev_snp_config(&self) -> Option<&BoxRuntimeSevSnpConfig> {
@@ -312,12 +312,12 @@ impl BoxRuntimeDriver {
     pub(super) async fn provider_build(&self) -> RuntimeResult<String> {
         self.provider_build
             .get_or_try_init(|| async {
-                let execution_isolation = self.execution_isolation;
+                let execution_boundary = self.execution_boundary;
                 let sev_snp_simulated = self.sev_snp.as_ref().map(|config| config.simulate);
                 let provider_build = tokio::time::timeout(
                     self.config.control_timeout,
                     tokio::task::spawn_blocking(move || {
-                        probe_provider_build(execution_isolation, sev_snp_simulated)
+                        probe_provider_build(execution_boundary, sev_snp_simulated)
                     }),
                 )
                 .await
@@ -419,29 +419,27 @@ fn production_manager(
 }
 
 fn probe_provider_build(
-    execution_isolation: ExecutionIsolation,
+    _execution_boundary: ExecutionBoundary,
     sev_snp_simulated: Option<bool>,
 ) -> Result<String, String> {
-    let provider_build = match execution_isolation {
-        ExecutionIsolation::Microvm => {
-            let support = crate::host_check::check_virtualization_support()
-                .map_err(|error| format!("microVM unavailable: {error}"))?;
-            if sev_snp_simulated == Some(false) {
-                let tee = crate::tee::check_sev_snp_support()
-                    .map_err(|error| format!("SEV-SNP capability probe failed: {error}"))?;
-                if !tee.available {
-                    return Err(format!(
-                        "SEV-SNP unavailable: {}",
-                        tee.reason.unwrap_or_else(|| "unknown reason".into())
-                    ));
-                }
+    let provider_build = {
+        let support = crate::host_check::check_virtualization_support()
+            .map_err(|error| format!("microVM unavailable: {error}"))?;
+        if sev_snp_simulated == Some(false) {
+            let tee = crate::tee::check_sev_snp_support()
+                .map_err(|error| format!("SEV-SNP capability probe failed: {error}"))?;
+            if !tee.available {
+                return Err(format!(
+                    "SEV-SNP unavailable: {}",
+                    tee.reason.unwrap_or_else(|| "unknown reason".into())
+                ));
             }
-            format!(
-                "kbox/{} isolation/microvm hypervisor/{}",
-                env!("CARGO_PKG_VERSION"),
-                support.backend
-            )
         }
+        format!(
+            "kbox/{} isolation/microvm hypervisor/{}",
+            env!("CARGO_PKG_VERSION"),
+            support.backend
+        )
     };
     Ok(match sev_snp_simulated {
         Some(true) => format!("{provider_build} tee/sev-snp-simulated"),
@@ -598,7 +596,7 @@ impl RuntimeDriver for BoxRuntimeDriver {
             unit_classes: vec![RuntimeUnitClass::Task, RuntimeUnitClass::Service],
             artifact_media_types: vec![OCI_IMAGE_MANIFEST.into(), OCI_IMAGE_INDEX.into()],
             // Runtime uses `Sandbox` as the provider-neutral isolation
-            // class. `execution_isolation` selects Box's concrete backend.
+            // class. `execution_boundary` selects Box's concrete backend.
             isolation_levels,
             // Outbound: MicroVM uses libkrun TSI; Sandbox uses host-netns.
             // Both advertise Outbound so Cloud publication Tasks can admit.

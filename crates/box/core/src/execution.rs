@@ -1,8 +1,12 @@
-//! Backend-neutral execution isolation resolution.
+//! Backend-neutral execution plan resolution.
+//!
+//! Box has exactly one isolation boundary: a hardware-backed MicroVM. There is
+//! no isolation selector in the request model; host capability admission is a
+//! separate pre-launch check (see `kbox_runtime::host_check`).
 
 use serde::{Deserialize, Serialize};
 
-use crate::config::{BoxConfig, ExecutionIsolation};
+use crate::config::BoxConfig;
 use crate::error::{BoxError, Result};
 
 /// Concrete backend selected for an execution request.
@@ -24,8 +28,6 @@ pub enum IsolationClass {
 /// Deterministic result of resolving one execution request.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct ResolvedExecutionPlan {
-    /// Isolation requested by the caller or selected by the implicit default.
-    pub requested_isolation: ExecutionIsolation,
     /// Concrete runtime backend.
     pub backend: ExecutionBackend,
     /// Effective security-boundary class.
@@ -53,25 +55,16 @@ pub fn resolve_execution(config: &BoxConfig) -> Result<ResolvedExecutionPlan> {
             "Host service sockets are not supported by snapshot boot".into(),
         ));
     }
-    match config.isolation {
-        ExecutionIsolation::Microvm => {
-            validate_microvm_compatibility(config)?;
-            Ok(ResolvedExecutionPlan {
-                requested_isolation: ExecutionIsolation::Microvm,
-                backend: ExecutionBackend::Kbox,
-                isolation_class: IsolationClass::HardwareVm,
-                required_controls: Vec::new(),
-            })
-        }
-    }
+    validate_microvm_compatibility(config)?;
+    Ok(ResolvedExecutionPlan {
+        backend: ExecutionBackend::Kbox,
+        isolation_class: IsolationClass::HardwareVm,
+        required_controls: Vec::new(),
+    })
 }
 
 /// Validate features that cannot be represented safely by the MicroVM backend.
 pub fn validate_microvm_compatibility(config: &BoxConfig) -> Result<()> {
-    if config.isolation != ExecutionIsolation::Microvm {
-        return Ok(());
-    }
-
     validate_security_options(config)
 }
 

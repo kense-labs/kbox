@@ -1,50 +1,37 @@
-use std::collections::BTreeSet;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use kbox_contract::contract::RuntimeObservation;
 use kbox_core::rootfs_metadata::RUNTIME_ENV_PATH;
 use kbox_core::secret::SECRET_ENVIRONMENT_MANIFEST;
-use kbox_core::{ExecutionBackend, ExecutionIsolation, IsolationClass};
+use kbox_core::{ExecutionBackend, IsolationClass};
 
 use super::fixture::{BoxRuntimeConformanceFixture, SECRET_ENV_VALUE, SECRET_FILE_VALUE};
 use super::{require, Result};
 
+/// Box has exactly one isolation boundary: a hardware-backed MicroVM. There is
+/// no shared-kernel security profile, no host-side sandbox OCI bundle, and no
+/// `isolation/sandbox` provider build identity to verify.
 pub(super) fn verify_provider_least_privilege(
     fixture: &BoxRuntimeConformanceFixture,
     record: &crate::BoxRecord,
     observation: &RuntimeObservation,
 ) -> Result<()> {
-    let execution_isolation = fixture.driver.execution_isolation();
     let metadata = record
         .managed_execution
         .as_ref()
         .ok_or_else(|| super::protocol("security record lost managed metadata"))?;
     let config = &metadata.request.config;
-    require(
-        record.isolation == execution_isolation && config.isolation == execution_isolation,
-        "security execution changed its requested Box isolation",
-    )?;
     let expected_plan = kbox_core::resolve_execution(config)
         .map_err(|error| super::external("resolve persisted security execution plan", error))?;
     require(
         metadata.plan == expected_plan,
         "security execution persisted a plan that drifted from its creation intent",
     )?;
-    let exact_boundary = match execution_isolation {
-        ExecutionIsolation::Microvm => {
-            metadata.plan.backend == ExecutionBackend::Kbox
-                && metadata.plan.isolation_class == IsolationClass::HardwareVm
-                && !metadata.plan.required_controls.is_empty()
-        }
-        ExecutionIsolation::Microvm => {
-            metadata.plan.backend == ExecutionBackend::Kbox
-                && metadata.plan.isolation_class == IsolationClass::HardwareVm
-                && metadata.plan.required_controls.is_empty()
-        }
-    };
     require(
-        metadata.plan.requested_isolation == execution_isolation && exact_boundary,
-        "security execution did not retain its exact isolation backend and boundary",
+        metadata.plan.backend == ExecutionBackend::Kbox
+            && metadata.plan.isolation_class == IsolationClass::HardwareVm
+            && metadata.plan.required_controls.is_empty(),
+        "security execution did not retain its exact MicroVM backend and boundary",
     )?;
     require(
         !config.privileged
@@ -62,163 +49,25 @@ pub(super) fn verify_provider_least_privilege(
         .provider_build
         .as_deref()
         .ok_or_else(|| super::protocol("security observation omitted provider build identity"))?;
-    match execution_isolation {
-        ExecutionIsolation::Microvm => {
-            require(
-                provider_build.starts_with("kbox/")
-                    && provider_build.contains(" isolation/sandbox koci/sha256:")
-                    && provider_build.contains(" agent/sha256:"),
-                format!("Sandbox provider build identity is incomplete: {provider_build:?}"),
-            )?;
-            verify_sandbox_least_privilege(record)
-        }
-        ExecutionIsolation::Microvm => {
-            require(
-                microvm_hypervisor_identity(provider_build).is_some(),
-                format!("MicroVM provider build identity is incomplete: {provider_build:?}"),
-            )?;
-            verify_microvm_process_identity(fixture, record)
-        }
-    }
+    require(
+        microvm_hypervisor_identity(provider_build).is_some(),
+        format!("MicroVM provider build identity is incomplete: {provider_build:?}"),
+    )?;
+    verify_microvm_process_identity(fixture, record)
 }
 
 pub(super) fn verify_secret_persistence(
-    fixture: &BoxRuntimeConformanceFixture,
     record: &crate::BoxRecord,
     creation_intent: &[u8],
     boxes: &[u8],
 ) -> Result<()> {
     verify_no_plaintext("managed creation intent", creation_intent)?;
     verify_no_plaintext("boxes.json", boxes)?;
-
-    match fixture.driver.execution_isolation() {
-        ExecutionIsolation::Microvm => verify_sandbox_secret_persistence(record),
-        ExecutionIsolation::Microvm => verify_microvm_secret_persistence(record),
-    }
+    verify_microvm_secret_persistence(record)
 }
 
 fn exactly_one(values: &[String], expected: &str) -> bool {
     matches!(values, [value] if value == expected)
-}
-
-fn verify_sandbox_least_privilege(record: &crate::BoxRecord) -> Result<()> {
-    const BOOTSTRAP_CAPABILITIES: [&str; 11] = [
-        "CAP_CHOWN",
-        "CAP_DAC_OVERRIDE",
-        "CAP_FOWNER",
-        "CAP_FSETID",
-        "CAP_KILL",
-        "CAP_NET_ADMIN",
-        "CAP_NET_BIND_SERVICE",
-        "CAP_SETGID",
-        "CAP_SETPCAP",
-        "CAP_SETUID",
-        "CAP_SYS_CHROOT",
-    ];
-    const BOOTSTRAP_CAPABILITY_MASK: u64 = 0x415fb;
-
-    let path = record.box_dir.join("sandbox/bundle/config.json");
-    let config: serde_json::Value = serde_json::from_slice(
-        &std::fs::read(&path)
-            .map_err(|error| super::external("read Sandbox OCI configuration", error))?,
-    )
-    .map_err(|error| super::external("decode Sandbox OCI configuration", error))?;
-    require(
-        config
-            .pointer("/process/noNewPrivileges")
-            .and_then(serde_json::Value::as_bool)
-            == Some(true),
-        "Sandbox OCI process did not enable no-new-privileges",
-    )?;
-    let expected = BOOTSTRAP_CAPABILITIES.into_iter().collect::<BTreeSet<_>>();
-    for set in ["bounding", "effective", "permitted"] {
-        let actual = config
-            .pointer(&format!("/process/capabilities/{set}"))
-            .and_then(serde_json::Value::as_array)
-            .map(|values| {
-                values
-                    .iter()
-                    .filter_map(serde_json::Value::as_str)
-                    .collect::<BTreeSet<_>>()
-            });
-        require(
-            actual.as_ref() == Some(&expected),
-            format!("Sandbox OCI bootstrap capability set {set} changed: actual={actual:?}"),
-        )?;
-    }
-    for set in ["inheritable", "ambient"] {
-        require(
-            config
-                .pointer(&format!("/process/capabilities/{set}"))
-                .and_then(serde_json::Value::as_array)
-                .is_some_and(Vec::is_empty),
-            format!("Sandbox OCI capability set {set} is not empty"),
-        )?;
-    }
-    require(
-        config.pointer("/linux/seccomp/defaultAction").is_some(),
-        "Sandbox OCI configuration omitted seccomp",
-    )?;
-    let namespaces = config
-        .pointer("/linux/namespaces")
-        .and_then(serde_json::Value::as_array)
-        .ok_or_else(|| super::protocol("Sandbox OCI namespaces are missing"))?;
-    for required in ["user", "mount", "pid", "ipc", "uts", "network", "cgroup"] {
-        require(
-            namespaces.iter().any(|namespace| {
-                namespace.get("type").and_then(serde_json::Value::as_str) == Some(required)
-            }),
-            format!("Sandbox OCI configuration omitted the {required} namespace"),
-        )?;
-    }
-    let mappings = config
-        .pointer("/linux/uidMappings")
-        .and_then(serde_json::Value::as_array)
-        .ok_or_else(|| super::protocol("Sandbox OCI UID mappings are missing"))?;
-    require(
-        mappings.iter().any(|mapping| {
-            mapping
-                .get("containerID")
-                .and_then(serde_json::Value::as_u64)
-                == Some(0)
-                && mapping.get("hostID").and_then(serde_json::Value::as_u64) != Some(0)
-        }),
-        "Sandbox container root maps to host root",
-    )?;
-    require(
-        config
-            .pointer("/linux/cgroupsPath")
-            .and_then(serde_json::Value::as_str)
-            == Some(format!("kbox/{}", record.id).as_str()),
-        "Sandbox OCI cgroup path is not execution-scoped",
-    )?;
-
-    let pid = record
-        .pid
-        .ok_or_else(|| super::protocol("running Sandbox record has no init PID"))?;
-    let status = std::fs::read_to_string(Path::new("/proc").join(pid.to_string()).join("status"))
-        .map_err(|error| super::external("read Sandbox init process status", error))?;
-    require(
-        status.lines().any(|line| line == "NoNewPrivs:\t1"),
-        "Sandbox init process does not have no_new_privs",
-    )?;
-    let effective = status
-        .lines()
-        .find_map(|line| line.strip_prefix("CapEff:\t"))
-        .ok_or_else(|| super::protocol("Sandbox init process has no CapEff evidence"))?;
-    let effective = u64::from_str_radix(effective, 16)
-        .map_err(|error| super::external("decode Sandbox init CapEff", error))?;
-    require(
-        effective & !BOOTSTRAP_CAPABILITY_MASK == 0,
-        format!("Sandbox init process escaped its bootstrap capability set: {effective:#x}"),
-    )?;
-    let host_uid = status
-        .lines()
-        .find_map(|line| line.strip_prefix("Uid:\t"))
-        .and_then(|line| line.split_whitespace().next())
-        .and_then(|value| value.parse::<u32>().ok())
-        .ok_or_else(|| super::protocol("Sandbox init process has no host UID evidence"))?;
-    require(host_uid != 0, "Sandbox init process runs as host root")
 }
 
 fn verify_microvm_process_identity(
@@ -262,34 +111,6 @@ fn verify_microvm_shim_binary(fixture: &BoxRuntimeConformanceFixture, pid: u32) 
 #[cfg(not(target_os = "linux"))]
 fn verify_microvm_shim_binary(_fixture: &BoxRuntimeConformanceFixture, _pid: u32) -> Result<()> {
     Ok(())
-}
-
-fn verify_sandbox_secret_persistence(record: &crate::BoxRecord) -> Result<()> {
-    let bundle_directory = record.box_dir.join("sandbox/bundle");
-    let oci = std::fs::read(bundle_directory.join("config.json"))
-        .map_err(|error| super::external("read Secret Sandbox OCI configuration", error))?;
-    let oci_spec: serde_json::Value = serde_json::from_slice(&oci)
-        .map_err(|error| super::external("decode Secret Sandbox OCI configuration", error))?;
-    let rootfs_path = oci_spec
-        .pointer("/root/path")
-        .and_then(serde_json::Value::as_str)
-        .ok_or_else(|| super::protocol("Secret Sandbox OCI configuration omitted root.path"))?;
-    let rootfs_path = if Path::new(rootfs_path).is_absolute() {
-        PathBuf::from(rootfs_path)
-    } else {
-        bundle_directory.join(rootfs_path)
-    };
-    let staged_environment = read_regular_file(
-        &rootfs_path.join(RUNTIME_ENV_PATH.trim_start_matches('/')),
-        "Secret Sandbox staged environment",
-    )?;
-    verify_no_plaintext("Sandbox OCI configuration", &oci)?;
-    verify_no_plaintext("Sandbox staged environment", &staged_environment)?;
-    require(
-        String::from_utf8_lossy(&oci).contains(&format!("BOX_EXEC_ENV_FILE={RUNTIME_ENV_PATH}")),
-        "Sandbox OCI configuration omitted the protected environment staging pointer",
-    )?;
-    verify_environment_manifest("Sandbox", &staged_environment)
 }
 
 fn verify_microvm_secret_persistence(record: &crate::BoxRecord) -> Result<()> {
@@ -429,7 +250,9 @@ mod identity_tests {
             None
         );
         assert_eq!(
-            microvm_hypervisor_identity("kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"),
+            microvm_hypervisor_identity(
+                "kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"
+            ),
             None
         );
     }

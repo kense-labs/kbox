@@ -79,14 +79,14 @@ Callers that need Runtime Secrets compose the driver with exactly one
 ```rust
 use std::sync::Arc;
 
-use kbox_core::ExecutionIsolation;
+use kbox_core::ExecutionBoundary;
 use kbox_runtime::{BoxRuntimeDriver, BoxRuntimeDriverConfig};
 
 let config = BoxRuntimeDriverConfig {
     secret_root: "/run/kbox/runtime-secrets".into(),
     ..Default::default()
 };
-let driver = BoxRuntimeDriver::new_with_isolation(config, ExecutionIsolation::Microvm)?
+let driver = BoxRuntimeDriver::new_with_boundary(config, ExecutionBoundary::Microvm)?
     .with_secret_materializer(Arc::new(node_secret_materializer));
 ```
 

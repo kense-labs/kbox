@@ -44,7 +44,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             &unit.spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -72,7 +72,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             &unit.spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;
@@ -130,7 +130,7 @@ impl BoxRuntimeDriver {
         validate_record_for_spec(
             &record,
             &unit.spec,
-            self.execution_isolation,
+            self.execution_boundary,
             self.sev_snp_config(),
             &self.config.secret_root,
         )?;

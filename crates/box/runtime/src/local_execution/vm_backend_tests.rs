@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode,
+    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
     OperationId, VmHandler, VmMetrics,
 };
 
@@ -25,7 +25,7 @@ async fn readonly_mount_refuses_before_managed_reservation_or_source_access() {
         directory.path(),
         backend.clone(),
     );
-    let mut candidate = record(directory.path(), ExecutionIsolation::Microvm);
+    let mut candidate = record(directory.path());
     let config = &mut candidate.managed_execution.as_mut().unwrap().request.config;
     let missing = directory.path().join("absent-secret");
     config.volumes = vec![format!("{}:/secret:rw", missing.display())];
@@ -52,17 +52,14 @@ async fn readonly_mount_refuses_before_managed_reservation_or_source_access() {
     assert!(manager.managed_records().await.unwrap().is_empty());
 }
 
-fn record(home_dir: &Path, isolation: ExecutionIsolation) -> BoxRecord {
+fn record(home_dir: &Path) -> BoxRecord {
     let id = ExecutionId::new("11111111-1111-4111-8111-111111111111").unwrap();
     let mut config = BoxConfig {
-        isolation,
         image: "alpine:latest".to_string(),
         dns: vec!["1.1.1.1".to_string()],
         ..Default::default()
     };
-    if isolation == ExecutionIsolation::Microvm {
-        config.sysctls = vec![("net.ipv4.ip_forward".to_string(), "1".to_string())];
-    }
+    config.sysctls = vec![("net.ipv4.ip_forward".to_string(), "1".to_string())];
     config.resources.memory_mb = 256;
     build_managed_record(
         home_dir,
@@ -86,10 +83,10 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
     let backend = VmLocalExecutionBackend::new(temporary.path());
 
     let microvm = backend
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await;
     let sandbox = backend
-        .preflight_isolation(ExecutionIsolation::Microvm)
+        .preflight_launch()
         .await;
 
     assert!(
@@ -138,7 +135,7 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
 async fn sandbox_resource_planning_persists_image_volume_ownership_without_runtime_side_effects() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     std::fs::create_dir_all(&record.box_dir).unwrap();
     crate::resolved_image::persist_resolved_image_config(
         &record.box_dir,
@@ -234,7 +231,7 @@ impl VmHandler for DelayedExitStatusHandler {
 fn manager_uses_the_full_persisted_request_config() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
 
     let manager = backend.new_manager(&record).unwrap();
 
@@ -252,7 +249,7 @@ fn manager_uses_the_full_persisted_request_config() {
 fn manager_uses_the_mutable_record_network_config() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.network_mode = NetworkMode::Bridge {
         network: "connected-after-create".to_string(),
     };
@@ -279,7 +276,7 @@ fn manager_uses_the_backend_pull_progress_callback() {
     let callback: crate::PullProgressFn = Arc::new(|_, _, _, _| {});
     let backend =
         VmLocalExecutionBackend::new(temporary.path()).with_pull_progress_fn(Arc::clone(&callback));
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
 
     let manager = backend.new_manager(&record).unwrap();
 
@@ -293,7 +290,7 @@ fn recovery_manager_does_not_consume_transient_registry_authorization() {
     let broker = TransientRegistryAuthBroker::default();
     let backend =
         VmLocalExecutionBackend::new(temporary.path()).with_transient_registry_auth(broker.clone());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let lease = broker
         .bind(
             &record.id,
@@ -316,7 +313,7 @@ fn boot_claim_consumes_only_its_transient_registry_authorization() {
     let broker = TransientRegistryAuthBroker::default();
     let backend =
         VmLocalExecutionBackend::new(temporary.path()).with_transient_registry_auth(broker.clone());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let lease = broker
         .bind(
             &record.id,
@@ -343,7 +340,7 @@ fn boot_claim_consumes_only_its_transient_registry_authorization() {
 fn manager_applies_persisted_shared_memory_policy_to_runtime_config() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let shm_size = 64 * 1024 * 1024;
     record.shm_size = Some(shm_size);
     record
@@ -366,7 +363,7 @@ fn manager_applies_persisted_shared_memory_policy_to_runtime_config() {
 fn validation_rejects_a_host_path_derived_from_external_input() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.box_dir = temporary.path().join("external-untrusted-label");
 
     let error = backend.new_manager(&record).err().unwrap();
@@ -377,7 +374,7 @@ fn validation_rejects_a_host_path_derived_from_external_input() {
 #[test]
 fn transitional_states_retry_idempotent_pause_and_resume_operations() {
     let temporary = tempfile::tempdir().unwrap();
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Pausing.as_status().to_string();
     record.managed_execution.as_mut().unwrap().pending_operation =
         Some(crate::ManagedExecutionOperation::Pause {
@@ -412,7 +409,7 @@ fn transitional_states_retry_idempotent_pause_and_resume_operations() {
 async fn startup_terminal_observation_preserves_assets_for_foreground_drain() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Starting.as_status().to_string();
     record.managed_execution.as_mut().unwrap().pending_operation =
         Some(crate::ManagedExecutionOperation::Start);
@@ -444,7 +441,7 @@ async fn startup_terminal_observation_preserves_assets_for_foreground_drain() {
 async fn cold_resume_observation_preserves_rootfs_when_the_replacement_exits() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Resuming.as_status().to_string();
     let metadata = record.managed_execution.as_mut().unwrap();
     metadata.pending_operation =
@@ -483,7 +480,7 @@ async fn cold_resume_observation_preserves_rootfs_when_the_replacement_exits() {
 async fn terminal_observation_refuses_cached_shim_zero_without_durable_guest_exit() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let sentinel = record.box_dir.join("rootfs/no-invent-state.txt");
     std::fs::create_dir_all(sentinel.parent().unwrap()).unwrap();
     std::fs::write(&sentinel, b"retained").unwrap();
@@ -513,7 +510,7 @@ async fn terminal_observation_refuses_cached_shim_zero_without_durable_guest_exi
 async fn terminal_observation_accepts_cached_shim_zero_with_durable_guest_exit() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let rootfs = record.box_dir.join("rootfs");
     std::fs::create_dir_all(&rootfs).unwrap();
     std::fs::write(rootfs.join(".kexit_code"), "0\n").unwrap();
@@ -537,7 +534,7 @@ async fn terminal_observation_accepts_cached_shim_zero_with_durable_guest_exit()
 async fn terminal_health_probe_waits_for_delayed_durable_exit_status_before_cleanup() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let rootfs = record.box_dir.join("rootfs");
     std::fs::create_dir_all(&rootfs).unwrap();
     let durable_exit_path = rootfs.join(".kexit_code");
@@ -573,7 +570,7 @@ async fn terminal_health_probe_waits_for_delayed_durable_exit_status_before_clea
 async fn terminal_observation_retains_runtime_without_an_exact_exit_status() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let exit_polls = Arc::new(AtomicUsize::new(0));
     let stop_calls = Arc::new(AtomicUsize::new(0));
     let manager = Arc::new(Mutex::new(backend.new_manager(&record).unwrap()));
@@ -617,7 +614,7 @@ async fn disappearing_live_handle_waits_for_delayed_terminal_status() {
     // MicroVM (not Sandbox) so Windows hosts can exercise the same contract.
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let rootfs = record.box_dir.join("rootfs");
     std::fs::create_dir_all(&rootfs).unwrap();
     std::fs::write(rootfs.join(".kexit_code"), "0\n").unwrap();
@@ -652,7 +649,7 @@ async fn disappearing_live_handle_waits_for_delayed_terminal_status() {
 #[test]
 fn restart_teardown_preserves_old_runtime_visibility_until_generation_advance() {
     let temporary = tempfile::tempdir().unwrap();
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::RestartStopping
         .as_status()
         .to_string();
@@ -682,8 +679,8 @@ fn restart_teardown_preserves_old_runtime_visibility_until_generation_advance() 
 async fn filesystem_only_pause_fails_before_starting_a_runtime() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let sandbox = record(temporary.path(), ExecutionIsolation::Microvm);
-    let microvm = record(temporary.path(), ExecutionIsolation::Microvm);
+    let sandbox = record(temporary.path());
+    let microvm = record(temporary.path());
 
     let sandbox_error = backend.pause(&sandbox, false).await.unwrap_err();
     let memory_error = backend.pause(&microvm, false).await.unwrap_err();
@@ -700,7 +697,7 @@ async fn filesystem_only_pause_fails_before_starting_a_runtime() {
 #[test]
 fn unsupported_backend_capabilities_are_unavailable() {
     let temporary = tempfile::tempdir().unwrap();
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
 
     let error = unsupported(&record, "pause", "the test backend");
 
@@ -717,7 +714,7 @@ fn unsupported_backend_capabilities_are_unavailable() {
 async fn retained_stops_preserve_anonymous_volumes_but_auto_remove_kill_removes_them() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     let volume_name = "anon_restart_volume";
     let volumes = crate::VolumeStore::new(
         temporary.path().join("volumes.json"),
@@ -765,7 +762,7 @@ async fn retained_stops_preserve_anonymous_volumes_but_auto_remove_kill_removes_
 async fn terminal_kill_cleans_a_cold_paused_rootfs_without_runtime_evidence() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Killing.as_status().to_string();
     let metadata = record.managed_execution.as_mut().unwrap();
     metadata.paused_with_memory = false;
@@ -785,7 +782,7 @@ async fn terminal_kill_cleans_a_cold_paused_rootfs_without_runtime_evidence() {
 #[test]
 fn managed_kill_uses_persisted_stop_signal_and_timeout() {
     let temporary = tempfile::tempdir().unwrap();
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
 
     assert_eq!(graceful_stop_options(&record, None).unwrap(), None);
 
@@ -809,7 +806,7 @@ fn managed_kill_uses_persisted_stop_signal_and_timeout() {
 #[test]
 fn managed_kill_rejects_stop_timeout_overflow() {
     let temporary = tempfile::tempdir().unwrap();
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
 
     let error = graceful_stop_options(&record, Some(u64::MAX)).unwrap_err();
 
@@ -819,7 +816,7 @@ fn managed_kill_rejects_stop_timeout_overflow() {
 #[test]
 fn visible_state_rejects_terminal_records() {
     let temporary = tempfile::tempdir().unwrap();
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Stopped.as_status().to_string();
     record.managed_execution.as_mut().unwrap().generation = ExecutionGeneration::INITIAL;
 
@@ -834,7 +831,7 @@ async fn starting_observation_stays_creating_without_exec_heartbeat() {
     // on missing exec proof; promote + Starting gates own the Creating projection.
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Starting.as_status().to_string();
     record.managed_execution.as_mut().unwrap().pending_operation =
         Some(crate::ManagedExecutionOperation::Start);
@@ -875,7 +872,7 @@ async fn created_observation_stays_creating_without_exec_heartbeat() {
     // promote_if_ready must not invent Ready from a constructed layout path.
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Created.as_status().to_string();
 
     let manager = backend.new_manager(&record).unwrap();
@@ -923,7 +920,7 @@ async fn promote_if_ready_refuses_ready_without_authenticated_exec_client() {
     // Direct promote path: no heartbeat ⇒ no Ready and no retained client (#418).
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let mut manager = backend.new_manager(&record).unwrap();
     *manager.state.write().await = crate::BoxState::Created;
 
@@ -946,7 +943,7 @@ async fn start_refuses_handle_when_boot_left_created_without_exec_heartbeat() {
     // a handle that claim_and_start durable-promotes to Running (#416).
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Starting.as_status().to_string();
 
     let mut manager = backend.new_manager(&record).unwrap();
@@ -989,7 +986,7 @@ async fn start_refuses_handle_when_ready_lacks_exec_heartbeat() {
     // in-memory Ready from an earlier one-shot promote.
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Starting.as_status().to_string();
 
     let mut manager = backend.new_manager(&record).unwrap();
@@ -1026,7 +1023,7 @@ async fn handle_from_manager_refuses_created_without_authenticated_ready() {
     // manager is still Created (#422 / #415/#416).
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Running.as_status().to_string();
 
     let mut manager = backend.new_manager(&record).unwrap();
@@ -1056,7 +1053,7 @@ async fn health_check_refuses_paused_without_inventing_ready() {
     // SIGSTOP demotes to Paused; PID alone must not sustain Ready health (#424).
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let record = record(temporary.path());
     let mut manager = backend.new_manager(&record).unwrap();
     *manager.state.write().await = crate::BoxState::Paused;
     *manager.handler.write().await = Some(Box::new(DelayedExitStatusHandler {
@@ -1081,7 +1078,7 @@ async fn handle_from_manager_allows_paused_for_pause_lease_bookkeeping() {
     // inventing Ready (#424 / #422).
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
-    let mut record = record(temporary.path(), ExecutionIsolation::Microvm);
+    let mut record = record(temporary.path());
     record.status = ManagedExecutionState::Paused.as_status().to_string();
     record.pid = Some(std::process::id());
     record.pid_start_time = crate::process::pid_start_time(std::process::id());

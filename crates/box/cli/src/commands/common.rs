@@ -3,7 +3,7 @@
 use std::collections::HashMap;
 
 use clap::{Args, ValueEnum};
-use kbox_core::config::{validate_vcpu_count, ExecutionIsolation, ResourceLimits, DEFAULT_VCPUS};
+use kbox_core::config::{validate_vcpu_count, ResourceLimits, DEFAULT_VCPUS};
 use kbox_core::network::NetworkMode;
 use kbox_runtime::oci::{OciHealthCheck, OciImageConfig};
 
@@ -31,11 +31,6 @@ impl VirtiofsCacheMode {
             Self::Default => "default",
         }
     }
-}
-
-/// MicroVM is the only Box isolation; omit any legacy isolation selector.
-pub(crate) fn resolve_isolation(_value: Option<()>) -> ExecutionIsolation {
-    ExecutionIsolation::Microvm
 }
 
 /// Resolve the optional Docker-compatible CLI network selector.
@@ -455,7 +450,6 @@ pub(crate) fn validate_runtime_options(common: &CommonBoxArgs) -> Result<(), Str
         );
     }
     let compatibility_config = kbox_core::BoxConfig {
-        isolation: execution_isolation(common),
         port_map: common.publish.clone(),
         network,
         cap_add: common.cap_add.clone(),
@@ -487,11 +481,6 @@ pub(crate) fn validate_health_check_support(
     let _ = health_check;
 
     Ok(())
-}
-
-/// Resolve the CLI's opt-in selector to the persisted execution isolation.
-pub(crate) fn execution_isolation(_common: &CommonBoxArgs) -> ExecutionIsolation {
-    resolve_isolation(None)
 }
 
 /// Normalize a user option into the runtime-supported numeric format.

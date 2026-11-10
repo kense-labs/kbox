@@ -706,7 +706,7 @@ mod tests {
 
     use chrono::Utc;
     use kbox_core::{
-        ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
+        ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
     };
     use tokio::{
         io::{AsyncReadExt, AsyncWriteExt},
@@ -862,7 +862,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         LocalScaleReconciler::with_lifecycle(catalog, lifecycle)
@@ -893,7 +892,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = Arc::new(LocalScaleReconciler::with_lifecycle_and_endpoint(
@@ -938,7 +936,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             ENDPOINT_CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle_and_endpoint(
@@ -1022,7 +1019,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle(catalog, lifecycle.clone());
@@ -1162,7 +1158,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::new(manager, catalog.clone());
@@ -1194,7 +1189,6 @@ mod tests {
         let catalog = ScaleServiceCatalog::from_kcl_str(
             CATALOG,
             "gateway-scale",
-            ExecutionIsolation::Microvm,
         )
         .unwrap();
         let reconciler = LocalScaleReconciler::new(manager.clone(), catalog);

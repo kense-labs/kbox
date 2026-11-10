@@ -10,7 +10,7 @@ use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
-    ExecutionId, ExecutionIsolation, ExecutionManagerError, ExecutionManagerResult,
+    ExecutionId, ExecutionManagerError, ExecutionManagerResult,
     ExecutionProcess, ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState,
     ExecutionStats, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome,
     OperationId,
@@ -240,10 +240,7 @@ pub trait LocalExecutionBackend: Send + Sync {
     /// Perform any backend-only launch-readiness probe available before callers
     /// execute external image operations. Backends without a context-free probe
     /// may defer to record preflight. Mutable checks must be repeated there.
-    async fn preflight_isolation(
-        &self,
-        _isolation: ExecutionIsolation,
-    ) -> ExecutionManagerResult<()> {
+    async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
         Ok(())
     }
 

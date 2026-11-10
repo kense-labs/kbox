@@ -125,8 +125,11 @@ impl BoxStateStore {
         }
 
         let data = std::fs::read_to_string(path)?;
-        let parsed = serde_json::from_str::<Vec<BoxRecord>>(&data)
-            .map_err(|error| error.to_string())
+        let parsed = Self::reject_retired_isolation_selector(&data)
+            .and_then(|_| {
+                serde_json::from_str::<Vec<BoxRecord>>(&data)
+                    .map_err(|error| error.to_string())
+            })
             .and_then(|records| {
                 validate_managed_records(&records)?;
                 Ok(records)
@@ -149,6 +152,42 @@ impl BoxStateStore {
             }
         }
     }
+
+/// Reject state written by the retired multi-isolation format.
+///
+/// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
+/// `isolation` field. Serde would silently ignore an unknown field, which
+/// would let a legacy shared-kernel `"sandbox"` record masquerade as a
+/// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
+/// instead: the one historical value that matches the current boundary is
+/// accepted, anything else is a hard error with migration guidance.
+///
+/// The fast path avoids a second JSON parse for every modern state file.
+fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
+    if !data.contains("\"isolation\"") {
+        return Ok(());
+    }
+    let value: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
+    let Some(records) = value.as_array() else {
+        return Ok(());
+    };
+    for record in records {
+        let Some(selector) = record.get("isolation") else {
+            continue;
+        };
+        match selector.as_str() {
+            Some("microvm") | None => {}
+            Some(other) => {
+                return Err(format!(
+                    "retired isolation selector {other:?} in boxes.json: shared-kernel \
+                     sandbox records cannot be loaded as MicroVM boxes; migrate or remove \
+                     the record before starting kbox"
+                ));
+            }
+        }
+    }
+    Ok(())
+}
 
     fn write_unlocked(&self) -> std::io::Result<()> {
         validate_managed_records(&self.records)
@@ -277,6 +316,33 @@ enum CorruptionPolicy {
 mod tests {
     use super::*;
 
+    #[test]
+    fn retired_sandbox_isolation_selector_is_rejected_explicitly() {
+        let error = BoxStateStore::reject_retired_isolation_selector(
+            r#"[{"id":"legacy","isolation":"sandbox"}]"#,
+        )
+        .unwrap_err();
+        assert!(error.contains("retired isolation selector"), "{error}");
+        assert!(error.contains("sandbox"), "{error}");
+        assert!(error.contains("migrate or remove"), "{error}");
+    }
+
+    #[test]
+    fn historical_microvm_isolation_selector_is_still_readable() {
+        assert!(BoxStateStore::reject_retired_isolation_selector(
+            r#"[{"id":"older","isolation":"microvm"}]"#
+        )
+        .is_ok());
+    }
+
+    #[test]
+    fn modern_state_without_selector_is_accepted() {
+        assert!(BoxStateStore::reject_retired_isolation_selector(
+            r#"[{"id":"current","image":"alpine:latest"}]"#
+        )
+        .is_ok());
+    }
+
     fn record(id: &str) -> BoxRecord {
         serde_json::from_value(serde_json::json!({
             "id": id,
@@ -303,7 +369,6 @@ mod tests {
         let mut record = record(id);
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
-            isolation: kbox_core::ExecutionIsolation::Microvm,
             ..Default::default()
         };
         record.managed_execution = Some(

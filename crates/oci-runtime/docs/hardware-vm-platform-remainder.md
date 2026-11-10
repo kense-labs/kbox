@@ -20,7 +20,7 @@ Apple Silicon 上一次本地 HVF 运行只说明这台 Mac 能创建虚拟机�
 | 快照层名称 | `platform`、`workload-start`、`instance-checkpoint` |
 | 启动布局 | `linux-direct-x86_64` 与 `linux-direct-aarch64` 各一份。布局名称不进配置字节 |
 | 控制通道限额 | 单条记录最多 65536 字节，信用窗口 32 |
-| 省略 `--isolation` | 选择 hardware-vm／MicroVM。kbox Box 产品路径仅为独立内核 MicroVM；共享宿主内核（历史上的 `--isolation sandbox`）不是当前产品路线，CLI 拒绝该值 |
+| 省略 `--isolation` | 选择 hardware-vm／MicroVM。kbox Box 产品边界仅为独立内核 MicroVM；共享宿主内核不是产品路线，退役的 `isolation` selector 在 CLI 与状态反序列化入口被明确拒绝 |
 
 `VmConfig::new` 先调用 `validate_profile_resources`。Windows x86_64 在这之后仍要求恰好 1 个 vCPU，报错文本保持 `exactly 1 vCPU`。2、4、8 在共享配置里合法，只在这块 WHPX 主机门槛上失败。
 
@@ -121,7 +121,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass `
 8. 启动凭证不出现在 argv、环境、日志和快照字节里。拆除报告只有 schema 版本、不透明 id、类别和计数。
 9. 每个主机记录自己的 launch-to-runnable 毫秒序列。这个特性只有在 KVM、HVF、WHPX 三组序列都存在、并且都落在同一个门限内时才可用。门限数值还没有从实机定下来。缺任何一组，特性就保持不可用。
 
-共享宿主内核路线不是当前 kbox Box 产品路径；CLI 拒绝 `--isolation sandbox`。上述第 1 到第 9 项只适用于 MicroVM／hardware-vm 启动路径。
+共享宿主内核不是 kbox Box 产品路径；退役 selector 在 CLI 与 `boxes.json` 反序列化入口明确拒绝。上述第 1 到第 9 项只适用于 MicroVM／hardware-vm 启动路径。
 
 ## 一个平台怎样算做完
 

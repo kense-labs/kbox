@@ -4,7 +4,7 @@ use super::*;
 use async_trait::async_trait;
 use kbox_core::vmm::{InstanceSpec, OwnedCleanupBudget, OwnedCloseBudget, VmExitEvidenceKind};
 use kbox_core::{
-    CreateExecutionRequest, ExecutionGeneration, ExecutionIsolation, NetworkMode, OperationId,
+    CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode, OperationId,
 };
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex as StdMutex;
@@ -58,7 +58,6 @@ fn original() -> (
     let temp = tempfile::tempdir().unwrap();
     let id = uuid::Uuid::new_v4().to_string();
     let config = BoxConfig {
-        isolation: ExecutionIsolation::Microvm,
         network: NetworkMode::None,
         ..Default::default()
     };
@@ -499,12 +498,9 @@ async fn finalization_failure_keeps_exact_provider_paths_and_direct_managers_unq
             .pid(),
         proof.pid()
     );
-    for isolation in [ExecutionIsolation::Microvm, ExecutionIsolation::Microvm] {
+    {
         let mut direct = VmManager::new(
-            BoxConfig {
-                isolation,
-                ..Default::default()
-            },
+            BoxConfig::default(),
             EventEmitter::new(8),
         );
         assert!(direct.original_scope.is_none());

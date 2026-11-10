@@ -12,7 +12,7 @@ async fn emits_only_selected_oci_resource_fields() {
     );
     let lease = manager
         .create_and_start(
-            request("partial-resource-update", ExecutionIsolation::Microvm),
+            request("partial-resource-update"),
             &box_operation("partial-resource-update-create"),
         )
         .await
@@ -48,7 +48,7 @@ async fn emits_only_selected_oci_resource_fields() {
 fn couples_derived_cpu_quota_with_period_updates() {
     let directory = tempfile::tempdir().expect("temporary directory");
     let execution_id = ExecutionId::new("period-update").expect("execution ID");
-    let mut request = request("period-update", ExecutionIsolation::Microvm);
+    let mut request = request("period-update");
     request.config.resources.vcpus = 2;
     let record = build_managed_record(
         directory.path(),

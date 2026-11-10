@@ -11,7 +11,7 @@ use async_trait::async_trait;
 use chrono::{TimeZone, Utc};
 use kbox_core::{
     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionHealthCheck, ExecutionId,
-    ExecutionIsolation, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
+    ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
     ExecutionSnapshotId, ExecutionState, KillExecutionOptions, KillOutcome, NetworkMode,
     OperationId, ReconcileOutcome, RestartExecutionOptions, SnapshotImageConfig,
 };
@@ -404,7 +404,6 @@ fn request(external_id: &str) -> CreateExecutionRequest {
             // FakeBackend lifecycle contracts are isolation-policy checks.
             // Default MicroVM so Windows hosts execute the same
             // honesty/recovery assertions instead of failing create.
-            isolation: ExecutionIsolation::Microvm,
             network: NetworkMode::None,
             resources: kbox_core::ResourceConfig {
                 vcpus: 1,
@@ -427,7 +426,6 @@ fn operation(value: &str) -> OperationId {
 
 fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
     let mut request = request(external_id);
-    request.config.isolation = ExecutionIsolation::Microvm;
     request
 }
 
@@ -436,7 +434,6 @@ fn managed_record_rejects_invalid_microvm_vcpu_count() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-vcpu-count").unwrap();
     let mut request = request("invalid-vcpu-count");
-    request.config.isolation = ExecutionIsolation::Microvm;
     request.config.resources.vcpus = 0;
 
     let error = build_managed_record(
@@ -461,7 +458,6 @@ fn managed_record_rejects_multiple_whpx_vcpus() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-whpx-vcpu-count").unwrap();
     let mut request = request("invalid-whpx-vcpu-count");
-    request.config.isolation = ExecutionIsolation::Microvm;
     request.config.resources.vcpus = 2;
 
     let error = build_managed_record(
@@ -486,7 +482,6 @@ fn managed_record_rejects_bridge_networking_on_windows() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-windows-bridge").unwrap();
     let mut request = request("invalid-windows-bridge");
-    request.config.isolation = ExecutionIsolation::Microvm;
     request.config.network = NetworkMode::Bridge {
         network: "unsupported".to_string(),
     };
@@ -513,7 +508,6 @@ fn managed_record_rejects_sandbox_isolation_on_windows() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-windows-sandbox").unwrap();
     let mut request = request("invalid-windows-sandbox");
-    request.config.isolation = ExecutionIsolation::Microvm;
 
     let error = build_managed_record(
         directory.path(),
@@ -537,7 +531,6 @@ fn managed_record_rejects_tee_on_windows() {
     let directory = tempfile::tempdir().unwrap();
     let execution_id = ExecutionId::new("invalid-windows-tee").unwrap();
     let mut request = request("invalid-windows-tee");
-    request.config.isolation = ExecutionIsolation::Microvm;
     request.config.tee = kbox_core::config::TeeConfig::SevSnp {
         workload_id: "demo".to_string(),
         generation: Default::default(),
@@ -637,7 +630,6 @@ async fn create_rejects_unsupported_microvm_security_before_store_or_backend() {
     .enumerate()
     {
         let mut create_request = request(&format!("unsupported-security-{index}"));
-        create_request.config.isolation = ExecutionIsolation::Microvm;
         create_request.config.security_opt = vec![security_option.to_string()];
 
         let error = manager
@@ -1293,7 +1285,6 @@ async fn filesystem_only_pause_restarts_the_runtime_and_preserves_generation_fen
 async fn failed_filesystem_only_pause_rolls_back_to_the_running_generation() {
     let (_directory, manager, backend) = harness();
     let mut create = request("cold-pause-failure");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("cold-pause-failure-create"))
         .await
@@ -1322,7 +1313,6 @@ async fn failed_filesystem_only_pause_rolls_back_to_the_running_generation() {
 async fn vanished_runtime_during_warm_pause_publishes_failed_not_pausing() {
     let (_directory, manager, backend) = harness();
     let mut create = request("warm-pause-vanished");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("warm-pause-vanished-create"))
         .await
@@ -1360,7 +1350,6 @@ async fn vanished_runtime_during_warm_pause_publishes_failed_not_pausing() {
 async fn vanished_runtime_during_warm_resume_publishes_failed_not_resuming() {
     let (_directory, manager, backend) = harness();
     let mut create = request("warm-resume-vanished");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("warm-resume-vanished-create"))
         .await
@@ -1403,7 +1392,6 @@ async fn observe_pausing_creating_projects_creating_not_running() {
     let (_directory, manager, backend) = harness();
     let create_operation = operation("observe-pausing-creating-create");
     let mut create = request("observe-pausing-creating");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &create_operation)
         .await
@@ -1447,7 +1435,6 @@ async fn observe_resuming_creating_projects_creating_not_paused() {
     let (_directory, manager, backend) = harness();
     let create_operation = operation("observe-resuming-creating-create");
     let mut create = request("observe-resuming-creating");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &create_operation)
         .await
@@ -1492,7 +1479,6 @@ async fn observe_pausing_stopped_without_exit_publishes_failed_not_clean_stopped
     let (_directory, manager, backend) = harness();
     let create_operation = operation("observe-pausing-stopped-create");
     let mut create = request("observe-pausing-stopped");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &create_operation)
         .await
@@ -1538,7 +1524,6 @@ async fn observe_killing_stopped_with_exit_attributes_stopped_by_user() {
     let (_directory, manager, backend) = harness();
     let create_operation = operation("observe-killing-exit-create");
     let mut create = request("observe-killing-exit");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &create_operation)
         .await
@@ -1576,7 +1561,6 @@ async fn observe_killing_stopped_with_exit_attributes_stopped_by_user() {
 async fn observe_stable_running_stopped_without_exit_stays_stopped() {
     let (_directory, manager, backend) = harness();
     let mut create = request("observe-running-stopped");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("observe-running-stopped-create"))
         .await
@@ -1607,7 +1591,6 @@ async fn observe_stable_running_stopped_without_exit_stays_stopped() {
 async fn crashed_generation_during_warm_pause_publishes_failed_not_pausing() {
     let (_directory, manager, backend) = harness();
     let mut create = request("warm-pause-crash");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("warm-pause-crash-create"))
         .await
@@ -1646,7 +1629,6 @@ async fn crashed_generation_during_warm_pause_publishes_failed_not_pausing() {
 async fn terminal_generation_during_warm_resume_publishes_stopped_not_resuming() {
     let (_directory, manager, backend) = harness();
     let mut create = request("warm-resume-terminal");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("warm-resume-terminal-create"))
         .await
@@ -1689,7 +1671,6 @@ async fn terminal_generation_during_warm_resume_publishes_stopped_not_resuming()
 async fn stopped_generation_with_exit_during_cold_pause_publishes_stopped_not_paused() {
     let (_directory, manager, backend) = harness();
     let mut create = request("cold-pause-stopped-exit");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("cold-pause-stopped-exit-create"))
         .await
@@ -1728,7 +1709,6 @@ async fn stopped_generation_with_exit_during_cold_pause_publishes_stopped_not_pa
 async fn crashed_generation_during_cold_pause_publishes_failed_not_paused() {
     let (_directory, manager, backend) = harness();
     let mut create = request("cold-pause-crash");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("cold-pause-crash-create"))
         .await
@@ -1767,7 +1747,6 @@ async fn crashed_generation_during_cold_pause_publishes_failed_not_paused() {
 async fn terminal_generation_during_cold_resume_publishes_stopped_not_paused() {
     let (_directory, manager, backend) = harness();
     let mut create = request("cold-resume-terminal");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("cold-resume-terminal-create"))
         .await
@@ -1809,7 +1788,6 @@ async fn terminal_generation_during_cold_resume_publishes_stopped_not_paused() {
 async fn failed_filesystem_only_resume_remains_retryable_without_advancing_generation() {
     let (_directory, manager, backend) = harness();
     let mut create = request("cold-resume-failure");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("cold-resume-failure-create"))
         .await
@@ -1985,7 +1963,6 @@ async fn reconcile_publishes_a_cold_resume_started_before_record_commit() {
 async fn ambiguous_pause_error_uses_backend_evidence_and_publishes_success() {
     let (_directory, manager, backend) = harness();
     let mut create = request("sandbox-1");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-1"))
         .await
@@ -2012,7 +1989,6 @@ async fn ambiguous_pause_error_uses_backend_evidence_and_publishes_success() {
 async fn kill_is_generation_fenced_and_idempotent() {
     let (_directory, manager, backend) = harness();
     let mut create = request("sandbox-1");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-1"))
         .await
@@ -2041,7 +2017,6 @@ async fn kill_is_generation_fenced_and_idempotent() {
 async fn option_aware_kill_persists_authoritative_backend_exit_code() {
     let (_directory, manager, _backend) = harness();
     let mut create = request("sandbox-exit-status");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-exit-status"))
         .await
@@ -2068,7 +2043,6 @@ async fn option_aware_kill_derives_exit_code_when_backend_cannot_reap_it() {
     let (_directory, manager, backend) = harness();
     backend.omit_kill_exit_code.store(true, Ordering::Relaxed);
     let mut create = request("sandbox-signaled-exit");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-signaled-exit"))
         .await
@@ -2097,7 +2071,6 @@ async fn already_stopped_kill_does_not_invent_signal_exit_code() {
         .already_stopped_without_exit
         .store(true, Ordering::Relaxed);
     let mut create = request("already-stopped-no-invent");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-already-stopped-no-invent"))
         .await
@@ -2131,7 +2104,6 @@ async fn already_stopped_kill_does_not_invent_signal_exit_code() {
 async fn not_found_kill_does_not_invent_stopped_by_user() {
     let (_directory, manager, backend) = harness();
     let mut create = request("kill-not-found-no-user-stop");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &operation("operation-kill-not-found-no-user-stop"))
         .await
@@ -2223,7 +2195,6 @@ async fn option_aware_kill_persists_intent_and_replays_it_after_a_crash() {
     let (directory, manager, backend) = harness();
     let create_operation = operation("operation-option-aware-kill");
     let mut create = request("option-aware-kill");
-    create.config.isolation = ExecutionIsolation::Microvm;
     let running = manager
         .create_and_start(create, &create_operation)
         .await
@@ -2536,7 +2507,6 @@ async fn inspection_releases_resources_after_an_external_terminal_observation() 
         .unwrap();
 
     let mut create_request = request("sandbox-1");
-    create_request.config.isolation = ExecutionIsolation::Microvm;
     #[cfg(not(windows))]
     {
         create_request.config.network = NetworkMode::Bridge {

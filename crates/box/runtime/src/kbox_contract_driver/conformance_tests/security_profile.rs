@@ -208,7 +208,6 @@ async fn secret_nondisclosure(
     let boxes = std::fs::read(fixture.home_dir.join("boxes.json"))
         .map_err(|error| super::external("read Box state for Secret nondisclosure", error))?;
     super::security_evidence::verify_secret_persistence(
-        fixture,
         &record,
         &creation_intent,
         &boxes,
@@ -443,7 +442,7 @@ async fn namespace_separation(fixture: &BoxRuntimeConformanceFixture) -> Result<
     .map_err(|error| super::external("seed sibling immutable image store", error))?;
     let sibling_state_root = sibling_home.join("runtime-state");
     fixture.register_state_root(sibling_state_root.clone());
-    let sibling_driver = Arc::new(BoxRuntimeDriver::new_with_isolation(
+    let sibling_driver = Arc::new(BoxRuntimeDriver::new_with_boundary(
         BoxRuntimeDriverConfig {
             state_snapshot: false,
             secret_root: sibling_home.join("runtime-secrets"),
@@ -451,7 +450,7 @@ async fn namespace_separation(fixture: &BoxRuntimeConformanceFixture) -> Result<
             control_timeout: Duration::from_secs(120),
             task_poll_interval: Duration::from_millis(25),
         },
-        fixture.driver.execution_isolation(),
+        fixture.driver.execution_boundary(),
     )?);
     fixture.register_driver(sibling_driver.clone());
     let sibling_state = Arc::new(FileRuntimeStateStore::new(&sibling_state_root));

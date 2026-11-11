@@ -1,0 +1,8 @@
+Building from /Users/roylin/code/kense/kbox/.tmp/acp-harnesses/aster-runtime-base/Containerfile
+Step 1/6: FROM node:24-bookworm-slim (stage 1/2 as node)
+Step 2/6: FROM ubuntu:20.04 (stage 2/2)
+Step 3/6: ENV DEBIAN_FRONTEND=noninteractive
+Step 4/6: RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates libssl1.1 libstdc++6 libatomic1 git util-linux && rm -rf /var/lib/apt/lists/*
+Error: Build error: RUN command failed (exit 1): apt-get update && apt-get install -y --no-install-recommends ca-certificates libssl1.1 libstdc++6 libatomic1 git util-linux && rm -rf /var/lib/apt/lists/*
+stderr:
+user must not be empty

@@ -1,0 +1,30 @@
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] new_reverse: id=17563370896910 local_port=1249623566 peer_port=4089
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] push_op_request: id=17563370896910, local_port=1249623566 peer_port=4089
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] process_op_response: id=17563370896910 src_port=4089 dst_port=1249623566
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] process_event: IN
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv_to_pkt: peer_avail_credit=262144, buf.len=3732, max_len=3732
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv cnt=5
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv rx_cnt=0
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] init_data_pkt: id=17563370896910, local_port=1249623566, peer_port=4089
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv_pkt: pushing packet with 49 bytes, push_cnt=49
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv_to_pkt: peer_avail_credit=262139, buf.len=3732, max_len=3732
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv_pkt: recv error: EAGAIN
+[2026-11-11T02:13:20Z DEBUG devices::virtio::vsock::unix] recv_pkt: have_used=true no_rx_space=false
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] update_credit: buf_alloc=262144 rx_cnt=5 fwd_cnt=5
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] process_event: HANG_UP
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] push_reset: id: 17563370896910, peer_port: 4089, local_port: 1249623566
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] new_reverse: id=17565112386718 local_port=2991113374 peer_port=4089
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] push_op_request: id=17565112386718, local_port=2991113374 peer_port=4089
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] process_op_response: id=17565112386718 src_port=4089 dst_port=2991113374
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] process_event: IN
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv_to_pkt: peer_avail_credit=262144, buf.len=3732, max_len=3732
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv cnt=5
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv rx_cnt=0
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] init_data_pkt: id=17565112386718, local_port=2991113374, peer_port=4089
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv_pkt: pushing packet with 49 bytes, push_cnt=49
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv_to_pkt: peer_avail_credit=262139, buf.len=3732, max_len=3732
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv_pkt: recv error: EAGAIN
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] recv_pkt: have_used=true no_rx_space=false
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] update_credit: buf_alloc=262144 rx_cnt=5 fwd_cnt=5
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] process_event: HANG_UP
+[2026-11-11T02:13:21Z DEBUG devices::virtio::vsock::unix] push_reset: id: 17565112386718, peer_port: 4089, local_port: 2991113374

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--release",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup",
+    "--",
+    "--exact",
+    "--ignored",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "environmentReferences": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home",
+    "K_BOX_TEST_STREAM_IMAGE": "docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110"
+  }
+}

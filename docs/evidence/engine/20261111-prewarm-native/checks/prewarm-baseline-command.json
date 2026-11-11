@@ -1,0 +1,13 @@
+{
+  "sourceHead": "0304123f562ce7264954a8a104dced9e19b3d483",
+  "worktree": "/Users/roylin/code/kense/krun/.build/prewarm-head-6b14c0ecb3d44a1ab9440bd634ec85d9/kbox",
+  "targetDir": "/Users/roylin/code/kense/kbox/target",
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "kbox_contract_driver::tests::"
+  ]
+}

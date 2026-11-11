@@ -1,0 +1,5 @@
+Building from /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/6e6161c8ebc8422fb7244f4a00a77bc8/context/Containerfile
+Step 1/6: FROM docker.io/library/krun-base@sha256:2c5dcac05ebc0b0e685959092dc3856453b593dd9c5ad736fef762580446d565
+Step 2/6: USER root
+Step 3/6: COPY marker /oci-marker
+Step 4/6: RUN python3 -c 'from pathlib import Path; Path("/image-build-proof").write_text(Path("/oci-marker").read_text())'

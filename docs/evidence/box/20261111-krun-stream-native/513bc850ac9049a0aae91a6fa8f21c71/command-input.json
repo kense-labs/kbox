@@ -1,0 +1,16 @@
+{
+  "home": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261111-krun-stream-native/513bc850ac9049a0aae91a6fa8f21c71/home",
+  "image": "docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110",
+  "output": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261111-krun-stream-native/513bc850ac9049a0aae91a6fa8f21c71",
+  "libkrunBuildCommand": [
+    "cargo",
+    "build",
+    "--locked",
+    "-p",
+    "libkrun",
+    "--features",
+    "blk,net",
+    "--release"
+  ],
+  "libkrunSourceSha256": "78300a862a600135983607e4732b58303dbc6e6825c3fc6a7ed41b1f5dab7f60"
+}

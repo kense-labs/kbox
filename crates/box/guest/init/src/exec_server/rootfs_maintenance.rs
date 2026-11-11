@@ -143,12 +143,7 @@ fn handle_connection(
             return Ok(());
         };
         let root = Path::new(kbox_core::guest_exec::GUEST_ROOTFS_MAINTENANCE_MOUNT_PATH);
-        if let Err(error) = super::stream_rootfs_archive_from(&mut stream, root, false) {
-            super::send_error_frame(
-                &mut stream,
-                &format!("rootfs maintenance archive failed: {error}"),
-            )?;
-        }
+        super::stream_rootfs_archive_from(&mut stream, root, false)?;
         return Ok(());
     }
     if frame_type == FrameType::Control as u8 && payload == EXEC_CONTROL_SHUTDOWN_MAINTENANCE {

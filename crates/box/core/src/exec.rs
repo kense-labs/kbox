@@ -49,6 +49,10 @@ pub fn windows_exec_pipe_path(box_id: &str) -> String {
 /// Default exec timeout: 5 seconds.
 pub const DEFAULT_EXEC_TIMEOUT_NS: u64 = 5_000_000_000;
 
+/// Explicitly disable the lifetime deadline of a streaming process.
+/// Zero retains the legacy default; one-shot execution keeps its existing timeout semantics.
+pub const UNLIMITED_STREAM_TIMEOUT_NS: u64 = u64::MAX;
+
 /// Maximum buffered streaming output size per stream (stdout/stderr): 16 MiB.
 pub const MAX_OUTPUT_BYTES: usize = 16 * 1024 * 1024;
 
@@ -80,7 +84,8 @@ pub struct ExecRequest {
     pub request_id: Option<String>,
     /// Command and arguments (e.g., ["ls", "-la"]).
     pub cmd: Vec<String>,
-    /// Timeout in nanoseconds. 0 means use the default.
+    /// Timeout in nanoseconds. 0 uses the default; streaming may explicitly use
+    /// [`UNLIMITED_STREAM_TIMEOUT_NS`] to run without a lifetime deadline.
     pub timeout_ns: u64,
     /// Additional environment variables (KEY=VALUE pairs).
     #[serde(default)]

@@ -1,0 +1,11 @@
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: entered main argc=1
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: mount_filesystems ok
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: after cmdline env import KRUN_INIT=/sbin/init KRUN_INIT_PID1=<null> BOX_EXEC_EXEC=<null>
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: root propagation ok
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: tty/session configured
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: config parsed
+[2026-11-11T02:11:07Z ERROR init_or_kernel] init.krun: selected exec=/sbin/init init_pid1=0
+[2026-11-11T02:11:07Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17562400538481
+[2026-11-11T02:11:07Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563804432877
+[2026-11-11T02:11:07Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17564664105615
+[2026-11-11T02:11:09Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17562243235147

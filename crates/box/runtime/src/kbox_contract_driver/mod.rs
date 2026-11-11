@@ -2,6 +2,7 @@
 
 mod artifact;
 mod attestation;
+mod directory;
 mod exec;
 mod health;
 #[cfg(all(test, unix, feature = "vm"))]
@@ -13,6 +14,10 @@ mod mapping;
 mod metadata;
 #[cfg(all(test, unix, feature = "vm"))]
 mod paperloom_processing_live_tests;
+pub(crate) mod prewarm;
+#[cfg(all(test, unix, feature = "vm"))]
+mod prewarm_native;
+mod profile;
 mod secret;
 mod service_endpoints;
 mod volume_storage;
@@ -46,7 +51,9 @@ use self::secret::SecretMaterializationOwner;
 use self::service_endpoints::ServiceEndpointOwner;
 
 pub use self::artifact::{BoxArtifactPort, BoxArtifactPortError};
+pub use self::directory::{BoxDirectoryPort, BoxDirectoryPortError};
 pub use self::host_services::BoxHostServiceResolver;
+pub use self::profile::NATIVE_GUEST_PROFILE_DIGEST;
 pub use self::secret::{
     BoxRegistryCredential, BoxSecretEnvironmentProjection, BoxSecretMaterial,
     BoxSecretMaterializationError, BoxSecretMaterializer, BoxTransientSecretStore,
@@ -106,7 +113,7 @@ pub struct BoxRuntimeSevSnpConfig {
 pub struct BoxRuntimeDriver {
     provider_id: ProviderId,
     pub(super) config: BoxRuntimeDriverConfig,
-    pub(super) manager: LocalExecutionManager,
+    pub(crate) manager: LocalExecutionManager,
     port_connector: Arc<dyn ExecutionPortConnector>,
     service_endpoints: ServiceEndpointOwner,
     execution_boundary: ExecutionBoundary,
@@ -121,6 +128,7 @@ pub struct BoxRuntimeDriver {
     host_services: host_services::HostServiceOwner,
     transient_registry_auth: Option<TransientRegistryAuthBroker>,
     provider_build: OnceCell<String>,
+    prewarm_scope: Option<prewarm::PrewarmScope>,
 }
 
 impl BoxRuntimeDriver {
@@ -231,7 +239,13 @@ impl BoxRuntimeDriver {
     /// reuses its existing VolumeStore and lifecycle records for mount wiring,
     /// Task-output staging, generation fencing, and cleanup.
     pub fn with_artifact_port(mut self, port: Arc<dyn BoxArtifactPort>) -> Self {
-        self.artifact_storage = ArtifactStorageOwner::new(self.config.home_dir.clone(), Some(port));
+        self.artifact_storage.set_artifact_port(port);
+        self
+    }
+
+    /// Enable only caller-authorized live directory references; not arbitrary host paths.
+    pub fn with_directory_port(mut self, port: Arc<dyn BoxDirectoryPort>) -> Self {
+        self.artifact_storage.set_directory_port(port);
         self
     }
 
@@ -279,6 +293,7 @@ impl BoxRuntimeDriver {
             host_services: host_services::HostServiceOwner::default(),
             transient_registry_auth,
             provider_build: OnceCell::new(),
+            prewarm_scope: None,
         })
     }
 
@@ -576,6 +591,9 @@ impl RuntimeDriver for BoxRuntimeDriver {
         if self.artifact_storage.artifact_configured() {
             mount_kinds.insert(0, MountKind::Artifact);
         }
+        if self.artifact_storage.directory_configured() {
+            mount_kinds.push(MountKind::Directory);
+        }
         let mut isolation_levels = vec![IsolationLevel::Sandbox];
         if self.sev_snp.is_some() {
             isolation_levels.push(IsolationLevel::Confidential);
@@ -688,10 +706,16 @@ mod activation_measurements;
 mod artifact_tests;
 #[cfg(test)]
 mod conformance_tests;
+#[cfg(all(test, feature = "pool", any(target_os = "linux", target_os = "macos")))]
+mod engine_process_native;
+#[cfg(all(test, feature = "pool", any(target_os = "linux", target_os = "macos")))]
+mod engine_tests;
 #[cfg(test)]
 mod exec_integration_tests;
 #[cfg(test)]
 mod lifecycle_tests;
+#[cfg(test)]
+mod profile_tests;
 #[cfg(test)]
 mod service_endpoint_tests;
 #[cfg(all(test, unix))]
@@ -700,6 +724,6 @@ mod service_lifecycle_tests;
 #[path = "snapshot_lane_tests.rs"]
 mod snapshot_lane_tests;
 #[cfg(test)]
-mod test_support;
+pub(crate) mod test_support;
 #[cfg(test)]
 mod tests;

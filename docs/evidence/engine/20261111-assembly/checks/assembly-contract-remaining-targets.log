@@ -1,0 +1,100 @@
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+     Running tests/process_races.rs (target/debug/deps/process_races-2703338dc56dba74)
+
+running 5 tests
+test subprocess_process_race_operation_helper ... ok
+
+running 1 test
+test subprocess_process_race_operation_helper ... 
+running 1 test
+test subprocess_process_race_operation_helper ... 
+running 1 test
+
+running 1 test
+test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... 
+running 1 test
+test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.26s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.26s
+
+test race_inventory_001_duplicate_resources_fail_closed_before_provider_mutation ... ok
+test race_gen_001_concurrent_generations_converge_to_one_newest_resource ... ok
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.13s
+
+test crash_gen_001_killed_generation_handoff_exact_replay_converges_once ... ok
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.21s
+
+
+running 1 test
+test subprocess_process_race_operation_helper ... 
+running 1 test
+test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.06s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.12s
+
+
+running 1 test
+
+running 1 test
+test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.06s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.10s
+
+test race_ops_001_apply_stop_remove_process_races_have_deterministic_oracles ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s
+
+     Running tests/protocol_golden.rs (target/debug/deps/protocol_golden-47c987563aa7d65e)
+
+running 2 tests
+test ct_digest_001_golden_request_and_spec_digests_are_stable ... FAILED
+test ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture ... FAILED
+
+failures:
+
+---- ct_digest_001_golden_request_and_spec_digests_are_stable stdout ----
+
+thread 'ct_digest_001_golden_request_and_spec_digests_are_stable' (63076857) panicked at crates/runtime/tests/protocol_golden.rs:163:5:
+assertion `left == right` failed
+  left: "sha256:c736a9b32ddebe8081659f292e9776689115d37399c0562cf1a26af6fe00df97"
+ right: "sha256:3b95a578b5a121530a95c7026d870f6b7008cd75c4e2fd9b2ceb949ea33172dd"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture stdout ----
+
+thread 'ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture' (63076858) panicked at crates/runtime/tests/protocol_golden.rs:42:24:
+current golden fixture must validate: "Runtime observation does not match the unit specification"
+
+
+failures:
+    ct_digest_001_golden_request_and_spec_digests_are_stable
+    ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p kbox-contract --test protocol_golden`

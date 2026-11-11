@@ -1,0 +1,7 @@
+Creating box acp-deepseek-cold-5482322f (e81d0b797b3a)...
+kbox run: still creating acp-deepseek-cold-5482322f; image is ready and runtime startup has taken 23s
+Box acp-deepseek-cold-5482322f (e81d0b797b3a) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box acp-deepseek-cold-5482322f exited and was removed.

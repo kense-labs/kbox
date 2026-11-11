@@ -1,0 +1,10 @@
+{
+  "checkedLocalLinks": 48,
+  "newBrokenLinks": [],
+  "unchangedBaselineBrokenLinks": [
+    {
+      "file": "kbox/crates/box/runtime/README.md",
+      "link": "../../../../docs/evidence/desktop/20261017-paperloom-secret-readonly-admission/OUTCOME.md"
+    }
+  ]
+}

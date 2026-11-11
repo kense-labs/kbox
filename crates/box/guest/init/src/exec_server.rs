@@ -31,6 +31,10 @@ use tracing::{info, warn};
 use crate::user::{parse_process_user, ProcessUser};
 
 mod rootfs_maintenance;
+mod stream_input;
+use stream_input::StreamingStdin;
+#[cfg(all(test, unix))]
+mod stream_tests;
 
 #[cfg(target_os = "linux")]
 pub use rootfs_maintenance::begin_rootfs_maintenance_idle_shutdown;
@@ -406,6 +410,7 @@ fn wait_for_published_container_pid(timeout: Duration) -> Option<i32> {
 
 /// Maximum payload bytes per streamed exec chunk.
 const STREAM_CHUNK_BYTES: usize = 16 * 1024;
+const STREAM_QUEUE_DEPTH: usize = 16;
 const EXEC_CONTROL_CANCEL: &[u8] = b"cancel";
 const EXEC_CONTROL_STDIN_CLOSE: &[u8] = b"stdin-close";
 const EXEC_CONTROL_SIGNAL: &[u8] = b"signal:";
@@ -898,10 +903,7 @@ pub(crate) fn handle_connection(
                 || payload == EXEC_CONTROL_ARCHIVE_ROOTFS_PAUSE)
         {
             let pause = payload == EXEC_CONTROL_ARCHIVE_ROOTFS_PAUSE;
-            let result = stream_rootfs_archive(&mut stream, pause);
-            if let Err(error) = result {
-                send_error_frame(&mut stream, &format!("rootfs archive failed: {error}"))?;
-            }
+            stream_rootfs_archive(&mut stream, pause)?;
             return Ok(());
         }
         send_error_frame(&mut stream, "Expected Data frame")?;
@@ -1711,7 +1713,15 @@ fn stream_rootfs_archive_from(
     let _pause_guard = pause.then(PausedContainerTree::pause);
     {
         let mut writer = ArchiveFrameWriter::new(&mut *stream);
-        crate::rootfs_archive::write_rootfs_archive(root, &mut writer)?;
+        match crate::rootfs_archive::write_rootfs_archive(root, &mut writer) {
+            Err(error) if writer.failed => return Err(error),
+            Err(error) => {
+                drop(writer);
+                send_error_frame(stream, &format!("rootfs archive failed: {error}"))?;
+                return Ok(());
+            }
+            Ok(()) => {}
+        }
         writer.finish()?;
     }
     write_frame(stream, FrameType::Control as u8, EXEC_ARCHIVE_ROOTFS_DONE)?;
@@ -1775,6 +1785,7 @@ fn collect_process_tree(pid: i32, output: &mut Vec<i32>) {
 struct ArchiveFrameWriter<'a, W: Write> {
     stream: &'a mut W,
     buffer: Vec<u8>,
+    failed: bool,
 }
 
 #[cfg(target_os = "linux")]
@@ -1785,14 +1796,21 @@ impl<'a, W: Write> ArchiveFrameWriter<'a, W> {
         Self {
             stream,
             buffer: Vec::with_capacity(Self::CHUNK_BYTES),
+            failed: false,
         }
     }
 
     fn flush_frame(&mut self) -> std::io::Result<()> {
+        if self.failed {
+            return Err(std::io::ErrorKind::BrokenPipe.into());
+        }
         if self.buffer.is_empty() {
             return Ok(());
         }
-        write_frame(self.stream, FrameType::Data as u8, &self.buffer)?;
+        if let Err(error) = write_frame(self.stream, FrameType::Data as u8, &self.buffer) {
+            self.failed = true;
+            return Err(error);
+        }
         self.buffer.clear();
         Ok(())
     }
@@ -1835,11 +1853,29 @@ fn write_frame(w: &mut impl Write, frame_type: u8, payload: &[u8]) -> std::io::R
             ),
         ));
     }
-    let len = payload.len() as u32;
-    w.write_all(&[frame_type])?;
-    w.write_all(&len.to_be_bytes())?;
-    w.write_all(payload)?;
+    let mut header = [0; 5];
+    header[0] = frame_type;
+    header[1..].copy_from_slice(&(payload.len() as u32).to_be_bytes());
+    write_frame_bytes(w, &header)?;
+    write_frame_bytes(w, payload)?;
     w.flush()
+}
+
+fn write_frame_bytes(w: &mut impl Write, mut bytes: &[u8]) -> std::io::Result<()> {
+    let mut chunk_bytes = bytes.len();
+    while !bytes.is_empty() {
+        match w.write(&bytes[..bytes.len().min(chunk_bytes)]) {
+            Ok(0) => return Err(std::io::ErrorKind::WriteZero.into()),
+            Ok(written) => bytes = &bytes[written..],
+            Err(error) if error.kind() == std::io::ErrorKind::Interrupted => {}
+            // Large vsock packet allocations can fail while smaller writes still progress.
+            Err(error) if error.kind() == std::io::ErrorKind::OutOfMemory && chunk_bytes > 4096 => {
+                chunk_bytes = (chunk_bytes / 2).max(4096);
+            }
+            Err(error) => return Err(error),
+        }
+    }
+    Ok(())
 }
 
 /// Read a frame: [type:u8][length:u32 BE][payload]. Returns None on EOF.
@@ -1891,7 +1927,7 @@ fn spawn_exec_input_monitor(
     stream: &std::fs::File,
 ) -> std::io::Result<mpsc::Receiver<ExecInputEvent>> {
     let mut reader = stream.try_clone()?;
-    let (tx, rx) = mpsc::channel();
+    let (tx, rx) = mpsc::sync_channel(STREAM_QUEUE_DEPTH);
 
     std::thread::spawn(move || loop {
         match read_frame(&mut reader) {
@@ -1929,8 +1965,10 @@ fn spawn_exec_input_monitor(
                 }
             }
             Ok(Some((frame_type, payload))) if frame_type == FrameType::Data as u8 => {
-                if tx.send(ExecInputEvent::Stdin(payload)).is_err() {
-                    break;
+                for chunk in payload.chunks(STREAM_CHUNK_BYTES) {
+                    if tx.send(ExecInputEvent::Stdin(chunk.to_vec())).is_err() {
+                        return;
+                    }
                 }
             }
             Ok(Some((frame_type, _))) if frame_type == FrameType::Close as u8 => {
@@ -2539,7 +2577,7 @@ enum StreamingStopReason {
 fn spawn_stream_reader<R>(
     stream: StreamType,
     mut reader: R,
-    sender: mpsc::Sender<StreamReaderEvent>,
+    sender: mpsc::SyncSender<StreamReaderEvent>,
 ) -> std::thread::JoinHandle<()>
 where
     R: Read + Send + 'static,
@@ -2582,7 +2620,8 @@ fn drain_stream_reader_events(
 #[cfg_attr(not(target_os = "linux"), allow(dead_code))]
 fn wait_streaming_child(
     child: &mut std::process::Child,
-    timeout: Duration,
+    timeout: Option<Duration>,
+    stdin: &mut StreamingStdin,
     input_rx: Option<&mpsc::Receiver<ExecInputEvent>>,
     receiver: &mpsc::Receiver<StreamReaderEvent>,
     writer: &mut impl Write,
@@ -2591,7 +2630,7 @@ fn wait_streaming_child(
     let poll_interval = Duration::from_millis(20);
 
     loop {
-        if process_streaming_input(child, input_rx, receiver, writer)? {
+        if process_streaming_input(child, stdin, input_rx, receiver, writer)? {
             warn!("Streaming exec command received stop request, killing");
             kill_child_process_group(child);
             return Ok((137, Some(StreamingStopReason::Cancelled)));
@@ -2604,7 +2643,7 @@ fn wait_streaming_child(
             Err(mpsc::RecvTimeoutError::Timeout | mpsc::RecvTimeoutError::Disconnected) => {}
         }
 
-        if process_streaming_input(child, input_rx, receiver, writer)? {
+        if process_streaming_input(child, stdin, input_rx, receiver, writer)? {
             warn!("Streaming exec command received stop request, killing");
             kill_child_process_group(child);
             return Ok((137, Some(StreamingStopReason::Cancelled)));
@@ -2613,7 +2652,7 @@ fn wait_streaming_child(
         match child.try_wait() {
             Ok(Some(status)) => return Ok((process_exit_code(&status), None)),
             Ok(None) => {
-                if start.elapsed() >= timeout {
+                if timeout.is_some_and(|limit| start.elapsed() >= limit) {
                     warn!(
                         "Streaming exec command timed out after {:?}, killing",
                         timeout
@@ -2654,18 +2693,26 @@ struct InputDrainOutcome {
 
 fn drain_exec_input_events(
     child: &mut std::process::Child,
+    stdin: &mut StreamingStdin,
     input_rx: Option<&mpsc::Receiver<ExecInputEvent>>,
 ) -> InputDrainOutcome {
     let mut outcome = InputDrainOutcome::default();
+    if !stdin.pump() {
+        return outcome;
+    }
     let Some(input_rx) = input_rx else {
         return outcome;
     };
 
-    loop {
+    for _ in 0..STREAM_QUEUE_DEPTH {
         match input_rx.try_recv() {
-            Ok(ExecInputEvent::Stdin(data)) => write_live_child_stdin(child, &data),
+            Ok(ExecInputEvent::Stdin(data)) => {
+                if !stdin.write(data) {
+                    return outcome;
+                }
+            }
             Ok(ExecInputEvent::StdinClose) => {
-                let _ = child.stdin.take();
+                stdin.close();
             }
             Ok(ExecInputEvent::Flush) => outcome.flush = true,
             Ok(ExecInputEvent::Signal(signal)) => {
@@ -2686,6 +2733,7 @@ fn drain_exec_input_events(
             }
         }
     }
+    outcome
 }
 
 /// Process pending input events: apply stdin/close, and on a flush request
@@ -2694,11 +2742,12 @@ fn drain_exec_input_events(
 #[cfg_attr(not(target_os = "linux"), allow(dead_code))]
 fn process_streaming_input(
     child: &mut std::process::Child,
+    stdin: &mut StreamingStdin,
     input_rx: Option<&mpsc::Receiver<ExecInputEvent>>,
     receiver: &mpsc::Receiver<StreamReaderEvent>,
     writer: &mut impl Write,
 ) -> Result<bool, Box<dyn std::error::Error>> {
-    let outcome = drain_exec_input_events(child, input_rx);
+    let outcome = drain_exec_input_events(child, stdin, input_rx);
     if outcome.flush {
         // Everything the reader threads have queued is written first, so the
         // ack marks a definitive boundary for log rotation.
@@ -2706,28 +2755,6 @@ fn process_streaming_input(
         write_exec_flush_ack(writer)?;
     }
     Ok(outcome.cancel)
-}
-
-#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
-fn write_live_child_stdin(child: &mut std::process::Child, data: &[u8]) {
-    let mut close_stdin = false;
-
-    if let Some(stdin_pipe) = child.stdin.as_mut() {
-        match stdin_pipe.write_all(data).and_then(|_| stdin_pipe.flush()) {
-            Ok(()) => {}
-            Err(e) if e.kind() == std::io::ErrorKind::BrokenPipe => {
-                close_stdin = true;
-            }
-            Err(e) => {
-                warn!(error = %e, "Failed to write streaming exec stdin");
-                close_stdin = true;
-            }
-        }
-    }
-
-    if close_stdin {
-        let _ = child.stdin.take();
-    }
 }
 
 #[cfg_attr(not(unix), allow(dead_code))]
@@ -2791,9 +2818,9 @@ fn execute_command_streaming(
         }
     };
 
-    write_child_stdin(&mut child, spec.stdin_data, spec.stdin_streaming);
+    let mut stdin = StreamingStdin::start(&mut child, spec.stdin_data, spec.stdin_streaming);
 
-    let (sender, receiver) = mpsc::channel();
+    let (sender, receiver) = mpsc::sync_channel(STREAM_QUEUE_DEPTH);
     let mut readers = Vec::new();
     if let Some(stdout) = child.stdout.take() {
         readers.push(spawn_stream_reader(
@@ -2811,23 +2838,45 @@ fn execute_command_streaming(
     }
     drop(sender);
 
-    let wait_result =
-        wait_streaming_child(&mut child, timeout, input_rx.as_ref(), &receiver, writer);
+    let timeout =
+        (spec.timeout_ns != kbox_core::exec::UNLIMITED_STREAM_TIMEOUT_NS).then_some(timeout);
+    let wait_result = wait_streaming_child(
+        &mut child,
+        timeout,
+        &mut stdin,
+        input_rx.as_ref(),
+        &receiver,
+        writer,
+    );
     let (exit_code, stop_reason) = match wait_result {
         Ok(result) => result,
         Err(error) => {
             kill_child_process_group(&mut child);
+            drop(receiver);
             for reader in readers {
                 let _ = reader.join();
             }
+            stdin.finish();
             return Err(error);
         }
     };
 
+    // Keep draining while producers finish: joining first deadlocks a full bounded queue.
+    let tail_result = (|| -> Result<(), Box<dyn std::error::Error>> {
+        while let Ok(StreamReaderEvent::Chunk(stream, data)) = receiver.recv() {
+            write_exec_stream_chunk(writer, stream, &data)?;
+        }
+        Ok(())
+    })();
+    if tail_result.is_err() {
+        kill_child_process_group(&mut child);
+    }
+    drop(receiver);
     for reader in readers {
         let _ = reader.join();
     }
-    drain_stream_reader_events(&receiver, writer)?;
+    stdin.finish();
+    tail_result?;
 
     match stop_reason {
         Some(StreamingStopReason::Timeout) => {
@@ -3317,6 +3366,111 @@ fn bounded_exec_output_with_truncation(
 mod tests {
     use super::*;
 
+    #[test]
+    fn frame_write_recovers_from_large_socket_allocation_failures() {
+        struct AllocationLimitedWriter {
+            bytes: Vec<u8>,
+            maximum: usize,
+        }
+        impl Write for AllocationLimitedWriter {
+            fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+                if bytes.len() > self.maximum {
+                    return Err(std::io::Error::from(std::io::ErrorKind::OutOfMemory));
+                }
+                let written = bytes.len().min(37);
+                self.bytes.extend_from_slice(&bytes[..written]);
+                Ok(written)
+            }
+
+            fn flush(&mut self) -> std::io::Result<()> {
+                Ok(())
+            }
+        }
+
+        let payload: Vec<u8> = (0..131_072).map(|index| index as u8).collect();
+        let mut writer = AllocationLimitedWriter {
+            bytes: Vec::new(),
+            maximum: 4096,
+        };
+        write_frame(&mut writer, FrameType::Data as u8, &payload).unwrap();
+        let mut input = std::io::Cursor::new(writer.bytes);
+        assert_eq!(
+            read_frame(&mut input).unwrap(),
+            Some((FrameType::Data as u8, payload))
+        );
+        assert!(read_frame(&mut input).unwrap().is_none());
+
+        let mut failed = AllocationLimitedWriter {
+            bytes: Vec::new(),
+            maximum: 0,
+        };
+        assert_eq!(
+            write_frame(&mut failed, FrameType::Data as u8, b"data")
+                .unwrap_err()
+                .kind(),
+            std::io::ErrorKind::OutOfMemory
+        );
+        let mut empty = &mut [][..];
+        assert_eq!(
+            write_frame(&mut empty, FrameType::Data as u8, b"data")
+                .unwrap_err()
+                .kind(),
+            std::io::ErrorKind::WriteZero
+        );
+    }
+
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn archive_transport_failure_cannot_append_another_frame() {
+        struct BrokenWriter {
+            bytes: Vec<u8>,
+            failed_once: bool,
+        }
+        impl Write for BrokenWriter {
+            fn write(&mut self, bytes: &[u8]) -> std::io::Result<usize> {
+                if self.failed_once {
+                    self.bytes.extend_from_slice(bytes);
+                    return Ok(bytes.len());
+                }
+                let size = bytes.len().min(261 - self.bytes.len());
+                if size == 0 {
+                    self.failed_once = true;
+                    return Err(std::io::ErrorKind::BrokenPipe.into());
+                }
+                self.bytes.extend_from_slice(&bytes[..size]);
+                Ok(size)
+            }
+            fn flush(&mut self) -> std::io::Result<()> {
+                Ok(())
+            }
+        }
+        let root = tempfile::tempdir().unwrap();
+        std::fs::write(root.path().join("large"), vec![0xa5; 131_072]).unwrap();
+        let mut writer = BrokenWriter {
+            bytes: Vec::new(),
+            failed_once: false,
+        };
+        assert!(stream_rootfs_archive_from(&mut writer, root.path(), false).is_err());
+        assert!(writer.failed_once);
+        assert_eq!(writer.bytes.len(), 261);
+        assert_eq!(&writer.bytes[..5], &[FrameType::Data as u8, 0, 1, 0, 0]);
+    }
+
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn archive_source_failure_is_one_error_frame() {
+        let root = tempfile::tempdir().unwrap();
+        let mut output = Vec::new();
+        stream_rootfs_archive_from(&mut output, &root.path().join("missing"), false).unwrap();
+        let mut input = std::io::Cursor::new(output);
+        let (kind, payload) = read_frame(&mut input).unwrap().unwrap();
+        assert_eq!(kind, FrameType::Error as u8);
+        assert!(String::from_utf8(payload)
+            .unwrap()
+            .starts_with("rootfs archive failed: "));
+        assert!(read_frame(&mut input).unwrap().is_none());
+    }
+
     fn spawn_long_running_test_child() -> std::process::Child {
         #[cfg(windows)]
         let mut command = {
@@ -3367,7 +3521,8 @@ mod tests {
         let mut child = spawn_long_running_test_child();
         let (tx, rx) = mpsc::channel::<ExecInputEvent>();
         drop(tx); // host gone
-        let outcome = drain_exec_input_events(&mut child, Some(&rx));
+        let mut stdin = StreamingStdin::start(&mut child, None, true);
+        let outcome = drain_exec_input_events(&mut child, &mut stdin, Some(&rx));
         assert!(
             outcome.cancel,
             "a disconnected host input channel must request cancel"
@@ -3381,7 +3536,8 @@ mod tests {
         use std::sync::mpsc;
         let mut child = spawn_long_running_test_child();
         let (_tx, rx) = mpsc::channel::<ExecInputEvent>(); // sender alive, no events
-        let outcome = drain_exec_input_events(&mut child, Some(&rx));
+        let mut stdin = StreamingStdin::start(&mut child, None, true);
+        let outcome = drain_exec_input_events(&mut child, &mut stdin, Some(&rx));
         assert!(
             !outcome.cancel,
             "an idle (still-connected) input channel must not cancel"
@@ -3666,14 +3822,15 @@ mod tests {
     }
 
     #[test]
-    fn test_build_command_rejects_named_user() {
+    fn test_build_command_rejects_unresolved_image_user() {
+        let root = tempfile::tempdir().unwrap();
         let output = build_command(
             ExecCommandSpec {
                 cmd: &["id".to_string()],
                 timeout_ns: 0,
                 env: &[],
                 working_dir: None,
-                rootfs: None,
+                rootfs: Some(root.path().to_str().unwrap()),
                 stdin_data: None,
                 stdin_streaming: false,
                 user: Some("node"),

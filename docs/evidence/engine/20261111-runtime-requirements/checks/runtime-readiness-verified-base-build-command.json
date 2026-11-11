@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/krun/.build/requirements-verified-prefix-e38b63fbb74240c9a9e2a5f49f23d882/bin/kbox",
+    "build",
+    "--run-pool-socket",
+    "/private/tmp/kr-req-build-jc59ffrq/pool.sock",
+    "--run-pool-autostart",
+    "--run-pool-image",
+    "node:24-bookworm@sha256:8fa96264f302f58bbb13aa7339c541547b56975766ce956c875da149452a3e40",
+    "-f",
+    "/Users/roylin/code/kense/krun/.build/requirements-verified-base-e38b63fbb74240c9a9e2a5f49f23d882/Containerfile",
+    "-t",
+    "krun-base:requirements-verified-e38b63fbb742",
+    "/Users/roylin/code/kense/krun/.build/requirements-verified-base-e38b63fbb74240c9a9e2a5f49f23d882"
+  ],
+  "cwd": "/Users/roylin/code/kense/kbox",
+  "kboxHome": "/Users/roylin/code/kense/krun/.build/requirements-verified-build-home-e38b63fbb74240c9a9e2a5f49f23d882"
+}

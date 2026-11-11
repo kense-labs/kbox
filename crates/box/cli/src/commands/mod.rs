@@ -12,6 +12,7 @@ mod cp;
 mod create;
 mod df;
 pub(crate) mod diff;
+mod engine;
 mod events;
 pub(crate) mod exec;
 mod export;
@@ -203,6 +204,8 @@ pub enum Command {
     Monitor(monitor::MonitorArgs),
     /// Manage the warm VM pool (pre-boot VMs for instant start)
     Pool(pool::PoolArgs),
+    /// Serve the versioned local runtime control plane
+    Engine(engine::EngineArgs),
     /// Open an interactive shell in a running box
     Shell(shell::ShellArgs),
     /// Serve the machine-facing Gateway scaling authority
@@ -701,6 +704,7 @@ pub async fn dispatch(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
         Command::Info(args) => Box::pin(info::execute(args)),
         Command::Monitor(args) => Box::pin(monitor::execute(args)),
         Command::Pool(args) => Box::pin(pool::execute(args)),
+        Command::Engine(args) => Box::pin(engine::execute(args)),
         Command::Shell(args) => Box::pin(shell::execute(args)),
         Command::ScaleApi(args) => Box::pin(scale_api::execute(args)),
     };

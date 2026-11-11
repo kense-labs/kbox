@@ -14,11 +14,19 @@ use std::future::Future;
 use std::sync::Arc;
 use std::time::Duration;
 
+/// Optional control-plane fence, checked under the unit's operation lease.
+#[async_trait]
+pub trait RuntimeAdmissionGuard: Send + Sync {
+    /// Refuse superseded work before provider dispatch. Must not reacquire the unit lease.
+    async fn check_apply(&self, request: &RuntimeApplyRequest) -> RuntimeResult<()>;
+}
+
 /// Shared durable lifecycle implementation used by provider integrations.
 pub struct ManagedRuntimeClient {
     state: Arc<dyn RuntimeStateStore>,
     driver: Arc<dyn RuntimeDriver>,
     clock: Arc<dyn RuntimeClock>,
+    admission_guard: Option<Arc<dyn RuntimeAdmissionGuard>>,
 }
 
 impl ManagedRuntimeClient {
@@ -35,7 +43,25 @@ impl ManagedRuntimeClient {
             state,
             driver,
             clock,
+            admission_guard: None,
         }
+    }
+
+    pub fn with_admission_guard(mut self, guard: Arc<dyn RuntimeAdmissionGuard>) -> Self {
+        self.admission_guard = Some(guard);
+        self
+    }
+
+    async fn check_apply_admission(&self, request: &RuntimeApplyRequest) -> RuntimeResult<()> {
+        if let Some(guard) = &self.admission_guard {
+            self.bounded(
+                request.deadline_at_ms,
+                "apply admission",
+                guard.check_apply(request),
+            )
+            .await?;
+        }
+        Ok(())
     }
 
     async fn checked_capabilities(&self) -> RuntimeResult<RuntimeCapabilities> {
@@ -210,6 +236,7 @@ impl RuntimeClient for ManagedRuntimeClient {
             .await?;
         self.check_deadline(request.deadline_at_ms)?;
 
+        self.check_apply_admission(request).await?;
         let reservation = self
             .state
             .reserve_apply(request, self.clock.now_ms())
@@ -220,6 +247,7 @@ impl RuntimeClient for ManagedRuntimeClient {
             });
         }
 
+        self.check_apply_admission(request).await?;
         let observation = self
             .bounded(
                 request.deadline_at_ms,

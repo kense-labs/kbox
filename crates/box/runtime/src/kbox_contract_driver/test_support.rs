@@ -735,7 +735,7 @@ pub(super) fn runtime_spec(
     }
 }
 
-pub(super) fn accepted(spec: &RuntimeUnitSpec) -> RuntimeObservation {
+pub(crate) fn accepted(spec: &RuntimeUnitSpec) -> RuntimeObservation {
     RuntimeObservation {
         schema: RuntimeObservation::SCHEMA.into(),
         unit_id: spec.unit_id.clone(),
@@ -767,7 +767,7 @@ pub(super) fn unknown(previous: &RuntimeObservation) -> RuntimeObservation {
     observation
 }
 
-pub(super) fn unit(spec: RuntimeUnitSpec, observation: RuntimeObservation) -> RuntimeUnitRecord {
+pub(crate) fn unit(spec: RuntimeUnitSpec, observation: RuntimeObservation) -> RuntimeUnitRecord {
     RuntimeUnitRecord {
         schema: RuntimeUnitRecord::SCHEMA.into(),
         spec,

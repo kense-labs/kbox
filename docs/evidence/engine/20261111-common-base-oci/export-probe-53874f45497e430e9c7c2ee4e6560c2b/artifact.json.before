@@ -1,0 +1,7 @@
+{
+  "schema": "kbox.rootfs-ext4.v1",
+  "builder": "mkext4/0.0.3+kadapter-v3",
+  "format": "raw-ext4",
+  "capacity_bytes": 4294967296,
+  "fs_uuid": "ce5c5815c5835276965830b877f2fd5b"
+}

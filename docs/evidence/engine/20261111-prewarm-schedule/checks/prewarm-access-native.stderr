@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/krun/scripts/test_prewarm_native.py", line 277, in <module>
+    main()
+  File "/Users/roylin/code/kense/krun/scripts/test_prewarm_native.py", line 164, in main
+    cli(kbox, ["run", "-d", "--name", ordinary_name, "--memory", "512m", "--network", "none",
+  File "/Users/roylin/code/kense/krun/scripts/test_prewarm_native.py", line 67, in cli
+    assert result.returncode == 0, f"CLI {index} failed; logs retained in {root}"
+AssertionError: CLI 2 failed; logs retained in /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/cf6480ef77114d09b55d7e7f945c8e26

@@ -106,6 +106,7 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
         Some(record) => record,
         None => return Err(format!("No such container: {}", args.r#box).into()),
     };
+    record.require_claimed()?;
     let oci_session = uses_oci_session(&record);
     if oci_session {
         if record.status != "running" {

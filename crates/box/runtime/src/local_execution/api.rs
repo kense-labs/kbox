@@ -20,29 +20,7 @@ impl ExecutionManager for LocalExecutionManager {
         request: CreateExecutionRequest,
         operation_id: &OperationId,
     ) -> ExecutionManagerResult<ExecutionReservation> {
-        let execution_id = ExecutionId::new(uuid::Uuid::new_v4().to_string())?;
-        let mut record = build_managed_record(
-            &self.home_dir,
-            &execution_id,
-            operation_id.clone(),
-            request,
-            chrono::Utc::now(),
-        )?;
-        let route = self.backend.route_for_create(&record)?;
-        record
-            .managed_execution
-            .as_mut()
-            .ok_or_else(|| {
-                ExecutionManagerError::Internal(format!(
-                    "new execution {execution_id} has no managed lifecycle metadata"
-                ))
-            })?
-            .runtime_route = route;
-        self.backend.preflight(&record).await?;
-        self.backend
-            .plan_create_resources(&record)
-            .await?
-            .apply_to(&mut record)?;
+        let record = self.prepare_creation_record(request, operation_id).await?;
         let reservation = self.reserve(record).await?;
         super::record::reservation_from_record(reservation.record())
     }
@@ -188,6 +166,7 @@ impl ExecutionManager for LocalExecutionManager {
             .ok_or_else(|| ExecutionManagerError::NotFound(execution_id.clone()))?;
         let record = self.stabilize_snapshot(record).await?;
         require_generation(&record, execution_id, expected_generation)?;
+        record.require_claimed()?;
         let state = managed_state(&record)?;
         if let Some(completed) = record
             .managed_execution
@@ -389,6 +368,17 @@ impl ExecutionManager for LocalExecutionManager {
         if state.is_terminal() {
             return Ok(KillOutcome::AlreadyStopped);
         }
+        if state == ManagedExecutionState::Created && record.is_unclaimed_prewarm() {
+            // This reservation has never crossed the provider start boundary.
+            self.transition(
+                &record,
+                state,
+                ManagedExecutionState::Stopped,
+                RuntimeUpdate::KillTerminal(None),
+            )
+            .await?;
+            return Ok(KillOutcome::AlreadyStopped);
+        }
         if matches!(
             state,
             ManagedExecutionState::RestartStopping | ManagedExecutionState::RestartStarting
@@ -501,6 +491,39 @@ impl ExecutionManager for LocalExecutionManager {
                 outcome_from_record(record, state)
             }
         }
+    }
+}
+
+impl LocalExecutionManager {
+    pub(super) async fn prepare_creation_record(
+        &self,
+        request: CreateExecutionRequest,
+        operation_id: &OperationId,
+    ) -> ExecutionManagerResult<crate::BoxRecord> {
+        let execution_id = ExecutionId::new(uuid::Uuid::new_v4().to_string())?;
+        let mut record = build_managed_record(
+            &self.home_dir,
+            &execution_id,
+            operation_id.clone(),
+            request,
+            chrono::Utc::now(),
+        )?;
+        let route = self.backend.route_for_create(&record)?;
+        record
+            .managed_execution
+            .as_mut()
+            .ok_or_else(|| {
+                ExecutionManagerError::Internal(
+                    "new execution has no managed lifecycle metadata".into(),
+                )
+            })?
+            .runtime_route = route;
+        self.backend.preflight(&record).await?;
+        self.backend
+            .plan_create_resources(&record)
+            .await?
+            .apply_to(&mut record)?;
+        Ok(record)
     }
 }
 

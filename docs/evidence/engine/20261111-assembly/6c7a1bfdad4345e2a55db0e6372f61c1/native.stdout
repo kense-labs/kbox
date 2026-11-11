@@ -1,0 +1,11 @@
+
+running 1 test
+test kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup ... FAILED
+
+failures:
+
+failures:
+    kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2148 filtered out; finished in 32.19s
+

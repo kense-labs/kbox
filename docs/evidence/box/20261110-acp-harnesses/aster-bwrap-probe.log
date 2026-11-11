@@ -1,0 +1,6 @@
+Creating box warm_torvalds (a23681beade2)...
+Box warm_torvalds (a23681beade2) started. Press Ctrl-C to stop.
+bubblewrap 0.4.0
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box warm_torvalds exited and was removed.

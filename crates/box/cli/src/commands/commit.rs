@@ -60,6 +60,7 @@ pub async fn execute(args: CommitArgs) -> Result<(), Box<dyn std::error::Error>>
             args.name
         )
     })?;
+    record.require_claimed()?;
     let capture_mode = commit_capture_mode(record)?;
 
     let attached_rootfs = if capture_mode != CommitCaptureMode::OfflineDirectory {

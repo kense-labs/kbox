@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "scripts/test_prewarm_native.py",
+    "--krun",
+    "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/krun",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--image",
+    "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule"
+  ],
+  "cwd": "/Users/roylin/code/kense/krun"
+}

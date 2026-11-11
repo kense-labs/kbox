@@ -4,18 +4,36 @@
 
 acp_rpc() {
   local id="$1" payload="$2" timeout="${3:-60}"
-  local line chunk
+  local line chunk update
   RPC_RESPONSE=""
   printf '%s\n' "$payload" >&3
   while IFS= read -r -t "$timeout" -u 4 line; do
     [[ "$line" == \{* ]] || continue
-    if jq -e --argjson id "$id" '.id? == $id' >/dev/null 2>&1 <<<"$line"; then
+    if jq -e '.method? == "session/request_permission" and has("id")' >/dev/null 2>&1 <<<"$line"; then
+      local permission_kind="reject_once" permission_reply
+      [[ "${ACP_ALLOW_ONCE:-0}" != 1 ]] || permission_kind="allow_once"
+      permission_reply="$(jq -c --arg kind "$permission_kind" '
+        {jsonrpc:"2.0",id:.id,result:{outcome:(
+          ([.params.options[] | select(.kind == $kind)] | first) as $option |
+          if $option == null then {outcome:"cancelled"}
+          else {outcome:"selected",optionId:$option.optionId} end)}}' <<<"$line")"
+      printf '%s\n' "$permission_reply" >&3
+      continue
+    fi
+    if jq -e --argjson id "$id" '.id? == $id and (has("method") | not)' >/dev/null 2>&1 <<<"$line"; then
       if jq -e 'has("error")' >/dev/null 2>&1 <<<"$line"; then
         jq -r '.error.message // "ACP request failed"' >&2 <<<"$line"
         return 1
       fi
       RPC_RESPONSE="$line"
       return 0
+    fi
+    update="$(jq -r 'select(.method? == "session/update") | .params.update.sessionUpdate // empty' <<<"$line" 2>/dev/null || true)"
+    if [[ "$update" == "tool_call" ]]; then
+      TOOL_CALL_COUNT=$((${TOOL_CALL_COUNT:-0} + 1))
+    elif [[ "$update" == "tool_call_update" ]] &&
+      jq -e '.params.update.status == "completed"' >/dev/null 2>&1 <<<"$line"; then
+      TOOL_COMPLETE_COUNT=$((${TOOL_COMPLETE_COUNT:-0} + 1))
     fi
     chunk="$(jq -rj 'select(.method? == "session/update") |
       .params.update | select(.sessionUpdate == "agent_message_chunk") |
@@ -58,6 +76,8 @@ acp_set_model_config() {
 acp_prompt() {
   local text="$1" timeout="${2:-240}"
   REPLY=""
+  TOOL_CALL_COUNT=0
+  TOOL_COMPLETE_COUNT=0
   acp_rpc 5 "$(jq -nc --arg session "$SESSION_ID" --arg text "$text" \
     '{jsonrpc:"2.0",id:5,method:"session/prompt",params:{sessionId:$session,prompt:[{type:"text",text:$text}]}}')" "$timeout"
   STOP_REASON="$(jq -r '.result.stopReason // empty' <<<"$RPC_RESPONSE")"

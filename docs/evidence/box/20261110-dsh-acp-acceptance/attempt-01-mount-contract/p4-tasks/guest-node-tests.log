@@ -1,0 +1,38 @@
+✔ exports the reducer under its documented and convenient names (0.418167ms)
+✔ deduplicates identical ids and counts only unique events in balances (0.40525ms)
+✔ rejects conflicting records that share an id (0.1905ms)
+✔ rejects a conflict even when its account would be filtered out (0.061375ms)
+✔ uses exact integer arithmetic and preserves unsafe sums as BigInt (0.19825ms)
+✔ sorts accounts by Unicode code point, not UTF-16 code unit (0.10825ms)
+✔ filters accounts and net but keeps global event counts (0.076667ms)
+✔ parses BOM, CRLF, and blank or whitespace-only lines (0.143833ms)
+✔ CLI writes the exact report shape and creates parent directories (14.60175ms)
+✔ CLI --account filters accounts and net without changing event counts (25.457292ms)
+✔ CLI reports exact decimal values for sums beyond safe integers (15.481958ms)
+▶ invalid inputs fail with nonzero exit and preserve existing output
+  ✔ malformed JSON (16.152459ms)
+  ✔ negative cents (12.70075ms)
+  ✔ fractional cents (12.537333ms)
+  ✔ string cents (12.033125ms)
+  ✔ unsafe cents (16.362833ms)
+  ✔ empty id (18.830583ms)
+  ✔ empty account (15.599042ms)
+  ✔ invalid kind (16.151417ms)
+  ✔ null record (15.667334ms)
+  ✔ array record (16.224417ms)
+  ✔ missing fields (15.764ms)
+  ✔ conflicting duplicate (18.518875ms)
+✔ invalid inputs fail with nonzero exit and preserve existing output (187.899708ms)
+✔ invalid UTF-8 fails without replacing output (17.040875ms)
+✔ a missing input fails without replacing output (16.198083ms)
+✔ a valid run replaces an existing output only after full validation (18.818209ms)
+✔ CLI rejects bad usage and unknown options (50.419125ms)
+✔ CLI can safely use the input path as the output path (26.542ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 401.996501

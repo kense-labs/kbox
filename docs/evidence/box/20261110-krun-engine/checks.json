@@ -1,0 +1,178 @@
+{
+  "schema": "kbox.evidence-checks.v1",
+  "status": "partial",
+  "head": "0304123f562ce7264954a8a104dced9e19b3d483",
+  "checks": [
+    {
+      "command": [
+        "rustfmt",
+        "--edition",
+        "2021",
+        "--config",
+        "skip_children=true",
+        "--check",
+        "crates/box/runtime/src/engine/controller.rs",
+        "crates/box/runtime/src/engine/journal.rs",
+        "crates/box/runtime/src/engine/mod.rs",
+        "crates/box/runtime/src/engine/protocol.rs",
+        "crates/box/runtime/src/engine/tests.rs",
+        "crates/box/runtime/src/engine/transport.rs",
+        "crates/box/runtime/src/kbox_contract_driver/profile.rs",
+        "crates/box/runtime/src/kbox_contract_driver/profile_tests.rs",
+        "crates/box/runtime/src/kbox_contract_driver/engine_tests.rs",
+        "crates/box/runtime/src/kbox_contract_driver/mapping.rs",
+        "crates/box/runtime/src/kbox_contract_driver/mod.rs",
+        "crates/box/runtime/src/host_sockets.rs",
+        "crates/box/cli/src/commands/engine.rs",
+        "crates/box/cli/src/commands/mod.rs",
+        "crates/runtime/src/managed.rs",
+        "crates/runtime/src/lib.rs"
+      ],
+      "exitCode": 0,
+      "log": "verify-0.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "verify-1.log"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/e2e-engine/native_smoke.py"
+      ],
+      "exitCode": 0,
+      "log": "verify-2.log"
+    },
+    {
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "exitCode": 0,
+      "log": "verify-3.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "exitCode": 0,
+      "log": "verify-4.log"
+    },
+    {
+      "command": [
+        "uname",
+        "-srm"
+      ],
+      "exitCode": 0,
+      "log": "verify-5.log"
+    }
+  ],
+  "sourceSha256": {
+    "crates/box/runtime/src/engine/controller.rs": "c4ff5bd041877743e26838e047bf04d1c4d440f26d7ffc8600f4737794287c9f",
+    "crates/box/runtime/src/engine/journal.rs": "dc4b1373fa44c252eda55460710147995ef369d234d75dc9105f12b47bb27781",
+    "crates/box/runtime/src/engine/mod.rs": "d0642edcff2f8dee7cb0e9d36b372dbc29277dff55bff95b58bb20ec33e9434d",
+    "crates/box/runtime/src/engine/protocol.rs": "1d3f7ebd700decddca27a6a9e6eb6dbddafa14fdf3eb06228f38b59377f0fbd1",
+    "crates/box/runtime/src/engine/tests.rs": "68d3364af45fb0afb402271d2e963da5fadbeb491d1a76e0d11129ea8908eb4c",
+    "crates/box/runtime/src/engine/transport.rs": "722f165fe654f32639c99418301c80ea581def9bd90ee622d53d60847182537d",
+    "crates/box/runtime/src/kbox_contract_driver/profile.rs": "95408d6f9c8996220bb3ffcdfa337f5f6504d16a9a879a1bb020f11100505349",
+    "crates/box/runtime/src/kbox_contract_driver/profile_tests.rs": "e3abcbec451830d2ea09b27bdc5d0134609727667b8b98ee6e296e66fe225d52",
+    "crates/box/runtime/src/kbox_contract_driver/engine_tests.rs": "0856cfc84e616307c44347e2a0aa8726ef0df71c2d9805e6368a1d28767d5dce",
+    "crates/box/runtime/src/kbox_contract_driver/mapping.rs": "8afa9accd4449fd2602cad0a39043ad10c44f1676161a7368a62467f3c7dd3e2",
+    "crates/box/runtime/src/kbox_contract_driver/mod.rs": "9a3e11e075adae4906d87f1235e477ac17dbee8a0b03dc85c157e2a34099232e",
+    "crates/box/runtime/src/host_sockets.rs": "81d0eb77bf09311a63f42780d377fd9d94190f36241280706e938cc5e8d38244",
+    "crates/box/cli/src/commands/engine.rs": "c8706ddc7a7ccb1c6e00c4c15408cde69e9f78b50002abd7c2980e2b335452ed",
+    "crates/box/cli/src/commands/mod.rs": "d01624a46458453736616ee1994ec87fbea453802da0910d195b0f18831556c1",
+    "crates/runtime/src/managed.rs": "54dd70aa6150cdccd7c8c3eea5743cf81ecfb9a2c9e51ac0cb5f2f2ebd51507b",
+    "crates/runtime/src/lib.rs": "28ac68e4137fb3c2176230ad78936f3c4e29fc7e9126227f5e7f14f56c3f8e60"
+  },
+  "completedChecks": [
+    {
+      "command": "cargo test --locked -p kbox-runtime --lib engine",
+      "status": "passed",
+      "count": 156,
+      "log": "engine-focused.log"
+    },
+    {
+      "command": "cargo test --locked -p kbox-runtime --lib kbox_contract_driver::engine_tests",
+      "status": "passed",
+      "count": 5,
+      "log": "engine-replace.log"
+    },
+    {
+      "command": "cargo test --locked -p kbox-runtime --lib kbox_contract_driver::profile_tests",
+      "status": "passed",
+      "count": 3,
+      "log": "native-profile.log"
+    },
+    {
+      "command": "cargo check --workspace --all-targets --locked",
+      "status": "passed",
+      "log": "workspace-check.log"
+    },
+    {
+      "command": "cargo clippy --locked -p kbox-runtime -p kbox-cli -p kbox-contract --all-targets --no-deps",
+      "status": "passed-with-existing-warnings",
+      "log": "clippy.log"
+    },
+    {
+      "command": "cargo test --locked -p kbox-contract",
+      "status": "failed-existing-locked-mcp-fixture-identity",
+      "log": "contract-full-existing-failure.log"
+    },
+    {
+      "command": "cargo fmt --all -- --check",
+      "status": "failed-existing-unformatted-files",
+      "log": "workspace-format-existing-failure.log"
+    },
+    {
+      "command": "cargo build --locked -p kbox-cli --release",
+      "status": "passed",
+      "log": "release-build.log"
+    },
+    {
+      "command": "python3 scripts/e2e-engine/native_smoke.py (arguments in OUTCOME.md)",
+      "status": "passed",
+      "nativeResult": "docs/evidence/engine/20261110-control-native/51057dee281e4dad9dd5141c8f3d49c3/result.json",
+      "log": "native-smoke.log"
+    }
+  ],
+  "nativeResult": {
+    "status": "PASS",
+    "platform": "Darwin",
+    "kboxSha256": "597fe5f70df4f9a9df4d7094501081024f88e9576e6b2d519f45c3f3f54f1d64",
+    "imageDigest": "sha256:692feef60bd099f8868a7be7855f2035e049ccd4045ad6377c733e4262e1cadb",
+    "fileProbe": {
+      "bytes": 1048576,
+      "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+    },
+    "engineId": "8a98e1dd-82e2-4c62-8c2a-b63350447409",
+    "operationId": "8d3429a1-0185-43ba-99b1-caa6c1f04230",
+    "sameExecutionAfterRestart": true,
+    "ordinaryOciWithoutAcp": true,
+    "nativeGuestProbe": {
+      "security": {
+        "CapEff": "000001ffffffffff",
+        "CapBnd": "000001ffffffffff",
+        "NoNewPrivs": "0",
+        "Seccomp": "0"
+      },
+      "sandboxExit": 0,
+      "sandboxStderr": ""
+    },
+    "nativeGuestMatchesDirectBaseline": true,
+    "zeroPrivateExecutions": true
+  },
+  "limitations": [
+    "process-stream not yet implemented",
+    "KRun formal ACP and capability acceptance pending",
+    "full contract suite and full workspace formatting not passing"
+  ]
+}

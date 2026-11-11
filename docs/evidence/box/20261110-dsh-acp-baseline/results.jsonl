@@ -1,0 +1,16 @@
+{"id": "P0-1", "status": "PASS", "message": "bench RUNS=1 succeeded", "detail": {"pool_log": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/p0-bench-pool.log", "image": "dsh-acp:e2e-ba01b05", "socket": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/p0-pool.sock"}, "ts": "2026-11-10T07:45:16Z"}
+{"id": "P0-2", "status": "PASS", "message": "initialize ok agent=deepseek-harness-acp protocol=1", "detail": {"agent": "deepseek-harness-acp", "protocolVersion": "1"}, "ts": "2026-11-10T07:45:39Z"}
+{"id": "P1-6", "status": "PASS", "message": "idle>=1 after prewarm", "detail": null, "ts": "2026-11-10T07:45:45Z"}
+{"id": "P1-1", "status": "PASS", "message": "initialize (+repeat) agent=deepseek-harness-acp protocol=1", "detail": null, "ts": "2026-11-10T07:45:48Z"}
+{"id": "P1-2", "status": "PASS", "message": "sessionId=ca05cc33-490a-42da-929c-dc9c38b49f17", "detail": null, "ts": "2026-11-10T07:45:48Z"}
+{"id": "P1-3", "status": "PASS", "message": "model config echoed", "detail": null, "ts": "2026-11-10T07:45:48Z"}
+{"id": "P1-4", "status": "PASS", "message": "prompt end_turn reply_len=57 stop=end_turn", "detail": null, "ts": "2026-11-10T07:45:48Z"}
+{"id": "P1-5", "status": "PASS", "message": "three sequential attaches succeeded", "detail": null, "ts": "2026-11-10T07:46:55Z"}
+{"id": "P2-3", "status": "PASS", "message": "prompt/session failed closed without DEEPSEEK_API_KEY", "detail": null, "ts": "2026-11-10T07:47:14Z"}
+{"id": "P2-1", "status": "PASS", "message": "workspace marker echoed", "detail": null, "ts": "2026-11-10T07:47:40Z"}
+{"id": "P2-2", "status": "PASS", "message": "named volume dsh-acp-data-e2e-20261110-154505-84274 present (cross-attach file persistence not asserted without tools)", "detail": null, "ts": "2026-11-10T07:47:40Z"}
+{"id": "P2-4", "status": "PASS", "message": "pool stopped; no running boxes", "detail": null, "ts": "2026-11-10T07:47:56Z"}
+{"id": "P3-3", "status": "PASS", "message": "bad image did not become idle within timeout", "detail": null, "ts": "2026-11-10T07:48:13Z"}
+{"id": "P3-1", "status": "PASS", "message": "disconnect destroyed session; pool replenished", "detail": null, "ts": "2026-11-10T07:48:53Z"}
+{"id": "P3-2", "status": "PASS", "message": "second attach blocked while size=1 busy", "detail": null, "ts": "2026-11-10T07:49:02Z"}
+{"id": "P3-4", "status": "PASS", "message": "real tool call and completed update observed; result=91", "detail": null, "ts": "2026-11-10T07:49:43Z"}

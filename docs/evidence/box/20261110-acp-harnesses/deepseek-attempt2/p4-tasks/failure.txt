@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 181, in main
+    first = prompt(cold, session, f"这是一次真实编码任务。先记住仅用于会话记忆的校验口令 {token_a}，"
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 108, in prompt
+    result = client.prompt(session, text, **kwargs)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 175, in prompt
+    result = self.wait(request, timeout, tick)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 141, in wait
+    raise RpcError(response["error"])
+acp_client.RpcError: Internal error: turn failed: DeepSeek Messages request failed (404)

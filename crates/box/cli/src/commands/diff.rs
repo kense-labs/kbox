@@ -48,6 +48,7 @@ pub async fn execute(args: DiffArgs) -> Result<(), Box<dyn std::error::Error>> {
         )
     })?;
 
+    record.require_claimed()?;
     // Snapshot the original image to compare against
     let snapshot_path = record.box_dir.join(DIFF_BASELINE_FILE);
     ensure_diff_baseline_present(&snapshot_path)?;

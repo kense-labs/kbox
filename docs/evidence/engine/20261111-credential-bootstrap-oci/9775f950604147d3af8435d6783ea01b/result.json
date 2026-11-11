@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "platform": "Darwin",
+  "kboxSha256": "17acc34822347286af3c70ac20b2ddd3665c1373f3f193d38c541829f3c8fcd8",
+  "imageDigest": "sha256:a154989de9d43cf5b2f5a9fc897fe9687a892a5a7fe6523cf8edf391002e9aeb",
+  "fileProbe": {
+    "bytes": 1048576,
+    "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+  },
+  "engineId": "9cfa452f-8e74-4449-b627-491285c82993",
+  "operationId": "b65f9670-5d90-4549-9df4-d258a9fbaed4",
+  "sameExecutionAfterRestart": true,
+  "ordinaryOciWithoutAcp": true,
+  "nativeGuestProbe": {
+    "security": {
+      "CapEff": "000001ffffffffff",
+      "CapBnd": "000001ffffffffff",
+      "NoNewPrivs": "0",
+      "Seccomp": "0"
+    },
+    "sandboxExit": 0,
+    "sandboxStderr": ""
+  },
+  "nativeGuestMatchesDirectBaseline": true,
+  "zeroPrivateExecutions": true
+}

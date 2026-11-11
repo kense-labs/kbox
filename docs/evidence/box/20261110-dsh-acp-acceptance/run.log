@@ -1,0 +1,38 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/release/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-acceptance/k-home
+[e2e] IMAGE=dsh-acp:e2e-ba01b05
+[e2e] TIER=p4
+[e2e] E2E_OUT=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-acceptance
+  turn 1: 10 tools, 101.785s
+P4-1: PASS — cold complex coding task with independent host oracle
+  turn 2: 3 tools, 8.438s
+  turn 3: 2 tools, 10.401s
+  turn 4: 4 tools, 18.822s
+  stream: worker started; beginning paced host input
+  stream: 20s, 3/12 host batches
+  stream: 40s, 5/12 host batches
+  stream: 60s, 7/12 host batches
+  stream: 80s, 9/12 host batches
+  stream: 100s, 11/12 host batches
+  stream: 120s, 12/12 host batches
+  stream: 140s, 12/12 host batches
+  turn 5: 7 tools, 197.592s
+P4-3: PASS — 125-second externally paced batch task stays in flight to completion
+  turn 6: 4 tools, 32.054s
+P4-4: PASS — external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling
+P4-2: PASS — six tool-using turns retain context and evolving requirements
+  turn 7: 0 tools, 2.186s
+  turn 8: 3 tools, 10.419s
+P4-5: PASS — named-volume session history resumes in a new pooled MicroVM
+  turn 9: 0 tools, 3.077s
+  turn 10: 0 tools, 2.508s
+P4-6: PASS — concurrent sessions keep context and cancellation independent
+  turn 11: 1 tools, 6.659s
+P4-7: PASS — cancel a running process tree, prevent late writes, then recover
+  turn 12: 1 tools, 6.186s
+P4-8: PASS — invalid, conflicting and denied operations fail closed
+P4-9: PASS — EOF, pool, boxes, socket and named volume clean up
+{"pass": 9, "fail": 0, "skip": 0, "blocked": 0}
+[e2e] results: /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-acceptance/results.json
+summary: {"pass": 9, "fail": 0, "skip": 0, "blocked": 0}

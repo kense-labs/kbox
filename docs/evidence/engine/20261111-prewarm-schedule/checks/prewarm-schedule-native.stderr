@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/krun/scripts/test_prewarm_native.py", line 236, in <module>
+    main()
+  File "/Users/roylin/code/kense/krun/scripts/test_prewarm_native.py", line 179, in main
+    assert cli(kbox, ["exec", warm["id"], "--", "true"], check=False).returncode != 0
+AssertionError

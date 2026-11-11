@@ -1,0 +1,277 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "engine",
+      "endpoint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "create",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "ordinary-oci",
+      "--memory",
+      "512m",
+      "--network",
+      "none",
+      "-v",
+      "ordinary-data:/data",
+      "--entrypoint",
+      "/bin/sleep",
+      "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+      "--",
+      "infinity"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "ordinary-oci",
+      "--",
+      "touch",
+      "/data/ordinary-marker"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun",
+      "up",
+      "warm",
+      "-f",
+      "/Users/roylin/code/kense/krun/harness/aster/acp-0.1.0.zip",
+      "-c",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/aster.kcl",
+      "--json",
+      "--wait-timeout",
+      "300",
+      "--workspace",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/\u9884\u70ed workspace"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "66a771f6-315a-4c91-9dd8-e393c383dfb5",
+      "--",
+      "touch",
+      "/tmp/user-dirty"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "inspect",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "--",
+      "touch",
+      "/tmp/premature-exec"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "cp",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/unmounted canary.txt",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee:/tmp/premature-copy"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "attach",
+      "-i",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "export",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "-o",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/premature-export.tar"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "container-update",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "--pids-limit",
+      "128"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "rename",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "premature-rename"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun",
+      "up",
+      "warm",
+      "-f",
+      "/Users/roylin/code/kense/krun/harness/dsh/acp-0.1.0.zip",
+      "-c",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/dsh.kcl",
+      "--json",
+      "--wait-timeout",
+      "300",
+      "--workspace",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/\u9884\u70ed workspace",
+      "--replace"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "engine",
+      "start-reserved-environment",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "1"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "76a059ba-956a-436f-bc5f-1721250eb5ee",
+      "--",
+      "node",
+      "-e",
+      "const fs=require('fs'), cp=require('child_process');if(['/tmp/user-dirty','/tmp/premature-exec','/tmp/premature-copy',process.argv[2]].some(p=>fs.existsSync(p)))process.exit(2);fs.writeFileSync('/external files/output.bin', fs.readFileSync(process.argv[1]));const child=cp.spawnSync(process.execPath,['-e',\"require('fs').writeFileSync('/external files/child.txt','child')\"]);process.exit(child.status);",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/\u9884\u70ed workspace/\u8f93\u5165 data.bin",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/unmounted canary.txt"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun",
+      "down",
+      "--id",
+      "7e346d6f-8454-4b71-bd03-e07e9bbf9bad",
+      "--json",
+      "--wait-timeout",
+      "300"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "ordinary-oci",
+      "--",
+      "test",
+      "-f",
+      "/data/ordinary-marker"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "rm",
+      "-f",
+      "ordinary-oci"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "rm",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun",
+      "ls",
+      "--all-workspaces",
+      "--json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun",
+      "down",
+      "--id",
+      "7e346d6f-8454-4b71-bd03-e07e9bbf9bad",
+      "--wait-timeout",
+      "300"
+    ],
+    "exitCode": 0
+  }
+]

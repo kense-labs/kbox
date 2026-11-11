@@ -1,0 +1,18 @@
+{
+  "build_id": "aster-cli-pair-v1:73b1d5b5ca5b9ca39f1496d3ac18fbf638bc47e9:aarch64-unknown-linux-gnu",
+  "archive_sha256": "f7816d5dc08ad3c33d48b6f603fbb1a665c8d386fb160f6461c85d3e5dcca105",
+  "archive_bytes": 116678560,
+  "members": [
+    "BUILD_ID",
+    "SHA256SUMS",
+    "aster",
+    "aster-acp",
+    "embedding/potion-code-16M-v2.config.json",
+    "embedding/potion-code-16M-v2.safetensors",
+    "embedding/potion-code-16M-v2.tokenizer.json"
+  ],
+  "binaries": {
+    "aster": "348691b2ce1141b0d527e2aae09b51b1c07c59aa0fba41a2d9f32698adc68b49",
+    "aster-acp": "e8a80d06e672e9eb346ab9b7895146f2fb3452b544e5acf12315d414c99999fa"
+  }
+}

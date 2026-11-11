@@ -1,0 +1,23 @@
+✔ reducer totals credits and debits with integer arithmetic (0.747333ms)
+✔ identical duplicate ids are counted once and not double-counted (0.106042ms)
+✔ records sharing an id but disagreeing are invalid (0.16975ms)
+✔ integer arithmetic keeps exact cents at safe-integer limits (0.073292ms)
+✔ non-integer and unsafe cent values are rejected (0.102792ms)
+✔ invalid ids, accounts, kinds and shapes are rejected (0.172291ms)
+✔ malformed JSON lines are rejected with a line number (0.182708ms)
+✔ blank lines are ignored and duplicates are counted across them (0.136ms)
+✔ accounts sort by Unicode code point, not UTF-16 code unit (0.106625ms)
+✔ --account filters balances and net but not event counts (0.130458ms)
+✔ CLI writes the exact JSON shape and creates parent directories (16.325125ms)
+✔ CLI deduplicates and supports --account filtering (16.750625ms)
+✔ CLI fails on invalid input and preserves an existing output (81.171ms)
+✔ CLI does not create output when input is invalid or missing (32.364416ms)
+✔ CLI rejects bad usage with nonzero exit (95.799958ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 270.5405

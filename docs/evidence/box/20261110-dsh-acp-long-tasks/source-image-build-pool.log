@@ -1,0 +1,99 @@
+Building from /Users/roylin/code/kense/dsh-acp/Containerfile
+Using .dockerignore
+Step 1/14: FROM node:24-bookworm-slim (stage 1/2 as build)
+Step 2/14: RUN apt-get update     && apt-get install -y --no-install-recommends build-essential python3     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@12.6.0 (CACHED)
+Step 3/14: WORKDIR /app
+Step 4/14: COPY . . (CACHED)
+Step 5/14: RUN pnpm install --frozen-lockfile     && pnpm run build
+Scope: all 179 workspace projects
+[WARN] There are cyclic workspace dependencies: /app/packages/api/gateway, /app/packages/api/remote-access; /app/packages/compaction/compaction-basic, /app/packages/compaction/compaction-image-offload; /app/packages/core/agent-default-model, /app/packages/settings/settings; /app/packages/core/agent-loop, /app/packages/llm/llm-deepseek-api-key, /app/packages/llm/llm-deepseek, /app/packages/llm/plugin-package-inventory-deepseek, /app/packages/preset/agent-preset-registry; /app/packages/core/tool-executor-native, /app/packages/core/tools, /app/packages/test-support/agent-loop-testkit, /app/packages/core/tool-executor-ptc; /app/packages/sandbox/sandbox-local, /app/packages/sandbox/sandbox-windows-acl; /app/packages/session/tool-working-directory, /app/packages/session/working-directory; /app/packages/subagent/subagent-spawn-in-process, /app/packages/subagent/tool-subagent; /app/vendor/cordis, /app/vendor/include
+? Verifying lockfile against supply-chain policies (555 entries)...
+Downloading @img/sharp-libvips-linux-arm64@1.3.4: 0.00 B/8.48 MB
+Packages are hard linked from the content-addressable store to the virtual store.
+  Content-addressable store is at: /root/.local/share/pnpm/store/v11
+  Virtual store is at:             node_modules/.pnpm
+Update available! 12.6.0 → 12.18.0.
+Changelog: https://pnpm.io/v/12.18.0
+To update, run: curl -fsSL https://get.pnpm.io/install.sh | sh -
+Progress: resolved 447, reused 0, downloaded 96, added 88
+Progress: resolved 447, reused 0, downloaded 160, added 153
+[WARN] Tarball download average speed 23 KiB/s (size 23 KiB) is below 50 KiB/s: https://registry.npmjs.org/picomatch/-/picomatch-4.0.7.tgz (GET)
+Progress: resolved 447, reused 0, downloaded 224, added 217
+Progress: resolved 447, reused 0, downloaded 256, added 256
+[WARN] Tarball download average speed 8 KiB/s (size 10 KiB) is below 50 KiB/s: https://registry.npmjs.org/body-parser/-/body-parser-2.3.0.tgz (GET)
+[WARN] Tarball download average speed 20 KiB/s (size 26 KiB) is below 50 KiB/s: https://registry.npmjs.org/@smithy/node-http-handler/-/node-http-handler-4.12.1.tgz (GET)
+[WARN] Tarball download average speed 19 KiB/s (size 24 KiB) is below 50 KiB/s: https://registry.npmjs.org/chokidar/-/chokidar-4.0.3.tgz (GET)
+[WARN] Tarball download average speed 10 KiB/s (size 12 KiB) is below 50 KiB/s: https://registry.npmjs.org/@csstools/css-color-parser/-/css-color-parser-4.1.9.tgz (GET)
+[WARN] Tarball download average speed 24 KiB/s (size 30 KiB) is below 50 KiB/s: https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz (GET)
+Downloading node-pty@1.2.0-beta.15: 0.00 B/7.15 MB
+Downloading @rolldown/binding-linux-arm64-gnu@1.2.7: 0.00 B/7.54 MB
+Progress: resolved 447, reused 0, downloaded 288, added 283
+Progress: resolved 447, reused 0, downloaded 288, added 285
+[WARN] Tarball download average speed 2 KiB/s (size 18 KiB) is below 50 KiB/s: https://registry.npmjs.org/@csstools/css-syntax-patches-for-csstree/-/css-syntax-patches-for-csstree-1.1.6.tgz (GET)
+[WARN] Tarball download average speed 10 KiB/s (size 84 KiB) is below 50 KiB/s: https://registry.npmjs.org/entities/-/entities-8.0.0.tgz (GET)
+[WARN] Tarball download average speed 21 KiB/s (size 170 KiB) is below 50 KiB/s: https://registry.npmjs.org/@img/sharp-linux-arm64/-/sharp-linux-arm64-0.35.5.tgz (GET)
+Progress: resolved 447, reused 0, downloaded 320, added 320
+Progress: resolved 447, reused 0, downloaded 352, added 349
+[WARN] Request took 10645ms: https://registry.npmjs.org/react
+[WARN] Request took 10670ms: https://registry.npmjs.org/scheduler
+[WARN] Request took 10722ms: https://registry.npmjs.org/react-dom
+Progress: resolved 447, reused 0, downloaded 416, added 396
+Progress: resolved 447, reused 0, downloaded 416, added 415
+Progress: resolved 447, reused 0, downloaded 447, added 441
+Progress: resolved 447, reused 0, downloaded 447, added 447
+✓ Lockfile passes supply-chain policies (555 entries in 24.4s)
+Lockfile is up to date, resolution step is skipped
+Packages: +447
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 447, reused 0, downloaded 447, added 447, done
+.../.pnpm/koffi@3.1.1/node_modules/koffi install$ node ./cnoke.cjs -P . -D src/koffi --prebuild --release
+.../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+.../node_modules/node-pty install$ node scripts/prebuild.js || node-gyp rebuild
+.../node_modules/node-pty install: [32m> Checking prebuilds...[0m
+.../node_modules/node-pty install: Done
+.../node_modules/node-pty postinstall$ node scripts/post-install.js
+.../node_modules/node-pty postinstall: [32m> Cleaning release folder...[0m
+.../node_modules/node-pty postinstall: [32m> Moving conpty.dll...[0m
+.../node_modules/node-pty postinstall:   SKIPPED (not Windows)
+.../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+.../node_modules/node-pty postinstall: Done
+.../.pnpm/koffi@3.1.1/node_modules/koffi install: Done
+packages/subprocess/subprocess-local postinstall$ node scripts/ensure-spawn-helper.mjs
+packages/subprocess/subprocess-local postinstall: Done
+
+dependencies:
++ zod 4.4.3
+
+devDependencies:
++ @types/hosted-git-info 3.0.5
++ @types/js-yaml 4.0.9
++ @types/node 22.20.1
++ @types/react 18.3.31
++ @types/react-dom 18.3.7
++ @types/semver 7.8.0
++ @types/ws 8.18.1
++ esbuild 0.28.2
++ tsx 4.23.13
++ typescript 6.0.3
++ vite-tsconfig-paths 6.1.1
++ vitest 4.1.11
+
+Done in 25.8s using pnpm v12.6.0
+build: built linux-arm64/bin/glibc/system.node
+generate-typert: wrote 14 Typert artifact(s) for 14 package(s) in 4.4s
+assemble-lib: prepared 172 package(s)
+$ pnpm run build:native-system && pnpm run build:typert && pnpm run build:lib && pnpm run build:assemble
+$ node --import tsx/esm native/system/scripts/build.ts --host-addon-only
+$ node --import tsx/esm scripts/generate-typert.ts
+$ node node_modules/typescript/bin/tsc -b tsconfig.host.json
+$ node scripts/assemble-lib.mjs
+Step 6/14: FROM node:24-bookworm-slim (stage 2/2 as runtime)
+Step 7/14: ENV NODE_ENV=production DSH_HOME=/data DSH_TELEMETRY_DISABLED=1
+Step 8/14: WORKDIR /workspace
+Step 9/14: COPY --from=build /app /app
+Step 10/14: RUN mkdir -p /data /workspace && chown -R node:node /data /workspace
+Step 11/14: USER node
+Step 12/14: VOLUME /data /workspace
+Step 13/14: ENTRYPOINT ["node", "/app/apps/cli/lib/bin.js", "--profile", "acp"]
+Step 14/14: CMD []
+Successfully built dsh-acp:e2e-ba01b05 (7 layers, 169.5 MB, linux/arm64)

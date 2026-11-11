@@ -1,0 +1,14 @@
+[
+  {
+    "CreatedAt": "2026-11-10T17:11:28.850389+00:00",
+    "Driver": "local",
+    "Labels": {
+      "kbox_contract.volume-id": "c4bc01debdc54fd88ee0ea95842b35e7",
+      "kbox_contract.volume-role": "persistent"
+    },
+    "Mountpoint": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-primary-native/2d048346173e4a11ad5015fdf1b1f6db/home/volumes/kbox_contract-volume-00823385035fb52e1e3a148ad382e7540709b6adef5d0dc5a25144a0f88036f8",
+    "Name": "kbox_contract-volume-00823385035fb52e1e3a148ad382e7540709b6adef5d0dc5a25144a0f88036f8",
+    "Options": {},
+    "Scope": "local"
+  }
+]

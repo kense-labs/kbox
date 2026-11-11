@@ -1,0 +1,13 @@
+{
+  "backpressureReachedGuest": true,
+  "executionGeneration": 1,
+  "executionId": "47b8b2fd-af85-496f-9e2d-333cde01bfbc",
+  "explicitUnlimitedSurvivedDefault": true,
+  "guestInitSha256": "ea43eb54fc46fa6f59daecde2dba27571beb32183916b8805042d0dc071eedd9",
+  "runtimeGeneration": 1,
+  "status": "PASS",
+  "stderrTailPreserved": true,
+  "stdinBytes": 2097152,
+  "stdoutBytes": 8388622,
+  "zeroPrivateExecutions": true
+}

@@ -1,0 +1,13 @@
+{
+  "prefix": "/Users/roylin/code/kense/krun/.build/prewarm-prefix-80ba781db8d34e4894c2caeb030be1a2",
+  "artifacts": {
+    "bin/kbox": "a3d3a05022c66e436f27814061387af3ccf5e0934c32d88ac5d2d4d85f327f3a",
+    "bin/kbox-guest-init": "31fcbd8783323a0cf3eb06d1ad0650075fea172efb09d615ea17ce3f52237440",
+    "bin/kbox-shim": "5cf18a25ba8d40285be34111c34b2d7a7ee0eb9182972f2da8198538e2babe95",
+    "lib/libkrun.1.17.0.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrun.1.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrun.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrunfw.5.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "lib/libkrunfw.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+  }
+}

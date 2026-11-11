@@ -50,6 +50,8 @@ const RUNTIME_RECORD_PID_ENV: &str = "K_BOX_TEST_RUNTIME_RECORD_PID";
 mod process_restart;
 #[path = "oci_backend_tests/resource_update_contract.rs"]
 mod resource_update_contract;
+#[path = "oci_backend_tests/prewarm.rs"]
+mod prewarm;
 
 #[derive(Clone)]
 struct FakeContainer {
@@ -5547,7 +5549,7 @@ fn runtime_info(dedicated_readiness: &str) -> RuntimeInfo {
                     "evidence": { "fake": "native" }
                 },
                 {
-                    "driver": "libkwhpx",
+                    "driver": DriverKind::LibkWhpx,
                     "status": "available",
                     "readiness": dedicated_readiness,
                     "isolation_classes": ["dedicated-vm"],

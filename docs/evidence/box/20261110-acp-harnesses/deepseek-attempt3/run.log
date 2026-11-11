@@ -1,0 +1,28 @@
+  turn 1: 14 tools, 121.792s
+P4-1: PASS — cold complex coding task with independent host oracle
+  turn 2: 1 tools, 7.981s
+  turn 3: 3 tools, 17.857s
+  turn 4: 3 tools, 17.004s
+  stream: worker started; beginning paced host input
+  stream: 20s, 3/12 host batches
+  stream: 40s, 5/12 host batches
+  stream: 60s, 7/12 host batches
+  stream: 80s, 9/12 host batches
+  stream: 100s, 11/12 host batches
+  stream: 120s, 12/12 host batches
+  turn 5: 5 tools, 185.49s
+P4-3: PASS — 125-second externally paced batch task stays in flight to completion
+  turn 6: 3 tools, 34.578s
+P4-4: PASS — external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling
+P4-2: PASS — six tool-using turns retain context and evolving requirements
+  turn 7: 0 tools, 2.257s
+  turn 8: 1 tools, 8.01s
+P4-5: PASS — named-volume session history restores in a fresh MicroVM
+  turn 9: 0 tools, 2.017s
+  turn 10: 0 tools, 1.996s
+P4-6: PASS — concurrent sessions keep context and cancellation independent
+  turn 11: 1 tools, 5.54s
+P4-7: PASS — cancel a running process tree, prevent late writes, then recover
+  turn 12: 1 tools, 5.028s
+P4-8: PASS — invalid, conflicting and denied operations fail closed
+P4-9: PASS — EOF, pool, boxes, socket and named volume clean up

@@ -1,0 +1,16 @@
+[
+  {
+    "repository": "kbox",
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "repository": "krun",
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "explicitNewFileTrailingWhitespace": [],
+    "files": 17
+  }
+]

@@ -1,0 +1,1 @@
+Error: Cannot exec box acp-build-codex because it is stopped. Use `kbox start acp-build-codex` to start it or `kbox ps -a` to inspect state.

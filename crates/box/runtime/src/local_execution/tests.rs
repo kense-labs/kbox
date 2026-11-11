@@ -2,6 +2,8 @@
 
 #[path = "tests/stop_ownership.rs"]
 mod stop_ownership;
+#[path = "tests/prewarm.rs"]
+mod prewarm;
 
 use std::collections::{BTreeMap, HashMap};
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
@@ -33,6 +35,7 @@ struct FakeExecution {
 #[derive(Default)]
 struct FakeBackend {
     executions: Mutex<HashMap<String, FakeExecution>>,
+    anonymous_volumes_override: Mutex<Option<Vec<String>>>,
     start_terminal_exit_code: Mutex<Option<i32>>,
     start_attempts: AtomicUsize,
     starts: AtomicUsize,
@@ -114,7 +117,10 @@ impl LocalExecutionBackend for FakeBackend {
         #[cfg(target_os = "linux")]
         write_fake_sandbox_bundle(record)?;
         write_fake_resolved_image_config(record)?;
-        let handle = Self::handle(record);
+        let mut handle = Self::handle(record);
+        if let Some(volumes) = self.anonymous_volumes_override.lock().unwrap().as_ref() {
+            handle.anonymous_volumes = volumes.clone();
+        }
         let terminal_exit_code = self.start_terminal_exit_code.lock().unwrap().take();
         executions.insert(
             record.id.clone(),

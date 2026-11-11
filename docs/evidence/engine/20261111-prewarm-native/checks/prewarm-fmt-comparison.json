@@ -1,0 +1,12 @@
+{
+  "baselineCount": 55,
+  "currentCount": 50,
+  "newPaths": [],
+  "resolvedPaths": [
+    "box/runtime/src/box_record.rs",
+    "box/runtime/src/kbox_contract_driver/lifecycle.rs",
+    "box/runtime/src/lib.rs",
+    "box/runtime/src/local_execution/mod.rs",
+    "box/runtime/src/local_execution/store.rs"
+  ]
+}

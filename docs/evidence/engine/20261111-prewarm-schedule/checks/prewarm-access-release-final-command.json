@@ -1,0 +1,11 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--locked",
+    "-p",
+    "kbox-cli",
+    "--release"
+  ],
+  "cwd": "/Users/roylin/code/kense/kbox"
+}

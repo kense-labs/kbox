@@ -94,6 +94,7 @@ pub async fn execute(args: ContainerUpdateArgs) -> Result<(), Box<dyn std::error
     let record = state
         .find_by_id_mut(&box_id)
         .ok_or_else(|| format!("Box {} was removed while waiting to update", args.name))?;
+    record.require_claimed()?;
 
     let name = record.name.clone();
     let requires_live_apply = record.is_active();

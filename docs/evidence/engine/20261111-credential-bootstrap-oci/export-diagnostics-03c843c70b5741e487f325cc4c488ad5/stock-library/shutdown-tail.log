@@ -1,0 +1,8 @@
+[2026-11-11T00:32:41Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17562635357340
+[2026-11-11T00:32:42Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17566174659670
+[2026-11-11T00:32:42Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17565870464502
+[2026-11-11T00:32:42Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17565870464502
+[2026-11-11T00:32:42Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563092002358
+[2026-11-11T00:32:42Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17565018292784
+[2026-11-11T00:32:42Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17565018292784
+[2026-11-11T00:32:43Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17562681717664

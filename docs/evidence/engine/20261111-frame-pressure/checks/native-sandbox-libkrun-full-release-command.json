@@ -1,0 +1,1 @@
+{"command": ["cargo", "build", "--locked", "--release", "-p", "libkrun", "--features", "blk,net"], "cwd": "/Users/roylin/code/kense/kbox/libkrun"}

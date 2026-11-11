@@ -1,0 +1,9 @@
+{"id": "batch-0-0", "account": "账户甲", "cents": 1592, "kind": "credit"}
+{"id": "batch-0-1", "account": "alpha", "cents": 6385, "kind": "debit"}
+{"id": "batch-0-2", "account": "账户甲", "cents": 485, "kind": "debit"}
+{"id": "batch-0-3", "account": "alpha", "cents": 215, "kind": "credit"}
+{"id": "batch-0-4", "account": "账户甲", "cents": 2564, "kind": "debit"}
+{"id": "batch-0-5", "account": "alpha", "cents": 5965, "kind": "debit"}
+{"id": "batch-0-6", "account": "账户甲", "cents": 3913, "kind": "credit"}
+{"id": "batch-0-7", "account": "alpha", "cents": 9304, "kind": "debit"}
+{"id": "batch-0-2", "account": "账户甲", "cents": 485, "kind": "debit"}

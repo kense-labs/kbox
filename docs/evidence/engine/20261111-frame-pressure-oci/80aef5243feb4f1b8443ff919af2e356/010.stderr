@@ -1,0 +1,6 @@
+Creating box happy_kernighan (8ff09d5e2bc4)...
+kbox run: still creating happy_kernighan; image is ready and runtime startup has taken 17s
+Box happy_kernighan (8ff09d5e2bc4) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box happy_kernighan exited and was removed.

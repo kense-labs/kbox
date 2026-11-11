@@ -1,0 +1,1 @@
+{"command": ["cargo", "clippy", "--locked", "-p", "kbox-guest-init", "--all-targets", "--no-deps"], "cwd": "/Users/roylin/code/kense/kbox", "exitCode": 0, "seconds": 0.78}

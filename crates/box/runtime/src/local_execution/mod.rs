@@ -93,6 +93,8 @@ mod oci_session;
 mod oci_storage_attachments;
 mod operations;
 mod port;
+mod prewarm;
+pub use prewarm::ManagedPrewarm;
 mod prepared_rootfs;
 mod record;
 mod recovery;
@@ -120,10 +122,7 @@ mod vm_process;
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use kbox_core::{
-    ExecutionGeneration, ExecutionId, ExecutionManagerError,
-    ExecutionManagerResult,
-};
+use kbox_core::{ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult};
 
 pub use backend::{
     LocalExecutionBackend, LocalExecutionHandle, LocalExecutionObservation,
@@ -140,9 +139,7 @@ pub use oci_migration::{
     WindowsWhpxOciMigrationConfig,
 };
 #[cfg(feature = "vm")]
-pub use oci_production::{
-    LinuxKvmOciBundleProvider, WindowsWhpxOciBundleProvider,
-};
+pub use oci_production::{LinuxKvmOciBundleProvider, WindowsWhpxOciBundleProvider};
 use record::{build_managed_record, status_from_record};
 pub use router::{LocalExecutionBackendRouter, OciMigrationPolicy};
 use store::RuntimeUpdate;
@@ -215,6 +212,7 @@ impl LocalExecutionManager {
             .await?
             .ok_or_else(|| ExecutionManagerError::NotFound(execution_id.clone()))?;
         support::require_generation(&record, execution_id, generation)?;
+        record.require_claimed()?;
         let state = support::managed_state(&record)?;
         if state != ManagedExecutionState::Running
             && !(allow_paused && state == ManagedExecutionState::Paused)

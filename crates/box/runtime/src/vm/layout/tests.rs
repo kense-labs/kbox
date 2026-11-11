@@ -72,6 +72,7 @@ fn make_vm_manager_with_home(home_dir: &Path) -> VmManager {
         rootfs_provider: Arc::from(crate::rootfs::default_provider()),
         original_scope: None,
         pending_handler: None,
+        provider_launch: super::super::ProviderLaunch::NotAttempted,
         exec_socket_path: None,
         pty_socket_path: None,
         port_forward_socket_path: None,

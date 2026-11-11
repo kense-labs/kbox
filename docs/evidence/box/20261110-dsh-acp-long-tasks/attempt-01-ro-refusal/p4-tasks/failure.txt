@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 153, in main
+    cold.initialize()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 115, in initialize
+    result = self.request("initialize", {"protocolVersion": 1, "clientCapabilities": {}}, 180)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 112, in request
+    return self.wait(self.send(method, params), timeout)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 105, in wait
+    self.pump(min(0.25, max(0, deadline - time.monotonic())))
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 79, in pump
+    raise message
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 37, in _read
+    raise EOFError(f"ACP disconnected (exit={self.proc.poll()})")
+EOFError: ACP disconnected (exit=1)

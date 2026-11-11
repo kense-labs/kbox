@@ -1,0 +1,38 @@
+{
+  "requests": 64,
+  "exactBodies": 59,
+  "failures": [
+    {
+      "index": 5,
+      "status": 200,
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 18,
+      "status": 200,
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 29,
+      "status": 200,
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 34,
+      "status": 200,
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "index": 42,
+      "status": 200,
+      "length": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "kboxSha256": "a3d3a05022c66e436f27814061387af3ccf5e0934c32d88ac5d2d4d85f327f3a",
+  "libkrunSha256": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4"
+}

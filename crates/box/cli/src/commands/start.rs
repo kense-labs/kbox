@@ -46,6 +46,7 @@ async fn start_one(state: &StateFile, query: &str) -> Result<(), Box<dyn std::er
         .find_by_id(&box_id)
         .ok_or_else(|| format!("Box {query} was removed while waiting for its lifecycle lock"))?
         .clone();
+    record.require_claimed()?;
     let health_check = (!record.healthcheck_disabled)
         .then_some(record.health_check.as_ref())
         .flatten();

@@ -45,6 +45,9 @@ pub async fn execute(args: AttachArgs) -> Result<(), Box<dyn std::error::Error>>
         Some(record) => record,
         None => return Err(format!("No such container: {}", args.r#box).into()),
     };
+    if args.interactive {
+        record.require_claimed()?;
+    }
     let route = resolve_attach_route(&record, args.tty);
     if route.is_managed() {
         if record.status != "running" {

@@ -1,5 +1,7 @@
 # 多 Harness 协作架构设计
 
+> 历史方案。当前 kbox、共享能力底座和 ACP Harness 安装包的职责以 [KRun 架构规划](krun.md) 为准；本文的任务协作与 DAG 属于上层应用范围。
+
 桌面、Web、终端和主 Agent 通过 REST 与 SSE 访问协作网关。
 网关管理任务、路由、DAG、审批和交接。
 异构 Harness 通过统一 Adapter 接口接入。

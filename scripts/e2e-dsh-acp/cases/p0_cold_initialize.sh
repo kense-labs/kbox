@@ -22,8 +22,8 @@ mkfifo "$WORK/acp.in" "$WORK/acp.out"
 ACP_PID=""
 cleanup() {
   set +e
-  exec 3>&- 2>/dev/null || true
-  exec 4>&- 2>/dev/null || true
+  exec 3>&- || true
+  exec 4>&- || true
   [[ -z "${ACP_PID:-}" ]] || kill "$ACP_PID" 2>/dev/null || true
   [[ -z "${ACP_PID:-}" ]] || wait "$ACP_PID" 2>/dev/null || true
 }

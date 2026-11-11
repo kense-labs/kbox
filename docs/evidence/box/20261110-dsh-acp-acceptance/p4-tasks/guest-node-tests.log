@@ -1,0 +1,21 @@
+✔ reducer adds credits, subtracts debits, and sorts accounts by code point (0.93425ms)
+✔ identical duplicate ids are ignored and counted; blanks are ignored (0.114708ms)
+✔ conflicting records with the same id invalidate the whole input (0.231292ms)
+✔ integer arithmetic stays exact for large safe integers (0.122959ms)
+✔ malformed JSON and invalid fields are rejected (0.233333ms)
+✔ --account filtering keeps global event counts and filters netCents (0.105833ms)
+✔ compareCodePoints orders astral characters after BMP code points (0.050458ms)
+✔ CLI writes the exact summary, creates parent directories, and filters (21.4675ms)
+✔ CLI leaves an existing output untouched on malformed input (16.010416ms)
+✔ CLI leaves an existing output untouched on conflicting duplicate ids (16.515458ms)
+✔ CLI rejects invalid UTF-8, missing inputs, bad arguments, and bad fields (72.903917ms)
+✔ empty input yields an empty but well-formed summary (0.09825ms)
+✔ CLI replaces a previous output after a successful run (16.63225ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 171.195709

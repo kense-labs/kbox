@@ -82,6 +82,18 @@ impl BoxRuntimeDriver {
                 let operation_id = operation(spec)?;
                 let reservation = self
                     .bounded("reservation", async {
+                        if super::prewarm::eligible(spec) && rootfs_snapshot.is_none() {
+                            if let Some(scope) = self.environment_scope(spec).await? {
+                                if let Some(reservation) = self
+                                    .manager
+                                    .claim_prewarmed(request.clone(), &operation_id, &scope)
+                                    .await
+                                    .map_err(|error| map_execution_error(&spec.unit_id, error))?
+                                {
+                                    return Ok(reservation);
+                                }
+                            }
+                        }
                         self.manager
                             .create(request, &operation_id)
                             .await
@@ -841,10 +853,7 @@ impl BoxRuntimeDriver {
             )
             .await?;
         let mut claims = BTreeMap::from([
-            (
-                "kbox.execution-isolation".into(),
-                "microvm".into(),
-            ),
+            ("kbox.execution-isolation".into(), "microvm".into()),
             (
                 "kbox.execution-generation".into(),
                 metadata.generation.get().to_string(),
@@ -1130,7 +1139,7 @@ mod runtime_state_honesty_tests {
 
     use kbox_contract::contract::{RuntimeUnitClass, RuntimeUnitState};
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, OperationId,
+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
     };
 
     use super::super::test_support::runtime_spec;

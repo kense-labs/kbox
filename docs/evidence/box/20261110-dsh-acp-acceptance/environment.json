@@ -1,0 +1,36 @@
+{
+  "kbox_revision": "0304123f562ce7264954a8a104dced9e19b3d483",
+  "dsh_acp_revision": "ba01b05988c3cd0c982ca71069efd242f813d6c4",
+  "dsh_acp_worktree_clean": true,
+  "os": "26.6.2",
+  "arch": "arm64",
+  "binaries": {
+    "kbox": {
+      "path": "/Users/roylin/code/kense/kbox/target/release/kbox",
+      "sha256": "b1267c906d17c525f08b9d591001ec9adbf5f72cd43c53bf2bd1aeb7531d91fb"
+    },
+    "kbox-shim": {
+      "path": "/Users/roylin/code/kense/kbox/target/release/kbox-shim",
+      "sha256": "5cf18a25ba8d40285be34111c34b2d7a7ee0eb9182972f2da8198538e2babe95"
+    },
+    "kbox-guest-init": {
+      "path": "/Users/roylin/code/kense/kbox/target/release/kbox-guest-init",
+      "sha256": "e52e024a3b14c66210a0a25cdddd20be7b7e0de88ba7e267e20f390d08ba52a0"
+    }
+  },
+  "source_file_sha256": {
+    "crates/box/cli/src/commands/run/foreground.rs": "b9f638eb95c9f3b9db4b6cf03e68a309496cba53d3b53497aeb79a44c9c58a15",
+    "crates/box/cli/src/commands/run/setup.rs": "40fcf8f80d84d6cdf7b8e9f91bf13b3ad103ca33ca394802ff59fc01e926cb28",
+    "scripts/e2e-dsh-acp/cases/p4_tasks.py": "a9eaae84e620093e60c593aa200fc6c4d405495f31c61a3954c5f3de6e40aa71",
+    "scripts/e2e-dsh-acp/lib/acp_client.py": "58ba4e8c9854f53bd4c2ed93ed53ec8b728266d47d5b2389e00da867dc07ef4f",
+    "scripts/e2e-dsh-acp/test_harness.py": "26ea0d734c306c94822d7f56e6f90d3d36dedc09c5d4169d919502cb9ef3a283",
+    "scripts/e2e-dsh-acp/cases/p0_bench.sh": "0649a07f958089c3cedd81cb5d10b18f3d410bfadb39d907c44ac73f0f7249d2",
+    "scripts/e2e-dsh-acp/cases/p0_cold_initialize.sh": "02e47e484e6fc63c7e3f83cbd0e62839d452818a2fb62113172340883803e476",
+    "scripts/e2e-dsh-acp/cases/p1_core.sh": "538469247b39838e8162d761cae16359874b6cae4a30045edc28291bb0a87181",
+    "scripts/e2e-dsh-acp/cases/p2_mounts_cleanup.sh": "d493c51175f37a264c2aa433c01d2966d871fe102895b9cd188d94edff3060b2",
+    "scripts/e2e-dsh-acp/cases/p3_negative.sh": "78a86fc78f9ec334d1c6be66965c9d6de102136b3a75489545bc20932c00420f",
+    "scripts/e2e-dsh-acp/lib/acp_session.sh": "aba9646d08e8eaa7ee866608931c644958ba1d898e3928497acf0d91976daa15",
+    "scripts/e2e-dsh-acp/lib/common.sh": "31174fbe28185d792706c026462836bc154a41cc24e6b89fd282d6bb27b90eac",
+    "scripts/e2e-dsh-acp/run.sh": "8b0e0942feb8326be515f322719976ac578d48bd03d14e7294601b824d714223"
+  }
+}

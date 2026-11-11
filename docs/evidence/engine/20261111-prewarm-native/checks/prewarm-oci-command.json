@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "../kbox/scripts/e2e-engine/native_smoke.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/prewarm-prefix-80ba781db8d34e4894c2caeb030be1a2/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-oci"
+  ]
+}

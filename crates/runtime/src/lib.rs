@@ -30,7 +30,7 @@ pub use conformance::{
 pub use consumer::RuntimeConsumerRequirements;
 pub use driver::RuntimeDriver;
 pub use error::{RuntimeError, RuntimeResult};
-pub use managed::ManagedRuntimeClient;
+pub use managed::{ManagedRuntimeClient, RuntimeAdmissionGuard};
 pub use provider::ProviderId;
 pub use registry::{RuntimeClientRegistry, RuntimeProviderFactory};
 pub use state::{

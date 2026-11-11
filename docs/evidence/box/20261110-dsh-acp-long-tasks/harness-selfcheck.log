@@ -1,0 +1,14 @@
+test_broken_listing_cannot_be_reported_as_zero_boxes (__main__.HarnessTests) ... ok
+test_cleanup_counts_real_cli_status_field (__main__.HarnessTests) ... ok
+test_digest_uses_actual_cli_and_manifest_field (__main__.HarnessTests) ... ok
+test_missing_live_credentials_is_a_failing_gate (__main__.HarnessTests) ... ok
+test_notifications_cannot_extend_request_deadline (__main__.HarnessTests) ... ok
+test_permission_request_is_not_confused_with_correlated_response (__main__.HarnessTests) ... ok
+test_protocol_stdout_is_strict (__main__.HarnessTests) ... ok
+test_shell_permission_id_collision_preserves_tool_result (__main__.HarnessTests) ... ok
+test_typed_rpc_error_is_observable (__main__.HarnessTests) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.646s
+
+OK

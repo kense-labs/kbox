@@ -1,0 +1,6 @@
+default_model = "fixture/probe"
+providers "fixture" {
+  base_url = "http://127.0.0.1:9"
+  api_key = "synthetic-fixture-key"
+  models "probe" { name = "Protocol fixture" }
+}

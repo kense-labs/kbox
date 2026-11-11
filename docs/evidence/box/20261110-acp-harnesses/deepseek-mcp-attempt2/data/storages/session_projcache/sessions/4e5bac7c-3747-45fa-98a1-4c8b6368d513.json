@@ -1,0 +1,239 @@
+{
+  "version": 7,
+  "record": {
+    "identity": {
+      "formatVersion": 4,
+      "createdAt": 1794302640070,
+      "cwd": "/workspace",
+      "isSeeded": false,
+      "inheritedEventCount": 0
+    },
+    "rows": {
+      "sandboxMode": {
+        "ver": 1,
+        "seq": 24,
+        "val": "workspace-write"
+      },
+      "approvalState": {
+        "ver": 1,
+        "seq": 24,
+        "val": {
+          "policy": "ask",
+          "turnOpen": false
+        }
+      },
+      "turnBoundary": {
+        "ver": 2,
+        "seq": 24,
+        "val": {
+          "openTurnStartSeq": null,
+          "lastStepStartSeq": 20,
+          "lastStepBoundary": {
+            "kind": "end",
+            "seq": 23
+          },
+          "lastTurn": 1
+        }
+      },
+      "tokenMeasurement": {
+        "ver": 2,
+        "seq": 24,
+        "val": {
+          "headerSeq": 12,
+          "stepStart": null,
+          "anchor": {
+            "headerSeq": 12,
+            "assistantTokens": 25,
+            "usage": {
+              "inputTokens": 230,
+              "outputTokens": 32,
+              "cacheReadTokens": 6272,
+              "cacheWriteTokens": 0,
+              "totalTokens": 6534
+            }
+          },
+          "invalidSeq": null
+        }
+      },
+      "userQuestions": {
+        "ver": 2,
+        "seq": 24,
+        "val": {
+          "inheritedEventCount": 0,
+          "timed": false,
+          "questions": {
+            "active": [],
+            "settled": []
+          }
+        }
+      },
+      "todos": {
+        "ver": 2,
+        "seq": 24,
+        "val": null
+      },
+      "tokenUsage": {
+        "ver": 2,
+        "seq": 24,
+        "val": {
+          "totals": {
+            "uncachedInputTokens": 6131,
+            "outputTokens": 87,
+            "cacheReadTokens": 6784,
+            "cacheWriteTokens": 0
+          },
+          "last": {
+            "turn": 1,
+            "step": 2,
+            "buckets": {
+              "uncachedInputTokens": 230,
+              "outputTokens": 32,
+              "cacheReadTokens": 6272,
+              "cacheWriteTokens": 0
+            }
+          }
+        }
+      },
+      "contextPressure": {
+        "ver": 5,
+        "seq": 24,
+        "val": {
+          "surfaceTokens": 1132,
+          "contextWindow": 1048576,
+          "pressureTokens": 6502,
+          "sampledSurfaceTokens": 1107
+        }
+      },
+      "title": {
+        "ver": 1,
+        "seq": 24,
+        "val": "调用本会话提供的 MCP acceptance_"
+      },
+      "llmRetry": {
+        "ver": 1,
+        "seq": 24,
+        "val": {}
+      },
+      "goal": {
+        "ver": 6,
+        "seq": 24,
+        "val": {
+          "current": null,
+          "seenGoalIds": [],
+          "failure": null
+        }
+      },
+      "plan": {
+        "ver": 4,
+        "seq": 24,
+        "val": {
+          "active": false,
+          "wanted": null,
+          "running": null,
+          "activeAtLastHeader": false,
+          "entered": false
+        }
+      },
+      "modelSelection": {
+        "ver": 3,
+        "seq": 24,
+        "val": {
+          "lastUsed": {
+            "provider": "deepseek-official",
+            "model": "deepseek-flash",
+            "reasoningEffort": "low"
+          },
+          "pending": null
+        }
+      },
+      "workingDirectory": {
+        "ver": 1,
+        "seq": 24,
+        "val": "/workspace"
+      },
+      "contextBreakdown": {
+        "ver": 6,
+        "seq": 24,
+        "val": {
+          "systems": [
+            {
+              "seq": 9,
+              "tokens": 822
+            }
+          ],
+          "surfaceTokens": 1132,
+          "breakdown": {
+            "systemTokens": 822,
+            "toolsTokens": 5441,
+            "messageTokens": 310
+          }
+        }
+      },
+      "titleInput": {
+        "ver": 3,
+        "seq": 24,
+        "val": {
+          "first": {
+            "seq": 10,
+            "text": "调用本会话提供的 MCP acceptance_challenge 工具，回复工具返回的完整校验值。不要读文件或环境变量，也不要用命令模拟该工具。"
+          },
+          "count": 1,
+          "lastSeq": 10
+        }
+      },
+      "inbox": {
+        "ver": 1,
+        "seq": 24,
+        "val": {
+          "next-turn": [],
+          "next-step": []
+        }
+      },
+      "permissions": {
+        "ver": 2,
+        "seq": 24,
+        "val": {
+          "preset": "workspace-write",
+          "sandbox": "workspace-write",
+          "approval": "ask",
+          "seeded": false
+        }
+      },
+      "subagentCatalog": {
+        "ver": 6,
+        "seq": 24,
+        "val": {
+          "inheritedEventCount": 0
+        }
+      },
+      "subagentTiming": {
+        "ver": 3,
+        "seq": 24,
+        "val": {
+          "descriptorSeen": false,
+          "settledMs": 0
+        }
+      },
+      "subagent": {
+        "ver": 2,
+        "seq": 24,
+        "val": {}
+      },
+      "agentTeam": {
+        "ver": 7,
+        "seq": 24,
+        "val": {
+          "inheritedEventCount": 0,
+          "id": "4e5bac7c-3747-45fa-98a1-4c8b6368d513",
+          "tasks": [],
+          "nextTaskNumber": 1
+        }
+      },
+      "subagentModelSelectionPolicy": {
+        "ver": 1,
+        "seq": 24,
+        "val": null
+      }
+    }
+  }
+}

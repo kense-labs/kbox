@@ -1,0 +1,22 @@
+{
+  "childProcess": true,
+  "claimedGeneration": 2,
+  "coldPrepareMs": 117813,
+  "differentRuntimeUnitClaimedCompatibleBase": true,
+  "dirtyVmNotReused": true,
+  "externalFileBytes": 2097152,
+  "externalFileSha256": "1e075c8d478ad21844e33e830a695ef03a4d2488b69ee275bd8947618bb1be1e",
+  "firstExecutionId": "ecb15883-eda7-4aec-a1c5-dfa55ca126e9",
+  "reconstructedDriverReusedReservation": true,
+  "replacementExecutionId": "02e3e89d-1dc3-4602-aea7-700f8e1fd19e",
+  "sameOriginalProcess": true,
+  "sourceGenerationRefused": true,
+  "status": "PASS",
+  "unclaimedExecRefused": true,
+  "warmClaimMs": 75,
+  "zeroPrivateExecutions": true,
+  "image": "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+  "zeroPrivateVolumes": true,
+  "testSha256": "163e202e550d3b9324276903eb344381b11fd531fb2547541bce74b69caf4804",
+  "kboxSha256": "e9f1e9abd1c0747338e46d37de00578573b4ece2cec5aa560e9d63e8081f05ee"
+}

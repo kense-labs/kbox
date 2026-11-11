@@ -1,0 +1,1 @@
+Interrupted the superseded run after discovering that pool start accepts host paths rather than named-volume tokens. The corrected runner resolves the named volume through volume inspect before pool launch.

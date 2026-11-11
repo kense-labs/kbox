@@ -1,0 +1,6 @@
+Creating box acp-deepseek-resumed-2ae59cb1 (aff81feea139)...
+Box acp-deepseek-resumed-2ae59cb1 (aff81feea139) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box acp-deepseek-resumed-2ae59cb1 exited and was removed.

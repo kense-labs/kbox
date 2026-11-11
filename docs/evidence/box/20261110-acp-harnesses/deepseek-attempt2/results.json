@@ -1,0 +1,97 @@
+{
+  "harness": "deepseek",
+  "image": "dsh-acp:e2e-ba01b05",
+  "digest": "sha256:5d8c283ef8cc74d4f6b76f1bbb585cb0758f26eb7a898201bc65502b9e0c6f7b",
+  "image_unchanged": true,
+  "accepted": false,
+  "summary": {
+    "pass": 1,
+    "fail": 8,
+    "blocked": 0,
+    "skip": 0
+  },
+  "elapsed_s": 30.413,
+  "cases": [
+    {
+      "id": "P4-9",
+      "status": "PASS",
+      "message": "EOF, pool, boxes, socket and named volume clean up",
+      "detail": {
+        "errors": []
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-1",
+      "status": "FAIL",
+      "message": "cold complex coding task with independent host oracle",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-2",
+      "status": "FAIL",
+      "message": "six tool-using turns retain context and evolving requirements",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-3",
+      "status": "FAIL",
+      "message": "125-second externally paced batch task stays in flight to completion",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-4",
+      "status": "FAIL",
+      "message": "external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-5",
+      "status": "FAIL",
+      "message": "named-volume session history restores in a fresh MicroVM",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-6",
+      "status": "FAIL",
+      "message": "concurrent sessions keep context and cancellation independent",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-7",
+      "status": "FAIL",
+      "message": "cancel a running process tree, prevent late writes, then recover",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    },
+    {
+      "id": "P4-8",
+      "status": "FAIL",
+      "message": "invalid, conflicting and denied operations fail closed",
+      "detail": {
+        "reason": "Internal error: turn failed: DeepSeek Messages request failed (404)"
+      },
+      "ts": "2026-11-10T09:03:48Z"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "platform": "Darwin",
+  "kboxSha256": "e3616fca15475a7a1ac5c8f1a3a00eb20929119efaef0da35faee892e7c91a79",
+  "image": "docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110",
+  "engineId": "8510a275-5e28-487d-9b1d-74c42d12b4d0",
+  "stdinBytes": 2097152,
+  "stdoutBytes": 8388622,
+  "exitCode": 37,
+  "backpressureAndConcurrentExec": true,
+  "halfCloseAndTails": true,
+  "noReplayAfterExitDisconnectAndEngineCrash": true,
+  "lostOpenNotLaunched": true,
+  "lateWriteChecks": {
+    "\u65ad\u5f00 late writes.txt": {
+      "bytes": 5,
+      "sha256": "eaf16bc07968e013f3f94ab1342472434a39fc3475f11cf341a6c3965974f8e9",
+      "quietSeconds": 54.553560166
+    },
+    "\u5d29\u6e83 late writes.txt": {
+      "bytes": 5,
+      "sha256": "eaf16bc07968e013f3f94ab1342472434a39fc3475f11cf341a6c3965974f8e9",
+      "quietSeconds": 52.177165957999996
+    }
+  },
+  "zeroPrivateExecutionsAndVolumes": true
+}

@@ -1,0 +1,43 @@
+[
+  {
+    "args": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0,
+    "stdout": "ordinary-data\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "volume",
+      "rm",
+      "ordinary-data"
+    ],
+    "exitCode": 0,
+    "stdout": "ordinary-data\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  }
+]

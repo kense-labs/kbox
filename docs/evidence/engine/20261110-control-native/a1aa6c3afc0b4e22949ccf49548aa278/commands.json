@@ -1,0 +1,60 @@
+[
+  {
+    "command": [
+      "pull",
+      "busybox:1.37.0"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "build",
+      "-f",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/a1aa6c3afc0b4e22949ccf49548aa278/context/Containerfile",
+      "-t",
+      "krun-oci-regression:a1aa6c3afc0b4e22949ccf49548aa278",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/a1aa6c3afc0b4e22949ccf49548aa278/context"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "image-inspect",
+      "krun-oci-regression:a1aa6c3afc0b4e22949ccf49548aa278"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "create",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "run",
+      "-d",
+      "--name",
+      "ordinary",
+      "--network",
+      "tsi",
+      "-v",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/a1aa6c3afc0b4e22949ccf49548aa278/\u5916\u90e8\u76ee\u5f55 with spaces:/workspace",
+      "-v",
+      "ordinary-data:/data",
+      "krun-oci-regression:a1aa6c3afc0b4e22949ccf49548aa278"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

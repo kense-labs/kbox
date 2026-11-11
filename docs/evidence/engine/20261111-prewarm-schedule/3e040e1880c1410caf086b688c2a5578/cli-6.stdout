@@ -1,0 +1,234 @@
+[
+  {
+    "id": "76a059ba-956a-436f-bc5f-1721250eb5ee",
+    "short_id": "76a059ba956a",
+    "name": "managed-76a059ba956a",
+    "image": "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+    "managed_execution": {
+      "operation_id": "kbox-prewarm-v1:0f5f174a-cd10-4d2e-b1f4-98d2d6cb9154",
+      "creation_intent_digest": "sha256:6219bef6d445155929d2aa04bfc355d380b97f45d181b1315d369f4c70bfb81a",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "prewarm:7e346d6f-8454-4b71-bd03-e07e9bbf9bad",
+        "config": {
+          "image": "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 512,
+            "disk_mb": 4096,
+            "timeout": 0
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "infinity"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": [
+            "/bin/sleep"
+          ],
+          "user": null,
+          "workdir": "/",
+          "hostname": null,
+          "volumes": [
+            "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/预热 workspace:/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/预热 workspace:rw",
+            "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun-home/runs/967d7d6bb6f38258336635bd70ca49720ea54b1d1c1930a8def611e16312f5e0/warm:/state:rw",
+            "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/原生 config:/config:rw",
+            "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/外部 files:/external files:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "none",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": 4294967295,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": 200000,
+            "cpu_period": 100000,
+            "memory_reservation": null,
+            "memory_swap": 536870912,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": true,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": true
+        },
+        "labels": {},
+        "policy": {
+          "name": null,
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": true,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": true,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "box_vm",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true,
+      "prewarm": {
+        "scope": "engine-41348d9ef10508598ce45c2fa7598915:3248e8eb20cc6de8f94e646be947835817528a30937077abbd99f28cec278f4d",
+        "owner": "7e346d6f-8454-4b71-bd03-e07e9bbf9bad",
+        "compatibilityDigest": "sha256:b98b53dc073fd384644ca85565b71ea27fbad9b3baa8c9e0b43e723b5b80ecc6",
+        "operationId": "kbox-prewarm-v1:0f5f174a-cd10-4d2e-b1f4-98d2d6cb9154",
+        "generation": 1
+      }
+    },
+    "status": "running",
+    "pid": 79339,
+    "pid_start_time": 1794351480090717,
+    "cpus": 2,
+    "memory_mb": 512,
+    "volumes": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/预热 workspace:/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/预热 workspace:rw",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/krun-home/runs/967d7d6bb6f38258336635bd70ca49720ea54b1d1c1930a8def611e16312f5e0/warm:/state:rw",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/原生 config:/config:rw",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/外部 files:/external files:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {},
+    "cmd": [
+      "infinity"
+    ],
+    "entrypoint": [
+      "/bin/sleep"
+    ],
+    "box_dir": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/kbox-home/boxes/76a059ba-956a-436f-bc5f-1721250eb5ee",
+    "exec_socket_path": "/private/tmp/kbox-sockets/76a059ba-956a-436f-bc5f-1721250eb5ee/exec.sock",
+    "console_log": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/3e040e1880c1410caf086b688c2a5578/kbox-home/boxes/76a059ba-956a-436f-bc5f-1721250eb5ee/logs/console.log",
+    "created_at": "2026-11-10T22:57:51.863680Z",
+    "started_at": "2026-11-10T22:58:04.105396Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": "/",
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": true,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "none",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": 4294967295,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": 200000,
+      "cpu_period": 100000,
+      "memory_reservation": null,
+      "memory_swap": 536870912,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": true,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": true,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null,
+    "status_detail": {
+      "state": "running",
+      "summary": "running",
+      "active": true,
+      "pid": 79339,
+      "restart_count": 0
+    },
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "ExitCode": null
+    }
+  }
+]

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 390, in main
+    assert cancelled_calls and cancelled_calls <= settled_calls, "cancel returned before tool-result drain"
+AssertionError: cancel returned before tool-result drain

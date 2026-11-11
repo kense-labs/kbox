@@ -1,0 +1,7 @@
+{
+  "requests": 256,
+  "exactBodies": 256,
+  "failures": [],
+  "kboxSha256": "034a0c4fd61456ea128eefd69b74490b484fdac47a0f2edd2e0047a195755a90",
+  "libkrunSha256": "09ec74b33f5b771732cdea6e27a60a3c63397f7240ecbd930a40175a5028dea5"
+}

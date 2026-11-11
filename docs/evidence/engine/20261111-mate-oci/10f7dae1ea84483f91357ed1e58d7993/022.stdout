@@ -1,0 +1,1 @@
+{"security": {"CapEff": "000001ffffffffff", "CapBnd": "000001ffffffffff", "NoNewPrivs": "0", "Seccomp": "0"}, "sandboxExit": 0, "sandboxStderr": ""}

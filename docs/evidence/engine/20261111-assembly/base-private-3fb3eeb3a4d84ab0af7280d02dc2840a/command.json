@@ -1,0 +1,22 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly/base-private-3fb3eeb3a4d84ab0af7280d02dc2840a",
+  "home": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly/base-private-3fb3eeb3a4d84ab0af7280d02dc2840a/home",
+  "command": [
+    "/Users/roylin/code/kense/krun/.build/assembly-prefix-61e004fafca5457384be01f83d8988ba/bin/kbox",
+    "build",
+    "--run-pool-socket",
+    "/private/tmp/krun-bld-t_mltw91/pool.sock",
+    "--run-pool-autostart",
+    "--run-pool-image",
+    "krun-coding-fixture:0.1.0",
+    "--run-pool-memory",
+    "2g",
+    "-f",
+    "/Users/roylin/code/kense/krun/.build/shared-base/Containerfile",
+    "-t",
+    "krun-base:0.1.0",
+    "/Users/roylin/code/kense/krun/.build/shared-base"
+  ],
+  "socket": "/private/tmp/krun-bld-t_mltw91/pool.sock",
+  "prefix": "/Users/roylin/code/kense/krun/.build/assembly-prefix-61e004fafca5457384be01f83d8988ba"
+}

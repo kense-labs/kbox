@@ -1937,6 +1937,7 @@ dependencies = [
  "tokio-rustls",
  "tokio-stream",
  "tracing",
+ "tracing-subscriber",
  "url",
  "uuid",
  "windows-sys 0.48.0",

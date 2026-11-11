@@ -1,0 +1,102 @@
+{
+  "reproductionCommands": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "kbox-runtime",
+        "engine::assembly::tests"
+      ],
+      "log": "mate-assembly-final-tests.log",
+      "passed": 4
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "kbox-runtime",
+        "kbox_contract_driver::exec_integration_tests"
+      ],
+      "log": "mate-bound-stream-tests.log",
+      "passed": 2
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "kbox-runtime",
+        "engine::"
+      ],
+      "log": "mate-engine-current-tests.log",
+      "passed": 165,
+      "note": "filter also includes OCI build engine modules"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "kbox-runtime",
+        "kbox_contract_driver::engine_tests"
+      ],
+      "log": "mate-engine-driver-tests.log",
+      "passed": 10
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--workspace",
+        "--all-targets",
+        "--locked"
+      ],
+      "log": "mate-workspace-check.log",
+      "result": "PASS"
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "kbox-runtime",
+        "-p",
+        "kbox-cli",
+        "--all-targets",
+        "--no-deps"
+      ],
+      "log": "mate-clippy.log",
+      "result": "PASS with existing warnings"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release",
+        "-p",
+        "kbox-cli"
+      ],
+      "log": "mate-infinite-keepalive-build.log",
+      "result": "PASS"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "log": "mate-workspace-final-fmt.log",
+      "result": "FAIL, 54 pre-existing paths, no new failing paths"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+Listening on /tmp/kbox-dsh-otlto3t4/pool.sock (Ctrl-C or SIGTERM to drain and stop)
+Warm pool started
+  default image: dsh-acp:e2e-ba01b05 (pre-warming 1)
+  max:      1
+  boot concurrency: 2 (daemon-wide)
+  ttl:      0s
+  lease ttl: 3600s
+  socket:   /tmp/kbox-dsh-otlto3t4/pool.sock
+Draining warm pools...
+Done.

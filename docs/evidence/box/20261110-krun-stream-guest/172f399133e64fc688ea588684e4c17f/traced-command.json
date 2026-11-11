@@ -1,0 +1,11 @@
+{
+  "command": [
+    "target/release/deps/kbox_runtime-56199650e1a3560a",
+    "kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup",
+    "--exact",
+    "--ignored",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "completeRuntimeAssets": true
+}

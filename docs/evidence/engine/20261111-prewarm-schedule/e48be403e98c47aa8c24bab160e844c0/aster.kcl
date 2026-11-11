@@ -1,0 +1,23 @@
+profile "coding" {
+  runtime {
+    image = "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51"
+    memory_bytes = 536870912
+    network = "none"
+  }
+  harness {
+    environment = {
+    ASTER_CONFIG = "/config/fixture.acl"
+    ASTER_DEFAULT_MODEL = "fixture/probe"
+    }
+  }
+  mount "config" {
+    source = "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/原生 config"
+    target = "/config"
+    access = "read-write"
+  }
+  mount "external" {
+    source = "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/外部 files"
+    target = "/external files"
+    access = "read-write"
+  }
+}

@@ -1,0 +1,16 @@
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.57s
+     Running unittests src/lib.rs (target/debug/deps/kbox_core-12548fbdc5c1f826)
+
+running 2 tests
+test guest_exec::mount_tests::encoded_mount_spec_refuses_malformed_utf8_and_nul ... ok
+test guest_exec::mount_tests::mount_spec_preserves_unicode_quotes_and_legacy_values ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 478 filtered out; finished in 0.00s
+
+     Running tests/compose_normalization.rs (target/debug/deps/compose_normalization-e354462fd9aff084)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+

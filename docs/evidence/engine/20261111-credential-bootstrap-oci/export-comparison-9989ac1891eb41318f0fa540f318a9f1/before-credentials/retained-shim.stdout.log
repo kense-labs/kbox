@@ -1,0 +1,8 @@
+2026-11-11T00:28:24.364589Z  INFO Starting VM box_id=bace2824-f2c7-4b79-bd0f-75603680f13a vcpus=2 memory_mib=512 rootfs=ext4-disk:/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/home/boxes/bace2824-f2c7-4b79-bd0f-75603680f13a/rootfs-ext4-v1/rootfs.ext4
+2026-11-11T00:28:24.370622Z  INFO Adding filesystem mounts via virtiofs:
+2026-11-11T00:28:24.370648Z  INFO   workspace → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/home/boxes/bace2824-f2c7-4b79-bd0f-75603680f13a/workspace (rw)
+2026-11-11T00:28:24.370656Z  INFO   vol0 → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/external 中文 (rw)
+2026-11-11T00:28:24.370670Z  INFO   vol1 → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/home/volumes/test-data (rw)
+2026-11-11T00:28:24.370676Z  INFO   kterminal → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/home/boxes/bace2824-f2c7-4b79-bd0f-75603680f13a/runtime-control (rw)
+2026-11-11T00:28:24.370682Z  INFO   kboot → /private/tmp/kbox-sockets/bace2824-f2c7-4b79-bd0f-75603680f13a/boot-control (ro)
+2026-11-11T00:28:24.377457Z  INFO Starting VM (process takeover) box_id=bace2824-f2c7-4b79-bd0f-75603680f13a

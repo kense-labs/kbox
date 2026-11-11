@@ -1,0 +1,1181 @@
+    Checking cfg-if v1.0.5
+    Checking zeroize v1.8.2
+    Checking memchr v2.8.3
+    Checking once_cell v1.21.4
+    Checking itoa v1.0.18
+    Checking subtle v2.6.1
+    Checking smallvec v1.16.4
+    Checking const-oid v0.9.6
+    Checking typenum v1.20.1
+    Checking libc v0.2.189
+    Checking pin-project-lite v0.2.17
+    Checking serde_core v1.0.229
+    Checking scopeguard v1.2.0
+    Checking bytes v1.12.1
+    Checking log v0.4.35
+    Checking num-traits v0.2.19
+    Checking futures-core v0.3.34
+    Checking bitflags v2.13.2
+    Checking futures-sink v0.3.34
+    Checking zmij v1.0.23
+    Checking lock_api v0.4.14
+    Checking slab v0.4.12
+    Checking core-foundation-sys v0.8.7
+    Checking percent-encoding v2.3.2
+    Checking tracing-core v0.1.36
+    Checking regex-syntax v0.8.11
+    Checking futures-channel v0.3.34
+    Checking equivalent v1.0.3
+    Checking thiserror v1.0.69
+    Checking futures-task v0.3.34
+    Checking futures-io v0.3.34
+    Checking zerocopy v0.8.63
+    Checking base64ct v1.6.0
+    Checking base64 v0.22.1
+    Checking thiserror v2.0.20
+    Checking ipnet v2.12.2
+    Checking tinyvec v1.13.3
+    Checking flagset v0.4.7
+    Checking lazy_static v1.5.1
+    Checking unicode-joining-type v1.0.0
+    Checking httparse v1.10.1
+    Checking aho-corasick v1.1.5
+    Checking futures-util v0.3.34
+    Checking rustls-pki-types v1.15.1
+    Checking tracing v0.1.44
+    Checking pem-rfc7468 v0.7.0
+    Checking tower-service v0.3.3
+    Checking http v1.5.0
+    Checking fnv v1.0.7
+    Checking hashbrown v0.16.1
+    Checking errno v0.3.14
+    Checking parking_lot_core v0.9.12
+    Checking socket2 v0.6.5
+    Checking mio v1.2.4
+    Checking getrandom v0.2.17
+    Checking getrandom v0.3.4
+    Checking cpufeatures v0.2.17
+    Checking num-integer v0.1.47
+    Checking unicode-normalization v0.1.24
+    Checking signal-hook-registry v1.4.8
+    Checking generic-array v0.14.7
+    Checking rustix v1.1.6
+    Checking rand_core v0.6.4
+    Checking untrusted v0.9.0
+    Checking parking_lot v0.12.5
+    Checking ring v0.17.14
+    Checking idna_mapping v1.1.0
+    Checking atomic-waker v1.1.2
+    Checking num-bigint v0.4.8
+    Checking unicode-bidi v0.3.18
+    Checking try-lock v0.2.5
+    Checking aws-lc-sys v0.47.0
+    Checking tokio v1.53.3
+    Checking want v0.3.2
+    Checking der v0.7.10
+    Checking minimal-lexical v0.2.1
+    Checking ryu v1.0.20
+    Checking indexmap v2.13.1
+    Checking fastrand v2.5.0
+    Checking idna_adapter v1.1.0
+    Checking deranged v0.5.9
+    Checking time-core v0.1.9
+    Checking powerfmt v0.2.0
+    Checking num-conv v0.2.2
+    Checking crypto-common v0.1.7
+    Checking block-buffer v0.10.4
+    Checking httpdate v1.0.3
+    Checking http-body v1.1.0
+    Checking data-encoding v2.11.1
+    Checking digest v0.10.7
+    Checking utf8_iter v1.0.4
+    Checking aws-lc-rs v1.19.0
+    Checking nom v7.1.3
+    Checking crossbeam-utils v0.8.23
+    Checking ff v0.13.1
+    Checking idna v1.1.0
+    Checking security-framework-sys v2.17.0
+    Checking sha2 v0.10.9
+    Checking hmac v0.12.1
+    Checking core-foundation v0.9.4
+    Checking socket2 v0.5.10
+    Checking form_urlencoded v1.2.2
+    Checking sync_wrapper v1.0.2
+    Checking tower-layer v0.3.3
+    Checking base16ct v0.2.0
+    Checking hkdf v0.12.4
+    Checking group v0.13.0
+    Checking http-body-util v0.1.5
+    Checking io-lifetimes v2.0.4
+    Checking io-lifetimes v3.0.1
+    Checking crypto-bigint v0.5.5
+    Checking security-framework v2.11.1
+    Checking num-iter v0.1.46
+    Checking spki v0.7.3
+    Checking rand_core v0.9.5
+    Checking num-complex v0.4.6
+    Checking regex-automata v0.4.18
+    Checking iana-time-zone v0.1.65
+    Checking num-rational v0.4.2
+    Checking mime v0.3.17
+    Checking ref-cast v1.0.25
+    Checking pkcs8 v0.10.2
+    Checking io-extras v0.19.0
+    Checking serde v1.0.229
+    Checking serde_json v1.0.151
+    Checking crossbeam-epoch v0.9.21
+    Checking time v0.3.55
+    Checking sec1 v0.7.3
+    Checking getrandom v0.4.3
+    Checking webpki-roots v1.0.11
+    Checking ambient-authority v0.0.2
+    Checking num v0.4.3
+    Checking foldhash v0.2.0
+    Checking maybe-owned v0.3.4
+    Checking borrow-or-share v0.2.4
+    Checking allocator-api2 v0.2.21
+    Checking option-ext v0.2.0
+    Checking sha1_smol v1.0.1
+    Checking hashbrown v0.12.3
+    Checking byteorder v1.5.0
+    Checking simd-adler32 v0.3.10
+    Checking bit-vec v0.8.0
+    Checking adler2 v2.0.1
+    Checking rustls-webpki v0.103.16
+    Checking tempfile v3.27.0
+    Checking fs-set-times v0.20.3
+    Checking hash32 v0.3.1
+    Checking miniz_oxide v0.9.1
+    Checking chrono v0.4.45
+    Checking cap-primitives v4.0.3
+    Checking serde_urlencoded v0.7.1
+    Checking hashbrown v0.17.1
+    Checking bit-set v0.8.0
+    Checking fluent-uri v0.4.1
+    Checking native-tls v0.2.13
+    Checking uuid v1.26.1
+    Checking dirs-sys v0.4.1
+    Checking indexmap v1.9.3
+    Checking rusticata-macros v4.1.0
+    Checking crossbeam-deque v0.8.8
+    Checking fraction v0.15.4
+    Checking webpki-roots v0.26.11
+    Checking crc32fast v1.5.3
+    Checking url v2.5.8
+    Checking rfc6979 v0.4.0
+    Checking sha1 v0.10.7
+    Checking rustls v0.23.46
+    Checking signature v2.2.0
+    Checking is-terminal v0.4.17
+    Checking unicase v2.10.0
+    Checking outref v0.5.2
+    Checking vsimd v0.8.0
+    Checking num-cmp v0.1.0
+    Checking elliptic-curve v0.13.8
+    Checking unsafe-libyaml v0.2.11
+    Checking micromap v0.3.0
+    Checking stable_deref_trait v1.2.1
+    Checking utf-8 v0.7.6
+    Checking utf8parse v0.2.2
+    Checking bytecount v0.6.9
+    Checking ryu-js v1.0.3
+    Checking heapless v0.8.0
+    Checking mime_guess v2.0.5
+    Checking anstyle-parse v1.0.0
+    Checking is_terminal_polyfill v1.48.2
+    Checking flate2 v1.1.10
+    Checking strum v0.28.0
+    Checking rayon-core v1.13.0
+    Checking kense-kcl v0.3.0 (/Users/roylin/code/kense/kcl)
+    Checking cap-std v4.0.2
+    Checking derive_builder v0.20.2
+    Checking uuid-simd v0.8.0
+    Checking unicode-general-category v1.1.0
+    Checking dirs v5.0.1
+    Checking ecdsa v0.16.9
+    Checking primeorder v0.13.6
+    Checking const_format v0.2.35
+    Checking email_address v0.2.9
+    Checking zstd-sys v2.1.2+zstd.1.5.7
+    Checking jsonschema-regex v0.48.5
+    Checking protobuf-support v3.7.2
+    Checking anstyle-query v1.1.1
+    Checking anstyle v1.0.14
+    Checking base64 v0.13.1
+    Checking either v1.19.0
+    Checking bitflags v1.3.2
+    Checking strum v0.27.2
+    Checking serde_yaml v0.9.21
+    Checking managed v0.8.0
+    Checking colorchoice v1.0.2
+    Checking zstd-safe v7.3.0
+    Checking cap-fs-ext v4.0.2
+    Checking axum-core v0.5.2
+    Checking crc32c v0.6.8
+    Checking bzip2-sys v0.1.13+1.0.8
+    Checking anstream v1.0.0
+    Checking lzma-sys v0.1.20
+    Checking futures-executor v0.3.34
+    Checking olpc-cjson v0.1.4
+    Checking protobuf v3.7.2
+    Checking rayon v1.12.0
+    Checking koci-core v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/core)
+    Checking jwt v0.16.0
+    Checking xattr v1.6.1
+    Checking serde_ignored v0.1.14
+    Checking serde_path_to_error v0.1.20
+    Checking smoltcp v0.11.0
+    Checking fs2 v0.4.3
+    Checking filetime v0.2.27
+    Checking pem v3.0.6
+    Checking http-auth v0.1.9
+    Checking clap_lex v1.0.1
+    Checking strsim v0.11.1
+    Checking matchit v0.8.4
+    Checking hashbrown v0.14.5
+    Checking semver v1.0.28
+    Checking tar v0.4.46
+    Checking clap_builder v4.6.7
+    Checking futures v0.3.34
+    Checking kbox-mkext4 v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/third_party/mkext4)
+    Checking xz2 v0.1.7
+    Checking zstd v0.13.3
+    Checking bzip2 v0.5.2
+    Checking p384 v0.13.1
+    Checking p256 v0.13.2
+    Checking x509-cert v0.2.5
+    Checking tracing-log v0.2.0
+    Checking asn1-rs v0.6.2
+    Checking yasna v0.5.2
+    Checking sharded-slab v0.1.7
+    Checking thread_local v1.1.10
+    Checking unicode-width v0.2.0
+    Checking dashmap v6.2.1
+    Checking unicode-segmentation v1.12.0
+    Checking hex v0.4.3
+    Checking ppv-lite86 v0.2.21
+    Checking ahash v0.8.12
+    Checking regex v1.12.4
+    Checking fancy-regex v0.18.0
+    Checking matchers v0.2.0
+    Checking nu-ansi-term v0.50.3
+   Compiling kbox-cli v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/cli)
+    Checking referencing v0.48.5
+    Checking jsonschema-value v0.48.5
+    Checking rand_chacha v0.9.0
+    Checking comfy-table v7.2.2
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking tracing-subscriber v0.3.23
+    Checking rand v0.9.5
+    Checking der-parser v9.0.0
+    Checking oid-registry v0.7.1
+    Checking jsonschema v0.48.5
+    Checking clap v4.6.7
+    Checking tungstenite v0.26.2
+    Checking sysinfo v0.30.13
+    Checking tokio-util v0.7.19
+    Checking tower v0.5.3
+    Checking tokio-native-tls v0.3.1
+    Checking kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+    Checking kbox-contract v0.8.0 (/Users/roylin/code/kense/kbox/crates/runtime)
+    Checking x509-parser v0.16.0
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+    Checking tokio-tungstenite v0.26.2
+    Checking tower-http v0.6.11
+    Checking h2 v0.4.20
+    Checking prometheus v0.14.0
+    Checking tokio-rustls v0.26.6
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking rcgen v0.13.2
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo clippy --fix --lib -p kbox-contract -- --no-deps` to apply 1 suggestion)
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking hyper v1.12.0
+    Checking hyper-util v0.1.19
+    Checking kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+    Checking hyper-tls v0.6.0
+    Checking hyper-rustls v0.27.2
+    Checking axum v0.8.4
+    Checking reqwest v0.12.28
+    Checking oci-distribution v0.11.0
+    Checking kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1142:13
+     |
+1142 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1156:13
+     |
+1156 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1187:13
+     |
+1187 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: constant `TMPFS_MAGIC` is never used
+  --> crates/box/runtime/src/kbox_contract_driver/secret.rs:28:7
+   |
+28 | const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
+   |       ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `prepare_registry_auth_for_create` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/secret.rs:482:25
+    |
+302 | impl SecretMaterializationOwner {
+    | ------------------------------- method in this implementation
+...
+482 |     pub(super) async fn prepare_registry_auth_for_create(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `validate_for` is never used
+   --> crates/box/runtime/src/local_execution/backend.rs:169:19
+    |
+157 | impl LocalExecutionOwnerFacts {
+    | ----------------------------- method in this implementation
+...
+169 |     pub(super) fn validate_for(
+    |                   ^^^^^^^^^^^^
+
+warning: function `retain_original_guard` is never used
+   --> crates/box/runtime/src/local_execution/lifecycle_lock.rs:141:15
+    |
+141 | pub(super) fn retain_original_guard(
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_box_owned_linux_network` is never used
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:20:15
+   |
+20 | pub(super) fn attach_box_owned_linux_network(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `NetworkInventory` is never constructed
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:83:8
+   |
+83 | struct NetworkInventory {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `network_inventory` is never used
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:89:4
+   |
+89 | fn network_inventory(bundle: &OciBundle) -> ExecutionManagerResult<NetworkInventory> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `attach_box_managed_secret_mounts` is never used
+  --> crates/box/runtime/src/local_execution/oci_secret_attachments.rs:15:15
+   |
+15 | pub(super) fn attach_box_managed_secret_mounts(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `oci_bind_mount_sources` is never used
+  --> crates/box/runtime/src/local_execution/oci_secret_attachments.rs:59:4
+   |
+59 | fn oci_bind_mount_sources(bundle: &OciBundle) -> ExecutionManagerResult<Vec<Option<PathBuf>>> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `WORKSPACE_STORAGE_IDENTITY` is never used
+  --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:18:7
+   |
+18 | const WORKSPACE_STORAGE_IDENTITY: &str = "kbox.workspace";
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_box_owned_volume_storage` is never used
+  --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:27:15
+   |
+27 | pub(super) fn attach_box_owned_volume_storage(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_staged_caller_bind_aliases` is never used
+  --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:53:15
+   |
+53 | pub(super) fn attach_staged_caller_bind_aliases(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `reject_unclassified_bind_mounts` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:100:15
+    |
+100 | pub(super) fn reject_unclassified_bind_mounts(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `bind_alias_slot` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:128:4
+    |
+128 | fn bind_alias_slot(alias_root: &Path, canonical: &Path) -> Option<String> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `staged_caller_bind_alias_root` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:148:4
+    |
+148 | fn staged_caller_bind_alias_root(home_dir: &Path, box_id: &str) -> PathBuf {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `classified_bind_indices` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:156:4
+    |
+156 | fn classified_bind_indices(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `mount_index_from_pointer` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:189:4
+    |
+189 | fn mount_index_from_pointer(pointer: &str) -> Option<usize> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_named_and_anonymous_volumes` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:197:4
+    |
+197 | fn attach_named_and_anonymous_volumes(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_workspace_bind` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:271:4
+    |
+271 | fn attach_workspace_bind(
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_storage` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:309:4
+    |
+309 | fn attach_storage(
+    |    ^^^^^^^^^^^^^^
+
+warning: struct `OciBindMount` is never constructed
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:343:8
+    |
+343 | struct OciBindMount {
+    |        ^^^^^^^^^^^^
+
+warning: function `oci_bind_mounts` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:349:4
+    |
+349 | fn oci_bind_mounts(bundle: &OciBundle) -> ExecutionManagerResult<Vec<OciBindMount>> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: variant `Released` is never constructed
+   --> crates/box/runtime/src/local_execution/resources.rs:372:5
+    |
+369 | enum ResourceEffect {
+    |      -------------- variant in this enum
+...
+372 |     Released,
+    |     ^^^^^^^^
+    |
+    = note: `ResourceEffect` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `name` and `effect` are never read
+   --> crates/box/runtime/src/local_execution/resources.rs:377:5
+    |
+376 | struct SelectedClaim {
+    |        ------------- fields in this struct
+377 |     name: String,
+    |     ^^^^
+378 |     effect: ResourceEffect,
+    |     ^^^^^^
+
+warning: fields `volumes`, `network`, and `prepared` are never read
+   --> crates/box/runtime/src/local_execution/resources.rs:382:5
+    |
+381 | struct SelectedResources {
+    |        ----------------- fields in this struct
+382 |     volumes: Vec<SelectedClaim>,
+    |     ^^^^^^^
+383 |     network: Option<SelectedClaim>,
+    |     ^^^^^^^
+384 |     snapshot: Option<(PathBuf, PathBuf, ResourceEffect)>,
+385 |     prepared: bool,
+    |     ^^^^^^^^
+
+warning: function `selected_resource_deadline` is never used
+   --> crates/box/runtime/src/local_execution/resources.rs:388:4
+    |
+388 | fn selected_resource_deadline(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `selected_empty`, `prepare_retained`, `remaining_rollback_known`, and `rollback_retained` are never used
+   --> crates/box/runtime/src/local_execution/resources.rs:401:19
+    |
+400 | impl ExecutionResourceGuard {
+    | --------------------------- associated items in this implementation
+401 |     pub(super) fn selected_empty(home: &Path, record: &BoxRecord) -> Self {
+    |                   ^^^^^^^^^^^^^^
+...
+418 |     pub(super) fn prepare_retained(
+    |                   ^^^^^^^^^^^^^^^^
+...
+539 |     pub(super) fn remaining_rollback_known(&self) -> bool {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+557 |     pub(super) fn rollback_retained(
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: methods `drive_cold_paused_snapshot`, `pause_for_snapshot`, and `capture_snapshot_rootfs` are never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:233:14
+    |
+ 24 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+233 |     async fn drive_cold_paused_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+282 |     async fn pause_for_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^
+...
+333 |     async fn capture_snapshot_rootfs(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `execution_state` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:524:4
+    |
+524 | fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<ExecutionState> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `build_snapshot_metadata` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:795:4
+    |
+795 | fn build_snapshot_metadata(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `snapshot_error` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:832:4
+    |
+832 | fn snapshot_error(
+    |    ^^^^^^^^^^^^^^
+
+warning: variant `Unused` is never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:57:5
+   |
+56 | pub(super) enum AdmissionState {
+   |                 -------------- variant in this enum
+57 |     Unused,
+   |     ^^^^^^
+
+warning: struct `OwnerReservation` is never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:64:19
+   |
+64 | pub(super) struct OwnerReservation {
+   |                   ^^^^^^^^^^^^^^^^
+
+warning: variants `StartSelected`, `StopSelected`, and `ReconcileRetainedRemove` are never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:76:5
+   |
+75 | enum OwnedLifecycleStage {
+   |      ------------------- variants in this enum
+76 |     StartSelected {
+   |     ^^^^^^^^^^^^^
+...
+82 |     StopSelected {
+   |     ^^^^^^^^^^^^
+...
+89 |     ReconcileRetainedRemove {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `completion` is never read
+  --> crates/box/runtime/src/local_execution/store.rs:98:5
+   |
+97 | pub struct OwnedLifecycleOutcome {
+   |            --------------------- field in this struct
+98 |     completion: OwnedLifecycleCompletion,
+   |     ^^^^^^^^^^
+
+warning: associated functions `start_selected`, `stop_selected`, and `reconcile_retained_remove` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:114:19
+    |
+103 | impl OwnedLifecycleRequest {
+    | -------------------------- associated functions in this implementation
+...
+114 |     pub(super) fn start_selected(
+    |                   ^^^^^^^^^^^^^^
+...
+130 |     pub(super) fn stop_selected(
+    |                   ^^^^^^^^^^^^^
+...
+148 |     pub(super) fn reconcile_retained_remove(
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `from_observed_reserved` is never used
+   --> crates/box/runtime/src/local_execution/store.rs:217:8
+    |
+216 | impl FreshOwnerAdmission {
+    | ------------------------ associated function in this implementation
+217 |     fn from_observed_reserved(
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `reserve_for_owner_admission` and `mark_snapshot_freezer_applied` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:257:25
+    |
+254 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+257 |     pub(super) async fn reserve_for_owner_admission(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+551 |     pub(super) async fn mark_snapshot_freezer_applied(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `SnapshotClaim` is never constructed
+   --> crates/box/runtime/src/local_execution/store.rs:604:5
+    |
+587 | pub(super) enum RuntimeUpdate {
+    |                 ------------- variant in this enum
+...
+604 |     SnapshotClaim {
+    |     ^^^^^^^^^^^^^
+
+warning: struct `ValidatedOwnedCall` is never constructed
+   --> crates/box/runtime/src/local_execution/store.rs:665:19
+    |
+665 | pub(super) struct ValidatedOwnedCall<'a> {
+    |                   ^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `validate`, and `stage` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:684:19
+    |
+683 | impl<'a> ValidatedOwnedCall<'a> {
+    | ------------------------------- associated items in this implementation
+684 |     pub(super) fn new(
+    |                   ^^^
+...
+701 |     pub(super) fn validate(&self, binding: &OwnerBinding) -> ExecutionManagerResult<()> {
+    |                   ^^^^^^^^
+...
+708 |     pub(super) fn stage(
+    |                   ^^^^^
+
+warning: methods `deadline` and `validate_call` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:735:19
+    |
+734 | impl OwnedStageBinding {
+    | ---------------------- methods in this implementation
+735 |     pub(super) fn deadline(&self) -> std::time::Instant {
+    |                   ^^^^^^^^
+...
+739 |     pub(super) fn validate_call(
+    |                   ^^^^^^^^^^^^^
+
+warning: methods `clone_auth` and `promote` are never used
+  --> crates/box/runtime/src/local_execution/transient_registry_auth.rs:56:19
+   |
+21 | impl TransientRegistryAuthBroker {
+   | -------------------------------- methods in this implementation
+...
+56 |     pub(crate) fn clone_auth(&self, key: &str) -> Option<RegistryAuth> {
+   |                   ^^^^^^^^^^
+...
+80 |     pub(crate) fn promote(
+   |                   ^^^^^^^
+
+warning: field `vm` is never read
+  --> crates/box/runtime/src/local_execution/vm_backend.rs:41:5
+   |
+39 | pub(super) struct AdmittedVm {
+   |                   ---------- field in this struct
+40 |     binding: super::store::OwnerBinding,
+41 |     vm: SharedVm,
+   |     ^^
+
+warning: variants `StageMetadata`, `PrepareResources`, `RollbackResources`, `FinalizeVm`, and `CleanupAnonymousVolumes` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1543:5
+     |
+1542 | enum OwnedVmJobKind {
+     |      -------------- variants in this enum
+1543 |     StageMetadata,
+     |     ^^^^^^^^^^^^^
+1544 |     PrepareResources,
+     |     ^^^^^^^^^^^^^^^^
+1545 |     RollbackResources,
+     |     ^^^^^^^^^^^^^^^^^
+1546 |     FinalizeVm,
+     |     ^^^^^^^^^^
+1547 |     CleanupAnonymousVolumes,
+     |     ^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `OwnedVmJobKind` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: associated items `as_str` and `parse` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1551:8
+     |
+1550 | impl OwnedVmJobKind {
+     | ------------------- associated items in this implementation
+1551 |     fn as_str(self) -> &'static str {
+     |        ^^^^^^
+...
+1560 |     fn parse(value: &str) -> ExecutionManagerResult<Self> {
+     |        ^^^^^
+
+warning: variants `Metadata`, `Prepare`, `Rollback`, `Finalize`, and `Anonymous` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1575:5
+     |
+1574 | enum OwnedVmJobOutput {
+     |      ---------------- variants in this enum
+1575 |     Metadata(kbox_core::Result<()>),
+     |     ^^^^^^^^
+1576 |     Prepare(ExecutionManagerResult<()>),
+     |     ^^^^^^^
+1577 |     Rollback(ExecutionManagerResult<()>),
+     |     ^^^^^^^^
+1578 |     Finalize(kbox_core::Result<()>),
+     |     ^^^^^^^^
+1579 |     Anonymous(kbox_core::Result<()>),
+     |     ^^^^^^^^^
+
+warning: method `result` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1583:8
+     |
+1582 | impl OwnedVmJobOutput {
+     | --------------------- method in this implementation
+1583 |     fn result(&self) -> ExecutionManagerResult<()> {
+     |        ^^^^^^
+
+warning: variants `Running` and `Ready` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1602:5
+     |
+1600 | enum OwnedVmJobSlot {
+     |      -------------- variants in this enum
+1601 |     Idle,
+1602 |     Running {
+     |     ^^^^^^^
+...
+1607 |     Ready {
+     |     ^^^^^
+
+warning: fields `kind`, `binding`, and `result` are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1616:5
+     |
+1615 | struct OwnedVmCompleted {
+     |        ---------------- fields in this struct
+1616 |     kind: OwnedVmJobKind,
+     |     ^^^^
+1617 |     binding: super::store::OwnedStageBinding,
+     |     ^^^^^^^
+1618 |     result: Result<OwnedVmJobOutput, tokio::task::JoinError>,
+     |     ^^^^^^
+
+warning: multiple fields are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1622:5
+     |
+1621 | struct OwnedVmProgress {
+     |        --------------- fields in this struct
+1622 |     scope: crate::vm::OriginalVmScope,
+     |     ^^^^^
+1623 |     launch_record: BoxRecord,
+     |     ^^^^^^^^^^^^^
+1624 |     acquisition: crate::vm::OriginalAcquisition,
+     |     ^^^^^^^^^^^
+1625 |     resources: Option<Arc<std::sync::Mutex<ExecutionResourceGuard>>>,
+     |     ^^^^^^^^^
+1626 |     finalization: Option<Arc<std::sync::Mutex<crate::vm::OriginalVmFinalization>>>,
+     |     ^^^^^^^^^^^^
+1627 |     anonymous: Option<Arc<std::sync::Mutex<OwnedAnonymousCleanup>>>,
+     |     ^^^^^^^^^
+1628 |     job: OwnedVmJobSlot,
+     |     ^^^
+1629 |     completed: Vec<OwnedVmCompleted>,
+     |     ^^^^^^^^^
+1630 |     physical: Option<kbox_core::Result<kbox_core::vmm::VmExitConfirmation>>,
+     |     ^^^^^^^^
+1631 |     physical_budget: Option<kbox_core::vmm::OwnedCloseBudget>,
+     |     ^^^^^^^^^^^^^^^
+1632 |     cleanup_budget: Option<kbox_core::vmm::OwnedCleanupBudget>,
+     |     ^^^^^^^^^^^^^^
+
+warning: methods `validate_bound_settings`, `refresh_inactive_network`, `reconcile_ready`, `install`, and `poll_job` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1656:8
+     |
+1637 | impl OwnedVmProgress {
+     | -------------------- methods in this implementation
+...
+1656 |     fn validate_bound_settings(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {
+     |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+1673 |     fn refresh_inactive_network(
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+1713 |     fn reconcile_ready(
+     |        ^^^^^^^^^^^^^^^
+...
+1734 |     fn install(
+     |        ^^^^^^^
+...
+1837 |     async fn poll_job(
+     |              ^^^^^^^^
+
+warning: fields `home`, `owner`, `names`, and `unproved` are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1884:5
+     |
+1883 | struct OwnedAnonymousCleanup {
+     |        --------------------- fields in this struct
+1884 |     home: PathBuf,
+     |     ^^^^
+1885 |     owner: String,
+     |     ^^^^^
+1886 |     names: Vec<(String, bool)>,
+     |     ^^^^^
+1887 |     unproved: bool,
+     |     ^^^^^^^^
+
+warning: method `run` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1890:8
+     |
+1889 | impl OwnedAnonymousCleanup {
+     | -------------------------- method in this implementation
+1890 |     fn run(&mut self, budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
+     |        ^^^
+
+warning: enum `OwnedVmWork` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1913:6
+     |
+1913 | enum OwnedVmWork {
+     |      ^^^^^^^^^^^
+
+warning: methods `remaining_known`, `validate_original`, `kind`, and `run` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1924:8
+     |
+1923 | impl OwnedVmWork {
+     | ---------------- methods in this implementation
+1924 |     fn remaining_known(&self) -> ExecutionManagerResult<bool> {
+     |        ^^^^^^^^^^^^^^^
+...
+1953 |     fn validate_original(
+     |        ^^^^^^^^^^^^^^^^^
+...
+1988 |     fn kind(&self) -> OwnedVmJobKind {
+     |        ^^^^
+...
+1997 |     fn run(self, budget: kbox_core::vmm::OwnedCleanupBudget) -> OwnedVmJobOutput {
+     |        ^^^
+
+warning: function `require_job_time` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2031:4
+     |
+2031 | fn require_job_time(budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
+     |    ^^^^^^^^^^^^^^^^
+
+warning: function `spawn_original_work` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2050:4
+     |
+2050 | fn spawn_original_work(
+     |    ^^^^^^^^^^^^^^^^^^^
+
+warning: multiple methods are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2107:8
+     |
+2106 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+2107 |     fn exact_original(
+     |        ^^^^^^^^^^^^^^
+...
+2124 |     fn recheck_original(
+     |        ^^^^^^^^^^^^^^^^
+...
+2137 |     async fn run_original_preparation(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2199 |     async fn rollback_original_resources(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2236 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2277 |     async fn close_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2355 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2419 |     async fn finalize_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_mapping_set` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:43:4
+   |
+43 | fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Result<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_rootfs_ownership_with_preference` is never used
+   --> crates/box/runtime/src/host_fs/rootfs.rs:733:15
+    |
+733 | pub(crate) fn prepare_rootfs_ownership_with_preference(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `prefer_image_rootfs_metadata` is never read
+   --> crates/box/runtime/src/vm/mod.rs:202:16
+    |
+170 | pub(crate) struct BoxLayout {
+    |                   --------- field in this struct
+...
+202 |     pub(crate) prefer_image_rootfs_metadata: bool,
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `boot_original_owned` is never used
+  --> crates/box/runtime/src/vm/boot.rs:11:25
+   |
+ 5 | impl VmManager {
+   | -------------- method in this implementation
+...
+11 |     pub(crate) async fn boot_original_owned(
+   |                         ^^^^^^^^^^^^^^^^^^^
+
+warning: method `plan_image_anonymous_volumes` is never used
+  --> crates/box/runtime/src/vm/layout.rs:27:25
+   |
+23 | impl VmManager {
+   | -------------- method in this implementation
+...
+27 |     pub(crate) async fn plan_image_anonymous_volumes(&mut self) -> Result<Vec<String>> {
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: multiple fields are never read
+    --> crates/box/runtime/src/vm/lifecycle.rs:1085:5
+     |
+1084 | pub(crate) struct OriginalVmFinalization {
+     |                   ---------------------- fields in this struct
+1085 |     rootfs: Arc<dyn crate::rootfs::RootfsProvider>,
+     |     ^^^^^^
+1086 |     network: Option<Box<dyn crate::network::NetworkBackend>>,
+     |     ^^^^^^^
+1087 |     network_none: bool,
+     |     ^^^^^^^^^^^^
+1088 |     box_dir: PathBuf,
+     |     ^^^^^^^
+1089 |     socket_dir: PathBuf,
+     |     ^^^^^^^^^^
+1090 |     preserve_rootfs: bool,
+     |     ^^^^^^^^^^^^^^^
+1091 |     clean_handoff_required: bool,
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+1092 |     steps: [FinalizationStep; 5],
+     |     ^^^^^
+
+warning: variants `Pending`, `Attempted`, `Complete`, and `Unproved` are never constructed
+    --> crates/box/runtime/src/vm/lifecycle.rs:1097:5
+     |
+1096 | enum FinalizationStep {
+     |      ---------------- variants in this enum
+1097 |     Pending,
+     |     ^^^^^^^
+1098 |     Attempted,
+     |     ^^^^^^^^^
+1099 |     Complete,
+     |     ^^^^^^^^
+1100 |     Unproved,
+     |     ^^^^^^^^
+     |
+     = note: `FinalizationStep` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: methods `validate_preserve_rootfs`, `remaining_steps_known`, and `run` are never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1104:19
+     |
+1103 | impl OriginalVmFinalization {
+     | --------------------------- methods in this implementation
+1104 |     pub(crate) fn validate_preserve_rootfs(&self, preserve_rootfs: bool) -> Result<()> {
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+1113 |     pub(crate) fn remaining_steps_known(&self) -> bool {
+     |                   ^^^^^^^^^^^^^^^^^^^^^
+...
+1122 |     pub(crate) fn run(&mut self, budget: kbox_core::vmm::OwnedCleanupBudget) -> Result<()> {
+     |                   ^^^
+
+warning: function `remove_original_directory` is never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1178:4
+     |
+1178 | fn remove_original_directory(path: &Path) -> Result<()> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `require_original_physical_time` is never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1186:4
+     |
+1186 | fn require_original_physical_time(budget: kbox_core::vmm::OwnedCloseBudget) -> Result<()> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `close_original_owned` and `take_original_finalization` are never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1215:25
+     |
+1199 | impl VmManager {
+     | -------------- methods in this implementation
+...
+1215 |     pub(crate) async fn close_original_owned(
+     |                         ^^^^^^^^^^^^^^^^^^^^
+...
+1308 |     pub(crate) fn take_original_finalization(
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_recorded_sandbox_runtime_in` is never used
+   --> crates/box/runtime/src/vm/reap.rs:686:15
+    |
+686 | pub(crate) fn cleanup_recorded_sandbox_runtime_in(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `build_instance_spec` is never used
+  --> crates/box/runtime/src/vm/spec.rs:54:19
+   |
+49 | impl VmManager {
+   | -------------- method in this implementation
+...
+54 |     pub(crate) fn build_instance_spec(&mut self, layout: &BoxLayout) -> Result<InstanceSpec> {
+   |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: `kbox-runtime` (lib) generated 76 warnings (run `cargo clippy --fix --lib -p kbox-runtime -- --no-deps` to apply 3 suggestions)
+warning: unneeded sub `cfg` when there is only one condition
+ --> crates/box/cli/src/commands/port_forward.rs:4:7
+  |
+4 | #[cfg(any(test))]
+  |       ^^^^^^^^^ help: try: `test`
+  |
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#non_minimal_cfg
+  = note: `#[warn(clippy::non_minimal_cfg)]` on by default
+
+warning: unused import: `kbox_core::ExecutionBoundary`
+   --> crates/box/cli/src/commands/commit/tests.rs:386:9
+    |
+386 |     use kbox_core::ExecutionBoundary;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `kbox_core::ExecutionBoundary`
+   --> crates/box/cli/src/commands/commit/tests.rs:400:9
+    |
+400 |     use kbox_core::ExecutionBoundary;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `kbox_core::ExecutionBoundary`
+   --> crates/box/cli/src/commands/commit/tests.rs:412:9
+    |
+412 |     use kbox_core::ExecutionBoundary;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `kbox_core::ExecutionBoundary`
+   --> crates/box/cli/src/commands/commit/tests.rs:461:9
+    |
+461 |     use kbox_core::ExecutionBoundary;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/cli/src/commands/cp.rs:521:9
+    |
+521 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/cli/src/commands/observe_inventory.rs:285:65
+    |
+285 |         BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary,
+    |                                                                 ^^^^^^^^^^^^^^^^^
+
+warning: use of deprecated function `rand::thread_rng`: Renamed to `rng`
+   --> crates/box/cli/src/commands/attest.rs:225:25
+    |
+225 |     let mut rng = rand::thread_rng();
+    |                         ^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `rand::thread_rng`: Renamed to `rng`
+   --> crates/box/cli/src/state/policy.rs:172:25
+    |
+172 |     let mut rng = rand::thread_rng();
+    |                         ^^^^^^^^^^
+
+warning: use of deprecated method `rand::Rng::gen_range`: Renamed to `random_range`
+   --> crates/box/cli/src/state/policy.rs:173:30
+    |
+173 |     let adj = ADJECTIVES[rng.gen_range(0..ADJECTIVES.len())];
+    |                              ^^^^^^^^^
+
+warning: use of deprecated method `rand::Rng::gen_range`: Renamed to `random_range`
+   --> crates/box/cli/src/state/policy.rs:174:26
+    |
+174 |     let noun = NOUNS[rng.gen_range(0..NOUNS.len())];
+    |                          ^^^^^^^^^
+
+warning: method `secret_root` is never used
+   --> crates/box/cli/src/commands/compose/secrets.rs:118:19
+    |
+113 | impl ComposeSecretLease {
+    | ----------------------- method in this implementation
+...
+118 |     pub(super) fn secret_root(&self) -> &std::path::Path {
+    |                   ^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/cli/src/commands/commit/tests.rs:388:9
+    |
+388 |     let mut box_record = make_record("id", "box", "running", Some(std::process::id()));
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/cli/src/commands/commit/tests.rs:402:9
+    |
+402 |     let mut box_record = make_record("id", "box", "paused", Some(std::process::id()));
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/box/cli/src/commands/commit/tests.rs:414:9
+    |
+414 |     let mut microvm = make_record("id", "vm", "paused", Some(std::process::id()));
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+   --> crates/box/cli/src/commands/commit/tests.rs:463:9
+    |
+463 |     let mut microvm = make_record("id", "vm", "running", Some(std::process::id()));
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: unused variable: `config`
+ --> crates/box/cli/src/commands/run/request_tests.rs:7:9
+  |
+7 |     let config = build_box_config(
+  |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_config`
+  |
+  = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-cli` (lib) generated 6 warnings
+warning: variable does not need to be mutable
+    --> crates/box/cli/src/state/tests.rs:1197:9
+     |
+1197 |     let mut record = sample_record("sandbox-id", "sandbox", "created");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: unused variable: `parsed`
+    --> crates/box/cli/src/state/tests.rs:1200:9
+     |
+1200 |     let parsed: BoxRecord = serde_json::from_str(&json).unwrap();
+     |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_parsed`
+
+warning: `kbox-cli` (lib test) generated 19 warnings (6 duplicates) (run `cargo clippy --fix --lib -p kbox-cli --tests -- --no-deps` to apply 13 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 19.45s

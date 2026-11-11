@@ -1,0 +1,31 @@
+{
+  "Config": {
+    "Cmd": [
+      "--cwd",
+      "/workspace"
+    ],
+    "Entrypoint": [
+      "/opt/aster/aster-acp"
+    ],
+    "Env": {
+      "DEBIAN_FRONTEND": "noninteractive",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "ExposedPorts": [],
+    "Healthcheck": null,
+    "Labels": {
+      "org.opencontainers.image.ref.name": "ubuntu",
+      "org.opencontainers.image.version": "20.04"
+    },
+    "OnBuild": [],
+    "StopSignal": null,
+    "User": "root",
+    "Volumes": [],
+    "WorkingDir": "/workspace"
+  },
+  "Digest": "sha256:825ba99ff6d5620053e22d1ebb18b8d40ac0ab02ae8b9528b67f32b9c8d7a7ed",
+  "LayerCount": 4,
+  "PulledAt": "2026-11-10T09:18:12.258514+00:00",
+  "Reference": "aster-acp:e2e-73b1d5b",
+  "Size": 220060894
+}

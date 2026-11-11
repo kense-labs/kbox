@@ -22,6 +22,7 @@ pub async fn execute(args: RenameArgs) -> Result<(), Box<dyn std::error::Error>>
             return Err(format!("Name \"{}\" is already in use", args.new_name).into());
         }
         let record = resolve::resolve_mut(state, &args.r#box)?;
+        record.require_claimed()?;
         let old_name = record.name.clone();
         record.name = args.new_name.clone();
         Ok(old_name)

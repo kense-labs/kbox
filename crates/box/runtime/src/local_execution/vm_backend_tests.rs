@@ -78,6 +78,49 @@ fn record(home_dir: &Path) -> BoxRecord {
 }
 
 #[tokio::test]
+async fn prelaunch_boot_failure_is_failed_without_fabricating_an_exit_status() {
+    let temporary = tempfile::tempdir().unwrap();
+    let backend = VmLocalExecutionBackend::new(temporary.path());
+    let mut record = record(temporary.path());
+    record.status = ManagedExecutionState::Starting.as_status().to_string();
+    record.managed_execution.as_mut().unwrap().pending_operation =
+        Some(ManagedExecutionOperation::Start);
+    let mut manager = backend.new_manager(&record).unwrap();
+    // An incomplete snapshot launch fails before layout or provider acquisition on every host.
+    manager.config.snapshot_mem_file =
+        Some(temporary.path().join("absent-memory").display().to_string());
+    assert!(manager.boot().await.is_err());
+    let manager = Arc::new(Mutex::new(manager));
+    backend
+        .managers
+        .insert(record.id.clone(), RegisteredVm::Legacy(manager));
+    let observed = backend.inspect(&record).await.unwrap();
+    assert_eq!(observed.state, ExecutionState::Failed);
+    assert!(observed.handle.is_none());
+    assert!(observed.exit_code.is_none());
+    assert!(backend.manager(&record.id).unwrap().is_none());
+    assert!(!temporary.path().join("absent-memory").exists());
+}
+
+#[tokio::test]
+async fn missing_pid_without_observed_boot_failure_is_not_terminal_proof() {
+    let temporary = tempfile::tempdir().unwrap();
+    let backend = VmLocalExecutionBackend::new(temporary.path());
+    let mut record = record(temporary.path());
+    record.status = ManagedExecutionState::Starting.as_status().to_string();
+    record.managed_execution.as_mut().unwrap().pending_operation =
+        Some(ManagedExecutionOperation::Start);
+    let manager = Arc::new(Mutex::new(backend.new_manager(&record).unwrap()));
+    backend
+        .managers
+        .insert(record.id.clone(), RegisteredVm::Legacy(manager));
+    let observation = backend.inspect(&record).await.unwrap();
+    assert_eq!(observation.state, ExecutionState::Creating);
+    assert!(observation.exit_code.is_none());
+    assert!(backend.manager(&record.id).unwrap().is_some());
+}
+
+#[tokio::test]
 async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());

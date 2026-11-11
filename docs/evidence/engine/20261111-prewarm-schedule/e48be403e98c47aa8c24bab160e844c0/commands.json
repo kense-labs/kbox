@@ -1,0 +1,68 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-schedule-prefix-0dc9f02a61a9458e86a2c00d47f5a7bb/bin/kbox",
+      "engine",
+      "endpoint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/krun",
+      "up",
+      "warm",
+      "-f",
+      "/Users/roylin/code/kense/krun/harness/aster/acp-0.1.0.zip",
+      "-c",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/aster.kcl",
+      "--json",
+      "--wait-timeout",
+      "300",
+      "--workspace",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/\u9884\u70ed workspace"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-schedule-prefix-0dc9f02a61a9458e86a2c00d47f5a7bb/bin/kbox",
+      "exec",
+      "461e2d13-4039-4f30-a1d5-f5e764cd078f",
+      "--",
+      "touch",
+      "/tmp/user-dirty"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-schedule-prefix-0dc9f02a61a9458e86a2c00d47f5a7bb/bin/kbox",
+      "exec",
+      "eddf6a03-df2d-4709-8075-f1ce4591e070",
+      "--",
+      "true"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/krun",
+      "ls",
+      "--all-workspaces",
+      "--json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule/e48be403e98c47aa8c24bab160e844c0/krun",
+      "down",
+      "--id",
+      "cbb919b7-0902-4c3b-9aac-9a266ef6c6b2",
+      "--wait-timeout",
+      "300"
+    ],
+    "exitCode": 0
+  }
+]

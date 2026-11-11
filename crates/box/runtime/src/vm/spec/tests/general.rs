@@ -301,6 +301,32 @@ fn test_parse_volume_spec_preserves_windows_drive_path() {
 }
 
 #[test]
+fn test_build_microvm_spec_encodes_unicode_mount_and_tmpfs_paths() {
+    let home = tempdir().unwrap();
+    let host = tempdir().unwrap();
+    let layout_dir = tempdir().unwrap();
+    let layout = test_layout(layout_dir.path(), Some(test_oci_config(None, None)), true);
+    let mut vm = test_vm_manager(BoxConfig {
+        volumes: vec![format!("{}:/原生 workspace", host.path().display())],
+        tmpfs: vec!["/临时 tmp:size=16m".into()],
+        ..Default::default()
+    });
+    vm.home_dir = home.path().to_path_buf();
+    let spec = vm.build_microvm_instance_spec(&layout).unwrap();
+    for (name, expected) in [
+        ("BOX_VOL_0", "vol0:/原生 workspace"),
+        ("BOX_TMPFS_0", "/临时 tmp:size=16m"),
+    ] {
+        let value = env_value(&spec, name).unwrap();
+        assert!(value.starts_with("kbox-b64-v1:") && value.is_ascii());
+        assert_eq!(
+            kbox_core::guest_exec::decode_guest_mount_spec(value).unwrap(),
+            expected
+        );
+    }
+}
+
+#[test]
 fn test_parse_volume_spec_preserves_windows_unc_path() {
     let parsed = VmManager::parse_volume_spec(r"\\server\share\folder:/workspace:rw").unwrap();
 

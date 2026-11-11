@@ -384,10 +384,10 @@ impl VmManager {
                 let copy_flag = if volume.copy_up { ":copy" } else { "" };
                 env.push((
                     format!("BOX_VOL_{}", i),
-                    format!(
+                    kbox_core::guest_exec::encode_guest_mount_spec(&format!(
                         "vol{}:{}{}{}{}",
                         i, volume.guest_path, mode, file_flag, copy_flag
-                    ),
+                    )),
                 ));
             }
 
@@ -396,7 +396,10 @@ impl VmManager {
                 let index = self.config.volumes.len() + offset;
                 env.push((
                     format!("BOX_VOL_{}", index),
-                    format!("vol{}:{}:copy", index, guest_path),
+                    kbox_core::guest_exec::encode_guest_mount_spec(&format!(
+                        "vol{}:{}:copy",
+                        index, guest_path
+                    )),
                 ));
             }
 
@@ -407,7 +410,10 @@ impl VmManager {
                     .split_once(':')
                     .map_or(tmpfs_spec.as_str(), |(path, _)| path);
                 Self::validate_guest_mount_path(guest_path)?;
-                env.push((format!("BOX_TMPFS_{}", i), tmpfs_spec.clone()));
+                env.push((
+                    format!("BOX_TMPFS_{}", i),
+                    kbox_core::guest_exec::encode_guest_mount_spec(tmpfs_spec),
+                ));
             }
 
             // Pass pod sysctls to guest init.

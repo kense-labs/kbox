@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-contract",
+    "--test",
+    "mcp_service_consumer_profile",
+    "--test",
+    "protocol_golden",
+    "--no-fail-fast"
+  ],
+  "sourceHead": "0304123f562ce7264954a8a104dced9e19b3d483",
+  "worktree": "/Users/roylin/code/kense/krun/.build/contract-head-ef7d4c59950641bc99cd90b4e00d9edc/kbox"
+}

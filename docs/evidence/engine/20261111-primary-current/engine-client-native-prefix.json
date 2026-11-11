@@ -1,0 +1,13 @@
+{
+  "prefix": "/Users/roylin/code/kense/krun/.build/client-prefix-4e8bbe814b13418d8e4c626d09a95a7c",
+  "artifacts": {
+    "bin/kbox": "2edaf24532c7b55077daa43e418d789535cb193c68dec5f2d050cf4aa0e30d68",
+    "bin/kbox-guest-init": "ea43eb54fc46fa6f59daecde2dba27571beb32183916b8805042d0dc071eedd9",
+    "bin/kbox-shim": "5cf18a25ba8d40285be34111c34b2d7a7ee0eb9182972f2da8198538e2babe95",
+    "lib/libkrun.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrun.1.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrun.1.17.0.dylib": "fb153c3f63092340f9a9b8a0f40dcdf7309f14dbc8fadb948c2d84e3bdeabfa4",
+    "lib/libkrunfw.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "lib/libkrunfw.5.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+  }
+}

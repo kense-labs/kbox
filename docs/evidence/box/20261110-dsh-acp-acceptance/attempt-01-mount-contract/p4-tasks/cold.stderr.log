@@ -1,0 +1,7 @@
+Creating box keen_knuth (7a7ef9682960)...
+kbox run: still creating keen_knuth; image is ready and runtime startup has taken 21s
+Box keen_knuth (7a7ef9682960) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box keen_knuth exited and was removed.

@@ -1,0 +1,26 @@
+{
+  "krun/scripts/test_prewarm_native.py": {
+    "sha256": "b34259744c828037c19d811c96e6436d0bc9199acab908d18f97ef186c195674",
+    "bytes": 15072
+  },
+  "krun/scripts/test_cli_native.py": {
+    "sha256": "b3b3f8aad5d2c9985442cbc969084918d3747992b5d357b4eac5cdda460ac129",
+    "bytes": 9665
+  },
+  "kbox/scripts/e2e-engine/native_smoke.py": {
+    "sha256": "f1180dcd7f6f1ed85bea72dd6923b6fc15c284cc99733064f6d4ec8bf3999c37",
+    "bytes": 14396
+  },
+  "krun/harness/aster/acp-0.1.0.zip": {
+    "sha256": "7284f287eef310a11cda475d719b6dbee6971b9194bea81acd36764fbe077348",
+    "bytes": 116720068
+  },
+  "krun/harness/dsh/acp-0.1.0.zip": {
+    "sha256": "bf3297721fa632079485c2ed84e35fc90395b685d3c2a04431d9bed4a9dc03e7",
+    "bytes": 121653313
+  },
+  "krun/harness/codex/acp-0.1.1.zip": {
+    "sha256": "fdfaab16e537fd1b30f82602621f400a5a64f2332ba3f297acb562ba1905bba1",
+    "bytes": 118572857
+  }
+}

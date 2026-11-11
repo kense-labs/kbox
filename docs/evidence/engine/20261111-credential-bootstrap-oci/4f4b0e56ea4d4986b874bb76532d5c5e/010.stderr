@@ -1,0 +1,5 @@
+Creating box pale_shamir (3204f6c3e071)...
+Box pale_shamir (3204f6c3e071) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box pale_shamir exited and was removed.

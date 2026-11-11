@@ -1,0 +1,177 @@
+warning: unused import: `std::sync::OnceLock`
+ --> src/utils/src/time.rs:5:5
+  |
+5 | use std::sync::OnceLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Instant`, `SystemTime`, and `UNIX_EPOCH`
+ --> src/utils/src/time.rs:6:17
+  |
+6 | use std::time::{Instant, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: `utils` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p utils -- --no-deps` to apply 2 suggestions)
+    Checking devices v3.2.7 (/Users/roylin/code/kense/kbox/libkrun/src/devices)
+warning: type alias `RawFdType` is never used
+  --> src/devices/src/virtio/vsock/muxer.rs:39:10
+   |
+39 | pub type RawFdType = RawFd;
+   |          ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: an implementation of `From` is preferred since it gives you `Into<_>` for free where the reverse isn't true
+   --> src/devices/src/legacy/irqchip.rs:161:5
+    |
+161 |     impl Into<IrqChip> for DummyIrqChip {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#from_over_into
+    = note: `#[warn(clippy::from_over_into)]` on by default
+help: replace the `Into` implementation with `From<legacy::irqchip::test_utils::DummyIrqChip>`
+    |
+161 ~     impl From<DummyIrqChip> for IrqChip {
+162 ~         fn from(val: DummyIrqChip) -> Self {
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/legacy/rtc_pl031.rs:194:29
+    |
+194 |         rtc.write(0, RTCMR, &mut data);
+    |                             ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+    = note: `#[warn(clippy::unnecessary_mut_passed)]` on by default
+help: remove this `mut`
+    |
+194 -         rtc.write(0, RTCMR, &mut data);
+194 +         rtc.write(0, RTCMR, &data);
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/legacy/rtc_pl031.rs:203:29
+    |
+203 |         rtc.write(0, RTCLR, &mut data);
+    |                             ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+203 -         rtc.write(0, RTCLR, &mut data);
+203 +         rtc.write(0, RTCLR, &data);
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/legacy/rtc_pl031.rs:215:31
+    |
+215 |         rtc.write(0, RTCIMSC, &mut data);
+    |                               ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+215 -         rtc.write(0, RTCIMSC, &mut data);
+215 +         rtc.write(0, RTCIMSC, &data);
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/legacy/rtc_pl031.rs:224:31
+    |
+224 |         rtc.write(0, RTCIMSC, &mut data);
+    |                               ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+224 -         rtc.write(0, RTCIMSC, &mut data);
+224 +         rtc.write(0, RTCIMSC, &data);
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/legacy/rtc_pl031.rs:231:29
+    |
+231 |         rtc.write(0, RTCCR, &mut data);
+    |                             ^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+231 -         rtc.write(0, RTCCR, &mut data);
+231 +         rtc.write(0, RTCCR, &data);
+    |
+
+warning: redundant pattern matching, consider using `is_err()`
+   --> src/devices/src/virtio/descriptor_utils.rs:568:16
+    |
+568 |         if let Err(_) = reader.read_exact(&mut buffer) {
+    |         -------^^^^^^--------------------------------- help: try: `if reader.read_exact(&mut buffer).is_err()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#redundant_pattern_matching
+    = note: `#[warn(clippy::redundant_pattern_matching)]` on by default
+
+warning: redundant pattern matching, consider using `is_err()`
+   --> src/devices/src/virtio/descriptor_utils.rs:609:16
+    |
+609 |         if let Err(_) = writer.write_all(&mut buffer) {
+    |         -------^^^^^^-------------------------------- help: try: `if writer.write_all(&mut buffer).is_err()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#redundant_pattern_matching
+
+warning: the method `write_all` doesn't need a mutable reference
+   --> src/devices/src/virtio/descriptor_utils.rs:609:42
+    |
+609 |         if let Err(_) = writer.write_all(&mut buffer) {
+    |                                          ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+609 -         if let Err(_) = writer.write_all(&mut buffer) {
+609 +         if let Err(_) = writer.write_all(&buffer) {
+    |
+
+warning: the method `write` doesn't need a mutable reference
+   --> src/devices/src/virtio/descriptor_utils.rs:616:28
+    |
+616 |         match writer.write(&mut buffer) {
+    |                            ^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_mut_passed
+help: remove this `mut`
+    |
+616 -         match writer.write(&mut buffer) {
+616 +         match writer.write(&buffer) {
+    |
+
+warning: redundant pattern matching, consider using `is_err()`
+   --> src/devices/src/virtio/descriptor_utils.rs:742:16
+    |
+742 |         if let Err(_) = writer.write_obj(secret) {
+    |         -------^^^^^^--------------------------- help: try: `if writer.write_obj(secret).is_err()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#redundant_pattern_matching
+
+warning: slow zero-filling initialization
+   --> src/devices/src/virtio/descriptor_utils.rs:780:23
+    |
+780 |           let mut buf = Vec::with_capacity(1024);
+    |  _______________________^
+781 | |         buf.resize(1024, 0);
+    | |___________________________^ help: consider replacing this with: `vec![0; 1024]`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#slow_vector_initialization
+    = note: `#[warn(clippy::slow_vector_initialization)]` on by default
+
+warning: redundant pattern matching, consider using `is_ok()`
+   --> src/devices/src/virtio/descriptor_utils.rs:932:16
+    |
+932 |         if let Ok(_) = reader.split_at(256) {
+    |         -------^^^^^----------------------- help: try: `if reader.split_at(256).is_ok()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#redundant_pattern_matching
+
+warning: `devices` (lib) generated 1 warning
+warning: `devices` (lib test) generated 14 warnings (1 duplicate) (run `cargo clippy --fix --lib -p devices --tests -- --no-deps` to apply 13 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s

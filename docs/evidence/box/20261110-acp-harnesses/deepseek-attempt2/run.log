@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 181, in main
+    first = prompt(cold, session, f"这是一次真实编码任务。先记住仅用于会话记忆的校验口令 {token_a}，"
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 108, in prompt
+    result = client.prompt(session, text, **kwargs)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 175, in prompt
+    result = self.wait(request, timeout, tick)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 141, in wait
+    raise RpcError(response["error"])
+acp_client.RpcError: Internal error: turn failed: DeepSeek Messages request failed (404)
+
+P4-9: PASS — EOF, pool, boxes, socket and named volume clean up
+P4-1: FAIL — cold complex coding task with independent host oracle
+P4-2: FAIL — six tool-using turns retain context and evolving requirements
+P4-3: FAIL — 125-second externally paced batch task stays in flight to completion
+P4-4: FAIL — external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling
+P4-5: FAIL — named-volume session history restores in a fresh MicroVM
+P4-6: FAIL — concurrent sessions keep context and cancellation independent
+P4-7: FAIL — cancel a running process tree, prevent late writes, then recover
+P4-8: FAIL — invalid, conflicting and denied operations fail closed

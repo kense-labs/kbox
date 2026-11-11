@@ -1,0 +1,36 @@
+
+running 1 test
+2026-11-10T16:01:41.293401Z  INFO kbox_runtime::rootfs::provider: Using guest-native ext4 rootfs provider
+2026-11-10T16:01:41.293574Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}: kbox_runtime::vm::boot: Booting VM box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8
+2026-11-10T16:01:41.294612Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:prepare_layout: kbox_runtime::vm::layout: Pulling OCI image from registry reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110
+2026-11-10T16:01:41.326222Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:prepare_layout: kbox_runtime::oci::pull: Using cached image requested_reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110 matched_reference=krun-coding-fixture:0.1.0 digest=sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110
+2026-11-10T16:01:42.514037Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:prepare_layout: kbox_runtime::rootfs::guest_native_ext4: Prepared guest-native ext4 directly from OCI layers disk=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/6c62007b-0697-4712-a27b-c7eaeda4f3c8/rootfs-ext4-v1/rootfs.ext4 layers=6
+2026-11-10T16:01:42.521219Z DEBUG kbox_runtime::vm::spec: Using guest init as PID 1 env_count=9
+2026-11-10T16:01:42.527817Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:vm_start: kbox_runtime::vmm::controller: Starting VM subprocess box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 vcpus=1 memory_mib=512
+2026-11-10T16:01:42.527922Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:vm_start: kbox_runtime::vmm::controller: Spawning shim subprocess shim=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/bin/kbox-shim box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8
+2026-11-10T16:01:42.528074Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:vm_start: kbox_runtime::vmm::controller: Redirecting shim stdio to per-box files box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 stdout=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/6c62007b-0697-4712-a27b-c7eaeda4f3c8/logs/shim.stdout.log stderr=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/6c62007b-0697-4712-a27b-c7eaeda4f3c8/logs/shim.stderr.log
+2026-11-10T16:01:42.529707Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:vm_start: kbox_runtime::vmm::controller: Shim subprocess spawned box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 pid=80360
+2026-11-10T16:01:42.529867Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:wait_for_ready: kbox_runtime::vm::ready: Confirming VM process started
+2026-11-10T16:01:42.612795Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:wait_for_ready: kbox_runtime::vm::ready: VM process is running
+2026-11-10T16:01:42.612850Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:wait_for_ready: kbox_runtime::vm::ready: Waiting for exec server readiness socket_path=/private/tmp/kbox-sockets/6c62007b-0697-4712-a27b-c7eaeda4f3c8/exec.sock timeout_ms=15000
+2026-11-10T16:01:46.664918Z DEBUG vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}:wait_for_ready: kbox_runtime::vm::ready: Exec server heartbeat passed
+2026-11-10T16:01:46.686414Z  INFO vm_boot{box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}: kbox_runtime::vm::boot: VM ready box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8
+2026-11-10T16:01:46.720195Z DEBUG kbox_runtime::local_execution::session_support: Prepared managed execution session environment execution_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 generation=1 operation="start_process" container_env_count=0 container_env_keys=[] merged_request_env_count=4 merged_request_env_keys=["K_SEC_CAP_ADD", "K_SEC_NO_NEW_PRIVS", "K_SEC_PRIVILEGED", "K_SEC_SECCOMP"] malformed_request_entries=0
+
+thread '<unnamed>' (61994676) panicked at crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs:102:18:
+called `Result::unwrap()` on an `Err` value: ProviderUnavailable("runtime reported execution 6c62007b-0697-4712-a27b-c7eaeda4f3c8 as terminal before its exact exit status became available (state=Ready, provider_exit=None)")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+2026-11-10T16:01:53.295041Z  INFO destroy_with_options{signal=15 timeout_ms=10000 box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}: kbox_runtime::vm::lifecycle: Destroying VM box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 signal=15 timeout_ms=10000
+2026-11-10T16:01:53.295375Z DEBUG destroy_with_options{signal=15 timeout_ms=10000 box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8}: kbox_runtime::vm::lifecycle: Delivered stop signal to the workload through guest control box_id=6c62007b-0697-4712-a27b-c7eaeda4f3c8 signal=15 socket_path=/private/tmp/kbox-sockets/6c62007b-0697-4712-a27b-c7eaeda4f3c8/exec.sock
+
+thread 'kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup' (61994675) panicked at crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs:38:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+test kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup ... FAILED
+
+failures:
+
+failures:
+    kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2128 filtered out; finished in 12.56s
+

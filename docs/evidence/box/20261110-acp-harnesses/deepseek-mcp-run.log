@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-acp-harnesses/check_mcp.py", line 66, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-acp-harnesses/check_mcp.py", line 30, in main
+    result = client.request('session/new', {'cwd': '/workspace', 'mcpServers': [{
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 145, in request
+    return self.wait(self.send(method, params), timeout)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 141, in wait
+    raise RpcError(response["error"])
+acp_client.RpcError: Invalid params: mcpServers[0].command must be an absolute path

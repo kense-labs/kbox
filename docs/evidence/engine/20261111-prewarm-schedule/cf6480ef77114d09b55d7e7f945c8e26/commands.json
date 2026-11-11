@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "engine",
+      "endpoint"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "create",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "ordinary-oci",
+      "--memory",
+      "512m",
+      "--network",
+      "none",
+      "-v",
+      "ordinary-data:/data",
+      "--entrypoint",
+      "/bin/sleep",
+      "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+      "infinity"
+    ],
+    "exitCode": 2
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "volume",
+      "rm",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  }
+]

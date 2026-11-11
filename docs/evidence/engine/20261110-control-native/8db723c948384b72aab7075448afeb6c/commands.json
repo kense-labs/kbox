@@ -1,0 +1,148 @@
+[
+  {
+    "command": [
+      "pull",
+      "busybox:1.37.0"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "build",
+      "-f",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/8db723c948384b72aab7075448afeb6c/context/Containerfile",
+      "-t",
+      "krun-oci-regression:8db723c948384b72aab7075448afeb6c",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/8db723c948384b72aab7075448afeb6c/context"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "image-inspect",
+      "krun-oci-regression:8db723c948384b72aab7075448afeb6c"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "create",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "run",
+      "-d",
+      "--name",
+      "ordinary",
+      "-v",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/8db723c948384b72aab7075448afeb6c/\u5916\u90e8\u76ee\u5f55 with spaces:/workspace",
+      "-v",
+      "ordinary-data:/data",
+      "krun-oci-regression:8db723c948384b72aab7075448afeb6c"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "exec",
+      "ordinary",
+      "--",
+      "python3",
+      "-c",
+      "import hashlib,json,pathlib,subprocess,urllib.request; proof=pathlib.Path('/image-build-proof').read_text(); assert proof=='8db723c948384b72aab7075448afeb6c',('image proof',proof,'8db723c948384b72aab7075448afeb6c'); remote=urllib.request.urlopen('http://127.0.0.1:55890',timeout=10).read(); assert remote==b'8db723c948384b72aab7075448afeb6c',('loopback nonce',remote,b'8db723c948384b72aab7075448afeb6c'); value=bytes(range(256))*4096; p=pathlib.Path('/workspace/\u4e2d\u6587 result.bin'); p.write_bytes(value); p.rename('/workspace/renamed.bin'); pathlib.Path('/data/persistent').write_text('8db723c948384b72aab7075448afeb6c'); pathlib.Path('/native-rootfs-check').write_text('8db723c948384b72aab7075448afeb6c'); assert subprocess.run(['python3','-c','print(7)'],capture_output=True,check=True).stdout.strip()==b'7'; print(json.dumps({'bytes':len(value),'sha256':hashlib.sha256(value).hexdigest()}))"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "stop",
+      "ordinary"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "snapshot",
+      "create",
+      "ordinary",
+      "--name",
+      "ordinary-snapshot"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "snapshot",
+      "restore",
+      "ordinary-snapshot",
+      "--name",
+      "restored"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "start",
+      "restored"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "exec",
+      "restored",
+      "--",
+      "python3",
+      "-c",
+      "from pathlib import Path; assert Path('/native-rootfs-check').read_text()=='8db723c948384b72aab7075448afeb6c'; assert Path('/data/persistent').read_text()=='8db723c948384b72aab7075448afeb6c'"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "rm",
+      "-f",
+      "restored",
+      "ordinary"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "snapshot",
+      "rm",
+      "ordinary-snapshot"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "rm",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

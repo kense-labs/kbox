@@ -1,0 +1,2 @@
+2026-11-11T00:28:42.573466Z  INFO Selecting guest-native provider for durable rootfs state path=/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/home/boxes/bace2824-f2c7-4b79-bd0f-75603680f13a/rootfs-ext4-v1 state=retained raw rootfs
+2026-11-11T00:28:42.573904Z  INFO destroy_with_options{signal=9 timeout_ms=0 box_id=bace2824-f2c7-4b79-bd0f-75603680f13a}: Destroying VM box_id=bace2824-f2c7-4b79-bd0f-75603680f13a signal=9 timeout_ms=0

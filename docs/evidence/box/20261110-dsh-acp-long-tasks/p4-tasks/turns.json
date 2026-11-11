@@ -1,0 +1,32 @@
+[
+  {
+    "elapsed_s": 131.274,
+    "tool_calls": 19,
+    "updates": 57
+  },
+  {
+    "elapsed_s": 12.403,
+    "tool_calls": 3,
+    "updates": 11
+  },
+  {
+    "elapsed_s": 17.304,
+    "tool_calls": 3,
+    "updates": 11
+  },
+  {
+    "elapsed_s": 21.305,
+    "tool_calls": 3,
+    "updates": 11
+  },
+  {
+    "elapsed_s": 143.35,
+    "tool_calls": 6,
+    "updates": 20
+  },
+  {
+    "elapsed_s": 23.368,
+    "tool_calls": 4,
+    "updates": 14
+  }
+]

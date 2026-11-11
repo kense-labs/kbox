@@ -1,0 +1,120 @@
+{
+  "protocolVersion": 1,
+  "agentCapabilities": {
+    "loadSession": true,
+    "promptCapabilities": {
+      "image": true,
+      "audio": false,
+      "embeddedContext": false
+    },
+    "mcpCapabilities": {
+      "http": false,
+      "sse": false
+    },
+    "sessionCapabilities": {},
+    "auth": {}
+  },
+  "authMethods": [],
+  "_meta": {
+    "grokShell": false,
+    "asterCode": true,
+    "agentVersion": "9.2.1",
+    "currentWorkingDirectory": "/workspace",
+    "modelState": {
+      "currentModelId": "deepseek/deepseek-flash",
+      "availableModels": [
+        {
+          "modelId": "deepseek/deepseek-flash",
+          "name": "deepseek/Acceptance model",
+          "description": "From Aster ACL provider deepseek",
+          "_meta": {
+            "supportsReasoningEffort": true,
+            "reasoningControlKnown": true,
+            "reasoningControl": "effort",
+            "reasoningSource": "documented",
+            "defaultReasoningEffort": "high",
+            "defaultReasoningEffortSource": "documented",
+            "reasoningEffortReset": true,
+            "reasoningEfforts": [
+              {
+                "value": "none",
+                "id": "none",
+                "label": "none",
+                "description": "Reasoning effort"
+              },
+              {
+                "value": "low",
+                "id": "low",
+                "label": "low",
+                "description": "Faster, lighter reasoning"
+              },
+              {
+                "value": "high",
+                "id": "high",
+                "label": "high",
+                "description": "Heavy reasoning"
+              },
+              {
+                "value": "max",
+                "id": "max",
+                "label": "max",
+                "description": "Maximum reasoning"
+              }
+            ],
+            "capabilitiesStatus": "unqueried",
+            "contextWindowSource": "documented",
+            "contextWindowKnown": true,
+            "totalContextTokens": 1000000,
+            "reasoningEffort": "low"
+          }
+        }
+      ]
+    },
+    "availableCommands": [
+      {
+        "name": "goal",
+        "description": "Set, pause, resume, or clear a durable goal",
+        "input": {
+          "hint": "<objective> | status | pause | resume | clear"
+        }
+      },
+      {
+        "name": "memory",
+        "description": "Inspect and manage stored memories",
+        "input": {
+          "hint": "list [query] | next <cursor> [query] | read <id> | delete <id> <revision>"
+        }
+      },
+      {
+        "name": "flush",
+        "description": "Save this session's memory to disk now",
+        "input": null
+      },
+      {
+        "name": "dream",
+        "description": "Consolidate memory now (merge observations into topics)",
+        "input": null
+      },
+      {
+        "name": "tasks",
+        "description": "Inspect background tasks or stop a task",
+        "input": {
+          "hint": "[stop <task-id>]"
+        }
+      }
+    ],
+    "cancelRewind": false,
+    "sessionRecap": false,
+    "feedbackTraceOffer": false,
+    "aster": {
+      "workspaceMcp": {
+        "pending": [],
+        "trusted": [],
+        "trustCommand": "aster-acp --trust-workspace-mcp <id|all>"
+      },
+      "withheldBlocks": [],
+      "droppedDirs": []
+    },
+    "openModelConfig": false
+  }
+}

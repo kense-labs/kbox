@@ -20,9 +20,9 @@ use kbox_core::ExecutionBoundary;
 
 use super::super::metadata::{local_identity, UNIT_LABEL};
 use super::super::{
-    BoxArtifactPort, BoxArtifactPortError, BoxRegistryCredential, BoxRuntimeDriver,
-    BoxRuntimeDriverConfig, BoxRuntimeSevSnpConfig, BoxSecretMaterial,
-    BoxSecretMaterializationError, BoxSecretMaterializer,
+    BoxArtifactPort, BoxArtifactPortError, BoxDirectoryPort, BoxDirectoryPortError,
+    BoxRegistryCredential, BoxRuntimeDriver, BoxRuntimeDriverConfig, BoxRuntimeSevSnpConfig,
+    BoxSecretMaterial, BoxSecretMaterializationError, BoxSecretMaterializer,
 };
 use super::cases::CaseFactory;
 use super::{
@@ -105,8 +105,29 @@ pub(super) struct ConformanceOutputCapture {
 
 struct ConformanceArtifactPort {
     source: PathBuf,
+    directory_source: PathBuf,
     captures: Mutex<Vec<ConformanceOutputCapture>>,
     cleanups: Mutex<Vec<String>>,
+}
+
+#[async_trait]
+impl BoxDirectoryPort for ConformanceArtifactPort {
+    async fn mount_path(
+        &self,
+        _spec: &RuntimeUnitSpec,
+        mount: &kbox_contract::contract::RuntimeMount,
+    ) -> std::result::Result<PathBuf, BoxDirectoryPortError> {
+        if !matches!(&mount.source,kbox_contract::contract::RuntimeMountSource::Directory{reference} if reference=="directory://r17/live")
+        {
+            return Err(BoxDirectoryPortError::Rejected(
+                "unregistered directory grant".into(),
+            ));
+        }
+        Ok(self.directory_source.clone())
+    }
+    async fn cleanup_spec(&self, _digest: &str) -> std::result::Result<(), BoxDirectoryPortError> {
+        Ok(())
+    }
 }
 
 #[async_trait]
@@ -303,6 +324,9 @@ impl BoxRuntimeConformanceFixture {
         std::fs::create_dir(&private_artifact_source)
             .map_err(|error| external("create private Artifact mount", error))?;
         set_private_artifact_modes(&private_artifact_root, &private_artifact_source)?;
+        let directory_source = private_artifact_root.join("live-directory");
+        std::fs::create_dir(&directory_source)
+            .map_err(|error| external("create live directory fixture", error))?;
         std::fs::write(
             private_artifact_source.join("payload.txt"),
             b"r17-private-artifact",
@@ -310,13 +334,15 @@ impl BoxRuntimeConformanceFixture {
         .map_err(|error| external("write private Artifact payload", error))?;
         let artifact_port = Arc::new(ConformanceArtifactPort {
             source: private_artifact_source,
+            directory_source,
             captures: Mutex::new(Vec::new()),
             cleanups: Mutex::new(Vec::new()),
         });
         let driver = Arc::new(
             runtime_driver(config, execution_boundary, sev_snp.as_ref())?
                 .with_secret_materializer(secret_materializer.clone())
-                .with_artifact_port(artifact_port.clone()),
+                .with_artifact_port(artifact_port.clone())
+                .with_directory_port(artifact_port.clone()),
         );
         let state = Arc::new(FileRuntimeStateStore::new(&state_root));
         Ok(Self {
@@ -358,7 +384,8 @@ impl BoxRuntimeConformanceFixture {
                 self.sev_snp.as_ref(),
             )?
             .with_secret_materializer(self.secret_materializer.clone())
-            .with_artifact_port(self.artifact_port.clone()),
+            .with_artifact_port(self.artifact_port.clone())
+            .with_directory_port(self.artifact_port.clone()),
         );
         self.register_driver(driver.clone());
         Ok(driver)
@@ -380,6 +407,10 @@ impl BoxRuntimeConformanceFixture {
 
     pub(super) fn private_artifact_root(&self) -> &Path {
         &self.private_artifact_root
+    }
+
+    pub(super) fn directory_source(&self) -> &Path {
+        &self.artifact_port.directory_source
     }
 
     pub(super) fn sev_snp_config(&self) -> Option<&BoxRuntimeSevSnpConfig> {

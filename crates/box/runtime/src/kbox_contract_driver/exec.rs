@@ -19,14 +19,61 @@ const MAX_EXEC_RESPONSE_BUDGET_MS: u64 = 100;
 const MIN_EXEC_PHASE_BUDGET_MS: u64 = 10;
 
 impl BoxRuntimeDriver {
-    pub(super) async fn execute_runtime_command(
+    /// Open a raw, non-replayable process on the exact Runtime and Box generation.
+    /// The extension caller owns durable stream admission and must hold the Runtime unit lease
+    /// until this returns. The control timeout bounds opening only, never the process lifetime.
+    pub async fn start_runtime_process(
         &self,
         unit: &RuntimeUnitRecord,
-        request: &RuntimeExecRequest,
-    ) -> RuntimeResult<RuntimeExecResult> {
+        request: ExecRequest,
+    ) -> RuntimeResult<(
+        kbox_core::ExecutionId,
+        kbox_core::ExecutionGeneration,
+        kbox_core::ExecutionProcess,
+    )> {
+        self.start_runtime_process_bound(unit, request, None).await
+    }
+
+    pub(crate) async fn start_runtime_process_bound(
+        &self,
+        unit: &RuntimeUnitRecord,
+        mut request: ExecRequest,
+        binding: Option<(&str, u64)>,
+    ) -> RuntimeResult<(
+        kbox_core::ExecutionId,
+        kbox_core::ExecutionGeneration,
+        kbox_core::ExecutionProcess,
+    )> {
+        if request.request_id.is_some() {
+            return Err(RuntimeError::InvalidRequest(
+                "streaming processes cannot replay a unary request ID".into(),
+            ));
+        }
+        request.streaming = true;
+        let (execution_id, generation) = self.running_execution(unit).await?;
+        if binding
+            .is_some_and(|(id, bound)| id != execution_id.as_str() || bound != generation.get())
+        {
+            return Err(RuntimeError::InvalidRequest(
+                "process assembly belongs to another Box execution generation".into(),
+            ));
+        }
+        let process = self
+            .bounded("process stream open", async {
+                self.manager
+                    .start_process(&execution_id, generation, request)
+                    .await
+                    .map_err(|error| map_execution_error(&unit.spec.unit_id, error))
+            })
+            .await?;
+        Ok((execution_id, generation, process))
+    }
+
+    pub(crate) async fn running_execution(
+        &self,
+        unit: &RuntimeUnitRecord,
+    ) -> RuntimeResult<(kbox_core::ExecutionId, kbox_core::ExecutionGeneration)> {
         unit.validate().map_err(RuntimeError::Protocol)?;
-        request.validate().map_err(RuntimeError::InvalidRequest)?;
-        validate_exec_identity(unit, request)?;
         if unit.observation.state != RuntimeUnitState::Running {
             return Err(RuntimeError::InvalidRequest(format!(
                 "Box Runtime exec requires a running unit; {:?} is {:?}",
@@ -89,6 +136,19 @@ impl BoxRuntimeDriver {
                 record.id
             )));
         }
+
+        Ok((execution_id, refreshed_generation))
+    }
+
+    pub(super) async fn execute_runtime_command(
+        &self,
+        unit: &RuntimeUnitRecord,
+        request: &RuntimeExecRequest,
+    ) -> RuntimeResult<RuntimeExecResult> {
+        unit.validate().map_err(RuntimeError::Protocol)?;
+        request.validate().map_err(RuntimeError::InvalidRequest)?;
+        validate_exec_identity(unit, request)?;
+        let (execution_id, refreshed_generation) = self.running_execution(unit).await?;
 
         let timeout = effective_timeout(request)?;
         let timeout_ns = u64::try_from(timeout.as_nanos()).map_err(|_| {

@@ -1,0 +1,14 @@
+{
+  "prefix": "/Users/roylin/code/kense/krun/.build/assembly-prefix-61e004fafca5457384be01f83d8988ba",
+  "root": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly/base-toolchain-c66967fb55c14982b1b89be50645efc9",
+  "home": "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly/base-toolchain-c66967fb55c14982b1b89be50645efc9/home",
+  "command": [
+    "/Users/roylin/code/kense/krun/.build/assembly-prefix-61e004fafca5457384be01f83d8988ba/bin/kbox",
+    "build",
+    "-f",
+    "/Users/roylin/code/kense/krun/.build/shared-base/Containerfile",
+    "-t",
+    "krun-base:0.1.0",
+    "/Users/roylin/code/kense/krun/.build/shared-base"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "box": "acp-build-codex",
+  "utf8_tail": {
+    "output": "🪐tail",
+    "truncated": true,
+    "exitStatus": {
+      "exitCode": 0
+    }
+  },
+  "kill_exit": {
+    "exitCode": 15
+  },
+  "late_write_observation_s": 6,
+  "calls": [
+    {
+      "method": "terminal/create",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/wait_for_exit",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/output",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/release",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/create",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/output",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/output",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/kill",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/wait_for_exit",
+      "sessionId": "s"
+    },
+    {
+      "method": "terminal/release",
+      "sessionId": "s"
+    }
+  ]
+}

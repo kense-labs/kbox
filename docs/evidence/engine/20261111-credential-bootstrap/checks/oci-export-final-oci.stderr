@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 284, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 159, in main
+    assert cli("run", "--rm", committed, "/bin/cat", "/native-rootfs-check").strip() == nonce.encode()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 96, in cli
+    raise RuntimeError(f"kbox command {counter} failed; see retained logs")
+RuntimeError: kbox command 10 failed; see retained logs

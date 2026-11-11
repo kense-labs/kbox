@@ -107,7 +107,7 @@ fn select_shared_runtime_socket_root(temp_parent: PathBuf) -> PathBuf {
 }
 
 #[cfg(unix)]
-fn current_unix_uid() -> u32 {
+pub(crate) fn current_unix_uid() -> u32 {
     // SAFETY: See the enclosing function's safety documentation.
     unsafe { libc::geteuid() }
 }

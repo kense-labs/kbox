@@ -130,6 +130,147 @@ workload-visible references, redacts exact values longest-first, and hashes only
 redacted content into its cursor. Registry credentials are never injected into
 the workload and therefore never become log-redaction inputs.
 
+## Local engine and native guest profile
+
+### Optional live directory grants
+
+`RuntimeMountSource::Directory` names a mutable caller-owned directory through a
+reference, independently of OCI image or ACP workload type. A plain
+`BoxRuntimeDriver` does not expose it. Callers opt in with `BoxDirectoryPort`;
+Box still owns the actual share, execution generation and teardown. Immutable
+Artifact inputs keep their existing read-only contract.
+
+The local engine advertises `directory-grants.v1` and accepts explicit grants
+in the immutable intent. References bind exact paths; a grant must match every
+Directory mount and cannot expand a read-only authorization to write access.
+Resolution checks the full accepted Runtime specification and generation,
+including previous attempts needed for teardown. Missing or moved caller paths
+do not prevent retiring an already bound execution. No parent directory is
+implicitly exposed, and removal retains caller data.
+
+MicroVM mount controls encode non-ASCII and quoted paths across libkrun's
+ASCII-only kernel command line; ordinary ASCII controls preserve their wire
+form. Package the matching guest-init with the host runtime. The native macOS
+directory and ordinary OCI results are recorded in
+[assembly evidence](../../../docs/evidence/engine/20261111-assembly/OUTCOME.md).
+
+`kbox engine serve` adds a same-user, owner-only Unix control endpoint over
+`ManagedRuntimeClient` and `ExecutionManager`. It persists accepted intent and
+immutable operation references; Runtime retains its receipts and Box retains
+actual execution resources. Ordinary OCI CLI commands and Runtime consumers do
+not require this endpoint, ACP, or KRun.
+
+The explicit `kbox.native-guest.v1` policy is pinned by
+`NATIVE_GUEST_PROFILE_DIGEST` in the Runtime specification's
+`semantics_profile_digest`. It requires independent-kernel Sandbox isolation,
+selects full guest capabilities, disables guest seccomp filtering and
+`no-new-privileges`, and preserves explicitly requested resource, mount and
+network policy. It grants no host mounts, devices or services. Other specs keep
+the existing provider security defaults. The engine selects this policy for an
+ACP Harness environment; it does not inspect ACP traffic or impose task-loop
+limits. Credentials remain references and this profile does not authorize
+inline secret storage.
+
+The canonical LF bytes hashed by that identity are:
+
+```text
+kbox.native-guest.v1
+boundary=microvm
+seccomp=unconfined
+capabilities=all-guest
+no-new-privileges=false
+resources=explicit
+```
+
+Native control-plane, OCI regression and guest-policy comparison evidence is
+recorded in [OUTCOME](../../../docs/evidence/box/20261110-krun-engine/OUTCOME.md).
+The separately discovered `process-stream.primary.v1` capability opens an
+exclusive primary process per environment generation. An owner-only control
+connection and a one-use data attachment keep disconnect detection independent
+of data backpressure. Raw stdout / stderr, explicit stdin half-close and one
+exact exit preserve the native process transport. Lost streams are not resumed
+or replayed: their receipt and the next empty environment attempt are published
+atomically, and Runtime retires the old resources before preparing the next
+generation. This primary policy does not prohibit other execution sessions;
+ordinary command / PTY / file APIs and unary Runtime `Exec` retain their contracts.
+
+`process-stream.bootstrap.v1` adds a bounded opaque launch input on the
+authenticated primary control connection. A client sets `bootstrap` in the
+open request, receives its ticket, and sends a little-endian 32-bit byte count
+and 1 byte to 4 MiB of data before attaching. The engine receives the complete
+frame before launch and forwards it through the generation-bound guest stdin
+before admitting the separate data stream. Bootstrap bytes stay out of the
+serialized request, its fingerprint and the journal. The caller and trusted
+guest launcher own the meaning of those bytes.
+
+### Optional Harness package assembly
+
+`harness-assembly.v1` is explicitly selected by an ACP Harness intent. The
+engine verifies a bounded immutable ZIP copy on the host and streams it through
+the existing generation-fenced process API to the trusted guest installer.
+Package contents and hooks never execute on the host. The receipt binds the
+accepted operation, Runtime specification and generation, package digest and
+actual Box execution identity and generation. A running VM alone is not an
+assembly receipt. Primary startup checks that binding again at the actual
+execution boundary; superseded assembly cannot publish readiness.
+
+An assembly may require a named guest protocol. The engine checks it against
+the installer response before publishing the bound receipt. Existing assembly
+plans without the field use the original readiness check.
+
+`harness-assembly.guest-protocols.v1` adds the optional
+`requiredGuestProtocols` list. Every requested protocol must appear in the
+installer response. The original singular field remains readable and empty
+lists are omitted from legacy wire data. A digest- and protocol-bound
+`krun.guest-installation-error.v1` response can report a missing runtime
+requirement. KBox records `RUNTIME_REQUIREMENTS_UNMET` and KRun reports failed
+assembly. The trusted guest installer owns component version and file checks.
+
+This optional path reserves `/opt/krun` for its trusted installer and published
+packages, and uses an indefinite bootstrap process. Those requirements do not
+apply to ordinary OCI or to intents that do not select package assembly. Legacy
+intents omit the new optional field and keep their existing wire identity.
+KRun stores plans and operation references; it does not own another VM registry.
+
+Native three-package streaming, public KRun CLI and ordinary OCI regression
+results are recorded in
+[assembly evidence](../../../docs/evidence/engine/20261111-mate-assembly/OUTCOME.md).
+That evidence does not qualify VM prewarm, memory credentials, arbitrary package
+dependencies, real-model tasks or other native platforms.
+
+### Canonical environment prewarm handoff
+
+The local engine advertises `environment-prewarm.v1` for assembly intents
+that opt in. ExecutionManager owns each idle reservation. The compatibility key
+covers the pinned image, boot configuration, resource policy, exact directory
+identities, capability bindings, platform, runtime asset generations and engine
+authority. Compatible Harness packages can use the same idle environment.
+
+After an opted-in instance becomes available, the engine keeps one compatible
+spare and starts it through a generation-bound worker. The worker holds the
+canonical lifecycle lock through startup and can finish if the engine exits.
+Runtime apply claims a compatible running spare or uses the normal create path.
+Drivers without prewarm composition and ordinary OCI requests use normal create.
+
+The idle VM starts the trusted bootstrap. Unclaimed reservations permit
+inventory and lifecycle teardown. The manager and direct CLI entry points
+require claim before workload access, including exec, PTY, file and port
+sessions. Claim atomically transfers ownership and advances the Box generation
+while retaining the same physical runtime and exact OCI binding. The claimed
+VM follows normal workload teardown, with its prewarm provenance kept for fencing.
+For an instance with prewarm history, engine stop stays `CLEANUP_PENDING`
+until its unclaimed reservations are removed, even after the workload is gone.
+
+The explicit driver composition exercises HVF identity reuse, cross-unit claim,
+external files and teardown. [Native handoff evidence](../../../docs/evidence/engine/20261111-prewarm-native/OUTCOME.md)
+The production CLI test also exercises an engine restart during prewarm, a real
+Aster-to-Dsh handoff, unclaimed access rejection and an ordinary OCI workload
+running throughout the handoff. [Engine prewarm evidence](../../../docs/evidence/engine/20261111-prewarm-schedule/OUTCOME.md)
+
+The independent OCI regression uses a prefix with only KBox and its runtime
+assets. It covers pull, build, run, external files, volumes, HTTP, live export,
+commit and run, snapshot restore and engine restart. [Native OCI evidence](../../../docs/evidence/engine/20261111-credential-bootstrap/OUTCOME.md)
+
 ## Cloud image-build boundary
 
 `BoxBuildPlan` is the closed Kbox ACL admission contract for Cloud-owned image

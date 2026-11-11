@@ -1,0 +1,112 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "--lib",
+      "prewarm"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-focused.log",
+    "exitCode": 0,
+    "seconds": 44.84
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "--lib",
+      "engine::"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-engine.log",
+    "exitCode": 0,
+    "seconds": 1.36
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "--lib",
+      "local_execution::tests::"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-manager.log",
+    "exitCode": 0,
+    "seconds": 2.79
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "--",
+      "socket_paths::tests",
+      "commands::exec::tests",
+      "commands::cp::tests",
+      "commands::attach::tests",
+      "commands::snapshot::tests",
+      "commands::start::tests",
+      "commands::container_update::tests"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-cli-routes.log",
+    "exitCode": 0,
+    "seconds": 63.08
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-workspace-check.log",
+    "exitCode": 0,
+    "seconds": 11.11
+  },
+  {
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "-p",
+      "kbox-cli",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-clippy.log",
+    "exitCode": 0,
+    "seconds": 20.37
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "cwd": "/Users/roylin/code/kense/kbox",
+    "log": "prewarm-access-kbox-fmt.log",
+    "exitCode": 1,
+    "seconds": 5.34
+  }
+]

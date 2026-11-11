@@ -102,40 +102,19 @@ e2e_wait_pool_idle() {
 }
 
 e2e_image_digest_hint() {
-  # Best-effort: inspect local image metadata if available; else record tag only.
-  local image="$1"
-  if "$KBOX" image inspect "$image" --json >/tmp/e2e-image.json 2>/dev/null; then
-    python3 - <<'PY'
-import json
-from pathlib import Path
-p = Path("/tmp/e2e-image.json")
-try:
-    data = json.loads(p.read_text())
-except Exception:
-    print("unknown")
-    raise SystemExit(0)
-if isinstance(data, list) and data:
-    data = data[0]
-digest = data.get("digest") or data.get("Id") or data.get("id") or "unknown"
-print(digest)
-PY
-  else
-    echo "tag-only:${image}"
-  fi
+  "$KBOX" image-inspect "$1" | python3 -c '
+import json, re, sys
+digest = json.load(sys.stdin)[0]["Digest"]
+if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+    raise ValueError("image inspection did not return a manifest digest")
+print(digest)'
 }
 
 e2e_running_box_count() {
-  local n
-  n="$("$KBOX" ps --json 2>/dev/null | python3 -c "import json,sys
-try:
-  d=json.load(sys.stdin)
-except Exception:
-  print(0); raise SystemExit(0)
-items=d if isinstance(d,list) else (d or {}).get('boxes', (d or {}).get('items', []))
+  "$KBOX" ps --all --format json | python3 -c '
+import json, sys
+items = json.load(sys.stdin)
 if not isinstance(items, list):
-  items=[]
-print(sum(1 for b in items if str((b or {}).get('status','')).lower() in ('running','paused')))" 2>/dev/null || true)"
-  n="$(printf '%s' "${n:-0}" | tr -d '[:space:]')"
-  [[ "$n" =~ ^[0-9]+$ ]] || n=0
-  printf '%s\n' "$n"
+    raise ValueError("box listing must be an array")
+print(sum(b["raw_status"] in ("running", "paused") for b in items))'
 }

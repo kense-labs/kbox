@@ -1,0 +1,67 @@
+   Compiling kbox-contract v0.8.0 (/Users/roylin/code/kense/krun/.build/contract-head-ef7d4c59950641bc99cd90b4e00d9edc/kbox/crates/runtime)
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.90s
+     Running tests/mcp_service_consumer_profile.rs (/Users/roylin/code/kense/kbox/target/debug/deps/mcp_service_consumer_profile-d278a2cdd552ac10)
+
+running 3 tests
+test rmcp_fence_001_rejects_stale_generation_and_profile_evidence ... ok
+test rmcp_endpoint_001_binds_unit_generation_profile_and_typed_endpoint ... ok
+test rmcp_fix_001_uses_only_the_generic_runtime_service_contract ... FAILED
+
+failures:
+
+---- rmcp_fix_001_uses_only_the_generic_runtime_service_contract stdout ----
+
+thread 'rmcp_fix_001_uses_only_the_generic_runtime_service_contract' (63080535) panicked at crates/runtime/tests/mcp_service_consumer_profile.rs:59:5:
+assertion `left == right` failed
+  left: "9f93e95b92f0cdb8860407d7dc7676e78ae0f82e464bba736604e1c9c0472eb2"
+ right: "f7e7b84867c5c646ad5a02d9e7be65a23ce7f6eb813ae1e1bf4786d4db602f4a"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    rmcp_fix_001_uses_only_the_generic_runtime_service_contract
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p kbox-contract --test mcp_service_consumer_profile`
+     Running tests/protocol_golden.rs (/Users/roylin/code/kense/kbox/target/debug/deps/protocol_golden-47c987563aa7d65e)
+
+running 2 tests
+test ct_digest_001_golden_request_and_spec_digests_are_stable ... FAILED
+test ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture ... FAILED
+
+failures:
+
+---- ct_digest_001_golden_request_and_spec_digests_are_stable stdout ----
+
+thread 'ct_digest_001_golden_request_and_spec_digests_are_stable' (63080674) panicked at crates/runtime/tests/protocol_golden.rs:163:5:
+assertion `left == right` failed
+  left: "sha256:c736a9b32ddebe8081659f292e9776689115d37399c0562cf1a26af6fe00df97"
+ right: "sha256:3b95a578b5a121530a95c7026d870f6b7008cd75c4e2fd9b2ceb949ea33172dd"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture stdout ----
+
+thread 'ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture' (63080675) panicked at crates/runtime/tests/protocol_golden.rs:42:24:
+current golden fixture must validate: "Runtime observation does not match the unit specification"
+
+
+failures:
+    ct_digest_001_golden_request_and_spec_digests_are_stable
+    ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p kbox-contract --test protocol_golden`
+error: 2 targets failed:
+    `-p kbox-contract --test mcp_service_consumer_profile`
+    `-p kbox-contract --test protocol_golden`

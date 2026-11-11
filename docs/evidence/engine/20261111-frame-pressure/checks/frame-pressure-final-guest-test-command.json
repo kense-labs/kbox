@@ -1,0 +1,1 @@
+{"command": ["cargo", "test", "--locked", "-p", "kbox-guest-init", "--lib"], "cwd": "/Users/roylin/code/kense/kbox", "exitCode": 0, "seconds": 8.88}

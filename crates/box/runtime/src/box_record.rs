@@ -7,8 +7,9 @@ use chrono::{DateTime, Utc};
 use kbox_core::config::ResourceLimits;
 use kbox_core::log::LogConfig;
 use kbox_core::{
-    CreateExecutionRequest, ExecutionGeneration, ExecutionResourceUpdate,
-    ExecutionSnapshotId, NetworkMode, OperationId, ResolvedExecutionPlan,
+    CreateExecutionRequest, ExecutionGeneration, ExecutionId, ExecutionManagerError,
+    ExecutionManagerResult, ExecutionResourceUpdate, ExecutionSnapshotId, NetworkMode, OperationId,
+    ResolvedExecutionPlan,
 };
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -197,6 +198,27 @@ impl BoxRecord {
         id.replace('-', "").chars().take(12).collect()
     }
 
+    /// Whether the execution is still reserved for an environment handoff.
+    pub fn is_unclaimed_prewarm(&self) -> bool {
+        self.managed_execution.as_ref().is_some_and(|metadata| {
+            metadata
+                .prewarm
+                .as_ref()
+                .is_some_and(|warm| warm.is_unclaimed(metadata))
+        })
+    }
+
+    /// Require the environment handoff before allowing workload operations.
+    pub fn require_claimed(&self) -> ExecutionManagerResult<()> {
+        if self.is_unclaimed_prewarm() {
+            return Err(ExecutionManagerError::Conflict {
+                execution_id: ExecutionId::new(self.id.clone())?,
+                message: "prewarmed environment has not been claimed".into(),
+            });
+        }
+        Ok(())
+    }
+
     /// Whether the persisted lifecycle state represents an active execution.
     pub fn is_active(&self) -> bool {
         if self.managed_execution.is_some() {
@@ -383,6 +405,9 @@ pub struct ManagedExecutionMetadata {
     /// warm pauses, so the backwards-compatible default is `true`.
     #[serde(default = "default_paused_with_memory")]
     pub paused_with_memory: bool,
+    /// Original pool reservation retained after the same VM is claimed.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prewarm: Option<crate::local_execution::ManagedPrewarm>,
 }
 
 /// Durable Box-side selection of the lifecycle implementation for one record.
@@ -518,6 +543,7 @@ impl ManagedExecutionMetadata {
             // restricts which managed states are valid. New records start warm
             // until an explicit cold pause claim flips the flag.
             paused_with_memory: true,
+            prewarm: None,
         })
     }
 
@@ -533,6 +559,9 @@ impl ManagedExecutionMetadata {
 
     /// Validate deserialized metadata before it participates in reconciliation.
     pub fn validate(&self) -> kbox_core::Result<()> {
+        if let Some(prewarm) = &self.prewarm {
+            prewarm.validate(self)?;
+        }
         if self.request.external_sandbox_id.trim().is_empty() {
             return Err(kbox_core::BoxError::StateError(
                 "managed execution has an empty external sandbox ID".to_string(),
@@ -592,6 +621,14 @@ impl ManagedExecutionMetadata {
             }
         }
         Ok(())
+    }
+
+    pub(crate) fn owns_creation_operation(&self, operation: &OperationId) -> bool {
+        self.operation_id == *operation
+            || self
+                .prewarm
+                .as_ref()
+                .is_some_and(|warm| warm.operation_id() == operation)
     }
 }
 

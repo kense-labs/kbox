@@ -6,6 +6,136 @@ use super::test_support::{accepted, action, fake_driver, fixture_tempdir, runtim
 
 #[cfg(unix)]
 #[tokio::test]
+async fn process_stream_bridge_preserves_raw_bytes_half_close_and_execution_identity() {
+    use kbox_core::exec::{ExecChunk, ExecEvent, ExecExit, StreamType};
+    let directory = fixture_tempdir();
+    let (driver, _) = fake_driver(&directory);
+    let spec = runtime_spec("raw-process", 1, RuntimeUnitClass::Service);
+    let running = driver
+        .apply(&super::test_support::apply_request(&spec), &accepted(&spec))
+        .await
+        .unwrap();
+    let record = driver.find_generation(&spec).await.unwrap().unwrap();
+    std::fs::create_dir_all(record.exec_socket_path.parent().unwrap()).unwrap();
+    let listener = tokio::net::UnixListener::bind(&record.exec_socket_path).unwrap();
+    let server = tokio::spawn(async move {
+        let (stream, _) = listener.accept().await.unwrap();
+        let (read, write) = tokio::io::split(stream);
+        let mut reader = ktransport::FrameReader::new(read);
+        let mut writer = ktransport::FrameWriter::new(write);
+        let initial = reader.read_frame().await.unwrap().unwrap();
+        let request: ExecRequest = serde_json::from_slice(&initial.payload).unwrap();
+        assert!(request.streaming && request.stdin_streaming);
+        assert!(request.request_id.is_none());
+        writer
+            .write_data(
+                &serde_json::to_vec(&ExecChunk {
+                    stream: StreamType::Stdout,
+                    data: vec![255, 0, 10],
+                })
+                .unwrap(),
+            )
+            .await
+            .unwrap();
+        let input = reader.read_frame().await.unwrap().unwrap();
+        assert_eq!(input.frame_type, ktransport::FrameType::Data);
+        assert_eq!(input.payload, b"input\0\xff");
+        let close = reader.read_frame().await.unwrap().unwrap();
+        assert_eq!(close.frame_type, ktransport::FrameType::Control);
+        assert_eq!(close.payload, b"stdin-close");
+        writer
+            .write_data(
+                &serde_json::to_vec(&ExecChunk {
+                    stream: StreamType::Stderr,
+                    data: b"tail after EOF".to_vec(),
+                })
+                .unwrap(),
+            )
+            .await
+            .unwrap();
+        writer
+            .write_control(
+                &serde_json::to_vec(&ExecExit {
+                    exit_code: 37,
+                    oom_killed: false,
+                })
+                .unwrap(),
+            )
+            .await
+            .unwrap();
+    });
+    let request = ExecRequest {
+        request_id: None,
+        cmd: vec!["/bin/cat".into()],
+        timeout_ns: 5_000_000_000,
+        env: Vec::new(),
+        working_dir: None,
+        rootfs: None,
+        stdin: None,
+        stdin_streaming: true,
+        user: None,
+        streaming: false,
+    };
+    let running_unit = unit(spec.clone(), running.clone());
+    let generation = record.managed_execution.as_ref().unwrap().generation.get();
+    for binding in [
+        ("another-execution", generation),
+        (record.id.as_str(), generation + 1),
+    ] {
+        assert!(matches!(
+            driver
+                .start_runtime_process_bound(&running_unit, request.clone(), Some(binding))
+                .await,
+            Err(RuntimeError::InvalidRequest(_))
+        ));
+    }
+    let mut keyed = request.clone();
+    keyed.request_id = Some("unary-replay".into());
+    assert!(matches!(
+        driver.start_runtime_process(&running_unit, keyed).await,
+        Err(RuntimeError::InvalidRequest(_))
+    ));
+    let (execution_id, generation, mut stream) = driver
+        .start_runtime_process(&running_unit, request.clone())
+        .await
+        .unwrap();
+    assert_eq!(
+        Some(execution_id.as_str()),
+        running.provider_resource_id.as_deref()
+    );
+    assert_eq!(generation, kbox_core::ExecutionGeneration::INITIAL);
+    assert!(
+        matches!(stream.next_event().await.unwrap(), Some(ExecEvent::Chunk(chunk))
+        if matches!(chunk.stream, StreamType::Stdout) && chunk.data == [255, 0, 10])
+    );
+    stream.input().write_stdin(b"input\0\xff").await.unwrap();
+    stream.input().close_stdin().await.unwrap();
+    assert!(
+        matches!(stream.next_event().await.unwrap(), Some(ExecEvent::Chunk(chunk))
+        if matches!(chunk.stream, StreamType::Stderr) && chunk.data == b"tail after EOF")
+    );
+    assert!(
+        matches!(stream.next_event().await.unwrap(), Some(ExecEvent::Exit(exit)) if exit.exit_code == 37)
+    );
+    assert!(stream.next_event().await.unwrap().is_none());
+    server.await.unwrap();
+    driver
+        .stop(&running_unit, &action("raw-stop", &spec))
+        .await
+        .unwrap();
+    assert!(matches!(
+        driver.start_runtime_process(&running_unit, request).await,
+        Err(RuntimeError::InvalidRequest(_))
+    ));
+    driver
+        .remove(&running_unit, &action("raw-remove", &spec))
+        .await
+        .unwrap();
+    assert!(driver.manager.managed_records().await.unwrap().is_empty());
+}
+
+#[cfg(unix)]
+#[tokio::test]
 async fn exec_binds_identity_timeout_replay_and_truncation_to_the_running_generation() {
     let directory = fixture_tempdir();
     let (driver, _backend) = fake_driver(&directory);

@@ -1,0 +1,58 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/release/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/k-home
+[e2e] IMAGE=dsh-acp:e2e-ba01b05
+[e2e] TIER=p0,p1,p2,p3
+[e2e] E2E_OUT=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline
+[e2e] running p0_bench.sh
+[e2e] fetching bench script
+P0-1: PASS — bench RUNS=1 succeeded
+[e2e] running p0_cold_initialize.sh
+Creating box mild_hopper (9a4c51761cab)...
+Box mild_hopper (9a4c51761cab) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box mild_hopper exited and was removed.
+P0-2: PASS — initialize ok agent=deepseek-harness-acp protocol=1
+[e2e] running p1_core.sh
+P1-6: PASS — idle>=1 after prewarm
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek Harness 中的编码智能体，可以帮你阅读代码、修改文件、运行命令并完成开发任务。P1-1: PASS — initialize (+repeat) agent=deepseek-harness-acp protocol=1
+P1-2: PASS — sessionId=ca05cc33-490a-42da-929c-dc9c38b49f17
+P1-3: PASS — model config echoed
+P1-4: PASS — prompt end_turn reply_len=57 stop=end_turn
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是运行在 DeepSeek Harness 上的 AI 编程助手，可以帮你阅读代码、调试问题、执行命令并完成开发任务。[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek 的 AI 编程助手，可以帮你写代码、调试问题、分析技术方案，也能处理各类文档和资料任务。P1-5: PASS — three sequential attaches succeeded
+[e2e] running p2_mounts_cleanup.sh
+Invalid params: unknown model option: ["deepseek-official","deepseek-flash"]
+Internal error: turn failed: llm-deepseek: no API key for provider route "deepseek-official"; store DEEPSEEK_API_KEY through the credentials service (the web Models page writes it), or export DEEPSEEK_API_KEY in the launching environment
+P2-3: PASS — prompt/session failed closed without DEEPSEEK_API_KEY
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+e2e-marker-1794296830P2-1: PASS — workspace marker echoed
+P2-2: PASS — named volume dsh-acp-data-e2e-20261110-154505-84274 present (cross-attach file persistence not asserted without tools)
+P2-4: PASS — pool stopped; no running boxes
+[e2e] running p3_negative.sh
+P3-3: PASS — bad image did not become idle within timeout
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P3-1: PASS — disconnect destroyed session; pool replenished
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P3-2: PASS — second attach blocked while size=1 busy
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+我实际执行了命令：
+
+```bash
+node -p '7*13'
+```
+
+工具输出结果：
+
+```
+91
+```
+
+说明：首次在默认 `workspace-write` 沙箱下执行时，主机没有可用的沙箱后端而报错；随后按提示以 `danger-full-access` 重试，命令正常运行并返回了 `91`。P3-4: PASS — real tool call and completed update observed; result=91
+{"pass": 16, "fail": 0, "skip": 0, "blocked": 0}
+[e2e] results: /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/results.json
+summary: {"pass": 16, "fail": 0, "skip": 0, "blocked": 0}

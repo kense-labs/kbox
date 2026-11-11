@@ -11,6 +11,15 @@ impl LocalExecutionManager {
         record: BoxRecord,
     ) -> ExecutionManagerResult<ExecutionLease> {
         super::record::validate_record_health(&record)?;
+        if record.is_unclaimed_prewarm()
+            && ["K_SNAPSHOT_MEM_FILE", "K_SNAPSHOT_SOCK", "K_RESTORE_FROM"]
+                .iter()
+                .any(|key| std::env::var_os(key).is_some_and(|value| !value.is_empty()))
+        {
+            return Err(ExecutionManagerError::InvalidRequest(
+                "prewarm cannot use ambient snapshot overrides".into(),
+            ));
+        }
         match managed_state(&record)? {
             state @ (ManagedExecutionState::Creating | ManagedExecutionState::Created) => {
                 self.claim_and_start(record, state).await

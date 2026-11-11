@@ -143,6 +143,7 @@ async fn execute_create(args: SnapshotCreateArgs) -> Result<(), Box<dyn std::err
     let record = state
         .find_by_id(&box_id)
         .ok_or_else(|| format!("Box '{box_id}' was removed while waiting to snapshot it"))?;
+    record.require_claimed()?;
     validate_snapshot_source_state(record)
         .map_err(|error| -> Box<dyn std::error::Error> { error.into() })?;
 

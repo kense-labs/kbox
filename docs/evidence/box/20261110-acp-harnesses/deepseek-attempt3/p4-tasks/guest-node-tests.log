@@ -1,0 +1,23 @@
+✔ credits add and debits subtract using exact integer arithmetic (0.878833ms)
+✔ amounts near Number.MAX_SAFE_INTEGER remain exact (0.1065ms)
+✔ identical duplicate ids are counted and applied only once (0.088959ms)
+✔ records with the same id but conflicting fields are invalid (0.233ms)
+✔ accounts are sorted by Unicode code point, not UTF-16 code unit (0.134416ms)
+✔ blank lines are ignored and CRLF input is accepted (0.182417ms)
+✔ --account filtering limits accounts and net but not event counts (0.098083ms)
+✔ malformed and invalid records are rejected (0.175041ms)
+✔ the CLI writes the exact summary shape and creates parent directories (18.34325ms)
+✔ the CLI applies --account while keeping whole-input event counts (35.133625ms)
+✔ invalid input fails without replacing an existing output (20.029583ms)
+✔ conflicting duplicate ids fail without creating or replacing output (33.524042ms)
+✔ the CLI rejects missing arguments, unknown options, and bad filters (94.787125ms)
+✔ empty input produces a zero summary (17.3665ms)
+✔ serializer emits unquoted integers and escapes account strings (0.181333ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 262.851834

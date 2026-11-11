@@ -1,0 +1,7 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling libsqlite3-sys v0.35.0
+   Compiling rusqlite v0.37.0
+   Compiling krun v0.1.0 (/Users/roylin/code/kense/krun)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.50s
+     Running `target/debug/examples/export_schemas`

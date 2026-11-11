@@ -166,6 +166,14 @@ enum VmBootMode {
     RootfsMaintenance,
 }
 
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+enum ProviderLaunch {
+    #[default]
+    NotAttempted,
+    Attempted,
+    FailedBeforeLaunch,
+}
+
 /// Layout of directories for a box instance.
 pub(crate) struct BoxLayout {
     /// Host staging path for a fresh directory-derived generation.
@@ -488,6 +496,7 @@ pub struct VmManager {
 
     original_scope: Option<OriginalVmScope>,
     pending_handler: Option<Box<dyn VmHandler>>,
+    provider_launch: ProviderLaunch,
 
     /// Path to the exec Unix socket (set after boot)
     pub(crate) exec_socket_path: Option<PathBuf>,
@@ -556,6 +565,7 @@ impl VmManager {
             rootfs_provider: Arc::from(rootfs_provider),
             original_scope: None,
             pending_handler: None,
+            provider_launch: ProviderLaunch::NotAttempted,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -601,6 +611,7 @@ impl VmManager {
             rootfs_provider: Arc::from(rootfs_provider),
             original_scope: None,
             pending_handler: None,
+            provider_launch: ProviderLaunch::NotAttempted,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -961,6 +972,7 @@ impl VmManager {
             rootfs_provider: Arc::from(rootfs_provider),
             original_scope: None,
             pending_handler: None,
+            provider_launch: ProviderLaunch::NotAttempted,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,

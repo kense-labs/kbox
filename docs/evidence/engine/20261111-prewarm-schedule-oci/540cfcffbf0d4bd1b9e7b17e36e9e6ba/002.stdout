@@ -1,0 +1,8 @@
+Building from /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-schedule-oci/540cfcffbf0d4bd1b9e7b17e36e9e6ba/context/Containerfile
+Step 1/6: FROM krun-coding-fixture:0.1.0
+Step 2/6: USER root
+Step 3/6: COPY marker /oci-marker
+Step 4/6: RUN python3 -c 'from pathlib import Path; Path("/image-build-proof").write_text(Path("/oci-marker").read_text())'
+Step 5/6: ENTRYPOINT []
+Step 6/6: CMD ["sleep", "2147483647"]
+Successfully built krun-oci-regression:540cfcffbf0d4bd1b9e7b17e36e9e6ba (8 layers, 121.7 MB, linux/arm64)

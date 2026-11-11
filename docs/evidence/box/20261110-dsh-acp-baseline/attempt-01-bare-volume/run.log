@@ -1,0 +1,39 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/release/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/k-home
+[e2e] IMAGE=dsh-acp:e2e-ba01b05
+[e2e] TIER=p0,p1,p2,p3
+[e2e] E2E_OUT=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline
+[e2e] running p0_bench.sh
+[e2e] fetching bench script
+P0-1: PASS — bench RUNS=1 succeeded
+[e2e] running p0_cold_initialize.sh
+Creating box mild_babbage (e26bd3055db5)...
+Box mild_babbage (e26bd3055db5) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box mild_babbage exited and was removed.
+P0-2: PASS — initialize ok agent=deepseek-harness-acp protocol=1
+[e2e] running p1_core.sh
+P1-6: PASS — idle>=1 after prewarm
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是由深度求索（DeepSeek）训练、运行在 DeepSeek Harness 中的 AI 编程助手，可以协助你写作、分析、编写与调试代码，以及处理各类软件工程任务。P1-1: PASS — initialize (+repeat) agent=deepseek-harness-acp protocol=1
+P1-2: PASS — sessionId=c14dc153-54a8-45d4-a2eb-997bcea92105
+P1-3: PASS — model config echoed
+P1-4: PASS — prompt end_turn reply_len=87 stop=end_turn
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek Harness 驱动的 AI 编程助手，可以帮你写代码、调试程序、分析文件和完成各类开发任务。[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek Harness 支持的 AI 编程助手，可以帮你阅读代码、调试问题、执行命令并完成开发任务。P1-5: PASS — three sequential attaches succeeded
+[e2e] running p2_mounts_cleanup.sh
+Invalid params: unknown model option: ["deepseek-official","deepseek-flash"]
+Internal error: turn failed: llm-deepseek: no API key for provider route "deepseek-official"; store DEEPSEEK_API_KEY through the credentials service (the web Models page writes it), or export DEEPSEEK_API_KEY in the launching environment
+P2-3: PASS — prompt/session failed closed without DEEPSEEK_API_KEY
+[e2e] running p3_negative.sh
+P3-3: PASS — bad image did not become idle within timeout
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P3-1: PASS — disconnect destroyed session; pool replenished
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+{"pass": 16, "fail": 0, "skip": 0, "blocked": 0}
+[e2e] results: /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/results.json
+summary: {"pass": 16, "fail": 0, "skip": 0, "blocked": 0}

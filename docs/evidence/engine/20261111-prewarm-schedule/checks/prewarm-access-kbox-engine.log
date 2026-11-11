@@ -1,0 +1,676 @@
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+warning: unused import: `ExecutionBoundary`
+    --> crates/box/runtime/src/kbox_contract_driver/lifecycle.rs:1142:44
+     |
+1142 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
+     |                                            ^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::Path`
+ --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:1:5
+  |
+1 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `RuntimeFeature`
+ --> crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:8:20
+  |
+8 |     RestartPolicy, RuntimeFeature, RuntimeInspection, RuntimeUnitClass, RuntimeUnitState,
+  |                    ^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs:8:53
+  |
+8 |     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
+  |                                                     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/remove.rs:217:44
+    |
+217 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionManager,
+    |                                            ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/resources.rs:654:54
+    |
+654 |         CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, ExecutionSnapshotId,
+    |                                                      ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/vm_backend_tests.rs:10:61
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+   |                                                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests/owned_vm_close.rs:10:61
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+   |                                                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/tests/attached_vm_identity.rs:7:40
+  |
+7 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, OperationId, VmHandler, VmMetrics,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests.rs:16:5
+   |
+16 |     ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
+   |     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `HttpBody`
+ --> crates/box/runtime/src/oci/registry/push_tests.rs:4:24
+  |
+4 | use axum::body::{Body, HttpBody};
+  |                        ^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:7:50
+  |
+7 |     CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode, OperationId,
+  |                                                  ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/api.rs:252:9
+    |
+252 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/reconciler.rs:709:9
+    |
+709 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionManager`
+  --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:13:30
+   |
+13 | use kbox_core::{ExecRequest, ExecutionManager, ExecutionSessionManager, HostServiceSocket};
+   |                              ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::vmm::VmHandler`
+ --> crates/box/runtime/src/local_execution/tests/owned_vm_jobs.rs:5:5
+  |
+5 | use crate::vmm::VmHandler;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `fixture`
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/recovery_profile.rs:401:5
+    |
+401 |     fixture: &BoxRuntimeConformanceFixture,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fixture`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `record`
+    --> crates/box/runtime/src/local_execution/oci_backend_tests.rs:1594:9
+     |
+1594 |         record: &BoxRecord,
+     |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_record`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1156:13
+     |
+1156 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1170:13
+     |
+1170 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1201:13
+     |
+1201 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: variable does not need to be mutable
+ --> crates/box/runtime/src/local_execution/tests/stop_ownership.rs:8:9
+  |
+8 |     let mut create = request("stop-unready-owner");
+  |         ----^^^^^^
+  |         |
+  |         help: remove this `mut`
+  |
+  = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/runtime/src/local_execution/tests.rs:434:9
+    |
+434 |     let mut request = request(external_id);
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1293:9
+     |
+1293 |     let mut create = request("cold-pause-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1321:9
+     |
+1321 |     let mut create = request("warm-pause-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1358:9
+     |
+1358 |     let mut create = request("warm-resume-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1400:9
+     |
+1400 |     let mut create = request("observe-pausing-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1443:9
+     |
+1443 |     let mut create = request("observe-resuming-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1487:9
+     |
+1487 |     let mut create = request("observe-pausing-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1532:9
+     |
+1532 |     let mut create = request("observe-killing-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1569:9
+     |
+1569 |     let mut create = request("observe-running-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1599:9
+     |
+1599 |     let mut create = request("warm-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1637:9
+     |
+1637 |     let mut create = request("warm-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1679:9
+     |
+1679 |     let mut create = request("cold-pause-stopped-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1717:9
+     |
+1717 |     let mut create = request("cold-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1755:9
+     |
+1755 |     let mut create = request("cold-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1796:9
+     |
+1796 |     let mut create = request("cold-resume-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1971:9
+     |
+1971 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1997:9
+     |
+1997 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2025:9
+     |
+2025 |     let mut create = request("sandbox-exit-status");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2051:9
+     |
+2051 |     let mut create = request("sandbox-signaled-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2079:9
+     |
+2079 |     let mut create = request("already-stopped-no-invent");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2112:9
+     |
+2112 |     let mut create = request("kill-not-found-no-user-stop");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2203:9
+     |
+2203 |     let mut create = request("option-aware-kill");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `validate_mapping_set` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:43:4
+   |
+43 | fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Result<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_rootfs_ownership_with_preference` is never used
+   --> crates/box/runtime/src/host_fs/rootfs.rs:733:15
+    |
+733 | pub(crate) fn prepare_rootfs_ownership_with_preference(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `TMPFS_MAGIC` is never used
+  --> crates/box/runtime/src/kbox_contract_driver/secret.rs:28:7
+   |
+28 | const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
+   |       ^^^^^^^^^^^
+
+warning: field `private_artifact_root` is never read
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:255:5
+    |
+245 | pub(super) struct BoxRuntimeConformanceFixture {
+    |                   ---------------------------- field in this struct
+...
+255 |     private_artifact_root: PathBuf,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `private_artifact_source` and `private_artifact_root` are never used
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:404:19
+    |
+263 | impl BoxRuntimeConformanceFixture {
+    | --------------------------------- methods in this implementation
+...
+404 |     pub(super) fn private_artifact_source(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^
+...
+408 |     pub(super) fn private_artifact_root(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `insert` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/test_support.rs:355:19
+    |
+354 | impl DriverFakeSecretMaterializer {
+    | --------------------------------- method in this implementation
+355 |     pub(super) fn insert(&self, reference: impl Into<String>, value: impl Into<Vec<u8>>) {
+    |                   ^^^^^^
+
+warning: methods `drive_cold_paused_snapshot`, `pause_for_snapshot`, and `capture_snapshot_rootfs` are never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:233:14
+    |
+ 24 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+233 |     async fn drive_cold_paused_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+282 |     async fn pause_for_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^
+...
+333 |     async fn capture_snapshot_rootfs(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `execution_state` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:524:4
+    |
+524 | fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<ExecutionState> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `build_snapshot_metadata` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:795:4
+    |
+795 | fn build_snapshot_metadata(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `snapshot_error` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:832:4
+    |
+832 | fn snapshot_error(
+    |    ^^^^^^^^^^^^^^
+
+warning: fields `store`, `home_dir`, and `lifecycle` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:78:9
+   |
+76 |     StartSelected {
+   |     ------------- fields in this variant
+77 |         record: BoxRecord,
+78 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+79 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+80 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+
+warning: fields `store`, `home_dir`, `lifecycle`, and `physical_budget` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:84:9
+   |
+82 |     StopSelected {
+   |     ------------ fields in this variant
+83 |         record: BoxRecord,
+84 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+85 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+86 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+87 |         physical_budget: kbox_core::vmm::OwnedCloseBudget,
+   |         ^^^^^^^^^^^^^^^
+
+warning: fields `execution_id` and `generation` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:90:9
+   |
+89 |     ReconcileRetainedRemove {
+   |     ----------------------- fields in this variant
+90 |         execution_id: ExecutionId,
+   |         ^^^^^^^^^^^^
+91 |         generation: ExecutionGeneration,
+   |         ^^^^^^^^^^
+
+warning: field `completion` is never read
+  --> crates/box/runtime/src/local_execution/store.rs:98:5
+   |
+97 | pub struct OwnedLifecycleOutcome {
+   |            --------------------- field in this struct
+98 |     completion: OwnedLifecycleCompletion,
+   |     ^^^^^^^^^^
+
+warning: methods `boot_original_component` and `cleanup_original_anonymous` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2250:14
+     |
+2120 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+...
+2250 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2369 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sandbox_request` is never used
+   --> crates/box/runtime/src/local_execution/tests.rs:433:4
+    |
+433 | fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
+    |    ^^^^^^^^^^^^^^^
+
+warning: field `prefer_image_rootfs_metadata` is never read
+   --> crates/box/runtime/src/vm/mod.rs:210:16
+    |
+178 | pub(crate) struct BoxLayout {
+    |                   --------- field in this struct
+...
+210 |     pub(crate) prefer_image_rootfs_metadata: bool,
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `boot_original_owned` is never used
+  --> crates/box/runtime/src/vm/boot.rs:22:25
+   |
+ 5 | impl VmManager {
+   | -------------- method in this implementation
+...
+22 |     pub(crate) async fn boot_original_owned(
+   |                         ^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_recorded_sandbox_runtime_in` is never used
+   --> crates/box/runtime/src/vm/reap.rs:686:15
+    |
+686 | pub(crate) fn cleanup_recorded_sandbox_runtime_in(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `kbox-runtime` (lib test) generated 64 warnings (run `cargo fix --lib -p kbox-runtime --tests` to apply 42 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.53s
+     Running unittests src/lib.rs (target/debug/deps/kbox_runtime-6ccf01207afc896d)
+
+running 167 tests
+test engine::tests::engine_endpoint_is_stable_short_and_scoped_to_its_home ... ok
+test engine::tests::engine_errors_retain_sources_without_exposing_sensitive_input ... ok
+test engine::assembly::tests::prewarm_requires_a_clean_idle_bootstrap_and_preserves_legacy_assembly ... ok
+test engine::assembly::tests::assembly_is_optional_and_only_reserves_its_own_control_path ... ok
+test engine::tests::generic_template_keeps_oci_options_and_harness_profile_requires_kernel ... ok
+test engine::directory::tests::grants_bind_exact_paths_and_permissions_and_leave_legacy_wire_unchanged ... ok
+test engine::tests::process_tests::idle_stream_has_no_task_deadline_but_incomplete_frame_expires ... ok
+test engine::tests::process_tests::native_process_request_preserves_empty_args_and_unlimited_default_but_rejects_invalid_input ... ok
+test engine::tests::corrupt_journal_is_retained_and_does_not_reset_engine_identity ... ok
+test engine::tests::service_template_remains_compatible_with_current_runtime_schema ... ok
+test engine::tests::rejects_unsupported_schema_and_unsafe_identifiers ... ok
+test engine::tests::process_tests::process_frames_preserve_fragments_and_reject_oversize_before_body_read ... ok
+test engine::tests::journal_has_one_owner_until_drop ... ok
+test oci::build::engine::handlers::tests::test_build_run_shell_cmd_uses_configured_shell_and_workdir ... ok
+test engine::transport::tests::socket_refuses_other_peer_or_non_private_parent ... ok
+test engine::prewarm::tests::compatibility_is_independent_of_instance_and_fences_live_directory_replacement ... ok
+test engine::tests::journal_replays_exact_request_after_restart_and_keeps_engine_identity ... ok
+test oci::build::engine::handlers::tests::test_ensure_linux_run_workdir_rejects_relative_path ... ok
+test engine::tests::newer_stop_can_arrive_before_old_up_and_old_up_cannot_be_accepted ... ok
+test oci::build::engine::handlers::tests::test_execute_onbuild_trigger_rejects_execution_instruction ... ok
+test oci::build::engine::handlers::tests::test_filter_run_mount_paths_excludes_runtime_pseudo_filesystems ... ok
+test oci::build::engine::handlers::tests::test_filter_run_mount_paths_excludes_bind_target ... ok
+test oci::build::engine::handlers::tests::test_filter_run_mount_paths_excludes_tmpfs_target ... ok
+test engine::assembly::tests::archive_copy_is_immutable_digest_bound_and_rejects_links_and_oversize ... ok
+test oci::build::engine::handlers::tests::test_filter_run_mount_paths_keeps_siblings_under_mount_ancestor ... ok
+test oci::build::engine::handlers::tests::test_glob_segment_match ... ok
+test oci::build::engine::handlers::tests::test_ensure_linux_run_workdir_creates_absolute_path ... ok
+test engine::transport::tests::socket_preserves_existing_file_and_exclusively_recovers_stale_socket ... ok
+test oci::build::engine::handlers::tests::test_ensure_linux_run_workdir_rejects_symlink_escape ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_add ... ok
+test oci::build::engine::handlers::tests::test_expand_glob_sources ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_add_no_chown ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_arg_no_default ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_arg_with_default ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_cmd ... ok
+test engine::tests::journal_revision_guard_fences_pending_backend_apply_after_stop_and_restart ... ok
+test engine::assembly::tests::corrupt_receipt_cannot_become_ready_after_reopening_the_journal ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_copy ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_copy_from_stage ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_entrypoint ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_env ... ok
+test engine::tests::persistence_failure_requires_reopen_before_retry_or_backend_dispatch ... ok
+test engine::tests::unknown_engine_and_reused_revision_are_refused ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_expose ... ok
+test engine::directory::tests::previous_attempts_keep_teardown_authority_without_granting_future_generations ... ok
+test oci::build::engine::handlers::tests::test_handle_run_rejects_macos_without_unsafe_opt_in ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_from ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_from_with_alias ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_healthcheck_none ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_healthcheck_with_cmd ... ok
+test engine::tests::journal_rejects_a_stale_instance_index_instead_of_reviving_old_up ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_label ... ok
+test engine::directory::tests::frozen_grants_resolve_exact_spec_through_replace_restart_and_missing_source ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_run ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_onbuild ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_run_exec_form ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_run_with_bind_mount ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_run_with_cache_mount ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_run_with_tmpfs_mount ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_shell ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_stopsignal ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_user ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_volume ... ok
+test oci::build::engine::handlers::tests::test_instruction_to_string_workdir ... ok
+test oci::build::engine::handlers::tests::test_linux_run_command_uses_private_pid_and_mount_namespaces ... ok
+test oci::build::engine::handlers::tests::test_linux_network_none_run_adds_a_private_network_namespace ... ok
+test oci::build::engine::handlers::tests::test_linux_run_shell_path_defaults_to_bin_sh ... ok
+test engine::assembly::tests::assembly_receipts_survive_restart_and_bind_exact_runtime_provider_and_intent ... ok
+test oci::build::engine::handlers::tests::test_handle_copy_rejects_dangling_destination_symlink_escape ... ok
+test oci::build::engine::handlers::tests::test_handle_add_chown_numeric_uid_gid ... ok
+test oci::build::engine::handlers::tests::test_linux_run_preconditions_reject_relative_shell ... ok
+test oci::build::engine::handlers::tests::test_linux_run_preconditions_reject_missing_shell ... ok
+test oci::build::engine::handlers::tests::test_linux_run_preconditions_reject_non_root ... ok
+test oci::build::engine::handlers::tests::test_handle_copy_layers_internal_absolute_symlink_target_path ... ok
+test oci::build::engine::handlers::tests::test_handle_copy_rejects_nested_destination_symlink_escape ... ok
+test oci::build::engine::handlers::tests::test_linux_run_preconditions_accept_absolute_shell_symlink ... ok
+test engine::tests::process_tests::primary_receipt_and_next_attempt_are_atomic_and_do_not_persist_payload_or_attach_token ... ok
+test engine::tests::process_tests::a_primary_connection_is_exclusive_per_generation_and_not_global ... ok
+test oci::build::engine::handlers::tests::test_run_command_failed_error_includes_stdout_and_stderr ... ok
+test oci::build::engine::handlers::tests::test_run_env_entries_includes_defaults_and_build_env ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_reject_duplicate_cache_key ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_reject_missing_seed_source ... ok
+test oci::build::engine::handlers::tests::test_run_exec_preconditions_accept_absolute_executable ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_reject_file_seed_source ... ok
+test oci::build::engine::handlers::tests::test_shell_command_in_workdir_enters_workdir_inside_chroot ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_by_alias ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_by_alias_unnamed ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_by_index ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mount_hydrate_failure_does_not_sync_partial_cache ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_empty_stages ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_error_lists_available ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_invalid_reference ... ok
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_out_of_bounds ... ok
+test oci::build::engine::handlers::tests::test_run_exec_preconditions_reject_missing_absolute_executable ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_empty ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_instructions_before_from_attached ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_multiple_stages ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_single_named ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_single_stage ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_three_stages ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_restore_without_sync_discards_failed_run_cache ... ok
+test oci::build::engine::handlers::tests::test_prepare_pool_run_filesystem_rejects_etc_symlink_escape ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_apply_root_metadata ... ok
+test oci::build::engine::handlers::tests::test_prepare_pool_run_filesystem_creates_support_paths ... ok
+test oci::build::engine::handlers::tests::test_run_bind_mount_overlay_staging_does_not_follow_image_symlink ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_restore_original_target ... ok
+test oci::build::engine::handlers::tests::test_run_bind_mount_overlays_context_and_restores_target ... ok
+test oci::build::engine::handlers::tests::test_run_tmpfs_mount_overlay_staging_does_not_follow_image_symlink ... ok
+test oci::build::engine::handlers::tests::test_run_tmpfs_mount_overlays_empty_dir_and_restores_target ... ok
+test oci::build::engine::tests::tests::test_add_url_invalid_host_returns_error ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_overlay_staging_does_not_follow_image_symlink ... ok
+test oci::build::engine::tests::tests::test_default_target_platform_is_linux ... ok
+test oci::build::engine::tests::tests::test_expand_args_braces ... ok
+test oci::build::engine::tests::tests::test_expand_args_dollar ... ok
+test oci::build::engine::tests::tests::test_expand_args_no_match ... ok
+test oci::build::engine::tests::tests::test_format_size ... ok
+test oci::build::engine::tests::tests::test_network_none_rejects_remote_add_before_cache_or_download ... ok
+test oci::build::engine::tests::tests::test_network_none_rejects_warm_pool_without_isolation_evidence ... ok
+test oci::build::engine::tests::tests::test_resolve_path_absolute ... ok
+test oci::build::engine::tests::tests::test_resolve_path_relative ... ok
+test oci::build::engine::handlers::tests::test_run_bind_mount_overlays_stage_source_and_restores_target ... ok
+test oci::build::engine::tests::tests::test_resolve_path_root_workdir ... ok
+test oci::build::engine::tests::tests::test_run_cache_identity_binds_network_policy ... ok
+test oci::build::engine::tests::tests::test_run_env_includes_declared_args_and_env_overrides ... ok
+test oci::build::engine::tests::tests::test_scratch_config_is_empty_base ... ok
+test oci::build::engine::tests::tests::test_validate_build_config_rejects_multi_platform ... ok
+test oci::build::engine::tests::tests::test_validate_build_config_rejects_non_linux_platform ... ok
+test engine::tests::process_tests::finishing_old_primary_cannot_change_a_newer_stop_or_replacement ... ok
+test oci::build::engine::utils::tests::compute_diff_id_accepts_a_zstd_oci_layer ... ok
+test oci::build::engine::utils::tests::compute_diff_id_accepts_a_gzip_oci_layer ... ok
+test oci::build::engine::utils::tests::test_expand_args_no_prefix_collision ... ok
+test oci::build::engine::utils::tests::compute_diff_id_accepts_an_uncompressed_oci_layer ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_persist_by_id ... ok
+test oci::build::engine::utils::tests::test_extract_nonexistent_file_fails ... ok
+test oci::build::engine::utils::tests::test_extract_plain_tar ... ok
+test oci::build::engine::utils::tests::test_extract_tar_bz2 ... ok
+test oci::build::engine::utils::tests::test_format_size_bytes ... ok
+test oci::build::engine::utils::tests::test_format_size_gb ... ok
+test oci::build::engine::utils::tests::test_format_size_kb ... ok
+test oci::build::engine::utils::tests::test_format_size_mb ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_case_insensitive ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_non_archive ... ok
+test oci::build::engine::utils::tests::test_assert_within_contains_and_rejects ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_tar ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_tar_bz2 ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_tar_gz ... ok
+test oci::build::engine::utils::tests::test_is_tar_archive_tar_xz ... ok
+test oci::build::engine::utils::tests::test_reject_path_traversal ... ok
+test oci::build::engine::utils::tests::test_resolve_path_absolute ... ok
+test oci::build::engine::utils::tests::test_resolve_path_relative ... ok
+test oci::build::engine::utils::tests::test_extract_tar_gz ... ok
+test oci::build::engine::utils::tests::test_extract_tar_xz ... ok
+test oci::build::engine::utils::tests::test_resolve_chown_rejects_rootfs_passwd_symlink_escape ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mount_lock_blocks_same_cache_key ... ok
+test oci::build::engine::handlers::tests::test_pool_run_cache_mounts_seed_from_stage_once ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_releases_stage_lease_after_run_failure ... ok
+test oci::build::engine::tests::tests::test_build_multistage_copy_from_absolute_source ... ok
+test oci::build::engine::tests::tests::test_build_target_stage ... ok
+test oci::build::engine::tests::tests::test_build_honors_dockerignore ... ok
+test oci::build::engine::tests::tests::test_build_from_scratch_copy_metadata_without_network ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_bind_mount_context_is_not_committed ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_tmpfs_mount_is_not_committed ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_bind_mount_from_stage_is_not_committed ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_cache_mount_from_stage_seeds_cache ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_fences_each_run_before_capturing_rootfs_diff ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_cache_mount_is_not_committed_to_layer ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_bind_mount_from_external_image_is_not_committed ... ok
+
+test result: ok. 167 passed; 0 failed; 0 ignored; 0 measured; 2000 filtered out; finished in 0.75s
+

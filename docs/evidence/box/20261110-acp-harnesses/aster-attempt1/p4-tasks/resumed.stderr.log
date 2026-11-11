@@ -1,0 +1,9 @@
+Creating box acp-aster-resumed-3376407b (dc15aea73bae)...
+Box acp-aster-resumed-3376407b (dc15aea73bae) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[2m2026-11-10T09:27:17.838375Z[0m [33m WARN[0m [2master_core::agent_api::session_sandbox[0m[2m:[0m default native Bash sandbox is unavailable; Bash remains denied [3mworkspace[0m[2m=[0m/workspace [3merror[0m[2m=[0mLinux native sandbox requires bubblewrap: set K_SANDBOX_BWRAP_PATH, install bwrap at /usr/bin/bwrap, or have bwrap on PATH [3mhint[0m[2m=[0m; if an outer container already isolates this job, set ASTER_ALLOW_PROCESS_HOST_SANDBOX=1 to allow the process-host Bash fallback (network posture: deny)
+[2m2026-11-10T09:27:33.260563Z[0m [33m WARN[0m [2master_core::workspace::retrieval::runtime[0m[2m:[0m workspace persistent index update failed [3merror[0m[2m=[0mstale workspace revision 2; current revision is 14 [3mretryable[0m[2m=[0mfalse [3mretries[0m[2m=[0m0
+[2m2026-11-10T09:27:52.420224Z[0m [33m WARN[0m [2master_core::agent_api::session_sandbox[0m[2m:[0m default native Bash sandbox is unavailable; Bash remains denied [3mworkspace[0m[2m=[0m/workspace [3merror[0m[2m=[0mLinux native sandbox requires bubblewrap: set K_SANDBOX_BWRAP_PATH, install bwrap at /usr/bin/bwrap, or have bwrap on PATH [3mhint[0m[2m=[0m; if an outer container already isolates this job, set ASTER_ALLOW_PROCESS_HOST_SANDBOX=1 to allow the process-host Bash fallback (network posture: deny)
+[2m2026-11-10T09:27:52.427887Z[0m [33m WARN[0m [2master_core::workspace::retrieval::runtime[0m[2m:[0m workspace persistent index update failed [3merror[0m[2m=[0mstale workspace revision 3; current revision is 14 [3mretryable[0m[2m=[0mfalse [3mretries[0m[2m=[0m0
+Box acp-aster-resumed-3376407b exited and was removed.

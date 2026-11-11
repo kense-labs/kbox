@@ -1,0 +1,5 @@
+[2026-11-11T00:32:34Z DEBUG devices::virtio::vsock::unix] process_event: HANG_UP
+[2026-11-11T00:32:34Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17565505639802
+[2026-11-11T00:32:34Z DEBUG devices::virtio::vsock::muxer] OP_RST: src=4089 dst=3384366458
+[2026-11-11T00:32:34Z DEBUG devices::virtio::vsock::muxer] allowing OP_RST: id=17565505639802 src=4089 dst=3384366458
+[2026-11-11T00:32:34Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17565505639802

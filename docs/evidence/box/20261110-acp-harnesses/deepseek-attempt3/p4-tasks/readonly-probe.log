@@ -1,0 +1,1 @@
+Error: invalid execution request: Configuration error: MicroVM :ro volume requires host-enforced virtio-fs write denial (Linux RO bind or Windows BindFlt); refusing guest-honor-only attach for /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-acp-harnesses/deepseek-attempt3/p4-tasks/只读 数据

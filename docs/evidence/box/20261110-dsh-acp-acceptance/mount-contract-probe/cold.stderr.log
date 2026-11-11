@@ -1,0 +1,6 @@
+Creating box safe_knuth (178e83b80dd3)...
+Box safe_knuth (178e83b80dd3) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box safe_knuth exited and was removed.

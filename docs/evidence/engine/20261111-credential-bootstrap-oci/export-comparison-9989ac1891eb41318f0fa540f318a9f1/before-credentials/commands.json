@@ -1,0 +1,105 @@
+[
+  {
+    "command": [
+      "volume",
+      "create",
+      "test-data"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  },
+  {
+    "command": [
+      "run",
+      "-d",
+      "--name",
+      "export-check",
+      "-v",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/external \u4e2d\u6587:/workspace",
+      "-v",
+      "test-data:/data",
+      "krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3"
+    ],
+    "exitCode": 0,
+    "seconds": 5.16
+  },
+  {
+    "command": [
+      "exec",
+      "export-check",
+      "--",
+      "/bin/sh",
+      "-c",
+      "printf proof >/native-rootfs-check; printf external >/workspace/\u5916\u90e8; printf volume >/data/volume"
+    ],
+    "exitCode": 0,
+    "seconds": 0.02
+  },
+  {
+    "command": [
+      "export",
+      "export-check",
+      "-o",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/export.tar"
+    ],
+    "exitCode": 1,
+    "seconds": 5.97
+  },
+  {
+    "command": [
+      "export",
+      "export-check",
+      "-o",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/export.tar"
+    ],
+    "exitCode": 1,
+    "seconds": 6.11
+  },
+  {
+    "command": [
+      "export",
+      "export-check",
+      "-o",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-comparison-9989ac1891eb41318f0fa540f318a9f1/before-credentials/export.tar"
+    ],
+    "exitCode": 1,
+    "seconds": 5.79
+  },
+  {
+    "command": [
+      "rm",
+      "-f",
+      "export-check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.44
+  },
+  {
+    "command": [
+      "volume",
+      "rm",
+      "test-data"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  },
+  {
+    "command": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  }
+]

@@ -98,6 +98,9 @@ pub fn require_runtime_socket(
     record: &BoxRecord,
     socket: RuntimeSocket,
 ) -> Result<PathBuf, String> {
+    record
+        .require_claimed()
+        .map_err(|error| error.to_string())?;
     require_running(record, socket.action())?;
     let path = runtime_socket(record, socket);
     #[cfg(windows)]

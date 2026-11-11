@@ -92,12 +92,20 @@ else
   exec 6<>"$WORK/b.out"
   "$KBOX" pool attach --socket "$POOL_SOCKET" <"$WORK/a.in" >"$WORK/a.out" 3>&- 4>&- 5>&- 6>&- &
   A_PID=$!
-  sleep 2
+  if ! acp_initialize; then
+    e2e_record_result "P3-2" "FAIL" "first attach did not initialize"
+    exit 1
+  fi
   set +e
   "$KBOX" pool attach --socket "$POOL_SOCKET" <"$WORK/b.in" >"$WORK/b.out" 3>&- 4>&- 5>&- 6>&- &
   B_PID=$!
-  sleep 8
-  if kill -0 "$B_PID" 2>/dev/null; then
+  printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":1,"clientCapabilities":{}}}' >&5
+  if IFS= read -r -t 8 -u 6 second_reply; then
+    b_ok=0
+    b_msg="second attach received protocol output while size=1 was busy"
+    kill "$B_PID" 2>/dev/null || true
+    wait "$B_PID" 2>/dev/null || true
+  elif kill -0 "$B_PID" 2>/dev/null; then
     kill "$B_PID" 2>/dev/null || true
     wait "$B_PID" 2>/dev/null || true
     b_ok=1
@@ -106,14 +114,14 @@ else
     wait "$B_PID" 2>/dev/null
     b_rc=$?
     # Immediate error is also acceptable fail-closed behavior under exhaustion.
-    b_ok=1
+    [[ "$b_rc" -ne 0 ]] && b_ok=1 || b_ok=0
     b_msg="second attach exited rc=$b_rc while size=1 busy"
   fi
   set -e
-  exec 3>&- 2>/dev/null || true
-  exec 4>&- 2>/dev/null || true
-  exec 5>&- 2>/dev/null || true
-  exec 6>&- 2>/dev/null || true
+  exec 3>&- || true
+  exec 4>&- || true
+  exec 5>&- || true
+  exec 6>&- || true
   kill "$A_PID" 2>/dev/null || true
   wait "$A_PID" 2>/dev/null || true
   if [[ "${b_ok:-0}" -eq 1 ]]; then
@@ -123,28 +131,27 @@ else
   fi
 fi
 
-# --- P3-4 tools capability probe ---
+# --- P3-4 real tool lifecycle, independent of capability advertisements ---
 if e2e_wait_pool_idle "$POOL_SOCKET" 90; then
   mkfifo "$WORK/t.in" "$WORK/t.out"
   exec 3<>"$WORK/t.in"
   exec 4<>"$WORK/t.out"
   "$KBOX" pool attach --socket "$POOL_SOCKET" <"$WORK/t.in" >"$WORK/t.out" 3>&- 4>&- &
   T_PID=$!
-  if acp_initialize; then
-    tools="$(jq -c '.result.agentCapabilities // .result.capabilities // {}' <<<"$RPC_RESPONSE")"
-    has_tools="$(jq -e '
-      (type=="object") and (
-        (.tools? != null) or (.loadSession? != null) or (.promptCapabilities? != null)
-      )' <<<"$tools" >/dev/null 2>&1 && echo yes || echo no)"
-    if [[ "$has_tools" == "yes" ]]; then
-      e2e_record_result "P3-4" "SKIP" "capabilities present but minimal tool round-trip not automated yet" \
-        "$(jq -nc --argjson caps "$tools" '{capabilities:$caps}')"
-    else
-      e2e_record_result "P3-4" "SKIP" "initialize did not declare tools capability" \
-        "$(jq -nc --argjson caps "$tools" '{capabilities:$caps}')"
-    fi
+  DSH_PROVIDER="${DSH_PROVIDER:-deepseek-official}"
+  DSH_MODEL="${DSH_MODEL:-deepseek-flash}"
+  case "$DSH_MODEL" in
+    */*) DSH_PROVIDER="${DSH_MODEL%%/*}"; DSH_MODEL="${DSH_MODEL#*/}" ;;
+  esac
+  ACP_ALLOW_ONCE=1
+  if acp_initialize && acp_session_new &&
+    acp_set_model_config "$DSH_PROVIDER" "$DSH_MODEL" "${DSH_REASONING_EFFORT:-low}" &&
+    acp_prompt "请实际使用 bash 工具执行 node -p '7*13'，然后给出执行结果，不要心算代替工具。" 240 &&
+    [[ "${TOOL_CALL_COUNT:-0}" -ge 1 && "${TOOL_COMPLETE_COUNT:-0}" -ge 1 ]] &&
+    [[ "$REPLY" == *91* ]]; then
+    e2e_record_result "P3-4" "PASS" "real tool call and completed update observed; result=91"
   else
-    e2e_record_result "P3-4" "FAIL" "initialize for tools probe failed"
+    e2e_record_result "P3-4" "FAIL" "tool execution did not complete with the expected result"
   fi
   exec 3>&-
   kill "$T_PID" 2>/dev/null || true

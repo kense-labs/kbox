@@ -1,0 +1,26 @@
+[2026-11-11T00:28:24Z INFO  krun] KRUN_BOOT_STAGE: enter ctx=0
+[2026-11-11T00:28:24Z INFO  krun] Loaded kernel from libkrunfw: guest_addr=0x80000000, entry_addr=0x80000000, size=22740992 bytes (21.69 MB)
+[2026-11-11T00:28:24Z INFO  krun] KRUN_BOOT_STAGE: kernel_ready
+[2026-11-11T00:28:24Z INFO  vmm::builder] Final kernel cmdline: reboot=k panic=-1 panic_print=0 nomodule console=hvc0 rootfstype=virtiofs rw quiet no-kvmapf init=/init.krun KRUN_INIT=/sbin/init KRUN_WORKDIR=/workspace KRUN_BLOCK_ROOT_DEVICE=/dev/vda KRUN_BLOCK_ROOT_FSTYPE=ext4 KRUN_RLIMITS="7=1048576:1048576,6=4096:8192" "BOX_BOOT_CONFIG_FILE=/run/kbox/boot/config.json" "BOX_VOL_0=vol0:/workspace" "BOX_VOL_1=vol1:/data:copy" "K_SEC_SECCOMP=default" "K_SEC_NO_NEW_PRIVS=1" "BOX_CRI_PORT_FWD=1" "BOX_PERSIST_ROOTFS_METADATA=1" tsi_hijack --
+[2026-11-11T00:28:24Z INFO  krun] KRUN_BOOT_STAGE: microvm_built
+[2026-11-11T00:28:24Z INFO  krun] KRUN_BOOT_STAGE: event_loop_entered
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: entered main argc=1
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: mount_filesystems ok
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: after cmdline env import KRUN_INIT=/sbin/init KRUN_INIT_PID1=<null> BOX_EXEC_EXEC=<null>
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: root propagation ok
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: tty/session configured
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: config parsed
+[2026-11-11T00:28:24Z ERROR init_or_kernel] init.krun: selected exec=/sbin/init init_pid1=0
+[2026-11-11T00:28:24Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563328443319
+[2026-11-11T00:28:24Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563360384055
+[2026-11-11T00:28:24Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17565111537612
+[2026-11-11T00:28:24Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17565111537612
+[2026-11-11T00:28:24Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563829923122
+[2026-11-11T00:28:24Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17563316586451
+[2026-11-11T00:28:24Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17563316586451
+[2026-11-11T00:28:25Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17564122965080
+[2026-11-11T00:28:30Z WARN  devices::virtio::vsock::muxer_thread] Failed to configure accepted Unix proxy: CreatingSocket(EINVAL)
+[2026-11-11T00:28:31Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17562193942577
+[2026-11-11T00:28:36Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17565621747574
+[2026-11-11T00:28:36Z INFO  devices::virtio::vsock::muxer] deferring proxy removal: 17565621747574
+[2026-11-11T00:28:37Z WARN  devices::virtio::vsock::muxer_thread] deferring proxy removal: 17564364829017

@@ -1,0 +1,157 @@
+   Compiling libsqlite3-sys v0.35.0
+   Compiling rusqlite v0.37.0
+   Compiling krun v0.1.0 (/Users/roylin/code/kense/krun)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.39s
+     Running unittests src/lib.rs (target/debug/deps/krun-a84e69bdea6e24c1)
+
+running 1 test
+test engine::unix::tests::partial_input_has_a_fixed_deadline_even_when_bytes_keep_arriving ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running unittests src/main.rs (target/debug/deps/krun-debe82f226bcf41a)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cli_install.rs (target/debug/deps/cli_install-8633645fff7fa954)
+
+running 3 tests
+test missing_file_argument_returns_usage_exit_code ... ok
+test malformed_package_has_versioned_error_and_no_stdout ... ok
+test cli_installs_from_a_unicode_path_without_starting_the_harness_or_kbox ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.34s
+
+     Running tests/cli_operations.rs (target/debug/deps/cli_operations-8bf03cc37e41a9dd)
+
+running 1 test
+test running_without_assembly_stays_pending_and_retries_query_the_original_operation ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.29s
+
+     Running tests/config.rs (target/debug/deps/config-4f56b9ff1d237993)
+
+running 5 tests
+test secret_reference_is_not_evaluated_and_native_arguments_are_preserved ... ok
+test file_credentials_can_refresh_without_reading_their_content ... ok
+test resolves_external_files_relative_to_config_not_current_directory ... ok
+test rejects_unknown_values_ambiguous_sources_and_implicit_secret_evaluation ... ok
+test uses_the_real_kcl_parser_and_repository_example ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/engine_client.rs (target/debug/deps/engine_client-075d1c2f9edecdb4)
+
+running 14 tests
+test endpoint_permissions_and_symlink_are_checked_before_connection ... ok
+test control::availability_requires_matching_assembly_and_running_runtime_not_a_ready_label ... ok
+test control::prewarm_requires_discovery_before_apply ... ok
+test control::assembly_queries_require_discovered_support_and_validate_the_receipt ... ok
+test control::directory_grants_preserve_legacy_wire_and_refuse_an_unadvertised_engine ... ok
+test wrong_engine_identity_is_rejected_and_error_body_is_not_exposed ... ok
+test malformed_success_and_extra_output_after_exit_fail_closed ... ok
+test control::control_queries_bind_receipts_and_keep_raw_runtime_data_out_of_debug ... ok
+test control::dispatch_commits_body_before_send_and_reconciles_lost_ack_without_replay ... ok
+test control::wrong_control_identity_and_unknown_runtime_state_fail_closed ... ok
+test real_unix_peer_transport_preserves_raw_bytes_half_close_and_unique_exit ... ok
+test cancel_closes_the_control_owner_while_input_is_backpressured ... ok
+test control::lost_apply_response_is_not_retried_or_reassigned ... ok
+test original_request_is_not_retried_when_its_open_response_is_lost ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+     Running tests/engine_native.rs (target/debug/deps/engine_native-e14fc8bfe0beda95)
+
+running 3 tests
+test native_assembled_harness_preserves_acp_initialize_and_eof ... ignored, requires the real shared KBox base and assembled ZIP; native script owns resources
+test native_engine_client_preserves_full_duplex_and_early_exit ... ignored, requires an explicitly prepared native KBox engine; scripts/test_engine_native.py owns cleanup
+test native_engine_control_preserves_requests_and_reports_actual_environment ... ignored, requires an explicitly prepared native KBox engine; scripts/test_engine_native.py owns cleanup
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/fixture_install.rs (target/debug/deps/fixture_install-27398486c7981fa5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/guest_install.rs (target/debug/deps/guest_install-30058fb511c3ff61)
+
+running 3 tests
+test guest_install_never_publishes_partial_wrong_digest_unsafe_or_excessive_input ... ok
+test guest_install_preserves_links_modes_and_refuses_dirty_replay ... ok
+test guest_concurrent_install_publishes_one_complete_tree ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+     Running tests/intent_store.rs (target/debug/deps/intent_store-030a45edd7acc568)
+
+running 13 tests
+test opening_an_existing_home_does_not_change_its_permissions ... ok
+test plan_conflict_preserves_old_intent_and_replace_advances_revision ... ok
+test stale_target_does_not_stop_a_replacement ... ok
+test refuses_corrupt_persisted_plan_instead_of_dispatching_it ... ok
+test identical_names_in_different_workspaces_are_independent ... ok
+test intent_and_outbox_survive_reopen_and_same_up_reuses_request ... ok
+test late_receipt_cannot_replace_a_newer_stop_intent ... ok
+test engine_identity_is_durable_before_dispatch_and_cannot_redirect_pending_intent ... ok
+test frozen_submission_survives_reopen_and_rejects_changed_body_engine_and_revision ... ok
+test concurrent_same_plan_up_has_one_instance_and_one_request ... ok
+test state_v2_migration_pins_the_engine_from_existing_receipts ... ok
+test state_v3_upgrade_retains_engine_binding_and_pending_request ... ok
+test state_upgrade_retains_installed_packages ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/package_install.rs (target/debug/deps/package_install-bd79a60629339530)
+
+running 11 tests
+test refuses_unknown_security_values_and_invalid_identity ... ok
+test bounds_archive_metadata_and_actual_content ... ok
+test rejects_duplicate_central_directory_names_before_reading_members ... ok
+test accepts_a_valid_zip64_terminal_directory ... ok
+test rejects_content_checksum_drift ... ok
+test validates_real_content_and_preserves_native_metadata ... ok
+test refuses_bad_schema_platform_and_entrypoint ... ok
+test failed_validation_does_not_publish_or_run_package ... ok
+test refuses_noncanonical_paths_and_link_chains ... ok
+test install_is_immutable_idempotent_and_durable ... ok
+test concurrent_installers_do_not_rebind_a_version ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/plan.rs (target/debug/deps/plan-dafc81239fd79e57)
+
+running 4 tests
+test rejects_secret_target_conflicts_without_loading_values ... ok
+test rejects_multi_plugin_cycles_and_orders_dependencies_first ... ok
+test rejects_invalid_mount_boundaries_and_resource_limits ... ok
+test plan_digest_is_stable_and_includes_native_arguments_and_secret_references ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/primary_store.rs (target/debug/deps/primary_store-4c8d9fd09fe14c15)
+
+running 4 tests
+test primary_metadata_cannot_redirect_the_engine_binding ... ok
+test concurrent_primary_preparation_has_one_original_request_id ... ok
+test state_v4_upgrade_retains_frozen_control_submission ... ok
+test primary_identity_survives_reopen_without_storing_payload_and_fences_changed_requests ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running tests/schemas.rs (target/debug/deps/schemas-6e40e405867b3da2)
+
+running 1 test
+test published_schemas_match_the_rust_contracts ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests krun
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

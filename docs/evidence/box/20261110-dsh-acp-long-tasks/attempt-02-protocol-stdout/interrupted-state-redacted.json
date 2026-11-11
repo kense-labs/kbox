@@ -1,0 +1,215 @@
+[
+  {
+    "id": "10203223-d533-48b3-b12c-7006afb27296",
+    "short_id": "10203223d533",
+    "name": "warm_hellman",
+    "image": "dsh-acp:e2e-ba01b05",
+    "managed_execution": {
+      "operation_id": "cli-run-d89ef04a-57c5-467c-a612-a2d7a4b3bf0f",
+      "creation_intent_digest": "sha256:5e17d51ab08947a0275f6751960d6694ca861032299a731ecfe7990b1623e80d",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "cli-run-d89ef04a-57c5-467c-a612-a2d7a4b3bf0f",
+        "config": {
+          "image": "dsh-acp:e2e-ba01b05",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 2048,
+            "disk_mb": 4096,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [],
+          "stdin_open": true,
+          "entrypoint_override": null,
+          "user": "0",
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/p4-tasks/\u5de5\u4f5c \u533a:/workspace",
+            "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/p4-tasks/\u5916\u90e8 \u6570\u636e:/external",
+            "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/volumes/dsh-acp-task-59996bd7e632:/data"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [
+            [
+              "DEEPSEEK_API_KEY",
+              "<redacted>"
+            ]
+          ],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "tsi",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": false,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": false
+        },
+        "labels": {},
+        "policy": {
+          "name": "warm_hellman",
+          "auto_remove": true,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [
+            "dsh-acp-task-59996bd7e632"
+          ],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "box_vm",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": {
+        "kind": "start"
+      },
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "starting",
+    "pid": null,
+    "pid_start_time": null,
+    "cpus": 2,
+    "memory_mb": 2048,
+    "volumes": [
+      "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/p4-tasks/\u5de5\u4f5c \u533a:/workspace",
+      "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/p4-tasks/\u5916\u90e8 \u6570\u636e:/external",
+      "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/volumes/dsh-acp-task-59996bd7e632:/data"
+    ],
+    "virtiofs_cache": null,
+    "env": "<redacted>",
+    "cmd": [],
+    "entrypoint": null,
+    "box_dir": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/boxes/10203223-d533-48b3-b12c-7006afb27296",
+    "exec_socket_path": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/boxes/10203223-d533-48b3-b12c-7006afb27296/sockets/exec.sock",
+    "console_log": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/boxes/10203223-d533-48b3-b12c-7006afb27296/logs/console.log",
+    "created_at": "2026-11-10T07:22:30.813845Z",
+    "started_at": null,
+    "auto_remove": true,
+    "hostname": null,
+    "user": "0",
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "tsi",
+    "network_name": null,
+    "volume_names": [
+      "dsh-acp-task-59996bd7e632"
+    ],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": false,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null
+  }
+]

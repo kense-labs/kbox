@@ -381,6 +381,7 @@ pub(super) fn mount_user_volumes() -> Result<(), Box<dyn std::error::Error>> {
         let env_key = format!("BOX_VOL_{}", index);
         match std::env::var(&env_key) {
             Ok(value) => {
+                let value = kbox_core::guest_exec::decode_guest_mount_spec(&value)?;
                 let parts: Vec<&str> = value.split(':').collect();
                 if parts.len() < 2 {
                     error!("Invalid volume spec in {}: {}", env_key, value);
@@ -581,6 +582,7 @@ pub(super) fn mount_tmpfs_volumes() -> Result<(), Box<dyn std::error::Error>> {
             let env_key = format!("BOX_TMPFS_{}", index);
             match std::env::var(&env_key) {
                 Ok(value) => {
+                    let value = kbox_core::guest_exec::decode_guest_mount_spec(&value)?;
                     let (path, options, read_only) = parse_tmpfs_mount(&value)?;
 
                     info!(

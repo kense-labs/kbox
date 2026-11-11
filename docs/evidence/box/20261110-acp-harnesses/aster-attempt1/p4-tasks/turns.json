@@ -1,0 +1,47 @@
+[
+  {
+    "elapsed_s": 105.452,
+    "tool_calls": 16,
+    "updates": 741
+  },
+  {
+    "elapsed_s": 24.122,
+    "tool_calls": 2,
+    "updates": 260
+  },
+  {
+    "elapsed_s": 33.52,
+    "tool_calls": 2,
+    "updates": 315
+  },
+  {
+    "elapsed_s": 30.29,
+    "tool_calls": 3,
+    "updates": 291
+  },
+  {
+    "elapsed_s": 176.206,
+    "tool_calls": 4,
+    "updates": 1082
+  },
+  {
+    "elapsed_s": 34.298,
+    "tool_calls": 2,
+    "updates": 370
+  },
+  {
+    "elapsed_s": 4.896,
+    "tool_calls": 0,
+    "updates": 18
+  },
+  {
+    "elapsed_s": 12.895,
+    "tool_calls": 1,
+    "updates": 186
+  },
+  {
+    "elapsed_s": 5.185,
+    "tool_calls": 0,
+    "updates": 20
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "engineAndOciUnitTests": 158,
+  "engineIntegrationTests": 10,
+  "vmBackendTests": {
+    "passed": 34,
+    "failed": 2
+  },
+  "vmFilterTests": {
+    "passed": 62,
+    "failed": 2,
+    "vmModulePassed": 42,
+    "hardwareVmPassed": 20
+  },
+  "baselineVmBackend": {
+    "passed": 32,
+    "failed": 2
+  },
+  "baselineHardwareVm": {
+    "passed": 20,
+    "failed": 2
+  },
+  "baselineCompilationRepair": "vm-backend-baseline-compile-repair.patch",
+  "workspaceCheck": "PASS",
+  "runtimeClippy": "PASS with existing warnings",
+  "scopedFmt": "PASS",
+  "workspaceFmt": "FAIL on pre-existing formatting",
+  "newFormattingFilesComparedWithBaseline": [],
+  "cliClippy": "PASS with existing warnings"
+}

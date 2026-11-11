@@ -1,0 +1,35 @@
+{
+  "Config": {
+    "Cmd": [],
+    "Entrypoint": [
+      "node",
+      "/app/apps/cli/lib/bin.js",
+      "--profile",
+      "acp"
+    ],
+    "Env": {
+      "DSH_HOME": "/data",
+      "DSH_TELEMETRY_DISABLED": "1",
+      "NODE_ENV": "production",
+      "NODE_VERSION": "24.22.2",
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "YARN_VERSION": "1.22.22"
+    },
+    "ExposedPorts": [],
+    "Healthcheck": null,
+    "Labels": {},
+    "OnBuild": [],
+    "StopSignal": null,
+    "User": "node",
+    "Volumes": [
+      "/data",
+      "/workspace"
+    ],
+    "WorkingDir": "/workspace"
+  },
+  "Digest": "sha256:5d8c283ef8cc74d4f6b76f1bbb585cb0758f26eb7a898201bc65502b9e0c6f7b",
+  "LayerCount": 7,
+  "PulledAt": "2026-11-10T07:19:20.589744+00:00",
+  "Reference": "dsh-acp:e2e-ba01b05",
+  "Size": 177705369
+}

@@ -174,7 +174,7 @@ pub(super) async fn setup_and_boot(
     kbox_core::lifecycle_profile::record_lifecycle_phase("cli.reserve", reserve_start.elapsed());
     let execution_id = reservation.execution_id.clone();
     let box_id = execution_id.to_string();
-    println!(
+    eprintln!(
         "Creating box {} ({})...",
         name,
         BoxRecord::make_short_id(&box_id)
@@ -299,7 +299,7 @@ fn completed_start_record(box_id: &str) -> Result<Option<BoxRecord>, Box<dyn std
 fn pull_progress_callback(image_name: String) -> kbox_runtime::PullProgressFn {
     std::sync::Arc::new(move |current, total, digest, size| {
         if current == 1 && size > 0 {
-            println!("Pulling {}...", image_name);
+            eprintln!("Pulling {}...", image_name);
         }
         let short = &digest[digest.len().saturating_sub(12)..];
         if size < 0 {
@@ -312,7 +312,7 @@ fn pull_progress_callback(image_name: String) -> kbox_runtime::PullProgressFn {
             } else {
                 format!("{} B", actual_size)
             };
-            println!("  [{current}/{total}] {short}: {size_str} ✓");
+            eprintln!("  [{current}/{total}] {short}: {size_str} ✓");
         } else {
             // Positive size means downloading - just show once
             let size_str = if size >= 1_048_576 {
@@ -322,7 +322,7 @@ fn pull_progress_callback(image_name: String) -> kbox_runtime::PullProgressFn {
             } else {
                 format!("{} B", size)
             };
-            println!("  [{current}/{total}] {short}: Pulling {size_str}...");
+            eprintln!("  [{current}/{total}] {short}: Pulling {size_str}...");
         }
     })
 }

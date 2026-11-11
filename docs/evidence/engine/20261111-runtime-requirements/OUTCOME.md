@@ -1,0 +1,13 @@
+# Guest protocol requirements and runtime dependency checks
+
+2026-11-11 on macOS 26.6.2 arm64/HVF with Linux/aarch64 guests. KBox assembled the shared KRun base and streamed packages through the existing generation-fenced process authority. The trusted image records component versions and file identities. KRun's guest installer verifies the archive's declared external requirements before publishing its package directory. KBox binds the resulting readiness to the accepted intent and actual execution generation. [Native requirement cases](../../../../../krun/docs/evidence/2026-11-11-runtime-requirements-native/OUTCOME.md) · [Base build invocation](checks/runtime-readiness-verified-base-build-command.json) · [Base inventory](checks/runtime-readiness-verified-base-inventory.stdout)
+
+The optional `requiredGuestProtocols` list is negotiated through `harness-assembly.guest-protocols.v1`. Every requested protocol must appear in the guest response. The singular legacy field and omitted empty-list serialization retain their original meaning. Structured installer failures require the exact archive digest and a requested protocol. Known unmet requirements become `RUNTIME_REQUIREMENTS_UNMET`. Invalid failure identities keep the general assembly failure. The engine's normal reconcile path remains responsible for retry and cleanup.
+
+The engine tests recorded 184 passes and two ignored hardware cases. Workspace all-target checking, scoped clippy and release compilation passed. Workspace fmt still reports the same 50 existing paths. [Engine checks](checks/runtime-readiness-current-kbox-engine.log) · [Workspace check](checks/runtime-readiness-current-kbox-workspace.log) · [Clippy](checks/runtime-readiness-current-kbox-clippy.log) · [Release](checks/runtime-readiness-current-kbox-release.log) · [Format comparison](checks/runtime-readiness-kbox-fmt-comparison.json)
+
+The independent OCI test passed in 70.22 seconds with the same KBox and libkrun artifacts in a KBox-only prefix. It covers pull, COPY/RUN build, run and exec, external files, volumes, HTTP, live export, commit followed by run, snapshots, engine restart and native guest-policy comparison. Final private executions and volumes were empty. [OCI result](../20261111-runtime-requirements-oci/00bbaddc1fb746a1bf2a0ccc246fdc1e/result.json) · [Invocation](checks/runtime-readiness-verified-oci-command.json) · [Artifact hashes](checks/runtime-readiness-verified-prefix.json)
+
+## Explicitly not claimed
+
+Native qualification covers HVF. Full Harness long-task gates, native authentication refresh, the five capability families, other native backends and distribution artifacts remain open in KRun's implementation plan.

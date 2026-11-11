@@ -1,0 +1,12 @@
+
+thread '<unnamed>' (63003388) panicked at crates/box/runtime/src/kbox_contract_driver/directory_native.rs:180:5:
+assertion `left == right` failed: Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly/6c7a1bfdad4345e2a55db0e6372f61c1/原生 workspace with spaces'
+
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup' (63003387) panicked at crates/box/runtime/src/kbox_contract_driver/directory_native.rs:64:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

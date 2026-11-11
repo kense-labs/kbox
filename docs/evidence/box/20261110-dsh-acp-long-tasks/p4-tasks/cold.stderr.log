@@ -1,0 +1,7 @@
+Creating box tiny_rivest (3d37cb99f12c)...
+kbox run: still creating tiny_rivest; image is ready and runtime startup has taken 127s
+Box tiny_rivest (3d37cb99f12c) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box tiny_rivest exited and was removed.

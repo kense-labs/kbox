@@ -1,0 +1,24 @@
+   Compiling krun v0.1.0 (/Users/roylin/code/kense/krun)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.22s
+     Running tests/cli_operations.rs (target/debug/deps/cli_operations-8bf03cc37e41a9dd)
+
+running 1 test
+test running_without_assembly_stays_pending_and_retries_query_the_original_operation ... FAILED
+
+failures:
+
+---- running_without_assembly_stays_pending_and_retries_query_the_original_operation stdout ----
+
+thread 'running_without_assembly_stays_pending_and_retries_query_the_original_operation' (63537666) panicked at tests/cli_operations.rs:170:9:
+assertion `left == right` failed: {"code":"TRANSPORT","instanceId":"28e8daf2-39f0-4806-ba80-d6b61e42ef0a","message":"Transport: engine IPC failed; inspect the original request before retrying (instance 28e8daf2-39f0-4806-ba80-d6b61e42ef0a, request 8084555d-92a5-458c-ab44-a740ac1dcb03)","operationId":"operation-1","requestId":"8084555d-92a5-458c-ab44-a740ac1dcb03","schema":"krun.error.v1"}
+  left: String("TRANSPORT")
+ right: "WAIT_TIMEOUT"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    running_without_assembly_stays_pending_and_retries_query_the_original_operation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.54s
+
+error: test failed, to rerun pass `--test cli_operations`

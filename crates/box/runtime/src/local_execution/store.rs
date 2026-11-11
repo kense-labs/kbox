@@ -6,9 +6,9 @@ use std::sync::Weak;
 use std::sync::{Arc, Mutex};
 
 use kbox_core::{
-    ExecutionGeneration, ExecutionId, ExecutionManagerError,
-    ExecutionManagerResult, ExecutionResourceUpdate, ExecutionSnapshotId, KillExecutionOptions,
-    OperationId, RestartExecutionOptions,
+    ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
+    ExecutionResourceUpdate, ExecutionSnapshotId, KillExecutionOptions, OperationId,
+    RestartExecutionOptions,
 };
 
 use super::record::{
@@ -390,6 +390,17 @@ impl LocalExecutionManager {
         to: ManagedExecutionState,
         update: RuntimeUpdate,
     ) -> ExecutionManagerResult<BoxRecord> {
+        if !matches!(
+            to,
+            ManagedExecutionState::Starting
+                | ManagedExecutionState::Running
+                | ManagedExecutionState::Killing
+                | ManagedExecutionState::Stopped
+                | ManagedExecutionState::Failed
+                | ManagedExecutionState::Removing
+        ) {
+            record.require_claimed()?;
+        }
         let store = self.store.clone();
         let execution_id = execution_id(record)?;
         let generation = generation(record, &execution_id)?;

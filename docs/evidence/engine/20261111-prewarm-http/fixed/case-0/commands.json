@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "http-probe",
+      "--memory",
+      "512m",
+      "--entrypoint",
+      "/bin/sleep",
+      "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+      "--",
+      "infinity"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+      "exec",
+      "--timeout",
+      "220",
+      "http-probe",
+      "--",
+      "python3",
+      "-c",
+      "import hashlib, json, urllib.request\nexpected = b'ae0e943b0bf44019a83d0494dc289537'\nurl = 'http://127.0.0.1:49485'\nsuccesses, failures = 0, []\nfor index in range(256):\n    try:\n        with urllib.request.urlopen(url, timeout=2) as response:\n            body = response.read()\n            if response.status == 200 and body == expected:\n                successes += 1\n            else:\n                failures.append(dict(index=index, status=response.status, length=len(body), sha256=hashlib.sha256(body).hexdigest()))\n    except Exception as error:\n        failures.append(dict(index=index, error=type(error).__name__))\nprint(json.dumps(dict(requests=256, exactBodies=successes, failures=failures)))"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+      "rm",
+      "-f",
+      "69ef0ee8-39c0-4755-83d0-b8f44b19f6b1"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

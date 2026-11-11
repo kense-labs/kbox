@@ -412,6 +412,7 @@ fn extend_capability_case_ids(
                 case_ids.insert(
                     match kind {
                         MountKind::Artifact => "MOUNT-ARTIFACT-BEHAVIOR",
+                        MountKind::Directory => "MOUNT-DIRECTORY-LIVE-BINDING",
                         MountKind::Volume => "MOUNT-VOLUME-PERSISTENCE",
                         MountKind::Tmpfs => "MOUNT-TMPFS-ISOLATION",
                     }

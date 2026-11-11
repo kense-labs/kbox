@@ -1,0 +1,14 @@
+{
+  "cwd": "/Users/roylin/code/kense/kbox",
+  "argv": [
+    "python3",
+    "scripts/e2e-engine/native_smoke.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/client-prefix-4e8bbe814b13418d8e4c626d09a95a7c/bin/kbox",
+    "--image-store",
+    "docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--output",
+    "docs/evidence/engine/20261111-client-oci-regression"
+  ],
+  "prefix": "/Users/roylin/code/kense/krun/.build/client-prefix-4e8bbe814b13418d8e4c626d09a95a7c"
+}

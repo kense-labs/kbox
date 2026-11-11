@@ -1,0 +1,143 @@
+{
+  "harness": "aster",
+  "image": "aster-acp:e2e-73b1d5b",
+  "digest": "sha256:825ba99ff6d5620053e22d1ebb18b8d40ac0ab02ae8b9528b67f32b9c8d7a7ed",
+  "image_unchanged": true,
+  "accepted": false,
+  "summary": {
+    "pass": 6,
+    "fail": 3,
+    "blocked": 0,
+    "skip": 0
+  },
+  "elapsed_s": 454.449,
+  "cases": [
+    {
+      "id": "P4-1",
+      "status": "PASS",
+      "message": "cold complex coding task with independent host oracle",
+      "detail": {
+        "independent_guest_exec": true,
+        "elapsed_s": 105.452,
+        "tool_calls": 16,
+        "updates": 741
+      },
+      "ts": "2026-11-10T09:22:16Z"
+    },
+    {
+      "id": "P4-3",
+      "status": "PASS",
+      "message": "125-second externally paced batch task stays in flight to completion",
+      "detail": {
+        "batches": 12,
+        "elapsed_s": 176.206,
+        "tool_calls": 4,
+        "updates": 1082
+      },
+      "ts": "2026-11-10T09:26:40Z"
+    },
+    {
+      "id": "P4-4",
+      "status": "PASS",
+      "message": "external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling",
+      "detail": {
+        "read_only_supported": false,
+        "read_only_error": "unsupported mount rejected before boot",
+        "permissions": 20,
+        "utf8_sha256": "e39944d343173bd06c1bf5057fa99e6986b6f822d6e352209c89e6e30769f1cb"
+      },
+      "ts": "2026-11-10T09:27:14Z"
+    },
+    {
+      "id": "P4-2",
+      "status": "PASS",
+      "message": "six tool-using turns retain context and evolving requirements",
+      "detail": {
+        "turns": [
+          {
+            "elapsed_s": 105.452,
+            "tool_calls": 16,
+            "updates": 741
+          },
+          {
+            "elapsed_s": 24.122,
+            "tool_calls": 2,
+            "updates": 260
+          },
+          {
+            "elapsed_s": 33.52,
+            "tool_calls": 2,
+            "updates": 315
+          },
+          {
+            "elapsed_s": 30.29,
+            "tool_calls": 3,
+            "updates": 291
+          },
+          {
+            "elapsed_s": 176.206,
+            "tool_calls": 4,
+            "updates": 1082
+          },
+          {
+            "elapsed_s": 34.298,
+            "tool_calls": 2,
+            "updates": 370
+          }
+        ],
+        "total_tool_calls": 29
+      },
+      "ts": "2026-11-10T09:27:14Z"
+    },
+    {
+      "id": "P4-5",
+      "status": "PASS",
+      "message": "named-volume session history restores in a fresh MicroVM",
+      "detail": {
+        "session_id": "7f9498ad-9524-445e-879a-fb44be72a74d",
+        "cold_pid": 17406,
+        "warm_pid": 20391,
+        "history_recalled_without_file_tools": true,
+        "restore_method": "session/load",
+        "pooled": false
+      },
+      "ts": "2026-11-10T09:27:35Z"
+    },
+    {
+      "id": "P4-9",
+      "status": "PASS",
+      "message": "EOF, pool, boxes, socket and named volume clean up",
+      "detail": {
+        "errors": []
+      },
+      "ts": "2026-11-10T09:27:58Z"
+    },
+    {
+      "id": "P4-6",
+      "status": "FAIL",
+      "message": "concurrent sessions keep context and cancellation independent",
+      "detail": {
+        "reason": "cancel returned before tool-result drain"
+      },
+      "ts": "2026-11-10T09:27:58Z"
+    },
+    {
+      "id": "P4-7",
+      "status": "FAIL",
+      "message": "cancel a running process tree, prevent late writes, then recover",
+      "detail": {
+        "reason": "cancel returned before tool-result drain"
+      },
+      "ts": "2026-11-10T09:27:58Z"
+    },
+    {
+      "id": "P4-8",
+      "status": "FAIL",
+      "message": "invalid, conflicting and denied operations fail closed",
+      "detail": {
+        "reason": "cancel returned before tool-result drain"
+      },
+      "ts": "2026-11-10T09:27:58Z"
+    }
+  ]
+}

@@ -43,8 +43,22 @@ __pycache__/
 
 # E2E isolated K_HOME trees and pool sockets (keep OUTCOME/results only).
 docs/evidence/**/k-home/
+docs/evidence/**/home/
+docs/evidence/**/kbox-home/
+docs/evidence/**/krun-home/
+docs/evidence/**/runtime-prefix/
+docs/evidence/**/中文 home with spaces/
+docs/evidence/**/deepseek-mcp/data/
+docs/evidence/**/.aster/
+docs/evidence/**/.codex/
+docs/evidence/**/.dsh/
+docs/evidence/engine/**/krun
+docs/evidence/**/native-client
 docs/evidence/**/*.sock
 docs/evidence/**/rootfs*/
+docs/evidence/**/*.tar
+docs/evidence/**/*.ext4
+docs/evidence/**/*.bin
 
 # Generated artifacts: the WorkBuddy desktop agent's repo-local memory and
 # the T01 harness output directory.

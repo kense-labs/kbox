@@ -42,8 +42,8 @@ if e2e_wait_pool_idle "$WORK/nokey.sock" 90; then
   else
     e2e_record_result "P2-3" "PASS" "prompt/session failed closed without DEEPSEEK_API_KEY"
   fi
-  exec 3>&- 2>/dev/null || true
-  exec 4>&- 2>/dev/null || true
+  exec 3>&- || true
+  exec 4>&- || true
   kill "$NOKEY_ACP" 2>/dev/null || true
   wait "$NOKEY_ACP" 2>/dev/null || true
 else
@@ -73,13 +73,14 @@ cleanup() {
 trap cleanup EXIT
 
 "$KBOX" volume create "$VOL_NAME" >/dev/null 2>&1 || true
+VOL_SOURCE="$("$KBOX" volume inspect "$VOL_NAME" | jq -er '.[0].Mountpoint')"
 
 "$KBOX" pool start --deferred --prewarm \
   --socket "$POOL_SOCKET" --image "$IMAGE" \
   --size 1 --max 1 --ttl 0 \
   -u root \
   -v "$WORK/host-workspace:/workspace" \
-  -v "${VOL_NAME}:/data" \
+  -v "${VOL_SOURCE}:/data" \
   -e DEEPSEEK_API_KEY \
   >"$WORK/pool.log" 2>&1 &
 POOL_PID=$!
@@ -117,11 +118,10 @@ wait "$ACP_PID" 2>/dev/null || true
 if [[ $prompt_rc -eq 0 ]] && grep -Fq "$MARKER_CONTENT" <<<"$REPLY"; then
   e2e_record_result "P2-1" "PASS" "workspace marker echoed"
 else
-  # Agent may lack file tools; do not pretend coverage.
-  e2e_record_result "P2-1" "SKIP" "agent did not echo marker (tools/capability limited); mount was configured"
+  e2e_record_result "P2-1" "FAIL" "agent did not read the mounted host marker"
 fi
 
-# P2-2: volume exists; persistence via second attach file tools is best-effort SKIP if no tools.
+# P2-2 checks registration; P4-5 proves cross-process file and history persistence.
 if "$KBOX" volume ls 2>/dev/null | grep -Fq "$VOL_NAME"; then
   e2e_record_result "P2-2" "PASS" "named volume $VOL_NAME present (cross-attach file persistence not asserted without tools)"
 else

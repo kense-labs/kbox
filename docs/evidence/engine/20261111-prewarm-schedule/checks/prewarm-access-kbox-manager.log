@@ -1,0 +1,584 @@
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+warning: unused import: `ExecutionBoundary`
+    --> crates/box/runtime/src/kbox_contract_driver/lifecycle.rs:1142:44
+     |
+1142 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
+     |                                            ^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::Path`
+ --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:1:5
+  |
+1 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `RuntimeFeature`
+ --> crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:8:20
+  |
+8 |     RestartPolicy, RuntimeFeature, RuntimeInspection, RuntimeUnitClass, RuntimeUnitState,
+  |                    ^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs:8:53
+  |
+8 |     BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
+  |                                                     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/remove.rs:217:44
+    |
+217 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionManager,
+    |                                            ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/resources.rs:654:54
+    |
+654 |         CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, ExecutionSnapshotId,
+    |                                                      ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/vm_backend_tests.rs:10:61
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+   |                                                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests/owned_vm_close.rs:10:61
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+   |                                                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/tests/attached_vm_identity.rs:7:40
+  |
+7 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, OperationId, VmHandler, VmMetrics,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests.rs:16:5
+   |
+16 |     ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
+   |     ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `HttpBody`
+ --> crates/box/runtime/src/oci/registry/push_tests.rs:4:24
+  |
+4 | use axum::body::{Body, HttpBody};
+  |                        ^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:7:50
+  |
+7 |     CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode, OperationId,
+  |                                                  ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/api.rs:252:9
+    |
+252 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/reconciler.rs:709:9
+    |
+709 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionManager`
+  --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:13:30
+   |
+13 | use kbox_core::{ExecRequest, ExecutionManager, ExecutionSessionManager, HostServiceSocket};
+   |                              ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::vmm::VmHandler`
+ --> crates/box/runtime/src/local_execution/tests/owned_vm_jobs.rs:5:5
+  |
+5 | use crate::vmm::VmHandler;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `fixture`
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/recovery_profile.rs:401:5
+    |
+401 |     fixture: &BoxRuntimeConformanceFixture,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fixture`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `record`
+    --> crates/box/runtime/src/local_execution/oci_backend_tests.rs:1594:9
+     |
+1594 |         record: &BoxRecord,
+     |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_record`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1156:13
+     |
+1156 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1170:13
+     |
+1170 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1201:13
+     |
+1201 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: variable does not need to be mutable
+ --> crates/box/runtime/src/local_execution/tests/stop_ownership.rs:8:9
+  |
+8 |     let mut create = request("stop-unready-owner");
+  |         ----^^^^^^
+  |         |
+  |         help: remove this `mut`
+  |
+  = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/runtime/src/local_execution/tests.rs:434:9
+    |
+434 |     let mut request = request(external_id);
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1293:9
+     |
+1293 |     let mut create = request("cold-pause-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1321:9
+     |
+1321 |     let mut create = request("warm-pause-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1358:9
+     |
+1358 |     let mut create = request("warm-resume-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1400:9
+     |
+1400 |     let mut create = request("observe-pausing-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1443:9
+     |
+1443 |     let mut create = request("observe-resuming-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1487:9
+     |
+1487 |     let mut create = request("observe-pausing-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1532:9
+     |
+1532 |     let mut create = request("observe-killing-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1569:9
+     |
+1569 |     let mut create = request("observe-running-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1599:9
+     |
+1599 |     let mut create = request("warm-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1637:9
+     |
+1637 |     let mut create = request("warm-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1679:9
+     |
+1679 |     let mut create = request("cold-pause-stopped-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1717:9
+     |
+1717 |     let mut create = request("cold-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1755:9
+     |
+1755 |     let mut create = request("cold-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1796:9
+     |
+1796 |     let mut create = request("cold-resume-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1971:9
+     |
+1971 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1997:9
+     |
+1997 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2025:9
+     |
+2025 |     let mut create = request("sandbox-exit-status");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2051:9
+     |
+2051 |     let mut create = request("sandbox-signaled-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2079:9
+     |
+2079 |     let mut create = request("already-stopped-no-invent");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2112:9
+     |
+2112 |     let mut create = request("kill-not-found-no-user-stop");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2203:9
+     |
+2203 |     let mut create = request("option-aware-kill");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `validate_mapping_set` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:43:4
+   |
+43 | fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Result<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_rootfs_ownership_with_preference` is never used
+   --> crates/box/runtime/src/host_fs/rootfs.rs:733:15
+    |
+733 | pub(crate) fn prepare_rootfs_ownership_with_preference(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `TMPFS_MAGIC` is never used
+  --> crates/box/runtime/src/kbox_contract_driver/secret.rs:28:7
+   |
+28 | const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
+   |       ^^^^^^^^^^^
+
+warning: field `private_artifact_root` is never read
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:255:5
+    |
+245 | pub(super) struct BoxRuntimeConformanceFixture {
+    |                   ---------------------------- field in this struct
+...
+255 |     private_artifact_root: PathBuf,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `private_artifact_source` and `private_artifact_root` are never used
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:404:19
+    |
+263 | impl BoxRuntimeConformanceFixture {
+    | --------------------------------- methods in this implementation
+...
+404 |     pub(super) fn private_artifact_source(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^
+...
+408 |     pub(super) fn private_artifact_root(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `insert` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/test_support.rs:355:19
+    |
+354 | impl DriverFakeSecretMaterializer {
+    | --------------------------------- method in this implementation
+355 |     pub(super) fn insert(&self, reference: impl Into<String>, value: impl Into<Vec<u8>>) {
+    |                   ^^^^^^
+
+warning: methods `drive_cold_paused_snapshot`, `pause_for_snapshot`, and `capture_snapshot_rootfs` are never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:233:14
+    |
+ 24 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+233 |     async fn drive_cold_paused_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+282 |     async fn pause_for_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^
+...
+333 |     async fn capture_snapshot_rootfs(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `execution_state` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:524:4
+    |
+524 | fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<ExecutionState> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `build_snapshot_metadata` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:795:4
+    |
+795 | fn build_snapshot_metadata(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `snapshot_error` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:832:4
+    |
+832 | fn snapshot_error(
+    |    ^^^^^^^^^^^^^^
+
+warning: fields `store`, `home_dir`, and `lifecycle` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:78:9
+   |
+76 |     StartSelected {
+   |     ------------- fields in this variant
+77 |         record: BoxRecord,
+78 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+79 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+80 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+
+warning: fields `store`, `home_dir`, `lifecycle`, and `physical_budget` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:84:9
+   |
+82 |     StopSelected {
+   |     ------------ fields in this variant
+83 |         record: BoxRecord,
+84 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+85 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+86 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+87 |         physical_budget: kbox_core::vmm::OwnedCloseBudget,
+   |         ^^^^^^^^^^^^^^^
+
+warning: fields `execution_id` and `generation` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:90:9
+   |
+89 |     ReconcileRetainedRemove {
+   |     ----------------------- fields in this variant
+90 |         execution_id: ExecutionId,
+   |         ^^^^^^^^^^^^
+91 |         generation: ExecutionGeneration,
+   |         ^^^^^^^^^^
+
+warning: field `completion` is never read
+  --> crates/box/runtime/src/local_execution/store.rs:98:5
+   |
+97 | pub struct OwnedLifecycleOutcome {
+   |            --------------------- field in this struct
+98 |     completion: OwnedLifecycleCompletion,
+   |     ^^^^^^^^^^
+
+warning: methods `boot_original_component` and `cleanup_original_anonymous` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2250:14
+     |
+2120 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+...
+2250 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2369 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sandbox_request` is never used
+   --> crates/box/runtime/src/local_execution/tests.rs:433:4
+    |
+433 | fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
+    |    ^^^^^^^^^^^^^^^
+
+warning: field `prefer_image_rootfs_metadata` is never read
+   --> crates/box/runtime/src/vm/mod.rs:210:16
+    |
+178 | pub(crate) struct BoxLayout {
+    |                   --------- field in this struct
+...
+210 |     pub(crate) prefer_image_rootfs_metadata: bool,
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `boot_original_owned` is never used
+  --> crates/box/runtime/src/vm/boot.rs:22:25
+   |
+ 5 | impl VmManager {
+   | -------------- method in this implementation
+...
+22 |     pub(crate) async fn boot_original_owned(
+   |                         ^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_recorded_sandbox_runtime_in` is never used
+   --> crates/box/runtime/src/vm/reap.rs:686:15
+    |
+686 | pub(crate) fn cleanup_recorded_sandbox_runtime_in(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `kbox-runtime` (lib test) generated 64 warnings (run `cargo fix --lib -p kbox-runtime --tests` to apply 42 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.28s
+     Running unittests src/lib.rs (target/debug/deps/kbox_runtime-6ccf01207afc896d)
+
+running 75 tests
+test local_execution::tests::create_rejects_unsupported_microvm_security_before_store_or_backend ... ok
+test local_execution::tests::create_preserves_complete_caller_record_policy ... ok
+test local_execution::tests::a_different_operation_cannot_take_over_an_in_progress_restart ... ok
+test local_execution::tests::create_persists_trusted_identity_and_returns_running_lease ... ok
+test local_execution::tests::ambiguous_pause_error_uses_backend_evidence_and_publishes_success ... ok
+test local_execution::tests::abandoned_starting_claim_force_kills_to_stopped_then_removes ... ok
+test local_execution::tests::first_start_initializes_health_state_from_persisted_policy ... ok
+test local_execution::tests::create_reserves_without_start_and_start_is_generation_fenced ... ok
+test local_execution::tests::failed_pause_rolls_back_without_changing_backend_or_generation ... ok
+test local_execution::tests::concurrent_retries_of_one_restart_start_the_new_generation_once ... ok
+test local_execution::tests::ambiguous_restart_start_error_uses_backend_evidence ... ok
+test local_execution::tests::managed_record_rejects_invalid_microvm_vcpu_count ... ok
+test local_execution::tests::crashed_generation_during_warm_pause_publishes_failed_not_pausing ... ok
+test local_execution::tests::already_stopped_kill_does_not_invent_signal_exit_code ... ok
+test local_execution::tests::concurrent_create_calls_start_one_internal_execution ... ok
+test local_execution::tests::crashed_generation_during_cold_pause_publishes_failed_not_paused ... ok
+test local_execution::tests::failed_filesystem_only_pause_rolls_back_to_the_running_generation ... ok
+test local_execution::tests::filesystem_only_pause_and_resume_publish_ambiguous_backend_successes ... ok
+test local_execution::tests::filesystem_only_pause_restarts_the_runtime_and_preserves_generation_fencing ... ok
+test local_execution::tests::failed_restart_start_is_terminal_at_the_new_generation ... ok
+test local_execution::tests::failed_filesystem_only_resume_remains_retryable_without_advancing_generation ... ok
+test local_execution::tests::inspect_retires_abandoned_starting_claim_when_backend_is_absent ... ok
+test local_execution::tests::legacy_snapshot_without_image_config_is_rejected_before_reservation ... ok
+test local_execution::tests::inspect_does_not_retire_restart_starting_when_backend_is_absent ... ok
+test local_execution::tests::inspection_persists_an_external_terminal_observation ... ok
+test local_execution::tests::legacy_creating_reservation_remains_recoverable_after_upgrade ... ok
+test local_execution::tests::kill_is_generation_fenced_and_idempotent ... ok
+test local_execution::tests::observe_stable_running_stopped_without_exit_stays_stopped ... ok
+test local_execution::tests::observe_pausing_creating_projects_creating_not_running ... ok
+test local_execution::tests::not_found_kill_does_not_invent_stopped_by_user ... ok
+test local_execution::tests::observe_pausing_stopped_without_exit_publishes_failed_not_clean_stopped ... ok
+test local_execution::tests::microvm_snapshot_reconcile_refuses_sandbox_only_publish ... ok
+test local_execution::tests::observe_killing_stopped_with_exit_attributes_stopped_by_user ... ok
+test local_execution::tests::observe_resuming_creating_projects_creating_not_paused ... ok
+test local_execution::tests::option_aware_kill_derives_exit_code_when_backend_cannot_reap_it ... ok
+test local_execution::tests::option_aware_kill_persists_intent_and_replays_it_after_a_crash ... ok
+test local_execution::tests::option_aware_kill_persists_authoritative_backend_exit_code ... ok
+test local_execution::tests::inspection_releases_resources_after_an_external_terminal_observation ... ok
+test local_execution::tests::microvm_cold_paused_snapshot_reconcile_restores_paused_not_failed ... ok
+test local_execution::tests::microvm_cold_paused_snapshot_reconcile_restores_paused_without_live_handle ... ok
+test local_execution::tests::process_session_inherits_environment_and_enforces_persisted_security ... ok
+test local_execution::tests::repeated_create_rejects_caller_policy_drift ... ok
+test local_execution::tests::reconciliation_reports_created_reservation_without_starting_it ... ok
+test local_execution::tests::ordinary_start_never_revives_a_terminal_managed_execution ... ok
+test local_execution::tests::pause_and_resume_are_generation_fenced_and_persist_policy ... ok
+test local_execution::tests::prewarm::stopping_a_reserved_environment_fences_a_late_boot_worker ... ok
+test local_execution::tests::repeated_create_is_idempotent_and_request_drift_conflicts ... ok
+test local_execution::tests::reconciliation_completes_pause_after_backend_side_effect ... ok
+test local_execution::tests::prewarm::prewarm_cannot_run_hooks_or_mutate_an_unclaimed_environment ... ok
+test local_execution::tests::prewarm::concurrent_prewarm_reservation_and_claim_have_one_canonical_winner ... ok
+test local_execution::tests::restart_of_an_unstarted_reservation_starts_generation_two_without_kill ... ok
+test local_execution::tests::prewarm::prewarm_requires_exact_scope_resources_mounts_and_a_live_provider ... ok
+test local_execution::tests::reconcile_finishes_a_crashed_filesystem_only_pause ... ok
+test local_execution::tests::prewarm::prewarm_claim_rebinds_the_same_running_vm_once_and_fences_the_old_generation ... ok
+test local_execution::tests::restart_observation_with_exact_exit_code_completes_as_stopped ... ok
+test local_execution::tests::startup_completion_with_exact_exit_code_is_persisted_as_stopped ... ok
+test local_execution::tests::reconcile_publishes_a_cold_resume_started_before_record_commit ... ok
+test local_execution::tests::restart_completion_with_exact_exit_code_is_persisted_as_stopped ... ok
+test local_execution::tests::stale_restart_generation_has_no_backend_side_effects ... ok
+test local_execution::tests::restart_recovers_after_generation_advance_before_backend_start ... ok
+test local_execution::tests::restart_persists_stop_options_and_rejects_retry_drift ... ok
+test local_execution::tests::restart_recovers_when_kill_succeeded_but_its_response_was_lost ... ok
+test local_execution::tests::startup_reconciliation_reports_the_secondary_inspection_error ... ok
+test local_execution::tests::startup_reconciliation_persists_an_exact_terminal_result_as_stopped ... ok
+test local_execution::tests::restart_running_execution_advances_generation_once_and_is_idempotent ... ok
+test local_execution::tests::stop_ownership::stop_failure_without_a_started_process_can_retire_a_creation ... ok
+test local_execution::tests::startup_reconciliation_publishes_an_already_started_backend_once ... ok
+test local_execution::tests::stop_ownership::stop_failure_preserves_owner_if_backend_becomes_unready ... ok
+test local_execution::tests::startup_reconciliation_restarts_a_claim_without_backend_evidence ... ok
+test local_execution::tests::stopped_generation_with_exit_during_cold_pause_publishes_stopped_not_paused ... ok
+test local_execution::tests::vanished_runtime_during_warm_pause_publishes_failed_not_pausing ... ok
+test local_execution::tests::terminal_generation_during_cold_resume_publishes_stopped_not_paused ... ok
+test local_execution::tests::terminal_generation_during_warm_resume_publishes_stopped_not_resuming ... ok
+test local_execution::tests::vanished_runtime_during_warm_resume_publishes_failed_not_resuming ... ok
+test local_execution::tests::restart_supports_paused_stopped_and_failed_executions ... ok
+
+test result: ok. 75 passed; 0 failed; 0 ignored; 0 measured; 2092 filtered out; finished in 2.44s
+

@@ -156,6 +156,8 @@ xz2 = "0.1"
 kbox-contract = { workspace = true }
 
 [dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+tracing-subscriber = { workspace = true }
 rand-legacy = { package = "rand", version = "0.8" }
 rand = { workspace = true }
 bytes = { workspace = true }

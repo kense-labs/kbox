@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "platform": "Darwin",
+  "imageDigest": "sha256:34b3b36b8ff0c320f74551c44593112c20cb09e937684771f77d96845edbfeb9",
+  "fileProbe": {
+    "bytes": 1048576,
+    "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+  },
+  "engineId": "916f5012-720a-4a6b-9a2d-2702e60e8478",
+  "operationId": "f5287a52-94a4-443f-b3d6-08cf905f4e57",
+  "sameExecutionAfterRestart": true,
+  "ordinaryOciWithoutAcp": true,
+  "zeroPrivateExecutions": true
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "command": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "inspect",
+      "kbox_contract-volume-725d7a7eafc0afc411eff358d6bbf04f3b6a531ffe89996d87bd6a295f025778"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "exec",
+      "4ff39f30-a819-45b3-b46b-fa0d0164520b",
+      "--",
+      "python3",
+      "-c",
+      "from pathlib import Path; print(int(Path('/tmp/stream-produced').exists()))"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "rm",
+      "kbox_contract-volume-725d7a7eafc0afc411eff358d6bbf04f3b6a531ffe89996d87bd6a295f025778"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

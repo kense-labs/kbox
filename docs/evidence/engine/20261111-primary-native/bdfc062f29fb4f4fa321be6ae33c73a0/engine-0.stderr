@@ -1,0 +1,4 @@
+2026-11-10T17:01:59.492318Z  INFO Using guest-native ext4 rootfs provider
+2026-11-10T17:01:59.492914Z  INFO vm_boot{box_id=305bf1f2-82af-40f9-b0fe-56507fd9e697}: Booting VM box_id=305bf1f2-82af-40f9-b0fe-56507fd9e697
+2026-11-10T17:01:59.493968Z  INFO vm_boot{box_id=305bf1f2-82af-40f9-b0fe-56507fd9e697}:prepare_layout: Pulling OCI image from registry reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110
+2026-11-10T17:01:59.528891Z  INFO vm_boot{box_id=305bf1f2-82af-40f9-b0fe-56507fd9e697}:prepare_layout: Using cached image requested_reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110 matched_reference=krun-coding-fixture:0.1.0 digest=sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110

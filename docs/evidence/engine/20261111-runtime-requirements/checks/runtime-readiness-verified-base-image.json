@@ -1,0 +1,5 @@
+{
+  "image": "docker.io/library/krun-base@sha256:134b3a0657c0737632edfa0581c4fd9d845f5c9a95b777bb0034874b853e1d9e",
+  "reference": "krun-base:requirements-verified-e38b63fbb742",
+  "guestSha256": "4df29dd4f409cd0be554f7c628a6601cccc316103842a650665ab56fee55df4b"
+}

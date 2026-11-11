@@ -1,0 +1,20 @@
+✔ reducer totals credits and debits and deduplicates identical ids (0.710208ms)
+✔ conflicting records sharing an id invalidate the whole input (0.17925ms)
+✔ integer arithmetic stays exact near the safe-integer boundary (0.127375ms)
+✔ invalid fields and malformed JSON are rejected (0.223167ms)
+✔ --account filtering changes accounts and net but not event counts (0.0915ms)
+✔ accounts are sorted by Unicode code point (0.106833ms)
+✔ blank lines are ignored when parsing JSONL (0.06275ms)
+✔ CLI writes the expected JSON and creates parent directories (12.283208ms)
+✔ CLI --account filters output while keeping whole-input counts (11.965875ms)
+✔ CLI preserves an existing output when input is malformed (13.677375ms)
+✔ CLI preserves an existing output on invalid or conflicting events (35.955375ms)
+✔ CLI rejects missing arguments and unknown options without writing output (33.69775ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 134.445667

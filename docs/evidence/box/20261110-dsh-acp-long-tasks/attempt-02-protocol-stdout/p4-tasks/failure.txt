@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/cases/p4_tasks.py", line 162, in main
+    cold.initialize()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 115, in initialize
+    result = self.request("initialize", {"protocolVersion": 1, "clientCapabilities": {}}, 180)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 112, in request
+    return self.wait(self.send(method, params), timeout)
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 105, in wait
+    self.pump(min(0.25, max(0, deadline - time.monotonic())))
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 79, in pump
+    raise message
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-dsh-acp/lib/acp_client.py", line 40, in _read
+    message = json.loads(line)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)

@@ -1,0 +1,7 @@
+Creating box native-unit-974feddf2e4d (6c8d7a96ecef)...
+kbox run: still creating native-unit-974feddf2e4d; image is ready and runtime startup has taken 18s
+Box native-unit-974feddf2e4d (6c8d7a96ecef) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Retained logs for removed box native-unit-974feddf2e4d at /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-frame-pressure-guest/974feddf2e4d48e489375ad5956545e1/home/removed-logs/6c8d7a96-ecef-48c6-ba0e-201eb8c481dc. View with: kbox logs native-unit-974feddf2e4d
+Box native-unit-974feddf2e4d exited and was removed.

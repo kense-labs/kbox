@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/krun/.build/prewarm-oci-http-probe.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--image",
+    "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+    "--count",
+    "256",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-http/fixed"
+  ],
+  "cwd": "/Users/roylin/code/kense/krun"
+}

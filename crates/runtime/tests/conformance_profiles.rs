@@ -385,6 +385,14 @@ async fn conf_profile_005_requirements_expand_every_advertised_behavior() {
             "MOUNT-VOLUME-PERSISTENCE".into(),
         ])
     );
+    let mut directories = capabilities.clone();
+    directories.mount_kinds.push(MountKind::Directory);
+    assert!(
+        runtime_profile_requirements(&directories, RuntimeConformanceProfile::Mounts)
+            .unwrap()
+            .case_ids
+            .contains("MOUNT-DIRECTORY-LIVE-BINDING")
+    );
 
     let health = runtime_profile_requirements(&capabilities, RuntimeConformanceProfile::Health)
         .expect("health requirements");

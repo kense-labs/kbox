@@ -585,6 +585,9 @@ fn require_inactive_for_network_change(
     record: &crate::state::BoxRecord,
     action: &str,
 ) -> Result<(), String> {
+    record
+        .require_claimed()
+        .map_err(|error| error.to_string())?;
     if !crate::status::is_active(record) {
         return Ok(());
     }

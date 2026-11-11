@@ -21,11 +21,14 @@ pub mod audit;
 pub mod box_record;
 pub mod box_state;
 pub mod cache;
+#[cfg(all(feature = "pool", any(target_os = "linux", target_os = "macos")))]
+pub mod engine;
 pub(crate) mod file_lock;
 pub mod fs;
 pub mod grpc;
 pub mod hardware_vm;
 pub mod host_check;
+pub mod host_fs;
 pub mod host_sockets;
 #[cfg(all(feature = "vm", any(target_os = "linux", target_os = "macos")))]
 pub mod kbox_contract_driver;
@@ -34,14 +37,13 @@ pub mod log;
 pub mod managed_execution_store;
 pub mod network;
 pub mod oci;
+pub mod oci_portable_spec;
 pub mod process;
 mod process_path;
 pub mod prom;
 pub mod resize;
 mod resolved_image;
 pub mod rootfs;
-pub mod host_fs;
-pub mod oci_portable_spec;
 pub mod snapshot;
 mod store_io;
 #[cfg(unix)]
@@ -69,10 +71,10 @@ pub use audit::{read_audit_log, AuditLog, AuditQuery};
 
 #[cfg(all(feature = "vm", any(target_os = "linux", target_os = "macos")))]
 pub use kbox_contract_driver::{
-    BoxArtifactPort, BoxArtifactPortError, BoxHostServiceResolver, BoxRegistryCredential,
-    BoxRuntimeDriver, BoxRuntimeDriverConfig, BoxRuntimeSevSnpConfig,
-    BoxSecretEnvironmentProjection, BoxSecretMaterial, BoxSecretMaterializationError,
-    BoxSecretMaterializer, BoxTransientSecretStore,
+    BoxArtifactPort, BoxArtifactPortError, BoxDirectoryPort, BoxDirectoryPortError,
+    BoxHostServiceResolver, BoxRegistryCredential, BoxRuntimeDriver, BoxRuntimeDriverConfig,
+    BoxRuntimeSevSnpConfig, BoxSecretEnvironmentProjection, BoxSecretMaterial,
+    BoxSecretMaterializationError, BoxSecretMaterializer, BoxTransientSecretStore,
 };
 
 // Canonical local execution metadata
@@ -87,10 +89,11 @@ pub use local_execution::{
     acquire_execution_lifecycle_lock, ExecutionLifecycleLock, FreshOwnerAdmission,
     LocalExecutionBackend, LocalExecutionBackendRouter, LocalExecutionHandle,
     LocalExecutionManager, LocalExecutionObservation, LocalExecutionOwnerFacts,
-    LocalExecutionResourcePlan, LocalExecutionTermination, OciBundlePreparationContext,
-    OciBundleProvider, OciLifecycleAdapter, OciLocalExecutionBackend, OciMigrationPolicy,
-    OciPreparedExecution, OciRuntimeBinding, OciRuntimeEndpoint, OciRuntimeLaunch,
-    OwnedLifecycleOutcome, OwnedLifecycleRequest, OCI_RUNTIME_BINDING_SCHEMA_VERSION,
+    LocalExecutionResourcePlan, LocalExecutionTermination, ManagedPrewarm,
+    OciBundlePreparationContext, OciBundleProvider, OciLifecycleAdapter, OciLocalExecutionBackend,
+    OciMigrationPolicy, OciPreparedExecution, OciRuntimeBinding, OciRuntimeEndpoint,
+    OciRuntimeLaunch, OwnedLifecycleOutcome, OwnedLifecycleRequest,
+    OCI_RUNTIME_BINDING_SCHEMA_VERSION,
 };
 
 /// Detach MicroVM `:ro` virtio-fs host RO-bind aliases under `box_dir/.filemounts`.
@@ -127,7 +130,6 @@ pub fn cleanup_host_netdevice_lease(
         Ok(())
     }
 }
-
 
 #[cfg(feature = "vm")]
 pub use local_execution::{

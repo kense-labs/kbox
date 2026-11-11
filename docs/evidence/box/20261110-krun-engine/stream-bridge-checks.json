@@ -1,0 +1,43 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "--lib",
+      "kbox_contract_driver::exec"
+    ],
+    "exitCode": 0,
+    "log": "process-bridge.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "exitCode": 0,
+    "log": "workspace-check-current.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "-p",
+      "kbox-cli",
+      "-p",
+      "kbox-contract",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "exitCode": 0,
+    "log": "clippy-current.log"
+  }
+]

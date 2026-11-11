@@ -1,0 +1,36 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/native-sandbox-full-oci-fb065a8b6538470fb0c21b292507db0d/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "export-raw",
+      "--network",
+      "none",
+      "--entrypoint",
+      "/bin/sleep",
+      "docker.io/library/krun-base@sha256:2c5dcac05ebc0b0e685959092dc3856453b593dd9c5ad736fef762580446d565",
+      "--",
+      "2147483647"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/native-sandbox-full-oci-fb065a8b6538470fb0c21b292507db0d/bin/kbox",
+      "inspect",
+      "export-raw"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/native-sandbox-full-oci-fb065a8b6538470fb0c21b292507db0d/bin/kbox",
+      "rm",
+      "-f",
+      "export-raw"
+    ],
+    "exitCode": 0
+  }
+]

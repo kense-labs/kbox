@@ -32,6 +32,43 @@ struct FakeArtifactPort {
     cleanups: Mutex<Vec<String>>,
 }
 
+#[async_trait]
+impl super::BoxDirectoryPort for FakeArtifactPort {
+    async fn mount_path(
+        &self,
+        _: &RuntimeUnitSpec,
+        _: &RuntimeMount,
+    ) -> Result<PathBuf, super::BoxDirectoryPortError> {
+        Err(super::BoxDirectoryPortError::Rejected(
+            "no directory granted in composition test".into(),
+        ))
+    }
+    async fn cleanup_spec(&self, _: &str) -> Result<(), super::BoxDirectoryPortError> {
+        Ok(())
+    }
+}
+
+#[tokio::test]
+async fn artifact_and_directory_ports_compose_in_either_builder_order() {
+    for directory_first in [false, true] {
+        let root = fixture_tempdir();
+        let (driver, _) = fake_driver(&root);
+        let port = Arc::new(FakeArtifactPort::default());
+        let driver = if directory_first {
+            driver
+                .with_directory_port(port.clone())
+                .with_artifact_port(port)
+        } else {
+            driver
+                .with_artifact_port(port.clone())
+                .with_directory_port(port)
+        };
+        let capabilities = driver.capabilities().await.unwrap();
+        assert!(capabilities.mount_kinds.contains(&MountKind::Artifact));
+        assert!(capabilities.mount_kinds.contains(&MountKind::Directory));
+    }
+}
+
 impl FakeArtifactPort {
     fn register_mount(&self, name: impl Into<String>, path: PathBuf) {
         self.mounts.lock().unwrap().insert(name.into(), path);

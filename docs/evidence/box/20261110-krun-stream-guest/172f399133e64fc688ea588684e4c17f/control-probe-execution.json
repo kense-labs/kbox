@@ -1,0 +1,47 @@
+{
+  "accepted": {
+    "schema": "kbox.engine.accepted.v1",
+    "engineId": "a1cd1e8e-cedf-4e53-a0d9-cb5a9c343f10",
+    "instanceId": "native-start-probe",
+    "requestId": "native-up-probe",
+    "operationId": "b8f0b3e7-9cf2-4837-8a7b-b6044a6a2773",
+    "intentRevision": 1,
+    "planDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "targetGeneration": 1,
+  "desiredState": "up",
+  "runtime": {
+    "status": "found",
+    "schema": "kbox_contract.inspection.v1",
+    "observation": {
+      "schema": "kbox_contract.observation.v4",
+      "unit_id": "engine.a1cd1e8e-cedf-4e53-a0d9-cb5a9c343f10.native-start-probe",
+      "generation": 1,
+      "spec_digest": "sha256:c47a0446a8c860185230d13043089a15ee17348cbec0fcdf5008d182487191f9",
+      "class": "service",
+      "state": "running",
+      "provider_resource_id": "5f190eaa-9cfa-4044-90d4-370b1e220dc0",
+      "provider_build": "kbox/3.2.7 isolation/microvm hypervisor/Hypervisor.framework",
+      "observed_at_ms": 1794326100291,
+      "started_at_ms": 1794326100258,
+      "finished_at_ms": null,
+      "health": null,
+      "liveness": null,
+      "outputs": [],
+      "usage": null,
+      "evidence": {
+        "provider_build": "kbox/3.2.7 isolation/microvm hypervisor/Hypervisor.framework",
+        "spec_digest": "sha256:c47a0446a8c860185230d13043089a15ee17348cbec0fcdf5008d182487191f9",
+        "semantics_profile_digest": "sha256:daf902bf6663b433b3d9a97dffefc5044661decf3b872916209348a7e439baeb",
+        "identity_attachment_digest": null,
+        "claims": {
+          "kbox.execution-generation": "1",
+          "kbox.execution-isolation": "microvm"
+        }
+      },
+      "provider_attestation": null,
+      "failure": null
+    }
+  },
+  "lastError": null
+}

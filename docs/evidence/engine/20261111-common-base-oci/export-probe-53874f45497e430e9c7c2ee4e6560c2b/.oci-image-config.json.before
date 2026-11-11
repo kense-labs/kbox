@@ -1,0 +1,41 @@
+{
+  "entrypoint": [],
+  "cmd": [
+    "sleep",
+    "2147483647"
+  ],
+  "env": [
+    [
+      "PATH",
+      "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    ],
+    [
+      "NODE_VERSION",
+      "24.22.2"
+    ],
+    [
+      "YARN_VERSION",
+      "1.22.22"
+    ],
+    [
+      "DEBIAN_FRONTEND",
+      "noninteractive"
+    ],
+    [
+      "LANG",
+      "C.UTF-8"
+    ],
+    [
+      "LC_ALL",
+      "C.UTF-8"
+    ]
+  ],
+  "working_dir": "/workspace",
+  "user": "root",
+  "exposed_ports": [],
+  "labels": {},
+  "volumes": [],
+  "stop_signal": null,
+  "health_check": null,
+  "onbuild": []
+}

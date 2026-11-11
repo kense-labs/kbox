@@ -1,0 +1,207 @@
+warning: unused import: `attachments_from_fact_tool_images`
+  --> crates/code/core/src/fact_control.rs:86:5
+   |
+86 |     attachments_from_fact_tool_images, confirmation_parked, decision_from_response,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ProgressBasis`
+  --> crates/code/core/src/goal_control/facts.rs:45:75
+   |
+45 | pub(crate) use run::{prepare_run, render_run_context, ContinuationSource, ProgressBasis};
+   |                                                                           ^^^^^^^^^^^^^
+
+warning: unreachable pattern
+   --> crates/code/core/src/workspace/manifest/scanner.rs:459:19
+    |
+458 |                 | ".aster"
+    |                   -------- matches all the relevant values
+459 |                 | ".aster"
+    |                   ^^^^^^^^ no value can reach this
+    |
+    = note: `#[warn(unreachable_patterns)]` (part of `#[warn(unused)]`) on by default
+
+warning: unreachable pattern
+  --> crates/code/core/src/workspace/source_egress.rs:65:19
+   |
+64 |                 | ".aster"
+   |                   -------- matches all the relevant values
+65 |                 | ".aster"
+   |                   ^^^^^^^^ no value can reach this
+
+warning: associated function `observed_mutations` is never used
+  --> crates/code/core/src/goal_control/facts/run/continuation.rs:26:19
+   |
+25 | impl ContinuationSource {
+   | ----------------------- associated function in this implementation
+26 |     pub(crate) fn observed_mutations(
+   |                   ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `recorded_uncertainties` is never used
+   --> crates/code/core/src/harness_loop.rs:746:19
+    |
+366 | impl MutationLedger {
+    | ------------------- method in this implementation
+...
+746 |     pub(crate) fn recorded_uncertainties(&self) -> &std::collections::BTreeSet<String> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `with_scheduler_quota_from` is never used
+   --> crates/code/core/src/llm/admission.rs:338:19
+    |
+257 | impl ModelGenerationAdmission {
+    | ----------------------------- method in this implementation
+...
+338 |     pub(crate) fn with_scheduler_quota_from(
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `uses_anthropic_messages_api` is never used
+   --> crates/code/core/src/llm/factory.rs:258:15
+    |
+258 | pub(crate) fn uses_anthropic_messages_api(provider: &str, base_url: Option<&str>) -> bool {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `lines` is never used
+   --> crates/code/core/src/porcelain.rs:498:21
+    |
+498 | pub(crate) async fn lines(root: &Path) -> Option<Vec<String>> {
+    |                     ^^^^^
+
+warning: associated function `new` is never used
+   --> crates/code/core/src/tools/types.rs:318:8
+    |
+316 | impl ModelGenerationPermitReservation {
+    | ------------------------------------- associated function in this implementation
+317 |     /// Called from the `dynamic-workflow` surface.
+318 |     fn new(permit: Arc<crate::llm::ModelGenerationPermit>) -> Self {
+    |        ^^^
+
+warning: method `with_model_generation_permit` is never used
+   --> crates/code/core/src/tools/types.rs:842:19
+    |
+406 | impl ToolContext {
+    | ---------------- method in this implementation
+...
+842 |     pub(crate) fn with_model_generation_permit(
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated functions `default_catalog` and `default_catalog_with_engine` are never used
+   --> crates/code/core/src/workspace/retrieval/catalog.rs:287:19
+    |
+153 | impl WorkspaceChunkCatalog {
+    | -------------------------- associated functions in this implementation
+...
+287 |     pub(crate) fn default_catalog() -> Arc<Self> {
+    |                   ^^^^^^^^^^^^^^^
+...
+295 |     pub(crate) fn default_catalog_with_engine(engine: WorkspaceLexicalEngine) -> Arc<Self> {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `aster-core` (lib) generated 12 warnings (run `cargo fix --lib -p aster-core` to apply 2 suggestions)
+warning: unused import: `sha2::Digest`
+  --> crates/embedding/src/hygiene.rs:10:5
+   |
+10 | use sha2::Digest as _;
+   |     ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+  --> crates/embedding/src/vector/hnsw.rs:41:13
+   |
+41 |         let mut index =
+   |             ----^^^^^
+   |             |
+   |             help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `dimension` is never read
+  --> crates/embedding/src/vector/hnsw.rs:21:5
+   |
+17 | pub struct HnswBackend {
+   |            ----------- field in this struct
+...
+21 |     dimension: usize,
+   |     ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling aster-acp v9.2.1 (/Users/roylin/code/aster/crates/code/acp)
+warning: `aster-embedding` (lib) generated 3 warnings (run `cargo fix --lib -p aster-embedding` to apply 1 suggestion)
+warning: function `remember_denies` is never used
+   --> crates/code/acp/src/agent.rs:529:4
+    |
+529 | fn remember_denies(live: &mut LiveSession) {
+    |    ^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `first_run_acl_is_created_once_and_lists_unconfigured_models` is never used
+   --> crates/code/acp/src/config.rs:948:8
+    |
+948 |     fn first_run_acl_is_created_once_and_lists_unconfigured_models() {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `successful_tool_json` is never used
+   --> crates/code/acp/src/document_read_tests.rs:293:4
+    |
+293 | fn successful_tool_json(text: &str) -> Value {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `successful_tool_json` is never used
+  --> crates/code/acp/src/document_run_tests.rs:13:4
+   |
+13 | fn successful_tool_json(text: &str) -> Value {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `successful_tool_json` is never used
+  --> crates/code/acp/src/office_read_governed_tests.rs:16:4
+   |
+16 | fn successful_tool_json(text: &str) -> Value {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: linker stderr: ld: __eh_frame section too large (max 16MB) to encode dwarf unwind offsets in compact unwind table, performance of exception handling might be affected
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `aster-acp` (lib test) generated 6 warnings
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.94s
+     Running unittests src/lib.rs (target/debug/deps/aster_acp-8048ded8e88dfafc)
+
+running 16 tests
+test agent::turn_terminal_tests::text_chunks_distinguish_model_generation_from_controller_output ... ok
+test agent::turn_terminal_tests::a_core_failure_after_visible_text_preserves_its_original_reason ... ok
+test agent::turn_terminal_tests::cancellation_after_event_eof_returns_while_retaining_the_live_worker_permit ... ok
+test agent::turn_terminal_tests::send_now_announces_the_running_prompt_before_its_text ... ok
+test agent::turn_terminal_tests::malformed_send_now_refuses_without_cancelling_or_waiting_for_the_queue ... ok
+test agent::turn_terminal_tests::permission_denial_closes_each_tool_row_once ... ok
+test agent::turn_terminal_tests::cancelled_prompt_observes_a_child_terminal_after_the_event_stream_closes ... ok
+test agent::turn_terminal_tests::cancelled_prompt_forwards_a_child_terminal_that_arrives_after_the_response ... ok
+test agent::turn_terminal_tests::completed_worker_returns_even_when_a_background_sender_stays_open ... ok
+test agent::turn_terminal_tests::cancelled_prompt_waits_for_foreground_tool_terminal ... ok
+test agent::turn_terminal_tests::completed_prompt_keeps_observing_its_live_child_after_the_response ... ok
+test agent::turn_terminal_tests::a_worker_return_without_a_terminal_is_a_failed_turn ... ok
+test agent::turn_terminal_tests::send_now_cancels_before_waiting_for_the_active_turn_permit ... ok
+test agent::turn_terminal_tests::forced_stop_is_not_a_successful_end_turn ... ok
+test agent::turn_terminal_tests::an_explicit_terminal_preserves_success_failure_and_cancellation ... ok
+test agent::turn_terminal_tests::stop_interrupts_unanswered_permissions_questions_and_forms ... FAILED
+
+failures:
+
+---- agent::turn_terminal_tests::stop_interrupts_unanswered_permissions_questions_and_forms stdout ----
+
+thread 'agent::turn_terminal_tests::stop_interrupts_unanswered_permissions_questions_and_forms' (60071281) panicked at crates/code/acp/src/agent/turn_terminal_tests.rs:1016:14:
+an unanswered host interaction must not block Stop: Elapsed(())
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    agent::turn_terminal_tests::stop_interrupts_unanswered_permissions_questions_and_forms
+
+test result: FAILED. 15 passed; 1 failed; 0 ignored; 0 measured; 510 filtered out; finished in 2.29s
+
+error: test failed, to rerun pass `-p aster-acp --lib`

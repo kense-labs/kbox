@@ -1,0 +1,8 @@
+{
+  "baselineCount": 55,
+  "currentCount": 54,
+  "newPaths": [],
+  "resolvedPaths": [
+    "box/runtime/src/lib.rs"
+  ]
+}

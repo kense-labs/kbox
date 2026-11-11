@@ -1,0 +1,69 @@
+[
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "log": "prewarm-final-workspace-check.log",
+    "exitCode": 0,
+    "seconds": 4.62
+  },
+  {
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "-p",
+      "kbox-cli",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "log": "prewarm-final-clippy.log",
+    "exitCode": 0,
+    "seconds": 7.45
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "local_execution::tests::"
+    ],
+    "log": "prewarm-final-manager-tests.log",
+    "exitCode": 0,
+    "seconds": 2.63
+  },
+  {
+    "command": [
+      "rustfmt",
+      "--edition",
+      "2021",
+      "--config",
+      "skip_children=true",
+      "--check",
+      "crates/box/runtime/src/local_execution/prewarm.rs",
+      "crates/box/runtime/src/local_execution/tests/prewarm.rs",
+      "crates/box/runtime/src/local_execution/oci_backend_tests/prewarm.rs",
+      "crates/box/runtime/src/kbox_contract_driver/prewarm.rs",
+      "crates/box/runtime/src/kbox_contract_driver/prewarm_native.rs",
+      "crates/box/runtime/src/local_execution/api.rs",
+      "crates/box/runtime/src/local_execution/mod.rs",
+      "crates/box/runtime/src/local_execution/store.rs",
+      "crates/box/runtime/src/local_execution/restart.rs",
+      "crates/box/runtime/src/box_record.rs",
+      "crates/box/runtime/src/lib.rs",
+      "crates/box/runtime/src/kbox_contract_driver/mod.rs",
+      "crates/box/runtime/src/kbox_contract_driver/lifecycle.rs"
+    ],
+    "log": "prewarm-final-scope-fmt.log",
+    "exitCode": 0,
+    "seconds": 0.06
+  }
+]

@@ -5,7 +5,18 @@ use super::*;
 impl VmManager {
     /// Boot the VM.
     pub async fn boot(&mut self) -> Result<()> {
-        self.boot_inner(None).await
+        if self.handler.read().await.is_some() || self.pending_handler.is_some() {
+            self.provider_launch = ProviderLaunch::Attempted;
+        }
+        let result = self.boot_inner(None).await;
+        if result.is_err() && self.provider_launch == ProviderLaunch::NotAttempted {
+            self.provider_launch = ProviderLaunch::FailedBeforeLaunch;
+        }
+        result
+    }
+
+    pub(crate) fn boot_failed_before_provider_start(&self) -> bool {
+        self.provider_launch == ProviderLaunch::FailedBeforeLaunch
     }
 
     pub(crate) async fn boot_original_owned(
@@ -41,6 +52,7 @@ impl VmManager {
             BoxError::StateError("original provider missing before acquisition".into())
         })?;
         *acquisition = OriginalAcquisition::Attempted;
+        self.provider_launch = ProviderLaunch::Attempted;
         let handler = provider.start(spec).await?;
         // There is no await/fallible operation between actual Ok and retention.
         self.pending_handler = Some(handler);
@@ -341,6 +353,7 @@ impl VmManager {
                                     "Ensure VmManager has a provider set before boot".into(),
                                 ),
                             })?;
+                    self.provider_launch = ProviderLaunch::Attempted;
                     let handler = provider.start(&spec).await?;
                     *self.handler.write().await = Some(handler);
                     Ok(())

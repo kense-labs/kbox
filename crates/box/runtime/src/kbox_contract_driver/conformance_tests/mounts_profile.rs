@@ -14,12 +14,75 @@ pub(super) async fn run(
     fixture: &BoxRuntimeConformanceFixture,
     client: &dyn RuntimeClient,
 ) -> Result<()> {
+    live_directory_binding(fixture, client).await?;
     #[cfg(target_os = "linux")]
     private_read_only_artifact(fixture, client).await?;
     read_only_enforcement(fixture, client).await?;
     tmpfs_isolation(fixture, client).await?;
     persistent_volume_reuse(fixture, client).await?;
     mount_cleanup(fixture, client).await
+}
+
+async fn live_directory_binding(
+    fixture: &BoxRuntimeConformanceFixture,
+    client: &dyn RuntimeClient,
+) -> Result<()> {
+    const TARGET: &str = "/mnt/r17-live-directory";
+    let nonce = uuid::Uuid::new_v4().simple().to_string();
+    let source = fixture.directory_source();
+    std::fs::write(source.join("input"), nonce.as_bytes())
+        .map_err(|error| super::external("write live directory input", error))?;
+    let mut service=fixture.cases.service("mount-directory-live",&format!(
+        "test \"$(cat {TARGET}/input)\" = {nonce} || exit 76; printf %s {nonce} > {TARGET}/written; mv {TARGET}/written {TARGET}/renamed; exec sleep 3600"));
+    service.spec.mounts = vec![RuntimeMount {
+        name: "live-directory".into(),
+        source: RuntimeMountSource::Directory {
+            reference: "directory://r17/live".into(),
+        },
+        target: TARGET.into(),
+        read_only: false,
+    }];
+    let running = client.apply(&service).await?;
+    require(
+        running.state == RuntimeUnitState::Running,
+        "live Directory did not reach running",
+    )?;
+    let record = fixture.record_for(&service.spec).await?;
+    require_bind_config(&record, TARGET, false)?;
+    wait_for_file(
+        &source.join("renamed"),
+        "Directory guest write did not reach the caller source",
+    )
+    .await?;
+    require(
+        std::fs::read(source.join("renamed"))
+            .map_err(|error| super::external("read live Directory result", error))?
+            == nonce.as_bytes(),
+        "Directory write/rename result mismatch",
+    )?;
+    let changed = uuid::Uuid::new_v4().simple().to_string();
+    std::fs::write(source.join("changed"), changed.as_bytes())
+        .map_err(|error| super::external("change live Directory source", error))?;
+    let output = client
+        .exec(&fixture.cases.exec(
+            "mount-directory-read-change",
+            &service.spec,
+            vec!["cat".into(), format!("{TARGET}/changed")],
+            5_000,
+        ))
+        .await?;
+    require(
+        output.exit_code == 0 && output.stdout == changed && !output.truncated,
+        "Directory read observed a copied snapshot rather than live caller data",
+    )?;
+    fixture
+        .remove_unit(client, &service.spec, "mount-directory-live")
+        .await?;
+    require(
+        source.join("renamed").is_file() && source.join("changed").is_file(),
+        "Directory cleanup removed caller data",
+    )?;
+    Ok(())
 }
 
 #[cfg(target_os = "linux")]

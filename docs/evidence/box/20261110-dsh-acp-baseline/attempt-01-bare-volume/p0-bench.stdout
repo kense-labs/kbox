@@ -1,0 +1,5 @@
+warming VM + dsh-acp process for ghcr.io/kense-labs/dsh-acp:latest
+{"run": 1, "spawn_to_initialize_ms": 22.148042, "initialize_rtt_ms": 20.998791999999998, "prompt_rtt_ms": 1801.0839170000002, "agent": "deepseek-harness-acp", "provider": "deepseek-official", "model": "deepseek-flash", "reasoning_effort": "low", "stop_reason": "end_turn", "reply": "你好！我是 DeepSeek Harness 中的编码智能体，可以帮你阅读和编辑代码、运行命令、排查问题以及完成各类开发任务。", "exit_code": 0}
+spawn_to_initialize_ms: min=22.148 median=22.148 max=22.148 ms
+initialize_rtt_ms: min=20.999 median=20.999 max=20.999 ms
+pool stopped

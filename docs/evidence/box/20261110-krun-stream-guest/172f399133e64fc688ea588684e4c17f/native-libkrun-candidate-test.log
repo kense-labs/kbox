@@ -1,0 +1,34 @@
+
+running 1 test
+2026-11-10T16:16:14.609760Z  INFO kbox_runtime::rootfs::provider: Using guest-native ext4 rootfs provider
+2026-11-10T16:16:14.610582Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}: kbox_runtime::vm::boot: Booting VM box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3
+2026-11-10T16:16:14.616821Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:prepare_layout: kbox_runtime::vm::layout: Pulling OCI image from registry reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110
+2026-11-10T16:16:14.649096Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:prepare_layout: kbox_runtime::oci::pull: Using cached image requested_reference=docker.io/library/krun-coding-fixture@sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110 matched_reference=krun-coding-fixture:0.1.0 digest=sha256:b77685543518fb2aa9777b11ed55b19d1776a8c6b930754b6b3069d8290ca110
+2026-11-10T16:16:15.964481Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:prepare_layout: kbox_runtime::rootfs::guest_native_ext4: Prepared guest-native ext4 directly from OCI layers disk=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/4ad8208d-495f-4b69-ac4d-707340abb4b3/rootfs-ext4-v1/rootfs.ext4 layers=6
+2026-11-10T16:16:15.974154Z DEBUG kbox_runtime::vm::spec: Using guest init as PID 1 env_count=9
+2026-11-10T16:16:15.982533Z DEBUG vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:vm_start: kbox_runtime::vmm::controller: Starting VM subprocess box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3 vcpus=1 memory_mib=512
+2026-11-10T16:16:15.983065Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:vm_start: kbox_runtime::vmm::controller: Spawning shim subprocess shim=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/bin/kbox-shim box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3
+2026-11-10T16:16:15.983368Z DEBUG vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:vm_start: kbox_runtime::vmm::controller: Redirecting shim stdio to per-box files box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3 stdout=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/4ad8208d-495f-4b69-ac4d-707340abb4b3/logs/shim.stdout.log stderr=/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/4ad8208d-495f-4b69-ac4d-707340abb4b3/logs/shim.stderr.log
+2026-11-10T16:16:15.985665Z  INFO vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:vm_start: kbox_runtime::vmm::controller: Shim subprocess spawned box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3 pid=98016
+2026-11-10T16:16:15.985786Z DEBUG vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:wait_for_ready: kbox_runtime::vm::ready: Confirming VM process started
+2026-11-10T16:16:16.068175Z DEBUG vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:wait_for_ready: kbox_runtime::vm::ready: VM process is running
+2026-11-10T16:16:16.068241Z DEBUG vm_boot{box_id=4ad8208d-495f-4b69-ac4d-707340abb4b3}:wait_for_ready: kbox_runtime::vm::ready: Waiting for exec server readiness socket_path=/private/tmp/kbox-sockets/4ad8208d-495f-4b69-ac4d-707340abb4b3/exec.sock timeout_ms=15000
+
+thread '<unnamed>' (62110127) panicked at crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs:83:18:
+called `Result::unwrap()` on an `Err` value: ProviderUnavailable("execution 4ad8208d-495f-4b69-ac4d-707340abb4b3 failed during startup: execution lifecycle failed: failed to start execution 4ad8208d-495f-4b69-ac4d-707340abb4b3: VM boot failed: VM process exited before the guest exec server became ready (hint: Inspect /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/4ad8208d-495f-4b69-ac4d-707340abb4b3/logs/shim.stderr.log and /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-krun-stream-guest/172f399133e64fc688ea588684e4c17f/home/boxes/4ad8208d-495f-4b69-ac4d-707340abb4b3/logs/console.err.log for the primary startup failure); failed to inspect backend state during reconciliation: execution backend unavailable: execution 4ad8208d-495f-4b69-ac4d-707340abb4b3 has no original attached process PID")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread '<unnamed>' (62110127) panicked at crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs:159:5:
+native stop failed: Err(ProviderUnavailable("execution 4ad8208d-495f-4b69-ac4d-707340abb4b3 has no original attached process PID"))
+
+thread 'kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup' (62110126) panicked at crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs:38:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+test kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup ... FAILED
+
+failures:
+
+failures:
+    kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2128 filtered out; finished in 12.21s
+

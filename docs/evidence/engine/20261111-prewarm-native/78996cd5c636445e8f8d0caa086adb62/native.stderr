@@ -1,0 +1,7 @@
+
+thread '<unnamed>' (63268814) panicked at crates/box/runtime/src/kbox_contract_driver/prewarm_native.rs:107:72:
+called `Result::unwrap()` on an `Err` value: InvalidRequest("invalid environment prewarm scope")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources' (63268813) panicked at crates/box/runtime/src/kbox_contract_driver/prewarm_native.rs:67:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

@@ -1,0 +1,1281 @@
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/commit/tests.rs:422:
+ fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
+     use crate::test_helpers::fixtures::make_record;
+     use kbox_core::{
+[31m-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, OperationId,
+(B[m[32m+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
+(B[m     };
+     use kbox_runtime::ManagedExecutionMetadata;
+     use std::collections::BTreeMap;
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/common.rs:50:
+     /// OCI image reference
+     pub image: String,
+ 
+[31m-
+(B[m     /// Assign a name to the box
+     #[arg(long)]
+     pub name: Option<String>,
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/compose/args.rs:80:
+     #[arg(long, default_value = "120")]
+     pub timeout: u64,
+ 
+[31m-
+(B[m     /// Limit convergence to these services and their dependencies
+     #[arg(value_name = "SERVICE")]
+     pub services: Vec<String>,
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/cp.rs:517:
+ 
+     use kbox_core::pty::PtyRequest;
+     use kbox_core::{
+[31m-        BoxConfig, CreateExecutionRequest, ExecOutput, ExecutionGeneration, ExecutionId,
+(B[m[31m-        ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+(B[m[32m+        BoxConfig, CreateExecutionRequest, ExecOutput, ExecutionBoundary, ExecutionGeneration,
+(B[m[32m+        ExecutionId, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+(B[m         ExecutionSessionManager, FileResponse, FilesystemResponse, OperationId,
+     };
+     use kbox_runtime::{ManagedExecutionMetadata, ManagedRuntimeRoute};
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/observe_inventory.rs:282:
+     use async_trait::async_trait;
+     use chrono::{TimeZone, Utc};
+     use kbox_core::{
+[31m-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary,
+(B[m[32m+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
+(B[m         ExecutionManagerError, ExecutionManagerResult, ExecutionResourceUpdate,
+         ExecutionSnapshotId, KillOutcome, OperationId,
+     };
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/request_tests.rs:17:
+         TeeConfig::None,
+     )
+     .unwrap();
+[31m-
+(B[m }
+ 
+ #[test]
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/tests/lifecycle.rs:261:
+     // No terminal status / legacy marker: clean recorded start exit must not
+     // invent guest success (resolve_workload_exit_code Absent parity).
+     assert_eq!(
+[31m-        foreground_workload_exit_code(
+(B[m[31m-            temporary.path(),
+(B[m[31m-            Some(0),
+(B[m[31m-            false,
+(B[m[31m-        ),
+(B[m[32m+        foreground_workload_exit_code(temporary.path(), Some(0), false,),
+(B[m         None
+     );
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/tests/lifecycle.rs:273:
+     std::fs::create_dir_all(exit_path.parent().unwrap()).unwrap();
+     std::fs::write(exit_path, "7\n").unwrap();
+     assert_eq!(
+[31m-        foreground_workload_exit_code(
+(B[m[31m-            temporary.path(),
+(B[m[31m-            Some(1),
+(B[m[31m-            false,
+(B[m[31m-        ),
+(B[m[32m+        foreground_workload_exit_code(temporary.path(), Some(1), false,),
+(B[m         Some(7)
+     );
+ }
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/tests/lifecycle.rs:286:
+ fn test_foreground_sandbox_trusts_provider_exit_zero() {
+     let temporary = tempfile::tempdir().unwrap();
+     assert_eq!(
+[31m-        foreground_workload_exit_code(
+(B[m[31m-            temporary.path(),
+(B[m[31m-            Some(0),
+(B[m[31m-            false,
+(B[m[31m-        ),
+(B[m[32m+        foreground_workload_exit_code(temporary.path(), Some(0), false,),
+(B[m         Some(0)
+     );
+ }
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/tests/lifecycle.rs:302:
+     // Sandbox TrustProvider. Without this, RequireGuestProof drops 0 and
+     // foreground invents exit 1 (#644 gate 3 exit parity).
+     assert_eq!(
+[31m-        foreground_workload_exit_code(
+(B[m[31m-            temporary.path(),
+(B[m[31m-            Some(0),
+(B[m[31m-            true,
+(B[m[31m-        ),
+(B[m[32m+        foreground_workload_exit_code(temporary.path(), Some(0), true,),
+(B[m         Some(0)
+     );
+     assert_eq!(
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/run/tests/lifecycle.rs:313:
+[31m-        foreground_workload_exit_code(
+(B[m[31m-            temporary.path(),
+(B[m[31m-            Some(17),
+(B[m[31m-            true,
+(B[m[31m-        ),
+(B[m[32m+        foreground_workload_exit_code(temporary.path(), Some(17), true,),
+(B[m         Some(17)
+     );
+ }
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/scale_api.rs:12:
+     ScaleEndpointConfig, ScaleServiceCatalog,
+ };
+ 
+[31m-
+(B[m #[derive(Args)]
+ pub struct ScaleApiArgs {
+     /// Address exposed to the trusted Gateway control plane.
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/commands/scale_api.rs:34:
+     /// Persist desired state without starting workloads (diagnostic/migration use only).
+     #[arg(long, conflicts_with = "services")]
+     desired_state_only: bool,
+[31m-
+(B[m 
+     /// Address used for runtime-owned replica endpoint listeners.
+     #[arg(long, default_value_t = IpAddr::V4(Ipv4Addr::LOCALHOST))]
+Diff in /Users/roylin/code/kense/kbox/crates/box/cli/src/state/tests.rs:1198:
+ 
+     let json = serde_json::to_string(&record).unwrap();
+     let parsed: BoxRecord = serde_json::from_str(&json).unwrap();
+[31m-
+(B[m }
+ 
+ // --- Restart policy validation tests ---
+Diff in /Users/roylin/code/kense/kbox/crates/box/core/src/compose.rs:6:
+ use serde::{Deserialize, Serialize};
+ use std::collections::HashMap;
+ 
+[31m-mod kcl;
+(B[m mod diagnostic;
+ mod interpolation;
+[32m+mod kcl;
+(B[m mod normalization;
+ mod normalized;
+ mod schema;
+Diff in /Users/roylin/code/kense/kbox/crates/box/core/src/compose.rs:15:
+ 
+[31m-pub use kcl::ComposeKclError;
+(B[m pub use diagnostic::{ComposeDiagnostic, ComposeDiagnosticCode, ComposeNormalizationError};
+ pub use interpolation::{interpolate_compose_yaml, ComposeInterpolationError};
+[32m+pub use kcl::ComposeKclError;
+(B[m pub use normalization::{normalize_compose, normalize_compose_config, ComposeSourceFormat};
+ pub use normalized::{
+     NormalizedComposeConfig, NormalizedDependsOn, NormalizedHealthcheckConfig,
+Diff in /Users/roylin/code/kense/kbox/crates/box/core/src/snapshot.rs:503:
+             error.to_string().contains("legacy shared-kernel capture"),
+             "{error}"
+         );
+[31m-        assert!(
+(B[m[31m-            error.to_string().contains("snapshot restore"),
+(B[m[31m-            "{error}"
+(B[m[31m-        );
+(B[m[32m+        assert!(error.to_string().contains("snapshot restore"), "{error}");
+(B[m     }
+ 
+     #[test]
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/image_service.rs:399:
+ #[cfg(test)]
+ mod tests {
+     use super::*;
+[31m-    use kbox_runtime::oci::ImageStore;
+(B[m     use futures::StreamExt;
+[32m+    use kbox_runtime::oci::ImageStore;
+(B[m 
+     const TEST_DIGEST: &str =
+         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/mod.rs:1329:
+             // guest masks (bind /dev/null or ro tmpfs) / remounts read-only
+             // inside the container rootfs.
+             if !sc.masked_paths.is_empty() {
+[31m-                env.push((
+(B[m[31m-                    "K_SEC_MASKED_PATHS".to_string(),
+(B[m[31m-                    sc.masked_paths.join(":"),
+(B[m[31m-                ));
+(B[m[32m+                env.push(("K_SEC_MASKED_PATHS".to_string(), sc.masked_paths.join(":")));
+(B[m             }
+             if !sc.readonly_paths.is_empty() {
+                 env.push((
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/supervisor.rs:24:
+ }
+ 
+ impl SupervisedWorkload {
+[31m-    async fn next_event(
+(B[m[31m-        &mut self,
+(B[m[31m-    ) -> kbox_core::error::Result<Option<kbox_core::exec::ExecEvent>> {
+(B[m[32m+    async fn next_event(&mut self) -> kbox_core::error::Result<Option<kbox_core::exec::ExecEvent>> {
+(B[m         match self {
+             Self::Exec(stream) => stream.next_event().await,
+             Self::Pty(stream) => stream.next_event().await,
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/tests.rs:923:
+ 
+         let frame = reader.read_frame().await.unwrap().unwrap();
+         assert_eq!(frame.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
+[31m-        let request: kbox_core::pty::PtyRequest =
+(B[m[31m-            serde_json::from_slice(&frame.payload).unwrap();
+(B[m[32m+        let request: kbox_core::pty::PtyRequest = serde_json::from_slice(&frame.payload).unwrap();
+(B[m         let Some(assert_request) = assert_request.take() else {
+             panic!("PTY stream server received more than one request");
+         };
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/tests.rs:1241:
+         )]),
+     };
+ 
+[31m-    assert_eq!(
+(B[m[31m-        options.agent_image_for("ksecure"),
+(B[m[31m-        "ghcr.io/kbox/secure:v1"
+(B[m[31m-    );
+(B[m[32m+    assert_eq!(options.agent_image_for("ksecure"), "ghcr.io/kbox/secure:v1");
+(B[m     assert_eq!(options.agent_image_for("kbox"), "ghcr.io/kbox/default:v1");
+ }
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/tests.rs:1265:
+         options.agent_image_for("explicit"),
+         "ghcr.io/kbox/explicit:v1"
+     );
+[32m+    assert_eq!(options.agent_image_for("blank"), "ghcr.io/kbox/default:v1");
+(B[m     assert_eq!(
+[31m-        options.agent_image_for("blank"),
+(B[m[31m-        "ghcr.io/kbox/default:v1"
+(B[m[31m-    );
+(B[m[31m-    assert_eq!(
+(B[m         options.agent_image_for("missing"),
+         "ghcr.io/kbox/default:v1"
+     );
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/runtime_service/tests.rs:1747:
+     assert_eq!(response.pod_sandbox_metrics.len(), 1);
+     assert_eq!(response.pod_sandbox_metrics[0].pod_sandbox_id, "sb-1");
+     assert_eq!(
+[31m-        pod_metric_value(
+(B[m[31m-            &response.pod_sandbox_metrics[0],
+(B[m[31m-            "kbox_pod_sandbox_ready"
+(B[m[31m-        ),
+(B[m[32m+        pod_metric_value(&response.pod_sandbox_metrics[0], "kbox_pod_sandbox_ready"),
+(B[m         0.0,
+         "stream metrics must not invent Ready without VM health (#436)"
+     );
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/spdy.rs:27:
+ use tokio::io::{AsyncReadExt, AsyncWriteExt};
+ use tokio::net::TcpStream;
+ 
+[31m-use kbox_core::exec::{ExecEvent, StreamType as ExecStream};
+(B[m use flate2::{Compress, Compression, FlushCompress, Status};
+[32m+use kbox_core::exec::{ExecEvent, StreamType as ExecStream};
+(B[m 
+ use crate::streaming::StreamingSession;
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/streaming.rs:513:
+         rows: 24,
+     };
+     let payload = serde_json::to_vec(&pty_req)?;
+[31m-    write_pty_frame(
+(B[m[31m-        &mut pty_stream,
+(B[m[31m-        kbox_core::pty::FRAME_PTY_REQUEST,
+(B[m[31m-        &payload,
+(B[m[31m-    )
+(B[m[31m-    .await?;
+(B[m[32m+    write_pty_frame(&mut pty_stream, kbox_core::pty::FRAME_PTY_REQUEST, &payload).await?;
+(B[m 
+     // Bidirectional copy between TCP stream and PTY Unix socket
+     let (mut tcp_read, mut tcp_write) = tokio::io::split(stream);
+Diff in /Users/roylin/code/kense/kbox/crates/box/cri/src/streaming.rs:1631:
+                 .unwrap();
+         });
+ 
+[31m-        let exec_client = kbox_runtime::ExecClient::connect(&sock_path)
+(B[m[31m-            .await
+(B[m[31m-            .unwrap();
+(B[m[32m+        let exec_client = kbox_runtime::ExecClient::connect(&sock_path).await.unwrap();
+(B[m         let exec_req = kbox_core::exec::ExecRequest {
+             request_id: None,
+             cmd: vec!["cat".to_string()],
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/examples/linux_kvm_live_session_qualification.rs:63:
+     use base64::Engine;
+     use kbox_core::{
+         BoxConfig, CreateExecutionRequest, ExecEvent, ExecRequest, ExecutionBackend,
+[31m-        ExecutionGeneration, ExecutionId, ExecutionBoundary, ExecutionManager,
+(B[m[32m+        ExecutionBoundary, ExecutionGeneration, ExecutionId, ExecutionManager,
+(B[m         ExecutionManagerError, ExecutionProcessSignal, ExecutionProcessStream,
+         ExecutionSessionManager, ExecutionState, FileOp, FileRequest, FileResponse,
+         FilesystemEntryKind, FilesystemOp, FilesystemRequest, FilesystemResponse,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/examples/linux_kvm_oci_qualification.rs:48:
+     use std::time::Duration;
+ 
+     use kbox_core::{
+[31m-        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
+(B[m[31m-        ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionState,
+(B[m[32m+        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionBoundary,
+(B[m[32m+        ExecutionGeneration, ExecutionId, ExecutionManager, ExecutionManagerError, ExecutionState,
+(B[m         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
+         ResourceConfig,
+     };
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/examples/windows_whpx_oci_qualification.rs:30:
+     use std::time::Duration;
+ 
+     use kbox_core::{
+[31m-        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
+(B[m[31m-        ExecutionBoundary, ExecutionManager, ExecutionState, IsolationClass as BoxIsolationClass,
+(B[m[31m-        NetworkMode, OperationId, ReconcileOutcome, ResourceConfig,
+(B[m[32m+        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionBoundary,
+(B[m[32m+        ExecutionGeneration, ExecutionId, ExecutionManager, ExecutionState,
+(B[m[32m+        IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
+(B[m[32m+        ResourceConfig,
+(B[m     };
+     use kbox_runtime::{
+         LocalExecutionManager, ManagedExecutionStore, ManagedRuntimeRoute, OciRuntimeBinding,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/box_state.rs:127:
+         let data = std::fs::read_to_string(path)?;
+         let parsed = Self::reject_retired_isolation_selector(&data)
+             .and_then(|_| {
+[31m-                serde_json::from_str::<Vec<BoxRecord>>(&data)
+(B[m[31m-                    .map_err(|error| error.to_string())
+(B[m[32m+                serde_json::from_str::<Vec<BoxRecord>>(&data).map_err(|error| error.to_string())
+(B[m             })
+             .and_then(|records| {
+                 validate_managed_records(&records)?;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/box_state.rs:153:
+         }
+     }
+ 
+[31m-/// Reject state written by the retired multi-isolation format.
+(B[m[31m-///
+(B[m[31m-/// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
+(B[m[31m-/// `isolation` field. Serde would silently ignore an unknown field, which
+(B[m[31m-/// would let a legacy shared-kernel `"sandbox"` record masquerade as a
+(B[m[31m-/// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
+(B[m[31m-/// instead: the one historical value that matches the current boundary is
+(B[m[31m-/// accepted, anything else is a hard error with migration guidance.
+(B[m[31m-///
+(B[m[31m-/// The fast path avoids a second JSON parse for every modern state file.
+(B[m[31m-fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
+(B[m[31m-    if !data.contains("\"isolation\"") {
+(B[m[31m-        return Ok(());
+(B[m[31m-    }
+(B[m[31m-    let value: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
+(B[m[31m-    let Some(records) = value.as_array() else {
+(B[m[31m-        return Ok(());
+(B[m[31m-    };
+(B[m[31m-    for record in records {
+(B[m[31m-        let Some(selector) = record.get("isolation") else {
+(B[m[31m-            continue;
+(B[m[32m+    /// Reject state written by the retired multi-isolation format.
+(B[m[32m+    ///
+(B[m[32m+    /// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
+(B[m[32m+    /// `isolation` field. Serde would silently ignore an unknown field, which
+(B[m[32m+    /// would let a legacy shared-kernel `"sandbox"` record masquerade as a
+(B[m[32m+    /// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
+(B[m[32m+    /// instead: the one historical value that matches the current boundary is
+(B[m[32m+    /// accepted, anything else is a hard error with migration guidance.
+(B[m[32m+    ///
+(B[m[32m+    /// The fast path avoids a second JSON parse for every modern state file.
+(B[m[32m+    fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
+(B[m[32m+        if !data.contains("\"isolation\"") {
+(B[m[32m+            return Ok(());
+(B[m[32m+        }
+(B[m[32m+        let value: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
+(B[m[32m+        let Some(records) = value.as_array() else {
+(B[m[32m+            return Ok(());
+(B[m         };
+[31m-        match selector.as_str() {
+(B[m[31m-            Some("microvm") | None => {}
+(B[m[31m-            Some(other) => {
+(B[m[31m-                return Err(format!(
+(B[m[31m-                    "retired isolation selector {other:?} in boxes.json: shared-kernel \
+(B[m[32m+        for record in records {
+(B[m[32m+            let Some(selector) = record.get("isolation") else {
+(B[m[32m+                continue;
+(B[m[32m+            };
+(B[m[32m+            match selector.as_str() {
+(B[m[32m+                Some("microvm") | None => {}
+(B[m[32m+                Some(other) => {
+(B[m[32m+                    return Err(format!(
+(B[m[32m+                        "retired isolation selector {other:?} in boxes.json: shared-kernel \
+(B[m                      sandbox records cannot be loaded as MicroVM boxes; migrate or remove \
+                      the record before starting kbox"
+[31m-                ));
+(B[m[32m+                    ));
+(B[m[32m+                }
+(B[m             }
+         }
+[32m+        Ok(())
+(B[m     }
+[31m-    Ok(())
+(B[m[31m-}
+(B[m 
+     fn write_unlocked(&self) -> std::io::Result<()> {
+         validate_managed_records(&self.records)
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/host_fs/id_mapping.rs:54:
+                 "{kind} mappings must be contiguous and non-empty"
+             )));
+         }
+[31m-        next = next.checked_add(mapping.size).ok_or_else(|| {
+(B[m[31m-            BoxError::ConfigError(format!("{kind} container mapping overflows"))
+(B[m[31m-        })?;
+(B[m[31m-        let host_end = mapping.host_id.checked_add(mapping.size).ok_or_else(|| {
+(B[m[31m-            BoxError::ConfigError(format!("{kind} host mapping overflows"))
+(B[m[31m-        })?;
+(B[m[32m+        next = next
+(B[m[32m+            .checked_add(mapping.size)
+(B[m[32m+            .ok_or_else(|| BoxError::ConfigError(format!("{kind} container mapping overflows")))?;
+(B[m[32m+        let host_end = mapping
+(B[m[32m+            .host_id
+(B[m[32m+            .checked_add(mapping.size)
+(B[m[32m+            .ok_or_else(|| BoxError::ConfigError(format!("{kind} host mapping overflows")))?;
+(B[m         if host_ranges
+             .iter()
+             .any(|(start, end)| mapping.host_id < *end && *start < host_end)
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/host_fs/mod.rs:8:
+ pub mod rootfs;
+ 
+ pub use id_mapping::{
+[31m-    map_container_gid, map_container_uid, unmap_host_gid, unmap_host_uid, IdMapping,
+(B[m[31m-    IdMappingPlan,
+(B[m[32m+    map_container_gid, map_container_uid, unmap_host_gid, unmap_host_uid, IdMapping, IdMappingPlan,
+(B[m };
+ pub(crate) use mount_alias::cleanup_mount_aliases;
+ #[cfg(target_os = "linux")]
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/host_fs/mount_alias.rs:162:
+     fn set_mode(path: &Path, mode: u32) {
+         std::fs::set_permissions(path, std::fs::Permissions::from_mode(mode)).unwrap();
+     }
+[31m-
+(B[m }
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/host_fs/rootfs.rs:43:
+ /// Sandbox rootfs back to container ownership after an interruption or during
+ /// a filesystem Snapshot.
+ #[cfg(target_os = "linux")]
+[31m-pub(crate) fn persist_rootfs_id_mappings(
+(B[m[31m-    box_dir: &Path,
+(B[m[31m-    plan: &IdMappingPlan,
+(B[m[31m-) -> Result<()> {
+(B[m[32m+pub(crate) fn persist_rootfs_id_mappings(box_dir: &Path, plan: &IdMappingPlan) -> Result<()> {
+(B[m     validate_id_mapping_plan(plan)?;
+     let destination = box_dir.join(ROOTFS_ID_MAPPING_FILE);
+     let parent = destination.parent().ok_or_else(|| {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/host_fs/rootfs.rs:575:
+ /// mappings are retained (caller may fall back to a host walk). Other capture
+ /// failures are errors.
+ #[cfg(target_os = "linux")]
+[31m-pub fn try_create_managed_diff_baseline_if_absent(
+(B[m[31m-    box_dir: &Path,
+(B[m[31m-    rootfs: &Path,
+(B[m[31m-) -> Result<bool> {
+(B[m[32m+pub fn try_create_managed_diff_baseline_if_absent(box_dir: &Path, rootfs: &Path) -> Result<bool> {
+(B[m     let Some(plan) = load_rootfs_id_mappings(box_dir)? else {
+         return Ok(false);
+     };
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:311:
+         .map_err(|error| super::external(&format!("read {}", path.display()), error))
+ }
+ 
+[31m-
+(B[m async fn guest_counter(
+     fixture: &BoxRuntimeConformanceFixture,
+     client: &dyn RuntimeClient,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:342:
+         super::external(&format!("decode guest cgroup counter {file}:{key}"), error)
+     })
+ }
+[31m-
+(B[m 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_evidence.rs:250:
+             None
+         );
+         assert_eq!(
+[31m-            microvm_hypervisor_identity(
+(B[m[31m-                "kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"
+(B[m[31m-            ),
+(B[m[32m+            microvm_hypervisor_identity("kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"),
+(B[m             None
+         );
+     }
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_profile.rs:207:
+     .map_err(|error| super::external("encode Secret creation intent", error))?;
+     let boxes = std::fs::read(fixture.home_dir.join("boxes.json"))
+         .map_err(|error| super::external("read Box state for Secret nondisclosure", error))?;
+[31m-    super::security_evidence::verify_secret_persistence(
+(B[m[31m-        &record,
+(B[m[31m-        &creation_intent,
+(B[m[31m-        &boxes,
+(B[m[31m-    )?;
+(B[m[32m+    super::security_evidence::verify_secret_persistence(&record, &creation_intent, &boxes)?;
+(B[m 
+     let calls_before_reconstruction = fixture.secret_materialization_calls();
+     let restarted_driver = fixture.restarted_driver()?;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/backend.rs:10:
+ use chrono::{DateTime, Utc};
+ use kbox_core::{
+     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
+[31m-    ExecutionId, ExecutionManagerError, ExecutionManagerResult,
+(B[m[31m-    ExecutionProcess, ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState,
+(B[m[31m-    ExecutionStats, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome,
+(B[m[31m-    OperationId,
+(B[m[32m+    ExecutionId, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+(B[m[32m+    ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState, ExecutionStats,
+(B[m[32m+    FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
+(B[m };
+ use std::collections::HashSet;
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs:5:
+ 
+ use async_trait::async_trait;
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionId, ExecutionManager,
+(B[m     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, NetworkMode,
+     OperationId,
+ };
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend.rs:9:
+ use base64::{engine::general_purpose::STANDARD, Engine as _};
+ use chrono::Utc;
+ use kbox_core::{
+[31m-    pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionCpuStats,
+(B[m[31m-    ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
+(B[m[31m-    ExecutionId, ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult,
+(B[m[32m+    pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionBoundary,
+(B[m[32m+    ExecutionCpuStats, ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest,
+(B[m[32m+    ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
+(B[m     ExecutionMemoryStats, ExecutionProcess, ExecutionProcessInfo, ExecutionProcessInventory,
+     ExecutionResourceUpdate, ExecutionRuntimeEvent, ExecutionState, ExecutionStats,
+     FileOp as BoxFileOp, FileRequest as BoxFileRequest, FileResponse as BoxFileResponse,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend.rs:1611:
+         let Some(runtime) = self.adapter.state_current(&execution_id).await? else {
+             return Ok(None);
+         };
+[31m-        let info = self.adapter
+(B[m[32m+        let info = self
+(B[m[32m+            .adapter
+(B[m             .require_isolation(ExecutionBoundary::Microvm)
+             .await?;
+         validate_recovered_record(
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend.rs:1775:
+                 "Host service sockets are not supported by the OCI backend".into(),
+             ));
+         }
+[31m-        let info = self.adapter
+(B[m[32m+        let info = self
+(B[m[32m+            .adapter
+(B[m             .require_isolation(ExecutionBoundary::Microvm)
+             .await?;
+         let context = self.preparation_context(record, &info)?;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend.rs:1825:
+             });
+         }
+ 
+[31m-        let info = self.adapter
+(B[m[32m+        let info = self
+(B[m[32m+            .adapter
+(B[m             .require_isolation(ExecutionBoundary::Microvm)
+             .await?;
+         let preparation = self.preparation_context(record, &info)?;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests/process_restart.rs:1238:
+     );
+     let operation = box_operation("runtime-owner-process-restart-operation");
+     let running = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("runtime-owner-process-restart"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("runtime-owner-process-restart"), &operation)
+(B[m         .await
+         .expect("initial launch through first runtime-owner process");
+     let mut exec = box_exec_request(None);
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests/process_restart.rs:1409:
+     );
+     let operation = box_operation("runtime-owner-filesystem-restart-operation");
+     let running = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("runtime-owner-filesystem-restart"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("runtime-owner-filesystem-restart"), &operation)
+(B[m         .await
+         .expect("initial launch through first runtime-owner process");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests/process_restart.rs:1698:
+     );
+     let operation = box_operation("runtime-owner-pause-restart-operation");
+     let running = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("runtime-owner-pause-restart"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("runtime-owner-pause-restart"), &operation)
+(B[m         .await
+         .expect("initial launch through the first runtime-owner process");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:8:
+ use kbox_core::exec::{ExecRequest as BoxExecRequest, StreamType};
+ use kbox_core::pty::PtyRequest;
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecEvent, ExecutionEventsRequest, ExecutionGeneration,
+(B[m[31m-    ExecutionId, ExecutionBoundary, ExecutionManager, ExecutionManagerError,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecEvent, ExecutionBoundary, ExecutionEventsRequest,
+(B[m[32m+    ExecutionGeneration, ExecutionId, ExecutionManager, ExecutionManagerError,
+(B[m     ExecutionProcessSignal, ExecutionResourceUpdate, ExecutionSessionManager, ExecutionSnapshotId,
+     ExecutionState, FileOp as BoxFileOp, FileRequest as BoxFileRequest,
+     FilesystemEntryKind as BoxFilesystemEntryKind, FilesystemOp as BoxFilesystemOp,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:45:
+     "sha256:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789";
+ const RUNTIME_RECORD_PID_ENV: &str = "K_BOX_TEST_RUNTIME_RECORD_PID";
+ 
+[32m+#[path = "oci_backend_tests/prewarm.rs"]
+(B[m[32m+mod prewarm;
+(B[m #[cfg(any(unix, windows))]
+ #[path = "oci_backend_tests/process_restart.rs"]
+ mod process_restart;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:51:
+ #[path = "oci_backend_tests/resource_update_contract.rs"]
+ mod resource_update_contract;
+[31m-#[path = "oci_backend_tests/prewarm.rs"]
+(B[m[31m-mod prewarm;
+(B[m 
+ #[derive(Clone)]
+ struct FakeContainer {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:1943:
+     let operation = box_operation("probe-only-create");
+ 
+     let error = manager
+[31m-        .create(
+(B[m[31m-            request("probe-only"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create(request("probe-only"), &operation)
+(B[m         .await
+         .expect_err("probe-only driver must fail closed");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:2006:
+     let operation = box_operation("missing-attachment-schema-create");
+ 
+     let error = manager
+[31m-        .create(
+(B[m[31m-            request("missing-attachment-schema"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create(request("missing-attachment-schema"), &operation)
+(B[m         .await
+         .expect_err("attachment-unaware runtime must fail before mutation");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:2039:
+     let operation = box_operation("missing-bundle-handoff-create");
+ 
+     let error = manager
+[31m-        .create(
+(B[m[31m-            request("missing-bundle-handoff"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create(request("missing-bundle-handoff"), &operation)
+(B[m         .await
+         .expect_err("handoff-unaware runtime must fail before mutation");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:2072:
+     let operation = box_operation("bundle-handoff-create");
+ 
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("bundle-handoff"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("bundle-handoff"), &operation)
+(B[m         .await
+         .expect("launch handoff-backed execution");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:2925:
+         Arc::new(FakeBundleProvider::default()),
+     );
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("file-limits"),
+(B[m[31m-            &box_operation("file-limits-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("file-limits"), &box_operation("file-limits-create"))
+(B[m         .await
+         .expect("initial launch");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:3653:
+     let provider = Arc::new(FakeBundleProvider::default());
+     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("pty-exec"),
+(B[m[31m-            &box_operation("pty-exec-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("pty-exec"), &box_operation("pty-exec-create"))
+(B[m         .await
+         .expect("initial launch");
+     let mut process = manager
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:3742:
+     let provider = Arc::new(FakeBundleProvider::default());
+     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("timed-exec"),
+(B[m[31m-            &box_operation("timed-exec-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("timed-exec"), &box_operation("timed-exec-create"))
+(B[m         .await
+         .expect("initial launch");
+     let mut exec = box_exec_request(Some("timed-exec-request"));
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:3813:
+     );
+     let operation = box_operation("freezer-cycle-operation");
+     let running = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("freezer-cycle"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("freezer-cycle"), &operation)
+(B[m         .await
+         .expect("initial launch");
+     let original = persisted(&manager, &running.execution_id);
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:3955:
+     );
+     let create_operation = box_operation("snapshot-thaw-recovery-create");
+     let running = first
+[31m-        .create_and_start(
+(B[m[31m-            request("snapshot-thaw-recovery"),
+(B[m[31m-            &create_operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("snapshot-thaw-recovery"), &create_operation)
+(B[m         .await
+         .expect("initial launch");
+     let snapshot_id = ExecutionSnapshotId::new("snapshot-thaw-recovery").unwrap();
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4168:
+         provider.clone(),
+     );
+     let running = first
+[31m-        .create_and_start(
+(B[m[31m-            request("interrupted-freezer"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("interrupted-freezer"), &operation)
+(B[m         .await
+         .expect("initial launch");
+     let record = persisted(&first, &running.execution_id);
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4297:
+     );
+     let operation = box_operation("runtime-server-restart-operation");
+     let running = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("runtime-server-restart"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("runtime-server-restart"), &operation)
+(B[m         .await
+         .expect("initial launch over local IPC");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4387:
+     let operation = box_operation("projection-before-start-operation");
+ 
+     let error = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("projection-before-start"),
+(B[m[31m-            &operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("projection-before-start"), &operation)
+(B[m         .await
+         .expect_err("projection failure must stop before OCI start");
+     assert!(error.to_string().contains("log projection"));
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4602:
+         Arc::new(FakeBundleProvider::default()),
+     );
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("lost-kill"),
+(B[m[31m-            &box_operation("lost-kill-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("lost-kill"), &box_operation("lost-kill-create"))
+(B[m         .await
+         .expect("initial launch");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4645:
+         Arc::new(FakeBundleProvider::default()),
+     );
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("lost-delete"),
+(B[m[31m-            &box_operation("lost-delete-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("lost-delete"), &box_operation("lost-delete-create"))
+(B[m         .await
+         .expect("initial launch");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:4870:
+         Arc::new(FakeBundleProvider::default()),
+     );
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("observable"),
+(B[m[31m-            &box_operation("observable-create"),
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("observable"), &box_operation("observable-create"))
+(B[m         .await
+         .expect("initial launch");
+     let binding = persisted(&manager, &lease.execution_id)
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:5096:
+     let create_operation = box_operation("lost-update-create");
+     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("lost-update"),
+(B[m[31m-            &create_operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("lost-update"), &create_operation)
+(B[m         .await
+         .expect("initial launch");
+     let update = ExecutionResourceUpdate {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:5158:
+         provider.clone(),
+     );
+     let lease = first
+[31m-        .create_and_start(
+(B[m[31m-            request("interrupted-update"),
+(B[m[31m-            &create_operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("interrupted-update"), &create_operation)
+(B[m         .await
+         .expect("initial launch");
+     let record = persisted(&first, &lease.execution_id);
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:5205:
+     let create_operation = box_operation("terminal-update-create");
+     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
+     let lease = manager
+[31m-        .create_and_start(
+(B[m[31m-            request("terminal-update"),
+(B[m[31m-            &create_operation,
+(B[m[31m-        )
+(B[m[32m+        .create_and_start(request("terminal-update"), &create_operation)
+(B[m         .await
+         .expect("initial launch");
+     service.mark_stopped(
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_backend_tests.rs:5315:
+         );
+         let create_operation = box_operation(&format!("missing-{operation:?}-create"));
+         let lease = manager
+[31m-            .create_and_start(
+(B[m[31m-                request("missing-observation"),
+(B[m[31m-                &create_operation,
+(B[m[31m-            )
+(B[m[32m+            .create_and_start(request("missing-observation"), &create_operation)
+(B[m             .await
+             .expect("initial launch");
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_production.rs:5:
+ use async_trait::async_trait;
+ use kbox_core::config::{ResourceConfig, TeeConfig};
+ use kbox_core::{
+[31m-    BoxError, ExecutionBackend, ExecutionManagerError, ExecutionManagerResult,
+(B[m[31m-    NetworkMode,
+(B[m[32m+    BoxError, ExecutionBackend, ExecutionManagerError, ExecutionManagerResult, NetworkMode,
+(B[m };
+ use koci_sdk::{CreateAttachments, IoMode, IsolationRequest, OciBundle, ProcessIo};
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_production.rs:613:
+     }
+     std::fs::remove_dir_all(bundle_directory)
+ }
+[31m-
+(B[m 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_whpx_owner.rs:380:
+ 
+         let last_error = if ready_ok {
+             match OciLifecycleAdapter::connect(endpoint.clone()).await {
+[31m-                Ok(adapter) => match adapter.require_isolation(kbox_core::ExecutionBoundary::Microvm).await {
+(B[m[32m+                Ok(adapter) => match adapter
+(B[m[32m+                    .require_isolation(kbox_core::ExecutionBoundary::Microvm)
+(B[m[32m+                    .await
+(B[m[32m+                {
+(B[m                     Ok(_) => return Ok(()),
+                     Err(error) => error.to_string(),
+                 },
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/resources.rs:651:
+ mod tests {
+     use kbox_core::{
+         network::NetworkConfig, snapshot::SnapshotMetadata, volume::VolumeConfig,
+[31m-        CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, ExecutionSnapshotId,
+(B[m[32m+        CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, ExecutionSnapshotId,
+(B[m         OperationId,
+     };
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router.rs:7:
+ use kbox_core::vmm::OwnedCloseBudget;
+ use kbox_core::{
+     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
+[31m-    ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+(B[m[31m-    ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse,
+(B[m[31m-    FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
+(B[m[32m+    ExecutionManagerError, ExecutionManagerResult, ExecutionProcess, ExecutionProcessInventory,
+(B[m[32m+    ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse, FilesystemRequest,
+(B[m[32m+    FilesystemResponse, KillOutcome, OperationId,
+(B[m };
+ 
+ use super::{
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:4:
+ 
+ use async_trait::async_trait;
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionId, ExecutionManager,
+(B[m     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, OperationId,
+ };
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:304:
+     );
+ 
+     let reservation = manager
+[31m-        .create(
+(B[m[31m-            request(),
+(B[m[31m-            &OperationId::new("route-sandbox").unwrap(),
+(B[m[31m-        )
+(B[m[32m+        .create(request(), &OperationId::new("route-sandbox").unwrap())
+(B[m         .await
+         .unwrap();
+     let record = manager
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:345:
+     );
+ 
+     let sandbox = manager
+[31m-        .create(
+(B[m[31m-            request(),
+(B[m[31m-            &OperationId::new("route-sandbox-kept").unwrap(),
+(B[m[31m-        )
+(B[m[32m+        .create(request(), &OperationId::new("route-sandbox-kept").unwrap())
+(B[m         .await
+         .unwrap();
+     let microvm = manager
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:355:
+[31m-        .create(
+(B[m[31m-            request(),
+(B[m[31m-            &OperationId::new("route-microvm-oci").unwrap(),
+(B[m[31m-        )
+(B[m[32m+        .create(request(), &OperationId::new("route-microvm-oci").unwrap())
+(B[m         .await
+         .unwrap();
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:435:
+     );
+ 
+     let reservation = manager
+[31m-        .create(
+(B[m[31m-            request(),
+(B[m[31m-            &OperationId::new("route-microvm").unwrap(),
+(B[m[31m-        )
+(B[m[32m+        .create(request(), &OperationId::new("route-microvm").unwrap())
+(B[m         .await
+         .unwrap();
+     let record = manager
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/router_tests.rs:473:
+     );
+ 
+     let error = manager
+[31m-        .create(
+(B[m[31m-            request(),
+(B[m[31m-            &OperationId::new("route-no-fallback").unwrap(),
+(B[m[31m-        )
+(B[m[32m+        .create(request(), &OperationId::new("route-no-fallback").unwrap())
+(B[m         .await
+         .unwrap_err();
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/tests/owned_vm_close.rs:7:
+ 
+ use kbox_core::vmm::OwnedCloseBudget;
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+(B[m     OperationId,
+ };
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/tests.rs:1:
+ #![cfg(test)]
+ 
+[31m-#[path = "tests/stop_ownership.rs"]
+(B[m[31m-mod stop_ownership;
+(B[m #[path = "tests/prewarm.rs"]
+ mod prewarm;
+[32m+#[path = "tests/stop_ownership.rs"]
+(B[m[32m+mod stop_ownership;
+(B[m 
+ use std::collections::{BTreeMap, HashMap};
+ use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/tests.rs:12:
+ use async_trait::async_trait;
+ use chrono::{TimeZone, Utc};
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionHealthCheck, ExecutionId,
+(B[m[31m-    ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
+(B[m[31m-    ExecutionSnapshotId, ExecutionState, KillExecutionOptions, KillOutcome, NetworkMode,
+(B[m[31m-    OperationId, ReconcileOutcome, RestartExecutionOptions, SnapshotImageConfig,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
+(B[m[32m+    ExecutionHealthCheck, ExecutionId, ExecutionManager, ExecutionManagerError,
+(B[m[32m+    ExecutionManagerResult, ExecutionSnapshotId, ExecutionState, KillExecutionOptions, KillOutcome,
+(B[m[32m+    NetworkMode, OperationId, ReconcileOutcome, RestartExecutionOptions, SnapshotImageConfig,
+(B[m };
+ #[cfg(unix)]
+ use kbox_core::{ExecEvent, ExecRequest, ExecutionSessionManager};
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/vm_backend.rs:219:
+         manager.transient_registry_auth = if record.is_unclaimed_prewarm() {
+             Some(crate::oci::RegistryAuth::anonymous())
+         } else {
+[31m-            self.transient_registry_auth.as_ref().and_then(|broker| broker.take(manager.box_id()))
+(B[m[32m+            self.transient_registry_auth
+(B[m[32m+                .as_ref()
+(B[m[32m+                .and_then(|broker| broker.take(manager.box_id()))
+(B[m         };
+     }
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/vm_backend.rs:287:
+                 "runtime returned no host PID for {execution_id}"
+             ))
+         })?;
+[31m-        let has_record_binding =
+(B[m[31m-            record.pid.is_some() || record.pid_start_time.is_some();
+(B[m[32m+        let has_record_binding = record.pid.is_some() || record.pid_start_time.is_some();
+(B[m         let pid_start_time = if has_record_binding {
+             self.metadata(record)?;
+             let (_, original_start_time) = require_attached_record_identity(
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/vm_backend.rs:478:
+             &record.box_dir,
+             exit_code,
+             crate::rootfs::ProviderExitPolicy::RequireGuestProof,
+[31m-
+(B[m         );
+         #[cfg(target_os = "windows")]
+         let authenticated = authenticate_windows_managed_terminal_exit(
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/vm_backend_tests.rs:7:
+ use std::sync::atomic::{AtomicUsize, Ordering};
+ 
+ use kbox_core::{
+[31m-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+(B[m[32m+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+(B[m     OperationId, VmHandler, VmMetrics,
+ };
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/vm_backend_tests.rs:125:
+     let temporary = tempfile::tempdir().unwrap();
+     let backend = VmLocalExecutionBackend::new(temporary.path());
+ 
+[31m-    let microvm = backend
+(B[m[31m-        .preflight_launch()
+(B[m[31m-        .await;
+(B[m[31m-    let sandbox = backend
+(B[m[31m-        .preflight_launch()
+(B[m[31m-        .await;
+(B[m[32m+    let microvm = backend.preflight_launch().await;
+(B[m[32m+    let sandbox = backend.preflight_launch().await;
+(B[m 
+     assert!(
+         !temporary.path().join("boxes").exists(),
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/oci/build/plan/tests.rs:1:
+ use super::*;
+[31m-use kcl::SchemaDiagnosticCode;
+(B[m use kbox_core::platform::Platform;
+[32m+use kcl::SchemaDiagnosticCode;
+(B[m 
+ const PLAN: &str = r#"
+ build "oci" {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/oci/build/plan.rs:7:
+ use std::collections::HashMap;
+ use std::path::{Path, PathBuf};
+ 
+[32m+use kbox_core::platform::Platform;
+(B[m use kcl::{
+     canonical_bytes_with_schema, canonical_digest_with_schema, parse_with_limits,
+     validate_document, AttributeSchema, Block, BlockSchema, CanonicalError, Cardinality, Document,
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/oci/build/plan.rs:13:
+     ParseLimits, Schema, SchemaDiagnosticCode, Value, ValueSchema,
+ };
+[31m-use kbox_core::platform::Platform;
+(B[m use serde::{Deserialize, Serialize};
+ use thiserror::Error;
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/catalog.rs:2:
+ 
+ use std::{collections::BTreeMap, path::Path};
+ 
+[31m-use kbox_core::{
+(B[m[31m-    compose::ComposeConfig, CreateExecutionRequest, ExecutionRecordPolicy,
+(B[m[31m-};
+(B[m[32m+use kbox_core::{compose::ComposeConfig, CreateExecutionRequest, ExecutionRecordPolicy};
+(B[m use sha2::{Digest, Sha256};
+ use thiserror::Error;
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/catalog.rs:200:
+ 
+     #[test]
+     fn catalog_builds_deterministic_labeled_execution_templates() {
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale")
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         assert_eq!(catalog.services(), vec!["api", "worker"]);
+ 
+         let first = catalog.create_request("worker", 3).unwrap();
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/catalog.rs:232:
+             let source = format!(
+                 "service \"api\" {{ image = \"api:v1\"; {field} }}\nservice \"db\" {{ image = \"db:v1\" }}"
+             );
+[31m-            let error = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-                &source,
+(B[m[31m-                "gateway-scale")
+(B[m[31m-            .unwrap_err();
+(B[m[32m+            let error = ScaleServiceCatalog::from_kcl_str(&source, "gateway-scale").unwrap_err();
+(B[m             assert!(error.to_string().contains(expected), "{error}");
+         }
+     }
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/catalog.rs:242:
+ 
+     #[test]
+     fn unknown_service_fails_without_fabricating_a_template() {
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale")
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         let error = catalog.create_request("missing", 0).unwrap_err();
+         assert!(error.to_string().contains("not found"));
+     }
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:859:
+     }
+ 
+     fn reconciler(lifecycle: Arc<FakeLifecycle>) -> LocalScaleReconciler {
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         LocalScaleReconciler::with_lifecycle(catalog, lifecycle)
+     }
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:889:
+     #[tokio::test]
+     async fn downscale_waits_for_endpoint_relays_before_removing_the_execution() {
+         let lifecycle = Arc::new(FakeLifecycle::new());
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            ENDPOINT_CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(ENDPOINT_CATALOG, "gateway-scale").unwrap();
+(B[m         let reconciler = Arc::new(LocalScaleReconciler::with_lifecycle_and_endpoint(
+             catalog,
+             lifecycle.clone(),
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:933:
+     #[tokio::test]
+     async fn declared_endpoints_are_not_ready_until_the_advertised_url_works() {
+         let lifecycle = Arc::new(FakeLifecycle::new());
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            ENDPOINT_CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(ENDPOINT_CATALOG, "gateway-scale").unwrap();
+(B[m         let reconciler = LocalScaleReconciler::with_lifecycle_and_endpoint(
+             catalog,
+             lifecycle.clone(),
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:1016:
+             execution: Mutex::new(None),
+             ensure_calls: AtomicUsize::new(0),
+         });
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         let reconciler = LocalScaleReconciler::with_lifecycle(catalog, lifecycle.clone());
+ 
+         let first = reconciler.reconcile("api", 1).await.unwrap();
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:1155:
+             .lose_next_start_response
+             .store(true, Ordering::SeqCst);
+         let manager = LocalExecutionManager::new(&state, &home, backend.clone());
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         let reconciler = LocalScaleReconciler::new(manager, catalog.clone());
+ 
+         let up = reconciler.reconcile("api", 2).await.unwrap();
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/scale/reconciler.rs:1186:
+         let state = directory.path().join("boxes.json");
+         let backend = Arc::new(RecordingBackend::new());
+         let manager = LocalExecutionManager::new(&state, &home, backend);
+[31m-        let catalog = ScaleServiceCatalog::from_kcl_str(
+(B[m[31m-            CATALOG,
+(B[m[31m-            "gateway-scale",
+(B[m[31m-        )
+(B[m[31m-        .unwrap();
+(B[m[32m+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
+(B[m         let reconciler = LocalScaleReconciler::new(manager.clone(), catalog);
+ 
+         let up = reconciler.reconcile("api", 1).await.unwrap();
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot.rs:598:
+             },
+         )
+     }
+[31m-
+(B[m }
+ 
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/oci_microvm.rs:52:
+                         .to_string(),
+                 ));
+             }
+[31m-            let runtime_process: MicrovmRuntimeProcess =
+(B[m[31m-                resolve_runtime_owned_process(
+(B[m[31m-                    &layout.rootfs_path,
+(B[m[31m-                    &instance_spec,
+(B[m[31m-                    &self.config.cap_drop,
+(B[m[31m-                )?;
+(B[m[32m+            let runtime_process: MicrovmRuntimeProcess = resolve_runtime_owned_process(
+(B[m[32m+                &layout.rootfs_path,
+(B[m[32m+                &instance_spec,
+(B[m[32m+                &self.config.cap_drop,
+(B[m[32m+            )?;
+(B[m             let hostname = self
+                 .config
+                 .hostname
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/oci_microvm.rs:308:
+         })
+         .collect())
+ }
+[31m-
+(B[m 
+ #[cfg(test)]
+ mod tests {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/reap.rs:296:
+     Ok(None)
+ }
+ 
+[31m-
+(B[m #[cfg(target_os = "linux")]
+ fn valid_sha256(value: &str) -> bool {
+     value.len() == 64 && value.bytes().all(|byte| byte.is_ascii_hexdigit())
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/reap.rs:309:
+ ) -> kbox_core::Result<()> {
+     Ok(())
+ }
+[31m-
+(B[m 
+ #[cfg(target_os = "linux")]
+ fn sha256_file(path: &Path) -> Option<String> {
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:4:
+ use async_trait::async_trait;
+ use kbox_core::vmm::{InstanceSpec, OwnedCleanupBudget, OwnedCloseBudget, VmExitEvidenceKind};
+ use kbox_core::{
+[31m-    CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode, OperationId,
+(B[m[32m+    CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode, OperationId,
+(B[m };
+ use std::sync::atomic::{AtomicUsize, Ordering};
+ use std::sync::Mutex as StdMutex;
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:499:
+         proof.pid()
+     );
+     {
+[31m-        let mut direct = VmManager::new(
+(B[m[31m-            BoxConfig::default(),
+(B[m[31m-            EventEmitter::new(8),
+(B[m[31m-        );
+(B[m[32m+        let mut direct = VmManager::new(BoxConfig::default(), EventEmitter::new(8));
+(B[m         assert!(direct.original_scope.is_none());
+         assert!(direct.pending_handler.is_none());
+         assert!(direct

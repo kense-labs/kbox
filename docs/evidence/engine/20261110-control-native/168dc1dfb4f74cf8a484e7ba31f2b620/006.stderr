@@ -1,0 +1,5 @@
+error: unexpected argument 'python3' found
+
+Usage: kbox exec [OPTIONS] <BOX> -- <CMD>...
+
+For more information, try '--help'.

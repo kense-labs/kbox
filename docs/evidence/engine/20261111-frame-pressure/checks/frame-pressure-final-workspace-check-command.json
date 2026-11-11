@@ -1,0 +1,1 @@
+{"command": ["cargo", "check", "--locked", "--workspace", "--all-targets"], "cwd": "/Users/roylin/code/kense/kbox", "exitCode": 0, "seconds": 2.41}

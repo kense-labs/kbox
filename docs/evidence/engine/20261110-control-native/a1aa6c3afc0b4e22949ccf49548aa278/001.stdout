@@ -1,0 +1,5 @@
+Pulling busybox:1.37.0...
+  [1/1] f5415111974e: 0 B / 1.8 MB downloaded
+  [1/1] f5415111974e: 1.0 MB / 1.8 MB downloaded
+  [1/1] f5415111974e: 1.8 MB / 1.8 MB downloaded ✓
+Pulled: busybox:1.37.0 (/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/a1aa6c3afc0b4e22949ccf49548aa278/home/images/sha256/a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec)

@@ -1,0 +1,6 @@
+Creating box native-unit-69ae2ccebcaa (eb6944f29e6a)...
+kbox run: still creating native-unit-69ae2ccebcaa; image is ready and runtime startup has taken 23s
+Box native-unit-69ae2ccebcaa (eb6944f29e6a) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box native-unit-69ae2ccebcaa exited and was removed.

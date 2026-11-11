@@ -1,0 +1,3 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+AssertionError: ('loopback nonce', b'', b'38adcba572754d84b9d5bc17150177ea')

@@ -1,0 +1,1 @@
+After interrupted client startup, confirmed no task-owned shim and only empty box directories; removed the isolated starting reservation and force-removed its generated test volume with stale reference count. Default user K_HOME untouched.

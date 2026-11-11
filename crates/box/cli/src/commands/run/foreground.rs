@@ -77,7 +77,7 @@ pub(super) async fn run_foreground(
     args: &RunArgs,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let foreground_start = std::time::Instant::now();
-    println!(
+    eprintln!(
         "Box {} ({}) started. Press Ctrl-C to stop.",
         ctx.name,
         BoxRecord::make_short_id(&ctx.box_id)
@@ -166,15 +166,15 @@ pub(super) async fn run_foreground(
     let stop_reason = loop {
         tokio::select! {
             _ = tokio::signal::ctrl_c() => {
-                println!("\nStopping box {}...", name);
+                eprintln!("\nStopping box {}...", name);
                 break ForegroundStopReason::UserInterrupted(FOREGROUND_SIGINT);
             }
             _ = recv_foreground_terminate(&mut terminate_signal) => {
-                println!("\nStopping box {} after SIGTERM...", name);
+                eprintln!("\nStopping box {} after SIGTERM...", name);
                 break ForegroundStopReason::UserInterrupted(FOREGROUND_SIGTERM);
             }
             _ = recv_foreground_timeout(timeout_at) => {
-                println!("\nStopping box {} after --timeout expired...", name);
+                eprintln!("\nStopping box {} after --timeout expired...", name);
                 break ForegroundStopReason::TimedOut;
             }
             _ = exit_poll.tick() => {
@@ -241,7 +241,7 @@ pub(super) async fn run_foreground(
         stop_reason == ForegroundStopReason::ProcessExited,
     )
     .await?;
-    println!(
+    eprintln!(
         "{}",
         foreground_completion_message(stop_reason, args.rm, &ctx.name)
     );

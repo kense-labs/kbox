@@ -4,6 +4,7 @@
 # Usage:
 #   TIER=p0 ./scripts/e2e-dsh-acp/run.sh
 #   TIER=p0,p1 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
+#   TIER=p4 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
 #   TIER=all ./scripts/e2e-dsh-acp/run.sh
 #
 # Env:
@@ -25,7 +26,10 @@ export E2E_RUN_ID="${E2E_RUN_ID:-$(date +%Y%m%d-%H%M%S)-$$}"
 export E2E_OUT="${E2E_OUT:-$ROOT/docs/evidence/box/${E2E_RUN_ID}-dsh-acp-e2e}"
 mkdir -p "$E2E_OUT"
 export RESULTS_JSONL="$E2E_OUT/results.jsonl"
-: >"$RESULTS_JSONL"
+if ! (set -C; : >"$RESULTS_JSONL"); then
+  e2e_log "cannot create results.jsonl; use a fresh writable E2E_OUT to preserve earlier evidence"
+  exit 1
+fi
 
 # Isolated K_HOME so the suite never touches the developer's default boxes.
 # Prefer E2E_OUT path; ignore ambient K_HOME unless E2E_K_HOME is set explicitly.
@@ -42,7 +46,10 @@ e2e_log "E2E_OUT=$E2E_OUT"
 e2e_require_cmds bash curl python3
 e2e_require_kbox
 
-DIGEST="$(e2e_image_digest_hint "$IMAGE" || true)"
+if ! DIGEST="$(e2e_image_digest_hint "$IMAGE" 2>/dev/null)"; then
+  "$KBOX" pull "$IMAGE" >"$E2E_OUT/image-pull.log" 2>&1
+  DIGEST="$(e2e_image_digest_hint "$IMAGE")"
+fi
 printf '%s\n' "$DIGEST" >"$E2E_OUT/image-digest.txt"
 "$KBOX" version >"$E2E_OUT/kbox-version.txt" 2>&1 || true
 
@@ -74,6 +81,9 @@ fi
 if want_tier p3; then
   run_case_script "$SCRIPT_DIR/cases/p3_negative.sh" || FAIL=1
 fi
+if want_tier p4; then
+  python3 "$SCRIPT_DIR/cases/p4_tasks.py" || FAIL=1
+fi
 
 e2e_finalize_results
 
@@ -100,12 +110,13 @@ if [[ "$FAIL" -ne 0 ]]; then
   exit 1
 fi
 
-# Treat FAIL rows as overall failure; BLOCKED/SKIP ok for gating when key missing.
+# Required task coverage must never pass through missing credentials or skips.
 python3 - "$E2E_OUT/results.json" <<'PY'
 import json, sys
 from pathlib import Path
 data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
 fails = [c for c in data.get("cases", []) if c.get("status") == "FAIL"]
+fails += [c for c in data.get("cases", []) if c["id"].startswith("P4-") and c["status"] != "PASS"]
 if fails:
     print("FAIL cases:", ", ".join(c["id"] for c in fails), file=sys.stderr)
     raise SystemExit(1)

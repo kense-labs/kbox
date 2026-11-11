@@ -1,0 +1,10 @@
+2026-11-11T00:32:34.936552Z  INFO Using cached image requested_reference=krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3 matched_reference=krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3 digest=sha256:ec67a47478b664377b23462cde83eeb6650f00cc7a3333dfc0affe7b7f6348fc
+Creating box probe (413548024dce)...
+2026-11-11T00:32:35.230838Z  INFO Using guest-native ext4 rootfs provider
+2026-11-11T00:32:35.230991Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}: Booting VM box_id=41354802-4dce-4327-a962-94b3a8577da6
+2026-11-11T00:32:35.231541Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}:prepare_layout: Pulling OCI image from registry reference=krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3
+2026-11-11T00:32:35.238418Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}:prepare_layout: Using cached image requested_reference=krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3 matched_reference=krun-oci-regression:c49aa0b6caf9481a8509a3b7fbb3a7c3 digest=sha256:ec67a47478b664377b23462cde83eeb6650f00cc7a3333dfc0affe7b7f6348fc
+2026-11-11T00:32:40.442910Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}:prepare_layout: Prepared guest-native ext4 directly from OCI layers disk=/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-credential-bootstrap-oci/export-diagnostics-03c843c70b5741e487f325cc4c488ad5/stock-library/home/boxes/41354802-4dce-4327-a962-94b3a8577da6/rootfs-ext4-v1/rootfs.ext4 layers=8
+2026-11-11T00:32:40.462938Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}:vm_start: Spawning shim subprocess shim=/Users/roylin/code/kense/krun/.build/oci-original-lib-fc8922de16c942d9a0b6845ed5a42178/bin/kbox-shim box_id=41354802-4dce-4327-a962-94b3a8577da6
+2026-11-11T00:32:40.465755Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}:vm_start: Shim subprocess spawned box_id=41354802-4dce-4327-a962-94b3a8577da6 pid=52561
+2026-11-11T00:32:42.018719Z  INFO vm_boot{box_id=41354802-4dce-4327-a962-94b3a8577da6}: VM ready box_id=41354802-4dce-4327-a962-94b3a8577da6

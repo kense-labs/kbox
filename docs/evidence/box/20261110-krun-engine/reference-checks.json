@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "checkedReferences": [
+    {
+      "source": "docs/evidence/box/20261110-krun-engine/OUTCOME.md",
+      "target": "../../engine/20261110-control-native/51057dee281e4dad9dd5141c8f3d49c3/result.json"
+    },
+    {
+      "source": "docs/evidence/box/20261110-krun-engine/OUTCOME.md",
+      "target": "../../engine/20261110-control-native/51057dee281e4dad9dd5141c8f3d49c3/commands.json"
+    },
+    {
+      "source": "../krun/docs/implementation-status.md",
+      "target": "implementation-plan.md"
+    },
+    {
+      "source": "../krun/docs/implementation-status.md",
+      "target": "evidence/2026-11-10-runtime-foundation/OUTCOME.md"
+    },
+    {
+      "source": "../krun/docs/implementation-status.md",
+      "target": "../../kbox/specs/001-krun-engine/tasks.md"
+    },
+    {
+      "source": "../krun/docs/implementation-status.md",
+      "target": "decisions/0001-mcp-service-runners.md"
+    },
+    {
+      "source": "../krun/docs/implementation-status.md",
+      "target": "../../kbox/docs/evidence/box/20261110-krun-engine/OUTCOME.md"
+    },
+    {
+      "source": "crates/box/runtime/README.md",
+      "target": "../../../docs/evidence/box/20261110-krun-engine/OUTCOME.md"
+    }
+  ],
+  "baselineUnchangedBrokenReference": {
+    "source": "crates/box/runtime/README.md",
+    "target": "../../../../docs/evidence/desktop/20261017-paperloom-secret-readonly-admission/OUTCOME.md"
+  },
+  "bridgeFormattingExitCode": 0,
+  "diffCheckExitCode": 0
+}

@@ -215,11 +215,12 @@ impl VmLocalExecutionBackend {
     }
 
     #[cfg(any(target_os = "linux", target_os = "macos"))]
-    fn claim_transient_registry_auth_for_boot(&self, manager: &mut VmManager) {
-        manager.transient_registry_auth = self
-            .transient_registry_auth
-            .as_ref()
-            .and_then(|broker| broker.take(manager.box_id()));
+    fn claim_transient_registry_auth_for_boot(&self, manager: &mut VmManager, record: &BoxRecord) {
+        manager.transient_registry_auth = if record.is_unclaimed_prewarm() {
+            Some(crate::oci::RegistryAuth::anonymous())
+        } else {
+            self.transient_registry_auth.as_ref().and_then(|broker| broker.take(manager.box_id()))
+        };
     }
 
     fn require_legacy_lineage(&self, execution_id: &str) -> ExecutionManagerResult<()> {
@@ -343,6 +344,15 @@ impl VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<LocalExecutionObservation> {
         self.require_legacy_lineage(&record.id)?;
         let mut manager = shared.lock().await;
+        if manager.boot_failed_before_provider_start() {
+            drop(manager);
+            self.remove_manager(&record.id, &shared)?;
+            return Ok(LocalExecutionObservation {
+                state: ExecutionState::Failed,
+                handle: None,
+                exit_code: None,
+            });
+        }
         let preserve_rootfs = should_force_rootfs_preservation(record)?;
         let exit_code = manager
             .try_wait_exit()
@@ -1054,7 +1064,7 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
             }
         };
         #[cfg(any(target_os = "linux", target_os = "macos"))]
-        self.claim_transient_registry_auth_for_boot(&mut guard);
+        self.claim_transient_registry_auth_for_boot(&mut guard, record);
         if let Err(error) = guard.boot().await {
             guard.config.persistent = requested_persistence;
             // Sandbox boot cleanup synchronously asks the authoritative OCI
@@ -1080,8 +1090,12 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
                     record.id
                 )));
             }
+            // Retain conclusive pre-launch failure until startup reconciliation observes it.
+            let failed_before_launch = guard.boot_failed_before_provider_start();
             drop(guard);
-            self.remove_manager(&record.id, &manager)?;
+            if !failed_before_launch {
+                self.remove_manager(&record.id, &manager)?;
+            }
             let rollback = match tokio::task::spawn_blocking(move || resources.rollback()).await {
                 Ok(result) => result,
                 Err(rollback_error) => Err(ExecutionManagerError::Internal(format!(

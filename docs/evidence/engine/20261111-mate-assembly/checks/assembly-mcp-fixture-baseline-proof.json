@@ -1,0 +1,8 @@
+{
+  "head": "0304123f562ce7264954a8a104dced9e19b3d483",
+  "fixtureUnchanged": true,
+  "testUnchanged": true,
+  "actualFixtureSha256": "9f93e95b92f0cdb8860407d7dc7676e78ae0f82e464bba736604e1c9c0472eb2",
+  "lockedExpectedSha256": "f7e7b84867c5c646ad5a02d9e7be65a23ce7f6eb813ae1e1bf4786d4db602f4a",
+  "baselineWouldFail": true
+}

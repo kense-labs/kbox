@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      "pull",
+      "busybox:1.37.0"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "build",
+      "--run-pool-socket",
+      "/private/tmp/ko-pool-bu3tpree/pool.sock",
+      "--run-pool-autostart",
+      "--run-pool-image",
+      "docker.io/library/krun-base@sha256:2c5dcac05ebc0b0e685959092dc3856453b593dd9c5ad736fef762580446d565",
+      "-f",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/6e6161c8ebc8422fb7244f4a00a77bc8/context/Containerfile",
+      "-t",
+      "krun-oci-regression:6e6161c8ebc8422fb7244f4a00a77bc8",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/6e6161c8ebc8422fb7244f4a00a77bc8/context"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/ko-pool-bu3tpree/pool.sock"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "ls",
+      "-q"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "rmi",
+      "-f",
+      "krun-oci-commit:6e6161c8ebc8422fb7244f4a00a77bc8"
+    ],
+    "exitCode": 0
+  }
+]

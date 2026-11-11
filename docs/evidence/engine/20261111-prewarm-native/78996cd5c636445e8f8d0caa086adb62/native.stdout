@@ -1,0 +1,11 @@
+
+running 1 test
+test kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources ... FAILED
+
+failures:
+
+failures:
+    kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2162 filtered out; finished in 0.07s
+

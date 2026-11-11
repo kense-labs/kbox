@@ -1,0 +1,12 @@
+Creating box eager_church (b4085e570e45)...
+Box eager_church (b4085e570e45) started. Press Ctrl-C to stop.
+	linux-vdso.so.1 (0x0000ffffbadfc000)
+	libgcc_s.so.1 => /lib/aarch64-linux-gnu/libgcc_s.so.1 (0x0000ffffb83f0000)
+	libpthread.so.0 => /lib/aarch64-linux-gnu/libpthread.so.0 (0x0000ffffb83c0000)
+	libm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (0x0000ffffb8310000)
+	libdl.so.2 => /lib/aarch64-linux-gnu/libdl.so.2 (0x0000ffffb82e0000)
+	libc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000ffffb8130000)
+	/lib/ld-linux-aarch64.so.1 (0x0000ffffbadc0000)
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box eager_church exited and was removed.

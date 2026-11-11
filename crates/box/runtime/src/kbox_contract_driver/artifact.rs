@@ -11,6 +11,7 @@ use kbox_contract::contract::{
 use kbox_contract::{RuntimeError, RuntimeResult};
 use kbox_core::CreateExecutionRequest;
 
+use super::directory::{map_error as map_directory_error, BoxDirectoryPort};
 use crate::BoxRecord;
 
 use super::volume_storage::{
@@ -117,11 +118,28 @@ impl RuntimeStoragePlan {
 pub(super) struct ArtifactStorageOwner {
     home_dir: PathBuf,
     port: Option<Arc<dyn BoxArtifactPort>>,
+    directory_port: Option<Arc<dyn BoxDirectoryPort>>,
 }
 
 impl ArtifactStorageOwner {
     pub(super) fn new(home_dir: PathBuf, port: Option<Arc<dyn BoxArtifactPort>>) -> Self {
-        Self { home_dir, port }
+        Self {
+            home_dir,
+            port,
+            directory_port: None,
+        }
+    }
+
+    pub(super) fn set_artifact_port(&mut self, port: Arc<dyn BoxArtifactPort>) {
+        self.port = Some(port);
+    }
+
+    pub(super) fn set_directory_port(&mut self, port: Arc<dyn BoxDirectoryPort>) {
+        self.directory_port = Some(port);
+    }
+
+    pub(super) fn directory_configured(&self) -> bool {
+        self.directory_port.is_some()
     }
 
     pub(super) fn artifact_configured(&self) -> bool {
@@ -136,6 +154,14 @@ impl ArtifactStorageOwner {
         let mut missing = Vec::new();
         if needs_artifacts && self.port.is_none() {
             missing.push("mount_kind:Artifact".into());
+        }
+        if spec
+            .mounts
+            .iter()
+            .any(|mount| matches!(mount.source, RuntimeMountSource::Directory { .. }))
+            && self.directory_port.is_none()
+        {
+            missing.push("mount_kind:Directory".into());
         }
         if !spec.outputs.is_empty() && self.port.is_none() {
             missing.push("feature:OutputArtifacts".into());
@@ -248,6 +274,11 @@ impl ArtifactStorageOwner {
         if let Some(port) = &self.port {
             port.cleanup_spec(digest).await.map_err(map_port_error)?;
         }
+        if let Some(port) = &self.directory_port {
+            port.cleanup_spec(digest)
+                .await
+                .map_err(map_directory_error)?;
+        }
         let home_dir = self.home_dir.clone();
         let digest = digest.to_owned();
         tokio::task::spawn_blocking(move || cleanup_output_volumes(&home_dir, &digest))
@@ -300,6 +331,24 @@ impl ArtifactStorageOwner {
                         .push(bind_mount(&resolved.path, &mount.target, mount.read_only)?);
                     plan.volume_names.push(resolved.name);
                 }
+                RuntimeMountSource::Directory { .. } => {
+                    let port = self.directory_port.as_ref().ok_or_else(|| {
+                        RuntimeError::UnsupportedCapabilities(vec!["mount_kind:Directory".into()])
+                    })?;
+                    let source = port
+                        .mount_path(spec, mount)
+                        .await
+                        .map_err(map_directory_error)?;
+                    let source = if create_volumes {
+                        validate_artifact_mount_path(source).await?
+                    } else {
+                        // A removed/moved source must not prevent teardown of its bound execution.
+                        validate_mount_path_shape(&source)?;
+                        source
+                    };
+                    plan.volumes
+                        .push(bind_mount(&source, &mount.target, mount.read_only)?);
+                }
                 RuntimeMountSource::Tmpfs { .. } => {}
             }
         }
@@ -327,6 +376,22 @@ impl ArtifactStorageOwner {
 }
 
 async fn validate_artifact_mount_path(path: PathBuf) -> RuntimeResult<PathBuf> {
+    validate_mount_path_shape(&path)?;
+    let metadata = tokio::fs::symlink_metadata(&path)
+        .await
+        .map_err(artifact_io_error)?;
+    let canonical = tokio::fs::canonicalize(&path)
+        .await
+        .map_err(artifact_io_error)?;
+    if metadata.file_type().is_symlink() || !metadata.file_type().is_dir() || canonical != path {
+        return Err(RuntimeError::InvalidRequest(
+            "Box Runtime mount source must be a canonical plain directory".into(),
+        ));
+    }
+    Ok(path)
+}
+
+fn validate_mount_path_shape(path: &Path) -> RuntimeResult<()> {
     let display = path.to_str().ok_or_else(|| {
         RuntimeError::InvalidRequest("Box Artifact mount path is not UTF-8".into())
     })?;
@@ -344,18 +409,7 @@ async fn validate_artifact_mount_path(path: PathBuf) -> RuntimeResult<PathBuf> {
             "Box Artifact mount path must be an encodable normalized absolute path".into(),
         ));
     }
-    let metadata = tokio::fs::symlink_metadata(&path)
-        .await
-        .map_err(artifact_io_error)?;
-    let canonical = tokio::fs::canonicalize(&path)
-        .await
-        .map_err(artifact_io_error)?;
-    if metadata.file_type().is_symlink() || !metadata.file_type().is_dir() || canonical != path {
-        return Err(RuntimeError::InvalidRequest(
-            "Box Artifact mount source must be a canonical plain directory".into(),
-        ));
-    }
-    Ok(path)
+    Ok(())
 }
 
 fn bind_mount(source: &Path, target: &str, read_only: bool) -> RuntimeResult<String> {

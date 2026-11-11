@@ -1,0 +1,77 @@
+[
+  {
+    "command": [
+      "pull",
+      "busybox:1.37.0"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "build",
+      "-f",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/5b100d27556747c7b820e18600c2ee52/context/Containerfile",
+      "-t",
+      "krun-oci-regression:5b100d27556747c7b820e18600c2ee52",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/5b100d27556747c7b820e18600c2ee52/context"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "image-inspect",
+      "krun-oci-regression:5b100d27556747c7b820e18600c2ee52"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "volume",
+      "create",
+      "ordinary-data"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "run",
+      "-d",
+      "--name",
+      "ordinary",
+      "-v",
+      "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261110-control-native/5b100d27556747c7b820e18600c2ee52/\u5916\u90e8\u76ee\u5f55 with spaces:/workspace",
+      "-v",
+      "ordinary-data:/data",
+      "krun-oci-regression:5b100d27556747c7b820e18600c2ee52"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "exec",
+      "ordinary",
+      "--",
+      "python3",
+      "-c",
+      "import hashlib,json,pathlib,subprocess,urllib.request; assert pathlib.Path('/image-build-proof').read_text()=='5b100d27556747c7b820e18600c2ee52'; assert urllib.request.urlopen('http://127.0.0.1:54088',timeout=10).read()==b'5b100d27556747c7b820e18600c2ee52'; value=bytes(range(256))*4096; p=pathlib.Path('/workspace/\u4e2d\u6587 result.bin'); p.write_bytes(value); p.rename('/workspace/renamed.bin'); pathlib.Path('/data/persistent').write_text('5b100d27556747c7b820e18600c2ee52'); pathlib.Path('/native-rootfs-check').write_text('5b100d27556747c7b820e18600c2ee52'); assert subprocess.run(['python3','-c','print(7)'],capture_output=True,check=True).stdout.strip()==b'7'; print(json.dumps({'bytes':len(value),'sha256':hashlib.sha256(value).hexdigest()}))"
+    ],
+    "exitCode": 1
+  },
+  {
+    "command": [
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "rm",
+      "-f",
+      "ea87f861-9893-4c9c-818a-4e3cee490053"
+    ],
+    "exitCode": 0
+  }
+]

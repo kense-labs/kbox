@@ -289,6 +289,9 @@ async fn collect_pids_current(record: &BoxRecord) -> Option<u64> {
 }
 
 async fn collect_guest_process_count(record: &BoxRecord) -> Option<u64> {
+    if record.is_unclaimed_prewarm() {
+        return None;
+    }
     let exec_socket_path =
         crate::socket_paths::runtime_socket(record, crate::socket_paths::RuntimeSocket::Exec);
     let client = ExecClient::connect(&exec_socket_path).await.ok()?;

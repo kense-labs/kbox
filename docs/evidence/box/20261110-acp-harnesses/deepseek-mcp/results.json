@@ -1,0 +1,6 @@
+{
+  "harness": "deepseek",
+  "status": "FAIL",
+  "error": "Invalid params: mcpServers[0].command must be an absolute path",
+  "remaining_boxes": []
+}

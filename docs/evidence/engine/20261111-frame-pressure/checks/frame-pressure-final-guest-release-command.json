@@ -1,0 +1,1 @@
+{"command": ["cargo", "zigbuild", "--locked", "--release", "--target", "aarch64-unknown-linux-musl", "-p", "kbox-guest-init"], "cwd": "/Users/roylin/code/kense/kbox", "exitCode": 0, "seconds": 15.0}

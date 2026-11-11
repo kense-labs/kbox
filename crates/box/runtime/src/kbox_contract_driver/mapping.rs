@@ -20,6 +20,7 @@ use url::Position;
 
 use super::artifact::RuntimeStoragePlan;
 use super::metadata::{managed_labels, operation_id};
+use super::profile::{native_guest_requested, validate_profile};
 use super::secret::secret_file;
 use super::{BoxRuntimeSevSnpConfig, OCI_IMAGE_INDEX, OCI_IMAGE_MANIFEST};
 
@@ -70,6 +71,7 @@ pub(super) fn creation_request_for(
     storage.validate_for(spec)?;
     validate_provider_unit_id(&spec.unit_id)?;
     validate_supported_shape(spec, execution_boundary, sev_snp)?;
+    validate_profile(spec)?;
     let spec_digest = spec.digest().map_err(RuntimeError::InvalidRequest)?;
     let memory_mb = spec.resources.memory_bytes.div_ceil(BYTES_PER_MIB);
     let memory_mb = u32::try_from(memory_mb).map_err(|_| {
@@ -166,8 +168,17 @@ pub(super) fn creation_request_for(
         },
         deferred_main: spec.isolation == kbox_contract::contract::IsolationLevel::Confidential,
         persistent: true,
-        cap_drop: vec!["ALL".into()],
-        security_opt: vec!["no-new-privileges".into()],
+        cap_drop: if native_guest_requested(spec) {
+            Vec::new()
+        } else {
+            vec!["ALL".into()]
+        },
+        security_opt: if native_guest_requested(spec) {
+            Vec::new()
+        } else {
+            vec!["no-new-privileges".into()]
+        },
+        privileged: native_guest_requested(spec),
         ..Default::default()
     };
 

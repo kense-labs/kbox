@@ -1,0 +1,59 @@
+[
+  {
+    "prefix": "/Users/roylin/code/kense/krun/.build/credential-final-oci-only-9097e15a54f44ad698297c541755e2fd",
+    "label": "candidate",
+    "exports": [
+      {
+        "exitCode": 1,
+        "bytes": 401342464
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395247616
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395575296
+      }
+    ],
+    "cleanup": true
+  },
+  {
+    "prefix": "/Users/roylin/code/kense/krun/.build/prewarm-verified-prefix-e821e354b75246e1ad358d02a2d556c1",
+    "label": "before-credentials",
+    "exports": [
+      {
+        "exitCode": 1,
+        "bytes": 401276928
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395182080
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395116544
+      }
+    ],
+    "cleanup": true
+  },
+  {
+    "prefix": "/Users/roylin/code/kense/krun/.build/prewarm-schedule-prefix-0dc9f02a61a9458e86a2c00d47f5a7bb",
+    "label": "before-tsi-eof",
+    "exports": [
+      {
+        "exitCode": 1,
+        "bytes": 401276928
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395247616
+      },
+      {
+        "exitCode": 1,
+        "bytes": 395116544
+      }
+    ],
+    "cleanup": true
+  }
+]

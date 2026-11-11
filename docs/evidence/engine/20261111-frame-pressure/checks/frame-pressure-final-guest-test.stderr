@@ -1,0 +1,3 @@
+   Compiling kbox-guest-init v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/guest/init)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.92s
+     Running unittests src/lib.rs (target/debug/deps/kbox_guest_init-d0801659491a117f)

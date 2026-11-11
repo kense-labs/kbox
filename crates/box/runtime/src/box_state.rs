@@ -243,7 +243,7 @@ fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
             record
                 .managed_execution
                 .as_ref()
-                .is_some_and(|metadata| &metadata.operation_id == operation_id)
+                .is_some_and(|metadata| metadata.owns_creation_operation(operation_id))
         })
     }
 
@@ -256,7 +256,7 @@ fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
             record
                 .managed_execution
                 .as_ref()
-                .is_some_and(|metadata| &metadata.operation_id == operation_id)
+                .is_some_and(|metadata| metadata.owns_creation_operation(operation_id))
         })
     }
 

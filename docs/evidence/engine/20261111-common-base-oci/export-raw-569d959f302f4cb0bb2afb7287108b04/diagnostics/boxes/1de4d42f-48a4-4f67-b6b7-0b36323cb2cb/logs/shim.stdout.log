@@ -1,0 +1,32 @@
+2026-11-11T02:14:15.911600Z  INFO Starting VM box_id=1de4d42f-48a4-4f67-b6b7-0b36323cb2cb vcpus=2 memory_mib=512 rootfs=ext4-disk:/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/rootfs-ext4-v1/rootfs.ext4
+2026-11-11T02:14:15.912163Z DEBUG Validated filesystem mount tag=workspace path=/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/workspace read_only=false
+2026-11-11T02:14:15.912186Z DEBUG Validated filesystem mount tag=kterminal path=/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/runtime-control read_only=false
+2026-11-11T02:14:15.912196Z DEBUG Validated filesystem mount tag=kboot path=/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/boot-control read_only=true
+2026-11-11T02:14:15.912218Z DEBUG Initializing libkrun logging
+2026-11-11T02:14:15.912223Z DEBUG Initializing libkrun with DEBUG log level
+2026-11-11T02:14:15.913678Z DEBUG Creating libkrun context
+2026-11-11T02:14:15.914520Z DEBUG Setting VM config vcpus=2 memory_mib=512
+2026-11-11T02:14:15.914531Z DEBUG Setting VM config cpus=2 memory_mib=512
+2026-11-11T02:14:15.914555Z DEBUG RLIMIT_NOFILE raised limit=9223372036854775807
+2026-11-11T02:14:15.914560Z DEBUG Configuring guest rlimits rlimits=["7=1048576:1048576", "6=4096:8192"]
+2026-11-11T02:14:15.914576Z  INFO Adding filesystem mounts via virtiofs:
+2026-11-11T02:14:15.914585Z  INFO   workspace → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/workspace (rw)
+2026-11-11T02:14:15.914589Z DEBUG Adding virtiofs mount mount_tag="workspace" host_path="/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/workspace"
+2026-11-11T02:14:15.914595Z  INFO   kterminal → /Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/runtime-control (rw)
+2026-11-11T02:14:15.914598Z DEBUG Adding virtiofs mount mount_tag="kterminal" host_path="/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/runtime-control"
+2026-11-11T02:14:15.914603Z  INFO   kboot → /private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/boot-control (ro)
+2026-11-11T02:14:15.914606Z DEBUG Adding virtiofs mount mount_tag="kboot" host_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/boot-control"
+2026-11-11T02:14:15.914608Z DEBUG Setting root filesystem source rootfs=ext4-disk:/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-common-base-oci/export-raw-569d959f302f4cb0bb2afb7287108b04/home/boxes/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/rootfs-ext4-v1/rootfs.ext4
+2026-11-11T02:14:15.914977Z DEBUG Setting working directory workdir=/workspace
+2026-11-11T02:14:15.914983Z DEBUG Setting entrypoint executable=/sbin/init args=[]
+2026-11-11T02:14:15.914992Z  INFO Disabling TSI socket interception for isolated networking
+2026-11-11T02:14:15.914995Z DEBUG Configuring vsock bridge for exec (Unix socket) socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/exec.sock" guest_port=4089
+2026-11-11T02:14:15.914998Z DEBUG Configuring vsock port port=4089 socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/exec.sock" listen=true
+2026-11-11T02:14:15.915149Z DEBUG Configuring vsock bridge for PTY socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/pty.sock" guest_port=4090
+2026-11-11T02:14:15.915160Z DEBUG Configuring vsock port port=4090 socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/pty.sock" listen=true
+2026-11-11T02:14:15.915174Z DEBUG Configuring vsock bridge for attestation socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/attest.sock" guest_port=4091
+2026-11-11T02:14:15.915177Z DEBUG Configuring vsock port port=4091 socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/attest.sock" listen=true
+2026-11-11T02:14:15.915183Z DEBUG Configuring vsock bridge for CRI port-forward control socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/portfwd.sock" guest_port=4093
+2026-11-11T02:14:15.915185Z DEBUG Configuring vsock port port=4093 socket_path="/private/tmp/kbox-sockets/1de4d42f-48a4-4f67-b6b7-0b36323cb2cb/portfwd.sock" listen=true
+2026-11-11T02:14:15.915292Z DEBUG split console enabled (stdout/stderr separated)
+2026-11-11T02:14:15.921574Z  INFO Starting VM (process takeover) box_id=1de4d42f-48a4-4f67-b6b7-0b36323cb2cb

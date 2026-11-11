@@ -1,0 +1,5 @@
+Building from /Users/roylin/code/kense/krun/.build/shared-base/Containerfile
+Step 1/9: FROM debian:bookworm-slim@sha256:734a72b3d6142a71993b4bc580ca01d8ca687f77a2c422d96a961d3376b179bc
+Step 2/9: USER root
+Step 3/9: ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
+Step 4/9: RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl git python3 python3-venv python3-dev build-essential pkg-config procps unzip bubblewrap jq openssh-client xz-utils && rm -rf /var/lib/apt/lists/*

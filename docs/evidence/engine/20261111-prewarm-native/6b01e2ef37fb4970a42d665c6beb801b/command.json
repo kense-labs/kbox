@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-prewarm-native/6b01e2ef37fb4970a42d665c6beb801b/native-client",
+    "--ignored",
+    "--exact",
+    "kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources",
+    "--nocapture"
+  ],
+  "image": "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+  "testSha256": "a124f90ebedda6cf6fb59ec57dcbd33b617cf10194789b434093b31855befb57",
+  "kboxSha256": "e9f1e9abd1c0747338e46d37de00578573b4ece2cec5aa560e9d63e8081f05ee"
+}

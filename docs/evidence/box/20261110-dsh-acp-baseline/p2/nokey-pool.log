@@ -1,0 +1,11 @@
+Listening on /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/p2/nokey.sock (Ctrl-C or SIGTERM to drain and stop)
+Warm pool started
+  default image: dsh-acp:e2e-ba01b05 (pre-warming 1)
+  max:      1
+  boot concurrency: 2 (daemon-wide)
+  ttl:      300s
+  lease ttl: 3600s
+  socket:   /Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-baseline/p2/nokey.sock
+Draining warm pools...
+2026-11-10T07:47:29.573586Z  WARN pool connection failed error=Broken pipe (os error 32)
+Done.

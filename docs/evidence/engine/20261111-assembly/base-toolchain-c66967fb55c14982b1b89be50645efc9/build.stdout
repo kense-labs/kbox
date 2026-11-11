@@ -1,0 +1,9 @@
+Building from /Users/roylin/code/kense/krun/.build/shared-base/Containerfile
+Step 1/7: FROM node:24-bookworm@sha256:8fa96264f302f58bbb13aa7339c541547b56975766ce956c875da149452a3e40
+Step 2/7: USER root
+Step 3/7: ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
+Step 4/7: COPY krun /opt/krun/bin/krun
+Step 5/7: WORKDIR /workspace
+Step 6/7: ENTRYPOINT []
+Step 7/7: CMD ["sleep", "2147483647"]
+Successfully built krun-base:0.1.0 (9 layers, 384.2 MB, linux/arm64)

@@ -1,0 +1,14 @@
+{
+  "timeout": false,
+  "bytes": 424443576,
+  "invalid": {
+    "offset": 424443516,
+    "kind": 0,
+    "size": 9,
+    "bytes": "9c02000000000063660000040151028700000000090400000032726f6f7466732061726368697665206661696c65643a",
+    "nextDataHeader": -1
+  },
+  "frames": 6476,
+  "payloadBytes": 424411136,
+  "remaining": 60
+}

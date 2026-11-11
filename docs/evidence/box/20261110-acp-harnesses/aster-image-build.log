@@ -1,0 +1,8 @@
+Building from /Users/roylin/code/kense/kbox/.tmp/acp-harnesses/aster-runtime/Containerfile
+Step 1/6: FROM acp-aster-base:20261110
+Step 2/6: USER root
+Step 3/6: COPY aster /opt/aster
+Step 4/6: WORKDIR /workspace
+Step 5/6: ENTRYPOINT ["/opt/aster/aster-acp"]
+Step 6/6: CMD ["--cwd", "/workspace"]
+Successfully built aster-acp:e2e-73b1d5b (4 layers, 209.9 MB, linux/arm64)

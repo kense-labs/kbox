@@ -3,6 +3,40 @@
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
+/// Preserve mount paths across libkrun's ASCII-only kernel command line.
+pub fn encode_guest_mount_spec(value: &str) -> String {
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
+    if value
+        .chars()
+        .all(|c| c.is_ascii_graphic() && !matches!(c, '\'' | '"' | '\\') || c == ' ')
+    {
+        value.to_owned()
+    } else {
+        format!("kbox-b64-v1:{}", STANDARD.encode(value.as_bytes()))
+    }
+}
+
+pub fn decode_guest_mount_spec(value: &str) -> Result<String, String> {
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
+    let value = match value.strip_prefix("kbox-b64-v1:") {
+        Some(encoded) => String::from_utf8(
+            STANDARD
+                .decode(encoded)
+                .map_err(|_| "invalid encoded mount spec")?,
+        )
+        .map_err(|_| "mount spec is not UTF-8")?,
+        None => value.to_owned(),
+    };
+    if value.contains('\0') {
+        return Err("mount spec contains NUL".into());
+    }
+    Ok(value)
+}
+
+#[cfg(test)]
+#[path = "guest_mount_tests.rs"]
+mod mount_tests;
+
 /// Fixed in-guest location of the runtime-owned entrypoint configuration.
 pub const RUNTIME_EXEC_CONFIG_PATH: &str = "/.kbox-exec.json";
 /// Versioned schema written by the runtime and consumed by guest-init.

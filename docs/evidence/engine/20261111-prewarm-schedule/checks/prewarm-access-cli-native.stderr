@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/krun/scripts/test_cli_native.py", line 176, in <module>
+    main()
+  File "/Users/roylin/code/kense/krun/scripts/test_cli_native.py", line 123, in main
+    up = json.loads(cli(krun, ["up", "-f", str(archive), "-c", str(config), "--json", "--wait-timeout", "300"], workspace).stdout)
+  File "/Users/roylin/code/kense/krun/scripts/test_cli_native.py", line 57, in cli
+    assert result.returncode == 0, f"CLI {index} failed; logs retained"
+AssertionError: CLI 1 failed; logs retained

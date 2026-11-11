@@ -17,6 +17,7 @@ pub enum RuntimeUnitClass {
 #[serde(rename_all = "snake_case")]
 pub enum MountKind {
     Artifact,
+    Directory,
     Volume,
     Tmpfs,
 }
@@ -24,15 +25,26 @@ pub enum MountKind {
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "snake_case", deny_unknown_fields)]
 pub enum RuntimeMountSource {
-    Artifact { artifact: ArtifactRef },
-    Volume { volume_id: String },
-    Tmpfs { size_bytes: u64 },
+    Artifact {
+        artifact: ArtifactRef,
+    },
+    /// Mutable caller-owned directory resolved through an authorized provider port.
+    Directory {
+        reference: String,
+    },
+    Volume {
+        volume_id: String,
+    },
+    Tmpfs {
+        size_bytes: u64,
+    },
 }
 
 impl RuntimeMountSource {
     pub fn kind(&self) -> MountKind {
         match self {
             Self::Artifact { .. } => MountKind::Artifact,
+            Self::Directory { .. } => MountKind::Directory,
             Self::Volume { .. } => MountKind::Volume,
             Self::Tmpfs { .. } => MountKind::Tmpfs,
         }
@@ -41,6 +53,9 @@ impl RuntimeMountSource {
     fn validate(&self) -> Result<(), String> {
         match self {
             Self::Artifact { artifact } => artifact.validate(),
+            Self::Directory { reference } => {
+                super::validate_id("directory reference", reference, 1024)
+            }
             Self::Volume { volume_id } => super::validate_id("volume_id", volume_id, 255),
             Self::Tmpfs { size_bytes } if *size_bytes == 0 => {
                 Err("tmpfs size_bytes must be positive".into())
@@ -49,6 +64,10 @@ impl RuntimeMountSource {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "directory_tests.rs"]
+mod directory_tests;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]

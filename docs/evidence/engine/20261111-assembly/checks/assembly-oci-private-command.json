@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "../kbox/scripts/e2e-engine/native_smoke.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/assembly-prefix-61e004fafca5457384be01f83d8988ba/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-assembly-oci-private-build"
+  ]
+}

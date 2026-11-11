@@ -1,0 +1,408 @@
+Diff in /Users/roylin/code/aster/crates/code/acp/src/agent/turn.rs:735:
+         };
+         if !drained {
+             crate::turn_cancel::detach_turn_permit(turn_permit, join);
+-            return Err(agent_failure_error("cancelled run cleanup or foreground tool results are still pending"));
++            return Err(agent_failure_error(
++                "cancelled run cleanup or foreground tool results are still pending",
++            ));
+         }
+         self.settle_public_join(join, turn_permit).await;
+         self.close_run_observation(state).await;
+Diff in /Users/roylin/code/aster/crates/code/acp/tests/shipped_tui_e2e/retrieval.rs:1:
+ #![cfg(test)]
+ 
+ use super::*;
+-use serde_json::{Value, json};
++use serde_json::{json, Value};
+ 
+ const PROMPT: &str = "RETRIEVAL-ORACLE: find the workspace retrieval probe using hybrid search";
+ const SEMANTIC_PROMPT: &str = "RETRIEVAL-ORACLE: find configuration loading by meaning";
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/env_acl/tests.rs:298:
+     )
+     .unwrap();
+     assert_eq!(config.tools.get("uv").map(String::as_str), Some("latest"));
++    assert_eq!(config.tools.get("kbox").map(String::as_str), Some("0.1.10"));
+     assert_eq!(
+-        config.tools.get("kbox").map(String::as_str),
+-        Some("0.1.10")
+-    );
+-    assert_eq!(
+         config.vars.get("NODE_ENV").map(String::as_str),
+         Some("development")
+     );
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/env_acl/tests.rs:385:
+     let uv = resolved.iter().find(|entry| entry.name == "uv").unwrap();
+     assert!(uv.version.is_none());
+     assert_eq!(uv.spec, "github:astral-sh/uv");
+-    let sandbox = resolved
+-        .iter()
+-        .find(|entry| entry.name == "kbox")
+-        .unwrap();
++    let sandbox = resolved.iter().find(|entry| entry.name == "kbox").unwrap();
+     assert_eq!(sandbox.version.as_deref(), Some("0.1.10"));
+ }
+ 
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:1918:
+         let windows = &["windows-x86_64"];
+         let windows_releases = [libkrun.clone(), product.clone()];
+         let windows_choice = choose_release(&windows_releases, windows, "kbox").unwrap();
+-        assert_eq!(
+-            windows_choice.asset.name,
+-            "kbox-v3.3.0-windows-x86_64.zip"
+-        );
++        assert_eq!(windows_choice.asset.name, "kbox-v3.3.0-windows-x86_64.zip");
+         let windows_libkrun_only = [libkrun];
+         let windows_libkrun = match choose_release(&windows_libkrun_only, windows, "kbox") {
+             Ok(choice) => panic!("selected {}", choice.asset.name),
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:1932:
+         let linux = &["linux-arm64"];
+         let linux_releases = [product];
+         let linux_choice = choose_release(&linux_releases, linux, "kbox").unwrap();
+-        assert_eq!(
+-            linux_choice.asset.name,
+-            "kbox-v3.3.0-linux-arm64.tar.gz"
+-        );
++        assert_eq!(linux_choice.asset.name, "kbox-v3.3.0-linux-arm64.tar.gz");
+     }
+ 
+     #[test]
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:1956:
+         let archive = tar_gz_files(&[
+             ("kbox-v3.3.0-macos-arm64/kbox", script),
+             ("kbox-v3.3.0-macos-arm64/kbox-shim", b"shim"),
+-            (
+-                "kbox-v3.3.0-macos-arm64/kbox-guest-init",
+-                b"guest-init",
+-            ),
++            ("kbox-v3.3.0-macos-arm64/kbox-guest-init", b"guest-init"),
+             ("kbox-v3.3.0-macos-arm64/lib/libkrun.dylib", b"libkrun"),
+         ]);
+-        let extracted =
+-            extract_tree("kbox-v3.3.0-macos-arm64.tar.gz", &archive, "kbox").unwrap();
++        let extracted = extract_tree("kbox-v3.3.0-macos-arm64.tar.gz", &archive, "kbox").unwrap();
+         assert_eq!(extracted.executable, script);
+         let mut paths: Vec<&str> = extracted
+             .companions
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:1973:
+         paths.sort_unstable();
+         assert_eq!(
+             paths,
+-            vec![
+-                "kbox-guest-init",
+-                "kbox-shim",
+-                "lib/libkrun.dylib",
+-            ]
++            vec!["kbox-guest-init", "kbox-shim", "lib/libkrun.dylib",]
+         );
+     }
+ 
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:1987:
+         let archive = tar_gz_files(&[
+             ("kbox-v3.3.0-macos-arm64/kbox", script),
+             ("kbox-v3.3.0-macos-arm64/kbox-shim", b"shim"),
+-            (
+-                "kbox-v3.3.0-macos-arm64/kbox-guest-init",
+-                b"guest-init",
+-            ),
++            ("kbox-v3.3.0-macos-arm64/kbox-guest-init", b"guest-init"),
+             ("kbox-v3.3.0-macos-arm64/lib/libkrun.dylib", b"libkrun"),
+         ]);
+         let digest = hex_encode(&Sha256::digest(&archive));
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:2149:
+             String::from_utf8_lossy(&output.stderr)
+         );
+         assert!(
+-            text.lines()
+-                .any(|line| line.starts_with("kbox version ")),
++            text.lines().any(|line| line.starts_with("kbox version ")),
+             "{text}"
+         );
+         store.remove_sync("kbox").unwrap();
+Diff in /Users/roylin/code/aster/crates/use/tool-acquire/src/http.rs:2170:
+ 
+     #[test]
+     fn kbox_without_a_checksum_is_refused() {
+-        let archive = tar_gz(
+-            "kbox",
+-            b"#!/bin/sh\nprintf '%s\\n' 'kbox version 3.3.0'\n",
+-        );
++        let archive = tar_gz("kbox", b"#!/bin/sh\nprintf '%s\\n' 'kbox version 3.3.0'\n");
+         let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+         let port = listener.local_addr().unwrap().port();
+         let listed = serde_json::json!([
+Diff in /Users/roylin/code/aster/apps/aster/src/cli_pair_update/tests.rs:117:
+         );
+     let parsed = parse_manifest(&serde_json::to_vec(&manifest).unwrap(), "").unwrap();
+     assert_eq!(parsed.assets.len(), 4);
+-    assert!(parsed.assets.iter().all(|asset| !asset.name.contains("kylin")));
++    assert!(
++        parsed
++            .assets
++            .iter()
++            .all(|asset| !asset.name.contains("kylin"))
++    );
+ }
+ 
+ #[test]
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/agent_plane/aix_episodes_tests.rs:805:
+ // Catch overlapping turns on one box or unbounded warm boxes.
+ #[test]
+ fn a_running_turn_and_the_box_limit_refuse_without_starting_a_box() {
+-    let episodes = AixEpisodes::with_box(
+-        Some(PathBuf::from("/nonexistent/kbox")),
+-        None,
+-        IDLE_LIMIT,
+-    )
+-    .unwrap();
++    let episodes =
++        AixEpisodes::with_box(Some(PathBuf::from("/nonexistent/kbox")), None, IDLE_LIMIT).unwrap();
+     let agent = agent_at(PathBuf::from("/nonexistent/agent/run.mjs"));
+     let model = ModelAccess {
+         origin: "http://127.0.0.1:9".to_owned(),
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/agent_plane/edge_box.rs:21:
+ 
+ use super::edge_runtime::{EdgeResources, PACKAGE_TIMED_OUT};
+ 
+-pub const BOX_REQUIRED: &str =
+-    "kbox is required to enforce the declared cpu and memory limits";
++pub const BOX_REQUIRED: &str = "kbox is required to enforce the declared cpu and memory limits";
+ pub const IMAGE_UNAVAILABLE: &str = "the edge agent image is not available";
+ pub const IMAGE_INVALID: &str = "the edge agent image is invalid";
+ pub const MEMORY_NOT_WHOLE_MIB: &str = "edge package memory must be a whole number of mebibytes";
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/app_updater/delivery_tests.rs:115:
+ }
+ 
+ #[cfg(target_os = "macos")]
+-
+ #[test]
+ fn distinct_product_bundles_never_share_their_update_staging_directory() {
+     let root = Path::new("/fixture/Applications");
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/app_updater/delivery_tests.rs:124:
+         stage_dir(&root.join("Legacy.app")).unwrap()
+     );
+ }
+-
+ 
+ #[test]
+ fn installing_owns_busy_until_settled() {
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/app_updater/github_feed_tests.rs:79:
+     assert_eq!(fs::read(partial).unwrap(), payload);
+ }
+ 
+-
+ #[test]
+ fn a_valid_manifest_parses_into_release_meta() {
+     let sha = "ab".repeat(32);
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:20:
+ const COMPOSER_FILE_LIMIT: usize = 20 * 1024 * 1024;
+ const STREAM_WAIT: Duration = Duration::from_secs(3);
+ 
+-
+-
+-
+ struct Conversation {
+     title: String,
+     cancelled: bool,
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:4027:
+         assert!(last.is_err(), "listener still accepted connections");
+     }
+ 
+-
+-
+-
+-
+-
+-
+     fn ndjson_events(body: &str) -> Vec<String> {
+         let bytes = body.as_bytes();
+         let mut index = 0;
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:4064:
+         events
+     }
+ 
+-
+     #[test]
+     fn composer_upload_name_drops_path_segments() {
+         assert_eq!(super::sanitize_upload_name("../secret.txt"), "secret.txt");
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:4181:
+         }
+     }
+ 
+-
+     #[test]
+     fn applet_product_release_is_served_without_a_token() {
+         let authority = StudioAuthority::start().unwrap();
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:4290:
+         assert!(!body.contains("aster_ms_"), "{body}");
+     }
+ 
+-
+-
+-
+-
+-
+-
+     #[cfg(feature = "tenant-aster")]
+     #[test]
+     fn saves_a_provider_without_putting_the_key_on_the_list() {
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority.rs:4371:
+         let denied = request(port, "GET", "/api/providers", "nope", Some(&origin), "");
+         assert_eq!(split_response(&denied).0, 401, "{denied}");
+     }
+-
+ }
+ 
+ #[cfg(test)]
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority_pure_local_tests.rs:104:
+     );
+ }
+ 
+-
+ #[cfg(feature = "tenant-aster")]
+ #[test]
+ fn pure_local_build_round_trips_custom_connectors_and_their_config() {
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/authority_resource_broker.rs:615:
+     };
+     Some(result.unwrap_or_else(error_response))
+ }
+-
+ 
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/capabilities_registry.rs:478:
+ fn required_component(package_id: &str) -> bool {
+     matches!(
+         package_id,
+-        "aster/kbox"
+-            | "aster/aster-document"
+-            | "use/aster/kbox"
+-            | "use/aster/aster-document"
++        "aster/kbox" | "aster/aster-document" | "use/aster/kbox" | "use/aster/aster-document"
+     )
+ }
+ 
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/model_control.rs:4:
+ use std::sync::Arc;
+ use std::time::{Instant, SystemTime, UNIX_EPOCH};
+ 
++use crate::model_translation::TranslationError;
+ use aster_boot::{BootResponse, StreamableFile};
+ use aster_core::budget::local::{BudgetScope, LocalBudget};
+ use aster_core::llm::local_policy::{LocalModelPolicy, ModelReference, ModelTarget};
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/model_control.rs:13:
+     InvocationRoute, InvocationStart, ObservedTokens, PricingSnapshot,
+     RouteCandidateRefusal as CandidateRefusal,
+ };
+-use crate::model_translation::TranslationError;
+ use futures_util::{StreamExt, stream};
+ use serde_json::{Value, json};
+ 
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/model_control_count.rs:11:
+         input: DispatchInput,
+     ) -> Result<BootResponse, DispatchError> {
+         let state_refs = if input.protocol == UsageProtocol::Gemini {
+-            gemini::counter_state_refs(crate::model_translation::gemini_count_input(
+-                &input.body,
+-            )?)?
++            gemini::counter_state_refs(crate::model_translation::gemini_count_input(&input.body)?)?
+         } else if input.protocol != UsageProtocol::AnthropicMessages
+             || !input.body.get("messages").is_some_and(Value::is_array)
+         {
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/model_control_http.rs:559:
+                     .ok_or_else(|| {
+                         BootError::BadRequest("gateway client identity is required".into())
+                     })?;
+-                let client_id =
+-                    if credential == DEFAULT_GATEWAY_CREDENTIAL {
+-                        "default".into()
+-                    } else {
+-                        credential.to_string()
+-                    };
++                let client_id = if credential == DEFAULT_GATEWAY_CREDENTIAL {
++                    "default".into()
++                } else {
++                    credential.to_string()
++                };
+                 ("api-gateway", request_id.to_string(), Some(client_id))
+             }
+         };
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/runtime_components_tests.rs:274:
+             .is_err()
+     );
+     assert_eq!(
+-        registry
+-            .get("aster/kbox")
+-            .await
+-            .unwrap()
+-            .unwrap()
+-            .receipt,
++        registry.get("aster/kbox").await.unwrap().unwrap().receipt,
+         first.receipt
+     );
+     pin.version = "0.1.0".into();
+Diff in /Users/roylin/code/aster/apps/studio/src-tauri/src/runtime_components_tests.rs:339:
+     fs::write(&path, serde_json::to_vec(&invalid).unwrap()).unwrap();
+     assert!(load_pin(&path, "2.1.4").is_err());
+     let mut invalid = pin;
+-    invalid.components.get_mut("kbox").unwrap().archive =
+-        Some("kbox-../../outside.aix".into());
++    invalid.components.get_mut("kbox").unwrap().archive = Some("kbox-../../outside.aix".into());
+     fs::write(&path, serde_json::to_vec(&invalid).unwrap()).unwrap();
+     assert!(load_pin(&path, "2.1.4").is_err());
+ }
+Diff in /Users/roylin/code/aster/crates/embedding/src/assets.rs:114:
+ 
+ fn read_asset(dir: &Path, file: &str, pinned: &str) -> Result<Vec<u8>, String> {
+     let path = dir.join(file);
+-    let bytes = std::fs::read(&path).map_err(|error| {
+-        format!(
+-            "cannot read embedding asset {}: {error}",
+-            path.display()
+-        )
+-    })?;
++    let bytes = std::fs::read(&path)
++        .map_err(|error| format!("cannot read embedding asset {}: {error}", path.display()))?;
+     verify_asset(file, &bytes, pinned)?;
+     Ok(bytes)
+ }
+Diff in /Users/roylin/code/aster/crates/terminal/crates/codegen/aster-confine/src/lib.rs:141:
+     Ok(())
+ }
+ 
+-pub fn verify_read_deny_enforced(
+-    _profile: &ProfileName,
+-    _workspace: &Path,
+-) -> Result<(), String> {
++pub fn verify_read_deny_enforced(_profile: &ProfileName, _workspace: &Path) -> Result<(), String> {
+     Ok(())
+ }
+ 
+Diff in /Users/roylin/code/aster/crates/terminal/crates/codegen/aster-shell/src/sampling/error.rs:545:
+         assert!(RATE_LIMITED_USER_MESSAGE_OAUTH.contains("Upgrade your account"));
+         assert!(RATE_LIMITED_USER_MESSAGE_API_KEY.contains("team"));
+         assert!(RATE_LIMITED_USER_MESSAGE_API_KEY.contains("credits"));
+-        assert!(
+-            RATE_LIMITED_USER_MESSAGE_API_KEY
+-                .contains("rate limit")
+-        );
++        assert!(RATE_LIMITED_USER_MESSAGE_API_KEY.contains("rate limit"));
+         assert!(!RATE_LIMITED_USER_MESSAGE_API_KEY.contains("Upgrade your account"));
+     }
+ 
+Diff in /Users/roylin/code/aster/crates/terminal/crates/codegen/aster-workspace/src/project_config.rs:110:
+             panic!("expected one project config: {found:?}");
+         };
+         assert!(!is_user_grok_config_file(first));
+-        assert_eq!(first.file_name().and_then(|n| n.to_str()), Some("config.toml"));
+         assert_eq!(
+-            first.parent().and_then(|p| p.file_name()).and_then(|n| n.to_str()),
++            first.file_name().and_then(|n| n.to_str()),
++            Some("config.toml")
++        );
++        assert_eq!(
++            first
++                .parent()
++                .and_then(|p| p.file_name())
++                .and_then(|n| n.to_str()),
+             Some(".aster")
+         );
+ 

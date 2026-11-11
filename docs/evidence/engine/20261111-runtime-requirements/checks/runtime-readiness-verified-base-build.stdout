@@ -1,0 +1,11 @@
+Building from /Users/roylin/code/kense/krun/.build/requirements-verified-base-e38b63fbb74240c9a9e2a5f49f23d882/Containerfile
+Step 1/9: FROM node:24-bookworm@sha256:8fa96264f302f58bbb13aa7339c541547b56975766ce956c875da149452a3e40
+Step 2/9: USER root
+Step 3/9: ENV DEBIAN_FRONTEND=noninteractive LANG=C.UTF-8 LC_ALL=C.UTF-8
+Step 4/9: COPY krun /opt/krun/bin/krun
+Step 5/9: COPY runtime-catalog.cjs /opt/krun/share/runtime-catalog.cjs
+Step 6/9: RUN /usr/local/bin/node /opt/krun/share/runtime-catalog.cjs /opt/krun/share/runtime-v1.json && rm /opt/krun/share/runtime-catalog.cjs
+Step 7/9: WORKDIR /workspace
+Step 8/9: ENTRYPOINT []
+Step 9/9: CMD ["sleep", "2147483647"]
+Successfully built krun-base:requirements-verified-e38b63fbb742 (11 layers, 384.6 MB, linux/arm64)

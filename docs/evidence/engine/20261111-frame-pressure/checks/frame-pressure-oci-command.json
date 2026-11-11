@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/frame-pressure-oci-b90b2cc2f6104569909c24a5e9f3dcce/bin/kbox",
+    "--base",
+    "docker.io/library/krun-base@sha256:2c5dcac05ebc0b0e685959092dc3856453b593dd9c5ad736fef762580446d565",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-frame-pressure-oci"
+  ],
+  "cwd": "/Users/roylin/code/kense",
+  "scriptSha256": "d928610a7c11cfdc510765a924ab319b5eb54510e6ce2191fc4ffb2c249a78e0"
+}

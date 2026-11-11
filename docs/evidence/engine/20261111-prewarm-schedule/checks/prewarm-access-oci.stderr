@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 265, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 142, in main
+    probe = json.loads(cli("exec", "ordinary", "--", "python3", "-c", program))
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 94, in cli
+    raise RuntimeError(f"kbox command {counter} failed; see retained logs")
+RuntimeError: kbox command 7 failed; see retained logs

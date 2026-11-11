@@ -1,0 +1,22 @@
+diff --git a/crates/box/runtime/src/kbox_contract_driver/conformance_tests/networking_profile.rs b/crates/box/runtime/src/kbox_contract_driver/conformance_tests/networking_profile.rs
+index e66a1f3..58e5f42 100644
+--- a/crates/box/runtime/src/kbox_contract_driver/conformance_tests/networking_profile.rs
++++ b/crates/box/runtime/src/kbox_contract_driver/conformance_tests/networking_profile.rs
+@@ -123,16 +123,8 @@ pub(super) async fn run(
+             .ok_or_else(|| super::protocol("outbound fixture lost managed metadata"))?
+             .request
+             .config;
+-        let expected_mode = if matches!(
+-            outbound_config.isolation,
+-            kbox_core::ExecutionBoundary::Microvm
+-        ) {
+-            BoxNetworkMode::Host
+-        } else {
+-            BoxNetworkMode::Tsi
+-        };
+         require(
+-            outbound_config.network == expected_mode,
++            outbound_config.network == BoxNetworkMode::Tsi,
+             "NetworkMode::Outbound was not mapped to the isolation egress path",
+         )?;
+         require(

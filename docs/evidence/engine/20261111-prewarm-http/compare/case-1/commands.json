@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "http-probe",
+      "--memory",
+      "512m",
+      "--entrypoint",
+      "/bin/sleep",
+      "docker.io/library/krun-base@sha256:4d054fc12eef66d0e1435d3b084988c38bf57b1ea31f3b9ba38e823f5e3f5f51",
+      "--",
+      "infinity"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "exec",
+      "--timeout",
+      "220",
+      "http-probe",
+      "--",
+      "python3",
+      "-c",
+      "import hashlib, json, urllib.request\nexpected = b'0d8d909519a645b48eef08ed90e16b76'\nurl = 'http://127.0.0.1:64522'\nsuccesses, failures = 0, []\nfor index in range(64):\n    try:\n        with urllib.request.urlopen(url, timeout=2) as response:\n            body = response.read()\n            if response.status == 200 and body == expected:\n                successes += 1\n            else:\n                failures.append(dict(index=index, status=response.status, length=len(body), sha256=hashlib.sha256(body).hexdigest()))\n    except Exception as error:\n        failures.append(dict(index=index, error=type(error).__name__))\nprint(json.dumps(dict(requests=64, exactBodies=successes, failures=failures)))"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "rm",
+      "-f",
+      "83f201f9-8144-462f-8542-bab07276f8bc"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/krun/.build/prewarm-access-prefix-36229adc07754a11b7b1824792960fa0/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0
+  }
+]

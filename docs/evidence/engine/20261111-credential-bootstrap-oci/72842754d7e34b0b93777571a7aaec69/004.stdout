@@ -1,0 +1,30 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "sleep",
+        "2147483647"
+      ],
+      "Entrypoint": [],
+      "Env": {
+        "DEBIAN_FRONTEND": "noninteractive",
+        "NODE_VERSION": "24.22.2",
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "YARN_VERSION": "1.22.22"
+      },
+      "ExposedPorts": [],
+      "Healthcheck": null,
+      "Labels": {},
+      "OnBuild": [],
+      "StopSignal": null,
+      "User": "root",
+      "Volumes": [],
+      "WorkingDir": "/workspace"
+    },
+    "Digest": "sha256:63030c25c07e273981cb09909086d6ff4b2a58f78d71de296b192a21bf024586",
+    "LayerCount": 8,
+    "PulledAt": "2026-11-11T00:36:41.942055+00:00",
+    "Reference": "krun-oci-regression:72842754d7e34b0b93777571a7aaec69",
+    "Size": 127640635
+  }
+]

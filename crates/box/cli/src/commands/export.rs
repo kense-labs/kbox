@@ -27,6 +27,7 @@ pub async fn execute(args: ExportArgs) -> Result<(), Box<dyn std::error::Error>>
         )
     })?;
 
+    record.require_claimed()?;
     if record.status == "running" {
         export_live_guest(record, &args.output).await?;
         drop(lifecycle_lock);

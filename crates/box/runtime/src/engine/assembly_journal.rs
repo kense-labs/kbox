@@ -34,6 +34,7 @@ impl EngineJournal {
             .is_some_and(|receipt| {
                 receipt.generation == unit.spec.generation
                     && receipt.package_digest == plan.digest
+                    && receipt.capability_packages == plan.installed_capabilities()
                     && receipt.spec_digest == unit.observation.spec_digest
                     && unit.observation.provider_resource_id.as_deref()
                         == Some(receipt.execution_id.as_str())
@@ -99,6 +100,7 @@ impl EngineJournal {
             || receipt.execution_generation == 0
             || receipt.package_digest != plan.digest
             || receipt.root != plan.root()
+            || receipt.capability_packages != plan.installed_capabilities()
             || receipt.spec_digest
                 != record
                     .intent

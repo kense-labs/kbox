@@ -13,7 +13,10 @@ mod process_transport;
 mod protocol;
 mod transport;
 
-pub use assembly::{EngineAssembly, EngineAssemblyPlan, EngineAssemblyReceipt};
+pub use assembly::{
+    EngineAssembly, EngineAssemblyPackage, EngineAssemblyPlan, EngineAssemblyReceipt,
+    EngineInstalledPackage,
+};
 pub use controller::LocalEngine;
 pub use directory::EngineDirectoryGrant;
 pub(crate) use journal::{EngineJournal, EngineRevisionGuard};
@@ -23,9 +26,10 @@ pub use process_protocol::{
     EngineProcessState,
 };
 pub use protocol::{
-    AcceptedOperation, DesiredState, EngineCommand, EngineDiscovery, EngineError, EngineErrorCode,
-    EngineExecution, EngineIntent, EngineKey, EngineOperation, EngineReply, EngineReplyBody,
-    EngineReplyValue, EngineRequest, EngineResult, EngineServiceTemplate, EngineWorkload,
+    AcceptedOperation, DesiredState, EngineCommand, EngineDiagnostics, EngineDiscovery,
+    EngineError, EngineErrorCode, EngineExecution, EngineIntent, EngineKey, EngineOperation,
+    EngineReply, EngineReplyBody, EngineReplyValue, EngineRequest, EngineResult,
+    EngineServiceTemplate, EngineVirtualization, EngineWorkload,
 };
 pub use transport::{default_engine_endpoint, serve_engine};
 

@@ -164,6 +164,11 @@ class AcpClient:
             provider, model = model.split("/", 1)
         for option, value in (("model", json.dumps([provider, model], separators=(",", ":"))),
                               ("reasoning_effort", os.environ.get("DSH_REASONING_EFFORT", "low"))):
+            if option == 'reasoning_effort' and 'DSH_REASONING_EFFORT' not in os.environ:
+                choices = [choice for setting in result['configOptions'] if setting['id'] == option
+                           for choice in setting.get('options', [])]
+                if not any(choice.get('value') == value for choice in choices):
+                    continue
             result = self.request("session/set_config_option", {
                 "sessionId": session, "configId": option, "value": value})
             assert any(o["id"] == option and o["currentValue"] == value for o in result["configOptions"])

@@ -27,6 +27,7 @@ const MAX_RECEIPT_BYTES: usize = 16 * 1024 * 1024;
 const INSTALLER: &str = "/opt/krun/bin/krun";
 const PACKAGE_ROOT: &str = "/opt/krun/packages";
 pub(super) const GUEST_PROTOCOLS_CAPABILITY: &str = "harness-assembly.guest-protocols.v1";
+pub(super) const PACKAGES_CAPABILITY: &str = "harness-assembly.capability-packages.v1";
 
 struct ArchiveCopyGuard(Arc<AtomicBool>);
 impl Drop for ArchiveCopyGuard {
@@ -40,6 +41,8 @@ impl Drop for ArchiveCopyGuard {
 pub struct EngineAssemblyPlan {
     pub archive: PathBuf,
     pub digest: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub capability_packages: Vec<EngineAssemblyPackage>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub prewarm_bindings_digest: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -48,12 +51,38 @@ pub struct EngineAssemblyPlan {
     pub required_guest_protocols: Vec<EngineKey>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct EngineAssemblyPackage {
+    pub archive: PathBuf,
+    pub digest: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct EngineInstalledPackage {
+    pub digest: String,
+    pub root: String,
+}
+
 impl EngineAssemblyPlan {
     pub(super) fn validate(&self, intent: &EngineIntent) -> EngineResult<()> {
         let mut protocols = std::collections::BTreeSet::new();
         if self
             .required_protocols()
             .any(|protocol| !protocols.insert(protocol))
+        {
+            return Err(invalid());
+        }
+        let mut digests = std::collections::BTreeSet::from([self.digest.as_str()]);
+        if self.capability_packages.iter().any(|package| {
+            !package.archive.is_absolute()
+                || !valid_digest(&package.digest)
+                || !digests.insert(package.digest.as_str())
+        }) || (!self.capability_packages.is_empty()
+            && !self
+                .required_protocols()
+                .any(|protocol| protocol.as_str() == "capability-packages.v1"))
         {
             return Err(invalid());
         }
@@ -103,10 +132,17 @@ impl EngineAssemblyPlan {
     }
 
     pub(super) fn root(&self) -> String {
-        format!(
-            "{PACKAGE_ROOT}/{}",
-            self.digest.strip_prefix("sha256:").unwrap_or("")
-        )
+        package_root(&self.digest)
+    }
+
+    pub(super) fn installed_capabilities(&self) -> Vec<EngineInstalledPackage> {
+        self.capability_packages
+            .iter()
+            .map(|package| EngineInstalledPackage {
+                digest: package.digest.clone(),
+                root: package_root(&package.digest),
+            })
+            .collect()
     }
 
     fn required_protocols(&self) -> impl Iterator<Item = &EngineKey> {
@@ -114,6 +150,13 @@ impl EngineAssemblyPlan {
             .iter()
             .chain(&self.required_guest_protocols)
     }
+}
+
+fn package_root(digest: &str) -> String {
+    format!(
+        "{PACKAGE_ROOT}/{}",
+        digest.strip_prefix("sha256:").unwrap_or("")
+    )
 }
 
 fn valid_digest(value: &str) -> bool {
@@ -137,6 +180,8 @@ pub struct EngineAssemblyReceipt {
     pub execution_generation: u64,
     pub package_digest: String,
     pub root: String,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub capability_packages: Vec<EngineInstalledPackage>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -167,10 +212,10 @@ struct GuestInstallationFailure {
 }
 
 impl GuestInstallationFailure {
-    fn decode(stdout: &[u8], plan: &EngineAssemblyPlan) -> Option<EngineError> {
+    fn decode(stdout: &[u8], digest: &str, plan: &EngineAssemblyPlan) -> Option<EngineError> {
         let failure: Self = serde_json::from_slice(stdout).ok()?;
         if failure.schema != "krun.guest-installation-error.v1"
-            || failure.digest != plan.digest
+            || failure.digest != digest
             || !plan
                 .required_protocols()
                 .any(|protocol| protocol == &failure.protocol)
@@ -192,10 +237,21 @@ impl GuestInstallationFailure {
 
 impl GuestInstallation {
     fn validate(&self, plan: &EngineAssemblyPlan) -> EngineResult<()> {
-        if self.schema != "krun.guest-installation.v1"
-            || self.digest != plan.digest
-            || self.root != plan.root()
-        {
+        self.validate_package(&plan.digest, false, plan)
+    }
+
+    fn validate_package(
+        &self,
+        digest: &str,
+        capability: bool,
+        plan: &EngineAssemblyPlan,
+    ) -> EngineResult<()> {
+        let schema = if capability {
+            "krun.guest-capability-installation.v1"
+        } else {
+            "krun.guest-installation.v1"
+        };
+        if self.schema != schema || self.digest != digest || self.root != package_root(digest) {
             return Err(failed());
         }
         if plan
@@ -264,13 +320,71 @@ impl LocalEngine {
             return Ok(());
         }
         drop(lease);
-        let plan_copy = plan.clone();
+        let (execution_id, execution_generation) = self
+            .install_package(
+                record,
+                unit_id,
+                &EngineAssemblyPackage {
+                    archive: plan.archive.clone(),
+                    digest: plan.digest.clone(),
+                },
+                false,
+            )
+            .await?;
+        for package in &plan.capability_packages {
+            let installed = self.install_package(record, unit_id, package, true).await?;
+            if installed != (execution_id.clone(), execution_generation) {
+                return Err(EngineError::new(
+                    EngineErrorCode::GenerationMismatch,
+                    "packages were installed into different Box executions",
+                ));
+            }
+        }
+        let lease = self.state.acquire_operation_lease(unit_id).await?;
+        let latest = self.state.load(unit_id).await?;
+        require_running(&latest, record)?;
+        let receipt = EngineAssemblyReceipt {
+            schema: "kbox.engine.assembly.v1".into(),
+            accepted: record.accepted.clone(),
+            runtime_request_id: record.runtime_request_id.clone(),
+            generation: record.generation,
+            spec_digest: latest.spec.digest().map_err(|_| invalid())?,
+            execution_id,
+            execution_generation,
+            package_digest: plan.digest.clone(),
+            root: plan.root(),
+            capability_packages: plan.installed_capabilities(),
+        };
+        if latest.observation.provider_resource_id.as_deref() != Some(receipt.execution_id.as_str())
+        {
+            return Err(failed());
+        }
+        let journal = self.journal.clone();
+        let record = record.clone();
+        tokio::task::spawn_blocking(move || {
+            let _lease = lease;
+            journal.blocking_lock().publish_assembly(&record, receipt)
+        })
+        .await
+        .map_err(|_| failed())?
+    }
+
+    async fn install_package(
+        &self,
+        record: &AcceptedIntent,
+        unit_id: &str,
+        package: &EngineAssemblyPackage,
+        capability: bool,
+    ) -> EngineResult<(String, u64)> {
+        let plan = record.intent.assembly.as_ref().ok_or_else(invalid)?;
+        let package_copy = package.clone();
         // Verify an immutable anonymous copy before any archive byte crosses into the guest.
         let source = {
             let cancelled = Arc::new(AtomicBool::new(false));
             let _cancel = ArchiveCopyGuard(cancelled.clone());
-            let stage =
-                tokio::task::spawn_blocking(move || verified_archive(&plan_copy, &cancelled));
+            let stage = tokio::task::spawn_blocking(move || {
+                verified_archive(&package_copy.archive, &package_copy.digest, &cancelled)
+            });
             tokio::select! {
                 result=stage=>result.map_err(|_| failed())??,
                 _=self.wait_assembly_superseded(record)=>return Err(EngineError::new(EngineErrorCode::StaleIntent,"archive copy intent changed")),
@@ -288,9 +402,14 @@ impl LocalEngine {
                     request_id: None,
                     cmd: vec![
                         INSTALLER.into(),
-                        "_guest-install".into(),
+                        if capability {
+                            "_guest-install-capability"
+                        } else {
+                            "_guest-install"
+                        }
+                        .into(),
                         "--digest".into(),
-                        plan.digest.clone(),
+                        package.digest.clone(),
                     ],
                     timeout_ns: UNLIMITED_STREAM_TIMEOUT_NS,
                     env: Vec::new(),
@@ -347,12 +466,17 @@ impl LocalEngine {
                 }
                 if exit.exit_code != 0 {
                     return Err(
-                        GuestInstallationFailure::decode(&stdout, plan).unwrap_or_else(failed)
+                        GuestInstallationFailure::decode(&stdout, &package.digest, plan)
+                            .unwrap_or_else(failed),
                     );
                 }
                 let reply: GuestInstallation =
                     serde_json::from_slice(&stdout).map_err(|_| failed())?;
-                reply.validate(plan)
+                if capability {
+                    reply.validate_package(&package.digest, true, plan)
+                } else {
+                    reply.validate(plan)
+                }
             };
             tokio::try_join!(send, receive).map(|_| ())
         };
@@ -364,32 +488,7 @@ impl LocalEngine {
             let _ = tokio::time::timeout(Duration::from_secs(5), input.cancel()).await;
             return Err(error);
         }
-        let lease = self.state.acquire_operation_lease(unit_id).await?;
-        let latest = self.state.load(unit_id).await?;
-        require_running(&latest, record)?;
-        let receipt = EngineAssemblyReceipt {
-            schema: "kbox.engine.assembly.v1".into(),
-            accepted: record.accepted.clone(),
-            runtime_request_id: record.runtime_request_id.clone(),
-            generation: record.generation,
-            spec_digest: latest.spec.digest().map_err(|_| invalid())?,
-            execution_id: execution_id.as_str().into(),
-            execution_generation: execution_generation.get(),
-            package_digest: plan.digest.clone(),
-            root: plan.root(),
-        };
-        if latest.observation.provider_resource_id.as_deref() != Some(receipt.execution_id.as_str())
-        {
-            return Err(failed());
-        }
-        let journal = self.journal.clone();
-        let record = record.clone();
-        tokio::task::spawn_blocking(move || {
-            let _lease = lease;
-            journal.blocking_lock().publish_assembly(&record, receipt)
-        })
-        .await
-        .map_err(|_| failed())?
+        Ok((execution_id.as_str().into(), execution_generation.get()))
     }
 
     async fn wait_assembly_superseded(&self, record: &AcceptedIntent) {
@@ -425,15 +524,15 @@ fn require_running(unit: &RuntimeUnitRecord, record: &AcceptedIntent) -> EngineR
     Ok(())
 }
 
-fn verified_archive(plan: &EngineAssemblyPlan, cancelled: &AtomicBool) -> EngineResult<File> {
-    let canonical = plan.archive.canonicalize()?;
-    if canonical != plan.archive {
+fn verified_archive(archive: &Path, digest: &str, cancelled: &AtomicBool) -> EngineResult<File> {
+    let canonical = archive.canonicalize()?;
+    if canonical != archive {
         return Err(invalid());
     }
     let mut source = OpenOptions::new()
         .read(true)
         .custom_flags(libc::O_NOFOLLOW | libc::O_NONBLOCK)
-        .open(&plan.archive)?;
+        .open(archive)?;
     let metadata = source.metadata()?;
     if !metadata.is_file() || metadata.len() > MAX_ARCHIVE_BYTES {
         return Err(invalid());
@@ -460,7 +559,7 @@ fn verified_archive(plan: &EngineAssemblyPlan, cancelled: &AtomicBool) -> Engine
         hash.update(&buffer[..count]);
         copy.write_all(&buffer[..count])?;
     }
-    if format!("sha256:{:x}", hash.finalize()) != plan.digest {
+    if format!("sha256:{:x}", hash.finalize()) != digest {
         return Err(invalid());
     }
     copy.rewind()?;

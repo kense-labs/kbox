@@ -48,6 +48,11 @@ Prewarm keys include bindings/resources/trust and exclude Harness identity.
   filesystem, subagents and Harness loops remain under the Harness.
 - FR-006: Ordinary OCI remains usable without any assembly, ACP or KRun component.
 - FR-007: Product configuration remains KCL; ZIP manifests and IPC are data contracts.
+- FR-008: Optional `harness-assembly.capability-packages.v1` accepts an ordered,
+  digest-fixed set of capability archives. Every archive uses the same bounded
+  streaming and guest validation path; no aggregate receipt is published until
+  every package belongs to the same actual Box execution and generation. KBox
+  does not interpret Skill, MCP, tool, plugin, model or vendor configuration.
 
 ## Edge and Adversarial Cases
 

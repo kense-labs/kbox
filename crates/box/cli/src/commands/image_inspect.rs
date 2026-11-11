@@ -13,7 +13,8 @@ pub struct ImageInspectArgs {
 pub async fn execute(args: ImageInspectArgs) -> Result<(), Box<dyn std::error::Error>> {
     let store = super::open_image_store()?;
     let images = store.list().await;
-    let stored = image_usage::resolve_required_stored_image(&images, &args.image)?;
+    let stored = resolve_inspect_image(&images, &args.image)?
+        .ok_or_else(|| format!("Image not found: {}", args.image))?;
     println!("{}", build_image_inspect_json(&stored)?);
     Ok(())
 }
@@ -25,10 +26,38 @@ pub(crate) async fn try_image_inspect_json(
 ) -> Result<Option<String>, Box<dyn std::error::Error>> {
     let store = super::open_image_store()?;
     let images = store.list().await;
-    match image_usage::resolve_stored_image(&images, reference)? {
+    match resolve_inspect_image(&images, reference)? {
         Some(stored) => Ok(Some(build_image_inspect_json(&stored)?)),
         None => Ok(None),
     }
+}
+
+fn resolve_inspect_image(
+    images: &[kbox_runtime::StoredImage],
+    query: &str,
+) -> Result<Option<kbox_runtime::StoredImage>, String> {
+    let query = query.trim();
+    if let Some((_, digest)) = query.rsplit_once('@') {
+        kbox_runtime::ImageReference::parse(query)
+            .map_err(|_| "invalid immutable image reference".to_owned())?;
+        let hex = digest
+            .strip_prefix("sha256:")
+            .ok_or("immutable image reference requires SHA-256")?;
+        if hex.len() != 64
+            || !hex
+                .bytes()
+                .all(|byte| byte.is_ascii_digit() || (b'a'..=b'f').contains(&byte))
+        {
+            return Err("immutable image reference requires a complete SHA-256 digest".into());
+        }
+        // Inspect content identity even when several mutable tags refer to the same bytes.
+        return Ok(images
+            .iter()
+            .filter(|image| image.digest == digest)
+            .min_by(|a, b| a.reference.cmp(&b.reference))
+            .cloned());
+    }
+    image_usage::resolve_stored_image(images, query)
 }
 
 /// Build the JSON inspection document for a stored image.
@@ -101,5 +130,41 @@ mod tests {
         let stored = image_usage::resolve_required_stored_image(&images, "alpine:latest").unwrap();
 
         assert_eq!(stored.reference, "docker.io/library/alpine:latest");
+    }
+
+    #[test]
+    fn image_inspect_uses_complete_immutable_digests_without_changing_destructive_resolution() {
+        let make = |reference: &str, hex: char| StoredImage {
+            reference: reference.into(),
+            digest: format!("sha256:{}", hex.to_string().repeat(64)),
+            size_bytes: 1,
+            pulled_at: Utc::now(),
+            last_used: Utc::now(),
+            path: PathBuf::from("/unused"),
+        };
+        let images = vec![
+            make("docker.io/library/base:latest", '2'),
+            make("docker.io/library/base:old", '1'),
+            make("docker.io/library/base:alias", '1'),
+        ];
+        let pin = format!("base@sha256:{}", "1".repeat(64));
+        let resolved = resolve_inspect_image(&images, &pin).unwrap().unwrap();
+        assert_eq!(resolved.digest, format!("sha256:{}", "1".repeat(64)));
+        assert_eq!(resolved.reference, "docker.io/library/base:alias");
+        assert!(image_usage::resolve_stored_image(&images, &pin)
+            .unwrap()
+            .is_none());
+        assert!(
+            resolve_inspect_image(&images, &format!("base@sha256:{}", "3".repeat(64)))
+                .unwrap()
+                .is_none()
+        );
+        for invalid in [
+            "base@sha256:1".to_owned(),
+            format!("base@sha256:{}", "A".repeat(64)),
+            format!("base@sha512:{}", "1".repeat(64)),
+        ] {
+            assert!(resolve_inspect_image(&images, &invalid).is_err());
+        }
     }
 }

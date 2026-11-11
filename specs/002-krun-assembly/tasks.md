@@ -44,3 +44,10 @@ passed initialization and cleanup with synthetic credentials on the same KBox
 and libkrun artifacts as the independent OCI run. A05 remains open for ownership
 and persistence of native credential refresh across generations.
 [Credential bootstrap and OCI evidence](../../docs/evidence/engine/20261111-credential-bootstrap/OUTCOME.md)
+
+A03 now supports optional ordered `capabilityPackages` alongside the primary
+Harness archive. The guest must advertise `capability-packages.v1`; every package
+receipt and the aggregate journal entry are bound to the same actual execution.
+Native multi-package, restart and refusal evidence is recorded separately from
+actual capability activation. KCL resolution, Harness adapters and service
+lifecycle remain KRun responsibilities and are not inferred from archive delivery.

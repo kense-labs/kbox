@@ -5,6 +5,7 @@ use crate::kbox_contract_driver::test_support::{accepted, unit};
 fn intent(engine: &EngineKey) -> EngineIntent {
     let mut value = crate::engine::tests::intent(engine, 1, DesiredState::Up);
     value.assembly = Some(EngineAssemblyPlan {
+        capability_packages: Vec::new(),
         prewarm_bindings_digest: None,
         required_guest_protocol: None,
         required_guest_protocols: Vec::new(),
@@ -125,7 +126,7 @@ fn guest_install_failure_requires_the_exact_archive_and_requested_protocol() {
         "protocol": "runtime-requirements.v1", "code": "RUNTIME_REQUIREMENTS_UNMET"
     });
     let decode = |value: &serde_json::Value| {
-        GuestInstallationFailure::decode(&serde_json::to_vec(value).unwrap(), plan)
+        GuestInstallationFailure::decode(&serde_json::to_vec(value).unwrap(), &plan.digest, plan)
     };
     assert_eq!(
         decode(&reply).unwrap().code,
@@ -155,6 +156,7 @@ fn archive_copy_is_immutable_digest_bound_and_rejects_links_and_oversize() {
     let bytes = vec![83; 100_000];
     std::fs::write(&path, &bytes).unwrap();
     let mut plan = EngineAssemblyPlan {
+        capability_packages: Vec::new(),
         prewarm_bindings_digest: None,
         required_guest_protocol: None,
         required_guest_protocols: Vec::new(),
@@ -164,20 +166,22 @@ fn archive_copy_is_immutable_digest_bound_and_rejects_links_and_oversize() {
     let cancelled = AtomicBool::new(false);
     cancelled.store(true, Ordering::Relaxed);
     assert_eq!(
-        verified_archive(&plan, &cancelled).unwrap_err().code,
+        verified_archive(&plan.archive, &plan.digest, &cancelled)
+            .unwrap_err()
+            .code,
         EngineErrorCode::StaleIntent
     );
     cancelled.store(false, Ordering::Relaxed);
-    let mut copy = verified_archive(&plan, &cancelled).unwrap();
+    let mut copy = verified_archive(&plan.archive, &plan.digest, &cancelled).unwrap();
     std::fs::write(&path, b"changed").unwrap();
     let mut received = Vec::new();
     copy.read_to_end(&mut received).unwrap();
     assert_eq!(received, bytes);
-    assert!(verified_archive(&plan, &cancelled).is_err());
+    assert!(verified_archive(&plan.archive, &plan.digest, &cancelled).is_err());
     let alias = root.path().canonicalize().unwrap().join("alias");
     std::os::unix::fs::symlink(&path, &alias).unwrap();
     plan.archive = alias;
-    assert!(verified_archive(&plan, &cancelled).is_err());
+    assert!(verified_archive(&plan.archive, &plan.digest, &cancelled).is_err());
     plan.archive = path;
     File::options()
         .write(true)
@@ -185,7 +189,7 @@ fn archive_copy_is_immutable_digest_bound_and_rejects_links_and_oversize() {
         .unwrap()
         .set_len(MAX_ARCHIVE_BYTES + 1)
         .unwrap();
-    assert!(verified_archive(&plan, &cancelled).is_err());
+    assert!(verified_archive(&plan.archive, &plan.digest, &cancelled).is_err());
 }
 
 #[test]
@@ -209,6 +213,7 @@ fn assembly_receipts_survive_restart_and_bind_exact_runtime_provider_and_intent(
     );
     let plan = up.assembly.as_ref().unwrap();
     let receipt = EngineAssemblyReceipt {
+        capability_packages: Vec::new(),
         schema: "kbox.engine.assembly.v1".into(),
         accepted: record.accepted.clone(),
         runtime_request_id: record.runtime_request_id.clone(),
@@ -253,6 +258,7 @@ fn corrupt_receipt_cannot_become_ready_after_reopening_the_journal() {
         .unwrap();
     let plan = up.assembly.as_ref().unwrap();
     let receipt = EngineAssemblyReceipt {
+        capability_packages: Vec::new(),
         schema: "kbox.engine.assembly.v1".into(),
         accepted: record.accepted.clone(),
         runtime_request_id: record.runtime_request_id.clone(),
@@ -268,6 +274,111 @@ fn corrupt_receipt_cannot_become_ready_after_reopening_the_journal() {
     let mut data: serde_json::Value =
         serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
     data["assemblies"][&record.runtime_request_id]["root"] = "/outside".into();
+    std::fs::write(&path, serde_json::to_vec(&data).unwrap()).unwrap();
+    assert!(EngineJournal::open(path).is_err());
+}
+
+#[test]
+fn capability_packages_require_explicit_protocol_and_distinct_fixed_identities() {
+    let mut value = intent(&EngineKey::parse("engine").unwrap());
+    let package = EngineAssemblyPackage {
+        archive: "/packages/能力包.zip".into(),
+        digest: format!("sha256:{}", "2".repeat(64)),
+    };
+    value
+        .assembly
+        .as_mut()
+        .unwrap()
+        .capability_packages
+        .push(package.clone());
+    assert!(value.validate().is_err());
+    value.assembly.as_mut().unwrap().required_guest_protocols =
+        vec![EngineKey::parse("capability-packages.v1").unwrap()];
+    value.validate().unwrap();
+    for (archive, digest) in [
+        ("relative", package.digest.as_str()),
+        ("/packages/other", "sha256:bad"),
+        (
+            "/packages/other",
+            value.assembly.as_ref().unwrap().digest.as_str(),
+        ),
+    ] {
+        let mut invalid = value.clone();
+        invalid.assembly.as_mut().unwrap().capability_packages[0] = EngineAssemblyPackage {
+            archive: archive.into(),
+            digest: digest.into(),
+        };
+        assert!(invalid.validate().is_err());
+    }
+    let plan = value.assembly.as_mut().unwrap();
+    let mut receipt: GuestInstallation = serde_json::from_value(serde_json::json!({
+        "schema":"krun.guest-capability-installation.v1", "digest":package.digest,
+        "root":package_root(&package.digest), "protocols":["capability-packages.v1"]
+    }))
+    .unwrap();
+    receipt
+        .validate_package(&package.digest, true, plan)
+        .unwrap();
+    assert!(receipt.validate(plan).is_err());
+    receipt.root = "/outside".into();
+    assert!(receipt
+        .validate_package(&package.digest, true, plan)
+        .is_err());
+    plan.capability_packages.push(package);
+    assert!(value.validate().is_err());
+}
+
+#[test]
+fn aggregate_receipt_requires_every_package_and_survives_restart_without_forged_members() {
+    let root = tempfile::tempdir().unwrap();
+    let path = root.path().join("journal.json");
+    let mut journal = EngineJournal::open(path.clone()).unwrap();
+    let mut up = intent(journal.engine_id());
+    let plan = up.assembly.as_mut().unwrap();
+    plan.required_guest_protocols = vec![EngineKey::parse("capability-packages.v1").unwrap()];
+    plan.capability_packages = ["2", "3"]
+        .into_iter()
+        .map(|digit| EngineAssemblyPackage {
+            archive: format!("/packages/{digit}.zip").into(),
+            digest: format!("sha256:{}", digit.repeat(64)),
+        })
+        .collect();
+    journal.accept(up.clone()).unwrap();
+    let record = journal.current(&up.instance_id).unwrap().clone();
+    let spec = up
+        .bind_service(journal.unit_id(&up.instance_id), 1)
+        .unwrap();
+    let plan = up.assembly.as_ref().unwrap();
+    let receipt = EngineAssemblyReceipt {
+        schema: "kbox.engine.assembly.v1".into(),
+        accepted: record.accepted.clone(),
+        runtime_request_id: record.runtime_request_id.clone(),
+        generation: 1,
+        spec_digest: spec.digest().unwrap(),
+        execution_id: "provider".into(),
+        execution_generation: 1,
+        package_digest: plan.digest.clone(),
+        root: plan.root(),
+        capability_packages: plan.installed_capabilities(),
+    };
+    for mutation in 0..3 {
+        let mut invalid = receipt.clone();
+        match mutation {
+            0 => {
+                invalid.capability_packages.pop();
+            }
+            1 => invalid.capability_packages.reverse(),
+            _ => invalid.capability_packages[0].root = "/outside".into(),
+        }
+        assert!(journal.publish_assembly(&record, invalid).is_err());
+    }
+    journal.publish_assembly(&record, receipt).unwrap();
+    drop(journal);
+    EngineJournal::open(path.clone()).unwrap();
+    let mut data: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    data["assemblies"][&record.runtime_request_id]["capabilityPackages"][0]["digest"] =
+        format!("sha256:{}", "4".repeat(64)).into();
     std::fs::write(&path, serde_json::to_vec(&data).unwrap()).unwrap();
     assert!(EngineJournal::open(path).is_err());
 }

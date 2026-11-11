@@ -36,6 +36,47 @@ async fn discover(engine: &LocalEngine) -> EngineKey {
 }
 
 #[tokio::test]
+async fn engine_diagnostics_do_not_submit_work_or_modify_the_journal() {
+    let root = fixture_tempdir();
+    let (driver, backend) = fake_driver(&root);
+    let directory = root.path().join("home/engine");
+    let engine = LocalEngine::with_runtime(directory.clone(), Arc::new(driver)).unwrap();
+    let EngineReplyValue::Discovery(discovery) = engine
+        .dispatch(request(EngineCommand::Discover))
+        .await
+        .unwrap()
+    else {
+        panic!("expected discovery")
+    };
+    assert!(discovery
+        .protocols
+        .iter()
+        .any(|value| value == "engine-diagnostics.v1"));
+    let before = std::fs::read(directory.join("intent.json")).unwrap();
+    let EngineReplyValue::Diagnostics(diagnostics) = engine
+        .dispatch(request(EngineCommand::Diagnose {}))
+        .await
+        .unwrap()
+    else {
+        panic!("expected diagnostics")
+    };
+    assert_eq!(diagnostics.schema, "kbox.engine.diagnostics.v1");
+    assert_eq!(diagnostics.engine_id, discovery.engine_id);
+    assert_eq!(diagnostics.version, kbox_core::VERSION);
+    assert_eq!(diagnostics.platform, discovery.platform);
+    assert_eq!(
+        std::fs::read(directory.join("intent.json")).unwrap(),
+        before
+    );
+    assert_eq!(backend.starts(), 0);
+    assert_eq!(backend.kills(), 0);
+    assert!(serde_json::from_value::<EngineRequest>(serde_json::json!({
+        "schema":"kbox.engine.request.v1", "command":{"op":"diagnose", "image":"must-not-launch"}
+    }))
+    .is_err());
+}
+
+#[tokio::test]
 async fn engine_down_observation_waits_for_owned_stopped_spare_removal() {
     use kbox_contract::contract::RestartPolicy;
     use kbox_core::ExecutionManager;
@@ -49,6 +90,7 @@ async fn engine_down_observation_waits_for_owned_stopped_spare_removal() {
     let mut up = intent(&id, 1, DesiredState::Up);
     up.workload = EngineWorkload::AcpHarness;
     up.assembly = Some(EngineAssemblyPlan {
+        capability_packages: Vec::new(),
         archive: root.path().join("package.zip"),
         digest: format!("sha256:{}", "2".repeat(64)),
         prewarm_bindings_digest: Some(format!("sha256:{}", "3".repeat(64))),

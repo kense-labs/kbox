@@ -18,9 +18,10 @@ use super::prewarm::EnginePrewarm;
 use super::process::PrimaryConnections;
 use super::protocol::AcceptedIntent;
 use super::{
-    AcceptedOperation, DesiredState, EngineCommand, EngineDiscovery, EngineError, EngineErrorCode,
-    EngineExecution, EngineIntent, EngineJournal, EngineKey, EngineOperation, EngineReplyValue,
-    EngineRequest, EngineResult, EngineRevisionGuard,
+    AcceptedOperation, DesiredState, EngineCommand, EngineDiagnostics, EngineDiscovery,
+    EngineError, EngineErrorCode, EngineExecution, EngineIntent, EngineJournal, EngineKey,
+    EngineOperation, EngineReplyValue, EngineRequest, EngineResult, EngineRevisionGuard,
+    EngineVirtualization,
 };
 
 /// Accepted intent and delivery only. Runtime receipts and ExecutionManager remain authoritative.
@@ -107,10 +108,12 @@ impl LocalEngine {
             EngineCommand::Discover => {
                 let mut protocols = vec![
                     "kbox.engine.v1".into(),
+                    "engine-diagnostics.v1".into(),
                     "process-stream.primary.v1".into(),
                     super::process_protocol::BOOTSTRAP_PROTOCOL.into(),
                     "harness-assembly.v1".into(),
                     super::assembly::GUEST_PROTOCOLS_CAPABILITY.into(),
+                    super::assembly::PACKAGES_CAPABILITY.into(),
                 ];
                 if self.prewarm.is_some() {
                     protocols.push("environment-prewarm.v1".into());
@@ -130,6 +133,26 @@ impl LocalEngine {
                     protocols,
                     platform: format!("{}/{}", std::env::consts::OS, std::env::consts::ARCH),
                     max_control_frame_bytes: super::transport::MAX_CONTROL_FRAME_BYTES as u32,
+                }))
+            }
+            EngineCommand::Diagnose {} => {
+                let virtualization =
+                    tokio::task::spawn_blocking(|| match crate::check_virtualization_support() {
+                        Ok(support) => EngineVirtualization::Available {
+                            backend: support.backend,
+                        },
+                        Err(_) => EngineVirtualization::Unavailable {},
+                    })
+                    .await
+                    .map_err(|_| {
+                        EngineError::new(EngineErrorCode::Internal, "virtualization probe failed")
+                    })?;
+                Ok(EngineReplyValue::Diagnostics(EngineDiagnostics {
+                    schema: "kbox.engine.diagnostics.v1".into(),
+                    engine_id: self.journal.lock().await.engine_id().clone(),
+                    version: kbox_core::VERSION.into(),
+                    platform: format!("{}/{}", std::env::consts::OS, std::env::consts::ARCH),
+                    virtualization,
                 }))
             }
             EngineCommand::ApplyIntent { intent } => {

@@ -314,6 +314,7 @@ pub struct AcceptedOperation {
 #[serde(tag = "op", rename_all = "snake_case", deny_unknown_fields)]
 pub enum EngineCommand {
     Discover,
+    Diagnose {},
     ApplyIntent {
         intent: Box<EngineIntent>,
     },
@@ -375,6 +376,23 @@ pub struct EngineDiscovery {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct EngineDiagnostics {
+    pub schema: String,
+    pub engine_id: EngineKey,
+    pub version: String,
+    pub platform: String,
+    pub virtualization: EngineVirtualization,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "status", rename_all = "snake_case", deny_unknown_fields)]
+pub enum EngineVirtualization {
+    Available { backend: String },
+    Unavailable {},
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct EngineExecution {
     pub accepted: AcceptedOperation,
     pub target_generation: u64,
@@ -402,6 +420,7 @@ pub struct EngineOperation {
 )]
 pub enum EngineReplyValue {
     Discovery(EngineDiscovery),
+    Diagnostics(EngineDiagnostics),
     Accepted(AcceptedOperation),
     Execution(EngineExecution),
     Operation(Box<EngineOperation>),

@@ -36,6 +36,11 @@ Artifact 的只读保证不因可写 workspace 接入而放宽。KRun profile
 
 KRun 负责 CLI、实例意图、包与能力索引、依赖解析、绑定适配和运行基础制品。它读取 kbox 的实际观测，不自行推断 VM 存活。用户配置继续使用 KCL；清单、装配计划与回执是版本化数据合同。
 
+独立的 `engine-diagnostics.v1` 通过现有私有 IPC 接收无参数 `diagnose`，返回
+引擎身份、版本、平台和宿主虚拟化探测结果。它不提交意图、不启动环境，也不运行
+库存对账。KRun 的 `doctor` 可组合这些观测与本地制品校验；客体依赖、认证和任务
+可用性仍由各自实际执行路径证明，不能从宿主诊断推导。
+
 Harness 第一版交付格式为 ZIP；`tar.zst` 待真实体积与安装性能比较后决定，无需每个 Harness 单独制作 OCI 镜像。安装包声明 ACP 入口、目标客体平台、版本与依赖；非 ACP 原生程序的 ACP adapter 放在包中。
 
 独立 SDK 已接通持久意图、原始流、显式目录授权、MateHarness 流式装配、
@@ -46,3 +51,10 @@ Harness 第一版交付格式为 ZIP；`tar.zst` 待真实体积与安装性能�
 
 原生认证刷新、通用依赖检测、完整 CLI 故障矩阵、五类能力和三套真实模型长程任务继续按 KRun 的实施计划验收。
 [KRun 开发状态](../../../krun/docs/implementation-status.md)
+
+可选扩展 `harness-assembly.capability-packages.v1` 允许装配计划附带有序
+`capabilityPackages: [{archive, digest}]`。Harness 安装回执必须先证明客体支持
+`capability-packages.v1`，再逐包流式调用可信客体安装器。全部成功且实际执行身份与
+代次一致后，聚合回执才记录每个摘要及安装根目录。回执持久化、重启核验和 primary
+启动门槛复用现有引擎日志；空列表保留原协议形状。KBox 不解释五类能力的原生格式，
+安装能力包也不等于已经激活能力或启动服务。

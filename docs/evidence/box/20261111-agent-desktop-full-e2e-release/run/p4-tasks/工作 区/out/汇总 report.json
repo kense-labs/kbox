@@ -1,0 +1,19 @@
+{
+  "uniqueEvents": 60,
+  "duplicateEvents": 3,
+  "accounts": [
+    {
+      "account": "alpha",
+      "balanceCents": 454048
+    },
+    {
+      "account": "beta",
+      "balanceCents": 511455
+    },
+    {
+      "account": "账户甲",
+      "balanceCents": 582884
+    }
+  ],
+  "netCents": 1548387
+}

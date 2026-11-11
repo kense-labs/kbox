@@ -1,0 +1,10 @@
+{"seq":1,"t":36,"kind":"request_sent","method":"initialize","id":100}
+{"seq":2,"t":36,"kind":"response","id":100,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["agentCapabilities","agentInfo","authMethods","protocolVersion"]}
+{"seq":3,"t":36,"kind":"request_sent","method":"session/new","id":101}
+{"seq":4,"t":36,"kind":"response","id":101,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":5,"t":36,"kind":"request_sent","method":"session/prompt","id":102}
+{"seq":6,"t":37,"kind":"notification","id":null,"method":"session/update","sessionUpdate":"agent_message_chunk","toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":63,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":7,"t":37,"kind":"notification","id":null,"method":"session/update","sessionUpdate":"usage_update","toolCallId":null,"title":null,"status":null,"used":6152,"size":1000000,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":8,"t":37,"kind":"response","id":102,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":"end_turn","error":null,"resultKeys":["stopReason"]}
+{"seq":9,"t":37,"kind":"request_sent","method":"session/close","id":103}
+{"seq":10,"t":37,"kind":"response","id":103,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}

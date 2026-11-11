@@ -5,11 +5,27 @@
 #   TIER=p0 ./scripts/e2e-dsh-acp/run.sh
 #   TIER=p0,p1 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
 #   TIER=p4 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
+#   E2E_LONGRUN=1 TIER=p5 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
+#   TIER=p6 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
+#   E2E_CAPABILITY_SURFACE=1 TIER=p4 DEEPSEEK_API_KEY=… ./scripts/e2e-dsh-acp/run.sh
 #   TIER=all ./scripts/e2e-dsh-acp/run.sh
+#
+# Tiers:
+#   p0/p1/p2/p3  smoke, core ACP, mounts/cleanup, negative (pre-existing)
+#   p4           required live-model task acceptance (cases/p4_tasks.py)
+#   p5           long-run / multi-turn (nightly; SKIP unless E2E_LONGRUN=1)
+#   p6           complex tool-heavy tasks
 #
 # Env:
 #   KBOX, IMAGE, DSH_MODEL, DSH_REASONING_EFFORT, GREETING, E2E_OUT
 #   DEEPSEEK_API_KEY  — required for live cases (otherwise BLOCKED)
+#   E2E_CAPABILITY_SURFACE=1 — also run the optional shell P4 capability
+#                             surface; its P4- rows join the required gate,
+#                             so only enable it with live credentials
+#   E2E_LONGRUN=1     — enable p5 (real tokens, >=15 min)
+#   LONGRUN_TURNS / LONGRUN_MIN_SECONDS / LONGRUN_MIN_CHUNKS /
+#   LONGRUN_MIN_TOOL_CALLS / E2E_LONGRUN_ENFORCE — p5 thresholds
+#   E2E_MCP_STDIO_COMMAND / E2E_MCP_HTTP_URL    — p6 positive MCP transports
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -83,6 +99,17 @@ if want_tier p3; then
 fi
 if want_tier p4; then
   python3 "$SCRIPT_DIR/cases/p4_tasks.py" || FAIL=1
+fi
+if want_tier p5; then
+  run_case_script "$SCRIPT_DIR/cases/p5_longrun.sh" || FAIL=1
+fi
+if want_tier p6; then
+  run_case_script "$SCRIPT_DIR/cases/p6_complex.sh" || FAIL=1
+fi
+# The shell capability surface also emits P4- rows. Keep it opt-in so its
+# BLOCKED/SKIP states can never weaken the required p4 acceptance gate.
+if [[ "${E2E_CAPABILITY_SURFACE:-0}" == "1" ]] && want_tier p4; then
+  run_case_script "$SCRIPT_DIR/cases/p4_capabilities.sh" || FAIL=1
 fi
 
 e2e_finalize_results

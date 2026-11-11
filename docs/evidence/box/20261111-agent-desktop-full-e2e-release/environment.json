@@ -1,0 +1,23 @@
+{
+  "started_at": "2026-11-11T19:10:28.159070+08:00",
+  "driver": "vercel agent-desktop 1.2.0: launch of GUI Runner App (KBoxE2ERunner) + accessibility-tree driven Terminal for attempt-01",
+  "kbox_revision": "2f653739e5501303df89261268f715440e602ca8",
+  "kbox_version": "kbox version 3.4.3",
+  "build_profile": "release/optimized (rebuilt from HEAD 2f65373)",
+  "prior_attempts": "attempt-01: debug binary too slow for cold ext4 assembly; attempt-02: E2E_OUT socket path hit macOS SUN_LEN=104. Both retained as evidence.",
+  "runtime_out": "/tmp/kbox-ad-e2e/out",
+  "ext4_cache": "warm (rootfs.ext4 built in isolated K_HOME by attempt-02)",
+  "image": "ghcr.io/kense-labs/dsh-acp:latest",
+  "k_home": "/tmp/kbox-e2e-ad-release/k-home (isolated; images symlinked to local store)",
+  "model_provider": "deepseek (config.acl)",
+  "model": "deepseek-flash",
+  "reasoning_effort": "low",
+  "tier": "all",
+  "capability_surface": true,
+  "longrun": "nightly gate: E2E_LONGRUN unset, P5 records explicit SKIP",
+  "credential": "injected into child env only; never printed or persisted",
+  "launch_receipt": "gui-control.jsonl (agent-desktop launch ok:true / delivery_uncertain callback)",
+  "git_revision": "2f653739e5501303df89261268f715440e602ca8",
+  "exit_code": 1,
+  "exit_code_reason": "strict P4 gate: optional capability-surface case P4-10 recorded SKIP (pool start --memory unsupported); 0 FAIL"
+}

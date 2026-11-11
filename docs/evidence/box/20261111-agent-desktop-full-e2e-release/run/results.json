@@ -1,0 +1,587 @@
+{
+  "kbox": "kbox version 3.4.3",
+  "image": "ghcr.io/kense-labs/dsh-acp:latest",
+  "summary": {
+    "pass": 38,
+    "fail": 0,
+    "skip": 7,
+    "blocked": 0
+  },
+  "cases": [
+    {
+      "id": "P0-1",
+      "status": "PASS",
+      "message": "bench RUNS=1 succeeded",
+      "detail": {
+        "pool_log": "/tmp/kbox-ad-e2e/out/p0-bench-pool.log",
+        "image": "ghcr.io/kense-labs/dsh-acp:latest",
+        "socket": "/tmp/kbox-ad-e2e/out/p0-pool.sock"
+      },
+      "ts": "2026-11-11T11:10:34Z"
+    },
+    {
+      "id": "P0-2",
+      "status": "PASS",
+      "message": "initialize ok agent=deepseek-harness-acp protocol=1",
+      "detail": {
+        "agent": "deepseek-harness-acp",
+        "protocolVersion": "1"
+      },
+      "ts": "2026-11-11T11:10:56Z"
+    },
+    {
+      "id": "P1-6",
+      "status": "PASS",
+      "message": "idle>=1 after prewarm",
+      "detail": null,
+      "ts": "2026-11-11T11:11:01Z"
+    },
+    {
+      "id": "P1-1",
+      "status": "PASS",
+      "message": "initialize (+repeat) agent=deepseek-harness-acp protocol=1",
+      "detail": null,
+      "ts": "2026-11-11T11:11:02Z"
+    },
+    {
+      "id": "P1-2",
+      "status": "PASS",
+      "message": "sessionId=0ad8f3ae-ad39-4315-8fc9-1e8a4baea5d3",
+      "detail": null,
+      "ts": "2026-11-11T11:11:02Z"
+    },
+    {
+      "id": "P1-3",
+      "status": "PASS",
+      "message": "model config echoed",
+      "detail": null,
+      "ts": "2026-11-11T11:11:02Z"
+    },
+    {
+      "id": "P1-4",
+      "status": "PASS",
+      "message": "prompt end_turn reply_len=151 stop=end_turn",
+      "detail": null,
+      "ts": "2026-11-11T11:11:03Z"
+    },
+    {
+      "id": "P1-5",
+      "status": "PASS",
+      "message": "three sequential attaches succeeded",
+      "detail": null,
+      "ts": "2026-11-11T11:12:09Z"
+    },
+    {
+      "id": "P2-3",
+      "status": "PASS",
+      "message": "prompt/session failed closed without DEEPSEEK_API_KEY",
+      "detail": null,
+      "ts": "2026-11-11T11:12:29Z"
+    },
+    {
+      "id": "P2-1",
+      "status": "PASS",
+      "message": "workspace marker echoed",
+      "detail": null,
+      "ts": "2026-11-11T11:12:50Z"
+    },
+    {
+      "id": "P2-2",
+      "status": "PASS",
+      "message": "named volume dsh-acp-data-e2e-agent-desktop-full-e2e present (cross-attach file persistence not asserted without tools)",
+      "detail": null,
+      "ts": "2026-11-11T11:12:50Z"
+    },
+    {
+      "id": "P2-4",
+      "status": "PASS",
+      "message": "pool stopped; no running boxes",
+      "detail": null,
+      "ts": "2026-11-11T11:13:06Z"
+    },
+    {
+      "id": "P3-3",
+      "status": "PASS",
+      "message": "bad image did not become idle within timeout",
+      "detail": null,
+      "ts": "2026-11-11T11:13:23Z"
+    },
+    {
+      "id": "P3-1",
+      "status": "PASS",
+      "message": "disconnect destroyed session; pool replenished",
+      "detail": null,
+      "ts": "2026-11-11T11:14:00Z"
+    },
+    {
+      "id": "P3-2",
+      "status": "PASS",
+      "message": "second attach blocked while size=1 busy",
+      "detail": null,
+      "ts": "2026-11-11T11:14:09Z"
+    },
+    {
+      "id": "P3-4",
+      "status": "PASS",
+      "message": "real tool call and completed update observed; result=91",
+      "detail": null,
+      "ts": "2026-11-11T11:14:47Z"
+    },
+    {
+      "id": "P4-1",
+      "status": "PASS",
+      "message": "cold complex coding task with independent host oracle",
+      "detail": {
+        "independent_guest_exec": true,
+        "elapsed_s": 84.688,
+        "tool_calls": 17,
+        "updates": 49
+      },
+      "ts": "2026-11-11T11:16:32Z"
+    },
+    {
+      "id": "P4-3",
+      "status": "PASS",
+      "message": "125-second externally paced batch task stays in flight to completion",
+      "detail": {
+        "batches": 12,
+        "elapsed_s": 170.57,
+        "tool_calls": 6,
+        "updates": 20
+      },
+      "ts": "2026-11-11T11:19:51Z"
+    },
+    {
+      "id": "P4-4",
+      "status": "PASS",
+      "message": "external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling",
+      "detail": {
+        "read_only_supported": false,
+        "read_only_error": "unsupported mount rejected before boot",
+        "permissions": 19,
+        "utf8_sha256": "df24111516bec762ed26174b8cdfff6f6f8479a6b43d97629aba59b9998cc5f9"
+      },
+      "ts": "2026-11-11T11:20:15Z"
+    },
+    {
+      "id": "P4-2",
+      "status": "PASS",
+      "message": "six tool-using turns retain context and evolving requirements",
+      "detail": {
+        "turns": [
+          {
+            "elapsed_s": 84.688,
+            "tool_calls": 17,
+            "updates": 49
+          },
+          {
+            "elapsed_s": 6.437,
+            "tool_calls": 3,
+            "updates": 11
+          },
+          {
+            "elapsed_s": 8.847,
+            "tool_calls": 4,
+            "updates": 13
+          },
+          {
+            "elapsed_s": 13.411,
+            "tool_calls": 5,
+            "updates": 16
+          },
+          {
+            "elapsed_s": 170.57,
+            "tool_calls": 6,
+            "updates": 20
+          },
+          {
+            "elapsed_s": 24.325,
+            "tool_calls": 5,
+            "updates": 15
+          }
+        ],
+        "total_tool_calls": 40
+      },
+      "ts": "2026-11-11T11:20:15Z"
+    },
+    {
+      "id": "P4-5",
+      "status": "PASS",
+      "message": "named-volume session history restores in a fresh MicroVM",
+      "detail": {
+        "session_id": "fc93e73b-2e17-48c3-ac7f-2a317cb0af56",
+        "cold_pid": 14806,
+        "warm_pid": 22155,
+        "history_recalled_without_file_tools": true,
+        "restore_method": "session/resume",
+        "pooled": true
+      },
+      "ts": "2026-11-11T11:20:27Z"
+    },
+    {
+      "id": "P4-6",
+      "status": "PASS",
+      "message": "concurrent sessions keep context and cancellation independent",
+      "detail": {
+        "sessions": [
+          "fc93e73b-2e17-48c3-ac7f-2a317cb0af56",
+          "26128150-9a2f-4a40-b8ed-753512299091"
+        ],
+        "overlapping_prompt_rejected": true,
+        "other_session_survived_cancel": true
+      },
+      "ts": "2026-11-11T11:20:32Z"
+    },
+    {
+      "id": "P4-7",
+      "status": "PASS",
+      "message": "cancel a running process tree, prevent late writes, then recover",
+      "detail": {
+        "cancel_latency_s": 0.036,
+        "late_write_observation_s": 50,
+        "process_tree": {
+          "pid": 249,
+          "childPid": 256,
+          "at": 1794396029445
+        }
+      },
+      "ts": "2026-11-11T11:21:24Z"
+    },
+    {
+      "id": "P4-8",
+      "status": "PASS",
+      "message": "invalid, conflicting and denied operations fail closed",
+      "detail": {
+        "typed_invalid_requests": 7,
+        "rejected_permissions": 1
+      },
+      "ts": "2026-11-11T11:21:27Z"
+    },
+    {
+      "id": "P4-9",
+      "status": "PASS",
+      "message": "EOF, pool, boxes, socket and named volume clean up",
+      "detail": {
+        "errors": []
+      },
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P5-01",
+      "status": "SKIP",
+      "message": "nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)",
+      "detail": null,
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P5-02",
+      "status": "SKIP",
+      "message": "nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)",
+      "detail": null,
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P5-03",
+      "status": "SKIP",
+      "message": "nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)",
+      "detail": null,
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P5-04",
+      "status": "SKIP",
+      "message": "nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)",
+      "detail": null,
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P5-05",
+      "status": "SKIP",
+      "message": "nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)",
+      "detail": null,
+      "ts": "2026-11-11T11:21:42Z"
+    },
+    {
+      "id": "P6-01",
+      "status": "PASS",
+      "message": "refactor finished; node --test=skipped (node not on host); forbidden 'apply_patch' used=false; tool lifecycle ordered",
+      "detail": {
+        "stats": {
+          "lines": 39,
+          "noise": 0,
+          "updates": 29,
+          "byType": {
+            "usage_update": 7,
+            "tool_call": 8,
+            "tool_call_update": 8,
+            "agent_thought_chunk": 5,
+            "agent_message_chunk": 1
+          },
+          "firstOrder": [
+            "usage_update",
+            "tool_call",
+            "tool_call_update",
+            "agent_thought_chunk",
+            "agent_message_chunk"
+          ],
+          "toolCalls": 8,
+          "toolCallUpdates": 8,
+          "chunks": 1,
+          "thoughtChunks": 5,
+          "usageUpdates": 7,
+          "permissionRequests": 2,
+          "permissionAnswers": 2,
+          "toolTitles": [
+            "bash",
+            "edit",
+            "read"
+          ],
+          "stopReasons": [
+            "end_turn"
+          ],
+          "errors": 0,
+          "lastUsed": 7494
+        },
+        "hostTest": "skipped (node not on host)"
+      },
+      "ts": "2026-11-11T11:21:59Z"
+    },
+    {
+      "id": "P6-02",
+      "status": "SKIP",
+      "message": "4/4 invalid mcpServers rejected; positive transport not covered: set E2E_MCP_STDIO_COMMAND (absolute path) and/or E2E_MCP_HTTP_URL for the positive path",
+      "detail": {
+        "lines": 8,
+        "noise": 0,
+        "updates": 0,
+        "byType": {},
+        "firstOrder": [],
+        "toolCalls": 0,
+        "toolCallUpdates": 0,
+        "chunks": 0,
+        "thoughtChunks": 0,
+        "usageUpdates": 0,
+        "permissionRequests": 0,
+        "permissionAnswers": 0,
+        "toolTitles": [],
+        "stopReasons": [],
+        "errors": 4,
+        "lastUsed": 0
+      },
+      "ts": "2026-11-11T11:21:59Z"
+    },
+    {
+      "id": "P6-03",
+      "status": "PASS",
+      "message": "one-shot permission policies exercised: allow-once:req=2/ans=2 reject-once:req=1/ans=1 cancelled:req=1/ans=1 fail:req=2/ans=2; answers matched requests; chunks kept flowing",
+      "detail": {
+        "totalPermissionRequests": 6,
+        "policies": [
+          "allow-once",
+          "reject-once",
+          "cancelled",
+          "fail"
+        ]
+      },
+      "ts": "2026-11-11T11:22:49Z"
+    },
+    {
+      "id": "P6-04",
+      "status": "PASS",
+      "message": "two live sessions isolated; cancel(sid2) did not affect sid1; cancel(sid1) -> cancelled; subagent resume rejection not exercised (no fork fixture)",
+      "detail": {
+        "sid1": "5de0da9c-a31a-4c68-90c9-42b1d91ba702",
+        "sid2": "faa35a4b-685e-4795-a063-65052ef7425d",
+        "listFiltered": true
+      },
+      "ts": "2026-11-11T11:22:55Z"
+    },
+    {
+      "id": "P6-05",
+      "status": "PASS",
+      "message": "tool round-trip inside VM; network=true interactive=false; toolTitles=[web_fetch,web_search]",
+      "detail": {
+        "stats": {
+          "lines": 17,
+          "noise": 0,
+          "updates": 11,
+          "byType": {
+            "agent_thought_chunk": 3,
+            "usage_update": 3,
+            "tool_call": 2,
+            "tool_call_update": 2,
+            "agent_message_chunk": 1
+          },
+          "firstOrder": [
+            "agent_thought_chunk",
+            "usage_update",
+            "tool_call",
+            "tool_call_update",
+            "agent_message_chunk"
+          ],
+          "toolCalls": 2,
+          "toolCallUpdates": 2,
+          "chunks": 1,
+          "thoughtChunks": 3,
+          "usageUpdates": 3,
+          "permissionRequests": 0,
+          "permissionAnswers": 0,
+          "toolTitles": [
+            "web_fetch",
+            "web_search"
+          ],
+          "stopReasons": [
+            "end_turn"
+          ],
+          "errors": 0,
+          "lastUsed": 9676
+        },
+        "networkTools": "true",
+        "interactiveTools": "false"
+      },
+      "ts": "2026-11-11T11:23:03Z"
+    },
+    {
+      "id": "P4-01",
+      "status": "PASS",
+      "message": "initialize agent=deepseek-harness-acp protocol=1; stdout JSON-RPC only",
+      "detail": {
+        "agent": "deepseek-harness-acp",
+        "protocolVersion": "1"
+      },
+      "ts": "2026-11-11T11:23:26Z"
+    },
+    {
+      "id": "P4-02",
+      "status": "PASS",
+      "message": "new/list/close/resume + negatives; not-triggered; no duplicate ids",
+      "detail": {
+        "sessionId": "890735b7-cdc6-4c8f-a7b4-edb5f13b6f68",
+        "pages": 1,
+        "duplicateIds": 0
+      },
+      "ts": "2026-11-11T11:23:27Z"
+    },
+    {
+      "id": "P4-03",
+      "status": "PASS",
+      "message": "model round-trip; 4 reasoning_effort values; effort-over-resume asserted",
+      "detail": {
+        "model": "[\"deepseek-official\",\"deepseek-v4-flash\"]",
+        "effortValuesChecked": 4
+      },
+      "ts": "2026-11-11T11:23:27Z"
+    },
+    {
+      "id": "P4-04",
+      "status": "PASS",
+      "message": "chunks + tool lifecycle + stopReason=end_turn observed",
+      "detail": {
+        "stats": {
+          "lines": 24,
+          "noise": 0,
+          "updates": 18,
+          "byType": {
+            "agent_thought_chunk": 4,
+            "usage_update": 5,
+            "tool_call": 4,
+            "tool_call_update": 4,
+            "agent_message_chunk": 1
+          },
+          "firstOrder": [
+            "agent_thought_chunk",
+            "usage_update",
+            "tool_call",
+            "tool_call_update",
+            "agent_message_chunk"
+          ],
+          "toolCalls": 4,
+          "toolCallUpdates": 4,
+          "chunks": 1,
+          "thoughtChunks": 4,
+          "usageUpdates": 5,
+          "permissionRequests": 1,
+          "permissionAnswers": 1,
+          "toolTitles": [
+            "bash",
+            "read",
+            "write"
+          ],
+          "stopReasons": [
+            "end_turn"
+          ],
+          "errors": 0,
+          "lastUsed": 6638
+        },
+        "optional": {
+          "thoughtChunks": 4,
+          "usageUpdates": 5,
+          "configOptionUpdates": 0,
+          "stopReasons": [
+            "end_turn"
+          ]
+        },
+        "stopReason": "end_turn"
+      },
+      "ts": "2026-11-11T11:23:33Z"
+    },
+    {
+      "id": "P4-05",
+      "status": "PASS",
+      "message": "3/3 invalid blocks rejected; image-capability=false; inline image not advertised (not exercised); huge prompt SKIPPED (set E2E_P4_HUGE_PROMPT=1 to spend tokens); connection survived",
+      "detail": null,
+      "ts": "2026-11-11T11:23:33Z"
+    },
+    {
+      "id": "P4-06",
+      "status": "PASS",
+      "message": "cold/pool agent=deepseek-harness-acp proto=1 stop=end_turn/end_turn; running boxes now=0 (pool still up)",
+      "detail": {
+        "coldAgent": "deepseek-harness-acp",
+        "poolAgent": "deepseek-harness-acp",
+        "coldStop": "end_turn",
+        "poolStop": "end_turn",
+        "runningBoxesAfter": 0
+      },
+      "ts": "2026-11-11T11:23:56Z"
+    },
+    {
+      "id": "P4-07",
+      "status": "PASS",
+      "message": "session 12d18916-bfed-4a56-b86f-4a04bb02c291 visible/resumable from a new VM on the same /data volume; host marker echoed",
+      "detail": {
+        "sessionId": "12d18916-bfed-4a56-b86f-4a04bb02c291",
+        "markerFile": "/workspace/p4-marker.txt"
+      },
+      "ts": "2026-11-11T11:23:59Z"
+    },
+    {
+      "id": "P4-08",
+      "status": "PASS",
+      "message": "size=1 exhaustion observed (second_attach_alive=1); pool replenished to idle",
+      "detail": {
+        "secondAttachAliveWhileBusy": 1
+      },
+      "ts": "2026-11-11T11:24:29Z"
+    },
+    {
+      "id": "P4-09",
+      "status": "PASS",
+      "message": "pool stopped; socket gone; running_boxes=0; lifecycle_locks=0 (snapshot sub-case not qualified)",
+      "detail": {
+        "runningBoxes": 0,
+        "lifecycleLocks": 0
+      },
+      "ts": "2026-11-11T11:24:38Z"
+    },
+    {
+      "id": "P4-10",
+      "status": "SKIP",
+      "message": "pool start --memory 2g not accepted by this kbox build; see p4-mem-pool.log",
+      "detail": null,
+      "ts": "2026-11-11T11:27:45Z"
+    }
+  ],
+  "image_digest": "sha256:4237b8ac59d8ad1fb89ce065877fdd8d02f9114c17412cca8163d4276242fea5",
+  "tier": "all"
+}

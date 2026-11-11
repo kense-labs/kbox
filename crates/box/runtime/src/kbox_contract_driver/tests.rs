@@ -119,7 +119,7 @@ fn driver_allows_explicit_shared_kernel_selection() {
 }
 
 #[tokio::test]
-async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
+async fn microvm_capabilities_map_outbound_to_tsi() {
     let directory = tempfile::tempdir().unwrap();
     let driver = BoxRuntimeDriver::new_with_boundary(
         BoxRuntimeDriverConfig {
@@ -153,7 +153,7 @@ async fn sandbox_capabilities_advertise_outbound_via_host_netns() {
             .unwrap()
             .config
             .network,
-        kbox_core::NetworkMode::Host
+        kbox_core::NetworkMode::Tsi
     );
 }
 
@@ -599,13 +599,13 @@ fn lifecycle_bound_reserves_the_full_grace_before_provider_timeout() {
 }
 
 #[test]
-fn mapping_honors_an_explicit_shared_kernel_backend() {
+fn mapping_omits_the_removed_sandbox_memory_limit() {
     let spec = spec(RuntimeUnitClass::Service);
     let request = creation_request(&spec, ExecutionBoundary::Microvm).unwrap();
 
     assert_eq!(
         request.config.resource_limits.sandbox_memory_limit_bytes,
-        Some(spec.resources.memory_bytes)
+        None
     );
 }
 

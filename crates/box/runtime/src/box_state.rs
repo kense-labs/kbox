@@ -540,8 +540,9 @@ mod tests {
         let directory = tempfile::tempdir().unwrap();
         let path = directory.path().join("boxes.json");
         let mut record = managed_record("managed", OperationId::new("operation-1").unwrap());
-        record.managed_execution.as_mut().unwrap().plan =
-            kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
+        let mut drifted = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
+        drifted.required_controls.push("tampered-control".to_string());
+        record.managed_execution.as_mut().unwrap().plan = drifted;
         std::fs::write(&path, serde_json::to_vec(&vec![record]).unwrap()).unwrap();
 
         let error = BoxStateStore::load(&path).unwrap_err();

@@ -1,0 +1,63 @@
+1794395235,  PID  PPID  %CPU %MEM    RSS COMM
+1794395240,  PID  PPID  %CPU %MEM    RSS COMM
+1794395240,88285 88246  45.6  0.1  31264 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395245,  PID  PPID  %CPU %MEM    RSS COMM
+1794395245,88285 88246  63.9  0.1  48384 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395250,  PID  PPID  %CPU %MEM    RSS COMM
+1794395250,88285 88246  80.2  0.2  52096 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395255,  PID  PPID  %CPU %MEM    RSS COMM
+1794395255,88285 88246  58.6  0.2  71504 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395261,  PID  PPID  %CPU %MEM    RSS COMM
+1794395261,88285 88246  85.2  0.2  74032 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395266,  PID  PPID  %CPU %MEM    RSS COMM
+1794395266,88285 88246  70.2  0.2  76560 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395271,  PID  PPID  %CPU %MEM    RSS COMM
+1794395271,88285 88246  79.9  0.2  78768 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395276,  PID  PPID  %CPU %MEM    RSS COMM
+1794395276,88285 88246  67.9  0.2  81248 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395281,  PID  PPID  %CPU %MEM    RSS COMM
+1794395281,88285 88246  60.9  0.2  83760 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395286,  PID  PPID  %CPU %MEM    RSS COMM
+1794395286,88285 88246  77.6  0.3 109568 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395291,  PID  PPID  %CPU %MEM    RSS COMM
+1794395291,88285 88246  44.2  0.6 186704 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395296,  PID  PPID  %CPU %MEM    RSS COMM
+1794395296,88285 88246  47.1  0.6 186704 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395301,  PID  PPID  %CPU %MEM    RSS COMM
+1794395301,88285 88246  30.9  0.5 163344 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395306,  PID  PPID  %CPU %MEM    RSS COMM
+1794395306,88285 88246  45.6  0.5 163344 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395311,  PID  PPID  %CPU %MEM    RSS COMM
+1794395311,88285 88246  39.9  0.5 163344 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395316,  PID  PPID  %CPU %MEM    RSS COMM
+1794395316,88285 88246   8.2  0.5 164320 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395316,92568 88285   0.4  0.0    160 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395321,  PID  PPID  %CPU %MEM    RSS COMM
+1794395321,92568     1   0.0  2.0 654672 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395321,93050 93042  84.5  0.1  20512 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395326,  PID  PPID  %CPU %MEM    RSS COMM
+1794395326,92568     1   0.2  2.0 655392 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395326,93050 93042   0.4  0.1  43808 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395326,93279 93050   0.4  2.2 745408 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395331,  PID  PPID  %CPU %MEM    RSS COMM
+1794395331,92568     1   0.3  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395331,93050 93042   0.7  0.1  43808 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395331,93279 93050   0.6  2.2 747088 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395336,  PID  PPID  %CPU %MEM    RSS COMM
+1794395336,92568     1   0.2  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395336,93050 93042   0.5  0.1  43808 /Users/roylin/code/kense/kbox/target/release/kbox
+1794395336,93279 93050   0.5  2.2 747632 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395341,  PID  PPID  %CPU %MEM    RSS COMM
+1794395341,92568     1   0.3  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395346,  PID  PPID  %CPU %MEM    RSS COMM
+1794395346,92568     1   0.0  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395346,95531     1  38.8  2.0 654656 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395352,  PID  PPID  %CPU %MEM    RSS COMM
+1794395352,92568     1   0.2  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395352,95531     1   0.3  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395357,  PID  PPID  %CPU %MEM    RSS COMM
+1794395357,92568     1   0.3  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395357,95531     1   1.0  2.0 655504 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395362,  PID  PPID  %CPU %MEM    RSS COMM
+1794395362,92568     1   0.3  2.0 655456 /Users/roylin/code/kense/kbox/target/release/kbox-shim
+1794395362,95531     1   0.2  2.0 655504 /Users/roylin/code/kense/kbox/target/release/kbox-shim

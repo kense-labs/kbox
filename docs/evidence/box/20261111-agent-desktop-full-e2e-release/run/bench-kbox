@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if [[ "${1:-}" == pool ]]; then
+  subcommand="$2"
+  shift 2
+  if [[ "$subcommand" == start ]]; then
+    args=("$@")
+    for i in "${!args[@]}"; do
+      if [[ "${args[$i]}" == --image ]]; then
+        args[$((i + 1))]="$E2E_BENCH_IMAGE"
+      fi
+    done
+    exec "$E2E_BENCH_KBOX" pool "$subcommand" "${args[@]}" --socket "$E2E_BENCH_SOCKET"
+  fi
+  exec "$E2E_BENCH_KBOX" pool "$subcommand" "$@" --socket "$E2E_BENCH_SOCKET"
+fi
+exec "$E2E_BENCH_KBOX" "$@"

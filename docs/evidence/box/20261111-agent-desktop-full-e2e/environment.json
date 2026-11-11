@@ -1,0 +1,14 @@
+{
+  "started_at": "2026-11-11T18:50:07.551821+08:00",
+  "driver": "vercel agent-desktop 1.2.0 (GUI Terminal, accessibility-tree refs)",
+  "kbox_revision": "2f653739e5501303df89261268f715440e602ca8",
+  "kbox_version": "kbox version 3.4.3",
+  "image": "ghcr.io/kense-labs/dsh-acp:latest",
+  "model_provider": "deepseek (config.acl)",
+  "model": "deepseek-flash",
+  "reasoning_effort": "low",
+  "tier": "all",
+  "capability_surface": true,
+  "longrun": "nightly gate: E2E_LONGRUN unset, P5 records explicit SKIP",
+  "credential": "injected into child env only; never printed or persisted"
+}

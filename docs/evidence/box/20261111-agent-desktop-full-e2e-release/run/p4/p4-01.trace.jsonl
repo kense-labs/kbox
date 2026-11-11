@@ -1,0 +1,4 @@
+{"seq":1,"t":7,"kind":"request_sent","method":"initialize","id":100}
+{"seq":2,"t":7,"kind":"response","id":100,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["agentCapabilities","agentInfo","authMethods","protocolVersion"]}
+{"seq":3,"t":7,"kind":"request_sent","method":"initialize","id":101}
+{"seq":4,"t":7,"kind":"response","id":101,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["agentCapabilities","agentInfo","authMethods","protocolVersion"]}

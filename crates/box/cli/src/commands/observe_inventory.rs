@@ -411,7 +411,7 @@ mod tests {
     }
 
     fn managed_snapshotting_record(id: &str, box_dir: &std::path::Path) -> BoxRecord {
-        managed_claim(
+        let mut record = managed_claim(
             id,
             box_dir,
             "snapshotting",
@@ -421,7 +421,12 @@ mod tests {
                 operation_id: None,
                 freezer_applied: false,
             },
-        )
+        );
+        // Snapshotting originates from Running, so inspect() expects the start
+        // timestamp used to build the lease. Keep the fixture faithful to that
+        // contract; the assertion below still forbids inventing an exit code.
+        record.started_at = Some(record.created_at);
+        record
     }
 
     fn managed_updating_resources_record(id: &str, box_dir: &std::path::Path) -> BoxRecord {

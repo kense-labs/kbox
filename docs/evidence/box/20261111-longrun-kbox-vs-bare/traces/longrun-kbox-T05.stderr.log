@@ -1,0 +1,6 @@
+Creating box loud_shannon (97e271da6073)...
+Box loud_shannon (97e271da6073) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box loud_shannon exited and was removed.

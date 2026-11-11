@@ -1,0 +1,11 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/debug/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/Users/roylin/code/kense/kbox/docs/evidence/box/20261111-agent-desktop-full-e2e/k-home
+[e2e] IMAGE=ghcr.io/kense-labs/dsh-acp:latest
+[e2e] TIER=all
+[e2e] E2E_OUT=/Users/roylin/code/kense/kbox/docs/evidence/box/20261111-agent-desktop-full-e2e/run
+[e2e] running p0_bench.sh
+[e2e] fetching bench script
+P0-1: FAIL — bench exited 1 (see p0-bench.stderr)
+[e2e] running p0_cold_initialize.sh
+Creating box eager_ritchie (8cef86e8a6a7)...

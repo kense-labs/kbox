@@ -1,0 +1,30 @@
+{"seq":1,"t":7,"kind":"request_sent","method":"session/new","id":100}
+{"seq":2,"t":7,"kind":"response","id":100,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":3,"t":7,"kind":"request_sent","method":"session/close","id":101}
+{"seq":4,"t":7,"kind":"response","id":101,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":5,"t":7,"kind":"request_sent","method":"session/list","id":102}
+{"seq":6,"t":7,"kind":"response","id":102,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["sessions"]}
+{"seq":7,"t":7,"kind":"request_sent","method":"session/resume","id":103}
+{"seq":8,"t":7,"kind":"response","id":103,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions"]}
+{"seq":9,"t":7,"kind":"request_sent","method":"session/resume","id":104}
+{"seq":10,"t":7,"kind":"response","id":104,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: session is already active: 890735b7-cdc6-4c8f-a7b4-edb5f13b6f68","resultKeys":[]}
+{"seq":11,"t":7,"kind":"request_sent","method":"session/close","id":105}
+{"seq":12,"t":7,"kind":"response","id":105,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":13,"t":7,"kind":"request_sent","method":"session/resume","id":106}
+{"seq":14,"t":7,"kind":"response","id":106,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: session cwd does not match: /tmp","resultKeys":[]}
+{"seq":15,"t":7,"kind":"request_sent","method":"session/resume","id":107}
+{"seq":16,"t":7,"kind":"response","id":107,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: session is not resumable: 00000000-0000-4000-8000-000000000000","resultKeys":[]}
+{"seq":17,"t":7,"kind":"request_sent","method":"session/new","id":108}
+{"seq":18,"t":7,"kind":"response","id":108,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":19,"t":7,"kind":"request_sent","method":"session/close","id":109}
+{"seq":20,"t":7,"kind":"response","id":109,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":21,"t":7,"kind":"request_sent","method":"session/new","id":110}
+{"seq":22,"t":7,"kind":"response","id":110,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":23,"t":7,"kind":"request_sent","method":"session/close","id":111}
+{"seq":24,"t":7,"kind":"response","id":111,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":25,"t":7,"kind":"request_sent","method":"session/new","id":112}
+{"seq":26,"t":8,"kind":"response","id":112,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":27,"t":8,"kind":"request_sent","method":"session/close","id":113}
+{"seq":28,"t":8,"kind":"response","id":113,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}
+{"seq":29,"t":8,"kind":"request_sent","method":"session/list","id":114}
+{"seq":30,"t":8,"kind":"response","id":114,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["sessions"]}

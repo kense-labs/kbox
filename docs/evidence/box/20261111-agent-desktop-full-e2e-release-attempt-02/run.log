@@ -1,0 +1,18 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/release/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/tmp/kbox-e2e-ad-release/k-home
+[e2e] IMAGE=ghcr.io/kense-labs/dsh-acp:latest
+[e2e] TIER=all
+[e2e] E2E_OUT=/Users/roylin/code/kense/kbox/docs/evidence/box/20261111-agent-desktop-full-e2e-release/run
+[e2e] running p0_bench.sh
+[e2e] fetching bench script
+P0-1: FAIL — bench exited 1 (see p0-bench.stderr)
+[e2e] running p0_cold_initialize.sh
+Creating box wise_dijkstra (0bae015263f3)...
+Box wise_dijkstra (0bae015263f3) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box wise_dijkstra exited and was removed.
+P0-2: PASS — initialize ok agent=deepseek-harness-acp protocol=1
+[e2e] running p1_core.sh

@@ -1,0 +1,1 @@
+{"version":"2.6","ok":false,"command":"launch","error":{"code":"TIMEOUT","message":"Operation exceeded its deadline","suggestion":"The target application may be busy or unresponsive","details":{"callback_may_arrive_late":true,"kind":"ns_workspace_launch_completion"},"disposition":{"delivery":"delivery_uncertain","retry":"unsafe"}}}

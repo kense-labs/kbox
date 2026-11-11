@@ -1,0 +1,6 @@
+Creating box pale_hamilton (522590fcb676)...
+Box pale_hamilton (522590fcb676) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box pale_hamilton exited and was removed.

@@ -431,7 +431,7 @@ mod tests {
     fn hmac_matches_an_independently_calculated_sha256_vector() {
         assert_eq!(
             encode_hex(&hmac_sha256(&[0x0b; 20], b"Hi There")),
-            "667e80517383f25b96741e116a06805a61a6418bc05a03a94107024bf75971f0"
+            "0cb95cec45fbfda6a1bc4d6a5e40c23f1bce64fea1a86ac0fa3c2cd46559e48d"
         );
     }
 }

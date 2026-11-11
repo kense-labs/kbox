@@ -1,0 +1,7 @@
+Creating box slim_liskov (a6ea5c4c6f77)...
+kbox run: still creating slim_liskov; image is ready and runtime startup has taken 70s
+Box slim_liskov (a6ea5c4c6f77) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box slim_liskov exited and was removed.

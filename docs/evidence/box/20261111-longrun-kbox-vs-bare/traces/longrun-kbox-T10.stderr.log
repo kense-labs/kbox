@@ -1,0 +1,6 @@
+Creating box noble_dijkstra (f2c937d4fae4)...
+Box noble_dijkstra (f2c937d4fae4) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box noble_dijkstra exited and was removed.

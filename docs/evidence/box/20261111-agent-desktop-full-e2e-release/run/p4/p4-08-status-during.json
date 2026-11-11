@@ -1,0 +1,1 @@
+[{"image":"ghcr.io/kense-labs/dsh-acp:latest","pool":"ghcr.io/kense-labs/dsh-acp:latest [vcpus=2, memory=512m, volumes=2]","max":3,"idle":0,"active":3,"leased":0,"total_created":3,"total_acquired":3,"total_evicted":0}]

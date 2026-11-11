@@ -1,0 +1,6 @@
+Creating box calm_thompson (c73049f4556c)...
+Box calm_thompson (c73049f4556c) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box calm_thompson exited and was removed.

@@ -182,7 +182,7 @@ fn stored_profile_ignores_oci_migration_and_isolation_selector() {
         );
         assert_eq!(
             select_isolation(Some("sandbox"), migration),
-            Ok(IsolationSelection::HardwareVm)
+            Err(ContractError::UnknownIsolation)
         );
     }
     assert_eq!(
@@ -670,15 +670,16 @@ fn latency_feature_stays_unavailable_until_every_series_is_inside_the_gate() {
 }
 
 #[test]
-fn sandbox_rejects_every_vm_only_feature() {
-    let sandbox = select_isolation(Some("sandbox"), Some("all")).expect("sandbox");
+fn removed_sandbox_selector_is_rejected_and_vm_only_features_stay_permitted() {
+    // MicroVM-only deleted the Sandbox isolation class: the old selector is
+    // now rejected as unknown instead of selecting SharedHostKernel.
+    assert_eq!(
+        select_isolation(Some("sandbox"), Some("all")),
+        Err(ContractError::UnknownIsolation)
+    );
     let hardware = select_isolation(None, None).expect("hardware-vm");
     assert_eq!(VmOnlyFeature::all().len(), 6);
     for feature in VmOnlyFeature::all() {
-        assert_eq!(
-            open_vm_only(sandbox, feature),
-            Err(ContractError::SandboxRejectsVmOnly)
-        );
         assert_eq!(open_vm_only(hardware, feature), Ok(()));
     }
 }

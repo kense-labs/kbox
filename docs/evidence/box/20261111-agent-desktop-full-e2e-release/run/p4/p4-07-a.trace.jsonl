@@ -1,0 +1,4 @@
+{"seq":1,"t":37,"kind":"request_sent","method":"session/new","id":100}
+{"seq":2,"t":37,"kind":"response","id":100,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":["configOptions","sessionId"]}
+{"seq":3,"t":37,"kind":"request_sent","method":"session/close","id":101}
+{"seq":4,"t":37,"kind":"response","id":101,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":null,"resultKeys":[]}

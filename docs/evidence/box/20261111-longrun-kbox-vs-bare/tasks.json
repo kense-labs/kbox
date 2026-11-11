@@ -1,0 +1,148 @@
+{
+  "tasks": [
+    {
+      "id": "T01",
+      "mode": "sum",
+      "name": "长程聚合：2 万行事件求和",
+      "seed_sha256": "f5ddbe2c54f584c41193965b0ee313a1a4537397ddf59054ff10aed1de165140",
+      "burn": 600000000,
+      "wait_ms": 1200
+    },
+    {
+      "id": "T02",
+      "mode": "sort",
+      "name": "长程排序：稳定排序与全量摘要",
+      "seed_sha256": "d5a7646d134d6f2a60240262ec6ddba649e64ae17aa029cdf445d27a012396d1",
+      "burn": 750000000,
+      "wait_ms": 1500
+    },
+    {
+      "id": "T03",
+      "mode": "group",
+      "name": "长程分组：账户维度归约",
+      "seed_sha256": "24210c1cfd1e7f1b46c56e8e68700f26fcd514e8b788c5a748ef2ca92ace375c",
+      "burn": 900000000,
+      "wait_ms": 1800
+    },
+    {
+      "id": "T04",
+      "mode": "gzip",
+      "name": "长程压缩：gzip 往返与字节校验",
+      "seed_sha256": "2888bfb5cead0696109b70e92a83cf1ef28b48551b620e6029e1b95cef2ee691",
+      "burn": 1050000000,
+      "wait_ms": 2100
+    },
+    {
+      "id": "T05",
+      "mode": "primes",
+      "name": "长程筛法：素数判定与统计",
+      "seed_sha256": "d8eb565905ae8f22c7942a1ebc5e9f9ec0c0075a10357ef672ca7e43e015e80c",
+      "burn": 1200000000,
+      "wait_ms": 1200
+    },
+    {
+      "id": "T06",
+      "mode": "matrix",
+      "name": "长程矩阵：48×48 稠密乘法",
+      "seed_sha256": "6c35deabe8396547171d7c133185e9d66ee92e01945d6b8bbbba859bb277d4df",
+      "burn": 1350000000,
+      "wait_ms": 1500
+    },
+    {
+      "id": "T07",
+      "mode": "chain",
+      "name": "长程哈希链：逐行链式摘要",
+      "seed_sha256": "d426853d333d1dfd0da4aa8be0b0c8aa6edde0efb808703d8d04bdc2cb1f4966",
+      "burn": 1500000000,
+      "wait_ms": 1800
+    },
+    {
+      "id": "T08",
+      "mode": "fanout",
+      "name": "长程文件扇出：200 个小文件",
+      "seed_sha256": "ee162fa3ece4f1c7fdc8903b64a7dba057835bf5a451a1dd31593a8c63351bc7",
+      "burn": 1650000000,
+      "wait_ms": 2100
+    },
+    {
+      "id": "T09",
+      "mode": "tree",
+      "name": "长程目录树：10×12 嵌套文件",
+      "seed_sha256": "fdde89e520bfcdf6c6e3426d6a302ab66d2f8238d87e6fbec537d182ee84058b",
+      "burn": 1800000000,
+      "wait_ms": 1200
+    },
+    {
+      "id": "T10",
+      "mode": "dedup",
+      "name": "长程去重：按主键消歧",
+      "seed_sha256": "e95c2d4fd7b4a07a875862316fbf4984d2fbeac5fb0e03de81d7b56062b6f8bc",
+      "burn": 1950000000,
+      "wait_ms": 1500
+    }
+  ],
+  "reference_compute_s": {
+    "T01": [
+      0.594,
+      0.591,
+      1.833
+    ],
+    "T02": [
+      0.79,
+      0.736,
+      2.267
+    ],
+    "T03": [
+      0.876,
+      0.874,
+      2.685
+    ],
+    "T04": [
+      1.014,
+      1.003,
+      3.126
+    ],
+    "T05": [
+      1.173,
+      1.141,
+      2.364
+    ],
+    "T06": [
+      1.285,
+      1.273,
+      2.796
+    ],
+    "T07": [
+      1.42,
+      1.443,
+      3.271
+    ],
+    "T08": [
+      1.551,
+      2.202,
+      3.731
+    ],
+    "T09": [
+      1.754,
+      2.127,
+      2.969
+    ],
+    "T10": [
+      1.827,
+      1.838,
+      3.36
+    ]
+  },
+  "reference_rc_ok": {
+    "T01": true,
+    "T02": true,
+    "T03": true,
+    "T04": true,
+    "T05": true,
+    "T06": true,
+    "T07": true,
+    "T08": true,
+    "T09": true,
+    "T10": true
+  }
+}

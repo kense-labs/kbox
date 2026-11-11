@@ -1,0 +1,12 @@
+Listening on /tmp/kbox-ad-e2e/out/p6/p6-main.sock (Ctrl-C or SIGTERM to drain and stop)
+Warm pool started
+  default image: ghcr.io/kense-labs/dsh-acp:latest (pre-warming 2)
+  max:      3
+  boot concurrency: 2 (daemon-wide)
+  ttl:      0s
+  lease ttl: 3600s
+  socket:   /tmp/kbox-ad-e2e/out/p6/p6-main.sock
+Draining warm pools...
+[2m2026-11-11T11:23:04.941678Z[0m [33m WARN[0m pool connection failed [3merror[0m[2m=[0mBroken pipe (os error 32)
+[2m2026-11-11T11:23:10.272386Z[0m [33m WARN[0m pool connection failed [3merror[0m[2m=[0mBroken pipe (os error 32)
+Done.

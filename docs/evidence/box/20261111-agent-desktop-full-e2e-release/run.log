@@ -1,0 +1,123 @@
+[e2e] ROOT=/Users/roylin/code/kense/kbox
+[e2e] KBOX=/Users/roylin/code/kense/kbox/target/release/kbox (kbox version 3.4.3)
+[e2e] K_HOME=/tmp/kbox-e2e-ad-release/k-home
+[e2e] IMAGE=ghcr.io/kense-labs/dsh-acp:latest
+[e2e] TIER=all
+[e2e] E2E_OUT=/tmp/kbox-ad-e2e/out
+[e2e] running p0_bench.sh
+[e2e] fetching bench script
+P0-1: PASS — bench RUNS=1 succeeded
+[e2e] running p0_cold_initialize.sh
+Creating box pure_diffie (c2b74c6c00f9)...
+Box pure_diffie (c2b74c6c00f9) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box pure_diffie exited and was removed.
+P0-2: PASS — initialize ok agent=deepseek-harness-acp protocol=1
+[e2e] running p1_core.sh
+P1-6: PASS — idle>=1 after prewarm
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek Harness 驱动的 AI 编程助手，可以帮你阅读代码、编写和调试程序、执行命令以及分析技术问题。P1-1: PASS — initialize (+repeat) agent=deepseek-harness-acp protocol=1
+P1-2: PASS — sessionId=0ad8f3ae-ad39-4315-8fc9-1e8a4baea5d3
+P1-3: PASS — model config echoed
+P1-4: PASS — prompt end_turn reply_len=151 stop=end_turn
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是由 DeepSeek 驱动的编程智能体，可以帮你阅读代码、运行命令、排查问题并完成开发任务。[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+你好！我是 DeepSeek 驱动的 AI 编码助手，可以帮你阅读代码、排查问题、编写和修改文件，并执行开发相关的任务。P1-5: PASS — three sequential attaches succeeded
+[e2e] running p2_mounts_cleanup.sh
+Invalid params: unknown model option: ["deepseek-official","deepseek-flash"]
+Internal error: turn failed: llm-deepseek: no API key for provider route "deepseek-official"; store DEEPSEEK_API_KEY through the credentials service (the web Models page writes it), or export DEEPSEEK_API_KEY in the launching environment
+P2-3: PASS — prompt/session failed closed without DEEPSEEK_API_KEY
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+e2e-marker-1794395544P2-1: PASS — workspace marker echoed
+P2-2: PASS — named volume dsh-acp-data-e2e-agent-desktop-full-e2e present (cross-attach file persistence not asserted without tools)
+P2-4: PASS — pool stopped; no running boxes
+[e2e] running p3_negative.sh
+P3-3: PASS — bad image did not become idle within timeout
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P3-1: PASS — disconnect destroyed session; pool replenished
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P3-2: PASS — second attach blocked while size=1 busy
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+已在 bash 工具中实际执行：
+
+```bash
+node -p '7*13'
+```
+
+执行结果：
+
+```
+91
+```
+
+所以 `7 * 13 = 91`。（首次以默认 `workspace-write` 沙箱运行时，因宿主机没有可用的沙箱后端而被拒绝；经批准改用 `danger-full-access` 后命令成功执行。）P3-4: PASS — real tool call and completed update observed; result=91
+  turn 1: 17 tools, 84.688s
+P4-1: PASS — cold complex coding task with independent host oracle
+  turn 2: 3 tools, 6.437s
+  turn 3: 4 tools, 8.847s
+  turn 4: 5 tools, 13.411s
+  stream: worker started; beginning paced host input
+  stream: 20s, 3/12 host batches
+  stream: 40s, 5/12 host batches
+  stream: 60s, 7/12 host batches
+  stream: 81s, 9/12 host batches
+  stream: 101s, 11/12 host batches
+  stream: 121s, 12/12 host batches
+  turn 5: 6 tools, 170.57s
+P4-3: PASS — 125-second externally paced batch task stays in flight to completion
+  turn 6: 5 tools, 24.325s
+P4-4: PASS — external filesystem read/write, refresh, Unicode paths and fail-closed read-only handling
+P4-2: PASS — six tool-using turns retain context and evolving requirements
+  turn 7: 0 tools, 1.017s
+  turn 8: 3 tools, 5.43s
+P4-5: PASS — named-volume session history restores in a fresh MicroVM
+  turn 9: 0 tools, 1.75s
+  turn 10: 0 tools, 0.711s
+P4-6: PASS — concurrent sessions keep context and cancellation independent
+  turn 11: 2 tools, 4.918s
+P4-7: PASS — cancel a running process tree, prevent late writes, then recover
+  turn 12: 1 tools, 2.515s
+P4-8: PASS — invalid, conflicting and denied operations fail closed
+P4-9: PASS — EOF, pool, boxes, socket and named volume clean up
+[e2e] running p5_longrun.sh
+P5-01: SKIP — nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)
+P5-02: SKIP — nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)
+P5-03: SKIP — nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)
+P5-04: SKIP — nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)
+P5-05: SKIP — nightly gate: set E2E_LONGRUN=1 (real tokens, >=15min)
+[e2e] running p6_complex.sh
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P6-01: PASS — refactor finished; node --test=skipped (node not on host); forbidden 'apply_patch' used=false; tool lifecycle ordered
+Invalid params: mcpServers[0].command must be an absolute path
+Invalid params: mcpServers[0].url must be an absolute HTTP(S) URL
+Invalid params: mcpServers contains duplicate normalized name: dup
+Invalid params: mcpServers[0] transport sse is not supported
+[e2e] P6-02: set E2E_MCP_STDIO_COMMAND (absolute path) and/or E2E_MCP_HTTP_URL for the positive path
+P6-02: SKIP — 4/4 invalid mcpServers rejected; positive transport not covered: set E2E_MCP_STDIO_COMMAND (absolute path) and/or E2E_MCP_HTTP_URL for the positive path
+P6-03: PASS — one-shot permission policies exercised: allow-once:req=2/ans=2 reject-once:req=1/ans=1 cancelled:req=1/ans=1 fail:req=2/ans=2; answers matched requests; chunks kept flowing
+[e2e] running p4_capabilities.sh
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+P4-01: PASS — initialize agent=deepseek-harness-acp protocol=1; stdout JSON-RPC only
+Invalid params: session is already active: 890735b7-cdc6-4c8f-a7b4-edb5f13b6f68
+Invalid params: session cwd does not match: /tmp
+Invalid params: session is not resumable: 00000000-0000-4000-8000-000000000000
+P4-02: PASS — new/list/close/resume + negatives; not-triggered; no duplicate ids
+P4-03: PASS — model round-trip; 4 reasoning_effort values; effort-over-resume asserted
+P4-04: PASS — chunks + tool lifecycle + stopReason=end_turn observed
+Invalid params: audio prompt content is not supported
+Invalid params: embedded resource prompt content is not supported
+Invalid params: inline image prompts were not advertised by this connection
+P4-05: PASS — 3/3 invalid blocks rejected; image-capability=false; inline image not advertised (not exercised); huge prompt SKIPPED (set E2E_P4_HUGE_PROMPT=1 to spend tokens); connection survived
+Creating box wise_shannon (2b80c78deec6)...
+Box wise_shannon (2b80c78deec6) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+
+Stopping box wise_shannon after SIGTERM...
+Box wise_shannon removed.
+{"pass": 38, "fail": 0, "skip": 7, "blocked": 0}
+[e2e] results: /tmp/kbox-ad-e2e/out/results.json
+FAIL cases: P4-10

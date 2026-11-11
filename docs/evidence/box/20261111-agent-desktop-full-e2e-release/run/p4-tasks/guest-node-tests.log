@@ -1,0 +1,18 @@
+✔ identical duplicate ids are counted once and reported (1.336041ms)
+✔ conflicting records with the same id invalidate the input (0.268542ms)
+✔ integer arithmetic stays exact at the safe integer boundary (0.156375ms)
+✔ invalid fields are rejected (0.141375ms)
+✔ accounts sort by Unicode code point, including astral characters (0.120375ms)
+✔ parseJsonl ignores blank lines and reports malformed line numbers (0.175958ms)
+✔ CLI writes the exact shape, creates parent directories and deduplicates (21.739625ms)
+✔ --account filters balances but not whole-input event counts (30.209667ms)
+✔ invalid input fails nonzero and preserves an existing output (67.458667ms)
+✔ invalid UTF-8 fails without replacing an existing output (13.300333ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169.299041

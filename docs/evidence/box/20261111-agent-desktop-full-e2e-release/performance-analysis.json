@@ -1,0 +1,74 @@
+{
+  "subject": "kbox running ghcr.io/kense-labs/dsh-acp:latest (dsh-acp ACP agent) on macOS arm64 / HVF",
+  "measured_on": "2026-11-11",
+  "kbox_revision": "2f653739e5501303df89261268f715440e602ca8",
+  "binary": "target/release/kbox (kbox 3.4.3, optimized, rebuilt from HEAD)",
+  "model": "deepseek-flash / deepseek-official (config.acl), reasoning low",
+  "layers": {
+    "cold_rootfs_assembly": {
+      "description": "OCI 7 layers -> guest-native ext4 (4.0 GiB sparse, ~780 MB actual) + sparse_sha256 hashing",
+      "current_HEAD_release_s": 76,
+      "current_HEAD_debug_s": 210,
+      "historical_2026_11_06_release_s": 23.607,
+      "note": "first boot per isolated K_HOME only; cached afterwards. debug/unoptimized hashing is ~2.8x slower than release."
+    },
+    "vm_boot": {
+      "description": "VM process spawn -> exec server heartbeat -> VM ready (historical detailed log)",
+      "seconds": 1.284,
+      "share_of_24_942s_cold_boot": "5.1%"
+    },
+    "warm_pool_attach": {
+      "spawn_to_initialize_ms": 19.967,
+      "initialize_rtt_ms": 18.781,
+      "five_run_median_ms": {
+        "spawn_to_initialize": 19.4,
+        "initialize_rtt": 17.6
+      },
+      "five_run_range_ms": {
+        "spawn_to_initialize": [
+          15.1,
+          29.0
+        ],
+        "initialize_rtt": [
+          13.8,
+          27.5
+        ]
+      }
+    },
+    "model_turn": {
+      "prompt_rtt_ms_this_run": 1390.2,
+      "five_run_median_ms": 1436.5,
+      "five_run_range_ms": [
+        676.9,
+        1676.1
+      ],
+      "note": "LLM/network dominated; kbox ACP overhead (~19 ms) is <2% of a prompt turn."
+    },
+    "long_tasks": {
+      "P4_1_complex_coding_s": 84.688,
+      "P4_1_tool_calls": 17,
+      "P4_3_paced_batch_s": 170.57,
+      "P4_3_batches": 12,
+      "P4_7_cancel_latency_s": 0.036,
+      "P4_7_late_write_observation_s": 50
+    }
+  },
+  "host_resources": {
+    "kbox_control_processes_max_rss_mb": 75,
+    "kbox_shim_vm_rss_mb": {
+      "min": 173,
+      "median": 651,
+      "max": 783
+    },
+    "kbox_cpu_percent": {
+      "median": 0.6,
+      "mean": 6.0,
+      "p95": 27.7,
+      "max": 101.1
+    },
+    "image_store_mb": 177.7,
+    "ext4_cache_per_k_home_mb": 780,
+    "note": "CPU spikes to ~100% of one core occur only during cold ext4 assembly; steady-state control-plane CPU is near idle."
+  },
+  "conclusion": "kbox adds ~20 ms per warm ACP session and ~1.3 s of VM boot; the dominant one-off cost is ~76 s cold ext4 rootfs assembly per new K_HOME. Steady-state runtime cost is dominated by the DeepSeek API (~0.7-1.7 s per prompt), not by kbox."
+}

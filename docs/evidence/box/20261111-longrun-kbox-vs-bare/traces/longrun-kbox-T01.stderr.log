@@ -1,0 +1,6 @@
+Creating box vivid_neumann (4c8e98e159d6)...
+Box vivid_neumann (4c8e98e159d6) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box vivid_neumann exited and was removed.

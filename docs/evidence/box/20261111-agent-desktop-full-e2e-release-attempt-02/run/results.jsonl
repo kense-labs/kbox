@@ -1,0 +1,2 @@
+{"id": "P0-1", "status": "FAIL", "message": "bench exited 1 (see p0-bench.stderr)", "detail": {"exit_code": 1}, "ts": "2026-11-11T11:08:41Z"}
+{"id": "P0-2", "status": "PASS", "message": "initialize ok agent=deepseek-harness-acp protocol=1", "detail": {"agent": "deepseek-harness-acp", "protocolVersion": "1"}, "ts": "2026-11-11T11:09:03Z"}

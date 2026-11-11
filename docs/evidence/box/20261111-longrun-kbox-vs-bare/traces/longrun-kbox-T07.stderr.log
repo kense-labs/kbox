@@ -1,0 +1,6 @@
+Creating box pure_wozniak (fc6d269be91e)...
+Box pure_wozniak (fc6d269be91e) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+[llm-deepseek-api-key] model listing from https://api.deepseek.com/models loaded 2 model(s), skipped 0 row(s)
+Box pure_wozniak exited and was removed.

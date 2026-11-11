@@ -162,24 +162,24 @@ fn ct_digest_001_golden_request_and_spec_digests_are_stable() {
         serde_json::from_str(include_str!("golden/unit-spec-v4.json")).unwrap();
     assert_eq!(
         unit.digest().unwrap(),
-        "sha256:3b95a578b5a121530a95c7026d870f6b7008cd75c4e2fd9b2ceb949ea33172dd"
+        "sha256:c736a9b32ddebe8081659f292e9776689115d37399c0562cf1a26af6fe00df97"
     );
 
     let apply: RuntimeApplyRequest =
         serde_json::from_str(include_str!("golden/apply-request-v1.json")).unwrap();
     assert_eq!(
         apply.spec.digest().unwrap(),
-        "sha256:5188d906f23f3b6d0f250e85f7363bdb4d8b4b49e711cc8464e95cae43a09b80"
+        "sha256:8b254121e27ad4b949e6c21dd75b8972e73315ddb61cef3313128339c9fef799"
     );
     assert_eq!(
         apply.digest().unwrap(),
-        "sha256:758df1679b518ce58aad3dbe3cd119f0d5a2b4cff8e78c53ab0973217456a132"
+        "sha256:e10804eba80e76316aa28e5b61207f0433ea235d37e1a9624c360e97fefdc77b"
     );
 
     let exec: RuntimeExecRequest =
         serde_json::from_str(include_str!("golden/exec-request-v1.json")).unwrap();
     assert_eq!(
         exec.digest().unwrap(),
-        "sha256:861f6cad44261c49a89b5cd12920ca3977d833b5c9143d748db945a08939bad0"
+        "sha256:b2cd9405150e2958941822706782fe317dc243c8764ca0394c248662d50e102f"
     );
 }

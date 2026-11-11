@@ -125,10 +125,10 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
 
+    // MicroVM-only removed the Sandbox isolation class, so there is no second
+    // Linux-only preflight arm to assert. The single remaining isolation must
+    // still fail closed before any box directory or durable state exists.
     let microvm = backend
-        .preflight_launch()
-        .await;
-    let sandbox = backend
         .preflight_launch()
         .await;
 
@@ -156,20 +156,6 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
                 "{message}"
             );
             assert!(!message.contains("whpx"), "{message}");
-        }
-    }
-
-    match sandbox {
-        Ok(()) => {
-            #[cfg(not(target_os = "linux"))]
-            panic!("Sandbox preflight must fail closed off Linux");
-        }
-        Err(error) => {
-            let message = error.to_string();
-            assert!(!message.to_lowercase().contains("wsl"), "{message}");
-            assert!(!message.contains("WHPX"), "{message}");
-            #[cfg(not(target_os = "linux"))]
-            assert!(message.contains("only on Linux"), "{message}");
         }
     }
 }

@@ -1,0 +1,16 @@
+[
+  {
+    "backend": "bare",
+    "cold_spawn_to_initialize_s": 18.893,
+    "initialize_rtt_ms": 18876.2,
+    "home": "/tmp/kbox-longrun-bench/cold-bare-home-1794398564",
+    "ok": true
+  },
+  {
+    "backend": "kbox",
+    "cold_spawn_to_initialize_s": 72.833,
+    "initialize_rtt_ms": 72819.7,
+    "home": "/tmp/kbox-longrun-bench/cold-khome-1794398583",
+    "ok": true
+  }
+]

@@ -1,0 +1,9 @@
+/Users/roylin/code/kense/kbox/target/release/kbox-shim: replacing existing signature
+Warm pool started
+  default image: ghcr.io/kense-labs/dsh-acp:latest (pre-warming 1)
+  max:      2
+  boot concurrency: 2 (daemon-wide)
+  ttl:      300s
+  lease ttl: 3600s
+  socket:   /Users/roylin/code/kense/kbox/docs/evidence/box/20261111-agent-desktop-full-e2e-release/run/p0-pool.sock
+Error: path must be shorter than SUN_LEN

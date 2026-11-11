@@ -282,18 +282,11 @@ fn test_foreground_workload_exit_code_refuses_invented_provider_zero() {
     );
 }
 
-#[test]
-fn test_foreground_sandbox_trusts_provider_exit_zero() {
-    let temporary = tempfile::tempdir().unwrap();
-    assert_eq!(
-        foreground_workload_exit_code(
-            temporary.path(),
-            Some(0),
-            false,
-        ),
-        Some(0)
-    );
-}
+// Sandbox isolation was removed in 3.4.3 (MicroVM-only). The
+// RequireGuestProof contract is covered by
+// test_foreground_workload_exit_code_refuses_invented_provider_zero, and the
+// TrustProvider contract by
+// test_foreground_oci_routed_microvm_trusts_provider_exit_zero.
 
 #[test]
 fn test_foreground_oci_routed_microvm_trusts_provider_exit_zero() {

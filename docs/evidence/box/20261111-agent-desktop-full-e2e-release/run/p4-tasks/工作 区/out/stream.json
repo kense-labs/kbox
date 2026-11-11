@@ -1,0 +1,218 @@
+[
+  {
+    "batch": "batch-00.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -11728
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": 1197
+        }
+      ],
+      "netCents": -10531
+    }
+  },
+  {
+    "batch": "batch-01.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -10534
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -4907
+        }
+      ],
+      "netCents": -15441
+    }
+  },
+  {
+    "batch": "batch-02.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -15710
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": 224
+        }
+      ],
+      "netCents": -15486
+    }
+  },
+  {
+    "batch": "batch-03.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -3308
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -4372
+        }
+      ],
+      "netCents": -7680
+    }
+  },
+  {
+    "batch": "batch-04.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -10535
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -1036
+        }
+      ],
+      "netCents": -11571
+    }
+  },
+  {
+    "batch": "batch-05.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -12876
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": 2645
+        }
+      ],
+      "netCents": -10231
+    }
+  },
+  {
+    "batch": "batch-06.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": 2010
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -4416
+        }
+      ],
+      "netCents": -2406
+    }
+  },
+  {
+    "batch": "batch-07.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -16011
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -11598
+        }
+      ],
+      "netCents": -27609
+    }
+  },
+  {
+    "batch": "batch-08.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -6866
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": 5072
+        }
+      ],
+      "netCents": -1794
+    }
+  },
+  {
+    "batch": "batch-09.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -3180
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -9200
+        }
+      ],
+      "netCents": -12380
+    }
+  },
+  {
+    "batch": "batch-10.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -9978
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": 8991
+        }
+      ],
+      "netCents": -987
+    }
+  },
+  {
+    "batch": "batch-11.jsonl",
+    "summary": {
+      "uniqueEvents": 8,
+      "duplicateEvents": 1,
+      "accounts": [
+        {
+          "account": "alpha",
+          "balanceCents": -2307
+        },
+        {
+          "account": "账户甲",
+          "balanceCents": -1159
+        }
+      ],
+      "netCents": -3466
+    }
+  }
+]

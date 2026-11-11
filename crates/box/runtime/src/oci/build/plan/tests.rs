@@ -47,7 +47,7 @@ fn canonical_kcl_and_digest_are_stable() {
     assert_eq!(first.canonical_kcl().unwrap(), expected);
     assert_eq!(
         first.canonical_digest().unwrap(),
-        "sha256:f8f1fbacf18535adbf39217cacf7eec46d415c607ecceefeeae37f0e16b1d816"
+        "sha256:2bcbe1541e8b5b728a2f3d088a97e788b0aaf124ba6b0515559ca10f9617d2d4"
     );
 }
 

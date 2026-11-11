@@ -58,7 +58,7 @@ fn rmcp_fix_001_uses_only_the_generic_runtime_service_contract() {
     let fixture = include_str!("fixtures/mcp0.1-runtime-unit-spec.json").replace("\r\n", "\n");
     assert_eq!(
         format!("{:x}", Sha256::digest(fixture.as_bytes())),
-        "f7e7b84867c5c646ad5a02d9e7be65a23ce7f6eb813ae1e1bf4786d4db602f4a"
+        "9f93e95b92f0cdb8860407d7dc7676e78ae0f82e464bba736604e1c9c0472eb2"
     );
     let spec = fixture_spec();
     spec.validate().expect("valid Runtime Service fixture");

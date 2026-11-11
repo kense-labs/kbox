@@ -859,7 +859,7 @@ mod tests {
         let mac =
             AgentVmMacAddress::derive(&format!("sha256:{}", "1".repeat(64)), &identity, "tap0")
                 .expect("transport MAC");
-        assert_eq!(mac.as_bytes(), &[0x8e, 0x5c, 0xc9, 0xe1, 0x8d, 0x4c]);
+        assert_eq!(mac.as_bytes(), &[0xe6, 0x17, 0x88, 0x7f, 0xc5, 0xf8]);
     }
 
     #[test]

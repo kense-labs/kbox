@@ -1,0 +1,8 @@
+{"seq":1,"t":17,"kind":"request_sent","method":"session/new","id":100}
+{"seq":2,"t":17,"kind":"response","id":100,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: mcpServers[0].command must be an absolute path","resultKeys":[]}
+{"seq":3,"t":17,"kind":"request_sent","method":"session/new","id":101}
+{"seq":4,"t":17,"kind":"response","id":101,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: mcpServers[0].url must be an absolute HTTP(S) URL","resultKeys":[]}
+{"seq":5,"t":17,"kind":"request_sent","method":"session/new","id":102}
+{"seq":6,"t":17,"kind":"response","id":102,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: mcpServers contains duplicate normalized name: dup","resultKeys":[]}
+{"seq":7,"t":17,"kind":"request_sent","method":"session/new","id":103}
+{"seq":8,"t":17,"kind":"response","id":103,"method":null,"sessionUpdate":null,"toolCallId":null,"title":null,"status":null,"used":null,"size":null,"textLen":0,"stopReason":null,"error":"Invalid params: mcpServers[0] transport sse is not supported","resultKeys":[]}

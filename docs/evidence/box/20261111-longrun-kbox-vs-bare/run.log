@@ -1,0 +1,115 @@
+[reference] T01 sum ...
+[reference] T02 sort ...
+[reference] T03 group ...
+[reference] T04 gzip ...
+[reference] T05 primes ...
+[reference] T06 matrix ...
+[reference] T07 chain ...
+[reference] T08 fanout ...
+[reference] T09 tree ...
+[reference] T10 dedup ...
+[cold] bare ...
+{"backend": "bare", "cold_spawn_to_initialize_s": 18.893, "initialize_rtt_ms": 18876.2, "home": "/tmp/kbox-longrun-bench/cold-bare-home-1794398564", "ok": true}
+[cold] kbox ...
+{"backend": "kbox", "cold_spawn_to_initialize_s": 72.833, "initialize_rtt_ms": 72819.7, "home": "/tmp/kbox-longrun-bench/cold-khome-1794398583", "ok": true}
+[run] bare T01 sum ...
+  [bare T01 step1] attempt=1 turn=13.364s tool=0.657s oracle=True
+  [bare T01 step2] attempt=1 turn=6.283s tool=0.749s oracle=True
+  [bare T01 step3] attempt=1 turn=7.148s tool=1.849s oracle=True
+{"task": "T01", "backend": "bare", "ok": true, "wall_s": 46.818, "error": null}
+[run] kbox T01 sum ...
+  [kbox T01 step1] attempt=1 turn=10.787s tool=0.674s oracle=True
+  [kbox T01 step2] attempt=1 turn=6.609s tool=0.629s oracle=True
+  [kbox T01 step3] attempt=1 turn=7.769s tool=1.88s oracle=True
+{"task": "T01", "backend": "kbox", "ok": true, "wall_s": 29.979, "error": null}
+[run] kbox T02 sort ...
+  [kbox T02 step1] attempt=1 turn=11.67s tool=0.841s oracle=True
+  [kbox T02 step2] attempt=1 turn=7.249s tool=0.777s oracle=True
+  [kbox T02 step3] attempt=1 turn=8.133s tool=2.275s oracle=True
+{"task": "T02", "backend": "kbox", "ok": true, "wall_s": 31.904, "error": null}
+[run] bare T02 sort ...
+  [bare T02 step1] attempt=1 turn=14.945s tool=0.795s oracle=True
+  [bare T02 step2] attempt=1 turn=6.525s tool=0.796s oracle=True
+  [bare T02 step3] attempt=1 turn=7.756s tool=2.337s oracle=True
+{"task": "T02", "backend": "bare", "ok": true, "wall_s": 49.951, "error": null}
+[run] bare T03 group ...
+  [bare T03 step1] attempt=1 turn=13.317s tool=0.957s oracle=True
+  [bare T03 step2] attempt=1 turn=5.963s tool=0.94s oracle=True
+  [bare T03 step3] attempt=1 turn=8.078s tool=2.762s oracle=True
+{"task": "T03", "backend": "bare", "ok": true, "wall_s": 48.568, "error": null}
+[run] kbox T03 group ...
+  [kbox T03 step1] attempt=1 turn=12.151s tool=0.911s oracle=True
+  [kbox T03 step2] attempt=1 turn=6.626s tool=0.934s oracle=True
+  [kbox T03 step3] attempt=1 turn=8.278s tool=2.75s oracle=True
+{"task": "T03", "backend": "kbox", "ok": true, "wall_s": 31.865, "error": null}
+[run] kbox T04 gzip ...
+  [kbox T04 step1] attempt=1 turn=12.565s tool=1.111s oracle=True
+  [kbox T04 step2] attempt=1 turn=6.917s tool=1.034s oracle=True
+  [kbox T04 step3] attempt=1 turn=8.621s tool=3.162s oracle=True
+{"task": "T04", "backend": "kbox", "ok": true, "wall_s": 32.789, "error": null}
+[run] bare T04 gzip ...
+  [bare T04 step1] attempt=1 turn=13.399s tool=1.085s oracle=True
+  [bare T04 step2] attempt=1 turn=6.346s tool=1.096s oracle=True
+  [bare T04 step3] attempt=1 turn=8.207s tool=3.193s oracle=True
+{"task": "T04", "backend": "bare", "ok": true, "wall_s": 49.105, "error": null}
+[run] bare T05 primes ...
+  [bare T05 step1] attempt=1 turn=14.776s tool=1.232s oracle=True
+  [bare T05 step2] attempt=1 turn=7.138s tool=1.257s oracle=True
+  [bare T05 step3] attempt=1 turn=7.865s tool=2.437s oracle=True
+{"task": "T05", "backend": "bare", "ok": true, "wall_s": 52.086, "error": null}
+[run] kbox T05 primes ...
+  [kbox T05 step1] attempt=1 turn=11.344s tool=1.194s oracle=True
+  [kbox T05 step2] attempt=1 turn=6.85s tool=1.167s oracle=True
+  [kbox T05 step3] attempt=1 turn=11.895s tool=2.407s oracle=True
+{"task": "T05", "backend": "kbox", "ok": true, "wall_s": 34.894, "error": null}
+[run] kbox T06 matrix ...
+  [kbox T06 step1] attempt=1 turn=11.493s tool=1.344s oracle=True
+  [kbox T06 step2] attempt=1 turn=7.659s tool=1.319s oracle=True
+  [kbox T06 step3] attempt=1 turn=8.186s tool=2.864s oracle=True
+{"task": "T06", "backend": "kbox", "ok": true, "wall_s": 32.094, "error": null}
+[run] bare T06 matrix ...
+  [bare T06 step1] attempt=1 turn=14.244s tool=1.366s oracle=True
+  [bare T06 step2] attempt=1 turn=7.755s tool=1.369s oracle=True
+  [bare T06 step3] attempt=1 turn=8.126s tool=2.919s oracle=True
+{"task": "T06", "backend": "bare", "ok": true, "wall_s": 50.955, "error": null}
+[run] bare T07 chain ...
+  [bare T07 step1] attempt=1 turn=13.602s tool=1.569s oracle=True
+  [bare T07 step2] attempt=1 turn=7.352s tool=1.494s oracle=True
+  [bare T07 step3] attempt=1 turn=9.443s tool=3.316s oracle=True
+{"task": "T07", "backend": "bare", "ok": true, "wall_s": 52.462, "error": null}
+[run] kbox T07 chain ...
+  [kbox T07 step1] attempt=1 turn=12.726s tool=1.499s oracle=True
+  [kbox T07 step2] attempt=1 turn=7.586s tool=1.508s oracle=True
+  [kbox T07 step3] attempt=1 turn=9.466s tool=3.309s oracle=True
+{"task": "T07", "backend": "kbox", "ok": true, "wall_s": 34.701, "error": null}
+[run] kbox T08 fanout ...
+  [kbox T08 step1] attempt=1 turn=13.068s tool=1.707s oracle=True
+  [kbox T08 step2] attempt=1 turn=7.257s tool=1.768s oracle=True
+  [kbox T08 step3] attempt=1 turn=9.517s tool=3.779s oracle=True
+{"task": "T08", "backend": "kbox", "ok": true, "wall_s": 35.401, "error": null}
+[run] bare T08 fanout ...
+  [bare T08 step1] attempt=1 turn=14.725s tool=1.69s oracle=True
+  [bare T08 step2] attempt=1 turn=7.422s tool=1.794s oracle=True
+  [bare T08 step3] attempt=1 turn=9.789s tool=3.79s oracle=True
+{"task": "T08", "backend": "bare", "ok": true, "wall_s": 53.224, "error": null}
+[run] bare T09 tree ...
+  [bare T09 step1] attempt=1 turn=12.863s tool=1.831s oracle=True
+  [bare T09 step2] attempt=1 turn=7.961s tool=1.919s oracle=True
+  [bare T09 step3] attempt=1 turn=8.907s tool=3.43s oracle=True
+{"task": "T09", "backend": "bare", "ok": true, "wall_s": 51.014, "error": null}
+[run] kbox T09 tree ...
+  [kbox T09 step1] attempt=1 turn=13.248s tool=1.799s oracle=True
+  [kbox T09 step2] attempt=1 turn=9.802s tool=1.887s oracle=True
+  [kbox T09 step3] attempt=1 turn=9.412s tool=3.006s oracle=True
+{"task": "T09", "backend": "kbox", "ok": true, "wall_s": 38.344, "error": null}
+[run] kbox T10 dedup ...
+  [kbox T10 step1] attempt=1 turn=13.153s tool=1.934s oracle=True
+  [kbox T10 step2] attempt=1 turn=7.542s tool=1.939s oracle=True
+  [kbox T10 step3] attempt=1 turn=8.955s tool=3.423s oracle=True
+{"task": "T10", "backend": "kbox", "ok": true, "wall_s": 34.643, "error": null}
+[run] bare T10 dedup ...
+  [bare T10 step1] attempt=1 turn=14.404s tool=1.949s oracle=True
+  [bare T10 step2] attempt=1 turn=7.083s tool=1.971s oracle=True
+  [bare T10 step3] attempt=1 turn=9.133s tool=3.465s oracle=True
+{"task": "T10", "backend": "bare", "ok": true, "wall_s": 51.944, "error": null}
+DONE /Users/roylin/code/kense/kbox/docs/evidence/box/20261111-longrun-kbox-vs-bare/samples.jsonl

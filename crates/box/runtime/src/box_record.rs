@@ -1079,7 +1079,9 @@ mod tests {
             },
         )
         .unwrap();
-        metadata.plan = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
+        let mut drifted = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
+        drifted.required_controls.push("tampered-control".to_string());
+        metadata.plan = drifted;
 
         assert!(metadata.validate().is_err());
     }

@@ -48,6 +48,10 @@ docs/evidence/**/kbox-home/
 docs/evidence/**/krun-home/
 docs/evidence/**/runtime-prefix/
 docs/evidence/**/中文 home with spaces/
+docs/evidence/**/外部目录 with spaces/
+# Per-run context and external-directory scratch trees. These were previously
+# ignored only inside one evidence directory; root rules cover every tree.
+docs/evidence/**/context/
 docs/evidence/**/deepseek-mcp/data/
 docs/evidence/**/.aster/
 docs/evidence/**/.codex/

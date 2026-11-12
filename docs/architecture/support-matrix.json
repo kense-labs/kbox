@@ -1,0 +1,185 @@
+{
+  "schema": "kbox.support-matrix.v1",
+  "status": "machine-readable draft",
+  "adoption": "Only scripts/check-support-matrix.py consumes this file today. README.md, crates/oci-runtime/docs/feature-coverage.md and dist/RELEASE_NOTES.md are still hand-maintained; generating them and wiring the check into CI is the next step.",
+  "evidence_discipline": "Cross-compilation, mocks, ignored tests and startup alone do not establish runtime support. Only native-tested configurations may be listed as supported. Never delete evidence to support a claim.",
+  "authority": {
+    "product_readiness": "This file. The only source allowed to state kbox product readiness.",
+    "upstream_capability": "libkrun/libkrunfw READMEs describe library capability, not kbox product status. Their 'production-ready' wording must not be copied into a product claim.",
+    "ffi_binding": "crates/box/deps/libksys/README.md describes FFI availability, not qualification."
+  },
+  "readiness_levels": ["probe-only", "experimental", "supported"],
+  "code_targets_source": "crates/oci-runtime/crates/kbox/src/runtime_assets.rs",
+  "guest_arch_contract": "CURRENTLY INFERRED, NOT NEGOTIATED: krun/src/package.rs::native_guest_architecture() derives the guest architecture from the host CPU. The guest_arch values below record that assumption; they are not evidence of independently qualified cross-architecture support. See cross-platform-compatibility.md P0-2.",
+  "sources": [
+    {"path": "README.md", "role": "human-facing Platforms table, to be generated"},
+    {"path": "crates/oci-runtime/docs/feature-coverage.md", "role": "driver readiness table, to be generated"},
+    {"path": "crates/oci-runtime/ROADMAP.md", "role": "fresh-host qualification gates"},
+    {"path": "dist/RELEASE_NOTES.md", "role": "per-release covered / not-covered statement, to be generated"},
+    {"path": "install.sh", "role": "prebuilt asset naming, to be generated"},
+    {"path": "crates/box/runtime/src/host_check.rs", "role": "hard rejection rules for host OS/CPU combinations"}
+  ],
+  "targets": [
+    {
+      "id": "macos-aarch64",
+      "host_os": "macos",
+      "host_arch": "aarch64",
+      "backend": "hvf",
+      "backend_api": "Apple Hypervisor.framework",
+      "guest_os": "linux",
+      "guest_arch": "aarch64",
+      "runtime_asset": "macos-aarch64",
+      "prebuilt_package": true,
+      "readiness": "experimental",
+      "evidence": [
+        "docs/evidence/box/2026-11-06-macos-build-run/OUTCOME.md",
+        "docs/evidence/box/2026-11-05-cli-e2e/OUTCOME.md",
+        "dist/RELEASE_NOTES.md"
+      ],
+      "open": [
+        "Signed release-package qualification",
+        "OCI conformance",
+        "security review",
+        "upgrade/rollback compatibility",
+        "longer release soak"
+      ],
+      "limitations": [
+        "Host-enforced read-only virtio-fs bind is unsupported; :ro is rejected at preflight",
+        "Guest architecture is currently inferred from the host CPU (see cross-platform-compatibility.md P0-2)"
+      ]
+    },
+    {
+      "id": "linux-x86_64",
+      "host_os": "linux",
+      "host_arch": "x86_64",
+      "backend": "kvm",
+      "backend_api": "/dev/kvm",
+      "guest_os": "linux",
+      "guest_arch": "x86_64",
+      "runtime_asset": "linux-x86_64",
+      "prebuilt_package": false,
+      "readiness": "probe-only",
+      "evidence": [
+        "docs/evidence/box/2026-11-05-cli-e2e/OUTCOME.md",
+        "crates/oci-runtime/docs/feature-coverage.md"
+      ],
+      "open": [
+        "Fresh x86_64 attestation-bound matrix",
+        "Utility-VM live qualification",
+        "Public KVM candidate registration",
+        "Cross-platform cutover"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "linux-aarch64",
+      "host_os": "linux",
+      "host_arch": "aarch64",
+      "backend": "kvm",
+      "backend_api": "/dev/kvm",
+      "guest_os": "linux",
+      "guest_arch": "aarch64",
+      "runtime_asset": "linux-aarch64",
+      "prebuilt_package": false,
+      "readiness": "probe-only",
+      "evidence": [
+        "docs/evidence/box/2026-11-05-cli-e2e/OUTCOME.md",
+        "crates/oci-runtime/docs/feature-coverage.md"
+      ],
+      "open": [
+        "Fresh AArch64 attestation-bound matrix on a newly provisioned KVM host",
+        "Utility-VM live qualification"
+      ],
+      "limitations": []
+    },
+    {
+      "id": "windows-x86_64",
+      "host_os": "windows",
+      "host_arch": "x86_64",
+      "backend": "whpx",
+      "backend_api": "Windows Hypervisor Platform (WinHvPlatform.dll)",
+      "guest_os": "linux",
+      "guest_arch": "x86_64",
+      "runtime_asset": "windows-x86_64",
+      "prebuilt_package": false,
+      "readiness": "probe-only",
+      "evidence": [
+        "docs/evidence/box/2026-11-05-cli-e2e/OUTCOME.md",
+        "crates/oci-runtime/docs/feature-coverage.md"
+      ],
+      "open": [
+        "Fresh-host WHPX R2 attestation-bound matrix (Blocked: needs a newly provisioned WHPX host)",
+        "libkrunfw-windows distribution",
+        "Multi-vCPU support"
+      ],
+      "limitations": [
+        "Single vCPU",
+        "No virtio-gpu",
+        "Interactive stdin channel is Unix-only",
+        "Pause/unpause, bridge networking, pool and health checks are not implemented"
+      ]
+    }
+  ],
+  "required_platforms": [
+    {
+      "id": "windows-aarch64",
+      "host_os": "windows",
+      "host_arch": "aarch64",
+      "guest_os": "linux",
+      "guest_arch": "aarch64",
+      "backend": "whpx",
+      "minimum_host_version": "Windows 11 24H2 with April 2025 optional updates or May 2025 security updates",
+      "status": "planned-unimplemented",
+      "target_readiness": "supported",
+      "current_readiness": "none",
+      "reason": "Product constraint raised on 2026-11-12. Not yet a target: there is no aarch64 WHPX backend in libkrun, no aarch64 guest kernel in libkrunfw-win, no Windows ARM64 runtime bundle, and zero native evidence.",
+      "blocking": [
+        "libkrun Windows backend is x86_64-only (X64 registers / APIC / CPUID / MSR)",
+        "libkrunfw-win accepts only x86_64 ELF vmlinux",
+        "No aarch64 krun.dll / krun.lib / libkrunfw.dll and no fifth runtime bundle",
+        "host_check.rs and 60+ cfg(all(windows, x86_64)) branches reject aarch64",
+        "No Windows ARM64 native evidence; Windows x86_64 itself is still probe-only"
+      ],
+      "gates": [
+        "S0 API-level feasibility spike on a Windows 11 24H2+ ARM64 host that owns EL2 (physical device or ARM64 bare metal); WHPX-independent parts of S0 can proceed without it",
+        "S1 qualify the existing Windows x86_64 WHPX baseline first",
+        "S2 upstream aarch64 WHPX backend + aarch64 guest kernel",
+        "S3 fifth runtime bundle with fixed digests",
+        "S4 kbox host checks, cfg convergence, CI and packaging",
+        "S5 fresh-host native evidence before any readiness promotion"
+      ],
+      "plan": "docs/architecture/windows-arm64-plan.md",
+      "evidence": []
+    }
+  ],
+  "rejected": [
+    {
+      "id": "macos-x86_64",
+      "reason": "Kbox Box on macOS requires Apple Silicon; Intel Macs are not supported.",
+      "source": "crates/box/runtime/src/host_check.rs"
+    },
+    {
+      "id": "windows-aarch64",
+      "reason": "CURRENT IMPLEMENTATION ONLY: host_check.rs rejects non-x86_64 Windows and libkrun has no aarch64 WHPX backend. The product requirement has been raised to must-support, so this rejection is scheduled to be lifted, not permanent.",
+      "source": "crates/box/runtime/src/host_check.rs",
+      "scope": "current-implementation-rejection",
+      "product_requirement": "must-support",
+      "plan": "docs/architecture/windows-arm64-plan.md"
+    },
+    {
+      "id": "other-host-os",
+      "reason": "Only macOS (Apple Silicon), Linux with KVM and Windows with WHPX are admitted.",
+      "source": "crates/box/runtime/src/host_check.rs"
+    },
+    {
+      "id": "shared-host-kernel",
+      "reason": "Box requires a dedicated MicroVM; shared-host-kernel containers are not a Box product path.",
+      "source": "README.md"
+    }
+  ],
+  "known_gaps": [
+    "The guest runtime catalog (krun/runtime/base/runtime-catalog.cjs) does not collect Python identity despite the architecture baseline naming Python 3.11.",
+    "libkrun main is 2.0 and explicitly not backwards compatible with the 1.x API/ABI; kbox pins libkrun 1.17.0 and a forked libkrunfw v5.3.0 with fixed SHA-256.",
+    "No built-in driver currently reaches 'supported'; fresh-host evidence for WHPX and Linux KVM is the remaining gate."
+  ]
+}

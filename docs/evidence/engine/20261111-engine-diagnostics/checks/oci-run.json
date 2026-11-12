@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+    "--kbox",
+    "/Users/roylin/code/kense/krun/.build/doctor-final-prefix-c9b8e068a3144a8aa367eb9c4ff84f79-oci/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images",
+    "--base",
+    "docker.io/library/krun-base@sha256:e59b8450a06b2f1caf2d6eff1274d517b468f916e4fadbfbb56dddba3ba14af2",
+    "--output",
+    "/Users/roylin/code/kense/kbox/docs/evidence/engine/20261111-engine-diagnostics-oci-final"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 162.532,
+  "runnerSha256": "d928610a7c11cfdc510765a924ab319b5eb54510e6ce2191fc4ffb2c249a78e0",
+  "hostKrunPresent": false
+}

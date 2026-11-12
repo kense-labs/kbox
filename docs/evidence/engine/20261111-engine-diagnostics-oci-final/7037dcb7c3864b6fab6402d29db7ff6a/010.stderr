@@ -1,0 +1,6 @@
+Creating box pale_church (317a713ba585)...
+kbox run: still creating pale_church; image is ready and runtime startup has taken 22s
+Box pale_church (317a713ba585) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box pale_church exited and was removed.

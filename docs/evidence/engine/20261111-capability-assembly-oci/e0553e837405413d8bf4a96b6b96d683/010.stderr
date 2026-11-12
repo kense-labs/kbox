@@ -1,0 +1,6 @@
+Creating box vivid_church (79d7ba6a7730)...
+kbox run: still creating vivid_church; image is ready and runtime startup has taken 24s
+Box vivid_church (79d7ba6a7730) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box vivid_church exited and was removed.

@@ -1,0 +1,17 @@
+{
+  "prefix": "/Users/roylin/code/kense/krun/.build/doctor-final-prefix-c9b8e068a3144a8aa367eb9c4ff84f79",
+  "ociPrefix": "/Users/roylin/code/kense/krun/.build/doctor-final-prefix-c9b8e068a3144a8aa367eb9c4ff84f79-oci",
+  "files": {
+    "bin/kbox": "46c9b99677eb0a22e812ba91c2bab36b4f82d3d3403a3f1074c7f3a47f86be63",
+    "bin/kbox-guest-init": "8f8a3912e29b2ee1540388466149397c24a5e9c2a5f1eeb6b67af6eedd149b4f",
+    "bin/krun": "85856fea8282bae9efa554e80bce2f3a8a14c25ee878f0d1d8baeebe7aaf742b",
+    "bin/kbox-shim": "5cf18a25ba8d40285be34111c34b2d7a7ee0eb9182972f2da8198538e2babe95",
+    "lib/libkrun.dylib": "4e4d3d7f82656aec342b9c40b665b7a28a77eacc6155c759fc26f15d91acd3b5",
+    "lib/libkrun.1.dylib": "4e4d3d7f82656aec342b9c40b665b7a28a77eacc6155c759fc26f15d91acd3b5",
+    "lib/libkrun.1.17.0.dylib": "4e4d3d7f82656aec342b9c40b665b7a28a77eacc6155c759fc26f15d91acd3b5",
+    "lib/libkrunfw.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "lib/libkrunfw.5.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+  },
+  "image": "docker.io/library/krun-base@sha256:e59b8450a06b2f1caf2d6eff1274d517b468f916e4fadbfbb56dddba3ba14af2",
+  "imageStore": "/Users/roylin/code/kense/kbox/docs/evidence/box/20261110-dsh-acp-long-tasks/k-home/images"
+}

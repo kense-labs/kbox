@@ -1,0 +1,7 @@
+Creating box slim_shamir (b49638c04adc)...
+kbox run: still creating slim_shamir; image is ready and runtime startup has taken 29s
+kbox run: still creating slim_shamir; image is ready and runtime startup has taken 30s
+Box slim_shamir (b49638c04adc) started. Press Ctrl-C to stop.
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+Box slim_shamir exited and was removed.

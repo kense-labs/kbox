@@ -1,0 +1,38 @@
+{
+  "krun": {
+    "rustPassed": 101,
+    "rustFailed": 0,
+    "nativeIgnored": 3,
+    "pythonPassed": 8,
+    "strictClippy": "PASS",
+    "fmt": "PASS",
+    "hostRelease": "PASS",
+    "linuxAarch64MuslCompile": "PASS",
+    "linuxNativeRuntimeTested": false
+  },
+  "kbox": {
+    "engineRelatedPassed": 187,
+    "engineRelatedIgnored": 2,
+    "imageInspectPassed": 2,
+    "workspaceCheck": "PASS",
+    "clippy": "PASS (existing warnings)",
+    "scopedFmt": "PASS",
+    "workspaceFmt": "FAIL: same 50 pre-existing paths",
+    "release": "PASS"
+  },
+  "native": {
+    "formalCli": "PASS",
+    "harnesses": [
+      "aster@0.1.2",
+      "dsh@0.1.5",
+      "codex@0.1.2"
+    ],
+    "cliElapsedSeconds": 602.529,
+    "ordinaryOci": "PASS",
+    "ociElapsedSeconds": 162.532,
+    "independentZeroResources": true,
+    "fiveCapabilityCacheChecks": "PASS",
+    "capabilityUseAndModelInferenceTested": false,
+    "fullGoalComplete": false
+  }
+}

@@ -416,16 +416,44 @@ setTimeout(()=>writeFileSync('/workspace/out/late-parent.txt','late'),180000);
                "进行权限拒绝测试：只使用 write 工具尝试创建 /external/permission-denied.txt，content 为 denied，"
                "sandbox_permissions 必须设为 danger-full-access，justification 为一次性外部写权限测试。"
                "如果客户端拒绝就停止并报告，不要使用其它工具绕过拒绝。") if profile is None or profile.name == "deepseek" else (
-               "进行客户端权限拒绝测试。用你实际具备的文件写入工具尝试创建 /external/permission-denied.txt，"
-               "内容为 denied。此路径在工作区外，需要先向客户端请求一次性写入批准。客户端会拒绝；"
-               "被拒绝后立即停止，不要重试，也不要用其它工具或命令绕过拒绝。")
+               "这是一个独立的新检查。进行客户端权限拒绝测试：只使用 bash 工具执行一条命令，"
+               "尝试把 denied 写入 /external/permission-denied.txt，例如 "
+               "printf denied > /external/permission-denied.txt。"
+               "不要使用 write 工具，write 工具在工作区外会被规则直接拒绝。此路径在工作区外，"
+               "需要先向客户端请求一次性写入批准。客户端会拒绝；被拒绝后立即停止，不要重试，"
+               "也不要用其它工具或命令绕过拒绝。")
+        # A workspace-scoped write tool is refused by a non-bypassable rule
+        # before it can ask the client. Check that refusal explicitly instead
+        # of treating the absence of an approval request as a test pass.
+        rule_denial = None
+        if profile and profile.name == "aster":
+            rule_target = external / "permission-hard-denied.txt"
+            rule_updates_start = len(warm.updates)
+            prompt(warm, session, (
+                "进行规则拒绝检查：只使用 write 工具尝试创建 "
+                "/external/permission-hard-denied.txt，内容为 denied。"
+                "这是一次边界检查，如实报告工具返回的结果即可；不要重试，"
+                "也不要用其它工具或命令绕过拒绝。"))
+            assert not warm.permissions[permission_start:], (
+                "rule-level denial emitted an ACP approval request")
+            terminals = [entry["update"] for entry in warm.updates[rule_updates_start:]
+                         if entry.get("sessionId") == session
+                         and entry.get("update", {}).get("sessionUpdate") == "tool_call_update"]
+            assert any(u.get("status") in ("failed", "cancelled") for u in terminals), terminals
+            assert not rule_target.exists(), "rule-denied write had filesystem effects"
+            rule_denial = {"toolTerminals": [u.get("status") for u in terminals],
+                           "approvalRequests": 0, "targetAbsent": True}
+        approval_start = len(warm.permissions)
         prompt(warm, session, denial_prompt)
-        denied = warm.permissions[permission_start:]
+        denied = warm.permissions[approval_start:]
         assert denied and all(p["outcome"].get("outcome") == "cancelled" or
             any(o["optionId"] == p["outcome"].get("optionId") and o["kind"] == "reject_once"
                 for o in p["request"]["options"]) for p in denied), denied
         assert not (external / "permission-denied.txt").exists(), "rejected permission had filesystem effects"
-        passed_case("P4-8", {"typed_invalid_requests": 7 if profile is None else 3, "rejected_permissions": len(denied)})
+        detail = {"typed_invalid_requests": 7 if profile is None else 3, "rejected_permissions": len(denied)}
+        if rule_denial is not None:
+            detail["ruleDenial"] = rule_denial
+        passed_case("P4-8", detail)
         if profile:
             profile.close_session(warm, other)
             profile.close_session(warm, session)

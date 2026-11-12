@@ -12,6 +12,10 @@ use klibksys::*;
 fn main() {
     println!("=== klibksys Windows Smoke Test ===\n");
 
+    // SAFETY: this standalone example is single-threaded and drives the libkrun
+    // C ABI serially. Every pointer argument refers to a `CString` or stack
+    // local that stays alive for the whole block, handle-returning calls are
+    // checked before use, and no other thread touches the same context.
     unsafe {
         // Test 1: Set log level
         println!("Test 1: kset_log_level");

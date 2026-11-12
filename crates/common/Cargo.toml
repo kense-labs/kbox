@@ -58,3 +58,6 @@ uuid = {version = "1.6", features = [
 [dev-dependencies]
 tempfile = {workspace = true}
 tokio = {workspace = true}
+
+[lints]
+workspace = true

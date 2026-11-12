@@ -123,6 +123,8 @@ fn open(owner_pid: NonZeroU32) -> io::Result<ExactOwner> {
     // process and also fails closed if the owner exited before registration.
     // SAFETY: getppid and getpid have no preconditions or failure returns.
     let parent = unsafe { libc::getppid() };
+    // SAFETY: `getpid()` takes no arguments, dereferences no pointer and
+    // cannot fail; it has no memory-safety preconditions.
     let process = unsafe { libc::getpid() };
     if parent != owner_pid {
         return Err(io::Error::new(

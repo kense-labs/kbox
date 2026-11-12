@@ -117,6 +117,10 @@ pub trait RuntimeDriver: Send + Sync {
 mod snapshot_tests {
     use super::*;
 
+    // These methods are deliberately unreachable in the snapshot tests. They
+    // panic instead of using `unimplemented!()`: a call would be a violated
+    // test contract, not an unfinished implementation, and the workspace keeps
+    // `clippy::unimplemented` at deny.
     struct NoSnapshotDriver;
 
     #[async_trait]
@@ -137,11 +141,11 @@ mod snapshot_tests {
             _request: &RuntimeApplyRequest,
             _current: &RuntimeObservation,
         ) -> RuntimeResult<RuntimeObservation> {
-            unimplemented!("apply is not under test")
+            panic!("apply is not under test")
         }
 
         async fn inspect(&self, _unit: &RuntimeUnitRecord) -> RuntimeResult<RuntimeInspection> {
-            unimplemented!("inspect is not under test")
+            panic!("inspect is not under test")
         }
 
         async fn stop(
@@ -149,7 +153,7 @@ mod snapshot_tests {
             _unit: &RuntimeUnitRecord,
             _request: &RuntimeActionRequest,
         ) -> RuntimeResult<RuntimeObservation> {
-            unimplemented!("stop is not under test")
+            panic!("stop is not under test")
         }
 
         async fn remove(
@@ -157,7 +161,7 @@ mod snapshot_tests {
             _unit: &RuntimeUnitRecord,
             _request: &RuntimeActionRequest,
         ) -> RuntimeResult<RuntimeRemoval> {
-            unimplemented!("remove is not under test")
+            panic!("remove is not under test")
         }
 
         async fn logs(
@@ -165,7 +169,7 @@ mod snapshot_tests {
             _unit: &RuntimeUnitRecord,
             _query: &RuntimeLogQuery,
         ) -> RuntimeResult<Vec<RuntimeLogChunk>> {
-            unimplemented!("logs is not under test")
+            panic!("logs is not under test")
         }
 
         async fn exec(
@@ -173,7 +177,7 @@ mod snapshot_tests {
             _unit: &RuntimeUnitRecord,
             _request: &RuntimeExecRequest,
         ) -> RuntimeResult<RuntimeExecResult> {
-            unimplemented!("exec is not under test")
+            panic!("exec is not under test")
         }
     }
 

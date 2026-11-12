@@ -1,0 +1,31 @@
+Command (before the change):
+  K_DEPS_STUB=1 RUSTUP_TOOLCHAIN=1.97.1 cargo clippy \
+    --manifest-path <workspace>/Cargo.toml --locked -p kbox-shim \
+    --target x86_64-pc-windows-gnu --all-targets --no-deps \
+    -- -W clippy::undocumented_unsafe_blocks
+
+Exit code: 0 (the lint is warned, not denied)
+Unique locations reported: 18
+  16 x "unsafe block missing a safety comment"
+   2 x "unsafe impl missing a safety comment"
+The bin target and its test target report the same 18 locations (duplicates).
+
+Locations (sorted, deduplicated):
+crates/box/shim/src/kbox/context.rs:664:9
+crates/box/shim/src/main.rs:262:5
+crates/box/shim/src/vm_launch.rs:864:5
+crates/box/shim/src/windows_port_forward.rs:1004:19
+crates/box/shim/src/windows_port_forward.rs:1016:18
+crates/box/shim/src/windows_port_forward.rs:1084:22
+crates/box/shim/src/windows_port_forward.rs:1107:23
+crates/box/shim/src/windows_port_forward.rs:1129:18
+crates/box/shim/src/windows_port_forward.rs:1148:22
+crates/box/shim/src/windows_port_forward.rs:1169:9
+crates/box/shim/src/windows_port_forward.rs:1176:1
+crates/box/shim/src/windows_port_forward.rs:1177:1
+crates/box/shim/src/windows_port_forward.rs:403:22
+crates/box/shim/src/windows_port_forward.rs:412:27
+crates/box/shim/src/windows_port_forward.rs:413:9
+crates/box/shim/src/windows_port_forward.rs:965:22
+crates/box/shim/src/windows_port_forward.rs:986:9
+crates/box/shim/src/windows_port_forward.rs:999:22

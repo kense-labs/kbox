@@ -424,6 +424,9 @@ async fn rehydration_publishes_task_before_output_replay_can_commit() {
     let stdout = directory.path().join("stdout");
     let stdout_c = std::ffi::CString::new(stdout.as_os_str().as_bytes())
         .expect("output FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(stdout_c.as_ptr(), 0o600) };
     assert_eq!(
         result,

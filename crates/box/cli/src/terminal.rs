@@ -38,11 +38,16 @@ impl Drop for RawModeGuard {
 /// Return the terminal size as `(cols, rows)`.
 pub fn size() -> io::Result<(u16, u16)> {
     let mut ws = std::mem::MaybeUninit::<libc::winsize>::zeroed();
+    // SAFETY: `ws` is a live `MaybeUninit<winsize>` stack buffer and `ioctl` with
+    // `TIOCGWINSZ` writes exactly that struct through the pointer; the kernel
+    // retains no pointer after the call.
     let ret = unsafe { libc::ioctl(libc::STDOUT_FILENO, libc::TIOCGWINSZ, ws.as_mut_ptr()) };
     if ret != 0 {
         return Err(io::Error::last_os_error());
     }
 
+    // SAFETY: `ioctl` returned success above, so the zero-initialized `winsize`
+    // buffer was fully written by the kernel.
     let ws = unsafe { ws.assume_init() };
     if ws.ws_col == 0 || ws.ws_row == 0 {
         return Err(io::Error::new(
@@ -62,17 +67,27 @@ pub fn raw_mode() -> io::Result<RawModeGuard> {
 /// Enable raw mode on stdin, saving the previous terminal settings.
 pub fn enable_raw_mode() -> io::Result<()> {
     let mut current = std::mem::MaybeUninit::<libc::termios>::uninit();
+    // SAFETY: `current` is a live `MaybeUninit<termios>` stack buffer and
+    // `tcgetattr` writes exactly that struct through the pointer; it retains no
+    // pointer after the call.
     let ret = unsafe { libc::tcgetattr(libc::STDIN_FILENO, current.as_mut_ptr()) };
     if ret != 0 {
         return Err(io::Error::last_os_error());
     }
 
+    // SAFETY: `tcgetattr` returned success above, so the `termios` output buffer
+    // was fully initialized by the kernel.
     let current = unsafe { current.assume_init() };
     let mut raw = current;
+    // SAFETY: `raw` is a live, fully initialized `termios` value and `cfmakeraw`
+    // only mutates its fields in place; it retains no pointer after the call.
     unsafe {
         libc::cfmakeraw(&mut raw);
     }
 
+    // SAFETY: the `termios` value above is live and fully initialized and is
+    // borrowed for this one call; `tcsetattr` reads it and retains no pointer
+    // after returning.
     let ret = unsafe { libc::tcsetattr(libc::STDIN_FILENO, libc::TCSANOW, &raw) };
     if ret != 0 {
         return Err(io::Error::last_os_error());
@@ -94,6 +109,9 @@ pub fn disable_raw_mode() -> io::Result<()> {
         return Ok(());
     };
 
+    // SAFETY: the `termios` value above is live and fully initialized and is
+    // borrowed for this one call; `tcsetattr` reads it and retains no pointer
+    // after returning.
     let ret = unsafe { libc::tcsetattr(libc::STDIN_FILENO, libc::TCSANOW, &original) };
     if ret != 0 {
         return Err(io::Error::last_os_error());

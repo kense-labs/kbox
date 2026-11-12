@@ -21,7 +21,7 @@ description: "Task list template for feature implementation"
 
 - Execution: `crates/box/`, `crates/oci-runtime/`
 - Runtime contracts: `crates/runtime/`
-- Policy: `../kcl/`
+- Policy: `kense-labs/kcl` pinned rev (root `Cargo.toml`); kbox-side schemas in `crates/box/core/src/compose/` and `crates/box/runtime/src/oci/build/plan.rs`
 - Native dependencies: root `libkrun` and `libkrunfw` gitlinks
 - Evidence: `docs/evidence/<domain>/<date-slug>/OUTCOME.md`
 

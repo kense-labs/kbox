@@ -3959,6 +3959,9 @@ mod tests {
         std::fs::create_dir_all(&rootfs).unwrap();
         // SAFETY: See the enclosing function's safety documentation.
         let uid = unsafe { libc::geteuid() };
+        // SAFETY: `getegid()` takes no arguments, dereferences no pointer and only
+        // reads the calling process's effective gid; it has no memory-safety
+        // preconditions.
         let gid = unsafe { libc::getegid() };
         let mounts = vec![RunCacheMount {
             raw: format!(

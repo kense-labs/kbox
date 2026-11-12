@@ -86,6 +86,9 @@ impl PasstManager {
         }
         // SAFETY: socketpair returned two new, uniquely owned descriptors.
         self.net_socket_fd = Some(unsafe { OwnedFd::from_raw_fd(descriptors[0]) });
+        // SAFETY: `socketpair` returned two new, uniquely owned descriptors;
+        // `descriptors[1]` is wrapped exactly once here and `descriptors[0]` was
+        // taken on the preceding line. No other owner closes either descriptor.
         self.net_proxy_fd = Some(unsafe { OwnedFd::from_raw_fd(descriptors[1]) });
         Ok(())
     }

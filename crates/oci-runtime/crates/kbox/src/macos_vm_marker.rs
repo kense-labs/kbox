@@ -284,6 +284,9 @@ fn stat_len(stat: &libc::stat) -> io::Result<u64> {
 #[allow(clippy::unnecessary_cast, clippy::useless_conversion)]
 fn validate_marker_stat(stat: &libc::stat) -> io::Result<()> {
     let mode = stat.st_mode as u32;
+    // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+    // reads the calling process's effective uid; it has no memory-safety
+    // preconditions.
     let effective_uid = unsafe { libc::geteuid() } as u64;
     if mode & libc::S_IFMT as u32 != libc::S_IFREG as u32 {
         return Err(marker_changed("marker is not a regular file"));

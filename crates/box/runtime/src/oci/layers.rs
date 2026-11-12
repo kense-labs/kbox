@@ -2410,6 +2410,9 @@ mod tests {
         fs::create_dir_all(&target).unwrap();
         // SAFETY: See the enclosing function's safety documentation.
         let euid = unsafe { libc::geteuid() } as u64;
+        // SAFETY: `getegid()` takes no arguments, dereferences no pointer and only
+        // reads the calling process's effective gid; it has no memory-safety
+        // preconditions.
         let egid = unsafe { libc::getegid() } as u64;
         write_image_metadata_for_admit(&target, euid, egid);
         admit_unprivileged_same_uid_directory_rootfs(&target).unwrap();

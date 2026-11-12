@@ -123,6 +123,9 @@ fn validate_bootstrap_log(path: &Path) -> Result<()> {
     // SAFETY: `file` retains a live handle and `information` is writable for
     // the fixed-size structure populated by GetFileInformationByHandle.
     let mut information: BY_HANDLE_FILE_INFORMATION = unsafe { zeroed() };
+    // SAFETY: `information` is a live, initialized
+    // `BY_HANDLE_FILE_INFORMATION` stack value and the handle is live; the call
+    // writes only within that struct and retains no pointer after returning.
     if unsafe { GetFileInformationByHandle(file.as_raw_handle(), &mut information) } == 0 {
         return Err(bootstrap_error(format!(
             "failed to inspect WHPX bootstrap log handle {}: {}",

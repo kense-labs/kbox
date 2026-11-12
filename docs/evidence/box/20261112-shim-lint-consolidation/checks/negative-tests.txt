@@ -1,0 +1,21 @@
+=== TEST 1: unwrap one FFI call; plain clippy (no -D) must fail ===
+error[E0133]: call to unsafe function `klibksys::krun_create_ctx` is unsafe and requires unsafe block
+For more information about this error, try `rustc --explain E0133`.
+error: could not compile `kbox-shim` (bin "kbox-shim") due to 1 previous error
+error: could not compile `kbox-shim` (bin "kbox-shim" test) due to 1 previous error
+clippy exit: 101
+
+=== TEST 2: re-add shim to LOCAL_LINT_EXCEPTIONS; layout gate must fail ===
+inherit root lints        : 18
+local lint exceptions     : 2
+  - crates/box/shim: stale probe
+FAIL: stale local lint exception (already inherits workspace lints): crates/box/shim
+gate exit: 1
+
+=== TEST 3: restored ===
+inherit root lints        : 18
+local lint exceptions     : 1
+  - crates/box/third_party/mkext4: keeps its own stricter unsafe_code = "forbid"
+PASS: single-workspace layout contract
+gate exit: 0
+clippy exit: 0

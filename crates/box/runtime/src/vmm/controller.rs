@@ -16,6 +16,9 @@ fn clear_fd_close_on_exec(descriptor: i32) -> std::io::Result<()> {
     // SAFETY: See the enclosing function's safety documentation.
     let flags = unsafe { libc::fcntl(descriptor, libc::F_GETFD) };
     if flags == -1
+        // SAFETY: `F_SETFD` takes only scalar fd/flag values and no pointer;
+        // `flags` came from the successful `F_GETFD` above, so clearing
+        // `FD_CLOEXEC` has no memory-safety precondition.
         || unsafe { libc::fcntl(descriptor, libc::F_SETFD, flags & !libc::FD_CLOEXEC) } == -1
     {
         return Err(std::io::Error::last_os_error());

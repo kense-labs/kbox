@@ -184,6 +184,9 @@ impl HealthWorkerLock {
             .create(true)
             .truncate(false)
             .open(path)?;
+        // SAFETY: `file` is a live `File` opened above, so `as_raw_fd()` is a valid
+        // descriptor for this call. `flock` takes only the integer and retains no
+        // pointer; the `File` is stored in the returned guard to hold the lock.
         let result = unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) };
         if result == 0 {
             return Ok(Some(Self { _file: file }));
@@ -670,6 +673,8 @@ mod tests {
         let pid = child.id() as libc::pid_t;
         // SAFETY: these read-only process queries take a live child PID.
         let session = unsafe { libc::getsid(pid) };
+        // SAFETY: `getpgid` takes a scalar pid and no pointer, so it has no Rust
+        // memory-safety precondition; an invalid pid simply returns -1 in this test.
         let group = unsafe { libc::getpgid(pid) };
         child.kill().unwrap();
         child.wait().unwrap();

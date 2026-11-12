@@ -605,6 +605,9 @@ async fn actual_file_guard_outlives_waiter_and_releases_before_unpolled_ready() 
             .open(home.join("locks").join(format!("{id}.lifecycle.lock")))
             .unwrap();
         // This exact original lock file is held by the real queued/running job.
+        // SAFETY: `probe` is a live `File` opened on the lock path in this test,
+        // so `as_raw_fd()` is a valid descriptor for this call. `flock` takes only
+        // the integer and retains no pointer; the test asserts the lock is refused.
         let refused = unsafe { libc::flock(probe.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) };
         assert_eq!(refused, -1);
         assert_eq!(

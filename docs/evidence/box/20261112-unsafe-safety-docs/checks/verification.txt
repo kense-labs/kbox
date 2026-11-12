@@ -1,0 +1,22 @@
+kbox unsafe-safety-doc verification (result summary; raw cargo progress lines omitted)
+Environment: macOS arm64, workspace rust toolchain 1.97.1, K_DEPS_STUB=1
+python3 = WorkBuddy Python 3.13.12; /usr/bin/python3 = 3.9.6 (no tomllib,
+           so check-workspace-layout.py must be run with PATH python3)
+
+COMMAND                                                                                          EXIT  NOTES
+python3 scripts/check-unsafe-safety-docs.py                                                         0  first-party .rs files        : 1452; unsafe fn declarations       : 35; missing # Safety sections    : 0; blanket missing_safety_doc allows: 0
+python3 scripts/check-workspace-layout.py                                                           0  [workspace] declarations : 1 (root only); workspace members         : 19; inherit root lints        : 17; local lint exceptions     : 2
+cargo check --locked --workspace --exclude kbox-cri --all-targets                                   0  168 pre-existing warning lines
+cargo clippy --locked --workspace --exclude kbox-cri --all-targets --no-deps                        0  190 pre-existing warning lines
+cargo clippy --locked -p kbox-shim --all-targets --no-deps -- -D clippy::missing_safety_doc         0  1 pre-existing warning lines
+cargo check --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets                      0  1 pre-existing warning lines
+cargo clippy --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets --no-deps -- -D clippy::missing_safety_doc    0  1 pre-existing warning lines
+git diff --check                                                                                    0  0 pre-existing warning lines
+
+Pre-existing warnings (not introduced by this change, not fixed here):
+  - crates/runtime/src/driver.rs:4 unused import `RuntimeUnitSpec`
+  - crates/oci-runtime/crates/containerd-shim/src/io/fifo.rs:17 deprecated `AsyncFd::new`
+  - klibksys build script: K_DEPS_STUB mode: skipping libkrun build
+  - numerous unused-import / dead-code / style warnings across kbox-runtime, kbox-cli
+
+All 8 commands exited 0. No errors, no clippy denial, no whitespace errors.

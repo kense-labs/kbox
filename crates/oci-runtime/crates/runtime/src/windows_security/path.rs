@@ -326,6 +326,9 @@ fn verify_plain_file_handle(handle: HANDLE, path: &Path) -> Result<()> {
     // SAFETY: the caller retains a live file handle and supplies writable
     // storage for the fixed-size information structure.
     let mut information: BY_HANDLE_FILE_INFORMATION = unsafe { zeroed() };
+    // SAFETY: `information` is a live, initialized
+    // `BY_HANDLE_FILE_INFORMATION` stack value and the handle is live; the call
+    // writes only within that struct and retains no pointer after returning.
     if unsafe { GetFileInformationByHandle(handle, &mut information) } == 0 {
         return Err(last_windows_error("verify-state-file", path));
     }

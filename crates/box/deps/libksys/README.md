@@ -170,7 +170,7 @@ cargo run --example nginx_test --target x86_64-pc-windows-msvc
 ### Linux and macOS
 
 The build script compiles libkrun automatically when a compatible system or
-cached library is unavailable. A recursive krun checkout uses the root
+cached library is unavailable. A recursive kbox checkout uses the root
 `libkrun` submodule directly. Because Cargo does not package submodule
 contents, the crates.io archive instead carries a deterministic,
 checksum-verified `vendor/libksource.tar` and extracts it under `OUT_DIR`.

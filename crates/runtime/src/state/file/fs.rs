@@ -169,6 +169,9 @@ fn reject_symlink(path: &Path, label: &str) -> RuntimeResult<()> {
 #[cfg(unix)]
 fn verify_owner(metadata: &std::fs::Metadata, path: &Path, label: &str) -> RuntimeResult<()> {
     use std::os::unix::fs::MetadataExt;
+    // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+    // reads the calling process's effective uid; it has no memory-safety
+    // preconditions and cannot invalidate a Rust invariant.
     if metadata.uid() != unsafe { libc::geteuid() } {
         return Err(RuntimeError::Protocol(format!(
             "Runtime {label} {} is owned by another user",

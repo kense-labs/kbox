@@ -506,6 +506,9 @@ fn poll_network(
             revents: 0,
         },
     ];
+    // SAFETY: `descriptors` is a live stack array of `pollfd` and
+    // `descriptors.len()` is its exact length; `poll` writes `revents` only inside
+    // that array and retains no pointer after returning. Fd values are scalars.
     let result = unsafe {
         libc::poll(
             descriptors.as_mut_ptr(),
@@ -535,6 +538,9 @@ fn poll_peer_only(guest: &UnixStream, bridge_fd: RawFd, guest_writable: bool) ->
             revents: 0,
         },
     ];
+    // SAFETY: `descriptors` is a live stack array of `pollfd` and
+    // `descriptors.len()` is its exact length; `poll` writes `revents` only inside
+    // that array and retains no pointer after returning. Fd values are scalars.
     let result = unsafe {
         libc::poll(
             descriptors.as_mut_ptr(),

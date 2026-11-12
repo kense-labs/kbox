@@ -572,10 +572,10 @@ mod tests {
 
     #[test]
     fn missing_console_log_message_mentions_recovery_commands() {
-        let message = missing_console_log_message("web", Path::new("/tmp/krun/web/console.log"));
+        let message = missing_console_log_message("web", Path::new("/tmp/kbox/web/console.log"));
 
         assert!(message.contains("running box web"));
-        assert!(message.contains("/tmp/krun/web/console.log"));
+        assert!(message.contains("/tmp/kbox/web/console.log"));
         assert!(message.contains("kbox logs -f web"));
         assert!(message.contains("kbox ps"));
     }

@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "description": "Versioned wire schema identifiers shared by kbox and krun. These strings are duplicated by hand in both repositories; this list is the machine-readable contract that scripts/check-wire-contracts.py enforces. Adding, renaming or removing any wire identifier requires editing this file in the same change.",
+  "wire_prefixes": [
+    "kbox.engine.",
+    "krun.guest",
+    "harness-assembly",
+    "process-stream.",
+    "krun.capability"
+  ],
+  "wire_exact": [
+    "capability-packages.v1",
+    "engine-diagnostics.v1",
+    "environment-prewarm.v1",
+    "directory-grants.v1",
+    "secret-launch.v1",
+    "runtime-requirements.v1",
+    "kbox.engine.v1"
+  ],
+  "shared": [
+    "capability-packages.v1",
+    "directory-grants.v1",
+    "engine-diagnostics.v1",
+    "environment-prewarm.v1",
+    "harness-assembly.capability-packages.v1",
+    "harness-assembly.guest-protocols.v1",
+    "harness-assembly.v1",
+    "kbox.engine.accepted.v1",
+    "kbox.engine.assembly.v1",
+    "kbox.engine.diagnostics.v1",
+    "kbox.engine.directory.v1",
+    "kbox.engine.discovery.v1",
+    "kbox.engine.endpoint.v1",
+    "kbox.engine.intent.v1",
+    "kbox.engine.primary-open.v1",
+    "kbox.engine.primary.v1",
+    "kbox.engine.request.v1",
+    "kbox.engine.response.v1",
+    "kbox.engine.v1",
+    "krun.guest-capability-installation.v1",
+    "krun.guest-installation-error.v1",
+    "krun.guest-installation.v1",
+    "process-stream.bootstrap.v1",
+    "process-stream.primary.v1",
+    "runtime-requirements.v1",
+    "secret-launch.v1"
+  ],
+  "kbox_only": {
+    "kbox.engine.journal.v1": "kbox-internal engine journal record; never sent to krun",
+    "kbox.engine.prewarm.v1": "kbox-internal prewarm schedule record; never sent to krun"
+  },
+  "krun_only": {
+    "krun.capability-package.v1": "krun-owned capability package schema; kbox only consumes the guest-installation envelope",
+    "krun.guest-runtime.v1": "krun-owned guest runtime inventory schema; not part of the engine wire protocol"
+  }
+}

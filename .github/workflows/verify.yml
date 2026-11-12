@@ -1,0 +1,73 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  layout:
+    name: Static repository contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Workspace contract
+        run: python3 scripts/check-workspace-layout.py
+      # `clippy::missing_safety_doc` only inspects exported items. kbox-shim is
+      # a binary crate with private modules, and Windows-only unsafe fns never
+      # reach a Linux host build, so clippy alone is a vacuous gate here.
+      - name: Unsafe safety documentation contract
+        run: python3 scripts/check-unsafe-safety-docs.py
+      # kbox and krun are separate repositories with no shared crate, so wire
+      # schema identifiers are duplicated by hand. CI verifies the kbox side
+      # only; checking krun needs a checkout (see the --krun flag in AGENTS.md).
+      - name: Wire schema contract
+        run: python3 scripts/check-wire-contracts.py
+      # kbox and krun must compile the same KCL implementation. CI verifies
+      # the kbox side; run `python3 scripts/check-kcl-source.py --krun ../krun`
+      # locally when changing the pinned rev (krun is a second private checkout).
+      - name: Pinned KCL dependency contract
+        run: python3 scripts/check-kcl-source.py
+
+  rust:
+    name: Check and clippy (Linux)
+    runs-on: ubuntu-latest
+    env:
+      # libksys build.rs would otherwise try to build libkrun from source.
+      # Check/clippy do not link, so the repository's stub mode is sufficient.
+      K_DEPS_STUB: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: rustc --version && cargo --version
+      # kbox-cri generates protobuf Rust with prost-build, which needs protoc.
+      - name: Install protoc
+        run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+      - name: Check workspace
+        run: cargo check --locked --workspace --all-targets
+      - name: Clippy
+        run: cargo clippy --locked --workspace --all-targets --no-deps
+      # `cargo fmt --all -- --check` is not a gate yet: the repository carries
+      # historical rustfmt differences outside the current change scope. Keep
+      # newly touched files formatted instead.
+
+  windows-cross:
+    name: Compile Windows-only shim modules
+    runs-on: ubuntu-latest
+    env:
+      K_DEPS_STUB: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add Windows target
+        run: rustup target add x86_64-pc-windows-gnu
+      # windows_port_forward.rs is #![cfg(target_os = "windows")], so a host
+      # build never type-checks it. Cross-compilation proves compilation only;
+      # native runtime claims still require a Windows host.
+      - name: Check kbox-shim on Windows target
+        run: cargo check --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets
+      # The root lints deny `clippy::undocumented_unsafe_blocks`, but clippy
+      # only inspects code compiled for the active target. Windows-only unsafe
+      # blocks need their own clippy pass; `cargo check` alone would not catch
+      # a missing SAFETY comment there.
+      - name: Clippy kbox-shim on Windows target
+        run: cargo clippy --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets --no-deps

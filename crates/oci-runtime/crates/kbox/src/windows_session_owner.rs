@@ -63,6 +63,9 @@ pub(crate) fn run_session_owner_probe(
 ) -> Result<ExitCode, String> {
     // Windows owner watchdog uses process handles, not parentage. Prove the
     // owner PID is a live process object the probe can synchronize on.
+    // SAFETY: `OpenProcess` takes scalar access flags and a pid and no pointer;
+    // it returns a handle or null, which is checked below. A null result has no
+    // Rust memory-safety consequence.
     let handle = unsafe { OpenProcess(PROCESS_SYNCHRONIZE, 0, owner_pid.get()) };
     if handle.is_null() {
         return Err(format!(
@@ -71,6 +74,8 @@ pub(crate) fn run_session_owner_probe(
             io::Error::last_os_error()
         ));
     }
+    // SAFETY: `handle` is a live non-null handle opened above and is closed
+    // exactly once on this path; `CloseHandle` consumes only the handle value.
     unsafe {
         let _ = CloseHandle(handle);
     }
@@ -84,6 +89,9 @@ pub(crate) fn run_session_owner_bridge_echo(
     owner_pid: NonZeroU32,
     pipe_name: String,
 ) -> Result<ExitCode, String> {
+    // SAFETY: `OpenProcess` takes scalar access flags and a pid and no pointer;
+    // it returns a handle or null, which is checked below. A null result has no
+    // Rust memory-safety consequence.
     let handle = unsafe { OpenProcess(PROCESS_SYNCHRONIZE, 0, owner_pid.get()) };
     if handle.is_null() {
         return Err(format!(
@@ -92,6 +100,8 @@ pub(crate) fn run_session_owner_bridge_echo(
             io::Error::last_os_error()
         ));
     }
+    // SAFETY: `handle` is a live non-null handle opened above and is closed
+    // exactly once on this path; `CloseHandle` consumes only the handle value.
     unsafe {
         let _ = CloseHandle(handle);
     }
@@ -282,6 +292,8 @@ fn wait_for_pipe_client(
                              {client_pid} (expected shim PID {})",
                             expected.get()
                         );
+                        // SAFETY: `server` is a live owned named-pipe handle; `DisconnectNamedPipe`
+                        // takes only that handle value and retains no pointer.
                         let _ = unsafe { DisconnectNamedPipe(server.as_raw_handle() as HANDLE) };
                         thread::sleep(Duration::from_millis(20));
                         continue;
@@ -348,6 +360,8 @@ fn create_named_pipe_server(path: &str, first_instance: bool) -> Result<OwnedHan
             io::Error::last_os_error()
         ));
     }
+    // SAFETY: `raw` is a fresh, uniquely owned handle returned by the native
+    // call above and wrapped exactly once; `OwnedHandle` closes it on drop.
     Ok(unsafe { OwnedHandle::from_raw_handle(raw as _) })
 }
 
@@ -456,6 +470,9 @@ fn pump_pipe_if_readable(from: HANDLE, to: HANDLE, buffer: &mut [u8]) -> io::Res
     }
     let to_read = (avail as usize).min(buffer.len()) as u32;
     let mut read = 0u32;
+    // SAFETY: `buffer` is a live mutable byte buffer and `to_read` is bounded
+    // by its length; `read` is a live `u32` local written by the call. The
+    // OVERLAPPED pointer is null and `ReadFile` retains no pointer after return.
     let ok = unsafe {
         ReadFile(
             from,
@@ -480,6 +497,9 @@ fn pump_pipe_if_readable(from: HANDLE, to: HANDLE, buffer: &mut [u8]) -> io::Res
     let mut offset = 0usize;
     while offset < read as usize {
         let mut written = 0u32;
+        // SAFETY: `buffer.as_ptr().add(offset)` stays inside the live buffer for
+        // the `read - offset` byte count; `written` is a live `u32` local. The
+        // OVERLAPPED pointer is null and `WriteFile` retains no pointer after return.
         let ok = unsafe {
             WriteFile(
                 to,
@@ -497,6 +517,8 @@ fn pump_pipe_if_readable(from: HANDLE, to: HANDLE, buffer: &mut [u8]) -> io::Res
         }
         offset += written as usize;
     }
+    // SAFETY: `to` is a live handle held by the caller; `FlushFileBuffers`
+    // takes only the handle and retains no pointer.
     let _ = unsafe { FlushFileBuffers(to) };
     Ok(false)
 }
@@ -525,6 +547,9 @@ fn connect_named_pipe_client(path: &str) -> Result<File, String> {
             )
         };
         if raw != INVALID_HANDLE_VALUE && !raw.is_null() {
+            // SAFETY: `raw` was checked against `INVALID_HANDLE_VALUE` and null above,
+            // so it is a fresh handle owned solely by this function; `from_raw_handle`
+            // takes ownership exactly once.
             return Ok(unsafe { File::from_raw_handle(raw as _) });
         }
         if std::time::Instant::now() >= deadline {
@@ -553,10 +578,17 @@ fn create_kill_on_close_job() -> Result<OwnedHandle, String> {
             io::Error::last_os_error()
         ));
     }
+    // SAFETY: `CreateJobObjectW` returned a checked non-null handle owned
+    // solely by this function; `OwnedHandle::from_raw_handle` wraps it once.
     let job = unsafe { OwnedHandle::from_raw_handle(raw as _) };
 
+    // SAFETY: `JOBOBJECT_EXTENDED_LIMIT_INFORMATION` is a plain Win32 struct
+    // whose all-zero bit pattern is a valid value; no Rust invariant is violated.
     let mut info = unsafe { std::mem::zeroed::<JOBOBJECT_EXTENDED_LIMIT_INFORMATION>() };
     info.BasicLimitInformation.LimitFlags = JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE;
+    // SAFETY: `job` is a live owned job handle, `info` a fully initialized
+    // struct, and `size_of_val(&info)` bounds the read; the call retains no
+    // pointer after returning.
     let ok = unsafe {
         SetInformationJobObject(
             job.as_raw_handle() as HANDLE,
@@ -577,9 +609,13 @@ fn create_kill_on_close_job() -> Result<OwnedHandle, String> {
 fn assign_child_to_job(job: &OwnedHandle, child: &std::process::Child) -> Result<(), String> {
     // SAFETY: Child's raw handle is valid for the process lifetime.
     let process = child.as_raw_handle() as HANDLE;
+    // SAFETY: both arguments are live scalar handles (`job` and the child
+    // process) held for this call; `AssignProcessToJobObject` retains no pointer.
     let ok = unsafe { AssignProcessToJobObject(job.as_raw_handle() as HANDLE, process) };
     if ok == 0 {
         // Best-effort terminate so we do not leave an unbound shim.
+        // SAFETY: `job` is a live owned job handle and the exit code is a scalar;
+        // `TerminateJobObject` retains no pointer.
         let _ = unsafe { TerminateJobObject(job.as_raw_handle() as HANDLE, OWNER_EXIT_CODE) };
         return Err(format!(
             "AssignProcessToJobObject failed: {}",
@@ -591,6 +627,9 @@ fn assign_child_to_job(job: &OwnedHandle, child: &std::process::Child) -> Result
 
 #[allow(dead_code)]
 fn process_exit_code(pid: NonZeroU32) -> Option<u32> {
+    // SAFETY: `OpenProcess` takes scalar access flags and a pid and no pointer;
+    // it returns a handle or null, which is checked below. A null result has no
+    // Rust memory-safety consequence.
     let handle = unsafe {
         OpenProcess(
             PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_SYNCHRONIZE,
@@ -602,8 +641,15 @@ fn process_exit_code(pid: NonZeroU32) -> Option<u32> {
         return None;
     }
     let mut code = 0u32;
+    // SAFETY: `handle` is a live process handle and `code` is a live `u32`
+    // local that `GetExitCodeProcess` writes exactly one word into; no pointer
+    // is retained.
     let ok = unsafe { GetExitCodeProcess(handle, &mut code) };
+    // SAFETY: `handle` is a live handle opened above; `WaitForSingleObject`
+    // takes only the handle and a scalar timeout and retains no pointer.
     let wait = unsafe { WaitForSingleObject(handle, 0) };
+    // SAFETY: `handle` is a live non-null handle opened above and is closed
+    // exactly once on this path; `CloseHandle` consumes only the handle value.
     unsafe {
         let _ = CloseHandle(handle);
     }

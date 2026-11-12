@@ -14,6 +14,7 @@ members = [
     "crates/oci-runtime/crates/agent",
     "crates/oci-runtime/crates/agent-protocol",
     "crates/oci-runtime/crates/cli",
+    "crates/oci-runtime/crates/containerd-shim",
     "crates/oci-runtime/crates/core",
     "crates/oci-runtime/crates/kbox",
     "crates/oci-runtime/crates/runtime",
@@ -113,7 +114,9 @@ windows = {features = ["Win32_Security", "Win32_Security_Authorization", "Win32_
 wiremock = {version = "0.6"}
 zstd = {version = "0.13"}
 
-kcl = { package = "kense-kcl", path = "../kcl" }
+# KCL is a separate repository. Pin the same revision as krun so both products
+# parse KCL with one implementation; do not fall back to a sibling ../kcl tree.
+kcl = { package = "kense-kcl", git = "https://github.com/kense-labs/kcl.git", rev = "76bf580454f1d69d7b826223ac50161efa685f85" }
 kbox-core = { path = "crates/box/core" }
 kbox-runtime = { path = "crates/box/runtime", features = ["build", "vm"], default-features = false }
 kbox-contract = { path = "crates/runtime" }
@@ -149,7 +152,7 @@ time = "0.3"
 tokio-rustls = { version = "0.26", default-features = false, features = ["logging", "ring", "tls12"] }
 tower = "0.4"
 x509-parser = "0.16"
-zeroize = "1"
+zeroize = { version = "1", features = ["derive"] }
 
 # Cryptography (for TEE attestation verification)
 zip = { version = "2", default-features = false, features = ["deflate"] }
@@ -201,7 +204,25 @@ windows-sys = { version = "0.59", features = [
     "Win32_System_Threading",
 ] }
 
+[workspace.lints.rust]
+# Keep at deny: the former nested OCI-runtime workspace already compiled with
+# this lint, and dropping it would silently relax an existing red line.
+# `crates/box/shim` now inherits it too; every FFI call inside its `unsafe fn`s
+# is wrapped in an explicit `unsafe { ... }` block with a nearby SAFETY comment.
+# The only remaining local lint exception is
+# `crates/box/third_party/mkext4`, which keeps its own stricter
+# `unsafe_code = "forbid"`.
+unsafe_op_in_unsafe_fn = "deny"
+
 [workspace.lints.clippy]
+dbg_macro = "deny"
+todo = "deny"
+unimplemented = "deny"
+# Every `unsafe` block needs a nearby `// SAFETY:` argument. Clippy only sees
+# the target it is compiled for, so the windows-cross job runs clippy too:
+# Windows-only `unsafe` blocks are invisible on a Linux host build.
+undocumented_unsafe_blocks = "deny"
+
 # prost 0.14 renders proto doc-comment bullet lists in a way that trips this
 # lint on generated code. Kept in sync with bazel/lint/linters.bzl.
 doc_lazy_continuation = "allow"

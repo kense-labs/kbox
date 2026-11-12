@@ -304,6 +304,9 @@ fn durable_stage_rename(_root: &Path, terminal: &Path, previous: &Path) -> std::
         .encode_wide()
         .chain(std::iter::once(0))
         .collect();
+    // SAFETY: `terminal` and `previous` are live NUL-terminated UTF-16 paths
+    // read only for this call; `MoveFileExW` takes scalar flags and retains no
+    // pointer after returning.
     if unsafe {
         MoveFileExW(
             terminal.as_ptr(),

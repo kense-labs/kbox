@@ -61,6 +61,9 @@ pub fn is_process_exited(pid: u32) -> bool {
         return true;
     };
     let mut status = 0;
+    // SAFETY: `status` is a live stack-local `c_int` and `waitpid` writes only
+    // that word for the given pid with `WNOHANG`; no pointer is retained after
+    // the call.
     let waited = unsafe { libc::waitpid(raw_pid, &mut status, libc::WNOHANG) };
     if waited == raw_pid {
         return true;
@@ -91,6 +94,8 @@ fn reap_exited_child(pid: u32) {
 /// Terminate a process immediately.
 #[cfg(unix)]
 pub fn terminate_process(pid: u32) {
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition; the return value is intentionally ignored.
     unsafe {
         libc::kill(pid as i32, libc::SIGKILL);
     }
@@ -99,6 +104,8 @@ pub fn terminate_process(pid: u32) {
 /// Send a Unix signal to a process and surface the OS error when delivery fails.
 #[cfg(unix)]
 pub fn send_signal(pid: u32, signal: i32) -> Result<(), std::io::Error> {
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition; a failure is returned as `last_os_error()`.
     let result = unsafe { libc::kill(pid as i32, signal) };
     if result == 0 {
         Ok(())
@@ -127,6 +134,9 @@ pub async fn graceful_stop(pid: u32, signal: i32, timeout: u64) -> StopOutcome {
         return StopOutcome::AlreadyExited;
     }
 
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition; the fallback probe below decides the
+    // outcome.
     unsafe {
         if libc::kill(pid as i32, signal) != 0 && !is_process_alive(pid) {
             return StopOutcome::AlreadyExited;
@@ -140,6 +150,8 @@ pub async fn graceful_stop(pid: u32, signal: i32, timeout: u64) -> StopOutcome {
             return StopOutcome::GracefulExit;
         }
         if start.elapsed().as_millis() >= timeout_ms as u128 {
+            // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+            // Rust memory-safety precondition; the return value is intentionally ignored.
             unsafe {
                 libc::kill(pid as i32, libc::SIGKILL);
             }
@@ -206,6 +218,8 @@ pub async fn graceful_stop_via_guest(
             return StopOutcome::GracefulExit;
         }
         if start.elapsed().as_millis() >= timeout_ms as u128 {
+            // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+            // Rust memory-safety precondition; the return value is intentionally ignored.
             unsafe {
                 libc::kill(pid as i32, libc::SIGKILL);
             }
@@ -356,6 +370,8 @@ mod tests {
     #[cfg(unix)]
     #[test]
     fn test_is_process_alive_parent_process() {
+        // SAFETY: `getppid()` takes no arguments, dereferences no pointer and cannot
+        // fail; it has no memory-safety preconditions.
         let parent_pid = unsafe { libc::getppid() as u32 };
         assert!(is_process_alive(parent_pid));
     }

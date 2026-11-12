@@ -167,3 +167,6 @@ tempfile = { workspace = true }
 # Registry fixture tests use an in-process HTTP server even when the optional
 # `scale` feature (the production axum consumer) is disabled.
 axum = { workspace = true }
+
+[lints]
+workspace = true

@@ -245,6 +245,8 @@ impl CliTest {
 
     pub fn interrupt_background(&self, child: &mut std::process::Child) {
         #[cfg(unix)]
+        // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+        // Rust memory-safety precondition; `child.id()` is the live child's pid.
         unsafe {
             let _ = libc::kill(child.id() as libc::pid_t, libc::SIGINT);
         }
@@ -530,6 +532,8 @@ impl CliTest {
         assert!(saw_marker);
 
         #[cfg(unix)]
+        // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+        // Rust memory-safety precondition; `child.id()` is the live child's pid.
         unsafe {
             libc::kill(child.id() as i32, libc::SIGINT);
         }

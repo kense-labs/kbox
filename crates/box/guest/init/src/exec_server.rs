@@ -1683,6 +1683,9 @@ fn chown_file_path(path: &Path, owner: Option<ProcessUser>) -> std::io::Result<(
     let path = CString::new(path.as_os_str().as_bytes())
         .map_err(|_| std::io::Error::from(std::io::ErrorKind::InvalidInput))?;
     let gid = owner.gid.unwrap_or(owner.uid);
+    // SAFETY: `path` is a live NUL-terminated `CString` built from the target
+    // `Path` above; `chown` reads it only for this call and retains no pointer.
+    // `owner.uid` and `gid` are scalars from a validated `ProcessUser`.
     let result = unsafe { libc::chown(path.as_ptr(), owner.uid, gid) };
     if result == 0 {
         Ok(())
@@ -2975,6 +2978,12 @@ fn configure_child_process(
     #[cfg(not(target_os = "linux"))]
     let may_setgroups = true;
 
+    // SAFETY: `pre_exec` runs in the forked child before `execve`, where only
+    // async-signal-safe work is permitted. The closure is deliberately limited to
+    // libc-backed operations on `CString`s, descriptors and capability sets built
+    // before the fork, and installs only the prebuilt seccomp filter; the
+    // in-closure comments record that constraint per step. This block registers
+    // the closure and dereferences no pointer itself.
     unsafe {
         command.pre_exec(move || {
             // Join the per-container cgroup FIRST, before chroot (afterwards the
@@ -3308,6 +3317,9 @@ pub(crate) fn remount_rootfs_readonly(rootfs: &str) {
 #[cfg_attr(not(unix), allow(dead_code))]
 fn kill_child_process_group(child: &mut std::process::Child) {
     #[cfg(unix)]
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition. `child.id()` is checked > 0 before the
+    // cast; the negated pid targets the child's process group only.
     unsafe {
         let pid = child.id() as i32;
         if pid > 0 {
@@ -3321,6 +3333,9 @@ fn kill_child_process_group(child: &mut std::process::Child) {
 #[cfg_attr(not(unix), allow(dead_code))]
 fn signal_child_process_group(child: &std::process::Child, signal: i32) {
     #[cfg(unix)]
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition. `child.id()` is checked > 0 before the
+    // cast; a failed group signal falls back to the child pid itself.
     unsafe {
         let pid = child.id() as i32;
         if pid > 0 && libc::kill(-pid, signal) != 0 {

@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1900" viewBox="0 0 1100 1900" role="img" aria-labelledby="kbox-title kbox-description">
+  <title id="kbox-title">KBox 当前架构</title>
+  <desc id="kbox-description">KBox 是独立 Rust workspace。krun 通过 Unix socket 上的版本化 kbox.engine 请求调用 Engine 控制面，kbox-cri 与 containerd-shim 提供 CRI / OCI Runtime v2 协议适配。ExecutionManager 持有 VM、进程、挂载、网络与文件 JSON 状态，是资源权威。唯一虚拟化后端是 libkrun / libkrunfw；kbox-shim 与 koci-kshim 是同一后端下的两条内部宿主进程实现，不是两个可切换后端。客体侧由 kbox-guest-init / koci-agent 承担 PID 1 与 guest 服务。ACP 与 LLM 属 krun，不在 KBox 内。虚线框表示规划但尚未实现的能力。</desc>
+  <metadata>Blueprint style follows krun/docs/architecture/krun-architecture.svg (Kense OS, kstack/docs/architecture/kense-os-modules.html). Content verified against kbox code at HEAD 405c8b8, 2026-11-12. Current architecture, not a target design; dashed boxes are unimplemented plans.</metadata>
+  <defs>
+    <marker id="arrow-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#141413" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#4E60FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: Menlo, "SFMono-Regular", Consolas, "PingFang SC", "Microsoft YaHei", monospace; font-weight: 400; fill: #141413; }
+      .title { font-size: 36px; font-weight: 500; }
+      .section { font-size: 21px; fill: #FDFCF9; }
+      .node-title { font-size: 19px; font-weight: 500; text-anchor: middle; }
+      .body { font-size: 16px; text-anchor: middle; }
+      .label { font-size: 16px; fill: #7A756C; }
+      .light { fill: #FDFCF9; }
+      .blue { fill: #4E60FF; }
+      .panel { fill: #FDFCF9; stroke: #141413; stroke-width: 1; }
+      .soft-panel { fill: #FDFCF9; stroke: #DCD6C8; stroke-width: 1; }
+      .line { fill: none; stroke: #141413; stroke-width: 1.5; stroke-linejoin: round; }
+      .data-line { fill: none; stroke: #4E60FF; stroke-width: 1.8; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1100" height="1900" rx="14" fill="#F8F6F0"/>
+  <text class="title" x="100" y="66">KBox</text>
+  <text class="label" x="1000" y="64" text-anchor="end">当前架构 · 基于代码</text>
+  <text x="100" y="104" font-size="19">单一 libkrun MicroVM 运行时 · 版本化 Engine 控制面 · 独立仓库</text>
+
+  <rect class="panel" x="100" y="142" width="240" height="74" rx="6"/>
+  <text class="node-title" x="220" y="171">krun · 独立仓库</text>
+  <text class="body" x="220" y="197">ACP Harness · 意图账本</text>
+  <rect class="panel" x="390" y="142" width="360" height="74" rx="6"/>
+  <text class="node-title" x="570" y="171">kbox CLI / OCI 客户端</text>
+  <text class="body" x="570" y="197">run · build · exec · ps · cp</text>
+  <rect class="panel" x="800" y="142" width="200" height="74" rx="6"/>
+  <text class="node-title" x="900" y="171">容器平台</text>
+  <text class="body" x="900" y="197">CRI · containerd v2</text>
+  <path class="line" d="M570 216V258" marker-end="url(#arrow-ink)"/>
+
+  <rect class="panel" x="100" y="258" width="900" height="172" rx="8"/>
+  <path d="M108 258H992Q1000 258 1000 266V302H100V266Q100 258 108 258Z" fill="#141413"/>
+  <text class="section" x="120" y="287">KBox · 入口与协议适配</text>
+  <text class="body light" x="980" y="286" style="text-anchor:end">独立主机进程</text>
+  <rect class="soft-panel" x="120" y="318" width="274" height="90" rx="6"/>
+  <text class="node-title" x="257" y="344">kbox-cli</text>
+  <text class="body" x="257" y="370">91+ 子命令 · Docker-like</text>
+  <text class="body" x="257" y="393">委托 kbox-runtime</text>
+  <rect class="soft-panel" x="414" y="318" width="274" height="90" rx="6"/>
+  <text class="node-title" x="551" y="344">kbox-cri</text>
+  <text class="body" x="551" y="370">runtime.v1 gRPC</text>
+  <text class="body" x="551" y="393">PodSandbox → MicroVM</text>
+  <rect class="soft-panel" x="708" y="318" width="272" height="90" rx="6"/>
+  <text class="node-title" x="844" y="344">koci / containerd-shim</text>
+  <text class="body" x="844" y="370">OCI Runtime v2</text>
+  <text class="body" x="844" y="393">koci-sdk 传输</text>
+  <path class="line" d="M570 430V488" marker-end="url(#arrow-ink)"/>
+  <text class="label" x="592" y="465">版本化 Engine API · 单一控制面</text>
+
+  <rect class="panel" x="100" y="488" width="900" height="214" rx="8"/>
+  <path d="M108 488H992Q1000 488 1000 496V532H100V496Q100 488 108 488Z" fill="#141413"/>
+  <text class="section" x="120" y="517">KBox · 版本化 Engine 控制面</text>
+  <text class="body light" x="980" y="516" style="text-anchor:end">Unix socket · 同 UID 校验</text>
+  <rect x="120" y="552" width="274" height="126" rx="6" fill="#141413"/>
+  <text class="node-title light" x="257" y="580">LocalEngine</text>
+  <text class="body light" x="257" y="607">endpoint / serve</text>
+  <text class="body light" x="257" y="632">request.v1 ↔ response.v1</text>
+  <text class="body light" x="257" y="655">4B 长度前缀 + JSON</text>
+  <rect class="panel" x="414" y="552" width="274" height="126" rx="6"/>
+  <text class="node-title" x="551" y="580">EngineIntent / Journal</text>
+  <text class="body" x="551" y="607">revision · generation</text>
+  <text class="body" x="551" y="632">fingerprint · request_id</text>
+  <text class="body" x="551" y="655">accepted.v1 操作回执</text>
+  <rect x="708" y="552" width="272" height="126" rx="6" fill="#FDFCF9" stroke="#4E60FF" stroke-width="1.3"/>
+  <text class="node-title" x="844" y="580">Assembly / Diagnostics</text>
+  <text class="body" x="844" y="607">harness-assembly.v1</text>
+  <text class="body" x="844" y="632">secret-launch.v1</text>
+  <text class="body" x="844" y="655">primary-open.v1</text>
+  <path class="line" d="M257 678V766" marker-end="url(#arrow-ink)"/>
+  <path class="line" d="M551 678V766" marker-end="url(#arrow-ink)"/>
+  <path class="line" d="M844 678V766" marker-end="url(#arrow-ink)"/>
+  <rect x="150" y="718" width="214" height="30" fill="#F8F6F0"/>
+  <rect x="438" y="718" width="226" height="30" fill="#F8F6F0"/>
+  <rect x="734" y="718" width="220" height="30" fill="#F8F6F0"/>
+  <text class="label" x="257" y="740" text-anchor="middle">ApplyIntent / inspect</text>
+  <text class="label" x="551" y="740" text-anchor="middle">幂等与操作回执</text>
+  <text class="label" x="844" y="740" text-anchor="middle">装配与凭据协商</text>
+
+  <rect class="panel" x="100" y="766" width="900" height="234" rx="8"/>
+  <path d="M108 766H992Q1000 766 1000 774V810H100V774Q100 766 108 766Z" fill="#141413"/>
+  <text class="section" x="120" y="795">KBox · 执行引擎与状态权威</text>
+  <text class="body light" x="980" y="794" style="text-anchor:end">ExecutionManager 持有资源状态</text>
+  <rect x="120" y="830" width="274" height="110" rx="6" fill="#141413"/>
+  <text class="node-title light" x="257" y="858">ExecutionManager</text>
+  <text class="body light" x="257" y="885">VM / 进程 / 挂载 / 网络</text>
+  <text class="body light" x="257" y="910">Task · Service · 清理</text>
+  <rect class="panel" x="414" y="830" width="274" height="110" rx="6"/>
+  <text class="node-title" x="551" y="858">执行资源编排</text>
+  <text class="body" x="551" y="885">VM · OCI · rootfs</text>
+  <text class="body" x="551" y="910">pool · snapshot · build</text>
+  <rect class="panel" x="708" y="830" width="272" height="110" rx="6"/>
+  <text class="node-title" x="844" y="858">FileRuntimeStateStore</text>
+  <text class="body" x="844" y="885">boxes.json / intent.json</text>
+  <text class="body" x="844" y="910">JSON + 文件锁 · 无 SQLite</text>
+  <rect x="120" y="956" width="860" height="32" rx="4" fill="#EFEBE1"/>
+  <text class="body" x="550" y="978">幂等：revision / generation / fingerprint / request_id · 内部契约 kbox_contract.*</text>
+  <path class="line" d="M550 1000V1040" marker-end="url(#arrow-ink)"/>
+
+  <rect x="100" y="1040" width="900" height="440" rx="8" fill="#FDFCF9" stroke="#4E60FF" stroke-width="1.3"/>
+  <path d="M108 1040H992Q1000 1040 1000 1048V1084H100V1048Q100 1040 108 1040Z" fill="#4E60FF"/>
+  <text class="section" x="120" y="1071">KBox 执行环境 · 独立 Linux MicroVM</text>
+  <text class="body light" x="980" y="1070" style="text-anchor:end">单一 libkrun 运行时</text>
+  <rect class="panel" x="120" y="1100" width="860" height="50" rx="6"/>
+  <text x="550" y="1132" font-size="17" text-anchor="middle">宿主侧进程：kbox-shim · koci-kshim — 同一 libkrun 后端的两条内部实现路径</text>
+  <rect x="120" y="1172" width="410" height="102" rx="6" fill="#141413"/>
+  <text class="node-title light" x="325" y="1202">libkrun / libkrunfw</text>
+  <text class="body light" x="325" y="1228">HVF · KVM · WHPX 平台后端</text>
+  <text class="body light" x="325" y="1251">krun_start_enter 接管宿主进程</text>
+  <rect class="panel" x="570" y="1172" width="410" height="102" rx="6"/>
+  <text class="node-title" x="775" y="1202">客体 PID 1 / Guest Services</text>
+  <text class="body" x="775" y="1228">kbox-guest-init · koci-agent</text>
+  <text class="body" x="775" y="1251">namespace · exec · PTY · vsock</text>
+  <path class="line" d="M530 1223H570" marker-end="url(#arrow-ink)"/>
+  <rect class="soft-panel" x="120" y="1300" width="260" height="76" rx="6"/>
+  <text class="node-title" x="250" y="1329">网络（宿主线程）</text>
+  <text class="body" x="250" y="1355">netproxy / passt</text>
+  <rect class="soft-panel" x="405" y="1300" width="275" height="76" rx="6"/>
+  <text class="node-title" x="542" y="1329">授权文件系统</text>
+  <text class="body" x="542" y="1355">rootfs · 卷 · 目录挂载</text>
+  <rect class="soft-panel" x="705" y="1300" width="275" height="76" rx="6"/>
+  <text class="node-title" x="842" y="1329">会话与凭据</text>
+  <text class="body" x="842" y="1355">generation 绑定 · tmpfs</text>
+  <rect x="120" y="1392" width="860" height="32" rx="4" fill="#EFEBE1"/>
+  <text class="body" x="550" y="1414">独立内核隔离 · 进程 / 挂载 / 网络由 ExecutionManager 管理</text>
+  <path class="line" d="M550 1480V1520" marker-end="url(#arrow-ink)"/>
+
+  <rect class="panel" x="100" y="1520" width="900" height="160" rx="8"/>
+  <path d="M108 1520H992Q1000 1520 1000 1528V1564H100V1528Q100 1520 108 1520Z" fill="#141413"/>
+  <text class="section" x="120" y="1551">镜像与数据面 · 外部依赖</text>
+  <text class="body light" x="980" y="1550" style="text-anchor:end">业务依赖，非运行时后端</text>
+  <rect class="soft-panel" x="120" y="1580" width="164" height="86" rx="6"/>
+  <text class="node-title" x="202" y="1606">OCI registry</text>
+  <text class="body" x="202" y="1631">pull / push</text>
+  <text class="body" x="202" y="1654">运行期网络 I/O</text>
+  <rect class="soft-panel" x="294" y="1580" width="164" height="86" rx="6"/>
+  <text class="node-title" x="376" y="1606">OCI 构建</text>
+  <text class="body" x="376" y="1631">Dockerfile 语法</text>
+  <text class="body" x="376" y="1654">无 dockerd 依赖</text>
+  <rect class="soft-panel" x="468" y="1580" width="164" height="86" rx="6"/>
+  <text class="node-title" x="550" y="1606">rootfs / ext4</text>
+  <text class="body" x="550" y="1631">确定性镜像</text>
+  <text class="body" x="550" y="1654">快照与缓存</text>
+  <rect class="soft-panel" x="642" y="1580" width="164" height="86" rx="6"/>
+  <text class="node-title" x="724" y="1606">KCL</text>
+  <text class="body" x="724" y="1631">pinned git rev</text>
+  <text class="body" x="724" y="1654">独立项目</text>
+  <rect class="soft-panel" x="816" y="1580" width="164" height="86" rx="6"/>
+  <text class="node-title" x="898" y="1606">libkrun fw</text>
+  <text class="body" x="898" y="1631">gitlink 子模块</text>
+  <text class="body" x="898" y="1654">构建期 + 本地库</text>
+
+  <path class="data-line" d="M376 1666V1710" stroke-dasharray="5 5" marker-end="url(#arrow-blue)"/>
+  <rect x="100" y="1710" width="440" height="86" rx="6" fill="#FDFCF9" stroke="#4E60FF" stroke-width="1.2" stroke-dasharray="5 5"/>
+  <text class="node-title blue" x="320" y="1740">规划 · 尚未实现</text>
+  <text class="body blue" x="320" y="1766">可插拔第二 hypervisor</text>
+  <text class="body blue" x="320" y="1788">QEMU / Cloud Hypervisor 仅注释</text>
+  <rect class="soft-panel" x="560" y="1710" width="440" height="86" rx="6"/>
+  <text class="node-title" x="780" y="1740">平台门控 · 已实现但受限</text>
+  <text class="body" x="780" y="1766">engine 不含 Windows</text>
+  <text class="body" x="780" y="1788">snapshot_fork 仅 Linux x86_64</text>
+
+  <rect x="100" y="1830" width="900" height="38" rx="6" fill="#4E60FF"/>
+  <text class="body light" x="550" y="1855">KBox 只提供通用 OCI / MicroVM 执行 · ACP / LLM 属 krun · 无第二运行时后端</text>
+
+  <path class="data-line" d="M100 179H50V595H120" marker-start="url(#arrow-blue)" marker-end="url(#arrow-blue)"/>
+  <text class="blue" x="28" y="390" font-size="17" text-anchor="middle" transform="rotate(-90 28 390)">krun ↔ kbox · kbox.engine.*.v1</text>
+  <path class="line" d="M1000 179H1050V360H1000" marker-end="url(#arrow-ink)"/>
+  <text class="label" x="1075" y="280" font-size="17" text-anchor="middle" transform="rotate(90 1075 280)">CRI / containerd 协议入口</text>
+  <path class="data-line" d="M980 1620H1020V1223H980" marker-end="url(#arrow-blue)"/>
+  <text class="blue" x="1045" y="1420" font-size="16" text-anchor="middle" transform="rotate(90 1045 1420)">镜像 / 卷 / 网络数据面</text>
+</svg>

@@ -185,6 +185,11 @@ pub fn spawn_isolated(
     );
 
     // Fork to create child process
+    // SAFETY: `fork()` takes no arguments and gives the child a private copy of
+    // this process's memory, so the call itself creates no aliasing or pointer
+    // lifetime obligation. The child branch never returns to the caller: it
+    // either execs or exits inside `child_process`. Child-side async-signal-safety
+    // is a separate property of `child_process`, not claimed by this comment.
     match unsafe { fork() }.map_err(NamespaceError::ForkFailed)? {
         ForkResult::Child => {
             // Child process: create namespaces and exec

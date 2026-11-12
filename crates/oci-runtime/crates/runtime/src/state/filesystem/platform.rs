@@ -414,6 +414,10 @@ fn rename_handle_relative(
         // variable-length FILE_RENAME_INFORMATION buffer is initialized as
         // documented by the native file-information contract.
         let mut io_status = std::mem::MaybeUninit::<IO_STATUS_BLOCK>::zeroed();
+        // SAFETY: `source_handle` is live, `io_status` is a live writable stack
+        // buffer, and `information` points to an initialized
+        // `FILE_RENAME_INFORMATION` buffer bounded by `buffer_length`; the native
+        // call retains no pointer after returning.
         let status = unsafe {
             NtSetInformationFile(
                 source_handle,
@@ -472,6 +476,11 @@ pub(super) async fn sync_directory(directory: Dir, display: &Path) -> Result<()>
             // cap-std may retain Linux directories through O_PATH. Reopen the
             // exact pinned directory descriptor with read access before
             // fsync; no ambient pathname is consulted.
+            // SAFETY: `directory` is a live pinned directory descriptor, so
+            // `as_raw_fd()` is valid for this call; `c"."` is a static NUL-terminated
+            // path read only by `openat`, which retains no pointer. A negative return is
+            // handled below and a non-negative fd is wrapped exactly once by
+            // `File::from_raw_fd`.
             let descriptor = unsafe {
                 libc::openat(
                     directory.as_raw_fd(),
@@ -559,9 +568,12 @@ pub(super) fn mount_identity(descriptor: std::os::fd::RawFd) -> io::Result<Mount
     if result != 0 {
         return Err(io::Error::last_os_error());
     }
-    // SAFETY: fstatfs initialized `stat`; fsid_t is exactly two i32 values on
-    // Apple platforms even though libc keeps the field private.
+    // SAFETY: `fstatfs` returned success above, so the zero-initialized
+    // `MaybeUninit<statfs>` was fully written by the kernel.
     let stat = unsafe { stat.assume_init() };
+    // SAFETY: `fsid_t` is exactly two `i32` values on Apple platforms even
+    // though libc keeps the field private, so `transmute_copy` reads only the
+    // initialized bytes of `stat.f_fsid` and produces an equal-sized value.
     let identity = unsafe { std::mem::transmute_copy::<libc::fsid_t, [i32; 2]>(&stat.f_fsid) };
     Ok(identity)
 }

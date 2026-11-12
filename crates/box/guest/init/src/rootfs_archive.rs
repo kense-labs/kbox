@@ -678,6 +678,9 @@ mod tests {
         let directory = tempfile::TempDir::new().unwrap();
         let fifo = directory.path().join("qa-pipe");
         let fifo_path = std::ffi::CString::new(fifo.as_os_str().as_bytes()).unwrap();
+        // SAFETY: `fifo_path` is a live NUL-terminated `CString` built from the test
+        // fixture path above; `mkfifo` reads it only for this call and retains no
+        // pointer. The mode is a constant and the parent directory exists.
         assert_eq!(unsafe { libc::mkfifo(fifo_path.as_ptr(), 0o600) }, 0);
         std::fs::set_permissions(&fifo, std::fs::Permissions::from_mode(0o640)).unwrap();
 

@@ -49,7 +49,7 @@ specs/[###-feature-name]/
 | --- | --- | --- |
 | Execution | `crates/box/` or `crates/oci-runtime/` | [Files] |
 | Runtime contracts | `crates/runtime/` | [Files] |
-| Policy | `../kcl/` | [Files] |
+| Policy | `kense-labs/kcl` pinned rev (root `Cargo.toml`); kbox-side schemas in `crates/box/core/src/compose/` and `crates/box/runtime/src/oci/build/plan.rs` | [Files] |
 | Supporting crate | `crates/<name>/` | [Files] |
 | Native submodule | `libkrun` or `libkrunfw` gitlink | [Owning commit and pointer] |
 

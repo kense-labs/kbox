@@ -89,6 +89,9 @@ pub fn regular_file_identity(file: &File) -> io::Result<WindowsFileIdentity> {
         ));
     }
     if information.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY != 0
+        // SAFETY: `GetFileType` takes a live handle value and no pointer, so it has
+        // no Rust memory-safety precondition; the result is compared to
+        // `FILE_TYPE_DISK`.
         || unsafe { GetFileType(handle) } != FILE_TYPE_DISK
     {
         return Err(io::Error::new(

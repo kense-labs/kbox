@@ -1083,6 +1083,9 @@ fn validate_private_file(file: &File, path: &Path, maximum_bytes: u64) -> Result
     {
         use std::os::unix::fs::MetadataExt;
 
+        // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+        // reads the calling process's effective uid; it has no memory-safety
+        // preconditions.
         let effective_uid = unsafe { libc::geteuid() };
         if metadata.uid() != effective_uid {
             return Err(metadata_error(format!(

@@ -154,6 +154,9 @@ impl WindowsTokenPrivilegeGuard {
         // SAFETY: both TOKEN_PRIVILEGES buffers are initialized and sized for
         // the single privilege requested here.
         unsafe { SetLastError(ERROR_SUCCESS) };
+        // SAFETY: `requested` and `previous` are live initialized `TOKEN_PRIVILEGES`
+        // buffers, `previous_length` is a live `u32` local, and the size argument
+        // bounds the read; the call retains no pointer after returning.
         let adjusted = unsafe {
             AdjustTokenPrivileges(
                 token,
@@ -164,6 +167,8 @@ impl WindowsTokenPrivilegeGuard {
                 &mut previous_length,
             )
         };
+        // SAFETY: `GetLastError()` takes no arguments, dereferences no pointer and
+        // only reads thread-local error state; it has no memory-safety preconditions.
         let adjustment_error = unsafe { GetLastError() };
         if adjusted == 0 {
             // SAFETY: `token` was returned by OpenProcessToken above.

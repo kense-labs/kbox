@@ -1,10 +1,23 @@
 //! High-level context wrapper for libkrun interactions.
 //!
-//! All unsafe functions in this module wrap libkrun FFI calls.
-//! They are marked unsafe because they call into C code and require
-//! the caller to ensure the KContext is valid.
-
-#![allow(clippy::missing_safety_doc)]
+//! Every function here forwards to the `libksys` C ABI. They are `unsafe`
+//! because libkrun never re-validates the context handle it is given.
+//!
+//! # Safety
+//!
+//! The following invariants apply to every method in this module. Each method's
+//! `# Safety` section names any additional requirement of its own:
+//!
+//! - `self` must hold a context id returned by [`KContext::create`] that has not
+//!   been released. The id is a plain `u32`; libkrun cannot detect a stale,
+//!   freed or forged one.
+//! - Calls on one `KContext` must be serialized by the caller. libkrun keeps
+//!   mutable configuration state behind that id and offers no per-context lock.
+//! - Paths, strings, file descriptors and named pipes passed to a method must
+//!   remain valid and open for as long as the VM uses them. The C side borrows
+//!   them; it does not take ownership of guest-visible resources.
+//! - [`KContext::init_logging`] mutates process-global libkrun state. Call it
+//!   once before any context is created, never concurrently with setup.
 
 use std::{ffi::CString, path::Path, ptr};
 
@@ -51,6 +64,11 @@ pub struct KContext {
 
 impl KContext {
     /// Initialize libkrun logging system based on RUST_LOG environment variable.
+    ///
+    /// # Safety
+    ///
+    /// Mutates process-global libkrun logging state. Call once before any
+    /// [`KContext::create`] and never concurrently with context setup.
     /// Must be called before creating any context.
     pub unsafe fn init_logging() -> Result<()> {
         use libksys::{
@@ -83,15 +101,21 @@ impl KContext {
 
         check_status(
             "kinit_log",
-            kinit_log(log_target, log_level, log_style, flags),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kinit_log(log_target, log_level, log_style, flags) },
         )
     }
 
     /// Create a new libkrun context.
-    #[allow(unsafe_op_in_unsafe_fn)]
+    ///
+    /// # Safety
+    ///
+    /// libkrun must already be initialized (see [`KContext::init_logging`]).
+    /// The returned context is owned by this value and released once.
     pub unsafe fn create() -> Result<Self> {
         tracing::trace!("Calling kcreate_ctx()");
-        let ctx = kcreate_ctx();
+        // SAFETY: this function's # Safety contract covers this call.
+        let ctx = unsafe { kcreate_ctx() };
         if ctx < 0 {
             tracing::error!(status = ctx, "kcreate_ctx failed");
             return Err(BoxError::BoxBootError {
@@ -104,26 +128,50 @@ impl KContext {
     }
 
     /// Configure VM resources (vCPUs and memory).
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn set_vm_config(&self, cpus: u8, memory_mib: u32) -> Result<()> {
         tracing::debug!(cpus, memory_mib, "Setting VM config");
         check_status(
             "kset_vm_config",
-            kset_vm_config(self.ctx_id, cpus, memory_mib),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kset_vm_config(self.ctx_id, cpus, memory_mib) },
         )
     }
 
     /// Configure either a virtio-fs directory root or a guest-native ext4 disk.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. The directory or disk image
+    /// behind `rootfs` must exist and stay available for the VM's lifetime.
     pub unsafe fn set_root(&self, rootfs: &RootfsSource) -> Result<()> {
         tracing::debug!(rootfs = %rootfs, "Setting root filesystem source");
         match rootfs {
             RootfsSource::Directory { path } => {
                 let rootfs_c = path_to_cstring(path, "rootfs directory")?;
-                check_status("kset_root", kset_root(self.ctx_id, rootfs_c.as_ptr()))
+                // SAFETY: this function's # Safety contract covers this call.
+                check_status("kset_root", unsafe {
+                    kset_root(self.ctx_id, rootfs_c.as_ptr())
+                })
             }
-            RootfsSource::Ext4Disk { path, read_only } => self.set_ext4_root_disk(path, *read_only),
+            // SAFETY: this function's # Safety contract covers this call.
+            RootfsSource::Ext4Disk { path, read_only } => unsafe {
+                self.set_ext4_root_disk(path, *read_only)
+            },
         }
     }
 
+    /// Configure a raw ext4 image as the guest root disk.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. `path` must be an existing raw
+    /// ext4 image that stays available and is never probed after guest use.
     #[cfg(not(target_os = "windows"))]
     unsafe fn set_ext4_root_disk(&self, path: &Path, read_only: bool) -> Result<()> {
         // Kcreated root images are always raw ext4 files with no partition
@@ -136,13 +184,16 @@ impl KContext {
         let disk_path = path_to_cstring(path, "ext4 root disk")?;
         check_status(
             "kadd_disk2(rootfs)",
-            kadd_disk2(
-                self.ctx_id,
-                block_id.as_ptr(),
-                disk_path.as_ptr(),
-                K_DISK_FORMAT_RAW,
-                read_only,
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kadd_disk2(
+                    self.ctx_id,
+                    block_id.as_ptr(),
+                    disk_path.as_ptr(),
+                    K_DISK_FORMAT_RAW,
+                    read_only,
+                )
+            },
         )?;
 
         let device = value_to_cstring(kbox_core::vmm::GUEST_EXT4_ROOT_DEVICE, "root device")?;
@@ -152,18 +203,26 @@ impl KContext {
             .transpose()?;
         check_status(
             "kset_root_disk_remount",
-            kset_root_disk_remount(
-                self.ctx_id,
-                device.as_ptr(),
-                filesystem.as_ptr(),
-                mount_options
-                    .as_ref()
-                    .map_or(ptr::null(), |value| value.as_ptr()),
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kset_root_disk_remount(
+                    self.ctx_id,
+                    device.as_ptr(),
+                    filesystem.as_ptr(),
+                    mount_options
+                        .as_ref()
+                        .map_or(ptr::null(), |value| value.as_ptr()),
+                )
+            },
         )
     }
 
     /// Attach a typed raw auxiliary disk without probing its guest-controlled
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. The referenced raw disk must
+    /// exist and stay available; its guest-controlled bytes are never probed.
     /// contents. Root disks are configured first, so list order maps
     /// deterministically onto the remaining `/dev/vd*` device names.
     #[cfg(not(target_os = "windows"))]
@@ -172,16 +231,25 @@ impl KContext {
         let disk_path = path_to_cstring(&disk.path, "raw block device")?;
         check_status(
             "kadd_disk2(auxiliary)",
-            kadd_disk2(
-                self.ctx_id,
-                block_id.as_ptr(),
-                disk_path.as_ptr(),
-                K_DISK_FORMAT_RAW,
-                disk.read_only,
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kadd_disk2(
+                    self.ctx_id,
+                    block_id.as_ptr(),
+                    disk_path.as_ptr(),
+                    K_DISK_FORMAT_RAW,
+                    disk.read_only,
+                )
+            },
         )
     }
 
+    /// Reject raw auxiliary block devices on the Windows libkrun backend.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. This stub performs no FFI call;
+    /// it keeps the `unsafe` signature shared with the Unix implementation.
     #[cfg(target_os = "windows")]
     pub unsafe fn add_raw_block_device(&self, disk: &RawBlockDevice) -> Result<()> {
         Err(BoxError::BoxBootError {
@@ -193,6 +261,12 @@ impl KContext {
         })
     }
 
+    /// Reject guest-native ext4 root disks on the Windows libkrun backend.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. This stub performs no FFI call;
+    /// it keeps the `unsafe` signature shared with the Unix implementation.
     #[cfg(target_os = "windows")]
     unsafe fn set_ext4_root_disk(&self, path: &Path, _read_only: bool) -> Result<()> {
         Err(BoxError::BoxBootError {
@@ -205,6 +279,12 @@ impl KContext {
     }
 
     /// Set the executable to run inside the VM.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn set_exec(
         &self,
         exec: &str,
@@ -246,12 +326,15 @@ impl KContext {
 
         check_status(
             "kset_exec",
-            kset_exec(
-                self.ctx_id,
-                exec_c.as_ptr(),
-                arg_ptrs.as_ptr(),
-                env_ptrs.as_ptr(),
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kset_exec(
+                    self.ctx_id,
+                    exec_c.as_ptr(),
+                    arg_ptrs.as_ptr(),
+                    env_ptrs.as_ptr(),
+                )
+            },
         )
     }
 
@@ -259,11 +342,18 @@ impl KContext {
     ///
     /// Kept as a wrapper for libkrun completeness, but normal boot flow passes
     /// environment through `set_exec` so guest-init metadata is not overwritten.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[allow(dead_code)]
     pub unsafe fn set_env(&self, env: &[(String, String)]) -> Result<()> {
         if env.is_empty() {
             let empty: [*const std::ffi::c_char; 1] = [ptr::null()];
-            return check_status("kset_env", kset_env(self.ctx_id, empty.as_ptr()));
+            // SAFETY: this function's # Safety contract covers this call.
+            return check_status("kset_env", unsafe { kset_env(self.ctx_id, empty.as_ptr()) });
         }
 
         let env_storage = Self::env_to_cstring(env)?;
@@ -271,7 +361,8 @@ impl KContext {
             env_storage.iter().map(|c| c.as_ptr()).collect();
         ptrs.push(ptr::null());
 
-        check_status("kset_env", kset_env(self.ctx_id, ptrs.as_ptr()))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("kset_env", unsafe { kset_env(self.ctx_id, ptrs.as_ptr()) })
     }
 
     fn env_to_cstring(env: &[(String, String)]) -> Result<Vec<CString>> {
@@ -286,6 +377,12 @@ impl KContext {
     }
 
     /// Set the working directory inside the VM.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn set_workdir(&self, workdir: &str) -> Result<()> {
         let workdir_c = CString::new(workdir).map_err(|e| BoxError::BoxBootError {
             message: format!("invalid workdir path: {}", e),
@@ -293,16 +390,26 @@ impl KContext {
         })?;
         check_status(
             "kset_workdir",
-            kset_workdir(self.ctx_id, workdir_c.as_ptr()),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kset_workdir(self.ctx_id, workdir_c.as_ptr()) },
         )
     }
 
     /// Set resource limits for the VM.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn set_rlimits(&self, rlimits: &[String]) -> Result<()> {
         tracing::trace!(rlimits = ?rlimits, "Setting rlimits");
         if rlimits.is_empty() {
             let empty: [*const std::ffi::c_char; 1] = [ptr::null()];
-            return check_status("kset_rlimits", kset_rlimits(self.ctx_id, empty.as_ptr()));
+            // SAFETY: this function's # Safety contract covers this call.
+            return check_status("kset_rlimits", unsafe {
+                kset_rlimits(self.ctx_id, empty.as_ptr())
+            });
         }
 
         let entries: Vec<CString> = rlimits
@@ -317,7 +424,10 @@ impl KContext {
         let mut ptrs: Vec<*const std::ffi::c_char> = entries.iter().map(|c| c.as_ptr()).collect();
         ptrs.push(ptr::null());
 
-        check_status("kset_rlimits", kset_rlimits(self.ctx_id, ptrs.as_ptr()))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("kset_rlimits", unsafe {
+            kset_rlimits(self.ctx_id, ptrs.as_ptr())
+        })
     }
 
     /// Add a virtiofs mount, sharing a host directory with the guest.
@@ -325,6 +435,12 @@ impl KContext {
     /// # Arguments
     /// * `mount_tag` - Tag used by guest to mount this share (e.g., "workspace", "vol0")
     /// * `host_path` - Path to directory on host to share
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn add_virtiofs(&self, mount_tag: &str, host_path: &str) -> Result<()> {
         tracing::debug!(mount_tag, host_path, "Adding virtiofs mount");
 
@@ -339,7 +455,8 @@ impl KContext {
 
         check_status(
             "kadd_virtiofs",
-            kadd_virtiofs(self.ctx_id, mount_tag_c.as_ptr(), host_path_c.as_ptr()),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kadd_virtiofs(self.ctx_id, mount_tag_c.as_ptr(), host_path_c.as_ptr()) },
         )
     }
 
@@ -350,6 +467,11 @@ impl KContext {
     /// * `socket_path` - Host Unix socket path for the bridge
     /// * `listen` - If true, libkrun creates the socket and listens (host connects).
     ///   If false, libkrun connects to an existing socket (host listens).
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. The bound socket path must be
+    /// created and owned by the caller before the VM starts.
     #[cfg(not(target_os = "windows"))]
     pub unsafe fn add_vsock_port(&self, port: u32, socket_path: &str, listen: bool) -> Result<()> {
         tracing::debug!(port, socket_path, listen, "Configuring vsock port");
@@ -359,17 +481,26 @@ impl KContext {
         })?;
         check_status(
             "kadd_vsock_port2",
-            kadd_vsock_port2(self.ctx_id, port, socket_path_c.as_ptr(), listen),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kadd_vsock_port2(self.ctx_id, port, socket_path_c.as_ptr(), listen) },
         )
     }
 
     /// Retain the explicit vsock device used for Box IPC without enabling TSI.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn disable_tsi(&self) -> Result<()> {
         check_status(
             "kdisable_implicit_vsock",
-            kdisable_implicit_vsock(self.ctx_id),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kdisable_implicit_vsock(self.ctx_id) },
         )?;
-        check_status("kadd_vsock", kadd_vsock(self.ctx_id, 0))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("kadd_vsock", unsafe { kadd_vsock(self.ctx_id, 0) })
     }
 
     /// Configure TSI port mappings for the VM.
@@ -380,6 +511,12 @@ impl KContext {
     ///
     /// # Arguments
     /// * `port_map` - Slice of "host_port:guest_port" strings (e.g., ["8080:80", "3000:3000"])
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(not(target_os = "windows"))]
     #[allow(dead_code)]
     pub unsafe fn set_port_map(&self, port_map: &[String]) -> Result<()> {
@@ -396,10 +533,18 @@ impl KContext {
         let mut ptrs: Vec<*const std::ffi::c_char> = entries.iter().map(|c| c.as_ptr()).collect();
         ptrs.push(ptr::null());
 
-        check_status("kset_port_map", kset_port_map(self.ctx_id, ptrs.as_ptr()))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("kset_port_map", unsafe {
+            kset_port_map(self.ctx_id, ptrs.as_ptr())
+        })
     }
 
     /// Add a virtio-net device connected to an inherited passt-compatible
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. `fd` must be an open socket
+    /// owned by the caller and must not be closed while the VM uses it.
     /// Unix stream descriptor. Path-only attach is refused: it would skip
     /// the egress proxy and connect libkrun straight to passt.
     #[cfg(target_os = "linux")]
@@ -414,6 +559,11 @@ impl KContext {
     }
 
     /// Add a virtio-net device connected to an inherited Unix datagram fd (macOS).
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. `fd` must be an open socket
+    /// owned by the caller and must not be closed while the VM uses it.
     /// Path-only attach is refused: it would skip the egress proxy.
     #[cfg(target_os = "macos")]
     pub unsafe fn add_net_unixgram_fd(&self, fd: i32, mac: &[u8; 6]) -> Result<()> {
@@ -423,43 +573,78 @@ impl KContext {
 
         check_status(
             "kadd_net_unixgram",
-            kadd_net_unixgram(self.ctx_id, ptr::null(), fd, mac.as_ptr(), features, 0),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kadd_net_unixgram(self.ctx_id, ptr::null(), fd, mac.as_ptr(), features, 0) },
         )
     }
 
     /// Set the user ID for the VM process.
     ///
     /// The UID is applied right before the microVM starts.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(not(target_os = "windows"))]
     pub unsafe fn set_uid(&self, uid: libc::uid_t) -> Result<()> {
         tracing::debug!(uid, "Setting VM uid");
-        check_status("ksetuid", ksetuid(self.ctx_id, uid))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("ksetuid", unsafe { ksetuid(self.ctx_id, uid) })
     }
 
     /// Set the user ID for the VM process (Windows).
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(target_os = "windows")]
     pub unsafe fn set_uid(&self, uid: u32) -> Result<()> {
         tracing::debug!(uid, "Setting VM uid");
-        check_status("ksetuid", ksetuid(self.ctx_id, uid))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("ksetuid", unsafe { ksetuid(self.ctx_id, uid) })
     }
 
     /// Set the group ID for the VM process.
     ///
     /// The GID is applied right before the microVM starts.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(not(target_os = "windows"))]
     pub unsafe fn set_gid(&self, gid: libc::gid_t) -> Result<()> {
         tracing::debug!(gid, "Setting VM gid");
-        check_status("ksetgid", ksetgid(self.ctx_id, gid))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("ksetgid", unsafe { ksetgid(self.ctx_id, gid) })
     }
 
     /// Set the group ID for the VM process (Windows).
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(target_os = "windows")]
     pub unsafe fn set_gid(&self, gid: u32) -> Result<()> {
         tracing::debug!(gid, "Setting VM gid");
-        check_status("ksetgid", ksetgid(self.ctx_id, gid))
+        // SAFETY: this function's # Safety contract covers this call.
+        check_status("ksetgid", unsafe { ksetgid(self.ctx_id, gid) })
     }
 
     /// Redirect VM console output to a file.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     pub unsafe fn set_console_output(&self, filepath: &str) -> Result<()> {
         tracing::debug!(filepath, "Setting console output path");
         let filepath_c = CString::new(filepath).map_err(|e| BoxError::BoxBootError {
@@ -468,11 +653,18 @@ impl KContext {
         })?;
         check_status(
             "kset_console_output",
-            kset_console_output(self.ctx_id, filepath_c.as_ptr()),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kset_console_output(self.ctx_id, filepath_c.as_ptr()) },
         )
     }
 
     /// Replace the implicit console with a virtio-console whose stdout and
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     /// stderr go to SEPARATE host fds (so the guest's stderr can be tagged).
     /// `input_fd` may be -1 (no stdin). Caller owns the fds for the VM lifetime.
     #[cfg(unix)]
@@ -484,17 +676,25 @@ impl KContext {
     ) -> Result<()> {
         check_status(
             "kdisable_implicit_console",
-            kdisable_implicit_console(self.ctx_id),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kdisable_implicit_console(self.ctx_id) },
         )?;
         check_status(
             "kadd_virtio_console_default",
-            kadd_virtio_console_default(self.ctx_id, input_fd, output_fd, err_fd),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kadd_virtio_console_default(self.ctx_id, input_fd, output_fd, err_fd) },
         )
     }
 
     /// Enable split IRQ chip mode (required for TEE VMs).
     ///
     /// This must be called before starting a TEE-enabled VM.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(target_os = "linux")]
     pub unsafe fn enable_split_irqchip(&self) -> Result<()> {
         tracing::debug!("Enabling split IRQ chip for TEE");
@@ -519,6 +719,11 @@ impl KContext {
     /// # Note
     /// This function is only available on Linux when libkrun is built with SEV support.
     /// Call `enable_split_irqchip()` before this function.
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. `config_path` must reference
+    /// a readable TEE configuration file for the duration of the call.
     #[cfg(target_os = "linux")]
     pub unsafe fn set_tee_config(&self, config_path: &str) -> Result<()> {
         tracing::debug!(config_path, "Setting TEE configuration file");
@@ -543,6 +748,11 @@ impl KContext {
     /// * `kernel_format` - One of the `K_KERNEL_FORMAT_*` constants
     /// * `initramfs` - Optional path to initramfs image
     /// * `cmdline` - Optional kernel command line string
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. The kernel image and format
+    /// must match the guest architecture configured for this context.
     #[cfg(target_os = "windows")]
     #[allow(dead_code)]
     pub unsafe fn set_kernel(
@@ -575,13 +785,16 @@ impl KContext {
             .transpose()?;
         check_status(
             "kset_kernel",
-            kset_kernel(
-                self.ctx_id,
-                kernel_c.as_ptr(),
-                kernel_format,
-                initramfs_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
-                cmdline_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kset_kernel(
+                    self.ctx_id,
+                    kernel_c.as_ptr(),
+                    kernel_format,
+                    initramfs_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
+                    cmdline_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
+                )
+            },
         )
     }
 
@@ -591,6 +804,12 @@ impl KContext {
     /// * `iface_id` - Interface identifier string
     /// * `mac` - MAC address as 6 bytes
     /// * `tcp_addr` - Optional `"host:port"` string for the TCP backend; `None` for disconnected
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract: `self` must hold a live context,
+    /// calls on it must be serialized, and borrowed arguments must stay valid
+    /// for the duration of the call.
     #[cfg(target_os = "windows")]
     #[allow(dead_code)]
     pub unsafe fn add_net_tcp(
@@ -610,12 +829,15 @@ impl KContext {
             .transpose()?;
         check_status(
             "kadd_net_tcp",
-            kadd_net_tcp(
-                self.ctx_id,
-                iface_c.as_ptr(),
-                mac.as_ptr(),
-                tcp_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
-            ),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe {
+                kadd_net_tcp(
+                    self.ctx_id,
+                    iface_c.as_ptr(),
+                    mac.as_ptr(),
+                    tcp_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
+                )
+            },
         )
     }
 
@@ -624,6 +846,11 @@ impl KContext {
     /// # Arguments
     /// * `port` - Guest vsock port number
     /// * `pipe_name` - Named Pipe name (e.g., `"myservice"` → `\\.\pipe\myservice`)
+    ///
+    /// # Safety
+    ///
+    /// See the module-level safety contract. The named pipe must be created
+    /// and owned by the caller before the VM starts.
     #[cfg(target_os = "windows")]
     pub unsafe fn add_vsock_port_windows(&self, port: u32, pipe_name: &str) -> Result<()> {
         tracing::debug!(port, pipe_name, "Adding vsock port via Named Pipe");
@@ -633,24 +860,27 @@ impl KContext {
         })?;
         check_status(
             "kadd_vsock_port_windows",
-            kadd_vsock_port_windows(self.ctx_id, port, pipe_c.as_ptr()),
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { kadd_vsock_port_windows(self.ctx_id, port, pipe_c.as_ptr()) },
         )
     }
 
     /// Start the VM and enter it (process takeover).
     ///
-    /// # Safety
-    /// This function performs process takeover - on success, it never returns.
-    /// The current process becomes the VM. This should only be called from
-    /// a subprocess (shim) to isolate the VM from the host application.
-    ///
     /// # Returns
     /// * On success: Never returns (process becomes VM)
     /// * On failure: Returns negative error code
     /// * On guest exit: Returns the guest's exit status (non-negative)
+    ///
+    /// # Safety
+    ///
+    /// This function performs process takeover - on success, it never returns.
+    /// The current process becomes the VM. This should only be called from
+    /// a subprocess (shim) to isolate the VM from the host application.
     pub unsafe fn start_enter(&self) -> i32 {
         tracing::trace!(ctx_id = self.ctx_id, "Calling kstart_enter");
-        let status = kstart_enter(self.ctx_id);
+        // SAFETY: this function's # Safety contract covers this call.
+        let status = unsafe { kstart_enter(self.ctx_id) };
         tracing::trace!(status, "kstart_enter returned");
         if status < 0 {
             tracing::error!(status, "kstart_enter failed");
@@ -661,6 +891,13 @@ impl KContext {
 
 impl Drop for KContext {
     fn drop(&mut self) {
+        // SAFETY: `ctx_id` came from `KContext::create` and has not been freed.
+        // `KContext` derives neither `Clone` nor `Copy`, and `kfree_ctx` is
+        // called only from this `Drop`, so each id is released exactly once.
+        // All C calls on this context happen on the same thread beforehand; on
+        // Unix `kstart_enter` takes over the process, and on Windows it returns
+        // only after guest shutdown, so no call is in flight here. The C ABI
+        // consumes only the scalar id and retains no pointer.
         unsafe {
             let _ = kfree_ctx(self.ctx_id);
         }

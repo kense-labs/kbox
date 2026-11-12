@@ -57,6 +57,9 @@ impl HostServiceOwner {
                 ));
             }
             binding
+                // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+                // reads the calling process's effective uid; it has no memory-safety
+                // preconditions.
                 .validate_host_path(unsafe { libc::geteuid() })
                 .map_err(|error| RuntimeError::ProviderUnavailable(error.to_string()))?;
             bindings.push(binding);

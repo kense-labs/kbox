@@ -1,0 +1,15 @@
+
+running 4 tests
+test vm::ready::tests::test_parse_exec_ready_timeout_ms ... ok
+test vm::ready::tests::test_set_boot_completion_state_without_exec_client ... ok
+test vm::ready::tests::wedged_heartbeat_attempt_cannot_outlive_the_total_boot_deadline ... FAILED
+test vm::ready::tests::heartbeat_after_the_total_boot_deadline_cannot_publish_ready ... FAILED
+
+failures:
+
+failures:
+    vm::ready::tests::heartbeat_after_the_total_boot_deadline_cannot_publish_ready
+    vm::ready::tests::wedged_heartbeat_attempt_cannot_outlive_the_total_boot_deadline
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 2318 filtered out; finished in 0.01s
+

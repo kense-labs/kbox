@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/qualification-runner.py",
+    "docs/evidence/runtime/20261116-warm-pool-readiness/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 152.19619133400002
+}

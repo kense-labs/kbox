@@ -1,0 +1,190 @@
+[
+  {
+    "case": 0,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/wave-3/0"
+    ],
+    "exit": 0,
+    "results": [
+      {
+        "status": "PASS",
+        "platform": "Darwin",
+        "kboxSha256": "7a1f1b01eb1376b8cbb027e219a6c0131aedea2d2838faaa29b2484be9ebae5f",
+        "imageDigest": "sha256:16f9feac7a9068338c0545194c06d9a069b5c88688313da8696ab15f10f2c739",
+        "fileProbe": {
+          "bytes": 1048576,
+          "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+        },
+        "engineId": "56d0c0f8-3d38-46ae-ad05-107f64e5f84d",
+        "operationId": "8f4e3d51-ed3c-4f6e-9902-9441516cc5bb",
+        "sameExecutionAfterRestart": true,
+        "ordinaryOciWithoutAcp": true,
+        "exportedRootfsExcludesMounts": true,
+        "committedImageRuns": true,
+        "nativeGuestProbe": {
+          "security": {
+            "CapEff": "000001ffffffffff",
+            "CapBnd": "000001ffffffffff",
+            "NoNewPrivs": "0",
+            "Seccomp": "0"
+          },
+          "sandboxExit": 0,
+          "sandboxStderr": ""
+        },
+        "nativeGuestMatchesDirectBaseline": true,
+        "zeroPrivateExecutions": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "case": 1,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/wave-3/1"
+    ],
+    "exit": 0,
+    "results": [
+      {
+        "status": "PASS",
+        "platform": "Darwin",
+        "kboxSha256": "7a1f1b01eb1376b8cbb027e219a6c0131aedea2d2838faaa29b2484be9ebae5f",
+        "imageDigest": "sha256:ad24c93c66f81a1b9560d122e7c687123a62261a5bb862906bc7a48091c002de",
+        "fileProbe": {
+          "bytes": 1048576,
+          "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+        },
+        "engineId": "b959874d-36e3-4be0-8aee-b8d50f2d8ee3",
+        "operationId": "0324cc10-a1c9-4d08-895a-233196913933",
+        "sameExecutionAfterRestart": true,
+        "ordinaryOciWithoutAcp": true,
+        "exportedRootfsExcludesMounts": true,
+        "committedImageRuns": true,
+        "nativeGuestProbe": {
+          "security": {
+            "CapEff": "000001ffffffffff",
+            "CapBnd": "000001ffffffffff",
+            "NoNewPrivs": "0",
+            "Seccomp": "0"
+          },
+          "sandboxExit": 0,
+          "sandboxStderr": ""
+        },
+        "nativeGuestMatchesDirectBaseline": true,
+        "zeroPrivateExecutions": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "case": 2,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/wave-3/2"
+    ],
+    "exit": 0,
+    "results": [
+      {
+        "status": "PASS",
+        "platform": "Darwin",
+        "kboxSha256": "7a1f1b01eb1376b8cbb027e219a6c0131aedea2d2838faaa29b2484be9ebae5f",
+        "imageDigest": "sha256:49b088a762103e69dec348c23e678f8e3fe2f79992ba85cfae2926b9cb4a1c51",
+        "fileProbe": {
+          "bytes": 1048576,
+          "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+        },
+        "engineId": "7825c6bc-1e37-469d-bba1-ad5f79ec9619",
+        "operationId": "cd7d0924-304e-402e-86a6-10a9d23842d5",
+        "sameExecutionAfterRestart": true,
+        "ordinaryOciWithoutAcp": true,
+        "exportedRootfsExcludesMounts": true,
+        "committedImageRuns": true,
+        "nativeGuestProbe": {
+          "security": {
+            "CapEff": "000001ffffffffff",
+            "CapBnd": "000001ffffffffff",
+            "NoNewPrivs": "0",
+            "Seccomp": "0"
+          },
+          "sandboxExit": 0,
+          "sandboxStderr": ""
+        },
+        "nativeGuestMatchesDirectBaseline": true,
+        "zeroPrivateExecutions": true
+      }
+    ],
+    "passed": true
+  },
+  {
+    "case": 3,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/wave-3/3"
+    ],
+    "exit": 0,
+    "results": [
+      {
+        "status": "PASS",
+        "platform": "Darwin",
+        "kboxSha256": "7a1f1b01eb1376b8cbb027e219a6c0131aedea2d2838faaa29b2484be9ebae5f",
+        "imageDigest": "sha256:8defd8a53cc0ec65a4d3f585c358f1fb734b42d33693669cf7f3036d7e8d0056",
+        "fileProbe": {
+          "bytes": 1048576,
+          "sha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83"
+        },
+        "engineId": "a34c5dfc-885d-4102-93f1-721e13c5a072",
+        "operationId": "7ee8873a-906c-4c7c-a247-90bbc9d7b5ce",
+        "sameExecutionAfterRestart": true,
+        "ordinaryOciWithoutAcp": true,
+        "exportedRootfsExcludesMounts": true,
+        "committedImageRuns": true,
+        "nativeGuestProbe": {
+          "security": {
+            "CapEff": "000001ffffffffff",
+            "CapBnd": "000001ffffffffff",
+            "NoNewPrivs": "0",
+            "Seccomp": "0"
+          },
+          "sandboxExit": 0,
+          "sandboxStderr": ""
+        },
+        "nativeGuestMatchesDirectBaseline": true,
+        "zeroPrivateExecutions": true
+      }
+    ],
+    "passed": true
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/check-final-identities.py"
+  ],
+  "exit": 0,
+  "seconds": 0.94356825
+}

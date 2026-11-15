@@ -534,8 +534,6 @@ async fn test_wait_for_exec_ready_fails_closed_when_guest_exit_persisted_before_
 #[cfg(unix)]
 #[tokio::test]
 async fn test_wait_for_exec_ready_fails_closed_when_cap_elapses_without_heartbeat() {
-    std::env::set_var("K_EXEC_READY_TIMEOUT_MS", "400");
-
     let tmp = tempfile::tempdir().unwrap();
     let box_id = "box-exec-cap".to_string();
     let mut vm =
@@ -546,10 +544,9 @@ async fn test_wait_for_exec_ready_fails_closed_when_cap_elapses_without_heartbea
 
     let started = std::time::Instant::now();
     let error = vm
-        .wait_for_exec_ready(&tmp.path().join("missing-exec.sock"))
+        .wait_for_exec_ready_with_timeout(&tmp.path().join("missing-exec.sock"), 400)
         .await
         .expect_err("wedged guest without heartbeat must fail closed");
-    std::env::remove_var("K_EXEC_READY_TIMEOUT_MS");
 
     assert!(
         error

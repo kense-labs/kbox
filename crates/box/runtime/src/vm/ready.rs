@@ -91,6 +91,15 @@ impl VmManager {
         &mut self,
         exec_socket_path: &std::path::Path,
     ) -> Result<()> {
+        self.wait_for_exec_ready_with_timeout(exec_socket_path, exec_ready_timeout_ms())
+            .await
+    }
+
+    pub(super) async fn wait_for_exec_ready_with_timeout(
+        &mut self,
+        exec_socket_path: &std::path::Path,
+        max_wait_ms: u64,
+    ) -> Result<()> {
         use tokio::time::Duration;
 
         // Per-attempt cap on one heartbeat round-trip. Do not call
@@ -110,7 +119,6 @@ impl VmManager {
         // default short enough that foreground `run` starts streaming the guest's
         // logs promptly; callers that truly need a longer cold-boot grace can set
         // K_EXEC_READY_TIMEOUT_MS.
-        let max_wait_ms = exec_ready_timeout_ms();
 
         // `exec_socket_path` is the layout/record path shared with Unix. WHPX
         // publishes the host side as a named pipe instead, using the box ID.
@@ -132,7 +140,8 @@ impl VmManager {
             "Waiting for exec server readiness"
         );
 
-        let start = std::time::Instant::now();
+        let start = tokio::time::Instant::now();
+        let max_wait = Duration::from_millis(max_wait_ms);
         let mut next_progress_log_ms = EXEC_READY_PROGRESS_LOG_MS;
 
         loop {
@@ -258,11 +267,15 @@ impl VmManager {
             let guest_control_ready = guest_control_ready_path.is_file();
             #[cfg(not(windows))]
             let guest_control_ready = true;
-            if guest_control_ready {
+            let remaining = max_wait.saturating_sub(start.elapsed());
+            if guest_control_ready && !remaining.is_zero() {
                 let client = ExecClient::for_socket(&exec_endpoint);
-                if let Ok(Ok(true)) =
-                    tokio::time::timeout(ATTEMPT_TIMEOUT, client.heartbeat()).await
+                if matches!(
+                    tokio::time::timeout(ATTEMPT_TIMEOUT.min(remaining), client.heartbeat()).await,
+                    Ok(Ok(true))
+                ) && start.elapsed() < max_wait
                 {
+                    // A ready response and its timeout can be polled together after a scheduler delay.
                     tracing::debug!("Exec server heartbeat passed");
                     // Retain proof on Unix and Windows so boot completion /
                     // pool publish cannot invent Ready from call-order alone
@@ -295,7 +308,7 @@ impl VmManager {
                     next_progress_log_ms.saturating_add(EXEC_READY_PROGRESS_LOG_MS);
             }
 
-            tokio::time::sleep(POLL_INTERVAL).await;
+            tokio::time::sleep(POLL_INTERVAL.min(max_wait.saturating_sub(start.elapsed()))).await;
         }
     }
 
@@ -361,40 +374,5 @@ fn vm_exited_before_exec_ready(box_dir: &std::path::Path, exit_code: Option<i32>
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use kbox_core::config::BoxConfig;
-    use kbox_core::event::EventEmitter;
-
-    #[test]
-    fn test_parse_exec_ready_timeout_ms() {
-        assert_eq!(
-            parse_exec_ready_timeout_ms(None),
-            DEFAULT_EXEC_READY_TIMEOUT_MS
-        );
-        assert_eq!(
-            parse_exec_ready_timeout_ms(Some("0")),
-            DEFAULT_EXEC_READY_TIMEOUT_MS
-        );
-        assert_eq!(
-            parse_exec_ready_timeout_ms(Some("not-a-number")),
-            DEFAULT_EXEC_READY_TIMEOUT_MS
-        );
-        assert_eq!(parse_exec_ready_timeout_ms(Some("2500")), 2500);
-    }
-
-    #[tokio::test]
-    async fn test_set_boot_completion_state_without_exec_client() {
-        let vm = VmManager::with_box_id(
-            BoxConfig::default(),
-            EventEmitter::new(16),
-            "box-boot-completion".to_string(),
-        );
-        let ready = vm.set_boot_completion_state().await;
-        assert!(
-            !ready,
-            "boot completion must not invent Ready without retained exec heartbeat (#425 / #414)"
-        );
-        assert_eq!(vm.state().await, BoxState::Created);
-    }
-}
+#[path = "ready_tests.rs"]
+mod tests;

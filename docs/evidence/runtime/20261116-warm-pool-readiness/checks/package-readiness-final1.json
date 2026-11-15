@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 309.754295334,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/package-home-readiness-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "d4cc47ffa43d69bfe7e762ae8fc6b7f4c4973ac209f73fc169d00c8dd113d20e"
+}

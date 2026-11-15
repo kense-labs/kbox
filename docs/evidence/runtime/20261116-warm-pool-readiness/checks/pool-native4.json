@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/pool_stress.py",
+    "docs/evidence/runtime/20261116-warm-pool-readiness/context.json",
+    "4"
+  ],
+  "exit": 0,
+  "seconds": 19.136877124999998
+}

@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/unpacked-readiness-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final-dist-readiness-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/unpacked-readiness-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 1.088779790999979,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final-dist-readiness-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "fd20baccb4cbfe793a1d98483f8e1a4406fda0022125ac28952d544ebbace2ea",
+  "compressedBytes": 23400527,
+  "installedDiskBytes": 44175360,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "69fffadbca8f5d71357c6b22e1780884b39a1160",
+    "sourceInputsSha256": "d4cc47ffa43d69bfe7e762ae8fc6b7f4c4973ac209f73fc169d00c8dd113d20e",
+    "cargoLockSha256": "c10845a30dd6cdf3a77b06afa54c6d271961f7b215b4af600b2fab482a36e129",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

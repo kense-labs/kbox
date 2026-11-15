@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/qualification-runner.py",
+    "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 146.050429667
+}

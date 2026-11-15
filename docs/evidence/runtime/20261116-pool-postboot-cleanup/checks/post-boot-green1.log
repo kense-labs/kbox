@@ -1,0 +1,9 @@
+
+running 4 tests
+test pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm ... ok
+test pool::warm_pool::post_boot_tests::process_prewarm_refusal_still_retires_the_owned_vm ... ok
+test pool::warm_pool::post_boot_tests::authenticated_post_boot_vm_remains_owned_and_ready ... ok
+test pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2332 filtered out; finished in 0.04s
+

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

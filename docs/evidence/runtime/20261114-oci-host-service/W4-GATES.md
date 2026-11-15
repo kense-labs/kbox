@@ -25,7 +25,7 @@ Service cutover remains incomplete. The authoritative broader requirements are
 | Custom root/anonymous disk capacity | Qualified bounded existing disk_mb16MiB..64GiB on this Mac profile: actual128MiB ENOSPC/reuse,256MiB CLI,8GiB sparse disk, undersized-image refusal, restart/stopped recovery and13-home cleanup. Root remains ephemeral; anonymous data persists. No new schema/resize/quota. [Spec028 evidence](../20261115-oci-disk-capacity/OUTCOME.md) |
 | Existing portable Guest cap_add | Qualified shared13-name allowlist plus previously explicit SYS_ADMIN; default10 unchanged, root ambient empty, nonroot carries only explicit undropped additions through shared init/exec mapping. Actual MKNOD/SETFCAP/mount effects, drop/ALL/per-UID/Host RO controls,45 observations,CLI,three generations and18-home cleanup. [Spec029 evidence](../20261115-oci-cap-add/OUTCOME.md) |
 | Shared-memory size | Qualified page-aligned4KiB..512MiB size-only /dev/shm, preserved1777/safety flags, actual POSIX mapping/lifetime,1/2MiB ENOSPC/reuse,sticky/noexec,CLI,three generations and7-home cleanup. [Spec030 pre-merge evidence](../20261115-oci-shm-size/OUTCOME.md) |
-| Complete Box feature parity | **Open.** This profile is Linux arm64, one vCPU/512 MiB, network none and bounded directory/ordinary-file grants. Unqualified process limits, custom VM CPU/memory sizing and disk quotas, arbitrary guest-capability additions, pools, snapshots, TEE, devices/custom network and other unsupported controls refuse; only the bounded Secret/raw combination in027 is qualified. Refusal is a boundary, not implemented parity |
+| Complete Box feature parity | **Open.** This explicit Mac profile runs Linux arm64 with qualified1/2/4/8 vCPU and128..8192MiB sizing (spec031), network none and bounded directory/ordinary-file grants. Unqualified process limits and disk quotas, arbitrary guest-capability additions, pools, snapshots, TEE, devices/custom network and other unsupported controls refuse; only the bounded Secret/raw combination in027 is qualified. Refusal is a boundary, not implemented parity |
 | Default Box cutover / no remaining direct VM path | **Open.** macOS default remains BoxVm; explicit migration only. Both persisted routes remain available. Do not flip an enum or remove the retained backend to claim W4 |
 | Fresh KVM x86_64 + AArch64 and WHPX native release matrices | **External hardware/attestation gate.** This existing macOS host cannot supply those matrices. No Windows waiting or VMM/firmware port started |
 | Fresh-host macOS, full OCI conformance/security review and long soak | **Open.** Existing-host qualification and 25-wave smoke do not replace these release gates |
@@ -83,3 +83,10 @@ Guest hardware readbacks, exact old-component refusal, 6 Rust native tests plus
 2278pass/6fail/48ignored, with a separate SDK disk-service failure. This closes
 only that bounded parity gap. Latest priority is local Git convergence; fresh
 remote integration/push still requires UID501 lookup and GitHub DNS recovery.
+
+The default BoxVm/libkrun cold-pool path now closes a proven post-boot admission
+leak in [spec032](../20261116-pool-postboot-cleanup/OUTCOME.md): actual lost-channel
+refusal stops the VM before return, no late writes,10-home cleanup and separate
+16-ready-VM concurrency control. This is separate from OCI-profile pool parity
+and does not locate the original15s startup failure. Continuous GA work resumes
+unblocked safety gaps while Git/disk-service prerequisites remain parked.

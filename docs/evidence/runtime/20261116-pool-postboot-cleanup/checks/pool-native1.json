@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/pool_stress.py",
+    "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/context.json",
+    "1"
+  ],
+  "exit": 0,
+  "seconds": 18.611494458
+}

@@ -1,0 +1,27 @@
+
+running 4 tests
+test pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm ... FAILED
+test pool::warm_pool::post_boot_tests::process_prewarm_refusal_still_retires_the_owned_vm ... ok
+test pool::warm_pool::post_boot_tests::authenticated_post_boot_vm_remains_owned_and_ready ... ok
+test pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal ... FAILED
+
+failures:
+
+---- pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm stdout ----
+
+thread 'pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm' (104543424) panicked at crates/box/runtime/src/pool/warm_pool/post_boot_tests.rs:56:5:
+post-boot refusal must stop its owned handler
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal stdout ----
+
+thread 'pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal' (104543423) panicked at crates/box/runtime/src/pool/warm_pool/post_boot_tests.rs:56:5:
+post-boot refusal must stop its owned handler
+
+
+failures:
+    pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal
+    pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 2332 filtered out; finished in 0.04s
+

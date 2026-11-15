@@ -1,0 +1,292 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-oci/3f5e18a514204a9db3eba0b06bef53dd/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-prewarm/56bf280f1b4f42b9a7c835b11c3f384f/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-primary/8e20b13f7853409aac6894ef451577d4/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/pool-wave-1/0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/pool-wave-1/1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/pool-wave-1/2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/pool-wave-1/3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

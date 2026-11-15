@@ -1,0 +1,4 @@
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting
+init.krun: setup_redirects ok
+init.krun: execvp(/sbin/init) starting

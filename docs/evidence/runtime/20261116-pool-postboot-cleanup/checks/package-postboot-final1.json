@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 93.260048458,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/package-home-postboot-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "241de04e39157c00593a913209d70757b4ccdc27c736ec9af70b15c758c94fa5"
+}

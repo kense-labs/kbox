@@ -967,22 +967,30 @@ impl WarmPool {
             }
             let mut vm = VmManager::new(box_config.clone(), event_emitter.clone());
             vm.boot().await?;
+            Self::complete_cold_boot(&mut vm).await?;
+            Ok(vm)
+        })
+    }
+
+    async fn complete_cold_boot(vm: &mut VmManager) -> Result<()> {
+        let result = async {
             vm.wait_for_exec_available(std::time::Duration::from_secs(120))
                 .await?;
-            // Cold boot already sets Ready via wait_for_exec_ready; re-assert after
-            // wait_for_exec_available so pool idle publish never retains Created (#416).
+            // Re-assert Ready only after the pool's independent authenticated probe.
             if !vm.set_boot_completion_state().await {
                 return Err(BoxError::BoxBootError {
                     message: "pool VM exec authenticated but Ready was not published".to_string(),
                     hint: None,
                 });
             }
-            if let Err(error) = vm.start_prewarmed_exec().await {
-                let _ = Self::destroy_manager_or_reap(&mut vm, Some(2000)).await;
-                return Err(error);
-            }
-            Ok(vm)
-        })
+            vm.start_prewarmed_exec().await
+        }
+        .await;
+        if result.is_err() {
+            // VmManager has no Drop reaper after a successful boot.
+            let _ = Self::destroy_manager_or_reap(vm, Some(2000)).await;
+        }
+        result
     }
 
     /// Boot a bounded batch of VMs and return results in completion order.
@@ -1607,6 +1615,9 @@ fn template_error_is_feature_missing(error: &BoxError) -> bool {
 
 #[cfg(test)]
 mod shutdown_tests;
+
+#[cfg(test)]
+mod post_boot_tests;
 
 #[cfg(test)]
 mod tests {

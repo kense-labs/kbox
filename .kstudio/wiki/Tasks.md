@@ -6,6 +6,14 @@
 
 每个任务的验收证据分路径保存，不覆盖旧报告。当前源码链接可更新，历史结论以回执或快照为准；`/k-wiki` 刷新本页入口并打包实际引用的产物。
 
+## T2026-11-16-pool-postboot-cleanup
+
+- **完成日期**:2026-11-16（有界修复，非总体完成）。
+- **结果**: 默认 libkrun pool 在启动后 exec 复验失败时清理实际 VM；原始错误与超时保留。
+- **产物/证据**: [源码、最终归档、原生结果和10-home清理](../../docs/evidence/runtime/20261116-pool-postboot-cleanup/OUTCOME.md)。
+- **验证**: focused4、pool87；3 Rust native +3 Python场景及4-daemon/16-VM并发控制通过；默认门禁仍6项磁盘服务失败。
+- **限制**: 原始15s启动超时、stop失败所有权边界、完整GA及外部平台门槛未完成；RSS未测量；tokens/cost unknown。
+
 ## T2026-11-16-k-init
 
 - **完成日期**: 2026-11-16

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "pool::"
+  ],
+  "exit": 0,
+  "seconds": 12.952956166
+}

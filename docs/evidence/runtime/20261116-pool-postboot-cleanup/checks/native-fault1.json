@@ -1,0 +1,66 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/native-client-lost-channel1",
+    "--ignored",
+    "--exact",
+    "pool::warm_pool::post_boot_tests::native_lost_post_boot_channel_stops_real_vm_and_late_writes",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1",
+  "exit": 0,
+  "seconds": 132.239884834,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 75464,
+      "parent": 75037,
+      "command": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"04a95368-9010-4d8a-9234-ffda4aa013c5\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/caller\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/checks/native-fault-live-logs/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/checks/native-fault-live-logs/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/checks/native-fault-live-logs/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.err.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/checks/native-fault-live-logs/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-cleanup-0b717b3c20f5/lost-channel-attempt-1/home/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-postboot-cleanup/checks/native-fault-live-logs/boxes/04a95368-9010-4d8a-9234-ffda4aa013c5/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    }
+  ],
+  "clientSha256": "5ddd92472a0e7083ca871f4d751b6c100bb439c96bba063ee866edbd3d8dcd16",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/installed-postboot-final-1",
+  "sourceInputsSha256": "241de04e39157c00593a913209d70757b4ccdc27c736ec9af70b15c758c94fa5"
+}

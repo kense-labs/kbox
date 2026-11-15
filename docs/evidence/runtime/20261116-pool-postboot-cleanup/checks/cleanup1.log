@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "241de04e39157c00593a913209d70757b4ccdc27c736ec9af70b15c758c94fa5",
+  "compiledInputCount": 1718,
+  "homes": 10,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 2,
+  "checkedSocketPaths": 9,
+  "remainingSockets": [],
+  "immutableCacheFilesCompared": 632,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "426e00b8ff571c021e34591ad911e5487262029368f26eca0dfaace68c0a76f7",
+      "after": "5cc3278d1c629aa28901e918e741d4b64f44466a29d3353e23e9d4a26f244b2c"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonNativeScenarios": 3,
+  "concurrentPoolDaemons": 4,
+  "concurrentIdleVms": 16,
+  "realPoolCommands": 4,
+  "postBootFailureSeconds": 120.085317084,
+  "callerSourcesRetained": true,
+  "priorArchivesRetainedUnchanged": true,
+  "runtimeMemoryMeasured": false,
+  "resourcesDeletedByAudit": [],
+  "scope": "This phase only; historical RAM and global external gates stay open"
+}

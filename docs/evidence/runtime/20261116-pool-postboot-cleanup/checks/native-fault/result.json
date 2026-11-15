@@ -1,0 +1,16 @@
+{
+  "boxDirectoryRemoved": true,
+  "callerBytesRetained": 1137,
+  "callerCanaryRetained": true,
+  "defaultReadinessSeconds": 120,
+  "error": "Exec error: Exec connection failed to /private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/exec.sock: No such file or directory (os error 2)",
+  "execution": "04a95368-9010-4d8a-9234-ffda4aa013c5",
+  "handlerReleased": true,
+  "noLateWrites": true,
+  "ownedSocketsRemoved": true,
+  "pid": 75464,
+  "postBootCheckSeconds": 120.085317084,
+  "runtimeRssMeasured": false,
+  "status": "PASS",
+  "vmStopped": true
+}

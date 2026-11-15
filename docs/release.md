@@ -431,3 +431,11 @@ GA are unfinished. Windows ARM64 dependencies remain unsupported and lack a
 native run; platform support levels are unchanged. Runtime RSS is unmeasured.
 Local commit/main convergence is authorized; actual remote synchronization
 requires restoration of local UID501 lookup and GitHub DNS.
+
+[Cold warm-pool admission cleanup](evidence/runtime/20261116-pool-postboot-cleanup/OUTCOME.md)
+now retires a booted default-libkrun VM if its independent exec recheck fails,
+without changing the120s admission bound. Native lost-channel refusal stops the
+real VM and late writes;3 Rust native tests,3 A-F Python scenarios and a separate
+4-daemon/16-ready-VM/4-command matrix pass.10-home cleanup passes. Default gate
+still has6 disk-service failures; original intermittent15s startup cause and
+full W4/default Host Service cutover/GA remain open. No platform promotion.

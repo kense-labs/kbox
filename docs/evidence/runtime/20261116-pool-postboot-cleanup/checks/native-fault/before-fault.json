@@ -1,0 +1,8 @@
+{
+  "authenticated": true,
+  "callerWriteBytes": 6,
+  "endpoint": "/private/tmp/kbox-sockets/04a95368-9010-4d8a-9234-ffda4aa013c5/exec.sock",
+  "execution": "04a95368-9010-4d8a-9234-ffda4aa013c5",
+  "pid": 75464,
+  "state": "ready"
+}

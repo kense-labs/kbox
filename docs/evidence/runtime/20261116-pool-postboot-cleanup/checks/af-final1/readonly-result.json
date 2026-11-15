@@ -1,0 +1,520 @@
+{
+  "status": "PASS",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "kboxSha256": "a5648bac988d071889f84105d17ad0b1a53a2edb789c6f7ee57e819ba13945d4",
+  "scriptSha256": "38dfee2b793b7a8edf4ad3f95dc75cf0f2f1c79f361e19852c80ba3c9ac31ef5",
+  "firstProbe": {
+    "remountWritable": true,
+    "freshWritableMount": true,
+    "hostDenials": {
+      "create": 1,
+      "overwrite": 1,
+      "append": 1,
+      "truncate": 1,
+      "unlink": 1,
+      "mkdir": 1,
+      "rmdir": 1,
+      "rename": 1,
+      "replace": 1,
+      "symlink-create": 1,
+      "symlink-follow": 1,
+      "directory-symlink-follow": 1,
+      "hardlink": 1,
+      "fresh-writable-mount": 1
+    },
+    "childDenial": 1,
+    "writableControl": true
+  },
+  "restartProbe": {
+    "remountWritable": true,
+    "freshWritableMount": true,
+    "hostDenials": {
+      "create": 1,
+      "overwrite": 1,
+      "append": 1,
+      "truncate": 1,
+      "unlink": 1,
+      "mkdir": 1,
+      "rmdir": 1,
+      "rename": 1,
+      "replace": 1,
+      "symlink-create": 1,
+      "symlink-follow": 1,
+      "directory-symlink-follow": 1,
+      "hardlink": 1,
+      "fresh-writable-mount": 1
+    },
+    "childDenial": 1,
+    "writableControl": true
+  },
+  "firstRecord": {
+    "id": "592ab18a-7760-4e1f-a20f-aaeb62bf251a",
+    "short_id": "592ab18a7760",
+    "name": "readonly",
+    "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+    "managed_execution": {
+      "operation_id": "cli-run-aded2856-66b5-4971-a85a-ad3325787957",
+      "creation_intent_digest": "sha256:45fc93648a8be1828235fb3acc294625a292417cf79147b4e5a3b043935e3de5",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "cli-run-aded2856-66b5-4971-a85a-ad3325787957",
+        "config": {
+          "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 512,
+            "disk_mb": 4096,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sleep",
+            "2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ea\u8bfb source with spaces:/readonly:ro",
+            "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ef\u5199 source with spaces:/writable:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [
+            [
+              "COREPACK_ENABLE_DOWNLOAD_PROMPT",
+              "0"
+            ]
+          ],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "tsi",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [
+            "seccomp=unconfined"
+          ],
+          "sysctls": [],
+          "privileged": true,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": true
+        },
+        "labels": {},
+        "policy": {
+          "name": "readonly",
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "box_vm",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "running",
+    "pid": 75759,
+    "pid_start_time": 1794784587428798,
+    "cpus": 2,
+    "memory_mb": 512,
+    "volumes": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ea\u8bfb source with spaces:/readonly:ro",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ef\u5199 source with spaces:/writable:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {
+      "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
+    },
+    "cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/home/boxes/592ab18a-7760-4e1f-a20f-aaeb62bf251a",
+    "exec_socket_path": "/private/tmp/kbox-sockets/592ab18a-7760-4e1f-a20f-aaeb62bf251a/exec.sock",
+    "console_log": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/home/boxes/592ab18a-7760-4e1f-a20f-aaeb62bf251a/logs/console.log",
+    "created_at": "2026-11-15T23:16:25.526561Z",
+    "started_at": "2026-11-15T23:16:27.743475Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "tsi",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [
+      "seccomp=unconfined"
+    ],
+    "privileged": true,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null,
+    "status_detail": {
+      "state": "running",
+      "summary": "running",
+      "active": true,
+      "pid": 75759,
+      "restart_count": 0
+    },
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "ExitCode": null
+    }
+  },
+  "restartedRecord": {
+    "id": "592ab18a-7760-4e1f-a20f-aaeb62bf251a",
+    "short_id": "592ab18a7760",
+    "name": "readonly",
+    "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+    "managed_execution": {
+      "operation_id": "cli-run-aded2856-66b5-4971-a85a-ad3325787957",
+      "creation_intent_digest": "sha256:45fc93648a8be1828235fb3acc294625a292417cf79147b4e5a3b043935e3de5",
+      "generation": 2,
+      "request": {
+        "external_sandbox_id": "cli-run-aded2856-66b5-4971-a85a-ad3325787957",
+        "config": {
+          "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 512,
+            "disk_mb": 4096,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sleep",
+            "2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ea\u8bfb source with spaces:/readonly:ro",
+            "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ef\u5199 source with spaces:/writable:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [
+            [
+              "COREPACK_ENABLE_DOWNLOAD_PROMPT",
+              "0"
+            ]
+          ],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "tsi",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [
+            "seccomp=unconfined"
+          ],
+          "sysctls": [],
+          "privileged": true,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": true
+        },
+        "labels": {},
+        "policy": {
+          "name": "readonly",
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "box_vm",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": {
+        "operation_id": "cli-restart-fb2dbe8b-93cb-47c9-be9c-188a260f55ac",
+        "source_generation": 1,
+        "target_generation": 2,
+        "outcome": "running",
+        "stop_timeout_secs": 10
+      },
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "running",
+    "pid": 75779,
+    "pid_start_time": 1794784588489494,
+    "cpus": 2,
+    "memory_mb": 512,
+    "volumes": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ea\u8bfb source with spaces:/readonly:ro",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/\u53ef\u5199 source with spaces:/writable:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {
+      "COREPACK_ENABLE_DOWNLOAD_PROMPT": "0"
+    },
+    "cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/home/boxes/592ab18a-7760-4e1f-a20f-aaeb62bf251a",
+    "exec_socket_path": "/private/tmp/kbox-sockets/592ab18a-7760-4e1f-a20f-aaeb62bf251a/exec.sock",
+    "console_log": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/af-final1/native-readonly/078ab994012043e4b731982de5a83510/home/boxes/592ab18a-7760-4e1f-a20f-aaeb62bf251a/logs/console.log",
+    "created_at": "2026-11-15T23:16:25.526561Z",
+    "started_at": "2026-11-15T23:16:28.786913Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "tsi",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [
+      "seccomp=unconfined"
+    ],
+    "privileged": true,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null,
+    "status_detail": {
+      "state": "running",
+      "summary": "running",
+      "active": true,
+      "pid": 75779,
+      "restart_count": 0
+    },
+    "State": {
+      "Status": "running",
+      "Running": true,
+      "Paused": false,
+      "ExitCode": null
+    }
+  },
+  "liveHostUpdates": true,
+  "sourceIdentityAndPermissionsPreserved": true,
+  "overlapRefused": true
+}

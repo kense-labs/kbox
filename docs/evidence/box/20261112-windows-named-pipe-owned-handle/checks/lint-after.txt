@@ -1,0 +1,17 @@
+Command (after the change):
+  K_DEPS_STUB=1 RUSTUP_TOOLCHAIN=1.97.1 cargo clippy \
+    --manifest-path <workspace>/Cargo.toml --locked -p kbox-shim \
+    --target x86_64-pc-windows-gnu --all-targets --no-deps \
+    -- -W clippy::undocumented_unsafe_blocks
+
+Exit code: 0
+Unique locations reported: 3
+   3 x "unsafe block missing a safety comment"
+   0 x "unsafe impl missing a safety comment"
+All 15 locations in windows_port_forward.rs are gone. The 3 remaining are in
+other files of the same crate and were not part of this change.
+
+Locations (sorted, deduplicated):
+crates/box/shim/src/kbox/context.rs:664:9
+crates/box/shim/src/main.rs:262:5
+crates/box/shim/src/vm_launch.rs:864:5

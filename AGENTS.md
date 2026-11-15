@@ -20,7 +20,7 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 | `crates/box` | Execution resources, MicroVM lifecycle, images, volumes, networks, snapshots and credentials | Preserve ExecutionManager ownership and generation fencing |
 | `crates/oci-runtime` | OCI execution and guest/host integration | Preserve backend routing and platform-specific behavior |
 | `crates/runtime` | Provider-neutral Task／Service contracts and lifecycle clients | Do not create a second execution state machine |
-| `../kcl` | KCL parsing and typed configuration | Keep product configuration in KCL |
+| `kense-labs/kcl` (external, pinned git rev) | KCL parser, generator and canonical digest | Keep product configuration in KCL; kbox-side closed schemas live in `crates/box/core/src/compose/` and `crates/box/runtime/src/oci/build/plan.rs` |
 | `libkrun` | Native virtualization source submodule | Edit in `kense-labs/libkrun`, test, then update the gitlink |
 | `libkrunfw` | Guest kernel bundle submodule | Edit in `kense-labs/libkrunfw`, preserve version and provenance, then update the gitlink |
 | `specs` | Bounded-epic planning | Planning is not acceptance evidence |
@@ -39,12 +39,14 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 
 ## General rules
 
-- Do not create another Cargo workspace or root lockfile. Keep internal `k*` dependencies on local paths and `publish = false`.
+- Do not create another Cargo workspace or root lockfile. Keep internal `k*` dependencies on local paths and `publish = false`. First-party crates share exactly one root `[workspace]`, one `Cargo.lock` and one `rust-toolchain.toml`; `scripts/check-workspace-layout.py` enforces this in CI (vendored trees, third_party and submodules are excluded).
 - Do not edit submodule content in the parent repository. Land and test the change in the owning repository, then update the parent's gitlink.
 - Do not create a repository for a new library without explicit user authorization.
 - Validate external input once at the entry boundary and pass typed values inward.
 - Reuse existing platform adapters for process cancellation, PTY behavior, locking, permissions, symlinks and atomic replacement.
 - Do not hand-edit generated files. Change the source and regenerate them.
+- kbox and krun are separate repositories with no shared crate, so versioned wire schema identifiers are duplicated by hand. `scripts/wire-contracts.json` is the declared contract: update it in the same change that adds, renames or removes any `.v1` wire identifier. `scripts/check-wire-contracts.py` verifies the kbox side in CI; run `python3 scripts/check-wire-contracts.py --krun ../krun` for any wire change. Undeclared identifiers fail the gate rather than being silently accepted.
+- KCL comes from `kense-labs/kcl` at a pinned `git rev` in the root `Cargo.toml`, exactly as krun does; do not restore a sibling `../kcl` path dependency or pin a `branch`/`tag` instead of a `rev`. A KCL rev or semantics change is a cross-repository change: update both manifests and lockfiles together, and verify with `python3 scripts/check-kcl-source.py --krun ../krun` plus the KCL-consuming tests (`cargo test --locked -p kbox-core --lib compose` and `cargo test --locked -p kbox-runtime --lib oci::build::plan`). `scripts/check-kcl-source.py` enforces the kbox side in CI. Historical release notes, test plans and evidence logs that mention `../kcl` stay unchanged.
 - Keep tests hermetic by default and mocks minimal. Test the real implementation rather than copying business logic into tests.
 - Record unrelated findings without fixing them unless they block the requested task.
 - Never hardcode evaluation answers, weaken a test, or change a grader to obtain a pass.
@@ -55,9 +57,13 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 - Return typed recoverable errors at library boundaries and preserve sources. Match error types or stable codes, not rendered text.
 - Input, I/O and cancellation failures are not panics. Production `unwrap()` or `expect()` requires a nearby construction-level infallibility argument.
 - Prefer item-scoped `#[expect(lint, reason = "...")]` for an expected lint. Do not broaden workspace lint allows.
+- Every member inherits the root lints with `[lints] workspace = true`, except the documented local exceptions in `scripts/check-workspace-layout.py`. Do not lower an inherited `deny` to make the gate pass; fix the code or keep the narrower local contract.
 - Public types implement useful `Debug`. Credentials, header values and sensitive payloads stay out of `Debug`, `Display` and logs. Test redaction with synthetic secrets.
 - Use structured `tracing` fields. Reserve stdout for intended CLI or protocol output.
 - Prefer safe Rust and existing wrappers. Every handwritten `unsafe` block or impl needs a nearby `SAFETY:` argument.
+- Every `unsafe fn` has its own `# Safety` rustdoc section stating the caller's obligations, even when private or target-gated. Do not add a blanket `allow(clippy::missing_safety_doc)`: that lint only inspects exported items, so binary crates and `cfg`-only functions escape it. `scripts/check-unsafe-safety-docs.py` is the visibility-independent gate in CI.
+- Inside an `unsafe fn`, wrap each FFI call in its own `unsafe { ... }` block with a nearby `SAFETY:` comment; the workspace keeps `unsafe_op_in_unsafe_fn` at deny. A block comment does not satisfy `clippy::undocumented_unsafe_blocks` — use a `// SAFETY:` line above or inside the block.
+- Every `unsafe` block has its own concrete `// SAFETY:` argument, not a shared boilerplate line; the root clippy baseline keeps `undocumented_unsafe_blocks` at deny and CI runs clippy on both the Linux host and the `x86_64-pc-windows-msvc` target, because clippy cannot see `cfg`-excluded Windows blocks from a Linux run. Verify with `K_DEPS_STUB=1 cargo clippy --locked -p kbox-shim --target x86_64-pc-windows-msvc --all-targets --no-deps` when touching target-gated unsafe code.
 - Bound input bytes and work at entry. Keep blocking I/O and long CPU work off async executor threads and do not hold blocking locks across `.await`.
 - Keep public re-exports explicit. Unit tests live in sibling files and public API integration tests live in `tests/`.
 - Measure hot paths before changing allocators, hashers or ownership layouts.
@@ -100,7 +106,7 @@ Run `cargo check --workspace --all-targets --locked` for workspace integration c
 - Malformed-input tests cover truncation, excessive sizes, path escape and invalid combinations.
 - Crash tests cover SIGKILL, restart, partial operations, stale generations and reconciliation.
 - Native tests cover only the actual backend, image and host configuration being claimed.
-- Documentation-only changes require reference checks and `git diff --check`.
+- Documentation-only changes require reference checks and `git diff --check`. Unsafe-doc changes also run `python3 scripts/check-unsafe-safety-docs.py` (with a negative test when the gate itself is new).
 
 A behavior change records `docs/evidence/<domain>/<date-slug>/OUTCOME.md` with actual commands, counts, environment, logs and an **Explicitly not claimed** section. Never claim a check without its actual result.
 

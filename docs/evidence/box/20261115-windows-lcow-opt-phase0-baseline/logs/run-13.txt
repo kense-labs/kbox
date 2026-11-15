@@ -1,0 +1,7 @@
+Creating box slim_knuth (b3e469990d35)...
+Box slim_knuth (b3e469990d35) started. Press Ctrl-C to stop.
+KBOX_PHASE0_BASELINE
+Linux localhost 6.12.91 #1 SMP PREEMPT_DYNAMIC Mon Jun  1 16:28:39 CEST 2026 x86_64 GNU/Linux
+uid=0(root) gid=0(root)
+Box slim_knuth exited and was removed.
+

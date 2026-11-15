@@ -236,6 +236,9 @@ fn run() -> Result<()> {
     }
     #[cfg(unix)]
     for service in &spec.host_services {
+        // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and
+        // only reads the calling process's effective uid; it has no
+        // memory-safety preconditions and cannot invalidate a Rust invariant.
         service.validate_host_path(unsafe { libc::geteuid() })?;
     }
     validate_raw_block_devices(&spec)?;
@@ -267,6 +270,15 @@ fn run() -> Result<()> {
     // Configure and start VM
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     let (spec, read_only) = macos_readonly::prepare(spec)?;
+    // SAFETY: `run` executes only in the short-lived shim subprocess, never in
+    // the host CLI, so `kstart_enter` may take over this process. Every
+    // resource-bearing field of `spec` was validated above (rootfs, host
+    // service sockets, raw block devices, fs_mounts); `_raw_disk_ownership`
+    // keeps the disk fds and their advisory locks alive through this call, and
+    // inherited network fds stay open. No other thread configures a libkrun
+    // context here, and `configure_and_start_vm` calls `init_logging` once
+    // before creating the context.
+
     unsafe {
         configure_and_start_vm(
             &spec,
@@ -687,6 +699,11 @@ fn lock_raw_disk_ownership(spec: &InstanceSpec) -> Result<Vec<std::fs::File>> {
                 message: format!("Failed to open raw disk {}: {error}", path.display()),
                 hint: None,
             })?;
+        // SAFETY: `file` is a live `std::fs::File` owned by this scope, so
+        // `as_raw_fd()` yields an open descriptor for this call. `flock` takes
+        // only that integer and retains no pointer. The `File` is pushed into
+        // `guards` below, keeping both the fd and the advisory lock alive until
+        // the VM exits.
         if unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX | libc::LOCK_NB) } != 0 {
             return Err(BoxError::StateError(format!(
                 "Raw disk {} is already owned by another Kbox VM",
@@ -715,11 +732,21 @@ fn windows_rootfs_path(spec: &InstanceSpec) -> Result<&Path> {
 
 #[cfg(unix)]
 fn log_inherited_net_fd(fd: i32) {
+    // SAFETY: `F_GETFD` only queries descriptor flags. `fcntl` receives the fd
+    // as a scalar and no pointer, so the caller-supplied `fd` has no
+    // memory-safety precondition; an invalid fd simply returns -1 and is logged.
     let fd_flags = unsafe { libc::fcntl(fd, libc::F_GETFD) };
+    // SAFETY: `F_GETFL` likewise only queries file status flags and receives
+    // no pointer, so the same `fd` has no memory-safety precondition here.
     let file_flags = unsafe { libc::fcntl(fd, libc::F_GETFL) };
 
     let mut sock_type: libc::c_int = 0;
     let mut opt_len = std::mem::size_of::<libc::c_int>() as libc::socklen_t;
+    // SAFETY: `sock_type` is a live `c_int` stack local and `opt_len` is a live
+    // `socklen_t` initialized to exactly its size; `SO_TYPE` writes at most
+    // that many bytes through the `void*`. `getsockopt` retains neither pointer
+    // after returning, and `fd` is passed as a scalar (a bad fd only yields -1,
+    // which is logged below).
     let sock_type_ret = unsafe {
         libc::getsockopt(
             fd,
@@ -741,12 +768,18 @@ fn log_inherited_net_fd(fd: i32) {
     );
 }
 
-/// Apply OCI USER directive to the krun context.
+/// Apply OCI USER directive to the libkrun context.
 ///
 /// Supports formats:
 /// - "uid" (e.g., "1000")
 /// - "uid:gid" (e.g., "1000:1000")
 /// - Non-numeric names are logged and skipped (would require /etc/passwd lookup)
+///
+/// # Safety
+///
+/// `ctx` must hold a live libkrun context created by `KContext::create` and
+/// not yet released, and calls on it must be serialized. See the module-level
+/// safety contract in `kbox::context`.
 unsafe fn apply_user_config(ctx: &KContext, user: &str) -> Result<()> {
     if user.is_empty() {
         return Ok(());
@@ -760,7 +793,8 @@ unsafe fn apply_user_config(ctx: &KContext, user: &str) -> Result<()> {
     match uid_str.parse::<u32>() {
         Ok(uid) => {
             tracing::info!(uid, "Setting VM user from OCI USER directive");
-            ctx.set_uid(uid)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.set_uid(uid) }?;
         }
         Err(_) => {
             // Non-numeric user name — would need /etc/passwd lookup inside rootfs
@@ -777,7 +811,8 @@ unsafe fn apply_user_config(ctx: &KContext, user: &str) -> Result<()> {
         match gid_str.parse::<u32>() {
             Ok(gid) => {
                 tracing::info!(gid, "Setting VM group from OCI USER directive");
-                ctx.set_gid(gid)?;
+                // SAFETY: this function's # Safety contract covers this call.
+                unsafe { ctx.set_gid(gid) }?;
             }
             Err(_) => {
                 tracing::warn!(

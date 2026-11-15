@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/opt/homebrew/bin/python3.13",
+    "scripts/check-workspace-layout.py"
+  ],
+  "exit": 0,
+  "seconds": 3.0087607089999997
+}

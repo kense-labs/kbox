@@ -3,6 +3,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
+use containerd_shim::{TtrpcContext, TtrpcResult};
+use containerd_shim_protos::{api, shim_async::Task, ttrpc};
 use koci_sdk::oci_spec::runtime::{ContainerState, Process, StateBuilder};
 use koci_sdk::{
     async_trait, ContainerRecord, CreateRequest, DeleteRequest, Error as RuntimeError, ErrorCode,
@@ -10,8 +12,6 @@ use koci_sdk::{
     OperationId, ProcessRecord, ProcessesRequest, RuntimeClient, SignalProcessRequest,
     StartRequest, StateRequest, WaitProcessRequest, WaitRequest,
 };
-use containerd_shim::{TtrpcContext, TtrpcResult};
-use containerd_shim_protos::{api, shim_async::Task, ttrpc};
 use tokio::sync::{Barrier, Mutex};
 
 use super::{
@@ -251,10 +251,7 @@ impl OciRuntimeService for SignalRuntime {
         self.finish_effect().await
     }
 
-    async fn processes(
-        &self,
-        _request: ProcessesRequest,
-    ) -> koci_sdk::Result<Vec<ProcessRecord>> {
+    async fn processes(&self, _request: ProcessesRequest) -> koci_sdk::Result<Vec<ProcessRecord>> {
         Ok(self
             .exec_targets
             .lock()

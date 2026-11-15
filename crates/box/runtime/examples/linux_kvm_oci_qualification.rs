@@ -806,6 +806,9 @@ mod qualification {
             std::thread::sleep(Duration::from_millis(100));
         }
         require(
+            // SAFETY: `kill(pid, 0)` is a scalar liveness probe that takes no pointer and
+            // has no Rust memory-safety precondition; the test only inspects its return
+            // code.
             unsafe { libc::kill(pid as i32, 0) } != 0,
             "Host Service pid remained alive after SIGKILL",
         )?;

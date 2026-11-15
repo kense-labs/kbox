@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "--workspace",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 0,
+  "seconds": 43.342389917000006
+}

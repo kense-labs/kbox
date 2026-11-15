@@ -1017,6 +1017,9 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
                 #[cfg(unix)]
                 for service in &metadata.request.config.host_services {
                     service
+                        // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+                        // reads the calling process's effective uid; it has no memory-safety
+                        // preconditions.
                         .validate_host_path(unsafe { libc::geteuid() })
                         .map_err(|error| {
                             ExecutionManagerError::InvalidRequest(error.to_string())

@@ -3,8 +3,8 @@ use std::io::{self, Read};
 use std::sync::Arc;
 use std::time::Duration;
 
-use koci_sdk::{Error as RuntimeError, ErrorCode, Generation, OutputStream};
 use async_trait::async_trait;
+use koci_sdk::{Error as RuntimeError, ErrorCode, Generation, OutputStream};
 use tokio::io::{unix::AsyncFd, Interest};
 use tokio::sync::mpsc;
 use tokio::sync::watch;

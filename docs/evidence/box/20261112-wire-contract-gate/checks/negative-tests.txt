@@ -1,0 +1,26 @@
+=== TEST 1: rename one shared identifier in kbox -> CI mode must FAIL ===
+kbox: 27 wire identifiers found, 28 declared
+krun side: not checked (pass --krun <path> for cross-repo verification)
+FAIL: kbox: declared contract missing from source: kbox.engine.endpoint.v1
+FAIL: wire contract drift
+gate exit: 1
+
+=== TEST 2: add an undeclared wire identifier -> must FAIL ===
+kbox: 29 wire identifiers found, 28 declared
+krun side: not checked (pass --krun <path> for cross-repo verification)
+FAIL: kbox: undeclared wire identifier kbox.engine.probe.v1 (in crates/box/cli/src/commands/engine.rs); update scripts/wire-contracts.json
+FAIL: wire contract drift
+gate exit: 1
+
+=== TEST 3: drop a shared identifier from a krun COPY -> cross mode must FAIL ===
+kbox: 28 wire identifiers found, 28 declared
+krun: 27 wire identifiers found, 28 declared
+FAIL: krun: declared contract missing from source: kbox.engine.discovery.v1
+FAIL: wire contract drift
+gate exit: 1
+
+=== TEST 4: restored kbox + pristine krun ===
+kbox: 28 wire identifiers found, 28 declared
+krun: 28 wire identifiers found, 28 declared
+PASS: wire schema identifiers match the declared contract
+gate exit: 0

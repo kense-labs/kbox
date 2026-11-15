@@ -523,12 +523,7 @@ mod tests {
 
         assert!(cargo_manifest.contains(&binary_declaration));
         assert!(cargo_manifest.contains("koci-sdk ="));
-        for forbidden_dependency in [
-            "koci-runtime",
-            "koci-core",
-            "koci-agent",
-            "kbox",
-        ] {
+        for forbidden_dependency in ["koci-runtime", "koci-core", "koci-agent", "kbox"] {
             assert!(!cargo_manifest.contains(forbidden_dependency));
         }
         assert!(release_workflow.contains("koci-containerd-shim"));

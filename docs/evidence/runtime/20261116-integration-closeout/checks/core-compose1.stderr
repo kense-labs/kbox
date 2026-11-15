@@ -1,0 +1,27 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling smallvec v1.16.4
+   Compiling num-traits v0.2.19
+   Compiling aho-corasick v1.1.5
+   Compiling tracing-core v0.1.36
+   Compiling syn v2.0.119
+   Compiling rustix v1.1.6
+   Compiling uuid v1.26.1
+   Compiling kense-kcl v0.3.0 (https://github.com/kense-labs/kcl.git?rev=76bf580454f1d69d7b826223ac50161efa685f85#76bf5804)
+   Compiling serde_yaml v0.9.21
+   Compiling parking_lot_core v0.9.12
+   Compiling parking_lot v0.12.5
+   Compiling tokio v1.53.3
+   Compiling regex-automata v0.4.18
+   Compiling tempfile v3.27.0
+   Compiling chrono v0.4.45
+   Compiling regex v1.12.4
+   Compiling tracing-attributes v0.1.31
+   Compiling thiserror-impl v1.0.69
+   Compiling thiserror v1.0.69
+   Compiling tracing v0.1.44
+   Compiling kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.80s
+     Running unittests src/lib.rs (target/debug/deps/kbox_core-9501430b810a415f)

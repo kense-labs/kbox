@@ -126,6 +126,8 @@ fn exit_watch(pid: u32) -> OwnedFd {
     // SAFETY: a successful kqueue result is a new descriptor owned by this test.
     let descriptor = unsafe { libc::kqueue() };
     assert!(descriptor >= 0);
+    // SAFETY: `kqueue` returned a non-negative descriptor above, so it is a
+    // fresh fd owned solely by this test; `from_raw_fd` wraps it exactly once.
     let descriptor = unsafe { OwnedFd::from_raw_fd(descriptor) };
     let change = libc::kevent {
         ident: pid as usize,
@@ -137,6 +139,9 @@ fn exit_watch(pid: u32) -> OwnedFd {
     };
     // SAFETY: the initialized change registers one exact live process incarnation.
     assert_eq!(
+        // SAFETY: `change` is a fully initialized `kevent` for one exact live
+        // process incarnation, `descriptor` is a live kqueue fd, and `kevent`
+        // retains neither the changelist nor the eventlist pointer after return.
         unsafe {
             libc::kevent(
                 descriptor.as_raw_fd(),

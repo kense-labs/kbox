@@ -320,9 +320,17 @@ impl CoreSmoke {
             close_fd(stdout_fd);
         })?;
 
+        // SAFETY: `master_fd` is the fresh PTY master fd returned by `open_pty`
+        // above and owned solely by this harness; `from_raw_fd` takes it once.
         let mut master = unsafe { File::from_raw_fd(master_fd) };
+        // SAFETY: `slave_fd` is the fresh PTY slave fd returned by `open_pty`
+        // above and owned solely by this harness; `from_raw_fd` takes it once.
         let slave_stdin = unsafe { File::from_raw_fd(slave_fd) };
+        // SAFETY: `stdout_fd` is a fresh duplicated descriptor owned solely by this
+        // harness; `from_raw_fd` takes ownership exactly once.
         let slave_stdout = unsafe { File::from_raw_fd(stdout_fd) };
+        // SAFETY: `stderr_fd` is a fresh duplicated descriptor owned solely by this
+        // harness; `from_raw_fd` takes ownership exactly once.
         let slave_stderr = unsafe { File::from_raw_fd(stderr_fd) };
 
         let mut child = self
@@ -395,6 +403,10 @@ impl CoreSmoke {
                 ws_ypixel: 0,
             };
 
+            // SAFETY: `master` and `slave` are live `c_int` stack locals that `openpty`
+            // writes exactly one descriptor into; `winsize` is a live stack struct
+            // borrowed for this call only, and the two remaining arguments are null.
+            // The C call retains no pointer after returning.
             let rc = unsafe {
                 libc::openpty(
                     &mut master,
@@ -415,6 +427,8 @@ impl CoreSmoke {
         }
 
         fn duplicate_fd(fd: RawFd) -> Result<RawFd, String> {
+            // SAFETY: `dup` takes a scalar fd and no pointer; it returns a new
+            // descriptor or -1, so it has no Rust memory-safety precondition.
             let dup = unsafe { libc::dup(fd) };
             if dup < 0 {
                 return Err(format!(
@@ -427,6 +441,8 @@ impl CoreSmoke {
 
         fn close_fd(fd: RawFd) {
             if fd >= 0 {
+                // SAFETY: `fd` was checked >= 0 and is the sole owned descriptor passed to
+                // this helper; `close` consumes only the integer and retains no pointer.
                 unsafe {
                     libc::close(fd);
                 }
@@ -434,6 +450,9 @@ impl CoreSmoke {
         }
 
         fn set_nonblocking(fd: RawFd) -> Result<(), String> {
+            // SAFETY: `F_GETFL` only queries fd status flags and passes no pointer, so
+            // the caller-supplied `fd` has no memory-safety precondition; a negative
+            // return is handled below.
             let flags = unsafe { libc::fcntl(fd, libc::F_GETFL) };
             if flags < 0 {
                 return Err(format!(
@@ -441,6 +460,8 @@ impl CoreSmoke {
                     std::io::Error::last_os_error()
                 ));
             }
+            // SAFETY: `F_SETFL` takes only scalar fd/flag values and no pointer; `flags`
+            // came from the successful `F_GETFL` above.
             if unsafe { libc::fcntl(fd, libc::F_SETFL, flags | libc::O_NONBLOCK) } < 0 {
                 return Err(format!(
                     "failed to set PTY nonblocking: {}",
@@ -969,6 +990,8 @@ fn kill_host_pid(pid: u64, signal: libc::c_int) {
         pid <= libc::pid_t::MAX as u64,
         "PID {pid} does not fit into pid_t"
     );
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition; the test asserts its return code.
     let rc = unsafe { libc::kill(pid as libc::pid_t, signal) };
     assert_eq!(
         rc,

@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 
-use koci_sdk::{CheckpointArtifactPath, CheckpointReference, Error, ErrorCode, Result};
 use containerd_shim_protos::protobuf::well_known_types::any::Any;
+use koci_sdk::{CheckpointArtifactPath, CheckpointReference, Error, ErrorCode, Result};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};

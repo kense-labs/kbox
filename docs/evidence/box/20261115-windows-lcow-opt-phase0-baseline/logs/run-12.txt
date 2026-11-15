@@ -1,0 +1,7 @@
+Creating box wise_stroustrup (3fb8d5ddc759)...
+Box wise_stroustrup (3fb8d5ddc759) started. Press Ctrl-C to stop.
+KBOX_PHASE0_BASELINE
+Linux localhost 6.12.91 #1 SMP PREEMPT_DYNAMIC Mon Jun  1 16:28:39 CEST 2026 x86_64 GNU/Linux
+uid=0(root) gid=0(root)
+Box wise_stroustrup exited and was removed.
+

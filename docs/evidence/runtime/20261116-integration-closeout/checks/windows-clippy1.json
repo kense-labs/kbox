@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "K_DEPS_STUB=1",
+    "cargo",
+    "clippy",
+    "--locked",
+    "-p",
+    "kbox-shim",
+    "--target",
+    "x86_64-pc-windows-gnu",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 101,
+  "seconds": 22.964110166
+}

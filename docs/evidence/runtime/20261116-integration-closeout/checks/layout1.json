@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "scripts/check-workspace-layout.py"
+  ],
+  "exit": 1,
+  "seconds": 0.026817999999999998
+}

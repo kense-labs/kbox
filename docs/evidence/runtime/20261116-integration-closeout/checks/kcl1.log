@@ -1,0 +1,6 @@
+pinned KCL repo          : https://github.com/kense-labs/kcl.git
+pinned KCL rev           : 76bf580454f1d69d7b826223ac50161efa685f85
+kbox manifests scanned   : 19
+krun manifests scanned   : 1
+cross-repository mode    : on
+PASS: pinned KCL dependency contract

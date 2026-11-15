@@ -1,0 +1,5 @@
+first-party .rs files        : 1560
+unsafe fn declarations       : 35
+missing # Safety sections    : 0
+blanket missing_safety_doc allows: 0
+PASS: every unsafe fn has a # Safety section

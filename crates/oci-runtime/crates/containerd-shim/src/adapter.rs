@@ -163,9 +163,7 @@ impl RuntimeAdapter {
         let class = isolation.class();
         let driver = match class {
             IsolationClass::SharedHostKernel => DriverKind::NativeLinux,
-            IsolationClass::DedicatedVm | IsolationClass::SharedGuestKernel => {
-                DriverKind::LibkKvm
-            }
+            IsolationClass::DedicatedVm | IsolationClass::SharedGuestKernel => DriverKind::LibkKvm,
         };
         let artifact = RuntimeArtifact::new(
             "koci-runtime",

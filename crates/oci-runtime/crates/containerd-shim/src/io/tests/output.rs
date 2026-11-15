@@ -11,6 +11,9 @@ async fn output_pump_resumes_after_persisted_cursor_and_commits_after_fifo_write
     let path = directory.path().join("stdout");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -95,6 +98,9 @@ async fn output_cancellation_commits_only_the_fifo_delivered_prefix() {
     let path = directory.path().join("stdout");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -203,6 +209,9 @@ async fn fifo_wrapper_opens_a_real_fifo_nonblocking() {
     let path = directory.path().join("stdio");
     let path_bytes = path.as_os_str().as_bytes();
     let path = std::ffi::CString::new(path_bytes).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -224,6 +233,9 @@ async fn output_fifo_survives_a_containerd_reader_reconnect_window() {
     let path = directory.path().join("stdout");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,

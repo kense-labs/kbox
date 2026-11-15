@@ -3,6 +3,7 @@ use std::path::Path;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex as StdMutex};
 
+use containerd_shim_protos::shim_async::Task;
 use koci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
 use koci_sdk::{
     async_trait, AttachmentCapabilities, CheckpointCompatibility, CheckpointDigest,
@@ -13,7 +14,6 @@ use koci_sdk::{
     RuntimeOperation, RuntimeOperationCapability, StateRequest, WaitRequest,
     PAUSED_STATE_ANNOTATION,
 };
-use containerd_shim_protos::shim_async::Task;
 use sha2::{Digest, Sha256};
 
 use super::*;
@@ -53,24 +53,15 @@ impl OciRuntimeService for BridgeRuntime {
         Err(Error::unsupported("test-features"))
     }
 
-    async fn create(
-        &self,
-        _request: koci_sdk::CreateRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: koci_sdk::CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(Error::unsupported("test-create"))
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(Error::unsupported("test-start"))
     }
 
-    async fn kill(
-        &self,
-        _request: koci_sdk::KillRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, _request: koci_sdk::KillRequest) -> koci_sdk::Result<ContainerRecord> {
         self.calls.lock().expect("restore bridge calls").kills += 1;
         self.killed.store(true, Ordering::SeqCst);
         self.record
@@ -86,10 +77,7 @@ impl OciRuntimeService for BridgeRuntime {
         Ok(())
     }
 
-    async fn checkpoint(
-        &self,
-        request: CheckpointRequest,
-    ) -> koci_sdk::Result<CheckpointResponse> {
+    async fn checkpoint(&self, request: CheckpointRequest) -> koci_sdk::Result<CheckpointResponse> {
         self.calls
             .lock()
             .expect("checkpoint bridge calls")

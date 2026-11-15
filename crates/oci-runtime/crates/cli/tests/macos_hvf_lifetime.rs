@@ -67,6 +67,9 @@ impl Host {
     fn terminate(&mut self) {
         // SAFETY: this unreaped child still owns its process identity.
         assert_eq!(
+            // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it
+            // has no Rust memory-safety precondition; `self.child.id()` is the
+            // unreaped child's live process id.
             unsafe { libc::kill(self.child.id() as i32, libc::SIGTERM) },
             0
         );

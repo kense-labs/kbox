@@ -2,6 +2,8 @@ use std::collections::{BTreeSet, VecDeque};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
+use containerd_shim::{TtrpcContext, TtrpcResult};
+use containerd_shim_protos::{api, protobuf, shim_async::Task, ttrpc};
 use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources, StateBuilder};
 use koci_sdk::{
     async_trait, ContainerOperationRequest, ContainerRecord, CreateRequest, DeleteRequest,
@@ -9,8 +11,6 @@ use koci_sdk::{
     OperationContext, RuntimeClient, RuntimeInfo, StartRequest, StateRequest, UpdateRequest,
     PAUSED_STATE_ANNOTATION,
 };
-use containerd_shim::{TtrpcContext, TtrpcResult};
-use containerd_shim_protos::{api, protobuf, shim_async::Task, ttrpc};
 use tokio::sync::Barrier;
 
 use super::{metadata_from_task, recovery_service_instance, task_state};
@@ -142,10 +142,7 @@ impl OciRuntimeService for ControlRuntime {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn pause(
-        &self,
-        request: ContainerOperationRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn pause(&self, request: ContainerOperationRequest) -> koci_sdk::Result<ContainerRecord> {
         self.record_call("pause", request.context, None);
         let barriers = self.pause_barriers.lock().expect("Pause barriers").take();
         if let Some(barriers) = barriers {

@@ -65,3 +65,6 @@ tonic-prost-build = { workspace = true }
 tempfile = { workspace = true }
 ktransport = { workspace = true }
 sha2 = { workspace = true }
+
+[lints]
+workspace = true

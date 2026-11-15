@@ -71,11 +71,17 @@ impl NetProxyManager {
 
     pub fn stop(&mut self) {
         if let Some(fd) = self.net_socket_fd.take() {
+            // SAFETY: `take()` removed this fd from `self.net_socket_fd`, so this branch
+            // is its sole owner and closes it exactly once. `close` consumes only the
+            // integer fd and retains no pointer.
             unsafe {
                 libc::close(fd);
             }
         }
         if let Some(fd) = self.net_proxy_fd.take() {
+            // SAFETY: `take()` removed this fd from `self.net_proxy_fd`, so this branch
+            // is its sole owner and closes it exactly once. `close` consumes only the
+            // integer fd and retains no pointer.
             unsafe {
                 libc::close(fd);
             }
@@ -128,6 +134,9 @@ pub fn spawn_inherited_netproxy(fd: RawFd, config: InheritedNetProxyConfig<'_>) 
         network_name,
         egress_allowed_names,
     } = config;
+    // SAFETY: `fd` is the inherited raw descriptor handed to this netproxy
+    // process by the shim; the caller transfers sole ownership, and
+    // `from_raw_fd` takes it exactly once with no other owner closing it here.
     let socket = unsafe { UnixDatagram::from_raw_fd(fd) };
     let parsed = parse_port_forwards(port_map, guest_ip)
         .map_err(|e| BoxError::NetworkError(format!("invalid port_map: {e}")))?;
@@ -177,6 +186,9 @@ pub fn spawn_inherited_netproxy(fd: RawFd, config: InheritedNetProxyConfig<'_>) 
 
 fn socketpair_unixgram() -> Result<(UnixDatagram, RawFd)> {
     let mut fds = [-1; 2];
+    // SAFETY: `fds` is a live `[RawFd; 2]` stack array, so `as_mut_ptr()` is
+    // valid for exactly the two descriptor writes `socketpair` performs; the C
+    // call retains no pointer after returning.
     let ret = unsafe { libc::socketpair(libc::AF_UNIX, libc::SOCK_DGRAM, 0, fds.as_mut_ptr()) };
     if ret != 0 {
         return Err(BoxError::NetworkError(format!(
@@ -185,6 +197,9 @@ fn socketpair_unixgram() -> Result<(UnixDatagram, RawFd)> {
         )));
     }
 
+    // SAFETY: `socketpair` succeeded above, so `fds[0]` is a fresh descriptor
+    // owned solely by this function. `from_raw_fd` takes ownership once; `fds[1]`
+    // is returned separately and never closed here.
     let proxy_socket = unsafe { UnixDatagram::from_raw_fd(fds[0]) };
     Ok((proxy_socket, fds[1]))
 }

@@ -325,11 +325,18 @@ fn wait_for_ready_file(
 }
 
 fn process_alive(pid: NonZeroU32) -> bool {
+    // SAFETY: `OpenProcess` takes scalar access flags and a pid and no pointer;
+    // it returns a handle or null, which is checked below. A null result has no
+    // Rust memory-safety consequence.
     let handle = unsafe { OpenProcess(PROCESS_SYNCHRONIZE, 0, pid.get()) };
     if handle.is_null() {
         return false;
     }
+    // SAFETY: `handle` is a live handle opened above; `WaitForSingleObject`
+    // takes only the handle and a scalar timeout and retains no pointer.
     let wait = unsafe { WaitForSingleObject(handle, 0) };
+    // SAFETY: `handle` is a live non-null handle opened above and is closed
+    // exactly once on this path; `CloseHandle` consumes only the handle value.
     unsafe {
         let _ = CloseHandle(handle);
     }
@@ -337,6 +344,9 @@ fn process_alive(pid: NonZeroU32) -> bool {
 }
 
 fn terminate_pid(pid: NonZeroU32) -> io::Result<()> {
+    // SAFETY: `OpenProcess` takes scalar access flags and a pid and no pointer;
+    // it returns a handle or null, which is checked below. A null result has no
+    // Rust memory-safety consequence.
     let handle = unsafe {
         OpenProcess(
             PROCESS_TERMINATE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_SYNCHRONIZE,
@@ -352,15 +362,23 @@ fn terminate_pid(pid: NonZeroU32) -> io::Result<()> {
         }
         return Err(err);
     }
+    // SAFETY: `handle` is a live non-null process handle; `TerminateProcess`
+    // takes only that handle and a scalar exit code and retains no pointer.
     let ok = unsafe { TerminateProcess(handle, 1) };
     if ok == 0 {
         let err = io::Error::last_os_error();
+        // SAFETY: `handle` is a live non-null handle opened above and is closed
+        // exactly once on this path; `CloseHandle` consumes only the handle value.
         unsafe {
             let _ = CloseHandle(handle);
         }
         return Err(err);
     }
+    // SAFETY: `handle` is a live handle opened above; `WaitForSingleObject`
+    // takes only the handle and a scalar timeout and retains no pointer.
     let _ = unsafe { WaitForSingleObject(handle, INFINITE) };
+    // SAFETY: `handle` is a live non-null handle opened above and is closed
+    // exactly once on this path; `CloseHandle` consumes only the handle value.
     unsafe {
         let _ = CloseHandle(handle);
     }
@@ -571,7 +589,12 @@ mod tests {
                 .collect();
         let deadline = Instant::now() + Duration::from_secs(10);
         loop {
+            // SAFETY: `wide` is a live NUL-terminated UTF-16 path; `WaitNamedPipeW`
+            // reads it only for this call and retains no pointer after returning.
             let _ = unsafe { WaitNamedPipeW(wide.as_ptr(), 100) };
+            // SAFETY: `wide` is a live NUL-terminated UTF-16 path, the security and
+            // template pointers are null, and the remaining arguments are scalars;
+            // `CreateFileW` retains no pointer after returning.
             let raw = unsafe {
                 CreateFileW(
                     wide.as_ptr(),
@@ -584,6 +607,9 @@ mod tests {
                 )
             };
             if raw != INVALID_HANDLE_VALUE && !raw.is_null() {
+                // SAFETY: `raw` was checked against `INVALID_HANDLE_VALUE` and null above,
+                // so it is a fresh handle owned solely by this function; `from_raw_handle`
+                // takes ownership exactly once.
                 return Ok(unsafe { std::fs::File::from_raw_handle(raw as _) });
             }
             let err = io::Error::last_os_error();

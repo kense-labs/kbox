@@ -1,7 +1,7 @@
 use super::*;
-use koci_sdk::oci_spec::runtime::LinuxResources;
 use containerd_shim::{TtrpcContext, TtrpcResult};
 use containerd_shim_protos::shim_async::Task;
+use koci_sdk::oci_spec::runtime::LinuxResources;
 
 use crate::contract::{OCI_LINUX_RESOURCES_TYPE_URL, OCI_PROCESS_TYPE_URL};
 

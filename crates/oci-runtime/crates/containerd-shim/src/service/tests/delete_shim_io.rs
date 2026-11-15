@@ -44,10 +44,7 @@ impl OciRuntimeService for CommittedIoCleanupService {
         Ok(self.record.clone())
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
@@ -73,10 +70,7 @@ impl OciRuntimeService for CommittedIoCleanupService {
         ExitStatus::signaled(9, false)
     }
 
-    async fn write_stdin(
-        &self,
-        _request: koci_sdk::WriteStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn write_stdin(&self, _request: koci_sdk::WriteStdinRequest) -> koci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")
@@ -84,10 +78,7 @@ impl OciRuntimeService for CommittedIoCleanupService {
         Ok(())
     }
 
-    async fn close_stdin(
-        &self,
-        _request: koci_sdk::CloseStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn close_stdin(&self, _request: koci_sdk::CloseStdinRequest) -> koci_sdk::Result<()> {
         self.calls
             .lock()
             .expect("committed-I/O cleanup calls")

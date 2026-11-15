@@ -1,0 +1,10 @@
+{
+  "command": [
+    "rustup",
+    "target",
+    "add",
+    "x86_64-pc-windows-gnu"
+  ],
+  "exit": 0,
+  "seconds": 54.333189333
+}

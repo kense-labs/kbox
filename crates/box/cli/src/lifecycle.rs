@@ -41,6 +41,9 @@ impl BoxLifecycleLock {
             .create(true)
             .truncate(false)
             .open(directory.join(format!("{box_id}.lifecycle.lock")))?;
+        // SAFETY: `file` is a live `File` opened above, so `as_raw_fd()` is a valid
+        // descriptor for this call. `flock` takes only the integer and retains no
+        // pointer; the `File` is stored in the returned guard to hold the lock.
         if unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX) } != 0 {
             return Err(std::io::Error::last_os_error());
         }

@@ -250,6 +250,7 @@ fn raw_storage_sandbox_child() {
         .unwrap();
     // SAFETY: the retained pin owns raw_fd and the input byte is valid for this call.
     assert_eq!(
+        // SAFETY: raw_fd stays owned by the live projection; the buffer contains one readable byte.
         unsafe { libc::pwrite(raw_fd, b"x".as_ptr().cast(), 1, 0) },
         -1
     );

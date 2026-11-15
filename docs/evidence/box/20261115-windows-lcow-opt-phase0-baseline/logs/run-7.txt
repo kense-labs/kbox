@@ -1,0 +1,6 @@
+Creating box dark_church (dc8c6cb28ec3)...
+Box dark_church (dc8c6cb28ec3) started. Press Ctrl-C to stop.
+KBOX_PHASE0_BASELINE
+Linux localhost 6.12.91 #1 SMP PREEMPT_DYNAMIC Mon Jun  1 16:28:39 CEST 2026 x86_64 GNU/Linux
+uid=0(root) gid=0(root)
+Box dark_church exited and was removed.

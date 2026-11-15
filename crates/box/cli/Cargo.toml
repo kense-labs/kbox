@@ -82,3 +82,6 @@ windows-sys = { version = "0.48", features = [
 async-trait = { workspace = true }
 axum = { workspace = true }
 tempfile = { workspace = true }
+
+[lints]
+workspace = true

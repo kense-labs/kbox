@@ -17,6 +17,11 @@ path = "examples/windows_whpx_oci_qualification.rs"
 required-features = ["vm"]
 
 [[example]]
+name = "windows-whpx-environment-prewarm-qualification"
+path = "examples/windows_whpx_environment_prewarm_qualification.rs"
+required-features = ["vm"]
+
+[[example]]
 name = "linux-kvm-oci-qualification"
 path = "examples/linux_kvm_oci_qualification.rs"
 required-features = ["vm"]
@@ -170,3 +175,6 @@ tempfile = { workspace = true }
 # Registry fixture tests use an in-process HTTP server even when the optional
 # `scale` feature (the production axum consumer) is disabled.
 axum = { workspace = true }
+
+[lints]
+workspace = true

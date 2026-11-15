@@ -10,6 +10,10 @@ impl VolumeInitializationLock {
 
         let file = std::fs::File::open(directory)?;
         loop {
+            // SAFETY: `file` is a live `std::fs::File` owned by this scope, so
+            // `as_raw_fd()` yields an open descriptor for this call. `flock` takes only
+            // that integer and retains no pointer; on success the `File` is moved into
+            // the returned guard so the fd and lock stay alive.
             if unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX) } == 0 {
                 return Ok(Self(file));
             }
@@ -25,6 +29,9 @@ impl Drop for VolumeInitializationLock {
     fn drop(&mut self) {
         use std::os::fd::AsRawFd;
 
+        // SAFETY: `self.0` is the live `File` holding the advisory lock, so its raw
+        // fd is valid during this `Drop`. `flock(LOCK_UN)` takes only the integer and
+        // retains no pointer; the `File` is closed by its own destructor afterwards.
         let _ = unsafe { libc::flock(self.0.as_raw_fd(), libc::LOCK_UN) };
     }
 }
@@ -152,6 +159,9 @@ fn apply_root_metadata(
     use std::os::unix::fs::{MetadataExt, PermissionsExt};
 
     let path = std::ffi::CString::new(destination.as_os_str().as_bytes())?;
+    // SAFETY: `path` is a live NUL-terminated `CString` built from `destination`
+    // above; `lchown` reads it only for this call and retains no pointer. The uid
+    // and gid are scalars read from `source_metadata`.
     if unsafe { libc::lchown(path.as_ptr(), source_metadata.uid(), source_metadata.gid()) } != 0 {
         return Err(std::io::Error::last_os_error().into());
     }

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "scripts/check-kcl-source.py",
+    "--krun",
+    "../krun"
+  ],
+  "exit": 0,
+  "seconds": 3.7877018749999998
+}

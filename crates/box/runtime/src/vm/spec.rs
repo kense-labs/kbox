@@ -88,6 +88,9 @@ impl VmManager {
             kbox_core::resolve_execution(&self.config)?;
             #[cfg(unix)]
             for service in &self.config.host_services {
+                // SAFETY: `geteuid()` takes no arguments, dereferences no pointer and only
+                // reads the calling process's effective uid; it has no memory-safety
+                // preconditions.
                 service.validate_host_path(unsafe { libc::geteuid() })?;
             }
         }

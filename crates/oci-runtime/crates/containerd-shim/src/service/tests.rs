@@ -1,4 +1,6 @@
 use super::*;
+use containerd_shim::TtrpcContext;
+use containerd_shim_protos::shim_async::Task;
 use koci_sdk::oci_spec::runtime::{
     ContainerState, LinuxSchedulerFlag, LinuxSchedulerPolicy, Process, StateBuilder,
 };
@@ -8,8 +10,6 @@ use koci_sdk::{
     OutputChunk, OutputStream, ProcessesRequest, ReadOutputRequest, StateRequest,
     WaitProcessRequest, WaitRequest,
 };
-use containerd_shim::TtrpcContext;
-use containerd_shim_protos::shim_async::Task;
 
 mod checkpoint_restore;
 mod control;
@@ -77,10 +77,7 @@ impl OciRuntimeService for DeletedRuntimeService {
         .for_operation("test-state"))
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
@@ -147,10 +144,7 @@ impl OciRuntimeService for CreateIntentCleanupService {
         Ok(self.record.clone())
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
@@ -183,10 +177,7 @@ impl OciRuntimeService for RecoveryService {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(
-        &self,
-        _request: koci_sdk::CreateRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: koci_sdk::CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
@@ -206,17 +197,11 @@ impl OciRuntimeService for RecoveryService {
         Ok(self.record.clone())
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 
-    async fn kill(
-        &self,
-        _request: koci_sdk::KillRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn kill(&self, _request: koci_sdk::KillRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-kill"))
     }
 
@@ -246,10 +231,7 @@ impl OciRuntimeService for RecoveryService {
         std::future::pending().await
     }
 
-    async fn processes(
-        &self,
-        _request: ProcessesRequest,
-    ) -> koci_sdk::Result<Vec<ProcessRecord>> {
+    async fn processes(&self, _request: ProcessesRequest) -> koci_sdk::Result<Vec<ProcessRecord>> {
         Ok(self
             .processes
             .lock()
@@ -261,10 +243,7 @@ impl OciRuntimeService for RecoveryService {
         std::future::pending().await
     }
 
-    async fn read_output(
-        &self,
-        request: ReadOutputRequest,
-    ) -> koci_sdk::Result<Vec<OutputChunk>> {
+    async fn read_output(&self, request: ReadOutputRequest) -> koci_sdk::Result<Vec<OutputChunk>> {
         let Some(output) = &self.output else {
             return std::future::pending().await;
         };

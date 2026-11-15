@@ -179,10 +179,7 @@ impl koci_sdk::OciRuntimeService for ReplaySafeStdinService {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn write_stdin(
-        &self,
-        request: koci_sdk::WriteStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn write_stdin(&self, request: koci_sdk::WriteStdinRequest) -> koci_sdk::Result<()> {
         let operation_id = request.context.operation_id;
         self.requests
             .lock()
@@ -206,10 +203,7 @@ impl koci_sdk::OciRuntimeService for ReplaySafeStdinService {
         Ok(())
     }
 
-    async fn close_stdin(
-        &self,
-        _request: koci_sdk::CloseStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn close_stdin(&self, _request: koci_sdk::CloseStdinRequest) -> koci_sdk::Result<()> {
         Ok(())
     }
 }
@@ -454,10 +448,7 @@ impl koci_sdk::OciRuntimeService for BlockingStdinService {
         Err(RuntimeError::unsupported("test-delete"))
     }
 
-    async fn write_stdin(
-        &self,
-        request: koci_sdk::WriteStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn write_stdin(&self, request: koci_sdk::WriteStdinRequest) -> koci_sdk::Result<()> {
         self.write_calls
             .fetch_add(1, std::sync::atomic::Ordering::SeqCst);
         self.write_started.notify_waiters();
@@ -474,10 +465,7 @@ impl koci_sdk::OciRuntimeService for BlockingStdinService {
         Ok(())
     }
 
-    async fn close_stdin(
-        &self,
-        _request: koci_sdk::CloseStdinRequest,
-    ) -> koci_sdk::Result<()> {
+    async fn close_stdin(&self, _request: koci_sdk::CloseStdinRequest) -> koci_sdk::Result<()> {
         assert!(
             self.producer_finished
                 .load(std::sync::atomic::Ordering::SeqCst),

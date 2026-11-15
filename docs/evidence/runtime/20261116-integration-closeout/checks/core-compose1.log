@@ -1,0 +1,40 @@
+
+running 35 tests
+test compose::tests::test_dns_config_list ... ok
+test compose::tests::test_dns_config_single ... ok
+test compose::kcl::tests::reports_missing_environment_values ... ok
+test compose::kcl::tests::parses_nested_healthcheck_after_multibyte_string ... ok
+test compose::kcl::tests::rejects_unknown_blocks_attributes_and_nested_fields ... ok
+test compose::kcl::tests::rejects_invalid_labels_types_numbers_and_functions ... ok
+test compose::interpolation::tests::reports_required_and_malformed_expressions ... ok
+test compose::tests::test_depends_on_list ... ok
+test compose::tests::test_env_vars_list ... ok
+test compose::tests::test_depends_on_map ... ok
+test compose::interpolation::tests::expands_bare_braced_nested_and_escaped_dollars ... ok
+test compose::kcl::tests::parses_complete_closed_kcl_schema ... ok
+test compose::interpolation::tests::leaves_transient_secret_references_unexpanded ... ok
+test compose::interpolation::tests::interpolates_values_but_not_mapping_keys ... ok
+test compose::interpolation::tests::expands_set_and_nonempty_replacement_operators ... ok
+test compose::interpolation::tests::expands_unset_and_empty_default_operators ... ok
+test compose::kcl::tests::accepts_ipv4_and_ipv6_dns_rejects_garbage ... ok
+test compose::tests::test_compose_serde_roundtrip ... ok
+test compose::tests::test_env_vars_map ... ok
+test compose::tests::test_healthcheck_disable ... ok
+test compose::tests::test_healthcheck_config ... ok
+test compose::tests::test_labels_list ... ok
+test compose::tests::test_labels_map ... ok
+test compose::tests::test_parse_minimal_compose ... ok
+test compose::tests::test_parse_full_compose ... ok
+test compose::tests::test_service_config_defaults ... ok
+test compose::tests::test_raw_yaml_parser_never_silently_ignores_unknown_fields ... ok
+test compose::tests::test_service_networks_list ... ok
+test compose::tests::test_service_order_cycle_detected ... ok
+test compose::tests::test_service_order_missing_dependency ... ok
+test compose::tests::test_string_or_list_empty ... ok
+test compose::tests::test_service_order_no_deps ... ok
+test compose::tests::test_service_order_simple ... ok
+test compose::tests::test_string_or_list_list ... ok
+test compose::tests::test_string_or_list_single ... ok
+
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 449 filtered out; finished in 0.01s
+

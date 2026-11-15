@@ -1,0 +1,45 @@
+kbox-shim lint consolidation — verification results
+Environment: macOS arm64, workspace rust toolchain 1.97.1, K_DEPS_STUB=1
+python3 = WorkBuddy Python 3.13.12 (layout script needs tomllib)
+All commands run from the kbox repository root. Raw cargo progress lines omitted.
+
+COMMAND                                                                                     EXIT
+python3 scripts/check-workspace-layout.py                                                       0
+python3 scripts/check-unsafe-safety-docs.py                                                     0
+cargo check --locked --workspace --exclude kbox-cri --all-targets                                0
+cargo clippy --locked --workspace --exclude kbox-cri --all-targets --no-deps                    0
+cargo clippy --locked -p kbox-shim --all-targets --no-deps                                      0
+cargo check --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets                 0
+cargo clippy --locked -p kbox-shim --target x86_64-pc-windows-gnu --all-targets --no-deps      0
+rustfmt --edition 2021 --check crates/box/shim/src/kbox/context.rs                             0
+rustfmt --edition 2021 --check crates/box/shim/src/main.rs                                     0
+rustfmt --edition 2021 --check crates/box/shim/src/vm_launch.rs                               0
+git diff --check                                                                               0
+
+Note: no `-D unsafe_op_in_unsafe_fn` flag is passed in any command above. The
+deny now comes from `[lints] workspace = true` in crates/box/shim/Cargo.toml.
+
+Before / after measurements (clippy --message-format=json, E0133 primary spans):
+  host target          : 50 E0133  -> 0
+  windows cross target : 37 E0133  -> 0
+  union of unique byte spans: 56 (31 context.rs, 2 main.rs, 23 vm_launch.rs;
+                                  7 spans are multi-line calls)
+  forced `-D` clippy after the change: 0 E0133 on both targets.
+
+Layout gate:
+  before: 19 members, 17 inherit root lints, 2 local lint exceptions
+  after : 19 members, 18 inherit root lints, 1 local lint exception
+          (crates/box/third_party/mkext4 keeps its stricter unsafe_code = "forbid")
+
+Unsafe-doc gate: 1452 first-party .rs files, 35 unsafe fn, 0 missing # Safety,
+0 blanket missing_safety_doc allows (unchanged by this work).
+
+undocumented_unsafe_blocks (host, -W clippy::undocumented_unsafe_blocks):
+  all 56 newly added unsafe blocks are accepted as documented;
+  7 pre-existing undocumented unsafe blocks remain outside this change scope
+  (context.rs Drop impl and main.rs libc geteuid/flock/fcntl calls).
+
+Formatting: all three touched Rust files were rustfmt-clean before the change,
+so `rustfmt --edition 2021` was applied to them afterwards (no historical
+rustfmt differences were swept in). Using `--edition 2024` produces spurious
+import-order diffs.

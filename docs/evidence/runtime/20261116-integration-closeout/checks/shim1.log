@@ -1,0 +1,49 @@
+
+running 31 tests
+test kbox::tests::test_check_status_success_zero ... ok
+test kbox::tests::test_check_status_success_positive ... ok
+test kbox::tests::test_check_status_failure_negative_one ... ok
+test kbox::tests::test_check_status_error_message_format ... ok
+test kbox::tests::test_check_status_failure_negative_large ... ok
+test managed_oci_log_worker::tests::retries_only_transient_output_ownership_conflicts ... ok
+test tests::test_parse_ulimit_all_resources ... ok
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpr7yx2m
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpr7yx2m/libkrunfw.5.dylib
+cargo:warning=staged /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpr7yx2m/libkrunfw.5.dylib
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpr7yx2m
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpr7yx2m/libkrunfw.5.dylib
+cargo:warning=staged /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBIxRBb/libkrunfw.5.dylib
+test tests::test_parse_ulimit_case_insensitive ... ok
+test tests::test_parse_ulimit_core ... ok
+test tests::test_parse_ulimit_no_equals ... ok
+test tests::test_parse_ulimit_nofile ... ok
+test tests::test_parse_ulimit_nproc ... ok
+test tests::test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them ... ok
+test tests::rejects_empty_ext4_disk_rootfs_source ... ok
+test managed_oci_log_worker::tests::rejects_non_contiguous_output_without_writing_it ... ok
+test tests::rejects_file_as_directory_rootfs_source ... ok
+test tests::test_parse_ulimit_stack ... ok
+test tests::test_parse_ulimit_unknown ... ok
+test macos_readonly::tests::readonly_exports_are_pinned_and_overlapping_writable_grants_refuse ... ok
+test tests::raw_disk_ownership::rejects_reserved_or_repeated_auxiliary_raw_disks ... ok
+test tests::test_tsi_port_map_for_spec_skips_macos_bridge_ports ... ok
+test tests::rejects_symlink_as_ext4_disk_rootfs_source ... ok
+test tests::raw_disk_ownership::validates_one_read_only_auxiliary_raw_disk ... ok
+test tests::virtio_net_requires_inherited_egress_proxy ... ok
+test managed_oci_log_worker::tests::accepts_contiguous_split_output_and_both_eofs ... ok
+test tests::macos_runtime_assets::staging_same_file_or_hard_link_does_not_truncate_it ... ok
+test tests::validates_directory_rootfs_source ... ok
+test tests::validates_nonempty_ext4_disk_rootfs_source ... ok
+test tests::raw_disk_ownership::raw_disk_ownership_lock_rejects_a_second_kowner ... ok
+test tests::raw_disk_ownership::raw_disk_ownership_survives_owner_process_crashes ... ok
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJcLTz1
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJcLTz1/libkrun.9.42.0.dylib
+cargo:warning=staged /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJtCIIC/libkrun.9.42.0.dylib
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJcLTz1/libkrun.9.dylib
+cargo:warning=staged /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJtCIIC/libkrun.9.dylib
+cargo:rerun-if-changed=/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJcLTz1/libkrun.dylib
+cargo:warning=staged /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJtCIIC/libkrun.dylib
+test tests::macos_runtime_assets::stages_versioned_dylibs_and_aliases_without_invalidating_signatures ... ok
+
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.16s
+

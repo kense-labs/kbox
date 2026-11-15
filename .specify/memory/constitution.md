@@ -12,9 +12,9 @@ New behavior has a hermetic test in the owning package. Backend claims also need
 
 ### Policy regime
 
-Paths: `../kcl`.
+Paths: the `kense-kcl` dependency in the root `Cargo.toml` (pinned `git rev` of `kense-labs/kcl`), plus the kbox-side closed schemas in `crates/box/core/src/compose/` and `crates/box/runtime/src/oci/build/plan.rs`. KCL is an external repository, not a sibling `../kcl` working tree.
 
-Policy changes have deterministic tests for allow, refuse and unsupported cases. Security tests include an adversarial case. Configuration stays in KCL and behavioral decisions remain separate from actual enforcement.
+Policy changes have deterministic tests for allow, refuse and unsupported cases. Security tests include an adversarial case. Configuration stays in KCL and behavioral decisions remain separate from actual enforcement. Parser or canonical-digest changes land in the owning KCL repository and require a coordinated pinned-rev update in both kbox and krun.
 
 ### Native dependency regime
 

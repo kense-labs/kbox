@@ -759,6 +759,8 @@ fn validate_secret_root(root: &Path) -> RuntimeResult<()> {
     if unsafe { libc::statfs(path.as_ptr(), status.as_mut_ptr()) } != 0 {
         return Err(secret_io_error(std::io::Error::last_os_error()));
     }
+    // SAFETY: `statfs` returned success above, so the `MaybeUninit<statfs>`
+    // output buffer was fully initialized by the kernel.
     let status = unsafe { status.assume_init() };
     if !secret_root_is_memory_backed(root, &status)? {
         return Err(RuntimeError::ProviderUnavailable(

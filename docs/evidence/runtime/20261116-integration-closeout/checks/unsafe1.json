@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "scripts/check-unsafe-safety-docs.py"
+  ],
+  "exit": 0,
+  "seconds": 0.5035142499999999
+}

@@ -1,0 +1,7 @@
+Creating box warm_hamilton (c01e27895aac)...
+2026-11-15T03:36:38.071716Z  WARN Still waiting for exec server readiness; guest init may be mounting volumes, starting the container, or blocked before its accept loop elapsed_ms=10102 timeout_ms=15000 socket_path=\\.\pipe\kbox-exec-c01e27895aac47f39204341b7167b403
+Box warm_hamilton (c01e27895aac) started. Press Ctrl-C to stop.
+KBOX_PHASE0_BASELINE
+Linux localhost 6.12.91 #1 SMP PREEMPT_DYNAMIC Mon Jun  1 16:28:39 CEST 2026 x86_64 GNU/Linux
+uid=0(root) gid=0(root)
+Box warm_hamilton exited and was removed.

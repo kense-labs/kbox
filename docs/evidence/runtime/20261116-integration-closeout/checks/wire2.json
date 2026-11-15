@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "scripts/check-wire-contracts.py",
+    "--krun",
+    "../krun"
+  ],
+  "exit": 0,
+  "seconds": 8.938240625
+}

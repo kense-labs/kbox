@@ -1,0 +1,25 @@
+=== TEST 1: clippy -D clippy::missing_safety_doc with a missing heading ===
+[setup] removed # Safety heading at line 130
+warning: klibksys@3.2.7: K_DEPS_STUB mode: skipping libkrun build
+   Compiling kbox-shim v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/shim)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.97s
+clippy exit: 0  <-- vacuous: kbox-shim is a binary crate, KContext is not exported
+
+=== TEST 2: static gate, missing heading + reintroduced blanket allow ===
+[setup] removed # Safety heading at line 130
+first-party .rs files        : 1452
+unsafe fn declarations       : 35
+missing # Safety sections    : 1
+blanket missing_safety_doc allows: 1
+  FAIL crates/box/shim/src/kbox/context.rs:134: unsafe fn set_vm_config
+  FAIL crates/oci-runtime/crates/agent/src/executor/hook/watchdog.rs:1: #![allow(clippy::missing_safety_doc)]
+FAIL: unsafe fn safety documentation contract
+gate exit: 1
+
+=== TEST 3: restored sources ===
+first-party .rs files        : 1452
+unsafe fn declarations       : 35
+missing # Safety sections    : 0
+blanket missing_safety_doc allows: 0
+PASS: every unsafe fn has a # Safety section
+gate exit: 0

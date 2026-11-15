@@ -80,9 +80,23 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
 /// Configure libkrun context and start the VM.
 ///
 /// # Safety
-/// This function calls unsafe libkrun FFI functions.
-/// It performs process takeover on Unix. The bundled Windows backend returns
-/// after guest shutdown so the shim can finish host-side log processing.
+///
+/// This function drives the libkrun C ABI end to end and performs process
+/// takeover on Unix. The bundled Windows backend returns after guest shutdown
+/// so the shim can finish host-side log processing. The caller must:
+///
+/// - Call it only from the short-lived shim subprocess, never from the host
+///   application process: `kstart_enter()` takes over the calling process.
+/// - Pass an `InstanceSpec` whose paths, socket paths, inherited fds, named
+///   pipes and disk images are valid and stay open for the whole VM lifetime.
+///   libkrun borrows these resources and cannot detect a closed or moved one.
+/// - Ensure no other thread is configuring or using the same libkrun context;
+///   libkrun keeps mutable per-context state with no internal lock.
+/// - Initialize process-global libkrun logging once before entry, never
+///   concurrently with another setup path.
+///
+/// Every `unsafe` block below relies on this contract. Their nearby `SAFETY:`
+/// comments point back here instead of restating the same argument 23 times.
 pub(super) unsafe fn configure_and_start_vm(
     spec: &InstanceSpec,
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
@@ -93,15 +107,18 @@ pub(super) unsafe fn configure_and_start_vm(
     read_only
         .confine()
         .map_err(macos_readonly::boundary_error)?;
+
     // Initialize libkrun logging
     tracing::debug!("Initializing libkrun logging");
-    if let Err(e) = KContext::init_logging() {
+    // SAFETY: this function's # Safety contract covers this call.
+    if let Err(e) = unsafe { KContext::init_logging() } {
         tracing::warn!(error = %e, "Failed to initialize libkrun logging");
     }
 
     // Create libkrun context
     tracing::debug!("Creating libkrun context");
-    let ctx = KContext::create()?;
+    // SAFETY: this function's # Safety contract covers this call.
+    let ctx = unsafe { KContext::create() }?;
 
     // Configure VM resources
     tracing::debug!(
@@ -109,7 +126,8 @@ pub(super) unsafe fn configure_and_start_vm(
         memory_mib = spec.memory_mib,
         "Setting VM config"
     );
-    ctx.set_vm_config(spec.vcpus, spec.memory_mib)?;
+    // SAFETY: this function's # Safety contract covers this call.
+    unsafe { ctx.set_vm_config(spec.vcpus, spec.memory_mib) }?;
 
     #[cfg(target_os = "windows")]
     configure_windows_kernel(&ctx)?;
@@ -122,9 +140,13 @@ pub(super) unsafe fn configure_and_start_vm(
             rlim_cur: 0,
             rlim_max: 0,
         };
-        if getrlimit(RLIMIT_NOFILE, &mut rlim) == 0 {
+        // SAFETY: `rlim` is a live stack-local and `RLIMIT_NOFILE` is a valid
+        // resource, so the `&mut` pointer stays valid for this single libc call.
+        if unsafe { getrlimit(RLIMIT_NOFILE, &mut rlim) } == 0 {
             rlim.rlim_cur = rlim.rlim_max;
-            if setrlimit(RLIMIT_NOFILE, &rlim) != 0 {
+            // SAFETY: `rlim` is still a live stack-local; the raised soft limit
+            // never exceeds the hard limit returned by the preceding call.
+            if unsafe { setrlimit(RLIMIT_NOFILE, &rlim) } != 0 {
                 tracing::warn!("Failed to raise RLIMIT_NOFILE");
             } else {
                 tracing::debug!(limit = rlim.rlim_cur, "RLIMIT_NOFILE raised");
@@ -154,7 +176,8 @@ pub(super) unsafe fn configure_and_start_vm(
     }
 
     tracing::debug!(rlimits = ?rlimits, "Configuring guest rlimits");
-    ctx.set_rlimits(&rlimits)?;
+    // SAFETY: this function's # Safety contract covers this call.
+    unsafe { ctx.set_rlimits(&rlimits) }?;
 
     // Add filesystem mounts via virtiofs
     // For file mounts, we need to create a temporary directory and copy the file into it
@@ -203,23 +226,27 @@ pub(super) unsafe fn configure_and_start_vm(
             host_path.display(),
             if mount.read_only { "ro" } else { "rw" }
         );
-        ctx.add_virtiofs(&mount.tag, path_str)?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { ctx.add_virtiofs(&mount.tag, path_str) }?;
     }
 
     // Configure either the legacy virtio-fs directory root or the guest-native
     // raw ext4 root disk. The latter never enters macOS DiskImages.
-    ctx.set_root(&spec.rootfs)?;
+    // SAFETY: this function's # Safety contract covers this call.
+    unsafe { ctx.set_root(&spec.rootfs) }?;
 
     // Root block disks must be registered first so they remain `/dev/vda`.
     // Auxiliary devices then receive stable names in declared order; the
     // maintenance guest relies on its sole read-only disk being `/dev/vda`.
     for disk in &spec.block_devices {
-        ctx.add_raw_block_device(disk)?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { ctx.add_raw_block_device(disk) }?;
     }
 
     // Set working directory
     tracing::debug!(workdir = %spec.workdir, "Setting working directory");
-    ctx.set_workdir(&spec.workdir)?;
+    // SAFETY: this function's # Safety contract covers this call.
+    unsafe { ctx.set_workdir(&spec.workdir) }?;
 
     // Set entrypoint
     tracing::debug!(
@@ -227,11 +254,14 @@ pub(super) unsafe fn configure_and_start_vm(
         args = ?spec.entrypoint.args,
         "Setting entrypoint"
     );
-    ctx.set_exec(
-        &spec.entrypoint.executable,
-        &spec.entrypoint.args,
-        &spec.entrypoint.env,
-    )?;
+    // SAFETY: this function's # Safety contract covers this call.
+    unsafe {
+        ctx.set_exec(
+            &spec.entrypoint.executable,
+            &spec.entrypoint.args,
+            &spec.entrypoint.env,
+        )
+    }?;
 
     // TSI port mapping for inbound connections (host -> guest).
     // Must be called before add_vsock_port to avoid EINVAL from libkrun.
@@ -261,7 +291,8 @@ pub(super) unsafe fn configure_and_start_vm(
 
     if spec.disable_tsi {
         tracing::info!("Disabling TSI socket interception for isolated networking");
-        ctx.disable_tsi()?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { ctx.disable_tsi() }?;
     }
 
     #[cfg(unix)]
@@ -270,7 +301,8 @@ pub(super) unsafe fn configure_and_start_vm(
             .socket_path
             .to_str()
             .ok_or_else(|| BoxError::ConfigError("Host service socket path is not UTF-8".into()))?;
-        ctx.add_vsock_port(service.guest_port, path, false)?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { ctx.add_vsock_port(service.guest_port, path, false) }?;
     }
 
     // Configure exec communication channel
@@ -291,7 +323,8 @@ pub(super) unsafe fn configure_and_start_vm(
             guest_port = EXEC_VSOCK_PORT,
             "Configuring vsock bridge for exec (Unix socket)"
         );
-        ctx.add_vsock_port(EXEC_VSOCK_PORT, exec_socket_str, true)?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { ctx.add_vsock_port(EXEC_VSOCK_PORT, exec_socket_str, true) }?;
 
         // Configure PTY communication channel (Unix socket bridged to vsock port 4090)
         if !spec.pty_socket_path.as_os_str().is_empty() {
@@ -310,7 +343,8 @@ pub(super) unsafe fn configure_and_start_vm(
                 guest_port = PTY_VSOCK_PORT,
                 "Configuring vsock bridge for PTY"
             );
-            ctx.add_vsock_port(PTY_VSOCK_PORT, pty_socket_str, true)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.add_vsock_port(PTY_VSOCK_PORT, pty_socket_str, true) }?;
         }
 
         // Configure attestation communication channel (Unix socket bridged to vsock port 4091)
@@ -330,7 +364,8 @@ pub(super) unsafe fn configure_and_start_vm(
                 guest_port = ATTEST_VSOCK_PORT,
                 "Configuring vsock bridge for attestation"
             );
-            ctx.add_vsock_port(ATTEST_VSOCK_PORT, attest_socket_str, true)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.add_vsock_port(ATTEST_VSOCK_PORT, attest_socket_str, true) }?;
         }
 
         if !spec.port_forward_socket_path.as_os_str().is_empty() {
@@ -349,7 +384,8 @@ pub(super) unsafe fn configure_and_start_vm(
                 guest_port = PORT_FWD_VSOCK_PORT,
                 "Configuring vsock bridge for CRI port-forward control"
             );
-            ctx.add_vsock_port(PORT_FWD_VSOCK_PORT, port_forward_socket_str, true)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.add_vsock_port(PORT_FWD_VSOCK_PORT, port_forward_socket_str, true) }?;
         }
     }
 
@@ -385,7 +421,10 @@ pub(super) unsafe fn configure_and_start_vm(
             stop_request = %stop_request.display(),
             "Configuring Windows host-control channel"
         );
-        ctx.add_vsock_port_windows(PORT_FWD_VSOCK_PORT, port_forward_manager.pipe_name())?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe {
+            ctx.add_vsock_port_windows(PORT_FWD_VSOCK_PORT, port_forward_manager.pipe_name())
+        }?;
         port_forward_manager
     };
 
@@ -491,7 +530,8 @@ pub(super) unsafe fn configure_and_start_vm(
                 },
             )?;
             log_inherited_net_fd(fd);
-            ctx.add_net_unixgram_fd(fd, &net_config.mac_address)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.add_net_unixgram_fd(fd, &net_config.mac_address) }?;
         }
 
         // Network env vars (K_NET_IP, K_NET_GATEWAY, K_NET_DNS) are now
@@ -503,7 +543,8 @@ pub(super) unsafe fn configure_and_start_vm(
 
     // Configure user/group from OCI USER directive
     if let Some(ref user) = spec.user {
-        apply_user_config(&ctx, user)?;
+        // SAFETY: this function's # Safety contract covers this call.
+        unsafe { apply_user_config(&ctx, user) }?;
     }
 
     // Keep split-console descriptors owned by the shim until start_enter
@@ -547,7 +588,8 @@ pub(super) unsafe fn configure_and_start_vm(
                     None
                 };
                 let input_fd = stdin.as_ref().map_or(-1, |channel| channel.0.as_raw_fd());
-                ctx.add_split_console(input_fd, out_f.as_raw_fd(), err_f.as_raw_fd())?;
+                // SAFETY: this function's # Safety contract covers this call.
+                unsafe { ctx.add_split_console(input_fd, out_f.as_raw_fd(), err_f.as_raw_fd()) }?;
                 split_console_files = Some((out_f, err_f, stdin));
                 tracing::debug!("split console enabled (stdout/stderr separated)");
                 split_done = true;
@@ -558,7 +600,8 @@ pub(super) unsafe fn configure_and_start_vm(
                 console_path = console_str,
                 "Redirecting console output (merged)"
             );
-            ctx.set_console_output(console_str)?;
+            // SAFETY: this function's # Safety contract covers this call.
+            unsafe { ctx.set_console_output(console_str) }?;
         }
     }
 
@@ -679,7 +722,8 @@ pub(super) unsafe fn configure_and_start_vm(
     read_only
         .reverify()
         .map_err(macos_readonly::boundary_error)?;
-    let status = ctx.start_enter();
+    // SAFETY: the verified mount guards and context resources remain live through VM entry.
+    let status = unsafe { ctx.start_enter() };
 
     // No guest writes are valid after start_enter returns. Close the shim's
     // console descriptors before signaling the readers so their final EOF is
@@ -872,6 +916,12 @@ fn apply_windows_kernel_selection(ctx: &KContext, selection: WindowsKernelSelect
         kernel_format,
         "Using external Windows guest kernel"
     );
+    // SAFETY: `ctx` is the live context created by `configure_and_start_vm`,
+    // configured serially on this shim thread before `start_enter`. The path
+    // was verified as UTF-8 and the file confirmed to exist above, and
+    // `kernel_format` is derived from that same image, so it matches the guest
+    // architecture configured for this context — the two extra obligations in
+    // `KContext::set_kernel`'s `# Safety`. `initramfs` and `cmdline` are `None`.
     unsafe { ctx.set_kernel(kernel_path_str, kernel_format, None, None) }
 }
 

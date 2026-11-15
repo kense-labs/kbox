@@ -10,6 +10,9 @@ description = "MicroVM shim process for Kbox Box"
 name = "kbox-shim"
 path = "src/main.rs"
 
+[lints]
+workspace = true
+
 [dependencies]
 kbox-core = { path = "../core" }
 koci-sdk = { workspace = true }

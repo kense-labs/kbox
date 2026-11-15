@@ -1,0 +1,2 @@
+ BOX ID        IMAGE           STATUS   CREATED         PORTS  NAMES      
+ edfdcd0c7f97  e0/boot:latest  running  15 seconds ago         phase0-rss 

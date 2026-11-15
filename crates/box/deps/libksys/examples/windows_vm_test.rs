@@ -20,6 +20,10 @@ fn main() {
         std::process::exit(1);
     }
 
+    // SAFETY: this standalone example is single-threaded and drives the libkrun
+    // C ABI serially. Every pointer argument refers to a `CString` or stack
+    // local that stays alive for the whole block, handle-returning calls are
+    // checked before use, and no other thread touches the same context.
     unsafe {
         // 1. Create context
         println!("1. Creating VM context...");

@@ -6,6 +6,7 @@ use std::fs;
 use std::io::{self, Read, Write};
 use std::net::{Shutdown, TcpListener, TcpStream};
 use std::os::windows::ffi::OsStrExt;
+use std::os::windows::io::{AsRawHandle, FromRawHandle, OwnedHandle, RawHandle};
 use std::os::windows::process::CommandExt;
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
@@ -20,7 +21,7 @@ use kbox_core::exec::{
     WINDOWS_GUEST_CONTROL_READY_FILE,
 };
 use windows_sys::Win32::Foundation::{
-    CloseHandle, GetLastError, ERROR_BROKEN_PIPE, ERROR_NO_DATA, ERROR_PIPE_CONNECTED, HANDLE,
+    GetLastError, ERROR_BROKEN_PIPE, ERROR_NO_DATA, ERROR_PIPE_CONNECTED, HANDLE,
     INVALID_HANDLE_VALUE, WAIT_OBJECT_0,
 };
 use windows_sys::Win32::Storage::FileSystem::{
@@ -400,8 +401,10 @@ fn write_ready_file(path: &Path, contents: &str) {
 
 fn spawn_parent_watchdog(parent_pid: u32) {
     thread::spawn(move || {
-        let handle = unsafe { OpenProcess(PROCESS_SYNCHRONIZE_ACCESS, 0, parent_pid) };
-        if handle == 0 {
+        // SAFETY: OpenProcess takes only scalar arguments (desired access,
+        // inherit flag and PID) and retains no caller pointer.
+        let raw = unsafe { OpenProcess(PROCESS_SYNCHRONIZE_ACCESS, 0, parent_pid) };
+        if raw == 0 {
             tracing::info!(
                 parent_pid,
                 "Windows port-forward worker exiting because shim parent is unavailable"
@@ -409,10 +412,15 @@ fn spawn_parent_watchdog(parent_pid: u32) {
             std::process::exit(0);
         }
 
-        let wait_status = unsafe { WaitForSingleObject(handle, INFINITE) };
-        unsafe {
-            CloseHandle(handle);
-        }
+        // SAFETY: `raw` is a non-zero HANDLE returned by OpenProcess with
+        // PROCESS_SYNCHRONIZE_ACCESS. This is its unique owner; no duplicate
+        // exists, so OwnedHandle performs the single CloseHandle.
+        let handle = unsafe { OwnedHandle::from_raw_handle(raw as RawHandle) };
+        // SAFETY: `handle` is a live process handle opened with SYNCHRONIZE
+        // access; INFINITE is a scalar timeout and no pointer is retained.
+        let wait_status =
+            unsafe { WaitForSingleObject(handle.as_raw_handle() as HANDLE, INFINITE) };
+        drop(handle);
         if wait_status != WAIT_OBJECT_0 {
             tracing::warn!(
                 parent_pid,
@@ -949,11 +957,25 @@ struct Frame {
     payload: Vec<u8>,
 }
 
+/// Owned server end of a byte-mode, duplex Windows named pipe.
+///
+/// A Win32 kernel handle is process-wide and usable from any thread. `OwnedHandle`
+/// supplies the `Send`/`Sync` guarantees and the single `CloseHandle` on drop,
+/// so this type needs no handwritten `unsafe impl` and never duplicates its
+/// handle. `Drop` disconnects an attached client before the field closes it.
 struct NamedPipeServer {
-    handle: HANDLE,
+    handle: OwnedHandle,
 }
 
 impl NamedPipeServer {
+    /// Borrow the scalar Win32 handle value for FFI calls only.
+    fn raw(&self) -> HANDLE {
+        // windows-sys 0.48 defines HANDLE as isize while RawHandle is
+        // *mut c_void; the cast is lossless on Windows ABIs and transfers no
+        // ownership. The OwnedHandle field keeps the resource alive.
+        self.handle.as_raw_handle() as HANDLE
+    }
+
     fn create(path: &str, first_instance: bool) -> io::Result<Self> {
         let path_w = wide(path);
         let open_mode = PIPE_ACCESS_DUPLEX
@@ -962,7 +984,10 @@ impl NamedPipeServer {
             } else {
                 0
             };
-        let handle = unsafe {
+        // SAFETY: `path_w` is a NUL-terminated UTF-16 buffer alive for the call;
+        // every other argument is a scalar flag, size or a null security
+        // descriptor, and CreateNamedPipeW retains no caller pointer.
+        let raw = unsafe {
             CreateNamedPipeW(
                 path_w.as_ptr(),
                 open_mode,
@@ -975,32 +1000,44 @@ impl NamedPipeServer {
             )
         };
 
-        if handle == INVALID_HANDLE_VALUE {
+        if raw == 0 || raw == INVALID_HANDLE_VALUE {
             return Err(io::Error::last_os_error());
         }
+
+        // SAFETY: `raw` is a non-null, non-INVALID_HANDLE_VALUE handle freshly
+        // created by CreateNamedPipeW (checked above). It is the unique owner of
+        // this server instance; no duplicate exists and OwnedHandle closes it
+        // exactly once.
+        let handle = unsafe { OwnedHandle::from_raw_handle(raw as RawHandle) };
 
         Ok(Self { handle })
     }
 
     fn disconnect(&self) {
+        // A guest response and FRAME_CLOSE commonly arrive back-to-back.
+        // Wait until the named-pipe client has consumed every byte already
+        // written before disconnecting, otherwise Windows may discard the
+        // final response and make the client fail with ERROR_PIPE_NOT_CONNECTED
+        // (233). A departed client makes FlushFileBuffers fail immediately;
+        // disconnect remains best-effort in either case.
+        // SAFETY: `self.raw()` is a live server handle owned by this instance;
+        // both calls take only its scalar value and retain no caller pointer.
         unsafe {
-            // A guest response and FRAME_CLOSE commonly arrive back-to-back.
-            // Wait until the named-pipe client has consumed every byte already
-            // written before disconnecting, otherwise Windows may discard the
-            // final response and make the client fail with ERROR_PIPE_NOT_CONNECTED
-            // (233). A departed client makes FlushFileBuffers fail immediately;
-            // disconnect remains best-effort in either case.
-            FlushFileBuffers(self.handle);
-            DisconnectNamedPipe(self.handle);
+            FlushFileBuffers(self.raw());
+            DisconnectNamedPipe(self.raw());
         }
     }
 
     fn connect(&self) -> io::Result<()> {
-        let result = unsafe { ConnectNamedPipe(self.handle, std::ptr::null_mut()) };
+        // SAFETY: `self.raw()` is a live server handle; a null OVERLAPPED makes
+        // ConnectNamedPipe synchronous and it retains no caller pointer.
+        let result = unsafe { ConnectNamedPipe(self.raw(), std::ptr::null_mut()) };
         if result != 0 {
             return Ok(());
         }
 
+        // SAFETY: GetLastError takes no arguments and is read immediately after
+        // the failed FFI call on this same thread.
         let err = unsafe { GetLastError() };
         if err == ERROR_PIPE_CONNECTED {
             Ok(())
@@ -1013,9 +1050,12 @@ impl NamedPipeServer {
         let mut preview = [0u8; 9];
         let mut preview_read = 0u32;
         let mut bytes_available = 0u32;
+        // SAFETY: `self.raw()` is a live server handle; `preview`,
+        // `preview_read` and `bytes_available` are valid writable buffers that
+        // outlive the call, and PeekNamedPipe retains no caller pointer.
         let ok = unsafe {
             PeekNamedPipe(
-                self.handle,
+                self.raw(),
                 preview.as_mut_ptr() as *mut _,
                 preview.len() as u32,
                 &mut preview_read,
@@ -1081,9 +1121,12 @@ impl NamedPipeServer {
         let mut offset = 0usize;
         while offset < buf.len() {
             let mut read = 0u32;
+            // SAFETY: `self.raw()` is a live server handle; `buf[offset..]` is
+            // writable for exactly the passed length, `read` is a valid out
+            // pointer, and the null OVERLAPPED makes the call synchronous.
             let ok = unsafe {
                 ReadFile(
-                    self.handle,
+                    self.raw(),
                     buf[offset..].as_mut_ptr() as *mut _,
                     (buf.len() - offset) as u32,
                     &mut read,
@@ -1104,9 +1147,12 @@ impl NamedPipeServer {
 
     fn read(&self, buf: &mut [u8]) -> io::Result<usize> {
         let mut bytes_available = 0u32;
+        // SAFETY: `self.raw()` is a live server handle; only `bytes_available`
+        // is written (all other buffer arguments are null) and no pointer is
+        // retained by PeekNamedPipe.
         let peek_ok = unsafe {
             PeekNamedPipe(
-                self.handle,
+                self.raw(),
                 std::ptr::null_mut(),
                 0,
                 std::ptr::null_mut(),
@@ -1126,9 +1172,12 @@ impl NamedPipeServer {
 
         let mut read = 0u32;
         let read_len = buf.len().min(bytes_available as usize);
+        // SAFETY: `self.raw()` is a live server handle; `read_len` is bounded by
+        // the writable `buf`, `read` is a valid out pointer, and the null
+        // OVERLAPPED makes the call synchronous.
         let ok = unsafe {
             ReadFile(
-                self.handle,
+                self.raw(),
                 buf.as_mut_ptr() as *mut _,
                 read_len as u32,
                 &mut read,
@@ -1145,9 +1194,12 @@ impl NamedPipeServer {
         let mut offset = 0usize;
         while offset < buf.len() {
             let mut written = 0u32;
+            // SAFETY: `self.raw()` is a live server handle; `buf[offset..]` is
+            // readable for exactly the passed length, `written` is a valid out
+            // pointer, and the null OVERLAPPED makes the call synchronous.
             let ok = unsafe {
                 WriteFile(
-                    self.handle,
+                    self.raw(),
                     buf[offset..].as_ptr() as *const _,
                     (buf.len() - offset) as u32,
                     &mut written,
@@ -1166,15 +1218,18 @@ impl NamedPipeServer {
 
 impl Drop for NamedPipeServer {
     fn drop(&mut self) {
+        // Fields drop only after Drop::drop returns, so an attached client sees
+        // a broken pipe before the OwnedHandle field closes the handle.
+        // SAFETY: `self.raw()` is live here; the call takes only a scalar handle
+        // and is valid on a server instance with no connected client.
         unsafe {
-            DisconnectNamedPipe(self.handle);
-            CloseHandle(self.handle);
+            DisconnectNamedPipe(self.raw());
         }
     }
 }
 
-unsafe impl Send for NamedPipeServer {}
-unsafe impl Sync for NamedPipeServer {}
+// Send and Sync come from the OwnedHandle field. Do not reintroduce handwritten
+// `unsafe impl Send/Sync`; the unit test below pins those bounds at compile time.
 
 fn wide(s: &str) -> Vec<u16> {
     OsStr::new(s)
@@ -1298,5 +1353,17 @@ mod tests {
         server.disconnect();
 
         assert_eq!(client.join().unwrap(), payload);
+    }
+
+    #[test]
+    fn named_pipe_server_thread_safety_comes_from_owned_handle() {
+        fn assert_send_sync<T: Send + Sync>() {}
+
+        // Regression guard: this type previously held a raw HANDLE, closed it in
+        // a handwritten Drop and declared `unsafe impl Send/Sync` without any
+        // soundness argument. The bounds now come from OwnedHandle alone, and
+        // Arc sharing across the port-forward threads depends on them.
+        assert_send_sync::<NamedPipeServer>();
+        assert_send_sync::<Arc<NamedPipeServer>>();
     }
 }

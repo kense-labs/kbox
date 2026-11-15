@@ -1,6 +1,6 @@
+use containerd_shim::TtrpcResult;
 use koci_sdk::oci_spec::runtime::{ContainerState, LinuxResources};
 use koci_sdk::ContainerRecord;
-use containerd_shim::TtrpcResult;
 
 use super::*;
 pub(super) use crate::metadata::update_request_digest;

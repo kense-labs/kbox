@@ -3,6 +3,8 @@ use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex as StdMutex};
 use std::time::Duration;
 
+use containerd_shim::{TtrpcContext, TtrpcResult};
+use containerd_shim_protos::{api, shim_async::Task, ttrpc};
 use koci_sdk::oci_spec::runtime::Process;
 use koci_sdk::{
     async_trait, ContainerRecord, CreateRequest, DeleteRequest, Error as RuntimeError, ErrorCode,
@@ -10,8 +12,6 @@ use koci_sdk::{
     ProcessRecord, ProcessTarget, ProcessesRequest, ResizeRequest, RuntimeClient, StartRequest,
     StateRequest, TerminalSize, WaitProcessRequest, WaitRequest,
 };
-use containerd_shim::{TtrpcContext, TtrpcResult};
-use containerd_shim_protos::{api, shim_async::Task, ttrpc};
 use tokio::sync::{Barrier, Mutex};
 
 use super::{
@@ -169,10 +169,7 @@ impl OciRuntimeService for ResizeRuntime {
         Ok(())
     }
 
-    async fn processes(
-        &self,
-        _request: ProcessesRequest,
-    ) -> koci_sdk::Result<Vec<ProcessRecord>> {
+    async fn processes(&self, _request: ProcessesRequest) -> koci_sdk::Result<Vec<ProcessRecord>> {
         if self.process_exited.load(Ordering::SeqCst) {
             return Ok(Vec::new());
         }

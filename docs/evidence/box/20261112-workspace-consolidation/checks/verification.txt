@@ -1,0 +1,37 @@
+Local verification, 2026-11-12, macOS/arm64, toolchain 1.97.1.
+All cargo commands below use K_DEPS_STUB=1 unless noted. Paths are relative to
+the kbox repository root. <manifest> is the root Cargo.toml.
+
+Command                                                                 Exit  Result
+-------                                                                 ----  ------
+cargo metadata --manifest-path <manifest> --no-deps --format-version 1   0     19 members; containerd-shim present
+cargo check --locked --workspace --exclude kbox-cri --all-targets         0     0 errors
+cargo clippy --locked --workspace --exclude kbox-cri --all-targets        0     0 errors (72 pre-existing warnings in kbox-runtime lib test)
+                                                  --no-deps
+python3 scripts/check-workspace-layout.py                                  0     PASS (see below)
+cargo check --locked -p kbox-shim --target x86_64-pc-windows-gnu          0     cfg-gated Windows module type-checked
+                     --all-targets
+cargo test --locked -p kbox-contract --lib                                 0     24 passed; 0 failed
+cargo check --manifest-path ../krun/Cargo.toml --locked --all-targets     0     parallel krun refactor unaffected
+git diff --check                                                            0     no whitespace errors
+cargo check --locked --workspace --all-targets                             101   kbox-cri build script: protoc not installed (host prerequisite)
+
+Layout contract output:
+  [workspace] declarations : 1 (root only)
+  first-party Cargo.lock    : 1
+  rust-toolchain files      : 1
+  workspace members         : 19
+  inherit root lints        : 17
+  local lint exceptions     : 2
+    - crates/box/shim: 49 pre-existing FFI calls inside unsafe fn (E0133 under deny)
+    - crates/box/third_party/mkext4: keeps its own stricter unsafe_code = "forbid"
+  PASS: single-workspace layout contract
+
+Before/after shape:
+  [workspace] manifests      2 -> 1
+  first-party Cargo.lock     2 -> 1
+  first-party toolchains     3 -> 1   (root 1.97.1, nested 1.98.1, crates/box "stable")
+  root workspace members    18 -> 19  (containerd-shim)
+  members inheriting lints    8 -> 17  (2 documented local exceptions)
+  clippy::undocumented_unsafe_blocks state for kbox-shim is unchanged from
+  20261112-windows-named-pipe-owned-handle (3 warnings outside that file).

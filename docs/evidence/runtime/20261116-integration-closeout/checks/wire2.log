@@ -1,0 +1,3 @@
+kbox: 17 wire identifiers found, 17 declared
+krun: 28 wire identifiers found, 28 declared
+PASS: wire schema identifiers match the declared contract

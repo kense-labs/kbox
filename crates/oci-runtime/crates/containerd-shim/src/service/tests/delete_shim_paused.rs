@@ -1,12 +1,12 @@
 use std::sync::{Arc, Mutex};
 
+use containerd_shim::asynchronous::Shim;
 use koci_sdk::oci_spec::runtime::{ContainerState, StateBuilder};
 use koci_sdk::{
     async_trait, ContainerOperationRequest, ContainerRecord, DeleteMode, DeleteRequest,
     Error as RuntimeError, ErrorCode, ExitStatus, Generation, IsolationRequest, KillRequest,
     OciRuntimeService, StateRequest, WaitRequest, PAUSED_STATE_ANNOTATION,
 };
-use containerd_shim::asynchronous::Shim;
 
 use super::{metadata_from_task, recovery_service_instance, task_state};
 use crate::adapter::RuntimeAdapter;
@@ -36,10 +36,7 @@ impl OciRuntimeService for PausedCleanupService {
         Err(RuntimeError::unsupported("test-features"))
     }
 
-    async fn create(
-        &self,
-        _request: koci_sdk::CreateRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn create(&self, _request: koci_sdk::CreateRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-create"))
     }
 
@@ -50,10 +47,7 @@ impl OciRuntimeService for PausedCleanupService {
         Ok(self.paused.clone())
     }
 
-    async fn start(
-        &self,
-        _request: koci_sdk::StartRequest,
-    ) -> koci_sdk::Result<ContainerRecord> {
+    async fn start(&self, _request: koci_sdk::StartRequest) -> koci_sdk::Result<ContainerRecord> {
         Err(RuntimeError::unsupported("test-start"))
     }
 

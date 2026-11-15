@@ -2,9 +2,7 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use std::time::Duration;
 
-use koci_sdk::{
-    ContainerTarget, Generation, OperationContext, ProcessTarget, WriteStdinRequest,
-};
+use koci_sdk::{ContainerTarget, Generation, OperationContext, ProcessTarget, WriteStdinRequest};
 use prost_types::Any;
 use serde::Deserialize;
 use tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader, Lines};

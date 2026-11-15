@@ -11,6 +11,9 @@ async fn stdin_fifo_distinguishes_writer_connection_from_real_eof() {
     let path = directory.path().join("stdin");
     let path_bytes = path.as_os_str().as_bytes();
     let path_c = std::ffi::CString::new(path_bytes).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -72,6 +75,9 @@ async fn stdin_pump_replays_pending_write_and_continues_after_durable_sequence()
     let path = directory.path().join("journaled-stdin");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -274,6 +280,9 @@ async fn initial_empty_stdin_closes_at_the_successful_start_boundary() {
     let path = directory.path().join("empty-stdin");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -337,6 +346,9 @@ async fn connected_slow_stdin_is_not_mistaken_for_initial_eof() {
     let path = directory.path().join("slow-stdin");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -415,6 +427,9 @@ async fn restored_stdin_waits_for_a_real_producer_reconnect() {
     let path = directory.path().join("restored-stdin");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,
@@ -498,6 +513,9 @@ async fn close_io_waits_for_every_buffered_stdin_byte_before_eof() {
     let path = directory.path().join("stdin-drain");
     let path_c =
         std::ffi::CString::new(path.as_os_str().as_bytes()).expect("FIFO path without NUL");
+    // SAFETY: the path `CString` above is live and NUL-terminated; `mkfifo` reads
+    // it only for this call and retains no pointer. The mode is a constant and the
+    // test fixture's parent directory exists.
     let result = unsafe { libc::mkfifo(path_c.as_ptr(), 0o600) };
     assert_eq!(
         result,

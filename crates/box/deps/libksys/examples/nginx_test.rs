@@ -46,6 +46,14 @@ fn main() {
         println!();
     }
 
+    // SAFETY: this standalone example is single-threaded and owns exactly one
+    // libkrun context. `ctx_id` comes from a successful `kcreate_ctx` above and
+    // is freed only on an error path or after `kstart_enter` returns; every
+    // `kset_*` call is serialized here. Each `CString` passed by pointer is a
+    // live local that stays in scope through `kstart_enter`, and the argv
+    // arrays are NUL-pointer-terminated slices of pointers to those same live
+    // strings. `kstart_enter` takes over the process on success, so the C side
+    // never uses these pointers after the block ends.
     unsafe {
         // 1. Create context
         println!("1. Creating VM context...");

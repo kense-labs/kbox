@@ -53,3 +53,6 @@ windows-sys = { version = "0.59", features = ["Win32_Foundation"] }
 
 [features]
 default = []
+
+[lints]
+workspace = true

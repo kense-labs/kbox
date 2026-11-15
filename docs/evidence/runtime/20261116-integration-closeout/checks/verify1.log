@@ -1,0 +1,258 @@
+== whitespace and conflict markers ==
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:3: trailing whitespace.
++> **用法**：`@` 本文件并说「按此工作计划持续推进」。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:4: trailing whitespace.
++> **权威约束**：`docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md`  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:5: trailing whitespace.
++> **产物语言**：简体中文。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:18: trailing whitespace.
++1. Phase 0 已完成后，**默认继续** WP-4 及后续，不因「等验收」停摆。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:19: trailing whitespace.
++2. 一次会话尽量吃完当前可做的最长前缀（设计→单测→示例骨架→真 WHPX 证据）。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:20: trailing whitespace.
++3. 阻塞时写清阻塞与解除步骤，改做下一项不依赖该阻塞的工作。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:21: trailing whitespace.
++4. 实现优先 **LocalExecutionManager environment-prewarm**；**不**先移植 Unix `pool` daemon / UDS。  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:51: trailing whitespace.
++- 状态机：`ensure_reservation → start_prewarmed → Running idle → claim_prewarmed（generation+1，不 reboot）→ release/remove`  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:52: trailing whitespace.
++- 与 Unix `pool` CLI 边界：Windows CLI 仍 fail-closed；本阶段不改 `pool.rs` 成功路径  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:53: trailing whitespace.
++- 与 live-session / Job Object / named pipe 的关系（加固可选，非 P50 阻塞）  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:54: trailing whitespace.
++- 兼容基线：Win10/11+WHPX；禁 HCS/Containers/HNS 默认依赖  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:55: trailing whitespace.
++- 最小垂直切片与验收数字：相对 Phase 0 P50 的二次任务时延  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:68: trailing whitespace.
++- 参考 `crates/box/runtime/examples/windows_whpx_oci_qualification.rs`  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:69: trailing whitespace.
++- 新增 example（建议名 `windows-whpx-environment-prewarm-qualification`）：  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:70: trailing whitespace.
++  bootstrap = `/bin/sleep` + `infinity` + digest-pinned image；调用 `ensure_prewarmed_reservation` / `start_prewarmed` / `claim_prewarmed`  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:71: trailing whitespace.
++- `Cargo.toml` `[[example]]`  
+docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md:76: trailing whitespace.
++目录：`docs/evidence/box/YYYYMMDD-windows-lcow-opt-phase1-prewarm/`  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:3: trailing whitespace.
++> **用法**：将本文件全文作为新 Agent 会话的系统/任务提示词（或 `@` 引用后说「按此提示词执行」）。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:4: trailing whitespace.
++> **产物语言**：对用户用简体中文；代码/路径/证据标识保持仓库原文。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:64: trailing whitespace.
++1. 启动/探测时显式检查能力；缺失时走基线路径，**不得**报模糊错误或半初始化。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:65: trailing whitespace.
++2. 对外合同区分：`baseline`（默认）vs `accelerated`（opt-in）。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:66: trailing whitespace.
++3. 证据矩阵至少覆盖：**基线宿主 PASS**；加速宿主可另附，但不能替代基线证据。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:71: trailing whitespace.
++- [ ] 是否引入了仅 Server 2022/2025、仅 LCOW v2、仅 Containers 功能包才有的 API？  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:72: trailing whitespace.
++- [ ] 在「WHPX-only、无 HNS、无 containerd」机器上，默认路径是否仍完成合同？  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:73: trailing whitespace.
++- [ ] 文档/CLI 是否把可选能力写成了全 Windows 必达？  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:106: trailing whitespace.
++- `warm pool` / 部分 pause：Windows fail-closed 或不支持  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:107: trailing whitespace.
++- `network` bridge：硬拒绝；应用**基线可实现**的替代合同，而非等 HNS  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:108: trailing whitespace.
++- 单 vCPU、冷启动、每 Box 一 VM 密度  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:109: trailing whitespace.
++- TEE / attest：unavailable（保持诚实）  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:110: trailing whitespace.
++- readiness：`probe-only` / fresh-host 门禁仍开  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:135: trailing whitespace.
++- Microsoft Learn：isolation modes、HCS overview（理解边界即可）  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:136: trailing whitespace.
++- `microsoft/hcsshim` / `opengcs`：UVM 一等公民、multipod **动机**  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:137: trailing whitespace.
++- 查阅时标注：该能力最低 OS / 是否需 Containers 功能包 → 记入「不可进默认路径」栏  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:143: trailing whitespace.
++1. **借鉴 ≠ 移植 ≠ 抬高最低版本**：四列表必须含「**基线宿主如何实现**」列。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:144: trailing whitespace.
++2. **宽兼容优先于追新**：同一功能有「新 API」与「WHPX+自研」两条路时，默认选后者。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:145: trailing whitespace.
++3. **先测量后优化**：声称更快/更密前，在**基线宿主**上留 before/after（P50/P95、RSS 等）。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:146: trailing whitespace.
++4. **合同先行**：生命周期/网络变更先短设计或 ADR，再写代码。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:147: trailing whitespace.
++5. **最小可证切片**：每阶段可独立取证；不做大爆炸重构。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:148: trailing whitespace.
++6. **证据纪律**：写入 `docs/evidence/...`；注明 OS build、SKU、是否启用可选功能包；不删旧证据。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:161: trailing whitespace.
++1. 写映射表（建议：`docs/architecture/windows-lcow-inspired-optimization.md`），每行含：  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:162: trailing whitespace.
++   LCOW 特性 → 设计要点 → **基线落地** → **禁止依赖** → 是否 opt-in。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:163: trailing whitespace.
++2. 在**兼容基线宿主**（WHPX-only）采集冷启动 / RSS / P50/P95。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:168: trailing whitespace.
++- [ ] 映射表含兼容列与非目标  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:169: trailing whitespace.
++- [ ] 基线数字 + 复现命令入 evidence（OS build / SKU / kbox 版本 / 二进制路径）  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:170: trailing whitespace.
++- [ ] 无 readiness 升级声明  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:182: trailing whitespace.
++- 预热/可附着 session：create → ready → attach/exec → release；失败不降级隔离。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:183: trailing whitespace.
++- 扩展现有 live-session / session owner / Job Object / named pipe，**不引入 HCS**。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:184: trailing whitespace.
++- CLI `pool` 若仍 fail-closed：先做运行时/引擎级合同，再谈 CLI。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:189: trailing whitespace.
++- [ ] 状态机、generation fencing、泄漏清理、失败语义书面化  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:190: trailing whitespace.
++- [ ] **基线宿主**上：预热后二次任务延迟相对 Phase 0 冷启动有可复现改善（如实报告）  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:191: trailing whitespace.
++- [ ] Cleanup 无遗留 VM / pipe / `K_HOME` 垃圾  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:192: trailing whitespace.
++- [ ] 兼容自检 §2.4 全部通过  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:204: trailing whitespace.
++- [ ] ADR：默认仍「每 Box 一 VM」unless 显式 opt-in  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:205: trailing whitespace.
++- [ ] 基线宿主证据（密度或 RSS 对比）  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:206: trailing whitespace.
++- [ ] 失败注入按 ADR 范围验证  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:207: trailing whitespace.
++- [ ] 兼容自检通过  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:219: trailing whitespace.
++1. 现有 virtio-net / TSI / port-forward / `network none` 的增强与文档诚实化  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:220: trailing whitespace.
++2. 纯用户态、不依赖 Containers 功能包的可达性方案  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:221: trailing whitespace.
++3. （可选）探测到 HNS 时的加速后端 —— 缺失时不影响默认路径  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:225: trailing whitespace.
++- [ ] 能力矩阵：`unsupported` / `baseline` / `opt-in`；写明最低依赖  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:226: trailing whitespace.
++- [ ] 默认路径在无 HNS 机器上的 E2E 或等价证据  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:227: trailing whitespace.
++- [ ] bridge 拒绝路径仍 PASS；不把 bridge 改写成 Windows supported  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:228: trailing whitespace.
++- [ ] 兼容自检通过  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:283: trailing whitespace.
++- 先搜拒绝点与状态机，再改代码。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:284: trailing whitespace.
++- 取证用隔离 `K_HOME` + 真实二进制；mock 不能冒充 MicroVM 证据。  
+docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md:285: trailing whitespace.
++- 对照 LCOW 时标注最低 OS/功能包，并归入「灵感 / 禁止默认依赖」。  
+docs/architecture/windows-environment-prewarm-phase1.md:3: trailing whitespace.
++**状态**：设计定稿（2026-11-15）· 实现按 next-workplan WP-5→WP-7 持续推进  
+docs/architecture/windows-environment-prewarm-phase1.md:4: trailing whitespace.
++**灵感**：LCOW「UVM 与 task 分离」——**只学状态分层，不接线 HCS/LCOW**  
+docs/architecture/windows-environment-prewarm-phase1.md:5: trailing whitespace.
++**基线宿主**：Windows 10/11 x86_64 + WHPX（见 Phase 0 证据）  
+docs/architecture/windows-environment-prewarm-phase1.md:49: trailing whitespace.
++- 不兼容 digest / 非 Running / inspect 失败 → claim 返回 `None` 或跳过，调用方 **冷路径** create+start（不得降级隔离）。  
+docs/architecture/windows-environment-prewarm-phase1.md:50: trailing whitespace.
++- 冲突 operation → `Conflict`。  
+docs/architecture/windows-environment-prewarm-phase1.md:71: trailing whitespace.
++1. 隔离 `K_HOME` + 既有 boot/OCI 镜像（digest-pinned，满足 `validate_bootstrap`）。  
+docs/architecture/windows-environment-prewarm-phase1.md:72: trailing whitespace.
++2. `ensure_prewarmed_reservation` + `start_prewarmed`，等待 Running。  
+docs/architecture/windows-environment-prewarm-phase1.md:73: trailing whitespace.
++3. 计时 `claim_prewarmed`（及随后一次短 exec/观测，若合同需要）。  
+docs/architecture/windows-environment-prewarm-phase1.md:74: trailing whitespace.
++4. 对照同环境冷 `create`+`start`（或 Phase 0 `kbox run` 仅作量级参考，**不可**替代 claim 证据）。  
+docs/architecture/windows-environment-prewarm-phase1.md:83: trailing whitespace.
++- `kbox info`：`Warm pool daemon: unsupported on Windows` — **保持**直至另立 CLI 史诗。  
+docs/architecture/windows-environment-prewarm-phase1.md:90: trailing whitespace.
++- [x] 默认路径不要求 Server 2025 / LCOW v2 / Containers 功能包  
+docs/architecture/windows-environment-prewarm-phase1.md:91: trailing whitespace.
++- [x] 不以 HNS 为预热或网络前提  
+docs/architecture/windows-environment-prewarm-phase1.md:92: trailing whitespace.
++- [x] 不共享宿主内核  
+docs/architecture/windows-environment-prewarm-phase1.md:93: trailing whitespace.
++- [x] 不静默切换 hypervisor  
+docs/architecture/windows-environment-prewarm-phase1.md:94: trailing whitespace.
++- [x] 不因本设计改 `support-matrix` readiness  
+docs/architecture/windows-environment-prewarm-phase1.md:111: trailing whitespace.
++- `docs/architecture/windows-lcow-inspired-optimization.md`  
+docs/architecture/windows-environment-prewarm-phase1.md:112: trailing whitespace.
++- `docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md`  
+docs/architecture/windows-environment-prewarm-phase1.md:113: trailing whitespace.
++- `crates/oci-runtime/docs/windows-whpx-live-session.md`  
+docs/architecture/windows-environment-prewarm-phase1.md:114: trailing whitespace.
++- `specs/001-krun-engine/research.md`（pool vs environment-prewarm 分工，若存在）  
+docs/architecture/windows-lcow-inspired-optimization.md:3: trailing whitespace.
++**状态**：Phase 0 范围锁定（2026-11-15）  
+docs/architecture/windows-lcow-inspired-optimization.md:4: trailing whitespace.
++**权威执行提示词**：`docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:5: trailing whitespace.
++**近期排期**：`docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:30: trailing whitespace.
++- 用 HCS / hcsshim / runhcs / `containerd-shim-lcow-v2` 替换 `kbox-shim` + libkrun。  
+docs/architecture/windows-lcow-inspired-optimization.md:31: trailing whitespace.
++- 用 WCOW process isolation 或 Host Process Containers「加速」Linux OCI。  
+docs/architecture/windows-lcow-inspired-optimization.md:32: trailing whitespace.
++- 静默降级隔离、静默换 hypervisor、第二套执行状态机。  
+docs/architecture/windows-lcow-inspired-optimization.md:33: trailing whitespace.
++- 在 Windows 上把 `bridge` 谎称为 supported。  
+docs/architecture/windows-lcow-inspired-optimization.md:34: trailing whitespace.
++- 把 libkrun `WINDOWS_ROADMAP` 完成度写成 kbox `supported`。  
+docs/architecture/windows-lcow-inspired-optimization.md:69: trailing whitespace.
++- [x] 未引入仅 Server 2022/2025、仅 LCOW v2、仅 Containers 功能包才有的 **默认** API 依赖  
+docs/architecture/windows-lcow-inspired-optimization.md:70: trailing whitespace.
++- [x] 在「WHPX-only、不以 HNS 为网络平面」设定下，默认优化路径仍可定义完成合同  
+docs/architecture/windows-lcow-inspired-optimization.md:71: trailing whitespace.
++- [x] 未把可选能力写成全 Windows 必达  
+docs/architecture/windows-lcow-inspired-optimization.md:72: trailing whitespace.
++- [x] 未提高产品最低 OS 版本要求  
+docs/architecture/windows-lcow-inspired-optimization.md:78: trailing whitespace.
++- 基线测量（Phase 0）：`docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/`  
+docs/architecture/windows-lcow-inspired-optimization.md:79: trailing whitespace.
++- Phase 1 设计：`docs/architecture/windows-environment-prewarm-phase1.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:80: trailing whitespace.
++- Phase 1 推进证据：`docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:81: trailing whitespace.
++- 既有 WHPX E2E：`docs/evidence/box/20261109-windows-visualized-e2e/OUTCOME.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:82: trailing whitespace.
++- 执行提示词：`docs/agent-prompts/lcow-inspired-krun-windows-optimization.AGENT.md`  
+docs/architecture/windows-lcow-inspired-optimization.md:83: trailing whitespace.
++- 持续排期：`docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md`  
+docs/evidence/box/20261112-wire-contract-gate/checks/verification.txt:2762: trailing whitespace.
++434 ~     
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:3: trailing whitespace.
++**日期**：2026-11-15  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:4: trailing whitespace.
++**Overall**：**PHASE 0 BASELINE RECORDED** — 仅测量与范围锁定；**未宣称**任何优化收益；**未改**产品 readiness / 运行时代码。  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:5: trailing whitespace.
++**计划**：`docs/agent-prompts/lcow-inspired-krun-next-workplan.AGENT.md` WP-2  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:73: trailing whitespace.
++- [x] 未引入 Server 2025 / LCOW v2 / Containers 功能包 API  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:74: trailing whitespace.
++- [x] 测量在 WHPX + 既有 kbox 二进制上完成；不以 HNS 为网络平面  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:75: trailing whitespace.
++- [x] 未把可选能力写成全 Windows 必达  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:82: trailing whitespace.
++- 任何「优化后更快」或产品完成度变化  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:83: trailing whitespace.
++- readiness 从 `probe-only` 晋升  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/OUTCOME.md:84: trailing whitespace.
++- warm pool / bridge / TEE 在 Windows 上变为 supported  
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/ps-final.txt:1: trailing whitespace.
++ BOX ID  IMAGE  STATUS  CREATED  PORTS  NAMES 
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/rss-create.txt:3: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/rss-ps.txt:1: trailing whitespace.
++ BOX ID        IMAGE           STATUS   CREATED         PORTS  NAMES      
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/rss-ps.txt:2: trailing whitespace.
++ edfdcd0c7f97  e0/boot:latest  running  15 seconds ago         phase0-rss 
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-10.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-11.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-12.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-13.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-14.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/logs/run-15.txt:7: new blank line at EOF.
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:3: trailing whitespace.
++**Overall**：**DESIGN + UNIT TESTS PASS；WHPX LIVE CLAIM TIMING BLOCKED**  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:28: trailing whitespace.
++- 源码：`crates/box/runtime/examples/windows_whpx_environment_prewarm_qualification.rs`  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:29: trailing whitespace.
++- Cargo：`[[example]] name = "windows-whpx-environment-prewarm-qualification"`  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:60: trailing whitespace.
++- 未依赖 Server 2025 / LCOW / Containers / HNS  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:61: trailing whitespace.
++- 未打开 Windows 整包 `kbox_contract_driver` / `engine`  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:62: trailing whitespace.
++- 未改 `support-matrix` readiness  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:63: trailing whitespace.
++- CLI `pool` 仍 fail-closed  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:69: trailing whitespace.
++1. 备齐 WHPX OCI host 工件后跑 WP-7。  
+docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md:70: trailing whitespace.
++2. 或 WP-8：仅当「无调用面」成为唯一阻塞时，加窄包装（仍禁止整包打开 contract_driver）。  

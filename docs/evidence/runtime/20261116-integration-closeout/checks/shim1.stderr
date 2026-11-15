@@ -1,0 +1,53 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling cc v1.4.7
+   Compiling smallvec v1.16.4
+   Compiling serde_json v1.0.151
+   Compiling regex-automata v0.4.18
+   Compiling num-bigint v0.4.8
+   Compiling unicode-normalization v0.1.24
+   Compiling ahash v0.8.12
+   Compiling tracing v0.1.44
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+   Compiling uuid v1.26.1
+   Compiling tempfile v3.27.0
+   Compiling parking_lot_core v0.9.12
+   Compiling parking_lot v0.12.5
+   Compiling idna_adapter v1.1.0
+   Compiling idna v1.1.0
+   Compiling tokio v1.53.3
+   Compiling sha2-asm v0.6.4
+   Compiling lzma-sys v0.1.20
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling fraction v0.15.4
+   Compiling referencing v0.48.5
+   Compiling jsonschema-value v0.48.5
+   Compiling sha2 v0.10.9
+   Compiling regex v1.12.4
+   Compiling fancy-regex v0.18.0
+   Compiling matchers v0.2.0
+   Compiling kense-kcl v0.3.0 (https://github.com/kense-labs/kcl.git?rev=76bf580454f1d69d7b826223ac50161efa685f85#76bf5804)
+   Compiling tracing-subscriber v0.3.23
+   Compiling xz2 v0.1.7
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling jsonschema v0.48.5
+warning: klibksys@3.2.7: K_BUILD_LIBKRUN set: forcing build from source
+warning: klibksys@3.2.7: Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+   Compiling kbox-shim v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/shim)
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.17.0.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.5.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.dylib
+   Compiling kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.05s
+     Running unittests src/main.rs (target/debug/deps/kbox_shim-5bb0a1d6d25e0ca3)
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJcLTz1/libkrun.9.42.0.dylib: replacing existing signature

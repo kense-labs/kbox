@@ -122,6 +122,14 @@ fn read_byte(descriptor: RawFd) -> io::Result<u8> {
     }
 }
 
+/// Fork once more so the watchdog is reparented away from the Hook process.
+///
+/// # Safety
+///
+/// Only call from the child branch of `configure_child`'s `fork`, between fork
+/// and exec: only async-signal-safe libc calls are permitted here. Every raw fd
+/// argument must still be open and owned by this process. This function never
+/// returns into Rust; it exits or diverges into `watchdog_main`.
 unsafe fn watchdog_intermediate(
     owner_pidfd: RawFd,
     hook_pidfd: RawFd,
@@ -143,6 +151,14 @@ unsafe fn watchdog_intermediate(
     unsafe { watchdog_main(owner_pidfd, hook_pidfd, hook_pid, ready_writer) }
 }
 
+/// Watch the owner pidfd and kill the Hook process group if the owner dies.
+///
+/// # Safety
+///
+/// Only call from the double-forked watchdog process, where no Rust runtime
+/// state is shared with the parent. Every raw fd argument must still be open
+/// and owned by this process, and must refer to the descriptors set up by
+/// `configure_child`. This function never returns into Rust.
 unsafe fn watchdog_main(
     owner_pidfd: RawFd,
     hook_pidfd: RawFd,

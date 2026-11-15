@@ -1,8 +1,8 @@
-use koci_sdk::{ContainerStats, Error, ErrorCode, PIDS_LIMIT_METRIC};
 use containerd_shim_protos::cgroups_v2::metrics::{
     CPUStat, MemoryEvents, MemoryStat, Metrics, PidsStat,
 };
 use containerd_shim_protos::protobuf::well_known_types::any::Any;
+use koci_sdk::{ContainerStats, Error, ErrorCode, PIDS_LIMIT_METRIC};
 
 const CPU_NR_PERIODS: &str = "cpu.stat.nr_periods";
 const CPU_NR_THROTTLED: &str = "cpu.stat.nr_throttled";
@@ -97,10 +97,10 @@ fn required_metric(stats: &ContainerStats, name: &str) -> Result<u64, Error> {
 mod tests {
     use std::collections::BTreeMap;
 
+    use containerd_shim_protos::protobuf::Message;
     use koci_sdk::{
         ContainerId, ContainerTarget, CpuStats, Generation, MemoryStats, PIDS_LIMIT_METRIC,
     };
-    use containerd_shim_protos::protobuf::Message;
 
     use super::*;
 

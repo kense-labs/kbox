@@ -1,0 +1,15 @@
+iter=1 exit=0 ms=20087
+iter=2 exit=0 ms=11605
+iter=3 exit=0 ms=16739
+iter=4 exit=0 ms=12430
+iter=5 exit=0 ms=22455
+iter=6 exit=0 ms=11892
+iter=7 exit=0 ms=11294
+iter=8 exit=0 ms=11319
+iter=9 exit=1 ms=12300
+iter=10 exit=0 ms=14760
+iter=11 exit=0 ms=12270
+iter=12 exit=0 ms=12759
+iter=13 exit=0 ms=14443
+iter=14 exit=0 ms=11985
+iter=15 exit=0 ms=11761

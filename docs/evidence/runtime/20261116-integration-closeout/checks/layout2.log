@@ -1,0 +1,8 @@
+[workspace] declarations : 1 (root only)
+first-party Cargo.lock    : 1
+rust-toolchain files      : 1
+workspace members         : 19
+inherit root lints        : 18
+local lint exceptions     : 1
+  - crates/box/third_party/mkext4: keeps its own stricter unsafe_code = "forbid"
+PASS: single-workspace layout contract

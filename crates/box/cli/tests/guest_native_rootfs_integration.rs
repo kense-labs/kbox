@@ -292,6 +292,9 @@ fn guest_native_persistent_restart_and_crash_recovery() {
         "test \"$(cat /generation-one)\" = generation-one; printf generation-two >/generation-two; sync",
     ]);
     let crashed_pid = smoke.inspect()["pid"].as_u64().expect("running shim PID") as i32;
+    // SAFETY: `kill` takes scalar pid/signal values and no pointer, so it has no
+    // Rust memory-safety precondition; `crashed_pid` is the live shim PID read
+    // from the test harness above.
     assert_eq!(unsafe { libc::kill(crashed_pid, libc::SIGKILL) }, 0);
     wait_for_process_exit(crashed_pid, Duration::from_secs(10));
     smoke.ok(&["ps", "--all"]);
@@ -529,6 +532,9 @@ fn migration_state(path: &Path) -> String {
 fn wait_for_process_exit(pid: i32, timeout: Duration) {
     let deadline = Instant::now() + timeout;
     while Instant::now() < deadline {
+        // SAFETY: `kill(pid, 0)` is a scalar liveness probe taking no pointer; it
+        // has no Rust memory-safety precondition and the test only inspects its
+        // result.
         if unsafe { libc::kill(pid, 0) } != 0 {
             return;
         }

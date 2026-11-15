@@ -54,3 +54,7 @@
 /docs/evidence/runtime/**/*.stderr whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 /docs/evidence/engine/20261114-generic-engine/checks/*.log whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
 /docs/evidence/runtime/20261114-windows-arm64/checks/scoped-worktree.diff whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+# Incoming Windows evidence retains its captured command bytes and Markdown breaks.
+/docs/evidence/box/20261112-wire-contract-gate/checks/verification.txt whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/box/20261115-windows-lcow-opt-phase0-baseline/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/box/20261115-windows-lcow-opt-phase1-prewarm/OUTCOME.md whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

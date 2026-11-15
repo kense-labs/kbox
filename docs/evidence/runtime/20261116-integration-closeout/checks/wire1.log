@@ -1,0 +1,14 @@
+kbox: 17 wire identifiers found, 28 declared
+krun: 28 wire identifiers found, 28 declared
+FAIL: kbox: declared contract missing from source: capability-packages.v1
+FAIL: kbox: declared contract missing from source: harness-assembly.capability-packages.v1
+FAIL: kbox: declared contract missing from source: harness-assembly.guest-protocols.v1
+FAIL: kbox: declared contract missing from source: harness-assembly.v1
+FAIL: kbox: declared contract missing from source: kbox.engine.assembly.v1
+FAIL: kbox: declared contract missing from source: kbox.engine.v1
+FAIL: kbox: declared contract missing from source: krun.guest-capability-installation.v1
+FAIL: kbox: declared contract missing from source: krun.guest-installation-error.v1
+FAIL: kbox: declared contract missing from source: krun.guest-installation.v1
+FAIL: kbox: declared contract missing from source: runtime-requirements.v1
+FAIL: kbox: declared contract missing from source: secret-launch.v1
+FAIL: wire contract drift

@@ -54,10 +54,7 @@ impl QualificationConfig {
             .map(PathBuf::from)
             .unwrap_or_else(|_| PathBuf::from("/run/koci/runtime.sock"));
         Ok(Self {
-            socket: environment_path(
-                "K_OCI_CONTAINERD_SOCKET",
-                "/run/containerd/containerd.sock",
-            ),
+            socket: environment_path("K_OCI_CONTAINERD_SOCKET", "/run/containerd/containerd.sock"),
             ttrpc_address: environment_value(
                 "K_OCI_CONTAINERD_TTRPC_ADDRESS",
                 "/run/containerd/containerd.sock.ttrpc",
@@ -68,10 +65,7 @@ impl QualificationConfig {
                 "/run/containerd/io.containerd.runtime.v2.task",
             ),
             namespace: environment_value("K_OCI_CONTAINERD_NAMESPACE", "default"),
-            image: environment_value(
-                "K_OCI_CONTAINERD_IMAGE",
-                "docker.io/library/busybox:latest",
-            ),
+            image: environment_value("K_OCI_CONTAINERD_IMAGE", "docker.io/library/busybox:latest"),
             runtime: environment_value("K_OCI_CONTAINERD_RUNTIME", "io.containerd.koci.v2"),
             service: environment_value("K_OCI_CONTAINERD_SERVICE", "containerd"),
             restart_boundaries: RestartBoundaryLedger::default(),

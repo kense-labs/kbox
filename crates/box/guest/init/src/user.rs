@@ -207,12 +207,17 @@ impl ProcessUser {
     #[cfg(unix)]
     pub fn apply(self) -> std::io::Result<()> {
         if let Some(gid) = self.gid {
+            // SAFETY: `setgid` takes a scalar gid and no pointer, so it has no Rust
+            // memory-safety precondition; a failure is returned as `last_os_error()`.
             let ret = unsafe { libc::setgid(gid as libc::gid_t) };
             if ret != 0 {
                 return Err(std::io::Error::last_os_error());
             }
         }
 
+        // SAFETY: `setuid` takes a scalar uid and no pointer, so it has no Rust
+        // memory-safety precondition. It runs after the optional `setgid` above, and
+        // a failure is returned as `last_os_error()`.
         let ret = unsafe { libc::setuid(self.uid as libc::uid_t) };
         if ret != 0 {
             return Err(std::io::Error::last_os_error());

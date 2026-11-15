@@ -1,0 +1,13 @@
+
+running 8 tests
+test oci::build::plan::tests::parser_applies_a_bounded_document_limit ... ok
+test oci::build::plan::tests::schema_is_closed_and_identity_values_are_exact ... ok
+test oci::build::plan::tests::compilation_requires_an_absolute_existing_source_root ... ok
+test oci::build::plan::tests::cache_and_network_policies_are_closed ... ok
+test oci::build::plan::tests::repository_paths_and_target_are_bounded_posix_values ... ok
+test oci::build::plan::tests::canonical_kcl_and_digest_are_stable ... ok
+test oci::build::plan::tests::compiles_exactly_into_the_existing_build_engine ... ok
+test oci::build::plan::tests::compilation_rejects_context_and_file_symlink_escapes ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2312 filtered out; finished in 0.04s
+

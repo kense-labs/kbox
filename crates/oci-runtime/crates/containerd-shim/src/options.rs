@@ -1,10 +1,10 @@
 use std::path::Path;
 
+use containerd_shim_protos::protobuf::well_known_types::any::Any;
 use koci_sdk::{
     Error, ErrorCode, IsolationClass, IsolationRequest, RuntimeExtensions, RuntimeOperation,
     RUNTIME_OPERATION_CONTRACT_V1,
 };
-use containerd_shim_protos::protobuf::well_known_types::any::Any;
 use serde::{Deserialize, Serialize};
 
 use crate::contract::{CREATE_OPTIONS_SCHEMA_VERSION, CREATE_OPTIONS_TYPE_URL};

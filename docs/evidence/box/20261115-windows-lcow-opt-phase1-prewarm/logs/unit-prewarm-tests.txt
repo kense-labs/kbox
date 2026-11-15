@@ -1,0 +1,10 @@
+command: cargo test -p kbox-runtime --lib local_execution::tests::prewarm --locked
+host: Windows 10 Pro 22631.4890
+result: 5 passed; 0 failed; 0 ignored; 1593 filtered out; finished in 0.27s
+tests:
+- stopping_a_reserved_environment_fences_a_late_boot_worker
+- concurrent_prewarm_reservation_and_claim_have_one_canonical_winner
+- prewarm_cannot_run_hooks_or_mutate_an_unclaimed_environment
+- prewarm_requires_exact_scope_resources_mounts_and_a_live_provider
+- prewarm_claim_rebinds_the_same_running_vm_once_and_fences_the_old_generation
+example_build: cargo build -p kbox-runtime --example windows-whpx-environment-prewarm-qualification --locked -> Finished ok

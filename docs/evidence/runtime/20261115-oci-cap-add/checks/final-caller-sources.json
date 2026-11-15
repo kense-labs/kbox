@@ -1,0 +1,555 @@
+{
+  "status": "PASS",
+  "sourceFiles": 21,
+  "records": [
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296794428,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-cli-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-cli-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296794428,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296781192,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-drop-all-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-drop-all-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296781192,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296793302,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-host-ro-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-host-ro-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296793302,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296764388,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-main-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-main-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296764388,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296792438,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-nonroot-nproc-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-nonroot-nproc-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296792438,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 1,
+      "preGrantSnapshot": {
+        "bytes": 1548504,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296774882,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-specific-drop-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-1/capability-specific-drop-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296774882,
+        "bytes": 1548504,
+        "nlink": 1,
+        "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 2,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297004199,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-drop-all-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-drop-all-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297004199,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 2,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 296990075,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-main-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-main-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 296990075,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 2,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297022657,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-nonroot-added-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-nonroot-added-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297022657,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 2,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297013654,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-nonroot-nproc-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-nonroot-nproc-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297013654,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 2,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297002209,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-specific-drop-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2/capability-specific-drop-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297002209,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297165020,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-cli-nonroot-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-cli-nonroot-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297165020,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297158735,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-cli-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-cli-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297158735,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297132184,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-drop-all-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-drop-all-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297132184,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297156265,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-host-ro-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-host-ro-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297156265,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297113405,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-main-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-main-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297113405,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297153591,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-added-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-added-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297153591,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297155411,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-admin-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-admin-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297155411,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297154588,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-dropped-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-dropped-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297154588,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297138902,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-nproc-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-nonroot-nproc-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297138902,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    },
+    {
+      "attempt": 3,
+      "preGrantSnapshot": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297125621,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-specific-drop-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-3/capability-specific-drop-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297125621,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      },
+      "sourcePreserved": true
+    }
+  ],
+  "allMetadataCapturedBeforeGrant": true,
+  "bytesUidGidModeInodeDeviceSizeAndNlinkUnchanged": true,
+  "removedByAudit": []
+}

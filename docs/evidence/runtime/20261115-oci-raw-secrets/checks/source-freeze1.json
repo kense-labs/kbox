@@ -1,0 +1,25 @@
+{
+  "sourceInputsSha256": "c07659de97c45cd962d08dd29f49e882ac9266bed570226b116af767bbc1734c",
+  "files": 1702,
+  "changed": [
+    "crates/box/runtime/src/local_execution/oci_backend.rs",
+    "crates/box/runtime/src/local_execution/oci_backend_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_raw_secrets.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_secret_environment.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_secrets.rs",
+    "crates/box/runtime/src/local_execution/oci_production.rs",
+    "crates/box/runtime/src/local_execution/oci_production_anonymous_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/lib.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/vm_attachment.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/vm_attachment/raw_storage.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/vm_attachment/raw_storage_tests.rs",
+    "crates/oci-runtime/crates/runtime/src/hvf_driver.rs",
+    "crates/oci-runtime/crates/sdk/src/attachment.rs",
+    "crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files.rs",
+    "crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs",
+    "crates/oci-runtime/crates/sdk/src/lib.rs"
+  ],
+  "nativeClientSha256": "61a434cb8ccba9b595e64c09df8711783e1fbd868134f7c50de3d7bb927dad5b"
+}

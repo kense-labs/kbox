@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/check-final-identities2.py"
+  ],
+  "exit": 0,
+  "seconds": 0.730586708
+}

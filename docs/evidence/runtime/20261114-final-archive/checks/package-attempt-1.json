@@ -1,0 +1,14 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "envSet": {
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "removedAmbientKeys": [],
+  "startedUtc": "2026-11-14T04:10:19.258751+00:00",
+  "exitCode": 0,
+  "seconds": 128.36567141700002,
+  "log": "docs/evidence/runtime/20261114-final-archive/checks/package-attempt-1.log"
+}

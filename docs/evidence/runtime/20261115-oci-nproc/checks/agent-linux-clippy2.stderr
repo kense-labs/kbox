@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on build directory
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+warning: use of deprecated associated function `tokio::io::unix::AsyncFd::<T>::new`: unsound due to lack of I/O safety; use `AsyncFd::register` instead (see https://github.com/tokio-rs/tokio/pull/8587)
+  --> crates/oci-runtime/crates/agent/src/executor/terminal.rs:70:35
+   |
+70 |         let descriptor = AsyncFd::new(self.master).map_err(|error| {
+   |                                   ^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: the borrowed expression implements the required traits
+  --> crates/oci-runtime/crates/agent/src/vm_attachment/directory.rs:38:15
+   |
+38 |         .open(&destination)
+   |               ^^^^^^^^^^^^ help: change this to: `destination`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#needless_borrows_for_generic_args
+   = note: `#[warn(clippy::needless_borrows_for_generic_args)]` on by default
+
+warning: `koci-agent` (lib) generated 2 warnings (run `cargo clippy --fix --lib -p koci-agent -- --no-deps` to apply 1 suggestion)
+warning: `koci-agent` (lib test) generated 2 warnings (2 duplicates)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 38.26s

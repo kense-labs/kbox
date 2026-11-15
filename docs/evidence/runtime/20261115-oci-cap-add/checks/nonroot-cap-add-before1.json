@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "hvf_nonroot_cap_add_retains_only_explicit_undropped_values_across_exec",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 12.331125459
+}

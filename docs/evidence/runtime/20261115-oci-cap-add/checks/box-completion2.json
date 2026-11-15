@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "vm::oci_hvf_spec::tests::",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 3.0053100830000004
+}

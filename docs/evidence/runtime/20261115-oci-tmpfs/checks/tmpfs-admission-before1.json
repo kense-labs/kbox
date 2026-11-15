@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "hvf_tmpfs",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 9.287769208
+}

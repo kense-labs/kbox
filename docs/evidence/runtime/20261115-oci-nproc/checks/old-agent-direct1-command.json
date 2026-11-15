@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/probe-old-agent-direct1.py"
+  ],
+  "exit": 1,
+  "seconds": 1.060367708
+}

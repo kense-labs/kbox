@@ -1,0 +1,3 @@
+{"command": ["/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/maintenance-client-pending-attempt7-1", "--ignored", "--exact", "local_execution::oci_hvf::tests::native::pending::native_reconcile_owned_pending_creates", "--nocapture"], "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-7", "exitCode": 0, "seconds": 3.061244625, "actualCounts": [["1", "0", "0"]], "clientSha256": "17d997a5bf34eb13ed0abe7f8894d3d58f3047beedb769998bfc29c50a612f29", "loadedWorkers": 0}
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-7/service/runtime.sock: No such file or directory (os error 2)
+

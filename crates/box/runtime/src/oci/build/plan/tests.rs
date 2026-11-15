@@ -1,6 +1,6 @@
 use super::*;
-use kcl::SchemaDiagnosticCode;
 use kbox_core::platform::Platform;
+use kcl::SchemaDiagnosticCode;
 
 const PLAN: &str = r#"
 build "oci" {

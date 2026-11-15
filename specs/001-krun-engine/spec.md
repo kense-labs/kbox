@@ -1,5 +1,8 @@
 # KRun 本地引擎入口与流式执行扩展
 
+> Historical scope, superseded by the generic engine boundary in `docs/architecture/local-engine.md`. Product-specific engine behavior and package assembly have been removed.
+
+
 创建：2026-11-10。状态：已规划，待实现；未创建特性分支。负责路径：`crates/box/{core,runtime,cli}`，必要时复用／扩展 `crates/runtime` 的操作回执接线。
 
 总计划由独立 KRun 仓库维护：[实施计划](../../../krun/docs/implementation-plan.md)。本 epic 只覆盖版本化引擎入口和流能力，不实现完整 MateHarness、能力装配或推理循环。

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/check-final-identities1.py"
+  ],
+  "exit": 0,
+  "seconds": 0.746068834
+}

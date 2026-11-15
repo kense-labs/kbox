@@ -1,0 +1,7 @@
+{
+  "sourceArtifact": "/Users/roylin/code/kense/kbox/target/debug/deps/kbox_runtime-1f7c9c129cc1351e",
+  "frozenClient": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/clients/native-runtime-client",
+  "sha256": "eaff8000b7c8ab307136c1a6ae255affbd8120bf175c29b3adb401577e0284f7",
+  "kind": "same-source Runtime test driver only; all actual VM companions come from the installed archive",
+  "developerNativeLibrariesLoaded": false
+}

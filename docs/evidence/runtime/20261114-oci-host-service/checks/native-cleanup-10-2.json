@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/maintenance-client-native-cleanup-10-2",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_cleanup_owned_hvf_test_root",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10",
+  "exitCode": 0,
+  "seconds": 5.085799791,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "clientSha256": "cb101ffd8b4544c7d38296e03c29c3827f04f1c271853cae337e420bfe06962f"
+}

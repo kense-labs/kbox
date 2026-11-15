@@ -200,3 +200,90 @@ fn rejects_directory_grants_without_an_oci_bind_mount() {
     .unwrap();
     assert!(directory.validate_configuration(&value).is_err());
 }
+
+#[test]
+fn workload_rootfs_v5_binds_content_and_refuses_legacy_reinterpretation() {
+    let (bundle, manifest) = fixture();
+    let descriptor = koci_sdk::RootfsImage::new(
+        format!("sha256:{}", "a".repeat(64)),
+        16 * 1024 * 1024,
+        format!("sha256:{}", "b".repeat(64)),
+    )
+    .unwrap();
+    let mut configuration: serde_json::Value = serde_json::from_str(bundle.config_json()).unwrap();
+    configuration["root"] = json!({"path":"rootfs","readonly":false});
+    configuration["annotations"] =
+        json!({koci_sdk::ROOTFS_IMAGE_EXTENSION: descriptor.annotation_value().unwrap()});
+    let bundle = OciBundle::from_json(bundle.directory(), configuration.to_string()).unwrap();
+    let mut manifest = manifest;
+    manifest.config_digest = bundle.config_digest().to_string();
+    let rootfs = AgentVmRootfsImage::new(
+        descriptor,
+        AgentVmStorageSourceIdentity::new(1, 0, 77, 16 * 1024 * 1024).unwrap(),
+    )
+    .unwrap();
+    let manifest = manifest.with_rootfs_image(rootfs, &bundle).unwrap();
+    assert_eq!(
+        AgentVmAttachmentManifest::from_bytes(&manifest.to_bytes().unwrap()).unwrap(),
+        manifest
+    );
+    for (field, value) in [
+        (
+            "schemaVersion",
+            json!(AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION),
+        ),
+        ("rootfsImage", serde_json::Value::Null),
+    ] {
+        let mut bad = serde_json::to_value(&manifest).unwrap();
+        bad[field] = value;
+        assert!(AgentVmAttachmentManifest::from_bytes(&serde_json::to_vec(&bad).unwrap()).is_err());
+    }
+    let mut bad = serde_json::to_value(&manifest).unwrap();
+    bad["rootfsImage"]["sourceIdentity"]["inode"] = json!(0);
+    assert!(AgentVmAttachmentManifest::from_bytes(&serde_json::to_vec(&bad).unwrap()).is_err());
+    let mut bad = serde_json::to_value(&manifest).unwrap();
+    bad["rootfsImage"]["image"]["sha256"] = json!(format!("sha256:{}", "c".repeat(64)));
+    let bad: AgentVmAttachmentManifest = serde_json::from_value(bad).unwrap();
+    assert!(bad.validate_bundle(&bundle).is_err());
+}
+
+#[test]
+fn workload_readonly_root_v2_manifest_binds_the_exact_bundle_view() {
+    let (bundle, mut manifest) = fixture();
+    let image = koci_sdk::RootfsImage::new(
+        format!("sha256:{}", "a".repeat(64)),
+        16 * 1024 * 1024,
+        format!("sha256:{}", "b".repeat(64)),
+    )
+    .unwrap()
+    .with_readonly_root()
+    .unwrap();
+    let mut configuration: serde_json::Value = serde_json::from_str(bundle.config_json()).unwrap();
+    configuration["root"] = json!({"path":"rootfs","readonly":true});
+    configuration["annotations"] =
+        json!({koci_sdk::ROOTFS_IMAGE_EXTENSION:image.annotation_value().unwrap()});
+    let bundle = OciBundle::from_json(bundle.directory(), configuration.to_string()).unwrap();
+    manifest.config_digest = bundle.config_digest().to_string();
+    let manifest = manifest
+        .with_rootfs_image(
+            AgentVmRootfsImage::new(
+                image,
+                AgentVmStorageSourceIdentity::new(1, 0, 77, 16 * 1024 * 1024).unwrap(),
+            )
+            .unwrap(),
+            &bundle,
+        )
+        .unwrap();
+    let decoded = AgentVmAttachmentManifest::from_bytes(&manifest.to_bytes().unwrap()).unwrap();
+    decoded.validate_bundle(&bundle).unwrap();
+    assert!(decoded.rootfs_image().unwrap().image().readonly_root());
+    let mut altered = serde_json::to_value(&decoded).unwrap();
+    altered["rootfsImage"]["image"]["schemaVersion"] = json!(1);
+    assert!(serde_json::from_value::<AgentVmAttachmentManifest>(altered)
+        .unwrap()
+        .validate_bundle(&bundle)
+        .is_err());
+    configuration["root"]["readonly"] = json!(false);
+    let altered = OciBundle::from_json(bundle.directory(), configuration.to_string()).unwrap();
+    assert!(decoded.validate_bundle(&altered).is_err());
+}

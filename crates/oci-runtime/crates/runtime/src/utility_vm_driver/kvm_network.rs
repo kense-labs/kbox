@@ -14,8 +14,6 @@ use super::vm_attachment_transport::{
     ensure_absent, ensure_dedicated_bundle_path, persist_manifest, PENDING_MANIFEST_FILE_NAME,
 };
 
-mod storage;
-
 const TUN_FLAG: u32 = 0x0001;
 const TAP_FLAG: u32 = 0x0002;
 
@@ -66,8 +64,10 @@ pub(crate) async fn prepare(request: &UtilityVmLaunchRequest<'_>) -> Result<Opti
 
     let mut storage = Vec::with_capacity(request.attachment_contract.storage().len());
     for attachment in request.attachment_contract.storage() {
-        storage
-            .push(storage::prepare(request, &configuration, attachment, &attachment_digest).await?);
+        storage.push(
+            super::raw_storage::prepare(request, &configuration, attachment, &attachment_digest)
+                .await?,
+        );
     }
     storage.sort();
 
@@ -79,7 +79,7 @@ pub(crate) async fn prepare(request: &UtilityVmLaunchRequest<'_>) -> Result<Opti
         network,
         storage,
     )?;
-    manifest.validate_bundle(request.bundle)?;
+    let manifest = manifest.with_nproc_admission(request.bundle)?;
     ensure_dedicated_bundle_path(&manifest)?;
     persist_manifest(request.runtime_share, &manifest).await?;
     manifest.digest().map(Some)

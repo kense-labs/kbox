@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe.c",
+    "-o",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.20767408399999998
+}

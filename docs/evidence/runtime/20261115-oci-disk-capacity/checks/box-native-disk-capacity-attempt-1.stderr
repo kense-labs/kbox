@@ -1,0 +1,19 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (95073613) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_rootfs.rs:11:5:
+assertion `left == right` failed: stat: can't stat '/ownership/secret': Permission denied
+stat: can't stat '/ownership/alias': Permission denied
+stat: can't stat '/ownership/link': Permission denied
+
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::disk_capacity::native_custom_disk_capacity_enforces_root_and_anonymous_disks_replay_and_recovery' (95073612) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_disk_capacity.rs:438:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

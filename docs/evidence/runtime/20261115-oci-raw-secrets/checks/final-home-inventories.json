@@ -1,0 +1,418 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-directory/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-oci/5f8fe3da1c944871b59efc3a47c78228/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-prewarm/d14ba5f2d8b94666ba60daddd57c2619/k-home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-primary/373523bc4ae74341a5763e69dc1feed7/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-readonly/2f2eae9a5d1c4d4794f1af6ef2f861f8/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/anonymous-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/files-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/host-service-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/nproc-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-disk-projection-1-disk/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-disk-home/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-2-disk-home/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-3-disk-home/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  }
+]

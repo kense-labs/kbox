@@ -1,0 +1,10 @@
+{
+  "boxArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/final-dist-cpu-time-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "57d38d06f5d637b4e2127b1e8967bab37e3a94c83922426e9f616e2e8413d15e"
+  },
+  "ociArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "542bfe43dd6f2837ad55c3ba79416832584e9032a9b6e1b2bfa4d75bc94203bf"
+  }
+}

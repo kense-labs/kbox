@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-pthread",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe2.c",
+    "-o",
+    "artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe-2"
+  ],
+  "exit": 0,
+  "seconds": 0.1365365
+}

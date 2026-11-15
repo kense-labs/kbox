@@ -122,6 +122,98 @@ fn append_symlink(archive: &mut Builder<File>, path: &str, target: &Path) {
 
 #[test]
 fn assembles_layers_without_a_host_namespace() {
+    assemble_layers(false);
+}
+
+#[test]
+fn volume_ext4_seeds_only_its_resolved_subtree_with_foreign_metadata_and_links() {
+    let temporary = tempfile::tempdir().unwrap();
+    let lower = temporary.path().join("lower.tar");
+    let upper = temporary.path().join("upper.tar");
+    let mut archive = Builder::new(File::create(&lower).unwrap());
+    append_dir(&mut archive, "data", 0o750);
+    archive
+        .append_pax_extensions([("SCHILY.xattr.user.kbox", b"volume".as_slice())])
+        .unwrap();
+    append_file(&mut archive, Path::new("data/input"), b"seed", 0o640);
+    append_file(&mut archive, Path::new("data/gone"), b"old", 0o600);
+    append_file(&mut archive, Path::new("private-canary"), b"outside", 0o600);
+    append_symlink(&mut archive, "volume-alias", Path::new("/data"));
+    append_symlink(&mut archive, "bad-alias", Path::new("../../outside"));
+    append_symlink(&mut archive, "data/link", Path::new("input"));
+    let mut hardlink = Header::new_gnu();
+    hardlink.set_entry_type(EntryType::Link);
+    hardlink.set_size(0);
+    hardlink.set_mode(0o640);
+    hardlink.set_cksum();
+    archive
+        .append_link(&mut hardlink, "data/linked", Path::new("data/input"))
+        .unwrap();
+    archive.finish().unwrap();
+    drop(archive);
+    let mut archive = Builder::new(File::create(&upper).unwrap());
+    append_marker(&mut archive, "data/.wh.gone");
+    append_file(&mut archive, Path::new("data/new"), b"upper", 0o600);
+    archive.finish().unwrap();
+    drop(archive);
+    let image = image_from_layers(&temporary.path().join("image"), &[&lower, &upper]);
+    let mut root = super::OciWorkloadRootfs::load(&image, temporary.path()).unwrap();
+    let options = Ext4ArtifactOptions::from_disk_mib(16, [0x71; 16]).unwrap();
+    let artifact = root
+        .publish_volume("/volume-alias", &temporary.path().join("volume"), options)
+        .unwrap();
+    let filesystem = mkext4::reader::Fs::open(File::open(artifact.disk).unwrap()).unwrap();
+    assert!(filesystem.verify().unwrap().is_empty());
+    let input = filesystem.resolve("/input").unwrap();
+    assert_eq!(filesystem.read_file(input).unwrap(), b"seed");
+    assert_eq!(filesystem.resolve("/linked").unwrap(), input);
+    let inode = filesystem.inode(input).unwrap();
+    assert_eq!(
+        (inode.uid, inode.gid, inode.mode & 0o7777),
+        (123, 456, 0o640)
+    );
+    let root_inode = filesystem.inode(filesystem.resolve("/").unwrap()).unwrap();
+    assert_eq!(
+        (root_inode.uid, root_inode.gid, root_inode.mode & 0o7777),
+        (123, 456, 0o750)
+    );
+    assert!(filesystem
+        .xattrs(input)
+        .unwrap()
+        .iter()
+        .any(
+            |attribute| attribute.full_name().as_deref() == Some(b"user.kbox")
+                && attribute.value == b"volume"
+        ));
+    assert_eq!(
+        filesystem
+            .read_file(filesystem.resolve("/new").unwrap())
+            .unwrap(),
+        b"upper"
+    );
+    assert!(filesystem.resolve("/gone").is_err());
+    assert!(filesystem.resolve("/private-canary").is_err());
+    assert!(filesystem.resolve("/data").is_err());
+    for invalid in ["relative", "/", "/bad-alias", "/data/input"] {
+        assert!(root
+            .publish_volume(invalid, &temporary.path().join("invalid"), options)
+            .is_err());
+        assert!(!temporary.path().join("invalid").exists());
+    }
+    let empty = root
+        .publish_volume("/missing", &temporary.path().join("empty"), options)
+        .unwrap();
+    let filesystem = mkext4::reader::Fs::open(File::open(empty.disk).unwrap()).unwrap();
+    assert!(filesystem.resolve("/input").is_err());
+    assert!(filesystem.verify().unwrap().is_empty());
+}
+
+#[test]
+fn workload_ext4_preserves_oci_ownership_links_and_layers_without_boot_injection() {
+    assemble_layers(true);
+}
+
+fn assemble_layers(workload: bool) {
     let temporary = tempfile::tempdir().unwrap();
     let lower = temporary.path().join("lower.tar");
     let upper = temporary.path().join("upper.tar");
@@ -143,6 +235,12 @@ fn assembles_layers_without_a_host_namespace() {
     append_file(&mut lower_tar, Path::new(raw_name), b"raw", 0o644);
     append_dir(&mut lower_tar, "usr", 0o755);
     append_dir(&mut lower_tar, "usr/sbin", 0o755);
+    append_file(
+        &mut lower_tar,
+        Path::new("usr/sbin/init"),
+        b"image-init",
+        0o640,
+    );
     append_symlink(&mut lower_tar, "sbin", Path::new("/usr/sbin"));
     lower_tar.finish().unwrap();
     drop(lower_tar);
@@ -169,14 +267,53 @@ fn assembles_layers_without_a_host_namespace() {
     drop(upper_tar);
     let image = image_from_layers(&temporary.path().join("image"), &[&lower, &upper]);
 
-    let artifact = publish_oci_layers_ext4(
-        &image,
-        &guest_init,
-        &sha256(b"guest-init"),
-        &temporary.path().join("artifact"),
-        Ext4ArtifactOptions::from_disk_mib(32, [0x31; 16]).unwrap(),
-    )
-    .unwrap();
+    let options = Ext4ArtifactOptions::from_disk_mib(32, [0x31; 16]).unwrap();
+    let destination = temporary.path().join("artifact");
+    let artifact = if workload {
+        let mut root = super::OciWorkloadRootfs::load(&image, temporary.path()).unwrap();
+        use crate::process_path::ProcessRootfs;
+        assert!(!root.executable_exists("/sbin/init").unwrap());
+        root.ensure_directory("/workspace").unwrap();
+        let box_dir = temporary.path().join("box");
+        std::fs::create_dir(&box_dir).unwrap();
+        crate::rootfs::install_baseline_bytes_if_absent(
+            &box_dir,
+            &root.diff_baseline_bytes().unwrap(),
+        )
+        .unwrap();
+        assert!(!crate::rootfs::guest_diff_baseline_required(&box_dir).unwrap());
+        let baseline_path = box_dir.join(crate::rootfs::DIFF_BASELINE_FILE);
+        let before = std::fs::read(&baseline_path).unwrap();
+        let baseline: std::collections::HashMap<String, crate::rootfs::RootfsFileInfo> =
+            serde_json::from_slice(&before).unwrap();
+        assert_eq!(
+            (baseline["/README"].mode, baseline["/README"].size),
+            (0o100640, 10)
+        );
+        assert_eq!(baseline["/usr"].mode, 0o040755);
+        assert!(baseline["/usr"].is_dir);
+        assert_eq!(baseline["/link"], baseline["/link.alias"]);
+        assert_eq!(baseline["/link"].mode, 0o120777);
+        assert!(!baseline.contains_key("/etc/removed"));
+        assert!(!baseline.contains_key("/opaque/old"));
+        assert!(baseline.contains_key("/opaque/new"));
+        crate::rootfs::install_baseline_bytes_if_absent(
+            &box_dir,
+            &root.diff_baseline_bytes().unwrap(),
+        )
+        .unwrap();
+        assert_eq!(std::fs::read(&baseline_path).unwrap(), before);
+        root.publish(&destination, options).unwrap()
+    } else {
+        publish_oci_layers_ext4(
+            &image,
+            &guest_init,
+            &sha256(b"guest-init"),
+            &destination,
+            options,
+        )
+        .unwrap()
+    };
 
     let filesystem = mkext4::reader::Fs::open(File::open(artifact.disk).unwrap()).unwrap();
     assert!(filesystem.verify().unwrap().is_empty());
@@ -247,7 +384,20 @@ fn assembles_layers_without_a_host_namespace() {
         filesystem
             .read_file(filesystem.resolve("/usr/sbin/init").unwrap())
             .unwrap(),
-        b"guest-init"
+        if workload {
+            b"image-init".as_slice()
+        } else {
+            b"guest-init".as_slice()
+        }
+    );
+    let root = filesystem.inode(mkext4::spec::ROOT_INO).unwrap();
+    assert_eq!((root.uid, root.gid), (0, 0));
+    let directory = filesystem
+        .inode(filesystem.resolve("/usr").unwrap())
+        .unwrap();
+    assert_eq!(
+        (directory.uid, directory.gid, directory.mode & 0o7777),
+        (123, 456, 0o755)
     );
     let init = filesystem.resolve("/usr/sbin/init").unwrap();
     let init_inode = filesystem.inode(init).unwrap();
@@ -258,13 +408,26 @@ fn assembles_layers_without_a_host_namespace() {
             init_inode.gid,
             init_inode.mtime
         ),
-        (0o755, 0, 0, 0)
+        if workload {
+            (0o640, 123, 456, 1_704_067_200)
+        } else {
+            (0o755, 0, 0, 0)
+        }
     );
     assert!(filesystem.resolve("/.kimage_metadata_v1.json").is_err());
 }
 
 #[test]
 fn failed_capacity_check_never_publishes_a_partial_generation() {
+    failed_capacity(false);
+}
+
+#[test]
+fn workload_capacity_failure_cleans_partial_disk_and_spool() {
+    failed_capacity(true);
+}
+
+fn failed_capacity(workload: bool) {
     let temporary = tempfile::tempdir().unwrap();
     let layer = temporary.path().join("oversized.tar");
     let guest_init = temporary.path().join("guest-init");
@@ -277,15 +440,25 @@ fn failed_capacity_check_never_publishes_a_partial_generation() {
     let destination = temporary.path().join("artifact");
     let image = image_from_layers(&temporary.path().join("image"), &[&layer]);
 
-    let error = publish_oci_layers_ext4(
-        &image,
-        &guest_init,
-        &sha256(b"guest-init"),
-        &destination,
-        Ext4ArtifactOptions::from_disk_mib(16, [0x32; 16]).unwrap(),
-    )
+    let options = Ext4ArtifactOptions::from_disk_mib(16, [0x32; 16]).unwrap();
+    let other = temporary.path().join("other-owned-state");
+    std::fs::write(&other, b"retain").unwrap();
+    let error = if workload {
+        super::OciWorkloadRootfs::load(&image, temporary.path())
+            .unwrap()
+            .publish(&destination, options)
+    } else {
+        publish_oci_layers_ext4(
+            &image,
+            &guest_init,
+            &sha256(b"guest-init"),
+            &destination,
+            options,
+        )
+    }
     .unwrap_err()
     .to_string();
+    assert_eq!(std::fs::read(&other).unwrap(), b"retain");
 
     assert!(error.contains("ext4"), "{error}");
     assert!(!destination.exists());
@@ -373,6 +546,13 @@ fn rejects_a_layer_changed_after_image_authentication() {
     .unwrap_err()
     .to_string();
 
+    let workload_error = super::OciWorkloadRootfs::load(&image, temporary.path())
+        .unwrap_err()
+        .to_string();
+    assert!(
+        workload_error.contains("descriptor digest"),
+        "{workload_error}"
+    );
     assert!(error.contains("descriptor digest"), "{error}");
     assert!(!destination.exists());
 }

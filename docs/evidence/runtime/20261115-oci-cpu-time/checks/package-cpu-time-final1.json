@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 110.435597541,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/package-home-cpu-time-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "6615f84bc0724b27fd6494c66a2a7f7b3e1fa26c5744bb8157e6aba230df7005"
+}

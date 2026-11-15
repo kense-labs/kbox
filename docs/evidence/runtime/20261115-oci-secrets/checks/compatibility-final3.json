@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/compatibility-final3.py"
+  ],
+  "exit": 0,
+  "seconds": 85.155257625
+}

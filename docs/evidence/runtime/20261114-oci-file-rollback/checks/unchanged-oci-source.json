@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "boxSourceInputsSha256": "12cd38dc44997121340fcd05d057b449f775a1768ea3a8d7d104aba7dcd575af",
+  "ociSourceInputsSha256": "3d07d7318f277094813eb973e746339c8fce5934bf95bcf1021a9011a7e54ca5",
+  "changedPaths": [
+    "crates/box/runtime/src/box_state.rs",
+    "crates/box/runtime/src/box_state_compat_tests.rs",
+    "crates/box/runtime/src/box_state_layout.rs",
+    "crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs",
+    "crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_profile.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_rollback.rs",
+    "crates/box/runtime/src/managed_execution_store.rs"
+  ],
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociArchiveSha256": "ce2b65c4b93b8843b9d4a9b897e5b37e217a78895458ae5fd7f2e58586fd9239",
+  "scope": "no OCI source/asset change; reuse exact accepted installed OCI7 bytes, not rebuilt claims"
+}

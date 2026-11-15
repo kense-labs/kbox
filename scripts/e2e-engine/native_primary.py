@@ -121,11 +121,12 @@ def main():
                 "network": {"host_services": [], "mode": "none", "ports": [], "egress_allowlist": None},
                 "resources": {"cpu_millis": 1000, "memory_bytes": 536870912, "pids": 4294967295,
                               "ephemeral_storage_bytes": None, "execution_timeout_ms": None},
+                "semantics_profile_digest": "sha256:daf902bf6663b433b3d9a97dffefc5044661decf3b872916209348a7e439baeb",
                 "isolation": "sandbox", "health": None, "service_lifecycle": None, "restart": {"kind": "never"},
             }
-            intent = {"schema": "kbox.engine.intent.v1", "engineId": discovery["engineId"],
+            intent = {"schema": "kbox.engine.intent.v2", "engineId": discovery["engineId"],
                       "instanceId": instance, "requestId": "up-1", "revision": 1,
-                      "desiredState": "up", "workload": "acp-harness",
+                      "desiredState": "up",
                       "planDigest": "sha256:" + hashlib.sha256(instance.encode()).hexdigest(), "service": service}
             accepted = rpc(endpoint, {"op": "apply_intent", "intent": intent})
 

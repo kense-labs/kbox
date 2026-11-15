@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "completedNativeScenarios": 1,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1",
+  "source": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b",
+  "binarySha256": "b51a149cdf5d46cc4d0ee0f8dc2b59a0a47985a7bf3799575892cbf09de74b41",
+  "guestInitSha256": "a852930e651da8a380d77bb5860f2deb3048e835610bd14cbae323cfb6ab003a",
+  "execution": "1a41a84a-f252-464c-9e40-89e7b379ac95",
+  "firstGeneration": 1,
+  "restartGeneration": 2,
+  "readOnlyRoot": true,
+  "initExecPty": true,
+  "writableTmpfsAndBind": true,
+  "restartTmpfsCleared": true,
+  "callerDataRetained": true,
+  "loaded": [
+    {
+      "pid": 42490,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim --config {\"box_id\":\"1a41a84a-f252-464c-9e40-89e7b379ac95\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/caller data \u4e2d\u6587\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/data\"],[\"BOX_TMPFS_0\",\"/scratch:size=1048576,mode=1777\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_READONLY\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"],[\"BOX_PERSIST_ROOTFS_METADATA\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 42518,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim --config {\"box_id\":\"1a41a84a-f252-464c-9e40-89e7b379ac95\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/caller data \u4e2d\u6587\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/1a41a84a-f252-464c-9e40-89e7b379ac95/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/data\"],[\"BOX_TMPFS_0\",\"/scratch:size=1048576,mode=1777\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_READONLY\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"],[\"BOX_PERSIST_ROOTFS_METADATA\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home/boxes/1a41a84a-f252-464c-9e40-89e7b379ac95/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "seconds": 3.150063584,
+  "callerDirectoryPreserved": true,
+  "zeroManagedExecutions": true,
+  "zeroVolumes": true
+}

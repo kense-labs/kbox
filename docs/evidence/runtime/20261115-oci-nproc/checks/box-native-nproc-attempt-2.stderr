@@ -1,0 +1,19 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (92145218) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_nproc.rs:395:5:
+assertion `left == right` failed: 
+thread 'executor::rlimit::nproc_tests::enforces_nproc_after_uid_transition_in_an_isolated_process' (5) panicked at crates/oci-runtime/crates/agent/src/executor/rlimit/nproc_tests.rs:111:9:
+Output { status: ExitStatus(unix_wait_status(25856)), stdout: "\nrunning 1 test\ntest executor::rlimit::nproc_tests::enforces_nproc_after_uid_transition_in_an_isolated_process ... FAILED\n\nfailures:\n\nfailures:\n    executor::rlimit::nproc_tests::enforces_nproc_after_uid_transition_in_an_isolated_process\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 612 filtered out; finished in 0.00s\n\n", stderr: "\nthread 'executor::rlimit::nproc_tests::enforces_nproc_after_uid_transition_in_an_isolated_process' (9) panicked at crates/oci-runtime/crates/agent/src/executor/rlimit/nproc_tests.rs:70:22:\nlast workload slot or unlimited control must be admitted: Error { code: ResourceExhausted, operation: Some(\"admit-process-nproc\"), message: \"process.rlimits RLIMIT_NPROC admission failed: Resource temporarily unavailable (os error 11)\", retryable: false }\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  left: 101
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery' (92145217) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_nproc.rs:605:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

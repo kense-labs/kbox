@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "b34ab4b90e5b334d12ae08625a3fa60024ce9b455084830863fee34c07a6ab36",
+  "sourceFiles": 1707,
+  "changedPaths": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_capabilities.rs",
+    "crates/box/runtime/src/local_execution/oci_production.rs",
+    "crates/box/runtime/src/local_execution/oci_production_capability_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_session.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs"
+  ],
+  "nativeRustTests": 3,
+  "guestUnitTests": 0,
+  "pythonNativeScenarios": 3,
+  "capabilityObservations": 45,
+  "resolvedNonrootExplicitCapabilitiesRetainedAcrossExec": true,
+  "rootDefaultsAndDropsUnchanged": true,
+  "hostRoAttackWaves": 2,
+  "cliRealPtyCases": 2,
+  "ociSdkAgentSourcesUnchanged": true,
+  "verifyRuntime": [
+    2269,
+    0,
+    45
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "installerTests": 8,
+  "cleanup": {
+    "status": "PASS",
+    "homes": 18,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 235,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 35,
+    "afSourceCacheFilesChecked": 409,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

@@ -39,15 +39,15 @@
       "target_os": "macos",
       "target_arch": "aarch64",
       "platform": "macos-aarch64",
-      "archive": "runtime/macos-aarch64/kmacos-arm64.tar.xz",
-      "archive_size": 11701136,
-      "archive_sha256": "5486f38e91eb4da0e58888b543c93fe669c918ad4b84dd495f0d1dfdffc43b56",
+      "archive": "runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+      "archive_size": 11806236,
+      "archive_sha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
       "files": [
         {
           "role": "library",
           "name": "libkrun.1.17.0.dylib",
-          "size": 4557488,
-          "sha256": "c5353f9cbd91564ce26eceaf1bdc33341097b43280fe029203ccca02807c082d"
+          "size": 5496272,
+          "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
         },
         {
           "role": "firmware",

@@ -1,0 +1,23 @@
+
+running 18 tests
+test rootfs::ext4::tests::capacity_policy_rejects_implicit_or_oversized_disks ... ok
+test rootfs::ext4_cache::tests::cache_key_covers_every_immutable_input ... ok
+test rootfs::ext4::tests::failed_build_never_publishes_partial_generation ... ok
+test rootfs::ext4::tests::published_artifact_refuses_a_manifest_uuid_that_does_not_match_its_clean_disk ... ok
+test rootfs::ext4::tests::clean_resume_rejects_a_different_allocation_uuid_without_mutating_the_image ... ok
+test rootfs::ext4::tests::preserves_raw_filename_and_symlink_target_bytes ... ok
+test rootfs::ext4::tests::runtime_managed_init_uses_canonical_metadata_not_stale_image_metadata ... ok
+test rootfs::ext4::tests::published_legacy_artifacts_remain_resumable_after_builder_upgrade ... ok
+test rootfs::ext4::tests::recovery_boot_rejects_a_changed_superblock_contract ... ok
+test rootfs::ext4::tests::publishes_verified_metadata_faithful_artifact ... ok
+test rootfs::ext4::tests::oci_raw_bytes_survive_staging_and_ext4_publication_end_to_end ... ok
+test rootfs::ext4::tests::resume_delegates_only_the_expected_recovery_state_to_the_guest ... ok
+test rootfs::ext4_cache::tests::cache_lock_reclaims_crash_staging_without_following_links ... ok
+test rootfs::ext4_cache::tests::cache_hit_does_not_invoke_source_publisher ... ok
+test rootfs::ext4_cache::tests::cache_hit_materializes_without_source_tree ... ok
+test rootfs::ext4::tests::identical_inputs_produce_identical_sparse_images ... ok
+test rootfs::ext4_cache::tests::corrupted_cache_entry_is_never_cloned_and_is_rebuilt ... ok
+test rootfs::ext4_cache::tests::pruning_counts_allocated_sparse_bytes_and_protects_current_entry ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 2211 filtered out; finished in 0.61s
+

@@ -1,0 +1,12 @@
+[
+  {
+    "original": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe",
+    "retained": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/candidate1-memory-limit-probe",
+    "sha256": "ff650e33f6743c1510297f7269c8f13a5678f9ac4ad6e121f74f5221dacb957b"
+  },
+  {
+    "original": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe.c",
+    "retained": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/candidate1-memory-limit-probe.c",
+    "sha256": "6fda7f6f322cef499e4a5ce94590e4f144e7e3a221135754e9bf8a6c6045cd72"
+  }
+]

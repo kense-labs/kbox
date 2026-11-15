@@ -1,0 +1,271 @@
+{
+  "files": {
+    "bin/kbox": {
+      "sha256": "6bf39a61180af727654e62f27637b1e672b5d560efd6ddfadb04ad747942a186",
+      "bytes": 8592752
+    },
+    "bin/kbox-shim": {
+      "sha256": "1d0a535ca939c5aed64ea06f1a0eb10f868fee79a9e76d5ef07224b324f024d0",
+      "bytes": 3368496
+    },
+    "bin/kbox-guest-init": {
+      "sha256": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a",
+      "bytes": 3171224
+    },
+    "lib/libkrun.1.17.0.dylib": {
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "bytes": 4529632
+    },
+    "lib/libkrunfw.5.dylib": {
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "bytes": 22836688
+    },
+    "libAliases": {
+      "libkrun.dylib": "libkrun.1.17.0.dylib",
+      "libkrun.1.dylib": "libkrun.1.17.0.dylib",
+      "libkrunfw.dylib": "libkrunfw.5.dylib"
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "companion-00.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+        "-archs"
+      ],
+      "exitCode": 0,
+      "log": "companion-01.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "--verbose=2",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "companion-02.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "companion-03.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "companion-04.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "companion-05.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-06.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim",
+        "-archs"
+      ],
+      "exitCode": 0,
+      "log": "companion-07.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "--verbose=2",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-08.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-09.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-10.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-11.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-guest-init"
+      ],
+      "exitCode": 0,
+      "log": "companion-12.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-13.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib",
+        "-archs"
+      ],
+      "exitCode": 0,
+      "log": "companion-14.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "--verbose=2",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-15.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-16.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-17.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-18.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-19.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib",
+        "-archs"
+      ],
+      "exitCode": 0,
+      "log": "companion-20.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "--verbose=2",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-21.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-22.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-23.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "companion-24.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "companion-25.log"
+    }
+  ],
+  "allChecksPass": true
+}

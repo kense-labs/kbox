@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/private/tmp/kbox-shm-size-c4f989080410"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

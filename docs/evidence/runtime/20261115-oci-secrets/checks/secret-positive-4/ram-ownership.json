@@ -1,0 +1,54 @@
+{
+  "device": "/dev/disk12",
+  "ram": "ram://1048576",
+  "mount": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-4-ram",
+  "image": {
+    "autodiskmount": false,
+    "blockcount": 1048576,
+    "blocksize": 512,
+    "diskimages2": false,
+    "hdid-pid": 55942,
+    "icon-path": "/System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns",
+    "image-encrypted": false,
+    "image-path": "ram://1048576",
+    "image-type": "\u8bfb/\u5199",
+    "owner-uid": 501,
+    "removable": true,
+    "system-entities": [
+      {
+        "content-hint": "",
+        "dev-entry": "/dev/disk12"
+      }
+    ],
+    "writeable": true
+  },
+  "container": {
+    "APFSContainerUUID": "C7629475-E19E-47FF-906F-6F5426C4C522",
+    "CapacityCeiling": 536870912,
+    "CapacityFree": 535085056,
+    "ContainerReference": "disk13",
+    "DesignatedPhysicalStore": "disk12",
+    "PhysicalStores": [
+      {
+        "DeviceIdentifier": "disk12",
+        "Size": 536870912
+      }
+    ],
+    "Volumes": [
+      {
+        "APFSVolumeUUID": "D50D6A9A-0FD8-4285-BA9E-1EA7B2D2C6FB",
+        "CapacityInUse": 20480,
+        "CapacityQuota": 0,
+        "CapacityReserve": 0,
+        "CryptoMigrationOn": false,
+        "DeviceIdentifier": "disk13s1",
+        "Encryption": false,
+        "FileVault": false,
+        "Locked": false,
+        "Name": "kbox-owned-secret",
+        "Roles": []
+      }
+    ]
+  },
+  "volume": "/dev/disk13s1"
+}

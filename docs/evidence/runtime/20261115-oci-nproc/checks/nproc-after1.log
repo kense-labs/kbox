@@ -1,0 +1,40 @@
+
+running 35 tests
+test local_execution::oci_hvf::tests::native::lifetime::native_box_hvf_owner_outlives_smoke_deadline ... ignored, requires sentinel-owned root, installed HVF assets and 95 seconds
+test local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery ... ignored, requires sentinel-owned private home and fixed signed independent HVF Host assets
+test local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep ... ignored, requires sentinel-owned root and fixed signed native HVF assets
+test local_execution::oci_hvf::tests::native::native_cleanup_owned_hvf_test_root ... ignored, maintenance only: requires the existing sentinel-owned HVF test root
+test hardware_vm::tests::profile_bytes_match_on_kvm_hvf_and_whpx ... ok
+test local_execution::oci_hvf::tests::hvf_missing_or_wrong_endpoint_and_unknown_modes_refuse ... ok
+test local_execution::oci_hvf::tests::hvf_explicit_endpoint_and_creation_policy_are_separate ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_omission_preserves_spec_bytes_and_disk_refuses ... ok
+test vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin ... ok
+test vm::oci_hvf_spec::tests::hvf_cpu_time_ulimits_complete_and_replace_only_declared_resource ... ok
+test vm::oci_hvf_spec::tests::hvf_bundle_preserves_host_grants_exact_resources_and_explicit_guest_capability ... ok
+test vm::oci_hvf_spec::tests::hvf_anonymous_completion_classifies_exact_planned_disk_separately_from_caller_files ... ok
+test vm::oci_hvf_spec::tests::hvf_memory_ulimits_preserve_cpu_defaults_and_exact_byte_values ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_refuses_unqualified_input_before_allocating ... ok
+test vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_qualification_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_refuse_bad_or_unqualified_limits_before_allocating ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_preserves_flags_data_defaults_and_refuses_image_subtree_collisions ... ok
+test local_execution::oci_production::ulimit_tests::hvf_memory_ulimits_admit_existing_byte_limits_without_allocating ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_admits_bounded_intent_without_allocations ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_do_not_promote_other_profiles ... ok
+test vm::oci_hvf_spec::tests::hvf_file_sources_admit_plain_data_and_refuse_aliases_and_invalid_controls ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_keep_empty_request_bytes_and_unmentioned_oci_defaults ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_support_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::ulimit_tests::hvf_cpu_time_ulimits_admit_existing_intent_without_allocating ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_admission_reuses_supported_guest_control_without_allocations ... ok
+test vm::oci_hvf_spec::tests::hvf_root_readonly_intent_reaches_existing_guest_executor ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor ... ok
+test local_execution::oci_production::named_tests::hvf_named_volume_profile_admits_existing_plain_store_mount ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_refuses_excess_inventory_before_claiming_allocations ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_reserves_normalized_image_volumes_before_materialization ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation ... ok
+
+test result: ok. 31 passed; 0 failed; 4 ignored; 0 measured; 2245 filtered out; finished in 0.29s
+

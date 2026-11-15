@@ -391,6 +391,40 @@ fn recovery_boot_rejects_a_changed_superblock_contract() {
     assert!(error.contains("UUID"));
 }
 
+#[test]
+fn clean_resume_rejects_a_different_allocation_uuid_without_mutating_the_image() {
+    let temp = tempfile::tempdir().unwrap();
+    let source = temp.path().join("source");
+    std::fs::create_dir(&source).unwrap();
+    let artifact =
+        publish_ext4_artifact(&source, &temp.path().join("artifact"), options()).unwrap();
+    let before = std::fs::read(&artifact.disk).unwrap();
+    assert!(validate_ext4_image_for_resume(
+        &artifact.disk,
+        artifact.manifest.capacity_bytes,
+        [0x99; 16],
+    )
+    .is_err());
+    assert_eq!(std::fs::read(&artifact.disk).unwrap(), before);
+}
+
+#[test]
+fn published_artifact_refuses_a_manifest_uuid_that_does_not_match_its_clean_disk() {
+    let temp = tempfile::tempdir().unwrap();
+    let source = temp.path().join("source");
+    std::fs::create_dir(&source).unwrap();
+    let artifact =
+        publish_ext4_artifact(&source, &temp.path().join("artifact"), options()).unwrap();
+    let mut manifest = artifact.manifest.clone();
+    manifest.fs_uuid = hex::encode([0x99; 16]);
+    std::fs::write(
+        artifact.directory.join(MANIFEST_FILE_NAME),
+        serde_json::to_vec(&manifest).unwrap(),
+    )
+    .unwrap();
+    assert!(super::super::ext4_artifact::open_ext4_artifact(&artifact.directory).is_err());
+}
+
 fn rewrite_superblock(path: &Path, mutate: impl FnOnce(&mut mkext4::spec::Superblock)) {
     let mut file = std::fs::OpenOptions::new()
         .read(true)

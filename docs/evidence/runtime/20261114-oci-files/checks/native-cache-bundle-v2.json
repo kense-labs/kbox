@@ -1,0 +1,98 @@
+{
+  "archive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "archiveSize": 11806236,
+  "archiveSha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+  "files": [
+    {
+      "role": "library",
+      "name": "libkrun.1.17.0.dylib",
+      "size": 5496272,
+      "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    {
+      "role": "firmware",
+      "name": "libkrunfw.5.dylib",
+      "size": 22952096,
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
+    }
+  ],
+  "kernel": {
+    "size": 22740992,
+    "sha256": "b1180b50148ed14f5fbeadf17288ce8abcf245daa468255b7ff41113bbf01199",
+    "guest_load_address": 2147483648,
+    "entry_address": 2147483648
+  },
+  "source": {
+    "schema": "kbox.native-source.v1",
+    "repository": "kense-labs/libkrun",
+    "baseCommit": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+    "uncommitted": true,
+    "parentGitlinkUnchanged": true,
+    "patchSha256": "394f321494615786c4f6c3aa7f3cb181d054ac87a3e034df6056145533f5acdd",
+    "sourceInputsSha256": "c89d545b25021c02c7739d300a746405772d889fd422935d9bf8a8ba2b5817bb",
+    "sourceArchiveSha256": "2097d9bea8640f5d2e04ce92f814e356a710d281e0970c94dfdce957ebbcfe80",
+    "initSourceSha256": "b7fdbe7d0eb203db59b0f4f7d9419afa4a980208c882f8498dd0242fae8dbd74",
+    "builtInitSha256": "771c4752eeb5624ae40930c3ed0c70a2dea26c28fd4ba3ec7570b9fbbfbb6a5e",
+    "minimumMacos": "11.0",
+    "rustToolchain": "1.97.1-aarch64-apple-darwin",
+    "requiredFunction": "krun_add_virtiofs_uncached",
+    "archiveSha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+    "librarySha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf",
+    "firmwareSha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+    "checks": "docs/evidence/runtime/20261114-oci-files",
+    "sourceArchiveRelative": "artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-source-v3/libkrun-uncached-source.tar.gz"
+  },
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "stdout": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "vtool",
+        "-show-build",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "stdout": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib:\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform MACOS\n    minos 11.0\n      sdk 26.5\n   ntools 1\n     tool LD\n  version 1267.0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "nm",
+        "-gU",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "stdout": "0000000000004c6c T _krun_add_console_port_inout\n0000000000004fec T _krun_add_console_port_tty\n000000000000538c T _krun_add_disk\n00000000000057fc T _krun_add_disk2\n0000000000005c70 T _krun_add_disk3\n000000000000610c T _krun_add_display\n0000000000006114 T _krun_add_input_device\n000000000000611c T _krun_add_input_device_fd\n0000000000006124 T _krun_add_net_tap\n000000000000612c T _krun_add_net_unixgram\n000000000000655c T _krun_add_net_unixstream\n000000000000698c T _krun_add_serial_console_default\n0000000000006c0c T _krun_add_virtio_console_default\n0000000000006ed4 T _krun_add_virtio_console_multiport\n0000000000007154 T _krun_add_virtiofs\n0000000000007170 T _krun_add_virtiofs2\n0000000000007580 T _krun_add_virtiofs_uncached\n000000000000759c T _krun_add_vsock\n0000000000007800 T _krun_add_vsock_port\n0000000000007808 T _krun_add_vsock_port2\n0000000000007f90 T _krun_check_nested_virt\n00000000000082b8 T _krun_create_ctx\n0000000000008ac4 T _krun_disable_implicit_console\n0000000000008d08 T _krun_disable_implicit_vsock\n000000000000610c T _krun_display_set_dpi\n0000000000008f48 T _krun_display_set_edid\n0000000000008f50 T _krun_display_set_physical_size\n000000000000610c T _krun_display_set_refresh_rate\n0000000000008f58 T _krun_free_ctx\n0000000000009228 T _krun_get_max_vcpus\n0000000000009314 T _krun_get_shutdown_eventfd\n0000000000009540 T _krun_init_log\n0000000000009914 T _krun_set_console_output\n0000000000009bec T _krun_set_data_disk\n0000000000008f48 T _krun_set_display_backend\n0000000000009fc8 T _krun_set_env\n000000000000a364 T _krun_set_exec\n000000000000a9f8 T _krun_set_firmware\n000000000000adf4 T _krun_set_gpu_options\n000000000000b038 T _krun_set_gpu_options2\n000000000000b298 T _krun_set_gvproxy_path\n000000000000b69c T _krun_set_kernel\n000000000000bf7c T _krun_set_kernel_console\n000000000000c2c4 T _krun_set_log_level\n000000000000c3c8 T _krun_set_mapped_volumes\n000000000000c3d0 T _krun_set_nested_virt\n000000000000c5f0 T _krun_set_net_mac\n000000000000c850 T _krun_set_passt_fd\n000000000000cac8 T _krun_set_port_map\n000000000000d468 T _krun_set_rlimits\n000000000000d9f4 T _krun_set_root\n000000000000de04 T _krun_set_root_disk\n000000000000e1e0 T _krun_set_root_disk_remount\n0000000000010c20 T _krun_set_smbios_oem_strings\n0000000000011074 T _krun_set_snd_device\n00000000000112b4 T _krun_set_vm_config\n0000000000011530 T _krun_set_workdir\n0000000000011830 T _krun_setgid\n0000000000011a74 T _krun_setuid\n0000000000011cb8 T _krun_split_irqchip\n0000000000011ee0 T _krun_start_enter\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "stdout": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib:\n\tlibkrun.1.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-cache-bundle-v2/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

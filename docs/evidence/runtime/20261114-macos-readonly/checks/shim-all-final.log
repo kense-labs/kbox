@@ -1,0 +1,47 @@
+warning: klibksys@3.2.7: K_BUILD_LIBKRUN set: forcing build from source
+warning: klibksys@3.2.7: Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.17.0.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.5.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.dylib
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling kbox-shim v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/shim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.30s
+     Running unittests src/main.rs (target/debug/deps/kbox_shim-d39e4cc793703bea)
+
+running 30 tests
+test kbox::tests::test_check_status_success_positive ... ok
+test kbox::tests::test_check_status_success_zero ... ok
+test kbox::tests::test_check_status_error_message_format ... ok
+test kbox::tests::test_check_status_failure_negative_large ... ok
+test kbox::tests::test_check_status_failure_negative_one ... ok
+test managed_oci_log_worker::tests::retries_only_transient_output_ownership_conflicts ... ok
+test tests::test_parse_ulimit_all_resources ... ok
+test tests::test_parse_ulimit_case_insensitive ... ok
+test tests::test_parse_ulimit_core ... ok
+test tests::test_parse_ulimit_no_equals ... ok
+test tests::test_parse_ulimit_nofile ... ok
+test tests::test_parse_ulimit_nproc ... ok
+test tests::test_parse_ulimit_stack ... ok
+test tests::test_parse_ulimit_unknown ... ok
+test tests::test_tsi_port_map_for_spec_skips_macos_bridge_ports ... ok
+test tests::virtio_net_requires_inherited_egress_proxy ... ok
+test tests::validates_directory_rootfs_source ... ok
+test tests::rejects_empty_ext4_disk_rootfs_source ... ok
+test tests::rejects_file_as_directory_rootfs_source ... ok
+test tests::raw_disk_ownership::rejects_reserved_or_repeated_auxiliary_raw_disks ... ok
+test managed_oci_log_worker::tests::rejects_non_contiguous_output_without_writing_it ... ok
+test tests::validates_nonempty_ext4_disk_rootfs_source ... ok
+test tests::rejects_symlink_as_ext4_disk_rootfs_source ... ok
+test tests::raw_disk_ownership::validates_one_read_only_auxiliary_raw_disk ... ok
+test managed_oci_log_worker::tests::accepts_contiguous_split_output_and_both_eofs ... ok
+test macos_readonly::tests::readonly_exports_are_pinned_and_overlapping_writable_grants_refuse ... ok
+test tests::macos_runtime_assets::staging_same_file_or_hard_link_does_not_truncate_it ... ok
+test tests::raw_disk_ownership::raw_disk_ownership_lock_rejects_a_second_kowner ... ok
+test tests::raw_disk_ownership::raw_disk_ownership_survives_owner_process_crashes ... ok
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpPkKzIt/libkrun.9.42.0.dylib: replacing existing signature
+test tests::macos_runtime_assets::stages_versioned_dylibs_and_aliases_without_invalidating_signatures ... ok
+
+test result: ok. 30 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+

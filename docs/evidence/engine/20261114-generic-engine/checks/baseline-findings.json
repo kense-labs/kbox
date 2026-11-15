@@ -1,0 +1,112 @@
+{
+  "workspaceFormatExitCode": 1,
+  "unchangedFilesWithFormatDifferences": [
+    "crates/box/cli/src/commands/commit/tests.rs",
+    "crates/box/cli/src/commands/common.rs",
+    "crates/box/cli/src/commands/compose/args.rs",
+    "crates/box/cli/src/commands/cp.rs",
+    "crates/box/cli/src/commands/observe_inventory.rs",
+    "crates/box/cli/src/commands/run/request_tests.rs",
+    "crates/box/cli/src/commands/run/tests/lifecycle.rs",
+    "crates/box/cli/src/commands/scale_api.rs",
+    "crates/box/cli/src/state/tests.rs",
+    "crates/box/core/src/compose.rs",
+    "crates/box/core/src/snapshot.rs",
+    "crates/box/cri/src/image_service.rs",
+    "crates/box/cri/src/runtime_service/mod.rs",
+    "crates/box/cri/src/runtime_service/supervisor.rs",
+    "crates/box/cri/src/runtime_service/tests.rs",
+    "crates/box/cri/src/spdy.rs",
+    "crates/box/cri/src/streaming.rs",
+    "crates/box/runtime/examples/linux_kvm_live_session_qualification.rs",
+    "crates/box/runtime/examples/linux_kvm_oci_qualification.rs",
+    "crates/box/runtime/examples/windows_whpx_oci_qualification.rs",
+    "crates/box/runtime/src/box_record.rs",
+    "crates/box/runtime/src/box_state.rs",
+    "crates/box/runtime/src/host_fs/id_mapping.rs",
+    "crates/box/runtime/src/host_fs/mod.rs",
+    "crates/box/runtime/src/host_fs/mount_alias.rs",
+    "crates/box/runtime/src/host_fs/rootfs.rs",
+    "crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs",
+    "crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_evidence.rs",
+    "crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_profile.rs",
+    "crates/box/runtime/src/local_execution/backend.rs",
+    "crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_backend.rs",
+    "crates/box/runtime/src/local_execution/oci_backend_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_backend_tests/process_restart.rs",
+    "crates/box/runtime/src/local_execution/oci_production.rs",
+    "crates/box/runtime/src/local_execution/oci_whpx_owner.rs",
+    "crates/box/runtime/src/local_execution/resources.rs",
+    "crates/box/runtime/src/local_execution/router.rs",
+    "crates/box/runtime/src/local_execution/router_tests.rs",
+    "crates/box/runtime/src/local_execution/tests.rs",
+    "crates/box/runtime/src/local_execution/tests/owned_vm_close.rs",
+    "crates/box/runtime/src/local_execution/vm_backend.rs",
+    "crates/box/runtime/src/local_execution/vm_backend_tests.rs",
+    "crates/box/runtime/src/oci/build/plan.rs",
+    "crates/box/runtime/src/oci/build/plan/tests.rs",
+    "crates/box/runtime/src/scale/catalog.rs",
+    "crates/box/runtime/src/scale/reconciler.rs",
+    "crates/box/runtime/src/vm/boot.rs",
+    "crates/box/runtime/src/vm/oci_microvm.rs",
+    "crates/box/runtime/src/vm/reap.rs",
+    "crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs"
+  ],
+  "modifiedFilesWithFormatDifferences": [],
+  "preexistingBrokenLinks": [
+    {
+      "file": "crates/box/runtime/README.md",
+      "target": "../../../../docs/evidence/desktop/20261017-paperloom-secret-readonly-admission/OUTCOME.md"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/run.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/meta_harness.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/loop_checkpoint.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/fact_control.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/completion_attestor.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/context/mod.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/durable_memory.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/tools/mod.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/lib.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/task_scheduler.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../crates/code/core/src/budget.rs"
+    },
+    {
+      "file": "docs/architecture/harness-gateway.md",
+      "target": "../../apps/gateway/src/lib.rs"
+    }
+  ],
+  "newBrokenLinks": []
+}

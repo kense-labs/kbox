@@ -1,0 +1,14 @@
+[
+  {
+    "mechanism": "fd-follow",
+    "success": false,
+    "errno": 1,
+    "error": "[Errno 1] Operation not permitted: '/dev/fd/4' -> '/private/tmp/kbox-files-38d1ee741be9/fd-link-probe/fd-follow'"
+  },
+  {
+    "mechanism": "fd-nofollow",
+    "success": false,
+    "errno": 1,
+    "error": "[Errno 1] Operation not permitted: '/dev/fd/4' -> '/private/tmp/kbox-files-38d1ee741be9/fd-link-probe/fd-nofollow'"
+  }
+]

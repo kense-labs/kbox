@@ -1,0 +1,9 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/official-kernel-source/user_namespace.c",
+  "sha256": "1ee1a746ea8e1ba1d3316c2500b3fe305adc0447e8526e745eab0dc6f3aa061f",
+  "function": "verify_root_map",
+  "rootParentRequiresCapability": "CAP_SETFCAP",
+  "workloadCapabilities": "all empty",
+  "diagnosticErrno": 1,
+  "scope": "fixture had an invalid root-map success assumption; keep actual Nice effect assertions and verify mapped nonroot separately"
+}

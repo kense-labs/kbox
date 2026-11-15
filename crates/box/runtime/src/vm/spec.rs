@@ -111,7 +111,7 @@ impl VmManager {
                 self.home_dir.join("volumes.json"),
                 self.home_dir.join("volumes"),
             )
-            .load()?
+            .load_strict()?
             .into_values()
             .map(|volume| PathBuf::from(volume.mount_point))
             .collect();
@@ -126,6 +126,19 @@ impl VmManager {
             })
             .collect::<Result<Vec<_>>>()?;
         for (i, volume) in parsed_volumes.iter().enumerate() {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            if !include_guest_controls
+                && std::fs::symlink_metadata(&volume.host_path)
+                    .map_err(BoxError::IoError)?
+                    .is_file()
+            {
+                fs_mounts.push(FsMount {
+                    tag: format!("vol{i}"),
+                    host_path: volume.host_path.clone(),
+                    read_only: volume.read_only,
+                });
+                continue;
+            }
             let mount = Self::prepare_volume_mount(
                 volume,
                 i,
@@ -162,6 +175,16 @@ impl VmManager {
                 (planned, name)
             })
             .collect::<Vec<_>>();
+
+        if !include_guest_controls
+            && materialization_plan
+                .iter()
+                .any(|(_, name)| !self.anonymous_volumes.contains(name))
+        {
+            return Err(BoxError::ConfigError(
+                "image volumes drifted from the durable Box ownership plan".into(),
+            ));
+        }
 
         for (planned, anon_name) in materialization_plan {
             // Image-declared anonymous volumes are part of the durable Box
@@ -406,10 +429,9 @@ impl VmManager {
             // Pass tmpfs mounts to guest init.
             // Format: BOX_TMPFS_<index>=<path>[:<options>]
             for (i, tmpfs_spec) in self.config.tmpfs.iter().enumerate() {
-                let guest_path = tmpfs_spec
-                    .split_once(':')
-                    .map_or(tmpfs_spec.as_str(), |(path, _)| path);
-                Self::validate_guest_mount_path(guest_path)?;
+                let parsed = kbox_core::guest_exec::GuestTmpfsMount::parse(tmpfs_spec)
+                    .map_err(|error| BoxError::ConfigError(error.to_string()))?;
+                Self::validate_guest_mount_path(parsed.path())?;
                 env.push((
                     format!("BOX_TMPFS_{}", i),
                     kbox_core::guest_exec::encode_guest_mount_spec(tmpfs_spec),
@@ -942,6 +964,7 @@ impl VmManager {
 
 mod virtiofs_ro;
 mod volumes;
+pub(super) use volumes::PlannedAnonymousVolume;
 
 pub(crate) use virtiofs_ro::cleanup_virtiofs_ro_shares;
 

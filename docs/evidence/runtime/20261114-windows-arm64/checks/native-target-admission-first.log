@@ -1,0 +1,11 @@
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+warning: klibksys@3.2.7: K_BUILD_LIBKRUN set: forcing build from source
+warning: klibksys@3.2.7: Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.85s
+     Running tests/build_support.rs (target/debug/deps/build_support-a19bb2369a1790b9)
+
+running 1 test
+test windows_runtime_target_refuses_arm64_and_foreign_abis_before_stub_or_asset_selection ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 6 filtered out; finished in 0.00s
+

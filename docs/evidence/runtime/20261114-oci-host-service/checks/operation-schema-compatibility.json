@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "new_exec_fingerprint_preserves"
+  ],
+  "exitCode": 0,
+  "seconds": 0.12108320800000083
+}

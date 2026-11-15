@@ -1,0 +1,127 @@
+{
+  "status": "PASS",
+  "sourceUnchanged": true,
+  "sourceInputsSha256": "07ccdf500f00db25334d538ebed0dd1bcf10dd11e3dfaf417ca45f79cad2ef35",
+  "referencesChecked": 27,
+  "references": [
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "run-context.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/preserved-archives.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/final-identities-1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/actual-counts-source1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/af-final1/native-results.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/named-receipts-checked.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md",
+      "target": "checks/final-descriptor-audit.json"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-final-archive/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-release-baseline/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-macos-readonly/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-windows-arm64/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-host-service/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-rootfs/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-files/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-file-rollback/OUTCOME.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-named-volumes/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../crates/oci-runtime/ROADMAP.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../crates/oci-runtime/docs/macos-hvf.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261114-oci-rootfs/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261114-oci-files/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261114-oci-named-volumes/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261114-oci-file-rollback/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../specs/008-oci-rootfs/tasks.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../specs/009-oci-file-grants/tasks.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../specs/011-oci-named-volumes/tasks.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../specs/010-oci-file-rollback/tasks.md"
+    }
+  ],
+  "installedNativeAttempts": [
+    3,
+    4,
+    5
+  ],
+  "preservedPriorArchivesUnchanged": true,
+  "nativeParentWorktreesClean": true,
+  "gitlinksUnchanged": true,
+  "indexEmpty": true,
+  "whitespaceExit": 0,
+  "resourcesDeletedByReview": []
+}

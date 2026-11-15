@@ -1,0 +1,8 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exit": 0,
+  "seconds": 212.285056666
+}

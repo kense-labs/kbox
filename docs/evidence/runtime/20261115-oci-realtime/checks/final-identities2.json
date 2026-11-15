@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/check-final-identities2.py"
+  ],
+  "exit": 0,
+  "seconds": 1.020709625
+}

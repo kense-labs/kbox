@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "changedPaths": [
+    "crates/box/runtime/src/local_execution/oci_session.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec.rs"
+  ],
+  "sharedInitExecCapabilityApplication": true,
+  "ociSdkAgentSourcesUnchanged": true
+}

@@ -1,0 +1,5 @@
+/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib:
+	@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)
+	/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)
+	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)

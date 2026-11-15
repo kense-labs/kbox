@@ -1,0 +1,9 @@
+   Compiling aws-lc-sys v0.47.0
+   Compiling ring v0.17.14
+   Compiling aws-lc-rs v1.19.0
+   Compiling x509-parser v0.16.0
+   Compiling rustls-webpki v0.103.16
+   Compiling rustls v0.23.46
+   Compiling rcgen v0.13.2
+   Compiling kbox-guest-init v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/guest/init)
+    Finished `release-dist` profile [optimized] target(s) in 14.63s

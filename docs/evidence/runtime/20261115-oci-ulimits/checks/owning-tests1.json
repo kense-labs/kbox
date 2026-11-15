@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-core",
+    "-p",
+    "kbox-shim",
+    "-p",
+    "kbox-guest-init",
+    "--all-targets"
+  ],
+  "exit": 0,
+  "seconds": 17.729507792
+}

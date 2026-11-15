@@ -1,0 +1,6 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.17s
+     Running unittests src/lib.rs (target/debug/deps/koci_agent-0e5a7a4994bdd9c6)
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-727e3b348542850f)

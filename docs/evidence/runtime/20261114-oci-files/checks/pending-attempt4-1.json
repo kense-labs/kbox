@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/maintenance-client-pending-attempt4-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::pending::native_reconcile_owned_pending_creates",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-4",
+  "exitCode": 101,
+  "seconds": 2.185787875,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "clientSha256": "ee1c3875aab8a997d06975ab3f55241a91e3be2d0385700b519b7044882ca2d2",
+  "loadedWorkers": 0
+}

@@ -1,0 +1,108 @@
+[
+  {
+    "case": "oci",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-image-cache/images",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-oci"
+    ],
+    "seconds": 38.047987667,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-oci/5f8fe3da1c944871b59efc3a47c78228/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "readonly",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-image-cache/images",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-readonly"
+    ],
+    "seconds": 5.133320374999997,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-readonly/2f2eae9a5d1c4d4794f1af6ef2f861f8/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "primary",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-image-cache/images",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-primary"
+    ],
+    "seconds": 67.568343167,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-primary/373523bc4ae74341a5763e69dc1feed7/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "prewarm",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/installed-raw-secrets-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-image-cache/images",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-prewarm",
+      "--test-binary",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/native-client-frozen2"
+    ],
+    "seconds": 16.148810291999993,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-prewarm/d14ba5f2d8b94666ba60daddd57c2619/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  {
+    "case": "directory",
+    "status": "PASS",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/native-client-frozen2",
+      "--ignored",
+      "--exact",
+      "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+      "--nocapture"
+    ],
+    "seconds": 20.731573209000004,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-directory/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  }
+]

@@ -1,0 +1,560 @@
+{
+  "schema_version": "koci.macos-hvf-host-service-smoke.v1",
+  "status": "available",
+  "platform": "macos",
+  "evidence_root": "/private/tmp/kbox-hvf-ebc8e8fb7890/v7s/hvf-77006-1794641806738930000",
+  "artifacts": {
+    "host_service_executable": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci",
+    "host_service_executable_sha256": "985eb976246585ff286e954b2b1109751970ea08cc15fde51e55f583084778ff",
+    "shim": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kshim",
+    "shim_sha256": "1631510e7874614cd3388d8d3828c5760ace4f722f80a00d1de8149728404d3a",
+    "system_image_manifest": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/system-image/system-image.json",
+    "system_image_manifest_sha256": "19960ea11e95125eefc3496fc2939276b1f9647ef2cad0fb5de56534db0c938b",
+    "source_bundle": "/private/tmp/kbox-hvf-ebc8e8fb7890/sdk-fixture",
+    "source_bundle_config_digest": "sha256:e03c15a76088241ba0178e6a5bdf7bbeeca412258ae724ea3703cc1bf3758469",
+    "source_revision": "405c8b89f151e9e2879438d9e457dd60bfd18b90"
+  },
+  "lifecycle": {
+    "host_service_pid": 77007,
+    "socket_private": true,
+    "features_verified": true,
+    "advertised_operations": [
+      "features",
+      "create",
+      "state",
+      "start",
+      "kill",
+      "delete",
+      "exec",
+      "wait",
+      "list",
+      "pause",
+      "resume",
+      "update",
+      "processes",
+      "stats",
+      "events",
+      "read-output",
+      "write-stdin",
+      "close-stdin",
+      "resize",
+      "signal-process",
+      "wait-process",
+      "file",
+      "filesystem"
+    ],
+    "exercised_operations": [
+      "features",
+      "create",
+      "state",
+      "start",
+      "kill",
+      "delete",
+      "exec",
+      "wait",
+      "list",
+      "pause",
+      "resume",
+      "update",
+      "processes",
+      "stats",
+      "events",
+      "read-output",
+      "write-stdin",
+      "close-stdin",
+      "resize",
+      "signal-process",
+      "wait-process",
+      "file",
+      "filesystem"
+    ],
+    "bundle_handoff_staged": true,
+    "bundle_handoff_consumed": true,
+    "create_returned_created": true,
+    "create_replayed": true,
+    "state_exact_after_create": true,
+    "list_exact_after_create": true,
+    "start_returned_running": true,
+    "init_marker_verified": true,
+    "process_io_verified": true,
+    "terminal_io_verified": true,
+    "exec_lifecycle_verified": true,
+    "signal_process_verified": true,
+    "wait_process_verified": true,
+    "read_output_verified": true,
+    "write_stdin_verified": true,
+    "close_stdin_verified": true,
+    "resize_verified": true,
+    "file_transfer_verified": true,
+    "filesystem_operations_verified": true,
+    "process_inventory_verified": true,
+    "resources_updated": true,
+    "stats_verified": true,
+    "pause_verified": true,
+    "resume_verified": true,
+    "wait_timeout_enforced": true,
+    "kill_replayed": true,
+    "wait_status": {
+      "signal": 9,
+      "oom_killed": false
+    },
+    "wait_replayed": true,
+    "events_verified": true,
+    "delete_replayed": true,
+    "state_removed": true,
+    "generation_monotonic": true,
+    "stale_generation_rejected": true,
+    "recreated_generation_deleted": true,
+    "list_empty_after_delete": true,
+    "service_descriptor_inventory_restored": true,
+    "open_descriptors_before": 13,
+    "open_descriptors_after": 13,
+    "vm_processes_reaped": true,
+    "endpoint_inventory_restored": true,
+    "bundle_handoffs_clean": true,
+    "runtime_shares_clean": true,
+    "recovery_reports_clean": true,
+    "console_files_created": 2,
+    "service_socket_removed": true,
+    "service_exit_success": true
+  },
+  "owner_death": {
+    "first_host_service_pid": 77042,
+    "first_socket_peer": {
+      "pid": 77042,
+      "parent_pid": 77006,
+      "process_group_id": 77004,
+      "start_time_unix_us": 1794641809937680,
+      "command": "koci"
+    },
+    "target": {
+      "id": "hvf-owner-death-77006-1794641806738930000-owner",
+      "generation": 1
+    },
+    "created_config_digest": "sha256:a75fbd4a83bce5b6ba37609fa95fc93f73eefe9b99154494df0e355c618052eb",
+    "live_vm_processes": [
+      {
+        "pid": 77045,
+        "parent_pid": 77044,
+        "process_group_id": 77044,
+        "start_time_unix_us": 1794641810159731,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77044,
+        "parent_pid": 77042,
+        "process_group_id": 77044,
+        "start_time_unix_us": 1794641810148637,
+        "command": "koci-kshim"
+      }
+    ],
+    "authenticated_endpoint_consumed": true,
+    "host_service_sigkill_delivered": true,
+    "first_host_service_reaped": true,
+    "stale_socket_retained": true,
+    "live_vm_processes_reaped": true,
+    "endpoint_inventory_restored": true,
+    "authenticated_recovery_report_retained": true,
+    "replacement_host_service_pid": 77046,
+    "replacement_socket_peer": {
+      "pid": 77046,
+      "parent_pid": 77006,
+      "process_group_id": 77004,
+      "start_time_unix_us": 1794641810627897,
+      "command": "koci"
+    },
+    "replacement_socket_new_owner": true,
+    "replacement_connected": true,
+    "exact_stopped_state_recovered": true,
+    "process_inventory_empty": true,
+    "recovered_wait_status": {
+      "signal": 9,
+      "oom_killed": false
+    },
+    "recovered_wait_replayed": true,
+    "stopped_delete_succeeded": true,
+    "durable_state_removed": true,
+    "replacement_descriptor_inventory_restored": true,
+    "open_descriptors_before": 13,
+    "open_descriptors_after": 13,
+    "bundle_handoffs_clean": true,
+    "runtime_shares_clean": true,
+    "recovery_reports_clean": true,
+    "replacement_socket_removed": true,
+    "replacement_exit_success": true
+  },
+  "soak": {
+    "requested_iterations": 25,
+    "completed_iterations": 25,
+    "host_service_pid": 77047,
+    "completed_vm_generations": 25,
+    "create_replays_verified": 25,
+    "kill_replays_verified": 25,
+    "wait_replays_verified": 25,
+    "delete_replays_verified": 25,
+    "generation_monotonic_every_iteration": true,
+    "stale_generation_rejected_every_iteration": true,
+    "descriptor_inventory_stable_every_iteration": true,
+    "steady_open_descriptors": 13,
+    "final_open_descriptors": 13,
+    "vm_processes_reaped_every_iteration": true,
+    "endpoint_inventory_restored_every_iteration": true,
+    "transients_clean_every_iteration": true,
+    "unique_vm_processes": true,
+    "vm_processes": [
+      {
+        "pid": 77050,
+        "parent_pid": 77049,
+        "process_group_id": 77049,
+        "start_time_unix_us": 1794641811053476,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77049,
+        "parent_pid": 77047,
+        "process_group_id": 77049,
+        "start_time_unix_us": 1794641811042525,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77066,
+        "parent_pid": 77065,
+        "process_group_id": 77065,
+        "start_time_unix_us": 1794641811878296,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77065,
+        "parent_pid": 77047,
+        "process_group_id": 77065,
+        "start_time_unix_us": 1794641811867950,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77092,
+        "parent_pid": 77091,
+        "process_group_id": 77091,
+        "start_time_unix_us": 1794641812786425,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77091,
+        "parent_pid": 77047,
+        "process_group_id": 77091,
+        "start_time_unix_us": 1794641812776426,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77102,
+        "parent_pid": 77101,
+        "process_group_id": 77101,
+        "start_time_unix_us": 1794641813663418,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77101,
+        "parent_pid": 77047,
+        "process_group_id": 77101,
+        "start_time_unix_us": 1794641813653109,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77105,
+        "parent_pid": 77104,
+        "process_group_id": 77104,
+        "start_time_unix_us": 1794641814501513,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77104,
+        "parent_pid": 77047,
+        "process_group_id": 77104,
+        "start_time_unix_us": 1794641814491341,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77108,
+        "parent_pid": 77107,
+        "process_group_id": 77107,
+        "start_time_unix_us": 1794641815323477,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77107,
+        "parent_pid": 77047,
+        "process_group_id": 77107,
+        "start_time_unix_us": 1794641815313376,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77111,
+        "parent_pid": 77110,
+        "process_group_id": 77110,
+        "start_time_unix_us": 1794641816126889,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77110,
+        "parent_pid": 77047,
+        "process_group_id": 77110,
+        "start_time_unix_us": 1794641816115967,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77119,
+        "parent_pid": 77118,
+        "process_group_id": 77118,
+        "start_time_unix_us": 1794641816952547,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77118,
+        "parent_pid": 77047,
+        "process_group_id": 77118,
+        "start_time_unix_us": 1794641816942192,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77133,
+        "parent_pid": 77132,
+        "process_group_id": 77132,
+        "start_time_unix_us": 1794641817789005,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77132,
+        "parent_pid": 77047,
+        "process_group_id": 77132,
+        "start_time_unix_us": 1794641817778797,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77145,
+        "parent_pid": 77144,
+        "process_group_id": 77144,
+        "start_time_unix_us": 1794641818671040,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77144,
+        "parent_pid": 77047,
+        "process_group_id": 77144,
+        "start_time_unix_us": 1794641818660452,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77202,
+        "parent_pid": 77201,
+        "process_group_id": 77201,
+        "start_time_unix_us": 1794641819675202,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77201,
+        "parent_pid": 77047,
+        "process_group_id": 77201,
+        "start_time_unix_us": 1794641819664968,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77218,
+        "parent_pid": 77217,
+        "process_group_id": 77217,
+        "start_time_unix_us": 1794641820596828,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77217,
+        "parent_pid": 77047,
+        "process_group_id": 77217,
+        "start_time_unix_us": 1794641820586328,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77287,
+        "parent_pid": 77286,
+        "process_group_id": 77286,
+        "start_time_unix_us": 1794641821622100,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77286,
+        "parent_pid": 77047,
+        "process_group_id": 77286,
+        "start_time_unix_us": 1794641821612776,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77307,
+        "parent_pid": 77306,
+        "process_group_id": 77306,
+        "start_time_unix_us": 1794641822642992,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77306,
+        "parent_pid": 77047,
+        "process_group_id": 77306,
+        "start_time_unix_us": 1794641822632799,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77313,
+        "parent_pid": 77312,
+        "process_group_id": 77312,
+        "start_time_unix_us": 1794641823732228,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77312,
+        "parent_pid": 77047,
+        "process_group_id": 77312,
+        "start_time_unix_us": 1794641823721872,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77318,
+        "parent_pid": 77317,
+        "process_group_id": 77317,
+        "start_time_unix_us": 1794641824758521,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77317,
+        "parent_pid": 77047,
+        "process_group_id": 77317,
+        "start_time_unix_us": 1794641824746408,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77324,
+        "parent_pid": 77323,
+        "process_group_id": 77323,
+        "start_time_unix_us": 1794641825591383,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77323,
+        "parent_pid": 77047,
+        "process_group_id": 77323,
+        "start_time_unix_us": 1794641825582189,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77340,
+        "parent_pid": 77339,
+        "process_group_id": 77339,
+        "start_time_unix_us": 1794641826471087,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77339,
+        "parent_pid": 77047,
+        "process_group_id": 77339,
+        "start_time_unix_us": 1794641826461900,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77345,
+        "parent_pid": 77344,
+        "process_group_id": 77344,
+        "start_time_unix_us": 1794641827315713,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77344,
+        "parent_pid": 77047,
+        "process_group_id": 77344,
+        "start_time_unix_us": 1794641827304788,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77406,
+        "parent_pid": 77405,
+        "process_group_id": 77405,
+        "start_time_unix_us": 1794641828260055,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77405,
+        "parent_pid": 77047,
+        "process_group_id": 77405,
+        "start_time_unix_us": 1794641828250749,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77417,
+        "parent_pid": 77416,
+        "process_group_id": 77416,
+        "start_time_unix_us": 1794641829087904,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77416,
+        "parent_pid": 77047,
+        "process_group_id": 77416,
+        "start_time_unix_us": 1794641829077003,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77478,
+        "parent_pid": 77476,
+        "process_group_id": 77476,
+        "start_time_unix_us": 1794641829964638,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77476,
+        "parent_pid": 77047,
+        "process_group_id": 77476,
+        "start_time_unix_us": 1794641829955270,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77531,
+        "parent_pid": 77530,
+        "process_group_id": 77530,
+        "start_time_unix_us": 1794641831084210,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77530,
+        "parent_pid": 77047,
+        "process_group_id": 77530,
+        "start_time_unix_us": 1794641831073934,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77551,
+        "parent_pid": 77550,
+        "process_group_id": 77550,
+        "start_time_unix_us": 1794641831957388,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77550,
+        "parent_pid": 77047,
+        "process_group_id": 77550,
+        "start_time_unix_us": 1794641831946561,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77569,
+        "parent_pid": 77568,
+        "process_group_id": 77568,
+        "start_time_unix_us": 1794641832781248,
+        "command": "koci-kshim"
+      },
+      {
+        "pid": 77568,
+        "parent_pid": 77047,
+        "process_group_id": 77568,
+        "start_time_unix_us": 1794641832770834,
+        "command": "koci-kshim"
+      }
+    ],
+    "console_files_created": 25,
+    "service_socket_removed": true,
+    "service_exit_success": true
+  }
+}

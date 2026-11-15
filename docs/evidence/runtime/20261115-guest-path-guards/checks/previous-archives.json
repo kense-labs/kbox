@@ -1,0 +1,38 @@
+[
+  {
+    "source": "dist/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/global/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "sha256": "71398befb65ad7deaa149c6539dc30d0cb01e9c6544e206c3d160b255c711294",
+    "bytes": 96
+  },
+  {
+    "source": "dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/global/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "ee2c103c56675350b28db18c6c0f7627a417095bbd1d281ac1ab63d824e0a9d5",
+    "bytes": 23362328
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/final-dist-rootro-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/accepted013/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "ee2c103c56675350b28db18c6c0f7627a417095bbd1d281ac1ab63d824e0a9d5",
+    "bytes": 23362328
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/final-dist-rootro-1/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/accepted013/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "sha256": "71398befb65ad7deaa149c6539dc30d0cb01e9c6544e206c3d160b255c711294",
+    "bytes": 96
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/oci-anonymous-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/accepted013/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "df4b882c40f607b56e098b9f971552ad879f8a156fdc35703cc79fd8faf71a2a",
+    "bytes": 33345582
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/oci-anonymous-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/previous-dist/accepted013/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "sha256": "aa5515750946fdc50f480d7a5604fcf28544002118ce2839f68897c50c265b90",
+    "bytes": 100
+  }
+]

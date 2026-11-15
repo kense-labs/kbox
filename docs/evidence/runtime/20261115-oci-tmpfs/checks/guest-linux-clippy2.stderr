@@ -1,0 +1,3 @@
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking kbox-guest-init v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/guest/init)
+    Finished `release-dist` profile [optimized] target(s) in 2.41s

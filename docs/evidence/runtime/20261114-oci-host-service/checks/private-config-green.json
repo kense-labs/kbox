@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "publish_portable_bundle_uses_private_directory_mode",
+    "--",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 11.199005833
+}

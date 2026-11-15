@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/final-review2.py", line 85, in <module>
+    assert counts(nproc/'nproc-guest-units.stdout')==[[5,0,0]];guest.append(5)
+AssertionError

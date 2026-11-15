@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "rustCounts": [
+    1,
+    0,
+    0
+  ],
+  "observations": 15,
+  "stackFrames": [
+    125,
+    126
+  ],
+  "actualPtyObservations": 3,
+  "allocationAndLockErrnos": [
+    12,
+    12,
+    12
+  ],
+  "stackSignal": 11,
+  "alternateSignalStack": true,
+  "unlimitedControl": {
+    "status": "PASS",
+    "unlimited": true,
+    "allocatedBytes": 8388608,
+    "mappedBytes": 8388608,
+    "lockedAboveFiniteLimit": true,
+    "stackFrames": 513
+  },
+  "probeSha256": "0fbd9ed9410148334d6b8cc634efa1c100bcad79363c602ddb6f00e53b8184b1",
+  "runtimeRSS": "not measured"
+}

@@ -1,6 +1,10 @@
 # Windows ARM64 成为必须支持平台：影响分析与落地规划
 
-状态：**架构规划与影响分析，2026-11-12**。本文不声明任何平台支持，不代表已实施、已编译或已验收。
+状态：**原始规划 2026-11-12；API、架构准入与构建检查已于 2026-11-14 更新**。
+当前完整栈结论为 **当前依赖不支持**；Windows ARM64 运行仍 **缺少原生验证**。
+最新交付和命令见 [F 证据](../evidence/runtime/20261114-windows-arm64/OUTCOME.md) 与
+[有界 spec](../../specs/005-windows-arm64/spec.md)。本文其他硬件/云平台规划保留为
+2026-11-12 的历史调研，不作为本轮重新验证的事实或运行结论。
 
 证据边界：本次为只读调研（源码、CI、制品清单、上游文档）与公开资料核对，**没有在真实 Windows ARM64 主机上运行任何 WHPX / libkrun / kbox 验收**。按 `AGENTS.md:84,96,105,112`，交叉编译、静态检查、mock 与启动成功都不构成运行时证据；任何 `supported` 声明都必须有该目标上的原生 `docs/evidence/<domain>/<date-slug>/OUTCOME.md`。
 
@@ -11,7 +15,7 @@
 ## 0. 结论摘要
 
 1. **平台层面可行，但不是「补一个 target」。** Windows ARM64 宿主 + Linux/aarch64 客体是**同构**组合，不需要 Rosetta / binfmt / 跨架构模拟，理论上比 x86_64 Windows 更干净。真正的代价在 libkrun 上游：它的 Windows 后端是纯 x86_64 实现（X64 寄存器、APIC、CPUID、MSR），`libkrunfw-win` 只有 x86_64 内核，Windows 三件套 DLL 也只有 x64。这是一次**新 VMM 后端**工程，不是 kbox 侧加 cfg。
-2. **关键事实校正：阻塞性质变了。** 仓库三处文档把 Windows ARM64 归因为「Microsoft WHPX 不暴露 ARM64 partition type，等外部依赖」。但 QEMU 11.0 官方文档（2026-03）明确 WHPX 在 x86_64 **和 arm64** Windows 上都能硬件加速，最低 Windows 11 24H2 + 2025 年 4/5 月更新。两者不是简单矛盾：QEMU 的 WHPX 建立在 `Vid` 之上，用的是与 Linux `mshv` 相同的 hypercalls；libkrun 依赖的是 WHPX 公开 API 里特定的 partition type。**结论：不能再把这件事定性为「等微软」，它已经变成「自己实现或绕开 libkrun 的 aarch64 WHPX 后端」。**
+2. **已核实：公开 ARM64 WHP API 存在。** Microsoft 已发布 ARM64 寄存器、GIC 与 `Arm64Support` 定义，QEMU ARM 后端直接调用 `WHvCreatePartition`、`WHvSetupPartition` 和 `WHvRunVirtualProcessor`。Vid 是 WHP 在 Windows 内部的实现层，不代表 QEMU 绕过公开 WHv API。当前缺口是所选 libkrun 的 ARM64 Windows VMM/固件/ABI 资产及真实宿主验证。见 [官方能力合同](https://learn.microsoft.com/en-us/virtualization/api/hypervisor-platform/funcs/whvgetcapability) 与 [QEMU ARM 源码](https://github.com/qemu/qemu/blob/master/target/arm/whpx/whpx-all.c)。
 3. **最重要的排序建议：先把 Windows x86_64 推出 `probe-only`。** 目前 WHPX x86_64 自身仍 `probe-only`，fresh-host 门在 `crates/oci-runtime/README.md:869-872` 全部 `Blocked`。在一个未资格化的兄弟平台上叠加新架构，会让新平台的证据链失去参照基线。S1 必须先把 WHPX 家族的共同基线（fresh-host 矩阵、session owner、handle reclamation、live reattach）做实。
 4. **CI 硬件不再是硬阻塞，但 WHPX 有明确的能力门槛：那个 Windows ARM64 必须自己能启动 Hyper-V，即占有 EL2。** 「必须真实物理设备」是过强说法（修正见 §2.4）。WHPX 不是「有 Windows 就行」，它要求宿主 Windows 里 Hyper-V hypervisor 处于运行态；若 Windows 本身是 guest，L0 必须把虚拟化扩展下放给它。满足这一条的现实环境是**物理 Windows on ARM 设备**，或 **ARM64 裸金属服务器上自行安装 Windows 11 ARM**（Linaro 已有在 aarch64 KVM 裸金属上跑 WoA guest 的公开方案，但许可/分发、virtio 驱动、TPM 需自行解决，且不存在 Windows Server for ARM）。GitHub 托管 `windows-11-arm` runner 已 GA（公开仓库免费，2026-09 起默认 VS2026 镜像），底层是 Azure Ampere Altra / Cobalt ARM VM；2026-09 公开资料显示 **Azure / GCP / AWS 的 ARM 实例都不提供嵌套虚拟化**（Microsoft 文档中的 Azure 嵌套虚拟化支持指 x86_64 系列，勿混用）。本机 macOS（M5 Max、macOS 26.6.2、`kern.hv_support=1`）的 OrbStack 只支持 Linux 容器与 Linux 发行版 VM；改用 Parallels / VMware Fusion / UTM 能装起 Windows 11 ARM，但 Apple 只对 **Linux guest** 暴露嵌套虚拟化（M3+ 芯片 + macOS 15+：Tart `--nested` / Lima `vmType: vz, nestedVirtualization: true`），Windows guest 拿不到；且 ARM64 嵌套 KVM 目前**不保证递归嵌套**（kvmtool 2026-03 主线补丁注明 non-VHE guest 会失去 recursive nested virtualisation），所以「macOS → Linux KVM guest → Windows ARM guest → WHPX」三层链也不成立。`kern.hv_support=1` 只说明 macOS 自己能当宿主。结论：**编译与打包可以上云或用本机 Linux VM；WHPX 相关验证延后到一个让 Windows ARM 占有 EL2 的环境。S0 中不依赖 WHPX 的部分现在就能做。**
 5. **Prism（x64 模拟）不是合规路径。** 它只翻译用户态指令，内核驱动必须原生 ARM64；虚拟化/底层工具属于官方列为高风险的类别。kbox 的 x64 三件套 DLL 依赖 WHPX 内核接口，模拟环境下不可用；即便「能跑」，按证据纪律也不能算 `supported`。
@@ -54,11 +58,11 @@
 
 ### 2.3 正确的定性
 
-**不能说「仓库文档过时」，也不能说「平台不可能」。** 更准确的是：
+**按平台接口、当前依赖和原生验证分别判定：**
 
 - Windows 11 24H2+ 的 ARM64 主机上，通过 WHPX/Vid 路径跑硬件加速的 **aarch64 guest 已被 QEMU 证明可行**；
-- 但 libkrun 依赖的 WHPX 公开 API 路径（ARM64 partition type）与它现有的 x86_64 vCPU 实现，**没有随上述能力一起就绪**；
-- 因此 S0 必须先做一次 **API 级 spike**，判明 libkrun 需要的能力在目标 Windows 版本上究竟是不可用、还是需要改用 Vid/hypercalls 路径。这个结论决定 S2 是「给 libkrun 加后端」还是「换后端」。
+- 公开 WHv API 已提供 ARM64/GIC 类型；当前所选 libkrun 的 Windows 实现仍使用 X64 vCPU/APIC/CPUID/MSR，Windows DLL 与固件仍是 x64；
+- S0 的剩余原生步骤是验证真实宿主的 HypervisorPresent、Arm64Support、partition/vCPU 与清理；平台 API 可行性已有官方依据，不再保留「必须绕过公开 API」的假设。当前产品入口保持 Unsupported，待原生依赖和证据齐备后再推进。
 
 ---
 
@@ -130,7 +134,7 @@
 
 | 实验 | 判据 | 失败时 |
 | --- | --- | --- |
-| S0-1 在一台 Win11 24H2+ ARM64 真机上，用最小 `WinHvPlatform` 程序验证 libkrun 所需的 partition/vCPU 能力；并用 QEMU 11.0 `-accel whpx` 跑起 aarch64 Linux guest 作为「平台能力存在」的对照 | 若 QEMU 成功而 WHPX 公开 API 缺 ARM64 partition type → 路线 A 需改走 Vid/hypercalls；若两者都失败 → 回到 H2 或 B | 停止 S2，改评 H2/D |
+| S0-1 在 Win11 24H2 更新后或更新版本的原生 ARM64 宿主上，用当前 SDK 查询 HypervisorPresent、Arm64Support，并保留 partition/vCPU 与精确清理结果 | API、缓冲区长度、真实架构与清理均需通过；QEMU 可作独立平台对照，不能替代 kbox 验收 | 缺能力位时记录 OS/功能/虚拟化条件；不切换后端，不提升 readiness |
 | S0-2 在 `windows-11-arm` 托管 runner 上实测 WHPX 是否可用（HypervisorPlatform 功能 + 能否 `WHvCreatePartition`） | 已知 runner 底层为 Azure ARM VM，且主流云 ARM 实例不开嵌套虚拟化 → **预期只能编译、不能跑 WHPX**；此步用于把「预期」变成有记录的实测结果 | 原生验收改由物理 Windows on ARM 设备或裸金属实例承担，不等待 runner |
 | S0-3 确认 libkrun 1.x 与 2.0 的 fork 基线（当前钉 `libkrun.1.17.0` + `boxlite-ai/libkrunfw v5.3.0`） | 明确在 `stable-*` 分支还是 2.0 上做 aarch64 后端，避免与全平台 ABI 升级叠加 | 拆成两个独立变更 |
 
@@ -211,7 +215,7 @@
 
 | 风险 | 影响 | 缓解 |
 | --- | --- | --- |
-| S0-1 证明 libkrun 依赖的 WHPX ARM64 partition type 仍不可用 | 路线 A 需改走 Vid/hypercalls，工作量上升 | S0 用最小程序 + QEMU 对照把结论钉死，再决定是否 B |
+| 原生宿主未满足 ARM64 WHP 能力，或 SDK/bindings 与公开合同不匹配 | 本地编译不能代替宿主 API/vCPU 结果 | 按原生交接记录能力位、ABI、HRESULT 与清理；保留当前明确拒绝 |
 | 托管 `windows-11-arm` runner / Azure ARM VM 不支持 WHPX（2026-09 社区确认 Azure / GCP / AWS ARM 实例均无嵌套虚拟化） | CI 只能编译与打包，无法产出原生证据 | S0-2 实测留证；原生验收直接规划物理 Windows on ARM 设备或裸金属实例，不抱侥幸 |
 | libkrun 2.0 不兼容 1.x API/ABI | 与 aarch64 后端叠加成一次全平台 breaking change | S0-3 固定 fork 基线；升级单独排期、四目标重验 |
 | Windows x86_64 自身 `probe-only`、fresh-host 门 Blocked | 新平台缺参照基线 | S1 先补齐，不跳过 |

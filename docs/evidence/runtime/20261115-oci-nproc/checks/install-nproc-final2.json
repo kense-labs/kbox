@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/unpacked-nproc-final-2/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/final-dist-nproc-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/unpacked-nproc-final-2"
+  ],
+  "exitCode": 0,
+  "seconds": 1.8949626250000051,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-2",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/final-dist-nproc-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "7b2ac56d2b70fbcc6d63c4a9df82259a1e7a4a3e6afe7d85b69ceb9eb07d8476",
+  "compressedBytes": 23392254,
+  "installedDiskBytes": 44171264,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+    "sourceInputsSha256": "a0edbd9e9b4ac1da0059bbeff8dd5a4dae7c61797ca1833b10a98569d344daac",
+    "cargoLockSha256": "0f82d0eaafd8b255f5a73c9de5a9106fc85f711bc2ed1d4ba9c02ef07aa63dbb",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

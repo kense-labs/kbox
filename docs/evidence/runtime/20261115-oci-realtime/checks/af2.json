@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-realtime/af-context-final2.json"
+  ],
+  "exit": 0,
+  "seconds": 137.484324375
+}

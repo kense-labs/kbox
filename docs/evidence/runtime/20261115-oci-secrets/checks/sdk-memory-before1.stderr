@@ -1,0 +1,11 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.18s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+
+thread 'attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse' (86610779) panicked at crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs:27:5:
+assertion failed: attachments.extensions().contains_key(MEMORY)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices' (86610778) panicked at crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs:49:9:
+{"mountIndices":[0],"schemaVersion":2}
+error: test failed, to rerun pass `-p koci-sdk --lib`

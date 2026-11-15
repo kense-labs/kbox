@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-agent-protocol",
+    "memory_secret_files_require_a_new_manifest",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 4.928378083999999
+}

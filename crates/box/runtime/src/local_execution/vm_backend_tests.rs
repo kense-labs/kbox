@@ -7,16 +7,27 @@ use std::collections::BTreeMap;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
     OperationId, VmHandler, VmMetrics,
 };
 
 use super::*;
 use crate::local_execution::record::build_managed_record;
 
-#[cfg(target_os = "macos")]
 #[tokio::test]
-async fn readonly_mount_refuses_before_managed_reservation_or_source_access() {
+async fn anonymous_recovery_preserves_corrupt_volume_catalog_without_empty_ownership() {
+    let home = tempfile::tempdir().unwrap();
+    let backend = VmLocalExecutionBackend::new(home.path());
+    let record = record(home.path());
+    let catalog = home.path().join("volumes.json");
+    std::fs::write(&catalog, b"{corrupt-authority").unwrap();
+    assert!(backend.anonymous_volumes_for_record(&record).await.is_err());
+    assert_eq!(std::fs::read(&catalog).unwrap(), b"{corrupt-authority");
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[tokio::test]
+async fn readonly_mount_admission_preserves_route_and_mode_without_source_access() {
     use kbox_core::ExecutionManager;
     let directory = tempfile::tempdir().unwrap();
     let backend = Arc::new(VmLocalExecutionBackend::new(directory.path()));
@@ -38,18 +49,19 @@ async fn readonly_mount_refuses_before_managed_reservation_or_source_access() {
         .config
         .volumes = vec![format!("{}:/secret:ro", missing.display())];
     let request = candidate.managed_execution.unwrap().request;
-    let error = manager
-        .create(request, &OperationId::new("readonly-refusal").unwrap())
+    manager
+        .create(request, &OperationId::new("readonly-admission").unwrap())
         .await
-        .unwrap_err();
-    assert!(
-        matches!(error, ExecutionManagerError::InvalidRequest(ref message) if message.contains("host-enforced virtio-fs write denial")),
-        "{error}"
-    );
+        .unwrap();
     assert!(!missing.exists());
-    assert!(!directory.path().join("boxes").exists());
-    assert!(!directory.path().join("boxes.json").exists());
-    assert!(manager.managed_records().await.unwrap().is_empty());
+    let records = manager.managed_records().await.unwrap();
+    assert_eq!(records.len(), 1);
+    let metadata = records[0].managed_execution.as_ref().unwrap();
+    assert_eq!(metadata.runtime_route, crate::ManagedRuntimeRoute::BoxVm);
+    assert_eq!(
+        metadata.request.config.volumes,
+        vec![format!("{}:/secret:ro", missing.display())]
+    );
 }
 
 fn record(home_dir: &Path) -> BoxRecord {
@@ -75,6 +87,27 @@ fn record(home_dir: &Path) -> BoxRecord {
         chrono::Utc::now(),
     )
     .unwrap()
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[test]
+fn oci_preparation_uses_directory_transport_without_changing_box_boot() {
+    let home = tempfile::tempdir().unwrap();
+    let backend = VmLocalExecutionBackend::new(home.path());
+    let mut record = record(home.path());
+    assert!(backend
+        .new_manager(&record)
+        .unwrap()
+        .rootfs_provider
+        .supports_direct_oci_assembly());
+    record.managed_execution.as_mut().unwrap().runtime_route = crate::ManagedRuntimeRoute::OciSdk;
+    let preparation = backend.new_oci_preparation_manager(&record).unwrap();
+    assert_eq!(preparation.rootfs_provider.name(), "case-sensitive-apfs");
+    assert!(!preparation.rootfs_provider.supports_direct_oci_assembly());
+    assert_eq!(
+        record.managed_execution.unwrap().runtime_route,
+        crate::ManagedRuntimeRoute::OciSdk
+    );
 }
 
 #[tokio::test]
@@ -128,9 +161,7 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
     // MicroVM-only removed the Sandbox isolation class, so there is no second
     // Linux-only preflight arm to assert. The single remaining isolation must
     // still fail closed before any box directory or durable state exists.
-    let microvm = backend
-        .preflight_launch()
-        .await;
+    let microvm = backend.preflight_launch().await;
 
     assert!(
         !temporary.path().join("boxes").exists(),
@@ -161,7 +192,7 @@ async fn launch_preflight_fails_closed_before_a_box_directory_exists() {
 }
 
 #[tokio::test]
-async fn sandbox_resource_planning_persists_image_volume_ownership_without_runtime_side_effects() {
+async fn cached_image_resource_planning_preserves_volume_ownership_without_runtime_side_effects() {
     let temporary = tempfile::tempdir().unwrap();
     let backend = VmLocalExecutionBackend::new(temporary.path());
     let record = record(temporary.path());
@@ -386,6 +417,8 @@ fn manager_applies_persisted_shared_memory_policy_to_runtime_config() {
         .config
         .tmpfs
         .contains(&format!("/dev/shm:size={shm_size}")));
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    crate::vm::oci_hvf_spec::validate(&manager.config).unwrap();
 }
 
 #[test]

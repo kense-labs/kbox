@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "recreating_a_volume_from_its_previous_config_gets_a_new_allocation_identity",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 9.409150208000002
+}

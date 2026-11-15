@@ -1,0 +1,40 @@
+   Compiling syn v2.0.119
+   Compiling num-bigint v0.4.8
+   Compiling syscalls v0.8.1
+   Compiling seccompiler v0.5.0
+   Compiling nix v0.29.0
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling fraction v0.15.4
+   Compiling jsonschema-value v0.48.5
+   Compiling darling_core v0.20.11
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling getset v0.1.7
+   Compiling strum_macros v0.27.2
+   Compiling zeroize_derive v1.4.3
+   Compiling ref-cast v1.0.25
+   Compiling zeroize v1.8.2
+   Compiling darling_macro v0.20.11
+   Compiling strum v0.28.0
+   Compiling darling v0.20.11
+   Compiling fluent-uri v0.4.1
+   Compiling referencing v0.48.5
+   Compiling jsonschema v0.48.5
+   Compiling derive_builder_core v0.20.2
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+warning: use of deprecated associated function `tokio::io::unix::AsyncFd::<T>::new`: unsound due to lack of I/O safety; use `AsyncFd::register` instead (see https://github.com/tokio-rs/tokio/pull/8587)
+  --> crates/oci-runtime/crates/agent/src/executor/terminal.rs:70:35
+   |
+70 |         let descriptor = AsyncFd::new(self.master).map_err(|error| {
+   |                                   ^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: `koci-agent` (lib) generated 1 warning
+    Finished `release-dist` profile [optimized] target(s) in 43.28s

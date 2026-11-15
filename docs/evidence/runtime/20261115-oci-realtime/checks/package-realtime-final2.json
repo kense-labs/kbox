@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 26.892095542,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/package-home-realtime-final2",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "9365453fbda6b3b8bd4758ae24c6a7b2817b5a0c130ec90724e75d3e46b3e676"
+}

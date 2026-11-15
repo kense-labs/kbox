@@ -1,0 +1,395 @@
+[
+  {
+    "log": "file-sdk-protocol-full-1.log",
+    "sha256": "85c4bcb629cf9835ba7ea4688afa44e2d0fcbf7ab6c828bf59c6173ad7ae2c86",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 63,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 213,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-shim-full-9.log",
+    "sha256": "33f27a09281b68e012a871507af727691b5c5d0505c24666663b019c52dfb850",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 75,
+        "failed": 0,
+        "ignored": 3,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 3,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-owning-full-1.log",
+    "sha256": "08e10c45ef29cad51a57b4b09f8c11c00e3cc44f9327ce5d42d96daa81c4d0ca",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2177,
+        "failed": 0,
+        "ignored": 14,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 434,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-runtime-full-3.log",
+    "sha256": "2fdfbc3d798d4dc6c56ee6f477a9d6c2fe5d81aa8a89b8a8134e6540ec5f7ea6",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 435,
+        "failed": 0,
+        "ignored": 1,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-host-tests-6.log",
+    "sha256": "69322b93213c5d35854df9cb0d0a49af8f7076b0c13105f1cdba9a2f69dccf35",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 1,
+        "filtered": 430
+      }
+    ]
+  },
+  {
+    "log": "file-agent-session-1.log",
+    "sha256": "dd239e8d2736edcf502c8f04d0b2a510c1114260c27d15dd0818519b63b21c69",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 418
+      }
+    ]
+  },
+  {
+    "log": "verify-commit-files-4.log",
+    "sha256": "bbb8613629adc27f6c996b4dde573840786c696e95c5433133aace78d3f2ef1c",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2177,
+        "failed": 0,
+        "ignored": 16,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 40
+      },
+      {
+        "status": "ok",
+        "passed": 41,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-eventfd-full-3.log",
+    "sha256": "132e7db4ce22db17fe9ca26e3443a5e78339cfb517051b6fb45bede020a02aed",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 61,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 21,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-libkrun-full-1.log",
+    "sha256": "6b0ff7e861a44172f368f420497fe7d08a8ff849cd9d655fb339fbc33e5ebb90",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-mmio-notify-before.log",
+    "sha256": "a84f03096b2f6aa5e0958e8dd7410262673cbc45614ae234bf5d8ffed9bc5232",
+    "actualResults": [
+      {
+        "status": "FAILED",
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0,
+        "filtered": 60
+      }
+    ]
+  },
+  {
+    "log": "native-mmio-notify-after.log",
+    "sha256": "5747bd9140b649a05201754451179b1d96f9e677d0f15c7d04e9c67ba877ad52",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 60
+      }
+    ]
+  },
+  {
+    "log": "agent-lifetime-before.log",
+    "sha256": "fe3e8d75ca3ba81e53a9490f2d9ec3ed231313c16415ea7cd8f8ffbdce487383",
+    "actualResults": [
+      {
+        "status": "FAILED",
+        "passed": 1,
+        "failed": 1,
+        "ignored": 0,
+        "filtered": 76
+      }
+    ]
+  },
+  {
+    "log": "agent-lifetime-after.log",
+    "sha256": "20097f8a085451f423f0bec3f5dc1df4d026a3af8acaaa7b3cf28a02596c5a35",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 76
+      }
+    ]
+  }
+]

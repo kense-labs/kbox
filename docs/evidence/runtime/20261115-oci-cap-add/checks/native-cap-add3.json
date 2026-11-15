@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/run-native.py",
+    "docs/evidence/runtime/20261115-oci-cap-add/run-context.json",
+    "3",
+    "cap-add"
+  ],
+  "exit": 0,
+  "seconds": 166.62880741700002
+}

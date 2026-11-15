@@ -1,0 +1,23 @@
+warning: klibksys@3.2.7: K_BUILD_LIBKRUN set: forcing build from source
+warning: klibksys@3.2.7: Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.17.0.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.5.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.dylib
+   Compiling kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling kbox-shim v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/shim)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.06s
+     Running unittests src/main.rs (target/debug/deps/kbox_shim-d39e4cc793703bea)
+
+thread 'tests::test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them' (86529814) panicked at crates/box/shim/src/tests.rs:285:9:
+assertion `left == right` failed: "nofile=2:1"
+  left: Some("7=2:1")
+ right: None
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p kbox-shim --bin kbox-shim`

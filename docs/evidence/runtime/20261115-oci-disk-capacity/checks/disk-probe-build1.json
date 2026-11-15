@@ -1,0 +1,18 @@
+{
+  "command": [
+    "zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-o",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c"
+  ],
+  "exit": 1,
+  "seconds": 0.267839375
+}

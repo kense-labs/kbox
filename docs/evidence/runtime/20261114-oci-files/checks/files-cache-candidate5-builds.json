@@ -1,0 +1,17 @@
+[
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--profile",
+      "release-dist",
+      "-p",
+      "koci-cli",
+      "-p",
+      "koci-kbox"
+    ],
+    "exitCode": 101,
+    "seconds": 0.9163616250000001
+  }
+]

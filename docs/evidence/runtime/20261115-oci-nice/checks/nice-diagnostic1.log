@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+      "exec",
+      "38c34c69-c19e-4f41-bfa2-27e5f5d6d058",
+      "--",
+      "/nice-probe"
+    ],
+    "exitCode": 80,
+    "stdout": "",
+    "stderr": "probe line65: write(fd,mapping,(size_t)length)==length && close(fd)==0 errno1\nprobe line70: read(pipefd[0],&result,sizeof(result))==sizeof(result) errno0\n"
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "38c34c69-c19e-4f41-bfa2-27e5f5d6d058"
+    ],
+    "exitCode": 0,
+    "stdout": "tall_mccarthy\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

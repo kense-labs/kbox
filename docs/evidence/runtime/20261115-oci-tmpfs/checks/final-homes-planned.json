@@ -1,0 +1,15 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/af-final1/native-oci/0b47261d6de947c98c7e88de3a0acd1d/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/af-final1/native-prewarm/cf0f66764f1b4d759e4f6d9868af4dd0/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/af-final1/native-primary/bca81536d3a04c0abe0f812d60cdba67/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/af-final1/native-readonly/84c55d1788e44f7dac91d7ea92a78feb/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/anonymous-attempt-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/files-attempt-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/guest-linux-final1-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/named-attempt-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/rootro-tmpfs-final1-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/tmpfs-attempt-1/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/tmpfs-attempt-2/home",
+  "/private/tmp/kbox-tmpfs-06c672b2c50b/tmpfs-attempt-3/home"
+]

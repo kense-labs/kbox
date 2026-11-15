@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "oci_preparation_uses_directory_transport",
+    "--",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 12.186431
+}

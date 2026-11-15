@@ -1,0 +1,17 @@
+{
+  "fileProbe": {
+    "bytes": 16777216,
+    "sha256": "341aacac661ccb210720bedaa9ead5d668fe5ea41a73532fc147c71e34040df1"
+  },
+  "firstExecutionId": "9bc7a8c1-5bc4-480b-ae15-98e8b2ad8d38",
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "liveHostChanges": true,
+  "movedSourceCleanup": true,
+  "nativeWorkspacePath": true,
+  "platform": "macos",
+  "secondExecutionId": "29c8ab4c-0087-4d14-841f-5860e83925e2",
+  "staleGenerationRefused": true,
+  "status": "PASS",
+  "unmountedCanaryPreserved": true,
+  "zeroPrivateExecutions": true
+}

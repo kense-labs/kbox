@@ -1,0 +1,11 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control.rs",
+    "-o",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control"
+  ],
+  "exit": 0,
+  "seconds": 0.636602834
+}

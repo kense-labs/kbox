@@ -1,0 +1,23 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.00s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 3 tests
+test macos_readonly::tests::confined_child ... ignored, entered by the parent test in a disposable native process
+test macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources ... ok
+test macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 68 filtered out; finished in 0.02s
+
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-4869246f58abb2ab)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.00s
+
+     Running tests/cli.rs (target/debug/deps/cli-a84ede5f8baedcf2)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+

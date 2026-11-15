@@ -1,7 +1,5 @@
 //! Versioned local control plane over the existing Runtime and Box authorities.
 
-mod assembly;
-mod assembly_journal;
 mod controller;
 mod directory;
 mod journal;
@@ -13,10 +11,6 @@ mod process_transport;
 mod protocol;
 mod transport;
 
-pub use assembly::{
-    EngineAssembly, EngineAssemblyPackage, EngineAssemblyPlan, EngineAssemblyReceipt,
-    EngineInstalledPackage,
-};
 pub use controller::LocalEngine;
 pub use directory::EngineDirectoryGrant;
 pub(crate) use journal::{EngineJournal, EngineRevisionGuard};
@@ -29,7 +23,7 @@ pub use protocol::{
     AcceptedOperation, DesiredState, EngineCommand, EngineDiagnostics, EngineDiscovery,
     EngineError, EngineErrorCode, EngineExecution, EngineIntent, EngineKey, EngineOperation,
     EngineReply, EngineReplyBody, EngineReplyValue, EngineRequest, EngineResult,
-    EngineServiceTemplate, EngineVirtualization, EngineWorkload,
+    EngineServiceTemplate, EngineVirtualization,
 };
 pub use transport::{default_engine_endpoint, serve_engine};
 

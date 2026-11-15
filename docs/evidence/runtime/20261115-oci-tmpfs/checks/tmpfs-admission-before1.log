@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor ... FAILED
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_admits_bounded_intent_without_allocations ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_admits_bounded_intent_without_allocations
+    vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2249 filtered out; finished in 0.04s
+

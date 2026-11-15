@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+      "exec",
+      "380e4700-5409-4db7-8074-98b2f2415090",
+      "--",
+      "/msgqueue-probe"
+    ],
+    "exitCode": 80,
+    "stdout": "",
+    "stderr": "probe line45: queue==(mqd_t)-1 && error==EMFILE errno75\nprobe line95: read(pipefd[0],&result,sizeof(result))==sizeof(result) errno24\n"
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "380e4700-5409-4db7-8074-98b2f2415090"
+    ],
+    "exitCode": 0,
+    "stdout": "keen_shamir\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

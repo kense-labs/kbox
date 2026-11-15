@@ -8,7 +8,7 @@ use koci_agent_protocol::{AgentVmAttachmentManifest, AGENT_VM_DIRECTORY_GUEST_RO
 use koci_sdk::{Error, ErrorCode, Result, StorageAccessMode};
 
 pub(super) fn configure_guest_directories(manifest: &AgentVmAttachmentManifest) -> Result<()> {
-    if manifest.directories().is_empty() {
+    if manifest.directories().is_empty() && manifest.files().is_empty() {
         return Ok(());
     }
     let parent = Path::new(AGENT_VM_DIRECTORY_GUEST_ROOT);
@@ -16,39 +16,53 @@ pub(super) fn configure_guest_directories(manifest: &AgentVmAttachmentManifest) 
     for directory in manifest.directories() {
         let destination = directory.guest_mount_path();
         ensure_mountpoint(Path::new(&destination))?;
-        let target = OpenOptions::new()
-            .read(true)
-            .custom_flags(libc::O_CLOEXEC | libc::O_NOFOLLOW | libc::O_DIRECTORY)
-            .open(&destination)
-            .map_err(|error| directory_error(error.to_string()))?;
-        let path = CString::new(format!("/proc/self/fd/{}", target.as_raw_fd()))
-            .map_err(|error| directory_error(error.to_string()))?;
-        let tag =
-            CString::new(directory.tag()).map_err(|error| directory_error(error.to_string()))?;
-        let flags = libc::MS_NOSUID
-            | libc::MS_NODEV
-            | if directory.attachment().access_mode() == StorageAccessMode::ReadOnly {
-                libc::MS_RDONLY
-            } else {
-                0
-            };
-        // SAFETY: the fixed filesystem, tag, and descriptor-pinned destination remain live for mount.
-        if unsafe {
-            libc::mount(
-                tag.as_ptr(),
-                path.as_ptr(),
-                c"virtiofs".as_ptr(),
-                flags,
-                std::ptr::null(),
-            )
-        } != 0
-        {
-            return Err(directory_error(format!(
-                "failed to mount authorized directory {}: {}",
-                directory.attachment().identity(),
-                std::io::Error::last_os_error()
-            )));
-        }
+        mount_projection(
+            directory.tag(),
+            &destination,
+            directory.attachment().access_mode(),
+        )?;
+    }
+    for file in manifest.files() {
+        let destination = file.guest_mount_path();
+        ensure_mountpoint(Path::new(koci_agent_protocol::AGENT_VM_FILES_GUEST_ROOT))?;
+        ensure_mountpoint(Path::new(&destination))?;
+        mount_projection(file.tag(), &destination, file.attachment().access_mode())?;
+    }
+    Ok(())
+}
+
+fn mount_projection(tag: &str, destination: &str, mode: StorageAccessMode) -> Result<()> {
+    let target = OpenOptions::new()
+        .read(true)
+        .custom_flags(libc::O_CLOEXEC | libc::O_NOFOLLOW | libc::O_DIRECTORY)
+        .open(&destination)
+        .map_err(|error| directory_error(error.to_string()))?;
+    let path = CString::new(format!("/proc/self/fd/{}", target.as_raw_fd()))
+        .map_err(|error| directory_error(error.to_string()))?;
+    let tag = CString::new(tag).map_err(|error| directory_error(error.to_string()))?;
+    let flags = libc::MS_NOSUID
+        | libc::MS_NODEV
+        | if mode == StorageAccessMode::ReadOnly {
+            libc::MS_RDONLY
+        } else {
+            0
+        };
+    // SAFETY: the fixed filesystem, tag, and descriptor-pinned destination remain live for mount.
+    if unsafe {
+        libc::mount(
+            tag.as_ptr(),
+            path.as_ptr(),
+            c"virtiofs".as_ptr(),
+            flags,
+            std::ptr::null(),
+        )
+    } != 0
+    {
+        return Err(directory_error(format!(
+            "failed to mount authorized directory {}: {}",
+            tag.to_string_lossy(),
+            std::io::Error::last_os_error()
+        )));
     }
     Ok(())
 }
@@ -78,6 +92,7 @@ fn ensure_mountpoint(path: &Path) -> Result<()> {
     fs::set_permissions(path, fs::Permissions::from_mode(mode))
         .map_err(|error| directory_error(error.to_string()))?;
     if path != Path::new(AGENT_VM_DIRECTORY_GUEST_ROOT)
+        && path != Path::new(koci_agent_protocol::AGENT_VM_FILES_GUEST_ROOT)
         && fs::read_dir(path)
             .map_err(|error| directory_error(error.to_string()))?
             .next()

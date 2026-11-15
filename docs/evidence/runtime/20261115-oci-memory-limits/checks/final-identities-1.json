@@ -1,0 +1,423 @@
+{
+  "sourceInputsSha256": "e02147be72c10c307955ad416a5daa41a3dc5b60cad7c682c405ce0b3dc4ffcc",
+  "ociOriginalSourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "files": {
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox": {
+      "bytes": 10175216,
+      "sha256": "0294bde7f262242899e833f7646fe34ab8f37cd874b893777291d6bd03016dbb"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim": {
+      "bytes": 3401552,
+      "sha256": "090e4138c069d76df9a01bf18ee2f797ad992af05933b7d030ff8cc2e04c2403"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-guest-init": {
+      "bytes": 3178560,
+      "sha256": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib": {
+      "bytes": 4529632,
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib": {
+      "bytes": 22836688,
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci": {
+      "bytes": 6098464,
+      "sha256": "40cea04e6b9fa3c20591ae032cb998209ff3a1f292bbb767527cd0d407a9653b"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim": {
+      "bytes": 2952048,
+      "sha256": "ceec7803a598ec0e4d00a38949b16d2e96d90a93b1d8aca27fb50a892f241ce1"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-agent": {
+      "bytes": 5053528,
+      "sha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib": {
+      "bytes": 5496272,
+      "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib": {
+      "bytes": 22952096,
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4": {
+      "bytes": 67108864,
+      "sha256": "77b2ab47caf668d28ce0dc807cb341cdc4b534c14ddd43989c9d760a509b3886"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json": {
+      "bytes": 1759,
+      "sha256": "b8854cc84ba844cd376b53ac3f24023fb3a63f1fdd8a4d9bf2e8fef81979b282"
+    }
+  },
+  "embeddedAgentMatchesStandalone": true,
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox\nIdentifier=kbox-742598ce93c05cf0\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=79000 flags=0x20002(adhoc,linker-signed) hashes=2465+0 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=dc88c028c343796d255df424e4305460918b7a79\nCandidateCDHashFull sha256=dc88c028c343796d255df424e4305460918b7a79d8b50f3b88ece49b8d3583a6\nHash choices=sha256\nCMSDigest=dc88c028c343796d255df424e4305460918b7a79d8b50f3b88ece49b8d3583a6\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=9420800\nExecutable Segment flags=0x1\nPage size=4096\nCDHash=dc88c028c343796d255df424e4305460918b7a79\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox:\n\t/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61901.120.67)\n\t/usr/lib/liblzma.5.dylib (compatibility version 6.0.0, current version 6.3.0)\n\t/usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.8)\n\t/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim\nIdentifier=kbox-shim-55554944e957c7bd28e53f84857ac3bbaf6dc88e\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6987 flags=0x2(adhoc) hashes=207+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=88ba43120b35741e590b3ab90c21542b2449c48e\nCandidateCDHashFull sha256=88ba43120b35741e590b3ab90c21542b2449c48e76c807af4b39f575726dc2a8\nHash choices=sha256\nCMSDigest=88ba43120b35741e590b3ab90c21542b2449c48e76c807af4b39f575726dc2a8\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=3063808\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=88ba43120b35741e590b3ab90c21542b2449c48e\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-shim:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci\nIdentifier=koci-55554944a115a1cc83373179bc5eec4a14542c17\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=12230 flags=0x2(adhoc) hashes=371+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29f\nCandidateCDHashFull sha256=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29fb71714c526871f3e8080f92d\nHash choices=sha256\nCMSDigest=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29fb71714c526871f3e8080f92d\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=5701632\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29f\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim\nIdentifier=koci-kshim-55554944c7e909bf0b5c362b903a31b00bd8480c\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6092 flags=0x2(adhoc) hashes=179+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=4ac947f27d4c5ced9cf9d695add04bb73315229b\nCandidateCDHashFull sha256=4ac947f27d4c5ced9cf9d695add04bb73315229b00b32bee92ff8a6eef70ad65\nHash choices=sha256\nCMSDigest=4ac947f27d4c5ced9cf9d695add04bb73315229b00b32bee92ff8a6eef70ad65\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=2670592\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=4ac947f27d4c5ced9cf9d695add04bb73315229b\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim:\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-guest-init"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox-guest-init: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-agent: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.17.0.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.1.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrun.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.5.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/lib/libkrunfw.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib:\n\tlibkrun.1.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib:\n\tlibkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1345.120.2)\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+        "-R",
+        "dump /usr/bin/koci-agent /Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/final-system-agent-1",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4"
+      ],
+      "exitCode": 0,
+      "output": "debugfs 1.47.4 (6-Mar-2025)\n"
+    }
+  ],
+  "runtimeMemory": "not measured"
+}

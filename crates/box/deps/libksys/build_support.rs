@@ -5,6 +5,15 @@ use std::io::{self, Read};
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+/// Refuse targets that cannot use the pinned Windows native runtime bundle.
+pub(crate) fn validate_windows_target(os: &str, arch: &str, abi: &str) -> Result<(), &'static str> {
+    if os == "windows" && (arch != "x86_64" || abi != "msvc") {
+        Err("libkrun/libkrunfw Windows runtime requires x86_64-pc-windows-msvc; Windows ARM64 and other ABIs are unsupported by the current native dependencies")
+    } else {
+        Ok(())
+    }
+}
+
 /// Query the minimum macOS version selected by the pinned Rust compiler.
 pub(crate) fn macos_deployment_target(rustc: &mut Command, target: &OsStr) -> io::Result<String> {
     let output = rustc

@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "actualInstalledCli": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/installed-files-final-6/bin/kbox",
+  "cliSha256": "fba18fb7a05e1552c998f45aaf59fdbf3a0930dc1c156e311a35556657cdc9fa",
+  "target": {
+    "generation": 1,
+    "id": "kbox-c7afbc57-52c3-4474-b5a3-16bac18e811f"
+  },
+  "stderr": "/private/tmp/kbox-files-38d1ee741be9/attempt-15/unbound-kill-cli.stderr",
+  "stderrSha256": "ac00086ff2214c654c04428f5e89a050f78bad31e3029eea6ff63b476125e73e",
+  "failedCreateReservationRetained": true,
+  "exactOriginalCreateReconciled": true,
+  "callerFilesRetained": true,
+  "workloadStartsAdded": 0
+}

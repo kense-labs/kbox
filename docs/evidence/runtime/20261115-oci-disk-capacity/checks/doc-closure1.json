@@ -1,0 +1,186 @@
+{
+  "status": "PASS",
+  "sourceUnchanged": true,
+  "lockUnchanged": true,
+  "nativeSubmodulesClean": true,
+  "diffCheckExit": 0,
+  "referencesChecked": 44,
+  "references": [
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/minimal-production-delta.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/host-environment.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "run-context.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/install-disk-capacity-final4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/reused-oci-install1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-identities-4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/prior-artifacts-retained.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/disk-admission-after1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-production1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-rootfs1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-backend2.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/verify4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-native-disk-capacity-attempt-4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-review4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/oversized-image-build1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/probe-client-identities4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "../../../../specs/008-oci-rootfs/contracts/rootfs-image.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-native-anonymous-attempt-2.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-native-host-service-attempt-2.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/box-native-files-attempt-2.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/af-final2/native-results.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/fixture-only-source3-to4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/production-equivalence2-to3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/production-equivalence3-to4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "FAILURES.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-fd-holders.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-cache-audit.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-owned-fixture-build.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-caller-sources.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/copy-group-control1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md",
+      "target": "checks/final-review4.json"
+    },
+    {
+      "file": "specs/028-oci-disk-capacity/tasks.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "specs/028-oci-disk-capacity/plan.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "specs/028-oci-disk-capacity/spec.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "specs/028-oci-disk-capacity/spec.md",
+      "target": "../008-oci-rootfs/contracts/rootfs-image.md"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "crates/box/runtime/README.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/README.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/ROADMAP.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/docs/macos-hvf.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/docs/attachment-contracts.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-disk-capacity/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-disk-capacity/OUTCOME.md"
+    }
+  ]
+}

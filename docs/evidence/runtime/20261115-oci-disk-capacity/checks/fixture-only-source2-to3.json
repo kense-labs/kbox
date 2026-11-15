@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "source2": "b50a61e991f0261ac5901a8e9a8b8ea31a7177c89d07d71c5ee8da11783dbb5a",
+  "source3": "8254ed0cbd6f1b17728b3c3776bea8a39d73c8e62f96a414631802cdfa6adc22",
+  "changedPaths": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_disk_capacity.rs"
+  ],
+  "productionAndOciSourcesUnchanged": true
+}

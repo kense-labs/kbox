@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/private/tmp/kbox-secrets-3b9553cebce5"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,120 @@
+warning: unused import: `std::sync::OnceLock`
+ --> src/utils/src/time.rs:5:5
+  |
+5 | use std::sync::OnceLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Instant`, `SystemTime`, and `UNIX_EPOCH`
+ --> src/utils/src/time.rs:6:17
+  |
+6 | use std::time::{Instant, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: `utils` (lib) generated 2 warnings (run `cargo fix --lib -p utils` to apply 2 suggestions)
+warning: `utils` (lib test) generated 2 warnings (2 duplicates)
+warning: type alias `RawFdType` is never used
+  --> src/devices/src/virtio/vsock/muxer.rs:39:10
+   |
+39 | pub type RawFdType = RawFd;
+   |          ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `devices` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running unittests src/lib.rs (target/debug/deps/devices-1f9119c09adbf31e)
+
+running 61 tests
+test bus::tests::test_display_error ... ok
+test legacy::i8042::tests::test_i8042_commands ... ok
+test legacy::i8042::tests::test_i8042_read_write_and_event ... ok
+test bus::tests::busrange_cmp_and_clone ... ok
+test bus::tests::bus_read_write ... ok
+test legacy::i8042::tests::test_i8042_kbd ... ok
+test legacy::i8042::tests::test_i8042_buffer ... ok
+test bus::tests::bus_read_write_values ... ok
+test legacy::rtc_pl031::tests::test_rtc_read_write_and_event ... ok
+test virtio::console::port_queue_mapping::test::test_port_id_to_queue_idx ... ok
+test virtio::console::port_queue_mapping::test::test_queue_idx_to_port_id_ok ... ok
+test bus::tests::bus_insert ... ok
+test virtio::descriptor_utils::tests::reader_test_incompatible_chain ... ok
+test virtio::descriptor_utils::tests::read_full ... ok
+test virtio::descriptor_utils::tests::reader_test_simple_chain ... ok
+test virtio::descriptor_utils::tests::reader_unexpected_eof ... ok
+test virtio::descriptor_utils::tests::reader_writer_shared_chain ... ok
+test virtio::console::port_queue_mapping::test::test_queue_idx_to_port_id_panic_rx_control - should panic ... ok
+test virtio::descriptor_utils::tests::reader_writer_shattered_object ... ok
+test virtio::console::port_queue_mapping::test::test_queue_idx_to_port_id_panic_tx_control - should panic ... ok
+test virtio::descriptor_utils::tests::split_beginning ... ok
+test virtio::descriptor_utils::tests::split_end ... ok
+test virtio::descriptor_utils::tests::split_border ... ok
+test virtio::descriptor_utils::tests::split_middle ... ok
+test virtio::descriptor_utils::tests::split_outofbounds ... ok
+test virtio::descriptor_utils::tests::write_full ... ok
+test virtio::descriptor_utils::tests::writer_test_incompatible_chain ... ok
+test virtio::descriptor_utils::tests::writer_test_simple_chain ... ok
+test virtio::fs::device::cache_tests::uncached_export_disables_data_and_metadata_caches_without_changing_default ... ok
+test virtio::fs::multikey::test::get ... ok
+test virtio::fs::multikey::test::remove ... ok
+test virtio::fs::multikey::test::update_alt_key ... ok
+test virtio::fs::multikey::test::update_both_keys_alt ... ok
+test virtio::fs::multikey::test::update_both_keys_main ... ok
+test virtio::fs::multikey::test::update_main_key ... ok
+test virtio::fs::multikey::test::update_value ... ok
+test virtio::mmio::tests::test_ack_features_by_page ... ok
+test virtio::mmio::notify_tests::every_queue_notification_signals_one_event_including_queue_zero ... ok
+test virtio::mmio::tests::test_bus_device_activate ... ok
+test virtio::mmio::tests::test_bus_device_read ... ok
+test virtio::mmio::tests::test_bus_device_reset ... ok
+test virtio::mmio::tests::test_get_acked_features ... ok
+test virtio::mmio::tests::test_get_avail_features ... ok
+test virtio::queue::tests::test_add_used ... ok
+test virtio::mmio::tests::test_new ... ok
+test virtio::queue::tests::test_checked_new_descriptor_chain ... ok
+test virtio::queue::tests::test_queue_validation ... ok
+test virtio::mmio::tests::test_set_acked_features ... ok
+test virtio::queue::tests::test_queue_processing ... ok
+test virtio::vsock::unix::tests::disconnected_peer_reports_failure_without_sigpipe ... ok
+test virtio::fs::macos::passthrough::tests::rewinding_readdir_refreshes_the_handle_snapshot ... ok
+test virtio::vsock::unix::tests::excess_credit_closes_only_the_offending_connection ... ok
+test virtio::vsock::unix::tests::sendmsg_uses_packet_length_instead_of_descriptor_capacity ... ok
+test virtio::fs::macos::passthrough::tests::getattr_open_handle_preserves_unlinked_file_identity ... ok
+test virtio::vsock::tsi_stream::tests::hangup_drains_the_tail_after_guest_rx_space_returns ... ok
+test virtio::fs::macos::passthrough::tests::getattr_refuses_a_handle_from_another_inode ... ok
+test virtio::vsock::unix::tests::queued_bytes_are_forwarded_before_write_shutdown ... ok
+test virtio::vsock::unix::tests::full_shutdown_drains_unix_write_tail_before_local_read_eof ... ok
+test virtio::vsock::unix::tests::paused_writer_preserves_binary_data_and_other_connections_progress ... ok
+test virtio::mmio::tests::test_bus_device_write ... ok
+test virtio::fs::macos::passthrough::tests::readdir_cookies_survive_removing_previously_returned_entries ... ok
+
+test result: ok. 61 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.46s
+
+     Running unittests src/lib.rs (target/debug/deps/utils-96d42b635cd59a3d)
+
+running 21 tests
+test macos::epoll::tests::test_events_debug ... ok
+test macos::eventfd::counter_tests::sums_clone_writes_and_external_shutdown_words ... ok
+test byte_order::tests::test_be_u16 ... ok
+test byte_order::tests::test_be_u32 ... ok
+test macos::eventfd::tests::test_clone ... ok
+test macos::epoll::tests::test_event_ops ... ok
+test byte_order::tests::test_le_i32 ... ok
+test macos::eventfd::tests::test_new ... ok
+test macos::eventfd::tests::test_read_write ... ok
+test sm::tests::test_sm ... ok
+test byte_order::tests::test_le_u64 ... ok
+test macos::eventfd::tests::test_write_overflow ... ok
+test byte_order::tests::test_le_u16 ... ok
+test byte_order::tests::test_le_u32 ... ok
+test macos::eventfd::tests::test_read_nothing ... ok
+test macos::eventfd::counter_tests::semaphore_flags_preserve_one_readiness_per_count ... ok
+test macos::epoll::tests::test_epoll ... ok
+test macos::eventfd::counter_tests::blocking_read_and_overflow_writer_wake_after_consumption ... ok
+test time::tests::test_seconds_to_nanoseconds ... ok
+test time::tests::test_local_time_display ... ok
+test time::tests::test_get_time ... ok
+
+test result: ok. 21 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

@@ -1,0 +1,37 @@
+
+running 32 tests
+test oci::registry::tests::test_registry_auth_to_oci_anonymous ... ok
+test oci::registry::tests::test_registry_auth_anonymous ... ok
+test vm::layout::tests::explicit_anonymous_image_auth_disables_the_persistent_store ... ok
+test vm::spec::tests::boot::runtime_owned_spec_rejects_anonymous_plan_drift_before_volume_materialization ... ok
+test vm::oci_hvf_spec::tests::hvf_anonymous_completion_classifies_exact_planned_disk_separately_from_caller_files ... ok
+test vm::spec::tests::general::anonymous_volume_identity_is_deterministic_and_bound_to_the_full_execution_id ... ok
+test local_execution::vm_backend::tests::anonymous_recovery_preserves_corrupt_volume_catalog_without_empty_ownership ... ok
+test vm::spec::tests::general::anonymous_volume_plan_normalizes_deduplicates_and_honors_explicit_mounts ... ok
+test oci::registry::basic_pull_tests::anonymous_pull_does_not_attempt_preemptive_basic ... ok
+test volume::store::tests::claim_anonymous_rejects_unsafe_identity_before_creating_a_directory ... ok
+test vm::spec::tests::boot::microvm_fails_closed_when_anonymous_volume_claim_is_rejected ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_refuses_excess_inventory_before_claiming_allocations ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_reserves_normalized_image_volumes_before_materialization ... ok
+test box_state::compat::oci_anonymous_store_fences_unaware_readers_without_changing_ownership_or_route ... ok
+test volume::store::tests::claim_anonymous_rejects_a_different_owner_without_mutation ... ok
+test volume::store::tests::claim_anonymous_rejects_named_volume_collision_without_mutation ... ok
+test local_execution::oci_storage_attachments::named_tests::anonymous_raw_storage_uses_exact_allocation_identity_and_retains_box_cleanup_authority ... ok
+test volume::store::tests::claim_anonymous_is_idempotent_for_the_exact_owner ... ok
+test vm::oci_anonymous::tests::anonymous_disk_stage_preserves_legacy_data_and_require_rejects_path_aliases ... ok
+test local_execution::vm_backend::tests::retained_stops_preserve_anonymous_volumes_but_auto_remove_kill_removes_them ... ok
+test volume::store::tests::claim_anonymous_upgrades_an_exact_owner_legacy_volume ... ok
+test volume::store::tests::remove_anonymous_cleans_an_unpublished_deterministic_directory ... ok
+test volume::store::tests::reclaim_anonymous_recreates_a_missing_owned_directory ... ok
+test volume::store::tests::remove_anonymous_requires_and_removes_the_exact_owner ... ok
+test vm::spec::tests::boot::test_build_instance_spec_tracks_new_anonymous_volumes_only ... ok
+test volume::store::tests::remove_anonymous_rejects_named_and_different_owner_collisions ... ok
+test vm::oci_anonymous::tests::anonymous_disk_publication_is_atomic_private_and_reuse_never_reseeds_data ... ok
+test local_execution::resources::anonymous_tests::retained_and_explicit_restart_cleanup_preserve_anonymous_data ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_uses_existing_authority_and_keeps_other_allocations ... ok
+test vm::oci_anonymous::tests::anonymous_disk_publication_refuses_other_owners_reallocated_names_and_busy_catalogs ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_cannot_delete_after_state_or_generation_ownership_moves ... ok
+test volume::store::tests::concurrent_anonymous_claims_publish_one_exact_owner ... ok
+
+test result: ok. 32 passed; 0 failed; 0 ignored; 0 measured; 2210 filtered out; finished in 0.56s
+

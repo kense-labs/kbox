@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "koci.container-record.v1",
+  "id": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+  "record": {
+    "state": {
+      "ociVersion": "1.3.0",
+      "id": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+      "status": "created",
+      "pid": 211,
+      "bundle": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-shim-2-ram/case/service/runtime/bundle-handoffs/kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4/kbox-create-10042c09099be550d0c1ae4a0f590f1904f3ac8d29cb8dd2612996d6a8dfe885/bundle",
+      "annotations": {
+        "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+        "com.kbox.process-owner": "koci-runtime",
+        "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:bd5737ac280398dd660bdc026e850b84e59b314a2ea81928bc135fd3e7b0637f\",\"size\":4294967296,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+        "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1",
+        "com.kbox.isolation-class": "hardware-vm",
+        "dev.kbox.file-grants": "{\"schemaVersion\":1,\"entries\":[{\"mountIndex\":3,\"identity\":\"kbox.hvf.mount.3\",\"sourceIdentity\":{\"device\":16777248,\"inode\":53},\"accessMode\":\"read-only\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"},{\"mountIndex\":4,\"identity\":\"kbox.hvf.mount.4\",\"sourceIdentity\":{\"device\":16777248,\"inode\":54},\"accessMode\":\"read-write\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"}]}",
+        "dev.kbox.memory-secret-files": "{\"schemaVersion\":1,\"mountIndices\":[3]}"
+      }
+    },
+    "generation": 1,
+    "driver": "libk-hvf",
+    "isolation": "dedicated-vm",
+    "config_digest": "sha256:d51741ffa1ab2be805376a3fb5a4b1b9cf402508897be21b3f0de6fc4117e95a",
+    "attachments_digest": "sha256:be96fb8201e6a2c6997b94a40dc7bb3c8aa97b77718b21956c945de8fe0c6baa"
+  },
+  "attachments": {
+    "schemaVersion": "koci.attachments.v2",
+    "rootfs": {
+      "jsonPointer": "/root",
+      "valueDigest": "sha256:2f9b36d930ecf25ea5df68f77c368b53f750ca0bd8e82afff17dca1941d1fee4"
+    },
+    "mounts": [
+      {
+        "jsonPointer": "/mounts/0",
+        "valueDigest": "sha256:87f4a1fa04833e24503befb4540b17c32c893b82a721dfdb33d26a9b76dc9da3"
+      },
+      {
+        "jsonPointer": "/mounts/1",
+        "valueDigest": "sha256:c7bdba97937e877f8026c7e17094e77838acb3414fa289875018d17b52290071"
+      },
+      {
+        "jsonPointer": "/mounts/2",
+        "valueDigest": "sha256:8027ff656c864acc77ffdd650e2c7d499336487d5d4e341e9e8529396457df7b"
+      },
+      {
+        "jsonPointer": "/mounts/3",
+        "valueDigest": "sha256:3382955c36ac7623224e05556c6b930ea18abc2b980acfe8d707ce86747df783"
+      },
+      {
+        "jsonPointer": "/mounts/4",
+        "valueDigest": "sha256:df2ddd7037d4b9d5f9b874ae4cbe0b2d1e7fc3d4b428e841eb897532c77dbb90"
+      },
+      {
+        "jsonPointer": "/mounts/5",
+        "valueDigest": "sha256:79690f2aa08dd21812fab8e262138a92ba7d615f21a6badde26cbd46fdfbe769"
+      }
+    ],
+    "network": [
+      {
+        "kind": "oci-configuration",
+        "configuration": {
+          "jsonPointer": "/linux/namespaces/3",
+          "valueDigest": "sha256:a84617b52b268e0d240a325b334ebb1c31df4cfcafef9d17d631693b3c1050eb"
+        }
+      }
+    ],
+    "processIo": {
+      "stdin": "null",
+      "stdout": "capture",
+      "stderr": "capture"
+    },
+    "secrets": [
+      {
+        "kind": "runtime-extension",
+        "name": "dev.kbox.memory-secret-files"
+      }
+    ],
+    "storage": [
+      {
+        "identity": "kbox.hvf.mount.2",
+        "mount": {
+          "jsonPointer": "/mounts/2",
+          "valueDigest": "sha256:8027ff656c864acc77ffdd650e2c7d499336487d5d4e341e9e8529396457df7b"
+        },
+        "accessMode": "read-write",
+        "ownership": "caller",
+        "cleanup": "detach-only"
+      },
+      {
+        "identity": "kbox.hvf.mount.3",
+        "mount": {
+          "jsonPointer": "/mounts/3",
+          "valueDigest": "sha256:3382955c36ac7623224e05556c6b930ea18abc2b980acfe8d707ce86747df783"
+        },
+        "accessMode": "read-only",
+        "ownership": "caller",
+        "cleanup": "detach-only"
+      },
+      {
+        "identity": "kbox.hvf.mount.4",
+        "mount": {
+          "jsonPointer": "/mounts/4",
+          "valueDigest": "sha256:df2ddd7037d4b9d5f9b874ae4cbe0b2d1e7fc3d4b428e841eb897532c77dbb90"
+        },
+        "accessMode": "read-write",
+        "ownership": "caller",
+        "cleanup": "detach-only"
+      }
+    ],
+    "extensions": {
+      "dev.kbox.bundle-handoff": {
+        "name": "dev.kbox.bundle-handoff",
+        "version": 2,
+        "required": true,
+        "configuration": {
+          "jsonPointer": "/annotations/dev.kbox.bundle-handoff",
+          "valueDigest": "sha256:f645292ba8cd4e5d350ea79dc9e246f98a85aad6fd441e71f7eb29bcac432c81"
+        }
+      },
+      "dev.kbox.file-grants": {
+        "name": "dev.kbox.file-grants",
+        "version": 1,
+        "required": true,
+        "configuration": {
+          "jsonPointer": "/annotations/dev.kbox.file-grants",
+          "valueDigest": "sha256:9ef80eeaa5232741ce076926116100343d82fca64fb4b6708965c293f4393600"
+        }
+      },
+      "dev.kbox.memory-secret-files": {
+        "name": "dev.kbox.memory-secret-files",
+        "version": 1,
+        "required": true,
+        "configuration": {
+          "jsonPointer": "/annotations/dev.kbox.memory-secret-files",
+          "valueDigest": "sha256:d049d100a5b9f03d2439b1f0d151cda324ff991f11591fcc18495c7fbcc110d8"
+        }
+      },
+      "dev.kbox.rootfs-image": {
+        "name": "dev.kbox.rootfs-image",
+        "version": 1,
+        "required": true,
+        "configuration": {
+          "jsonPointer": "/annotations/dev.kbox.rootfs-image",
+          "valueDigest": "sha256:44766b7ed037b5ad6844425e2a179bea5349d4026da34e2502f2a851ce8352fe"
+        }
+      }
+    }
+  },
+  "activeOperation": "owned-pending-cleanup-kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4"
+}

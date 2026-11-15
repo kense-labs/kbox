@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/inputs/rlimit-probe.c",
+    "-o",
+    "artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/inputs/rlimit-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.285693667
+}

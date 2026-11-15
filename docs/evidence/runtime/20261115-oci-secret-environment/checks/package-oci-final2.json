@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/package-oci-final2.py"
+  ],
+  "exit": 0,
+  "seconds": 2.113765875
+}

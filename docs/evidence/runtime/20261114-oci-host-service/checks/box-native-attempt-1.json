@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/native-client-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-1",
+  "clientSha256": "67d3a5acae5f823fa5e5690bad792b1ee5a3cefcb07cd53025bbd455287755a8",
+  "exitCode": 101,
+  "seconds": 10.6016075,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

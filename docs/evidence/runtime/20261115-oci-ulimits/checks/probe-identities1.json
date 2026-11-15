@@ -1,0 +1,14 @@
+{
+  "files": {
+    "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/inputs/rlimit-probe.c": {
+      "sha256": "6ebe78167b3a8985f0ce606f3c111123980a076f51a5222845459769dfa2ddf6",
+      "bytes": 2027
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/inputs/rlimit-probe": {
+      "sha256": "e315dd4d5f876615df62bfd564445a13b0343ebc62139960d203eb4469acfb2f",
+      "bytes": 1467688
+    }
+  },
+  "architecture": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/inputs/rlimit-probe: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped\n",
+  "nativeRun": "not yet; cross-build alone is not a native pass"
+}

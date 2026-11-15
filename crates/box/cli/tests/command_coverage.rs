@@ -532,23 +532,29 @@ fn test_create_persists_rich_runtime_options() {
     cli.ok(&["volume", "rm", "covrichdata"]);
 }
 
-#[cfg(target_os = "macos")]
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 #[test]
-fn test_macos_read_only_volume_fails_before_reservation() {
+fn test_macos_read_only_volume_reserves_without_changing_access_mode() {
     let cli = CliTest::new();
-    cli.fails(
-        &[
-            "create",
-            "--name",
-            "cov-read-only-volume",
-            "--volume",
-            "covro:/data:ro",
-            "docker.io/library/alpine:latest",
-        ],
-        "requires host-enforced virtio-fs write denial",
-    );
-    assert!(!cli.ok(&["ps", "-a"]).contains("cov-read-only-volume"));
-    assert!(!cli.ok(&["volume", "ls", "--quiet"]).contains("covro"));
+    cli.ok(&[
+        "create",
+        "--name",
+        "cov-read-only-volume",
+        "--volume",
+        "covro:/data:ro",
+        "docker.io/library/alpine:latest",
+    ]);
+    assert!(cli.ok(&["ps", "-a"]).contains("cov-read-only-volume"));
+    assert!(cli.ok(&["volume", "ls", "--quiet"]).contains("covro"));
+    let inspect = parse_inspect(&cli.ok(&["inspect", "cov-read-only-volume"]));
+    let metadata = &inspect["managed_execution"];
+    assert!(metadata["request"]["config"]["volumes"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .any(|volume| volume.as_str().unwrap().ends_with(":/data:ro")));
+    cli.ok(&["rm", "cov-read-only-volume"]);
+    cli.ok(&["volume", "rm", "covro"]);
 }
 
 #[cfg(not(target_os = "windows"))]

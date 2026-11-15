@@ -1,0 +1,11 @@
+
+running 1 test
+test commands::exec::session_tests::persisted_box_and_oci_sessions_use_the_execution_manager ... FAILED
+
+failures:
+
+failures:
+    commands::exec::session_tests::persisted_box_and_oci_sessions_use_the_execution_manager
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 933 filtered out; finished in 0.01s
+

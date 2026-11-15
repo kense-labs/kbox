@@ -3,6 +3,11 @@
 //! The SDK owns the public contract. Runtime drivers, WHPX, libkrun, and
 //! durable-state implementation details remain behind [`OciRuntimeService`].
 
+#[cfg(target_os = "macos")]
+mod macos_memory;
+#[cfg(target_os = "macos")]
+pub use macos_memory::{macos_path_is_on_ram_disk, parse_macos_mount_line};
+
 mod attachment;
 mod bundle;
 mod checkpoint;
@@ -33,20 +38,29 @@ mod service;
 mod tee;
 mod transport;
 mod validation;
+#[cfg(any(windows, test))]
+mod windows_architecture;
 mod workspace_path;
 
 pub use async_trait::async_trait;
 pub use attachment::{
-    AttachmentCapabilities, AttachmentSource, ConfigurationAttachment, CreateAttachments,
-    GuestSessionAttachment, GuestSessionCapacity, GuestSessionGeneration, GuestSessionOwnership,
-    GuestSessionReset, LocalNetworkRedirectAttachment, NetworkAttachment,
+    nproc_admission_required, raw_storage_images_requested, AttachmentCapabilities,
+    AttachmentSource, ConfigurationAttachment, CreateAttachments, FileGrant, FileGrants,
+    FileSourceIdentity, GuestSessionAttachment, GuestSessionCapacity, GuestSessionGeneration,
+    GuestSessionOwnership, GuestSessionReset, LocalNetworkRedirectAttachment,
+    MemorySecretEnvironmentBinding, MemorySecretFiles, NetworkAttachment,
     NetworkAttachmentIdentity, NetworkCleanup, NetworkEnforcementAttachment,
     NetworkEnforcementCleanup, NetworkEnforcementOwnership, NetworkMechanismDigest,
-    NetworkMechanismGeneration, NetworkOwnership, RuntimeExtensionAttachment, StorageAccessMode,
-    StorageAttachment, StorageCleanup, StorageOwnership, StoragePathRestriction,
+    NetworkMechanismGeneration, NetworkOwnership, RootfsImage, RuntimeExtensionAttachment,
+    StorageAccessMode, StorageAttachment, StorageCleanup, StorageOwnership, StoragePathRestriction,
     StoragePathRestrictions, ATTACHMENT_SCHEMA_V1, ATTACHMENT_SCHEMA_V2, ATTACHMENT_SCHEMA_V3,
-    ATTACHMENT_SCHEMA_V4, MAX_GUEST_SESSION_CAPACITY, NETWORK_ENFORCEMENT_EXTENSION,
+    ATTACHMENT_SCHEMA_V4, FILE_GRANTS_EXTENSION, FILE_GRANTS_VERSION, MAX_GUEST_SESSION_CAPACITY,
+    MEMORY_SECRET_ENVIRONMENT_VERSION, MEMORY_SECRET_FILES_EXTENSION, MEMORY_SECRET_FILES_VERSION,
+    MEMORY_SECRET_RAW_STORAGE_VERSION, NETWORK_ENFORCEMENT_EXTENSION,
     NETWORK_ENFORCEMENT_EXTENSION_VERSION, NETWORK_ENFORCEMENT_SCHEMA_V1,
+    NPROC_ADMISSION_EXTENSION, NPROC_ADMISSION_VERSION, RAW_STORAGE_IMAGES_EXTENSION,
+    RAW_STORAGE_IMAGES_VALUE, RAW_STORAGE_IMAGES_VERSION, ROOTFS_IMAGE_EXTENSION,
+    ROOTFS_IMAGE_FILE_NAME, ROOTFS_IMAGE_READONLY_VERSION, ROOTFS_IMAGE_VERSION,
     RUNTIME_BUNDLE_HANDOFF_EXTENSION, RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION,
     RUNTIME_BUNDLE_HANDOFF_EXTERNAL_STORAGE_VERSION, RUNTIME_BUNDLE_HANDOFF_MOVE_V1,
     RUNTIME_BUNDLE_HANDOFF_MOVE_V2, STORAGE_PATH_RESTRICTIONS_EXTENSION,
@@ -152,6 +166,8 @@ pub use validation::{
     MAX_FILESYSTEM_USER_BYTES, MAX_FILE_TRANSFER_BYTES, MAX_OUTPUT_READ_BYTES,
     MAX_STDIN_WRITE_BYTES,
 };
+#[cfg(windows)]
+pub use windows_architecture::admit_windows_whpx_host;
 pub use workspace_path::{
     admit_workspace_path, WorkspacePathReject, WORKSPACE_STAGING_DIRECTORY_MODE,
 };

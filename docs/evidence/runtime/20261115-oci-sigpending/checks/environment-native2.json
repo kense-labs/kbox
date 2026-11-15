@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/run-memory-native.py",
+    "docs/evidence/runtime/20261115-oci-sigpending/memory-env-context-final2.json",
+    "2",
+    "positive"
+  ],
+  "exit": 0,
+  "seconds": 259.973436416
+}

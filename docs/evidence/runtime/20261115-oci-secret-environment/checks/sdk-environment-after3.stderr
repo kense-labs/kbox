@@ -1,0 +1,8 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.68s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+
+thread 'attachment::memory_secret_files_tests::memory_secret_environment_refuses_unbound_duplicate_and_malformed_metadata' (87613998) panicked at crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs:164:81:
+called `Result::unwrap()` on an `Err` value: Error { code: InvalidArgument, operation: Some("validate-oci-semantics"), message: "OCI configuration failed semantic validation (1 violation(s)): environment entries must use NAME=VALUE form at /process/env/0 [oci.common.environment.assignment]", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p koci-sdk --lib`

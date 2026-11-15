@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/qualification-runner-final1.py", line 137, in <module>
+    status = wait_process(case, command, checks / (case + '.stdout'),
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/qualification-runner-final1.py", line 69, in wait_process
+    with stdout.open('wb') as out, stderr.open('wb') as err:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-disk-capacity/checks/af-final1/oci.stdout'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/qualification-runner-final1.py", line 161, in <module>
+    (checks / (case + '-runner-failure.log')).write_text(traceback.format_exc())
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1275, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors) as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1110, in _opener
+    return self._accessor.open(self, flags, mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-disk-capacity/checks/af-final1/oci-runner-failure.log'

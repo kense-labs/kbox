@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "local_execution::oci_production::shm_tests::",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 14.210427792
+}

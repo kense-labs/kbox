@@ -65,8 +65,8 @@ fn paperloom_service_completes_real_gateway_ocr_job_and_retires_secrets() {
 #[cfg(target_os = "macos")]
 #[test]
 #[ignore = "requires runner-owned RAM Secret root and actual macOS MicroVM admission"]
-fn paperloom_unsupported_secret_refuses_without_execution_or_ram_material() {
-    run_test(true);
+fn paperloom_secret_mount_runs_with_native_readonly_support() {
+    run_test(false);
 }
 
 fn run_test(expect_readonly_refusal: bool) {

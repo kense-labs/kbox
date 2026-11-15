@@ -1,0 +1,16 @@
+Executable=/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrunfw.5.dylib
+Identifier=libkrunfw.5
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=44676 flags=0x2(adhoc) hashes=1391+2 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=cdde11dc181d92ccc4729493a4b475eb65dc30e1
+CandidateCDHashFull sha256=cdde11dc181d92ccc4729493a4b475eb65dc30e1ce0c51c4c5e84066856521bb
+Hash choices=sha256
+CMSDigest=cdde11dc181d92ccc4729493a4b475eb65dc30e1ce0c51c4c5e84066856521bb
+CMSDigestType=2
+CDHash=cdde11dc181d92ccc4729493a4b475eb65dc30e1
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements count=0 size=12

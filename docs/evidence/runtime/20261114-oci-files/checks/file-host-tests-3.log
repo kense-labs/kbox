@@ -1,0 +1,14 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.19s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 4 tests
+test utility_vm_driver::hvf_files::tests::source_replacement_cannot_be_reauthorized_or_deleted_by_cleanup ... ok
+test utility_vm_driver::hvf_files::tests::malformed_aliases_concurrent_grants_and_partial_preparation_fail_closed ... ok
+test utility_vm_driver::hvf_files::tests::live_file_transport_replays_and_cleans_only_private_aliases ... ok
+test utility_vm_driver::hvf_files::tests::publication_rejects_replaced_projection_identity_and_symlink_sources ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 430 filtered out; finished in 0.07s
+

@@ -16,13 +16,14 @@ const OCI_DEADLINE_OVERRUN: &str = "SCHED_FLAG_DL_OVERRUN";
 const TYPED_RESET_ON_FORK: &str = "SCHED_RESET_ON_FORK";
 const TYPED_DEADLINE_OVERRUN: &str = "SCHED_FLAG_D_L_OVERRUN";
 
-/// Serialize an OCI process with the exact scheduler flag names from OCI 1.3.
+/// Serialize OCI scheduler names and unordered capability sets deterministically.
 pub fn serialize<S>(process: &Process, serializer: S) -> std::result::Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
     let mut value = serde_json::to_value(process).map_err(serde::ser::Error::custom)?;
     normalize_for_wire(&mut value);
+    normalize_capability_order(&mut value);
     value.serialize(serializer)
 }
 
@@ -47,6 +48,25 @@ pub fn decode(mut value: Value) -> Result<Process> {
         )
         .for_operation("decode-oci-process")
     })
+}
+
+fn normalize_capability_order(process: &mut Value) {
+    if let Some(capabilities) = process
+        .get_mut("capabilities")
+        .and_then(Value::as_object_mut)
+    {
+        for name in [
+            "bounding",
+            "effective",
+            "inheritable",
+            "permitted",
+            "ambient",
+        ] {
+            if let Some(values) = capabilities.get_mut(name).and_then(Value::as_array_mut) {
+                values.sort_by(|left, right| left.as_str().cmp(&right.as_str()));
+            }
+        }
+    }
 }
 
 pub(crate) fn normalize_for_wire(process: &mut Value) {
@@ -175,3 +195,7 @@ mod tests {
         assert_eq!(affinity.cpu_affinity_final(), &None);
     }
 }
+
+#[cfg(test)]
+#[path = "process_serde_capability_tests.rs"]
+mod capability_tests;

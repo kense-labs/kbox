@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/run-native.py",
+    "docs/evidence/runtime/20261115-oci-realtime/run-context.json",
+    "2",
+    "realtime"
+  ],
+  "exit": 101,
+  "seconds": 34.918990792
+}

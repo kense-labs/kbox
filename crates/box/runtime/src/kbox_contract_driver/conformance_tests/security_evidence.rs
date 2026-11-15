@@ -250,9 +250,7 @@ mod identity_tests {
             None
         );
         assert_eq!(
-            microvm_hypervisor_identity(
-                "kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"
-            ),
+            microvm_hypervisor_identity("kbox/3.2.7 isolation/microvm hypervisor/KVM tee/"),
             None
         );
     }

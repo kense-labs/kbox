@@ -1,0 +1,7 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::root_readonly::native_root_readonly_intent_enforces_all_access_paths_and_preserves_inner_mounts has been running for over 60 seconds
+test local_execution::oci_hvf::tests::native::root_readonly::native_root_readonly_intent_enforces_all_access_paths_and_preserves_inner_mounts ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2260 filtered out; finished in 185.90s
+

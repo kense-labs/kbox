@@ -1,0 +1,2 @@
+   Compiling kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+error: could not compile `kbox-runtime` (lib test) due to 2 previous errors; 44 warnings emitted

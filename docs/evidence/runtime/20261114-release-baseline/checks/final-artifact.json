@@ -1,0 +1,9 @@
+{
+  "archiveBytes": 22475371,
+  "installedDiskBytes": 42512384,
+  "runtimeMemory": "Not measured; native scenarios configured 512 MiB guest memory. No peak RSS claim.",
+  "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+  "host": "macOS-26.6.2-arm64-arm-64bit",
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "date": "2026-11-14T01:13:49.969046+00:00"
+}

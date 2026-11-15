@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_nice_ulimits_preserve_exact_values_and_legacy_root_defaults ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_nice_ulimits_admit_without_allocating_and_refuse_privilege_bypasses ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_nice_ulimits_admit_without_allocating_and_refuse_privilege_bypasses
+    vm::oci_hvf_spec::tests::hvf_nice_ulimits_preserve_exact_values_and_legacy_root_defaults
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2295 filtered out; finished in 0.01s
+

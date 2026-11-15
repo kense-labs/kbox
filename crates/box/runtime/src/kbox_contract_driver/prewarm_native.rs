@@ -73,7 +73,7 @@ async fn run() {
     assert_eq!(home.canonicalize().unwrap(), home);
     assert_eq!(home.metadata().unwrap().permissions().mode() & 0o777, 0o700);
     assert_eq!(
-        std::fs::read_to_string(home.join(".krun-prewarm-native")).unwrap(),
+        std::fs::read_to_string(home.join(".kbox-prewarm-native")).unwrap(),
         "owned-prewarm-native-test\n"
     );
     let root = home.parent().unwrap();

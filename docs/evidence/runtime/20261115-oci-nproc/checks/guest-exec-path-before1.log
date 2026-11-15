@@ -1,0 +1,11 @@
+
+running 1 test
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_uses_guest_lookup_and_effective_image_path ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_session::path_tests::hvf_guest_exec_path_uses_guest_lookup_and_effective_image_path
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2284 filtered out; finished in 0.04s
+

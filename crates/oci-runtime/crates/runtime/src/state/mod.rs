@@ -47,7 +47,7 @@ use model::{
     StoredOperationKind, StoredOperationRequest, StoredOperationStatus, CONTAINER_SCHEMA_VERSION,
     GENERATION_SCHEMA_VERSION, OPERATION_SCHEMA_VERSION, OPERATION_SCHEMA_VERSION_V1,
     OPERATION_SCHEMA_VERSION_V2, OPERATION_SCHEMA_VERSION_V3, OPERATION_SCHEMA_VERSION_V4,
-    OPERATION_SCHEMA_VERSION_V5,
+    OPERATION_SCHEMA_VERSION_V5, OPERATION_SCHEMA_VERSION_V6,
 };
 use oci_state::{container_state, is_paused, rebuild_state};
 use operation::validate_deadline;
@@ -724,6 +724,7 @@ impl DurableStateStore {
                 | OPERATION_SCHEMA_VERSION_V3
                 | OPERATION_SCHEMA_VERSION_V4
                 | OPERATION_SCHEMA_VERSION_V5
+                | OPERATION_SCHEMA_VERSION_V6
                 | OPERATION_SCHEMA_VERSION
         ) || operation.operation_id != *operation_id
         {
@@ -1015,6 +1016,7 @@ fn validate_stored_operation_shape(operation: &StoredOperation) -> Result<()> {
                 OPERATION_SCHEMA_VERSION_V3
                     | OPERATION_SCHEMA_VERSION_V4
                     | OPERATION_SCHEMA_VERSION_V5
+                    | OPERATION_SCHEMA_VERSION_V6
                     | OPERATION_SCHEMA_VERSION
             ) {
                 return Err(invalid(
@@ -1065,6 +1067,7 @@ fn validate_stored_operation_shape(operation: &StoredOperation) -> Result<()> {
                 OPERATION_SCHEMA_VERSION_V3
                     | OPERATION_SCHEMA_VERSION_V4
                     | OPERATION_SCHEMA_VERSION_V5
+                    | OPERATION_SCHEMA_VERSION_V6
                     | OPERATION_SCHEMA_VERSION
             ) {
                 return Err(invalid(
@@ -1116,6 +1119,7 @@ fn validate_stored_operation_shape(operation: &StoredOperation) -> Result<()> {
                 operation.schema_version.as_str(),
                 OPERATION_SCHEMA_VERSION_V4
                     | OPERATION_SCHEMA_VERSION_V5
+                    | OPERATION_SCHEMA_VERSION_V6
                     | OPERATION_SCHEMA_VERSION
             ) {
                 return Err(invalid(
@@ -1158,7 +1162,9 @@ fn validate_stored_operation_shape(operation: &StoredOperation) -> Result<()> {
         StoredOperationKind::Restore => {
             if !matches!(
                 operation.schema_version.as_str(),
-                OPERATION_SCHEMA_VERSION_V5 | OPERATION_SCHEMA_VERSION
+                OPERATION_SCHEMA_VERSION_V5
+                    | OPERATION_SCHEMA_VERSION_V6
+                    | OPERATION_SCHEMA_VERSION
             ) {
                 return Err(invalid(
                     "Restore mutations require the current request-retaining schema".to_string(),

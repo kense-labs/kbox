@@ -1,0 +1,140 @@
+{
+  "status": "PASS",
+  "original": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+  "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+  "sourceFiles": 9,
+  "observations": [
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/capacity-manifest-9f4f58d0-5836-409d-9b10-f9c86a6f1742-g1.json",
+      "device": 16777233,
+      "inode": 296027582,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-second-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-manifest-93b61bb8-9e59-46ad-b3d2-959b62e08fac-g1.json",
+      "device": 16777233,
+      "inode": 296308085,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-manifest-3899aaf4-d281-4a6c-bb13-b0bb04282dca-g3.json",
+      "device": 16777233,
+      "inode": 296292430,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-manifest-3899aaf4-d281-4a6c-bb13-b0bb04282dca-g2.json",
+      "device": 16777233,
+      "inode": 296292430,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-manifest-3899aaf4-d281-4a6c-bb13-b0bb04282dca-g1.json",
+      "device": 16777233,
+      "inode": 296292430,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-big-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/capacity-manifest-de984d70-b911-47e8-9d37-638bf40e0b93-g1.json",
+      "device": 16777233,
+      "inode": 296322612,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-manifest-10ce00e0-2fb2-4025-a8a0-ec388972eb2c-g2.json",
+      "device": 16777233,
+      "inode": 296205709,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-second-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-manifest-882d3d9c-a618-4128-9bd1-92074197ce76-g1.json",
+      "device": 16777233,
+      "inode": 296208367,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-big-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-manifest-883506f2-b4ba-44a5-9ff4-951331128011-g1.json",
+      "device": 16777233,
+      "inode": 296210519,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/capacity-manifest-10ce00e0-2fb2-4025-a8a0-ec388972eb2c-g1.json",
+      "device": 16777233,
+      "inode": 296205709,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/capacity-second-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/capacity-manifest-e02c7ef3-9b75-408f-81d5-9626335cb6ad-g1.json",
+      "device": 16777233,
+      "inode": 296082476,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    },
+    {
+      "source": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/capacity-main-probe",
+      "manifest": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/capacity-manifest-97985e24-d88a-41d6-b366-26d9dd84cbe6-g1.json",
+      "device": 16777233,
+      "inode": 296078410,
+      "nlink": 1,
+      "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75",
+      "uidAndModeMatchCopyContract": true,
+      "creationGidMatchesNativeControl": true,
+      "gid": 0
+    }
+  ]
+}

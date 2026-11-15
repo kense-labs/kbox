@@ -23,8 +23,6 @@ pub enum EngineErrorCode {
     StreamLost,
     FrameTooLarge,
     CleanupPending,
-    AssemblyFailed,
-    RuntimeRequirementsUnmet,
     Unknown,
     Transport,
     Internal,
@@ -149,13 +147,6 @@ pub enum DesiredState {
     Down,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "kebab-case")]
-pub enum EngineWorkload {
-    OciService,
-    AcpHarness,
-}
-
 /// Identity-free Service definition. The engine binds its unit and generation.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -170,6 +161,8 @@ pub struct EngineServiceTemplate {
     pub health: Option<RuntimeHealthCheck>,
     pub service_lifecycle: Option<RuntimeServiceLifecycle>,
     pub restart: RestartPolicy,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub semantics_profile_digest: Option<String>,
 }
 
 impl EngineServiceTemplate {
@@ -190,7 +183,7 @@ impl EngineServiceTemplate {
             service_lifecycle: self.service_lifecycle.clone(),
             restart: self.restart.clone(),
             outputs: Vec::new(),
-            semantics_profile_digest: None,
+            semantics_profile_digest: self.semantics_profile_digest.clone(),
             identity_attachment_digest: None,
         };
         spec.validate().map_err(|_| {
@@ -212,13 +205,12 @@ pub struct EngineIntent {
     pub request_id: EngineKey,
     pub revision: u64,
     pub desired_state: DesiredState,
-    pub workload: EngineWorkload,
     pub plan_digest: String,
     pub service: Option<EngineServiceTemplate>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub directories: Vec<super::EngineDirectoryGrant>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub assembly: Option<super::EngineAssemblyPlan>,
+    pub prewarm_bindings_digest: Option<String>,
 }
 
 impl EngineIntent {
@@ -230,16 +222,11 @@ impl EngineIntent {
                 "down has no Service to bind",
             )
         })?;
-        let mut spec = template.bind(unit_id, generation)?;
-        if self.workload == EngineWorkload::AcpHarness {
-            spec.semantics_profile_digest =
-                Some(crate::kbox_contract_driver::NATIVE_GUEST_PROFILE_DIGEST.into());
-        }
-        Ok(spec)
+        template.bind(unit_id, generation)
     }
 
     pub fn validate(&self) -> EngineResult<()> {
-        if self.schema != "kbox.engine.intent.v1" {
+        if self.schema != "kbox.engine.intent.v2" {
             return Err(EngineError::new(
                 EngineErrorCode::UnsupportedVersion,
                 "unsupported engine intent schema",
@@ -263,20 +250,28 @@ impl EngineIntent {
             ));
         }
         super::directory::validate_grants(self)?;
-        if let Some(assembly) = &self.assembly {
-            assembly.validate(self)?;
+        if let Some(bindings) = &self.prewarm_bindings_digest {
+            let valid_digest = bindings.strip_prefix("sha256:").is_some_and(|digest| {
+                digest.len() == 64
+                    && digest
+                        .bytes()
+                        .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))
+            });
+            let eligible = self.service.as_ref().is_some_and(|service| {
+                service
+                    .bind("engine-validation".into(), 1)
+                    .is_ok_and(|spec| crate::kbox_contract_driver::prewarm::eligible(&spec))
+            });
+            if self.desired_state != DesiredState::Up || !valid_digest || !eligible {
+                return Err(EngineError::new(
+                    EngineErrorCode::InvalidRequest,
+                    "prewarm requires a valid bindings digest and a clean idle Service",
+                ));
+            }
         }
         match (&self.desired_state, &self.service) {
             (DesiredState::Up, Some(template)) => {
                 template.bind("engine-validation".into(), 1)?;
-                if self.workload == EngineWorkload::AcpHarness
-                    && template.isolation != IsolationLevel::Sandbox
-                {
-                    return Err(EngineError::new(
-                        EngineErrorCode::UnsupportedCapability,
-                        "the ACP Harness profile requires independent-kernel isolation",
-                    ));
-                }
             }
             (DesiredState::Down, None) => {}
             _ => {
@@ -323,9 +318,6 @@ pub enum EngineCommand {
     },
     InspectOperation {
         request_id: EngineKey,
-    },
-    InspectAssembly {
-        instance_id: EngineKey,
     },
     ReadLogs {
         instance_id: EngineKey,
@@ -427,7 +419,6 @@ pub enum EngineReplyValue {
     Logs(Vec<RuntimeLogChunk>),
     PrimaryTicket(super::EnginePrimaryTicket),
     PrimaryProcess(super::EnginePrimaryInfo),
-    Assembly(super::EngineAssembly),
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -467,8 +458,6 @@ pub struct EngineJournalData {
     pub instances: BTreeMap<EngineKey, EngineKey>,
     #[serde(default)]
     pub(super) primary_processes: BTreeMap<EngineKey, super::process_protocol::EnginePrimaryRecord>,
-    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
-    pub(super) assemblies: BTreeMap<String, super::EngineAssemblyReceipt>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

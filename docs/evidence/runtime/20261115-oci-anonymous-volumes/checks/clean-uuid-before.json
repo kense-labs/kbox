@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "clean_resume_rejects_a_different_allocation_uuid",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 0.22026120800000015
+}

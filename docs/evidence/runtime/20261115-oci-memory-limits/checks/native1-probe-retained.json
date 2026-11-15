@@ -1,0 +1,10 @@
+[
+  {
+    "path": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/native1-memory-limit-probe",
+    "sha256": "9bc7337fdd03ce80f7ea3a340cd2c6a3cb846396c46d90e287f2057098adc20f"
+  },
+  {
+    "path": "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/native1-memory-limit-probe.c",
+    "sha256": "0fa1e16e346c43c9aedfd3077cd928ef910293da5138b0a5932fec90c8617e24"
+  }
+]

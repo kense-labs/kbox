@@ -1,0 +1,9 @@
+{
+  "sourceInputsSha256": "b0d1c272758563f69ee10d20d6b62a59f29e6d7e5e15b1f9c7370eb97af18129",
+  "changedInputs": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_sigpending.rs"
+  ],
+  "productionSourceUnchanged": true,
+  "ociSourceUnchanged": true,
+  "ociOriginalSourceInputsSha256": "4f9dbe71f19a9d018e40b0a58e5a62e2dd2cde5d07c9698f7e710c9a8f2a648b"
+}

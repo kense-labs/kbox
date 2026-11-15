@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-raw-secrets/af-context-final2.json"
+  ],
+  "exit": 0,
+  "seconds": 147.690163333
+}

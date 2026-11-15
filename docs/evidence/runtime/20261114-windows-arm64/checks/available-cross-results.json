@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "klibksys"
+    ],
+    "exitCode": 101,
+    "expectedRefusal": true,
+    "seconds": 1.184981292,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-native-refusal.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "x86_64-pc-windows-msvc",
+      "-p",
+      "klibksys"
+    ],
+    "exitCode": 0,
+    "expectedRefusal": false,
+    "seconds": 1.193317292,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/x64-native-target.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-runtime",
+      "-p",
+      "koci-kbox",
+      "--lib"
+    ],
+    "exitCode": 0,
+    "expectedRefusal": false,
+    "seconds": 8.184964208,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-oci-libraries.log"
+  }
+]

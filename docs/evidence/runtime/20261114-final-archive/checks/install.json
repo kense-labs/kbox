@@ -1,0 +1,12 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/unpacked/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "envSet": {
+    "KBOX_PREFIX": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed"
+  },
+  "exitCode": 0,
+  "seconds": 0.803138708,
+  "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]"
+}

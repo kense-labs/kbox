@@ -1,0 +1,9 @@
+{
+  "sourceInputsSha256": "ccc6c32ff1d7823cbb6f80aa5e03e799a0f839f170c6844372f5e7341bde77f7",
+  "inputs": 1693,
+  "changedFromCandidate1": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_cpu_time.rs"
+  ],
+  "productionInputsUnchanged": true,
+  "ociOriginalSourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35"
+}

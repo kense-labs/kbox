@@ -1,0 +1,37 @@
+{
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/frozen",
+  "files": {
+    "bin/kbox": {
+      "bytes": 111674840,
+      "sha256": "c263278b52c4a03803276146c4c2262a4cbd99a555bbebd8b58d5f721dfb17d9"
+    },
+    "bin/kbox-guest-init": {
+      "bytes": 3171224,
+      "sha256": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a"
+    },
+    "bin/kbox-shim": {
+      "bytes": 33547968,
+      "sha256": "e08b8b0b43c0228fc1ec72015240e02f32d8408ac238f7d42286115c96387b29"
+    },
+    "lib/libkrun.1.17.0.dylib": {
+      "bytes": 4529632,
+      "sha256": "c1a85ecc4f622a47503b1f2e233345d10dcb907434cc3b4c90d016952dcc102f"
+    },
+    "lib/libkrunfw.5.dylib": {
+      "bytes": 22836688,
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+    }
+  },
+  "signatureCommand": [
+    "codesign",
+    "--force",
+    "--sign",
+    "-",
+    "--entitlements",
+    "crates/box/shim/entitlements.plist",
+    "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/frozen/bin/kbox-shim"
+  ],
+  "signatureOutput": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/frozen/bin/kbox-shim: replacing existing signature\n",
+  "baseCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+  "nativeSources": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n"
+}

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-process-regressions1.py"
+  ],
+  "exit": 0,
+  "seconds": 718.419206583
+}

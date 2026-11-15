@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/native-client-raw-ro-attempt-9",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::raw_ro::native_raw_ro_disks_reject_guest_remount_child_and_writes_with_unchanged_host_image",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-9",
+  "clientSha256": "bd39f7b6758e7980ebadcaa0f270401dfcf2924af855457fa0ee380fab44ace8",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/installed-anonymous-final-1",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "exitCode": 0,
+  "seconds": 6.53919025,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

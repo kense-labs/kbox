@@ -1,0 +1,31 @@
+[
+  {
+    "kind": "box",
+    "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2",
+    "entriesVerified": 11
+  },
+  {
+    "kind": "oci",
+    "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64",
+    "entriesVerified": 10
+  },
+  {
+    "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "f5f1752afd9c20af91429e2eda61cad4f7d3b0848c10fd0d224c5cfc559a4eb4",
+    "bytes": 23294607
+  },
+  {
+    "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "17ffecf4643a3ec16da398e6db865c87824b70a2a68cc1ca028c2c829682385b",
+    "bytes": 32988952
+  },
+  {
+    "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/final-dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "7ef357779e46361bf5d5e6d24d48271e7590f0394b7576ae1fe335f3d57d54a2",
+    "bytes": 23294648
+  },
+  {
+    "priorArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/previous-dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "1289af08712159ef5dc70c8240b72388af32e1699589c3f798388738fbdceb4c"
+  }
+]

@@ -296,6 +296,14 @@ fn run_container_init(invocation: ContainerInitInvocation) -> Result<()> {
         Ok(prepared) => prepared,
         Err(error) => return reject_before_ready(&mut control, error),
     };
+    let secret_sources = vm_storage_sources.memory_secret_environment_sources(&canonical_bundle);
+    let secret_environment = match super::secret_env::PreparedMemorySecretEnvironment::prepare(
+        &plan.environment,
+        &secret_sources,
+    ) {
+        Ok(prepared) => prepared,
+        Err(error) => return reject_before_ready(&mut control, error),
+    };
     let source_resolver = mount::BindSourceResolver::new(&canonical_bundle, pinned_bundle.as_ref());
     let expected_device_mount_count = usize::from(rootless && plan.devices.has_node_setup())
         * super::device::ROOTLESS_DEVICE_MOUNT_COUNT;
@@ -411,6 +419,7 @@ fn run_container_init(invocation: ContainerInitInvocation) -> Result<()> {
         rootfs: &rootfs,
         prepared_devices: &prepared_devices,
         hook_state: &hook_state,
+        secret_environment: &secret_environment,
     };
     supervision::run_supervised_init(
         &create,
@@ -427,6 +436,7 @@ pub(super) struct CreateContext<'a> {
     rootfs: &'a PreparedContainerRootfs,
     prepared_devices: &'a PreparedDeviceSources,
     hook_state: &'a HookStateTemplate,
+    secret_environment: &'a super::secret_env::PreparedMemorySecretEnvironment,
 }
 
 pub(super) fn complete_create_and_wait_for_start(
@@ -494,6 +504,7 @@ pub(super) fn complete_create_and_wait_for_start(
         runtime_pid,
         control,
         create.hook_state,
+        create.secret_environment,
     )
 }
 
@@ -536,6 +547,7 @@ fn wait_for_start_and_exec(
     runtime_pid: i32,
     mut control: UnixStream,
     hook_state: &HookStateTemplate,
+    secret_environment: &super::secret_env::PreparedMemorySecretEnvironment,
 ) -> Result<()> {
     let mut start = [0_u8; 1];
     control.read_exact(&mut start).map_err(|error| {
@@ -557,6 +569,7 @@ fn wait_for_start_and_exec(
         runtime_pid,
         hook_state,
         &mut control,
+        secret_environment,
     );
     match result {
         Ok(()) => Ok(()),
@@ -971,6 +984,7 @@ fn enter_rootfs_run_start_hooks_and_exec(
     runtime_pid: i32,
     hook_state: &HookStateTemplate,
     control: &mut UnixStream,
+    secret_environment: &super::secret_env::PreparedMemorySecretEnvironment,
 ) -> Result<()> {
     if !plan.namespaces.new_mount() && !uses_private_joined_rootfs(plan) {
         rootfs::chroot(rootfs)?;
@@ -980,13 +994,14 @@ fn enter_rootfs_run_start_hooks_and_exec(
         Some(runtime_pid),
     )?;
     plan.hooks.run_sync(HookPhase::StartContainer, &created)?;
-    exec_configured_process(plan, host_proc, control)
+    exec_configured_process(plan, host_proc, control, secret_environment)
 }
 
 fn exec_configured_process(
     plan: &InitPlan,
     host_proc: &File,
     control: &mut UnixStream,
+    secret_environment: &super::secret_env::PreparedMemorySecretEnvironment,
 ) -> Result<()> {
     let cwd = CString::new(plan.cwd.as_bytes()).map_err(|error| {
         init_error(
@@ -996,7 +1011,7 @@ fn exec_configured_process(
     })?;
     let args = cstring_vector(&plan.args, "process.args")?;
     let mut process_environment = plan.environment.clone();
-    super::secret_env::materialize(&mut process_environment)?;
+    secret_environment.materialize(&mut process_environment)?;
     let environment = cstring_vector(&process_environment, "process.env")?;
     if args.is_empty() {
         return Err(init_error(
@@ -1010,7 +1025,7 @@ fn exec_configured_process(
     super::oom::apply(host_proc, plan.oom_score_adj)?;
     super::personality::apply(plan.personality.as_ref())?;
     super::memory_policy::apply(plan.memory_policy.as_ref())?;
-    plan.rlimits.apply()?;
+    plan.rlimits.apply_before_credentials()?;
     let capabilities = plan.capabilities.prepare_for_credentials(plan.uid)?;
     write_capability_warnings(control, capabilities.warnings())?;
     namespace::apply_supplementary_groups(
@@ -1035,6 +1050,7 @@ fn exec_configured_process(
         }
     }
     capabilities.apply_after_credentials(plan.uid)?;
+    plan.rlimits.finish_credentials()?;
     super::no_new_privileges::apply(plan.no_new_privileges)?;
     plan.seccomp.install()?;
     let error = super::process_executable::execute(&args, &environment);

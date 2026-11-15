@@ -1,0 +1,8 @@
+{
+  "sourceInputsSha256": "9365453fbda6b3b8bd4758ae24c6a7b2817b5a0c130ec90724e75d3e46b3e676",
+  "files": 1701,
+  "changedFrom1": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_realtime.rs"
+  ],
+  "nativeClientSha256": "b6eca6423c0d6b4682e147a8cd16db09bd46a4a796f4d450cf3925e2dafc59ce"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/private/tmp/kbox-sigpending-46afe6c4c9c3"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

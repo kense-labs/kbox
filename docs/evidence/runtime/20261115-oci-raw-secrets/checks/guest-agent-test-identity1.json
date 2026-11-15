@@ -1,0 +1,7 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-frozen1",
+  "sha256": "46d3ea2f56b5167ed1e40f3a703485a656e012f6a61d26e03589e1059e4465fc",
+  "bytes": 78615168,
+  "sourceInputsSha256": "c07659de97c45cd962d08dd29f49e882ac9266bed570226b116af767bbc1734c",
+  "crossCompilationOnly": true
+}

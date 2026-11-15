@@ -54,8 +54,8 @@ async fn run(with_volume: bool) {
     assert_eq!(home.canonicalize().unwrap(), home);
     assert_eq!(home.metadata().unwrap().permissions().mode() & 0o777, 0o700);
     assert_eq!(
-        std::fs::read_to_string(home.join(".krun-stream-native")).unwrap(),
-        "owned-krun-stream-test\n"
+        std::fs::read_to_string(home.join(".kbox-stream-native")).unwrap(),
+        "owned-kbox-stream-test\n"
     );
     let image = std::env::var("K_BOX_TEST_STREAM_IMAGE").expect("digest-pinned OCI image");
     let digest = image.rsplit_once('@').unwrap().1;
@@ -104,7 +104,7 @@ async fn run(with_volume: bool) {
         assert_eq!(observation.state, RuntimeUnitState::Running);
         let unit = state.load(&spec.unit_id).await.unwrap();
         let lease = state.acquire_operation_lease(&spec.unit_id).await.unwrap();
-        let program = "import pathlib,sys,time; sys.stdout.buffer.write(b'A'*(8*1024*1024)); sys.stdout.buffer.flush(); pathlib.Path('/tmp/krun-stream-produced').write_text('ready'); data=sys.stdin.buffer.read(); time.sleep(6); sys.stdout.buffer.write(b'\\xff\\x00tail:'+str(len(data)).encode()); sys.stdout.buffer.flush(); sys.stderr.buffer.write('尾部stderr\\n'.encode()); sys.stderr.buffer.flush()";
+        let program = "import pathlib,sys,time; sys.stdout.buffer.write(b'A'*(8*1024*1024)); sys.stdout.buffer.flush(); pathlib.Path('/tmp/kbox-stream-produced').write_text('ready'); data=sys.stdin.buffer.read(); time.sleep(6); sys.stdout.buffer.write(b'\\xff\\x00tail:'+str(len(data)).encode()); sys.stdout.buffer.flush(); sys.stderr.buffer.write('尾部stderr\\n'.encode()); sys.stderr.buffer.flush()";
         let started = std::time::Instant::now();
         let (execution_id, execution_generation, mut process) = driver.start_runtime_process(&unit, ExecRequest {
             request_id: None, cmd: vec!["python3".into(),"-c".into(),program.into()],
@@ -118,7 +118,7 @@ async fn run(with_volume: bool) {
             schema: RuntimeExecRequest::SCHEMA.into(), request_id: "native-stream-checkpoint".into(),
             unit_id: spec.unit_id.clone(), generation: spec.generation, timeout_ms: 2000,
             deadline_at_ms: None, command: vec!["python3".into(), "-c".into(),
-                "from pathlib import Path; print(int(Path('/tmp/krun-stream-produced').exists()))".into()],
+                "from pathlib import Path; print(int(Path('/tmp/kbox-stream-produced').exists()))".into()],
         }).await.unwrap();
         assert_eq!(checkpoint.exit_code, 0);
         assert_eq!(checkpoint.stdout.trim(), "0", "slow-consumer backpressure did not reach the guest process");

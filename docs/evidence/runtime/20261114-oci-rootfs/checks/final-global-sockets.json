@@ -1,0 +1,18 @@
+{
+  "globalBoxSocketNodes": [
+    "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/exec.sock",
+    "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/attest.sock",
+    "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/pty.sock",
+    "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/portfwd.sock",
+    "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/exec.sock",
+    "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/attest.sock",
+    "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/pty.sock",
+    "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/portfwd.sock",
+    "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/exec.sock",
+    "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/attest.sock",
+    "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/pty.sock",
+    "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/portfwd.sock"
+  ],
+  "globalAgentSocketNodes": [],
+  "action": "read-only inventory; no unowned path deleted"
+}

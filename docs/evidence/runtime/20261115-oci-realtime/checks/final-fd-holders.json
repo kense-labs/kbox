@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/private/tmp/kbox-realtime-b71041f58773"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

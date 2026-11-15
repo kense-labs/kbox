@@ -1,0 +1,208 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "12cd38dc44997121340fcd05d057b449f775a1768ea3a8d7d104aba7dcd575af",
+  "verifyLog": "verify-commit-2.log",
+  "testResultRows": [
+    {
+      "passed": 2188,
+      "failed": 0,
+      "ignored": 19,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 933,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 23
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 23
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 23
+    },
+    {
+      "passed": 24,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 40
+    },
+    {
+      "passed": 41,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 3,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 4
+    },
+    {
+      "passed": 5,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 2,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 11,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    },
+    {
+      "passed": 0,
+      "failed": 0,
+      "ignored": 0,
+      "measured": 0,
+      "filtered": 0
+    }
+  ],
+  "installerActualTests": 8,
+  "scope": "Every result row retained, including subprocess filtered cases and zero doctests; no duplicated aggregate claimed",
+  "focusedBoxStateLog": "focused-all-5.log",
+  "newCompatibilityTests": 9,
+  "finalNativeCompatibility": {
+    "commandResult": "box-native-attempt-3.json",
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0,
+    "cliAdopted": true
+  },
+  "finalNativeFailedCreate": {
+    "commandResult": "box-native-attempt-5.json",
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0
+  },
+  "afActualScenarios": 5,
+  "fullNative": "still running"
+}

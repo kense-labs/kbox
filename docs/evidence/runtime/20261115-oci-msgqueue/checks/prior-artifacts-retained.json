@@ -1,0 +1,14 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/final-dist-sigpending-3/kbox-3.4.3-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/previous-dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "a6f6b3712876891e4967fb1c5a050346fee69a478e165c0d194b221342af3888",
+    "bytes": 23392573
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/previous-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+    "bytes": 33421132
+  }
+]

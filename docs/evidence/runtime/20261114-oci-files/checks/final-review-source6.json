@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "3d07d7318f277094813eb973e746339c8fce5934bf95bcf1021a9011a7e54ca5",
+  "sourceFrozenUnchanged": true,
+  "supplementalFilesMatch": true,
+  "preservedArchives": 15,
+  "checkedReferences": 50,
+  "parentNativeWorktreesClean": true,
+  "stagedPaths": [],
+  "diffCheck": "PASS",
+  "scope": "final009 docs/identity review; no tests rerun by this audit"
+}

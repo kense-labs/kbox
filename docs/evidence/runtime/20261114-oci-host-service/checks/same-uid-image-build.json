@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/previous-dist/kbox-3.4.3-macos-arm64/bin/kbox",
+    "build",
+    "-f",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/same-uid-image/Containerfile",
+    "-t",
+    "kbox-hvf-same-uid:qualification",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/same-uid-image"
+  ],
+  "exitCode": 0,
+  "seconds": 3.68046375
+}

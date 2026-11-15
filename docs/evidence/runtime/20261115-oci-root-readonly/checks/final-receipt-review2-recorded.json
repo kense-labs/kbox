@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/final-receipt-review2.py"
+  ],
+  "exit": 0,
+  "seconds": 0.471523667
+}

@@ -503,10 +503,7 @@ mod tests {
             error.to_string().contains("legacy shared-kernel capture"),
             "{error}"
         );
-        assert!(
-            error.to_string().contains("snapshot restore"),
-            "{error}"
-        );
+        assert!(error.to_string().contains("snapshot restore"), "{error}");
     }
 
     #[test]

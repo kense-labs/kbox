@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::secrets::native_memory_secret_unsupported_transport_refuses_and_preserves_source ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2271 filtered out; finished in 35.12s
+

@@ -41,6 +41,8 @@ const LINUX_UTS_NAME_MAX: usize = 64;
 pub(super) struct ProcessPlan {
     pub(super) args: Vec<String>,
     pub(super) environment: Vec<String>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub(super) memory_secret_environment: Vec<crate::vm_attachment::MemorySecretEnvironmentSource>,
     pub(super) cwd: String,
     pub(super) uid: u32,
     pub(super) gid: u32,
@@ -75,6 +77,7 @@ impl ProcessPlan {
         Ok(Self {
             args: Vec::new(),
             environment: Vec::new(),
+            memory_secret_environment: Vec::new(),
             cwd: "/".to_string(),
             uid: 0,
             gid: 0,
@@ -140,6 +143,7 @@ impl ProcessPlan {
         Ok(Self {
             args,
             environment,
+            memory_secret_environment: Vec::new(),
             cwd,
             uid: user.uid(),
             gid: user.gid(),

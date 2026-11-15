@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/final-resource-audit.py", line 52, in <module>
+    remaining_disks=[str(p) for p in private.rglob('*.rootfs.ext4')];assert not remaining_disks,remaining_disks
+AssertionError: ['/private/tmp/kbox-files-38d1ee741be9/attempt-7/service/runtime/shares/kbox-1dc85cad-67c0-4123-949a-1235a3178686/1.rootfs.ext4', '/private/tmp/kbox-files-38d1ee741be9/attempt-6/service/runtime/shares/kbox-aea9ca8c-4b6b-4e66-b1d2-da3d5f21f9b7/1.rootfs.ext4', '/private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime/shares/kbox-20704869-ea3a-4466-bde2-db7e3a3e2b5c/1.rootfs.ext4', '/private/tmp/kbox-files-38d1ee741be9/attempt-5/service/runtime/shares/kbox-6e62ff4c-2f63-45a9-9105-298a12388a55/1.rootfs.ext4']

@@ -66,16 +66,8 @@ pub fn admit_microvm_host_class() -> Result<()> {
 
     #[cfg(windows)]
     {
-        #[cfg(target_arch = "x86_64")]
-        {
-            Ok(())
-        }
-        #[cfg(not(target_arch = "x86_64"))]
-        {
-            Err(BoxError::ConfigError(
-                "Kbox Box on Windows currently requires x86_64 for the WHPX backend.".to_string(),
-            ))
-        }
+        koci_sdk::admit_windows_whpx_host()
+            .map_err(|error| BoxError::ConfigError(error.to_string()))
     }
 
     #[cfg(not(any(target_os = "macos", target_os = "linux", windows)))]
@@ -204,6 +196,8 @@ fn check_linux_kvm() -> Result<VirtualizationSupport> {
 /// Check for Windows Hypervisor Platform (WHPX) support on Windows.
 #[cfg(target_os = "windows")]
 fn check_windows_whpx() -> Result<VirtualizationSupport> {
+    koci_sdk::admit_windows_whpx_host()
+        .map_err(|error| BoxError::ConfigError(error.to_string()))?;
     #[cfg(not(target_arch = "x86_64"))]
     {
         return Err(BoxError::ConfigError(

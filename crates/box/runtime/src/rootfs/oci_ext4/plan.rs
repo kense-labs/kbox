@@ -12,15 +12,28 @@ impl LogicalRootfs {
         &self,
         options: Ext4ArtifactOptions,
     ) -> Result<(FsBuilder, Vec<FileFill>)> {
+        self.declare_subtree(&Vec::new(), options)
+    }
+
+    pub(super) fn declare_subtree(
+        &self,
+        subtree: &GuestPath,
+        options: Ext4ArtifactOptions,
+    ) -> Result<(FsBuilder, Vec<FileFill>)> {
         let mut builder = new_ext4_fs_builder(options)?;
-        let root = &self.nodes[&0];
+        let entry = self
+            .entries
+            .get(subtree)
+            .ok_or_else(|| build_error("volume seed directory is absent"))?;
+        let root = &self.nodes[&entry.node];
         builder.set_meta(ROOT, root.meta).map_err(mkext4_error)?;
         apply_xattrs(&mut builder, ROOT, &root.xattrs)?;
 
         let mut paths = self
             .entries
             .iter()
-            .filter(|(path, _)| !path.is_empty())
+            .filter(|(path, _)| path.starts_with(subtree) && path.len() > subtree.len())
+            .map(|(path, entry)| (path[subtree.len()..].to_vec(), entry))
             .collect::<Vec<_>>();
         paths.sort_by(|(left, _), (right, _)| {
             left.len().cmp(&right.len()).then_with(|| left.cmp(right))
@@ -33,7 +46,7 @@ impl LogicalRootfs {
             let parent = *path_handles.get(&parent_path).ok_or_else(|| {
                 build_error(format!(
                     "Logical OCI tree has a missing parent for {}",
-                    display_guest_path(path)
+                    display_guest_path(&path)
                 ))
             })?;
             let name = path.last().expect("non-root path");

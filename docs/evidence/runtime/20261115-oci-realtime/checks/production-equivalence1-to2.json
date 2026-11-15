@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "payloadsIdentical": [
+    "VERSION",
+    "bin/kbox",
+    "bin/kbox-guest-init",
+    "bin/kbox-shim",
+    "install.sh",
+    "lib/libkrun.1.17.0.dylib",
+    "lib/libkrun.1.dylib",
+    "lib/libkrun.dylib",
+    "lib/libkrunfw.5.dylib",
+    "lib/libkrunfw.dylib"
+  ],
+  "source1": "98f47a3faafc788fc0494115b36298cbff5d112e8bca55be46d6ff0333f41a9d",
+  "source2": "9365453fbda6b3b8bd4758ae24c6a7b2817b5a0c130ec90724e75d3e46b3e676",
+  "exception": "build-info.json records each actual source freeze; only ignored native readiness fixture changed"
+}

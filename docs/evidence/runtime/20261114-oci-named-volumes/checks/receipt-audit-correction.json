@@ -1,0 +1,6 @@
+{
+  "firstAttempt": "failed TypeError: len(int)",
+  "cause": "review script assumed A-F map fields for Host native probe summary; actual Host summary uses hostDenials integer14 plus guestChildDenied/writableRemount/freshWritableMount booleans",
+  "correction": "read owning helper and actual serialized fields, assert all actual conditions; no product/native test or assertions changed",
+  "exitCodeAfterCorrection": 0
+}

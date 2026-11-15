@@ -1,0 +1,8 @@
+
+running 3 tests
+test local_execution::oci_production::disk_tests::custom_disk_capacity_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::disk_tests::hvf_custom_disk_capacity_admits_existing_builder_bounds_without_mutation ... ok
+test local_execution::oci_production::disk_tests::hvf_custom_disk_capacity_refuses_out_of_bounds_and_other_controls ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2304 filtered out; finished in 0.15s
+

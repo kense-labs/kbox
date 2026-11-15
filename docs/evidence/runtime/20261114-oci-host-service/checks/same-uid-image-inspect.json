@@ -1,0 +1,25 @@
+{
+  "Config": {
+    "Cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "Entrypoint": null,
+    "Env": {
+      "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    },
+    "ExposedPorts": [],
+    "Healthcheck": null,
+    "Labels": {},
+    "OnBuild": [],
+    "StopSignal": null,
+    "User": null,
+    "Volumes": [],
+    "WorkingDir": null
+  },
+  "Digest": "sha256:a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136",
+  "LayerCount": 1,
+  "PulledAt": "2026-11-14T06:13:18.933985+00:00",
+  "Reference": "kbox-hvf-same-uid:qualification",
+  "Size": 3993743
+}

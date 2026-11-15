@@ -1,0 +1,9 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.24s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+     Running tests/client_contract.rs (target/debug/deps/client_contract-4b92bd44a05ae353)
+     Running tests/kbox_bundle.rs (target/debug/deps/kbox_bundle-5bfcceced31bdd70)
+     Running tests/linux_cgroup_path.rs (target/debug/deps/linux_cgroup_path-325c48f2f35a0aa7)
+     Running tests/linux_namespace_contract.rs (target/debug/deps/linux_namespace_contract-34a25fa980689f11)
+     Running tests/linux_seccomp_contract.rs (target/debug/deps/linux_seccomp_contract-08191474126734b6)
+     Running tests/run_composition.rs (target/debug/deps/run_composition-7a133daea6b49e27)

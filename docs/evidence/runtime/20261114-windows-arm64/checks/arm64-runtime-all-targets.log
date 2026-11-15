@@ -1,0 +1,451 @@
+    Checking referencing v0.48.5
+    Checking jsonschema v0.48.5
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+warning: type alias `CleanupFuture` is never used
+ --> crates/oci-runtime/crates/runtime/src/async_cleanup.rs:4:6
+  |
+4 | type CleanupFuture = Pin<Box<dyn Future<Output = ()> + Send + 'static>>;
+  |      ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: type alias `CleanupFactory` is never used
+ --> crates/oci-runtime/crates/runtime/src/async_cleanup.rs:5:6
+  |
+5 | type CleanupFactory = Box<dyn FnOnce() -> CleanupFuture + Send + 'static>;
+  |      ^^^^^^^^^^^^^^
+
+warning: struct `DetachedAsyncCleanup` is never constructed
+  --> crates/oci-runtime/crates/runtime/src/async_cleanup.rs:14:19
+   |
+14 | pub(crate) struct DetachedAsyncCleanup {
+   |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new` and `disarm` are never used
+  --> crates/oci-runtime/crates/runtime/src/async_cleanup.rs:21:19
+   |
+18 | impl DetachedAsyncCleanup {
+   | ------------------------- associated items in this implementation
+...
+21 |     pub(crate) fn new<F, Fut>(cleanup: F) -> Self
+   |                   ^^^
+...
+32 |     pub(crate) fn disarm(&mut self) {
+   |                   ^^^^^^
+
+warning: constant `HASH_BUFFER_BYTES` is never used
+  --> crates/oci-runtime/crates/runtime/src/file_security.rs:15:7
+   |
+15 | const HASH_BUFFER_BYTES: usize = 64 * 1024;
+   |       ^^^^^^^^^^^^^^^^^
+
+warning: struct `VerifiedRegularFile` is never constructed
+  --> crates/oci-runtime/crates/runtime/src/file_security.rs:18:19
+   |
+18 | pub(crate) struct VerifiedRegularFile {
+   |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: struct `WindowsFileIdentity` is never constructed
+  --> crates/oci-runtime/crates/runtime/src/file_security.rs:36:8
+   |
+36 | struct WindowsFileIdentity {
+   |        ^^^^^^^^^^^^^^^^^^^
+
+warning: function `open_verified_regular_file` is never used
+  --> crates/oci-runtime/crates/runtime/src/file_security.rs:43:21
+   |
+43 | pub(crate) async fn open_verified_regular_file(path: &Path) -> io::Result<VerifiedRegularFile> {
+   |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `verify_unchanged` and `verify_path_unchanged` are never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:121:25
+    |
+118 | impl VerifiedRegularFile {
+    | ------------------------ methods in this implementation
+...
+121 |     pub(crate) async fn verify_unchanged(&self, bytes_read: u64) -> io::Result<()> {
+    |                         ^^^^^^^^^^^^^^^^
+...
+157 |     pub(crate) async fn verify_path_unchanged(&self, path: &Path) -> io::Result<()> {
+    |                         ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sha256_verified_file` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:203:21
+    |
+203 | pub(crate) async fn sha256_verified_file(
+    |                     ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sha256_path` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:252:21
+    |
+252 | pub(crate) async fn sha256_path(path: &Path, max_size: Option<u64>) -> io::Result<String> {
+    |                     ^^^^^^^^^^^
+
+warning: function `invalid_file` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:257:4
+    |
+257 | fn invalid_file(message: impl Into<String>) -> io::Error {
+    |    ^^^^^^^^^^^^
+
+warning: function `is_plain_regular_file` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:261:4
+    |
+261 | fn is_plain_regular_file(metadata: &std::fs::Metadata) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `open_readonly_nofollow` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:265:10
+    |
+265 | async fn open_readonly_nofollow(path: &Path) -> io::Result<tokio::fs::File> {
+    |          ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `windows_file_identity` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:304:4
+    |
+304 | fn windows_file_identity(file: &tokio::fs::File) -> io::Result<WindowsFileIdentity> {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `is_reparse_point` is never used
+   --> crates/oci-runtime/crates/runtime/src/file_security.rs:329:4
+    |
+329 | fn is_reparse_point(metadata: &std::fs::Metadata) -> bool {
+    |    ^^^^^^^^^^^^^^^^
+
+warning: enum `ExactMarkerState` is never used
+ --> crates/oci-runtime/crates/runtime/src/marker.rs:2:17
+  |
+2 | pub(crate) enum ExactMarkerState {
+  |                 ^^^^^^^^^^^^^^^^
+
+warning: function `exact_marker_state` is never used
+ --> crates/oci-runtime/crates/runtime/src/marker.rs:8:15
+  |
+8 | pub(crate) fn exact_marker_state(observed: &[u8], expected: &[u8]) -> ExactMarkerState {
+  |               ^^^^^^^^^^^^^^^^^^
+
+warning: struct `NamespaceJoinBundles` is never constructed
+ --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:6:19
+  |
+6 | pub(crate) struct NamespaceJoinBundles {
+  |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `build_bundles` is never used
+  --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:44:15
+   |
+44 | pub(crate) fn build_bundles(
+   |               ^^^^^^^^^^^^^
+
+warning: function `joined_non_mount_namespaces` is never used
+  --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:88:4
+   |
+88 | fn joined_non_mount_namespaces(donor_pid: i32) -> Vec<Value> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `replace_linux_profile` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:113:4
+    |
+113 | fn replace_linux_profile(config: &mut Value, namespaces: Vec<Value>) -> Result<(), String> {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `remove_root_fields` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:124:4
+    |
+124 | fn remove_root_fields(config: &mut Value, fields: &[&str]) -> Result<(), String> {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `replace_process_command` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:132:4
+    |
+132 | fn replace_process_command(config: &mut Value, replacement: String) -> Result<(), String> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `process_command_mut` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:137:4
+    |
+137 | fn process_command_mut(config: &mut Value) -> Result<&mut String, String> {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `object_mut` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:153:4
+    |
+153 | fn object_mut<'a>(value: &'a mut Value, field: &str) -> Result<&'a mut Map<String, Value>, String> {
+    |    ^^^^^^^^^^
+
+warning: function `namespace_path` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:159:4
+    |
+159 | fn namespace_path(pid: i32, namespace: &str) -> String {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `join_workload_command` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:163:4
+    |
+163 | fn join_workload_command() -> String {
+    |    ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `joined_user_device_workload_command` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:167:4
+    |
+167 | fn joined_user_device_workload_command() -> String {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `bundle_from_value` is never used
+   --> crates/oci-runtime/crates/runtime/src/namespace_join.rs:183:4
+    |
+183 | fn bundle_from_value(directory: &Path, config: Value) -> Result<OciBundle, String> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: constant `EVIDENCE_FILE` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:28:7
+   |
+28 | const EVIDENCE_FILE: &str = "evidence";
+   |       ^^^^^^^^^^^^^
+
+warning: constant `BIND_SOURCE_FILE` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:29:7
+   |
+29 | const BIND_SOURCE_FILE: &str = "bind-source";
+   |       ^^^^^^^^^^^^^^^^
+
+warning: constant `IDMAP_BIND_SOURCE_DIRECTORY` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:30:7
+   |
+30 | const IDMAP_BIND_SOURCE_DIRECTORY: &str = "idmap-bind-source";
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `FOREIGN_READONLY_BIND_SOURCE_FILE` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:31:7
+   |
+31 | const FOREIGN_READONLY_BIND_SOURCE_FILE: &str = "foreign-readonly-secret";
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `BIND_SOURCE_CONTENTS` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:32:7
+   |
+32 | const BIND_SOURCE_CONTENTS: &[u8] = b"koci-bind-source-v1";
+   |       ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `MAX_EVIDENCE_BYTES` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:35:7
+   |
+35 | const MAX_EVIDENCE_BYTES: u64 = 1_024;
+   |       ^^^^^^^^^^^^^^^^^^
+
+warning: constant `IDMAP_VISIBLE_ID_RANGE` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:36:7
+   |
+36 | const IDMAP_VISIBLE_ID_RANGE: u32 = 65_536;
+   |       ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `EXPECTED_COMMON_EVIDENCE` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:37:7
+   |
+37 | const EXPECTED_COMMON_EVIDENCE: &[u8] = b"pid1-supervision-enforced\n\
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `RootfsEnforcementFixture` is never constructed
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:71:19
+   |
+71 | pub(crate) struct RootfsEnforcementFixture {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `prepare_inner`, `targets_created`, `evidence_absent`, `read_evidence`, `collect_evidence`, and `cleanup` are never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:99:14
+    |
+ 80 | impl RootfsEnforcementFixture {
+    | ----------------------------- associated items in this implementation
+...
+ 99 |     async fn prepare_inner(
+    |              ^^^^^^^^^^^^^
+...
+182 |     pub(crate) async fn targets_created(&self) -> Result<bool, String> {
+    |                         ^^^^^^^^^^^^^^^
+...
+206 |     pub(crate) async fn evidence_absent(&self) -> Result<bool, String> {
+    |                         ^^^^^^^^^^^^^^^
+...
+210 |     pub(crate) async fn read_evidence(&self) -> Result<Vec<u8>, String> {
+    |                         ^^^^^^^^^^^^^
+...
+246 |     pub(crate) async fn collect_evidence(
+    |                         ^^^^^^^^^^^^^^^^
+...
+287 |     pub(crate) async fn cleanup(&self) -> Result<bool, String> {
+    |                         ^^^^^^^
+
+warning: struct `FixtureIdMapping` is never constructed
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:300:8
+    |
+300 | struct FixtureIdMapping {
+    |        ^^^^^^^^^^^^^^^^
+
+warning: methods `as_json` and `translate` are never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:307:8
+    |
+306 | impl FixtureIdMapping {
+    | --------------------- methods in this implementation
+307 |     fn as_json(self) -> Value {
+    |        ^^^^^^^
+...
+315 |     fn translate(self, container_id: u32) -> Option<u32> {
+    |        ^^^^^^^^^
+
+warning: struct `MountIdMappingPair` is never constructed
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:325:8
+    |
+325 | struct MountIdMappingPair {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: struct `EnforcementIdMappings` is never constructed
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:331:8
+    |
+331 | struct EnforcementIdMappings {
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `from_base` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:341:8
+    |
+340 | impl EnforcementIdMappings {
+    | -------------------------- associated function in this implementation
+341 |     fn from_base(base: &OciBundle, preserve_user_mappings: bool) -> Result<Self, String> {
+    |        ^^^^^^^^^
+
+warning: function `collect_fixture_mappings` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:418:4
+    |
+418 | fn collect_fixture_mappings(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `complete_fixture_mapping` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:434:4
+    |
+434 | fn complete_fixture_mapping(root_host_id: u32) -> Vec<FixtureIdMapping> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `single_mapping` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:463:10
+    |
+463 | const fn single_mapping(container_id: u32, host_id: u32) -> FixtureIdMapping {
+    |          ^^^^^^^^^^^^^^
+
+warning: function `translate_fixture_id` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:471:4
+    |
+471 | fn translate_fixture_id(
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `mapping_array` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:486:4
+    |
+486 | fn mapping_array(mappings: &[FixtureIdMapping]) -> Value {
+    |    ^^^^^^^^^^^^^
+
+warning: function `build_bundle` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:496:4
+    |
+496 | fn build_bundle(
+    |    ^^^^^^^^^^^^
+
+warning: function `object_mut` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:704:4
+    |
+704 | fn object_mut<'a>(value: &'a mut Value, field: &str) -> Result<&'a mut Map<String, Value>, String> {
+    |    ^^^^^^^^^^
+
+warning: function `safe_component` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:710:4
+    |
+710 | fn safe_component(value: &str) -> Result<&str, String> {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `ensure_absent` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:937:10
+    |
+937 | async fn ensure_absent(path: &Path, description: &str) -> Result<(), String> {
+    |          ^^^^^^^^^^^^^
+
+warning: function `path_absent` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:948:10
+    |
+948 | async fn path_absent(path: &Path) -> Result<bool, String> {
+    |          ^^^^^^^^^^^
+
+warning: function `real_directory` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:956:10
+    |
+956 | async fn real_directory(path: &Path) -> Result<bool, String> {
+    |          ^^^^^^^^^^^^^^
+
+warning: function `real_file` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:964:10
+    |
+964 | async fn real_file(path: &Path) -> Result<bool, String> {
+    |          ^^^^^^^^^
+
+warning: function `remove_tree` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:972:10
+    |
+972 | async fn remove_tree(path: &Path, description: &str) -> Result<(), String> {
+    |          ^^^^^^^^^^^
+
+warning: struct `NativeIdmapBindPaths` is never constructed
+ --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement/command.rs:4:19
+  |
+4 | pub(super) struct NativeIdmapBindPaths<'a> {
+  |                   ^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `EnforcementCommandPaths` is never constructed
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement/command.rs:12:19
+   |
+12 | pub(super) struct EnforcementCommandPaths<'a> {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `enforcement_command` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement/command.rs:23:15
+   |
+23 | pub(super) fn enforcement_command(
+   |               ^^^^^^^^^^^^^^^^^^^
+
+warning: function `process_command_mut` is never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement/command.rs:233:15
+    |
+233 | pub(super) fn process_command_mut(root: &mut Map<String, Value>) -> Result<&mut String, String> {
+    |               ^^^^^^^^^^^^^^^^^^^
+
+warning: `koci-runtime` (lib) generated 62 warnings
+warning: constant `MAX_EVIDENCE_BYTES` is never used
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:35:7
+   |
+35 | const MAX_EVIDENCE_BYTES: u64 = 1_024;
+   |       ^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `native_idmap_bind_expected` is never read
+  --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:75:5
+   |
+71 | pub(crate) struct RootfsEnforcementFixture {
+   |                   ------------------------ field in this struct
+...
+75 |     native_idmap_bind_expected: bool,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `targets_created`, `read_evidence`, and `collect_evidence` are never used
+   --> crates/oci-runtime/crates/runtime/src/rootfs_enforcement.rs:182:25
+    |
+ 80 | impl RootfsEnforcementFixture {
+    | ----------------------------- methods in this implementation
+...
+182 |     pub(crate) async fn targets_created(&self) -> Result<bool, String> {
+    |                         ^^^^^^^^^^^^^^^
+...
+210 |     pub(crate) async fn read_evidence(&self) -> Result<Vec<u8>, String> {
+    |                         ^^^^^^^^^^^^^
+...
+246 |     pub(crate) async fn collect_evidence(
+    |                         ^^^^^^^^^^^^^^^^
+
+warning: `koci-runtime` (lib test) generated 6 warnings (3 duplicates)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.66s

@@ -1,0 +1,18 @@
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking kbox-guest-init v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/guest/init)
+error[E0425]: cannot find value `parsed` in this scope
+   --> crates/box/guest/init/src/linux/mounts.rs:461:37
+    |
+461 |                         read_only = parsed.read_only(),
+    |                                     ^^^^^^ not found in this scope
+
+error[E0425]: cannot find value `parsed` in this scope
+   --> crates/box/guest/init/src/linux/mounts.rs:477:37
+    |
+477 |                         read_only = parsed.read_only(),
+    |                                     ^^^^^^ not found in this scope
+
+For more information about this error, try `rustc --explain E0425`.
+error: could not compile `kbox-guest-init` (bin "kbox-guest-init") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `kbox-guest-init` (bin "kbox-guest-init" test) due to 2 previous errors

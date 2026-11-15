@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "nativeHost": "macOS arm64",
+  "controlRuns": 4,
+  "sourceSha256": "6ebb5cdf3a0a4cb4d8a113afd7682c0a5040db20d1f1ecf59b4628e6d79e23ec",
+  "binarySha256": "640c410d55a09f23a93769b2a39f7ef11879291f92ec3b6baee47c4c4579cb9f",
+  "rows": [
+    {
+      "parent": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+        "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-1/.copy-group-3ae42d8a095f44738a4a9a425f16065a"
+      ],
+      "exitCode": 0,
+      "observation": {
+        "status": "PASS",
+        "uid": 501,
+        "artifactGid": 20,
+        "copiedGid": 0,
+        "mode": 493,
+        "bytes": 1553632,
+        "ownedCopyRemoved": true
+      },
+      "stderr": ""
+    },
+    {
+      "parent": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+        "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/.copy-group-d736acf4893a49c2829e916bed988411"
+      ],
+      "exitCode": 0,
+      "observation": {
+        "status": "PASS",
+        "uid": 501,
+        "artifactGid": 20,
+        "copiedGid": 0,
+        "mode": 493,
+        "bytes": 1553632,
+        "ownedCopyRemoved": true
+      },
+      "stderr": ""
+    },
+    {
+      "parent": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+        "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-3/.copy-group-00cd087d26c145dcb0c561e34d6dee18"
+      ],
+      "exitCode": 0,
+      "observation": {
+        "status": "PASS",
+        "uid": 501,
+        "artifactGid": 20,
+        "copiedGid": 0,
+        "mode": 493,
+        "bytes": 1553632,
+        "ownedCopyRemoved": true
+      },
+      "stderr": ""
+    },
+    {
+      "parent": "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/copy-group-control",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe",
+        "/private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-4/.copy-group-638ab71d297b4d62a28fa500889d5690"
+      ],
+      "exitCode": 0,
+      "observation": {
+        "status": "PASS",
+        "uid": 501,
+        "artifactGid": 20,
+        "copiedGid": 0,
+        "mode": 493,
+        "bytes": 1553632,
+        "ownedCopyRemoved": true
+      },
+      "stderr": ""
+    }
+  ]
+}

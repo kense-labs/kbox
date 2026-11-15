@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "capability_set_reconstruction"
+  ],
+  "exitCode": 0,
+  "seconds": 8.447573166000002
+}

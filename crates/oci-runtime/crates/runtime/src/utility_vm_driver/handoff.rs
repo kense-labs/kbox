@@ -169,6 +169,37 @@ impl BundleHandoffStore {
         Ok(bundle)
     }
 
+    pub(super) async fn cleanup_prepared(
+        &self,
+        request: &DriverCreateRequest,
+        remove_empty_session: bool,
+    ) -> Result<()> {
+        let session = request.attachment_contract.guest_session();
+        if let Some(paths) = existing_runtime_share_paths(
+            &self.runtime_share_root,
+            &request.target,
+            session,
+            "cleanup-prepared-utility-vm-handoff",
+        )
+        .await?
+        {
+            let path = paths.container_share.join(MARKER_FILE);
+            if path_metadata(&path).await?.is_some() {
+                let marker = read_marker(&path).await?;
+                if marker.target != request.target
+                    || marker.config_digest != request.bundle.config_digest()
+                {
+                    return Err(handoff_error(
+                        ErrorCode::FailedPrecondition,
+                        "rejected handoff differs from the exact prepared Create intent",
+                    ));
+                }
+            }
+        }
+        self.cleanup(&request.target, session, remove_empty_session)
+            .await
+    }
+
     pub(super) async fn cleanup(
         &self,
         target: &ContainerTarget,
@@ -276,6 +307,11 @@ impl BundleHandoffStore {
             }
             None => {}
         }
+
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        super::rootfs_image::cleanup(&paths.container_share, target).await?;
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        super::hvf_files::cleanup(&paths.container_share, target).await?;
 
         // The exact-generation share is wholly runtime-owned. Removing it as
         // one verified subtree also clears the guest's empty `run` directory
@@ -1218,6 +1254,10 @@ fn nonempty_session_error(session: &GuestSessionAttachment) -> Error {
         ),
     )
 }
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "handoff_owned_repair_tests.rs"]
+mod owned_repair_tests;
 
 #[cfg(test)]
 mod tests {

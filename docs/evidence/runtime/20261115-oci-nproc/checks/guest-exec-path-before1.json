@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "hvf_guest_exec_path",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 13.223558792
+}

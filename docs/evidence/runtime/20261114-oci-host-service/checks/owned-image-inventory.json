@@ -1,0 +1,41 @@
+{
+  "commands": [
+    {
+      "command": [
+        "mount"
+      ],
+      "exitCode": 0,
+      "log": "final-mounts.log"
+    },
+    {
+      "command": [
+        "ps",
+        "-ax",
+        "-o",
+        "pid=,ppid=,command="
+      ],
+      "exitCode": 0,
+      "log": "final-processes.log"
+    },
+    {
+      "command": [
+        "hdiutil",
+        "info",
+        "-plist"
+      ],
+      "exitCode": 0,
+      "log": "final-images.log"
+    }
+  ],
+  "ownedImages": [],
+  "allImagePaths": [
+    "/Users/roylin/Downloads/CCBaga-0.2.50-macos-arm64.dmg",
+    "ram://65536",
+    "ram://65536",
+    "ram://65536",
+    "ram://65536",
+    "ram://65536",
+    "ram://65536",
+    "ram://65536"
+  ]
+}

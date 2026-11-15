@@ -54,12 +54,13 @@ fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Res
                 "{kind} mappings must be contiguous and non-empty"
             )));
         }
-        next = next.checked_add(mapping.size).ok_or_else(|| {
-            BoxError::ConfigError(format!("{kind} container mapping overflows"))
-        })?;
-        let host_end = mapping.host_id.checked_add(mapping.size).ok_or_else(|| {
-            BoxError::ConfigError(format!("{kind} host mapping overflows"))
-        })?;
+        next = next
+            .checked_add(mapping.size)
+            .ok_or_else(|| BoxError::ConfigError(format!("{kind} container mapping overflows")))?;
+        let host_end = mapping
+            .host_id
+            .checked_add(mapping.size)
+            .ok_or_else(|| BoxError::ConfigError(format!("{kind} host mapping overflows")))?;
         if host_ranges
             .iter()
             .any(|(start, end)| mapping.host_id < *end && *start < host_end)

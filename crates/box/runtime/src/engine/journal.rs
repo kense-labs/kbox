@@ -65,15 +65,14 @@ impl EngineJournal {
             serde_json::from_slice::<EngineJournalData>(&bytes)?
         } else {
             EngineJournalData {
-                schema: "kbox.engine.journal.v1".into(),
+                schema: "kbox.engine.journal.v2".into(),
                 engine_id: EngineKey::parse(uuid::Uuid::new_v4().to_string())?,
                 requests: BTreeMap::new(),
                 instances: BTreeMap::new(),
                 primary_processes: BTreeMap::new(),
-                assemblies: BTreeMap::new(),
             }
         };
-        if data.schema != "kbox.engine.journal.v1" {
+        if data.schema != "kbox.engine.journal.v2" {
             return Err(EngineError::new(
                 EngineErrorCode::UnsupportedVersion,
                 "unsupported engine journal",
@@ -228,7 +227,6 @@ impl EngineJournal {
 
     fn validate(&self) -> EngineResult<()> {
         self.validate_primary_records()?;
-        self.validate_assemblies()?;
         let mut latest = BTreeMap::new();
         let mut operations = std::collections::BTreeSet::new();
         let mut revisions = std::collections::BTreeSet::new();

@@ -8,8 +8,8 @@ use chrono::Utc;
 use kbox_core::exec::{ExecRequest as BoxExecRequest, StreamType};
 use kbox_core::pty::PtyRequest;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecEvent, ExecutionEventsRequest, ExecutionGeneration,
-    ExecutionId, ExecutionBoundary, ExecutionManager, ExecutionManagerError,
+    BoxConfig, CreateExecutionRequest, ExecEvent, ExecutionBoundary, ExecutionEventsRequest,
+    ExecutionGeneration, ExecutionId, ExecutionManager, ExecutionManagerError,
     ExecutionProcessSignal, ExecutionResourceUpdate, ExecutionSessionManager, ExecutionSnapshotId,
     ExecutionState, FileOp as BoxFileOp, FileRequest as BoxFileRequest,
     FilesystemEntryKind as BoxFilesystemEntryKind, FilesystemOp as BoxFilesystemOp,
@@ -45,13 +45,16 @@ const ATTACHMENTS_DIGEST: &str =
     "sha256:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789";
 const RUNTIME_RECORD_PID_ENV: &str = "K_BOX_TEST_RUNTIME_RECORD_PID";
 
+#[path = "oci_backend_tests/prewarm.rs"]
+mod prewarm;
 #[cfg(any(unix, windows))]
 #[path = "oci_backend_tests/process_restart.rs"]
 mod process_restart;
 #[path = "oci_backend_tests/resource_update_contract.rs"]
 mod resource_update_contract;
-#[path = "oci_backend_tests/prewarm.rs"]
-mod prewarm;
+
+#[path = "oci_backend_tests/unbound_kill.rs"]
+mod unbound_kill;
 
 #[derive(Clone)]
 struct FakeContainer {
@@ -1445,6 +1448,7 @@ struct FakeBundleProvider {
     projection_owner_loss_stops: AtomicUsize,
     fail_projection: AtomicBool,
     fail_projection_exited_before_drain: AtomicBool,
+    fail_projection_during_drain: AtomicBool,
     invalid_console: AtomicBool,
     expected_snapshot_lower: Mutex<Option<std::path::PathBuf>>,
     snapshot_lower_observed: AtomicBool,
@@ -1457,6 +1461,7 @@ impl OciBundleProvider for FakeBundleProvider {
     async fn plan_create_resources(
         &self,
         _record: &BoxRecord,
+        _capabilities: &AttachmentCapabilities,
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         self.resource_plans.fetch_add(1, Ordering::SeqCst);
         Ok(LocalExecutionResourcePlan {
@@ -1465,6 +1470,7 @@ impl OciBundleProvider for FakeBundleProvider {
                 .lock()
                 .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?
                 .clone(),
+            ..Default::default()
         })
     }
 
@@ -1557,6 +1563,11 @@ impl OciBundleProvider for FakeBundleProvider {
         _binding: &OciRuntimeBinding,
     ) -> ExecutionManagerResult<()> {
         self.projection_drains.fetch_add(1, Ordering::SeqCst);
+        if self.fail_projection_during_drain.load(Ordering::SeqCst) {
+            return Err(ExecutionManagerError::Unavailable(
+                "projection died after readiness".into(),
+            ));
+        }
         Ok(())
     }
 
@@ -1847,8 +1858,8 @@ fn durable_state_rejects_a_runtime_binding_owned_by_another_product_execution() 
         &other_id,
         RUNTIME_GENERATION,
         ContainerState::Running,
-        DriverKind::NativeLinux,
-        IsolationClass::SharedHostKernel,
+        DriverKind::LibkWhpx,
+        IsolationClass::DedicatedVm,
         CONFIG_DIGEST,
         Some(ATTACHMENTS_DIGEST),
     )
@@ -1868,6 +1879,77 @@ fn durable_state_rejects_a_runtime_binding_owned_by_another_product_execution() 
 
     assert_eq!(error.kind(), std::io::ErrorKind::InvalidData);
     assert!(error.to_string().contains("does not belong"));
+}
+
+#[test]
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+fn nproc_host_capability_refuses_before_bundle_or_resource_mutation() {
+    let temporary = tempfile::tempdir().unwrap();
+    let home = temporary.path().canonicalize().unwrap();
+    let mut requested = request("nproc-capability");
+    requested.config.network = NetworkMode::None;
+    requested.config.resources = kbox_core::config::ResourceConfig {
+        vcpus: 1,
+        memory_mb: 512,
+        ..Default::default()
+    };
+    requested.config.user = Some("1001:2002".into());
+    requested.config.cap_drop = vec!["ALL".into()];
+    requested.config.resource_limits.ulimits = vec!["nproc=16:16".into()];
+    let operation = box_operation("nproc-capability");
+    let record = super::super::record::build_managed_record(
+        &home,
+        &ExecutionId::new("00000000-0000-4000-8000-000000000022").unwrap(),
+        operation.clone(),
+        requested,
+        Utc::now(),
+    )
+    .unwrap();
+    let runtime_root = home.join("runtime");
+    std::fs::create_dir(&runtime_root).unwrap();
+    use std::os::unix::fs::PermissionsExt;
+    std::fs::set_permissions(&runtime_root, std::fs::Permissions::from_mode(0o700)).unwrap();
+    let provider = super::super::MacosHvfOciBundleProvider::new(&home, &runtime_root);
+    let caps = koci_sdk::AttachmentCapabilities::base_v2()
+        .with_extension(
+            koci_sdk::ROOTFS_IMAGE_EXTENSION,
+            vec![koci_sdk::ROOTFS_IMAGE_VERSION],
+        )
+        .unwrap()
+        .with_extension(
+            koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION,
+            vec![koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION_VERSION],
+        )
+        .unwrap();
+    let mut context = OciBundlePreparationContext {
+        runtime_container_id: ContainerId::new("nproc-capability").unwrap(),
+        create_context: koci_sdk::OperationContext::new(
+            koci_sdk::OperationId::new("nproc-capability").unwrap(),
+        ),
+        isolation: IsolationRequest::DedicatedVm,
+        attachment_capabilities: caps,
+        execution_generation: ExecutionGeneration::INITIAL,
+        operation_seed: operation,
+    };
+    let error = provider.preflight(&record, &context).unwrap_err();
+    assert!(matches!(error, ExecutionManagerError::InvalidRequest(_)));
+    assert!(
+        error
+            .to_string()
+            .contains("Host lacks required kernel-counted nproc admission"),
+        "{error}"
+    );
+    context.attachment_capabilities = context
+        .attachment_capabilities
+        .with_extension(
+            koci_sdk::NPROC_ADMISSION_EXTENSION,
+            vec![koci_sdk::NPROC_ADMISSION_VERSION],
+        )
+        .unwrap();
+    provider.preflight(&record, &context).unwrap();
+    assert!(std::fs::read_dir(&runtime_root).unwrap().next().is_none());
+    assert!(!home.join("boxes.json").exists());
+    assert!(!home.join("boxes").exists());
 }
 
 #[tokio::test]
@@ -1943,10 +2025,7 @@ async fn preflight_rejects_probe_only_isolation_before_store_or_preparation() {
     let operation = box_operation("probe-only-create");
 
     let error = manager
-        .create(
-            request("probe-only"),
-            &operation,
-        )
+        .create(request("probe-only"), &operation)
         .await
         .expect_err("probe-only driver must fail closed");
 
@@ -2006,10 +2085,7 @@ async fn preflight_requires_attachment_v1_before_store_or_preparation() {
     let operation = box_operation("missing-attachment-schema-create");
 
     let error = manager
-        .create(
-            request("missing-attachment-schema"),
-            &operation,
-        )
+        .create(request("missing-attachment-schema"), &operation)
         .await
         .expect_err("attachment-unaware runtime must fail before mutation");
 
@@ -2039,10 +2115,7 @@ async fn bundle_handoff_capability_fails_before_store_or_preparation() {
     let operation = box_operation("missing-bundle-handoff-create");
 
     let error = manager
-        .create(
-            request("missing-bundle-handoff"),
-            &operation,
-        )
+        .create(request("missing-bundle-handoff"), &operation)
         .await
         .expect_err("handoff-unaware runtime must fail before mutation");
 
@@ -2072,10 +2145,7 @@ async fn bundle_handoff_uses_the_exact_context_sent_to_runtime_create() {
     let operation = box_operation("bundle-handoff-create");
 
     let lease = manager
-        .create_and_start(
-            request("bundle-handoff"),
-            &operation,
-        )
+        .create_and_start(request("bundle-handoff"), &operation)
         .await
         .expect("launch handoff-backed execution");
 
@@ -2381,15 +2451,42 @@ async fn launch_persists_exact_runtime_binding_for_microvm() {
                 .digest()
                 .expect("submitted attachment digest")
         );
-        assert_eq!(persisted.pid, Some(std::process::id()));
         assert_eq!(
-            persisted.pid_start_time,
-            crate::process::pid_start_time(std::process::id())
+            persisted.pid, None,
+            "guest PID must never authorize a host process"
         );
+        assert_eq!(persisted.pid_start_time, None);
         assert!(persisted.exec_socket_path.as_os_str().is_empty());
         assert_eq!(provider.prepares.load(Ordering::SeqCst), 1);
         assert_eq!(provider.cleanups.load(Ordering::SeqCst), 0);
     }
+}
+
+#[tokio::test]
+async fn active_execution_missing_binding_refuses_current_generation_discovery() {
+    let directory = tempfile::tempdir().unwrap();
+    let service = Arc::new(FakeRuntimeService::launch_ready());
+    let provider = Arc::new(FakeBundleProvider::default());
+    let manager = manager(&directory, test_endpoint(), service, provider.clone());
+    let lease = manager
+        .create_and_start(
+            request("missing-binding"),
+            &box_operation("missing-binding-create"),
+        )
+        .await
+        .unwrap();
+    let mut invalid = persisted(&manager, &lease.execution_id);
+    invalid.managed_execution.as_mut().unwrap().oci_runtime = None;
+    assert!(matches!(
+        manager.backend.inspect(&invalid).await,
+        Err(ExecutionManagerError::Internal(_))
+    ));
+    assert_eq!(provider.cleanups.load(Ordering::SeqCst), 0);
+    assert!(persisted(&manager, &lease.execution_id)
+        .managed_execution
+        .unwrap()
+        .oci_runtime
+        .is_some());
 }
 
 #[tokio::test]
@@ -2925,10 +3022,7 @@ async fn file_sessions_reject_invalid_download_limits_before_dispatch() {
         Arc::new(FakeBundleProvider::default()),
     );
     let lease = manager
-        .create_and_start(
-            request("file-limits"),
-            &box_operation("file-limits-create"),
-        )
+        .create_and_start(request("file-limits"), &box_operation("file-limits-create"))
         .await
         .expect("initial launch");
 
@@ -3653,10 +3747,7 @@ async fn pty_routes_merged_output_resize_and_signal_to_the_exact_sdk_process() {
     let provider = Arc::new(FakeBundleProvider::default());
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
-        .create_and_start(
-            request("pty-exec"),
-            &box_operation("pty-exec-create"),
-        )
+        .create_and_start(request("pty-exec"), &box_operation("pty-exec-create"))
         .await
         .expect("initial launch");
     let mut process = manager
@@ -3742,10 +3833,7 @@ async fn captured_exec_timeout_kills_and_returns_legacy_terminal_shape() {
     let provider = Arc::new(FakeBundleProvider::default());
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
-        .create_and_start(
-            request("timed-exec"),
-            &box_operation("timed-exec-create"),
-        )
+        .create_and_start(request("timed-exec"), &box_operation("timed-exec-create"))
         .await
         .expect("initial launch");
     let mut exec = box_exec_request(Some("timed-exec-request"));
@@ -3813,10 +3901,7 @@ async fn pause_resume_use_exact_runtime_target_and_unique_box_generations() {
     );
     let operation = box_operation("freezer-cycle-operation");
     let running = manager
-        .create_and_start(
-            request("freezer-cycle"),
-            &operation,
-        )
+        .create_and_start(request("freezer-cycle"), &operation)
         .await
         .expect("initial launch");
     let original = persisted(&manager, &running.execution_id);
@@ -3884,7 +3969,7 @@ async fn pause_resume_use_exact_runtime_target_and_unique_box_generations() {
 }
 
 #[tokio::test]
-async fn running_snapshot_uses_a_durable_freezer_identity_per_attempt() {
+async fn unsupported_running_snapshot_refuses_before_freezer_effects() {
     let directory = tempfile::tempdir().expect("temporary directory");
     let service = Arc::new(FakeRuntimeService::launch_ready());
     let provider = Arc::new(FakeBundleProvider::default());
@@ -3898,34 +3983,15 @@ async fn running_snapshot_uses_a_durable_freezer_identity_per_attempt() {
         .expect("initial launch");
     let snapshot_id = ExecutionSnapshotId::new("snapshot-freezer-attempt").unwrap();
 
-    for attempt in 0..2 {
+    for _ in 0..2 {
         let error = manager
             .create_filesystem_snapshot(&running.execution_id, running.generation, &snapshot_id)
             .await
-            .expect_err("an empty fake rootfs cannot be captured");
-        assert!(error
-            .to_string()
-            .contains("has no populated managed rootfs to snapshot"));
-
-        let pauses = service.pause_requests();
-        let resumes = service.resume_requests();
-        assert_eq!(pauses.len(), attempt + 1);
-        assert_eq!(resumes.len(), attempt + 1);
-        assert_eq!(pauses[attempt].target, resumes[attempt].target);
-        assert_ne!(
-            pauses[attempt].context.operation_id,
-            resumes[attempt].context.operation_id
-        );
-        if attempt > 0 {
-            assert_ne!(
-                pauses[attempt - 1].context.operation_id,
-                pauses[attempt].context.operation_id
-            );
-            assert_ne!(
-                resumes[attempt - 1].context.operation_id,
-                resumes[attempt].context.operation_id
-            );
-        }
+            .expect_err("MicroVM live filesystem capture is unsupported");
+        assert!(matches!(error, ExecutionManagerError::Conflict { .. }));
+        assert!(service.pause_requests().is_empty());
+        assert!(service.resume_requests().is_empty());
+        assert!(!directory.path().join("home/snapshots").exists());
 
         let restored = persisted(&manager, &running.execution_id);
         assert_eq!(restored.status, ManagedExecutionState::Running.as_status());
@@ -3955,10 +4021,7 @@ async fn snapshot_recovery_does_not_replay_a_completed_pause_after_thaw() {
     );
     let create_operation = box_operation("snapshot-thaw-recovery-create");
     let running = first
-        .create_and_start(
-            request("snapshot-thaw-recovery"),
-            &create_operation,
-        )
+        .create_and_start(request("snapshot-thaw-recovery"), &create_operation)
         .await
         .expect("initial launch");
     let snapshot_id = ExecutionSnapshotId::new("snapshot-thaw-recovery").unwrap();
@@ -3993,13 +4056,11 @@ async fn snapshot_recovery_does_not_replay_a_completed_pause_after_thaw() {
     drop(first);
 
     let recovered = manager(&directory, test_endpoint(), service.clone(), provider);
-    let error = recovered
+    recovered
         .reconcile(&create_operation)
         .await
-        .expect_err("an unpublished thawed snapshot must roll back");
-    assert!(error
-        .to_string()
-        .contains("was thawed before filesystem snapshot"));
+        .expect("unsupported in-flight capture restores the source without replaying freeze");
+    assert!(!directory.path().join("home/snapshots").exists());
     assert_eq!(service.pause_requests().len(), 1);
     assert_eq!(service.resume_requests().len(), 1);
     let rolled_back = persisted(&recovered, &running.execution_id);
@@ -4168,10 +4229,7 @@ async fn reopened_backend_reconciles_lost_pause_and_resume_responses_without_rep
         provider.clone(),
     );
     let running = first
-        .create_and_start(
-            request("interrupted-freezer"),
-            &operation,
-        )
+        .create_and_start(request("interrupted-freezer"), &operation)
         .await
         .expect("initial launch");
     let record = persisted(&first, &running.execution_id);
@@ -4297,10 +4355,7 @@ async fn retained_backend_reconnects_and_reconciles_after_local_runtime_server_r
     );
     let operation = box_operation("runtime-server-restart-operation");
     let running = manager
-        .create_and_start(
-            request("runtime-server-restart"),
-            &operation,
-        )
+        .create_and_start(request("runtime-server-restart"), &operation)
         .await
         .expect("initial launch over local IPC");
 
@@ -4387,10 +4442,7 @@ async fn log_projection_is_ready_before_start_and_created_state_recovers_without
     let operation = box_operation("projection-before-start-operation");
 
     let error = manager
-        .create_and_start(
-            request("projection-before-start"),
-            &operation,
-        )
+        .create_and_start(request("projection-before-start"), &operation)
         .await
         .expect_err("projection failure must stop before OCI start");
     assert!(error.to_string().contains("log projection"));
@@ -4602,10 +4654,7 @@ async fn lost_kill_response_recovers_within_one_kill() {
         Arc::new(FakeBundleProvider::default()),
     );
     let lease = manager
-        .create_and_start(
-            request("lost-kill"),
-            &box_operation("lost-kill-create"),
-        )
+        .create_and_start(request("lost-kill"), &box_operation("lost-kill-create"))
         .await
         .expect("initial launch");
 
@@ -4645,10 +4694,7 @@ async fn lost_delete_response_recovers_within_one_delete() {
         Arc::new(FakeBundleProvider::default()),
     );
     let lease = manager
-        .create_and_start(
-            request("lost-delete"),
-            &box_operation("lost-delete-create"),
-        )
+        .create_and_start(request("lost-delete"), &box_operation("lost-delete-create"))
         .await
         .expect("initial launch");
 
@@ -4815,6 +4861,51 @@ async fn reopened_backend_treats_undrained_projection_death_as_owner_loss() {
 }
 
 #[tokio::test]
+async fn projection_death_between_ready_and_drain_is_confirmed_before_cleanup() {
+    let directory = tempfile::tempdir().expect("temporary directory");
+    let service = Arc::new(FakeRuntimeService::launch_ready());
+    let provider = Arc::new(FakeBundleProvider::default());
+    let endpoint = test_endpoint();
+    let first = manager(
+        &directory,
+        endpoint.clone(),
+        service.clone(),
+        provider.clone(),
+    );
+    let lease = first
+        .create_and_start(
+            request("projection-owner-loss"),
+            &box_operation("projection-owner-loss-operation"),
+        )
+        .await
+        .expect("initial launch");
+    provider
+        .fail_projection_during_drain
+        .store(true, Ordering::SeqCst);
+    // Wait evidence alone must not invent a product exit when the projection
+    // died with the owner before drain.
+    service.mark_stopped(
+        &lease.execution_id,
+        ExitStatus::exited(23).expect("exit status"),
+    );
+    let reopened = manager(&directory, endpoint, service.clone(), provider.clone());
+
+    let status = reopened
+        .inspect(&lease.execution_id)
+        .await
+        .expect("projection-owner-loss terminal inspection");
+    let record = persisted(&reopened, &lease.execution_id);
+
+    assert_eq!(status.state, ExecutionState::Stopped);
+    assert_eq!(record.exit_code, None);
+    assert_eq!(provider.projection_drains.load(Ordering::SeqCst), 1);
+    assert_eq!(
+        provider.projection_owner_loss_stops.load(Ordering::SeqCst),
+        1
+    );
+}
+
+#[tokio::test]
 async fn graceful_kill_timeout_escalates_through_a_distinct_sdk_signal() {
     let directory = tempfile::tempdir().expect("temporary directory");
     let service = Arc::new(FakeRuntimeService::launch_ready());
@@ -4870,10 +4961,7 @@ async fn exact_generation_processes_stats_and_events_use_the_public_sdk() {
         Arc::new(FakeBundleProvider::default()),
     );
     let lease = manager
-        .create_and_start(
-            request("observable"),
-            &box_operation("observable-create"),
-        )
+        .create_and_start(request("observable"), &box_operation("observable-create"))
         .await
         .expect("initial launch");
     let binding = persisted(&manager, &lease.execution_id)
@@ -5096,10 +5184,7 @@ async fn lost_resource_update_response_recovers_within_one_update() {
     let create_operation = box_operation("lost-update-create");
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
-        .create_and_start(
-            request("lost-update"),
-            &create_operation,
-        )
+        .create_and_start(request("lost-update"), &create_operation)
         .await
         .expect("initial launch");
     let update = ExecutionResourceUpdate {
@@ -5158,10 +5243,7 @@ async fn interrupted_resource_update_claim_replays_after_backend_reopen() {
         provider.clone(),
     );
     let lease = first
-        .create_and_start(
-            request("interrupted-update"),
-            &create_operation,
-        )
+        .create_and_start(request("interrupted-update"), &create_operation)
         .await
         .expect("initial launch");
     let record = persisted(&first, &lease.execution_id);
@@ -5205,10 +5287,7 @@ async fn resource_update_racing_natural_exit_settles_the_terminal_record() {
     let create_operation = box_operation("terminal-update-create");
     let manager = manager(&directory, test_endpoint(), service.clone(), provider);
     let lease = manager
-        .create_and_start(
-            request("terminal-update"),
-            &create_operation,
-        )
+        .create_and_start(request("terminal-update"), &create_operation)
         .await
         .expect("initial launch");
     service.mark_stopped(
@@ -5315,10 +5394,7 @@ async fn new_runtime_operations_require_advertised_capabilities_before_dispatch(
         );
         let create_operation = box_operation(&format!("missing-{operation:?}-create"));
         let lease = manager
-            .create_and_start(
-                request("missing-observation"),
-                &create_operation,
-            )
+            .create_and_start(request("missing-observation"), &create_operation)
             .await
             .expect("initial launch");
 

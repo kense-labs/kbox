@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/guest-tests-final2",
+    "sha256": "54ab32d124d566bc65cabf2e219a9e44744d48b9693313e7727ae6bc62c12758",
+    "source": "8f562b1b69caeee726b22c068a8b3909cd515fa30c31b4e0759aa34408055f55"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/guest-init-tests-final2",
+    "sha256": "0a846fd652726b15757d29ba2b589c66f94d013d4d54d19e4b8df77dae9c3b48",
+    "source": "8f562b1b69caeee726b22c068a8b3909cd515fa30c31b4e0759aa34408055f55"
+  }
+]

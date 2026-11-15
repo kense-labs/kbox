@@ -1,0 +1,12 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/target/aarch64-unknown-linux-musl/release-dist/deps/kbox_guest_init-a848bee291637ce1",
+    "frozen": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-tests-after3",
+    "sha256": "ec3a3d0043817bd16b890927f1f40bc5967cf41dab8ad0d9a9727edbbc0df4c7"
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/target/aarch64-unknown-linux-musl/release-dist/deps/kbox_guest_init-fa20fb30690f42ef",
+    "frozen": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-init-tests-after3",
+    "sha256": "f1268fd2c15e9e52066aa8012671dbfa7d45af4e93d348b126c95577f235dd33"
+  }
+]

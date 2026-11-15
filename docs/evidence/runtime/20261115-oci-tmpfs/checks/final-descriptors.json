@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "-n",
+    "-P",
+    "-Fpcn"
+  ],
+  "exitCode": 0,
+  "ownedDescriptorHolders": [],
+  "scope": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7",
+    "/private/tmp/kbox-tmpfs-06c672b2c50b"
+  ]
+}

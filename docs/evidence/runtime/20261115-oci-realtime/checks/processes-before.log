@@ -1,0 +1,2871 @@
+    1     0 /sbin/launchd
+  134     1 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+  210     1 /Users/roylin/.kbox/bin/kbox
+  218     1 /Users/roylin/.kbox/bin/kbox
+  224     1 /Applications/UURemote.app/Contents/MacOS/UURemoteService
+  268     1 /Users/roylin/.kbox/bin/kbox
+  337     1 /usr/libexec/logd
+  339     1 /usr/libexec/UserEventAgent
+  341     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd
+  342     1 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoted
+  345     1 /usr/sbin/systemstats
+  349     1 /usr/libexec/configd
+  351     1 /System/Library/CoreServices/powerd.bundle/powerd
+  352     1 /usr/libexec/IOMFB_bics_daemon
+  356     1 /usr/libexec/remoted
+  360     1 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd_system
+  362     1 /usr/libexec/watchdogd
+  366     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds
+  368     1 /usr/libexec/kernelmanagerd
+  369     1 /usr/libexec/diskarbitrationd
+  373     1 /usr/sbin/syslogd
+  375     1 /usr/libexec/thermalmonitord
+  376     1 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/contextstored
+  377     1 /usr/libexec/xprotectd
+  378     1 /usr/libexec/opendirectoryd
+  379     1 /System/Library/PrivateFrameworks/ApplePushService.framework/apsd
+  380     1 /System/Library/CoreServices/launchservicesd
+  381     1 /usr/libexec/timed
+  382     1 /System/Library/PrivateFrameworks/MobileDevice.framework/Versions/A/Resources/usbmuxd
+  383     1 /usr/sbin/securityd
+  385     1 /usr/libexec/locationd
+  386     1 /usr/libexec/nesessionmanager
+  388     1 autofsd
+  389     1 /usr/libexec/dasd
+  390     1 /usr/libexec/corerepaird
+  392     1 /usr/sbin/distnoted
+  396     1 /System/Library/CoreServices/logind
+  397     1 /System/Library/PrivateFrameworks/GenerationalStorage.framework/Versions/A/Support/revisiond
+  398     1 /usr/sbin/KernelEventAgent
+  402     1 /usr/sbin/bluetoothd
+  403     1 /usr/sbin/notifyd
+  405     1 /usr/libexec/corebrightnessd
+  406     1 /usr/libexec/AirPlayXPCHelper
+  407     1 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/com.apple.cmio.registerassistantservice
+  410     1 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
+  413     1 /usr/sbin/cfprefsd
+  414     1 /System/Library/CoreServices/loginwindow.app/Contents/MacOS/loginwindow
+  418     1 /System/Library/CoreServices/coreservicesd
+  419     1 /usr/libexec/runningboardd
+  421     1 /usr/sbin/coreaudiod
+  425     1 /usr/sbin/mDNSResponder
+  426     1 /usr/libexec/airportd
+  428     1 /usr/libexec/apfsd
+  437     1 /usr/libexec/lsd
+  440     1 /usr/sbin/distnoted
+  441     1 /Users/roylin/.kbox/bin/kbox
+  443     1 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/authd.xpc/Contents/MacOS/authd
+  444     1 /usr/libexec/eligibilityd
+  451     1 /usr/sbin/distnoted
+  452     1 /usr/sbin/distnoted
+  471     1 /usr/sbin/mDNSResponderHelper
+  477     1 /usr/libexec/ApplicationFirewall/socketfilterfw
+  486     1 /Users/roylin/.kbox/bin/kbox
+  495     1 /Users/roylin/.kbox/bin/kbox
+  510     1 /Applications/UURemote.app/Contents/MacOS/UURemoteDaemon
+  515     1 /usr/libexec/symptomsd
+  518     1 /usr/libexec/syspolicyd
+  521     1 Core Audio Driver (ParrotAudioPlugin.driver)
+  525     1 /usr/sbin/distnoted
+  528     1 /usr/libexec/audiomxd
+  532     1 /usr/sbin/distnoted
+  542     1 /usr/libexec/audioclocksyncd
+  549     1 /usr/libexec/modelmanagerd
+  550     1 /System/Library/DriverExtensions/com.apple.DriverKit-IOUserDockChannelSerial.dext/com.apple.DriverKit-IOUserDockChannelSerial
+  558     1 /System/Library/DriverExtensions/com.apple.AppleUserHIDDrivers.dext/com.apple.AppleUserHIDDrivers
+  566     1 /System/Library/CoreServices/appleeventsd
+  569     1 /usr/libexec/com.apple.cmio.videodriverkithostextension.systemextension/Contents/MacOS/com.apple.cmio.videodriverkithostextension
+  571     1 /usr/libexec/cameracaptured
+  573     1 /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/UVCAssistant.systemextension/Contents/MacOS/UVCAssistant
+  580     1 /usr/libexec/searchpartyd
+  587     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mds_stores
+  592     1 /usr/sbin/distnoted
+  593     1 /System/Library/CoreServices/Software Update.app/Contents/Resources/suhelperd
+  605     1 /usr/sbin/distnoted
+  606     1 /Users/roylin/.kbox/bin/kbox
+  607     1 /usr/sbin/distnoted
+  619     1 /System/Library/DriverExtensions/AppleCentauriAlpha.dext/AppleCentauriAlpha
+  621     1 /System/Library/DriverExtensions/AppleCentauriControl.dext/AppleCentauriControl
+  623     1 /System/Library/DriverExtensions/AppleCentauriBeta.dext/AppleCentauriBeta
+  636     1 /usr/sbin/distnoted
+  644     1 /System/Library/CoreServices/SubmitDiagInfo
+  650     1 /usr/sbin/distnoted
+  656     1 /usr/sbin/distnoted
+  666     1 /usr/libexec/UserEventAgent
+  675     1 /usr/sbin/universalaccessd
+  677     1 /usr/libexec/ContinuityCaptureAgent
+  678     1 /usr/libexec/pboard
+  680     1 /System/Library/CoreServices/WindowManager.app/Contents/MacOS/WindowManager
+  682     1 /usr/libexec/lsd
+  683     1 /System/Library/PrivateFrameworks/UserNotificationsCore.framework/Support/usernotificationsd
+  693     1 /System/Library/CoreServices/lockoutagent
+  696     1 /usr/libexec/rapportd
+  697     1 /usr/sbin/usernoted
+  709     1 /System/Library/PrivateFrameworks/IDS.framework/identityservicesd.app/Contents/MacOS/identityservicesd
+  711     1 /usr/sbin/distnoted
+  720     1 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+  724     1 /usr/libexec/sharingd
+  730     1 /System/Library/PrivateFrameworks/IMCore.framework/imagent.app/Contents/MacOS/imagent
+  734     1 /Applications/iTerm.app/Contents/MacOS/iTerm2
+  739     1 /System/Library/PrivateFrameworks/FamilyCircle.framework/Versions/A/Resources/familycircled
+  741     1 /System/Library/CoreServices/sharedfilelistd
+  744     1 /System/Library/CoreServices/ControlCenter.app/Contents/MacOS/ControlCenter
+  745     1 /System/Library/CoreServices/SystemUIServer.app/Contents/MacOS/SystemUIServer
+  746     1 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/ATS.framework/Support/fontd
+  750     1 /System/Library/CoreServices/AccessibilityUIServer.app/Contents/MacOS/AccessibilityUIServer
+  753     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Support/fontworker
+  754     1 /System/Library/CoreServices/WallpaperAgent.app/Contents/MacOS/WallpaperAgent
+  758     1 /usr/sbin/filecoordinationd
+  761     1 /System/Library/PrivateFrameworks/ViewBridge.framework/Versions/A/XPCServices/ViewBridgeAuxiliary.xpc/Contents/MacOS/ViewBridgeAuxiliary
+  764     1 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsd
+  771     1 /Users/roylin/.kbox/bin/kbox
+  772     1 automountd
+  774     1 /System/Library/PrivateFrameworks/FileProvider.framework/Support/fileproviderd
+  775     1 /System/Library/PrivateFrameworks/AMPDevices.framework/Versions/A/Support/AMPDeviceDiscoveryAgent
+  779     1 /usr/sbin/distnoted
+  783     1 /System/Library/ExtensionKit/Extensions/WallpaperAerialsExtension.appex/Contents/MacOS/WallpaperAerialsExtension
+  785     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/corespotlightd
+  789     1 /usr/libexec/nearbyd
+  791     1 /System/Library/PrivateFrameworks/CommunicationsFilter.framework/CMFSyncAgent
+  795     1 /System/Library/PrivateFrameworks/ChronoCore.framework/Support/chronod
+  798     1 /usr/libexec/rosetta/oahd
+  805     1 /System/Library/CoreServices/NotificationCenter.app/Contents/MacOS/NotificationCenter
+  816     1 /System/Library/PrivateFrameworks/StatusKit.framework/StatusKitAgent
+  822     1 /System/Library/PrivateFrameworks/CloudDocs.framework/PlugIns/com.apple.CloudDocs.iCloudDriveFileProvider.appex/Contents/MacOS/com.apple.CloudDocs.iCloudDriveFileProvider
+  840     1 /System/Library/CoreServices/WiFiAgent.app/Contents/MacOS/WiFiAgent
+  843     1 /System/Library/CoreServices/Spotlight.app/Contents/MacOS/Spotlight
+  845     1 /System/Library/PrivateFrameworks/MediaRemote.framework/Support/mediaremoteagent
+  846     1 /usr/libexec/avconferenced
+  852     1 /usr/libexec/neagent
+  868     1 /System/Library/PrivateFrameworks/TextInputUIMacHelper.framework/Versions/A/XPCServices/CursorUIViewService.xpc/Contents/MacOS/CursorUIViewService
+  882     1 /System/Library/Frameworks/InputMethodKit.framework/Resources/imklaunchagent
+  887     1 /System/Library/Input Methods/SCIM.app/Contents/PlugIns/SCIM_Extension.appex/Contents/MacOS/SCIM_Extension
+  888     1 /System/Library/Input Methods/PressAndHold.app/Contents/PlugIns/PAH_Extension.appex/Contents/MacOS/PAH_Extension
+  889     1 /Users/roylin/.kbox/bin/kbox
+  890     1 /Users/roylin/.kbox/bin/kbox
+  898   734 /Users/roylin/Library/Application Support/iTerm2/iTermServer-3.6.11
+  910     1 /Users/roylin/.kbox/bin/kbox
+  915     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+  921     1 /Users/roylin/.kbox/bin/kbox
+  923     1 /System/iOSSupport/System/Library/PrivateFrameworks/HomeEnergyDaemon.framework/Support/homeenergyd
+  942     1 /usr/sbin/distnoted
+  952     1 /usr/libexec/inboxupdaterd
+  963     1 /System/Library/PrivateFrameworks/UniversalAccess.framework/Versions/A/Resources/universalAccessAuthWarn.app/Contents/MacOS/universalAccessAuthWarn
+  968     1 /System/Library/PrivateFrameworks/CoreSpeech.framework/corespeechd
+  974     1 /System/Library/Image Capture/Support/icdd
+  978     1 /System/Library/CoreServices/AirPlayUIAgent.app/Contents/MacOS/AirPlayUIAgent
+  979     1 /System/Library/CoreServices/diagnostics_agent
+  980     1 /System/Library/CoreServices/TextInputMenuAgent.app/Contents/MacOS/TextInputMenuAgent
+  982     1 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+ 1021     1 /System/Library/Frameworks/CryptoTokenKit.framework/ctkahp.bundle/Contents/MacOS/ctkahp
+ 1028     1 /usr/sbin/distnoted
+ 1049     1 /Users/roylin/.kbox/bin/kbox
+ 1073     1 /Users/roylin/.kbox/bin/kbox
+ 1118     1 /usr/sbin/netbiosd
+ 1125     1 /System/Library/PrivateFrameworks/CoreFP.framework/Versions/A/fairplayd
+ 1126   345 /usr/sbin/systemstats
+ 1138     1 /usr/sbin/distnoted
+ 1139     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdbulkimport
+ 1141     1 /System/Library/DriverExtensions/IOUserBluetoothSerialDriver.dext/IOUserBluetoothSerialDriver
+ 1165     1 /System/Library/CoreServices/CrashReporterSupportHelper
+ 1170     1 /Users/roylin/.kbox/bin/kbox
+ 1173     1 /Users/roylin/.kbox/bin/kbox
+ 1197     1 /Users/roylin/.kbox/bin/kbox
+ 1233     1 /Users/roylin/.kbox/bin/kbox
+ 1249     1 /usr/sbin/distnoted
+ 1292     1 /Users/roylin/.kbox/bin/kbox
+ 1306     1 /Users/roylin/.kbox/bin/kbox
+ 1431     1 /Users/roylin/.kbox/bin/kbox
+ 1446     1 /Users/roylin/.kbox/bin/kbox
+ 1460     1 /Users/roylin/.kbox/bin/kbox
+ 1461     1 /Users/roylin/.kbox/bin/kbox
+ 1552     1 /Users/roylin/.kbox/bin/kbox
+ 1558     1 /Users/roylin/.kbox/bin/kbox
+ 1571     1 /Users/roylin/.kbox/bin/kbox
+ 1624     1 /Users/roylin/.kbox/bin/kbox
+ 1689     1 /Users/roylin/.kbox/bin/kbox
+ 1701     1 /Users/roylin/.kbox/bin/kbox
+ 1731     1 /Users/roylin/.kbox/bin/kbox
+ 1777     1 /Users/roylin/.kbox/bin/kbox
+ 1785     1 /usr/sbin/distnoted
+ 1790     1 /Users/roylin/.kbox/bin/kbox
+ 1871     1 /Users/roylin/.kbox/bin/kbox
+ 1932     1 /Users/roylin/.kbox/bin/kbox
+ 1945     1 /Users/roylin/.kbox/bin/kbox
+ 1956     1 /Users/roylin/.kbox/bin/kbox
+ 1974     1 /Users/roylin/.kbox/bin/kbox
+ 2015     1 /Users/roylin/.kbox/bin/kbox
+ 2117     1 /Users/roylin/.kbox/bin/kbox
+ 2147     1 /System/Cryptexes/App/usr/libexec/PasswordBreachAgent
+ 2183     1 /Users/roylin/.kbox/bin/kbox
+ 2200     1 /Users/roylin/.kbox/bin/kbox
+ 2238     1 /Users/roylin/.kbox/bin/kbox
+ 2292     1 /Users/roylin/.kbox/bin/kbox
+ 2302     1 /Users/roylin/.kbox/bin/kbox
+ 2328     1 /Users/roylin/.kbox/bin/kbox
+ 2341     1 /Users/roylin/.kbox/bin/kbox
+ 2343     1 /usr/libexec/wifivelocityd
+ 2406     1 /Users/roylin/.kbox/bin/kbox
+ 2424     1 /Users/roylin/.kbox/bin/kbox
+ 2441     1 /Users/roylin/.kbox/bin/kbox
+ 2504     1 /Users/roylin/.kbox/bin/kbox
+ 2520     1 /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/XPCServices/extensionkitservice.xpc/Contents/MacOS/extensionkitservice
+ 2521     1 /System/Library/ExtensionKit/Extensions/com.apple.fskit.exfat.appex/Contents/MacOS/com.apple.fskit.exfat
+ 2522     1 /System/Library/ExtensionKit/Extensions/com.apple.fskit.msdos.appex/Contents/MacOS/com.apple.fskit.msdos
+ 2529     1 /Users/roylin/.kbox/bin/kbox
+ 2594     1 /System/Library/Frameworks/ColorSync.framework/Versions/A/XPCServices/com.apple.ColorSyncXPCAgent.xpc/Contents/MacOS/com.apple.ColorSyncXPCAgent
+ 2608     1 /Users/roylin/.kbox/bin/kbox
+ 2621     1 /usr/libexec/applekeystored
+ 2624     1 /Users/roylin/.kbox/bin/kbox
+ 2627     1 /Users/roylin/.kbox/bin/kbox
+ 2686     1 /Users/roylin/.kbox/bin/kbox
+ 2739     1 /Users/roylin/.kbox/bin/kbox
+ 2767     1 /Users/roylin/.kbox/bin/kbox
+ 2786     1 /System/Library/PrivateFrameworks/ManagedBackgroundAssets.framework/Versions/A/XPCServices/Managed Background Assets Helper Service.xpc/Contents/MacOS/Managed Background Assets Helper Service
+ 2881     1 /Users/roylin/.kbox/bin/kbox
+ 2935     1 /Users/roylin/.kbox/bin/kbox
+ 3028     1 /Users/roylin/.kbox/bin/kbox
+ 3032     1 /Users/roylin/.kbox/bin/kbox
+ 3071     1 /Users/roylin/.kbox/bin/kbox
+ 3101     1 /Users/roylin/.kbox/bin/kbox
+ 3122     1 /Users/roylin/.kbox/bin/kbox
+ 3141     1 /Users/roylin/.kbox/bin/kbox
+ 3150     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+ 3203     1 /Users/roylin/.kbox/bin/kbox
+ 3241     1 /Users/roylin/.kbox/bin/kbox
+ 3300     1 /Users/roylin/.kbox/bin/kbox
+ 3350     1 /Users/roylin/.kbox/bin/kbox
+ 3375     1 /Users/roylin/.kbox/bin/kbox
+ 3378     1 /Users/roylin/.kbox/bin/kbox
+ 3400     1 /Users/roylin/.kbox/bin/kbox
+ 3412     1 /Users/roylin/.kbox/bin/kbox
+ 3469     1 /Users/roylin/.kbox/bin/kbox
+ 3539     1 /Users/roylin/.kbox/bin/kbox
+ 3553     1 /Users/roylin/.kbox/bin/kbox
+ 3713     1 /Users/roylin/.kbox/bin/kbox
+ 3720     1 /Users/roylin/.kbox/bin/kbox
+ 3730     1 /Users/roylin/.kbox/bin/kbox
+ 3833     1 /Users/roylin/.kbox/bin/kbox
+ 3950     1 /Users/roylin/.kbox/bin/kbox
+ 3961     1 /Users/roylin/.kbox/bin/kbox
+ 4021     1 /Users/roylin/.kbox/bin/kbox
+ 4052     1 /Users/roylin/.kbox/bin/kbox
+ 4058     1 /Users/roylin/.kbox/bin/kbox
+ 4188     1 /Users/roylin/.kbox/bin/kbox
+ 4204     1 /Users/roylin/.kbox/bin/kbox
+ 4246     1 /Users/roylin/.kbox/bin/kbox
+ 4304     1 /Applications/Kimi.app/Contents/Frameworks/Electron Framework.framework/Helpers/chrome_crashpad_handler
+ 4308     1 /Users/roylin/.kbox/bin/kbox
+ 4328 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper (Renderer).app/Contents/MacOS/Lark Helper (Renderer)
+ 4371     1 /Users/roylin/.kbox/bin/kbox
+ 4382     1 /Users/roylin/.kbox/bin/kbox
+ 4386     1 /Users/roylin/.kbox/bin/kbox
+ 4394     1 /Users/roylin/.kbox/bin/kbox
+ 4403     1 /Users/roylin/.kbox/bin/kbox
+ 4417     1 /Users/roylin/.kbox/bin/kbox
+ 4481     1 /Users/roylin/.kbox/bin/kbox
+ 4528     1 /Users/roylin/.kbox/bin/kbox
+ 4554     1 /Users/roylin/.kbox/bin/kbox
+ 4620     1 /Users/roylin/.kbox/bin/kbox
+ 4645     1 /Users/roylin/.kbox/bin/kbox
+ 4648     1 /Users/roylin/.kbox/bin/kbox
+ 4657     1 /Users/roylin/.kbox/bin/kbox
+ 4719     1 /Users/roylin/.kbox/bin/kbox
+ 4722     1 /Users/roylin/.kbox/bin/kbox
+ 4738     1 /Users/roylin/.kbox/bin/kbox
+ 4817     1 /Users/roylin/.kbox/bin/kbox
+ 4855     1 /System/Library/PrivateFrameworks/FileProviderDaemon.framework/XPCServices/FPCKService.xpc/Contents/MacOS/FPCKService
+ 4859     1 /Users/roylin/.kbox/bin/kbox
+ 4865     1 /Users/roylin/.kbox/bin/kbox
+ 4868     1 /Users/roylin/.kbox/bin/kbox
+ 4936     1 /Users/roylin/.kbox/bin/kbox
+ 4941     1 /Users/roylin/.kbox/bin/kbox
+ 4999     1 /Users/roylin/.kbox/bin/kbox
+ 5019     1 /Users/roylin/.kbox/bin/kbox
+ 5076     1 /Users/roylin/.kbox/bin/kbox
+ 5085     1 /Users/roylin/.kbox/bin/kbox
+ 5100     1 /Users/roylin/.kbox/bin/kbox
+ 5163     1 /Users/roylin/.kbox/bin/kbox
+ 5174     1 /System/Library/ExtensionKit/Extensions/WebThumbnailExtension.appex/Contents/MacOS/WebThumbnailExtension
+ 5175     1 /System/Library/Frameworks/CoreGraphics.framework/Versions/A/XPCServices/CGPDFService.xpc/Contents/MacOS/CGPDFService
+ 5176     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.GPU.xpc/Contents/MacOS/com.apple.WebKit.GPU
+ 5179     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+ 5180     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+ 5211     1 /Users/roylin/.kbox/bin/kbox
+ 5233     1 /Users/roylin/.kbox/bin/kbox
+ 5296     1 /Users/roylin/.kbox/bin/kbox
+ 5314     1 /Users/roylin/.kbox/bin/kbox
+ 5353     1 /Users/roylin/.kbox/bin/kbox
+ 5409     1 /Users/roylin/.kbox/bin/kbox
+ 5490     1 /Users/roylin/.kbox/bin/kbox
+ 5502     1 /Users/roylin/.kbox/bin/kbox
+ 5549     1 /Users/roylin/.kbox/bin/kbox
+ 5560     1 /Users/roylin/.kbox/bin/kbox
+ 5579     1 /Users/roylin/.kbox/bin/kbox
+ 5586     1 /Users/roylin/.kbox/bin/kbox
+ 5602     1 /Users/roylin/.kbox/bin/kbox
+ 5647     1 /Users/roylin/.kbox/bin/kbox
+ 5668     1 /Users/roylin/.kbox/bin/kbox
+ 5673     1 /Users/roylin/.kbox/bin/kbox
+ 5740     1 /Users/roylin/.kbox/bin/kbox
+ 5777     1 /Users/roylin/.kbox/bin/kbox
+ 5781     1 /Users/roylin/.kbox/bin/kbox
+ 5831     1 /Users/roylin/.kbox/bin/kbox
+ 5863     1 /Users/roylin/.kbox/bin/kbox
+ 5881     1 /Users/roylin/.kbox/bin/kbox
+ 5888     1 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+ 5912     1 /Users/roylin/.kbox/bin/kbox
+ 5929     1 /Users/roylin/.kbox/bin/kbox
+ 5944     1 /Users/roylin/.kbox/bin/kbox
+ 5962     1 /Users/roylin/.kbox/bin/kbox
+ 5979     1 /Applications/Xnip.app/Contents/MacOS/Xnip
+ 5980     1 /Users/roylin/.kbox/bin/kbox
+ 5986     1 /Applications/Xnip.app/Contents/Library/LoginItems/XnipHelper.app/Contents/MacOS/XnipHelper
+ 6047     1 /Users/roylin/.kbox/bin/kbox
+ 6087     1 /Users/roylin/.kbox/bin/kbox
+ 6133     1 /Users/roylin/.kbox/bin/kbox
+ 6146     1 /Users/roylin/.kbox/bin/kbox
+ 6193     1 /Users/roylin/.kbox/bin/kbox
+ 6264 88470 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+ 6265 88470 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+ 6289     1 /Users/roylin/.kbox/bin/kbox
+ 6344     1 /Users/roylin/.kbox/bin/kbox
+ 6360     1 /Users/roylin/.kbox/bin/kbox
+ 6388     1 /Users/roylin/.kbox/bin/kbox
+ 6442     1 /Users/roylin/.kbox/bin/kbox
+ 6451     1 /Users/roylin/.kbox/bin/kbox
+ 6466     1 /Users/roylin/.kbox/bin/kbox
+ 6501     1 /Users/roylin/.kbox/bin/kbox
+ 6533     1 /Users/roylin/.kbox/bin/kbox
+ 6556     1 /Users/roylin/.kbox/bin/kbox
+ 6570     1 /Users/roylin/.kbox/bin/kbox
+ 6586     1 /System/Library/PrivateFrameworks/SiriTTSService.framework/sirittsd
+ 6691     1 /Users/roylin/.kbox/bin/kbox
+ 6695     1 /Users/roylin/.kbox/bin/kbox
+ 6721     1 /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/XPCServices/extensionkitservice.xpc/Contents/MacOS/extensionkitservice
+ 6754     1 /System/Library/CoreServices/Software Update.app/Contents/Resources/softwareupdated
+ 6755     1 /System/Library/PrivateFrameworks/HomeKitDaemon.framework/Support/homed
+ 6766     1 /Users/roylin/.kbox/bin/kbox
+ 6767     1 /System/Library/PrivateFrameworks/TelephonyUtilities.framework/callservicesd
+ 6768     1 /usr/libexec/mobileassetd
+ 6773     1 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+ 6776     1 /System/Library/Frameworks/Contacts.framework/Support/contactsd
+ 6779     1 /System/Library/PrivateFrameworks/AccessibilitySupport.framework/Versions/A/Resources/AccessibilityVisualsAgent.app/Contents/MacOS/AccessibilityVisualsAgent
+ 6780     1 /System/Library/CoreServices/UIKitSystem.app/Contents/MacOS/UIKitSystem
+ 6784     1 /System/Library/CoreServices/TextInputSwitcher.app/Contents/MacOS/TextInputSwitcher
+ 6788     1 /System/Library/PrivateFrameworks/AppStoreDaemon.framework/Support/appstoreagent
+ 6793     1 /usr/libexec/transparencyd
+ 6795     1 /System/Library/PrivateFrameworks/AppleMediaServices.framework/Resources/amsaccountsd
+ 6796     1 /usr/libexec/knowledge-agent
+ 6797     1 /System/Library/PrivateFrameworks/HearingCore.framework/heard
+ 6799     1 /usr/libexec/networkserviceproxy
+ 6801     1 /System/Library/Frameworks/FinanceKit.framework/financed
+ 6834     1 /System/Library/PrivateFrameworks/MobileAssetDaemon.framework/Versions/A/XPCServices/com.apple.MobileAsset.DownloadService.Builtin.xpc/Contents/MacOS/com.apple.MobileAsset.DownloadService.Builtin
+ 6837     1 /Users/roylin/.kbox/bin/kbox
+ 6902     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+ 6918     1 /Users/roylin/.kbox/bin/kbox
+ 6927     1 /System/Library/PrivateFrameworks/CalendarDaemon.framework/Support/calaccessd
+ 6936     1 /Users/roylin/.kbox/bin/kbox
+ 6937     1 /System/Library/PrivateFrameworks/SoftwareUpdate.framework/Resources/SoftwareUpdateNotificationManager.app/Contents/MacOS/SoftwareUpdateNotificationManager
+ 6954     1 /System/Library/Frameworks/Contacts.framework/Support/postersyncd
+ 6958     1 /System/Library/PrivateFrameworks/iTunesCloud.framework/Support/itunescloudd
+ 6960     1 /Users/roylin/.kbox/bin/kbox
+ 6966     1 /usr/libexec/secd
+ 6967     1 /System/Library/PrivateFrameworks/DoNotDisturbServer.framework/Support/donotdisturbd
+ 6968     1 /System/Library/PrivateFrameworks/iCloudDriveCore.framework/Versions/A/Support/bird
+ 6972     1 /System/Library/PrivateFrameworks/ReplicatorCore.framework/Support/replicatord
+ 6974     1 /System/Library/PrivateFrameworks/BiomeStreams.framework/Support/BiomeAgent
+ 6976     1 /System/Library/PrivateFrameworks/IntelligenceFlowContextRuntime.framework/Versions/A/intelligencecontextd
+ 6977     1 /System/Library/PrivateFrameworks/WorkflowKit.framework/XPCServices/ShortcutsViewService.xpc/Contents/MacOS/ShortcutsViewService
+ 6978     1 /System/Library/PrivateFrameworks/AvatarPersistence.framework/Support/avatarsd
+ 6980     1 /System/Library/PrivateFrameworks/Noticeboard.framework/Versions/A/Resources/nbagent.app/Contents/MacOS/nbagent
+ 6981     1 /System/Library/PrivateFrameworks/CloudKitDaemon.framework/Support/cloudd
+ 6982     1 /System/Library/CoreServices/CoreServicesUIAgent.app/Contents/MacOS/CoreServicesUIAgent
+ 6983     1 /System/Library/PrivateFrameworks/CoreDuetContext.framework/Resources/ContextStoreAgent
+ 6986     1 /usr/libexec/siriknowledged
+ 7002     1 /usr/libexec/GamePolicyAgent
+ 7003     1 /System/Library/Frameworks/QuickLookThumbnailing.framework/Support/com.apple.quicklook.ThumbnailsAgent
+ 7009     1 /System/Library/PrivateFrameworks/ScreenTimeCore.framework/Versions/A/ScreenTimeAgent
+ 7010     1 /System/Library/CoreServices/Siri.app/Contents/MacOS/Siri
+ 7011     1 /System/Library/PrivateFrameworks/Categories.framework/Versions/A/XPCServices/CategoriesService.xpc/Contents/MacOS/CategoriesService
+ 7012     1 /System/Library/PrivateFrameworks/CallHistory.framework/Support/CallHistorySyncHelper
+ 7013     1 /System/Library/PrivateFrameworks/CloudSubscriptionFeatures.framework/FeatureAccessAgent
+ 7018     1 /System/Cryptexes/App/usr/libexec/SafariBookmarksSyncAgent
+ 7023     1 /System/Library/CoreServices/talagentd
+ 7027     1 /System/Library/Frameworks/StoreKit.framework/Support/storekitagent
+ 7028     1 /System/Library/PrivateFrameworks/AppleMediaServicesUI.framework/amsengagementd
+ 7029     1 /System/Library/PrivateFrameworks/Ecosystem.framework/Support/ecosystemd
+ 7030     1 /System/Library/PrivateFrameworks/CommunicationTrust.framework/Support/communicationtrustd
+ 7031     1 /System/Library/PrivateFrameworks/ContactsDonation.framework/Versions/A/Support/contactsdonationagent
+ 7032     1 /System/Library/PrivateFrameworks/People.framework/peopled
+ 7037     1 /System/Library/PrivateFrameworks/IMDPersistence.framework/XPCServices/IMDPersistenceAgent.xpc/Contents/MacOS/IMDPersistenceAgent
+ 7038     1 /System/Library/Frameworks/ManagedAppDistribution.framework/Support/managedappdistributiond
+ 7040     1 /usr/libexec/coreduetd
+ 7042     1 /usr/libexec/appleaccountd
+ 7046     1 /System/Library/PrivateFrameworks/OnDeviceStorage.framework/Support/amsondevicestoraged
+ 7049     1 /usr/libexec/promotedcontentd
+ 7053     1 /usr/libexec/wifip2pd
+ 7055     1 /System/Library/PrivateFrameworks/MapsSync.framework/mapssyncd
+ 7061     1 /usr/libexec/trustd
+ 7062     1 /System/Library/CoreServices/CoreLocationAgent.app/Contents/MacOS/CoreLocationAgent
+ 7071     1 cloudphotod
+ 7074     1 /System/Library/PrivateFrameworks/CallHistory.framework/Support/CallHistoryPluginHelper
+ 7079     1 /System/Library/Frameworks/ApplicationServices.framework/Frameworks/PrintCore.framework/Versions/A/printtool
+ 7080     1 /System/Library/PrivateFrameworks/TextToSpeechVoiceBankingSupport.framework/Support/voicebankingd
+ 7084     1 /System/Library/PrivateFrameworks/ModelCatalogRuntime.framework/Versions/A/modelcatalogd
+ 7085     1 /usr/libexec/dmd
+ 7087     1 /System/Library/Frameworks/ManagedAppDistribution.framework/Support/managedappdistributionagent
+ 7088     1 /Users/roylin/.kbox/bin/kbox
+ 7089     1 /System/Library/PrivateFrameworks/Stickers.framework/Support/stickersd
+ 7090     1 /System/Library/PrivateFrameworks/ContinuousDialogManagerService.framework/assistant_cdmd
+ 7091     1 /usr/libexec/mlhostd
+ 7126     1 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+ 7128     1 /System/Library/Frameworks/ShazamKit.framework/shazamd
+ 7133     1 /System/Library/PrivateFrameworks/ModelCatalogRuntime.framework/Versions/A/ModelCatalogAgent
+ 7140     1 /System/Library/PrivateFrameworks/EmailDaemon.framework/Versions/A/maild
+ 7141     1 /usr/libexec/triald
+ 7142     1 /System/Cryptexes/App/usr/libexec/AuthenticationServicesAgent
+ 7143     1 /System/Library/PrivateFrameworks/ContextKit.framework/Versions/A/XPCServices/ContextService.xpc/Contents/MacOS/ContextService
+ 7147     1 /System/Library/PrivateFrameworks/SiriInference.framework/Versions/A/siriinferenced
+ 7153     1 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted
+ 7154     1 /usr/libexec/intelligentroutingd
+ 7155     1 /usr/libexec/keyboardservicesd
+ 7156     1 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/Support/assistant_service
+ 7157     1 /usr/libexec/findmylocateagent
+ 7158     1 /System/Library/Frameworks/CoreTelephony.framework/Support/CommCenter
+ 7160     1 /usr/libexec/proactived
+ 7161     1 /usr/libexec/adprivacyd
+ 7163     1 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+ 7167     1 /Users/roylin/.kbox/bin/kbox
+ 7168     1 /System/Library/PrivateFrameworks/ContextKit.framework/Versions/A/XPCServices/ContextService.xpc/Contents/MacOS/ContextService
+ 7171     1 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/suggestd
+ 7172     1 /System/Cryptexes/App/usr/libexec/com.apple.Safari.History
+ 7175     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/remotemanagementd
+ 7190     1 /usr/libexec/symptomsd-diag
+ 7192     1 /Users/roylin/.kbox/bin/kbox
+ 7194     1 /System/Library/PrivateFrameworks/HomeKitEvents.framework/Support/homeeventsd
+ 7195     1 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+ 7196     1 /System/Library/PrivateFrameworks/BiomeStreams.framework/Support/biomed
+ 7198     1 /usr/libexec/swtransparencyd
+ 7199     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/RemoteManagementAgent
+ 7200     1 /System/Library/Frameworks/Translation.framework/translationd
+ 7201     1 /usr/libexec/assetsubscriptiond
+ 7202     1 /usr/libexec/ciphermld
+ 7207     1 /usr/libexec/NRDUpdated
+ 7218     1 /Users/roylin/.kbox/bin/kbox
+ 7240     1 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreautha.bundle/Contents/MacOS/coreautha
+ 7248     1 /System/Library/PrivateFrameworks/AXAssetLoader.framework/Support/axassetsd
+ 7250     1 /System/Library/PrivateFrameworks/PrivateCloudCompute.framework/privatecloudcomputed.app/Contents/MacOS/privatecloudcomputed
+ 7256     1 /System/Library/CoreServices/appplaceholdersyncd
+ 7257     1 /usr/libexec/PowerUIAgent
+ 7265     1 /usr/libexec/findmybeaconingd
+ 7269     1 /usr/libexec/ospredictiond
+ 7272     1 /System/Library/PrivateFrameworks/CoreRecents.framework/Versions/A/Support/recentsd
+ 7286     1 /System/Library/Frameworks/ClassKit.framework/Versions/A/progressd
+ 7287     1 /usr/libexec/triald_system
+ 7288     1 /usr/libexec/textunderstandingd
+ 7290     1 /System/Library/PrivateFrameworks/JetCore.framework/Support/jetpackassetd
+ 7291     1 /usr/libexec/secinitd
+ 7292     1 /usr/libexec/wifianalyticsd
+ 7293     1 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+ 7294     1 /usr/libexec/nehelper
+ 7297     1 /usr/libexec/storagekitd
+ 7298     1 /System/Library/PrivateFrameworks/AppleAccountTransparency.framework/Versions/A/Resources/appleaccounttransparencyd
+ 7299     1 /System/Library/PrivateFrameworks/SafariSafeBrowsing.framework/com.apple.Safari.SafeBrowsing.Service
+ 7300     1 /usr/libexec/tipsd
+ 7302     1 /System/Library/PrivateFrameworks/SocialLayer.framework/sociallayerd.app/Contents/MacOS/sociallayerd
+ 7304     1 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+ 7307     1 /System/Library/CoreServices/iconservicesagent
+ 7309     1 /System/Library/PrivateFrameworks/WebPrivacy.framework/webprivacyd
+ 7310     1 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Support/softwareupdated
+ 7311     1 /System/Library/PrivateFrameworks/IntelligenceFlowRuntime.framework/Versions/A/intelligenceflowd
+ 7312     1 /System/Library/PrivateFrameworks/ProtectedCloudStorage.framework/Helpers/ProtectedCloudKeySyncing
+ 7315     1 /System/Library/CoreServices/ScopedBookmarkAgent
+ 7316     1 /System/Library/PrivateFrameworks/CoreAnalytics.framework/Support/analyticsagent
+ 7317     1 /usr/libexec/findmydeviced
+ 7318     1 /System/Library/PrivateFrameworks/GeoAnalytics.framework/geoanalyticsd
+ 7319     1 /System/Library/PrivateFrameworks/iCloudNotification.framework/iCloudNotificationAgent
+ 7321     1 /System/Library/PrivateFrameworks/CoreSuggestions.framework/Versions/A/Support/reversetemplated
+ 7325     1 /System/Library/PrivateFrameworks/BusinessChatService.framework/businessservicesd
+ 7327     1 /System/Library/Frameworks/AudioToolbox.framework/AudioComponentRegistrar
+ 7332     1 /usr/libexec/AssetCache/AssetCache
+ 7333     1 /usr/libexec/swcd
+ 7334     1 /usr/libexec/icloudmailagent
+ 7335     1 /System/Library/PrivateFrameworks/VoiceShortcuts.framework/Versions/A/Support/siriactionsd
+ 7337     1 /usr/libexec/containermanagerd_system
+ 7338     1 /System/Library/PrivateFrameworks/Synapse.framework/Support/contentlinkingd
+ 7341     1 /usr/libexec/dprivacyd
+ 7343     1 /usr/sbin/WirelessRadioManagerd
+ 7344     1 /System/Library/Frameworks/MediaExtension.framework/Versions/A/Helpers/MENotificationAgent
+ 7345     1 /usr/libexec/dprivacyd
+ 7346     1 /System/Library/CoreServices/osanalyticshelper
+ 7348     1 /System/Library/PrivateFrameworks/BookKit.framework/Versions/A/XPCServices/com.apple.BKAgentService.xpc/Contents/MacOS/com.apple.BKAgentService
+ 7349     1 /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Resources/backgroundtaskmanagementd
+ 7350     1 /System/Library/PrivateFrameworks/GameControllerFoundation.framework/Versions/A/XPCServices/GameControllerConfigService.xpc/Contents/MacOS/GameControllerConfigService
+ 7354     1 /usr/libexec/mobilerepaird
+ 7355     1 /System/Cryptexes/App/usr/libexec/SafariNotificationAgent
+ 7359     1 /System/Library/Frameworks/CryptoTokenKit.framework/ctkd
+ 7360     1 /usr/libexec/frauddefensed
+ 7361     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+ 7362     1 /usr/libexec/secinitd
+ 7365     1 /usr/libexec/inputanalyticsd
+ 7367     1 /usr/libexec/trustd
+ 7369     1 /System/Library/PrivateFrameworks/PowerLog.framework/Versions/A/XPCServices/PerfPowerTelemetryClientRegistrationService.xpc/Contents/MacOS/PerfPowerTelemetryClientRegistrationService
+ 7370     1 /usr/libexec/betaenrollmentagent
+ 7371     1 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/TrustedPeersHelper.xpc/Contents/MacOS/TrustedPeersHelper
+ 7372     1 /System/Library/PrivateFrameworks/CoreThreadCommissionerService.framework/CoreThreadCommissionerServiced
+ 7373     1 /System/Library/PrivateFrameworks/GenerativeExperiencesRuntime.framework/Versions/A/generativeexperiencesd
+ 7374     1 /usr/libexec/trustd
+ 7375     1 /usr/libexec/seld
+ 7376     1 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService
+ 7377     1 /usr/libexec/mobileactivationd
+ 7378     1 /System/Library/PrivateFrameworks/PhotoLibraryServices.framework/Versions/A/Support/photolibraryd
+ 7379     1 /System/Library/CoreServices/diagnosticservicesd
+ 7381     1 /usr/libexec/aned
+ 7382     1 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/Support/assistantd
+ 7384     1 /System/Library/PrivateFrameworks/AssetCacheServices.framework/Versions/A/XPCServices/AssetCacheLocatorService.xpc/Contents/MacOS/AssetCacheLocatorService
+ 7385     1 /usr/libexec/mmaintenanced
+ 7387     1 /usr/libexec/proactiveeventtrackerd
+ 7388     1 /System/Cryptexes/App/usr/libexec/SafariLaunchAgent
+ 7389     1 /System/Library/PrivateFrameworks/AppSSO.framework/Support/AppSSOAgent.app/Contents/MacOS/AppSSOAgent
+ 7392     1 /usr/libexec/linkd
+ 7397     1 /System/Library/PrivateFrameworks/MobileSoftwareUpdate.framework/Versions/A/XPCServices/com.apple.MobileSoftwareUpdate.CleanupPreparePathService.xpc/Contents/MacOS/com.apple.MobileSoftwareUpdate.CleanupPreparePathService
+ 7398     1 /usr/libexec/containermanagerd
+ 7399     1 /System/Library/Frameworks/SystemExtensions.framework/Versions/A/Helpers/sysextd
+ 7400     1 /System/Library/PrivateFrameworks/CoreADI.framework/adid
+ 7401     1 /usr/libexec/findmydevice-user-agent
+ 7403     1 /usr/libexec/containermanagerd
+ 7404     1 /System/Library/Frameworks/AudioToolbox.framework/AudioComponentRegistrar
+ 7405     1 /usr/libexec/fskit_agent
+ 7406     1 /System/Library/PrivateFrameworks/CoreFollowUp.framework/Versions/A/Support/followupd
+ 7407     1 /usr/libexec/containermanagerd
+ 7409     1 /System/Library/PrivateFrameworks/IntelligenceTasksEngine.framework/Support/intelligencetasksd
+ 7410     1 /usr/libexec/fairplaydeviceidentityd
+ 7411     1 /System/Library/CoreServices/iconservicesagent
+ 7412     1 /System/Library/PrivateFrameworks/IntlPreferences.framework/Support/localizationswitcherd
+ 7413     1 /usr/libexec/seserviced
+ 7415     1 /System/Library/PrivateFrameworks/MobileTimer.framework/Executables/mobiletimerd
+ 7416     1 /usr/libexec/trustd
+ 7420     1 /System/Library/Frameworks/Accounts.framework/Versions/A/Support/accountsd
+ 7422     1 /System/Library/CoreServices/TimeMachine/backupd-helper
+ 7423     1 /System/Library/CoreServices/pbs
+ 7424     1 /System/Library/PrivateFrameworks/CommerceKit.framework/Versions/A/Resources/commerce
+ 7426     1 /System/Library/CoreServices/audioaccessoryd
+ 7427     1 /usr/libexec/keychainsharingmessagingd
+ 7428     1 /usr/libexec/gamecontrolleragentd
+ 7430     1 /System/Library/PrivateFrameworks/DeviceCheckInternal.framework/devicecheckd
+ 7432     1 /System/Library/CoreServices/TimeMachine/backupd
+ 7433     1 /usr/libexec/naturallanguaged
+ 7434     1 /System/Library/CoreServices/iconservicesd
+ 7436     1 /System/Library/PrivateFrameworks/InstallCoordination.framework/Support/installcoordinationd
+ 7437     1 /usr/libexec/MTLAssetUpgraderD
+ 7438     1 /usr/libexec/pkd
+ 7440     1 /System/Library/CoreServices/EscrowSecurityAlert.app/Contents/MacOS/EscrowSecurityAlert
+ 7441     1 /usr/libexec/aneuserd
+ 7442     1 /System/Library/PrivateFrameworks/IMTransferServices.framework/IMTransferAgent.app/Contents/MacOS/IMTransferAgent
+ 7444     1 /usr/libexec/filevaultd
+ 7445     1 /usr/libexec/ASPCarryLog
+ 7450     1 /usr/libexec/containermanagerd
+ 7451     1 /usr/libexec/trustd
+ 7456     1 /System/Library/CoreServices/APFSUserAgent
+ 7459     1 /System/Library/PrivateFrameworks/SyncedDefaults.framework/Support/syncdefaultsd
+ 7460     1 /System/Library/PrivateFrameworks/SessionCore.framework/Support/liveactivitiesd
+ 7466     1 /Users/roylin/.kbox/bin/kbox
+ 7467     1 /System/Library/CoreServices/IOUIAgent.app/Contents/MacOS/IOUIAgent
+ 7468     1 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/installd
+ 7473     1 /System/Library/PrivateFrameworks/AssetCacheServicesExtensions.framework/XPCServices/AssetCacheTetheratorService.xpc/Contents/MacOS/AssetCacheTetheratorService
+ 7476     1 /System/Library/PrivateFrameworks/Categories.framework/Versions/A/XPCServices/CategoriesService.xpc/Contents/MacOS/CategoriesService
+ 7477     1 /usr/libexec/securityd_system
+ 7478     1 /System/Library/PrivateFrameworks/PackageKit.framework/Resources/system_installd
+ 7479     1 /usr/libexec/griddatad
+ 7480     1 /System/Library/PrivateFrameworks/MobileAsset.framework/Versions/A/XPCServices/ManifestStorageService.xpc/Contents/MacOS/ManifestStorageService
+ 7481     1 /System/Library/PrivateFrameworks/AppStoreDaemon.framework/Versions/A/XPCServices/com.apple.AppStoreDaemon.StorePrivilegedODRService.xpc/Contents/MacOS/com.apple.AppStoreDaemon.StorePrivilegedODRService
+ 7484     1 /usr/libexec/metrickitd
+ 7491     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+ 7492     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/XPCServices/com.apple.hiservices-xpcservice.xpc/Contents/MacOS/com.apple.hiservices-xpcservice
+ 7494     1 /usr/libexec/uarpassetmanagerd
+ 7495     1 /usr/sbin/cfprefsd
+ 7498     1 /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+ 7502     1 /usr/sbin/cfprefsd
+ 7503     1 /usr/sbin/cfprefsd
+ 7504     1 /usr/sbin/cfprefsd
+ 7505     1 /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/XPCServices/com.apple.accessibility.mediaaccessibilityd.xpc/Contents/MacOS/com.apple.accessibility.mediaaccessibilityd
+ 7507     1 /usr/libexec/betaenrollmentd
+ 7508     1 /usr/sbin/cfprefsd
+ 7511     1 /System/Library/Frameworks/FamilyControls.framework/Versions/A/FamilyControlsAgent
+ 7514     1 /usr/sbin/cfprefsd
+ 7515     1 /usr/libexec/routined
+ 7516     1 /usr/libexec/countryd
+ 7522     1 /usr/sbin/cfprefsd
+ 7525     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/managedcorespotlightd
+ 7527     1 /usr/sbin/cfprefsd
+ 7528     1 /System/Library/PrivateFrameworks/GeoServices.framework/geodMachServiceBridge
+ 7529     1 /System/Library/PrivateFrameworks/IASUtilities.framework/Versions/A/Resources/installerauthagent
+ 7530     1 /usr/sbin/cfprefsd
+ 7532     1 /usr/libexec/misagent
+ 7534     1 /System/Library/PrivateFrameworks/PodcastServices.framework/XPCServices/PodcastContentService.xpc/Contents/MacOS/PodcastContentService
+ 7535     1 /System/Library/PrivateFrameworks/CacheDelete.framework/deleted_helper
+ 7543     1 /System/Library/PrivateFrameworks/CoreKDL.framework/Support/corekdld
+ 7548     1 /System/Library/PrivateFrameworks/CloudServices.framework/Helpers/com.apple.sbd
+ 7551     1 /System/Library/PrivateFrameworks/CoreSymbolication.framework/coresymbolicationd
+ 7552     1 /usr/libexec/searchpartyuseragent
+ 7553     1 /usr/libexec/secinitd
+ 7554     1 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/MacOS/XProtect
+ 7555     1 /usr/libexec/smd
+ 7556     1 /usr/libexec/tzd
+ 7558     1 /System/Library/Frameworks/ManagedSettings.framework/Versions/A/ManagedSettingsAgent
+ 7585     1 /Users/roylin/.kbox/bin/kbox
+ 7587     1 /usr/libexec/fskitd
+ 7590     1 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/com.apple.CodeSigningHelper.xpc/Contents/MacOS/com.apple.CodeSigningHelper
+ 7591     1 /usr/libexec/online-auth-agent
+ 7592     1 /usr/libexec/centaurid
+ 7593     1 /System/Library/PrivateFrameworks/AppSSO.framework/Support/AppSSODaemon
+ 7594     1 /System/Library/PrivateFrameworks/TCC.framework/Support/tccd
+ 7597     1 /usr/libexec/feedbackd
+ 7603     1 /usr/libexec/gamecontrollerd
+ 7604     1 /usr/libexec/bluetoothuserd
+ 7605     1 /usr/libexec/rtcreportingd
+ 7606     1 /System/Library/CoreServices/Keychain Circle Notification.app/Contents/MacOS/Keychain Circle Notification
+ 7609     1 /usr/libexec/sandboxd
+ 7610     1 /usr/libexec/trustdFileHelper
+ 7611     1 /System/Library/CoreServices/liquiddetectiond.app/liquiddetectiond
+ 7612     1 /usr/libexec/keybagd
+ 7613     1 /System/Library/CoreServices/ReportCrash
+ 7614     1 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/MacOS/XProtect
+ 7615     1 /usr/libexec/colorsyncd
+ 7616     1 /usr/libexec/colorsync.displayservices
+ 7617     1 /System/Library/PrivateFrameworks/AssetCacheServicesExtensions.framework/XPCServices/AssetCacheManagerService.xpc/Contents/MacOS/AssetCacheManagerService
+ 7618     1 /System/Library/PrivateFrameworks/PhotoAnalysis.framework/Versions/A/Support/photoanalysisd
+ 7619     1 /usr/libexec/captiveagent
+ 7621     1 /System/Library/Frameworks/ColorSync.framework/Support/colorsync.useragent
+ 7622     1 /usr/libexec/logd_helper
+ 7624     1 /System/Library/PrivateFrameworks/MediaAnalysis.framework/Versions/A/mediaanalysisd
+ 7625     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/XPCServices/csnameddatad.xpc/Contents/MacOS/csnameddatad
+ 7626     1 /usr/sbin/systemsoundserverd
+ 7627     1 /System/Library/PrivateFrameworks/SystemStatusServer.framework/Support/systemstatusd
+ 7628     1 /System/Library/PrivateFrameworks/Install.framework/Frameworks/DistributionKit.framework/Versions/A/XPCServices/DistributionHelper.xpc/Contents/MacOS/DistributionHelper
+ 7629     1 /usr/libexec/microstackshot
+ 7630     1 /usr/libexec/seputil
+ 7631     1 /usr/libexec/sysmond
+ 7632     1 /usr/libexec/amfid
+ 7633     1 /System/Library/CoreServices/ReportCrash
+ 7634     1 /System/Library/PrivateFrameworks/Noticeboard.framework/Versions/A/Resources/nbstated
+ 7635     1 /usr/libexec/spindump_agent
+ 7636     1 /System/Library/CoreServices/ReportSystemMemory
+ 7637     1 /usr/libexec/biometrickitd
+ 7638     1 /System/Library/Frameworks/Security.framework/authtrampoline
+ 7640     1 /System/Library/CoreServices/UniversalControl.app/Contents/MacOS/UniversalControl
+ 7641     1 /System/Library/Frameworks/GSS.framework/Helpers/GSSCred
+ 7642     1 /Users/roylin/.kbox/bin/kbox
+ 7644     1 /usr/sbin/cfprefsd
+ 7646     1 /usr/sbin/cfprefsd
+ 7647     1 /usr/libexec/powerexperienced
+ 7649     1 /usr/libexec/fskit_helper
+ 7650     1 /usr/libexec/tailspind
+ 7652     1 /System/Library/CryptoTokenKit/com.apple.ifdreader.slotd/Contents/MacOS/com.apple.ifdreader
+ 7653     1 /usr/libexec/usermanagerd
+ 7654     1 /usr/libexec/dirhelper
+ 7665     1 /Users/roylin/.kbox/bin/kbox
+ 7710     1 /usr/libexec/assessmentagent
+ 7712     1 /usr/libexec/nfcd
+ 7714     1 /System/Library/PrivateFrameworks/GeoServices.framework/Versions/A/XPCServices/com.apple.geod.xpc/Contents/MacOS/com.apple.geod
+ 7727     1 /Applications/iTerm.app/Contents/XPCServices/pidinfo.xpc/Contents/MacOS/pidinfo
+ 7734     1 /System/Library/Frameworks/Speech.framework/Versions/A/XPCServices/localspeechrecognition.xpc/Contents/MacOS/localspeechrecognition
+ 7744     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+ 7775     1 /Users/roylin/.kbox/bin/kbox
+ 7780     1 /System/Library/PrivateFrameworks/NearFieldPrivateServices.framework/Versions/A/XPCServices/NFStorageServer.xpc/Contents/MacOS/NFStorageServer
+ 7835     1 /Users/roylin/.kbox/bin/kbox
+ 7862     1 /Users/roylin/.kbox/bin/kbox
+ 7865     1 /Users/roylin/.kbox/bin/kbox
+ 7896     1 /Users/roylin/.kbox/bin/kbox
+ 7980     1 /Users/roylin/.kbox/bin/kbox
+ 8049     1 /Users/roylin/.kbox/bin/kbox
+ 8062     1 /Users/roylin/.kbox/bin/kbox
+ 8068     1 /Users/roylin/.kbox/bin/kbox
+ 8092     1 /System/Library/PrivateFrameworks/TrialServer.framework/Versions/A/XPCServices/TrialArchivingService.xpc/Contents/MacOS/TrialArchivingService
+ 8098     1 /usr/libexec/replayd
+ 8140     1 /Users/roylin/.kbox/bin/kbox
+ 8206     1 /Users/roylin/.kbox/bin/kbox
+ 8306     1 /Users/roylin/.kbox/bin/kbox
+ 8316     1 /Users/roylin/.kbox/bin/kbox
+ 8336     1 /Users/roylin/.kbox/bin/kbox
+ 8349     1 /Users/roylin/.kbox/bin/kbox
+ 8392     1 /Users/roylin/.kbox/bin/kbox
+ 8436     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+ 8440     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+ 8449     1 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/UARPUpdaterServiceDisplay.xpc/Contents/MacOS/UARPUpdaterServiceDisplay
+ 8451     1 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+ 8454     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+ 8463     1 /Users/roylin/.kbox/bin/kbox
+ 8482     1 /Users/roylin/.kbox/bin/kbox
+ 8575     1 /Users/roylin/.kbox/bin/kbox
+ 8582     1 /Users/roylin/.kbox/bin/kbox
+ 8598     1 /Users/roylin/.kbox/bin/kbox
+ 8617     1 /Users/roylin/.kbox/bin/kbox
+ 8671     1 /Users/roylin/.kbox/bin/kbox
+ 8757     1 /Users/roylin/.kbox/bin/kbox
+ 8776     1 /Users/roylin/.kbox/bin/kbox
+ 8799     1 /System/Library/PrivateFrameworks/iCloudDriveService.framework/XPCServices/ContainerMetadataExtractor.xpc/Contents/MacOS/ContainerMetadataExtractor
+ 8814     1 /Users/roylin/.kbox/bin/kbox
+ 8844     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+ 8922     1 /Users/roylin/.kbox/bin/kbox
+ 8936     1 /Users/roylin/.kbox/bin/kbox
+ 8954     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+ 8971     1 /Users/roylin/.kbox/bin/kbox
+ 8975     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+ 9018     1 /Users/roylin/.kbox/bin/kbox
+ 9057     1 /Users/roylin/.kbox/bin/kbox
+ 9075     1 /Users/roylin/.kbox/bin/kbox
+ 9082     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdwrite
+ 9119     1 /Users/roylin/.kbox/bin/kbox
+ 9154     1 /Users/roylin/.kbox/bin/kbox
+ 9227  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+ 9228  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+ 9230  9228 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+ 9257     1 /Users/roylin/.kbox/bin/kbox
+ 9258     1 /Users/roylin/.kbox/bin/kbox
+ 9269     1 /Users/roylin/.kbox/bin/kbox
+ 9328     1 /Users/roylin/.kbox/bin/kbox
+ 9343     1 /Users/roylin/.kbox/bin/kbox
+ 9354     1 /System/Library/PrivateFrameworks/SafariFoundation.framework/Versions/A/XPCServices/SafariConfigurationSubscriber.xpc/Contents/MacOS/SafariConfigurationSubscriber
+ 9358     1 /Users/roylin/.kbox/bin/kbox
+ 9384     1 /Users/roylin/.kbox/bin/kbox
+ 9414     1 /Users/roylin/.kbox/bin/kbox
+ 9429     1 /Users/roylin/.kbox/bin/kbox
+ 9472     1 /Users/roylin/.kbox/bin/kbox
+ 9529     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/SecuritySubscriber.xpc/Contents/MacOS/SecuritySubscriber
+ 9538     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/SecuritySubscriber.xpc/Contents/MacOS/SecuritySubscriber
+ 9542     1 /Users/roylin/.kbox/bin/kbox
+ 9555     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+ 9556     1 /Users/roylin/.kbox/bin/kbox
+ 9570     1 /Users/roylin/.kbox/bin/kbox
+ 9582 21990 /Users/roylin/.codex/packages/app-server-daemon/releases/0.169.0-aarch64-apple-darwin/bin/codex
+ 9589     1 /Users/roylin/.kbox/bin/kbox
+ 9645     1 /Users/roylin/.kbox/bin/kbox
+ 9685     1 /Users/roylin/.kbox/bin/kbox
+ 9699     1 /Users/roylin/.kbox/bin/kbox
+ 9708     1 /System/Library/PrivateFrameworks/MessagesBlastDoorSupport.framework/Versions/A/XPCServices/MessagesBlastDoorService.xpc/Contents/MacOS/MessagesBlastDoorService
+ 9715     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/InteractiveLegacyProfilesSubscriber.xpc/Contents/MacOS/InteractiveLegacyProfilesSubscriber
+ 9733     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/InteractiveLegacyProfilesSubscriber.xpc/Contents/MacOS/InteractiveLegacyProfilesSubscriber
+ 9754     1 /usr/libexec/tzlinkd
+ 9764     1 /Users/roylin/.kbox/bin/kbox
+ 9840     1 /Users/roylin/.kbox/bin/kbox
+ 9865     1 /Users/roylin/.kbox/bin/kbox
+ 9871     1 /Users/roylin/.kbox/bin/kbox
+ 9880     1 /Applications/OrbStack.app/Contents/MacOS/OrbStack
+ 9926     1 /Users/roylin/.kbox/bin/kbox
+ 9959     1 /Users/roylin/.kbox/bin/kbox
+ 9967     1 /Users/roylin/.kbox/bin/kbox
+ 9985     1 /Users/roylin/.kbox/bin/kbox
+10007     1 /Applications/OrbStack.app/Contents/Frameworks/OrbStack Helper.app/Contents/MacOS/OrbStack Helper
+10010     1 /usr/libexec/InternetSharing
+10023     1 /usr/libexec/dhcp6d
+10092     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ScreenSharingSubscriber.xpc/Contents/MacOS/ScreenSharingSubscriber
+10100     1 /Applications/GoGoJumpVPN.app/Contents/PlugIns/ProxiPacketTunnel.appex/Contents/MacOS/ProxiPacketTunnel
+10115     1 /Users/roylin/.kbox/bin/kbox
+10128     1 /Users/roylin/.kbox/bin/kbox
+10129     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ScreenSharingSubscriber.xpc/Contents/MacOS/ScreenSharingSubscriber
+10137     1 /Users/roylin/.kbox/bin/kbox
+10159     1 /System/Library/ExtensionKit/Extensions/OfficeThumbnailExtension.appex/Contents/MacOS/OfficeThumbnailExtension
+10186     1 /Users/roylin/.kbox/bin/kbox
+10278     1 /Users/roylin/.kbox/bin/kbox
+10305     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/LegacyProfilesSubscriber.xpc/Contents/MacOS/LegacyProfilesSubscriber
+10308     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/PasscodeSettingsSubscriber.xpc/Contents/MacOS/PasscodeSettingsSubscriber
+10360     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/DiskManagementSubscriber.xpc/Contents/MacOS/DiskManagementSubscriber
+10366     1 /Users/roylin/.kbox/bin/kbox
+10376  9582 /Users/roylin/.codex/packages/app-server-daemon/releases/0.169.0-aarch64-apple-darwin/bin/codex-code-mode-host
+10380     1 /Users/roylin/.kbox/bin/kbox
+10429     1 /usr/libexec/spotlightknowledged.updater
+10475     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedPreferencesSubscriber.xpc/Contents/MacOS/ManagedPreferencesSubscriber
+10478     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/LegacyProfilesSubscriber.xpc/Contents/MacOS/LegacyProfilesSubscriber
+10480     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/PasscodeSettingsSubscriber.xpc/Contents/MacOS/PasscodeSettingsSubscriber
+10482     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/SoftwareUpdateSubscriber.xpc/Contents/MacOS/SoftwareUpdateSubscriber
+10486     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/AccountSubscriber.xpc/Contents/MacOS/AccountSubscriber
+10487     1 /Users/roylin/.kbox/bin/kbox
+10507     1 /Users/roylin/.kbox/bin/kbox
+10546     1 /Users/roylin/.kbox/bin/kbox
+10637     1 /Users/roylin/.kbox/bin/kbox
+10663     1 /Users/roylin/.kbox/bin/kbox
+10664     1 /System/Library/ExtensionKit/Extensions/FontThumbnailExtension.appex/Contents/MacOS/FontThumbnailExtension
+10666     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedAppsSubscriber.xpc/Contents/MacOS/ManagedAppsSubscriber
+10672     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+10741     1 /Users/roylin/.kbox/bin/kbox
+10749     1 /Users/roylin/.kbox/bin/kbox
+10821     1 /Users/roylin/.kbox/bin/kbox
+10835     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/MigrationSubscriber.xpc/Contents/MacOS/MigrationSubscriber
+10844     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagementTestSubscriber.xpc/Contents/MacOS/ManagementTestSubscriber
+10847     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedAppsSubscriber.xpc/Contents/MacOS/ManagedAppsSubscriber
+10849     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ASConfigurationSubscriber.xpc/Contents/MacOS/ASConfigurationSubscriber
+10852     1 /Users/roylin/.kbox/bin/kbox
+10868     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedSettingsSubscriber.xpc/Contents/MacOS/ManagedSettingsSubscriber
+10875     1 /Users/roylin/.kbox/bin/kbox
+10985     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagementTestSubscriber.xpc/Contents/MacOS/ManagementTestSubscriber
+10988     1 /Users/roylin/.kbox/bin/kbox
+11019     1 /System/Library/PrivateFrameworks/RemoteManagement.framework/XPCServices/ManagedConfigurationFilesSubscriber.xpc/Contents/MacOS/ManagedConfigurationFilesSubscriber
+11095     1 /Users/roylin/.kbox/bin/kbox
+11119     1 /Users/roylin/.kbox/bin/kbox
+11165     1 /Users/roylin/.kbox/bin/kbox
+11211     1 /Users/roylin/.kbox/bin/kbox
+11267     1 /Users/roylin/.kbox/bin/kbox
+11367     1 /Users/roylin/.kbox/bin/kbox
+11383     1 /Users/roylin/.kbox/bin/kbox
+11389     1 /Users/roylin/.kbox/bin/kbox
+11516     1 /Users/roylin/.kbox/bin/kbox
+11534     1 /System/Library/PrivateFrameworks/SiriSuggestionsSupport.framework/Versions/A/XPCServices/SiriSuggestionsBookkeepingService.xpc/Contents/MacOS/SiriSuggestionsBookkeepingService
+11561     1 /Users/roylin/.kbox/bin/kbox
+11628     1 /Users/roylin/.kbox/bin/kbox
+11638     1 /Users/roylin/.kbox/bin/kbox
+11672     1 /Users/roylin/.kbox/bin/kbox
+11773     1 /Users/roylin/.kbox/bin/kbox
+11899     1 /Users/roylin/.kbox/bin/kbox
+11923     1 /Users/roylin/.kbox/bin/kbox
+11937     1 /Users/roylin/.kbox/bin/kbox
+11987     1 /Users/roylin/.kbox/bin/kbox
+12058     1 /Users/roylin/.kbox/bin/kbox
+12109     1 /Users/roylin/.kbox/bin/kbox
+12141     1 /Users/roylin/.kbox/bin/kbox
+12204     1 /Users/roylin/.kbox/bin/kbox
+12221     1 /Users/roylin/.kbox/bin/kbox
+12251     1 /Users/roylin/.kbox/bin/kbox
+12274     1 /System/Library/Frameworks/DiskArbitration.framework/Versions/A/Support/DiskArbitrationAgent
+12309     1 /Users/roylin/.kbox/bin/kbox
+12326     1 /Users/roylin/.kbox/bin/kbox
+12360     1 /System/Library/ExtensionKit/Extensions/AudiovisualThumbnailExtension.appex/Contents/MacOS/AudiovisualThumbnailExtension
+12361     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+12369     1 /Users/roylin/.kbox/bin/kbox
+12391     1 /Users/roylin/.kbox/bin/kbox
+12439     1 /Users/roylin/.kbox/bin/kbox
+12559     1 /Users/roylin/.kbox/bin/kbox
+12564     1 /Users/roylin/.kbox/bin/kbox
+12646     1 /Users/roylin/.kbox/bin/kbox
+12705     1 /Users/roylin/.kbox/bin/kbox
+12789     1 /Users/roylin/.kbox/bin/kbox
+12816     1 /Users/roylin/.kbox/bin/kbox
+12869     1 /Users/roylin/.kbox/bin/kbox
+12871     1 /Users/roylin/.kbox/bin/kbox
+12978     1 /Users/roylin/.kbox/bin/kbox
+13143     1 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+13227     1 /Users/roylin/.kbox/bin/kbox
+13276     1 /Users/roylin/.kbox/bin/kbox
+13359     1 /Users/roylin/.kbox/bin/kbox
+13396     1 /Users/roylin/.kbox/bin/kbox
+13405     1 /Users/roylin/.kbox/bin/kbox
+13452     1 /Users/roylin/.kbox/bin/kbox
+13508     1 /Users/roylin/.kbox/bin/kbox
+13643     1 /Users/roylin/.kbox/bin/kbox
+13741     1 /Users/roylin/.kbox/bin/kbox
+13863     1 /Users/roylin/.kbox/bin/kbox
+13868     1 /System/Library/ExtensionKit/Extensions/com.apple.fskit.msdos.appex/Contents/MacOS/com.apple.fskit.msdos
+13893     1 /Users/roylin/.kbox/bin/kbox
+13962     1 /Users/roylin/.kbox/bin/kbox
+14024     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+14027     1 /Users/roylin/.kbox/bin/kbox
+14242     1 /Users/roylin/.kbox/bin/kbox
+14270     1 /Users/roylin/.kbox/bin/kbox
+14290     1 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XProtectBridgeService.xpc/Contents/MacOS/XProtectBridgeService
+14420     1 /System/Library/AssetsV2/com_apple_MobileAsset_RecoveryOSUpdateBrain/28f9b40aedc0bda53bdc29e31682c998de89e5cb.asset/AssetData/com.apple.NRD.UpdateBrainService.xpc/Contents/MacOS/com.apple.NRD.UpdateBrainService
+14428     1 /Users/roylin/.kbox/bin/kbox
+14513     1 /Users/roylin/.kbox/bin/kbox
+14528     1 /Users/roylin/.kbox/bin/kbox
+14636     1 /Users/roylin/.kbox/bin/kbox
+14822     1 /Users/roylin/.kbox/bin/kbox
+15026     1 /Users/roylin/.kbox/bin/kbox
+15037     1 /Users/roylin/.kbox/bin/kbox
+15091     1 /System/Library/Frameworks/PaperKit.framework/Contents/LinkedNotesUIService.app/Contents/MacOS/LinkedNotesUIService
+15192     1 /Users/roylin/.kbox/bin/kbox
+15263     1 /Users/roylin/.kbox/bin/kbox
+15398     1 /Users/roylin/.kbox/bin/kbox
+15430     1 /Users/roylin/.kbox/bin/kbox
+15453     1 /usr/libexec/PerfPowerServices
+15479     1 /System/Library/PrivateFrameworks/StreamingZip.framework/Versions/A/XPCServices/com.apple.StreamingUnzipService.privileged.xpc/Contents/MacOS/com.apple.StreamingUnzipService.privileged
+15546     1 /Users/roylin/.kbox/bin/kbox
+15752     1 /Users/roylin/.kbox/bin/kbox
+15753     1 /Users/roylin/.kbox/bin/kbox
+15851     1 /Users/roylin/.kbox/bin/kbox
+15945     1 /Users/roylin/.kbox/bin/kbox
+16028     1 /Users/roylin/.kbox/bin/kbox
+16132     1 /Users/roylin/.kbox/bin/kbox
+16276     1 /Users/roylin/.kbox/bin/kbox
+16473     1 /Users/roylin/.kbox/bin/kbox
+16528     1 /Users/roylin/.kbox/bin/kbox
+16588     1 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+16652     1 /Users/roylin/.kbox/bin/kbox
+16736     1 /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/XPCServices/nsattributedstringagent.xpc/Contents/MacOS/nsattributedstringagent
+16816     1 /Users/roylin/.kbox/bin/kbox
+16896     1 /Users/roylin/.kbox/bin/kbox
+17078     1 /Users/roylin/.kbox/bin/kbox
+17092     1 /Users/roylin/.kbox/bin/kbox
+17189     1 /Users/roylin/.kbox/bin/kbox
+17227     1 /Users/roylin/.kbox/bin/kbox
+17373     1 /Users/roylin/.kbox/bin/kbox
+17565     1 /Users/roylin/.kbox/bin/kbox
+17578     1 /Users/roylin/.kbox/bin/kbox
+17636     1 aslmanager
+17769     1 /Users/roylin/.kbox/bin/kbox
+17878     1 /Users/roylin/.kbox/bin/kbox
+17880     1 /Users/roylin/.kbox/bin/kbox
+17997     1 /System/Library/PrivateFrameworks/SiriAnalytics.framework/Versions/A/XPCServices/SAExtensionOrchestrator.xpc/Contents/MacOS/SAExtensionOrchestrator
+18002     1 /Users/roylin/.kbox/bin/kbox
+18010     1 /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/XPCServices/extensionkitservice.xpc/Contents/MacOS/extensionkitservice
+18011     1 /System/Library/ExtensionKit/Extensions/GMSSELFIngestor.appex/Contents/MacOS/GMSSELFIngestor
+18025     1 /System/Library/ExtensionKit/Extensions/IFTelemetrySELFIngestor.appex/Contents/MacOS/IFTelemetrySELFIngestor
+18026     1 /System/Library/ExtensionKit/Extensions/IFTranscriptSELFIngestor.appex/Contents/MacOS/IFTranscriptSELFIngestor
+18027     1 /System/Library/ExtensionKit/Extensions/BiomeSELFIngestor.appex/Contents/MacOS/BiomeSELFIngestor
+18109     1 /Users/roylin/.kbox/bin/kbox
+18286     1 /Users/roylin/.kbox/bin/kbox
+18493     1 /Users/roylin/.kbox/bin/kbox
+18579     1 /Users/roylin/.kbox/bin/kbox
+18708     1 /Users/roylin/.kbox/bin/kbox
+18830     1 /Users/roylin/.kbox/bin/kbox
+18942     1 /Users/roylin/.kbox/bin/kbox
+18949     1 /Users/roylin/.kbox/bin/kbox
+19035     1 /Users/roylin/.kbox/bin/kbox
+19142     1 /Users/roylin/.kbox/bin/kbox
+19151     1 /Users/roylin/.kbox/bin/kbox
+19257     1 /Users/roylin/.kbox/bin/kbox
+19284     1 /Users/roylin/.kbox/bin/kbox
+19345     1 /Users/roylin/.kbox/bin/kbox
+19444     1 /Users/roylin/.kbox/bin/kbox
+19507     1 /Users/roylin/.kbox/bin/kbox
+19577     1 /Users/roylin/.kbox/bin/kbox
+19605     1 /Users/roylin/.kbox/bin/kbox
+19702     1 /Users/roylin/.kbox/bin/kbox
+19790     1 /Users/roylin/.kbox/bin/kbox
+19818     1 /Users/roylin/.kbox/bin/kbox
+19854     1 /Users/roylin/.kbox/bin/kbox
+19923     1 /Users/roylin/.kbox/bin/kbox
+19943     1 /Users/roylin/.kbox/bin/kbox
+20007     1 /Users/roylin/.kbox/bin/kbox
+20106     1 /Users/roylin/.kbox/bin/kbox
+20197     1 /Users/roylin/.kbox/bin/kbox
+20296     1 /Users/roylin/.kbox/bin/kbox
+20308     1 /Users/roylin/.kbox/bin/kbox
+20439     1 /Users/roylin/.kbox/bin/kbox
+20526     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+20527     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+20528     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+20531     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+20532     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+20542     1 /Users/roylin/.kbox/bin/kbox
+20686     1 /Users/roylin/.kbox/bin/kbox
+20742     1 /Users/roylin/.kbox/bin/kbox
+20755     1 /Users/roylin/.kbox/bin/kbox
+20806     1 /Users/roylin/.kbox/bin/kbox
+20870     1 /Users/roylin/.kbox/bin/kbox
+20879     1 /Users/roylin/.kbox/bin/kbox
+20888     1 /Users/roylin/.kbox/bin/kbox
+20975     1 /Users/roylin/.kbox/bin/kbox
+21004     1 /Users/roylin/.kbox/bin/kbox
+21017     1 /Users/roylin/.kbox/bin/kbox
+21097     1 /Users/roylin/.kbox/bin/kbox
+21167     1 /Users/roylin/.kbox/bin/kbox
+21198     1 /Users/roylin/.kbox/bin/kbox
+21206     1 /Users/roylin/.kbox/bin/kbox
+21212     1 /Users/roylin/.kbox/bin/kbox
+21255     1 /Users/roylin/.kbox/bin/kbox
+21272     1 /Users/roylin/.kbox/bin/kbox
+21321     1 /Users/roylin/.kbox/bin/kbox
+21416     1 /Users/roylin/.kbox/bin/kbox
+21426     1 /Users/roylin/.kbox/bin/kbox
+21592     1 /Users/roylin/.kbox/bin/kbox
+21685     1 /Users/roylin/.kbox/bin/kbox
+21779     1 /Users/roylin/.kbox/bin/kbox
+21885     1 /Users/roylin/.kbox/bin/kbox
+21910     1 /Users/roylin/.kbox/bin/kbox
+21960     1 /Users/roylin/.kbox/bin/kbox
+21990     1 /Users/roylin/.codex/packages/app-server-daemon/releases/0.169.0-aarch64-apple-darwin/bin/codex
+22021     1 /Users/roylin/.kbox/bin/kbox
+22089     1 /Users/roylin/.kbox/bin/kbox
+22106     1 /Users/roylin/.kbox/bin/kbox
+22118     1 /Users/roylin/.kbox/bin/kbox
+22183     1 /Users/roylin/.kbox/bin/kbox
+22212     1 /Users/roylin/.kbox/bin/kbox
+22256     1 /Users/roylin/.kbox/bin/kbox
+22264     1 /Users/roylin/.kbox/bin/kbox
+22309     1 /Users/roylin/.kbox/bin/kbox
+22317     1 /Users/roylin/.kbox/bin/kbox
+22432     1 /Users/roylin/.kbox/bin/kbox
+22505     1 /Users/roylin/.kbox/bin/kbox
+22560     1 /Users/roylin/.kbox/bin/kbox
+22565     1 /Users/roylin/.kbox/bin/kbox
+22568     1 /Users/roylin/.kbox/bin/kbox
+22690     1 /Users/roylin/.kbox/bin/kbox
+22696     1 /Users/roylin/.kbox/bin/kbox
+22715     1 /Users/roylin/.kbox/bin/kbox
+22767     1 /Users/roylin/.kbox/bin/kbox
+22780     1 /Users/roylin/.kbox/bin/kbox
+22828     1 /Users/roylin/.kbox/bin/kbox-shim
+22836     1 /Users/roylin/.kbox/bin/kbox
+22846     1 /Users/roylin/.kbox/bin/kbox
+22983     1 /Users/roylin/.kbox/bin/kbox
+23006     1 /Users/roylin/.kbox/bin/kbox
+23065     1 /Users/roylin/.kbox/bin/kbox
+23099     1 /Users/roylin/.kbox/bin/kbox
+23125     1 /Users/roylin/.kbox/bin/kbox
+23197     1 /Users/roylin/.kbox/bin/kbox
+23209     1 /Users/roylin/.kbox/bin/kbox
+23247     1 /Users/roylin/.kbox/bin/kbox
+23270     1 /Users/roylin/.kbox/bin/kbox
+23320     1 /System/Library/PrivateFrameworks/AppleCredentialManager.framework/AppleCredentialManagerDaemon
+23336     1 /Users/roylin/.kbox/bin/kbox
+23348     1 /usr/libexec/hidd
+23353     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+23372     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+23398     1 /Users/roylin/.kbox/bin/kbox
+23425     1 /Users/roylin/.kbox/bin/kbox
+23471     1 /Users/roylin/.kbox/bin/kbox
+23523     1 /Users/roylin/.kbox/bin/kbox
+23711     1 /System/Library/Frameworks/CoreSpotlight.framework/spotlightknowledged
+23750     1 /Users/roylin/.kbox/bin/kbox
+23942     1 /Users/roylin/.kbox/bin/kbox
+23990     1 /Users/roylin/.kbox/bin/kbox
+24038     1 /Users/roylin/.kbox/bin/kbox
+24078     1 /Users/roylin/.kbox/bin/kbox
+24147     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+24218     1 /Users/roylin/.kbox/bin/kbox
+24476     1 /Users/roylin/.kbox/bin/kbox
+24579     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+24580     1 /Applications/WeChat.app/Contents/Frameworks/Sparkle.framework/Versions/B/XPCServices/Installer.xpc/Contents/MacOS/Installer
+24581     1 /Applications/WeChat.app/Contents/Frameworks/Sparkle.framework/Versions/B/Autoupdate
+24582     1 /Users/roylin/Library/Caches/com.tencent.xinWeChat/org.sparkle-project.Sparkle/Launcher/T3wReIgPH/Updater.app/Contents/MacOS/Updater
+24612     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+24623     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+24714     1 /Users/roylin/.kbox/bin/kbox
+24734     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+24750     1 /Users/roylin/.kbox/bin/kbox
+24919     1 /Users/roylin/.kbox/bin/kbox
+25095     1 /System/Library/CoreServices/Siri.app/Contents/XPCServices/SiriNCService.xpc/Contents/MacOS/SiriNCService
+25209     1 /Users/roylin/.kbox/bin/kbox
+25238     1 /Users/roylin/.kbox/bin/kbox
+25249     1 /Users/roylin/.kbox/bin/kbox
+25423     1 /Users/roylin/.kbox/bin/kbox
+25547     1 /Users/roylin/.kbox/bin/kbox
+25564     1 /Users/roylin/.kbox/bin/kbox
+25590     1 /Users/roylin/.kbox/bin/kbox
+25758     1 /Users/roylin/.kbox/bin/kbox
+25809     1 /Users/roylin/.kbox/bin/kbox
+25831     1 /Users/roylin/.kbox/bin/kbox
+25900     1 /Users/roylin/.kbox/bin/kbox
+25952 51514 /bin/zsh
+25964     1 /Users/roylin/.kbox/bin/kbox
+25970 25952 /bin/zsh
+25971 25952 tee
+25972 25970 /opt/homebrew/Cellar/just/1.58.0/bin/just
+25973 25952 tail
+25993 25972 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+26027     1 /Users/roylin/.kbox/bin/kbox
+26038 25993 /Users/roylin/code/inkstone/krun/target/release/krun
+26039 25993 node
+26130     1 /Users/roylin/.kbox/bin/kbox
+26185     1 /System/Library/PrivateFrameworks/MobileInstallation.framework/XPCServices/com.apple.MobileInstallationHelperService.xpc/Contents/MacOS/com.apple.MobileInstallationHelperService
+26186     1 /usr/libexec/backgroundassets.user
+26187     1 /System/Library/PrivateFrameworks/StreamingZip.framework/Versions/A/XPCServices/com.apple.StreamingUnzipService.xpc/Contents/MacOS/com.apple.StreamingUnzipService
+26327     1 /System/Library/PrivateFrameworks/IntelligencePlatformCompute.framework/Versions/A/XPCServices/IntelligencePlatformComputeService.xpc/Contents/MacOS/IntelligencePlatformComputeService
+26359     1 /Users/roylin/.kbox/bin/kbox
+26365     1 /Users/roylin/.kbox/bin/kbox
+26592     1 /System/Library/Services/AppleSpell.service/Contents/MacOS/AppleSpell
+26623     1 /Users/roylin/.kbox/bin/kbox
+26706     1 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/Support/accessoryupdaterd
+26724     1 /Users/roylin/.kbox/bin/kbox
+26768     1 /Users/roylin/.kbox/bin/kbox
+26887     1 /System/Library/PrivateFrameworks/UserActivity.framework/Agents/useractivityd
+26903     1 /Users/roylin/.kbox/bin/kbox
+27001     1 /Users/roylin/.kbox/bin/kbox
+27324     1 /Users/roylin/.kbox/bin/kbox
+27325     1 /Users/roylin/.kbox/bin/kbox
+27328     1 /Users/roylin/.kbox/bin/kbox
+27477     1 /usr/sbin/spindump
+27544 26039 /opt/homebrew/Cellar/node/26.8.1/bin/node
+27591     1 /Users/roylin/.kbox/bin/kbox
+27617     1 /Users/roylin/.kbox/bin/kbox
+27679     1 /Users/roylin/.kbox/bin/kbox
+27782     1 /Users/roylin/.kbox/bin/kbox
+27879     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/com.apple.appkit.xpc.openAndSavePanelService.xpc/Contents/MacOS/com.apple.appkit.xpc.openAndSavePanelService
+27880     1 /System/Library/Frameworks/QuickLookUI.framework/Versions/A/XPCServices/QuickLookUIService.xpc/Contents/MacOS/QuickLookUIService
+27951     1 /Users/roylin/.kbox/bin/kbox
+28191     1 /Users/roylin/.kbox/bin/kbox
+28227     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+28251     1 /Users/roylin/.kbox/bin/kbox
+28373     1 /Users/roylin/.kbox/bin/kbox
+28482     1 /Users/roylin/.kbox/bin/kbox
+28756     1 /Users/roylin/.kbox/bin/kbox
+28836     1 /Users/roylin/.kbox/bin/kbox
+29113     1 /Users/roylin/.kbox/bin/kbox
+29231     1 /Users/roylin/.kbox/bin/kbox
+29248     1 /Users/roylin/.kbox/bin/kbox
+29402     1 /Users/roylin/.kbox/bin/kbox
+29488     1 /Users/roylin/.kbox/bin/kbox
+29544     1 /Users/roylin/.kbox/bin/kbox
+29585     1 /Users/roylin/.kbox/bin/kbox
+29593     1 /Users/roylin/.kbox/bin/kbox
+29665     1 /Users/roylin/.kbox/bin/kbox
+29748     1 /Users/roylin/.kbox/bin/kbox
+29806     1 /Users/roylin/.kbox/bin/kbox
+29824     1 /Users/roylin/.kbox/bin/kbox
+29920     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+29978     1 /Users/roylin/.kbox/bin/kbox
+30070     1 /Users/roylin/.kbox/bin/kbox
+30165     1 /Users/roylin/.kbox/bin/kbox
+30192     1 /Users/roylin/.kbox/bin/kbox
+30444     1 /Users/roylin/.kbox/bin/kbox
+30460     1 /Users/roylin/.kbox/bin/kbox
+30577     1 /Users/roylin/.kbox/bin/kbox
+30611     1 /Users/roylin/.kbox/bin/kbox
+30672     1 /Users/roylin/.kbox/bin/kbox
+30742     1 /Users/roylin/.kbox/bin/kbox
+30753     1 /Users/roylin/.kbox/bin/kbox
+30779     1 /Users/roylin/.kbox/bin/kbox
+30795     1 /Users/roylin/.kbox/bin/kbox
+30886 97892 sleep
+30901     1 /Users/roylin/.kbox/bin/kbox
+30930     1 /Users/roylin/.kbox/bin/kbox
+31012     1 /Users/roylin/.kbox/bin/kbox
+31028     1 /Users/roylin/.kbox/bin/kbox
+31083     1 /Users/roylin/.kbox/bin/kbox
+31103     1 /Users/roylin/.kbox/bin/kbox
+31159     1 /Users/roylin/.kbox/bin/kbox
+31289     1 /System/Library/PrivateFrameworks/AssistantServices.framework/Versions/A/XPCServices/media-indexer.xpc/Contents/MacOS/media-indexer
+31293     1 /System/Library/PrivateFrameworks/AMPLibrary.framework/Versions/A/Support/AMPLibraryAgent
+31298     1 /Users/roylin/.kbox/bin/kbox
+31310     1 /System/Library/PrivateFrameworks/AMPLibrary.framework/Versions/A/Support/AMPArtworkAgent
+31316     1 /Users/roylin/.kbox/bin/kbox
+31359     1 /Users/roylin/.kbox/bin/kbox
+31372     1 /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/XPCServices/ANEStorageMaintainer.xpc/Contents/MacOS/ANEStorageMaintainer
+31373     1 /System/Library/PrivateFrameworks/AppleNeuralEngine.framework/XPCServices/ANEStorageMaintainer.xpc/Contents/MacOS/ANEStorageMaintainer
+31406     1 /Users/roylin/.kbox/bin/kbox
+31476     1 /Users/roylin/.kbox/bin/kbox
+31490     1 /Users/roylin/.kbox/bin/kbox
+31629     1 /Users/roylin/.kbox/bin/kbox
+31663     1 /Users/roylin/.kbox/bin/kbox
+31680     1 /Users/roylin/.kbox/bin/kbox
+31690     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+31775     1 /Users/roylin/.kbox/bin/kbox
+31873     1 /Users/roylin/.kbox/bin/kbox
+31909 27544 /Users/roylin/code/inkstone/web/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron
+31911 31909 /Users/roylin/code/inkstone/web/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper
+31912 31909 /Users/roylin/code/inkstone/web/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper.app/Contents/MacOS/Electron Helper
+31913 31909 /Users/roylin/code/inkstone/web/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)
+31914 31909 /Users/roylin/code/inkstone/web/node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Helper (Renderer).app/Contents/MacOS/Electron Helper (Renderer)
+31931     1 /Users/roylin/.kbox/bin/kbox
+31950     1 /usr/libexec/pfd
+31956     1 /Users/roylin/code/inkstone/krun/target/native-runtime/bin/krun-vm
+31959 31909 /Users/roylin/code/inkstone/krun/target/native-runtime/bin/krun-vm
+31961 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+31962     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+31963     1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker_shared
+31968  9582 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python
+31970 31968 ps
+32022     1 /Users/roylin/.kbox/bin/kbox
+32054     1 /Users/roylin/.kbox/bin/kbox
+32207     1 /Users/roylin/.kbox/bin/kbox
+32353     1 /Users/roylin/.kbox/bin/kbox
+32394     1 /Users/roylin/.kbox/bin/kbox
+32609     1 /Users/roylin/.kbox/bin/kbox
+32663     1 /Users/roylin/.kbox/bin/kbox
+32775     1 /Users/roylin/.kbox/bin/kbox
+32821     1 /Users/roylin/.kbox/bin/kbox
+32835     1 /Users/roylin/.kbox/bin/kbox
+32849     1 /Users/roylin/.kbox/bin/kbox
+32920     1 /System/Library/PrivateFrameworks/AmbientDisplay.framework/Versions/A/XPCServices/com.apple.AmbientDisplayAgent.xpc/Contents/MacOS/com.apple.AmbientDisplayAgent
+32977     1 /Users/roylin/.kbox/bin/kbox
+32993     1 /Users/roylin/.kbox/bin/kbox
+33035     1 /Users/roylin/.kbox/bin/kbox
+33202     1 /Users/roylin/.kbox/bin/kbox
+33203     1 /Users/roylin/.kbox/bin/kbox
+33226     1 /Users/roylin/.kbox/bin/kbox
+33306     1 /System/Library/Frameworks/ColorSync.framework/Versions/A/XPCServices/com.apple.ColorSyncXPCAgent.xpc/Contents/MacOS/com.apple.ColorSyncXPCAgent
+33353     1 /Users/roylin/.kbox/bin/kbox
+33393     1 /Users/roylin/.kbox/bin/kbox
+33398     1 /Users/roylin/.kbox/bin/kbox
+33442     1 /Users/roylin/.kbox/bin/kbox
+33466     1 /Users/roylin/.kbox/bin/kbox
+33500     1 /Users/roylin/.kbox/bin/kbox
+33546     1 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/XPCServices/XProtectPluginService.xpc/Contents/MacOS/XProtectPluginService
+33549     1 /Library/Apple/System/Library/CoreServices/XProtect.app/Contents/XPCServices/XProtectPluginService.xpc/Contents/MacOS/XProtectPluginService
+33550     1 /Users/roylin/.kbox/bin/kbox
+33566     1 /Users/roylin/.kbox/bin/kbox
+33676     1 /Users/roylin/.kbox/bin/kbox
+33699     1 /Users/roylin/.kbox/bin/kbox
+33700     1 /Users/roylin/.kbox/bin/kbox
+33805     1 /Users/roylin/.kbox/bin/kbox
+33819     1 /Users/roylin/.kbox/bin/kbox
+33830     1 /System/Library/ExtensionKit/Extensions/ImageThumbnailExtension.appex/Contents/MacOS/ImageThumbnailExtension
+33880     1 /System/Library/PrivateFrameworks/KerberosHelper/Helpers/DiskUnmountWatcher
+33931     1 /Users/roylin/.kbox/bin/kbox
+33953     1 /Users/roylin/.kbox/bin/kbox
+33969     1 /System/Library/CoreServices/Setup Assistant.app/Contents/Resources/mbuseragent
+33973     1 /usr/libexec/DataDetectorsSourceAccess
+34085     1 /Users/roylin/.kbox/bin/kbox
+34153     1 /Users/roylin/.kbox/bin/kbox
+34175     1 /Users/roylin/.kbox/bin/kbox
+34301     1 /Users/roylin/.kbox/bin/kbox
+34325     1 /Users/roylin/.kbox/bin/kbox
+34355 96654 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
+34465     1 /Users/roylin/.kbox/bin/kbox
+34469     1 /Users/roylin/.kbox/bin/kbox
+34546     1 /Users/roylin/.kbox/bin/kbox
+34623     1 /Users/roylin/.kbox/bin/kbox
+34626     1 /Users/roylin/.kbox/bin/kbox
+34641     1 /System/Applications/News.app/Contents/PlugIns/NewsToday2.appex/Contents/MacOS/NewsToday2
+34644     1 /System/Applications/News.app/Contents/PlugIns/NewsTag.appex/Contents/MacOS/NewsTag
+34711     1 /Users/roylin/.kbox/bin/kbox
+34793 96654 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
+34808     1 /Users/roylin/.kbox/bin/kbox
+34870     1 /Users/roylin/.kbox/bin/kbox
+34959     1 /Users/roylin/.kbox/bin/kbox
+35148     1 /Users/roylin/.kbox/bin/kbox
+35225     1 /System/Library/PrivateFrameworks/DataAccess.framework/Support/dataaccessd
+35236     1 /Users/roylin/.kbox/bin/kbox
+35242     1 /Users/roylin/.kbox/bin/kbox
+35311     1 /usr/libexec/duetexpertd
+35352     1 /Users/roylin/.kbox/bin/kbox
+35417     1 /Users/roylin/.kbox/bin/kbox
+35469     1 /Users/roylin/.kbox/bin/kbox
+35549     1 /Users/roylin/.kbox/bin/kbox
+35610     1 /Users/roylin/.kbox/bin/kbox
+35676     1 /Users/roylin/.kbox/bin/kbox
+35740     1 /Users/roylin/.kbox/bin/kbox
+35812     1 /Users/roylin/.kbox/bin/kbox
+35822     1 /Users/roylin/.kbox/bin/kbox
+35836     1 /Users/roylin/.kbox/bin/kbox
+35846     1 /Users/roylin/.kbox/bin/kbox
+35964     1 /Users/roylin/.kbox/bin/kbox
+36007     1 /Users/roylin/.kbox/bin/kbox
+36032     1 /Users/roylin/.kbox/bin/kbox
+36089     1 /Users/roylin/.kbox/bin/kbox
+36279     1 /Users/roylin/.kbox/bin/kbox
+36291     1 /Users/roylin/.kbox/bin/kbox
+36300     1 /Users/roylin/.kbox/bin/kbox
+36304     1 /Users/roylin/.kbox/bin/kbox
+36386     1 /Users/roylin/.kbox/bin/kbox
+36404     1 /Users/roylin/.kbox/bin/kbox
+36422     1 /Users/roylin/.kbox/bin/kbox
+36452     1 /Users/roylin/.kbox/bin/kbox
+36506     1 /Users/roylin/.kbox/bin/kbox
+36587     1 /Users/roylin/.kbox/bin/kbox
+36597     1 /Users/roylin/.kbox/bin/kbox
+36610     1 /Users/roylin/.kbox/bin/kbox
+36647     1 /Users/roylin/.kbox/bin/kbox
+36672     1 /Users/roylin/.kbox/bin/kbox
+36731     1 /Users/roylin/.kbox/bin/kbox
+36773     1 /Users/roylin/.kbox/bin/kbox
+36798     1 /Users/roylin/.kbox/bin/kbox
+36810     1 /usr/libexec/nsurlsessiond
+36921     1 /Users/roylin/.kbox/bin/kbox
+36922     1 /Users/roylin/.kbox/bin/kbox
+36932     1 /Users/roylin/.kbox/bin/kbox
+37006     1 /Users/roylin/.kbox/bin/kbox
+37013     1 /Users/roylin/.kbox/bin/kbox
+37032     1 /Users/roylin/.kbox/bin/kbox
+37043     1 /Users/roylin/.kbox/bin/kbox
+37104     1 /Users/roylin/.kbox/bin/kbox
+37146     1 /Users/roylin/.kbox/bin/kbox
+37183     1 /Users/roylin/.kbox/bin/kbox
+37186     1 /Users/roylin/.kbox/bin/kbox
+37279     1 /Users/roylin/.kbox/bin/kbox
+37298     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+37324     1 /Users/roylin/.kbox/bin/kbox
+37362     1 /Users/roylin/.kbox/bin/kbox
+37390     1 /Users/roylin/.kbox/bin/kbox
+37417     1 /Users/roylin/.kbox/bin/kbox
+37455     1 /Users/roylin/.kbox/bin/kbox
+37532     1 /Users/roylin/.kbox/bin/kbox
+37542     1 /Users/roylin/.kbox/bin/kbox
+37633     1 /Users/roylin/.kbox/bin/kbox
+37647     1 /System/Library/CoreServices/WindowManager.app/Contents/PlugIns/WindowManagerControlsExtension.appex/Contents/MacOS/WindowManagerControlsExtension
+37648     1 /System/Library/CoreServices/ControlCenter.app/Contents/PlugIns/DisplayControls.appex/Contents/MacOS/DisplayControls
+37649     1 /System/Applications/Utilities/Screenshot.app/Contents/PlugIns/ScreenshotControls.appex/Contents/MacOS/ScreenshotControls
+37650     1 /Users/roylin/.kbox/bin/kbox
+37691     1 /Users/roylin/.kbox/bin/kbox
+37782     1 /Users/roylin/.kbox/bin/kbox
+37808     1 /Users/roylin/.kbox/bin/kbox
+37824     1 /Users/roylin/.kbox/bin/kbox
+37872     1 /Users/roylin/.kbox/bin/kbox
+37948     1 /Users/roylin/.kbox/bin/kbox
+37955     1 /Users/roylin/.kbox/bin/kbox
+37967     1 /Users/roylin/.kbox/bin/kbox
+37972     1 /Users/roylin/.kbox/bin/kbox
+38057     1 /Users/roylin/.kbox/bin/kbox
+38075     1 /Users/roylin/.kbox/bin/kbox
+38093     1 /Users/roylin/.kbox/bin/kbox
+38100     1 /Users/roylin/.kbox/bin/kbox
+38136     1 /Users/roylin/.kbox/bin/kbox
+38160     1 /Users/roylin/.kbox/bin/kbox
+38182     1 /Users/roylin/.kbox/bin/kbox
+38251     1 /Users/roylin/.kbox/bin/kbox
+38268     1 /Users/roylin/.kbox/bin/kbox
+38324     1 /Users/roylin/.kbox/bin/kbox
+38331     1 /Users/roylin/.kbox/bin/kbox
+38345     1 /Users/roylin/.kbox/bin/kbox
+38375     1 /Users/roylin/.kbox/bin/kbox
+38389     1 /Applications/Visual Studio Code.app/Contents/Frameworks/Squirrel.framework/Resources/ShipIt
+38410     1 /Users/roylin/.kbox/bin/kbox
+38420     1 /Users/roylin/.kbox/bin/kbox
+38433     1 /Users/roylin/.kbox/bin/kbox
+38486     1 /Users/roylin/.kbox/bin/kbox
+38502     1 /Users/roylin/.kbox/bin/kbox
+38515     1 /Users/roylin/.kbox/bin/kbox
+38520     1 /Users/roylin/.kbox/bin/kbox
+38595     1 /Users/roylin/.kbox/bin/kbox
+38614     1 /Users/roylin/.kbox/bin/kbox
+38669     1 /Users/roylin/.kbox/bin/kbox
+38722     1 /Users/roylin/.kbox/bin/kbox
+38731     1 /Users/roylin/.kbox/bin/kbox
+38735     1 /Users/roylin/.kbox/bin/kbox
+38749     1 /Users/roylin/.kbox/bin/kbox
+38755     1 /Users/roylin/.kbox/bin/kbox
+38831     1 /Users/roylin/.kbox/bin/kbox
+38836     1 /Users/roylin/.kbox/bin/kbox
+38868     1 /Users/roylin/.kbox/bin/kbox
+38887     1 /Users/roylin/.kbox/bin/kbox
+38924     1 keyboxd
+38926     1 gpg-agent
+38927 38926 scdaemon
+38956     1 /System/Library/PrivateFrameworks/FindMyDevice.framework/XPCServices/FindMyDeviceSharedConfigurationXPCService.xpc/Contents/MacOS/FindMyDeviceSharedConfigurationXPCService
+38958     1 /Users/roylin/.kbox/bin/kbox
+38962     1 /Users/roylin/.kbox/bin/kbox
+38969     1 /Users/roylin/.kbox/bin/kbox
+39044     1 /Users/roylin/.kbox/bin/kbox
+39067     1 /Users/roylin/.kbox/bin/kbox
+39095     1 /Users/roylin/.kbox/bin/kbox
+39114     1 /Users/roylin/.kbox/bin/kbox
+39139     1 /Users/roylin/.kbox/bin/kbox
+39152     1 /Users/roylin/.kbox/bin/kbox
+39154     1 /Users/roylin/.kbox/bin/kbox
+39191     1 /Users/roylin/.kbox/bin/kbox
+39202     1 /Users/roylin/.kbox/bin/kbox
+39218     1 /Users/roylin/.kbox/bin/kbox
+39254     1 /Users/roylin/.kbox/bin/kbox
+39274  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+39275  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+39277 39275 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+39284     1 /Users/roylin/.kbox/bin/kbox
+39327     1 /Users/roylin/.kbox/bin/kbox
+39340     1 /Users/roylin/.kbox/bin/kbox
+39345     1 /Users/roylin/.kbox/bin/kbox
+39414     1 /Users/roylin/.kbox/bin/kbox
+39417     1 /Users/roylin/.kbox/bin/kbox
+39454     1 /Users/roylin/.kbox/bin/kbox
+39462     1 /Users/roylin/.kbox/bin/kbox
+39478     1 /Users/roylin/.kbox/bin/kbox
+39483     1 /Users/roylin/.kbox/bin/kbox
+39588     1 /Users/roylin/.kbox/bin/kbox
+39662     1 /Users/roylin/.kbox/bin/kbox
+39682     1 /Users/roylin/.kbox/bin/kbox
+39706     1 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+39719     1 /Users/roylin/.kbox/bin/kbox
+39753     1 /Users/roylin/.kbox/bin/kbox
+39798     1 /Users/roylin/.kbox/bin/kbox
+39854     1 /Users/roylin/.kbox/bin/kbox
+39866     1 /Users/roylin/.kbox/bin/kbox
+39905     1 /Users/roylin/.kbox/bin/kbox
+39978     1 /Users/roylin/.kbox/bin/kbox
+40012     1 /Users/roylin/.kbox/bin/kbox
+40031     1 /Users/roylin/.kbox/bin/kbox
+40037     1 /Users/roylin/.kbox/bin/kbox
+40068     1 /Users/roylin/.kbox/bin/kbox
+40080     1 /Users/roylin/.kbox/bin/kbox
+40110     1 /Users/roylin/.kbox/bin/kbox
+40111     1 /Users/roylin/.kbox/bin/kbox
+40144     1 /Users/roylin/.kbox/bin/kbox
+40153     1 /Users/roylin/.kbox/bin/kbox
+40271     1 /Users/roylin/.kbox/bin/kbox
+40276     1 /Users/roylin/.kbox/bin/kbox
+40358     1 /Users/roylin/.kbox/bin/kbox
+40387     1 /Users/roylin/.kbox/bin/kbox
+40401     1 /Users/roylin/.kbox/bin/kbox
+40432     1 /Users/roylin/.kbox/bin/kbox
+40480     1 /Users/roylin/.kbox/bin/kbox
+40493     1 /Users/roylin/.kbox/bin/kbox
+40521     1 /Users/roylin/.kbox/bin/kbox
+40531     1 /Users/roylin/.kbox/bin/kbox
+40542     1 /Users/roylin/.kbox/bin/kbox
+40623     1 /Users/roylin/.kbox/bin/kbox
+40681     1 /Users/roylin/.kbox/bin/kbox
+40685     1 /Users/roylin/.kbox/bin/kbox
+40688     1 /Users/roylin/.kbox/bin/kbox
+40690     1 /Users/roylin/.kbox/bin/kbox
+40694     1 /Users/roylin/.kbox/bin/kbox
+40730     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+40797     1 /Users/roylin/.kbox/bin/kbox
+40809     1 /Users/roylin/.kbox/bin/kbox
+40832     1 /Users/roylin/.kbox/bin/kbox
+40896     1 /Users/roylin/.kbox/bin/kbox
+40899     1 /Users/roylin/.kbox/bin/kbox
+40906     1 /Users/roylin/.kbox/bin/kbox
+40941     1 /Users/roylin/.kbox/bin/kbox
+40989     1 /Users/roylin/.kbox/bin/kbox
+41029     1 /Users/roylin/.kbox/bin/kbox
+41053     1 /Users/roylin/.kbox/bin/kbox
+41081     1 /Users/roylin/.kbox/bin/kbox
+41119     1 /Users/roylin/.kbox/bin/kbox
+41125     1 /Users/roylin/.kbox/bin/kbox
+41130     1 /Users/roylin/.kbox/bin/kbox
+41139     1 /Users/roylin/.kbox/bin/kbox
+41167     1 /Users/roylin/.kbox/bin/kbox
+41192     1 /Users/roylin/.kbox/bin/kbox
+41199     1 /Users/roylin/.kbox/bin/kbox
+41235     1 /Users/roylin/.kbox/bin/kbox
+41273     1 /Users/roylin/.kbox/bin/kbox
+41294     1 /Users/roylin/.kbox/bin/kbox
+41318     1 /Users/roylin/.kbox/bin/kbox
+41328     1 /Users/roylin/.kbox/bin/kbox
+41360     1 /Users/roylin/.kbox/bin/kbox
+41410     1 /Users/roylin/.kbox/bin/kbox
+41459     1 /Users/roylin/.kbox/bin/kbox
+41464     1 /Users/roylin/.kbox/bin/kbox
+41496     1 /Users/roylin/.kbox/bin/kbox
+41508     1 /Users/roylin/.kbox/bin/kbox
+41555     1 /Users/roylin/.kbox/bin/kbox
+41593     1 /Users/roylin/.kbox/bin/kbox
+41626     1 /Users/roylin/.kbox/bin/kbox
+41631     1 /Users/roylin/.kbox/bin/kbox
+41696     1 /Users/roylin/.kbox/bin/kbox
+41697     1 /Users/roylin/.kbox/bin/kbox
+41712     1 /Users/roylin/.kbox/bin/kbox
+41753     1 /Users/roylin/.kbox/bin/kbox
+41808     1 /Users/roylin/.kbox/bin/kbox
+41813     1 /Users/roylin/.kbox/bin/kbox
+41815     1 /Users/roylin/.kbox/bin/kbox
+41824     1 /Users/roylin/.kbox/bin/kbox
+41826     1 /Users/roylin/.kbox/bin/kbox
+41900     1 /Users/roylin/.kbox/bin/kbox
+41910     1 /Users/roylin/.kbox/bin/kbox
+41920     1 /Users/roylin/.kbox/bin/kbox
+41944     1 /Users/roylin/.kbox/bin/kbox
+41954     1 /Users/roylin/.kbox/bin/kbox
+41995     1 /Users/roylin/.kbox/bin/kbox
+42047     1 /Users/roylin/.kbox/bin/kbox
+42049     1 /Users/roylin/.kbox/bin/kbox
+42069     1 /Users/roylin/.kbox/bin/kbox
+42092     1 /Users/roylin/.kbox/bin/kbox
+42166     1 /Users/roylin/.kbox/bin/kbox
+42267     1 /Users/roylin/.kbox/bin/kbox
+42280     1 /Users/roylin/.kbox/bin/kbox
+42313     1 /Users/roylin/.kbox/bin/kbox
+42359     1 /Users/roylin/.kbox/bin/kbox
+42376     1 /Users/roylin/.kbox/bin/kbox
+42394     1 /Users/roylin/.kbox/bin/kbox
+42492     1 /Users/roylin/.kbox/bin/kbox
+42542     1 /Users/roylin/.kbox/bin/kbox
+42559     1 /Users/roylin/.kbox/bin/kbox
+42597     1 /Users/roylin/.kbox/bin/kbox
+42631     1 /Users/roylin/.kbox/bin/kbox
+42648     1 /Users/roylin/.kbox/bin/kbox
+42763     1 /Users/roylin/.kbox/bin/kbox
+42775     1 /Users/roylin/.kbox/bin/kbox
+42784     1 /Users/roylin/.kbox/bin/kbox
+42795     1 /usr/libexec/remindd
+42803     1 /Users/roylin/.kbox/bin/kbox
+42836     1 /Users/roylin/.kbox/bin/kbox
+42842     1 /Users/roylin/.kbox/bin/kbox
+42887     1 /Users/roylin/.kbox/bin/kbox
+42919     1 /Users/roylin/.kbox/bin/kbox
+42933     1 /Users/roylin/.kbox/bin/kbox
+42943     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+42944     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+43001     1 /Users/roylin/.kbox/bin/kbox
+43005     1 /Users/roylin/.kbox/bin/kbox
+43030     1 /Users/roylin/.kbox/bin/kbox
+43040     1 /Users/roylin/.kbox/bin/kbox
+43081     1 /Users/roylin/.kbox/bin/kbox
+43109     1 /Users/roylin/.kbox/bin/kbox
+43117     1 /Users/roylin/.kbox/bin/kbox
+43172     1 /Users/roylin/.kbox/bin/kbox
+43210     1 /Users/roylin/.kbox/bin/kbox
+43233     1 /Users/roylin/.kbox/bin/kbox
+43253     1 /Users/roylin/.kbox/bin/kbox
+43285     1 /Users/roylin/.kbox/bin/kbox
+43299     1 /Users/roylin/.kbox/bin/kbox
+43340     1 /Users/roylin/.kbox/bin/kbox
+43359     1 /Users/roylin/.kbox/bin/kbox
+43372     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+43381     1 /Users/roylin/.kbox/bin/kbox
+43409     1 /Users/roylin/.kbox/bin/kbox
+43418     1 /Users/roylin/.kbox/bin/kbox
+43429     1 /Users/roylin/.kbox/bin/kbox
+43447     1 /Users/roylin/.kbox/bin/kbox
+43488     1 /Users/roylin/.kbox/bin/kbox
+43492     1 /Users/roylin/.kbox/bin/kbox
+43502     1 /Users/roylin/.kbox/bin/kbox
+43560     1 /Users/roylin/.kbox/bin/kbox
+43562     1 /Users/roylin/.kbox/bin/kbox
+43568     1 /Users/roylin/.kbox/bin/kbox
+43594     1 /Users/roylin/.kbox/bin/kbox
+43621     1 /Users/roylin/.kbox/bin/kbox
+43633     1 /Users/roylin/.kbox/bin/kbox
+43657     1 /Users/roylin/.kbox/bin/kbox
+43671     1 /Users/roylin/.kbox/bin/kbox
+43695     1 /Users/roylin/.kbox/bin/kbox
+43698     1 /Users/roylin/.kbox/bin/kbox
+43751     1 /Users/roylin/.kbox/bin/kbox
+43752     1 /Users/roylin/.kbox/bin/kbox
+43770     1 /Users/roylin/.kbox/bin/kbox
+43829     1 /Users/roylin/.kbox/bin/kbox
+43848     1 /Users/roylin/.kbox/bin/kbox
+43876     1 /Users/roylin/.kbox/bin/kbox
+43888     1 /Users/roylin/.kbox/bin/kbox
+43889     1 /Users/roylin/.kbox/bin/kbox
+43902     1 /Users/roylin/.kbox/bin/kbox
+43949     1 /Users/roylin/.kbox/bin/kbox
+43962     1 /Users/roylin/.kbox/bin/kbox
+43990     1 /Users/roylin/.kbox/bin/kbox
+44021     1 /Users/roylin/.kbox/bin/kbox
+44030     1 /Users/roylin/.kbox/bin/kbox
+44066     1 /Users/roylin/.kbox/bin/kbox
+44075     1 /Users/roylin/.kbox/bin/kbox
+44113     1 /Users/roylin/.kbox/bin/kbox
+44199     1 /Users/roylin/.kbox/bin/kbox
+44212     1 /Users/roylin/.kbox/bin/kbox
+44214     1 /Users/roylin/.kbox/bin/kbox
+44242     1 /Users/roylin/.kbox/bin/kbox
+44256     1 /Users/roylin/.kbox/bin/kbox
+44272     1 /Users/roylin/.kbox/bin/kbox
+44351     1 /Users/roylin/.kbox/bin/kbox
+44353     1 /Users/roylin/.kbox/bin/kbox
+44391     1 /Users/roylin/.kbox/bin/kbox
+44404     1 /Users/roylin/.kbox/bin/kbox
+44437     1 /Users/roylin/.kbox/bin/kbox
+44515     1 /Users/roylin/.kbox/bin/kbox
+44576     1 /Users/roylin/.kbox/bin/kbox
+44581     1 /Users/roylin/.kbox/bin/kbox
+44582     1 /Users/roylin/.kbox/bin/kbox
+44594     1 /Users/roylin/.kbox/bin/kbox
+44617     1 /Users/roylin/.kbox/bin/kbox
+44742     1 /Users/roylin/.kbox/bin/kbox
+44746     1 /Users/roylin/.kbox/bin/kbox
+44748     1 /Users/roylin/.kbox/bin/kbox
+44801     1 /Users/roylin/.kbox/bin/kbox
+44811     1 /Users/roylin/.kbox/bin/kbox
+44855     1 /Users/roylin/.kbox/bin/kbox
+44872     1 /Users/roylin/.kbox/bin/kbox
+44894     1 /Users/roylin/.kbox/bin/kbox
+44922     1 /Users/roylin/.kbox/bin/kbox
+44932     1 /Users/roylin/.kbox/bin/kbox
+44953     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+44954     1 /System/Library/PrivateFrameworks/MediaConversionService.framework/Versions/A/XPCServices/com.apple.photos.ImageConversionService.xpc/Contents/MacOS/com.apple.photos.ImageConversionService
+44979     1 /Users/roylin/.kbox/bin/kbox
+44981     1 /Users/roylin/.kbox/bin/kbox
+45034     1 /Users/roylin/.kbox/bin/kbox
+45051     1 /Users/roylin/.kbox/bin/kbox
+45084     1 /Users/roylin/.kbox/bin/kbox
+45090     1 /Users/roylin/.kbox/bin/kbox
+45094     1 /Users/roylin/.kbox/bin/kbox
+45098     1 /Users/roylin/.kbox/bin/kbox
+45171     1 /Users/roylin/.kbox/bin/kbox
+45208     1 /Users/roylin/.kbox/bin/kbox
+45220     1 /Users/roylin/.kbox/bin/kbox
+45252     1 /Users/roylin/.kbox/bin/kbox
+45310     1 /Users/roylin/.kbox/bin/kbox
+45311     1 /Users/roylin/.kbox/bin/kbox
+45335     1 /Users/roylin/.kbox/bin/kbox
+45343     1 /Users/roylin/.kbox/bin/kbox
+45352     1 /Users/roylin/.kbox/bin/kbox
+45387     1 /Users/roylin/.kbox/bin/kbox
+45428     1 /Users/roylin/.kbox/bin/kbox
+45436     1 /Users/roylin/.kbox/bin/kbox
+45438     1 /Users/roylin/.kbox/bin/kbox
+45449     1 /Users/roylin/.kbox/bin/kbox
+45455     1 /Users/roylin/.kbox/bin/kbox
+45499     1 /Users/roylin/.kbox/bin/kbox
+45509     1 /Users/roylin/.kbox/bin/kbox
+45591     1 /Users/roylin/.kbox/bin/kbox
+45594     1 /Users/roylin/.kbox/bin/kbox
+45620     1 /Users/roylin/.kbox/bin/kbox
+45630     1 /Users/roylin/.kbox/bin/kbox
+45650     1 /Users/roylin/.kbox/bin/kbox
+45652     1 /Users/roylin/.kbox/bin/kbox
+45691     1 /Users/roylin/.kbox/bin/kbox
+45698     1 /Users/roylin/.kbox/bin/kbox
+45729     1 /Users/roylin/.kbox/bin/kbox
+45777     1 /Users/roylin/.kbox/bin/kbox
+45783     1 /Users/roylin/.kbox/bin/kbox
+45786     1 /Users/roylin/.kbox/bin/kbox
+45821     1 /Users/roylin/.kbox/bin/kbox
+45839     1 /Users/roylin/.kbox/bin/kbox
+45863     1 /Users/roylin/.kbox/bin/kbox
+45895     1 /Users/roylin/.kbox/bin/kbox
+45896     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+45948     1 /Users/roylin/.kbox/bin/kbox
+45969     1 /Users/roylin/.kbox/bin/kbox
+46002     1 /Users/roylin/.kbox/bin/kbox
+46049     1 /Users/roylin/.kbox/bin/kbox
+46055     1 /Users/roylin/.kbox/bin/kbox
+46069     1 /Users/roylin/.kbox/bin/kbox
+46109     1 /Users/roylin/.kbox/bin/kbox
+46164     1 /Users/roylin/.kbox/bin/kbox
+46177     1 /Users/roylin/.kbox/bin/kbox
+46196     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+46208     1 /Users/roylin/.kbox/bin/kbox
+46227     1 /Users/roylin/.kbox/bin/kbox
+46245     1 /Users/roylin/.kbox/bin/kbox
+46261     1 /Users/roylin/.kbox/bin/kbox
+46266     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+46288     1 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XprotectService.xpc/Contents/MacOS/XprotectService
+46306     1 /Users/roylin/.kbox/bin/kbox
+46363     1 /Users/roylin/.kbox/bin/kbox
+46367     1 /Users/roylin/.kbox/bin/kbox
+46389     1 /Users/roylin/.kbox/bin/kbox
+46402     1 /Users/roylin/.kbox/bin/kbox
+46428     1 /Users/roylin/.kbox/bin/kbox
+46454     1 /Users/roylin/.kbox/bin/kbox
+46507     1 /Users/roylin/.kbox/bin/kbox
+46513     1 /Users/roylin/.kbox/bin/kbox
+46558     1 /Users/roylin/.kbox/bin/kbox
+46601     1 /Users/roylin/.kbox/bin/kbox
+46610     1 /Users/roylin/.kbox/bin/kbox
+46704     1 /Users/roylin/.kbox/bin/kbox
+46709     1 /Users/roylin/.kbox/bin/kbox
+46727     1 /Users/roylin/.kbox/bin/kbox
+46748     1 /Users/roylin/.kbox/bin/kbox
+46756     1 /Users/roylin/.kbox/bin/kbox
+46814     1 /Users/roylin/.kbox/bin/kbox
+46825     1 /Users/roylin/.kbox/bin/kbox
+46879     1 /Users/roylin/.kbox/bin/kbox
+46901     1 /Users/roylin/.kbox/bin/kbox
+46947     1 /Users/roylin/.kbox/bin/kbox
+46964     1 /Users/roylin/.kbox/bin/kbox
+46994     1 /Users/roylin/.kbox/bin/kbox
+47027     1 /Users/roylin/.kbox/bin/kbox
+47033     1 /Users/roylin/.kbox/bin/kbox
+47084     1 /Users/roylin/.kbox/bin/kbox
+47213     1 /Users/roylin/.kbox/bin/kbox
+47227     1 /Users/roylin/.kbox/bin/kbox
+47308     1 /Users/roylin/.kbox/bin/kbox
+47345     1 /Users/roylin/.kbox/bin/kbox
+47374     1 /Users/roylin/.kbox/bin/kbox
+47380     1 /Users/roylin/.kbox/bin/kbox
+47392     1 /Users/roylin/.kbox/bin/kbox
+47462     1 /Users/roylin/.kbox/bin/kbox
+47507     1 /Users/roylin/.kbox/bin/kbox
+47514     1 /Users/roylin/.kbox/bin/kbox
+47570     1 /Users/roylin/.kbox/bin/kbox
+47572     1 /Users/roylin/.kbox/bin/kbox
+47585     1 /Users/roylin/.kbox/bin/kbox
+47643     1 /Users/roylin/.kbox/bin/kbox
+47730     1 /Users/roylin/.kbox/bin/kbox
+47794     1 /Users/roylin/.kbox/bin/kbox
+47799     1 /Users/roylin/.kbox/bin/kbox
+47913     1 /Users/roylin/.kbox/bin/kbox
+47943     1 /Users/roylin/.kbox/bin/kbox
+48038     1 /Users/roylin/.kbox/bin/kbox
+48088     1 /Users/roylin/.kbox/bin/kbox
+48100     1 /usr/libexec/historicalaudiod
+48112     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+48121     1 /Users/roylin/.kbox/bin/kbox
+48157     1 /Users/roylin/.kbox/bin/kbox
+48223     1 /Users/roylin/.kbox/bin/kbox
+48366     1 /Users/roylin/.kbox/bin/kbox
+48399     1 /Users/roylin/.kbox/bin/kbox
+48438     1 /Users/roylin/.kbox/bin/kbox
+48466     1 /Users/roylin/.kbox/bin/kbox
+48475     1 /Users/roylin/.kbox/bin/kbox
+48541     1 /Users/roylin/.kbox/bin/kbox
+48609     1 /Users/roylin/.kbox/bin/kbox
+48672     1 /Users/roylin/.kbox/bin/kbox
+48763     1 /Users/roylin/.kbox/bin/kbox
+48769     1 /Users/roylin/.kbox/bin/kbox
+48778     1 /Users/roylin/.kbox/bin/kbox
+48924     1 /Users/roylin/.kbox/bin/kbox
+48952     1 /Users/roylin/.kbox/bin/kbox
+49063     1 /Users/roylin/.kbox/bin/kbox
+49084     1 /Users/roylin/.kbox/bin/kbox
+49094     1 /Users/roylin/.kbox/bin/kbox
+49287     1 /Users/roylin/.kbox/bin/kbox
+49387     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+49390     1 /Users/roylin/.kbox/bin/kbox
+49427     1 /Users/roylin/.kbox/bin/kbox
+49467     1 /Users/roylin/.kbox/bin/kbox
+49473     1 /Users/roylin/.kbox/bin/kbox
+49598     1 /Users/roylin/.kbox/bin/kbox
+49599     1 /Users/roylin/.kbox/bin/kbox
+49722     1 /Users/roylin/.kbox/bin/kbox
+49740     1 /Users/roylin/.kbox/bin/kbox
+49867     1 /Users/roylin/.kbox/bin/kbox
+49944     1 /Users/roylin/.kbox/bin/kbox
+50037     1 /Users/roylin/.kbox/bin/kbox
+50061     1 /Users/roylin/.kbox/bin/kbox
+50095     1 /Users/roylin/.kbox/bin/kbox
+50098     1 /Users/roylin/.kbox/bin/kbox
+50207     1 /Users/roylin/.kbox/bin/kbox
+50243     1 /Users/roylin/.kbox/bin/kbox
+50315     1 /Users/roylin/.kbox/bin/kbox
+50344     1 /Users/roylin/.kbox/bin/kbox
+50394     1 /Users/roylin/.kbox/bin/kbox
+50475     1 /Users/roylin/.kbox/bin/kbox
+50478     1 /Users/roylin/.kbox/bin/kbox
+50576     1 /Users/roylin/.kbox/bin/kbox
+50605     1 /Users/roylin/.kbox/bin/kbox
+50678     1 /Users/roylin/.kbox/bin/kbox
+50728     1 /Users/roylin/.kbox/bin/kbox
+50747     1 /Users/roylin/.kbox/bin/kbox
+50766     1 /Users/roylin/.kbox/bin/kbox
+50792     1 /Users/roylin/.kbox/bin/kbox
+50820     1 /Users/roylin/.kbox/bin/kbox
+50853     1 /Users/roylin/.kbox/bin/kbox
+51017     1 /Users/roylin/.kbox/bin/kbox
+51018     1 /Users/roylin/.kbox/bin/kbox
+51023     1 /Users/roylin/.kbox/bin/kbox
+51107     1 /Users/roylin/.kbox/bin/kbox
+51114     1 /Users/roylin/.kbox/bin/kbox
+51127     1 /Users/roylin/.kbox/bin/kbox
+51131     1 /Users/roylin/.kbox/bin/kbox
+51180     1 /Users/roylin/.kbox/bin/kbox
+51296     1 /Users/roylin/.kbox/bin/kbox
+51309     1 /Users/roylin/.kbox/bin/kbox
+51337     1 /Users/roylin/.kbox/bin/kbox
+51362     1 /Users/roylin/.kbox/bin/kbox
+51377     1 /Applications/UURemote.app/Contents/MacOS/UURemote
+51392     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+51397   224 /Applications/UURemote.app/Contents/Helpers/UURemoteServer
+51408     1 /Users/roylin/.kbox/bin/kbox
+51413     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService
+51424     1 /Users/roylin/.kbox/bin/kbox
+51429     1 /Users/roylin/.kbox/bin/kbox
+51433     1 /Users/roylin/.kbox/bin/kbox
+51481     1 /Users/roylin/.kbox/bin/kbox
+51572     1 /Users/roylin/.kbox/bin/kbox
+51595     1 /Users/roylin/.kbox/bin/kbox
+51637     1 /Users/roylin/.kbox/bin/kbox
+51646     1 /Users/roylin/.kbox/bin/kbox
+51683     1 /Users/roylin/.kbox/bin/kbox
+51724     1 /Users/roylin/.kbox/bin/kbox
+51725     1 /Users/roylin/.kbox/bin/kbox
+51771     1 /Users/roylin/.kbox/bin/kbox
+51772     1 /Users/roylin/.kbox/bin/kbox
+51802     1 /Users/roylin/.kbox/bin/kbox
+51811     1 /Users/roylin/.kbox/bin/kbox
+51848     1 /Users/roylin/.kbox/bin/kbox
+51912     1 /Users/roylin/.kbox/bin/kbox
+51923     1 /Users/roylin/.kbox/bin/kbox
+51952     1 /Applications/UURemote.app/Contents/XPCServices/UURemoteHelper.xpc/Contents/MacOS/UURemoteHelper
+51960     1 /Users/roylin/.kbox/bin/kbox
+51970     1 /Users/roylin/.kbox/bin/kbox
+52018     1 /Users/roylin/.kbox/bin/kbox
+52058     1 /Users/roylin/.kbox/bin/kbox
+52071     1 /Users/roylin/.kbox/bin/kbox
+52092     1 /Users/roylin/.kbox/bin/kbox
+52136     1 /Users/roylin/.kbox/bin/kbox
+52148     1 /Users/roylin/.kbox/bin/kbox
+52160     1 /Users/roylin/.kbox/bin/kbox
+52213     1 /Users/roylin/.kbox/bin/kbox
+52225     1 /Users/roylin/.kbox/bin/kbox
+52257     1 /Users/roylin/.kbox/bin/kbox
+52298     1 /Users/roylin/.kbox/bin/kbox
+52326     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+52327     1 /Users/roylin/.kbox/bin/kbox
+52396     1 /Users/roylin/.kbox/bin/kbox
+52450     1 /Users/roylin/.kbox/bin/kbox
+52463     1 /Users/roylin/.kbox/bin/kbox
+52492     1 /Users/roylin/.kbox/bin/kbox
+52505     1 /Users/roylin/.kbox/bin/kbox
+52527     1 /Users/roylin/.kbox/bin/kbox
+52633     1 /Users/roylin/.kbox/bin/kbox
+52684     1 /Users/roylin/.kbox/bin/kbox
+52757     1 /Users/roylin/.kbox/bin/kbox
+52807     1 /Users/roylin/.kbox/bin/kbox
+52827     1 /Users/roylin/.kbox/bin/kbox
+52845     1 /Users/roylin/.kbox/bin/kbox
+52858     1 /Users/roylin/.kbox/bin/kbox
+52885     1 /Users/roylin/.kbox/bin/kbox
+52891     1 /Users/roylin/.kbox/bin/kbox
+52900     1 /Users/roylin/.kbox/bin/kbox
+52970     1 /Users/roylin/.kbox/bin/kbox
+53056     1 /Users/roylin/.kbox/bin/kbox
+53095     1 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/UARPUpdaterServiceUSBPD.xpc/Contents/MacOS/UARPUpdaterServiceUSBPD
+53162     1 /Users/roylin/.kbox/bin/kbox
+53163     1 /Users/roylin/.kbox/bin/kbox
+53169     1 /Users/roylin/.kbox/bin/kbox
+53214     1 /Users/roylin/.kbox/bin/kbox
+53244     1 /Users/roylin/.kbox/bin/kbox
+53263     1 /Users/roylin/.kbox/bin/kbox
+53301     1 /Users/roylin/.kbox/bin/kbox
+53310     1 /Users/roylin/.kbox/bin/kbox
+53358     1 /Users/roylin/.kbox/bin/kbox
+53361     1 /Users/roylin/.kbox/bin/kbox
+53420     1 /Users/roylin/.kbox/bin/kbox
+53427     1 /Users/roylin/.kbox/bin/kbox
+53429     1 /usr/sbin/cfprefsd
+53467     1 /Users/roylin/.kbox/bin/kbox
+53534     1 /Users/roylin/.kbox/bin/kbox
+53546     1 /Users/roylin/.kbox/bin/kbox
+53574     1 /Users/roylin/.kbox/bin/kbox
+53633     1 /Users/roylin/.kbox/bin/kbox
+53652     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+53669     1 /Users/roylin/.kbox/bin/kbox
+53760     1 /Users/roylin/.kbox/bin/kbox
+53792     1 /Users/roylin/.kbox/bin/kbox
+53837     1 /Users/roylin/.kbox/bin/kbox
+53920     1 /Users/roylin/.kbox/bin/kbox
+53969     1 /Users/roylin/.kbox/bin/kbox
+53976     1 /Users/roylin/.kbox/bin/kbox
+53980     1 /usr/libexec/icloudwebd
+54059     1 /Users/roylin/.kbox/bin/kbox
+54159     1 /Users/roylin/.kbox/bin/kbox
+54192     1 /Users/roylin/.kbox/bin/kbox
+54236     1 /Users/roylin/.kbox/bin/kbox
+54248     1 /Users/roylin/.kbox/bin/kbox
+54381     1 /Users/roylin/.kbox/bin/kbox
+54392     1 /Users/roylin/.kbox/bin/kbox
+54399     1 /Users/roylin/.kbox/bin/kbox
+54426     1 /System/Library/PrivateFrameworks/SystemAdministration.framework/XPCServices/writeconfig.xpc/Contents/MacOS/writeconfig
+54460     1 /Users/roylin/.kbox/bin/kbox
+54493     1 /Users/roylin/.kbox/bin/kbox
+54538     1 /Users/roylin/.kbox/bin/kbox
+54587     1 /Users/roylin/.kbox/bin/kbox
+54609     1 /usr/bin/ssh-agent
+54655     1 /Users/roylin/.kbox/bin/kbox
+54734     1 /Users/roylin/.kbox/bin/kbox
+54787     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+54868     1 /Users/roylin/.kbox/bin/kbox
+54928     1 /Users/roylin/.kbox/bin/kbox
+54948     1 /Users/roylin/.kbox/bin/kbox
+54956     1 /Users/roylin/.kbox/bin/kbox
+55022     1 /Users/roylin/.kbox/bin/kbox
+55138     1 /System/Library/PrivateFrameworks/NewDeviceOutreach.framework/ndoagent
+55164     1 /Users/roylin/.kbox/bin/kbox
+55321     1 /Users/roylin/.kbox/bin/kbox
+55364     1 /Users/roylin/.kbox/bin/kbox
+55398     1 /Users/roylin/.kbox/bin/kbox
+55477     1 /System/Library/CoreServices/PowerChime.app/Contents/MacOS/PowerChime
+55715     1 /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/XPCServices/extensionkitservice.xpc/Contents/MacOS/extensionkitservice
+55716     1 /System/Library/ExtensionKit/Extensions/TextThumbnailExtension.appex/Contents/MacOS/TextThumbnailExtension
+55729     1 /Users/roylin/.kbox/bin/kbox
+55863     1 /Users/roylin/.kbox/bin/kbox
+55957     1 /Users/roylin/.kbox/bin/kbox
+56032     1 /Users/roylin/.kbox/bin/kbox
+56090     1 /Users/roylin/.kbox/bin/kbox
+56191     1 /Users/roylin/.kbox/bin/kbox
+56362     1 /Users/roylin/.kbox/bin/kbox
+56543     1 /Users/roylin/.kbox/bin/kbox
+56625     1 /Users/roylin/.kbox/bin/kbox
+56634     1 /Users/roylin/.kbox/bin/kbox
+56641     1 /Users/roylin/.kbox/bin/kbox
+56718     1 /Users/roylin/.kbox/bin/kbox
+56824     1 /Users/roylin/.kbox/bin/kbox
+56933     1 /Users/roylin/.kbox/bin/kbox
+57033     1 /Users/roylin/.kbox/bin/kbox
+57062     1 /Users/roylin/.kbox/bin/kbox
+57070     1 /Users/roylin/.kbox/bin/kbox
+57087     1 /Users/roylin/.kbox/bin/kbox
+57281     1 /Users/roylin/.kbox/bin/kbox
+57301     1 /Users/roylin/.kbox/bin/kbox
+57340     1 /Users/roylin/.kbox/bin/kbox
+57407     1 /System/Library/PrivateFrameworks/Ecosystem.framework/Support/ecosystemagent
+57477     1 /Users/roylin/.kbox/bin/kbox
+57484     1 /Users/roylin/.kbox/bin/kbox
+57590     1 /Users/roylin/.kbox/bin/kbox
+57699     1 /Users/roylin/.kbox/bin/kbox
+57705     1 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+57743     1 /Users/roylin/.kbox/bin/kbox
+57890     1 /Users/roylin/.kbox/bin/kbox
+57930     1 /Users/roylin/.kbox/bin/kbox
+57951     1 /Users/roylin/.kbox/bin/kbox
+58091     1 /Users/roylin/.kbox/bin/kbox
+58170     1 /Users/roylin/.kbox/bin/kbox
+58193     1 /Users/roylin/.kbox/bin/kbox
+58227     1 /Users/roylin/.kbox/bin/kbox
+58285     1 /System/Library/PrivateFrameworks/CoreParsec.framework/parsecd
+58286     1 /usr/libexec/nsurlsessiond
+58309     1 /System/Library/PrivateFrameworks/CoreCDP.framework/Versions/A/Resources/cdpd
+58415     1 /System/Library/Frameworks/LocalAuthentication.framework/Support/coreauthd
+58492     1 /usr/libexec/secinitd
+58613     1 /usr/libexec/gamepolicyd
+58619     1 /Users/roylin/.kbox/bin/kbox
+58649     1 /Users/roylin/.kbox/bin/kbox
+58685     1 /Users/roylin/.kbox/bin/kbox
+58742     1 /usr/libexec/secinitd
+58795     1 /Users/roylin/.kbox/bin/kbox
+58840     1 /Users/roylin/.kbox/bin/kbox
+58890     1 /Users/roylin/.kbox/bin/kbox
+58901     1 /Users/roylin/.kbox/bin/kbox
+58914     1 /Users/roylin/.kbox/bin/kbox
+58980     1 /Users/roylin/.kbox/bin/kbox
+59071     1 /Users/roylin/.kbox/bin/kbox
+59158     1 /Users/roylin/.kbox/bin/kbox
+59310     1 /Users/roylin/.kbox/bin/kbox
+59318     1 /Users/roylin/.kbox/bin/kbox
+59409     1 /Users/roylin/.kbox/bin/kbox
+59851     1 /Users/roylin/.kbox/bin/kbox
+59988     1 /Users/roylin/.kbox/bin/kbox
+60024     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+60096     1 /Users/roylin/.kbox/bin/kbox
+60123     1 /Users/roylin/.kbox/bin/kbox
+60188     1 /Users/roylin/.kbox/bin/kbox
+60222     1 /Users/roylin/.kbox/bin/kbox
+60248     1 /Applications/QQMusic.app/Contents/MacOS/QQMusic
+60249     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.GPU.xpc/Contents/MacOS/com.apple.WebKit.GPU
+60250     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+60251     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60253     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60254     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60255     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60256     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60257     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60258     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60259     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60260     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+60262     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+60298     1 /Users/roylin/.kbox/bin/kbox
+60361     1 /Users/roylin/.kbox/bin/kbox
+60556     1 /Users/roylin/.kbox/bin/kbox
+60620     1 /Users/roylin/.kbox/bin/kbox
+60750     1 /Users/roylin/.kbox/bin/kbox
+60758     1 /Users/roylin/.kbox/bin/kbox
+60860     1 /Users/roylin/.kbox/bin/kbox
+60869     1 /usr/sbin/distnoted
+60887     1 /Users/roylin/.kbox/bin/kbox
+60922     1 /Users/roylin/.kbox/bin/kbox
+60928     1 /Users/roylin/.kbox/bin/kbox
+60970     1 /Users/roylin/.kbox/bin/kbox
+61019     1 /Users/roylin/.kbox/bin/kbox
+61053     1 /Users/roylin/.kbox/bin/kbox
+61066     1 /Users/roylin/.kbox/bin/kbox
+61100     1 /Users/roylin/.kbox/bin/kbox
+61131     1 /Users/roylin/.kbox/bin/kbox
+61145     1 /Users/roylin/.kbox/bin/kbox
+61243     1 /Users/roylin/.kbox/bin/kbox
+61245     1 /Users/roylin/.kbox/bin/kbox
+61313     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+61366     1 /Users/roylin/.kbox/bin/kbox
+61373     1 /Users/roylin/.kbox/bin/kbox
+61398     1 /Users/roylin/.kbox/bin/kbox
+61496     1 /Users/roylin/.kbox/bin/kbox
+61521     1 /Users/roylin/.kbox/bin/kbox
+61628     1 /Users/roylin/.kbox/bin/kbox
+61648     1 /Users/roylin/.kbox/bin/kbox
+61718     1 /Users/roylin/.kbox/bin/kbox
+61768     1 /Users/roylin/.kbox/bin/kbox
+61804     1 /Users/roylin/.kbox/bin/kbox
+61887     1 /Users/roylin/.kbox/bin/kbox
+61963     1 /Users/roylin/.kbox/bin/kbox
+61989 94892 /Applications/Visual Studio Code.app/Contents/Resources/app/node_modules.asar.unpacked/@github/copilot-sdk-darwin-arm64/prebuilds/darwin-arm64/copilot-runtime
+62013     1 /Users/roylin/.kbox/bin/kbox
+62102     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+62117     1 /Users/roylin/.kbox/bin/kbox
+62134     1 /Users/roylin/.kbox/bin/kbox
+62187     1 /Users/roylin/.kbox/bin/kbox
+62233     1 /Users/roylin/.kbox/bin/kbox
+62300     1 /Users/roylin/.kbox/bin/kbox
+62335     1 /Users/roylin/.kbox/bin/kbox
+62357     1 /Users/roylin/.kbox/bin/kbox
+62422     1 /Users/roylin/.kbox/bin/kbox
+62515     1 /Users/roylin/.kbox/bin/kbox
+62577     1 /Users/roylin/.kbox/bin/kbox
+62594     1 /Users/roylin/.kbox/bin/kbox
+62680     1 /Users/roylin/.kbox/bin/kbox
+62687     1 /Users/roylin/.kbox/bin/kbox
+62811     1 /Users/roylin/.kbox/bin/kbox
+62901     1 /Users/roylin/.kbox/bin/kbox
+62906     1 /Users/roylin/.kbox/bin/kbox
+62980     1 /Users/roylin/.kbox/bin/kbox
+62995     1 /Users/roylin/.kbox/bin/kbox
+63102     1 /Users/roylin/.kbox/bin/kbox
+63120     1 /Users/roylin/.kbox/bin/kbox
+63200     1 /Users/roylin/.kbox/bin/kbox
+63209     1 /Users/roylin/.kbox/bin/kbox
+63228 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+63272     1 /Users/roylin/.kbox/bin/kbox
+63286     1 /Users/roylin/.kbox/bin/kbox
+63337     1 /System/Library/Frameworks/Security.framework/Versions/A/XPCServices/XPCTimeStampingService.xpc/Contents/MacOS/XPCTimeStampingService
+63374     1 /Users/roylin/.kbox/bin/kbox
+63437     1 /Users/roylin/.kbox/bin/kbox
+63455     1 /Users/roylin/.kbox/bin/kbox
+63537     1 /Users/roylin/.kbox/bin/kbox
+63598     1 /Users/roylin/.kbox/bin/kbox
+63624     1 /Users/roylin/.kbox/bin/kbox
+63722     1 /Users/roylin/.kbox/bin/kbox
+63737     1 /Users/roylin/.kbox/bin/kbox
+63755     1 /Users/roylin/.kbox/bin/kbox
+63757     1 /Users/roylin/.kbox/bin/kbox
+63769     1 /System/Library/CoreServices/Finder.app/Contents/MacOS/Finder
+63770     1 /System/Library/Frameworks/QuickLookUI.framework/Versions/A/XPCServices/QuickLookUIService.xpc/Contents/MacOS/QuickLookUIService
+63818     1 /Users/roylin/.kbox/bin/kbox
+63863     1 /Users/roylin/.kbox/bin/kbox
+63929     1 /Users/roylin/.kbox/bin/kbox
+63963     1 /Users/roylin/.kbox/bin/kbox
+63982     1 /Users/roylin/.kbox/bin/kbox
+64111     1 /Users/roylin/.kbox/bin/kbox
+64132     1 /Users/roylin/.kbox/bin/kbox
+64201     1 /Users/roylin/.kbox/bin/kbox
+64256     1 /Users/roylin/.kbox/bin/kbox
+64264     1 /Users/roylin/.kbox/bin/kbox
+64291     1 /Users/roylin/.kbox/bin/kbox
+64389     1 /Users/roylin/.kbox/bin/kbox
+64417     1 /Users/roylin/.kbox/bin/kbox
+64477     1 /Users/roylin/.kbox/bin/kbox
+64480     1 /Users/roylin/.kbox/bin/kbox
+64547     1 /Users/roylin/.kbox/bin/kbox
+64585     1 /Users/roylin/.kbox/bin/kbox
+64596     1 /Users/roylin/.kbox/bin/kbox
+64698     1 /Users/roylin/.kbox/bin/kbox
+64703     1 /Users/roylin/.kbox/bin/kbox
+64780     1 /Users/roylin/.kbox/bin/kbox
+64816     1 /Users/roylin/.kbox/bin/kbox
+64862     1 /Users/roylin/.kbox/bin/kbox
+64871 96654 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
+64879     1 /Users/roylin/.kbox/bin/kbox
+64915     1 /Users/roylin/.kbox/bin/kbox
+64941     1 /Users/roylin/.kbox/bin/kbox
+64983     1 /Users/roylin/.kbox/bin/kbox
+65044     1 /Users/roylin/.kbox/bin/kbox
+65136     1 /Users/roylin/.kbox/bin/kbox
+65154     1 /Users/roylin/.kbox/bin/kbox
+65239     1 /Users/roylin/.kbox/bin/kbox
+65336     1 /Users/roylin/.kbox/bin/kbox
+65421     1 /Users/roylin/.kbox/bin/kbox
+65425     1 /Users/roylin/.kbox/bin/kbox
+65440 11727 /bin/zsh
+65441 65440 cat
+65472     1 /Users/roylin/.kbox/bin/kbox
+65562     1 /Users/roylin/.kbox/bin/kbox
+65573     1 /Users/roylin/.kbox/bin/kbox
+65666     1 /Users/roylin/.kbox/bin/kbox
+65679     1 /Users/roylin/.kbox/bin/kbox
+65684     1 /Users/roylin/.kbox/bin/kbox
+65774     1 /Users/roylin/.kbox/bin/kbox
+65864     1 /Users/roylin/.kbox/bin/kbox
+65900     1 /Users/roylin/.kbox/bin/kbox
+65912     1 /Users/roylin/.kbox/bin/kbox
+65990     1 /Users/roylin/.kbox/bin/kbox
+66085     1 /Users/roylin/.kbox/bin/kbox
+66098     1 /Users/roylin/.kbox/bin/kbox
+66111     1 /Users/roylin/.kbox/bin/kbox
+66167     1 /Users/roylin/.kbox/bin/kbox
+66173     1 /Users/roylin/.kbox/bin/kbox
+66177     1 /Users/roylin/.kbox/bin/kbox
+66180     1 /Users/roylin/.kbox/bin/kbox
+66264     1 /Users/roylin/.kbox/bin/kbox
+66276     1 /Users/roylin/.kbox/bin/kbox
+66320  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+66321  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+66325 66320 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+66376     1 /Users/roylin/.kbox/bin/kbox
+66403     1 /Users/roylin/.kbox/bin/kbox
+66414     1 /Users/roylin/.kbox/bin/kbox
+66465     1 /Users/roylin/.kbox/bin/kbox
+66501     1 /Users/roylin/.kbox/bin/kbox
+66551     1 /Users/roylin/.kbox/bin/kbox
+66571     1 /Users/roylin/.kbox/bin/kbox
+66612     1 /Users/roylin/.kbox/bin/kbox
+66688     1 /Users/roylin/.kbox/bin/kbox
+66725     1 /Users/roylin/.kbox/bin/kbox
+66793     1 /Users/roylin/.kbox/bin/kbox
+66807     1 /Users/roylin/.kbox/bin/kbox
+66856     1 /Users/roylin/.kbox/bin/kbox
+66872     1 /Users/roylin/.kbox/bin/kbox
+66909     1 /Users/roylin/.kbox/bin/kbox
+66911     1 /Users/roylin/.kbox/bin/kbox
+67018     1 /Users/roylin/.kbox/bin/kbox
+67098     1 /Users/roylin/.kbox/bin/kbox
+67103     1 /Users/roylin/.kbox/bin/kbox
+67126     1 /Users/roylin/.kbox/bin/kbox
+67242     1 /Users/roylin/.kbox/bin/kbox
+67247     1 /Users/roylin/.kbox/bin/kbox
+67288     1 /Users/roylin/.kbox/bin/kbox
+67349     1 /Users/roylin/.kbox/bin/kbox
+67442     1 /Users/roylin/.kbox/bin/kbox
+67447     1 /Users/roylin/.kbox/bin/kbox
+67524     1 /Users/roylin/.kbox/bin/kbox
+67587     1 /Users/roylin/.kbox/bin/kbox
+67650     1 /Users/roylin/.kbox/bin/kbox
+67780     1 /Users/roylin/.kbox/bin/kbox
+67899     1 /Users/roylin/.kbox/bin/kbox
+67904     1 /Applications/Quark.app/Contents/MacOS/Quark
+67917     1 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/chrome_crashpad_handler
+67919     1 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/chrome_crashpad_handler
+67925     1 /Users/roylin/.kbox/bin/kbox
+67940 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67941 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Player).app/Contents/MacOS/Quark Helper (Player)
+67942 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67951 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67965 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67966 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67971 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+67974 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67977 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+67992 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper.app/Contents/MacOS/Quark Helper
+67995 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+68022     1 /Users/roylin/.kbox/bin/kbox
+68023 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+68024 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+68092     1 /Users/roylin/.kbox/bin/kbox
+68188     1 /Users/roylin/.kbox/bin/kbox
+68190     1 /Users/roylin/.kbox/bin/kbox
+68216     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+68251     1 /System/Library/PrivateFrameworks/AppleIntelligenceReportingProcessing.framework/Versions/A/XPCServices/AppleIntelligenceReportingProcessingService.xpc/Contents/MacOS/AppleIntelligenceReportingProcessingService
+68339     1 /Users/roylin/.kbox/bin/kbox
+68518     1 /Users/roylin/.kbox/bin/kbox
+68554     1 /Users/roylin/.kbox/bin/kbox
+68564     1 /Users/roylin/.kbox/bin/kbox
+68694     1 /Users/roylin/.kbox/bin/kbox
+68697     1 /Users/roylin/.kbox/bin/kbox
+68721     1 /Users/roylin/.kbox/bin/kbox
+68741     1 /Users/roylin/.kbox/bin/kbox
+68905     1 /Users/roylin/.kbox/bin/kbox
+69084     1 /Users/roylin/.kbox/bin/kbox
+69193     1 /Users/roylin/code/inkstone/krun/target/release/krun
+69214     1 /Users/roylin/.kbox/bin/kbox
+69246     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+69315     1 /Users/roylin/.kbox/bin/kbox
+69316     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+69317     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+69358     1 /Users/roylin/.kbox/bin/kbox
+69376     1 /Users/roylin/.kbox/bin/kbox
+69378     1 /Users/roylin/.kbox/bin/kbox
+69512     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+69522     1 /Users/roylin/.kbox/bin/kbox
+69533     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+69618     1 /Users/roylin/.kbox/bin/kbox
+69723     1 /Users/roylin/.kbox/bin/kbox
+69777     1 /Users/roylin/.kbox/bin/kbox
+69785     1 /Users/roylin/.kbox/bin/kbox
+69821     1 /Users/roylin/.kbox/bin/kbox
+69836     1 /Users/roylin/.kbox/bin/kbox
+69990     1 /Users/roylin/.kbox/bin/kbox
+69994     1 /Users/roylin/.kbox/bin/kbox
+70119     1 /Users/roylin/.kbox/bin/kbox
+70194     1 /Users/roylin/.kbox/bin/kbox
+70249     1 /Users/roylin/.kbox/bin/kbox
+70316     1 /Users/roylin/.kbox/bin/kbox
+70327     1 /Users/roylin/.kbox/bin/kbox
+70491     1 /Users/roylin/.kbox/bin/kbox
+70607     1 /Users/roylin/.kbox/bin/kbox
+70625     1 /Users/roylin/.kbox/bin/kbox
+70629     1 /Users/roylin/.kbox/bin/kbox
+70761     1 /Users/roylin/.kbox/bin/kbox
+70801     1 /Users/roylin/.kbox/bin/kbox
+70875     1 /Users/roylin/.kbox/bin/kbox
+70883     1 /Users/roylin/.kbox/bin/kbox
+70887     1 /Users/roylin/Library/Application Support/orca/daemon-host/macos/terminal-host-c3054155063e42ba93d6d5c0505e84af73816b61/app.noindex/Orca Terminal Host.app/Contents/MacOS/orca-terminal-host
+70997     1 /Users/roylin/.kbox/bin/kbox
+71016 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)
+71025 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)
+71098     1 /Users/roylin/.kbox/bin/kbox
+71164     1 /Users/roylin/.kbox/bin/kbox
+71190     1 /Users/roylin/.kbox/bin/kbox
+71360     1 /Users/roylin/.kbox/bin/kbox
+71369     1 /Users/roylin/.kbox/bin/kbox
+71553     1 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XprotectService.xpc/Contents/MacOS/XprotectService
+71558     1 /Users/roylin/.kbox/bin/kbox
+71569     1 /Users/roylin/.kbox/bin/kbox
+71630     1 /Users/roylin/.kbox/bin/kbox
+71651     1 /Users/roylin/.kbox/bin/kbox
+71768     1 /Users/roylin/.kbox/bin/kbox
+71769     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+71841     1 /Applications/iTerm.app/Contents/XPCServices/iTerm2SandboxedWorker.xpc/Contents/MacOS/iTerm2SandboxedWorker
+71921     1 /Users/roylin/.kbox/bin/kbox
+71962     1 /Users/roylin/.kbox/bin/kbox
+71985     1 /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Support/BackgroundTaskManagementAgent.app/Contents/MacOS/BackgroundTaskManagementAgent
+72008     1 /Users/roylin/.kbox/bin/kbox
+72097     1 /Users/roylin/.kbox/bin/kbox
+72102     1 /Users/roylin/.kbox/bin/kbox
+72244     1 /Users/roylin/.kbox/bin/kbox
+72252     1 /Users/roylin/.kbox/bin/kbox
+72274     1 /Users/roylin/.kbox/bin/kbox
+72277     1 /Users/roylin/.kbox/bin/kbox
+72423     1 /Users/roylin/.kbox/bin/kbox
+72457     1 /Users/roylin/.kbox/bin/kbox
+72493     1 /Users/roylin/.kbox/bin/kbox
+72665     1 /Users/roylin/.kbox/bin/kbox
+72767     1 /Users/roylin/.kbox/bin/kbox
+72785     1 /Users/roylin/.kbox/bin/kbox
+72811     1 /Users/roylin/.kbox/bin/kbox
+72849     1 /Users/roylin/.kbox/bin/kbox
+72910     1 /Users/roylin/.kbox/bin/kbox
+72968     1 /Users/roylin/.kbox/bin/kbox
+73033     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+73090     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+73092     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+73187     1 /Users/roylin/.kbox/bin/kbox
+73259     1 /Users/roylin/.kbox/bin/kbox
+73333     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.WebContent.xpc/Contents/MacOS/com.apple.WebKit.WebContent
+73438     1 /Users/roylin/.kbox/bin/kbox
+73486 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+73600     1 /Users/roylin/.kbox/bin/kbox
+73698     1 /Users/roylin/.kbox/bin/kbox
+73705     1 /Users/roylin/.kbox/bin/kbox
+73749     1 /Users/roylin/.kbox/bin/kbox
+73855     1 /Users/roylin/.kbox/bin/kbox
+73889     1 /Users/roylin/.kbox/bin/kbox
+74006     1 /Users/roylin/.kbox/bin/kbox
+74068     1 /Users/roylin/.kbox/bin/kbox
+74285     1 /Users/roylin/.kbox/bin/kbox
+74330     1 /Users/roylin/.kbox/bin/kbox
+74360     1 /System/Library/PrivateFrameworks/EcosystemAnalytics.framework/Support/ecosystemanalyticsd
+74454     1 /Users/roylin/.kbox/bin/kbox
+74590     1 /Applications/Bob.app/Contents/MacOS/Bob
+74592     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+74662     1 /Users/roylin/.kbox/bin/kbox
+74679     1 /Users/roylin/.kbox/bin/kbox
+74724     1 /Users/roylin/.kbox/bin/kbox
+74787     1 /Users/roylin/.kbox/bin/kbox
+75021     1 /Users/roylin/.kbox/bin/kbox
+75050     1 /Users/roylin/.kbox/bin/kbox
+75184     1 /Users/roylin/.kbox/bin/kbox
+75212     1 /Users/roylin/.kbox/bin/kbox
+75313     1 /Users/roylin/.kbox/bin/kbox
+75322     1 /Users/roylin/.kbox/bin/kbox
+75369     1 /Users/roylin/.kbox/bin/kbox
+75489 67904 /Applications/Quark.app/Contents/Frameworks/Quark Framework.framework/Versions/7.5.0.1049/Helpers/Quark Helper (Renderer).app/Contents/MacOS/Quark Helper (Renderer)
+75510     1 /Users/roylin/.kbox/bin/kbox
+75523     1 /Users/roylin/.kbox/bin/kbox
+75542     1 /Users/roylin/.kbox/bin/kbox
+75670     1 /System/Library/PrivateFrameworks/UsageTracking.framework/Versions/A/UsageTrackingAgent
+75716     1 /Users/roylin/.kbox/bin/kbox
+75763     1 /Users/roylin/.kbox/bin/kbox
+75822     1 /Users/roylin/.kbox/bin/kbox
+75879     1 /System/Library/PrivateFrameworks/CoreFollowUp.framework/Versions/A/Resources/FollowUpUI.app/Contents/MacOS/FollowUpUI
+75881     1 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+75883     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/XPCServices/SpeechSynthesisServerXPC.xpc/Contents/MacOS/SpeechSynthesisServerXPC
+75963     1 /Users/roylin/.kbox/bin/kbox
+75987     1 /Users/roylin/.kbox/bin/kbox
+76034     1 /Users/roylin/.kbox/bin/kbox
+76103 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeApp.app/Contents/MacOS/WeApp
+76156     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+76247     1 /Users/roylin/.kbox/bin/kbox
+76260     1 /Users/roylin/.kbox/bin/kbox
+76281     1 /Users/roylin/.kbox/bin/kbox
+76408     1 /Users/roylin/.kbox/bin/kbox
+76462     1 /Users/roylin/.kbox/bin/kbox
+76507     1 /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/MacOS/Safari
+76511     1 /System/Library/Frameworks/ImageIO.framework/Versions/A/XPCServices/ImageIOXPCService.xpc/Contents/MacOS/ImageIOXPCService
+76513     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+76514     1 /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app/Contents/XPCServices/com.apple.Safari.SandboxBroker.xpc/Contents/MacOS/com.apple.Safari.SandboxBroker
+76515     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.Networking.xpc/Contents/MacOS/com.apple.WebKit.Networking
+76516     1 /System/Library/Frameworks/WebKit.framework/Versions/A/XPCServices/com.apple.WebKit.GPU.xpc/Contents/MacOS/com.apple.WebKit.GPU
+76519     1 /System/Library/PrivateFrameworks/SafariShared.framework/Versions/A/XPCServices/com.apple.Safari.SearchHelper.xpc/Contents/MacOS/com.apple.Safari.SearchHelper
+76525     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+76531     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+76545     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/com.apple.appkit.xpc.openAndSavePanelService.xpc/Contents/MacOS/com.apple.appkit.xpc.openAndSavePanelService
+76547     1 /System/Library/Frameworks/QuickLookUI.framework/Versions/A/XPCServices/QuickLookUIService.xpc/Contents/MacOS/QuickLookUIService
+76548     1 /System/Library/Frameworks/ImageIO.framework/Versions/A/XPCServices/ImageIOXPCService.xpc/Contents/MacOS/ImageIOXPCService
+76582     1 /Users/roylin/.kbox/bin/kbox
+76693     1 /Users/roylin/.kbox/bin/kbox
+76699     1 /Users/roylin/.kbox/bin/kbox
+76782     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService
+76783     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+76784     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+76795     1 /Users/roylin/.kbox/bin/kbox
+76861     1 /Users/roylin/.kbox/bin/kbox
+76946     1 /Users/roylin/.kbox/bin/kbox
+76951     1 /Users/roylin/.kbox/bin/kbox
+77041     1 /Users/roylin/.kbox/bin/kbox
+77095     1 /Users/roylin/.kbox/bin/kbox
+77135     1 /Users/roylin/.kbox/bin/kbox
+77278     1 /usr/libexec/taskgated
+77294     1 /Users/roylin/.kbox/bin/kbox
+77320     1 /Users/roylin/.kbox/bin/kbox
+77535     1 /Users/roylin/.kbox/bin/kbox
+77733     1 /Users/roylin/.kbox/bin/kbox
+77811     1 /Users/roylin/.kbox/bin/kbox
+77855     1 /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/XPCServices/SpeechSynthesisServerXPC.xpc/Contents/MacOS/SpeechSynthesisServerXPC
+77859     1 /Users/roylin/.kbox/bin/kbox
+77879     1 /Users/roylin/.kbox/bin/kbox
+77942     1 /Users/roylin/.kbox/bin/kbox
+78000     1 /Users/roylin/.kbox/bin/kbox
+78018     1 /Users/roylin/.kbox/bin/kbox
+78023     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+78107     1 /Users/roylin/.kbox/bin/kbox
+78154     1 /Users/roylin/.kbox/bin/kbox
+78175     1 /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer
+78236     1 /Users/roylin/.kbox/bin/kbox
+78275     1 /Users/roylin/.kbox/bin/kbox
+78293     1 /Users/roylin/.kbox/bin/kbox
+78344     1 /Users/roylin/.kbox/bin/kbox
+78384     1 /Users/roylin/.kbox/bin/kbox
+78388     1 /Users/roylin/.kbox/bin/kbox
+78488     1 /System/Library/CoreServices/UserNotificationCenter.app/Contents/MacOS/UserNotificationCenter
+78560     1 /Users/roylin/.kbox/bin/kbox
+78626     1 /Users/roylin/.kbox/bin/kbox
+78675     1 /Users/roylin/.kbox/bin/kbox
+78705     1 /Users/roylin/.kbox/bin/kbox
+78797     1 /Users/roylin/.kbox/bin/kbox
+78877     1 /Users/roylin/.kbox/bin/kbox
+78895     1 /Users/roylin/.kbox/bin/kbox
+78981     1 /Users/roylin/.kbox/bin/kbox
+78994     1 /Users/roylin/.kbox/bin/kbox
+79001     1 /Users/roylin/.kbox/bin/kbox
+79122     1 /Users/roylin/.kbox/bin/kbox
+79162     1 /Users/roylin/.kbox/bin/kbox
+79174     1 /Users/roylin/.kbox/bin/kbox
+79295     1 /Users/roylin/.kbox/bin/kbox-shim
+79393     1 /Users/roylin/.kbox/bin/kbox
+79474     1 /Users/roylin/.kbox/bin/kbox
+79530     1 /Users/roylin/.kbox/bin/kbox
+79630     1 /Users/roylin/.kbox/bin/kbox
+79638     1 /Users/roylin/.kbox/bin/kbox
+79664     1 /Users/roylin/.kbox/bin/kbox
+79842     1 /Users/roylin/.kbox/bin/kbox
+79844     1 /Users/roylin/.kbox/bin/kbox
+80013     1 /Users/roylin/.kbox/bin/kbox
+80116     1 /Users/roylin/.kbox/bin/kbox
+80163     1 /Users/roylin/.kbox/bin/kbox
+80333     1 /Users/roylin/.kbox/bin/kbox
+80339     1 /Users/roylin/.kbox/bin/kbox
+80548     1 /Users/roylin/.kbox/bin/kbox
+80717     1 /Users/roylin/.kbox/bin/kbox
+80723     1 /Users/roylin/.kbox/bin/kbox
+80731     1 /Users/roylin/.kbox/bin/kbox
+80774     1 /Users/roylin/.kbox/bin/kbox
+80898     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+80916     1 /Users/roylin/.kbox/bin/kbox
+80947     1 /Users/roylin/.kbox/bin/kbox
+81067     1 /Users/roylin/.kbox/bin/kbox
+81097     1 /Users/roylin/.kbox/bin/kbox
+81168     1 /Users/roylin/.kbox/bin/kbox
+81225     1 /Users/roylin/.kbox/bin/kbox
+81273     1 /Users/roylin/.kbox/bin/kbox
+81282     1 /Users/roylin/.kbox/bin/kbox
+81352     1 /Users/roylin/.kbox/bin/kbox
+81370     1 /Users/roylin/.kbox/bin/kbox
+81444     1 /Users/roylin/.kbox/bin/kbox
+81449     1 /Users/roylin/.kbox/bin/kbox
+81453     1 /Users/roylin/.kbox/bin/kbox
+81512     1 /Users/roylin/.kbox/bin/kbox
+81550     1 /Users/roylin/.kbox/bin/kbox
+81556     1 /usr/sbin/distnoted
+81557     1 /Users/roylin/.kbox/bin/kbox
+81579     1 /Users/roylin/.kbox/bin/kbox
+81637     1 /Users/roylin/.kbox/bin/kbox
+81657     1 /Users/roylin/.kbox/bin/kbox
+81744     1 /Users/roylin/.kbox/bin/kbox
+81772     1 /Users/roylin/.kbox/bin/kbox
+81813     1 /Users/roylin/.kbox/bin/kbox
+81828     1 /Users/roylin/.kimi-webbridge/bin/kimi-webbridge
+81831     1 /Users/roylin/.kbox/bin/kbox
+81869     1 /Users/roylin/.kbox/bin/kbox
+81958     1 /System/Library/PrivateFrameworks/SystemMigration.framework/Resources/systemmigrationd
+81977     1 /Users/roylin/.kbox/bin/kbox
+82029  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+82030  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+82036     1 /System/Library/PrivateFrameworks/CascadeSets.framework/Versions/A/XPCServices/SetStoreUpdateService.xpc/Contents/MacOS/SetStoreUpdateService
+82043 82029 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+82067     1 /Users/roylin/.kbox/bin/kbox
+82087     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+82111     1 /Users/roylin/.kbox/bin/kbox
+82118     1 /Users/roylin/.kbox/bin/kbox
+82135     1 /Users/roylin/.kbox/bin/kbox
+82183     1 /Users/roylin/.kbox/bin/kbox
+82208     1 /Users/roylin/.kbox/bin/kbox
+82215     1 /Users/roylin/.kbox/bin/kbox
+82247     1 /Users/roylin/.kbox/bin/kbox
+82300     1 /Users/roylin/.kbox/bin/kbox
+82320     1 /usr/libexec/corercd
+82342     1 /Users/roylin/.kbox/bin/kbox
+82353     1 /Users/roylin/.kbox/bin/kbox
+82391     1 /Users/roylin/.kbox/bin/kbox
+82401     1 /System/Library/PrivateFrameworks/IMDPersistence.framework/IMAutomaticHistoryDeletionAgent.app/Contents/MacOS/IMAutomaticHistoryDeletionAgent
+82411     1 /Users/roylin/.kbox/bin/kbox
+82467     1 /Users/roylin/.kbox/bin/kbox
+82518     1 /Users/roylin/.kbox/bin/kbox
+82524     1 /Users/roylin/.kbox/bin/kbox
+82550     1 /Users/roylin/.kbox/bin/kbox
+82605     1 /Users/roylin/.kbox/bin/kbox
+82624     1 /Users/roylin/.kbox/bin/kbox
+82627     1 /Users/roylin/.kbox/bin/kbox
+82656     1 /Users/roylin/.kbox/bin/kbox
+82725     1 /Users/roylin/.kbox/bin/kbox
+82781     1 /Users/roylin/.kbox/bin/kbox
+82784     1 /Users/roylin/.kbox/bin/kbox
+82853     1 /Users/roylin/.kbox/bin/kbox
+82943     1 /Users/roylin/.kbox/bin/kbox
+82969     1 /Users/roylin/.kbox/bin/kbox
+83041     1 /Users/roylin/.kbox/bin/kbox
+83042     1 /Users/roylin/.kbox/bin/kbox
+83049     1 /Users/roylin/.kbox/bin/kbox
+83062     1 /Users/roylin/.kbox/bin/kbox
+83083     1 /Users/roylin/.kbox/bin/kbox
+83130     1 /Users/roylin/.kbox/bin/kbox
+83157     1 /System/Library/PrivateFrameworks/CloudPhotoServices.framework/Versions/A/XPCServices/com.apple.CloudPhotosConfiguration.xpc/Contents/MacOS/com.apple.CloudPhotosConfiguration
+83166     1 /usr/libexec/studentd
+83184     1 /Users/roylin/.kbox/bin/kbox
+83222     1 /Users/roylin/.kbox/bin/kbox
+83304     1 /System/Library/CoreServices/Dock.app/Contents/MacOS/Dock
+83306     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+83343     1 /Users/roylin/.kbox/bin/kbox
+83355     1 /Users/roylin/.kbox/bin/kbox
+83387     1 /Users/roylin/.kbox/bin/kbox
+83403     1 /Users/roylin/.kbox/bin/kbox
+83451     1 /Users/roylin/.kbox/bin/kbox
+83554     1 /Users/roylin/.kbox/bin/kbox
+83569     1 /Users/roylin/.kbox/bin/kbox
+83586     1 /Users/roylin/.kbox/bin/kbox
+83644     1 /Users/roylin/.kbox/bin/kbox
+83718     1 /Users/roylin/.kbox/bin/kbox
+83752     1 /Users/roylin/.kbox/bin/kbox
+83829     1 /Users/roylin/.kbox/bin/kbox
+83831     1 /Users/roylin/.kbox/bin/kbox
+83852     1 /Users/roylin/.kbox/bin/kbox
+83942     1 /Users/roylin/.kbox/bin/kbox
+83953     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+83955     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+84024     1 /Users/roylin/.kbox/bin/kbox
+84065     1 /Users/roylin/.kbox/bin/kbox
+84080     1 /Users/roylin/.kbox/bin/kbox
+84083     1 /Users/roylin/.kbox/bin/kbox
+84170     1 /Users/roylin/.kbox/bin/kbox
+84183     1 /Users/roylin/.kbox/bin/kbox
+84261     1 /Users/roylin/.kbox/bin/kbox
+84288     1 /Users/roylin/.kbox/bin/kbox
+84382     1 /Users/roylin/.kbox/bin/kbox
+84395     1 /Users/roylin/.kbox/bin/kbox
+84408     1 /Users/roylin/.kbox/bin/kbox
+84416     1 /Users/roylin/.kbox/bin/kbox
+84512     1 /Users/roylin/.kbox/bin/kbox
+84516     1 /Users/roylin/.kbox/bin/kbox
+84527     1 /Users/roylin/.kbox/bin/kbox
+84605     1 /Users/roylin/.kbox/bin/kbox
+84691     1 /Users/roylin/.kbox/bin/kbox
+84711     1 /Users/roylin/.kbox/bin/kbox
+84752     1 /System/Library/ExtensionKit/Extensions/com.apple.fskit.msdos.appex/Contents/MacOS/com.apple.fskit.msdos
+84780     1 /Users/roylin/.kbox/bin/kbox
+84823     1 /Users/roylin/.kbox/bin/kbox
+84900     1 /Users/roylin/.kbox/bin/kbox
+84957     1 /Users/roylin/.kbox/bin/kbox
+85040     1 /Users/roylin/.kbox/bin/kbox
+85042     1 /Users/roylin/.kbox/bin/kbox
+85144     1 /Users/roylin/.kbox/bin/kbox
+85191     1 /Users/roylin/.kbox/bin/kbox
+85195     1 /Users/roylin/.kbox/bin/kbox
+85308     1 /Users/roylin/.kbox/bin/kbox
+85340     1 /Users/roylin/.kbox/bin/kbox
+85344     1 /Users/roylin/.kbox/bin/kbox
+85502     1 /Users/roylin/.kbox/bin/kbox
+85556     1 /Users/roylin/.kbox/bin/kbox
+85626     1 /Users/roylin/.kbox/bin/kbox
+85704     1 /Users/roylin/.kbox/bin/kbox
+85768     1 /Users/roylin/.kbox/bin/kbox
+85803     1 /Users/roylin/.kbox/bin/kbox
+85884     1 /Users/roylin/.kbox/bin/kbox
+85978     1 /Users/roylin/.kbox/bin/kbox
+86009     1 /Users/roylin/.kbox/bin/kbox
+86161     1 /Users/roylin/.kbox/bin/kbox
+86174     1 /Users/roylin/.kbox/bin/kbox
+86175     1 /Users/roylin/.kbox/bin/kbox
+86314     1 /Users/roylin/.kbox/bin/kbox
+86461     1 /Users/roylin/.kbox/bin/kbox
+86488     1 /Users/roylin/.kbox/bin/kbox
+86565     1 /System/Library/PrivateFrameworks/CoreEmbeddedSpeechRecognition.framework/Versions/A/XPCServices/com.apple.siri.embeddedspeech.xpc/Contents/MacOS/com.apple.siri.embeddedspeech
+86593     1 /Users/roylin/.kbox/bin/kbox
+86607     1 /usr/libexec/diagnosticd
+86721     1 /Users/roylin/.kbox/bin/kbox
+86738     1 /Users/roylin/.kbox/bin/kbox
+86763     1 /Users/roylin/.kbox/bin/kbox
+86826     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+86851     1 /Users/roylin/.kbox/bin/kbox
+87028     1 /Users/roylin/.kbox/bin/kbox
+87063 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+87084     1 /Users/roylin/.kbox/bin/kbox
+87087     1 /Users/roylin/.kbox/bin/kbox
+87150     1 /Users/roylin/.kbox/bin/kbox
+87163     1 /Users/roylin/.kbox/bin/kbox
+87305     1 /Users/roylin/.kbox/bin/kbox
+87348     1 /Users/roylin/.kbox/bin/kbox
+87408     1 /Users/roylin/.kbox/bin/kbox
+87417     1 /Users/roylin/.kbox/bin/kbox
+87429     1 /Users/roylin/.kbox/bin/kbox
+87674     1 /System/Library/CoreServices/Dock.app/Contents/XPCServices/DockHelper.xpc/Contents/MacOS/DockHelper
+87690     1 /Users/roylin/.kbox/bin/kbox
+87698     1 /Users/roylin/.kbox/bin/kbox
+87706     1 /Users/roylin/.kbox/bin/kbox
+87846     1 /Users/roylin/.kbox/bin/kbox
+87908     1 /Users/roylin/.kbox/bin/kbox
+87909     1 /Users/roylin/.kbox/bin/kbox
+87943     1 /Users/roylin/.kbox/bin/kbox
+88037     1 /Users/roylin/.kbox/bin/kbox
+88094     1 /Users/roylin/.kbox/bin/kbox
+88176     1 /Users/roylin/.kbox/bin/kbox
+88201     1 /Users/roylin/.kbox/bin/kbox
+88205     1 /Users/roylin/.kbox/bin/kbox
+88280     1 /Users/roylin/.kbox/bin/kbox
+88329     1 /Users/roylin/.kbox/bin/kbox
+88365     1 /Users/roylin/.kbox/bin/kbox
+88396     1 /Users/roylin/.kbox/bin/kbox
+88448     1 /Users/roylin/.kbox/bin/kbox
+88454     1 /Users/roylin/.kbox/bin/kbox
+88468  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+88469  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+88470 88468 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+88489  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+88490  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+88492 88490 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+88716     1 /Users/roylin/.kbox/bin/kbox
+88740     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/hdiejectd
+88751 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Plugin).app/Contents/MacOS/WeChatAppEx Helper (Plugin)
+88752     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+88793     1 /Users/roylin/.kbox/bin/kbox
+88854     1 /Applications/Lark.app/Contents/MacOS/Feishu
+88866 82043 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+88867 82043 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+88868 82043 /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex
+88871 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88872 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88873 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88875 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88879 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88960     1 /Applications/Lark.app/Contents/XPCServices/AgentInfraService.xpc/Contents/MacOS/AgentInfraService
+88962 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper (Renderer).app/Contents/MacOS/Lark Helper (Renderer)
+88964     1 /Applications/GoGoJumpVPN.app/Contents/MacOS/GoGoJumpVPN
+88984     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService
+88985 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+88986     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+88987 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+89014     1 /Users/roylin/.kbox/bin/kbox
+89029     1 /Users/roylin/.kbox/bin/kbox
+89133     1 /Users/roylin/.kbox/bin/kbox
+89212     1 /Users/roylin/.kbox/bin/kbox
+89241  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+89242  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+89295     1 /Users/roylin/.kbox/bin/kbox
+89316     1 /System/Library/PrivateFrameworks/AuthKit.framework/Versions/A/Support/akd
+89317 88854 /Applications/Lark.app/Contents/Frameworks/Lark Framework.framework/Versions/147.0.7727.149/Helpers/Lark Helper.app/Contents/MacOS/Lark Helper
+89348 89241 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+89364     1 /Users/roylin/.kbox/bin/kbox
+89477     1 /Users/roylin/.kbox/bin/kbox
+89496     1 /usr/libexec/audioanalyticsd
+89550     1 /Users/roylin/.kbox/bin/kbox
+89553     1 /Users/roylin/.kbox/bin/kbox
+89698     1 /Users/roylin/.kbox/bin/kbox
+89730     1 /Users/roylin/.kbox/bin/kbox
+89762     1 /Users/roylin/.kbox/bin/kbox
+89862 88470 /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex
+89915     1 /Users/roylin/.kbox/bin/kbox
+89963     1 /Users/roylin/.kbox/bin/kbox
+90002     1 /Users/roylin/.kbox/bin/kbox
+90146     1 /Users/roylin/.kbox/bin/kbox
+90259     1 /Users/roylin/.kbox/bin/kbox
+90278     1 /Users/roylin/.kbox/bin/kbox
+90359     1 /Users/roylin/.kbox/bin/kbox
+90411     1 /Users/roylin/.kbox/bin/kbox
+90435     1 /Users/roylin/.kbox/bin/kbox
+90489     1 /Users/roylin/.kbox/bin/kbox
+90501 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)
+90563     1 /Users/roylin/.kbox/bin/kbox
+90619     1 /Users/roylin/.kbox/bin/kbox
+90685     1 /Users/roylin/.kbox/bin/kbox
+90705     1 /Users/roylin/.kbox/bin/kbox
+90745     1 /Users/roylin/.kbox/bin/kbox
+90754     1 /Users/roylin/.kbox/bin/kbox
+90799     1 /Users/roylin/.kbox/bin/kbox
+90809     1 /Users/roylin/.kbox/bin/kbox
+90874     1 /Users/roylin/.kbox/bin/kbox
+90934     1 /Users/roylin/.kbox/bin/kbox
+91022     1 /Users/roylin/.kbox/bin/kbox
+91043     1 /Users/roylin/.kbox/bin/kbox
+91055     1 /Users/roylin/.kbox/bin/kbox
+91153     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/ThemeWidgetControlViewService.xpc/Contents/MacOS/ThemeWidgetControlViewService
+91188     1 /Users/roylin/.kbox/bin/kbox
+91270     1 /Users/roylin/.kbox/bin/kbox
+91305     1 /Users/roylin/.kbox/bin/kbox
+91386     1 /Users/roylin/.kbox/bin/kbox
+91464     1 /System/Library/PrivateFrameworks/DiskImages.framework/Resources/diskimages-helper
+91593     1 /Users/roylin/.kbox/bin/kbox
+91606     1 /Users/roylin/.kbox/bin/kbox
+91631     1 /Users/roylin/.kbox/bin/kbox
+91851     1 /Users/roylin/.kbox/bin/kbox
+91900     1 /Users/roylin/.kbox/bin/kbox
+91905     1 /Users/roylin/.kbox/bin/kbox
+91974     1 /Users/roylin/.kbox/bin/kbox
+92001     1 /usr/libexec/milod
+92007     1 /Users/roylin/.kbox/bin/kbox
+92017     1 /Users/roylin/.kbox/bin/kbox
+92060     1 /Users/roylin/.kbox/bin/kbox
+92118     1 /Users/roylin/.kbox/bin/kbox
+92174     1 /Users/roylin/.kbox/bin/kbox
+92206     1 /Users/roylin/.kbox/bin/kbox
+92212     1 /Users/roylin/.kbox/bin/kbox
+92230     1 /Users/roylin/.kbox/bin/kbox
+92275     1 /Users/roylin/.kbox/bin/kbox
+92293     1 /Users/roylin/.kbox/bin/kbox
+92299     1 /Users/roylin/.kbox/bin/kbox
+92314     1 /Users/roylin/.kbox/bin/kbox
+92341     1 /Users/roylin/.kbox/bin/kbox
+92369     1 /Users/roylin/.kbox/bin/kbox
+92415     1 /Users/roylin/.kbox/bin/kbox
+92431     1 /Users/roylin/.kbox/bin/kbox
+92432     1 /Users/roylin/.kbox/bin/kbox
+92465     1 /Users/roylin/.kbox/bin/kbox
+92473     1 /Users/roylin/.kbox/bin/kbox
+92494     1 /Users/roylin/.kbox/bin/kbox
+92518     1 /Users/roylin/.kbox/bin/kbox
+92585     1 /Users/roylin/.kbox/bin/kbox
+92663     1 /Users/roylin/.kbox/bin/kbox
+92741     1 /Users/roylin/.kbox/bin/kbox
+92783     1 /Users/roylin/.kbox/bin/kbox
+92796     1 /Users/roylin/.kbox/bin/kbox
+92832     1 /Users/roylin/.kbox/bin/kbox
+92861     1 /Users/roylin/.kbox/bin/kbox
+92874     1 /Users/roylin/.kbox/bin/kbox
+92924     1 /Users/roylin/.kbox/bin/kbox
+92927     1 /Users/roylin/.kbox/bin/kbox
+93011     1 /Users/roylin/.kbox/bin/kbox
+93043     1 /Users/roylin/.kbox/bin/kbox
+93055     1 /Users/roylin/.kbox/bin/kbox
+93074     1 /Users/roylin/.kbox/bin/kbox
+93076     1 /Users/roylin/.kbox/bin/kbox
+93137     1 /Users/roylin/.kbox/bin/kbox
+93142     1 /Applications/Visual Studio Code.app/Contents/MacOS/Code
+93153     1 /Users/roylin/.kbox/bin/kbox
+93198     1 /Users/roylin/.kbox/bin/kbox
+93217     1 /Users/roylin/.kbox/bin/kbox
+93240     1 /Users/roylin/.kbox/bin/kbox
+93272     1 /Users/roylin/.kbox/bin/kbox
+93295     1 /Users/roylin/.kbox/bin/kbox
+93321     1 /Users/roylin/.kbox/bin/kbox
+93356     1 /Users/roylin/.kbox/bin/kbox
+93361     1 /Users/roylin/.kbox/bin/kbox
+93366     1 /Users/roylin/.kbox/bin/kbox
+93437     1 /Users/roylin/.kbox/bin/kbox
+93480     1 /Users/roylin/.kbox/bin/kbox
+93489     1 /Users/roylin/.kbox/bin/kbox
+93583     1 /Users/roylin/.kbox/bin/kbox
+93587     1 /Users/roylin/.kbox/bin/kbox
+93633     1 /Users/roylin/.kbox/bin/kbox
+93635     1 /Users/roylin/.kbox/bin/kbox
+93661     1 /Users/roylin/.kbox/bin/kbox
+93733     1 /Users/roylin/.kbox/bin/kbox
+93747     1 /Users/roylin/.kbox/bin/kbox
+93853     1 /Users/roylin/.kbox/bin/kbox
+93891     1 /Users/roylin/.kbox/bin/kbox
+93902     1 /Users/roylin/.kbox/bin/kbox
+93906     1 /Users/roylin/.kbox/bin/kbox
+93955     1 /Users/roylin/.kbox/bin/kbox
+94008     1 /Users/roylin/.kbox/bin/kbox
+94018     1 /Users/roylin/.kbox/bin/kbox
+94060     1 /Users/roylin/.kbox/bin/kbox
+94101     1 /Users/roylin/.kbox/bin/kbox
+94137     1 /Users/roylin/.kbox/bin/kbox
+94151     1 /Users/roylin/.kbox/bin/kbox
+94227     1 /Users/roylin/.kbox/bin/kbox
+94243     1 /Users/roylin/.kbox/bin/kbox
+94262     1 /Users/roylin/.kbox/bin/kbox
+94265     1 /Users/roylin/.kbox/bin/kbox
+94308     1 /Users/roylin/.kbox/bin/kbox
+94311     1 /System/Library/PrivateFrameworks/UARPAssetManager.framework/XPCServices/UARPAssetManagerServiceMobileAsset.xpc/Contents/MacOS/UARPAssetManagerServiceMobileAsset
+94348     1 /Users/roylin/.kbox/bin/kbox
+94351     1 /Users/roylin/.kbox/bin/kbox
+94436     1 /Users/roylin/.kbox/bin/kbox
+94482     1 /Users/roylin/.kbox/bin/kbox
+94509     1 /Users/roylin/.kbox/bin/kbox
+94553     1 /Users/roylin/.kbox/bin/kbox
+94556     1 /Users/roylin/.kbox/bin/kbox
+94568     1 /Users/roylin/.kbox/bin/kbox
+94590     1 /Users/roylin/.kbox/bin/kbox
+94627     1 /Applications/Visual Studio Code.app/Contents/Frameworks/Electron Framework.framework/Helpers/chrome_crashpad_handler
+94628 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+94629 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+94689     1 /Users/roylin/.kbox/bin/kbox
+94702     1 /Users/roylin/.kbox/bin/kbox
+94714     1 /Users/roylin/.kbox/bin/kbox
+94730 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Renderer).app/Contents/MacOS/Code Helper (Renderer)
+94753     1 /Users/roylin/.kbox/bin/kbox
+94818     1 /System/Library/PrivateFrameworks/IntelligencePlatformCore.framework/Versions/A/intelligenceplatformd
+94819     1 /System/Library/PrivateFrameworks/XprotectFramework.framework/Versions/A/XPCServices/XProtectUpdateService.xpc/Contents/MacOS/XProtectUpdateService
+94856     1 /Users/roylin/.kbox/bin/kbox
+94892 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+94930     1 /Users/roylin/.kbox/bin/kbox
+94938 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+94954     1 /Users/roylin/.kbox/bin/kbox
+95034     1 /Users/roylin/.kbox/bin/kbox
+95136     1 /System/Library/PrivateFrameworks/CloudTelemetry.framework/Versions/A/XPCServices/CloudTelemetryService.xpc/Contents/MacOS/CloudTelemetryService
+95184     1 /Users/roylin/.kbox/bin/kbox
+95185     1 /System/Library/PrivateFrameworks/PassKitCore.framework/passd
+95188     1 /Users/roylin/.kbox/bin/kbox
+95191     1 /Users/roylin/.kbox/bin/kbox
+95234     1 /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/XPCServices/extensionkitservice.xpc/Contents/MacOS/extensionkitservice
+95235     1 /System/Applications/FindMy.app/Contents/PlugIns/FindMyWidgetItems.appex/Contents/MacOS/FindMyWidgetItems
+95238     1 /usr/libexec/sysdiagnosed
+95289     1 /Users/roylin/.kbox/bin/kbox
+95296     1 /System/Library/PrivateFrameworks/MobileAccessoryUpdater.framework/XPCServices/EAUpdaterService.xpc/Contents/MacOS/EAUpdaterService
+95298     1 /System/Library/PrivateFrameworks/CoreAccessories.framework/Support/accessoryd
+95333     1 /Users/roylin/.kbox/bin/kbox
+95340     1 /System/Library/Frameworks/AppKit.framework/Versions/C/XPCServices/com.apple.appkit.xpc.openAndSavePanelService.xpc/Contents/MacOS/com.apple.appkit.xpc.openAndSavePanelService
+95341     1 /System/Library/Frameworks/QuickLookUI.framework/Versions/A/XPCServices/QuickLookUIService.xpc/Contents/MacOS/QuickLookUIService
+95367     1 /Users/roylin/.kbox/bin/kbox
+95453     1 /Users/roylin/.kbox/bin/kbox
+95486     1 /System/Library/PrivateFrameworks/MediaAnalysisAccess.framework/Versions/A/XPCServices/mediaanalysisd-access.xpc/Contents/MacOS/mediaanalysisd-access
+95487     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTDecoderXPCService.xpc/Contents/MacOS/VTDecoderXPCService
+95488     1 /System/Library/Frameworks/VideoToolbox.framework/Versions/A/XPCServices/VTEncoderXPCService.xpc/Contents/MacOS/VTEncoderXPCService
+95489     1 /Users/roylin/.kbox/bin/kbox
+95493     1 /Users/roylin/.kbox/bin/kbox
+95495     1 /Users/roylin/.kbox/bin/kbox
+95549     1 /Users/roylin/.kbox/bin/kbox
+95591     1 /Users/roylin/.kbox/bin/kbox
+95611     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+95638     1 /Applications/WeChat.app/Contents/MacOS/WeChat
+95640     1 /Applications/WeChat.app/Contents/Frameworks/crashpad_handler
+95642     1 /System/Library/Frameworks/AudioToolbox.framework/XPCServices/com.apple.audio.SandboxHelper.xpc/Contents/MacOS/com.apple.audio.SandboxHelper
+95643 95638 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/MacOS/WeChatAppEx
+95660 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper.app/Contents/MacOS/WeChatAppEx Helper
+95661 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (GPU).app/Contents/MacOS/WeChatAppEx Helper (GPU)
+95662     1 /System/Library/PrivateFrameworks/SafariPlatformSupport.framework/Versions/A/XPCServices/com.apple.SafariPlatformSupport.Helper.xpc/Contents/MacOS/com.apple.SafariPlatformSupport.Helper
+95691     1 /System/Library/PrivateFrameworks/StreamingExtractor.framework/Versions/A/XPCServices/STExtractionService.privileged.xpc/Contents/MacOS/STExtractionService.privileged
+95699     1 /Users/roylin/.kbox/bin/kbox
+95706     1 /Users/roylin/.kbox/bin/kbox
+95724     1 /Users/roylin/.kbox/bin/kbox
+95771     1 /Users/roylin/.kbox/bin/kbox
+95808     1 /Users/roylin/.kbox/bin/kbox
+95819     1 /Users/roylin/.kbox/bin/kbox
+95851     1 /Users/roylin/.kbox/bin/kbox
+95871     1 /Users/roylin/.kbox/bin/kbox
+95873     1 /Users/roylin/.kbox/bin/kbox
+95947     1 /Users/roylin/.kbox/bin/kbox
+96015     1 /Users/roylin/.kbox/bin/kbox
+96050     1 /Users/roylin/.kbox/bin/kbox
+96058     1 /System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService
+96087     1 /Users/roylin/.kbox/bin/kbox
+96114     1 /Users/roylin/.kbox/bin/kbox
+96115     1 /Users/roylin/.kbox/bin/kbox
+96132     1 /Users/roylin/.kbox/bin/kbox
+96137     1 /Users/roylin/.kbox/bin/kbox
+96199     1 /Users/roylin/.kbox/bin/kbox
+96204     1 /Users/roylin/.kbox/bin/kbox
+96210     1 /Users/roylin/.kbox/bin/kbox
+96268     1 /Users/roylin/.kbox/bin/kbox
+96276     1 /Users/roylin/.kbox/bin/kbox
+96353     1 /Users/roylin/.kbox/bin/kbox
+96369     1 /Users/roylin/.kbox/bin/kbox
+96404     1 /Users/roylin/.kbox/bin/kbox
+96405     1 /Users/roylin/.kbox/bin/kbox
+96430     1 /Users/roylin/.kbox/bin/kbox
+96496 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+96497     1 /Users/roylin/.kbox/bin/kbox
+96502     1 /Users/roylin/.kbox/bin/kbox
+96504     1 /Users/roylin/.kbox/bin/kbox
+96554     1 /Users/roylin/.kbox/bin/kbox
+96561     1 /Users/roylin/.kbox/bin/kbox
+96564     1 /Users/roylin/.kbox/bin/kbox
+96615     1 /Users/roylin/.kbox/bin/kbox
+96637     1 /Users/roylin/.kbox/bin/kbox
+96653 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper.app/Contents/MacOS/Code Helper
+96654 93142 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin)
+96700     1 /Users/roylin/.kbox/bin/kbox
+96713     1 /Users/roylin/.kbox/bin/kbox
+96728     1 /System/Library/Frameworks/NetFS.framework/Versions/A/XPCServices/PlugInLibraryService.xpc/Contents/MacOS/PlugInLibraryService
+96767     1 /Users/roylin/.kbox/bin/kbox
+96772     1 /Users/roylin/.kbox/bin/kbox
+96815     1 /Users/roylin/.kbox/bin/kbox
+96852     1 /Users/roylin/.kbox/bin/kbox
+96871     1 /Users/roylin/.kbox/bin/kbox
+96892     1 /Users/roylin/.kbox/bin/kbox
+96941     1 /Users/roylin/.kbox/bin/kbox
+96965     1 /Users/roylin/.kbox/bin/kbox
+97024     1 /Users/roylin/.kbox/bin/kbox
+97037     1 /Users/roylin/.kbox/bin/kbox
+97066     1 /Users/roylin/.kbox/bin/kbox
+97101     1 /Users/roylin/.kbox/bin/kbox
+97110     1 /Users/roylin/.kbox/bin/kbox
+97124     1 /Users/roylin/.kbox/bin/kbox
+97141     1 /Users/roylin/.kbox/bin/kbox
+97159     1 /Users/roylin/.kbox/bin/kbox
+97177 95638 /Applications/WeChat.app/Contents/MacOS/WeChatHelper.app/Contents/MacOS/WeChatHelper
+97178 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper.app/Contents/MacOS/WeChatAppEx Helper
+97179 95638 /Applications/WeChat.app/Contents/MacOS/WeChatHelper.app/Contents/MacOS/WeChatHelper
+97180 95638 /Applications/WeChat.app/Contents/MacOS/XPlayer.app/Contents/MacOS/XPlayer
+97181 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)
+97182 95643 /Applications/WeChat.app/Contents/MacOS/WeChatAppEx.app/Contents/Frameworks/WeChatAppEx Framework.framework/Versions/C/Helpers/WeChatAppEx Helper (Renderer).app/Contents/MacOS/WeChatAppEx Helper (Renderer)
+97220     1 /Users/roylin/.kbox/bin/kbox
+97269     1 /Users/roylin/.kbox/bin/kbox
+97331     1 /Users/roylin/.kbox/bin/kbox
+97354     1 /Users/roylin/.kbox/bin/kbox
+97398     1 /Users/roylin/.kbox/bin/kbox
+97412     1 /Users/roylin/.kbox/bin/kbox
+97438     1 /Users/roylin/.kbox/bin/kbox
+97446     1 /Users/roylin/.kbox/bin/kbox
+97516     1 /Users/roylin/.kbox/bin/kbox
+97573     1 /Users/roylin/.kbox/bin/kbox
+97589     1 /Users/roylin/.kbox/bin/kbox
+97618     1 /Users/roylin/.kbox/bin/kbox
+97637     1 /Users/roylin/.kbox/bin/kbox
+97652     1 /Users/roylin/.kbox/bin/kbox
+97741     1 /Users/roylin/.kbox/bin/kbox
+97745     1 /Users/roylin/.kbox/bin/kbox
+97789     1 /Users/roylin/.kbox/bin/kbox
+97805     1 /Users/roylin/.kbox/bin/kbox
+97836     1 /Users/roylin/.kbox/bin/kbox
+97878     1 /Users/roylin/.kbox/bin/kbox
+97892 26684 /bin/zsh
+97935     1 /Users/roylin/.kbox/bin/kbox
+97947     1 /Users/roylin/.kbox/bin/kbox
+97987     1 /Users/roylin/.kbox/bin/kbox
+98004     1 /Users/roylin/.kbox/bin/kbox
+98008     1 /Users/roylin/.kbox/bin/kbox
+98058     1 /Users/roylin/.kbox/bin/kbox
+98100     1 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/156.0.8078.79/Helpers/browser_crashpad_handler
+98103     1 /Applications/ChatGPT.app/Contents/Frameworks/Codex Framework.framework/Versions/156.0.8078.79/Helpers/browser_crashpad_handler
+98120     1 /Users/roylin/.kbox/bin/kbox
+98131     1 /Users/roylin/.kbox/bin/kbox
+98177     1 /Users/roylin/.kbox/bin/kbox
+98228     1 /Users/roylin/.kbox/bin/kbox
+98240     1 /Users/roylin/.kbox/bin/kbox
+98335     1 /Users/roylin/.kbox/bin/kbox
+98342  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+98343  9582 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+98349 98343 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl
+98355     1 /Users/roylin/.kbox/bin/kbox
+98372     1 /Applications/ChatGPT.app/Contents/Resources/native/bare-modifier-monitor
+98380     1 /Users/roylin/.kbox/bin/kbox
+98482     1 /Users/roylin/.kbox/bin/kbox
+98499     1 /Users/roylin/.kbox/bin/kbox
+98512     1 /Users/roylin/.kbox/bin/kbox
+98549     1 /Users/roylin/.kbox/bin/kbox
+98577     1 /Users/roylin/.kbox/bin/kbox
+98605     1 /Users/roylin/.kbox/bin/kbox
+98644     1 /Users/roylin/.kbox/bin/kbox
+98694     1 /Users/roylin/.kbox/bin/kbox
+98707     1 /Users/roylin/.kbox/bin/kbox
+98711     1 /Users/roylin/.kbox/bin/kbox
+98784     1 /Users/roylin/.kbox/bin/kbox
+98856     1 /Users/roylin/.kbox/bin/kbox
+98919     1 /Users/roylin/.kbox/bin/kbox
+98954     1 /Users/roylin/.kbox/bin/kbox
+99058     1 /Users/roylin/.kbox/bin/kbox
+99112     1 /Users/roylin/.kbox/bin/kbox
+99230     1 /Users/roylin/.kbox/bin/kbox
+99236 89348 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+99237 89348 /Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node
+99276 89348 /Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex
+99279     1 /Users/roylin/.kbox/bin/kbox
+99283     1 /Users/roylin/.kbox/bin/kbox
+99340     1 /Users/roylin/.kbox/bin/kbox
+99379     1 /Users/roylin/.kbox/bin/kbox
+99403     1 /Users/roylin/.kbox/bin/kbox
+99454     1 /Users/roylin/.kbox/bin/kbox
+99480     1 /Users/roylin/.kbox/bin/kbox
+99646     1 /Users/roylin/.kbox/bin/kbox
+99797     1 /Users/roylin/.kbox/bin/kbox
+99821     1 /Users/roylin/.kbox/bin/kbox
+76220   898 login
+76221 76220 -zsh
+11727 63428 /Users/roylin/.local/bin/agent
+63427   898 login
+63428 63427 -zsh
+ 8951   898 login
+ 8952  8951 -zsh
+ 9220  8952 codex
+37151   898 login
+37152 37151 -zsh
+96931 37152 /Users/roylin/.local/bin/agent
+ 8967   898 login
+ 8968  8967 -zsh
+26684  8968 /Users/roylin/.local/bin/agent
+87122   898 login
+87148 87122 -zsh
+89057 87148 codex
+63700   898 login
+63702 63700 -zsh
+66094 63702 codex
+71130 70887 /usr/bin/login
+71135 71130 -/bin/zsh
+71131 70887 /usr/bin/login
+71134 71131 -/bin/zsh
+76426   898 login
+76441 76426 -zsh
+81720 76441 codex
+63621   898 login
+63622 63621 -zsh
+64839 63622 /Users/roylin/.local/bin/agent
+51514 79566 /Users/roylin/.local/bin/agent
+79565   898 login
+79566 79565 -zsh

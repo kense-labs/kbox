@@ -181,7 +181,7 @@ impl LogicalRootfs {
         self.write_runtime_file(path, content.as_bytes())
     }
 
-    fn read_runtime_text(&mut self, path: &str) -> Result<Option<String>> {
+    pub(super) fn read_runtime_text(&mut self, path: &str) -> Result<Option<String>> {
         let path = guest_path(path)?;
         let Some(resolved) = self.resolve_path(&path, true, false)? else {
             return Ok(None);

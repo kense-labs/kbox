@@ -231,20 +231,34 @@ async fn launch_process(
     binding.validate_for(&execution_id)?;
     let terminal = matches!(launch.io.stdin, IoMode::Terminal);
     let mut args = launch.args;
+    let mut env = launch.env;
     resolve_exec_executable(
         record,
+        binding.driver,
         &mut args,
-        &launch.env,
+        &mut env,
         launch.working_dir.as_deref(),
     )?;
     let process = build_process(
         args,
-        launch.env,
+        env,
         launch.working_dir,
         launch.rootfs,
         launch.user,
         terminal,
     )?;
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    let process = if binding.driver == koci_sdk::DriverKind::LibkHvf {
+        let mut process = process;
+        let config = &backend.metadata(record)?.request.config;
+        crate::vm::oci_hvf_spec::apply_workload_capabilities(config, &mut process)
+            .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+        crate::vm::oci_hvf_spec::apply_workload_rlimits(config, &mut process)
+            .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+        process
+    } else {
+        process
+    };
     let client = backend.client();
     require_process_operations(&client, launch.io.stdin, terminal).await?;
     let initial_stdin_digest = launch.initial_stdin.as_deref().map(sha256_digest);
@@ -358,8 +372,9 @@ async fn launch_process(
 
 fn resolve_exec_executable(
     record: &BoxRecord,
+    driver: koci_sdk::DriverKind,
     args: &mut [String],
-    env: &[String],
+    env: &mut Vec<String>,
     working_dir: Option<&str>,
 ) -> ExecutionManagerResult<()> {
     let Some(command) = args.first_mut() else {
@@ -397,8 +412,25 @@ fn resolve_exec_executable(
             })
         })
         .unwrap_or(DEFAULT_CONTAINER_PATH);
-    let rootfs = super::prepared_rootfs::resolve_prepared_rootfs(&record.box_dir)
-        .unwrap_or_else(|| record.box_dir.join("rootfs"));
+    let prepared_rootfs = super::prepared_rootfs::resolve_prepared_rootfs(&record.box_dir);
+    if driver == koci_sdk::DriverKind::LibkHvf && prepared_rootfs.is_none() {
+        // Guest ext4 has no Host tree; retain existing materialized-rootfs request bytes.
+        if command.contains('/') {
+            *command = normalize_linux_guest_path(cwd, command, "exec process executable")
+                .map_err(exec_path_request_error)?;
+        } else {
+            for directory in path.split(':') {
+                let directory = if directory.is_empty() { cwd } else { directory };
+                normalize_linux_guest_path(cwd, directory, "PATH entry")
+                    .map_err(exec_path_request_error)?;
+            }
+        }
+        if request_path.is_none() {
+            env.push(format!("PATH={path}"));
+        }
+        return Ok(());
+    }
+    let rootfs = prepared_rootfs.unwrap_or_else(|| record.box_dir.join("rootfs"));
     *command =
         resolve_runtime_executable(&rootfs, cwd, path, command).map_err(exec_path_request_error)?;
     Ok(())
@@ -663,7 +695,7 @@ fn build_process(
         })
 }
 
-fn parse_process_user(user: Option<&str>) -> ExecutionManagerResult<(u32, u32)> {
+pub(crate) fn parse_process_user(user: Option<&str>) -> ExecutionManagerResult<(u32, u32)> {
     let Some(user) = user else {
         return Ok((0, 0));
     };
@@ -1146,3 +1178,7 @@ mod tests {
         assert!(parse_process_user(Some("alice")).is_err());
     }
 }
+
+#[cfg(test)]
+#[path = "oci_session_path_tests.rs"]
+mod path_tests;

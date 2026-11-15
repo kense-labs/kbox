@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::failed_create::native_failed_create_preserves_authority_and_reconciles_owned_resources ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2196 filtered out; finished in 40.42s
+

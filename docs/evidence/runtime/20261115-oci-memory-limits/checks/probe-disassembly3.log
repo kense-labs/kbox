@@ -1,0 +1,210 @@
+
+artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000001011b28 <main>:
+ 1011b28:      	sub	sp, sp, #0x80
+ 1011b2c:      	stp	x29, x30, [sp, #0x60]
+ 1011b30:      	stp	x20, x19, [sp, #0x70]
+ 1011b34:      	add	x29, sp, #0x60
+ 1011b38:      	mov	x19, x1
+ 1011b3c:      	mov	w20, w0
+ 1011b40:      	sub	x1, x29, #0x10
+ 1011b44:      	mov	w0, #0x2                // =2
+ 1011b48:      	bl	0x1012a30 <getrlimit>
+ 1011b4c:      	cbnz	w0, 0x1011b70 <main+0x48>
+ 1011b50:      	sub	x1, x29, #0x20
+ 1011b54:      	mov	w0, #0x3                // =3
+ 1011b58:      	bl	0x1012a30 <getrlimit>
+ 1011b5c:      	cbnz	w0, 0x1011b70 <main+0x48>
+ 1011b60:      	add	x1, sp, #0x30
+ 1011b64:      	mov	w0, #0x8                // =8
+ 1011b68:      	bl	0x1012a30 <getrlimit>
+ 1011b6c:      	cbz	w0, 0x1011b84 <main+0x5c>
+ 1011b70:      	mov	w0, #0xa                // =10
+ 1011b74:      	ldp	x20, x19, [sp, #0x70]
+ 1011b78:      	ldp	x29, x30, [sp, #0x60]
+ 1011b7c:      	add	sp, sp, #0x80
+ 1011b80:      	ret
+ 1011b84:      	cmp	w20, #0x2
+ 1011b88:      	b.lt	0x1011bbc <main+0x94>
+ 1011b8c:      	ldr	x20, [x19, #0x8]
+ 1011b90:      	nop
+ 1011b94:      	adr	x1, 0x100024e <__init_array_start+0x24e>
+ 1011b98:      	mov	x0, x20
+ 1011b9c:      	bl	0x1016e8c <strcoll>
+ 1011ba0:      	mov	w19, w0
+ 1011ba4:      	adrp	x1, 0x1000000 <_DYNAMIC+0x1000000>
+ 1011ba8:      	add	x1, x1, #0x21d
+ 1011bac:      	mov	x0, x20
+ 1011bb0:      	bl	0x1016e8c <strcoll>
+ 1011bb4:      	cbz	w0, 0x1011c80 <main+0x158>
+ 1011bb8:      	cbz	w19, 0x1011cc4 <main+0x19c>
+ 1011bbc:      	mov	w8, #0x400000           // =4194304
+ 1011bc0:      	mov	w9, #0x80000            // =524288
+ 1011bc4:      	mov	w0, #0xd                // =13
+ 1011bc8:      	dup	v0.2d, x8
+ 1011bcc:      	dup	v1.2d, x9
+ 1011bd0:      	ldp	q3, q2, [x29, #-0x20]
+ 1011bd4:      	cmeq	v1.2d, v3.2d, v1.2d
+ 1011bd8:      	cmeq	v0.2d, v2.2d, v0.2d
+ 1011bdc:      	uzp1	v0.4s, v0.4s, v1.4s
+ 1011be0:      	mvn	v0.16b, v0.16b
+ 1011be4:      	umaxv	s0, v0.4s
+ 1011be8:      	fmov	w8, s0
+ 1011bec:      	tbnz	w8, #0x0, 0x1011b74 <main+0x4c>
+ 1011bf0:      	ldr	x8, [sp, #0x30]
+ 1011bf4:      	cmp	x8, #0x10, lsl #12      // =0x10000
+ 1011bf8:      	b.ne	0x1011b74 <main+0x4c>
+ 1011bfc:      	ldr	x8, [sp, #0x38]
+ 1011c00:      	cmp	x8, #0x10, lsl #12      // =0x10000
+ 1011c04:      	b.ne	0x1011b74 <main+0x4c>
+ 1011c08:      	mov	w0, #0x2                // =2
+ 1011c0c:      	mov	w1, #0x400000           // =4194304
+ 1011c10:      	mov	w2, #0x400000           // =4194304
+ 1011c14:      	bl	0x1011e58 <raise_denied>
+ 1011c18:      	ldp	x1, x2, [x29, #-0x20]
+ 1011c1c:      	mov	w20, w0
+ 1011c20:      	mov	w0, #0x3                // =3
+ 1011c24:      	bl	0x1011e58 <raise_denied>
+ 1011c28:      	ldp	x1, x2, [sp, #0x30]
+ 1011c2c:      	mov	w19, w0
+ 1011c30:      	mov	w0, #0x8                // =8
+ 1011c34:      	bl	0x1011e58 <raise_denied>
+ 1011c38:      	mov	w8, w0
+ 1011c3c:      	mov	w0, #0xe                // =14
+ 1011c40:      	cbz	w20, 0x1011b74 <main+0x4c>
+ 1011c44:      	cbz	w19, 0x1011b74 <main+0x4c>
+ 1011c48:      	cbz	w8, 0x1011b74 <main+0x4c>
+ 1011c4c:      	bl	0x1012904 <__errno_location>
+ 1011c50:      	str	wzr, [x0]
+ 1011c54:      	adrp	x8, 0x1000000 <_DYNAMIC+0x1000000>
+ 1011c58:      	adrp	x1, 0x1000000 <_DYNAMIC+0x1000000>
+ 1011c5c:      	add	x1, x1, #0x2fa
+ 1011c60:      	ldp	x5, x6, [x29, #-0x10]
+ 1011c64:      	ldr	x0, [x8, #0x6b0]
+ 1011c68:      	mov	w2, wzr
+ 1011c6c:      	mov	w3, #0x1                // =1
+ 1011c70:      	mov	w4, wzr
+ 1011c74:      	bl	0x10133d8 <fprintf>
+ 1011c78:      	mov	w0, #0x10               // =16
+ 1011c7c:      	b	0x1011b74 <main+0x4c>
+ 1011c80:      	adrp	x8, 0x1000000 <_DYNAMIC+0x1000000>
+ 1011c84:      	add	x0, sp, #0x10
+ 1011c88:      	mov	w1, #0x20               // =32
+ 1011c8c:      	ldr	x2, [x8, #0x6b8]
+ 1011c90:      	bl	0x101324c <fgets_unlocked>
+ 1011c94:      	cbz	x0, 0x1011cbc <main+0x194>
+ 1011c98:      	mov	x10, #0x7473            // =29811
+ 1011c9c:      	ldr	x8, [sp, #0x10]
+ 1011ca0:      	ldrh	w9, [sp, #0x18]
+ 1011ca4:      	movk	x10, #0x6572, lsl #16
+ 1011ca8:      	movk	x10, #0x6d61, lsl #32
+ 1011cac:      	movk	x10, #0x6465, lsl #48
+ 1011cb0:      	cmp	x8, x10
+ 1011cb4:      	ccmp	w9, #0xa, #0x0, eq
+ 1011cb8:      	b.eq	0x1011bb8 <main+0x90>
+ 1011cbc:      	mov	w0, #0xb                // =11
+ 1011cc0:      	b	0x1011b74 <main+0x4c>
+ 1011cc4:      	movi	v0.2d, #0xffffffffffffffff
+ 1011cc8:      	ldp	q2, q1, [x29, #-0x20]
+ 1011ccc:      	mov	w0, #0xc                // =12
+ 1011cd0:      	cmeq	v2.2d, v2.2d, v0.2d
+ 1011cd4:      	cmeq	v0.2d, v1.2d, v0.2d
+ 1011cd8:      	uzp1	v0.4s, v0.4s, v2.4s
+ 1011cdc:      	mvn	v0.16b, v0.16b
+ 1011ce0:      	umaxv	s0, v0.4s
+ 1011ce4:      	fmov	w8, s0
+ 1011ce8:      	tbnz	w8, #0x0, 0x1011b74 <main+0x4c>
+ 1011cec:      	ldr	x8, [sp, #0x30]
+ 1011cf0:      	cmn	x8, #0x1
+ 1011cf4:      	b.ne	0x1011b74 <main+0x4c>
+ 1011cf8:      	ldr	x8, [sp, #0x38]
+ 1011cfc:      	cmn	x8, #0x1
+ 1011d00:      	b.ne	0x1011b74 <main+0x4c>
+ 1011d04:      	bl	0x1012904 <__errno_location>
+ 1011d08:      	mov	x19, x0
+ 1011d0c:      	str	wzr, [x0]
+ 1011d10:      	mov	x0, xzr
+ 1011d14:      	mov	w1, #0x800000           // =8388608
+ 1011d18:      	mov	w2, #0x3                // =3
+ 1011d1c:      	mov	w3, #0x22               // =34
+ 1011d20:      	mov	w4, #-0x1               // =-1
+ 1011d24:      	mov	x5, xzr
+ 1011d28:      	bl	0x1012ba0 <mmap>
+ 1011d2c:      	cmn	x0, #0x1
+ 1011d30:      	b.eq	0x1011d48 <main+0x220>
+ 1011d34:      	mov	w1, #0x800000           // =8388608
+ 1011d38:      	bl	0x1012c5c <munmap>
+ 1011d3c:      	cbz	w0, 0x1011d50 <main+0x228>
+ 1011d40:      	mov	w0, #0x12               // =18
+ 1011d44:      	b	0x1011b74 <main+0x4c>
+ 1011d48:      	mov	w0, #0x11               // =17
+ 1011d4c:      	b	0x1011b74 <main+0x4c>
+ 1011d50:      	mov	w0, #0x1e               // =30
+ 1011d54:      	bl	0x1012200 <sysconf>
+ 1011d58:      	sub	x8, x0, #0x10, lsl #12  // =0x10000
+ 1011d5c:      	sub	x8, x8, #0x1
+ 1011d60:      	cmn	x8, #0x10, lsl #12      // =0x10000
+ 1011d64:      	b.lo	0x1011d78 <main+0x250>
+ 1011d68:      	mov	w8, #0x10000            // =65536
+ 1011d6c:      	udiv	w9, w8, w0
+ 1011d70:      	msub	w8, w9, w0, w8
+ 1011d74:      	cbz	w8, 0x1011d80 <main+0x258>
+ 1011d78:      	mov	w0, #0x1b               // =27
+ 1011d7c:      	b	0x1011b74 <main+0x4c>
+ 1011d80:      	str	x0, [sp, #0x8]
+ 1011d84:      	add	x1, x0, #0x10, lsl #12  // =0x10000
+ 1011d88:      	mov	x0, xzr
+ 1011d8c:      	mov	w2, #0x3                // =3
+ 1011d90:      	mov	w3, #0x22               // =34
+ 1011d94:      	mov	w4, #-0x1               // =-1
+ 1011d98:      	mov	x5, xzr
+ 1011d9c:      	bl	0x1012ba0 <mmap>
+ 1011da0:      	cmn	x0, #0x1
+ 1011da4:      	b.eq	0x1011db8 <main+0x290>
+ 1011da8:      	mov	w1, #0x10000            // =65536
+ 1011dac:      	str	x0, [sp]
+ 1011db0:      	bl	0x1016bc4 <mlock>
+ 1011db4:      	cbz	w0, 0x1011dc0 <main+0x298>
+ 1011db8:      	mov	w0, #0x1c               // =28
+ 1011dbc:      	b	0x1011b74 <main+0x4c>
+ 1011dc0:      	ldp	x8, x1, [sp]
+ 1011dc4:      	str	wzr, [x19]
+ 1011dc8:      	add	x0, x8, #0x10, lsl #12  // =0x10000
+ 1011dcc:      	bl	0x1016bc4 <mlock>
+ 1011dd0:      	cbz	w0, 0x1011ddc <main+0x2b4>
+ 1011dd4:      	mov	w0, #0x1d               // =29
+ 1011dd8:      	b	0x1011b74 <main+0x4c>
+ 1011ddc:      	ldr	x0, [sp]
+ 1011de0:      	mov	w1, #0x10000            // =65536
+ 1011de4:      	bl	0x1016b84 <munlock>
+ 1011de8:      	cbnz	w0, 0x1011e1c <main+0x2f4>
+ 1011dec:      	ldp	x8, x1, [sp]
+ 1011df0:      	add	x0, x8, #0x10, lsl #12  // =0x10000
+ 1011df4:      	bl	0x1016bc4 <mlock>
+ 1011df8:      	cbnz	w0, 0x1011e1c <main+0x2f4>
+ 1011dfc:      	ldp	x8, x1, [sp]
+ 1011e00:      	add	x0, x8, #0x10, lsl #12  // =0x10000
+ 1011e04:      	bl	0x1016b84 <munlock>
+ 1011e08:      	cbnz	w0, 0x1011e1c <main+0x2f4>
+ 1011e0c:      	ldp	x0, x8, [sp]
+ 1011e10:      	add	x1, x8, #0x10, lsl #12  // =0x10000
+ 1011e14:      	bl	0x1012c5c <munmap>
+ 1011e18:      	cbz	w0, 0x1011e24 <main+0x2fc>
+ 1011e1c:      	mov	w0, #0x1e               // =30
+ 1011e20:      	b	0x1011b74 <main+0x4c>
+ 1011e24:      	movi	v0.2d, #0000000000000000
+ 1011e28:      	add	x1, sp, #0x10
+ 1011e2c:      	stp	q0, q0, [sp, #0x10]
+ 1011e30:      	bl	0x1011ee4 <stack_probe>
+ 1011e34:      	mov	w19, w0
+ 1011e38:      	cbnz	w0, 0x1011e50 <main+0x328>
+ 1011e3c:      	ldr	w8, [sp, #0x18]
+ 1011e40:      	adrp	x0, 0x1000000 <_DYNAMIC+0x1000000>
+ 1011e44:      	add	x0, x0, #0x278
+ 1011e48:      	add	w1, w8, #0x1
+ 1011e4c:      	bl	0x1013544 <printf>
+ 1011e50:      	mov	w0, w19
+ 1011e54:      	b	0x1011b74 <main+0x4c>

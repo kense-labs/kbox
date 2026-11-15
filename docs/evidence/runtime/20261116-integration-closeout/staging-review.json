@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "files": 8533,
+  "pathsSha256": "687276828b96971fbec35376677316dd0f83c6e13060c216132b2c9a7b7689d6",
+  "sourceInputsSha256": "c7e0c86543bd475639bc5b56261d34fac6d115f0deed5f0c11fdb02683a8d1dd",
+  "credentialMarkerFiles": [],
+  "nativeStateRetainedLocally": true,
+  "rawEvidenceWhitespacePreserved": true,
+  "diffCheckExit": 0
+}

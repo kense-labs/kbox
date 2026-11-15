@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/check-final-identities3.py"
+  ],
+  "exit": 0,
+  "seconds": 0.816834292
+}

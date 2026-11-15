@@ -1,0 +1,37 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.61s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 3 tests
+test macos_readonly::tests::confined_child ... ignored, entered by the parent test in a disposable native process
+test macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources ... ok
+
+thread 'macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children' (82364590) panicked at crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs:50:5:
+
+running 1 test
+test macos_readonly::tests::confined_child ... FAILED
+
+failures:
+
+failures:
+    macos_readonly::tests::confined_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 70 filtered out; finished in 0.01s
+
+
+
+thread 'macos_readonly::tests::confined_child' (82364593) panicked at crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs:73:5:
+called `Result::unwrap_err()` on an `Ok` value: ()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children ... FAILED
+
+failures:
+
+failures:
+    macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children
+
+test result: FAILED. 1 passed; 1 failed; 1 ignored; 0 measured; 68 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p koci-kbox --lib`

@@ -26,6 +26,7 @@ sha2.workspace = true
 windows-sys.workspace = true
 
 [target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
+cap-std.workspace = true
 libc = "0.2"
 libloading.workspace = true
 sha2 = { workspace = true, features = ["asm"] }

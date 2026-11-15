@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "completedNativeScenarios": 0,
+  "error": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/run-rootro.py\", line 64, in <module>\n    identity=label;before=inspect();identity=before['id'];metadata=before['managed_execution'];assert metadata['backend']=='box_vm',metadata;assert before['read_only'];generation=metadata['generation'];first=cli('exec',identity,'--','/bin/sh','-c',probe);assert b'ROOT_RO_INNER_RW_OK' in first\nKeyError: 'backend'\n",
+  "seconds": 4.595782375,
+  "callerDirectoryPreserved": true,
+  "zeroManagedExecutions": true,
+  "zeroVolumes": true
+}

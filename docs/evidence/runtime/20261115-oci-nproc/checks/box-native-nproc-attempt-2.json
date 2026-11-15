@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/native-client-nproc-attempt-2",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-attempt-2",
+  "clientSha256": "f949c7a849e2f7d6b9a605023e773228a3c6d87a494755e16f494ebc76a0f663",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-2",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-nproc-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-nproc-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-nproc-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 35.715162875000004,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

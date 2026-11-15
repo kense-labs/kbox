@@ -28,6 +28,7 @@ windows-sys.workspace = true
 libc = "0.2"
 
 [target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
+tempfile = "3.20"
 sha2 = { workspace = true, features = ["asm"] }
 
 [target.'cfg(target_os = "linux")'.dependencies]

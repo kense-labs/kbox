@@ -9,9 +9,9 @@ use async_trait::async_trait;
 use base64::{engine::general_purpose::STANDARD, Engine as _};
 use chrono::Utc;
 use kbox_core::{
-    pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionCpuStats,
-    ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest, ExecutionGeneration,
-    ExecutionId, ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult,
+    pty::PtyRequest, ExecOutput, ExecRequest as BoxExecRequest, ExecutionBoundary,
+    ExecutionCpuStats, ExecutionEventBatch, ExecutionEventKind, ExecutionEventsRequest,
+    ExecutionGeneration, ExecutionId, ExecutionManagerError, ExecutionManagerResult,
     ExecutionMemoryStats, ExecutionProcess, ExecutionProcessInfo, ExecutionProcessInventory,
     ExecutionResourceUpdate, ExecutionRuntimeEvent, ExecutionState, ExecutionStats,
     FileOp as BoxFileOp, FileRequest as BoxFileRequest, FileResponse as BoxFileResponse,
@@ -389,11 +389,23 @@ impl OciPreparedExecution {
                 self.bundle.directory().display()
             )));
         }
-        self.attachments = self
-            .attachments
-            .clone()
-            .with_runtime_bundle_handoff(&self.bundle)
-            .map_err(|error| sdk_error("prepare bundle handoff", error))?;
+        let external_storage = self
+            .bundle
+            .spec()
+            .annotations()
+            .as_ref()
+            .and_then(|values| values.get(koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION))
+            .is_some_and(|value| value == koci_sdk::RUNTIME_BUNDLE_HANDOFF_MOVE_V2);
+        self.attachments = if external_storage {
+            self.attachments
+                .clone()
+                .with_runtime_bundle_storage_handoff(&self.bundle)
+        } else {
+            self.attachments
+                .clone()
+                .with_runtime_bundle_handoff(&self.bundle)
+        }
+        .map_err(|error| sdk_error("prepare bundle handoff", error))?;
         self.attachments
             .validate(&self.bundle)
             .map_err(|error| sdk_error("validate bundle handoff", error))?;
@@ -527,9 +539,11 @@ pub trait OciBundleProvider: Send + Sync {
 
     /// Derive Box-owned identities from immutable image metadata without
     /// creating the bundle, rootfs, mounts, or volumes they will later name.
+    /// Required composition capabilities must be checked before identities are claimed.
     async fn plan_create_resources(
         &self,
         _record: &BoxRecord,
+        _capabilities: &AttachmentCapabilities,
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         Ok(LocalExecutionResourcePlan::default())
     }
@@ -1608,10 +1622,37 @@ impl OciLocalExecutionBackend {
                 .await?
                 .map(|runtime| (runtime, binding)));
         }
+        let state = record
+            .managed_state()
+            .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
+        if state == Some(ManagedExecutionState::Running)
+            || (state == Some(ManagedExecutionState::Paused)
+                && self.metadata(record)?.paused_with_memory)
+        {
+            return Err(ExecutionManagerError::Internal(format!(
+                "active execution {execution_id} has no exact Kbox OCI binding"
+            )));
+        }
+        if state == Some(ManagedExecutionState::Killing) {
+            if self.adapter.state_current(&execution_id).await?.is_some() {
+                return Err(ExecutionManagerError::Conflict {
+                    execution_id,
+                    message: "an unfinished OCI create still owns runtime resources; reconcile its original operation before unbound cleanup".into(),
+                });
+            }
+            return Ok(None);
+        }
+        if !matches!(
+            state,
+            Some(ManagedExecutionState::Starting | ManagedExecutionState::RestartStarting)
+        ) {
+            return Ok(None);
+        }
         let Some(runtime) = self.adapter.state_current(&execution_id).await? else {
             return Ok(None);
         };
-        let info = self.adapter
+        let info = self
+            .adapter
             .require_isolation(ExecutionBoundary::Microvm)
             .await?;
         validate_recovered_record(
@@ -1638,20 +1679,18 @@ impl OciLocalExecutionBackend {
         let generation = self.metadata(record)?.generation;
         let status = self.adapter.wait_stopped(runtime, binding).await?;
         let exit_code = match status {
-            Some(status) => match self.provider.ensure_log_projection(record, binding).await {
-                Ok(()) => {
-                    self.provider
-                        .wait_log_projection_drained(record, binding)
-                        .await?;
-                    Some(exit_code(&status)?)
-                }
-                Err(ExecutionManagerError::Unavailable(message))
-                    if message.contains("exited before drain") =>
-                {
-                    // The projection worker died with the utility-VM/Host
-                    // owner. Do not restart it for drain theater, and do not
-                    // publish an exit code that Box cannot authenticate through
-                    // drained init output after owner loss.
+            Some(status) => match async {
+                self.provider.ensure_log_projection(record, binding).await?;
+                self.provider
+                    .wait_log_projection_drained(record, binding)
+                    .await
+            }
+            .await
+            {
+                Ok(()) => Some(exit_code(&status)?),
+                Err(ExecutionManagerError::Unavailable(_)) => {
+                    // The worker can die between readiness and drain. Require its
+                    // exact terminal identity before releasing an undrained runtime.
                     self.provider
                         .wait_log_projection_stopped_after_owner_loss(record, binding)
                         .await?;
@@ -1775,7 +1814,8 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
                 "Host service sockets are not supported by the OCI backend".into(),
             ));
         }
-        let info = self.adapter
+        let info = self
+            .adapter
             .require_isolation(ExecutionBoundary::Microvm)
             .await?;
         let context = self.preparation_context(record, &info)?;
@@ -1787,7 +1827,14 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
         record: &BoxRecord,
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         self.metadata(record)?;
-        self.provider.plan_create_resources(record).await
+        let info = self
+            .adapter
+            .require_isolation(ExecutionBoundary::Microvm)
+            .await?;
+        let context = self.preparation_context(record, &info)?;
+        self.provider
+            .plan_create_resources(record, context.attachment_capabilities())
+            .await
     }
 
     async fn start(&self, record: &BoxRecord) -> ExecutionManagerResult<LocalExecutionHandle> {
@@ -1825,7 +1872,8 @@ impl LocalExecutionBackend for OciLocalExecutionBackend {
             });
         }
 
-        let info = self.adapter
+        let info = self
+            .adapter
             .require_isolation(ExecutionBoundary::Microvm)
             .await?;
         let preparation = self.preparation_context(record, &info)?;

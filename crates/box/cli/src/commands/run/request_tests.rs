@@ -17,7 +17,6 @@ fn test_build_box_config_defaults_to_microvm_isolation() {
         TeeConfig::None,
     )
     .unwrap();
-
 }
 
 #[test]

@@ -1,0 +1,16 @@
+
+running 11 tests
+test box_state::compat::no_file_store_retains_legacy_format ... ok
+test box_state::compat::file_store_corruption_never_quarantines_authority_to_empty ... ok
+test box_state::compat::file_authority_cannot_change_in_managed_transition ... ok
+test box_state::compat::file_store_symlinked_records_refuse_without_following_or_quarantine ... ok
+test box_state::compat::oci_anonymous_store_fences_unaware_readers_without_changing_ownership_or_route ... ok
+test box_state::compat::file_store_empty_after_cleanup_keeps_old_reader_fence ... ok
+test box_state::compat::legacy_file_store_migrates_atomically_without_changing_records ... ok
+test box_state::compat::mutable_load_adopts_old_file_records_and_stale_flat_writer_cannot_replace_them ... ok
+test box_state::compat::file_store_missing_records_and_future_layout_refuse_without_writes ... ok
+test box_state::compat::file_store_concurrent_migration_keeps_all_records_and_one_container ... ok
+test box_state::compat::file_store_concurrent_record_loss_never_reports_an_empty_collection ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2228 filtered out; finished in 0.61s
+

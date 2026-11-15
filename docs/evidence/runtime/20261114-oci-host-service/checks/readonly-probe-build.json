@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-s",
+    "/Users/roylin/code/kense/kbox/crates/box/runtime/tests/fixtures/hvf_readonly.c",
+    "-o",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/hvf-readonly-probe"
+  ],
+  "exitCode": 0,
+  "seconds": 0.32183720800000004,
+  "sourceSha256": "3004bc0ad75484e8b150e90834c20ec4997e002e8d33559609e79998cf00c59a",
+  "sha256": "b198e9487a234409951d6c1d4731e2a6e3fbed0cd66c8f3f6f1d68650f24d219",
+  "file": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/hvf-readonly-probe: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+}

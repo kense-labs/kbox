@@ -1,0 +1,30 @@
+
+running 25 tests
+test local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime ... ignored, requires sentinel-owned home and fixed installed independent HVF assets
+test oci::build::engine::stages::tests::test_resolve_stage_rootfs_by_alias_unnamed ... ok
+test oci::build::engine::stages::tests::test_split_into_stages_single_named ... ok
+test vm::oci_microvm::tests::runtime_owned_process_rejects_root_escape_and_unknown_named_user ... ok
+test volume::store::named_tests::normal_volume_reads_and_prune_do_not_quarantine_a_corrupt_catalog ... ok
+test volume::store::named_tests::named_volume_mutations_refuse_a_corrupt_catalog_without_moving_it ... ok
+test volume::store::named_tests::poisoned_catalog_cannot_delete_a_caller_directory ... ok
+test local_execution::oci_production::named_tests::hvf_named_volume_profile_admits_existing_plain_store_mount ... ok
+test volume::store::named_tests::legacy_catalog_without_allocation_label_is_read_without_rewriting ... ok
+test vm::oci_microvm::tests::runtime_owned_process_resolves_path_and_named_identity_from_rootfs ... ok
+test volume::store::named_tests::alternate_case_name_cannot_claim_an_existing_allocation ... ok
+test local_execution::oci_storage_attachments::tests::attaches_named_volume_and_promotes_schema_to_v2 ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_corrupt_catalog_refuses_without_quarantining_or_changing_data ... ok
+test local_execution::oci_storage_attachments::named_tests::legacy_named_storage_delegation_preserves_unlabelled_catalog_bytes ... ok
+test volume::store::tests::claim_anonymous_rejects_named_volume_collision_without_mutation ... ok
+test vm::spec::tests::general::test_build_instance_spec_marks_named_volume_for_copy_up ... ok
+test volume::store::named_tests::two_volumes_cannot_publish_one_allocation_identity ... ok
+test volume::store::tests::remove_anonymous_rejects_named_and_different_owner_collisions ... ok
+test volume::store::named_tests::invalid_allocation_label_and_catalog_symlink_refuse_without_changing_targets ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_identity_is_stable_per_allocation_and_changes_after_recreation ... ok
+test volume::store::named_tests::allocation_identity_is_store_issued_preserved_and_not_reused_from_copied_config ... ok
+test local_execution::oci_storage_attachments::named_tests::recreating_a_volume_from_its_previous_config_gets_a_new_allocation_identity ... ok
+test local_execution::oci_production::named_tests::named_preflight_rejects_missing_duplicate_and_drifted_bindings_without_mutation ... ok
+test volume::store::named_tests::volume_names_cannot_create_or_reclaim_a_caller_directory ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_rejects_unenforced_driver_quota_and_catalog_path_escape ... ok
+
+test result: ok. 24 passed; 0 failed; 1 ignored; 0 measured; 2210 filtered out; finished in 0.22s
+

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 232.200952625,
+  "isolatedHome": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/verification-final-home-2"
+}

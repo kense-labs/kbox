@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 198.547216917,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/package-home-cap-add-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "92e955ba8a23a45642013582ca139b8df75ef47d0de81004e87bc0be30fb46d0"
+}

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/check-final-identities2.py"
+  ],
+  "exit": 0,
+  "seconds": 1.093134917
+}

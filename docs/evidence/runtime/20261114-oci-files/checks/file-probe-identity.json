@@ -1,0 +1,7 @@
+{
+  "source": "crates/box/runtime/tests/fixtures/hvf_file_probe.c",
+  "sourceSha256": "b3cae3179c8b5678b724b6245326b57cf576d411abed8ab19a62c0835545a03e",
+  "binary": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/hvf-file-probe",
+  "binarySha256": "72b348294d8bab194a0fd35a0e5c4228ebbfb5211826c1153b1673e95a17f348",
+  "architecture": "aarch64-linux-musl static; cross-build only until native Guest execution"
+}

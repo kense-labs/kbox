@@ -1,0 +1,42 @@
+{
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/unpacked-2"
+  ],
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/unpacked-2/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 0.732201667,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "f5f1752afd9c20af91429e2eda61cad4f7d3b0848c10fd0d224c5cfc559a4eb4",
+  "compressedBytes": 23294607,
+  "filesVerified": 11,
+  "installedDiskBytes": 44027904,
+  "logicalRegularFileBytes": 44003747,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+    "sourceInputsSha256": "c9a60cf9a6efddec179aac6ecf22f0213db34752ffe44fc081f6e7e5246897b9",
+    "cargoLockSha256": "0f82d0eaafd8b255f5a73c9de5a9106fc85f711bc2ed1d4ba9c02ef07aa63dbb",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  },
+  "previousCompanionsIdentical": {
+    "bin/kbox": true,
+    "bin/kbox-guest-init": true,
+    "bin/kbox-shim": true,
+    "lib/libkrun.1.17.0.dylib": true,
+    "lib/libkrunfw.5.dylib": true
+  }
+}

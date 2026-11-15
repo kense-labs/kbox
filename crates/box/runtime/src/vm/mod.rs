@@ -8,6 +8,10 @@ mod lifecycle;
 pub(crate) use lifecycle::OriginalVmFinalization;
 mod maintenance;
 mod network;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub(crate) mod oci_anonymous;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub(crate) mod oci_hvf_spec;
 mod oci_microvm;
 mod ready;
 pub mod reap;

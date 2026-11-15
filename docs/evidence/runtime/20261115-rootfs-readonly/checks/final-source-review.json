@@ -1,0 +1,18 @@
+{
+  "sourceInputsSha256": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b",
+  "codeInputFiles": 1664,
+  "nativeWorkingTreesClean": true,
+  "indexEmpty": true,
+  "sourceUnchangedDuringBuildAndAcceptance": true,
+  "scriptHashes": {
+    "run-check.py": "52686e90c3d5a69c4d6e71429c9e2174efb924c50708e8424538bf6cbb9a5848",
+    "source_snapshot.py": "8a64178eaf825ce4541bd53fdfb00f4d45662d50acc508844be469e7782ec93a",
+    "run-rootro.py": "4f8273931e11c0a3fea91a8b4dd085234481f9b10c215cc47a93004978cd531a",
+    "run-guest-final.py": "40339ed0c9edc1358742db4f89d10287a7b71dd968e246c26806acdb4f18ea88",
+    "qualification-runner.py": "7a2a83a8100da20721515c6333147ce60be833591e284c08cc3dc350146126f8",
+    "run-guest.py": "b29f30728b9668e2a5687327b0546b272dc4df6191592548296eff66506423bd",
+    "final-resource-audit.py": "42990eab96b899128897cc83258fe3465b7af8c609b666bdde8820bf9217bc4d",
+    "build-box-final1.py": "7c70decaf32a307817c3faf59b3c75eed40981ef0bca9d5c0df7e0a9fef8176e",
+    "check-final-identities1.py": "974f8d3f1455e07e027f3f157a48eb3646a66dcba1a586f2ac8df2dcd2ddc26c"
+  }
+}

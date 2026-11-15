@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-core",
+      "-p",
+      "koci-sdk",
+      "--all-targets"
+    ],
+    "exitCode": 0,
+    "expectedRefusal": false,
+    "seconds": 0.16811258299999998,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-core-sdk-after-example.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-runtime",
+      "-p",
+      "koci-kbox",
+      "--all-targets"
+    ],
+    "exitCode": 101,
+    "expectedRefusal": false,
+    "seconds": 5.717468667,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-oci-runtime.log"
+  }
+]

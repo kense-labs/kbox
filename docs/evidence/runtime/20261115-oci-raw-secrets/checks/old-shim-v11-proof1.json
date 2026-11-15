@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "oldShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "oldShimSha256": "7634e75df03fdee448356084fcd1ebe10b7f74cb5ab2a9a84355d33bdca54450",
+  "actualSchemaRefusal": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-shim-1/native-root/expected-refusal.txt",
+      "sha256": "5d657306bcce7395aeefd625af6ca7ddb695f359be20c0e17199d12d2e5da76c",
+      "line": "  \"reason\": \"unsupported utility-VM attachment manifest schema koci.agent-vm-attachments.v11\""
+    }
+  ]
+}

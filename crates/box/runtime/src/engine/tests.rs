@@ -66,17 +66,16 @@ fn template() -> EngineServiceTemplate {
 
 pub(super) fn intent(engine: &EngineKey, revision: u64, state: DesiredState) -> EngineIntent {
     EngineIntent {
-        schema: "kbox.engine.intent.v1".into(),
+        schema: "kbox.engine.intent.v2".into(),
         engine_id: engine.clone(),
         instance_id: EngineKey::parse("instance").unwrap(),
         request_id: EngineKey::parse(format!("request-{revision}")).unwrap(),
         revision,
         desired_state: state,
-        workload: EngineWorkload::AcpHarness,
         plan_digest: format!("sha256:{}", "1".repeat(64)),
         service: (state == DesiredState::Up).then(template),
         directories: Vec::new(),
-        assembly: None,
+        prewarm_bindings_digest: None,
     }
 }
 
@@ -87,12 +86,12 @@ fn rejects_unsupported_schema_and_unsafe_identifiers() {
         assert!(EngineKey::parse(value).is_err());
     }
     let mut request = intent(&key, 1, DesiredState::Up);
-    request.schema = "kbox.engine.intent.v2".into();
+    request.schema = "kbox.engine.intent.v99".into();
     assert_eq!(
         request.validate().unwrap_err().code,
         EngineErrorCode::UnsupportedVersion
     );
-    request.schema = "kbox.engine.intent.v1".into();
+    request.schema = "kbox.engine.intent.v2".into();
     request.revision = 0;
     assert_eq!(
         request.validate().unwrap_err().code,
@@ -101,25 +100,66 @@ fn rejects_unsupported_schema_and_unsafe_identifiers() {
 }
 
 #[test]
-fn generic_template_keeps_oci_options_and_harness_profile_requires_kernel() {
-    let template = template();
-    let spec = template.bind("owned-unit".into(), 7).unwrap();
-    assert_eq!(spec.unit_id, "owned-unit");
-    assert_eq!(spec.generation, 7);
+fn engine_preserves_explicit_service_policy_without_workload_classification() {
+    let mut request = intent(&EngineKey::parse("engine").unwrap(), 1, DesiredState::Up);
+    let ordinary = request.bind_service("owned-unit".into(), 7).unwrap();
+    assert_eq!(ordinary.unit_id, "owned-unit");
+    assert_eq!(ordinary.generation, 7);
+    assert!(ordinary.semantics_profile_digest.is_none());
     assert_eq!(
-        spec.class,
+        ordinary.class,
         kbox_contract::contract::RuntimeUnitClass::Service
     );
-    let mut invalid = template;
-    invalid.isolation = kbox_contract::contract::IsolationLevel::Process;
-    invalid.bind("owned-unit".into(), 7).unwrap();
-    let mut request = intent(&EngineKey::parse("engine").unwrap(), 1, DesiredState::Up);
-    request.service = Some(invalid);
+    request.service.as_mut().unwrap().isolation = kbox_contract::contract::IsolationLevel::Process;
+    request.validate().unwrap();
     assert_eq!(
-        request.validate().unwrap_err().code,
-        EngineErrorCode::UnsupportedCapability
+        request
+            .bind_service("owned-unit".into(), 7)
+            .unwrap()
+            .isolation,
+        kbox_contract::contract::IsolationLevel::Process
     );
-    request.workload = EngineWorkload::OciService;
+    let service = request.service.as_mut().unwrap();
+    service.isolation = kbox_contract::contract::IsolationLevel::Sandbox;
+    service.semantics_profile_digest =
+        Some(crate::kbox_contract_driver::NATIVE_GUEST_PROFILE_DIGEST.into());
+    let explicit = request.bind_service("owned-unit".into(), 7).unwrap();
+    assert_eq!(
+        explicit.semantics_profile_digest,
+        request.service.as_ref().unwrap().semantics_profile_digest
+    );
+    assert_eq!(explicit.process, ordinary.process);
+    assert_eq!(explicit.resources, ordinary.resources);
+    assert_eq!(explicit.mounts, ordinary.mounts);
+}
+
+#[test]
+fn engine_refuses_unknown_product_fields_and_legacy_intents() {
+    let request = intent(&EngineKey::parse("engine").unwrap(), 1, DesiredState::Up);
+    let encoded = serde_json::to_value(&request).unwrap();
+    for field in ["workload", "assembly"] {
+        let mut unknown = encoded.clone();
+        unknown[field] = serde_json::json!({"extension": "client-owned"});
+        assert!(serde_json::from_value::<EngineIntent>(unknown).is_err());
+    }
+    let mut legacy = request;
+    legacy.schema = "kbox.engine.intent.v1".into();
+    assert_eq!(
+        legacy.validate().unwrap_err().code,
+        EngineErrorCode::UnsupportedVersion
+    );
+}
+
+#[test]
+fn generic_service_does_not_reserve_client_installation_paths() {
+    use kbox_contract::contract::{RuntimeMount, RuntimeMountSource};
+    let mut request = intent(&EngineKey::parse("engine").unwrap(), 1, DesiredState::Up);
+    request.service.as_mut().unwrap().mounts = vec![RuntimeMount {
+        name: "client-files".into(),
+        source: RuntimeMountSource::Tmpfs { size_bytes: 1024 },
+        target: "/opt".into(),
+        read_only: false,
+    }];
     request.validate().unwrap();
 }
 
@@ -310,4 +350,24 @@ fn journal_rejects_a_stale_instance_index_instead_of_reviving_old_up() {
 fn service_template_remains_compatible_with_current_runtime_schema() {
     let spec: RuntimeUnitSpec = template().bind("owned-unit".into(), 1).unwrap();
     spec.validate().unwrap();
+}
+
+#[test]
+fn unsupported_journal_is_retained_without_replacing_identity_or_records() {
+    let root = tempfile::tempdir().unwrap();
+    let path = root.path().join("journal.json");
+    let mut journal = EngineJournal::open(path.clone()).unwrap();
+    let key = journal.engine_id().clone();
+    journal.accept(intent(&key, 1, DesiredState::Up)).unwrap();
+    drop(journal);
+    let mut stored: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(&path).unwrap()).unwrap();
+    stored["schema"] = "kbox.engine.journal.v1".into();
+    let bytes = serde_json::to_vec(&stored).unwrap();
+    std::fs::write(&path, &bytes).unwrap();
+    assert_eq!(
+        EngineJournal::open(path.clone()).unwrap_err().code,
+        EngineErrorCode::UnsupportedVersion
+    );
+    assert_eq!(std::fs::read(path).unwrap(), bytes);
 }

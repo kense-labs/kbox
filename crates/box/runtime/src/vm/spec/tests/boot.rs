@@ -665,7 +665,7 @@ fn microvm_fails_closed_when_anonymous_volume_claim_is_rejected() {
 }
 
 #[test]
-fn sandbox_rejects_anonymous_plan_drift_before_volume_materialization() {
+fn runtime_owned_spec_rejects_anonymous_plan_drift_before_volume_materialization() {
     let home = tempdir().unwrap();
     let layout_dir = tempdir().unwrap();
     let mut oci_config = test_oci_config(None, None);
@@ -678,7 +678,7 @@ fn sandbox_rejects_anonymous_plan_drift_before_volume_materialization() {
 
     let error = vm
         .build_runtime_owned_instance_spec(&layout)
-        .expect_err("Sandbox may only materialize its durable ownership plan");
+        .expect_err("runtime-owned spec may only materialize its durable ownership plan");
 
     assert!(error
         .to_string()

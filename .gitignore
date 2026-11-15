@@ -58,6 +58,8 @@ docs/evidence/**/.codex/
 docs/evidence/**/.dsh/
 docs/evidence/engine/**/krun
 docs/evidence/**/native-client
+# Keep native service state locally; version its receipts and identity inventory.
+docs/evidence/runtime/**/native-root/
 docs/evidence/**/*.sock
 docs/evidence/**/rootfs*/
 docs/evidence/**/*.tar
@@ -81,3 +83,6 @@ docs/evidence/**/*.bin
 # Mutable kvec index state from package-local development runs.
 /crates/code/core/manifest.json
 /crates/code/core/segments/
+
+# Release archives and staging trees are generated.
+/dist/

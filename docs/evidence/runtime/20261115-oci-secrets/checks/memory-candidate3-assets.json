@@ -1,0 +1,80 @@
+{
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-candidate-3",
+  "files": {
+    "koci": {
+      "sha256": "5859ac940da3360e63a2cc05f876ff07d496f88c1a12d93647b5ef9e069f9837",
+      "bytes": 6098432
+    },
+    "koci-agent": {
+      "sha256": "becf4831806d8fa3afde16356dee736f8052cb8277c07c3469dc5d554ebb9d17",
+      "bytes": 5032984
+    },
+    "koci-kbox-runtime/libkrun.1.17.0.dylib": {
+      "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf",
+      "bytes": 5496272
+    },
+    "koci-kbox-runtime/libkrunfw.5.dylib": {
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+      "bytes": 22952096
+    },
+    "koci-kshim": {
+      "sha256": "5fba958c8582587fe560fdb085b9c638ff4f055fc2c83a27d5c8dcda3bbb7fb6",
+      "bytes": 2952016
+    },
+    "system-image/koci-system.ext4": {
+      "sha256": "ecd801bf1b1688a39c1bf5baf3a21389f5367409c7124e180d4e54b7b0ed161d",
+      "bytes": 67108864
+    },
+    "system-image/koci-system.ext4.xz": {
+      "sha256": "d4aba1fcf0a0e9a72b4926b7f282f5c641cff627df44b4a41a6bf9345db92e0d",
+      "bytes": 4995264
+    },
+    "system-image/system-image.json": {
+      "sha256": "8a596e74d8f2d192e8f494c26b6e0fc972850bca36e3b90a8591d8646de05b8f",
+      "bytes": 1759
+    }
+  },
+  "systemImage": {
+    "architecture": "aarch64",
+    "compatibility_level": "koci-runtime-0.2.0-agent-protocol-v10",
+    "image": {
+      "archive_name": "koci-system.ext4.xz",
+      "archive_sha256": "d4aba1fcf0a0e9a72b4926b7f282f5c641cff627df44b4a41a6bf9345db92e0d",
+      "archive_size": 4995264,
+      "directory_hash_seed": "a3a30c1a-2026-4000-8000-000000000002",
+      "filesystem": "ext4",
+      "filesystem_label": "koci-system",
+      "filesystem_uuid": "a3a30c1a-2026-4000-8000-000000000001",
+      "name": "koci-system.ext4",
+      "sha256": "ecd801bf1b1688a39c1bf5baf3a21389f5367409c7124e180d4e54b7b0ed161d",
+      "size": 67108864
+    },
+    "runtime": {
+      "archive_sha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+      "firmware_sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+      "kernel_bundle_sha256": "b1180b50148ed14f5fbeadf17288ce8abcf245daa468255b7ff41113bbf01199",
+      "kernel_bundle_size": 22740992,
+      "kernel_entry_address": "0x0000000080000000",
+      "kernel_guest_load_address": "0x0000000080000000",
+      "libkrun_sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "schema_version": "koci.macos-system-image.v1",
+    "sources": {
+      "agent": {
+        "sha256": "becf4831806d8fa3afde16356dee736f8052cb8277c07c3469dc5d554ebb9d17",
+        "size": 5032984,
+        "version": "0.3.6"
+      },
+      "alpine": {
+        "archive_sha256": "3fbc6285032ed46821b511292633d7b2a6306a2e254f590e92bdafff56cf2f70",
+        "archive_size": 3966256,
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+        "version": "3.22.5"
+      },
+      "builder": {
+        "e2fsprogs_version": "1.47.4 (6-Mar-2025)",
+        "source_date_epoch": 1735689600
+      }
+    }
+  }
+}

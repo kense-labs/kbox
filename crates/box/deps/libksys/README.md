@@ -29,6 +29,15 @@ FFI bindings to [libkrun](https://github.com/containers/libkrun) with **Windows 
 | macOS arm64 | Hypervisor.framework | ✅ Supported |
 | **Windows x86_64** | **WHPX** | ✅ **Supported** |
 
+This table describes FFI availability. Product readiness remains in the
+[kbox support matrix](../../../../docs/architecture/support-matrix.json).
+The current Windows archive is x64 MSVC only. The build checks the Cargo target
+before stub/asset discovery and refuses Windows ARM64, ARM64EC and other ABIs;
+Unix native-source builds require a matching build host OS/CPU. Rust metadata
+checks and x64 emulation do not establish native runtime support. Microsoft WHP
+does expose ARM64 APIs; the selected VMM/firmware has not implemented them.
+See [the current feasibility evidence](../../../../docs/evidence/runtime/20261114-windows-arm64/OUTCOME.md).
+
 ## Installation
 
 Add to your `Cargo.toml`:

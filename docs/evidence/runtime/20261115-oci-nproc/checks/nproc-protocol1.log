@@ -1,0 +1,7 @@
+
+running 2 tests
+test vm_attachment::file_tests::nproc_requires_explicit_v10_without_reinterpreting_prior_transports ... ok
+test vm_attachment::raw_storage::tests::nproc_guard_keeps_raw_storage_file_and_rootfs_transport_semantics ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 68 filtered out; finished in 0.02s
+

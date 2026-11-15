@@ -1,0 +1,116 @@
+{
+  "changedBaselineFiles": {
+    "crates/box/runtime/README.md": {
+      "before": "0022b0428e93a95f373bc76a5e1063fb4b455b4abf8b26421cc55ab9501be2fb",
+      "after": "5437f9f468887cba4c420833c420e067ca14bc0f3c20091031ee8fb6f64fc861"
+    },
+    "crates/box/runtime/src/lib.rs": {
+      "before": "0c222a3e854feb60a5a8017f4eea8943d6a7500525633f327e8d8715888ad7c3",
+      "after": "4f3a69e3879929b50f8d370c100d92e48ce5c409e9c21cb353743e5445545c75"
+    },
+    "crates/box/runtime/src/local_execution/mod.rs": {
+      "before": "334adbecacb162964651b9eeb3e6cff860bc91ec292c26c6793bfae61e957348",
+      "after": "24fa83fba67b01d369f61009eaa1793d233dc1724ceeb7b4fd21f732fa22d943"
+    },
+    "crates/box/runtime/src/local_execution/oci_backend.rs": {
+      "before": "a49d5e4197e82e11f0fd46c737da145bb4ed325213f5afe70c7be54df7257a80",
+      "after": "6be2bcf934d03da9bb52d424839754c153e6464ab726e5d13f28f218e2511305"
+    },
+    "crates/box/runtime/src/local_execution/oci_backend_tests.rs": {
+      "before": "d1ba4351bb8560e73e822be02ac8ef402fbdb4b29974081df2da32d22f38b167",
+      "after": "a7f0d4cda625ba297ee61efee80955aa69daf3963886dfc5bf4e6bc23bd35ff5"
+    },
+    "crates/box/runtime/src/local_execution/oci_migration.rs": {
+      "before": "1658c9bbfb4f5ddd66a8d1137bc432c68c00e3acb860b4cea489990766b2d1f1",
+      "after": "cc8ab797b3cc7081f20e10d6c430c4a94fe723db46013c4efd7ba12c13e4320f"
+    },
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs.rs": {
+      "before": "9eeee79879c8c38379a244930b614339c45c62b11f75dad2767409bc8c79ea19",
+      "after": "10619af4b35a11e9f84484d179bd7b223ae0c3912147f639f3a96a3794a1d00b"
+    },
+    "crates/box/runtime/src/local_execution/oci_production.rs": {
+      "before": "4808d7a9ffb996ee26a37f25070edf7e6fee5560b6d1ebf9d39b1b2575f2609c",
+      "after": "a69b4a201fabb80af23518266dbf5ee18bdd346e7c24fa932fd71a20437fb482"
+    },
+    "crates/box/runtime/src/local_execution/oci_session.rs": {
+      "before": "236ceba2be89451d8e1911975932f646223c207456bca14aa03b22ea9f559a80",
+      "after": "6f19d83659ddb299e17b0ae777b2f0c1ef7981652c108e3e29b02fc2408a7ac8"
+    },
+    "crates/box/runtime/src/local_execution/vm_backend.rs": {
+      "before": "8de97d1d8d3851600aa78f2a3124ae60cb66a79cc5b00a02869b50634a1b1566",
+      "after": "f5cd40dff8a838d40002a95f94faa6217ac8137c4b60b065a15db977b3f5dc81"
+    },
+    "crates/box/runtime/src/local_execution/vm_backend_tests.rs": {
+      "before": "1df4116b19a183f37f663c81e57f7df14be462076fc200137aec11426680ab48",
+      "after": "bc5fb4679588305843633d1bb2f49798e093c93d0d4187be8c6d01a9a0ff5474"
+    },
+    "crates/box/runtime/src/oci_portable_spec.rs": {
+      "before": "50cac65bce6f1223a6377a0dc629f5fd4d15a10099710a1f3e4e4769e4b10ff6",
+      "after": "d8a68bfda0d29b25b45da810cf5f2cad0c1031b299b31eb63199330d834d0504"
+    },
+    "crates/box/runtime/src/rootfs/mod.rs": {
+      "before": "7b29735e5230413a7e0239d56e67a932821d9bbd39d6718a2a50c00bfe4f8367",
+      "after": "819b415494f70abddc74424ddc2ffbd851b04b1ddf60f49d41dafaeaccbadcfc"
+    },
+    "crates/box/runtime/src/vm/mod.rs": {
+      "before": "eafa19a4877b9ca1f5e6eda07df4caa31e8bf23f9f8ed5b326a51db79e9c5819",
+      "after": "f4950111800dff82699b563ff2c3044e7579da48a107de1141b495ed33068ff8"
+    },
+    "crates/box/runtime/src/vm/oci_microvm.rs": {
+      "before": "08127635dc3ba26fdd9e5548644144faab91134e4ef45477b8fe79790743ba0a",
+      "after": "e705d39dda4a2fbcdec46dc2f80df4ae484cf5c9776b1b87c83dabcb89cc967c"
+    },
+    "crates/oci-runtime/README.md": {
+      "before": "f457efa374ff414c042298c29bf03a009b8ea11895258f7ae29230a973bf3699",
+      "after": "35cf3eb3248f7aa495449162b3b0244fb993abcc348424a5dc5ec1132ccc7bc3"
+    },
+    "crates/oci-runtime/ROADMAP.md": {
+      "before": "fcc808a09d7a19e2137c1342e258eebdfb92e413374c89280afe483db971fe1e",
+      "after": "a478e9988e3a7806ae5678f88aebde7da477d1a8e2054409801865a3b08ad4be"
+    },
+    "crates/oci-runtime/crates/runtime/src/service/tests.rs": {
+      "before": "e14be3d8176e75264cc24ab6adcfccc655a5a2d4308eff5ba5425fc385e81850",
+      "after": "b80ec327a72e24a4ddda83216c3dbef22c53b0b9e4e733c9574ac9593562f385"
+    },
+    "crates/oci-runtime/crates/runtime/src/state/mod.rs": {
+      "before": "563093ff15db5fa1096e1cd3dde7e382c9dd86ff3abd503f86d8f05b1244f5a3",
+      "after": "8439a69cf6310fe7ee00172167323c9386d15fb5c723f2565f1ab744bb5edbe6"
+    },
+    "crates/oci-runtime/crates/runtime/src/state/model.rs": {
+      "before": "1e8e1558a1059c3f7c8e4b7c9b87691a810182f72bbdc09034f5fa623f5f072a",
+      "after": "b447190e88efe977c6f79e79eb53815c13932932c3228454214e994b53795a8c"
+    },
+    "crates/oci-runtime/crates/runtime/src/state/operation.rs": {
+      "before": "8cd10904669de39f70bb6458a09190cc553f9bc44541f56f9fce5a86902ccf8c",
+      "after": "7226c61e4a564b18a88f62b162b1f5dcb3663956fc8bafa6a4a1531591521395"
+    },
+    "crates/oci-runtime/crates/runtime/src/state/process.rs": {
+      "before": "112559438156b9a8e76f30bed083838b4e975368d6b702f11fc14c1252725a3b",
+      "after": "b54208cd55b156614aa411a306a3a33d660247d151b605cc75a36814038339f4"
+    },
+    "crates/oci-runtime/crates/sdk/src/process_serde.rs": {
+      "before": "29dad33bfc01ae80fe1cee9e2e597226e433d4db9a4f138e62a4feedfdf3e9b7",
+      "after": "ee790fba4571e445c4844aafba1d256538e3e27473f7e87798ad4da962acfad1"
+    },
+    "crates/oci-runtime/docs/macos-hvf.md": {
+      "before": "642027cf1e307e56cd98a67bd42d76e121b7770204d860b8bfc7e951ad03bff9",
+      "after": "2433481e02afce5e4c784d6ede9dad9cfd256bb4cce94c5e0583b47737002d33"
+    }
+  },
+  "deletedBaselineFiles": [],
+  "newFiles": [
+    ".cargo/config.toml",
+    "crates/box/runtime/src/local_execution/oci_hvf.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_behavior.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_cli.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_faults.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs",
+    "crates/oci-runtime/crates/runtime/src/service/tests/exec_capabilities.rs",
+    "crates/oci-runtime/crates/runtime/src/state/operation_fingerprint_tests.rs",
+    "crates/oci-runtime/crates/sdk/src/process_serde_capability_tests.rs",
+    "rust-toolchain.toml"
+  ]
+}

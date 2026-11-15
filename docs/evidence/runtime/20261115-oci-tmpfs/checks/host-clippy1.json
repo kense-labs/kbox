@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "-p",
+    "kbox-core",
+    "-p",
+    "kbox-runtime",
+    "-p",
+    "kbox-guest-init",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 0,
+  "seconds": 23.483706542
+}

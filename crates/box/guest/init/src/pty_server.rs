@@ -321,13 +321,20 @@ fn handle_pty_connection(fd: std::os::fd::OwnedFd) -> Result<(), Box<dyn std::er
         // /proc/self/* or /dev/urandom and won't start without them. Idempotent.
         crate::exec_server::ensure_container_pseudo_filesystems(rootfs);
         crate::container_devices::ensure_container_dev_nodes(rootfs);
-        // CRI MaskedPaths / ReadonlyPaths (best-effort; a path that doesn't exist
-        // is skipped) — these need /proc + /sys mounted above.
+        // CRI MaskedPaths / ReadonlyPaths need /proc + /sys mounted above.
         let masked = crate::exec_server::parse_sec_path_list(&request.env, "K_SEC_MASKED_PATHS=");
         let readonly =
             crate::exec_server::parse_sec_path_list(&request.env, "K_SEC_READONLY_PATHS=");
         if !masked.is_empty() || !readonly.is_empty() {
-            crate::exec_server::apply_container_path_restrictions(rootfs, &masked, &readonly);
+            if let Err(error) =
+                crate::exec_server::apply_container_path_restrictions(rootfs, &masked, &readonly)
+            {
+                write_error(
+                    &mut stream,
+                    &format!("Rootfs path restriction failed: {error}"),
+                )?;
+                return Ok(());
+            }
         }
         // readOnlyRootFilesystem — last, after /proc, /sys and inner mounts are up.
         if request
@@ -335,7 +342,13 @@ fn handle_pty_connection(fd: std::os::fd::OwnedFd) -> Result<(), Box<dyn std::er
             .iter()
             .any(|entry| entry == "K_SEC_READONLY_ROOTFS=1")
         {
-            crate::exec_server::remount_rootfs_readonly(rootfs);
+            if let Err(error) = crate::exec_server::remount_rootfs_readonly(rootfs) {
+                write_error(
+                    &mut stream,
+                    &format!("Rootfs read-only enforcement failed: {error}"),
+                )?;
+                return Ok(());
+            }
         }
     }
 
@@ -810,6 +823,14 @@ fn set_blocking(fd: std::os::fd::RawFd) {
         libc::fcntl(fd, libc::F_SETFL, flags & !libc::O_NONBLOCK);
     }
 }
+
+#[cfg(all(test, target_os = "linux"))]
+#[path = "pty_server_path_guards_tests.rs"]
+mod path_guards_tests;
+
+#[cfg(all(test, target_os = "linux"))]
+#[path = "pty_server_readonly_tests.rs"]
+mod readonly_tests;
 
 #[cfg(test)]
 mod tests {

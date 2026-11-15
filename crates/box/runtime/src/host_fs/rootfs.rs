@@ -43,10 +43,7 @@ pub struct RootfsIdentityRequirements {
 /// Sandbox rootfs back to container ownership after an interruption or during
 /// a filesystem Snapshot.
 #[cfg(target_os = "linux")]
-pub(crate) fn persist_rootfs_id_mappings(
-    box_dir: &Path,
-    plan: &IdMappingPlan,
-) -> Result<()> {
+pub(crate) fn persist_rootfs_id_mappings(box_dir: &Path, plan: &IdMappingPlan) -> Result<()> {
     validate_id_mapping_plan(plan)?;
     let destination = box_dir.join(ROOTFS_ID_MAPPING_FILE);
     let parent = destination.parent().ok_or_else(|| {
@@ -575,10 +572,7 @@ pub(crate) fn capture_rootfs_metadata(
 /// mappings are retained (caller may fall back to a host walk). Other capture
 /// failures are errors.
 #[cfg(target_os = "linux")]
-pub fn try_create_managed_diff_baseline_if_absent(
-    box_dir: &Path,
-    rootfs: &Path,
-) -> Result<bool> {
+pub fn try_create_managed_diff_baseline_if_absent(box_dir: &Path, rootfs: &Path) -> Result<bool> {
     let Some(plan) = load_rootfs_id_mappings(box_dir)? else {
         return Ok(false);
     };

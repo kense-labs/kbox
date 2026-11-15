@@ -128,6 +128,36 @@ impl HvfRuntimeDriver {
             ),
         ]);
 
+        let memory_path = prepared.runtime_share_root.clone();
+        let memory_backed =
+            tokio::task::spawn_blocking(move || koci_sdk::macos_path_is_on_ram_disk(&memory_path))
+                .await
+                .map_err(|error| {
+                    Error::new(
+                        ErrorCode::Internal,
+                        format!("HVF memory capability probe failed: {error}"),
+                    )
+                })??;
+        capability.evidence.insert(
+            "memory_secret_files".into(),
+            if memory_backed {
+                "available-with-ram-source-and-projection"
+            } else {
+                "unavailable-runtime-share-is-not-memory-backed"
+            }
+            .into(),
+        );
+        let mut attachments = koci_sdk::AttachmentCapabilities::base_v2();
+        if memory_backed {
+            attachments = attachments.with_extension(
+                koci_sdk::MEMORY_SECRET_FILES_EXTENSION,
+                vec![
+                    koci_sdk::MEMORY_SECRET_FILES_VERSION,
+                    koci_sdk::MEMORY_SECRET_ENVIRONMENT_VERSION,
+                    koci_sdk::MEMORY_SECRET_RAW_STORAGE_VERSION,
+                ],
+            )?;
+        }
         let recovery = RecoveryStore::new(prepared.recovery_directory.clone());
         let factory: Arc<dyn UtilityVmFactory> = Arc::new(LiveHvfVmFactory {
             shim: prepared.shim,
@@ -139,7 +169,26 @@ impl HvfRuntimeDriver {
         Ok(Self {
             inner: UtilityVmRuntimeDriver::new(
                 capability,
-                koci_sdk::AttachmentCapabilities::base_v2()
+                attachments
+                    .with_extension(
+                        koci_sdk::NPROC_ADMISSION_EXTENSION,
+                        vec![koci_sdk::NPROC_ADMISSION_VERSION],
+                    )?
+                    .with_extension(
+                        koci_sdk::RAW_STORAGE_IMAGES_EXTENSION,
+                        vec![koci_sdk::RAW_STORAGE_IMAGES_VERSION],
+                    )?
+                    .with_extension(
+                        koci_sdk::FILE_GRANTS_EXTENSION,
+                        vec![koci_sdk::FILE_GRANTS_VERSION],
+                    )?
+                    .with_extension(
+                        koci_sdk::ROOTFS_IMAGE_EXTENSION,
+                        vec![
+                            koci_sdk::ROOTFS_IMAGE_VERSION,
+                            koci_sdk::ROOTFS_IMAGE_READONLY_VERSION,
+                        ],
+                    )?
                     .with_extension(
                         koci_sdk::RUNTIME_BUNDLE_HANDOFF_EXTENSION,
                         vec![

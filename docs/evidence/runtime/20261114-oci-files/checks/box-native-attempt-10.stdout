@@ -1,0 +1,7 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::lifetime::native_box_hvf_owner_outlives_smoke_deadline has been running for over 60 seconds
+test local_execution::oci_hvf::tests::native::lifetime::native_box_hvf_owner_outlives_smoke_deadline ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2192 filtered out; finished in 135.11s
+

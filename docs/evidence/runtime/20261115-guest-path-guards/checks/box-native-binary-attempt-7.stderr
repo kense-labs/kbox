@@ -1,0 +1,8 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-pathguard-90a50b1c75b5/binary-attempt-7/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (86317763) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_path_guards_binary.rs:36:21:
+installed Guest allowed unsafe masked path
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::path_guards::binary::native_installed_guest_path_guards_refuse_and_enforce_exec_and_pty' (86317762) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_path_guards_binary.rs:51:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

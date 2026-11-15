@@ -1,0 +1,20 @@
+{
+  "schema": "kbox.native-source.v1",
+  "repository": "kense-labs/libkrun",
+  "baseCommit": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+  "uncommitted": true,
+  "parentGitlinkUnchanged": true,
+  "patchSha256": "394f321494615786c4f6c3aa7f3cb181d054ac87a3e034df6056145533f5acdd",
+  "sourceInputsSha256": "c89d545b25021c02c7739d300a746405772d889fd422935d9bf8a8ba2b5817bb",
+  "sourceArchiveSha256": "2097d9bea8640f5d2e04ce92f814e356a710d281e0970c94dfdce957ebbcfe80",
+  "initSourceSha256": "b7fdbe7d0eb203db59b0f4f7d9419afa4a980208c882f8498dd0242fae8dbd74",
+  "builtInitSha256": "771c4752eeb5624ae40930c3ed0c70a2dea26c28fd4ba3ec7570b9fbbfbb6a5e",
+  "minimumMacos": "11.0",
+  "rustToolchain": "1.97.1-aarch64-apple-darwin",
+  "requiredFunction": "krun_add_virtiofs_uncached",
+  "archiveSha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+  "librarySha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf",
+  "firmwareSha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+  "checks": "docs/evidence/runtime/20261114-oci-files",
+  "sourceArchiveRelative": "artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-source-v3/libkrun-uncached-source.tar.gz"
+}

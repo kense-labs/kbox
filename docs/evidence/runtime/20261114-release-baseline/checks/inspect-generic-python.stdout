@@ -1,0 +1,30 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "python3"
+      ],
+      "Entrypoint": null,
+      "Env": {
+        "GPG_KEY": "7169605F62C751356D054A26A821E680E5FA6305",
+        "LANG": "C.UTF-8",
+        "PATH": "/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "PYTHON_SHA256": "abb0102e6d4ae027509bcb82327d9dd85515b44a3ba8ad538cfc5e9847029f68",
+        "PYTHON_VERSION": "3.13.18"
+      },
+      "ExposedPorts": [],
+      "Healthcheck": null,
+      "Labels": {},
+      "OnBuild": [],
+      "StopSignal": null,
+      "User": null,
+      "Volumes": [],
+      "WorkingDir": null
+    },
+    "Digest": "sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90",
+    "LayerCount": 4,
+    "PulledAt": "2026-11-14T01:00:25.265799+00:00",
+    "Reference": "docker.io/library/python:3.13-slim",
+    "Size": 43349873
+  }
+]

@@ -1,0 +1,507 @@
+{
+  "assets": [
+    {
+      "kind": "box",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+      "sha256": "b7ee49b574a9ca26277b4bd386b01c2fc4006cc89a6f9d2a66cee0dc73e9c4b9",
+      "bytes": 10075264,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "box",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim",
+      "sha256": "3a89881e33fcd5ce9b18f75c5a822286c05aa5a61df75c947d7b214cfc520275",
+      "bytes": 3384960,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "box",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-guest-init",
+      "sha256": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a",
+      "bytes": 3171224,
+      "elf": {
+        "machine": "AArch64",
+        "staticNoInterpreter": true
+      }
+    },
+    {
+      "kind": "box",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib",
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "bytes": 4529632,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "box",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib",
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "bytes": 22836688,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "oci",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci",
+      "sha256": "985eb976246585ff286e954b2b1109751970ea08cc15fde51e55f583084778ff",
+      "bytes": 6015504,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "oci",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "sha256": "1631510e7874614cd3388d8d3828c5760ace4f722f80a00d1de8149728404d3a",
+      "bytes": 2885840,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "oci",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent",
+      "sha256": "926aeebde2e5eaca4d533f8db776078409bae3a5b6372504297aed213f3ed69d",
+      "bytes": 4990416,
+      "elf": {
+        "machine": "AArch64",
+        "staticNoInterpreter": true
+      }
+    },
+    {
+      "kind": "oci",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "sha256": "c5353f9cbd91564ce26eceaf1bdc33341097b43280fe029203ccca02807c082d",
+      "bytes": 4557488,
+      "minimumOs": [
+        "11.0"
+      ]
+    },
+    {
+      "kind": "oci",
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib",
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+      "bytes": 22952096,
+      "minimumOs": [
+        "14.0"
+      ]
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "audit3-00.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "audit3-01.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "audit3-02.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "audit3-03.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox"
+      ],
+      "exitCode": 0,
+      "log": "audit3-04.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-05.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-06.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-07.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-08.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-09.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-10.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox-guest-init"
+      ],
+      "exitCode": 0,
+      "log": "audit3-11.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-12.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-13.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-14.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-15.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-16.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-17.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-18.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-19.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-20.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-21.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-22.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-23.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-24.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-25.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-26.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "log": "audit3-27.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-28.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-29.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-30.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-31.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-32.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "-d",
+        "--entitlements",
+        ":-",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "log": "audit3-33.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "log": "audit3-34.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-35.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-36.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-37.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-38.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-39.log"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-40.log"
+    },
+    {
+      "command": [
+        "lipo",
+        "-archs",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-41.log"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-42.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-43.log"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "log": "audit3-44.log"
+    }
+  ]
+}

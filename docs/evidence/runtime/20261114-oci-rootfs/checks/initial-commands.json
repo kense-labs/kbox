@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "git",
+      "status",
+      "--porcelain=v1"
+    ],
+    "exitCode": 0,
+    "log": "initial-status.log"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "log": "initial-head.log"
+  },
+  {
+    "command": [
+      "mount"
+    ],
+    "exitCode": 0,
+    "log": "initial-mounts.log"
+  },
+  {
+    "command": [
+      "ps",
+      "-ax",
+      "-o",
+      "pid=,ppid=,command="
+    ],
+    "exitCode": 0,
+    "log": "initial-processes.log"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "libkrun",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0,
+    "log": "initial-native-libkrun.log"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "libkrunfw",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0,
+    "log": "initial-native-fw.log"
+  },
+  {
+    "command": [
+      "sw_vers"
+    ],
+    "exitCode": 0,
+    "log": "initial-environment.log"
+  },
+  {
+    "command": [
+      "rustc",
+      "-Vv"
+    ],
+    "exitCode": 0,
+    "log": "initial-compiler.log"
+  }
+]

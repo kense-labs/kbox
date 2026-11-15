@@ -1,0 +1,18 @@
+
+running 1 test
+test vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin ... FAILED
+
+failures:
+
+---- vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin stdout ----
+
+thread 'vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin' (84259817) panicked at crates/box/runtime/src/vm/oci_hvf_spec_tests.rs:14:9:
+ all 
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2186 filtered out; finished in 0.00s
+

@@ -823,6 +823,12 @@ pub(super) fn validate_ext4_image_for_resume(
     })?;
     let needs_recovery = superblock.feature_incompat & mkext4::spec::incompat::RECOVER != 0;
     if !needs_recovery {
+        if superblock.uuid != expected_uuid {
+            return Err(BoxError::BuildError(format!(
+                "ext4 artifact {} UUID differs from its allocation manifest",
+                path.display()
+            )));
+        }
         validate_ext4_image(path, expected_length)?;
         return Ok(Ext4ResumeValidation::Clean);
     }

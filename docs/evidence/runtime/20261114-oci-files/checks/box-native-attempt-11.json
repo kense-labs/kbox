@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-client-attempt-11",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-11",
+  "clientSha256": "9a05bf467950ea0169d0cc508b9a913327e07aa6254bc7a3904990c493a85926",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/installed-files-final-5",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "exitCode": 0,
+  "seconds": 399.40830425,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

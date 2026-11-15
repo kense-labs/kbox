@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "koci.event-claim.v1",
+  "identity": "container:kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4:1:creating",
+  "event": {
+    "sequence": 1,
+    "timestamp_unix_ns": 1794711090301942000,
+    "container": {
+      "id": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+      "generation": 1
+    },
+    "kind": "container-creating",
+    "attributes": {}
+  }
+}

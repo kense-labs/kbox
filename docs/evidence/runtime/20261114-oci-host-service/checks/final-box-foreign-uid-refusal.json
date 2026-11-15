@@ -1,0 +1,5 @@
+{
+  "error": "execution backend unavailable: Box/HVF OCI prepare bundle failed: VM boot failed: unprivileged MicroVM rejected: Linux directory rootfs is same-UID virtio-fs only; this image declares UIDs outside {0, host euid} (hint: Guest chown to those UIDs returns EPERM, and unprivileged extract cannot restore layer ownership. Re-run as root (e.g. sudo kbox run), use a same-UID image, or a transport that stores Linux ownership (macOS guest-native ext4 / Windows WHPX portable metadata). Foreign gids with uid 0 (for example alpine shadow) are admitted; guest-init skips virtio-fs lchown EPERM during metadata replay.)",
+  "execution": "1ce52048-ee16-463f-aba5-94ccc1c749ae",
+  "runtimeCreateNotAdmitted": true
+}

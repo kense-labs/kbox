@@ -1,0 +1,1244 @@
+    Checking kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+    Checking hyper-util v0.1.19
+    Checking tower v0.5.3
+    Checking jsonschema v0.48.5
+    Checking tokio-rustls v0.26.6
+    Checking kbox-contract v0.8.0 (/Users/roylin/code/kense/kbox/crates/runtime)
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+    Checking tower-http v0.6.11
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking hyper-rustls v0.27.2
+    Checking hyper-tls v0.6.0
+    Checking axum v0.8.4
+    Checking reqwest v0.12.28
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo clippy --fix --lib -p kbox-contract -- --no-deps` to apply 1 suggestion)
+    Checking oci-distribution v0.11.0
+    Checking kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+    Checking kbox-guest-init v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/guest/init)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+warning: unused import: `ExecutionBoundary`
+    --> crates/box/runtime/src/kbox_contract_driver/lifecycle.rs:1142:44
+     |
+1142 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
+     |                                            ^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::Path`
+ --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:1:5
+  |
+1 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `RuntimeFeature`
+ --> crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:8:20
+  |
+8 |     RestartPolicy, RuntimeFeature, RuntimeInspection, RuntimeUnitClass, RuntimeUnitState,
+  |                    ^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs:8:40
+  |
+8 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionId, ExecutionManager,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionGeneration`
+ --> crates/box/runtime/src/local_execution/oci_hvf_native_named.rs:3:39
+  |
+3 | use kbox_core::{volume::VolumeConfig, ExecutionGeneration, ExecutionId};
+  |                                       ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/remove.rs:220:44
+    |
+220 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionManager,
+    |                                            ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/resources.rs:703:33
+    |
+703 |         CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, ExecutionSnapshotId,
+    |                                 ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/vm_backend_tests.rs:10:40
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests/owned_vm_close.rs:10:40
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/tests/attached_vm_identity.rs:7:40
+  |
+7 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, OperationId, VmHandler, VmMetrics,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests.rs:15:40
+   |
+15 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `HttpBody`
+ --> crates/box/runtime/src/oci/registry/push_tests.rs:4:24
+  |
+4 | use axum::body::{Body, HttpBody};
+  |                        ^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:7:29
+  |
+7 |     CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode, OperationId,
+  |                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/api.rs:252:9
+    |
+252 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/reconciler.rs:709:9
+    |
+709 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1187:13
+     |
+1187 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1201:13
+     |
+1201 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1232:13
+     |
+1232 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused import: `ExecutionManager`
+  --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:13:30
+   |
+13 | use kbox_core::{ExecRequest, ExecutionManager, ExecutionSessionManager, HostServiceSocket};
+   |                              ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::vmm::VmHandler`
+ --> crates/box/runtime/src/local_execution/tests/owned_vm_jobs.rs:5:5
+  |
+5 | use crate::vmm::VmHandler;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `data_path` is never used
+   --> crates/box/runtime/src/box_state.rs:243:19
+    |
+ 24 | impl BoxStateStore {
+    | ------------------ method in this implementation
+...
+243 |     pub(crate) fn data_path(&self) -> std::io::Result<PathBuf> {
+    |                   ^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_mapping_set` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:43:4
+   |
+43 | fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Result<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_rootfs_ownership_with_preference` is never used
+   --> crates/box/runtime/src/host_fs/rootfs.rs:727:15
+    |
+727 | pub(crate) fn prepare_rootfs_ownership_with_preference(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `TMPFS_MAGIC` is never used
+  --> crates/box/runtime/src/kbox_contract_driver/secret.rs:28:7
+   |
+28 | const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
+   |       ^^^^^^^^^^^
+
+warning: method `prepare_registry_auth_for_create` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/secret.rs:482:25
+    |
+302 | impl SecretMaterializationOwner {
+    | ------------------------------- method in this implementation
+...
+482 |     pub(super) async fn prepare_registry_auth_for_create(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `validate_for` is never used
+   --> crates/box/runtime/src/local_execution/backend.rs:192:19
+    |
+180 | impl LocalExecutionOwnerFacts {
+    | ----------------------------- method in this implementation
+...
+192 |     pub(super) fn validate_for(
+    |                   ^^^^^^^^^^^^
+
+warning: function `retain_original_guard` is never used
+   --> crates/box/runtime/src/local_execution/lifecycle_lock.rs:141:15
+    |
+141 | pub(super) fn retain_original_guard(
+    |               ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `reject_removed_sandbox_migration_env` is never used
+   --> crates/box/runtime/src/local_execution/oci_migration.rs:587:4
+    |
+587 | fn reject_removed_sandbox_migration_env() -> ExecutionManagerResult<()> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_box_owned_linux_network` is never used
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:20:15
+   |
+20 | pub(super) fn attach_box_owned_linux_network(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `NetworkInventory` is never constructed
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:83:8
+   |
+83 | struct NetworkInventory {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: function `network_inventory` is never used
+  --> crates/box/runtime/src/local_execution/oci_network_attachments.rs:89:4
+   |
+89 | fn network_inventory(bundle: &OciBundle) -> ExecutionManagerResult<NetworkInventory> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `attach_box_managed_secret_mounts` is never used
+  --> crates/box/runtime/src/local_execution/oci_secret_attachments.rs:15:15
+   |
+15 | pub(super) fn attach_box_managed_secret_mounts(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `oci_bind_mount_sources` is never used
+  --> crates/box/runtime/src/local_execution/oci_secret_attachments.rs:59:4
+   |
+59 | fn oci_bind_mount_sources(bundle: &OciBundle) -> ExecutionManagerResult<Vec<Option<PathBuf>>> {
+   |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `attach_staged_caller_bind_aliases` is never used
+  --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:53:15
+   |
+53 | pub(super) fn attach_staged_caller_bind_aliases(
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `bind_alias_slot` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:128:4
+    |
+128 | fn bind_alias_slot(alias_root: &Path, canonical: &Path) -> Option<String> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `staged_caller_bind_alias_root` is never used
+   --> crates/box/runtime/src/local_execution/oci_storage_attachments.rs:148:4
+    |
+148 | fn staged_caller_bind_alias_root(home_dir: &Path, box_id: &str) -> PathBuf {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `Released` is never constructed
+   --> crates/box/runtime/src/local_execution/resources.rs:421:5
+    |
+418 | enum ResourceEffect {
+    |      -------------- variant in this enum
+...
+421 |     Released,
+    |     ^^^^^^^^
+    |
+    = note: `ResourceEffect` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `name` and `effect` are never read
+   --> crates/box/runtime/src/local_execution/resources.rs:426:5
+    |
+425 | struct SelectedClaim {
+    |        ------------- fields in this struct
+426 |     name: String,
+    |     ^^^^
+427 |     effect: ResourceEffect,
+    |     ^^^^^^
+
+warning: fields `volumes`, `network`, and `prepared` are never read
+   --> crates/box/runtime/src/local_execution/resources.rs:431:5
+    |
+430 | struct SelectedResources {
+    |        ----------------- fields in this struct
+431 |     volumes: Vec<SelectedClaim>,
+    |     ^^^^^^^
+432 |     network: Option<SelectedClaim>,
+    |     ^^^^^^^
+433 |     snapshot: Option<(PathBuf, PathBuf, ResourceEffect)>,
+434 |     prepared: bool,
+    |     ^^^^^^^^
+
+warning: function `selected_resource_deadline` is never used
+   --> crates/box/runtime/src/local_execution/resources.rs:437:4
+    |
+437 | fn selected_resource_deadline(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated items `selected_empty`, `prepare_retained`, `remaining_rollback_known`, and `rollback_retained` are never used
+   --> crates/box/runtime/src/local_execution/resources.rs:450:19
+    |
+449 | impl ExecutionResourceGuard {
+    | --------------------------- associated items in this implementation
+450 |     pub(super) fn selected_empty(home: &Path, record: &BoxRecord) -> Self {
+    |                   ^^^^^^^^^^^^^^
+...
+467 |     pub(super) fn prepare_retained(
+    |                   ^^^^^^^^^^^^^^^^
+...
+588 |     pub(super) fn remaining_rollback_known(&self) -> bool {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+606 |     pub(super) fn rollback_retained(
+    |                   ^^^^^^^^^^^^^^^^^
+
+warning: methods `drive_cold_paused_snapshot`, `pause_for_snapshot`, and `capture_snapshot_rootfs` are never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:245:14
+    |
+ 24 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+245 |     async fn drive_cold_paused_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+294 |     async fn pause_for_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^
+...
+345 |     async fn capture_snapshot_rootfs(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `execution_state` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:536:4
+    |
+536 | fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<ExecutionState> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `build_snapshot_metadata` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:807:4
+    |
+807 | fn build_snapshot_metadata(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `snapshot_error` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:844:4
+    |
+844 | fn snapshot_error(
+    |    ^^^^^^^^^^^^^^
+
+warning: variant `Unused` is never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:57:5
+   |
+56 | pub(super) enum AdmissionState {
+   |                 -------------- variant in this enum
+57 |     Unused,
+   |     ^^^^^^
+
+warning: struct `OwnerReservation` is never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:64:19
+   |
+64 | pub(super) struct OwnerReservation {
+   |                   ^^^^^^^^^^^^^^^^
+
+warning: variants `StartSelected`, `StopSelected`, and `ReconcileRetainedRemove` are never constructed
+  --> crates/box/runtime/src/local_execution/store.rs:76:5
+   |
+75 | enum OwnedLifecycleStage {
+   |      ------------------- variants in this enum
+76 |     StartSelected {
+   |     ^^^^^^^^^^^^^
+...
+82 |     StopSelected {
+   |     ^^^^^^^^^^^^
+...
+89 |     ReconcileRetainedRemove {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `completion` is never read
+  --> crates/box/runtime/src/local_execution/store.rs:98:5
+   |
+97 | pub struct OwnedLifecycleOutcome {
+   |            --------------------- field in this struct
+98 |     completion: OwnedLifecycleCompletion,
+   |     ^^^^^^^^^^
+
+warning: associated functions `start_selected`, `stop_selected`, and `reconcile_retained_remove` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:114:19
+    |
+103 | impl OwnedLifecycleRequest {
+    | -------------------------- associated functions in this implementation
+...
+114 |     pub(super) fn start_selected(
+    |                   ^^^^^^^^^^^^^^
+...
+130 |     pub(super) fn stop_selected(
+    |                   ^^^^^^^^^^^^^
+...
+148 |     pub(super) fn reconcile_retained_remove(
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: associated function `from_observed_reserved` is never used
+   --> crates/box/runtime/src/local_execution/store.rs:217:8
+    |
+216 | impl FreshOwnerAdmission {
+    | ------------------------ associated function in this implementation
+217 |     fn from_observed_reserved(
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `reserve_for_owner_admission` and `mark_snapshot_freezer_applied` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:257:25
+    |
+254 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+257 |     pub(super) async fn reserve_for_owner_admission(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+562 |     pub(super) async fn mark_snapshot_freezer_applied(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variant `SnapshotClaim` is never constructed
+   --> crates/box/runtime/src/local_execution/store.rs:615:5
+    |
+598 | pub(super) enum RuntimeUpdate {
+    |                 ------------- variant in this enum
+...
+615 |     SnapshotClaim {
+    |     ^^^^^^^^^^^^^
+
+warning: struct `ValidatedOwnedCall` is never constructed
+   --> crates/box/runtime/src/local_execution/store.rs:676:19
+    |
+676 | pub(super) struct ValidatedOwnedCall<'a> {
+    |                   ^^^^^^^^^^^^^^^^^^
+
+warning: associated items `new`, `validate`, and `stage` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:695:19
+    |
+694 | impl<'a> ValidatedOwnedCall<'a> {
+    | ------------------------------- associated items in this implementation
+695 |     pub(super) fn new(
+    |                   ^^^
+...
+712 |     pub(super) fn validate(&self, binding: &OwnerBinding) -> ExecutionManagerResult<()> {
+    |                   ^^^^^^^^
+...
+719 |     pub(super) fn stage(
+    |                   ^^^^^
+
+warning: methods `deadline` and `validate_call` are never used
+   --> crates/box/runtime/src/local_execution/store.rs:746:19
+    |
+745 | impl OwnedStageBinding {
+    | ---------------------- methods in this implementation
+746 |     pub(super) fn deadline(&self) -> std::time::Instant {
+    |                   ^^^^^^^^
+...
+750 |     pub(super) fn validate_call(
+    |                   ^^^^^^^^^^^^^
+
+warning: methods `clone_auth` and `promote` are never used
+  --> crates/box/runtime/src/local_execution/transient_registry_auth.rs:56:19
+   |
+21 | impl TransientRegistryAuthBroker {
+   | -------------------------------- methods in this implementation
+...
+56 |     pub(crate) fn clone_auth(&self, key: &str) -> Option<RegistryAuth> {
+   |                   ^^^^^^^^^^
+...
+80 |     pub(crate) fn promote(
+   |                   ^^^^^^^
+
+warning: field `vm` is never read
+  --> crates/box/runtime/src/local_execution/vm_backend.rs:41:5
+   |
+39 | pub(super) struct AdmittedVm {
+   |                   ---------- field in this struct
+40 |     binding: super::store::OwnerBinding,
+41 |     vm: SharedVm,
+   |     ^^
+
+warning: variants `StageMetadata`, `PrepareResources`, `RollbackResources`, `FinalizeVm`, and `CleanupAnonymousVolumes` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1588:5
+     |
+1587 | enum OwnedVmJobKind {
+     |      -------------- variants in this enum
+1588 |     StageMetadata,
+     |     ^^^^^^^^^^^^^
+1589 |     PrepareResources,
+     |     ^^^^^^^^^^^^^^^^
+1590 |     RollbackResources,
+     |     ^^^^^^^^^^^^^^^^^
+1591 |     FinalizeVm,
+     |     ^^^^^^^^^^
+1592 |     CleanupAnonymousVolumes,
+     |     ^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `OwnedVmJobKind` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: associated items `as_str` and `parse` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1596:8
+     |
+1595 | impl OwnedVmJobKind {
+     | ------------------- associated items in this implementation
+1596 |     fn as_str(self) -> &'static str {
+     |        ^^^^^^
+...
+1605 |     fn parse(value: &str) -> ExecutionManagerResult<Self> {
+     |        ^^^^^
+
+warning: variants `Metadata`, `Prepare`, `Rollback`, `Finalize`, and `Anonymous` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1620:5
+     |
+1619 | enum OwnedVmJobOutput {
+     |      ---------------- variants in this enum
+1620 |     Metadata(kbox_core::Result<()>),
+     |     ^^^^^^^^
+1621 |     Prepare(ExecutionManagerResult<()>),
+     |     ^^^^^^^
+1622 |     Rollback(ExecutionManagerResult<()>),
+     |     ^^^^^^^^
+1623 |     Finalize(kbox_core::Result<()>),
+     |     ^^^^^^^^
+1624 |     Anonymous(kbox_core::Result<()>),
+     |     ^^^^^^^^^
+
+warning: method `result` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1628:8
+     |
+1627 | impl OwnedVmJobOutput {
+     | --------------------- method in this implementation
+1628 |     fn result(&self) -> ExecutionManagerResult<()> {
+     |        ^^^^^^
+
+warning: variants `Running` and `Ready` are never constructed
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1647:5
+     |
+1645 | enum OwnedVmJobSlot {
+     |      -------------- variants in this enum
+1646 |     Idle,
+1647 |     Running {
+     |     ^^^^^^^
+...
+1652 |     Ready {
+     |     ^^^^^
+
+warning: fields `kind`, `binding`, and `result` are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1661:5
+     |
+1660 | struct OwnedVmCompleted {
+     |        ---------------- fields in this struct
+1661 |     kind: OwnedVmJobKind,
+     |     ^^^^
+1662 |     binding: super::store::OwnedStageBinding,
+     |     ^^^^^^^
+1663 |     result: Result<OwnedVmJobOutput, tokio::task::JoinError>,
+     |     ^^^^^^
+
+warning: multiple fields are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1667:5
+     |
+1666 | struct OwnedVmProgress {
+     |        --------------- fields in this struct
+1667 |     scope: crate::vm::OriginalVmScope,
+     |     ^^^^^
+1668 |     launch_record: BoxRecord,
+     |     ^^^^^^^^^^^^^
+1669 |     acquisition: crate::vm::OriginalAcquisition,
+     |     ^^^^^^^^^^^
+1670 |     resources: Option<Arc<std::sync::Mutex<ExecutionResourceGuard>>>,
+     |     ^^^^^^^^^
+1671 |     finalization: Option<Arc<std::sync::Mutex<crate::vm::OriginalVmFinalization>>>,
+     |     ^^^^^^^^^^^^
+1672 |     anonymous: Option<Arc<std::sync::Mutex<OwnedAnonymousCleanup>>>,
+     |     ^^^^^^^^^
+1673 |     job: OwnedVmJobSlot,
+     |     ^^^
+1674 |     completed: Vec<OwnedVmCompleted>,
+     |     ^^^^^^^^^
+1675 |     physical: Option<kbox_core::Result<kbox_core::vmm::VmExitConfirmation>>,
+     |     ^^^^^^^^
+1676 |     physical_budget: Option<kbox_core::vmm::OwnedCloseBudget>,
+     |     ^^^^^^^^^^^^^^^
+1677 |     cleanup_budget: Option<kbox_core::vmm::OwnedCleanupBudget>,
+     |     ^^^^^^^^^^^^^^
+
+warning: methods `validate_bound_settings`, `refresh_inactive_network`, `reconcile_ready`, `install`, and `poll_job` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1701:8
+     |
+1682 | impl OwnedVmProgress {
+     | -------------------- methods in this implementation
+...
+1701 |     fn validate_bound_settings(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {
+     |        ^^^^^^^^^^^^^^^^^^^^^^^
+...
+1718 |     fn refresh_inactive_network(
+     |        ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+1758 |     fn reconcile_ready(
+     |        ^^^^^^^^^^^^^^^
+...
+1779 |     fn install(
+     |        ^^^^^^^
+...
+1882 |     async fn poll_job(
+     |              ^^^^^^^^
+
+warning: fields `home`, `owner`, `names`, and `unproved` are never read
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1929:5
+     |
+1928 | struct OwnedAnonymousCleanup {
+     |        --------------------- fields in this struct
+1929 |     home: PathBuf,
+     |     ^^^^
+1930 |     owner: String,
+     |     ^^^^^
+1931 |     names: Vec<(String, bool)>,
+     |     ^^^^^
+1932 |     unproved: bool,
+     |     ^^^^^^^^
+
+warning: method `run` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1935:8
+     |
+1934 | impl OwnedAnonymousCleanup {
+     | -------------------------- method in this implementation
+1935 |     fn run(&mut self, budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
+     |        ^^^
+
+warning: enum `OwnedVmWork` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1958:6
+     |
+1958 | enum OwnedVmWork {
+     |      ^^^^^^^^^^^
+
+warning: methods `remaining_known`, `validate_original`, `kind`, and `run` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1969:8
+     |
+1968 | impl OwnedVmWork {
+     | ---------------- methods in this implementation
+1969 |     fn remaining_known(&self) -> ExecutionManagerResult<bool> {
+     |        ^^^^^^^^^^^^^^^
+...
+1998 |     fn validate_original(
+     |        ^^^^^^^^^^^^^^^^^
+...
+2033 |     fn kind(&self) -> OwnedVmJobKind {
+     |        ^^^^
+...
+2042 |     fn run(self, budget: kbox_core::vmm::OwnedCleanupBudget) -> OwnedVmJobOutput {
+     |        ^^^
+
+warning: function `require_job_time` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2076:4
+     |
+2076 | fn require_job_time(budget: kbox_core::vmm::OwnedCleanupBudget) -> kbox_core::Result<()> {
+     |    ^^^^^^^^^^^^^^^^
+
+warning: function `spawn_original_work` is never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2095:4
+     |
+2095 | fn spawn_original_work(
+     |    ^^^^^^^^^^^^^^^^^^^
+
+warning: multiple methods are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2152:8
+     |
+2151 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+2152 |     fn exact_original(
+     |        ^^^^^^^^^^^^^^
+...
+2169 |     fn recheck_original(
+     |        ^^^^^^^^^^^^^^^^
+...
+2182 |     async fn run_original_preparation(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2244 |     async fn rollback_original_resources(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2281 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2322 |     async fn close_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2400 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+2464 |     async fn finalize_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `prefer_image_rootfs_metadata` is never read
+   --> crates/box/runtime/src/vm/mod.rs:214:16
+    |
+182 | pub(crate) struct BoxLayout {
+    |                   --------- field in this struct
+...
+214 |     pub(crate) prefer_image_rootfs_metadata: bool,
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `boot_original_owned` is never used
+  --> crates/box/runtime/src/vm/boot.rs:22:25
+   |
+ 5 | impl VmManager {
+   | -------------- method in this implementation
+...
+22 |     pub(crate) async fn boot_original_owned(
+   |                         ^^^^^^^^^^^^^^^^^^^
+
+warning: multiple fields are never read
+    --> crates/box/runtime/src/vm/lifecycle.rs:1085:5
+     |
+1084 | pub(crate) struct OriginalVmFinalization {
+     |                   ---------------------- fields in this struct
+1085 |     rootfs: Arc<dyn crate::rootfs::RootfsProvider>,
+     |     ^^^^^^
+1086 |     network: Option<Box<dyn crate::network::NetworkBackend>>,
+     |     ^^^^^^^
+1087 |     network_none: bool,
+     |     ^^^^^^^^^^^^
+1088 |     box_dir: PathBuf,
+     |     ^^^^^^^
+1089 |     socket_dir: PathBuf,
+     |     ^^^^^^^^^^
+1090 |     preserve_rootfs: bool,
+     |     ^^^^^^^^^^^^^^^
+1091 |     clean_handoff_required: bool,
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+1092 |     steps: [FinalizationStep; 5],
+     |     ^^^^^
+
+warning: variants `Pending`, `Attempted`, `Complete`, and `Unproved` are never constructed
+    --> crates/box/runtime/src/vm/lifecycle.rs:1097:5
+     |
+1096 | enum FinalizationStep {
+     |      ---------------- variants in this enum
+1097 |     Pending,
+     |     ^^^^^^^
+1098 |     Attempted,
+     |     ^^^^^^^^^
+1099 |     Complete,
+     |     ^^^^^^^^
+1100 |     Unproved,
+     |     ^^^^^^^^
+     |
+     = note: `FinalizationStep` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: methods `validate_preserve_rootfs`, `remaining_steps_known`, and `run` are never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1104:19
+     |
+1103 | impl OriginalVmFinalization {
+     | --------------------------- methods in this implementation
+1104 |     pub(crate) fn validate_preserve_rootfs(&self, preserve_rootfs: bool) -> Result<()> {
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^
+...
+1113 |     pub(crate) fn remaining_steps_known(&self) -> bool {
+     |                   ^^^^^^^^^^^^^^^^^^^^^
+...
+1122 |     pub(crate) fn run(&mut self, budget: kbox_core::vmm::OwnedCleanupBudget) -> Result<()> {
+     |                   ^^^
+
+warning: function `remove_original_directory` is never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1178:4
+     |
+1178 | fn remove_original_directory(path: &Path) -> Result<()> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `require_original_physical_time` is never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1186:4
+     |
+1186 | fn require_original_physical_time(budget: kbox_core::vmm::OwnedCloseBudget) -> Result<()> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `close_original_owned` and `take_original_finalization` are never used
+    --> crates/box/runtime/src/vm/lifecycle.rs:1215:25
+     |
+1199 | impl VmManager {
+     | -------------- methods in this implementation
+...
+1215 |     pub(crate) async fn close_original_owned(
+     |                         ^^^^^^^^^^^^^^^^^^^^
+...
+1308 |     pub(crate) fn take_original_finalization(
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_recorded_sandbox_runtime_in` is never used
+   --> crates/box/runtime/src/vm/reap.rs:684:15
+    |
+684 | pub(crate) fn cleanup_recorded_sandbox_runtime_in(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `build_instance_spec` is never used
+  --> crates/box/runtime/src/vm/spec.rs:54:19
+   |
+49 | impl VmManager {
+   | -------------- method in this implementation
+...
+54 |     pub(crate) fn build_instance_spec(&mut self, layout: &BoxLayout) -> Result<InstanceSpec> {
+   |                   ^^^^^^^^^^^^^^^^^^^
+
+warning: large size difference between variants
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1958:1
+     |
+1958 | /  enum OwnedVmWork {
+1959 | |      StageMetadata(PathBuf),
+     | |      ---------------------- the second-largest variant contains at least 24 bytes
+1960 | |/     PrepareResources {
+1961 | ||         cell: Arc<std::sync::Mutex<ExecutionResourceGuard>>,
+1962 | ||         record: BoxRecord,
+1963 | ||     },
+     | ||_____- the largest variant contains at least 3480 bytes
+...    |
+1966 | |      CleanupAnonymousVolumes(Arc<std::sync::Mutex<OwnedAnonymousCleanup>>),
+1967 | |  }
+     | |__^ the entire enum is at least 3480 bytes
+     |
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#large_enum_variant
+     = note: `#[warn(clippy::large_enum_variant)]` on by default
+help: consider boxing the large fields or introducing indirection in some other way to reduce the total size of the enum
+     |
+1962 -         record: BoxRecord,
+1962 +         record: Box<BoxRecord>,
+     |
+
+warning: unused variable: `fixture`
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/recovery_profile.rs:401:5
+    |
+401 |     fixture: &BoxRuntimeConformanceFixture,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fixture`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-runtime` (lib) generated 68 warnings (run `cargo clippy --fix --lib -p kbox-runtime -- --no-deps` to apply 3 suggestions)
+warning: unused variable: `record`
+    --> crates/box/runtime/src/local_execution/oci_backend_tests.rs:1604:9
+     |
+1604 |         record: &BoxRecord,
+     |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_record`
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/examples/windows_whpx_oci_qualification.rs:33:62
+   |
+33 |         BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionBoundary,
+   |                                                              ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/examples/linux_kvm_oci_qualification.rs:51:62
+   |
+51 |         BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionBoundary,
+   |                                                              ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-runtime` (example "windows-whpx-oci-qualification") generated 1 warning (run `cargo clippy --fix --example "windows-whpx-oci-qualification" -p kbox-runtime -- --no-deps` to apply 1 suggestion)
+warning: `kbox-runtime` (example "linux-kvm-oci-qualification") generated 1 warning (run `cargo clippy --fix --example "linux-kvm-oci-qualification" -p kbox-runtime -- --no-deps` to apply 1 suggestion)
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1187:13
+     |
+1187 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: variable does not need to be mutable
+ --> crates/box/runtime/src/local_execution/tests/stop_ownership.rs:8:9
+  |
+8 |     let mut create = request("stop-unready-owner");
+  |         ----^^^^^^
+  |         |
+  |         help: remove this `mut`
+  |
+  = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/runtime/src/local_execution/tests.rs:434:9
+    |
+434 |     let mut request = request(external_id);
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1293:9
+     |
+1293 |     let mut create = request("cold-pause-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1321:9
+     |
+1321 |     let mut create = request("warm-pause-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1358:9
+     |
+1358 |     let mut create = request("warm-resume-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1400:9
+     |
+1400 |     let mut create = request("observe-pausing-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1443:9
+     |
+1443 |     let mut create = request("observe-resuming-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1487:9
+     |
+1487 |     let mut create = request("observe-pausing-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1532:9
+     |
+1532 |     let mut create = request("observe-killing-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1569:9
+     |
+1569 |     let mut create = request("observe-running-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1599:9
+     |
+1599 |     let mut create = request("warm-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1637:9
+     |
+1637 |     let mut create = request("warm-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1679:9
+     |
+1679 |     let mut create = request("cold-pause-stopped-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1717:9
+     |
+1717 |     let mut create = request("cold-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1755:9
+     |
+1755 |     let mut create = request("cold-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1796:9
+     |
+1796 |     let mut create = request("cold-resume-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1971:9
+     |
+1971 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1997:9
+     |
+1997 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2025:9
+     |
+2025 |     let mut create = request("sandbox-exit-status");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2051:9
+     |
+2051 |     let mut create = request("sandbox-signaled-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2079:9
+     |
+2079 |     let mut create = request("already-stopped-no-invent");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2112:9
+     |
+2112 |     let mut create = request("kill-not-found-no-user-stop");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2203:9
+     |
+2203 |     let mut create = request("option-aware-kill");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: field `private_artifact_root` is never read
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:255:5
+    |
+245 | pub(super) struct BoxRuntimeConformanceFixture {
+    |                   ---------------------------- field in this struct
+...
+255 |     private_artifact_root: PathBuf,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `private_artifact_source` and `private_artifact_root` are never used
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:404:19
+    |
+263 | impl BoxRuntimeConformanceFixture {
+    | --------------------------------- methods in this implementation
+...
+404 |     pub(super) fn private_artifact_source(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^
+...
+408 |     pub(super) fn private_artifact_root(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `insert` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/test_support.rs:355:19
+    |
+354 | impl DriverFakeSecretMaterializer {
+    | --------------------------------- method in this implementation
+355 |     pub(super) fn insert(&self, reference: impl Into<String>, value: impl Into<Vec<u8>>) {
+    |                   ^^^^^^
+
+warning: fields `store`, `home_dir`, and `lifecycle` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:78:9
+   |
+76 |     StartSelected {
+   |     ------------- fields in this variant
+77 |         record: BoxRecord,
+78 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+79 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+80 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+
+warning: fields `store`, `home_dir`, `lifecycle`, and `physical_budget` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:84:9
+   |
+82 |     StopSelected {
+   |     ------------ fields in this variant
+83 |         record: BoxRecord,
+84 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+85 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+86 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+87 |         physical_budget: kbox_core::vmm::OwnedCloseBudget,
+   |         ^^^^^^^^^^^^^^^
+
+warning: fields `execution_id` and `generation` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:90:9
+   |
+89 |     ReconcileRetainedRemove {
+   |     ----------------------- fields in this variant
+90 |         execution_id: ExecutionId,
+   |         ^^^^^^^^^^^^
+91 |         generation: ExecutionGeneration,
+   |         ^^^^^^^^^^
+
+warning: methods `boot_original_component` and `cleanup_original_anonymous` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2281:14
+     |
+2151 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+...
+2281 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2400 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sandbox_request` is never used
+   --> crates/box/runtime/src/local_execution/tests.rs:433:4
+    |
+433 | fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
+    |    ^^^^^^^^^^^^^^^
+
+warning: unnecessary use of `clone` to create a slice from a reference
+   --> crates/box/runtime/src/hardware_vm_tests.rs:246:23
+    |
+246 |         identify_root(&[distro.clone()]),
+    |                       ^^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&distro)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#cloned_ref_to_slice_refs
+    = note: `#[warn(clippy::cloned_ref_to_slice_refs)]` on by default
+
+warning: unnecessary use of `clone` to create a slice from a reference
+   --> crates/box/runtime/src/hardware_vm_tests.rs:305:9
+    |
+305 |         &[share.clone()],
+    |         ^^^^^^^^^^^^^^^^ help: try: `std::slice::from_ref(&share)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#cloned_ref_to_slice_refs
+
+warning: used `assert_eq!` with a literal bool
+   --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:311:5
+    |
+311 |     assert_eq!(removed.unwrap(), true);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#bool_assert_comparison
+    = note: `#[warn(clippy::bool_assert_comparison)]` on by default
+help: replace it with `assert!(..)`
+    |
+311 -     assert_eq!(removed.unwrap(), true);
+311 +     assert!(removed.unwrap());
+    |
+
+warning: used `assert_eq!` with a literal bool
+   --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:388:5
+    |
+388 |     assert_eq!(removed.unwrap(), true);
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#bool_assert_comparison
+help: replace it with `assert!(..)`
+    |
+388 -     assert_eq!(removed.unwrap(), true);
+388 +     assert!(removed.unwrap());
+    |
+
+warning: items after a test module
+   --> crates/box/runtime/src/local_execution/lifecycle_lock.rs:112:1
+    |
+112 |   mod tests {
+    |   ^^^^^^^^^
+...
+141 | / pub(super) fn retain_original_guard(
+142 | |     original: &std::sync::Arc<ExecutionLifecycleLock>,
+143 | | ) -> std::sync::Arc<ExecutionLifecycleLock> {
+    | |___________________________________________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#items_after_test_module
+    = note: `#[warn(clippy::items_after_test_module)]` on by default
+    = help: move the items to before the test module was defined
+
+warning: the borrowed expression implements the required traits
+  --> crates/box/runtime/src/local_execution/oci_hvf_native_raw_ro.rs:84:59
+   |
+84 | ...:OciImage::from_path(&PathBuf::from(std::env::var_os("K_BOX_TEST_HVF_RAW_IMAGE_LAYOUT").unwrap())).unwrap();
+   |                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `PathBuf::from(std::env::var_os("K_BOX_TEST_HVF_RAW_IMAGE_LAYOUT").unwrap())`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#needless_borrows_for_generic_args
+   = note: `#[warn(clippy::needless_borrows_for_generic_args)]` on by default
+
+warning: the borrowed expression implements the required traits
+  --> crates/box/runtime/src/local_execution/oci_hvf_native_raw_ro.rs:93:72
+   |
+93 | ...ndle_handoff_directory(&root.join("service/runtime"),&id,&create_context.operation_id).unwrap();
+   |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: change this to: `root.join("service/runtime")`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#needless_borrows_for_generic_args
+
+warning: returning the result of a `let` binding from a block
+   --> crates/box/runtime/src/local_execution/tests.rs:435:5
+    |
+434 |     let mut request = request(external_id);
+    |     --------------------------------------- unnecessary `let` binding
+435 |     request
+    |     ^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#let_and_return
+    = note: `#[warn(clippy::let_and_return)]` on by default
+help: return the expression directly
+    |
+434 ~     
+435 ~     request(external_id)
+    |
+
+warning: `kbox-runtime` (lib test) generated 75 warnings (15 duplicates) (run `cargo clippy --fix --lib -p kbox-runtime --tests -- --no-deps` to apply 49 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 23.43s

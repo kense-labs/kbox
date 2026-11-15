@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "hvf_cap_add_",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 79.2018595
+}

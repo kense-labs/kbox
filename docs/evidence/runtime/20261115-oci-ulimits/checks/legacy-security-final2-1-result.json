@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "completedNativeScenarios": 1,
+  "execution": "7552dfc2-9262-48bb-a87d-4416bbf65385",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-2",
+  "source": "8c687c06d486c721afcc33605d83ec208cd9b92f3a72d7732529ebd2d7ddd736",
+  "capturedRequestOverridesRefused": true,
+  "realAttachPty": true,
+  "allFiveKernelCapabilitySetsZero": true,
+  "noNewPrivs": 1,
+  "seccomp": 2,
+  "hardRaiseRefused": true,
+  "loaded": [
+    {
+      "pid": 29076,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-2/bin/kbox-shim --config {\"box_id\":\"7552dfc2-9262-48bb-a87d-4416bbf65385\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-rlimits-e5c6b94fd37f/legacy-security-final2-1/home/boxes/7552dfc2-9262-48bb-a87d-4416bbf65385/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/7552dfc2-9262-48bb-a87d-4416bbf65385/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/7552dfc2-9262-48bb-a87d-4416bbf65385/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/7552dfc2-9262-48bb-a87d-4416bbf65385/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/7552dfc2-9262-48bb-a87d-4416bbf65385/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-rlimits-e5c6b94fd37f/legacy-security-final2-1/home/boxes/7552dfc2-9262-48bb-a87d-4416bbf65385/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-rlimits-e5c6b94fd37f/legacy-security-final2-1/home/boxes/7552dfc2-9262-48bb-a87d-4416bbf65385/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/7552dfc2-9262-48bb-a87d-4416bbf65385/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"K_SEC_CAP_DROP\",\"ALL\"],[\"BOX_CRI_PORT_FWD\",\"1\"],[\"BOX_PERSIST_ROOTFS_METADATA\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-rlimits-e5c6b94fd37f/legacy-security-final2-1/home/boxes/7552dfc2-9262-48bb-a87d-4416bbf65385/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[\"nofile=64:128\",\"core=0:0\"],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-2/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-2/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-2/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "seconds": 2.089783542,
+  "zeroManagedExecutions": true,
+  "zeroVolumes": true
+}

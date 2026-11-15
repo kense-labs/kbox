@@ -1,0 +1,7 @@
+{
+  "sourceInputsSha256": "a0edbd9e9b4ac1da0059bbeff8dd5a4dae7c61797ca1833b10a98569d344daac",
+  "inputCount": 1696,
+  "priorSourceSha256": "a7729b6ebe537df41c36745c2798399525e54bd4fed039f1f88a2e5073c5b0a5",
+  "newOciRequired": true,
+  "reason": "shared Agent atomic nproc admission and explicit v10 compatibility boundary"
+}

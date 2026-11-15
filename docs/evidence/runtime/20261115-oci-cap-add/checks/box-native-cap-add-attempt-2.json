@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/native-client-cap-add-attempt-2",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::capabilities::native_cap_add_enforces_guest_permissions_drop_controls_all_entries_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-cap-add-05c0ae87abb2/cap-add-attempt-2",
+  "clientSha256": "a95fb13be017d2459983dd3cd29c7819ca08fd997a7266dfadf18dfbea11126d",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/installed-cap-add-final-2",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 59.137371374999994,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

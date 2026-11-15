@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/aarch64-apple-darwin/bin/llvm-objcopy",
+    "--strip-all",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-frozen1",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-stripped4"
+  ],
+  "exit": 0,
+  "seconds": 0.026239707999999997
+}

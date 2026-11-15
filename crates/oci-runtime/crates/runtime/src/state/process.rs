@@ -23,12 +23,15 @@ use super::{
 };
 
 #[derive(Serialize)]
-struct ExecFingerprint<'a> {
+struct ExecFingerprint<'a, P: Serialize> {
     container: &'a ContainerTarget,
     process_id: &'a ProcessId,
-    process: &'a Process,
+    process: &'a P,
     io: &'a ProcessIo,
 }
+
+#[derive(Serialize)]
+struct WireProcess<'a>(#[serde(serialize_with = "koci_sdk::process_serde::serialize")] &'a Process);
 
 #[derive(Serialize)]
 struct SignalProcessFingerprint<'a> {
@@ -83,6 +86,15 @@ impl DurableStateStore {
                 container: &request.container,
                 process_id: &request.process_id,
                 process: &request.process,
+                io: &request.io,
+            },
+            "digest-exec-request",
+        )?
+        .with_current(
+            &ExecFingerprint {
+                container: &request.container,
+                process_id: &request.process_id,
+                process: &WireProcess(&request.process),
                 io: &request.io,
             },
             "digest-exec-request",

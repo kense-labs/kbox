@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-shim",
+    "test_parse_ulimit_refuses_malformed",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 5.80367125
+}

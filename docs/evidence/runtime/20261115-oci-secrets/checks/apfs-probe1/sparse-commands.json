@@ -1,0 +1,33 @@
+[
+  {
+    "command": [
+      "/sbin/mount",
+      "-t",
+      "apfs",
+      "/dev/disk14s1",
+      "/private/tmp/kbox-secrets-3b9553cebce5/owned-apfs-probe"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/sbin/umount",
+      "/private/tmp/kbox-secrets-3b9553cebce5/owned-apfs-probe"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/bin/hdiutil",
+      "detach",
+      "/dev/disk13"
+    ],
+    "exitCode": 0,
+    "stdout": "\"disk13\" ejected.\n",
+    "stderr": ""
+  }
+]

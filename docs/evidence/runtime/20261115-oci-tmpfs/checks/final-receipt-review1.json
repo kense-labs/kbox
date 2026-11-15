@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/final-receipt-review1.py"
+  ],
+  "exit": 0,
+  "seconds": 0.803942625
+}

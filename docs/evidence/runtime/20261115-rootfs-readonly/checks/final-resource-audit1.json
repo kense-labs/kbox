@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/final-resource-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 0.565212333
+}

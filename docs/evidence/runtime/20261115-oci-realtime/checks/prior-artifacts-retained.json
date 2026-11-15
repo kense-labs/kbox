@@ -1,0 +1,16 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/final-dist-nice-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "15baefe0145e030046f16b1cdb4c2af72434e5b3bd581488b620f1fe2db76dfd",
+    "bytes": 23393022,
+    "companionPath": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/final-dist-nice-2/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "companion": "15baefe0145e030046f16b1cdb4c2af72434e5b3bd581488b620f1fe2db76dfd  kbox-3.4.3-macos-arm64.tar.gz\n"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+    "bytes": 33421132,
+    "companionPath": null,
+    "companion": null
+  }
+]

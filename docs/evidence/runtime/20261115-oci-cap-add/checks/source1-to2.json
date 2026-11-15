@@ -1,0 +1,11 @@
+{
+  "source1": "92e955ba8a23a45642013582ca139b8df75ef47d0de81004e87bc0be30fb46d0",
+  "source2": "b8f8a892cadb5c53b7addddc1fbf592a7042a4becadaae83d9ca2c340519b5c6",
+  "changedPaths": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_capabilities.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs"
+  ],
+  "ociSdkAgentSourcesUnchanged": true,
+  "scope": "necessary nonroot ambient completion plus owning/native tests; final Box/native/default artifacts must regenerate"
+}

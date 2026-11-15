@@ -1,0 +1,5 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.14s

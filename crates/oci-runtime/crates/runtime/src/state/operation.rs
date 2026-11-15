@@ -10,18 +10,34 @@ use super::filesystem::state_error;
 use super::model::{
     StoredOperation, StoredOperationKind, OPERATION_SCHEMA_VERSION, OPERATION_SCHEMA_VERSION_V1,
     OPERATION_SCHEMA_VERSION_V2, OPERATION_SCHEMA_VERSION_V3, OPERATION_SCHEMA_VERSION_V4,
-    OPERATION_SCHEMA_VERSION_V5,
+    OPERATION_SCHEMA_VERSION_V5, OPERATION_SCHEMA_VERSION_V6,
 };
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) struct RequestDigests {
     legacy: String,
     canonical: String,
+    normalized: String,
 }
 
 impl RequestDigests {
     pub(super) fn current(&self) -> &str {
-        &self.canonical
+        &self.normalized
+    }
+
+    pub(super) fn with_current(
+        mut self,
+        value: &impl Serialize,
+        operation: &'static str,
+    ) -> Result<Self> {
+        self.normalized = sha256_digest(canonical_json_bytes(value).map_err(|error| {
+            state_error(
+                ErrorCode::Internal,
+                operation,
+                format!("failed to encode normalized operation fingerprint: {error}"),
+            )
+        })?);
+        Ok(self)
     }
 
     #[cfg(test)]
@@ -36,7 +52,8 @@ impl RequestDigests {
             | OPERATION_SCHEMA_VERSION_V3
             | OPERATION_SCHEMA_VERSION_V4
             | OPERATION_SCHEMA_VERSION_V5
-            | OPERATION_SCHEMA_VERSION => Some(&self.canonical),
+            | OPERATION_SCHEMA_VERSION_V6 => Some(&self.canonical),
+            OPERATION_SCHEMA_VERSION => Some(&self.normalized),
             _ => None,
         }
     }
@@ -62,6 +79,7 @@ pub(super) fn request_digest(
     })?;
     Ok(RequestDigests {
         legacy: sha256_digest(legacy),
+        normalized: sha256_digest(&canonical),
         canonical: sha256_digest(canonical),
     })
 }
@@ -139,7 +157,7 @@ mod tests {
     use crate::state::model::{
         StoredOperation, StoredOperationKind, StoredOperationStatus, OPERATION_SCHEMA_VERSION,
         OPERATION_SCHEMA_VERSION_V1, OPERATION_SCHEMA_VERSION_V2, OPERATION_SCHEMA_VERSION_V3,
-        OPERATION_SCHEMA_VERSION_V4, OPERATION_SCHEMA_VERSION_V5,
+        OPERATION_SCHEMA_VERSION_V4, OPERATION_SCHEMA_VERSION_V5, OPERATION_SCHEMA_VERSION_V6,
     };
 
     #[derive(Serialize)]
@@ -188,6 +206,7 @@ mod tests {
             (OPERATION_SCHEMA_VERSION_V3, digests.canonical.clone()),
             (OPERATION_SCHEMA_VERSION_V4, digests.canonical.clone()),
             (OPERATION_SCHEMA_VERSION_V5, digests.canonical.clone()),
+            (OPERATION_SCHEMA_VERSION_V6, digests.canonical.clone()),
             (OPERATION_SCHEMA_VERSION, digests.canonical.clone()),
         ] {
             let stored = StoredOperation {
@@ -213,3 +232,7 @@ mod tests {
         }
     }
 }
+
+#[cfg(test)]
+#[path = "operation_fingerprint_tests.rs"]
+mod fingerprint_tests;

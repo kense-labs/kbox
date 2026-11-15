@@ -1,0 +1,11 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (94457898) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_raw_secrets.rs:258:213:
+called `Result::unwrap()` on an `Err` value: Unavailable("Box/HVF OCI prepare bundle failed: I/O error: No space left on device (os error 28)")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::raw_secrets::native_raw_secret_files_environment_disks_entries_and_recovery' (94457897) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_raw_secrets.rs:281:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

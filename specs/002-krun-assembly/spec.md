@@ -1,5 +1,8 @@
 # Feature Specification: KRun environment assembly
 
+> Historical scope, superseded by the generic engine boundary in `docs/architecture/local-engine.md`. Product-specific engine behavior and package assembly have been removed.
+
+
 **Created**: 2026-11-11
 **Status**: In progress
 **Owning path**: `crates/box/runtime`, `crates/runtime`; independent client/guest tooling in `../krun`.

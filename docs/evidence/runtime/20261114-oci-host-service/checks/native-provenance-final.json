@@ -1,0 +1,27 @@
+{
+  "nativeGitlinks": {
+    "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+    "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+  },
+  "nativeSourcesClean": true,
+  "archiveNativeBytesMatchPrior": {
+    "libkrun.1.17.0.dylib": true,
+    "libkrunfw.5.dylib": true
+  },
+  "actualBuildMatches": [
+    {
+      "buildOutput": "target/release-dist/build/klibksys-28e4ba6bf389d83e/output",
+      "libkrunInstall": "/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib",
+      "firmwareInstall": "/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib",
+      "firmwareTarball": "/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw-prebuilt-12b9401d7735.tar.gz",
+      "firmwareTarballSha256": "12b9401d7735d1682450e4d025273c5016ec2237dcbfb76b2f0a152be6e606d6",
+      "kernelCSha256": "52fb5a33bf7e63140f6476c092c108b79f235b742271dab8b1f66246be982e54",
+      "firmwareSourceUrl": "https://github.com/boxlite-ai/libkrunfw/releases/download/v5.3.0/libkrunfw-prebuilt-aarch64.tgz",
+      "firmwareSourceKind": "checksum-pinned prebuilt kernel.c source bundle compiled locally; root libkrunfw gitlink is recorded but not used to build this firmware",
+      "deploymentTarget": "11.0",
+      "retainedFirmwareTarball": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/source-inputs/libkrunfw-prebuilt-12b9401d7735.tar.gz",
+      "retainedBuildOutput": "native-build-output-0.log"
+    }
+  ],
+  "note": "Cargo reused this exact clean-source native output. Execution used the archive-installed bytes, verified by loader maps; OCI uses its separate pinned native archive."
+}

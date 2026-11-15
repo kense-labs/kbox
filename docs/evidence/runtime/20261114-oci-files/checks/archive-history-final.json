@@ -1,0 +1,51 @@
+[
+  {
+    "kind": "boxArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "34e2a8f09f7c029319e8a86495c1e9607dfb83941fe6a0752ab4972aa617f889",
+    "bytes": 23309401,
+    "retained": true
+  },
+  {
+    "kind": "ociArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/oci-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "fb1bc50474bea3802325352e1400d0811ed6177c42597a53a78b252acbcadba5",
+    "bytes": 33124162,
+    "retained": true
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/dist-before-files/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23309401,
+    "sha256": "34e2a8f09f7c029319e8a86495c1e9607dfb83941fe6a0752ab4972aa617f889"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23331513,
+    "sha256": "d78863fce2d15cb10172019b67cf8d8fd4cbe3e51e8a9fe03181654d44ae79c3"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/final-dist-files-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23331528,
+    "sha256": "0ce9f1bb23283e60d0c27bed8671267a0dcafa6aff71b3138c128b75c48bdb60"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/final-dist-files-3/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23331608,
+    "sha256": "87d01d3cfa819b85b377530504385959d2af56a04613d4e2f2e9a0ffbbaab884"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "bytes": 33199160,
+    "sha256": "66d5facf0cec0c88623c2f746cdd3ce0680a6dea43075047d25b6b3d999fbbe2"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "bytes": 33329455,
+    "sha256": "86a9719f212cf53d1cde99c7d42c3304a8a97188b8142341c6cea495339c6374"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final4-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "bytes": 33329407,
+    "sha256": "31ebb79b7ab8419edaea875bae0f731617f5fb5edcbfe7fd2e0dbee4d5c3fd7f"
+  }
+]

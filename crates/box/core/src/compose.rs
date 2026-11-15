@@ -6,16 +6,16 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-mod kcl;
 mod diagnostic;
 mod interpolation;
+mod kcl;
 mod normalization;
 mod normalized;
 mod schema;
 
-pub use kcl::ComposeKclError;
 pub use diagnostic::{ComposeDiagnostic, ComposeDiagnosticCode, ComposeNormalizationError};
 pub use interpolation::{interpolate_compose_yaml, ComposeInterpolationError};
+pub use kcl::ComposeKclError;
 pub use normalization::{normalize_compose, normalize_compose_config, ComposeSourceFormat};
 pub use normalized::{
     NormalizedComposeConfig, NormalizedDependsOn, NormalizedHealthcheckConfig,

@@ -6,6 +6,55 @@ use kbox_core::{BoxError, ExecutionManagerError, ExecutionManagerResult, Network
 
 use crate::{BoxRecord, LocalExecutionManager, NetworkStore, VolumeStore};
 
+/// Release ephemeral OCI allocations only after the caller has proved its VM stopped.
+pub(super) async fn cleanup_ephemeral_oci_anonymous(
+    home: &Path,
+    record: &BoxRecord,
+) -> ExecutionManagerResult<()> {
+    use crate::{ManagedExecutionState, ManagedExecutionStoreError, ManagedRuntimeRoute};
+    let state = super::support::managed_state(record)?;
+    if !record.auto_remove
+        || record.anonymous_volumes.is_empty()
+        || matches!(
+            state,
+            ManagedExecutionState::RestartStopping
+                | ManagedExecutionState::RestartStarting
+                | ManagedExecutionState::Pausing
+                | ManagedExecutionState::Removing
+        )
+    {
+        return Ok(());
+    }
+    let expected = record.clone();
+    let home = home.to_path_buf();
+    super::store::run_store(move || {
+        crate::BoxStateStore::transact(&home.join("boxes.json"), |store| {
+            let id = kbox_core::ExecutionId::new(expected.id.clone())
+                .map_err(|error| ManagedExecutionStoreError::InvalidRecord(error.to_string()))?;
+            let current = store.find_by_id(id.as_str()).ok_or_else(|| ManagedExecutionStoreError::NotFound(id.clone()))?;
+            let current_metadata = current.managed_execution.as_ref().ok_or_else(|| ManagedExecutionStoreError::Unmanaged(id.clone()))?;
+            let expected_metadata = expected.managed_execution.as_ref().ok_or_else(|| ManagedExecutionStoreError::Unmanaged(id.clone()))?;
+            if !current.auto_remove || current.status != expected.status
+                || current_metadata.runtime_route != ManagedRuntimeRoute::OciSdk
+                || current_metadata.generation != expected_metadata.generation
+                || current_metadata.operation_id != expected_metadata.operation_id
+                || current_metadata.creation_intent_digest != expected_metadata.creation_intent_digest
+                || current_metadata.oci_runtime != expected_metadata.oci_runtime
+                || current.anonymous_volumes != expected.anonymous_volumes
+            {
+                return Err(ManagedExecutionStoreError::Conflict { execution_id: id, message: "ephemeral cleanup no longer owns the exact OCI generation and lifecycle attempt".into() });
+            }
+            // Keep the existing Box state lock in this worker until deletion finishes, even if its waiter is cancelled.
+            super::remove::remove_anonymous_volumes(&home, current)
+                .map_err(|error| ManagedExecutionStoreError::Io(std::io::Error::other(error)))
+        })
+    }).await
+}
+
+#[cfg(test)]
+#[path = "resources_anonymous_tests.rs"]
+mod anonymous_tests;
+
 /// Rolls back only the resource ownership acquired by one start attempt.
 pub(super) struct ExecutionResourceGuard {
     home_dir: PathBuf,
@@ -651,7 +700,7 @@ impl ExecutionResourceGuard {
 mod tests {
     use kbox_core::{
         network::NetworkConfig, snapshot::SnapshotMetadata, volume::VolumeConfig,
-        CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, ExecutionSnapshotId,
+        CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, ExecutionSnapshotId,
         OperationId,
     };
 

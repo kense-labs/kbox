@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "build",
+      "--run-pool-socket",
+      "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-tools-pool-6rexqw0t/pool.sock",
+      "--run-pool-autostart",
+      "--run-pool-image",
+      "docker.io/library/kbox-qualification-base@sha256:15d5b9a98bd45f61e1af0d1dc4e35f8c04b7b35f9d062e41daa07cfa3b64bc5d",
+      "-f",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/tools-fixture-context/Containerfile",
+      "-t",
+      "kbox-qualification-tools:local",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/tools-fixture-context"
+    ],
+    "exitCode": 0,
+    "seconds": 29.65
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-tools-pool-6rexqw0t/pool.sock"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "image-inspect",
+      "kbox-qualification-tools:local"
+    ],
+    "exitCode": 0,
+    "seconds": 0.29
+  }
+]

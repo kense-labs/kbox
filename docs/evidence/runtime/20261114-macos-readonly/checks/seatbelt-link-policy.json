@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-p",
+    "(version 1)(allow default)(deny file-link (subpath \"/Users/roylin/code/kense/kbox/artifacts/kbox-ro-link-policy-8_e2ext_/ro\"))(deny file-write* (subpath \"/Users/roylin/code/kense/kbox/artifacts/kbox-ro-link-policy-8_e2ext_/ro\"))",
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-c",
+    "import os,pathlib,sys,json\nro=pathlib.Path(sys.argv[1]);rw=pathlib.Path(sys.argv[2]);out={}\nfor name,src,dst in [('source-readonly',ro/'input',rw/'bad-alias'),('destination-readonly',rw/'input',ro/'bad-alias'),('writable-control',rw/'input',rw/'good-alias')]:\n try: os.link(src,dst);out[name]='ALLOWED'\n except OSError as e: out[name]=e.errno\nprint(json.dumps(out))\n",
+    "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-link-policy-8_e2ext_/ro",
+    "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-link-policy-8_e2ext_/rw"
+  ],
+  "returncode": 0,
+  "stdout": "{\"source-readonly\": 1, \"destination-readonly\": 1, \"writable-control\": \"ALLOWED\"}\n",
+  "stderr": "",
+  "root": "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-link-policy-8_e2ext_"
+}

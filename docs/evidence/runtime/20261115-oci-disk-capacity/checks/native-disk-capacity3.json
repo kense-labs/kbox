@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/run-native.py",
+    "docs/evidence/runtime/20261115-oci-disk-capacity/run-context.json",
+    "3",
+    "disk-capacity"
+  ],
+  "exit": 101,
+  "seconds": 127.922498292
+}

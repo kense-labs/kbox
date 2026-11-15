@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+  ],
+  "buildScriptSha256": "86381c6ba88e3ee77059b468d92e6dbb5d39287858a6b2d881a6dbd23d14ea04",
+  "target": "aarch64-pc-windows-msvc",
+  "stub": true,
+  "exitCode": 0,
+  "stdout": "cargo:rerun-if-changed=../../../../libkrun\ncargo:rerun-if-changed=vendor/libksource.tar\ncargo:rerun-if-changed=vendor/kwindows-x64.tar.xz\ncargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.dll\ncargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.lib\ncargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/libkrunfw.dll\ncargo:rerun-if-env-changed=K_DEPS_STUB\ncargo:rerun-if-env-changed=K_BUILD_LIBKRUN\ncargo:rerun-if-env-changed=K_USE_SYSTEM_LIBKRUN\ncargo:rerun-if-env-changed=K_LIBKRUNFW_DYLIB\ncargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET\ncargo:warning=K_DEPS_STUB mode: skipping libkrun build\ncargo:rustc-link-lib=dylib=krun\ncargo:LIBK_K_DEP=/nonexistent\ncargo:LIBKRUNFW_K_DEP=/nonexistent\n",
+  "stderr": ""
+}

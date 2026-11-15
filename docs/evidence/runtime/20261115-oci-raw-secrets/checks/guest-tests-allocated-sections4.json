@@ -1,0 +1,119 @@
+{
+  "status": "PASS",
+  "original": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-frozen1",
+    "bytes": 78615168,
+    "sha256": "46d3ea2f56b5167ed1e40f3a703485a656e012f6a61d26e03589e1059e4465fc"
+  },
+  "stripped": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-stripped4",
+    "bytes": 24916008,
+    "sha256": "3fa9d23c7d26d37997087495c0fc247ae04047e07bae13e6d1b01a8f7a2e34ac"
+  },
+  "allAllocatedSectionsIdentical": {
+    "type": 2,
+    "machine": 183,
+    "entry": 23794480,
+    "sections": {
+      ".gcc_except_table": {
+        "type": 1,
+        "flags": 2,
+        "address": 16777784,
+        "size": 1222836,
+        "sha256": "6a0e9aa7bb47ad6ad03190d3af06dd10b74578d401df10d943a01a5fceb0acba"
+      },
+      ".rodata": {
+        "type": 1,
+        "flags": 50,
+        "address": 18000640,
+        "size": 1483984,
+        "sha256": "ff14d197112a6f2b6fcb1bb82aa5fbdb9d54b703cf03d94e5307e9510238c630"
+      },
+      ".debug_gdb_scripts": {
+        "type": 1,
+        "flags": 50,
+        "address": 19484624,
+        "size": 34,
+        "sha256": "90b05a6111bee6fd5b996298dba2fda834c39fb2709fd7f2377455c439f84eee"
+      },
+      ".eh_frame_hdr": {
+        "type": 1,
+        "flags": 2,
+        "address": 19484660,
+        "size": 691500,
+        "sha256": "7e849e5cff36138bc024a111c48193457d5a5b369d287f9d5d6e9701c80f6cfa"
+      },
+      ".eh_frame": {
+        "type": 1,
+        "flags": 2,
+        "address": 20176160,
+        "size": 3552772,
+        "sha256": "58b7774f130c22746c7e6c58b688b948b719a9f64548a6fe366d12f09671db52"
+      },
+      ".text": {
+        "type": 1,
+        "flags": 6,
+        "address": 23794480,
+        "size": 17096992,
+        "sha256": "a357f9ea7012efcff9db1862e49963ed19885f31de617328a568340916317103"
+      },
+      ".tdata": {
+        "type": 1,
+        "flags": 1027,
+        "address": 40957008,
+        "size": 120,
+        "sha256": "3a33ad708d05f1861b37727ba14351ddbaa5570fa8b5273198bb4e627898cc5f"
+      },
+      ".tbss": {
+        "type": 8,
+        "flags": 1027,
+        "address": 40957128,
+        "size": 204,
+        "sha256": null
+      },
+      ".data.rel.ro": {
+        "type": 1,
+        "flags": 3,
+        "address": 40957128,
+        "size": 858016,
+        "sha256": "3958f05c2ab9729ae7fbacb8618cf9354719b5a37499b2da16a04fffbb86750c"
+      },
+      ".init_array": {
+        "type": 14,
+        "flags": 3,
+        "address": 41815144,
+        "size": 16,
+        "sha256": "0e3bf1a4b3921f4907f1aa699dda930473c7743962f2329d81cb7bbf037a5ae8"
+      },
+      ".got": {
+        "type": 1,
+        "flags": 3,
+        "address": 41815160,
+        "size": 2904,
+        "sha256": "8bfe4258a85f5740904fa776b5517e8c3c7a27180713c70d1b614c865f47dd76"
+      },
+      ".relro_padding": {
+        "type": 8,
+        "flags": 3,
+        "address": 41818064,
+        "size": 2096,
+        "sha256": null
+      },
+      ".data": {
+        "type": 1,
+        "flags": 3,
+        "address": 41883600,
+        "size": 5048,
+        "sha256": "2f41d3dc1cf611b0bd614fa47872b605c4b46803385e4def09efde34923b8a24"
+      },
+      ".bss": {
+        "type": 8,
+        "flags": 3,
+        "address": 41888768,
+        "size": 38416,
+        "sha256": null
+      }
+    }
+  },
+  "scope": "strip only nonallocated debug/symbol tables; no executable/data/unwind/TLS bytes or entrypoint/assertions/test descriptions changed; same compiled debug assertions; actual native test counts still required"
+}

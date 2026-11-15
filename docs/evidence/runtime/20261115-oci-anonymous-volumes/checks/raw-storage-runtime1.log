@@ -1,0 +1,15 @@
+
+running 10 tests
+test utility_vm_driver::hvf_directory::tests::aliases_and_overlapping_grants_fail_before_manifest_publication ... ok
+test utility_vm_driver::hvf_directory::tests::a_create_without_directory_grants_refuses_stale_manifest_evidence ... ok
+test utility_vm_driver::hvf_directory::tests::transport_retains_exact_identity_access_and_caller_permissions ... ok
+test utility_vm_driver::hvf_directory::tests::restricted_directory_requires_a_declared_extension_and_enforcement_digest ... ok
+test utility_vm_driver::hvf_directory::tests::replay_cannot_silently_export_a_replaced_directory ... ok
+test utility_vm_driver::hvf_directory::tests::raw_ext4_storage_keeps_existing_disk_identity_access_and_detach_contract ... ok
+test utility_vm_driver::hvf_directory::tests::workload_disk_cleanup_refuses_wrong_generation_and_unbounded_manifest ... ok
+test utility_vm_driver::hvf_directory::tests::workload_disk_recovers_pre_manifest_interruption_and_refuses_missing_capability ... ok
+test utility_vm_driver::hvf_directory::tests::workload_disk_rejects_corruption_source_alias_and_stale_generation ... ok
+test utility_vm_driver::hvf_directory::tests::workload_disk_is_private_bound_and_separate_for_two_executions ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 430 filtered out; finished in 0.88s
+

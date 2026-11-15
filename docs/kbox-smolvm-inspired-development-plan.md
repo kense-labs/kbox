@@ -1,6 +1,6 @@
 # Kbox Box 优化与 Agent Runtime 完整开发计划
 
-> 历史计划。Harness 交付、共享能力底座及装配路线以 [KRun 架构规划](architecture/krun.md) 为准；本文旧范围与工期不直接沿用。
+> 历史方案，已停止作为实施依据。当前执行资源与调用方的职责见 [本地引擎边界](architecture/local-engine.md)。应用装配由调用方负责。
 
 **版本**：v2.0
 

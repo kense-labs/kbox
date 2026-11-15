@@ -1,0 +1,16 @@
+{
+  "command": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-installed"
+  ],
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "filesVerified": 11,
+  "originalSourceInputsSha256": "4f9dbe71f19a9d018e40b0a58e5a62e2dd2cde5d07c9698f7e710c9a8f2a648b",
+  "compressedBytes": 33421132,
+  "installedDiskBytes": 114950144
+}

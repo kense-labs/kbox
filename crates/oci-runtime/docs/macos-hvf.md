@@ -13,6 +13,13 @@ macOS feature discovery reports the `libkhvf` driver. The feature probe:
 Intel macOS is reported as unsupported by Kbox driver policy instead of being
 silently treated as an unavailable Apple Silicon host.
 
+The OCI and Box VM workers share the host read-only export boundary in
+`koci-kbox::MacosReadOnlyMounts`. It pins sources, checks physical path aliases,
+refuses overlapping writable grants and pre-opened writable source descriptors,
+and denies host writes even after a privileged guest remount. OCI keeps its
+stricter deny-default worker policy. See the [current boundary evidence](../../../docs/evidence/runtime/20261114-macos-readonly/OUTCOME.md)
+for unsupported input trees and the exact native scope; this does not promote readiness.
+
 The launch-ready public driver and Host Service advertise only
 `DedicatedVm`: one exact container generation owns one utility VM. The probe
 does not advertise `SharedGuestKernel`. The shared HVF/KVM core now implements
@@ -1263,3 +1270,198 @@ the public product path is 100% function-complete and remains `experimental`.
 This is not a `supported` release claim. Signed release-package qualification,
 upstream OCI conformance, adversarial security review, upgrade and rollback
 compatibility, and broader long-duration testing remain promotion gates.
+
+## Box opt-in composition in this workspace
+
+Box now has an explicit macOS arm64 composition using the public SDK and this
+independent Host Service. It retains persisted OciSdk/BoxVm routing rather than
+changing the default backend. Its bounded storage/resource profile, stopped-only
+owner-death semantics and admission limits are documented in
+[Box Runtime](../../box/runtime/README.md#explicit-macos-oci-host-service).
+The [integration outcome](../../../docs/evidence/runtime/20261114-oci-host-service/OUTCOME.md)
+records fixed asset identities, actual native counts and failures. W4, fresh-host
+promotion and other-platform qualification remain open.
+
+Keyed Exec fingerprints now normalize capability-set order using the SDK's
+existing process serializer. New operation journals use `koci.operation.v7`;
+v1–v6 retain their original fingerprint algorithms and remain readable. Ordered
+argv/environment and exact bundle configuration digests are unchanged. Old
+nonempty-capability Exec receipts still use their original order-sensitive
+fingerprint; they are not silently rewritten or accepted with weaker identity.
+
+## Guest-native workload rootfs (explicit Box profile)
+
+`dev.kbox.rootfs-image` v1 declares an initial ext4 byte length, SHA256 and OCI
+manifest digest in the immutable OCI configuration. It is automatically a
+required SDK attachment extension; older Hosts fail capability admission.
+Agent attachment manifest v5 binds that descriptor to the exact target,
+generation, configuration and a private writable disk inode. The shim verifies
+content and inode again before VM entry, retains a writable no-follow FD and
+adds a separate virtio-blk device. The guest matches serial, capacity and access
+mode before mounting ext4 at the dedicated OCI root. Boot system image/Agent
+assets retain their own immutable identity and are not workload bootstrap files.
+
+The transferred operation disk is a sibling of the exact-generation share,
+outside virtio-fs exports and caller grants. The sandbox authorizes only its
+file data, with no parent-directory write grant. Generation-owned cleanup uses
+the existing handoff owner, bounded manifest reader and identity-bound removal.
+The v5 directory profile requires an authorized directory grant (Box supplies its
+workspace); raw caller storage/network or reusable guest sessions are refused by
+that older manifest. The explicit combined raw-disk v7 contract is described below.
+Each operation assembles a fresh disk from verified immutable OCI blobs; no
+writable artifact is shared as a cache. Restart creates a fresh workload root
+and advances generation. Old directory transport keeps its UID admission gate.
+
+See [spec008](../../../specs/008-oci-rootfs/spec.md) and
+[acceptance evidence](../../../docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md).
+This adds no live-session continuity, default cutover, fresh-host, cross-platform
+or release-readiness claim. Windows ARM64 remains dependency-unsupported and
+has no native runtime evidence here.
+
+## Exact ordinary caller files (explicit Box profile)
+
+Required `dev.kbox.file-grants` v1 / Agent manifest v6 binds ordinary file grants
+to source device/inode, storage identity, immutable configuration and generation.
+Private same-filesystem hardlink projections are exported uncached; startup
+copies cannot substitute for live bytes. Host Seatbelt pins RO or data-only RW
+access without caller-parent content access. Unsafe aliases, overlaps, inherited
+writable descriptors and cross-filesystem sources refuse before VM activation.
+Restart revalidates the original source; cleanup removes only bound projections.
+
+[Spec009 acceptance](../../../docs/evidence/runtime/20261114-oci-files/OUTCOME.md)
+records actual installed Box6/OCI7 matrices, Host EPERM/EACCES with Guest
+read-only flags cleared, live updates, source replacement, failed-create
+reconciliation and final owned cleanup. Its native dependency changes remain
+uncommitted in the owning linked worktree with exact source/patch/binary
+provenance; the parent gitlinks are unchanged. This does not qualify caller-file
+metadata rollback, arbitrary allocations, live continuity, fresh-host or release
+promotion. The default and Windows ARM64 limitations remain unchanged.
+
+
+## Raw ext4 storage with workload roots and files
+
+Required `dev.kbox.raw-storage-images` v1 with the exact `raw-ext4-v1` token
+selects Agent attachment manifest v7. This explicitly combines existing storage
+v2 raw ext4 entries with optional rootfs-image v1, directory and ordinary-file
+grants. It does not change v1–v6 meanings or grant a mount by annotation alone.
+The public caller still supplies each exact Caller/DetachOnly storage identity.
+This is transport, not a Runtime volume allocator; Box owns image VOLUME seeds,
+allocation identity, references, retention and deletion.
+
+The Host reuses the existing raw-image verifier. The Mac shim retains no-follow
+private single-link RO/RW FDs, verifies inode/size/content at VM entry, takes an
+exclusive writer or shared reader OS lock, and attaches native virtio-blk with
+matching access. Seatbelt authorizes only the exact file/descriptor, without
+parent contents, rename or deletion. Source aliases, overlaps, inherited writable
+RO descriptors, duplicate objects/serials and unsupported capacities refuse.
+RO descriptor scanning occurs before confinement; entry rechecks use pinned
+identities without requesting forbidden descriptor-directory enumeration.
+
+Guest serial/size/access verification and ext4 mounting reuse the existing block
+transport. Native Guest remount/fresh-device/child attacks and Host syscall
+proof are separate evidence: Guest EROFS/EPERM and hardware RO flags alone do not
+prove Host enforcement. The exact observed VM FDs and native Host EPERM/EBADF
+mutations are retained in [spec012 evidence](../../../docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md).
+This remains an explicit existing-host profile; default BoxVm, stopped recovery,
+unsupported Windows ARM64 and all fresh-host/conformance/readiness gates remain.
+
+Box read_only intent now uses required `dev.kbox.rootfs-image` v2 for the
+read-only Guest root view. v1 retains its exact writable-root contract and bytes;
+public attachment version,descriptor and OCI root access must agree. The Host
+advertises1+2 and old Hosts refuse2 before preparation. Existing Agent manifest
+versions retain their versioned rootfs-image field; updated Host/Agent/system
+image must stay together. Physical root disk access remains writable for boot.
+[Installed spec016 evidence](../../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md)
+records actual init/exec/stream/PTY/File/FS EROFS,positive writable controls,inner
+mount data and generation recovery. This does not qualify rollback of v2 records
+to v1-only binaries,revoke Guest SYS_ADMIN,or promote any platform/default route.
+
+The explicit Box profile qualifies bounded already-authorized RAM Secret files
+using required `dev.kbox.memory-secret-files` v1 and Agent manifest v8. Existing
+ordinary file v1 / manifest v6 and older versions retain their meaning. The
+actual source and projection must be on RAM; APFS volume identity must resolve
+only to hdiutil ram:// physical stores. Host capability is absent on a physical
+runtime root, and the Shim rechecks backing before Seatbelt plus pinned identity
+after it. No source-mode/owner translation or copy-to-disk fallback is allowed.
+[Spec018 final installed evidence](../../../docs/evidence/runtime/20261115-oci-secrets/OUTCOME.md)
+records actual Host refusals, old Host/Shim/Agent controls and exact RAM cleanup.
+Secret environment delivery and raw storage combinations remain refused; this
+does not close W4, default cutover or any fresh-host/platform promotion gate.
+
+Required memory-secret-filesv2 / Agent manifestv9 additionally qualifies the
+existing Box environment binding manifest. SDK exact-index validation and the
+Host RAM boundary remain required. The Agent pins sources before entering
+workload namespaces and consumes bytes only after Start, with CLOEXEC handles
+and no plaintext process plans. Visible path replacement and malformed/retarget
+requests cannot change the source; oldv1-only Hosts andv8 shims/Agents refuse.
+Files-onlyv1/v8 retains its contract. [Spec019 installed evidence](../../../docs/evidence/runtime/20261115-oci-secret-environment/OUTCOME.md)
+includes true process paths, actual Guest tests, compatibility and cleanup.
+Raw storage combinations, full W4/default cutover/platform promotion stay open.
+
+Spec020 qualifies Box CPU-time intent on the explicit Mac OCI route through the
+existing process.rlimits executor. Zero refuses; omission/default bytes and
+other limits stay intact. Actual SIGXCPU/SIGKILL, measured CPU usage, idle and
+unlimited controls, init/exec/child/stream/realPTY, CLI/replay/three generations
+and owned cleanup pass the final installed archives. [Final evidence:8 outer
+Rust native,8 Guest units,3 Python scenarios and20-home cleanup](../../../docs/evidence/runtime/20261115-oci-cpu-time/OUTCOME.md).
+CPU-time is per-process, separate from wall deadlines and aggregate cgroups.
+Full W4/default cutover/live continuity/platform promotion stay open; Windows
+ARM64 dependencies remain unsupported without a native run. Next local work:
+data/stack/memlock process limits, qualified by spec021 below.
+
+Spec021 qualifies standard data/stack/memlock byte limits through the existing
+Mac OCI executor. Actual malloc/mmap/mlock ENOMEM, stack SIGSEGV on alternate
+stack, unlock/reuse, hard-raise EPERM, unlimited controls, all process paths/CLI,
+replay and stopped recovery pass the final installed archives. [Evidence:5 Rust
+native tests +3 Python scenarios and10-home cleanup](../../../docs/evidence/runtime/20261115-oci-memory-limits/OUTCOME.md).
+No VM/cgroup/RSS or privileged-bypass claim; full W4/default cutover/platform
+gates remain open. Next local item is nonroot nproc, with explicit root and
+privileged refusal rather than an ineffective root quota.
+
+
+Spec027 qualifies managed RAM Secret files/environment with raw anonymous volumes
+through required memory-secret-filesv3 / Agent transportv11, including the existing
+NPROC v10 envelope. Old versions retain meaning and refuse incompatible intent;
+old Host/shim/Agent and disk projections actually refuse. A real cross-volume
+sparse rootfs publication bug is fixed by reusing the existing extent copier.
+[Final installed evidence:12 Rust native +21 top-level Guest units (plus2 isolated
+child test runs) +3 Python scenarios and17-home/8-owned-RAM cleanup](../../../docs/evidence/runtime/20261115-oci-raw-secrets/OUTCOME.md).
+Box2 f9f48ab5…:23,393,755compressed/44,171,264installed bytes; OCI1 30eb5e29…:
+33,424,560/114,954,240. Verify2261/43ignored,CLI935,installer8. Full OCI Host
+Service/default cutover/live continuity/platform gates remain open; Windows
+ARM64 dependencies unsupported/no native run, support levels unchanged and RSS
+unmeasured. Continue the existing W4 custom writable-root disk-capacity gap.
+
+
+Spec028 qualifies existing disk_mb on the explicit macOS OciSdk route using the
+existing16MiB..64GiB ext4/rootfs-image/raw-storage contracts. Actual128MiB root+
+anonymous ENOSPC/reuse, independent256MiB CLI controls,8GiB sparse disk, too-small
+image refusal, replay/fences/normal+stopped three generations pass. Root remains
+per-generation ephemeral; anonymous data persists. [Final installed evidence:
+6 Rust native +3 Python scenarios,13-home/107-socket cleanup](../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md).
+Box4 39e6b5b3…:23,393,934compressed/44,171,264installed bytes; OCI30eb5e29…
+unchanged/freshly extracted with honestc07659de… source. Verify2264/44ignored,
+CLI935,installer8. Full W4/default Host Service cutover/live continuity/platform
+gates remain open; Windows ARM64 dependencies unsupported/no native run, support
+levels unchanged and RSS unmeasured. Continue the existing Mac cap_add allowlist gap.
+
+Spec029 qualifies the existing Mac portable cap_add allowlist with explicit
+nonroot inherited/ambient values shared by init and exec. Default10, root empty
+ambient, drop ALL, unknown-cap refusal, per-UID budgets and Host PEP remain.
+Actual MKNOD/SETFCAP effects, SYS_ADMIN mount/drop controls,45 observations,
+CLI/realPTY,three generations and Host RO pass the final installed Box3/unchanged
+OCI assets. Final3Rust native+3Python scenarios pass; verify Runtime2269/45ignored,
+CLI935,installer8. Audit18 homes/235 absent sockets/21 pre-grant source identities
+and zero owned resources passes. [Final assets, failures and evidence](../../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md).
+Full W4/default Host Service cutover/live continuity/platform gates stay open;
+Windows ARM64 dependencies remain unsupported/no native run and RSS unmeasured.
+Continue the existing W4 policy.shm_size gap; platform support levels stay fixed.
+
+Spec030 qualifies existing shm_size and size-only /dev/shm on Mac: page-aligned
+4KiB..512MiB,1777/rw/nosuid/nodev/noexec,exact POSIX mapping/lifetime,1/2MiB
+ENOSPC/reuse,noexec/sticky controls,CLI,three generations and7-home cleanup.
+Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
+[Pre-merge assets and evidence](../../../docs/evidence/runtime/20261115-oci-shm-size/OUTCOME.md). Full W4/default Host Service
+cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
+unsupported/no native run and RSS unmeasured. The user requests convergence and
+integration now; subsequent merged-source validation is recorded separately.

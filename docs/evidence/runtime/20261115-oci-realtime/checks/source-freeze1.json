@@ -1,0 +1,11 @@
+{
+  "sha256": "98f47a3faafc788fc0494115b36298cbff5d112e8bca55be46d6ff0333f41a9d",
+  "files": 1701,
+  "changed": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_realtime.rs",
+    "crates/box/runtime/src/local_execution/oci_production_ulimit_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_rlimits.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/run-memory-native.py",
+    "docs/evidence/runtime/20261115-oci-nproc/memory-env-context-final3.json",
+    "3",
+    "positive"
+  ],
+  "exit": 0,
+  "seconds": 240.549719166
+}

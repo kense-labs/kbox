@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "8f562b1b69caeee726b22c068a8b3909cd515fa30c31b4e0759aa34408055f55",
+  "sourceInputFiles": 1669,
+  "binaryExecutionId": "9344e63e-aed3-47a2-a99f-28dd16bcadaa",
+  "binaryActualGenerations": [
+    1,
+    2
+  ],
+  "binaryWorkers": 2,
+  "binaryGuestInitSha256": "302300eaeeeca31577a90806c131fa19f3d1530f7682f7f7524b0fa524675cb1",
+  "finalUnitParents": 4,
+  "unitChildInvocations": 4,
+  "explicitUnitTests": 4,
+  "afScenarios": 5,
+  "sourceUnchanged": true,
+  "nativeTreesClean": true,
+  "indexEmpty": true,
+  "artifactScriptHashes": {
+    "build-box-final2.py": "7751b328ea0051ae0e96e49a8343c1a422f50bcafd242de428f7d729c66bbad8",
+    "check-final-identities2.py": "7c1634917dbe7f235e11a492b9f20bb62717f838c68a6268a77393a9a17aa485",
+    "run-check.py": "15ebef7ba1908cbf17b5dd3b7a61403ac29b45d6e037f644f95a7699308c48af",
+    "source_snapshot.py": "8a64178eaf825ce4541bd53fdfb00f4d45662d50acc508844be469e7782ec93a",
+    "run-rootro.py": "9e541eb412a43b16dae7a7e78af6ce36a44b3527b0a2e2478be2debce1da6032",
+    "final-receipt-review2.py": "a0123565c8b8b7a64ea0fec81724dc07195ae32280ba708b59cef107ad67a9c1",
+    "build-box-final2-attempt1.py": "3e9de398c14d1a1b016cb400394a9ee36efa2e76fee27cff09d5d6964432cdc4",
+    "qualification-runner.py": "7a2a83a8100da20721515c6333147ce60be833591e284c08cc3dc350146126f8",
+    "run-guest.py": "27e2670f0f2a2d5fd52d7f5415b97dac6e68416b0de0164305dd538d8e539c14",
+    "final-resource-audit.py": "eb862c3015639c4bed3a971962d2b186cea2e95ba84e3fd4dbc96633b1414e05",
+    "run-binary.py": "e20135d572730aad690f67142df68d2a9c4052e416e06b00e033c0156954f86e",
+    "build-box-final1.py": "712b2319bf26716c952339a27d402b8cc3fc0cc29a36985f80b9722b83d10b8d",
+    "check-final-identities1.py": "ae7dae43ba692163a9480870b727ec6741440b9167270324cca184284f1a3967",
+    "build-box-final2-resume1.py": "9d7e331282cc4b75109b0339299f7db64b787f6502bea6a161bb1e3051e3fdbb"
+  },
+  "runtimeRSS": "not measured"
+}

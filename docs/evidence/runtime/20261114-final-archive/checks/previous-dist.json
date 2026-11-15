@@ -1,0 +1,76 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/previous-dist",
+  "files": {
+    "kbox-3.4.3-macos-arm64.tar.gz.sha256": {
+      "sha256": "1f39bbde35bc04f47896683d7f7797c9872ad499034186e79fb64552c3d84511",
+      "bytes": 96,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64.tar.gz": {
+      "sha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+      "bytes": 22475371,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/build-info.json": {
+      "sha256": "9b6dd17d6fbb343a0aa698f70ed6fbf72c45061fb7a63ffd6d78dfe4e40025a5",
+      "bytes": 554,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/install.sh": {
+      "sha256": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+      "bytes": 4510,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/VERSION": {
+      "sha256": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+      "bytes": 6,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/SHA256SUMS": {
+      "sha256": "fc6274a0960cc58db990baaec79b5f1489e328ac0113a06a4cce63633d1aaa45",
+      "bytes": 909,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/bin/kbox": {
+      "sha256": "f6bcb2a2375add4c2cda7e40bc4d934c41512a5930b2427fbeaf3980003cd6ee",
+      "bytes": 8592720,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/bin/kbox-guest-init": {
+      "sha256": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a",
+      "bytes": 3171224,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/bin/kbox-shim": {
+      "sha256": "60978aa73abc2ed4c971bb6a64e9eabdb903f9c5798bdceece8f7e93e77d01b3",
+      "bytes": 3351456,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/lib/libkrun.dylib": {
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "bytes": 4529632,
+      "symlink": "libkrun.1.17.0.dylib"
+    },
+    "kbox-3.4.3-macos-arm64/lib/libkrun.1.dylib": {
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "bytes": 4529632,
+      "symlink": "libkrun.1.17.0.dylib"
+    },
+    "kbox-3.4.3-macos-arm64/lib/libkrun.1.17.0.dylib": {
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "bytes": 4529632,
+      "symlink": null
+    },
+    "kbox-3.4.3-macos-arm64/lib/libkrunfw.dylib": {
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "bytes": 22836688,
+      "symlink": "libkrunfw.5.dylib"
+    },
+    "kbox-3.4.3-macos-arm64/lib/libkrunfw.5.dylib": {
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "bytes": 22836688,
+      "symlink": null
+    }
+  },
+  "checksumVerified": true
+}

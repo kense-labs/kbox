@@ -45,6 +45,11 @@ impl LinuxExecutor {
         // state.  Retries either observe the pending claim during handoff or
         // serialize behind the owner guard, then replay the exact recorded
         // result once the owner task finishes.
+        let secret_sources = self
+            .vm_attachments
+            .as_ref()
+            .map(crate::UtilityVmAttachmentBinding::memory_secret_environment_sources)
+            .unwrap_or_default();
         if let Some(mut state) = owner {
             match self.init_executable.duplicate_command_path() {
                 Ok((init_executable, pinned_executable)) => {
@@ -54,6 +59,7 @@ impl LinuxExecutor {
                             &mut state,
                             &request,
                             session_supervisor,
+                            secret_sources,
                         )
                         .await;
                         if let Err(error) =
@@ -136,6 +142,7 @@ impl LinuxExecutor {
         state: &mut ExecutorState,
         request: &AgentExecRequest,
         session_supervisor: Option<SharedSessionSupervisor>,
+        secret_sources: Vec<crate::vm_attachment::MemorySecretEnvironmentSource>,
     ) -> Result<AgentProcess> {
         validate_deadline(&request.context)?;
         if request.target.process_id.is_init() {
@@ -181,6 +188,7 @@ impl LinuxExecutor {
 
         let process_io = request.io.resolve_for_process(&request.process)?;
         let mut plan = ProcessPlan::from_exec_process(&request.process, &process_io)?;
+        plan.memory_secret_environment = secret_sources;
         let seccomp = state
             .containers
             .get(&key)
@@ -203,6 +211,11 @@ impl LinuxExecutor {
             .process
             .execution_context()
             .validate_process_ids(plan.uid, plan.gid, &plan.additional_gids)?;
+        // Reject literal collisions and retargeting before private process metadata is written.
+        let _ = super::secret_env::requested_sources(
+            &plan.environment,
+            &plan.memory_secret_environment,
+        )?;
         let slot = state.next_slot.checked_add(1).ok_or_else(|| {
             executor_error(
                 ErrorCode::ResourceExhausted,

@@ -1,0 +1,14 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/final-dist-realtime-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "fb44d46e0fdd8f70d56c88a46cfdb6bc005778eadf7ce109dc968fb9119e6bc4",
+    "bytes": 23392959,
+    "companion": "fb44d46e0fdd8f70d56c88a46cfdb6bc005778eadf7ce109dc968fb9119e6bc4  kbox-3.4.3-macos-arm64.tar.gz\n"
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+    "bytes": 33421132,
+    "companion": null
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "ownedFromLogs": [
+    "/dev/disk12",
+    "/dev/disk13"
+  ],
+  "results": [
+    {
+      "command": [
+        "/sbin/umount",
+        "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpOYC3ZW/secrets"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "hdiutil",
+        "detach",
+        "-force",
+        "/dev/disk12"
+      ],
+      "exitCode": 0,
+      "stdout": "\"disk12\" ejected.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/sbin/umount",
+        "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpp7W5Sq/secrets"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "hdiutil",
+        "detach",
+        "-force",
+        "/dev/disk13"
+      ],
+      "exitCode": 0,
+      "stdout": "\"disk13\" ejected.\n",
+      "stderr": ""
+    }
+  ]
+}

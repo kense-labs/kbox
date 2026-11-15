@@ -1,0 +1,19 @@
+{
+  "command": [
+    "zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-pthread",
+    "-o",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe.c"
+  ],
+  "exit": 0,
+  "seconds": 0.384916708
+}

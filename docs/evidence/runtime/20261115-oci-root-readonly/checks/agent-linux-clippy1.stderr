@@ -1,0 +1,40 @@
+    Checking num-bigint v0.4.8
+    Checking ref-cast v1.0.25
+    Checking derive_builder v0.20.2
+    Checking strum v0.28.0
+    Checking zeroize v1.8.2
+    Checking syscalls v0.8.1
+    Checking nix v0.29.0
+    Checking seccompiler v0.5.0
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking fluent-uri v0.4.1
+    Checking referencing v0.48.5
+    Checking num-rational v0.4.2
+    Checking num v0.4.3
+    Checking fraction v0.15.4
+    Checking jsonschema-value v0.48.5
+    Checking jsonschema v0.48.5
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+warning: use of deprecated associated function `tokio::io::unix::AsyncFd::<T>::new`: unsound due to lack of I/O safety; use `AsyncFd::register` instead (see https://github.com/tokio-rs/tokio/pull/8587)
+  --> crates/oci-runtime/crates/agent/src/executor/terminal.rs:70:35
+   |
+70 |         let descriptor = AsyncFd::new(self.master).map_err(|error| {
+   |                                   ^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: the borrowed expression implements the required traits
+  --> crates/oci-runtime/crates/agent/src/vm_attachment/directory.rs:38:15
+   |
+38 |         .open(&destination)
+   |               ^^^^^^^^^^^^ help: change this to: `destination`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#needless_borrows_for_generic_args
+   = note: `#[warn(clippy::needless_borrows_for_generic_args)]` on by default
+
+warning: `koci-agent` (lib) generated 2 warnings (1 duplicate)
+warning: `koci-agent` (lib) generated 2 warnings (1 duplicate) (run `cargo clippy --fix --lib -p koci-agent -- --no-deps` to apply 1 suggestion)
+warning: `koci-agent` (lib test) generated 2 warnings (2 duplicates)
+    Finished `release-dist` profile [optimized] target(s) in 10.09s

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/opt/homebrew/opt/llvm/bin/llvm-objdump",
+    "--disassemble",
+    "--no-show-raw-insn",
+    "--disassemble-symbols=main",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.130955042
+}

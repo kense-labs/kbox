@@ -1,0 +1,9 @@
+{
+  "prior": "24a5092bcdc88f0ae4156a349ab61cc5be7a39dca135cd5d562d5174ff9f8e03",
+  "current": "8f562b1b69caeee726b22c068a8b3909cd515fa30c31b4e0759aa34408055f55",
+  "changed": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_path_guards_binary.rs"
+  ],
+  "guestAndProductionInputsUnchanged": true,
+  "reason": "Native caller fixture uses trusted Guest ExecClient; managed security filter unchanged"
+}

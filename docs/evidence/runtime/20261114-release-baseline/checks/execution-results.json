@@ -1,0 +1,20 @@
+[
+  {
+    "name": "verification-entry",
+    "command": [
+      "bash",
+      "scripts/verify-commit.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 288.13
+  },
+  {
+    "name": "release-package",
+    "command": [
+      "bash",
+      "scripts/package-macos-arm64.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 67.18
+  }
+]

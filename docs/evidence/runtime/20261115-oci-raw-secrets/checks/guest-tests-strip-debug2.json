@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "objcopy",
+    "--strip-debug",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-frozen1",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/guest-agent-tests-stripped2"
+  ],
+  "exit": 1,
+  "seconds": 0.04403725
+}

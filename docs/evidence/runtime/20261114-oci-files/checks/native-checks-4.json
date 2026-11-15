@@ -1,0 +1,64 @@
+[
+  {
+    "label": "native-mmio-notify-after",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "devices",
+      "--lib",
+      "every_queue_notification"
+    ],
+    "exitCode": 0,
+    "seconds": 0.870874875
+  },
+  {
+    "label": "native-eventfd-full-3",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "devices",
+      "-p",
+      "utils",
+      "--lib"
+    ],
+    "exitCode": 0,
+    "seconds": 0.5331610419999999
+  },
+  {
+    "label": "native-cache-clippy-3",
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "libkrun",
+      "-p",
+      "devices",
+      "-p",
+      "utils",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "exitCode": 0,
+    "seconds": 1.0263344170000002
+  },
+  {
+    "label": "native-cache-release-4",
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--release",
+      "-p",
+      "libkrun",
+      "--features",
+      "blk,net"
+    ],
+    "exitCode": 0,
+    "seconds": 18.905436375
+  }
+]

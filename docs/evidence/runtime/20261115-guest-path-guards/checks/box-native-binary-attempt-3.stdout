@@ -1,0 +1,11 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::path_guards::binary::native_installed_guest_path_guards_refuse_and_enforce_exec_and_pty ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_hvf::tests::native::path_guards::binary::native_installed_guest_path_guards_refuse_and_enforce_exec_and_pty
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2248 filtered out; finished in 1.58s
+

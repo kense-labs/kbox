@@ -1,0 +1,14 @@
+{
+  "sourceInputsSha256": "3725be7869d05e893c3d3d95cb96121653037e64dc33f3059adf26ca8e0d52fa",
+  "changedInputs": [
+    "crates/box/cli/src/commands/exec.rs",
+    "crates/box/cli/src/commands/exec_session_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_sigpending.rs",
+    "crates/box/runtime/src/local_execution/oci_production_ulimit_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_rlimits.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs"
+  ],
+  "ociSourceInputsUnchanged": true,
+  "ociOriginalSourceInputsSha256": "4f9dbe71f19a9d018e40b0a58e5a62e2dd2cde5d07c9698f7e710c9a8f2a648b"
+}

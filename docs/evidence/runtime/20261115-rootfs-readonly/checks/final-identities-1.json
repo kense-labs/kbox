@@ -1,0 +1,422 @@
+{
+  "sourceInputsSha256": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "files": {
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox": {
+      "bytes": 10158496,
+      "sha256": "b51a149cdf5d46cc4d0ee0f8dc2b59a0a47985a7bf3799575892cbf09de74b41"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim": {
+      "bytes": 3385088,
+      "sha256": "ed56e77237c52021547bc6489ecf497e1792a8f66eb5e1a5600e8e8b2f79127c"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-guest-init": {
+      "bytes": 3169704,
+      "sha256": "a852930e651da8a380d77bb5860f2deb3048e835610bd14cbae323cfb6ab003a"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib": {
+      "bytes": 4529632,
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib": {
+      "bytes": 22836688,
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci": {
+      "bytes": 6081888,
+      "sha256": "658d5f17cf30f31f2df3f308e151d4bdc287c5895dc9bef0e1a1cad376590b07"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim": {
+      "bytes": 2935472,
+      "sha256": "9a83e3ebf700989bf6859d02f4d6ff98fefeb6bc9494852a6dd87959bb69153b"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent": {
+      "bytes": 5028584,
+      "sha256": "a2784157a7599caa2cac819c8e07772da840046439bc85e02596de0ec3af0ae7"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib": {
+      "bytes": 5496272,
+      "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib": {
+      "bytes": 22952096,
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4": {
+      "bytes": 67108864,
+      "sha256": "4438d090417c90841582f1e4d3f7b5a54a38b9dcbf8bf2c867010fb707dbdd86"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json": {
+      "bytes": 1759,
+      "sha256": "55f2a17648acd0fc39b515850ae80ab00a72929ed7209d0cd8f92364ccab3cbd"
+    }
+  },
+  "embeddedAgentMatchesStandalone": true,
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox\nIdentifier=kbox-742598ce93c05cf0\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=78872 flags=0x20002(adhoc,linker-signed) hashes=2461+0 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=ad298122d8898faada2c89bd5e12e5b759f55a3e\nCandidateCDHashFull sha256=ad298122d8898faada2c89bd5e12e5b759f55a3e00c53728eadf25f2e2fd8dac\nHash choices=sha256\nCMSDigest=ad298122d8898faada2c89bd5e12e5b759f55a3e00c53728eadf25f2e2fd8dac\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=9404416\nExecutable Segment flags=0x1\nPage size=4096\nCDHash=ad298122d8898faada2c89bd5e12e5b759f55a3e\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox:\n\t/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61901.120.67)\n\t/usr/lib/liblzma.5.dylib (compatibility version 6.0.0, current version 6.3.0)\n\t/usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.8)\n\t/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim\nIdentifier=kbox-shim-55554944c2c7cf70e8653e7c984c5b1eea45740a\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6955 flags=0x2(adhoc) hashes=206+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=9a2afc8c4abbfd752faa224db5c28cae8eaeb3c2\nCandidateCDHashFull sha256=9a2afc8c4abbfd752faa224db5c28cae8eaeb3c2fad76a1d5d3621c9fb989caa\nHash choices=sha256\nCMSDigest=9a2afc8c4abbfd752faa224db5c28cae8eaeb3c2fad76a1d5d3621c9fb989caa\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=3047424\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=9a2afc8c4abbfd752faa224db5c28cae8eaeb3c2\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-shim:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci\nIdentifier=koci-555549442f31adfdb57b3a23816c2bb66a40f642\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=12198 flags=0x2(adhoc) hashes=370+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=37d745dbbcabad9a144cec8336911e03b14f80c2\nCandidateCDHashFull sha256=37d745dbbcabad9a144cec8336911e03b14f80c24f9dc39ec4763c7e7b4895d5\nHash choices=sha256\nCMSDigest=37d745dbbcabad9a144cec8336911e03b14f80c24f9dc39ec4763c7e7b4895d5\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=5685248\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=37d745dbbcabad9a144cec8336911e03b14f80c2\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim\nIdentifier=koci-kshim-555549442cebb254dd1a3ac192a937c06d74e804\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6060 flags=0x2(adhoc) hashes=178+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=d1c4a942a93a26ab14d017a175b419fcc9ef0bff\nCandidateCDHashFull sha256=d1c4a942a93a26ab14d017a175b419fcc9ef0bff89d5074acd5a6fcc27af1248\nHash choices=sha256\nCMSDigest=d1c4a942a93a26ab14d017a175b419fcc9ef0bff89d5074acd5a6fcc27af1248\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=2654208\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=d1c4a942a93a26ab14d017a175b419fcc9ef0bff\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim:\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-guest-init"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/bin/kbox-guest-init: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.17.0.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.1.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrun.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.5.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1/lib/libkrunfw.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib:\n\tlibkrun.1.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib:\n\tlibkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1345.120.2)\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+        "-R",
+        "dump /usr/bin/koci-agent /Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/final-system-agent-1",
+        "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4"
+      ],
+      "exitCode": 0,
+      "output": "debugfs 1.47.4 (6-Mar-2025)\n"
+    }
+  ],
+  "runtimeMemory": "not measured"
+}

@@ -4,7 +4,7 @@ use super::*;
 use async_trait::async_trait;
 use kbox_core::vmm::{InstanceSpec, OwnedCleanupBudget, OwnedCloseBudget, VmExitEvidenceKind};
 use kbox_core::{
-    CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode, OperationId,
+    CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode, OperationId,
 };
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Mutex as StdMutex;
@@ -499,10 +499,7 @@ async fn finalization_failure_keeps_exact_provider_paths_and_direct_managers_unq
         proof.pid()
     );
     {
-        let mut direct = VmManager::new(
-            BoxConfig::default(),
-            EventEmitter::new(8),
-        );
+        let mut direct = VmManager::new(BoxConfig::default(), EventEmitter::new(8));
         assert!(direct.original_scope.is_none());
         assert!(direct.pending_handler.is_none());
         assert!(direct

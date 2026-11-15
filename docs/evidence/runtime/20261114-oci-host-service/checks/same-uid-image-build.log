@@ -1,0 +1,6 @@
+Building from /Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/same-uid-image/Containerfile
+Step 1/4: FROM scratch
+Step 2/4: ADD rootfs.tar.gz /
+Step 3/4: ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+Step 4/4: CMD ["/bin/sleep", "2147483647"]
+Successfully built kbox-hvf-same-uid:qualification (1 layers, 3.8 MB, linux/arm64)

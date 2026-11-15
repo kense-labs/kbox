@@ -1,0 +1,19 @@
+{
+  "sourceInputsSha256": "cc9e1c37a0012ce51169262970c27f90d110ef47648fea8a373952fbcd32d4d0",
+  "changedInputs": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native_nproc.rs"
+  ],
+  "productionInputsUnchanged": true,
+  "ociOriginalSourceInputsSha256": "4f9dbe71f19a9d018e40b0a58e5a62e2dd2cde5d07c9698f7e710c9a8f2a648b",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "archiveSha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-installed/koci-hvf-0.3.6-macos-arm64",
+  "filesVerified": 11,
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "-C",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-installed"
+  ]
+}

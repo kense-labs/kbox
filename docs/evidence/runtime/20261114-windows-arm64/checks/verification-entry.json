@@ -1,0 +1,10 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "startedUtc": "2026-11-14T03:04:44.807261+00:00",
+  "exitCode": 0,
+  "seconds": 273.7110125,
+  "log": "docs/evidence/runtime/20261114-windows-arm64/checks/verification-entry.log"
+}

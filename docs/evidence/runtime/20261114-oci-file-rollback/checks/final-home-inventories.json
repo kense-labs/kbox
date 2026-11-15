@@ -1,0 +1,642 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-directory/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-oci/150a4bc3103b45038a5eabffa4c4cbcc/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-prewarm/0a94dafaf36c4afd86362bf13b8d3d8e/k-home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-primary/d4f9edc558b949e4a7227a7a4064b64f/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-readonly/e34c21262e654928b0dcace50f54a20c/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final2/native-directory/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final2/native-oci/8909ab76df62461a82ee45c0049b37e0/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final2/native-prewarm/c776093e781746e6a515eab32f1d9760/k-home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final2/native-primary/877335a770604da08a1342bb5595cf07/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final2/native-readonly/6f1262c3ba854ff88b2cea0298c53041/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/package-home-rollback-final1",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/package-home-rollback-final2",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-1/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-3/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-4/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-5/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-6/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-7/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-8/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  }
+]

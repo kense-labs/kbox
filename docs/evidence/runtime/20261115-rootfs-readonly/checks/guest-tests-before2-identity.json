@@ -1,0 +1,5 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/target/aarch64-unknown-linux-musl/release-dist/deps/kbox_guest_init-a848bee291637ce1",
+  "frozen": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-tests-before2",
+  "sha256": "fc3e199c09eaedbe7c6b638ca8c808cf09cfc7546e29c03ee0144d87462d4b2a"
+}

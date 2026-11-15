@@ -1,0 +1,16 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final/native-oci/e63cdc4bfb624741addce5be2492e49b/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final/native-prewarm/fc24a321e8174d358492fae07df6d8a5/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final/native-primary/40ddb37b5772471d90190163aab5ee08/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final/native-readonly/9b00d5d391e9418f9b2c17eaa76039f2/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final2/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final2/native-oci/bf2d8b1951bc44a3a32077657703e48c/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final2/native-prewarm/1db8e36a97af4423a0cffac1adab4372/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final2/native-primary/24065c4a787b4169a8721477b15d564d/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/archive-qualification-final2/native-readonly/f6698c5b75664a10b1f93fc2c224f7d2/home",
+  "/private/tmp/kbox-rootfs-1a469ffdee77/attempt-1/home",
+  "/private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/home",
+  "/private/tmp/kbox-rootfs-1a469ffdee77/attempt-3/home",
+  "/private/tmp/kbox-rootfs-1a469ffdee77/cli-baseline-check/home"
+]

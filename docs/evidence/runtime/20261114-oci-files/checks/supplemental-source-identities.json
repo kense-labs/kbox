@@ -1,0 +1,25 @@
+{
+  "purpose": "Inputs excluded by existing package sourceInputsSha256 algorithm, explicitly bound here and to native/source manifests",
+  "files": {
+    "crates/oci-runtime/crates/kbox/runtime/runtime-assets.json": {
+      "sha256": "8489d6544a919a991e9302c5d435b8fb3737ae357e0ebb2efb886e0e039340d4",
+      "bytes": 4039
+    },
+    "crates/oci-runtime/crates/kbox/runtime/macos-aarch64/uncached-source.json": {
+      "sha256": "66673c7c07072b48515557510034a7eb12a56f2fe3c842fcdbf9418b7d6b8cb5",
+      "bytes": 1221
+    },
+    "crates/oci-runtime/scripts/build-macos-system-image.sh": {
+      "sha256": "3d3a9cc1088a01ee6a6e972f8f2b056d74d407541607988c0776ac237dd8eb7b",
+      "bytes": 2081
+    },
+    "crates/oci-runtime/scripts/test-macos-system-image-runtime.py": {
+      "sha256": "4dd90c3bc332a0aa498e24df3e1a040028b09ab44b0220fac5a0aa733ddf3f87",
+      "bytes": 2878
+    },
+    "crates/box/runtime/tests/fixtures/hvf_file_probe.c": {
+      "sha256": "4d06848e4fca49b3952eaa0c6739de8df31152898911f04a8b64c9e923e97111",
+      "bytes": 4192
+    }
+  }
+}

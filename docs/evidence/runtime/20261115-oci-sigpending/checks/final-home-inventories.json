@@ -1,0 +1,450 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-directory/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-oci/5d611bc765404799bfb1550a97beb45e/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-prewarm/49d10097501040bebeb3e26d56a8d1a1/k-home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-primary/76b8e4d26205455f98cd2018c7174853/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-readonly/3909bb22f048438eaeee3193df75cd61/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/cpu-time-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/files-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/host-service-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/memory-limits-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/nproc-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-1/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-3/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "home": "/private/tmp/kbox-sigpending-46afe6c4c9c3/ulimits-attempt-2/home",
+    "executions": [],
+    "volumes": [],
+    "remainingExecutionDisks": [],
+    "temporaryBuilders": [],
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exitCode": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  }
+]

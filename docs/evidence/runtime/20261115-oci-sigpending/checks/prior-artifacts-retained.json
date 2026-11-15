@@ -1,0 +1,18 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/final-dist-nproc-5/kbox-3.4.3-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/previous-dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "f190440c72f88159c6c33f40050f4a5dbe556e6e369e3b85f45805e116b34c0a",
+    "checksum": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/previous-dist/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "bytes": 23392791,
+    "originalPreserved": true
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/previous-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+    "checksum": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/previous-dist/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "bytes": 33421132,
+    "originalPreserved": true
+  }
+]

@@ -206,3 +206,114 @@ fn pins_restrictions_from_the_same_configuration_as_the_directory_grant() {
     assert_eq!(attachments.path_restrictions()[0].1.deny_read(), &[".env"]);
     attachments.reverify().unwrap();
 }
+
+#[test]
+fn pins_v7_raw_inventory_and_rejects_source_replacement_before_vm_entry() {
+    use koci_agent_protocol::{AgentVmStorageAttachment, AgentVmStorageSourceIdentity};
+    let fixture = Fixture::new();
+    let share = fixture.share.path();
+    let path = fixture.root.join("raw.ext4");
+    File::create(&path)
+        .unwrap()
+        .set_len(16 * 1024 * 1024)
+        .unwrap();
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+    let old: AgentVmAttachmentManifest = serde_json::from_slice(
+        &fs::read(share.join(AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME)).unwrap(),
+    )
+    .unwrap();
+    let mut config: serde_json::Value =
+        serde_json::from_slice(&fs::read(share.join("bundle/config.json")).unwrap()).unwrap();
+    config["annotations"] =
+        json!({koci_sdk::RAW_STORAGE_IMAGES_EXTENSION:koci_sdk::RAW_STORAGE_IMAGES_VALUE});
+    config["mounts"]
+        .as_array_mut()
+        .unwrap()
+        .push(json!({"type":"ext4","source":path,"destination":"/data","options":["rw"]}));
+    let bundle = OciBundle::from_json(share.join("bundle"), config.to_string()).unwrap();
+    let mut attachments = CreateAttachments::from_bundle(&bundle, ProcessIo::default()).unwrap();
+    for (index, identity, access) in [
+        (0, "workspace", StorageAccessMode::ReadOnly),
+        (1, "raw", StorageAccessMode::ReadWrite),
+    ] {
+        attachments = attachments
+            .attach_storage_mount(
+                &bundle,
+                index,
+                StorageAttachmentId::new(identity).unwrap(),
+                access,
+                StorageOwnership::Caller,
+                StorageCleanup::DetachOnly,
+            )
+            .unwrap();
+    }
+    let digest = attachments.digest().unwrap();
+    let directory = &old.directories()[0];
+    let directory = AgentVmDirectoryAttachment::new(
+        attachments
+            .storage()
+            .iter()
+            .find(|entry| entry.identity().as_str() == "workspace")
+            .unwrap()
+            .clone(),
+        directory.host_source(),
+        directory.source_identity(),
+        &digest,
+    )
+    .unwrap();
+    let metadata = fs::metadata(&path).unwrap();
+    let raw = attachments
+        .storage()
+        .iter()
+        .find(|entry| entry.identity().as_str() == "raw")
+        .unwrap();
+    let raw = AgentVmStorageAttachment::new(
+        raw.identity().clone(),
+        raw.mount().clone(),
+        StorageAccessMode::ReadWrite,
+        StorageOwnership::Caller,
+        StorageCleanup::DetachOnly,
+        path.to_str().unwrap(),
+        AgentVmStorageSourceIdentity::new(
+            metadata.dev(),
+            metadata.rdev(),
+            metadata.ino(),
+            metadata.len(),
+        )
+        .unwrap(),
+        &digest,
+    )
+    .unwrap();
+    let manifest = AgentVmAttachmentManifest::new_with_raw_storage(
+        old.target().clone(),
+        old.guest_bundle().clone(),
+        &bundle,
+        digest,
+        vec![raw],
+        vec![directory],
+        vec![],
+        None,
+    )
+    .unwrap();
+    fs::write(share.join("bundle/config.json"), bundle.config_json()).unwrap();
+    fs::write(
+        share.join(AGENT_VM_ATTACHMENT_MANIFEST_FILE_NAME),
+        manifest.to_bytes().unwrap(),
+    )
+    .unwrap();
+    let pinned = MacosVmAttachments::open(&fixture.share, Some(&manifest.digest().unwrap()))
+        .unwrap()
+        .unwrap();
+    assert_eq!(pinned.storage_disks().len(), 1);
+    assert_eq!(pinned.directories().len(), 1);
+    pinned.reverify().unwrap();
+    fs::rename(&path, fixture.root.join("retained.ext4")).unwrap();
+    File::create(&path)
+        .unwrap()
+        .set_len(metadata.len())
+        .unwrap();
+    fs::set_permissions(&path, fs::Permissions::from_mode(0o600)).unwrap();
+    assert!(pinned.reverify().is_err());
+    assert!(MacosVmAttachments::open(&fixture.share, Some(&manifest.digest().unwrap())).is_err());
+    assert!(fixture.root.join("retained.ext4").exists());
+}

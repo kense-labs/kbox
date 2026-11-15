@@ -161,7 +161,10 @@ pub(super) fn validate_attachments(
     Ok(())
 }
 
-fn mount_access_mode(configuration: &Value, mount_index: usize) -> Result<StorageAccessMode> {
+pub(super) fn mount_access_mode(
+    configuration: &Value,
+    mount_index: usize,
+) -> Result<StorageAccessMode> {
     let pointer = format!("/mounts/{mount_index}/options");
     let options: &[Value] = match configuration.pointer(&pointer) {
         Some(value) => value

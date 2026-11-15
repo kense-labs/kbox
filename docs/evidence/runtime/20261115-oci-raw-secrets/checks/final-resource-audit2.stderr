@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/final-resource-audit2.py", line 30, in <module>
+    if catalog.exists():assert json.loads(catalog.read_text())==[]
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1256, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pathlib.py", line 1242, in open
+    return io.open(self, mode, buffering, encoding, errors, newline,
+IsADirectoryError: [Errno 21] Is a directory: '/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-file-positive-1/native-root/home/boxes.json'

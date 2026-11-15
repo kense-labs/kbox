@@ -1,0 +1,49 @@
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:17:11: error: unused variable 'f' [-Werror,-Wunused-variable]
+   17 |     FILE *f=fopen(path,"r"); assert(f);
+      |           ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:19:12: error: variable 'value' is uninitialized when used here [-Werror,-Wuninitialized]
+   19 |     return value;
+      |            ^~~~~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:18:19: note: initialize the variable 'value' to silence this warning
+   18 |     uint64_t value; assert(fscanf(f,"%"SCNu64,&value)==1); assert(fclose(f)==0);
+      |                   ^
+      |                    = 0
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:29:67: error: unused variable 'line' [-Werror,-Wunused-variable]
+   29 |     if(argc==4&&!fill) { assert(!strcmp(argv[3],"--stdin")); char line[32]; assert(fgets(line,sizeof(line),stdin)); assert(!strcmp(line,"streamed\n")); }
+      |                                                                   ^~~~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:43:15: error: unused variable 'f' [-Werror,-Wunused-variable]
+   43 |         FILE *f=fopen(buffer,"r"); assert(f); unsigned a,b; assert(fscanf(f,"%u:%u",&a,&b)==2); assert(fclose(f)==0);
+      |               ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:66:13: error: unused variable 'synced' [-Werror,-Wunused-variable]
+   66 |         int synced=fsync(fd); assert(synced==0||errno==ENOSPC); assert(close(fd)==0); assert(unlink(buffer)==0);
+      |             ^~~~~~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:67:13: error: unused variable 'dir' [-Werror,-Wunused-variable]
+   67 |         int dir=open(path,O_RDONLY|O_DIRECTORY|O_CLOEXEC); assert(dir>=0&&syncfs(dir)==0);
+      |             ^~~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:30:86: error: variable 'caps' set but not used [-Werror,-Wunused-but-set-variable]
+   30 |     FILE *status=fopen("/proc/self/status","r"); assert(status); char line[256]; int caps=0,nnp=0;
+      |                                                                                      ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:30:93: error: variable 'nnp' set but not used [-Werror,-Wunused-but-set-variable]
+   30 |     FILE *status=fopen("/proc/self/status","r"); assert(status); char line[256]; int caps=0,nnp=0;
+      |                                                                                             ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:37:19: error: unused variable 'fs' [-Werror,-Wunused-variable]
+   37 |     struct statfs fs; assert(statfs(path,&fs)==0&&fs.f_type==0xef53);
+      |                   ^~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:39:14: error: unused variable 'matches' [-Werror,-Wunused-variable]
+   39 |     unsigned matches=0; uint64_t raw=0; unsigned maj=0,min=0; char devname[128]={0},buffer[512];
+      |              ^~~~~~~
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:44:12: error: variable 'a' is uninitialized when used here [-Werror,-Wuninitialized]
+   44 |         if(a!=major(st.st_dev)||b!=minor(st.st_dev)) continue;
+      |            ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:43:57: note: initialize the variable 'a' to silence this warning
+   43 |         FILE *f=fopen(buffer,"r"); assert(f); unsigned a,b; assert(fscanf(f,"%u:%u",&a,&b)==2); assert(fclose(f)==0);
+      |                                                         ^
+      |                                                          = 0
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:44:33: error: variable 'b' is uninitialized when used here [-Werror,-Wuninitialized]
+   44 |         if(a!=major(st.st_dev)||b!=minor(st.st_dev)) continue;
+      |                                 ^
+artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c:43:59: note: initialize the variable 'b' to silence this warning
+   43 |         FILE *f=fopen(buffer,"r"); assert(f); unsigned a,b; assert(fscanf(f,"%u:%u",&a,&b)==2); assert(fclose(f)==0);
+      |                                                           ^
+      |                                                            = 0
+12 errors generated.

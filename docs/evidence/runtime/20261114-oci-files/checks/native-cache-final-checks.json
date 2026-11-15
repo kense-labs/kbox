@@ -1,0 +1,56 @@
+{
+  "workdir": "/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9",
+  "environment": {
+    "MACOSX_DEPLOYMENT_TARGET": "11.0",
+    "RUSTUP_TOOLCHAIN": "1.97.1-aarch64-apple-darwin"
+  },
+  "results": [
+    {
+      "label": "native-cache-ffi-unit-2",
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "-p",
+        "libkrun",
+        "--lib",
+        "uncached_api"
+      ],
+      "exitCode": 0,
+      "seconds": 4.708259375
+    },
+    {
+      "label": "native-cache-clippy-2",
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "-p",
+        "libkrun",
+        "-p",
+        "devices",
+        "-p",
+        "utils",
+        "--all-targets",
+        "--no-deps"
+      ],
+      "exitCode": 0,
+      "seconds": 3.007120083
+    },
+    {
+      "label": "native-cache-release-3",
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release",
+        "-p",
+        "libkrun",
+        "--features",
+        "blk,net"
+      ],
+      "exitCode": 0,
+      "seconds": 17.605338749999998
+    }
+  ]
+}

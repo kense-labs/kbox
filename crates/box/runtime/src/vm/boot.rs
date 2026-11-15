@@ -316,6 +316,22 @@ impl VmManager {
             }
         };
 
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        {
+            let exports = spec.clone();
+            let validation =
+                tokio::task::spawn_blocking(move || Self::validate_macos_exports(&exports))
+                    .await
+                    .map_err(|error| {
+                        BoxError::StateError(format!("macOS export admission task failed: {error}"))
+                    })
+                    .and_then(|result| result);
+            if let Err(error) = validation {
+                self.cleanup_failed_boot_if_legacy(selected_path).await;
+                return Err(error);
+            }
+        }
+
         // 3. Initialize VMM provider (use injected provider or default to VmController)
         if self.provider.is_none() {
             let shim_path = match VmController::find_shim() {
@@ -598,5 +614,4 @@ impl VmManager {
             },
         )
     }
-
 }

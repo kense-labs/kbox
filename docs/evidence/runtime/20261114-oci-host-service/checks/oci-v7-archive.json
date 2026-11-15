@@ -1,0 +1,17 @@
+{
+  "command": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked"
+  ],
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sha256": "17ffecf4643a3ec16da398e6db865c87824b70a2a68cc1ca028c2c829682385b",
+  "compressedBytes": 32988952,
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "installedDiskBytes": 113643520,
+  "sourceInputsSha256": "6c844a37e54811fcdc52241028fb5da54d125a4251d9b61dfd518977a36a68f1",
+  "filesVerified": 10,
+  "seconds": 4.7111613750000005
+}

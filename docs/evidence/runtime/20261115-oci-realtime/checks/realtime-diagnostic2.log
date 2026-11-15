@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c",
+      "--",
+      "/realtime-probe"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"status\":\"PASS\",\"uid\":0,\"gid\":0,\"emptyCapabilities\":true,\"noNewPrivileges\":true,\"unlimited\":false,\"zero\":false,\"priorityCeiling\":5,\"priorityErrno\":1,\"allowedRangeReused\":true,\"hardRaiseErrno\":1,\"timeHardRaiseErrno\":1,\"childInheritedPolicy\":2,\"childInheritedPriority\":5,\"childPriorityErrno\":1,\"childReaped\":true,\"threadInheritedPolicy\":2,\"threadInheritedPriority\":5,\"threadPriorityErrno\":1,\"threadJoined\":true,\"parentSchedulerRestored\":true,\"parentTimeLimitUnchanged\":true,\"softSignal\":24,\"softSignalCode\":128,\"softCpuMicros\":106147,\"hardSignal\":9,\"hardCpuMicros\":306016,\"blockingResetCpuMicros\":400053,\"normalCpuMicros\":360000,\"unlimitedCpuMicros\":0,\"tty\":false,\"userNamespace\":{\"entered\":true,\"errno\":0,\"mapped\":false,\"mappingErrno\":1,\"priority\":5,\"priorityErrno\":1,\"childReaped\":true}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c"
+    ],
+    "exitCode": 0,
+    "stdout": "vast_cerf\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

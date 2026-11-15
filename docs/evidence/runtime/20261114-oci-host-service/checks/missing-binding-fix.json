@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "active_execution_missing_binding"
+  ],
+  "exitCode": 0,
+  "seconds": 12.751309042
+}

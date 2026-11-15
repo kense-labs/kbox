@@ -1,0 +1,6 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.50s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+error: test failed, to rerun pass `-p koci-runtime --lib`

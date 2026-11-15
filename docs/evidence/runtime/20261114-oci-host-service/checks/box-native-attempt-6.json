@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/native-client-attempt-6",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-6",
+  "clientSha256": "d37d7e3a641df9e705dc8645b32e4ffcf23428deb994dcfd2daf6732e91596d3",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/previous-dist/kbox-3.4.3-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-same-uid@sha256:a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136",
+  "refusedForeignUidImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "exitCode": 101,
+  "seconds": 20.861017333,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

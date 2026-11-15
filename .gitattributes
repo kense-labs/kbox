@@ -47,3 +47,10 @@
 # Preserve raw rustfmt context lines and the CLI help output byte-for-byte.
 /docs/evidence/governance/2026-10-29-microsoft-rust-guidelines/focused-format.log -text whitespace=-blank-at-eol
 /docs/evidence/governance/2026-10-29-microsoft-rust-guidelines/format.log -text whitespace=-blank-at-eof
+
+# Preserve captured runtime command/terminal bytes and rustfmt patch context.
+/docs/evidence/runtime/**/*.log whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/runtime/**/*.stdout whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/runtime/**/*.stderr whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/engine/20261114-generic-engine/checks/*.log whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol
+/docs/evidence/runtime/20261114-windows-arm64/checks/scoped-worktree.diff whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab,cr-at-eol

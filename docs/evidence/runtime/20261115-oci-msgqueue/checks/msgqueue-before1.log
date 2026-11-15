@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_msgqueue_ulimits_preserve_exact_values_and_per_uid_entry_guards ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_msgqueue_ulimits_admit_without_allocating_and_refuse_bad_identity ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_msgqueue_ulimits_admit_without_allocating_and_refuse_bad_identity
+    vm::oci_hvf_spec::tests::hvf_msgqueue_ulimits_preserve_exact_values_and_per_uid_entry_guards
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2292 filtered out; finished in 0.03s
+

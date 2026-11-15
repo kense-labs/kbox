@@ -31,8 +31,14 @@ unsafe extern "C" {
     fn sandbox_free_error(error: *mut c_char);
 }
 
+#[expect(
+    clippy::too_many_arguments,
+    reason = "exact existing sandbox grants plus workload disk descriptors"
+)]
 pub(crate) fn confine(
     read_only_files: &[&Path],
+    writable_files: &[&Path],
+    metadata_only_files: &[&Path],
     runtime_share: &Path,
     console: &PreparedConsoleOutput,
     agent_socket: Option<&Path>,
@@ -50,6 +56,7 @@ pub(crate) fn confine(
             .into_iter()
             .chain(agent_socket)
             .chain(read_only_files.iter().copied())
+            .chain(writable_files.iter().copied())
             .any(|path| overlaps(directory, path))
             || directories[..index]
                 .iter()
@@ -70,9 +77,20 @@ pub(crate) fn confine(
             ));
         }
     }
+    crate::macos_readonly::validate_read_only_file_descriptors(read_only_files)?;
     let mut profile = BASE_PROFILE.to_string();
     let mut parameters = Vec::new();
     let mut ancestors = BTreeSet::new();
+    for path in metadata_only_files {
+        add_path_rule(
+            &mut profile,
+            &mut parameters,
+            "file-read-metadata",
+            "literal",
+            path,
+        )?;
+        ancestors.extend(path.ancestors().skip(1));
+    }
     for path in read_only_files {
         if path.starts_with(runtime_share) || *path == console.path() {
             return Err(sandbox_error(
@@ -80,6 +98,24 @@ pub(crate) fn confine(
             ));
         }
         add_path_rule(&mut profile, &mut parameters, "file-read*", "literal", path)?;
+        ancestors.extend(path.ancestors().skip(1));
+    }
+    for path in writable_files {
+        if path.starts_with(runtime_share)
+            || *path == console.path()
+            || read_only_files.contains(path)
+        {
+            return Err(sandbox_error(
+                "workload disk overlaps a shared path or immutable asset",
+            ));
+        }
+        add_path_rule(
+            &mut profile,
+            &mut parameters,
+            "file-read* file-write-data",
+            "literal",
+            path,
+        )?;
         ancestors.extend(path.ancestors().skip(1));
     }
     add_path_rule(
@@ -148,8 +184,17 @@ pub(crate) fn confine(
         }
         apply_path_restrictions(&mut profile, &mut parameters, source, restrictions)?;
     }
-    let profile = value_to_cstring(OPERATION, "Seatbelt profile", &profile)?;
-    let parameters = FfiStringArray::new(OPERATION, "Seatbelt parameters", &parameters)?;
+    let mut writable_paths = read_write_directories.to_vec();
+    writable_paths.extend([runtime_share, console.path()]);
+    let read_only =
+        crate::macos_readonly::MacosReadOnlyMounts::open(read_only_directories, &writable_paths)?;
+    read_only.append_rules(&mut profile, &mut parameters)?;
+    install(&profile, &parameters)
+}
+
+pub(super) fn install(profile: &str, parameters: &[String]) -> Result<()> {
+    let profile = value_to_cstring(OPERATION, "Seatbelt profile", profile)?;
+    let parameters = FfiStringArray::new(OPERATION, "Seatbelt parameters", parameters)?;
     let mut error = ptr::null_mut();
     // SAFETY: all strings and the terminated pointer table remain alive for this call.
     let status = unsafe {
@@ -231,7 +276,7 @@ fn apply_path_restrictions(
     Ok(())
 }
 
-fn add_denied_rule(
+pub(super) fn add_denied_rule(
     profile: &mut String,
     parameters: &mut Vec<String>,
     operations: &str,
@@ -278,7 +323,7 @@ fn add_parameter(parameters: &mut Vec<String>, path: &Path) -> Result<String> {
     Ok(key)
 }
 
-fn sandbox_error(reason: impl Into<String>) -> Error {
+pub(super) fn sandbox_error(reason: impl Into<String>) -> Error {
     Error::new(ErrorCode::FailedPrecondition, reason).for_operation(OPERATION)
 }
 
@@ -289,3 +334,7 @@ mod tests;
 fn overlaps(left: &Path, right: &Path) -> bool {
     left.starts_with(right) || right.starts_with(left)
 }
+
+#[cfg(test)]
+#[path = "macos_file_grant_sandbox_tests.rs"]
+mod file_tests;

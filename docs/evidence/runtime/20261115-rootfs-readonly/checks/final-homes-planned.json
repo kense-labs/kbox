@@ -1,0 +1,14 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/af-final1/native-oci/d2a4a7a5d57a4d5eb39a09e8ba745705/home",
+  "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/af-final1/native-prewarm/90e9e862c660489b9b5e08d8c495f883/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/af-final1/native-primary/76bbd36daed247999ce27265b3ef085b/home",
+  "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/af-final1/native-readonly/13347de398a842d09c4d871f9b558768/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-1/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-2/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-3/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-4/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-5/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/rootro-1/home",
+  "/private/tmp/kbox-rootro-a4e38db72f6b/rootro-2/home"
+]

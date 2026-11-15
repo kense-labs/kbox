@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-kbox",
+    "--lib",
+    "memory",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 4.177370125
+}

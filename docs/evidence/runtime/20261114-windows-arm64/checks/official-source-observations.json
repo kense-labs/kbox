@@ -1,0 +1,437 @@
+{
+  "accessedAt": "2026-11-14T02:22:19.239471+00:00",
+  "sources": [
+    {
+      "name": "whp-defs",
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/Virtualization-Documentation/main/virtualization/api/hypervisor-platform/headers/WinHvPlatformDefs.h",
+      "bytes": 135972,
+      "sha256": "479b247b2782ab3e7fe657d438b379fdc58df64bebeafbe6aee0386c99e0df1d",
+      "matches": [
+        {
+          "line": 24,
+          "text": "#if defined(_AMD64_) || defined(_ARM64_)"
+        },
+        {
+          "line": 329,
+          "text": "#elif defined (_ARM64_)"
+        },
+        {
+          "line": 1207,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 1253,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 1255,
+          "text": "typedef enum WHV_ARM64_PENDING_EVENT_TYPE"
+        },
+        {
+          "line": 1259,
+          "text": "} WHV_ARM64_PENDING_EVENT_TYPE;"
+        },
+        {
+          "line": 1261,
+          "text": "#define WHV_ARM64_PENDING_EVENT_HEADER \\"
+        },
+        {
+          "line": 1269,
+          "text": "typedef union WHV_ARM64_PENDING_EXCEPTION_EVENT"
+        },
+        {
+          "line": 1275,
+          "text": "WHV_ARM64_PENDING_EVENT_HEADER;"
+        },
+        {
+          "line": 1283,
+          "text": "} WHV_ARM64_PENDING_EXCEPTION_EVENT;"
+        },
+        {
+          "line": 1285,
+          "text": "typedef enum WHV_ARM64_SYNTHETIC_EXCEPTION_TYPE"
+        },
+        {
+          "line": 1297,
+          "text": "} WHV_ARM64_SYNTHETIC_EXCEPTION_TYPE;"
+        },
+        {
+          "line": 1302,
+          "text": "typedef union WHV_ARM64_PENDING_SYNTHETIC_EXCEPTION_EVENT"
+        },
+        {
+          "line": 1307,
+          "text": "WHV_ARM64_PENDING_EVENT_HEADER;"
+        },
+        {
+          "line": 1322,
+          "text": "} WHV_ARM64_PENDING_SYNTHETIC_EXCEPTION_EVENT;"
+        },
+        {
+          "line": 1327,
+          "text": "typedef union WHV_ARM64_PENDING_EVENT"
+        },
+        {
+          "line": 1337,
+          "text": "WHV_ARM64_PENDING_EVENT_HEADER;"
+        },
+        {
+          "line": 1341,
+          "text": "WHV_ARM64_PENDING_EXCEPTION_EVENT Exception;"
+        },
+        {
+          "line": 1342,
+          "text": "WHV_ARM64_PENDING_SYNTHETIC_EXCEPTION_EVENT SyntheticException;"
+        },
+        {
+          "line": 1344,
+          "text": "} WHV_ARM64_PENDING_EVENT;"
+        },
+        {
+          "line": 1394,
+          "text": "WHvCapabilityCodeFeatures                         = 0x00000001,"
+        },
+        {
+          "line": 1440,
+          "text": "#elif defined (_ARM64_)"
+        },
+        {
+          "line": 1475,
+          "text": "UINT64 Arm64Support : 1;"
+        },
+        {
+          "line": 1701,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 1703,
+          "text": "typedef union WHV_ARM64_PROCESSOR_FEATURES"
+        },
+        {
+          "line": 1825,
+          "text": "} WHV_ARM64_PROCESSOR_FEATURES, WHV_PROCESSOR_FEATURES;"
+        },
+        {
+          "line": 1827,
+          "text": "typedef union WHV_ARM64_PROCESSOR_FEATURES1"
+        },
+        {
+          "line": 1881,
+          "text": "} WHV_ARM64_PROCESSOR_FEATURES1, WHV_PROCESSOR_FEATURES1;"
+        },
+        {
+          "line": 2051,
+          "text": "#if defined(_ARM64_)"
+        },
+        {
+          "line": 2159,
+          "text": "#if defined(_ARM64_)"
+        },
+        {
+          "line": 2274,
+          "text": "#if defined(_ARM64_)"
+        },
+        {
+          "line": 2629,
+          "text": "#elif defined (_ARM64_)"
+        },
+        {
+          "line": 2740,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 2746,
+          "text": "typedef enum WHV_ARM64_IC_EMULATION_MODE"
+        },
+        {
+          "line": 2750,
+          "text": "} WHV_ARM64_IC_EMULATION_MODE;"
+        },
+        {
+          "line": 2752,
+          "text": "typedef UINT32 WHV_ARM64_INTERRUPT_VECTOR;"
+        },
+        {
+          "line": 2754,
+          "text": "typedef struct WHV_ARM64_IC_GIC_V3_PARAMETERS"
+        },
+        {
+          "line": 2760,
+          "text": "WHV_ARM64_INTERRUPT_VECTOR GicPpiOverflowInterruptFromCntv;"
+        },
+        {
+          "line": 2761,
+          "text": "WHV_ARM64_INTERRUPT_VECTOR GicPpiPerformanceMonitorsInterrupt;"
+        },
+        {
+          "line": 2763,
+          "text": "} WHV_ARM64_IC_GIC_V3_PARAMETERS;"
+        },
+        {
+          "line": 2765,
+          "text": "C_ASSERT(sizeof(WHV_ARM64_IC_GIC_V3_PARAMETERS) == 56);"
+        },
+        {
+          "line": 2767,
+          "text": "typedef struct WHV_ARM64_IC_PARAMETERS"
+        },
+        {
+          "line": 2769,
+          "text": "WHV_ARM64_IC_EMULATION_MODE EmulationMode;"
+        },
+        {
+          "line": 2773,
+          "text": "WHV_ARM64_IC_GIC_V3_PARAMETERS GicV3Parameters;"
+        },
+        {
+          "line": 2776,
+          "text": "} WHV_ARM64_IC_PARAMETERS;"
+        },
+        {
+          "line": 2778,
+          "text": "C_ASSERT(sizeof(WHV_ARM64_IC_PARAMETERS) == 64);"
+        },
+        {
+          "line": 2819,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 2820,
+          "text": "WHV_ARM64_IC_PARAMETERS Arm64IcParameters;"
+        },
+        {
+          "line": 2863,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3111,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3236,
+          "text": "typedef enum WHV_ARM64_RESET_TYPE"
+        },
+        {
+          "line": 3240,
+          "text": "} WHV_ARM64_RESET_TYPE;"
+        },
+        {
+          "line": 3242,
+          "text": "typedef struct WHV_ARM64_RESET_CONTEXT"
+        },
+        {
+          "line": 3245,
+          "text": "WHV_ARM64_RESET_TYPE ResetType;"
+        },
+        {
+          "line": 3247,
+          "text": "} WHV_ARM64_RESET_CONTEXT;"
+        },
+        {
+          "line": 3249,
+          "text": "C_ASSERT(sizeof(WHV_ARM64_RESET_CONTEXT) == 32);"
+        },
+        {
+          "line": 3367,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3369,
+          "text": "typedef struct WHV_ARM64_HYPERCALL_CONTEXT"
+        },
+        {
+          "line": 3376,
+          "text": "} WHV_ARM64_HYPERCALL_CONTEXT, WHV_HYPERCALL_CONTEXT, *PWHV_HYPERCALL_CONTEXT;"
+        },
+        {
+          "line": 3418,
+          "text": "// WHvRunVirtualProcessor output buffer"
+        },
+        {
+          "line": 3426,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3449,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3453,
+          "text": "WHV_ARM64_RESET_CONTEXT Arm64Reset;"
+        },
+        {
+          "line": 3463,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3506,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3623,
+          "text": "#elif defined(_ARM64_)"
+        },
+        {
+          "line": 3707,
+          "text": "#elif defined (_ARM64_)"
+        },
+        {
+          "line": 3974,
+          "text": "#if defined (_ARM64_)"
+        },
+        {
+          "line": 3976,
+          "text": "typedef struct WHV_ARM64_INTERRUPT_STATE"
+        },
+        {
+          "line": 3994,
+          "text": "} WHV_ARM64_INTERRUPT_STATE;"
+        },
+        {
+          "line": 3996,
+          "text": "typedef struct WHV_ARM64_GLOBAL_INTERRUPT_STATE"
+        },
+        {
+          "line": 4007,
+          "text": "WHV_ARM64_INTERRUPT_STATE InterruptState;"
+        },
+        {
+          "line": 4009,
+          "text": "} WHV_ARM64_GLOBAL_INTERRUPT_STATE;"
+        },
+        {
+          "line": 4011,
+          "text": "#define WHV_ARM64_GLOBAL_INTERRUPT_CONTROLLER_STATE_VERSION_CURRENT (1)"
+        },
+        {
+          "line": 4013,
+          "text": "typedef struct WHV_ARM64_GLOBAL_INTERRUPT_CONTROLLER_STATE"
+        },
+        {
+          "line": 4022,
+          "text": "WHV_ARM64_GLOBAL_INTERRUPT_STATE Interrupts[ANYSIZE_ARRAY];"
+        },
+        {
+          "line": 4024,
+          "text": "} WHV_ARM64_GLOBAL_INTERRUPT_CONTROLLER_STATE;"
+        },
+        {
+          "line": 4026,
+          "text": "#define WHV_ARM64_INTERRUPT_CONTROLLER_STATE_VERSION_CURRENT (1)"
+        },
+        {
+          "line": 4028,
+          "text": "typedef struct WHV_ARM64_LOCAL_INTERRUPT_CONTROLLER_STATE"
+        },
+        {
+          "line": 4042,
+          "text": "WHV_ARM64_INTERRUPT_STATE BankedInterruptState[32];"
+        },
+        {
+          "line": 4044,
+          "text": "} WHV_ARM64_LOCAL_INTERRUPT_CONTROLLER_STATE;"
+        },
+        {
+          "line": 4050,
+          "text": "typedef struct WHV_ARM64_VP_STATE_SVE {"
+        },
+        {
+          "line": 4059,
+          "text": "} WHV_ARM64_VP_STATE_SVE;"
+        },
+        {
+          "line": 4061,
+          "text": "#endif // defined (_ARM64_)"
+        },
+        {
+          "line": 4348,
+          "text": "#endif // defined(_AMD64_) || defined(_ARM64_)"
+        }
+      ]
+    },
+    {
+      "name": "whp-api",
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/Virtualization-Documentation/main/virtualization/api/hypervisor-platform/headers/WinHvPlatform.h",
+      "bytes": 23533,
+      "sha256": "b97678400db4123faa87d1909e30f795dacaeec3e0c408ef66f5f9633412af93",
+      "matches": [
+        {
+          "line": 38,
+          "text": "#if defined(_AMD64_) || defined(_ARM64_)"
+        },
+        {
+          "line": 59,
+          "text": "WHvCreatePartition("
+        },
+        {
+          "line": 65,
+          "text": "WHvSetupPartition("
+        },
+        {
+          "line": 186,
+          "text": "WHvRunVirtualProcessor("
+        },
+        {
+          "line": 702,
+          "text": "#endif // defined(_AMD64_) || defined(_ARM64_)"
+        },
+        {
+          "line": 720,
+          "text": "#if defined(_AMD64_) || defined(_ARM64_)"
+        },
+        {
+          "line": 730,
+          "text": "IsWHvCreatePartitionPresent("
+        },
+        {
+          "line": 736,
+          "text": "IsWHvSetupPartitionPresent("
+        },
+        {
+          "line": 820,
+          "text": "IsWHvRunVirtualProcessorPresent("
+        },
+        {
+          "line": 1182,
+          "text": "#endif // defined(_AMD64_) || defined(_ARM64_)"
+        }
+      ]
+    },
+    {
+      "name": "qemu-whpx-arm",
+      "url": "https://raw.githubusercontent.com/qemu/qemu/master/target/arm/whpx/whpx-all.c",
+      "bytes": 38583,
+      "sha256": "68e77163543ae97ec44f71bca7e1a7bcdc3e76e21301aaf008626f02bee7199e",
+      "matches": [
+        {
+          "line": 427,
+          "text": "hr = whp_dispatch.WHvRunVirtualProcessor("
+        },
+        {
+          "line": 896,
+          "text": "WHvCapabilityCodeFeatures, &features, sizeof(features), NULL);"
+        },
+        {
+          "line": 903,
+          "text": "if (!features.Arm64Support) {"
+        },
+        {
+          "line": 918,
+          "text": "hr = whp_dispatch.WHvCreatePartition(&whpx->partition);"
+        },
+        {
+          "line": 954,
+          "text": "* WHvSetupPartition."
+        },
+        {
+          "line": 957,
+          "text": "WHV_ARM64_IC_PARAMETERS ic_params = {"
+        },
+        {
+          "line": 1019,
+          "text": "hr = whp_dispatch.WHvSetupPartition(whpx->partition);"
+        }
+      ]
+    }
+  ]
+}

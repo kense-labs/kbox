@@ -3,6 +3,14 @@
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeSet;
 
+#[path = "guest_tmpfs.rs"]
+mod tmpfs;
+pub use tmpfs::{GuestTmpfsMount, TmpfsMountFlag};
+
+#[path = "guest_rlimit.rs"]
+mod rlimit;
+pub use rlimit::{GuestRlimit, GuestRlimitResource};
+
 /// Preserve mount paths across libkrun's ASCII-only kernel command line.
 pub fn encode_guest_mount_spec(value: &str) -> String {
     use base64::{engine::general_purpose::STANDARD, Engine as _};

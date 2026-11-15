@@ -296,7 +296,6 @@ fn load_recorded_sandbox_runtime_identity(
     Ok(None)
 }
 
-
 #[cfg(target_os = "linux")]
 fn valid_sha256(value: &str) -> bool {
     value.len() == 64 && value.bytes().all(|byte| byte.is_ascii_hexdigit())
@@ -309,7 +308,6 @@ fn verify_recorded_koci_owner(
 ) -> kbox_core::Result<()> {
     Ok(())
 }
-
 
 #[cfg(target_os = "linux")]
 fn sha256_file(path: &Path) -> Option<String> {

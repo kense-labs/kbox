@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/build-box-final2-attempt1.py"
+  ],
+  "exitCode": 1,
+  "buildAndArchiveSucceeded": true,
+  "failure": "FileExistsError: mistakenly reused final-dist-pathguard-1; mkdir refused before copying or modifying it",
+  "source": "8f562b1b69caeee726b22c068a8b3909cd515fa30c31b4e0759aa34408055f55",
+  "resume": "build-box-final2-resume1.py verifies already built global archive source identity, then copies/installs at corrected final2 paths; no unnecessary rebuild"
+}

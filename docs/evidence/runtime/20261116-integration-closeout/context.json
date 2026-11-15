@@ -1,0 +1,10 @@
+{
+  "startedUtc": "2026-11-15T16:20:44.912860+00:00",
+  "base": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+  "remoteMain": "e4a6809",
+  "branch": "codex/macos-oci-release-baseline",
+  "acceptedSource": "c7e0c86543bd475639bc5b56261d34fac6d115f0deed5f0c11fdb02683a8d1dd",
+  "preMergeEvidence": "docs/evidence/runtime/20261115-oci-shm-size",
+  "scope": "Converge, commit, merge remote main, verify merged source and affected native assets, merge and push",
+  "status": "staging"
+}

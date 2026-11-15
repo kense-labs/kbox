@@ -1,0 +1,90 @@
+   Compiling cc v1.4.7
+   Compiling smallvec v1.16.4
+   Compiling serde_json v1.0.151
+   Compiling aho-corasick v1.1.5
+   Compiling syn v2.0.119
+   Compiling num-bigint v0.4.8
+   Compiling rustix v1.1.6
+   Compiling ahash v0.8.12
+   Compiling unicode-normalization v0.1.24
+   Compiling libloading v0.8.9
+   Compiling tempfile v3.27.0
+   Compiling parking_lot_core v0.9.12
+   Compiling parking_lot v0.12.5
+   Compiling idna_adapter v1.1.0
+   Compiling idna v1.1.0
+   Compiling tokio v1.53.3
+   Compiling regex-automata v0.4.18
+   Compiling sha2-asm v0.6.4
+   Compiling lzma-sys v0.1.20
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling fraction v0.15.4
+   Compiling darling_core v0.20.11
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling strum_macros v0.27.2
+   Compiling getset v0.1.7
+   Compiling zeroize_derive v1.4.3
+   Compiling regex v1.12.4
+   Compiling fancy-regex v0.18.0
+   Compiling ref-cast v1.0.25
+   Compiling zeroize v1.8.2
+   Compiling darling_macro v0.20.11
+   Compiling strum v0.28.0
+   Compiling darling v0.20.11
+   Compiling jsonschema-value v0.48.5
+   Compiling xattr v1.6.1
+   Compiling tar v0.4.46
+   Compiling sha2 v0.10.9
+   Compiling xz2 v0.1.7
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling fluent-uri v0.4.1
+   Compiling referencing v0.48.5
+   Compiling jsonschema v0.48.5
+   Compiling derive_builder_core v0.20.2
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.27s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2f0c7d27422f68aa)
+
+running 3 tests
+test macos_readonly::tests::confined_child ... ignored, entered by the parent test in a disposable native process
+
+thread 'macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources' (82357753) panicked at crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs:21:5:
+assertion failed: error.to_string().contains("hard-linked")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources ... FAILED
+
+thread 'macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children' (82357752) panicked at crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs:49:5:
+
+running 1 test
+test macos_readonly::tests::confined_child ... FAILED
+
+failures:
+
+failures:
+    macos_readonly::tests::confined_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 70 filtered out; finished in 0.00s
+
+
+
+thread 'macos_readonly::tests::confined_child' (82357755) panicked at crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs:65:70:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("confine-macos-vm-worker"), message: "Not a directory (os error 20)", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children ... FAILED
+
+failures:
+
+failures:
+    macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children
+    macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources
+
+test result: FAILED. 0 passed; 2 failed; 1 ignored; 0 measured; 68 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p koci-kbox --lib`

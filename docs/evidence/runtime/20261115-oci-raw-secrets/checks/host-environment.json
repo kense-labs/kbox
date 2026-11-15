@@ -1,0 +1,8 @@
+{
+  "os": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "machine": "arm64",
+  "model": "Apple M5 Max",
+  "uid": 501,
+  "rust": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "runtimeMemory": "not measured"
+}

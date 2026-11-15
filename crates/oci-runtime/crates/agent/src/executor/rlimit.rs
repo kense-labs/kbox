@@ -95,50 +95,54 @@ impl RlimitPlan {
         Ok(Self { limits: planned })
     }
 
-    pub(super) fn apply(&self) -> Result<()> {
+    pub(super) fn apply_before_credentials(&self) -> Result<()> {
         for (index, limit) in self.limits.iter().enumerate() {
-            let native = limit.as_libc();
-            // SAFETY: `native` is a fully initialized Linux rlimit structure,
-            // and the resource identifier is selected from libc constants.
-            if unsafe { libc::setrlimit(limit.resource.as_libc(), &native) } != 0 {
-                let source = io::Error::last_os_error();
-                let code = match source.raw_os_error() {
-                    Some(libc::EPERM | libc::EACCES) => ErrorCode::PermissionDenied,
-                    Some(libc::EINVAL) => ErrorCode::InvalidArgument,
-                    _ => ErrorCode::Internal,
-                };
-                return Err(rlimit_error(
-                    code,
-                    format!(
-                        "failed to apply process.rlimits[{index}] {} soft={} hard={}: {source}",
-                        limit.resource.oci_name(),
-                        limit.soft,
-                        limit.hard
-                    ),
-                    "apply-process-rlimits",
-                ));
-            }
-
-            let mut actual = libc::rlimit {
-                rlim_cur: 0,
-                rlim_max: 0,
-            };
-            // SAFETY: `actual` is writable and the resource identifier is
-            // selected from the same bounded libc constant table as setrlimit.
-            if unsafe { libc::getrlimit(limit.resource.as_libc(), &mut actual) } != 0 {
-                let source = io::Error::last_os_error();
-                return Err(rlimit_error(
-                    ErrorCode::Internal,
-                    format!(
-                        "failed to read back process.rlimits[{index}] {} after apply: {source}",
-                        limit.resource.oci_name()
-                    ),
-                    "verify-process-rlimits",
-                ));
-            }
-            limit.verify_readback(index, actual)?;
+            limit.before_credentials().apply(index)?;
         }
         Ok(())
+    }
+
+    pub(super) fn finish_credentials(&self) -> Result<()> {
+        let Some((index, limit)) = self
+            .limits
+            .iter()
+            .enumerate()
+            .find(|(_, limit)| limit.resource == RlimitResource::Nproc)
+        else {
+            return Ok(());
+        };
+        if limit.soft != libc::RLIM_INFINITY {
+            // setuid checks the old count before accounting this process; fork
+            // checks atomically after accounting both it and this temporary child.
+            // SAFETY: launch helpers are single-threaded; the child only exits.
+            let child = unsafe { libc::fork() };
+            if child < 0 {
+                let source = io::Error::last_os_error();
+                return Err(rlimit_error(
+                    if source.raw_os_error() == Some(libc::EAGAIN) {
+                        ErrorCode::ResourceExhausted
+                    } else {
+                        ErrorCode::Internal
+                    },
+                    format!("process.rlimits RLIMIT_NPROC admission failed: {source}"),
+                    "admit-process-nproc",
+                ));
+            }
+            if child == 0 {
+                // SAFETY: this child runs no workload code or Rust destructors.
+                unsafe { libc::_exit(0) }
+            }
+            if super::pid_supervisor::wait_for_child(child)?
+                != super::pid_supervisor::ChildOutcome::Exited(0)
+            {
+                return Err(rlimit_error(
+                    ErrorCode::Internal,
+                    "RLIMIT_NPROC admission child did not exit cleanly",
+                    "admit-process-nproc",
+                ));
+            }
+        }
+        limit.apply(index)
     }
 
     #[cfg(test)]
@@ -148,6 +152,57 @@ impl RlimitPlan {
 }
 
 impl RlimitEntry {
+    fn before_credentials(mut self) -> Self {
+        if self.resource == RlimitResource::Nproc {
+            // Only trusted setup sees the extra slot, consumed by the admission child.
+            self.soft = self.soft.saturating_add(1);
+            self.hard = self.hard.max(self.soft);
+        }
+        self
+    }
+
+    fn apply(self, index: usize) -> Result<()> {
+        let native = self.as_libc();
+        // SAFETY: `native` is a fully initialized Linux rlimit structure,
+        // and the resource identifier is selected from libc constants.
+        if unsafe { libc::setrlimit(self.resource.as_libc(), &native) } != 0 {
+            let source = io::Error::last_os_error();
+            let code = match source.raw_os_error() {
+                Some(libc::EPERM | libc::EACCES) => ErrorCode::PermissionDenied,
+                Some(libc::EINVAL) => ErrorCode::InvalidArgument,
+                _ => ErrorCode::Internal,
+            };
+            return Err(rlimit_error(
+                code,
+                format!(
+                    "failed to apply process.rlimits[{index}] {} soft={} hard={}: {source}",
+                    self.resource.oci_name(),
+                    self.soft,
+                    self.hard
+                ),
+                "apply-process-rlimits",
+            ));
+        }
+
+        let mut actual = libc::rlimit {
+            rlim_cur: 0,
+            rlim_max: 0,
+        };
+        // SAFETY: `actual` is writable and the resource identifier is
+        // selected from the same bounded libc constant table as setrlimit.
+        if unsafe { libc::getrlimit(self.resource.as_libc(), &mut actual) } != 0 {
+            let source = io::Error::last_os_error();
+            return Err(rlimit_error(
+                ErrorCode::Internal,
+                format!(
+                    "failed to read back process.rlimits[{index}] {} after apply: {source}",
+                    self.resource.oci_name()
+                ),
+                "verify-process-rlimits",
+            ));
+        }
+        self.verify_readback(index, actual)
+    }
     const fn as_libc(self) -> libc::rlimit {
         libc::rlimit {
             rlim_cur: self.soft,
@@ -311,7 +366,7 @@ mod tests {
             .expect("decode child rlimit");
             RlimitPlan::from_oci(Some(&[limit]))
                 .expect("plan child rlimit")
-                .apply()
+                .apply_before_credentials()
                 .expect("apply child rlimit");
 
             let mut actual = libc::rlimit {
@@ -341,3 +396,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "rlimit/nproc_tests.rs"]
+mod nproc_tests;

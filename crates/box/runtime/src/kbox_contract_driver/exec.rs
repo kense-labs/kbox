@@ -55,7 +55,7 @@ impl BoxRuntimeDriver {
             .is_some_and(|(id, bound)| id != execution_id.as_str() || bound != generation.get())
         {
             return Err(RuntimeError::InvalidRequest(
-                "process assembly belongs to another Box execution generation".into(),
+                "process binding belongs to another Box execution generation".into(),
             ));
         }
         let process = self

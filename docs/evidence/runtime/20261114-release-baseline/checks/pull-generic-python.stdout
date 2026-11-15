@@ -1,0 +1,50 @@
+Pulling docker.io/library/python:3.13-slim...
+  [1/4] 0f11f5d5f1ef: 0 B / 28.8 MB downloaded
+  [2/4] 1a66b7723d83: 0 B / 1.2 MB downloaded
+  [3/4] dd3727c3cc3f: 0 B / 11.3 MB downloaded
+  [4/4] 97048dbedc12: 0 B / 250 B downloaded
+  [1/4] 0f11f5d5f1ef: 1.0 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 2.0 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 3.0 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 4.0 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 5.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 6.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 7.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 8.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 9.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 10.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 11.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 12.1 MB / 28.8 MB downloaded
+  [4/4] 97048dbedc12: 250 B / 250 B downloaded ✓
+  [1/4] 0f11f5d5f1ef: 13.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 14.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 15.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 16.1 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 17.1 MB / 28.8 MB downloaded
+  [2/4] 1a66b7723d83: 1.0 MB / 1.2 MB downloaded
+  [3/4] dd3727c3cc3f: 1.0 MB / 11.3 MB downloaded
+  [2/4] 1a66b7723d83: 1.2 MB / 1.2 MB downloaded ✓
+  [1/4] 0f11f5d5f1ef: 18.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 19.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 20.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 21.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 22.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 23.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 24.2 MB / 28.8 MB downloaded
+  [3/4] dd3727c3cc3f: 2.0 MB / 11.3 MB downloaded
+  [1/4] 0f11f5d5f1ef: 25.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 26.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 27.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 28.2 MB / 28.8 MB downloaded
+  [1/4] 0f11f5d5f1ef: 28.8 MB / 28.8 MB downloaded ✓
+  [3/4] dd3727c3cc3f: 3.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 4.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 5.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 6.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 7.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 8.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 9.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 10.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 11.0 MB / 11.3 MB downloaded
+  [3/4] dd3727c3cc3f: 11.3 MB / 11.3 MB downloaded ✓
+Pulled: docker.io/library/python:3.13-slim (/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images/sha256/e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90)

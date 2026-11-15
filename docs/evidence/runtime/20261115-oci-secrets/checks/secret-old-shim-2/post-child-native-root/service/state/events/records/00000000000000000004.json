@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "koci.event-record.v1",
+  "event": {
+    "sequence": 4,
+    "timestamp_unix_ns": 1794711099649319000,
+    "container": {
+      "id": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+      "generation": 1
+    },
+    "kind": "container-deleted",
+    "attributes": {}
+  }
+}

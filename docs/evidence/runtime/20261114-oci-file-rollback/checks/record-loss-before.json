@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "file_store_concurrent_record_loss_never_reports_an_empty_collection",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 12.870005
+}

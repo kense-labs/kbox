@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "platform": "Darwin",
+  "kboxSha256": "f6bcb2a2375add4c2cda7e40bc4d934c41512a5930b2427fbeaf3980003cd6ee",
+  "image": "docker.io/library/kbox-qualification-base@sha256:15d5b9a98bd45f61e1af0d1dc4e35f8c04b7b35f9d062e41daa07cfa3b64bc5d",
+  "engineId": "9eec7996-bd34-40d8-98a9-4fa77096c791",
+  "stdinBytes": 2097152,
+  "stdoutBytes": 8388622,
+  "exitCode": 37,
+  "backpressureAndConcurrentExec": true,
+  "halfCloseAndTails": true,
+  "noReplayAfterExitDisconnectAndEngineCrash": true,
+  "lostOpenNotLaunched": true,
+  "lateWriteChecks": {
+    "\u65ad\u5f00 late writes.txt": {
+      "bytes": 6,
+      "sha256": "b7fb217694ae2d305e766608d250f797daa984e4ac4b5fa638a729be352f2fcd",
+      "quietSeconds": 54.06191033299999
+    },
+    "\u5d29\u6e83 late writes.txt": {
+      "bytes": 6,
+      "sha256": "b7fb217694ae2d305e766608d250f797daa984e4ac4b5fa638a729be352f2fcd",
+      "quietSeconds": 51.888069375
+    }
+  },
+  "zeroPrivateExecutionsAndVolumes": true
+}

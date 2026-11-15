@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "rootfs::oci_ext4",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 9.594731792
+}

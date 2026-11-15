@@ -56,6 +56,36 @@ impl VmManager {
             .map(|plans| plans.into_iter().map(|plan| plan.name).collect())
     }
 
+    pub(super) async fn pull_runtime_image(
+        &self,
+        reference: &str,
+        transient_registry_auth: Option<crate::oci::RegistryAuth>,
+    ) -> Result<crate::oci::OciImage> {
+        let images_dir = self.home_dir.join("images");
+        let store = crate::oci::ImageStore::new(&images_dir, crate::DEFAULT_IMAGE_CACHE_SIZE)?;
+        let auth = registry_auth_for_image(&self.home_dir, reference, transient_registry_auth)?;
+        let mut puller = crate::oci::ImagePuller::new(std::sync::Arc::new(store), auth);
+        if let Some(ref m) = self.prom {
+            puller = puller.set_metrics(m.clone());
+        }
+        if let Some(ref f) = self.pull_progress_fn {
+            puller = puller.with_progress_fn(f.clone());
+        }
+
+        tracing::info!(reference = %reference, "Pulling OCI image from registry");
+
+        let oci_image = puller.pull(reference).await?;
+        // The image object owns only the cached OCI layout. Drop the puller as
+        // soon as the registry boundary closes so transient authorization is
+        // zeroized before rootfs extraction or guest preparation begins.
+        drop(puller);
+        validate_image_health_support(
+            oci_image.config().health_check.as_ref(),
+            self.healthcheck_disabled,
+        )?;
+        Ok(oci_image)
+    }
+
     pub(crate) async fn prepare_layout(&mut self) -> Result<BoxLayout> {
         let transient_registry_auth = self.transient_registry_auth.take();
         // Create box-specific directories
@@ -346,28 +376,9 @@ impl VmManager {
             });
         }
 
-        let images_dir = self.home_dir.join("images");
-        let store = crate::oci::ImageStore::new(&images_dir, crate::DEFAULT_IMAGE_CACHE_SIZE)?;
-        let auth = registry_auth_for_image(&self.home_dir, reference, transient_registry_auth)?;
-        let mut puller = crate::oci::ImagePuller::new(std::sync::Arc::new(store), auth);
-        if let Some(ref m) = self.prom {
-            puller = puller.set_metrics(m.clone());
-        }
-        if let Some(ref f) = self.pull_progress_fn {
-            puller = puller.with_progress_fn(f.clone());
-        }
-
-        tracing::info!(reference = %reference, "Pulling OCI image from registry");
-
-        let oci_image = puller.pull(reference).await?;
-        // The image object owns only the cached OCI layout. Drop the puller as
-        // soon as the registry boundary closes so transient authorization is
-        // zeroized before rootfs extraction or guest preparation begins.
-        drop(puller);
-        validate_image_health_support(
-            oci_image.config().health_check.as_ref(),
-            self.healthcheck_disabled,
-        )?;
+        let oci_image = self
+            .pull_runtime_image(reference, transient_registry_auth)
+            .await?;
 
         let image_path = oci_image.root_dir().to_path_buf();
         let manifest_digest = oci_image.manifest_digest().to_string();

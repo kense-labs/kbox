@@ -1,0 +1,11 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.41s
+     Running unittests src/lib.rs (target/debug/deps/koci_agent_protocol-5a351c4b9e85612c)
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpZdtQFA/libkrun.1.17.0.dylib: replacing existing signature
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpZdtQFA/libkrunfw.5.dylib: replacing existing signature
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-727e3b348542850f)

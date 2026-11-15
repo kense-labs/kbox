@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2291 filtered out; finished in 45.00s
+

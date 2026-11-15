@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/check-final-identities1.py"
+  ],
+  "exit": 0,
+  "seconds": 1.159576209
+}

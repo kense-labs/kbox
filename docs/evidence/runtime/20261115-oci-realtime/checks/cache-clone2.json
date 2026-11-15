@@ -1,0 +1,24 @@
+{
+  "exitCode": 0,
+  "seconds": 0.9460261249999999,
+  "stores": [
+    {
+      "command": [
+        "cp",
+        "-cR",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/image-cache",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/image-cache"
+      ],
+      "files": 23
+    },
+    {
+      "command": [
+        "cp",
+        "-cR",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/af-image-cache",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-image-cache"
+      ],
+      "files": 367
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/final-resource-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 1.8125631249999998
+}

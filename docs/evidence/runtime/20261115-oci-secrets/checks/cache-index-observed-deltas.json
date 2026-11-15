@@ -1,0 +1,342 @@
+[
+  {
+    "kind": "native",
+    "baselineExactBytesRecoveredFromUnchangedPriorCache": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/image-cache/images/index.json",
+    "baselineSha256": "88b7fc68fc3009bb965717b13f3117315934842b5ffb2d001b04eba7a4417c30",
+    "changes": [
+      {
+        "path": "/images",
+        "before": [
+          {
+            "reference": "kbox-hvf-same-uid:qualification",
+            "digest": "sha256:a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136",
+            "size_bytes": 3993743,
+            "pulled_at": "2026-11-14T06:13:18.933985Z",
+            "last_used": "2026-11-15T01:30:25.879576Z",
+            "path": "/private/tmp/kbox-rlimits-e5c6b94fd37f/ulimits-attempt-3/home/images/sha256/a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136"
+          },
+          {
+            "reference": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+            "digest": "sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+            "size_bytes": 3966763,
+            "pulled_at": "2026-11-14T09:25:46.216579Z",
+            "last_used": "2026-11-15T01:31:01.350219Z",
+            "path": "/private/tmp/kbox-rlimits-e5c6b94fd37f/ulimits-attempt-3/home/images/sha256/a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa"
+          },
+          {
+            "reference": "docker.io/library/kbox-hvf-volumes@sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+            "digest": "sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+            "size_bytes": 3966763,
+            "pulled_at": "2026-11-14T09:25:46.216579Z",
+            "last_used": "2026-11-15T00:45:08.955991Z",
+            "path": "/private/tmp/kbox-rlimits-e5c6b94fd37f/ulimits-attempt-3/home/images/sha256/fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4"
+          }
+        ],
+        "after": [
+          {
+            "reference": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+            "digest": "sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+            "size_bytes": 3966763,
+            "pulled_at": "2026-11-14T09:25:46.216579Z",
+            "last_used": "2026-11-15T03:15:04.010141Z",
+            "path": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-7-ram/case/home/images/sha256/a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa"
+          },
+          {
+            "reference": "kbox-hvf-same-uid:qualification",
+            "digest": "sha256:a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136",
+            "size_bytes": 3993743,
+            "pulled_at": "2026-11-14T06:13:18.933985Z",
+            "last_used": "2026-11-15T03:14:54.575818Z",
+            "path": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-7-ram/case/home/images/sha256/a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136"
+          },
+          {
+            "reference": "docker.io/library/kbox-hvf-volumes@sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+            "digest": "sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+            "size_bytes": 3966763,
+            "pulled_at": "2026-11-14T09:25:46.216579Z",
+            "last_used": "2026-11-15T03:14:37.149721Z",
+            "path": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-7-ram/case/home/images/sha256/fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "kind": "af",
+    "baselineExactBytesRecoveredFromUnchangedPriorCache": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/image-cache/images/index.json",
+    "baselineSha256": "4e84c957780533849aa29f29a2ec81243dc03403a0ca018361d72cd2bec06307",
+    "changes": [
+      {
+        "path": "/images",
+        "before": [
+          {
+            "reference": "kbox-oci-regression:a599f4dec228407fbf8a30b1a09e3dd0",
+            "digest": "sha256:6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7",
+            "size_bytes": 78030213,
+            "pulled_at": "2026-11-15T01:17:59.302217Z",
+            "last_used": "2026-11-15T01:18:32.076361Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7"
+          },
+          {
+            "reference": "kbox-oci-regression:0e1b603a9b014109bdddfa5ce7890a77",
+            "digest": "sha256:709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e",
+            "size_bytes": 78030221,
+            "pulled_at": "2026-11-14T12:30:04.974853Z",
+            "last_used": "2026-11-14T12:30:38.301181Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e"
+          },
+          {
+            "reference": "kbox-oci-regression:e63cdc4bfb624741addce5be2492e49b",
+            "digest": "sha256:c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T09:55:11.576431Z",
+            "last_used": "2026-11-14T09:55:43.770499Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec"
+          },
+          {
+            "reference": "kbox-oci-regression:a642a84119104354960a33bc119fd2e7",
+            "digest": "sha256:440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1",
+            "size_bytes": 78030214,
+            "pulled_at": "2026-11-14T18:04:28.142654Z",
+            "last_used": "2026-11-14T18:04:45.920234Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1"
+          },
+          {
+            "reference": "kbox-oci-regression:150a4bc3103b45038a5eabffa4c4cbcc",
+            "digest": "sha256:4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962",
+            "size_bytes": 78030223,
+            "pulled_at": "2026-11-14T16:19:45.858129Z",
+            "last_used": "2026-11-14T16:20:16.294751Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962"
+          },
+          {
+            "reference": "kbox-oci-regression:6d4fd4ac440649e8aa07a53d09f4c089",
+            "digest": "sha256:7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1",
+            "size_bytes": 78030211,
+            "pulled_at": "2026-11-14T15:36:59.499808Z",
+            "last_used": "2026-11-14T15:37:16.509485Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1"
+          },
+          {
+            "reference": "docker.io/library/busybox:1.37.0",
+            "digest": "sha256:a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec",
+            "size_bytes": 1902122,
+            "pulled_at": "2026-11-14T01:02:38.148591Z",
+            "last_used": "2026-11-15T01:28:15.623991Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec"
+          },
+          {
+            "reference": "kbox-oci-regression:ab64678ae888431eb33a72a51286e179",
+            "digest": "sha256:6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3",
+            "size_bytes": 78030203,
+            "pulled_at": "2026-11-15T01:28:40.265900Z",
+            "last_used": "2026-11-15T01:29:08.798187Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3"
+          },
+          {
+            "reference": "kbox-oci-regression:0b47261d6de947c98c7e88de3a0acd1d",
+            "digest": "sha256:7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406",
+            "size_bytes": 78030225,
+            "pulled_at": "2026-11-14T23:45:19.734400Z",
+            "last_used": "2026-11-14T23:45:51.721867Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406"
+          },
+          {
+            "reference": "kbox-oci-regression:739d08ea2f084fa880a5174d6006beb5",
+            "digest": "sha256:9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7",
+            "size_bytes": 78030215,
+            "pulled_at": "2026-11-15T00:37:55.062807Z",
+            "last_used": "2026-11-15T00:38:19.429581Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7"
+          },
+          {
+            "reference": "kbox-oci-regression:8909ab76df62461a82ee45c0049b37e0",
+            "digest": "sha256:820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14",
+            "size_bytes": 78030226,
+            "pulled_at": "2026-11-14T16:31:00.580700Z",
+            "last_used": "2026-11-14T16:31:17.327027Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14"
+          },
+          {
+            "reference": "kbox-qualification-tools:local",
+            "digest": "sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+            "size_bytes": 77799778,
+            "pulled_at": "2026-11-14T01:06:48.965537Z",
+            "last_used": "2026-11-15T01:30:59.248478Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7"
+          },
+          {
+            "reference": "kbox-oci-regression:bf2d8b1951bc44a3a32077657703e48c",
+            "digest": "sha256:5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192",
+            "size_bytes": 78030213,
+            "pulled_at": "2026-11-14T10:12:35.777663Z",
+            "last_used": "2026-11-14T10:12:53.081024Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192"
+          },
+          {
+            "reference": "kbox-oci-regression:41f9f7299cf44bdc99d605c3fbcb7b20",
+            "digest": "sha256:8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a",
+            "size_bytes": 78030220,
+            "pulled_at": "2026-11-14T22:57:22.466462Z",
+            "last_used": "2026-11-14T22:57:40.907596Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a"
+          },
+          {
+            "reference": "kbox-oci-regression:ac25b5cc9d6740d3bd9dde90c908cd5c",
+            "digest": "sha256:c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T20:26:18.261477Z",
+            "last_used": "2026-11-14T20:26:36.284988Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a"
+          },
+          {
+            "reference": "kbox-oci-regression:d2a4a7a5d57a4d5eb39a09e8ba745705",
+            "digest": "sha256:fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T21:20:09.491765Z",
+            "last_used": "2026-11-14T21:20:27.285874Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/af-final2/native-directory/home/images/sha256/fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd"
+          }
+        ],
+        "after": [
+          {
+            "reference": "kbox-oci-regression:6d4fd4ac440649e8aa07a53d09f4c089",
+            "digest": "sha256:7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1",
+            "size_bytes": 78030211,
+            "pulled_at": "2026-11-14T15:36:59.499808Z",
+            "last_used": "2026-11-14T15:37:16.509485Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1"
+          },
+          {
+            "reference": "kbox-oci-regression:e63cdc4bfb624741addce5be2492e49b",
+            "digest": "sha256:c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T09:55:11.576431Z",
+            "last_used": "2026-11-14T09:55:43.770499Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec"
+          },
+          {
+            "reference": "kbox-oci-regression:ab64678ae888431eb33a72a51286e179",
+            "digest": "sha256:6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3",
+            "size_bytes": 78030203,
+            "pulled_at": "2026-11-15T01:28:40.265900Z",
+            "last_used": "2026-11-15T01:29:08.798187Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3"
+          },
+          {
+            "reference": "kbox-oci-regression:a599f4dec228407fbf8a30b1a09e3dd0",
+            "digest": "sha256:6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7",
+            "size_bytes": 78030213,
+            "pulled_at": "2026-11-15T01:17:59.302217Z",
+            "last_used": "2026-11-15T01:18:32.076361Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7"
+          },
+          {
+            "reference": "kbox-oci-regression:8909ab76df62461a82ee45c0049b37e0",
+            "digest": "sha256:820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14",
+            "size_bytes": 78030226,
+            "pulled_at": "2026-11-14T16:31:00.580700Z",
+            "last_used": "2026-11-14T16:31:17.327027Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14"
+          },
+          {
+            "reference": "kbox-oci-regression:d2a4a7a5d57a4d5eb39a09e8ba745705",
+            "digest": "sha256:fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T21:20:09.491765Z",
+            "last_used": "2026-11-14T21:20:27.285874Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd"
+          },
+          {
+            "reference": "docker.io/library/busybox:1.37.0",
+            "digest": "sha256:a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec",
+            "size_bytes": 1902122,
+            "pulled_at": "2026-11-14T01:02:38.148591Z",
+            "last_used": "2026-11-15T03:13:25.617295Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec"
+          },
+          {
+            "reference": "kbox-oci-regression:0e1b603a9b014109bdddfa5ce7890a77",
+            "digest": "sha256:709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e",
+            "size_bytes": 78030221,
+            "pulled_at": "2026-11-14T12:30:04.974853Z",
+            "last_used": "2026-11-14T12:30:38.301181Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e"
+          },
+          {
+            "reference": "kbox-oci-regression:41f9f7299cf44bdc99d605c3fbcb7b20",
+            "digest": "sha256:8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a",
+            "size_bytes": 78030220,
+            "pulled_at": "2026-11-14T22:57:22.466462Z",
+            "last_used": "2026-11-14T22:57:40.907596Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a"
+          },
+          {
+            "reference": "kbox-oci-regression:bf2d8b1951bc44a3a32077657703e48c",
+            "digest": "sha256:5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192",
+            "size_bytes": 78030213,
+            "pulled_at": "2026-11-14T10:12:35.777663Z",
+            "last_used": "2026-11-14T10:12:53.081024Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192"
+          },
+          {
+            "reference": "kbox-oci-regression:ac25b5cc9d6740d3bd9dde90c908cd5c",
+            "digest": "sha256:c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a",
+            "size_bytes": 78030216,
+            "pulled_at": "2026-11-14T20:26:18.261477Z",
+            "last_used": "2026-11-14T20:26:36.284988Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a"
+          },
+          {
+            "reference": "kbox-oci-regression:a642a84119104354960a33bc119fd2e7",
+            "digest": "sha256:440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1",
+            "size_bytes": 78030214,
+            "pulled_at": "2026-11-14T18:04:28.142654Z",
+            "last_used": "2026-11-14T18:04:45.920234Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1"
+          },
+          {
+            "reference": "kbox-oci-regression:0b47261d6de947c98c7e88de3a0acd1d",
+            "digest": "sha256:7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406",
+            "size_bytes": 78030225,
+            "pulled_at": "2026-11-14T23:45:19.734400Z",
+            "last_used": "2026-11-14T23:45:51.721867Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406"
+          },
+          {
+            "reference": "kbox-oci-regression:fbefa72579a44e0d831874de5ba2f5d6",
+            "digest": "sha256:0b1dc72cd513d32b3a7314062db309e7a259a9be4f6ab99eb3937c21d6814f8e",
+            "size_bytes": 78030222,
+            "pulled_at": "2026-11-15T03:13:47.422580Z",
+            "last_used": "2026-11-15T03:14:05.308041Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/0b1dc72cd513d32b3a7314062db309e7a259a9be4f6ab99eb3937c21d6814f8e"
+          },
+          {
+            "reference": "kbox-oci-regression:150a4bc3103b45038a5eabffa4c4cbcc",
+            "digest": "sha256:4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962",
+            "size_bytes": 78030223,
+            "pulled_at": "2026-11-14T16:19:45.858129Z",
+            "last_used": "2026-11-14T16:20:16.294751Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962"
+          },
+          {
+            "reference": "kbox-qualification-tools:local",
+            "digest": "sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+            "size_bytes": 77799778,
+            "pulled_at": "2026-11-14T01:06:48.965537Z",
+            "last_used": "2026-11-15T03:14:26.982272Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7"
+          },
+          {
+            "reference": "kbox-oci-regression:739d08ea2f084fa880a5174d6006beb5",
+            "digest": "sha256:9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7",
+            "size_bytes": 78030215,
+            "pulled_at": "2026-11-15T00:37:55.062807Z",
+            "last_used": "2026-11-15T00:38:19.429581Z",
+            "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home/images/sha256/9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7"
+          }
+        ]
+      }
+    ]
+  }
+]

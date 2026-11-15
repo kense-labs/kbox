@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-kbox",
+    "--bin",
+    "koci-kshim",
+    "macos_storage_attachment::tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 1.4196712089999999
+}

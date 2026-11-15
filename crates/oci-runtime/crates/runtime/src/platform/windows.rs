@@ -253,14 +253,30 @@ fn capability_from_observation(observation: ProbeObservation) -> DriverCapabilit
 }
 
 pub(crate) fn features() -> RuntimeFeatures {
-    RuntimeFeatures::current(vec![capability_from_observation(observe_whpx())])
+    RuntimeFeatures::current(vec![whpx_driver_capability()])
 }
 
 pub(crate) fn whpx_driver_capability() -> DriverCapability {
+    if let Err(error) = koci_sdk::admit_windows_whpx_host() {
+        let unsupported = error.code == koci_sdk::ErrorCode::Unsupported;
+        let mut capability = capability_from_observation(ProbeObservation {
+            dll_loaded: false,
+            hypervisor_present: false,
+            reason: Some(error.to_string()),
+        });
+        if unsupported {
+            capability.status = CapabilityStatus::Unsupported;
+            capability.isolation_classes.clear();
+        }
+        return capability;
+    }
     capability_from_observation(observe_whpx())
 }
 
 pub(crate) fn whpx_smoke() -> WhpxSmokeReport {
+    if let Err(error) = koci_sdk::admit_windows_whpx_host() {
+        return WhpxSmokeReport::unavailable(false, false, error.to_string());
+    }
     let api = match WhpxApi::load() {
         Ok(api) => api,
         Err(error) => return WhpxSmokeReport::unavailable(false, false, error.to_string()),

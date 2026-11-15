@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "nproc_cli_defaults",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.765460208
+}

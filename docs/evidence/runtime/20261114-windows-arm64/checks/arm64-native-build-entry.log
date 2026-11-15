@@ -1,0 +1,4 @@
+
+thread 'main' (82660510) panicked at crates/box/deps/libksys/build.rs:86:34:
+libkrun/libkrunfw Windows runtime requires x86_64-pc-windows-msvc; Windows ARM64 and other ABIs are unsupported by the current native dependencies
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

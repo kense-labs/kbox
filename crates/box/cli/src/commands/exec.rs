@@ -107,8 +107,8 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
         None => return Err(format!("No such container: {}", args.r#box).into()),
     };
     record.require_claimed()?;
-    let oci_session = uses_oci_session(&record);
-    if oci_session {
+    let managed_session = uses_managed_session(&record);
+    if managed_session {
         if record.status != "running" {
             return Err(format!("Box {} is not running", record.name).into());
         }
@@ -125,7 +125,7 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
             return Err("Cannot use --request-id with -t/--tty".into());
         }
 
-        return if oci_session {
+        return if managed_session {
             execute_managed_pty(args, &record, user).await
         } else {
             execute_pty(args, &record, user).await
@@ -196,11 +196,14 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
 
 pub(crate) async fn execute_captured(
     record: &crate::state::BoxRecord,
-    request: kbox_core::exec::ExecRequest,
+    mut request: kbox_core::exec::ExecRequest,
 ) -> Result<kbox_core::exec::ExecOutput, Box<dyn std::error::Error>> {
     use kbox_core::{ExecutionId, ExecutionSessionManager};
 
-    if uses_oci_session(record) {
+    if uses_managed_session(record) {
+        request.user = request
+            .user
+            .or_else(|| configured_process_limit_user(record));
         if record.status != "running" {
             return Err(format!("Box {} is not running", record.name).into());
         }
@@ -232,11 +235,32 @@ pub(crate) async fn execute_captured(
     }
 }
 
-pub(crate) fn uses_oci_session(record: &crate::state::BoxRecord) -> bool {
-    record
-        .managed_execution
-        .as_ref()
-        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
+pub(crate) fn uses_managed_session(record: &crate::state::BoxRecord) -> bool {
+    // Both persisted backends need the manager's security inheritance and fencing.
+    record.managed_execution.is_some()
+}
+
+pub(crate) fn configured_process_limit_user(record: &crate::state::BoxRecord) -> Option<String> {
+    use kbox_core::guest_exec::{GuestRlimit, GuestRlimitResource};
+
+    let metadata = record.managed_execution.as_ref()?;
+    if metadata.runtime_route != kbox_runtime::ManagedRuntimeRoute::OciSdk {
+        return None;
+    }
+    let config = &metadata.request.config;
+    let limits = GuestRlimit::parse_specs(&config.resource_limits.ulimits).ok()?;
+    if !limits.iter().any(|limit| {
+        matches!(
+            limit.resource(),
+            GuestRlimitResource::Nproc
+                | GuestRlimitResource::Sigpending
+                | GuestRlimitResource::Msgqueue
+        )
+    }) {
+        return None;
+    }
+    // The CLI makes the bounded quota UID explicit; public None still means root.
+    config.user.clone()
 }
 
 fn timeout_secs_to_ns(timeout_secs: u64) -> u64 {
@@ -317,7 +341,7 @@ async fn execute_managed_pty(
                 env: args.envs,
                 working_dir: args.workdir,
                 rootfs: None,
-                user,
+                user: user.or_else(|| configured_process_limit_user(record)),
                 cols,
                 rows,
             },
@@ -693,3 +717,7 @@ mod tests {
         assert!(!cli.exec.tty);
     }
 }
+
+#[cfg(test)]
+#[path = "exec_session_tests.rs"]
+mod session_tests;

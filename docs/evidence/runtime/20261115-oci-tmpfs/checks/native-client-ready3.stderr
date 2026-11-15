@@ -1,0 +1,4 @@
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+   Compiling kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+   Compiling kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.07s

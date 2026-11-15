@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/native-client-cpu-time-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::cpu_time::native_cpu_time_limits_signal_all_process_paths_replay_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-cpu-time-092623a0dfc9/cpu-time-attempt-1",
+  "clientSha256": "9b292d212d67e4e14a91913b7738adce472740e18d0c9ef0ac14aee3627700c0",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/installed-cpu-time-final-1",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 223.745935083,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

@@ -8,11 +8,11 @@ use kbox_contract::contract::{
     RuntimeApplyRequest, RuntimeExecRequest, RuntimeInspection, RuntimeMount, RuntimeMountSource,
     RuntimeUnitClass,
 };
-use kbox_contract::{FileRuntimeStateStore, ManagedRuntimeClient, RuntimeClient, RuntimeDriver};
+use kbox_contract::{FileRuntimeStateStore, ManagedRuntimeClient, RuntimeClient};
 use sha2::{Digest, Sha256};
 
 use super::*;
-use crate::kbox_contract_driver::test_support::{accepted, action, apply_request, runtime_spec};
+use crate::kbox_contract_driver::test_support::{action, apply_request, runtime_spec};
 use crate::{BoxRuntimeDriver, BoxRuntimeDriverConfig};
 
 struct Grants {
@@ -70,7 +70,7 @@ async fn run() {
     assert_eq!(home.canonicalize().unwrap(), home);
     assert_eq!(home.metadata().unwrap().permissions().mode() & 0o777, 0o700);
     assert_eq!(
-        std::fs::read_to_string(home.join(".krun-directory-native")).unwrap(),
+        std::fs::read_to_string(home.join(".kbox-directory-native")).unwrap(),
         "owned-directory-native-test\n"
     );
     let root = home.parent().unwrap();
@@ -132,15 +132,48 @@ async fn run() {
             read_only: false,
         },
     ];
-    #[cfg(target_os = "macos")]
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     {
         let mut ro = spec.clone();
         ro.unit_id = readonly_id;
         ro.mounts[0].read_only = true;
-        assert!(matches!(
-            driver.apply(&apply_request(&ro), &accepted(&ro)).await,
-            Err(kbox_contract::RuntimeError::InvalidRequest(_))
-        ));
+        client.apply(&apply_request(&ro)).await.unwrap();
+        let probe = r#"import ctypes,errno,os,pathlib,subprocess,sys
+p=pathlib.Path(sys.argv[1]); original=(p/'输入 file.txt').read_text()
+libc=ctypes.CDLL(None,use_errno=True)
+assert libc.mount(None,os.fsencode(p),None,32,None)==0,ctypes.get_errno()
+try: (p/'输入 file.txt').write_text('forbidden')
+except OSError as e: assert e.errno in (errno.EPERM,errno.EACCES),e
+else: raise AssertionError('privileged guest bypassed host readonly')
+assert (p/'输入 file.txt').read_text()==original
+print('host-readonly-after-remount')"#;
+        let result = client
+            .exec(&RuntimeExecRequest {
+                schema: RuntimeExecRequest::SCHEMA.into(),
+                request_id: "directory-readonly-remount".into(),
+                unit_id: ro.unit_id.clone(),
+                generation: 1,
+                command: vec![
+                    "python3".into(),
+                    "-c".into(),
+                    probe.into(),
+                    workspace.to_str().unwrap().into(),
+                ],
+                timeout_ms: 10_000,
+                deadline_at_ms: None,
+            })
+            .await
+            .unwrap();
+        assert_eq!(result.exit_code, 0, "{}", result.stderr);
+        assert_eq!(result.stdout.trim(), "host-readonly-after-remount");
+        client
+            .stop(&action("directory-readonly-stop", &ro))
+            .await
+            .unwrap();
+        client
+            .remove(&action("directory-readonly-remove", &ro))
+            .await
+            .unwrap();
         assert!(driver.manager.managed_records().await.unwrap().is_empty());
     }
     let running = client

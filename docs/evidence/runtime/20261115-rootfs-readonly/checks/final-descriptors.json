@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "-n",
+    "-P",
+    "-Fpcn"
+  ],
+  "exitCode": 0,
+  "ownedDescriptorHolders": [],
+  "scope": [
+    "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48",
+    "/private/tmp/kbox-rootro-a4e38db72f6b"
+  ]
+}

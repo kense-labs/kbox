@@ -1,0 +1,20 @@
+   Compiling num-bigint v0.4.8
+   Compiling ref-cast v1.0.25
+   Compiling strum v0.28.0
+   Compiling derive_builder v0.20.2
+   Compiling seccompiler v0.5.0
+   Compiling zeroize v1.8.2
+   Compiling syscalls v0.8.1
+   Compiling nix v0.29.0
+   Compiling fluent-uri v0.4.1
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling referencing v0.48.5
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling fraction v0.15.4
+   Compiling jsonschema-value v0.48.5
+   Compiling jsonschema v0.48.5
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+    Finished `release-dist` profile [optimized] target(s) in 4m 16s

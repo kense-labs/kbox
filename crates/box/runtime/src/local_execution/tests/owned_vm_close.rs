@@ -7,7 +7,7 @@ use std::time::Instant;
 
 use kbox_core::vmm::OwnedCloseBudget;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, NetworkMode,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
     OperationId,
 };
 

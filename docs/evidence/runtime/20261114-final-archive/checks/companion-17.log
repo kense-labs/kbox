@@ -1,0 +1,5 @@
+/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib:
+	@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)
+	/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)
+	/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)

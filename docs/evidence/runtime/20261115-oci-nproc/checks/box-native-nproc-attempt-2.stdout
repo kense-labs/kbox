@@ -1,0 +1,11 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2283 filtered out; finished in 35.38s
+

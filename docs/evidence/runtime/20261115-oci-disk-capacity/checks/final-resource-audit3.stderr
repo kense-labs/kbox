@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/final-resource-audit3.py", line 118, in <module>
+    assert (st.st_uid,st.st_gid,st.st_mode&0o777)==(original.st_uid,original.st_gid,original.st_mode&0o777)
+AssertionError

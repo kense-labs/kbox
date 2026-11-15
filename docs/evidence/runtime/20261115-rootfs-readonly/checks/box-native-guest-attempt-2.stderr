@@ -1,0 +1,89 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootro-a4e38db72f6b/guest-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (86173567) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_guest_readonly.rs:23:17:
+assertion `left == right` failed: 
+running 4 tests
+test exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child ... ignored, invoked by parent after dropping mount authority in an isolated process
+test exec_server::readonly_tests::readonly_rootfs_mount_failure_refuses_exec_preparation ... 
+running 1 test
+test exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child ... FAILED
+
+failures:
+
+failures:
+    exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.00s
+
+
+FAILED
+test pty_server::readonly_tests::readonly_rootfs_mount_failure_refuses_pty_before_launch ... 
+running 1 test
+test pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child ... FAILED
+
+failures:
+
+failures:
+    pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.00s
+
+
+FAILED
+test pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child ... ignored, invoked by parent in an isolated process without mount authority
+
+failures:
+
+failures:
+    exec_server::readonly_tests::readonly_rootfs_mount_failure_refuses_exec_preparation
+    pty_server::readonly_tests::readonly_rootfs_mount_failure_refuses_pty_before_launch
+
+test result: FAILED. 0 passed; 2 failed; 2 ignored; 0 measured; 192 filtered out; finished in 0.01s
+
+
+
+thread 'exec_server::readonly_tests::readonly_rootfs_mount_failure_refuses_exec_preparation' (4) panicked at crates/box/guest/init/src/exec_server/rootfs_readonly_tests.rs:14:5:
+
+running 1 test
+test exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child ... FAILED
+
+failures:
+
+failures:
+    exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.00s
+
+
+
+thread 'exec_server::readonly_tests::readonly_rootfs_exec_without_mount_authority_child' (6) panicked at crates/box/guest/init/src/exec_server/rootfs_readonly_tests.rs:29:5:
+explicit readonly root was admitted after failed mount enforcement
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'pty_server::readonly_tests::readonly_rootfs_mount_failure_refuses_pty_before_launch' (7) panicked at crates/box/guest/init/src/pty_server_readonly_tests.rs:10:5:
+
+running 1 test
+test pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child ... FAILED
+
+failures:
+
+failures:
+    pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 195 filtered out; finished in 0.00s
+
+
+
+thread 'pty_server::readonly_tests::readonly_rootfs_pty_without_mount_authority_child' (9) panicked at crates/box/guest/init/src/pty_server_readonly_tests.rs:31:5:
+PTY proceeded after unenforced readonly root
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+  left: 101
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::guest_readonly::native_guest_readonly_guards_refuse_unenforced_root_before_exec_or_pty' (86173566) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_guest_readonly.rs:30:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

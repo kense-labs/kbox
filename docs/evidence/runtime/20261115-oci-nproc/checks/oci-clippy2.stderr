@@ -1,0 +1,50 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+warning: this `if` statement can be collapsed
+   --> crates/oci-runtime/crates/kbox/src/macos_context.rs:876:16
+    |
+876 |           } else if command == 0x19
+    |  ________________^
+877 | |             && size >= 72
+878 | |             && bytes.get(offset + 8..offset + 24)? == b"__LINKEDIT\0\0\0\0\0\0"
+...   |
+883 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#collapsible_if
+    = note: `#[warn(clippy::collapsible_if)]` on by default
+help: collapse nested if block
+    |
+878 ~             && bytes.get(offset + 8..offset + 24)? == b"__LINKEDIT\0\0\0\0\0\0"
+879 ~             && linkedit.replace(offset).is_some() {
+880 |                 return None;
+881 ~             }
+    |
+
+warning: `koci-kbox` (lib) generated 1 warning (run `cargo clippy --fix --lib -p koci-kbox -- --no-deps` to apply 1 suggestion)
+warning: `koci-kbox` (lib test) generated 1 warning (1 duplicate)
+warning: spawned process is never `wait()`ed on
+   --> crates/oci-runtime/crates/kbox/src/owner_process_macos_tests.rs:179:19
+    |
+179 |       let _worker = Command::new(std::env::current_exe().unwrap())
+    |  ___________________^
+180 | |         .args([
+181 | |             "--ignored",
+182 | |             "--exact",
+...   |
+189 | |         .spawn()
+190 | |         .unwrap();
+    | |_________________^
+    |
+    = help: consider calling `.wait()`
+    = note: not doing so might leave behind zombie processes
+    = note: see https://doc.rust-lang.org/stable/std/process/struct.Child.html#warning
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#zombie_processes
+    = note: `#[warn(clippy::zombie_processes)]` on by default
+
+warning: `koci-kbox` (bin "koci-kshim" test) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 27.37s

@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "sourceUnchanged": true,
+  "attempts": [
+    {
+      "attempt": 2,
+      "retainedVolumeCount": 2,
+      "readOnlyProbes": 3,
+      "liveData": {
+        "actual": "host update after guest first read has a different length",
+        "exit": 0,
+        "expected": "host update after guest first read has a different length"
+      },
+      "fixtureOwnerCleanup": true
+    },
+    {
+      "attempt": 3,
+      "retainedVolumeCount": 3,
+      "readOnlyProbes": 3,
+      "liveData": {
+        "actual": "host update after guest first read has a different length",
+        "exit": 0,
+        "expected": "host update after guest first read has a different length"
+      },
+      "fixtureOwnerCleanup": true
+    }
+  ]
+}

@@ -7,6 +7,9 @@ use crate::store_io::quarantine_label;
 use crate::BoxRecord;
 use kbox_core::{ExecutionId, OperationId};
 
+#[path = "box_state_layout.rs"]
+mod layout;
+
 /// Durable collection of local box execution records.
 ///
 /// All mutating operations use the sibling `boxes.json.lock` advisory lock and
@@ -32,7 +35,7 @@ impl BoxStateStore {
     /// A missing state file is represented by an empty store and its parent
     /// directory is created for subsequent writes.
     pub fn load(path: &Path) -> std::io::Result<Self> {
-        Self::load_unlocked(path, CorruptionPolicy::ReturnError, true)
+        Self::load_mutable(path, CorruptionPolicy::ReturnError)
     }
 
     /// Load state and preserve an invalid file as a timestamped sibling.
@@ -40,7 +43,7 @@ impl BoxStateStore {
     /// This compatibility path keeps the CLI available for manual recovery.
     /// New runtime services should prefer [`Self::load`] and fail closed.
     pub fn load_or_quarantine(path: &Path) -> std::io::Result<Self> {
-        Self::load_unlocked(path, CorruptionPolicy::Quarantine, true)
+        Self::load_mutable(path, CorruptionPolicy::Quarantine)
     }
 
     /// Load a side-effect-free snapshot.
@@ -115,7 +118,9 @@ impl BoxStateStore {
         corruption_policy: CorruptionPolicy,
         create_parent: bool,
     ) -> std::io::Result<Self> {
-        if !path.exists() {
+        let fenced_path = layout::data_path(path)?;
+        let data_path = fenced_path.as_deref().unwrap_or(path);
+        if fenced_path.is_none() && !data_path.exists() {
             if create_parent {
                 if let Some(parent) = path.parent() {
                     std::fs::create_dir_all(parent)?;
@@ -124,11 +129,10 @@ impl BoxStateStore {
             return Ok(Self::from_records(path.to_path_buf(), Vec::new()));
         }
 
-        let data = std::fs::read_to_string(path)?;
+        let data = std::fs::read_to_string(data_path)?;
         let parsed = Self::reject_retired_isolation_selector(&data)
             .and_then(|_| {
-                serde_json::from_str::<Vec<BoxRecord>>(&data)
-                    .map_err(|error| error.to_string())
+                serde_json::from_str::<Vec<BoxRecord>>(&data).map_err(|error| error.to_string())
             })
             .and_then(|records| {
                 validate_managed_records(&records)?;
@@ -136,7 +140,9 @@ impl BoxStateStore {
             });
         match parsed {
             Ok(records) => Ok(Self::from_records(path.to_path_buf(), records)),
-            Err(error) if corruption_policy == CorruptionPolicy::ReturnError => {
+            Err(error)
+                if fenced_path.is_some() || corruption_policy == CorruptionPolicy::ReturnError =>
+            {
                 Err(std::io::Error::new(std::io::ErrorKind::InvalidData, error))
             }
             Err(error) => {
@@ -153,41 +159,63 @@ impl BoxStateStore {
         }
     }
 
-/// Reject state written by the retired multi-isolation format.
-///
-/// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
-/// `isolation` field. Serde would silently ignore an unknown field, which
-/// would let a legacy shared-kernel `"sandbox"` record masquerade as a
-/// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
-/// instead: the one historical value that matches the current boundary is
-/// accepted, anything else is a hard error with migration guidance.
-///
-/// The fast path avoids a second JSON parse for every modern state file.
-fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
-    if !data.contains("\"isolation\"") {
-        return Ok(());
+    fn requires_directory_fence(&self) -> bool {
+        self.records.iter().any(|record| {
+            record.managed_execution.as_ref().is_some_and(|metadata| {
+                !metadata.caller_files.is_empty()
+                    || (cfg!(all(target_os = "macos", target_arch = "aarch64"))
+                        && metadata.runtime_route == crate::ManagedRuntimeRoute::OciSdk
+                        && !record.anonymous_volumes.is_empty())
+            })
+        })
     }
-    let value: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
-    let Some(records) = value.as_array() else {
-        return Ok(());
-    };
-    for record in records {
-        let Some(selector) = record.get("isolation") else {
-            continue;
+
+    fn load_mutable(path: &Path, policy: CorruptionPolicy) -> std::io::Result<Self> {
+        let store = Self::load_unlocked(path, policy, true)?;
+        if store.requires_directory_fence() && layout::data_path(path)?.is_none() {
+            let _lock = FileLock::acquire(path)?;
+            let current = Self::load_unlocked(path, policy, true)?;
+            current.write_unlocked()?;
+            return Ok(current);
+        }
+        Ok(store)
+    }
+
+    /// Reject state written by the retired multi-isolation format.
+    ///
+    /// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
+    /// `isolation` field. Serde would silently ignore an unknown field, which
+    /// would let a legacy shared-kernel `"sandbox"` record masquerade as a
+    /// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
+    /// instead: the one historical value that matches the current boundary is
+    /// accepted, anything else is a hard error with migration guidance.
+    ///
+    /// The fast path avoids a second JSON parse for every modern state file.
+    fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
+        if !data.contains("\"isolation\"") {
+            return Ok(());
+        }
+        let value: serde_json::Value = serde_json::from_str(data).map_err(|e| e.to_string())?;
+        let Some(records) = value.as_array() else {
+            return Ok(());
         };
-        match selector.as_str() {
-            Some("microvm") | None => {}
-            Some(other) => {
-                return Err(format!(
-                    "retired isolation selector {other:?} in boxes.json: shared-kernel \
+        for record in records {
+            let Some(selector) = record.get("isolation") else {
+                continue;
+            };
+            match selector.as_str() {
+                Some("microvm") | None => {}
+                Some(other) => {
+                    return Err(format!(
+                        "retired isolation selector {other:?} in boxes.json: shared-kernel \
                      sandbox records cannot be loaded as MicroVM boxes; migrate or remove \
                      the record before starting kbox"
-                ));
+                    ));
+                }
             }
         }
+        Ok(())
     }
-    Ok(())
-}
 
     fn write_unlocked(&self) -> std::io::Result<()> {
         validate_managed_records(&self.records)
@@ -196,6 +224,12 @@ fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
             std::fs::create_dir_all(parent)?;
         }
         let data = serde_json::to_vec_pretty(&self.records).map_err(std::io::Error::other)?;
+        if let Some(path) = layout::data_path(&self.path)? {
+            return kbox_core::fs_atomic::write_durable(&path.with_extension("tmp"), &path, &data);
+        }
+        if self.requires_directory_fence() {
+            return layout::publish(&self.path, &data);
+        }
         let temporary_path = self.path.with_extension("json.tmp");
         kbox_core::fs_atomic::write_durable(&temporary_path, &self.path, &data)
     }
@@ -203,6 +237,11 @@ fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
     /// Path of the durable state file.
     pub fn path(&self) -> &Path {
         &self.path
+    }
+
+    /// Actual record bytes for internal persistence evidence, including the versioned layout.
+    pub(crate) fn data_path(&self) -> std::io::Result<PathBuf> {
+        Ok(layout::data_path(&self.path)?.unwrap_or_else(|| self.path.clone()))
     }
 
     /// All execution records in persistence order.
@@ -343,7 +382,7 @@ mod tests {
         .is_ok());
     }
 
-    fn record(id: &str) -> BoxRecord {
+    pub(super) fn record(id: &str) -> BoxRecord {
         serde_json::from_value(serde_json::json!({
             "id": id,
             "short_id": BoxRecord::make_short_id(id),
@@ -365,7 +404,7 @@ mod tests {
         .unwrap()
     }
 
-    fn managed_record(id: &str, operation_id: OperationId) -> BoxRecord {
+    pub(super) fn managed_record(id: &str, operation_id: OperationId) -> BoxRecord {
         let mut record = record(id);
         let config = kbox_core::BoxConfig {
             image: "alpine:latest".to_string(),
@@ -541,7 +580,9 @@ mod tests {
         let path = directory.path().join("boxes.json");
         let mut record = managed_record("managed", OperationId::new("operation-1").unwrap());
         let mut drifted = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
-        drifted.required_controls.push("tampered-control".to_string());
+        drifted
+            .required_controls
+            .push("tampered-control".to_string());
         record.managed_execution.as_mut().unwrap().plan = drifted;
         std::fs::write(&path, serde_json::to_vec(&vec![record]).unwrap()).unwrap();
 
@@ -607,3 +648,7 @@ mod tests {
         assert_eq!(store.records().len(), 8);
     }
 }
+
+#[cfg(all(test, target_os = "macos"))]
+#[path = "box_state_compat_tests.rs"]
+mod compat;

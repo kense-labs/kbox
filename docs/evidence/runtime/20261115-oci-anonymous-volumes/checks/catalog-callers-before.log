@@ -1,0 +1,13 @@
+
+running 2 tests
+test local_execution::vm_backend::tests::anonymous_recovery_preserves_corrupt_volume_catalog_without_empty_ownership ... FAILED
+test vm::spec::tests::general::instance_spec_preserves_corrupt_volume_catalog_without_recovery_to_empty ... FAILED
+
+failures:
+
+failures:
+    local_execution::vm_backend::tests::anonymous_recovery_preserves_corrupt_volume_catalog_without_empty_ownership
+    vm::spec::tests::general::instance_spec_preserves_corrupt_volume_catalog_without_recovery_to_empty
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2233 filtered out; finished in 0.02s
+

@@ -399,8 +399,8 @@ impl ImageService for BoxImageService {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use kbox_runtime::oci::ImageStore;
     use futures::StreamExt;
+    use kbox_runtime::oci::ImageStore;
 
     const TEST_DIGEST: &str =
         "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";

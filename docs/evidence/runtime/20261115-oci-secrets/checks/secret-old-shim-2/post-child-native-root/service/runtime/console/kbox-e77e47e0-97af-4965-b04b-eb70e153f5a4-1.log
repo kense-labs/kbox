@@ -1,0 +1,9 @@
+init.krun: entered main argc=1
+init.krun: mount_filesystems ok
+init.krun: after cmdline env import KRUN_INIT=/usr/bin/koci-agent KRUN_INIT_PID1=<null> BOX_EXEC_EXEC=<null>
+init.krun: root propagation ok
+init.krun: tty/session configured
+init.krun: config parsed
+init.krun: selected exec=/usr/bin/koci-agent init_pid1=0
+init.krun: setup_redirects ok
+init.krun: execvp(/usr/bin/koci-agent) starting

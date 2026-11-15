@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-service-regressions1.py", line 8, in <module>
+    assert results==[0,0],results
+AssertionError: [0, 1]

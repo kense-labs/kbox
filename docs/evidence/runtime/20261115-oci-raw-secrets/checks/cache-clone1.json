@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "cp",
+      "-cR",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/image-cache",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/image-cache"
+    ],
+    "files": 23
+  },
+  {
+    "command": [
+      "cp",
+      "-cR",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-image-cache",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-image-cache"
+    ],
+    "files": 381
+  }
+]

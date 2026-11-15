@@ -76,9 +76,7 @@ pub struct BoxRuntimeDriverConfig {
     /// Secret files. The provider never creates or silently downgrades this
     /// mount to disk-backed storage.
     pub secret_root: PathBuf,
-    /// ED3 (design A): advertise and honor the StateSnapshot feature —
-    /// keyed filesystem snapshots before termination, restores on apply.
-    /// Off by default until the engine conformance lane qualifies it.
+    /// Reserved StateSnapshot opt-in. MicroVM providers currently refuse `true`.
     pub state_snapshot: bool,
 }
 
@@ -464,6 +462,11 @@ fn probe_provider_build(
 }
 
 fn validate_config(config: &BoxRuntimeDriverConfig) -> RuntimeResult<()> {
+    if config.state_snapshot {
+        return Err(RuntimeError::UnsupportedCapabilities(vec![
+            "feature:StateSnapshot".into(),
+        ]));
+    }
     if !config.home_dir.is_absolute() {
         return Err(RuntimeError::InvalidRequest(
             "Box Runtime home directory must be absolute".into(),
@@ -583,9 +586,6 @@ impl RuntimeDriver for BoxRuntimeDriver {
         features.push(RuntimeFeature::IdentityAttachment);
         if self.sev_snp.is_some() {
             features.push(RuntimeFeature::Attestation);
-        }
-        if self.config.state_snapshot {
-            features.push(RuntimeFeature::StateSnapshot);
         }
         let mut mount_kinds = vec![MountKind::Volume, MountKind::Tmpfs];
         if self.artifact_storage.artifact_configured() {

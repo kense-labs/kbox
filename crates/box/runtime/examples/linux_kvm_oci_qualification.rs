@@ -48,8 +48,8 @@ mod qualification {
     use std::time::Duration;
 
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionGeneration, ExecutionId,
-        ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionState,
+        BoxConfig, CreateExecutionRequest, ExecutionBackend, ExecutionBoundary,
+        ExecutionGeneration, ExecutionId, ExecutionManager, ExecutionManagerError, ExecutionState,
         IsolationClass as BoxIsolationClass, NetworkMode, OperationId, ReconcileOutcome,
         ResourceConfig,
     };

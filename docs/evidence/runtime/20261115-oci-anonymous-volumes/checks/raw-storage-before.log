@@ -1,0 +1,11 @@
+
+running 1 test
+test utility_vm_driver::hvf_directory::tests::raw_ext4_storage_keeps_existing_disk_identity_access_and_detach_contract ... FAILED
+
+failures:
+
+failures:
+    utility_vm_driver::hvf_directory::tests::raw_ext4_storage_keeps_existing_disk_identity_access_and_detach_contract
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 439 filtered out; finished in 0.04s
+

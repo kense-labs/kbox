@@ -118,6 +118,15 @@ pub(crate) fn publish_portable_bundle(
     spec: &Spec,
     bundle_directory: &Path,
 ) -> Result<()> {
+    publish_portable_bundle_with_disk(source_rootfs, spec, bundle_directory, None)
+}
+
+pub(crate) fn publish_portable_bundle_with_disk(
+    source_rootfs: &Path,
+    spec: &Spec,
+    bundle_directory: &Path,
+    disk: Option<&Path>,
+) -> Result<()> {
     let operation_directory = bundle_directory.parent().ok_or_else(|| {
         metadata_error(format!(
             "portable OCI bundle has no operation parent: {}",
@@ -142,14 +151,34 @@ pub(crate) fn publish_portable_bundle(
             publish_portable_rootfs_metadata(&rootfs)?;
         }
 
+        if let Some(disk) = disk {
+            let destination = pending.join(koci_sdk::ROOTFS_IMAGE_FILE_NAME);
+            #[cfg(target_os = "macos")]
+            crate::rootfs::copy_sparse_ext4_file(disk, &destination)?;
+            #[cfg(not(target_os = "macos"))]
+            crate::cache::layer_cache::copy_file_cow(disk, &destination)
+                .map_err(BoxError::IoError)?;
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                std::fs::set_permissions(&destination, std::fs::Permissions::from_mode(0o600))
+                    .map_err(BoxError::IoError)?;
+            }
+            File::open(&destination)
+                .and_then(|file| file.sync_all())
+                .map_err(BoxError::IoError)?;
+        }
         let config = pending.join("config.json");
         let encoded = serde_json::to_vec_pretty(spec)
             .map_err(|error| metadata_error(format!("failed to encode OCI bundle: {error}")))?;
-        let mut file = OpenOptions::new()
-            .write(true)
-            .create_new(true)
-            .open(&config)
-            .map_err(BoxError::IoError)?;
+        let mut options = OpenOptions::new();
+        options.write(true).create_new(true);
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::OpenOptionsExt as _;
+            options.mode(0o600);
+        }
+        let mut file = options.open(&config).map_err(BoxError::IoError)?;
         file.write_all(&encoded).map_err(BoxError::IoError)?;
         file.sync_all().map_err(BoxError::IoError)?;
         drop(file);
@@ -166,6 +195,10 @@ pub(crate) fn publish_portable_bundle(
     }
     Ok(())
 }
+
+#[cfg(all(test, target_os = "macos"))]
+#[path = "oci_portable_rootfs_disk_tests.rs"]
+mod disk_tests;
 
 fn portable_rootfs_metadata_requested(spec: &Spec) -> bool {
     spec.annotations().as_ref().is_some_and(|annotations| {
@@ -653,6 +686,14 @@ mod tests {
             & 0o777;
         assert_eq!(container_mode, 0o700);
         assert!(bundle.join("config.json").is_file());
+        assert_eq!(
+            std::fs::metadata(bundle.join("config.json"))
+                .unwrap()
+                .permissions()
+                .mode()
+                & 0o777,
+            0o600
+        );
         assert!(bundle.join("rootfs").is_dir());
         assert!(
             !bundle

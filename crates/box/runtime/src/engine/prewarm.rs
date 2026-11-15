@@ -33,11 +33,7 @@ impl EngineJournal {
     pub(super) fn has_prewarm_history(&self, instance: &EngineKey) -> bool {
         self.data.requests.values().any(|previous| {
             previous.intent.instance_id == *instance
-                && previous
-                    .intent
-                    .assembly
-                    .as_ref()
-                    .is_some_and(|plan| plan.prewarm_bindings_digest.is_some())
+                && previous.intent.prewarm_bindings_digest.is_some()
         })
     }
 }
@@ -74,12 +70,7 @@ impl BoxPrewarmScopePort for EnginePrewarm {
             else {
                 return Ok(None);
             };
-            let Some(bindings) = record
-                .intent
-                .assembly
-                .as_ref()
-                .and_then(|assembly| assembly.prewarm_bindings_digest.clone())
-            else {
+            let Some(bindings) = record.intent.prewarm_bindings_digest.clone() else {
                 return Ok(None);
             };
             if record
@@ -258,12 +249,7 @@ impl LocalEngine {
             }
             let records = self.journal.lock().await.current_requests()?;
             for record in records {
-                if !record
-                    .intent
-                    .assembly
-                    .as_ref()
-                    .is_some_and(|plan| plan.prewarm_bindings_digest.is_some())
-                {
+                if record.intent.prewarm_bindings_digest.is_none() {
                     continue;
                 }
                 if *shutdown.borrow() {
@@ -315,7 +301,6 @@ impl LocalEngine {
         if unit.spec != spec
             || unit.observation.state != RuntimeUnitState::Running
             || unit.removed_at_ms.is_some()
-            || !self.journal.lock().await.assembly_matches(&unit, record)?
         {
             return Ok(());
         }

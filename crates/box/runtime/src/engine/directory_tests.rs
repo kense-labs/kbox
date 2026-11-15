@@ -22,9 +22,7 @@ fn intent() -> EngineIntent {
 fn grants_bind_exact_paths_and_permissions_and_leave_legacy_wire_unchanged() {
     let request = intent();
     request.validate().unwrap();
-    let mut oci = request.clone();
-    oci.workload = crate::engine::EngineWorkload::OciService;
-    let bound = oci.bind_service("ordinary-oci".into(), 7).unwrap();
+    let bound = request.bind_service("ordinary-oci".into(), 7).unwrap();
     assert!(bound.semantics_profile_digest.is_none());
     assert_eq!(bound.mounts, request.service.as_ref().unwrap().mounts);
     let encoded = serde_json::to_value(&request).unwrap();

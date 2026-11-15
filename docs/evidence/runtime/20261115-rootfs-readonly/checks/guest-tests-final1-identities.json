@@ -1,0 +1,14 @@
+[
+  {
+    "name": "kbox_guest_init",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-tests-final1",
+    "sha256": "c4c7b93dd4a16d98cadc372ee78517c95542f9f6e035f1fc23a8c0c06dd3c011",
+    "source": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b"
+  },
+  {
+    "name": "kbox-guest-init",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-init-tests-final1",
+    "sha256": "0a846fd652726b15757d29ba2b589c66f94d013d4d54d19e4b8df77dae9c3b48",
+    "source": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b"
+  }
+]

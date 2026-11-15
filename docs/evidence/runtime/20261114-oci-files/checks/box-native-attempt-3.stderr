@@ -1,0 +1,13 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-3/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (84941268) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_files.rs:57:5:
+assertion `left == right` failed
+  left: [108, 105, 118, 101, 32, 104, 111, 115, 116, 32, 97, 108]
+ right: [108, 105, 118, 101, 32, 104, 111, 115, 116, 32, 97, 108, 112, 104, 97, 32, 103, 101, 110, 101, 114, 97, 116, 105, 111, 110, 32, 49, 32, 99, 104, 97, 110, 103, 101, 100, 32, 108, 101, 110, 103, 116, 104]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (84941267) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:159:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

@@ -1,0 +1,21 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+warning: unused import: `FileExt`
+ --> crates/oci-runtime/crates/kbox/src/macos_file_grant_sandbox_tests.rs:2:25
+  |
+2 | use std::os::unix::fs::{FileExt, MetadataExt, PermissionsExt};
+  |                         ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `koci-kbox` (lib test) generated 1 warning (run `cargo fix --lib -p koci-kbox --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.87s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 4 tests
+test macos_worker_sandbox::file_tests::file_projection_child ... ignored, invoked by parent in a disposable native sandbox process
+test macos_worker_sandbox::tests::confined_worker_child ... ignored, entered only by the parent test in a disposable subprocess
+test macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority ... ok
+test macos_worker_sandbox::tests::worker_cannot_read_write_connect_or_exec_outside_its_grants ... ok
+
+test result: ok. 2 passed; 0 failed; 2 ignored; 0 measured; 71 filtered out; finished in 0.27s
+

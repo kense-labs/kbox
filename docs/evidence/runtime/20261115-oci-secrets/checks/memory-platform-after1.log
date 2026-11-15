@@ -1,0 +1,8 @@
+
+running 3 tests
+test macos_memory::tests::memory_backing_requires_exact_ram_image_and_device ... ok
+test tests::accepts_profile_vcpu_and_aligned_memory ... ok
+test macos_memory::tests::ordinary_disk_is_not_memory_backing ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 83 filtered out; finished in 0.04s
+

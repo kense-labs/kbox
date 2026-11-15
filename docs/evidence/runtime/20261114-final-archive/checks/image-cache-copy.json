@@ -1,0 +1,6 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images",
+  "destination": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/image-cache/images",
+  "seconds": 0.227937709,
+  "kind": "copy of prior owned pinned-image cache; no user cache and no runtime executable copied"
+}

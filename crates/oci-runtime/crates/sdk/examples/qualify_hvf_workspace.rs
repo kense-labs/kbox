@@ -1,11 +1,16 @@
 //! Real public-SDK qualification of caller-owned macOS workspace directories.
 
 use std::error::Error;
+#[cfg(unix)]
 use std::fs::{self, File};
+#[cfg(unix)]
 use std::path::{Path, PathBuf};
+#[cfg(unix)]
 use std::process::{Command, Stdio};
+#[cfg(unix)]
 use std::time::Duration;
 
+#[cfg(unix)]
 use koci_sdk::{
     runtime_bundle_handoff_directory, ContainerId, ContainerTarget, CreateAttachments,
     CreateRequest, DeleteMode, DeleteRequest, IsolationRequest, LocalIpcEndpoint, OciBundle,
@@ -16,7 +21,9 @@ use koci_sdk::{
     RUNTIME_BUNDLE_HANDOFF_MOVE_V2, STORAGE_PATH_RESTRICTIONS_EXTENSION,
     STORAGE_PATH_RESTRICTIONS_VERSION,
 };
+#[cfg(unix)]
 use serde_json::json;
+#[cfg(unix)]
 use tokio::time::{sleep, timeout, Instant};
 
 #[cfg(unix)]
@@ -24,6 +31,12 @@ use std::os::unix::fs::PermissionsExt;
 
 type QualificationResult<T> = Result<T, Box<dyn Error + Send + Sync>>;
 
+#[cfg(not(unix))]
+fn main() -> QualificationResult<()> {
+    Err("this qualification requires Apple Silicon macOS".into())
+}
+
+#[cfg(unix)]
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> QualificationResult<()> {
     let args: Vec<PathBuf> = std::env::args_os().skip(1).map(PathBuf::from).collect();
@@ -63,6 +76,7 @@ async fn main() -> QualificationResult<()> {
     Ok(())
 }
 
+#[cfg(unix)]
 async fn qualify(
     service: &Path,
     fixture: &Path,
@@ -289,6 +303,7 @@ async fn qualify(
     )
 }
 
+#[cfg(unix)]
 fn operation(name: &str) -> koci_sdk::Result<OperationContext> {
     Ok(OperationContext::new(OperationId::new(name)?))
 }

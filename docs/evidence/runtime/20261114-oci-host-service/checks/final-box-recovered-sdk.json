@@ -1,0 +1,19 @@
+{
+  "state": {
+    "ociVersion": "1.3.0",
+    "id": "kbox-8bb39e0e-1fa2-4a2f-be3f-7a6f76092546",
+    "status": "stopped",
+    "bundle": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-14/service/runtime/bundle-handoffs/kbox-8bb39e0e-1fa2-4a2f-be3f-7a6f76092546/kbox-create-e20aa976d5fa1b960840405b62e7129b4e193c4059ca192006c07b101e0e9b66/bundle",
+    "annotations": {
+      "com.kbox.isolation-class": "hardware-vm",
+      "com.kbox.process-owner": "koci-runtime",
+      "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+      "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1"
+    }
+  },
+  "generation": 1,
+  "driver": "libk-hvf",
+  "isolation": "dedicated-vm",
+  "config_digest": "sha256:610787fd8805f7dacb4503c38467de02acaeb2ef68eb5533446d466c3d3aef7c",
+  "attachments_digest": "sha256:49409c31540df6c9e09cc33261f629b50bd873bd1c27bb0b2e75a0bfc1e4d940"
+}

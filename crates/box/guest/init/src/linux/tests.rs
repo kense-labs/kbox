@@ -3,6 +3,32 @@
 use super::*;
 
 #[test]
+#[ignore = "requires a disposable writable Linux Guest root and a dedicated test process"]
+fn readonly_rootfs_init_refuses_without_mount_authority() {
+    assert!(!nix::sys::statvfs::statvfs("/")
+        .unwrap()
+        .flags()
+        .contains(nix::sys::statvfs::FsFlags::ST_RDONLY));
+    // SAFETY: this ignored test runs alone in an owned Guest process; dropping UID is irreversible only there.
+    if unsafe { libc::geteuid() } == 0 {
+        // SAFETY: setuid takes a numeric UID and affects only this disposable test process.
+        assert_eq!(unsafe { libc::setuid(65534) }, 0);
+    }
+    let temporary = tempfile::tempdir().unwrap();
+    let marker = temporary.path().join("workload-marker");
+    std::env::set_var("BOX_READONLY", "1");
+    let result = remount_rootfs_readonly();
+    if result.is_ok() {
+        std::fs::write(&marker, b"forbidden continuation").unwrap();
+    }
+    assert!(
+        result.is_err(),
+        "init continued after unenforced readonly root"
+    );
+    assert!(!marker.exists());
+}
+
+#[test]
 fn shutdown_scope_requires_namespace_init_or_exact_microvm_bootstrap_parent() {
     use std::path::Path;
     let kbox = Some(Path::new("/init.krun"));
@@ -156,6 +182,10 @@ fn secret_environment_manifest_fails_closed_on_tamper() {
 
 #[test]
 fn tmpfs_mount_parser_separates_access_mode_from_mount_data() {
+    fn parse_tmpfs_mount(value: &str) -> std::io::Result<(&str, Option<String>, bool)> {
+        let parsed = kbox_core::guest_exec::GuestTmpfsMount::parse(value)?;
+        Ok((parsed.path(), parsed.data_options(), parsed.read_only()))
+    }
     assert_eq!(
         parse_tmpfs_mount("/scratch:size=1048576,rw").unwrap(),
         ("/scratch", Some("size=1048576".into()), false)
@@ -170,6 +200,21 @@ fn tmpfs_mount_parser_separates_access_mode_from_mount_data() {
     );
     assert!(parse_tmpfs_mount("/scratch:ro,rw").is_err());
     assert!(parse_tmpfs_mount("/run/kbox/boot:size=4096").is_err());
+}
+
+#[test]
+fn tmpfs_safety_options_use_mount_flags() {
+    use kbox_core::guest_exec::GuestTmpfsMount;
+    use nix::mount::MsFlags;
+    let parsed = GuestTmpfsMount::parse("/scratch:size=1m,ro,nosuid,nodev,noexec").unwrap();
+    assert_eq!(
+        tmpfs_mount_flags(&parsed),
+        MsFlags::MS_RDONLY | MsFlags::MS_NOSUID | MsFlags::MS_NODEV | MsFlags::MS_NOEXEC
+    );
+    assert_eq!(parsed.data_options().as_deref(), Some("size=1m"));
+    assert!(
+        tmpfs_mount_flags(&GuestTmpfsMount::parse("/scratch:rw,suid,dev,exec").unwrap()).is_empty()
+    );
 }
 
 #[test]

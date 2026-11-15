@@ -1,0 +1,320 @@
+[
+  {
+    "log": "file-sdk-protocol-full-1.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 63,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 213,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-shim-full-6.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 73,
+        "failed": 0,
+        "ignored": 3,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-runtime-full-2.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 435,
+        "failed": 0,
+        "ignored": 1,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-host-tests-6.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 1,
+        "filtered": 430
+      }
+    ]
+  },
+  {
+    "log": "verify-commit-files-2.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2177,
+        "failed": 0,
+        "ignored": 15,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 40
+      },
+      {
+        "status": "ok",
+        "passed": 41,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-eventfd-full-3.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 61,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 21,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-mmio-notify-before.log",
+    "actualResults": [
+      {
+        "status": "FAILED",
+        "passed": 0,
+        "failed": 1,
+        "ignored": 0,
+        "filtered": 60
+      }
+    ]
+  },
+  {
+    "log": "native-mmio-notify-after.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 60
+      }
+    ]
+  },
+  {
+    "log": "file-owning-full-1.log",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2177,
+        "failed": 0,
+        "ignored": 14,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 434,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  }
+]

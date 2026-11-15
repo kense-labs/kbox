@@ -1,0 +1,95 @@
+{
+  "timeUtc": "2026-11-14T23:43:22.409660+00:00",
+  "commands": [
+    {
+      "command": [
+        "uname",
+        "-a"
+      ],
+      "exitCode": 0,
+      "stdout": "Darwin RoyLins-MacBook-Pro-M5-Max.local 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:19:08 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6050 arm64\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sw_vers"
+      ],
+      "exitCode": 0,
+      "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "id"
+      ],
+      "exitCode": 0,
+      "stdout": "uid=501(lyon) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),79(_appserverusr),80(admin),81(_appserveradm),701(com.apple.sharepoint.group.1),33(_appstore),98(_lpadmin),100(_lpoperator),204(_developer),250(_analyticsusers),395(com.apple.access_ftp),398(com.apple.access_screensharing),399(com.apple.access_ssh),400(com.apple.access_remote_ae)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "rustc 1.97.1 (8bab26f4f 2026-07-14)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "cargo 1.97.1 (c980f4866 2026-06-30)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "exitCode": 0,
+      "stdout": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrun",
+        "status",
+        "--short"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrunfw",
+        "status",
+        "--short"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "runtimeMemory": "not measured",
+  "platformLevelUnchanged": true
+}

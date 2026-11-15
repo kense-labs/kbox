@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "binarySha256": "346a4193ec1cd7d1aef45a20ee2e7863cdf33a5ca1a06f1d16b725862ca79a18",
+  "protocols": [
+    "kbox.engine.v2",
+    "engine-diagnostics.v1",
+    "process-stream.primary.v1",
+    "process-stream.bootstrap.v1",
+    "environment-prewarm.v1",
+    "directory-grants.v1"
+  ],
+  "emptyJournal": true,
+  "unknownCommandRefused": true,
+  "shutdownExitCode": 0,
+  "endpointRemoved": true,
+  "virtualMachinesStarted": false
+}

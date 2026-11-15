@@ -1,0 +1,13 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+warning: use of deprecated associated function `tokio::io::unix::AsyncFd::<T>::new`: unsound due to lack of I/O safety; use `AsyncFd::register` instead (see https://github.com/tokio-rs/tokio/pull/8587)
+  --> crates/oci-runtime/crates/agent/src/executor/terminal.rs:70:35
+   |
+70 |         let descriptor = AsyncFd::new(self.master).map_err(|error| {
+   |                                   ^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: `koci-agent` (lib) generated 1 warning
+    Finished `release-dist` profile [optimized] target(s) in 33.79s

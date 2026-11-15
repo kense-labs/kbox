@@ -1,0 +1,9 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/service/runtime.sock: Connection refused (os error 61)
+
+thread '<unnamed>' (84178106) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_faults.rs:232:39:
+called `Result::unwrap()` on an `Err` value: Unavailable("managed OCI log worker for kbox-5f38141b-24f8-4f5c-91d0-b571d7560ff8 generation 1 exited before publishing drain evidence: 2026-11-14T07:32:58.697389Z ERROR Shim failed error=VM boot failed: Failed to read managed OCI init output at cursor 0: container kbox-5f38141b-24f8-4f5c-91d0-b571d7560ff8 generation Some(Generation(1)) was recovered as stopped after its utility-VM owner exited; delete this generation before another live operation")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (84178105) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:150:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

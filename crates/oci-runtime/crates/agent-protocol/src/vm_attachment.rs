@@ -10,11 +10,54 @@ use sha2::{Digest, Sha256};
 
 use crate::{GuestPath, AGENT_RUNTIME_SHARE_GUEST_ROOT};
 
+mod file;
+#[cfg(test)]
+#[path = "vm_attachment/file_tests.rs"]
+mod file_tests;
+pub use file::{
+    file_projection_root, file_tag, AgentVmFileAttachment, AGENT_VM_FILES_GUEST_ROOT,
+    AGENT_VM_FILES_RELATIVE_ROOT, AGENT_VM_PROJECTED_FILE_NAME,
+};
+/// Cumulative exact-file transport schema; prior versions retain their encoding.
+pub const AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION: &str = "koci.agent-vm-attachments.v6";
+/// File transport with required Host memory provenance; old shims/Agents must refuse.
+pub const AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION: &str = "koci.agent-vm-attachments.v8";
+/// Memory file version2 also binds environment projection to protected exact sources.
+pub const AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION: &str =
+    "koci.agent-vm-attachments.v9";
+/// RAM files/optional protected environment together with exact raw-storage disks.
+pub const AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION: &str =
+    "koci.agent-vm-attachments.v11";
+
+fn memory_manifest_schema(bundle: &OciBundle) -> Result<Option<&'static str>> {
+    Ok(
+        koci_sdk::MemorySecretFiles::from_bundle(bundle)?.map(|memory| match memory.version() {
+            koci_sdk::MEMORY_SECRET_RAW_STORAGE_VERSION => {
+                AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+            }
+            koci_sdk::MEMORY_SECRET_ENVIRONMENT_VERSION => {
+                AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION
+            }
+            _ => AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION,
+        }),
+    )
+}
+
+/// Explicit process-admission guard; v1-v9 transport encodings retain their meaning.
+pub const AGENT_VM_NPROC_MANIFEST_SCHEMA_VERSION: &str = "koci.agent-vm-attachments.v10";
+
 mod directory;
 #[cfg(test)]
 #[path = "vm_attachment/directory_tests.rs"]
 mod directory_tests;
+mod raw_storage;
+mod rootfs;
 mod storage;
+/// Explicit combined raw-disk/rootfs/file transport; v1–v6 meanings stay unchanged.
+pub const AGENT_VM_RAW_STORAGE_MANIFEST_SCHEMA_VERSION: &str = "koci.agent-vm-attachments.v7";
+pub use rootfs::{workload_rootfs_disk_path, AgentVmRootfsImage};
+/// Workload-rootfs disk schema; retains v1-v4 encodings unchanged.
+pub const AGENT_VM_ROOTFS_MANIFEST_SCHEMA_VERSION: &str = "koci.agent-vm-attachments.v5";
 
 pub use directory::{AgentVmDirectoryAttachment, AgentVmDirectorySourceIdentity};
 pub use storage::{AgentVmStorageAttachment, AgentVmStorageSourceIdentity};
@@ -232,6 +275,8 @@ impl AgentVmNetworkAttachment {
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct AgentVmAttachmentManifest {
     schema_version: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    nproc_transport_schema: Option<String>,
     target: ContainerTarget,
     guest_bundle: GuestPath,
     config_digest: String,
@@ -243,9 +288,31 @@ pub struct AgentVmAttachmentManifest {
     directories: Vec<AgentVmDirectoryAttachment>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     storage_path_restrictions_digest: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    rootfs_image: Option<AgentVmRootfsImage>,
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    files: Vec<AgentVmFileAttachment>,
 }
 
 impl AgentVmAttachmentManifest {
+    fn transport_schema(&self) -> &str {
+        self.nproc_transport_schema
+            .as_deref()
+            .unwrap_or(&self.schema_version)
+    }
+
+    /// Bind kernel process admission without reinterpreting any prior transport.
+    pub fn with_nproc_admission(mut self, bundle: &OciBundle) -> Result<Self> {
+        if koci_sdk::nproc_admission_required(bundle)
+            && self.schema_version != AGENT_VM_NPROC_MANIFEST_SCHEMA_VERSION
+        {
+            self.nproc_transport_schema = Some(self.schema_version);
+            self.schema_version = AGENT_VM_NPROC_MANIFEST_SCHEMA_VERSION.into();
+        }
+        self.validate_bundle(bundle)?;
+        Ok(self)
+    }
+
     /// Construct and validate one canonical, non-empty attachment transport manifest.
     pub fn new(
         target: ContainerTarget,
@@ -285,6 +352,7 @@ impl AgentVmAttachmentManifest {
         };
         let manifest = Self {
             schema_version: schema_version.to_string(),
+            nproc_transport_schema: None,
             target,
             guest_bundle,
             config_digest: config_digest.into(),
@@ -293,9 +361,73 @@ impl AgentVmAttachmentManifest {
             storage,
             directories,
             storage_path_restrictions_digest: None,
+            rootfs_image: None,
+            files: Vec::new(),
         };
         manifest.validate()?;
         Ok(manifest)
+    }
+
+    /// Publish exact files; memory constraints require v8 while ordinary files retain v6.
+    pub fn new_with_file_grants(
+        target: ContainerTarget,
+        guest_bundle: GuestPath,
+        bundle: &OciBundle,
+        attachment_digest: impl Into<String>,
+        directories: Vec<AgentVmDirectoryAttachment>,
+        files: Vec<AgentVmFileAttachment>,
+        rootfs_image: Option<AgentVmRootfsImage>,
+    ) -> Result<Self> {
+        let manifest = Self {
+            schema_version: memory_manifest_schema(bundle)?
+                .unwrap_or(AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION)
+                .into(),
+            nproc_transport_schema: None,
+            target,
+            guest_bundle,
+            config_digest: bundle.config_digest().into(),
+            attachment_digest: attachment_digest.into(),
+            network: Vec::new(),
+            storage: Vec::new(),
+            directories,
+            files,
+            rootfs_image,
+            storage_path_restrictions_digest: StoragePathRestrictions::from_bundle(bundle)?
+                .as_ref()
+                .map(StoragePathRestrictions::digest)
+                .transpose()?,
+        };
+        manifest.with_nproc_admission(bundle)
+    }
+    /// Exact ordinary-file grants, distinct from directory grants and raw block storage.
+    pub fn files(&self) -> &[AgentVmFileAttachment] {
+        &self.files
+    }
+
+    /// Bind the independent workload disk without reinterpreting older manifests.
+    pub fn with_rootfs_image(
+        mut self,
+        rootfs: AgentVmRootfsImage,
+        bundle: &OciBundle,
+    ) -> Result<Self> {
+        self.schema_version = memory_manifest_schema(bundle)?
+            .unwrap_or(if self.files.is_empty() {
+                AGENT_VM_ROOTFS_MANIFEST_SCHEMA_VERSION
+            } else {
+                AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION
+            })
+            .into();
+        self.rootfs_image = Some(rootfs);
+        self.storage_path_restrictions_digest = StoragePathRestrictions::from_bundle(bundle)?
+            .as_ref()
+            .map(StoragePathRestrictions::digest)
+            .transpose()?;
+        self.with_nproc_admission(bundle)
+    }
+
+    /// Exact generation-owned workload disk, if this is the new transport.
+    pub fn rootfs_image(&self) -> Option<&AgentVmRootfsImage> {
+        self.rootfs_image.as_ref()
     }
 
     /// Require Host restrictions without expanding the bounded transport manifest.
@@ -304,10 +436,11 @@ impl AgentVmAttachmentManifest {
         bundle: &OciBundle,
         restrictions: &StoragePathRestrictions,
     ) -> Result<Self> {
-        self.schema_version = AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION.into();
+        if self.rootfs_image.is_none() && self.files.is_empty() {
+            self.schema_version = AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION.into();
+        }
         self.storage_path_restrictions_digest = Some(restrictions.digest()?);
-        self.validate_bundle(bundle)?;
-        Ok(self)
+        self.with_nproc_admission(bundle)
     }
 
     /// Positive Host enforcement binding required before the Guest serves requests.
@@ -402,12 +535,44 @@ impl AgentVmAttachmentManifest {
     /// Revalidate all public attachment pointers against the exact OCI bundle.
     pub fn validate_bundle(&self, bundle: &OciBundle) -> Result<()> {
         self.validate()?;
+        if koci_sdk::nproc_admission_required(bundle)
+            != (self.schema_version == AGENT_VM_NPROC_MANIFEST_SCHEMA_VERSION)
+        {
+            return Err(manifest_error(
+                "RLIMIT_NPROC requires exact v10 admission enforcement; downgrade is forbidden",
+            ));
+        }
+        if koci_sdk::raw_storage_images_requested(bundle)?
+            != matches!(
+                self.transport_schema(),
+                AGENT_VM_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+                    | AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+            )
+        {
+            return Err(manifest_error(
+                "raw storage images require their explicit v7/v11 transport and SDK capability",
+            ));
+        }
         if bundle.config_digest() != self.config_digest {
             return Err(manifest_error(format!(
                 "utility-VM attachment manifest expects configuration {}, received {}",
                 self.config_digest,
                 bundle.config_digest()
             )));
+        }
+        let memory_schema = memory_manifest_schema(bundle)?;
+        if memory_schema.is_some_and(|version| self.transport_schema() != version)
+            || (memory_schema.is_none()
+                && matches!(
+                    self.transport_schema(),
+                    AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+                ))
+        {
+            return Err(manifest_error(
+                "memory Secret files/environment require their exact v8/v9/v11 transport; downgrade is forbidden",
+            ));
         }
         let configuration: Value = serde_json::from_str(bundle.config_json()).map_err(|error| {
             manifest_error(format!(
@@ -422,6 +587,37 @@ impl AgentVmAttachmentManifest {
         }
         for attachment in &self.directories {
             attachment.validate_configuration(&configuration)?;
+        }
+        let file_grants = koci_sdk::FileGrants::from_bundle(bundle)?;
+        if file_grants.as_ref().map_or(0, |g| g.entries().len()) != self.files.len() {
+            return Err(manifest_error(
+                "file manifest inventory differs from its required SDK file grants",
+            ));
+        }
+        if let Some(grants) = file_grants {
+            for file in &self.files {
+                file.validate_configuration(&configuration)?;
+                let exact = grants
+                    .entries()
+                    .iter()
+                    .find(|g| g.mount_index() == file.mount_index().unwrap_or(usize::MAX))
+                    .ok_or_else(|| manifest_error("file manifest has an undeclared mount"))?;
+                if exact.identity() != file.attachment().identity()
+                    || exact.source_identity() != file.source_identity()
+                    || exact.access_mode() != file.attachment().access_mode()
+                {
+                    return Err(manifest_error(
+                        "file manifest changed its caller allocation, source inode or access",
+                    ));
+                }
+            }
+        }
+        if koci_sdk::RootfsImage::from_bundle(bundle)?.as_ref()
+            != self.rootfs_image.as_ref().map(AgentVmRootfsImage::image)
+        {
+            return Err(manifest_error(
+                "workload rootfs descriptor differs from the exact bound configuration",
+            ));
         }
         let restrictions = StoragePathRestrictions::from_bundle(bundle)?;
         let digest = restrictions
@@ -456,10 +652,24 @@ impl AgentVmAttachmentManifest {
 
     /// Validate schema, target, digests, canonical order, and transport uniqueness.
     pub fn validate(&self) -> Result<()> {
-        if self.schema_version != AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION
-            && self.schema_version != AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1
-            && self.schema_version != AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION
-            && self.schema_version != AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION
+        if (self.schema_version == AGENT_VM_NPROC_MANIFEST_SCHEMA_VERSION)
+            != self.nproc_transport_schema.is_some()
+        {
+            return Err(manifest_error(
+                "nproc admission requires its explicit v10 transport binding",
+            ));
+        }
+        let schema = self.transport_schema();
+        if schema != AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1
+            && schema != AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_ROOTFS_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION
+            && schema != AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
         {
             return Err(manifest_error(format!(
                 "unsupported utility-VM attachment manifest schema {}",
@@ -490,42 +700,142 @@ impl AgentVmAttachmentManifest {
                 "utility-VM attachment manifest carries more than {MAX_NETWORK_ATTACHMENTS} network entries"
             )));
         }
-        if self.storage.len() + self.directories.len() > MAX_STORAGE_ATTACHMENTS {
+        if self.storage.len()
+            + self.directories.len()
+            + self.files.len()
+            + usize::from(self.rootfs_image.is_some())
+            > MAX_STORAGE_ATTACHMENTS
+        {
             return Err(manifest_error(format!(
                 "utility-VM attachment manifest carries more than {MAX_STORAGE_ATTACHMENTS} storage entries"
             )));
         }
-        if self.network.is_empty() && self.storage.is_empty() && self.directories.is_empty() {
+        let raw_images = matches!(
+            self.transport_schema(),
+            AGENT_VM_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+                | AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+        );
+        if schema == AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION && self.files.is_empty() {
+            return Err(manifest_error(
+                "combined memory/raw transport requires exact file grants",
+            ));
+        }
+        if raw_images
+            && (self.storage.is_empty()
+                || !self.network.is_empty()
+                || self.guest_bundle.as_str() != format!("{AGENT_RUNTIME_SHARE_GUEST_ROOT}/bundle"))
+        {
+            return Err(manifest_error(
+                "v7/v11 requires raw storage in the exact dedicated bundle without network",
+            ));
+        }
+        if !raw_images
+            && matches!(
+                self.transport_schema(),
+                AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION
+                    | AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION
+                    | AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION
+            ) != !self.files.is_empty()
+        {
+            return Err(manifest_error(
+                "file transports require schema v6/v8 and either version requires files",
+            ));
+        }
+        if (self.transport_schema() == AGENT_VM_ROOTFS_MANIFEST_SCHEMA_VERSION
+            && self.rootfs_image.is_none())
+            || (self.rootfs_image.is_some()
+                && !matches!(
+                    self.transport_schema(),
+                    AGENT_VM_ROOTFS_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_FILE_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_MEMORY_FILE_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_MEMORY_ENVIRONMENT_MANIFEST_SCHEMA_VERSION
+                        | AGENT_VM_MEMORY_RAW_STORAGE_MANIFEST_SCHEMA_VERSION
+                ))
+        {
+            return Err(manifest_error(
+                "workload rootfs requires schema v5/v6 and v5 requires a rootfs disk",
+            ));
+        }
+        if !self.files.is_empty() {
+            if self.guest_bundle.as_str() != format!("{AGENT_RUNTIME_SHARE_GUEST_ROOT}/bundle")
+                || (!raw_images && !self.storage.is_empty())
+                || !self.network.is_empty()
+                || self.files.windows(2).any(|w| w[0] >= w[1])
+            {
+                return Err(manifest_error("file transport requires ordered unique dedicated-VM grants without raw storage or network"));
+            }
+            let mut inodes = BTreeSet::new();
+            let mut allocations = BTreeSet::new();
+            let mut mounts = BTreeSet::new();
+            for file in &self.files {
+                file.validate_shape(&self.config_digest)?;
+                if !inodes.insert(file.source_identity())
+                    || !allocations.insert(file.attachment().identity())
+                    || !mounts.insert(file.attachment().mount())
+                    || self.directories.iter().any(|d| {
+                        d.attachment().identity() == file.attachment().identity()
+                            || d.attachment().mount() == file.attachment().mount()
+                    })
+                {
+                    return Err(manifest_error(
+                        "file grants duplicate source objects, mounts or allocation identities",
+                    ));
+                }
+            }
+        }
+        if let Some(rootfs) = &self.rootfs_image {
+            rootfs.validate()?;
+            if (!raw_images && !self.storage.is_empty())
+                || !self.network.is_empty()
+                || self.guest_bundle.as_str() != format!("{AGENT_RUNTIME_SHARE_GUEST_ROOT}/bundle")
+            {
+                return Err(manifest_error("workload rootfs v5 requires the dedicated bundle without raw caller storage or network"));
+            }
+        }
+        if self.network.is_empty()
+            && self.storage.is_empty()
+            && self.directories.is_empty()
+            && self.rootfs_image.is_none()
+            && self.files.is_empty()
+        {
             return Err(manifest_error(
                 "utility-VM attachment manifest must carry at least one storage or network entry",
             ));
         }
-        if self.schema_version == AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1
+        if self.transport_schema() == AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION_V1
             && (!self.storage.is_empty() || self.network.is_empty())
         {
             return Err(manifest_error(
                 "utility-VM attachment manifest v1 requires network entries and cannot carry storage",
             ));
         }
-        if self.schema_version == AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION
+        if self.transport_schema() == AGENT_VM_ATTACHMENT_MANIFEST_SCHEMA_VERSION
             && self.storage.is_empty()
         {
             return Err(manifest_error(
                 "utility-VM attachment manifest v2 requires at least one storage entry",
             ));
         }
-        if (matches!(
-            self.schema_version.as_str(),
-            AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION
-                | AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION
-        )) != !self.directories.is_empty()
+        if !raw_images
+            && self.rootfs_image.is_none()
+            && self.files.is_empty()
+            && (matches!(
+                self.transport_schema(),
+                AGENT_VM_DIRECTORY_MANIFEST_SCHEMA_VERSION
+                    | AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION
+            )) != !self.directories.is_empty()
         {
             return Err(manifest_error(
                 "directory transports require schema v3, and v3 requires directory transports",
             ));
         }
-        if (self.schema_version == AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION)
-            != self.storage_path_restrictions_digest.is_some()
+        if !raw_images
+            && self.rootfs_image.is_none()
+            && self.files.is_empty()
+            && ((self.transport_schema() == AGENT_VM_RESTRICTED_DIRECTORY_MANIFEST_SCHEMA_VERSION)
+                != self.storage_path_restrictions_digest.is_some())
         {
             return Err(manifest_error(
                 "Host path restrictions require schema v4 and an enforcement digest",
@@ -584,6 +894,14 @@ impl AgentVmAttachmentManifest {
         let mut storage_serials = BTreeSet::new();
         let mut block_ids = BTreeSet::new();
         let mut storage_identities = BTreeSet::new();
+        let mut source_objects = BTreeSet::new();
+        if let Some(rootfs) = &self.rootfs_image {
+            storage_serials.insert(rootfs.source_identity().virtio_serial());
+            source_objects.insert((
+                rootfs.source_identity().device(),
+                rootfs.source_identity().inode(),
+            ));
+        }
         for attachment in &self.storage {
             attachment.validate_shape(&self.attachment_digest)?;
             if !storage_mounts.insert(attachment.mount().json_pointer()) {
@@ -592,7 +910,16 @@ impl AgentVmAttachmentManifest {
                     attachment.mount().json_pointer()
                 )));
             }
-            storage_identities.insert(attachment.identity());
+            if !storage_identities.insert(attachment.identity())
+                || !source_objects.insert((
+                    attachment.source_identity().device(),
+                    attachment.source_identity().inode(),
+                ))
+            {
+                return Err(manifest_error(
+                    "raw storage repeats an allocation or source object",
+                ));
+            }
             if !storage_sources.insert(attachment.host_source()) {
                 return Err(manifest_error(format!(
                     "Host storage source {} is transported more than once",
@@ -628,6 +955,18 @@ impl AgentVmAttachmentManifest {
                 return Err(manifest_error(
                     "directory transport repeats a storage identity, mount, source, inode, or tag",
                 ));
+            }
+        }
+        for file in &self.files {
+            if !storage_identities.insert(file.attachment().identity())
+                || !storage_mounts.insert(file.attachment().mount().json_pointer())
+                || !storage_sources.insert(file.host_source())
+                || !source_objects.insert((
+                    file.source_identity().device(),
+                    file.source_identity().inode(),
+                ))
+            {
+                return Err(manifest_error("file transport repeats a raw storage/rootfs allocation, mount or source object"));
             }
         }
         Ok(())

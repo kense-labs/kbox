@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "-p",
+    "koci-agent",
+    "--target",
+    "aarch64-unknown-linux-musl",
+    "--all-targets"
+  ],
+  "exit": 101,
+  "seconds": 35.709530791
+}

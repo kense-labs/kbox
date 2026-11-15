@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-core",
+      "-p",
+      "koci-sdk",
+      "--all-targets"
+    ],
+    "exitCode": 101,
+    "expectedRefusal": false,
+    "seconds": 11.495064042,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-core-sdk.log"
+  }
+]

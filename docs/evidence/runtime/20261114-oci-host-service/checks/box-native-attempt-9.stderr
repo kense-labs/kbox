@@ -1,0 +1,5 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-9/service/runtime.sock: No such file or directory (os error 2)
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (84137792) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_faults.rs:81:10:
+called `Result::unwrap()` on an `Err` value: Unavailable("Kbox OCI exec rejected the lifecycle boundary: operation ID kbox-exec-68eaa03be9f2c92b6b1720c222de86b83c7f7a479900599db199b8bc7b223b24 was already used for a different request")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

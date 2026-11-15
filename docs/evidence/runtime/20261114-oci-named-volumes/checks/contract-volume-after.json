@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "kbox_contract_driver::artifact_tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.859558125
+}

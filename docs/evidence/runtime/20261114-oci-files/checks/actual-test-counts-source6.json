@@ -1,0 +1,362 @@
+[
+  {
+    "log": "file-sdk-protocol-full-1.log",
+    "sha256": "85c4bcb629cf9835ba7ea4688afa44e2d0fcbf7ab6c828bf59c6173ad7ae2c86",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 63,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 213,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-shim-full-9.log",
+    "sha256": "33f27a09281b68e012a871507af727691b5c5d0505c24666663b019c52dfb850",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 75,
+        "failed": 0,
+        "ignored": 3,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 18,
+        "failed": 0,
+        "ignored": 3,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-owning-full-1.log",
+    "sha256": "08e10c45ef29cad51a57b4b09f8c11c00e3cc44f9327ce5d42d96daa81c4d0ca",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2177,
+        "failed": 0,
+        "ignored": 14,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 25,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 434,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-runtime-full-4.log",
+    "sha256": "fae6161adcbc13a5d4b2125dda11787c71079cdb1ba07b2c8c5e257e863ca330",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 437,
+        "failed": 0,
+        "ignored": 2,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "file-host-tests-6.log",
+    "sha256": "69322b93213c5d35854df9cb0d0a49af8f7076b0c13105f1cdba9a2f69dccf35",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 1,
+        "filtered": 430
+      }
+    ]
+  },
+  {
+    "log": "verify-commit-files-5.log",
+    "sha256": "5d46637b6ecaf823a72f7cff71727e895fa00b8bf37d9b049d80cb1b984d0d3a",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2179,
+        "failed": 0,
+        "ignored": 18,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 933,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 23
+      },
+      {
+        "status": "ok",
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 40
+      },
+      {
+        "status": "ok",
+        "passed": 41,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 4
+      },
+      {
+        "status": "ok",
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "shared-create-cleanup-2.log",
+    "sha256": "341881939f77f87f8dc0cdb7b00498ad6aec93f1570d70b2b104cff67ef1e2aa",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 40,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 399
+      }
+    ]
+  },
+  {
+    "log": "unbound-kill-after.log",
+    "sha256": "343824c8a84f0cb705b1e2db3163250492ec6420494657b1b12031b5f2dd4481",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 2193
+      }
+    ]
+  },
+  {
+    "log": "terminal-prepare-after-2.log",
+    "sha256": "074d6f3b60dfab6eac4ce4f4c2e36f222860e2148542e67ad5d3c52f0c81d427",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 436
+      }
+    ]
+  },
+  {
+    "log": "native-eventfd-full-3.log",
+    "sha256": "132e7db4ce22db17fe9ca26e3443a5e78339cfb517051b6fb45bede020a02aed",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 61,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      },
+      {
+        "status": "ok",
+        "passed": 21,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  },
+  {
+    "log": "native-libkrun-full-1.log",
+    "sha256": "6b0ff7e861a44172f368f420497fe7d08a8ff849cd9d655fb339fbc33e5ebb90",
+    "actualResults": [
+      {
+        "status": "ok",
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0,
+        "filtered": 0
+      }
+    ]
+  }
+]

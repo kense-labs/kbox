@@ -310,7 +310,7 @@ fn manifest_conflict() -> Error {
     )
 }
 
-async fn read_manifest(path: &Path) -> Result<AgentVmAttachmentManifest> {
+pub(super) async fn read_manifest(path: &Path) -> Result<AgentVmAttachmentManifest> {
     let metadata = tokio::fs::symlink_metadata(path).await.map_err(|error| {
         attachment_error(
             ErrorCode::FailedPrecondition,
@@ -510,7 +510,7 @@ async fn remove_private_file_if_present(path: &Path) -> Result<()> {
     remove_private_file_bound(path, &metadata).await
 }
 
-async fn remove_private_file_bound(
+pub(super) async fn remove_private_file_bound(
     path: &Path,
     initial_metadata: &std::fs::Metadata,
 ) -> Result<()> {

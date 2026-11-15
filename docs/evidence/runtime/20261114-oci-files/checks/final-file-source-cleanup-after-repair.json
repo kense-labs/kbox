@@ -1,0 +1,773 @@
+[
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-alpha",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-alpha/canary",
+        "device": 16777233,
+        "inode": 288420178,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-alpha/empty rw",
+        "device": 16777233,
+        "inode": 288420177,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-alpha/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288420176,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 43,
+        "sha256": "aad1a9679f212e6976a7b0b7499788375fafb0d04c45efdb35bae8d77887755b"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-beta",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-beta/canary",
+        "device": 16777233,
+        "inode": 288420182,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-beta/empty rw",
+        "device": 16777233,
+        "inode": 288420181,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-beta/retained",
+        "device": 16777233,
+        "inode": 288420180,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "a1d343375d553f16011514254030c1187888e9c89ca67a640d6d91ec6affaa30"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-beta/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288451282,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 31,
+        "sha256": "66decb8a01f400f2413b8e090946f88e9e30b6b58203d729e3dedcef5b6c3d15"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-main",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-main/canary",
+        "device": 16777233,
+        "inode": 288452726,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-main/empty rw",
+        "device": 16777233,
+        "inode": 288452723,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-1/caller-files-main/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288452711,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "c2a91dff90191621446d27a7d83287afa954cecbaf5f6389e8e43b773f102dad"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-alpha",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-alpha/canary",
+        "device": 16777233,
+        "inode": 288897192,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-alpha/empty rw",
+        "device": 16777233,
+        "inode": 288897191,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-alpha/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288897190,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 43,
+        "sha256": "aad1a9679f212e6976a7b0b7499788375fafb0d04c45efdb35bae8d77887755b"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-beta",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-beta/canary",
+        "device": 16777233,
+        "inode": 288897196,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-beta/empty rw",
+        "device": 16777233,
+        "inode": 288897195,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-beta/retained",
+        "device": 16777233,
+        "inode": 288897194,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "a1d343375d553f16011514254030c1187888e9c89ca67a640d6d91ec6affaa30"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-beta/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288918918,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 31,
+        "sha256": "66decb8a01f400f2413b8e090946f88e9e30b6b58203d729e3dedcef5b6c3d15"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-main",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-main/canary",
+        "device": 16777233,
+        "inode": 288919271,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-main/empty rw",
+        "device": 16777233,
+        "inode": 288919270,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-11/caller-files-main/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288919269,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "c2a91dff90191621446d27a7d83287afa954cecbaf5f6389e8e43b773f102dad"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-13/caller-files-failed",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-13/caller-files-failed/canary",
+        "device": 16777233,
+        "inode": 288965923,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-13/caller-files-failed/empty rw",
+        "device": 16777233,
+        "inode": 288965920,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-13/caller-files-failed/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288965915,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-2/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-2/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288478844,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-2/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288478843,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-2/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288478842,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 41,
+        "sha256": "3d58373d7aedba047eccaf08f722b2f8d8140b89b8ef4bacf2d28f25d7f49424"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-alpha",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-alpha/canary",
+        "device": 16777233,
+        "inode": 288661305,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-alpha/empty rw",
+        "device": 16777233,
+        "inode": 288661304,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-alpha/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288661303,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 43,
+        "sha256": "2b4e60ea29005ecc1923c6da132b589ec96ee429ddbcf39c705378493e4178ce"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-beta",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-beta/canary",
+        "device": 16777233,
+        "inode": 288661309,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-beta/empty rw",
+        "device": 16777233,
+        "inode": 288661308,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-3/caller-files-beta/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288661307,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-4/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-4/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288706172,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-4/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288706171,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-4/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288706170,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-5/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-5/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288711556,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-5/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288711555,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-5/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288711554,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-6/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-6/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288712951,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-6/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288712950,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-6/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288712949,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-7/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-7/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288714151,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-7/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288714150,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-7/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288714149,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 12,
+        "sha256": "ba8a2053882951e30b7bc98e867ddb7d7043de28074d6b5ec59c5b2c62dca4b5"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-8/caller-files-pep",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-8/caller-files-pep/canary",
+        "device": 16777233,
+        "inode": 288738866,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-8/caller-files-pep/empty rw",
+        "device": 16777233,
+        "inode": 288738865,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-8/caller-files-pep/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288738864,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 41,
+        "sha256": "3d58373d7aedba047eccaf08f722b2f8d8140b89b8ef4bacf2d28f25d7f49424"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-alpha",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-alpha/canary",
+        "device": 16777233,
+        "inode": 288773689,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-alpha/empty rw",
+        "device": 16777233,
+        "inode": 288773688,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-alpha/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288773687,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 43,
+        "sha256": "aad1a9679f212e6976a7b0b7499788375fafb0d04c45efdb35bae8d77887755b"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-beta",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-beta/canary",
+        "device": 16777233,
+        "inode": 288773693,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-beta/empty rw",
+        "device": 16777233,
+        "inode": 288773692,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-beta/retained",
+        "device": 16777233,
+        "inode": 288773691,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "a1d343375d553f16011514254030c1187888e9c89ca67a640d6d91ec6affaa30"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-beta/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288776203,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 31,
+        "sha256": "66decb8a01f400f2413b8e090946f88e9e30b6b58203d729e3dedcef5b6c3d15"
+      }
+    ],
+    "canaryUnchanged": true
+  },
+  {
+    "parent": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-main",
+    "parentOwner": 501,
+    "parentMode": "0o777",
+    "sourceFilesRetained": [
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-main/canary",
+        "device": 16777233,
+        "inode": 288776259,
+        "mode": 33188,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 15,
+        "sha256": "e59a4728213f9b9461e2c4ae24de4acee83841d6a459f38dcdcc7295b2c11654"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-main/empty rw",
+        "device": 16777233,
+        "inode": 288776258,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 16,
+        "sha256": "43cfb228d2a938e6f0415e9c622cba6c0d6450f3050ec9f8d4b7a48bb627641c"
+      },
+      {
+        "path": "/private/tmp/kbox-files-38d1ee741be9/attempt-9/caller-files-main/\u53ea\u8bfb input",
+        "device": 16777233,
+        "inode": 288776257,
+        "mode": 33206,
+        "uid": 501,
+        "gid": 0,
+        "nlink": 1,
+        "bytes": 42,
+        "sha256": "dc5fffdc7e6e31d6b27b683aceab8eb8648227f0d34b573da8da624a55d23cbb"
+      }
+    ],
+    "canaryUnchanged": true
+  }
+]

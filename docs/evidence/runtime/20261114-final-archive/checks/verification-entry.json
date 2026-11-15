@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "envSet": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/verification-home"
+  },
+  "startedUtc": "2026-11-14T04:20:39.694583+00:00",
+  "exitCode": 0,
+  "seconds": 231.883562625,
+  "log": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261114-final-archive/checks/verification-entry.log"
+}

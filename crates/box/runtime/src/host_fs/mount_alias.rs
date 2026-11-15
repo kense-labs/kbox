@@ -162,5 +162,4 @@ mod tests {
     fn set_mode(path: &Path, mode: u32) {
         std::fs::set_permissions(path, std::fs::Permissions::from_mode(mode)).unwrap();
     }
-
 }

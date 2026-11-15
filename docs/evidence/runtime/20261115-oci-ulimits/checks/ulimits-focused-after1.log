@@ -1,0 +1,33 @@
+
+running 2 tests
+test guest_exec::rlimit::tests::guest_ulimits_keep_linux_ids_values_and_infinity ... ok
+test guest_exec::rlimit::tests::guest_ulimits_refuse_unknown_malformed_escaping_duplicate_or_unbounded_input ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 482 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2261 filtered out; finished in 0.04s
+
+
+running 9 tests
+test tests::test_parse_ulimit_unknown ... ok
+test tests::test_parse_ulimit_no_equals ... ok
+test tests::test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them ... ok
+test tests::test_parse_ulimit_core ... ok
+test tests::test_parse_ulimit_stack ... ok
+test tests::test_parse_ulimit_case_insensitive ... ok
+test tests::test_parse_ulimit_nproc ... ok
+test tests::test_parse_ulimit_all_resources ... ok
+test tests::test_parse_ulimit_nofile ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+

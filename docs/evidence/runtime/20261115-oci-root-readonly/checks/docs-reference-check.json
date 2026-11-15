@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "links": [
+    {
+      "source": "docs/release.md",
+      "target": "evidence/runtime/20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "crates/box/runtime/README.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/docs/macos-hvf.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-root-readonly/OUTCOME.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/final-identities-2.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/artifact-sizes-final2.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/calibration-failures.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/final-descriptors.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md",
+      "target": "checks/final-receipt-review2-summary.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/final-identities-1.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/calibration-failures.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/final-descriptors.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/final-receipt-review1-summary.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md",
+      "target": "checks/artifact-sizes.json"
+    }
+  ],
+  "scope": "new spec016 links and direct current predecessor evidence links; no historical missing files fabricated",
+  "gitDiffCheck": 0
+}

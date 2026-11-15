@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-msgqueue/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 155.915534625
+}

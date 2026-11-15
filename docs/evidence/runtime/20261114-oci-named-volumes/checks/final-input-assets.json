@@ -1,0 +1,57 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/runtime-assets.json",
+    "sha256": "8489d6544a919a991e9302c5d435b8fb3737ae357e0ebb2efb886e0e039340d4",
+    "bytes": 4039
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+    "sha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+    "bytes": 11806236
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/uncached-source.json",
+    "sha256": "66673c7c07072b48515557510034a7eb12a56f2fe3c842fcdbf9418b7d6b8cb5",
+    "bytes": 1221
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/build-box-final1.py",
+    "sha256": "3ee7176a507b3ed65cb03a1f94a87515b58830007680954355136f75bdefda6f",
+    "bytes": 2913
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/build-oci-candidate2.py",
+    "sha256": "f0041750fb01ad7c1d466b31b9cea66ff2f9fe529653f47fe73de2cee4fe1f86",
+    "bytes": 3173
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/package-oci-final1.py",
+    "sha256": "9788682c84c8e2d8d1a9326c89e74e9411b144c8e3d0223ed4d22eff1712425e",
+    "bytes": 5036
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/source_snapshot.py",
+    "sha256": "8a64178eaf825ce4541bd53fdfb00f4d45662d50acc508844be469e7782ec93a",
+    "bytes": 845
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/run-named-final.py",
+    "sha256": "4240634944fae63a5eaeaf15e8425711182004533648ee87c656f7d69799e5ff",
+    "bytes": 5530
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/run-full-final.py",
+    "sha256": "1766346a08e95b8dd949c2b3593668b4dc69a3325df6f01b122824f07cfd27d7",
+    "bytes": 5488
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/run-failed-create-final.py",
+    "sha256": "4f0e56661babd7eb5df9ac598d939490b2145cb6806e3cb38c5b3504dce45cdd",
+    "bytes": 5560
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/qualification-runner.py",
+    "sha256": "7a2a83a8100da20721515c6333147ce60be833591e284c08cc3dc350146126f8",
+    "bytes": 8425
+  }
+]

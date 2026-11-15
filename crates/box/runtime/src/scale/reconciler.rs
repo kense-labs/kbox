@@ -859,11 +859,7 @@ mod tests {
     }
 
     fn reconciler(lifecycle: Arc<FakeLifecycle>) -> LocalScaleReconciler {
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         LocalScaleReconciler::with_lifecycle(catalog, lifecycle)
     }
 
@@ -889,11 +885,7 @@ mod tests {
     #[tokio::test]
     async fn downscale_waits_for_endpoint_relays_before_removing_the_execution() {
         let lifecycle = Arc::new(FakeLifecycle::new());
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            ENDPOINT_CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(ENDPOINT_CATALOG, "gateway-scale").unwrap();
         let reconciler = Arc::new(LocalScaleReconciler::with_lifecycle_and_endpoint(
             catalog,
             lifecycle.clone(),
@@ -933,11 +925,7 @@ mod tests {
     #[tokio::test]
     async fn declared_endpoints_are_not_ready_until_the_advertised_url_works() {
         let lifecycle = Arc::new(FakeLifecycle::new());
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            ENDPOINT_CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(ENDPOINT_CATALOG, "gateway-scale").unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle_and_endpoint(
             catalog,
             lifecycle.clone(),
@@ -1016,11 +1004,7 @@ mod tests {
             execution: Mutex::new(None),
             ensure_calls: AtomicUsize::new(0),
         });
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         let reconciler = LocalScaleReconciler::with_lifecycle(catalog, lifecycle.clone());
 
         let first = reconciler.reconcile("api", 1).await.unwrap();
@@ -1155,11 +1139,7 @@ mod tests {
             .lose_next_start_response
             .store(true, Ordering::SeqCst);
         let manager = LocalExecutionManager::new(&state, &home, backend.clone());
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         let reconciler = LocalScaleReconciler::new(manager, catalog.clone());
 
         let up = reconciler.reconcile("api", 2).await.unwrap();
@@ -1186,11 +1166,7 @@ mod tests {
         let state = directory.path().join("boxes.json");
         let backend = Arc::new(RecordingBackend::new());
         let manager = LocalExecutionManager::new(&state, &home, backend);
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale",
-        )
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         let reconciler = LocalScaleReconciler::new(manager.clone(), catalog);
 
         let up = reconciler.reconcile("api", 1).await.unwrap();

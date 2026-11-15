@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/opt/homebrew/Cellar/zig/0.16.0_1/lib/zig/libc/musl/src/sched/sched_getparam.c",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/official-kernel-source/installed-musl-sched_getparam.c",
+    "sha256": "8df67fb663bff94738826fd5e7a08543c4364d797a508fde174970070a82609e",
+    "contents": "#include <sched.h>\n#include <errno.h>\n#include \"syscall.h\"\n\nint sched_getparam(pid_t pid, struct sched_param *param)\n{\n\treturn __syscall_ret(-ENOSYS);\n}\n"
+  },
+  {
+    "path": "/opt/homebrew/Cellar/zig/0.16.0_1/lib/zig/libc/musl/src/sched/sched_getscheduler.c",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/official-kernel-source/installed-musl-sched_getscheduler.c",
+    "sha256": "cc6f868c91b1f2a0f7b024657b2af40a219ba835343b618994c94d9739dabfde",
+    "contents": "#include <sched.h>\n#include <errno.h>\n#include \"syscall.h\"\n\nint sched_getscheduler(pid_t pid)\n{\n\treturn __syscall_ret(-ENOSYS);\n}\n"
+  },
+  {
+    "path": "/opt/homebrew/Cellar/zig/0.16.0_1/lib/zig/libc/musl/src/sched/sched_setscheduler.c",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/official-kernel-source/installed-musl-sched_setscheduler.c",
+    "sha256": "581d8667d8a855df57cf79421153349a08c8ef72e6f67889d8a2acd163077559",
+    "contents": "#include <sched.h>\n#include <errno.h>\n#include \"syscall.h\"\n\nint sched_setscheduler(pid_t pid, int sched, const struct sched_param *param)\n{\n\treturn __syscall_ret(-ENOSYS);\n}\n"
+  }
+]

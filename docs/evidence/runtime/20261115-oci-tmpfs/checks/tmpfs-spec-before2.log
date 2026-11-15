@@ -1,0 +1,11 @@
+
+running 1 test
+test vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor ... FAILED
+
+failures:
+
+failures:
+    vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2249 filtered out; finished in 0.00s
+

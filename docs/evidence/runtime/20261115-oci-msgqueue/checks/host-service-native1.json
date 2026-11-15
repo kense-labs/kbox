@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/run-native.py",
+    "docs/evidence/runtime/20261115-oci-msgqueue/run-context.json",
+    "1",
+    "host-service"
+  ],
+  "exit": 0,
+  "seconds": 403.450306291
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-runtime-client",
+    "--ignored",
+    "--exact",
+    "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+    "--nocapture"
+  ],
+  "work": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-directory-qualified"
+}

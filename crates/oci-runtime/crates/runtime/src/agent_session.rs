@@ -1210,8 +1210,11 @@ impl AgentVmSession {
             Err(error) => return Err(failed(report, error.to_string())),
         };
         let mut command = Command::new(prepared_shim.command_path());
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        command.arg("agent-vm-smoke").arg("--runtime-owner");
+        #[cfg(not(all(target_os = "macos", target_arch = "aarch64")))]
+        command.arg("agent-vm-smoke");
         command
-            .arg("agent-vm-smoke")
             .arg("--rootfs")
             .arg(&rootfs)
             .arg("--console")

@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "reversePatchMatchesPriorProduction": true,
+  "path": "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+  "reversePatchSha256": "8809d7df84e862e1984b4f3352b6c69b89ee34ed16797f2eeb087d153f8498bd",
+  "priorSha256": "8809d7df84e862e1984b4f3352b6c69b89ee34ed16797f2eeb087d153f8498bd",
+  "sharedAllowlistAndDefaultsUnchanged": true,
+  "existingSysAdminBranchUnchanged": true
+}

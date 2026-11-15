@@ -56,6 +56,100 @@ pub(super) fn attach_box_managed_secret_mounts(
     Ok(attachments)
 }
 
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub(super) fn validate_hvf_managed_secret_files(
+    record: &crate::BoxRecord,
+) -> ExecutionManagerResult<()> {
+    let metadata = record.managed_execution.as_ref().ok_or_else(|| {
+        ExecutionManagerError::Internal(
+            "managed Secret validation has no execution metadata".into(),
+        )
+    })?;
+    let config = &metadata.request.config;
+    let environment: Vec<_> = config
+        .extra_env
+        .iter()
+        .map(|(key, value)| format!("{key}={value}"))
+        .collect();
+    let bindings = koci_sdk::MemorySecretEnvironmentBinding::from_environment(&environment)
+        .map_err(|error| {
+            ExecutionManagerError::InvalidRequest(format!("Secret environment projection: {error}"))
+        })?;
+    let Some(root) = &metadata.request.policy.managed_secret_root else {
+        if bindings.is_some() {
+            return Err(ExecutionManagerError::InvalidRequest(
+                "Secret environment projection requires a managed memory root".into(),
+            ));
+        }
+        return Ok(());
+    };
+    if let Some(bindings) = &bindings {
+        for binding in bindings {
+            let mut matching = 0;
+            for spec in &config.volumes {
+                let volume = crate::vm::VmManager::parse_volume_spec(spec)
+                    .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+                if volume.guest_path == binding.path() {
+                    if !volume.read_only || !volume.host_path.starts_with(root) {
+                        return Err(ExecutionManagerError::InvalidRequest(
+                            "Secret environment binding lacks its exact managed readonly file"
+                                .into(),
+                        ));
+                    }
+                    matching += 1;
+                }
+            }
+            if matching != 1 {
+                return Err(ExecutionManagerError::InvalidRequest(
+                    "Secret environment binding has missing or ambiguous file authority".into(),
+                ));
+            }
+        }
+    }
+    crate::BoxTransientSecretStore::new(root)
+        .require_ready_sync()
+        .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+    let mut count = 0;
+    for spec in &config.volumes {
+        let volume = crate::vm::VmManager::parse_volume_spec(spec)
+            .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+        if !volume.host_path.starts_with(root) {
+            continue;
+        }
+        let file = std::fs::symlink_metadata(&volume.host_path)
+            .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+        if bindings.as_ref().is_some_and(|bindings| {
+            bindings
+                .iter()
+                .any(|binding| binding.path() == volume.guest_path)
+        }) {
+            use std::os::unix::fs::PermissionsExt;
+            if file.permissions().mode() & 0o777 != 0o400 {
+                return Err(ExecutionManagerError::InvalidRequest(
+                    "Secret environment file must retain exact mode400".into(),
+                ));
+            }
+        }
+        if !volume.read_only
+            || !file.is_file()
+            || file.file_type().is_symlink()
+            || file.len() == 0
+            || file.len() > 1024 * 1024
+        {
+            return Err(ExecutionManagerError::InvalidRequest(
+                "managed Secret must be a bounded nonempty read-only regular file".into(),
+            ));
+        }
+        count += 1;
+    }
+    if count == 0 {
+        return Err(ExecutionManagerError::InvalidRequest(
+            "managed Secret root has no matching file grants".into(),
+        ));
+    }
+    Ok(())
+}
+
 fn oci_bind_mount_sources(bundle: &OciBundle) -> ExecutionManagerResult<Vec<Option<PathBuf>>> {
     let configuration: serde_json::Value =
         serde_json::from_str(bundle.config_json()).map_err(|error| {

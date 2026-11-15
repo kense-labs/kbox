@@ -1,0 +1,347 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "dada28865aa4e06e0e3462d046f179eaea58d6cad73195af424efbdf1dba1046",
+  "finalNative": [
+    {
+      "label": "anonymous-attempt-2",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 430.717218834,
+      "cliChecked": true,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/anonymous-attempt-2/result.json"
+    },
+    {
+      "label": "attempt-1",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 379.74437712499997,
+      "cliChecked": true,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/attempt-1/result.json"
+    },
+    {
+      "label": "attempt-2",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 40.665900042,
+      "cliChecked": null,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/attempt-2/result.json"
+    },
+    {
+      "label": "attempt-3",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 162.156942542,
+      "cliChecked": true,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/attempt-3/result.json"
+    },
+    {
+      "label": "raw-ro-attempt-10",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 7.930816749999999,
+      "cliChecked": null,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-10/result.json"
+    },
+    {
+      "label": "old-host-attempt-3",
+      "counts": [
+        [
+          "1",
+          "0",
+          "0"
+        ]
+      ],
+      "seconds": 1.7804008340000002,
+      "cliChecked": null,
+      "result": "/private/tmp/kbox-anonymous-dc919588a169/old-host-attempt-3/result.json"
+    }
+  ],
+  "afCases": 5,
+  "nativeHostSyscalls": {
+    "childExecDenial": 1,
+    "hostDenials": {
+      "append": 1,
+      "delete": 1,
+      "descriptor-reopen": 1,
+      "hardlink": 1,
+      "parent-create": 1,
+      "rename": 1,
+      "replace": 1,
+      "rw-delete": 1,
+      "rw-rename": 1,
+      "symlink": 1,
+      "truncate": 1,
+      "write": 1
+    },
+    "retainedRoFdWrite": 9,
+    "threadDenial": 1,
+    "writableControl": true
+  },
+  "actualRetainedAndNativeRawFdProof": [
+    {
+      "log": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/descriptors-raw-ro-attempt-10-oci-22726-native.log",
+      "sources": {
+        "readonly": [
+          {
+            "fd": "9",
+            "access": "r",
+            "path": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-10/raw-inputs/readonly/rootfs.ext4"
+          },
+          {
+            "fd": "29",
+            "access": "r",
+            "path": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-10/raw-inputs/readonly/rootfs.ext4"
+          }
+        ],
+        "writable": [
+          {
+            "fd": "10",
+            "access": "u",
+            "path": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-10/raw-inputs/writable/rootfs.ext4"
+          },
+          {
+            "fd": "34",
+            "access": "u",
+            "path": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-10/raw-inputs/writable/rootfs.ext4"
+          }
+        ]
+      }
+    }
+  ],
+  "sourceCounts": {
+    "oci-all-owning1": [
+      [
+        "65",
+        "0",
+        "0"
+      ],
+      [
+        "80",
+        "0",
+        "4"
+      ],
+      [
+        "18",
+        "0",
+        "3"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "438",
+        "0",
+        "2"
+      ],
+      [
+        "215",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "8",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "verify-commit1": [
+      [
+        "2222",
+        "0",
+        "24"
+      ],
+      [
+        "933",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "24",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "41",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "11",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ]
+    ]
+  }
+}

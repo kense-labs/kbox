@@ -1,0 +1,28 @@
+{
+  "sourceInputsSha256": "e02147be72c10c307955ad416a5daa41a3dc5b60cad7c682c405ce0b3dc4ffcc",
+  "inputs": 1694,
+  "changedFrom020": {
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs": {
+      "before": "a2ea85b7ec17e59c31eb8513fbb8d9ae8326044d2c3bcc1163c6c5e2ec07b6c7",
+      "after": "61e0c7db64c7ae9ec056cf30ab9ef9fd3eeee980e5bc9e30918d1b7ef48d6fe8"
+    },
+    "crates/box/runtime/src/local_execution/oci_hvf_native_memory_limits.rs": {
+      "before": null,
+      "after": "a6722daa83d371eed2cda85052e36d3a975db125392b85583713e654bbb88162"
+    },
+    "crates/box/runtime/src/local_execution/oci_production_ulimit_tests.rs": {
+      "before": "d61c888d30eaec452d46728202573c6b2e039c60b69497ff89a4d98175b70b3e",
+      "after": "735c45fe30b4a9a91cf068d3207ca13b3af6b1f22384bb3263c6ea48e26e27ac"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_rlimits.rs": {
+      "before": "a1b4f242396a6061b6b62c97fbe8958caca52e465af96b09103ca63ee57493fc",
+      "after": "b05b074defb08ff1f428d4b99f6d2f19b867d0f975231c1672100f842248defb"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs": {
+      "before": "0c3f88bff3b9134b7cc63ad578210c47a599a7f245560b82de42def4669f9211",
+      "after": "3fe8ff1d49e7e87ec4ae9a4ce7ca8eed544adf26716b69522027922c0a7d0911"
+    }
+  },
+  "unchangedOciInputs": true,
+  "ociOriginalSourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35"
+}

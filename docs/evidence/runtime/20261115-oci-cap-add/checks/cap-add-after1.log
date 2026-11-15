@@ -1,0 +1,14 @@
+
+running 4 tests
+test local_execution::oci_production::capability_tests::hvf_cap_add_preserves_shared_default_and_explicit_sets ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_retains_drop_precedence_and_unknown_refusal ... FAILED
+test local_execution::oci_production::capability_tests::hvf_cap_add_preserves_per_uid_unprivileged_admission ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_admission_is_readonly_and_other_profiles_stay_closed ... ok
+
+failures:
+
+failures:
+    local_execution::oci_production::capability_tests::hvf_cap_add_retains_drop_precedence_and_unknown_refusal
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 2308 filtered out; finished in 0.04s
+

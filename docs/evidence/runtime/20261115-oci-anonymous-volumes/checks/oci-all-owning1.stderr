@@ -1,0 +1,22 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.39s
+     Running unittests src/lib.rs (target/debug/deps/koci_agent_protocol-5a351c4b9e85612c)
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp6jjdE4/libkrun.1.17.0.dylib: replacing existing signature
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp6jjdE4/libkrunfw.5.dylib: replacing existing signature
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-4869246f58abb2ab)
+     Running tests/cli.rs (target/debug/deps/cli-a84ede5f8baedcf2)
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-727e3b348542850f)
+     Running tests/client_contract.rs (target/debug/deps/client_contract-80967636841c43b4)
+     Running tests/kbox_bundle.rs (target/debug/deps/kbox_bundle-413b66fe974ec2f1)
+     Running tests/linux_cgroup_path.rs (target/debug/deps/linux_cgroup_path-7a75143e79158836)
+     Running tests/linux_namespace_contract.rs (target/debug/deps/linux_namespace_contract-75e344b891288020)
+     Running tests/linux_seccomp_contract.rs (target/debug/deps/linux_seccomp_contract-0500cd03ec847c68)
+     Running tests/run_composition.rs (target/debug/deps/run_composition-d403aa83dce94307)
+     Running unittests examples/generate_normative_coverage.rs (target/debug/examples/generate_normative_coverage-9819e1e83113ce45)
+     Running unittests examples/generate_schema_coverage.rs (target/debug/examples/generate_schema_coverage-3ba6ba55b1201e23)
+     Running unittests examples/qualify_hvf_workspace.rs (target/debug/examples/qualify_hvf_workspace-bb6af042b3bf9271)

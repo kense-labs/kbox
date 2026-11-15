@@ -133,8 +133,9 @@ pub fn cleanup_host_netdevice_lease(
 
 #[cfg(feature = "vm")]
 pub use local_execution::{
-    LinuxKvmOciBundleProvider, LinuxKvmOciMigrationConfig, VmLocalExecutionBackend,
-    WindowsWhpxOciBundleProvider, WindowsWhpxOciMigrationConfig,
+    LinuxKvmOciBundleProvider, LinuxKvmOciMigrationConfig, MacosHvfOciBundleProvider,
+    MacosHvfOciMigrationConfig, VmLocalExecutionBackend, WindowsWhpxOciBundleProvider,
+    WindowsWhpxOciMigrationConfig,
 };
 pub use managed_execution_store::{
     ManagedExecutionReservation, ManagedExecutionStore, ManagedExecutionStoreError,

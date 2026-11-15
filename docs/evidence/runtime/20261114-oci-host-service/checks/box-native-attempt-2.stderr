@@ -1,0 +1,6 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+cp: /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-2/home/boxes/rootfs-apfs-v2.sparseimage: No such file or directory
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (83948589) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:144:84:
+called `Result::unwrap()` on an `Err` value: Unavailable("Box/HVF OCI prepare bundle failed: VM boot failed: unprivileged MicroVM rejected: Linux directory rootfs is same-UID virtio-fs only; this image declares UIDs outside {0, host euid} (hint: Guest chown to those UIDs returns EPERM, and unprivileged extract cannot restore layer ownership. Re-run as root (e.g. sudo kbox run), use a same-UID image, or a transport that stores Linux ownership (macOS guest-native ext4 / Windows WHPX portable metadata). Foreign gids with uid 0 (for example alpine shadow) are admitted; guest-init skips virtio-fs lchown EPERM during metadata replay.)")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-kbox",
+    "--lib",
+    "macos_vm_attachment",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 4.054078917
+}

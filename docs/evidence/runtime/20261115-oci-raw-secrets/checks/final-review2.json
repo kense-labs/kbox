@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/final-review2.py"
+  ],
+  "exit": 1,
+  "seconds": 1.6960401250000001
+}

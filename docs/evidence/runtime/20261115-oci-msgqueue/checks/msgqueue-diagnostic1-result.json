@@ -1,0 +1,149 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "root": "/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1",
+  "hostCommand": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci",
+    "macos-hvf-host-service",
+    "--root",
+    "/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1/service",
+    "--shim",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+    "--system-image-manifest",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json"
+  ],
+  "hostPid": 38648,
+  "commands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "run",
+        "-d",
+        "--cpus",
+        "1",
+        "--memory",
+        "512",
+        "--network",
+        "none",
+        "--user",
+        "1001:2002",
+        "--cap-drop",
+        "ALL",
+        "--read-only",
+        "--tmpfs",
+        "/scratch:size=1m,mode=1777",
+        "--ulimit",
+        "msgqueue=2048:2048",
+        "--ulimit",
+        "core=0:0",
+        "-v",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe:/msgqueue-probe:ro",
+        "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+        "--",
+        "/bin/sleep",
+        "2147483647"
+      ],
+      "exitCode": 0,
+      "stdout": "380e4700-5409-4db7-8074-98b2f2415090\n",
+      "stderr": "Creating box keen_shamir (380e47005409)...\n"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "inspect",
+        "380e4700-5409-4db7-8074-98b2f2415090"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"id\": \"380e4700-5409-4db7-8074-98b2f2415090\",\n    \"short_id\": \"380e47005409\",\n    \"name\": \"keen_shamir\",\n    \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n    \"managed_execution\": {\n      \"operation_id\": \"cli-run-af36a333-c95d-4df8-be06-0a2154fd6e72\",\n      \"creation_intent_digest\": \"sha256:3a39f4fd55d119b8a1f06f0d13e6d2a0e34e34ed753d38c6b97eb244cbce23b1\",\n      \"generation\": 1,\n      \"request\": {\n        \"external_sandbox_id\": \"cli-run-af36a333-c95d-4df8-be06-0a2154fd6e72\",\n        \"config\": {\n          \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n          \"workspace\": \"\",\n          \"resources\": {\n            \"vcpus\": 1,\n            \"memory_mb\": 512,\n            \"disk_mb\": 4096,\n            \"timeout\": 3600\n          },\n          \"log_level\": \"Info\",\n          \"debug_grpc\": false,\n          \"tee\": {\n            \"kind\": \"none\"\n          },\n          \"cmd\": [\n            \"/bin/sleep\",\n            \"2147483647\"\n          ],\n          \"stdin_open\": false,\n          \"entrypoint_override\": null,\n          \"user\": \"1001:2002\",\n          \"workdir\": null,\n          \"hostname\": null,\n          \"volumes\": [\n            \"/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe:/msgqueue-probe:ro\"\n          ],\n          \"virtiofs_cache\": null,\n          \"extra_env\": [\n            [\n              \"COREPACK_ENABLE_DOWNLOAD_PROMPT\",\n              \"0\"\n            ]\n          ],\n          \"cache\": {\n            \"enabled\": true,\n            \"cache_dir\": null,\n            \"max_rootfs_entries\": 10,\n            \"max_cache_bytes\": 10737418240\n          },\n          \"pool\": {\n            \"enabled\": false,\n            \"prewarm\": null,\n            \"min_idle\": 1,\n            \"max_size\": 5,\n            \"max_concurrent_boots\": 2,\n            \"idle_ttl_secs\": 300,\n            \"scaling\": {\n              \"enabled\": false,\n              \"scale_up_threshold\": 0.3,\n              \"scale_down_threshold\": 0.05,\n              \"max_min_idle\": 0,\n              \"cooldown_secs\": 60,\n              \"window_secs\": 120\n            },\n            \"snapshot_fork\": false\n          },\n          \"deferred_main\": false,\n          \"ksm\": false,\n          \"snapshot_mem_file\": null,\n          \"snapshot_sock\": null,\n          \"restore_from\": null,\n          \"port_map\": [],\n          \"dns\": [],\n          \"egress_allowed_names\": [],\n          \"add_hosts\": [],\n          \"network\": \"none\",\n          \"tmpfs\": [\n            \"/scratch:size=1m,mode=1777\"\n          ],\n          \"resource_limits\": {\n            \"pids_limit\": null,\n            \"cpuset_cpus\": null,\n            \"ulimits\": [\n              \"msgqueue=2048:2048\",\n              \"core=0:0\"\n            ],\n            \"cpu_shares\": null,\n            \"cpu_quota\": null,\n            \"cpu_period\": null,\n            \"memory_reservation\": null,\n            \"memory_swap\": null,\n            \"sandbox_memory_limit_bytes\": null\n          },\n          \"cap_add\": [],\n          \"cap_drop\": [\n            \"ALL\"\n          ],\n          \"security_opt\": [],\n          \"sysctls\": [],\n          \"privileged\": false,\n          \"read_only\": true,\n          \"sidecar\": null,\n          \"persistent\": true\n        },\n        \"labels\": {},\n        \"policy\": {\n          \"name\": \"keen_shamir\",\n          \"auto_remove\": false,\n          \"restart_policy\": \"no\",\n          \"max_restart_count\": 0,\n          \"health_check\": null,\n          \"healthcheck_disabled\": false,\n          \"log_config\": {\n            \"driver\": \"json-file\",\n            \"options\": {}\n          },\n          \"volume_names\": [],\n          \"platform\": null,\n          \"init\": false,\n          \"devices\": [],\n          \"gpus\": null,\n          \"shm_size\": null,\n          \"stop_signal\": null,\n          \"stop_timeout\": null,\n          \"oom_kill_disable\": false,\n          \"oom_score_adj\": null,\n          \"managed_secret_root\": null\n        },\n        \"rootfs_snapshot_id\": null\n      },\n      \"oci_runtime\": {\n        \"schema_version\": \"kbox.oci-runtime-binding.v2\",\n        \"endpoint\": {\n          \"kind\": \"unix-socket\",\n          \"path\": \"/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1/service/runtime.sock\"\n        },\n        \"target\": {\n          \"id\": \"kbox-380e4700-5409-4db7-8074-98b2f2415090\",\n          \"generation\": 1\n        },\n        \"driver\": \"libk-hvf\",\n        \"isolation\": \"dedicated-vm\",\n        \"config_digest\": \"sha256:b5658643503d87c891f10172c01b5b6ac2c97ed12504b3f63a6e45a1eeaef908\",\n        \"attachments_digest\": \"sha256:18ce975b3a9dac858be4b84da664dc3a4733655014d89ab8b7d415e82d960dfb\"\n      },\n      \"caller_files\": {\n        \"/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe\": {\n          \"device\": 16777233,\n          \"inode\": 294367292\n        }\n      },\n      \"runtime_route\": \"oci_sdk\",\n      \"plan\": {\n        \"backend\": \"kbox\",\n        \"isolation_class\": \"hardware-vm\",\n        \"required_controls\": []\n      },\n      \"pending_operation\": null,\n      \"last_restart\": null,\n      \"last_resource_update\": null,\n      \"finished_at\": null,\n      \"paused_with_memory\": true\n    },\n    \"status\": \"running\",\n    \"pid\": null,\n    \"pid_start_time\": null,\n    \"cpus\": 1,\n    \"memory_mb\": 512,\n    \"volumes\": [\n      \"/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe:/msgqueue-probe:ro\"\n    ],\n    \"virtiofs_cache\": null,\n    \"env\": {\n      \"COREPACK_ENABLE_DOWNLOAD_PROMPT\": \"0\"\n    },\n    \"cmd\": [\n      \"/bin/sleep\",\n      \"2147483647\"\n    ],\n    \"entrypoint\": null,\n    \"box_dir\": \"/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1/home/boxes/380e4700-5409-4db7-8074-98b2f2415090\",\n    \"exec_socket_path\": \"\",\n    \"console_log\": \"/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1/home/boxes/380e4700-5409-4db7-8074-98b2f2415090/logs/console.log\",\n    \"created_at\": \"2026-11-15T10:18:58.788474Z\",\n    \"started_at\": \"2026-11-15T10:19:08.436712Z\",\n    \"auto_remove\": false,\n    \"hostname\": null,\n    \"user\": \"1001:2002\",\n    \"workdir\": null,\n    \"restart_policy\": \"no\",\n    \"port_map\": [],\n    \"labels\": {},\n    \"stopped_by_user\": false,\n    \"restart_count\": 0,\n    \"max_restart_count\": 0,\n    \"exit_code\": null,\n    \"health_check\": null,\n    \"healthcheck_disabled\": false,\n    \"health_status\": \"none\",\n    \"health_retries\": 0,\n    \"health_last_check\": null,\n    \"network_mode\": \"none\",\n    \"network_name\": null,\n    \"volume_names\": [],\n    \"tmpfs\": [\n      \"/scratch:size=1m,mode=1777\"\n    ],\n    \"anonymous_volumes\": [],\n    \"resource_limits\": {\n      \"pids_limit\": null,\n      \"cpuset_cpus\": null,\n      \"ulimits\": [\n        \"msgqueue=2048:2048\",\n        \"core=0:0\"\n      ],\n      \"cpu_shares\": null,\n      \"cpu_quota\": null,\n      \"cpu_period\": null,\n      \"memory_reservation\": null,\n      \"memory_swap\": null,\n      \"sandbox_memory_limit_bytes\": null\n    },\n    \"log_config\": {\n      \"driver\": \"json-file\",\n      \"options\": {}\n    },\n    \"add_host\": [],\n    \"platform\": null,\n    \"init\": false,\n    \"read_only\": true,\n    \"cap_add\": [],\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"security_opt\": [],\n    \"privileged\": false,\n    \"devices\": [],\n    \"gpus\": null,\n    \"shm_size\": null,\n    \"stop_signal\": null,\n    \"stop_timeout\": null,\n    \"oom_kill_disable\": false,\n    \"oom_score_adj\": null,\n    \"status_detail\": {\n      \"state\": \"running\",\n      \"summary\": \"running\",\n      \"active\": true,\n      \"restart_count\": 0\n    },\n    \"State\": {\n      \"Status\": \"running\",\n      \"Running\": true,\n      \"Paused\": false,\n      \"ExitCode\": null\n    }\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "exec",
+        "380e4700-5409-4db7-8074-98b2f2415090",
+        "--",
+        "/bin/cat",
+        "/proc/self/limits"
+      ],
+      "exitCode": 0,
+      "stdout": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited            unlimited            bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    0                    bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             1661                 1661                 processes \nMax open files            1024                 1024                 files     \nMax locked memory         8388608              8388608              bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       1661                 1661                 signals   \nMax msgqueue size         2048                 2048                 bytes     \nMax nice priority         0                    0                    \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "exec",
+        "380e4700-5409-4db7-8074-98b2f2415090",
+        "--",
+        "/bin/cat",
+        "/proc/self/status"
+      ],
+      "exitCode": 0,
+      "stdout": "Name:\tcat\nUmask:\t0022\nState:\tR (running)\nTgid:\t4\nNgid:\t0\nPid:\t4\nPPid:\t0\nTracerPid:\t0\nUid:\t1001\t1001\t1001\t1001\nGid:\t2002\t2002\t2002\t2002\nFDSize:\t64\nGroups:\t \nNStgid:\t4\nNSpid:\t4\nNSpgid:\t4\nNSsid:\t0\nKthread:\t0\nVmPeak:\t    1772 kB\nVmSize:\t    1744 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t     880 kB\nVmRSS:\t     880 kB\nRssAnon:\t      48 kB\nRssFile:\t     832 kB\nRssShmem:\t       0 kB\nVmData:\t      84 kB\nVmStk:\t     132 kB\nVmExe:\t     840 kB\nVmLib:\t     656 kB\nVmPTE:\t      40 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nuntag_mask:\t0xffffffffffffff\nThreads:\t1\nSigQ:\t0/1661\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t0000000000000000\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\tunknown\nCpus_allowed:\t1\nCpus_allowed_list:\t0\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4\nnonvoluntary_ctxt_switches:\t0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "exec",
+        "380e4700-5409-4db7-8074-98b2f2415090",
+        "--",
+        "/bin/cat",
+        "/proc/cmdline"
+      ],
+      "exitCode": 0,
+      "stdout": "reboot=k panic=-1 panic_print=0 nomodule console=hvc0 rootfstype=virtiofs rw quiet no-kvmapf init=/init.krun KRUN_INIT=/usr/bin/koci-agent KRUN_WORKDIR=/ KRUN_BLOCK_ROOT_DEVICE=/dev/vda KRUN_BLOCK_ROOT_FSTYPE=ext4 KRUN_BLOCK_ROOT_OPTIONS=ro  \"K_OCI_AGENT_SESSION_TOKEN_FILE=/run/koci-runtime/.koci-bootstrap-koci-agent-9c65467338192c1370c7af189e5453e7/session-token\" \"K_OCI_AGENT_RUNTIME_SHARE=koci-runtime\" \"K_OCI_AGENT_VM_ATTACHMENT_MANIFEST_SHA256=sha256:79c8da35007108bee9c380612cf165cf9d4e14b704ee742beab6b9b9a81f6300\" \"K_OCI_AGENT_RECOVERY_REPORT=/run/koci-runtime/.koci-recovery-koci-agent-9c65467338192c1370c7af189e5453e7/report.json\" --\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "exec",
+        "380e4700-5409-4db7-8074-98b2f2415090",
+        "--",
+        "/msgqueue-probe"
+      ],
+      "exitCode": 80,
+      "stdout": "",
+      "stderr": "probe line45: queue==(mqd_t)-1 && error==EMFILE errno75\nprobe line95: read(pipefd[0],&result,sizeof(result))==sizeof(result) errno24\n"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "rm",
+        "-f",
+        "380e4700-5409-4db7-8074-98b2f2415090"
+      ],
+      "exitCode": 0,
+      "stdout": "keen_shamir\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/installed-msgqueue-final-1/bin/kbox",
+        "volume",
+        "ls",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "probeSha256": "0f1a52a4201ac923d86aed8a64081c6c6850ce5e7bf5670cc355ef92ec0ba49d",
+  "executionsAfter": [],
+  "volumesAfter": [],
+  "nativeAcceptance": false
+}

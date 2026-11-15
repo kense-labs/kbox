@@ -21,6 +21,7 @@ fn worker_cannot_read_write_connect_or_exec_outside_its_grants() {
     assert!(Command::new(&executable).status().unwrap().success());
     fs::write(root.join("immutable"), b"immutable").unwrap();
     fs::write(root.join("outside"), b"private").unwrap();
+    fs::write(root.join("rootfs.ext4"), b"initial-disk").unwrap();
     for name in ["caller-ro", "caller-rw"] {
         fs::create_dir(root.join(name)).unwrap();
         fs::write(root.join(name).join("input"), b"caller data").unwrap();
@@ -54,6 +55,7 @@ fn worker_cannot_read_write_connect_or_exec_outside_its_grants() {
         String::from_utf8_lossy(&output.stderr)
     );
     assert_eq!(fs::read(share.join("output")).unwrap(), b"written");
+    assert_eq!(fs::read(root.join("rootfs.ext4")).unwrap(), b"updated-disk");
     assert_eq!(fs::read(writable.join(".env")).unwrap(), b"credential");
     assert_eq!(fs::read(writable.join(".kbox/config")).unwrap(), b"control");
     assert_eq!(
@@ -81,6 +83,8 @@ fn confined_worker_child() {
     let console = crate::unix_process::prepare_console_output(&root.join("console"), None).unwrap();
     assert!(super::confine(
         &[&share.join("input")],
+        &[],
+        &[],
         &share,
         &console,
         None,
@@ -89,8 +93,18 @@ fn confined_worker_child() {
         &[]
     )
     .is_err());
+    let disk = root.join("rootfs.ext4");
+    let pinned = fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .open(&disk)
+        .unwrap();
+    use std::os::fd::AsRawFd;
+    let disk_fd = PathBuf::from(format!("/dev/fd/{}", pinned.as_raw_fd()));
     super::confine(
         &[&immutable],
+        &[&disk, &disk_fd],
+        &[],
         &share,
         &console,
         Some(&root.join("agent.sock")),
@@ -109,6 +123,12 @@ fn confined_worker_child() {
     )
     .unwrap();
 
+    use std::os::unix::fs::FileExt;
+    pinned.write_all_at(b"updated-disk", 0).unwrap();
+    assert_eq!(fs::read(&disk).unwrap(), b"updated-disk");
+    assert!(fs::remove_file(&disk).is_err());
+    assert!(fs::rename(&disk, root.join("moved-disk")).is_err());
+    assert!(fs::write(root.join("new-disk"), b"ungranted").is_err());
     assert_eq!(fs::read(share.join("input")).unwrap(), b"authorized");
     fs::write(share.join("output"), b"written").unwrap();
     assert_eq!(fs::read(&immutable).unwrap(), b"immutable");

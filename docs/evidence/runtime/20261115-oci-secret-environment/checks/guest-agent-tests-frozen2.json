@@ -1,0 +1,8 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/guest-agent-tests-frozen2",
+  "sha256": "e6bbea5a58e5bb809e8102ed932b2b31844bd93c1d3bc7b3bd3678426818dc88",
+  "bytes": 7543640,
+  "sourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35",
+  "preparationOnly": true,
+  "nativeExecuted": false
+}

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/build-box-final2.py"
+  ],
+  "exit": 0,
+  "seconds": 106.46534991700001
+}

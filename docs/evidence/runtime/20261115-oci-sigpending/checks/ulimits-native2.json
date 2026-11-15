@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/run-native.py",
+    "docs/evidence/runtime/20261115-oci-sigpending/run-context.json",
+    "2",
+    "ulimits"
+  ],
+  "exit": 0,
+  "seconds": 200.148008167
+}

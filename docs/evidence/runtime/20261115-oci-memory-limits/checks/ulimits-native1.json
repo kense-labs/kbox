@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/run-native.py",
+    "docs/evidence/runtime/20261115-oci-memory-limits/run-context.json",
+    "1",
+    "ulimits"
+  ],
+  "exit": 0,
+  "seconds": 182.66096149999998
+}

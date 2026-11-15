@@ -1,0 +1,8 @@
+
+running 3 tests
+test local_execution::resources::anonymous_tests::retained_and_explicit_restart_cleanup_preserve_anonymous_data ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_uses_existing_authority_and_keeps_other_allocations ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_cannot_delete_after_state_or_generation_ownership_moves ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2235 filtered out; finished in 0.17s
+

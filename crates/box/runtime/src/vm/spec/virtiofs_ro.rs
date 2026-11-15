@@ -4,9 +4,9 @@
 //! shares the host directory writable. Linux stages a private bind remounted
 //! `MS_RDONLY` (same honesty contract as OCI bind attachment aliases) and
 //! points virtio-fs at that alias. Windows stages a BindFlt read-only mapping
-//! with the same live-view / source-stays-writable contract. Other hosts refuse
-//! `:ro` until a native host denial exists (guest-honor-only is not
-//! production-honest).
+//! with the same live-view / source-stays-writable contract. macOS arm64 pins
+//! exports and installs OCI's shared Seatbelt write boundary in the VM shim.
+//! Other hosts refuse `:ro` rather than relying on guest mount flags.
 
 use std::path::{Path, PathBuf};
 
@@ -202,7 +202,29 @@ pub(super) fn stage_virtiofs_ro_share(
     }
 }
 
-#[cfg(not(any(target_os = "linux", target_os = "windows")))]
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub(super) fn stage_virtiofs_ro_share(
+    source: &Path,
+    _filemounts_dir: &Path,
+    _index: usize,
+) -> Result<PathBuf> {
+    if !std::fs::symlink_metadata(source)
+        .map_err(BoxError::IoError)?
+        .is_dir()
+    {
+        return Err(BoxError::ConfigError(
+            "macOS read-only virtio-fs source must be a plain directory".into(),
+        ));
+    }
+    // The source stays live; only the isolated shim loses write permission.
+    Ok(source.to_path_buf())
+}
+
+#[cfg(not(any(
+    target_os = "linux",
+    target_os = "windows",
+    all(target_os = "macos", target_arch = "aarch64")
+)))]
 pub(super) fn stage_virtiofs_ro_share(
     source: &Path,
     _filemounts_dir: &Path,
@@ -211,7 +233,11 @@ pub(super) fn stage_virtiofs_ro_share(
     Err(unsupported_read_only_share(source))
 }
 
-#[cfg(not(any(target_os = "linux", target_os = "windows")))]
+#[cfg(not(any(
+    target_os = "linux",
+    target_os = "windows",
+    all(target_os = "macos", target_arch = "aarch64")
+)))]
 pub(super) fn unsupported_read_only_share(source: &Path) -> BoxError {
     BoxError::ConfigError(format!(
         "MicroVM :ro volume requires host-enforced virtio-fs write denial \

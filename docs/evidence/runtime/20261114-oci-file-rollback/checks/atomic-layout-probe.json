@@ -1,0 +1,9 @@
+{
+  "api": "renamex_np(RENAME_SWAP=2)",
+  "exit": 0,
+  "errno": 0,
+  "logicalIsDirectory": true,
+  "oldBytesPreservedAtCandidate": true,
+  "newBytesPresent": true,
+  "staleWriterRenameErrno": 21
+}

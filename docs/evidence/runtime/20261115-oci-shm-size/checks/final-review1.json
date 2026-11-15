@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "c7e0c86543bd475639bc5b56261d34fac6d115f0deed5f0c11fdb02683a8d1dd",
+  "sourceFiles": 1709,
+  "nativeRustTests": 4,
+  "pythonNativeScenarios": 3,
+  "guestUnitTests": 0,
+  "shmObservations": 25,
+  "boundaryAndDefaultObservations": 3,
+  "cliRealPtyCases": 2,
+  "actualPosixMappingEnospcReuseAndNoexec": true,
+  "defaultCapacityObservedBytes": 252522496,
+  "verifyRuntime": [
+    2274,
+    0,
+    46
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "installerTests": 8,
+  "cleanup": {
+    "status": "PASS",
+    "homes": 7,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 86,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 35,
+    "afSourceCacheFilesChecked": 451,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-s",
+    "/Users/roylin/code/kense/kbox/crates/box/runtime/tests/fixtures/hvf_readonly.c",
+    "-o",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/hvf-readonly-probe"
+  ],
+  "exitCode": 0,
+  "sourceSha256": "33fb210fbcc5e15a6f2533bb0ecdb268dbb7054e15f61c67dabb99434767489b",
+  "sha256": "2bc6f853fce35dd448ca364ba5135344aec93440043feb8147da070cbe178b61",
+  "assertionsPresentInPreprocessedSource": true
+}

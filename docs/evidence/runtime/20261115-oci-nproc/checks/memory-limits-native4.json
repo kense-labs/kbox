@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/run-native.py",
+    "docs/evidence/runtime/20261115-oci-nproc/run-context.json",
+    "4",
+    "memory-limits"
+  ],
+  "exit": 0,
+  "seconds": 195.93784449999998
+}

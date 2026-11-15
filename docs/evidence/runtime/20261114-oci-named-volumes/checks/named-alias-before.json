@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "alternate_case_name_cannot_claim_an_existing_allocation",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 9.420603333
+}

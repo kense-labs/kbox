@@ -1,0 +1,11 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.45s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+
+thread 'attachment::memory_secret_files_tests::memory_secret_environment_requires_explicit_v2_and_old_capability_refusal' (87420391) panicked at crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs:110:85:
+called `Result::unwrap()` on an `Err` value: Error { code: InvalidArgument, operation: Some("validate-attachments"), message: "memory Secret files require version1 and ordered unique bounded indices", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'attachment::memory_secret_files_tests::memory_secret_environment_cannot_reuse_files_only_v1_semantics' (87420390) panicked at crates/oci-runtime/crates/sdk/src/attachment/memory_secret_files_tests.rs:125:5:
+files-only version1 silently admitted environment projection
+error: test failed, to rerun pass `-p koci-sdk --lib`

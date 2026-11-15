@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/run-memory-native.py",
+    "docs/evidence/runtime/20261115-oci-msgqueue/memory-env-context-final1.json",
+    "1",
+    "positive"
+  ],
+  "exit": 0,
+  "seconds": 267.343021334
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "bash",
+    "crates/oci-runtime/scripts/build-macos-system-image.sh",
+    "--alpine-archive",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+    "--agent",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci-agent",
+    "--output-dir",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/system-image"
+  ],
+  "exitCode": 0,
+  "seconds": 6.212065292,
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/build-tools:/opt/homebrew/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/gnu-tar/libexec/gnubin:/opt/homebrew/opt/e2fsprogs/sbin:/Users/roylin/.local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/opt/homebrew/bin:/Users/roylin/.codex/packages/app-server-daemon/releases/0.169.0-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg0Gpowzf:/Users/roylin/.codex/tmp/arg0-macos/codex-arg0YfCGns:/Users/roylin/.codex/packages/app-server-daemon/releases/0.168.0-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg0iHF2bH:/Users/roylin/.codex/packages/app-server-daemon/releases/0.167.2-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg04JIuwu:/Users/roylin/.codex/packages/app-server-daemon/releases/0.167.1-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg0S3bAWN:/Users/roylin/.codex/packages/app-server-daemon/releases/0.167.0-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg0P5I36O:/Users/roylin/.codex/packages/app-server-daemon/releases/0.166.0-aarch64-apple-darwin/codex-path:/Users/roylin/.codex/tmp/arg0-macos/codex-arg05lMjQB:/Users/roylin/.codex/packages/standalone/releases/0.166.0-aarch64-apple-darwin/codex-path:/Users/roylin/.opencode/bin:/Users/roylin/.local/bin:/Users/roylin/.kimi-code/bin:/Users/roylin/.minimax/bin:/Users/roylin/code/a3s/scripts/dev-bin:/Users/roylin/.mimocode/bin:/Users/roylin/.grok/bin:/Users/roylin/.bun/bin:/Users/roylin/.cargo/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/roylin/.orbstack/bin:/Users/roylin/.orbstack/bin"
+}

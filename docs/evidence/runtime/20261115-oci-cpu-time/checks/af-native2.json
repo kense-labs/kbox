@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-cpu-time/af-context-final2.json"
+  ],
+  "exit": 0,
+  "seconds": 186.518851125
+}

@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "rustCounts": [
+    1,
+    0,
+    0
+  ],
+  "generations": [
+    1,
+    2,
+    3
+  ],
+  "observations": 15,
+  "softCpuSeconds": [
+    0.995171,
+    1.015951
+  ],
+  "hardCpuSeconds": [
+    1.998736,
+    2.014952
+  ],
+  "idleCpuSeconds": [
+    0.000121,
+    0.000539
+  ],
+  "actualPtyObservations": 3,
+  "defaultAndInfinityControls": {
+    "omitted": {
+      "status": "PASS",
+      "unlimited": true,
+      "cpuSeconds": 2.500204
+    },
+    "infinity": {
+      "status": "PASS",
+      "unlimited": true,
+      "cpuSeconds": 2.500184
+    }
+  },
+  "cliChecked": true,
+  "runtimeRSS": "not measured"
+}

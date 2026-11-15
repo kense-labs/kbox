@@ -101,7 +101,7 @@ fn driver_defaults_to_microvm_without_shared_kernel_fallback() {
 }
 
 #[test]
-fn driver_allows_explicit_shared_kernel_selection() {
+fn driver_allows_explicit_microvm_selection() {
     let directory = tempfile::tempdir().unwrap();
     let driver = BoxRuntimeDriver::new_with_boundary(
         BoxRuntimeDriverConfig {
@@ -949,7 +949,7 @@ async fn metadata_tamper_is_rejected_fail_closed() {
 }
 
 #[tokio::test]
-async fn metadata_rejects_a_record_created_for_another_box_isolation_backend() {
+async fn metadata_rejects_a_record_with_changed_creation_policy() {
     let directory = tempfile::tempdir().unwrap();
     let driver = driver(&directory);
     let spec = spec(RuntimeUnitClass::Service);
@@ -957,22 +957,25 @@ async fn metadata_rejects_a_record_created_for_another_box_isolation_backend() {
     let reservation = driver
         .manager
         .create(
-            // Use the MicroVM path for this metadata-only test so resource
-            // planning does not need to resolve the deliberately synthetic
-            // registry digest. The validation below still asks whether that
-            // record can be treated as a Sandbox execution and must reject it.
             creation_request(&spec, ExecutionBoundary::Microvm).unwrap(),
             &operation_id,
         )
         .await
         .unwrap();
-    let record = driver
+    let mut record = driver
         .manager
         .managed_record(&reservation.execution_id)
         .await
         .unwrap()
         .unwrap();
 
+    record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .request
+        .config
+        .privileged = true;
     assert!(matches!(
         validate_record_for_spec(
             &record,
@@ -1042,4 +1045,38 @@ async fn discovery_rejects_a_runtime_operation_that_lost_all_labels() {
         driver.find_generation(&spec).await,
         Err(RuntimeError::Protocol(message)) if message.contains("no unit identity")
     ));
+}
+
+#[test]
+fn unsupported_snapshot_configuration_is_refused_without_creating_provider_state() {
+    let directory = tempfile::tempdir().unwrap();
+    let home = directory.path().join("uncreated-home");
+    let error = BoxRuntimeDriver::new(BoxRuntimeDriverConfig {
+        home_dir: home.clone(),
+        state_snapshot: true,
+        ..Default::default()
+    })
+    .err()
+    .expect("unsupported snapshot configuration must refuse");
+    assert!(
+        matches!(error, RuntimeError::UnsupportedCapabilities(missing)
+        if missing == vec!["feature:StateSnapshot"])
+    );
+    assert!(!home.exists());
+}
+
+#[tokio::test]
+async fn microvm_does_not_advertise_unimplemented_snapshot_capability() {
+    let directory = tempfile::tempdir().unwrap();
+    let driver = driver(&directory);
+    driver
+        .provider_build
+        .set("kbox/test isolation/microvm hypervisor/test".into())
+        .unwrap();
+    assert!(!driver
+        .capabilities()
+        .await
+        .unwrap()
+        .features
+        .contains(&RuntimeFeature::StateSnapshot));
 }

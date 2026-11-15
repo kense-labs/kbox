@@ -5,6 +5,14 @@
 The Windows foundation establishes an honest evidence boundary before OCI
 lifecycle code is allowed to launch workloads.
 
+Box and OCI now share native Windows process/host admission through
+IsWow64Process2. The current native stack requires native x64 MSVC execution;
+ARM64, x64 emulation on ARM64 and unknown architectures refuse before VM
+mutation. Unsupported hosts expose no usable isolation class, and a successful
+HypervisorPresent query cannot override this dependency boundary. ARM64 WHP
+interfaces exist, but the selected VMM, firmware and Windows bundles are x64.
+See [Windows ARM64 feasibility and native handoff](../../../docs/evidence/runtime/20261114-windows-arm64/OUTCOME.md).
+
 The runtime:
 
 1. loads `WinHvPlatform.dll` only from the Windows system directory search

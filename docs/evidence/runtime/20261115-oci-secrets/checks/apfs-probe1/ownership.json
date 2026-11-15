@@ -1,0 +1,9 @@
+{
+  "device": "/dev/disk13",
+  "ownedNewRamImage": true,
+  "mounted": false,
+  "physical": "/dev/disk13",
+  "volume": "/dev/disk14s1",
+  "container": "disk14",
+  "detached": true
+}

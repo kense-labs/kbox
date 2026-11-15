@@ -1,0 +1,1 @@
+Installed CLI created a running readonly BoxVm, but the diagnostic inspected nonexistent managed_execution.backend. Actual contract is runtime_route=box_vm; corrected the diagnostic assertion without changing any product code. Attempt1 retained and owned execution removed, caller canary/UID/GID/mode unchanged. Attempt2 will exercise all effects.

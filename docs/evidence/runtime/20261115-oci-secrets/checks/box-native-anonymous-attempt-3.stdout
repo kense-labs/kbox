@@ -1,0 +1,7 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::anonymous::native_anonymous_volumes_preserve_guest_metadata_identity_restart_and_owned_cleanup has been running for over 60 seconds
+test local_execution::oci_hvf::tests::native::anonymous::native_anonymous_volumes_preserve_guest_metadata_identity_restart_and_owned_cleanup ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2270 filtered out; finished in 470.36s
+

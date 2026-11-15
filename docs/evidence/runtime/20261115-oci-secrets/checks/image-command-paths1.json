@@ -1,0 +1,12 @@
+[
+  {
+    "layer": "sha256:3fbc6285032ed46821b511292633d7b2a6306a2e254f590e92bdafff56cf2f70",
+    "path": "./usr/bin/sha256sum",
+    "link": "/bin/busybox"
+  },
+  {
+    "layer": "sha256:3fbc6285032ed46821b511292633d7b2a6306a2e254f590e92bdafff56cf2f70",
+    "path": "./bin/stat",
+    "link": "/bin/busybox"
+  }
+]

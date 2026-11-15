@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/native-client-nice-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::nice::native_nice_limits_enforce_priority_floor_all_entries_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-nice-581649d8a124/nice-attempt-1",
+  "clientSha256": "62cfcf87684801afb4e128440cde3cbd596dd6e8e6e9c7a625efcd24dc361670",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 36.711653375000004,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

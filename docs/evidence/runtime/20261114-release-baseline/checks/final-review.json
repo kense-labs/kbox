@@ -1,0 +1,49 @@
+{
+  "result": "pass",
+  "sourceInputsSha256": "abf1bceaafef07f9d627261a726bf55d5bcb2beed4d40959953892cde36b3f52",
+  "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+  "cargoLockConstitutionAndNativeSubmodulesUnchanged": true,
+  "checks": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check-support-matrix.py"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "reviewed": [
+    "resource limits, typed snapshot refusal, snapshot recovery, anonymous-volume ownership",
+    "archive installer, rollback cases and package provenance",
+    "route/ownership/generation regression assertions",
+    "verification entry, release documentation and native evidence"
+  ],
+  "lastChanges": "documentation only; full verification and native checks retained from final rerun"
+}

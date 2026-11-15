@@ -147,7 +147,10 @@ fn resolve_volume(
     if volume.name != name
         || volume.driver != "local"
         || volume.size_limit != 0
-        || volume.labels.len() != labels.len()
+        || volume
+            .labels
+            .keys()
+            .any(|key| key != crate::volume::ALLOCATION_ID_LABEL && !labels.contains_key(key))
         || labels
             .iter()
             .any(|(key, value)| volume.labels.get(key) != Some(value))

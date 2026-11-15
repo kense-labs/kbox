@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "boxArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/final-dist-cap-add-3/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23394400,
+    "sha256": "b1964bfc6ca149932f870ae951e6aceca67a99486a3e2fd5a4d0f5bfbddb6cd6"
+  },
+  {
+    "kind": "ociArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "bytes": 33424560,
+    "sha256": "30eb5e29bbe0e3676a55a6c67f95b20d2752e5aacbf791a2cd70222e9f4f8d62"
+  }
+]

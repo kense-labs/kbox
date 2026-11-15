@@ -326,9 +326,8 @@ pub(super) fn rewrite_vm_storage_sources(
                 source.mount_index()
             )));
         }
-        if (source.is_directory() && !plan.bind)
-            || (!source.is_directory()
-                && (plan.bind || plan.filesystem_type.as_deref() != Some("ext4")))
+        if (source.is_bind() && !plan.bind)
+            || (!source.is_bind() && (plan.bind || plan.filesystem_type.as_deref() != Some("ext4")))
         {
             return Err(permission_denied(format!(
                 "VM storage source for OCI mount index {} requires its matching bind-directory or ext4-device mount",

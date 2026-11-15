@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "homes": 7,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "newRamDevices": [],
+  "baselineRamDevicesPreserved": 7,
+  "workloadDisksRemaining": [],
+  "observedSocketPaths": 86,
+  "existingSockets": [],
+  "sourceCacheFilesChecked": 35,
+  "afSourceCacheFilesChecked": 451,
+  "changedSourceBlobs": [],
+  "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+  "resourcesDeletedByAudit": [],
+  "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+}

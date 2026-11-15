@@ -1,0 +1,14 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (84515748) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_cli.rs:21:9:
+CLI ["run", "-d", "--name", "cli-hvf", "--cpus", "1", "--memory", "512", "--network", "none", "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "--", "/bin/sleep", "2147483647"]: Creating box cli-hvf (59d6f75d8449)...
+Error: refusing to invent a rootfs diff baseline without a resolved rootfs under /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/home/boxes/59d6f75d-8449-4691-8a45-22daaf6995d4 (Build error: failed to inspect guest diff baseline /private/tmp/kbox-rootfs-1a469ffdee77/attempt-2/home/boxes/59d6f75d-8449-4691-8a45-22daaf6995d4/runtime-control/baseline.json: No such file or directory (os error 2))
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (84515747) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:156:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

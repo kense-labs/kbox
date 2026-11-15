@@ -1,0 +1,10 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.52s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 2 tests
+test macos_agent_smoke::lifetime_tests::standalone_smoke_still_terminates_and_reaps_a_timed_out_worker ... ok
+test macos_agent_smoke::lifetime_tests::runtime_owner_keeps_worker_alive_after_the_smoke_deadline ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 76 filtered out; finished in 0.10s
+

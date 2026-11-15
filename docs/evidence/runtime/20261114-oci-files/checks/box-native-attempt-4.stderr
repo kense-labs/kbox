@@ -1,0 +1,12 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-4/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (85011126) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:318:30:
+called `Result::unwrap()` on an `Err` value: Unavailable("Kbox OCI create: libkrun shim exited before connecting the authenticated agent bridge; shim stdout: {\n  \"schema_version\": \"koci.kagent-vm-smoke.v7\",\n  \"platform\": \"macos\",\n  \"status\": \"unavailable\",\n  \"runtime_bundle_loaded\": true,\n  \"context_created\": false,\n  \"vm_configured\": false,\n  \"rootfs_configured\": false,\n  \"runtime_share_configured\": false,\n  \"kvm_device_opened\": false,\n  \"kvm_api_verified\": false,\n  \"kvm_post_probe_failure_injected\": false,\n  \"macos_host_sandbox_enforced\": false,\n  \"agent_binary_present\": false,\n  \"agent_vsock_configured\": false,\n  \"workload_configured\": false,\n  \"console_configured\": false,\n  \"vm_entered\": false,\n  \"console_created\": true,\n  \"vcpus\": 1,\n  \"memory_mib\": 512,\n  \"reason\": \"manifest runtime.archive_sha256 mismatch: expected \\\"ec21a5ec84baf732aac7175ea3dac93d23b74d2d2607937965181662710617ed\\\", found \\\"5486f38e91eb4da0e58888b543c93fe669c918ad4b84dd495f0d1dfdffc43b56\\\"\"\n}")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep' (85011125) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:345:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

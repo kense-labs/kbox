@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-p",
+    "(version 1)(allow default)(deny file-write* (require-not (subpath \"/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/可写\")))(deny file-write* (subpath \"/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/只读\"))(deny file-link)",
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-c",
+    "import os,sys,pathlib,json\nro=pathlib.Path(sys.argv[1]); rw=pathlib.Path(sys.argv[2]); results={}\nfor name,p in [('direct',ro/'input'),('inward',rw/'symlink'),('hardlink',rw/'hardlink'),('outward',ro/'outward'),('writable',rw/'positive')]:\n try: p.write_text(name); results[name]='WRITE ALLOWED'\n except OSError as e: results[name]=dict(errno=e.errno,error=str(e))\nprint(json.dumps(results,ensure_ascii=False,indent=2))\n",
+    "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/只读",
+    "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/可写"
+  ],
+  "returncode": 0,
+  "stdout": "{\n  \"direct\": {\n    \"errno\": 1,\n    \"error\": \"[Errno 1] Operation not permitted: '/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/只读/input'\"\n  },\n  \"inward\": {\n    \"errno\": 1,\n    \"error\": \"[Errno 1] Operation not permitted: '/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl/可写/symlink'\"\n  },\n  \"hardlink\": \"WRITE ALLOWED\",\n  \"outward\": \"WRITE ALLOWED\",\n  \"writable\": \"WRITE ALLOWED\"\n}\n",
+  "stderr": "",
+  "fixture": "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-spike-3o6refyl"
+}

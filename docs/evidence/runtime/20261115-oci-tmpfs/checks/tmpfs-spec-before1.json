@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 9.801502625000001
+}

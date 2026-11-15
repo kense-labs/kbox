@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/qualification-runner.py",
+    "docs/evidence/runtime/20261115-oci-secret-environment/af-context-final2.json"
+  ],
+  "exit": 1,
+  "seconds": 118.788091667
+}

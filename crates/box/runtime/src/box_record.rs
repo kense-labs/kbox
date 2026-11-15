@@ -1,6 +1,6 @@
 //! Canonical persisted metadata schema for local box executions.
 
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
 use chrono::{DateTime, Utc};
@@ -378,6 +378,9 @@ pub struct ManagedExecutionMetadata {
     /// generations remain separate and this field is cleared after teardown.
     #[serde(default)]
     pub oci_runtime: Option<crate::local_execution::OciRuntimeBinding>,
+    /// Caller-authorized file incarnations retained across generation changes.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub caller_files: BTreeMap<PathBuf, koci_sdk::FileSourceIdentity>,
     /// Product-selected lifecycle route for every generation of this record.
     ///
     /// `Unspecified` is retained only for records written before production
@@ -533,6 +536,7 @@ impl ManagedExecutionMetadata {
             generation,
             request,
             oci_runtime: None,
+            caller_files: BTreeMap::new(),
             runtime_route: ManagedRuntimeRoute::Unspecified,
             plan,
             pending_operation: None,
@@ -575,6 +579,22 @@ impl ManagedExecutionMetadata {
             return Err(kbox_core::BoxError::StateError(
                 "managed execution plan does not match its persisted creation request".to_string(),
             ));
+        }
+        for (path, identity) in &self.caller_files {
+            if !path.is_absolute()
+                || path.components().any(|c| {
+                    matches!(
+                        c,
+                        std::path::Component::ParentDir | std::path::Component::CurDir
+                    )
+                })
+            {
+                return Err(kbox_core::BoxError::StateError(
+                    "caller file binding requires an absolute normalized source".into(),
+                ));
+            }
+            koci_sdk::FileSourceIdentity::new(identity.device(), identity.inode())
+                .map_err(|error| kbox_core::BoxError::StateError(error.to_string()))?;
         }
         if let Some(binding) = &self.oci_runtime {
             if self.runtime_route == ManagedRuntimeRoute::BoxVm {
@@ -1080,7 +1100,9 @@ mod tests {
         )
         .unwrap();
         let mut drifted = kbox_core::resolve_execution(&kbox_core::BoxConfig::default()).unwrap();
-        drifted.required_controls.push("tampered-control".to_string());
+        drifted
+            .required_controls
+            .push("tampered-control".to_string());
         metadata.plan = drifted;
 
         assert!(metadata.validate().is_err());

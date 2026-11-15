@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating
+    vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2278 filtered out; finished in 0.03s
+

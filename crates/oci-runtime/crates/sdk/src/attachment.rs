@@ -11,11 +11,30 @@ use crate::{
     INTEL_TDX_LAUNCH_EXTENSION, TEE_LAUNCH_EXTENSION_VERSION,
 };
 
+mod file_grants;
+pub use file_grants::{
+    FileGrant, FileGrants, FileSourceIdentity, FILE_GRANTS_EXTENSION, FILE_GRANTS_VERSION,
+};
+mod memory_secret_files;
+pub use memory_secret_files::{
+    MemorySecretEnvironmentBinding, MemorySecretFiles, MEMORY_SECRET_ENVIRONMENT_VERSION,
+    MEMORY_SECRET_FILES_EXTENSION, MEMORY_SECRET_FILES_VERSION, MEMORY_SECRET_RAW_STORAGE_VERSION,
+};
 mod guest_session;
 mod network;
 mod network_enforcement;
+mod raw_storage_images;
+mod rootfs_image;
+pub use raw_storage_images::{
+    raw_storage_images_requested, RAW_STORAGE_IMAGES_EXTENSION, RAW_STORAGE_IMAGES_VALUE,
+    RAW_STORAGE_IMAGES_VERSION,
+};
 mod storage;
 mod storage_paths;
+pub use rootfs_image::{
+    RootfsImage, ROOTFS_IMAGE_EXTENSION, ROOTFS_IMAGE_FILE_NAME, ROOTFS_IMAGE_READONLY_VERSION,
+    ROOTFS_IMAGE_VERSION,
+};
 mod tee_launch;
 
 pub use guest_session::{
@@ -34,6 +53,25 @@ pub use storage_paths::{
     StoragePathRestriction, StoragePathRestrictions, STORAGE_PATH_RESTRICTIONS_EXTENSION,
     STORAGE_PATH_RESTRICTIONS_VERSION,
 };
+
+/// Kernel-counted process admission after credential changes, including full quotas.
+pub const NPROC_ADMISSION_EXTENSION: &str = "dev.kbox.nproc-admission";
+/// First guarded process-admission contract; requires Agent attachment manifest v10.
+pub const NPROC_ADMISSION_VERSION: u16 = 1;
+
+/// Whether this immutable bundle requests a real-UID process budget.
+pub fn nproc_admission_required(bundle: &OciBundle) -> bool {
+    bundle
+        .spec()
+        .process()
+        .as_ref()
+        .and_then(|p| p.rlimits().as_ref())
+        .is_some_and(|limits| {
+            limits
+                .iter()
+                .any(|limit| limit.typ() == crate::oci_spec::runtime::PosixRlimitType::RlimitNproc)
+        })
+}
 
 /// First public create-time attachment contract understood by Kbox OCI Runtime.
 pub const ATTACHMENT_SCHEMA_V1: &str = "koci.attachments.v1";
@@ -232,7 +270,59 @@ pub struct CreateAttachments {
 impl CreateAttachments {
     /// Derive the complete standard attachment inventory from an immutable bundle.
     pub fn from_bundle(bundle: &OciBundle, process_io: ProcessIo) -> Result<Self> {
-        let attachments = Self::from_bundle_unchecked(bundle, process_io)?;
+        let mut attachments = Self::from_bundle_unchecked(bundle, process_io)?;
+        if raw_storage_images_requested(bundle)? {
+            attachments.extensions.insert(
+                RAW_STORAGE_IMAGES_EXTENSION.into(),
+                RuntimeExtensionAttachment::from_annotation(
+                    &decode_configuration(bundle)?,
+                    RAW_STORAGE_IMAGES_EXTENSION,
+                    RAW_STORAGE_IMAGES_VERSION,
+                    true,
+                )?,
+            );
+        }
+        if let Some(image) = RootfsImage::from_bundle(bundle)? {
+            let configuration = decode_configuration(bundle)?;
+            attachments.extensions.insert(
+                ROOTFS_IMAGE_EXTENSION.into(),
+                RuntimeExtensionAttachment::from_annotation(
+                    &configuration,
+                    ROOTFS_IMAGE_EXTENSION,
+                    image.version(),
+                    true,
+                )?,
+            );
+        }
+        if let Some(files) = FileGrants::from_bundle(bundle)? {
+            let configuration = decode_configuration(bundle)?;
+            attachments.extensions.insert(
+                FILE_GRANTS_EXTENSION.into(),
+                RuntimeExtensionAttachment::from_annotation(
+                    &configuration,
+                    FILE_GRANTS_EXTENSION,
+                    FILE_GRANTS_VERSION,
+                    true,
+                )?,
+            );
+            for file in files.entries() {
+                let mount = attachments
+                    .mounts
+                    .get(file.mount_index())
+                    .cloned()
+                    .ok_or_else(|| invalid_attachment("file grant mount absent"))?;
+                attachments.storage.push(StorageAttachment::new(
+                    file.identity().clone(),
+                    mount,
+                    file.access_mode(),
+                    StorageOwnership::Caller,
+                    StorageCleanup::DetachOnly,
+                ));
+            }
+            attachments.storage.sort();
+            attachments.schema_version = ATTACHMENT_SCHEMA_V2.into();
+        }
+        attachments.attach_memory_secret_files(bundle)?;
         attachments.validate(bundle)?;
         Ok(attachments)
     }
@@ -843,6 +933,10 @@ impl CreateAttachments {
         storage::validate_attachments(&self.storage, &self.mounts, &self.secrets, &configuration)?;
         self.validate_runtime_bundle_handoff(bundle, &configuration)?;
         self.storage_path_restrictions(bundle)?;
+        self.rootfs_image(bundle)?;
+        self.raw_storage_images(bundle)?;
+        self.file_grants(bundle)?;
+        self.memory_secret_files(bundle)?;
         network::validate_attachments(&self.network_attachments, &self.network, &configuration)?;
         network_enforcement::decode_extension(
             &self.extensions,
@@ -1296,3 +1390,7 @@ fn invalid_attachment(message: impl Into<String>) -> Error {
 
 #[cfg(test)]
 mod tests;
+
+#[cfg(test)]
+#[path = "attachment/memory_secret_files_tests.rs"]
+mod memory_secret_files_tests;

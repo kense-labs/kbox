@@ -155,6 +155,10 @@ impl BoxTransientSecretStore {
         &self.root
     }
 
+    pub(crate) fn require_ready_sync(&self) -> RuntimeResult<()> {
+        validate_secret_root(&self.root)
+    }
+
     pub async fn require_ready(&self) -> RuntimeResult<()> {
         let root = self.root.clone();
         tokio::task::spawn_blocking(move || validate_secret_root(&root))
@@ -795,109 +799,12 @@ fn secret_root_is_memory_backed(root: &Path, status: &libc::statfs) -> RuntimeRe
 
 #[cfg(target_os = "macos")]
 fn macos_path_is_on_ram_disk(root: &Path) -> RuntimeResult<bool> {
-    let mount_table = std::process::Command::new("mount")
-        .output()
-        .map_err(secret_io_error)?;
-    if !mount_table.status.success() {
-        return Err(RuntimeError::ProviderUnavailable(
-            "could not read macOS mounts for the Secret root".into(),
-        ));
-    }
-    let table = String::from_utf8_lossy(&mount_table.stdout);
-    let device = longest_mount_device(&table, root);
-    let Some(device) = device else {
-        return Ok(false);
-    };
-    device_is_ram_image(&device)
+    koci_kbox::macos_path_is_on_ram_disk(root)
+        .map_err(|error| RuntimeError::ProviderUnavailable(error.to_string()))
 }
 
-#[cfg(target_os = "macos")]
-fn longest_mount_device(table: &str, root: &Path) -> Option<String> {
-    let mut best: Option<(usize, String)> = None;
-    for line in table.lines() {
-        let Some((device, point)) = parse_mount_line(line) else {
-            continue;
-        };
-        let point_path = Path::new(point);
-        if root != point_path && !root.starts_with(point_path) {
-            continue;
-        }
-        let length = point.len();
-        if best.as_ref().is_none_or(|current| length > current.0) {
-            best = Some((length, device.to_owned()));
-        }
-    }
-    best.map(|(_, device)| device)
-}
-
-#[cfg(target_os = "macos")]
-fn parse_mount_line(line: &str) -> Option<(&str, &str)> {
-    let (device, rest) = line.split_once(" on ")?;
-    let (point, _) = rest.rsplit_once(" (")?;
-    if device.is_empty() || point.is_empty() {
-        return None;
-    }
-    Some((device, point))
-}
-
-#[cfg(target_os = "macos")]
-fn device_is_ram_image(device: &str) -> RuntimeResult<bool> {
-    let plist = std::process::Command::new("hdiutil")
-        .args(["info", "-plist"])
-        .output()
-        .map_err(secret_io_error)?;
-    if !plist.status.success() {
-        return Err(RuntimeError::ProviderUnavailable(
-            "could not read macOS disk-image mounts for the Secret root".into(),
-        ));
-    }
-    let file =
-        std::env::temp_dir().join(format!("kbox-secret-mounts-{}.plist", std::process::id()));
-    std::fs::write(&file, &plist.stdout).map_err(secret_io_error)?;
-    let Some(file_arg) = file.to_str() else {
-        let _ = std::fs::remove_file(&file);
-        return Err(RuntimeError::ProviderUnavailable(
-            "could not read macOS disk-image mounts for the Secret root".into(),
-        ));
-    };
-    let json = std::process::Command::new("plutil")
-        .args(["-convert", "json", "-o", "-", file_arg])
-        .output()
-        .map_err(secret_io_error);
-    let _ = std::fs::remove_file(&file);
-    let json = json?;
-    if !json.status.success() {
-        return Err(RuntimeError::ProviderUnavailable(
-            "could not read macOS disk-image mounts for the Secret root".into(),
-        ));
-    }
-    let value: serde_json::Value = serde_json::from_slice(&json.stdout).map_err(|error| {
-        RuntimeError::ProviderUnavailable(format!(
-            "could not read macOS disk-image mounts for the Secret root: {error}"
-        ))
-    })?;
-    let Some(images) = value.get("images").and_then(serde_json::Value::as_array) else {
-        return Ok(false);
-    };
-    for image in images {
-        let image_path = image.get("image-path").and_then(serde_json::Value::as_str);
-        if !image_path.is_some_and(|path| path.starts_with("ram://")) {
-            continue;
-        }
-        let Some(entities) = image
-            .get("system-entities")
-            .and_then(serde_json::Value::as_array)
-        else {
-            continue;
-        };
-        for entity in entities {
-            if entity.get("dev-entry").and_then(serde_json::Value::as_str) == Some(device) {
-                return Ok(true);
-            }
-        }
-    }
-    Ok(false)
-}
+#[cfg(all(test, target_os = "macos"))]
+use koci_kbox::parse_macos_mount_line as parse_mount_line;
 
 fn validate_private_directory(path: &Path) -> RuntimeResult<()> {
     let metadata = std::fs::symlink_metadata(path).map_err(secret_io_error)?;
@@ -1094,23 +1001,34 @@ mod tests {
         std::fs::create_dir(&root).unwrap();
         let root = root.canonicalize().unwrap();
         let device = attach_ram_volume(&root);
-        let _guard = RamDetach(device);
+        let _guard = RamDetach {
+            device,
+            root: root.clone(),
+        };
         std::fs::set_permissions(&root, std::fs::Permissions::from_mode(0o700)).unwrap();
         validate_secret_root(&root).expect("ram:// secret root");
     }
 
     #[cfg(target_os = "macos")]
-    struct RamDetach(&'static str);
+    struct RamDetach {
+        device: &'static str,
+        root: PathBuf,
+    }
 
     #[cfg(target_os = "macos")]
     impl Drop for RamDetach {
         fn drop(&mut self) {
-            let _ = std::process::Command::new("diskutil")
-                .args(["unmountDisk", "force", self.0])
-                .status();
-            let _ = std::process::Command::new("hdiutil")
-                .args(["detach", "-force", self.0])
-                .status();
+            // This manually mounted HFS volume is absent from Disk Arbitration's inventory.
+            let unmounted = std::process::Command::new("/sbin/umount")
+                .arg(&self.root)
+                .status()
+                .expect("unmount owned test RAM volume");
+            assert!(unmounted.success(), "owned RAM volume was not unmounted");
+            let detached = std::process::Command::new("hdiutil")
+                .args(["detach", "-force", self.device])
+                .status()
+                .expect("detach owned test RAM device");
+            assert!(detached.success(), "owned RAM device was not detached");
         }
     }
 

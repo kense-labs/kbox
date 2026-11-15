@@ -1,0 +1,11 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-agent-protocol"
+  ],
+  "exit": 0,
+  "seconds": 3.2267291670000002
+}

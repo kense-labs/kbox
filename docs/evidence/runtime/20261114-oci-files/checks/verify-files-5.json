@@ -1,0 +1,59 @@
+[
+  {
+    "label": "file-fmt-5",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 3.075428208
+  },
+  {
+    "label": "file-clippy-7",
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "-p",
+      "koci-runtime",
+      "-p",
+      "koci-sdk",
+      "-p",
+      "koci-agent-protocol",
+      "-p",
+      "koci-agent",
+      "-p",
+      "koci-kbox",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "exitCode": 0,
+    "seconds": 10.802772292
+  },
+  {
+    "label": "file-workspace-check-5",
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "exitCode": 0,
+    "seconds": 10.107501667
+  },
+  {
+    "label": "verify-commit-files-5",
+    "command": [
+      "bash",
+      "scripts/verify-commit.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 230.315628834
+  }
+]

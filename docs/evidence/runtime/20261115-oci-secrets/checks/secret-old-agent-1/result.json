@@ -1,0 +1,54 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/native-client-secret-old-agent-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::secrets::native_memory_secret_unsupported_transport_refuses_and_preserves_source",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "seconds": 40.422933334,
+  "root": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram/case",
+  "clientSha256": "bc7bebcaf73145d725aaa63e76c9ee24252e233f15e0cb25094fff4fd53e7ead",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "loaded": [
+    {
+      "pid": 57160,
+      "parent": 57159,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/oci-ulimits-final1-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram/case/service/runtime/shares/kbox-208aa17a-b571-4e4b-b3cf-88b488ee8673/1 --runtime-share-device 16777254 --runtime-share-inode 186 --runtime-state-device 16777254 --runtime-state-inode 202 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-f276628550f2808db22a51135c5da69c/session-token --console /private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram/case/service/runtime/console/kbox-208aa17a-b571-4e4b-b3cf-88b488ee8673-1.log --socket-path /private/tmp/koci-agent-f276628550f2808db22a51135c5da69c/agent.sock --console-device 16777254 --console-inode 203 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-f276628550f2808db22a51135c5da69c/report.json --vm-attachment-manifest-sha256 sha256:ad3fafde9d76de339102981d95eeddaaf040e9b31af48240ea204b317a72b9ca",
+      "paths": {
+        "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 57412,
+      "parent": 57411,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram/case/service/runtime/shares/kbox-208aa17a-b571-4e4b-b3cf-88b488ee8673/1 --runtime-share-device 16777254 --runtime-share-inode 186 --runtime-state-device 16777254 --runtime-state-inode 202 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-6fce2a43c888a9ebb24f755c4fb91681/session-token --console /private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram/case/service/runtime/console/kbox-208aa17a-b571-4e4b-b3cf-88b488ee8673-1.log --socket-path /private/tmp/koci-agent-6fce2a43c888a9ebb24f755c4fb91681/agent.sock --console-device 16777254 --console-inode 220 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-6fce2a43c888a9ebb24f755c4fb91681/report.json --vm-attachment-manifest-sha256 sha256:ad3fafde9d76de339102981d95eeddaaf040e9b31af48240ea204b317a72b9ca",
+      "paths": {
+        "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "status": "FAIL",
+  "error": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-memory-native-apfs.py\", line 54, in <module>\n    if mode=='old-agent':assert (case/'old-agent-schema-proof.json').is_file(),'no actual old Agent v8 rejection proof'\nAssertionError: no actual old Agent v8 rejection proof\n",
+  "archivedNativeRoot": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-agent-1/native-root",
+  "ownedRuntimeProcessesAfter": [],
+  "ramUnmountExitCode": 0,
+  "ramDetachExitCode": 0,
+  "device": "/dev/disk17",
+  "mount": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-agent-1-ram",
+  "runtimeRSS": "not measured"
+}

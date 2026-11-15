@@ -1,0 +1,17 @@
+{
+  "oldSpec008Cli": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/installed-final-2/bin/kbox",
+    "sha256": "59ab2868fecd36d50d4ed863fcbeb9d7d6aa281bd5a09b549fb0696b26b590eb",
+    "bytes": 10091968
+  },
+  "currentInstalledCli": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-1/bin/kbox",
+    "sha256": "93882f6280d0518de0eb36f572e7e7d6f70c7eb8574a6a0632ac19cd4b7ce491",
+    "bytes": 10108736
+  },
+  "frozenNativeClient": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/native-client-frozen2",
+    "sha256": "1f731b649c8edfa595c899ba32d398e01d89e35728d9ae5906ffeb5c228df487",
+    "bytes": 176282592
+  }
+}

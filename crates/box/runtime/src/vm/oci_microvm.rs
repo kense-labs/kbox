@@ -7,7 +7,8 @@ use kbox_core::{BoxError, ExecutionBackend, ResolvedExecutionPlan, Result};
 use super::VmManager;
 use crate::oci_portable_spec::{compile_portable_microvm_oci_spec, MicrovmRuntimeProcess};
 use crate::process_path::{
-    normalize_linux_guest_path, resolve_runtime_executable, DEFAULT_CONTAINER_PATH,
+    normalize_linux_guest_path, resolve_runtime_executable_in, ProcessRootfs,
+    DEFAULT_CONTAINER_PATH,
 };
 
 /// Portable handoff produced without starting a Box-owned VM.
@@ -52,12 +53,11 @@ impl VmManager {
                         .to_string(),
                 ));
             }
-            let runtime_process: MicrovmRuntimeProcess =
-                resolve_runtime_owned_process(
-                    &layout.rootfs_path,
-                    &instance_spec,
-                    &self.config.cap_drop,
-                )?;
+            let runtime_process: MicrovmRuntimeProcess = resolve_runtime_owned_process(
+                &layout.rootfs_path,
+                &instance_spec,
+                &self.config.cap_drop,
+            )?;
             let hostname = self
                 .config
                 .hostname
@@ -65,6 +65,12 @@ impl VmManager {
                 .unwrap_or_else(|| self.box_id.clone());
             let spec =
                 compile_portable_microvm_oci_spec(&self.box_id, &hostname, &runtime_process)?;
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            let spec = {
+                let mut spec = spec;
+                super::oci_hvf_spec::complete(&mut spec, &self.config, &instance_spec)?;
+                spec
+            };
             crate::local_execution::oci_portable_rootfs::publish_portable_bundle(
                 &layout.rootfs_path,
                 &spec,
@@ -87,6 +93,164 @@ impl VmManager {
                 Err(error)
             }
         }
+    }
+
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    pub(crate) async fn prepare_runtime_owned_ext4_bundle(
+        &mut self,
+        execution_plan: &ResolvedExecutionPlan,
+        bundle_directory: &Path,
+        caller_files: &std::collections::BTreeMap<PathBuf, koci_sdk::FileSourceIdentity>,
+    ) -> Result<RuntimeOwnedMicrovmBundle> {
+        if execution_plan.backend != ExecutionBackend::Kbox {
+            return Err(BoxError::ConfigError(
+                "workload ext4 requires the Kbox execution plan".into(),
+            ));
+        }
+        let reference = self.config.image.clone();
+        let auth = self.transient_registry_auth.take();
+        let image = self.pull_runtime_image(&reference, auth).await?;
+        if image.platform().os != "linux" || image.platform().architecture != "arm64" {
+            return Err(BoxError::ConfigError(
+                "HVF workload rootfs requires a Linux arm64 image".into(),
+            ));
+        }
+        super::oci_hvf_spec::validate_tmpfs_image_volumes(&self.config, &image.config().volumes)?;
+        let box_dir = self.home_dir.join("boxes").join(&self.box_id);
+        std::fs::create_dir_all(box_dir.join("logs")).map_err(BoxError::IoError)?;
+        // Cancellation may remove the execution directory while a blocking builder is finishing.
+        let preparation = tempfile::Builder::new()
+            .prefix(".oci-workload-")
+            .tempdir_in(&self.home_dir)
+            .map_err(BoxError::IoError)?;
+        let empty_root = preparation.path().join("rootfs");
+        std::fs::create_dir(&empty_root).map_err(BoxError::IoError)?;
+        let workspace = if self.config.workspace.as_os_str().is_empty() {
+            box_dir.join("workspace")
+        } else {
+            self.config.workspace.clone()
+        };
+        std::fs::create_dir_all(&workspace).map_err(BoxError::IoError)?;
+        let socket = super::layout::ensure_runtime_socket_dir(&self.home_dir, &self.box_id)?;
+        self.image_config = Some(image.config().clone());
+        crate::resolved_image::persist_resolved_image_config(&box_dir, image.config())?;
+        let layout = super::BoxLayout {
+            rootfs_path: empty_root.clone(),
+            resumed_rootfs: None,
+            exec_socket_path: socket.join("exec.sock"),
+            pty_socket_path: socket.join("pty.sock"),
+            attest_socket_path: socket.join("attest.sock"),
+            port_forward_socket_path: socket.join("portfwd.sock"),
+            workspace_path: workspace.canonicalize().map_err(BoxError::IoError)?,
+            console_output: Some(box_dir.join("logs/console.log")),
+            oci_config: Some(image.config().clone()),
+            oci_manifest_digest: Some(image.manifest_digest().to_string()),
+            prefer_image_rootfs_metadata: true,
+            tee_instance_config: None,
+        };
+        let spec = self.build_runtime_owned_instance_spec(&layout)?;
+        let volume_plans = self.anonymous_disk_plan(image.config())?;
+        let anonymous_mounts: Vec<_> = volume_plans
+            .iter()
+            .map(|(plan, volume)| (PathBuf::from(&volume.mount_point), plan.guest_path.clone()))
+            .collect();
+        let source_digest = image.manifest_digest().to_string();
+        // The blocking job owns its temporary directory even if its awaiting future is cancelled.
+        let (preparation, mut rootfs) = tokio::task::spawn_blocking(move || {
+            let rootfs = crate::rootfs::OciWorkloadRootfs::load(&image, preparation.path())?;
+            Ok::<_, BoxError>((preparation, rootfs))
+        })
+        .await
+        .map_err(|error| BoxError::BuildError(error.to_string()))??;
+        let process = resolve_runtime_owned_process_in(&mut rootfs, &spec, &self.config.cap_drop)?;
+        let capture_baseline = crate::rootfs::guest_diff_baseline_required(&box_dir)?;
+        let hostname = self
+            .config
+            .hostname
+            .clone()
+            .unwrap_or_else(|| self.box_id.clone());
+        let mut oci = compile_portable_microvm_oci_spec(&self.box_id, &hostname, &process)?;
+        let destination = preparation.path().join("artifact");
+        let options = crate::rootfs::Ext4ArtifactOptions::from_disk_mib(
+            self.config.resources.disk_mb,
+            uuid::Uuid::new_v4().into_bytes(),
+        )?;
+        let disk_mib = self.config.resources.disk_mb;
+        let artifact = tokio::task::spawn_blocking(move || {
+            use sha2::{Digest, Sha256};
+            use std::io::Read;
+            let baseline = capture_baseline
+                .then(|| rootfs.diff_baseline_bytes())
+                .transpose()?;
+            let volumes = super::oci_anonymous::stage(
+                &mut rootfs,
+                &volume_plans,
+                disk_mib,
+                preparation.path(),
+            )?;
+            let artifact = rootfs.publish(&destination, options)?;
+            let mut input = std::fs::File::open(&artifact.disk).map_err(BoxError::IoError)?;
+            let mut hasher = Sha256::new();
+            let mut buffer = [0_u8; 64 * 1024];
+            loop {
+                let read = input.read(&mut buffer).map_err(BoxError::IoError)?;
+                if read == 0 {
+                    break;
+                }
+                hasher.update(&buffer[..read]);
+            }
+            Ok::<_, BoxError>((
+                preparation,
+                artifact,
+                format!("sha256:{:x}", hasher.finalize()),
+                baseline,
+                volumes,
+            ))
+        })
+        .await
+        .map_err(|error| BoxError::BuildError(error.to_string()))??;
+        super::oci_anonymous::publish(&self.home_dir, &self.box_id, artifact.4)?;
+        super::oci_hvf_spec::complete_with_anonymous(
+            &mut oci,
+            &self.config,
+            &spec,
+            caller_files,
+            &anonymous_mounts,
+        )?;
+        super::oci_hvf_spec::complete_memory_secret_files(
+            &mut oci,
+            self.managed_secret_root.as_deref(),
+        )?;
+        if let Some(baseline) = artifact.3.as_deref() {
+            crate::rootfs::install_baseline_bytes_if_absent(&box_dir, baseline)?;
+        }
+        let descriptor =
+            koci_sdk::RootfsImage::new(artifact.2, options.capacity_bytes, source_digest)
+                .map_err(|error| BoxError::ConfigError(error.to_string()))?;
+        let descriptor = if self.config.read_only {
+            descriptor
+                .with_readonly_root()
+                .map_err(|error| BoxError::ConfigError(error.to_string()))?
+        } else {
+            descriptor
+        };
+        oci.annotations_mut().get_or_insert_default().insert(
+            koci_sdk::ROOTFS_IMAGE_EXTENSION.into(),
+            descriptor
+                .annotation_value()
+                .map_err(|error| BoxError::ConfigError(error.to_string()))?,
+        );
+        crate::local_execution::oci_portable_rootfs::publish_portable_bundle_with_disk(
+            &empty_root,
+            &oci,
+            bundle_directory,
+            Some(&artifact.1.disk),
+        )?;
+        Ok(RuntimeOwnedMicrovmBundle {
+            bundle_dir: bundle_directory.into(),
+            console_output: box_dir.join("logs/console.log"),
+            anonymous_volumes: self.anonymous_volumes.clone(),
+        })
     }
 
     /// Remove only Box-owned rootfs and socket preparation after runtime deletion.
@@ -117,12 +281,20 @@ struct RuntimeGroupEntry {
 }
 
 pub(crate) fn resolve_runtime_owned_process(
-    rootfs: &Path,
+    mut rootfs: &Path,
+    instance_spec: &crate::vmm::InstanceSpec,
+    dropped_capabilities: &[String],
+) -> Result<MicrovmRuntimeProcess> {
+    resolve_runtime_owned_process_in(&mut rootfs, instance_spec, dropped_capabilities)
+}
+
+pub(crate) fn resolve_runtime_owned_process_in(
+    rootfs: &mut impl ProcessRootfs,
     instance_spec: &crate::vmm::InstanceSpec,
     dropped_capabilities: &[String],
 ) -> Result<MicrovmRuntimeProcess> {
     let cwd = normalize_linux_guest_path("/", &instance_spec.workdir, "working directory")?;
-    crate::oci::rootfs::ensure_guest_directory(rootfs, cwd.trim_start_matches('/'))?;
+    rootfs.ensure_directory(&cwd)?;
 
     let mut environment = instance_spec.entrypoint.env.clone();
     let path = environment
@@ -131,8 +303,8 @@ pub(crate) fn resolve_runtime_owned_process(
         .find_map(|(key, value)| (key == "PATH").then_some(value.as_str()))
         .unwrap_or(DEFAULT_CONTAINER_PATH);
     let executable =
-        resolve_runtime_executable(rootfs, &cwd, path, &instance_spec.entrypoint.executable)?;
-    let identity = resolve_runtime_identity(rootfs, instance_spec.user.as_deref())?;
+        resolve_runtime_executable_in(rootfs, &cwd, path, &instance_spec.entrypoint.executable)?;
+    let identity = resolve_runtime_identity_in(rootfs, instance_spec.user.as_deref())?;
     if !environment.iter().any(|(key, _)| key == "HOME") {
         if let Some(home) = identity.home.as_ref() {
             environment.push(("HOME".to_string(), home.clone()));
@@ -161,7 +333,15 @@ struct RuntimeIdentity {
     home: Option<String>,
 }
 
-fn resolve_runtime_identity(rootfs: &Path, requested: Option<&str>) -> Result<RuntimeIdentity> {
+#[cfg(test)]
+fn resolve_runtime_identity(mut rootfs: &Path, requested: Option<&str>) -> Result<RuntimeIdentity> {
+    resolve_runtime_identity_in(&mut rootfs, requested)
+}
+
+fn resolve_runtime_identity_in(
+    rootfs: &mut impl ProcessRootfs,
+    requested: Option<&str>,
+) -> Result<RuntimeIdentity> {
     let passwd = runtime_passwd_entries(rootfs)?;
     let groups = runtime_group_entries(rootfs)?;
     let Some(requested) = requested.map(str::trim).filter(|value| !value.is_empty()) else {
@@ -260,9 +440,8 @@ fn resolve_runtime_identity(rootfs: &Path, requested: Option<&str>) -> Result<Ru
     })
 }
 
-fn runtime_passwd_entries(rootfs: &Path) -> Result<Vec<RuntimePasswdEntry>> {
-    let Some(contents) = crate::oci::rootfs::read_guest_file_to_string(rootfs, "etc/passwd")?
-    else {
+fn runtime_passwd_entries(rootfs: &mut impl ProcessRootfs) -> Result<Vec<RuntimePasswdEntry>> {
+    let Some(contents) = rootfs.read_text("etc/passwd")? else {
         return Ok(Vec::new());
     };
     Ok(contents
@@ -283,8 +462,8 @@ fn runtime_passwd_entries(rootfs: &Path) -> Result<Vec<RuntimePasswdEntry>> {
         .collect())
 }
 
-fn runtime_group_entries(rootfs: &Path) -> Result<Vec<RuntimeGroupEntry>> {
-    let Some(contents) = crate::oci::rootfs::read_guest_file_to_string(rootfs, "etc/group")? else {
+fn runtime_group_entries(rootfs: &mut impl ProcessRootfs) -> Result<Vec<RuntimeGroupEntry>> {
+    let Some(contents) = rootfs.read_text("etc/group")? else {
         return Ok(Vec::new());
     };
     Ok(contents
@@ -309,10 +488,10 @@ fn runtime_group_entries(rootfs: &Path) -> Result<Vec<RuntimeGroupEntry>> {
         .collect())
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::process_path::resolve_runtime_executable;
 
     #[test]
     fn runtime_owned_process_resolves_path_and_named_identity_from_rootfs() {

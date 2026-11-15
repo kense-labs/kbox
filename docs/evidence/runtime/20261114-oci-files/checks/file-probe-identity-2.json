@@ -1,0 +1,12 @@
+{
+  "source": "crates/box/runtime/tests/fixtures/hvf_file_probe.c",
+  "sourceSha256": "4d06848e4fca49b3952eaa0c6739de8df31152898911f04a8b64c9e923e97111",
+  "binary": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/hvf-file-probe-2",
+  "binarySha256": "4ea3987392403969ab9d7773fe1ce05fd31f8a553fc6e4b443da413ef157ca91",
+  "guestFilesystemWritableAssertion": true,
+  "allowedDenialErrnos": [
+    1,
+    13
+  ],
+  "commandsLog": "file-probe-build-2.log"
+}

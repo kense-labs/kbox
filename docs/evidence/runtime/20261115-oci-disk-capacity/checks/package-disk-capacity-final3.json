@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 32.414450166,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/package-home-disk-capacity-final3",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "8254ed0cbd6f1b17728b3c3776bea8a39d73c8e62f96a414631802cdfa6adc22"
+}

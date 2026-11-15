@@ -1,0 +1,77 @@
+{
+  "runStartedUtc": "2026-11-14T09:03:30.810014+00:00",
+  "sockets": [
+    {
+      "path": "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/exec.sock",
+      "inode": 254840079,
+      "birthUtc": "2026-11-07T07:38:53.414978+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/attest.sock",
+      "inode": 254840080,
+      "birthUtc": "2026-11-07T07:38:53.415008+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/pty.sock",
+      "inode": 254840078,
+      "birthUtc": "2026-11-07T07:38:53.414943+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/33aa4cb2-360a-4567-883b-1c7ee749eca9/portfwd.sock",
+      "inode": 254840077,
+      "birthUtc": "2026-11-07T07:38:53.414889+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/exec.sock",
+      "inode": 255277474,
+      "birthUtc": "2026-11-07T08:34:01.138840+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/attest.sock",
+      "inode": 255277475,
+      "birthUtc": "2026-11-07T08:34:01.138870+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/pty.sock",
+      "inode": 255277472,
+      "birthUtc": "2026-11-07T08:34:01.138753+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973/portfwd.sock",
+      "inode": 255277473,
+      "birthUtc": "2026-11-07T08:34:01.138809+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/exec.sock",
+      "inode": 255341722,
+      "birthUtc": "2026-11-07T08:47:57.663889+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/attest.sock",
+      "inode": 255341723,
+      "birthUtc": "2026-11-07T08:47:57.663924+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/pty.sock",
+      "inode": 255341721,
+      "birthUtc": "2026-11-07T08:47:57.663778+00:00",
+      "createdBeforeRun": true
+    },
+    {
+      "path": "/private/tmp/kbox-sockets/d05a5e2c-f082-4e56-8f2e-b8036e582474/portfwd.sock",
+      "inode": 255341724,
+      "birthUtc": "2026-11-07T08:47:57.663962+00:00",
+      "createdBeforeRun": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-shm-size/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 175.698641958
+}

@@ -1,0 +1,95 @@
+   Compiling bitflags v2.10.0
+   Compiling log v0.4.29
+   Compiling memchr v2.7.4
+   Compiling nix v0.30.1
+   Compiling simd-adler32 v0.3.7
+   Compiling regex-syntax v0.8.5
+   Compiling serde v1.0.219
+   Compiling utf8parse v0.2.2
+   Compiling serde_derive v1.0.219
+   Compiling crc32fast v1.4.2
+   Compiling colorchoice v1.0.4
+   Compiling anstyle v1.0.11
+   Compiling anstyle-query v1.1.3
+   Compiling is_terminal_polyfill v1.70.1
+   Compiling libkrun v1.17.5 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/libkrun)
+   Compiling jiff v0.2.14
+   Compiling linux-loader v0.13.0
+   Compiling anstyle-parse v0.2.7
+   Compiling miniz_oxide v0.8.8
+   Compiling anstream v0.6.19
+   Compiling aho-corasick v1.1.3
+   Compiling flate2 v1.1.5
+   Compiling regex-automata v0.4.9
+   Compiling regex v1.11.1
+   Compiling env_filter v0.1.3
+   Compiling env_logger v0.11.8
+   Compiling utils v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/utils)
+   Compiling imago v0.2.1
+warning: unused import: `std::sync::OnceLock`
+ --> src/utils/src/time.rs:5:5
+  |
+5 | use std::sync::OnceLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Instant`, `SystemTime`, and `UNIX_EPOCH`
+ --> src/utils/src/time.rs:6:17
+  |
+6 | use std::time::{Instant, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^
+
+   Compiling arch v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/arch)
+   Compiling polly v0.0.1 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/polly)
+   Compiling kernel v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/kernel)
+   Compiling hvf v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/hvf)
+warning: `utils` (lib) generated 2 warnings (run `cargo fix --lib -p utils` to apply 2 suggestions)
+   Compiling devices v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/devices)
+   Compiling bincode v1.3.3
+warning: type alias `RawFdType` is never used
+  --> src/devices/src/virtio/vsock/muxer.rs:39:10
+   |
+39 | pub type RawFdType = RawFd;
+   |          ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling vmm v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/vmm)
+warning: unused import: `vm_memory::Bytes`
+  --> src/vmm/src/lib.rs:73:5
+   |
+73 | use vm_memory::Bytes;
+   |     ^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+    --> src/vmm/src/builder.rs:2258:9
+     |
+2258 |     let mut vcpus;
+     |         ----^^^^^
+     |         |
+     |         help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: `devices` (lib) generated 1 warning
+warning: `vmm` (lib) generated 2 warnings (run `cargo fix --lib -p vmm` to apply 1 suggestion)
+warning: unused import: `std::os::fd::AsRawFd`
+  --> src/libkrun/src/lib.rs:35:5
+   |
+35 | use std::os::fd::AsRawFd;
+   |     ^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `libkrun` (lib test) generated 1 warning (run `cargo fix --lib -p libkrun --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.32s
+     Running unittests src/lib.rs (target/debug/deps/krun-21115349deb53891)
+
+running 1 test
+test virtiofs_cache_tests::uncached_api_sets_only_its_device_and_rejects_invalid_inputs ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

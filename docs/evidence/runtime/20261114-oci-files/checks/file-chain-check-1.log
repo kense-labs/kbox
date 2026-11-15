@@ -1,0 +1,24 @@
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+    Checking koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+    Checking koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+error[E0365]: `MacosFileAttachment` is private, and cannot be re-exported
+  --> crates/oci-runtime/crates/kbox/src/macos_vm_attachment.rs:20:16
+   |
+20 | pub(crate) use file::MacosFileAttachment;
+   |                ^^^^^^^^^^^^^^^^^^^^^^^^^ re-export of private `MacosFileAttachment`
+   |
+   = note: consider declaring type or module `MacosFileAttachment` with `pub`
+
+For more information about this error, try `rustc --explain E0365`.
+error: could not compile `koci-kbox` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/runtime-maintenance-terminal-repair4-1",
+    "--ignored",
+    "--exact",
+    "utility_vm_driver::handoff::owned_repair_tests::native_cleanup_owned_terminal_create_handoff",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-4",
+  "exitCode": 0,
+  "seconds": 0.9134812090000001,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "clientSha256": "d2992cec493308ed94d152e793fe33810a4178944a577b2f12ce997ec4d2b728"
+}

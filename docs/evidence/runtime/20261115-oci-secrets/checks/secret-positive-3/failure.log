@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-memory-native-apfs.py", line 45, in <module>
+    counts=re.findall(r'test result: (?:ok|FAILED)\. (\d+) passed; (\d+) failed; (\d+) ignored;',(case/'native.stdout').read_text());result.update(command=cmd,exitCode=exit_code,actualCounts=counts,seconds=time.monotonic()-started,root=str(root),clientSha256=sha(client),boxPrefix=str(box),ociHostPrefix=str(host_prefix),ociShimPrefix=str(shim_prefix),loaded=list(loaded.values()));(case/'run.json').write_text(json.dumps(result,indent=2)+'\n');assert exit_code==0 and counts==[('1','0','0')]
+AssertionError

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/diagnose-msgqueue1.py"
+  ],
+  "exit": 0,
+  "seconds": 16.072244666
+}

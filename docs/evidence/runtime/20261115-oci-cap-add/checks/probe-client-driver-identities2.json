@@ -1,0 +1,22 @@
+{
+  "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe.c": {
+    "bytes": 6488,
+    "sha256": "8372b6fe8c5a156ed113b2698ddfd0808211e5b5ebb0fbe13baec839058c57ce"
+  },
+  "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe": {
+    "bytes": 1559720,
+    "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+  },
+  "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-cli-pty.py": {
+    "bytes": 2753,
+    "sha256": "e2c0dcfa607d69901b101915866aaff0a146748ace039d7a85249efaa9b694f7"
+  },
+  "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/native-client-frozen2": {
+    "bytes": 184346992,
+    "sha256": "a95fb13be017d2459983dd3cd29c7819ca08fd997a7266dfadf18dfbea11126d"
+  },
+  "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/run-native.py": {
+    "bytes": 15279,
+    "sha256": "26e73c169787119fffc7c10250e53355da42d00d4b5184fe6bb7da663af238ac"
+  }
+}

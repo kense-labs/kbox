@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/unpacked-disk-capacity-final-3/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/final-dist-disk-capacity-3/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/unpacked-disk-capacity-final-3"
+  ],
+  "exitCode": 0,
+  "seconds": 0.9088221249999933,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-3",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/final-dist-disk-capacity-3/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "071ded8abf176d3668eb10d516367194ca9f9a5e417b6e2f3d52a132f65c27a3",
+  "compressedBytes": 23393932,
+  "installedDiskBytes": 44171264,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+    "sourceInputsSha256": "8254ed0cbd6f1b17728b3c3776bea8a39d73c8e62f96a414631802cdfa6adc22",
+    "cargoLockSha256": "0f82d0eaafd8b255f5a73c9de5a9106fc85f711bc2ed1d4ba9c02ef07aa63dbb",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

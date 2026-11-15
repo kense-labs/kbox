@@ -1,0 +1,233 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "a54f07ddea510d319125b0deec7c1aeb48c2e94f6c2af70e74f1911b251069c3",
+  "sourceFiles": 1623,
+  "initialFilesStillPresent": true,
+  "changedInitialFiles": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_faults.rs",
+    "crates/box/runtime/README.md",
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs.rs",
+    "crates/box/runtime/src/local_execution/oci_production.rs",
+    "crates/box/runtime/src/process_path.rs",
+    "crates/box/runtime/src/rootfs/baseline.rs",
+    "crates/box/runtime/src/rootfs/mod.rs",
+    "crates/box/runtime/src/rootfs/oci_ext4/mod.rs",
+    "crates/box/runtime/src/rootfs/oci_ext4/runtime.rs",
+    "crates/box/runtime/src/rootfs/oci_ext4/tests.rs",
+    "crates/box/runtime/src/vm/layout.rs",
+    "crates/box/runtime/src/vm/oci_microvm.rs",
+    "crates/oci-runtime/README.md",
+    "crates/oci-runtime/ROADMAP.md",
+    "crates/oci-runtime/crates/agent-protocol/src/lib.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/vm_attachment.rs",
+    "crates/oci-runtime/crates/agent-protocol/src/vm_attachment/directory_tests.rs",
+    "crates/oci-runtime/crates/agent/src/vm_attachment.rs",
+    "crates/oci-runtime/crates/agent/src/vm_attachment/storage.rs",
+    "crates/oci-runtime/crates/kbox/src/macos_assets.rs",
+    "crates/oci-runtime/crates/kbox/src/macos_context.rs",
+    "crates/oci-runtime/crates/kbox/src/macos_vm_attachment.rs",
+    "crates/oci-runtime/crates/kbox/src/macos_worker_sandbox.rs",
+    "crates/oci-runtime/crates/kbox/src/macos_worker_sandbox_tests.rs",
+    "crates/oci-runtime/crates/runtime/src/hvf_driver.rs",
+    "crates/oci-runtime/crates/runtime/src/utility_vm_driver.rs",
+    "crates/oci-runtime/crates/runtime/src/utility_vm_driver/handoff.rs",
+    "crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_directory.rs",
+    "crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_directory_tests.rs",
+    "crates/oci-runtime/crates/runtime/src/utility_vm_driver/vm_attachment_transport.rs",
+    "crates/oci-runtime/crates/sdk/src/attachment.rs",
+    "crates/oci-runtime/crates/sdk/src/lib.rs",
+    "crates/oci-runtime/docs/macos-hvf.md"
+  ],
+  "referenceChecks": [
+    {
+      "document": "specs/008-oci-rootfs/tasks.md",
+      "target": "../../docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "specs/008-oci-rootfs/plan.md",
+      "target": "../../docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/final-host.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/initial-compiler.log",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "run-context.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "../../../../specs/008-oci-rootfs/tasks.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "../../../../specs/008-oci-rootfs/contracts/rootfs-image.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/verify-commit-candidate2.log",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/box-native-attempt-3.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/archive-final2/native-results.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/ownership-image-identity.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/loader-attempt-3.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/archive-final2/native-loaded-libraries.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/rootfs-fds-attempt-3/inventory.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/oci-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/install-final2.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/oci-final2-install.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/final-identities.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/box-native-attempt-2.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/final-cleanup.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/preexisting-global-sockets.json",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "../20261114-oci-host-service/W4-GATES.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "target": "checks/final-review.json",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-final-archive/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-release-baseline/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-macos-readonly/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-windows-arm64/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-host-service/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261114-oci-rootfs/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../crates/oci-runtime/ROADMAP.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../crates/oci-runtime/docs/macos-hvf.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261114-oci-rootfs/OUTCOME.md",
+      "exists": true
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../../../../specs/008-oci-rootfs/tasks.md",
+      "exists": true
+    }
+  ],
+  "missingNewReferences": [],
+  "preexistingMissingHistory": [
+    "crates/oci-runtime/docs/evidence/2026-10-18-guest-command-status/OUTCOME.md",
+    "docs/evidence/code-harness/20261018-macos-guest-owner/OUTCOME.md"
+  ],
+  "nativeSubmodulesClean": true,
+  "headUnchanged": true,
+  "originalShimTestFileRestored": true,
+  "reviewedBoundaries": [
+    "verified layers and logical process view",
+    "legacy UID gate retained",
+    "SDK required version and v1-v4/v5 compatibility",
+    "Host content/inode/target/generation binding",
+    "private pinned raw disk and Seatbelt",
+    "Agent unique serial/size/access mount",
+    "first-writer CLI baseline and cancellation-owned staging",
+    "exact-generation cleanup and original routes/capability ceiling"
+  ],
+  "unresolvedWithinSpec008": []
+}

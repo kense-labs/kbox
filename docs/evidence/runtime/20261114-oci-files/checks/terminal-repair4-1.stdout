@@ -1,0 +1,6 @@
+
+running 1 test
+test utility_vm_driver::handoff::owned_repair_tests::native_cleanup_owned_terminal_create_handoff ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 438 filtered out; finished in 0.18s
+

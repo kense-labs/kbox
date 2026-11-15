@@ -1,0 +1,153 @@
+{
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sha256": "ce2b65c4b93b8843b9d4a9b897e5b37e217a78895458ae5fd7f2e58586fd9239",
+  "compressedBytes": 33333578,
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "installedDiskBytes": 114847744,
+  "filesVerified": 11,
+  "sourceInputsSha256": "3d07d7318f277094813eb973e746339c8fce5934bf95bcf1021a9011a7e54ca5",
+  "systemImage": {
+    "architecture": "aarch64",
+    "compatibility_level": "koci-runtime-0.2.0-agent-protocol-v10",
+    "image": {
+      "archive_name": "koci-system.ext4.xz",
+      "archive_sha256": "f85ffe23073b9967ed0dbdf0cc035b33e8fc295b94f40a99dfdfe7a643b40db5",
+      "archive_size": 4995664,
+      "directory_hash_seed": "a3a30c1a-2026-4000-8000-000000000002",
+      "filesystem": "ext4",
+      "filesystem_label": "koci-system",
+      "filesystem_uuid": "a3a30c1a-2026-4000-8000-000000000001",
+      "name": "koci-system.ext4",
+      "sha256": "2d58413c150be0956116d46bbd73214713d349dd317d782a82c8d094b028e1f6",
+      "size": 67108864
+    },
+    "runtime": {
+      "archive_sha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+      "firmware_sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+      "kernel_bundle_sha256": "b1180b50148ed14f5fbeadf17288ce8abcf245daa468255b7ff41113bbf01199",
+      "kernel_bundle_size": 22740992,
+      "kernel_entry_address": "0x0000000080000000",
+      "kernel_guest_load_address": "0x0000000080000000",
+      "libkrun_sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "schema_version": "koci.macos-system-image.v1",
+    "sources": {
+      "agent": {
+        "sha256": "397a843173b78ca316ea07611aed7a5e191a87535fbac6ea58d9d94162a729f2",
+        "size": 5026232,
+        "version": "0.3.6"
+      },
+      "alpine": {
+        "archive_sha256": "3fbc6285032ed46821b511292633d7b2a6306a2e254f590e92bdafff56cf2f70",
+        "archive_size": 3966256,
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+        "version": "3.22.5"
+      },
+      "builder": {
+        "e2fsprogs_version": "1.47.4 (6-Mar-2025)",
+        "source_date_epoch": 1735689600
+      }
+    }
+  },
+  "nativeArchiveSha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+  "identityChecks": [
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci\nIdentifier=koci-555549444989c41eb5c138a4895e4d3fb9258c1e\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=12198 flags=0x2(adhoc) hashes=370+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=172ad4c351f3ec569f1d299d6bb389f9f83f2b73\nCandidateCDHashFull sha256=172ad4c351f3ec569f1d299d6bb389f9f83f2b73d81c72c55b2febd88ffbe811\nHash choices=sha256\nCMSDigest=172ad4c351f3ec569f1d299d6bb389f9f83f2b73d81c72c55b2febd88ffbe811\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=5685248\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=172ad4c351f3ec569f1d299d6bb389f9f83f2b73\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim\nIdentifier=koci-kshim-5555494485290ba49fa03a3980746ae582420523\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6060 flags=0x2(adhoc) hashes=178+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=2fb3f1712636438c899df69d81150e811dcc4a86\nCandidateCDHashFull sha256=2fb3f1712636438c899df69d81150e811dcc4a86b5665d59e0d065d5a7eb3a7b\nHash choices=sha256\nCMSDigest=2fb3f1712636438c899df69d81150e811dcc4a86b5665d59e0d065d5a7eb3a7b\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=2654208\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=2fb3f1712636438c899df69d81150e811dcc4a86\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim:\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    }
+  ]
+}

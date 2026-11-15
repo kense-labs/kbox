@@ -1,0 +1,237 @@
+{
+  "schema": "kbox.local-runtime-evidence.v1",
+  "reason": "Retained local mutable native service state and binary transfer responses; OUTCOME, commands, result counters and raw external logs remain versioned.",
+  "roots": [
+    {
+      "root": "docs/evidence/runtime/20261115-oci-cpu-time/checks/environment-positive-1/native-root",
+      "files": 589,
+      "bytes": 23414012,
+      "pathAndContentSha256": "ff322a3ad7ca81aeb005a56e93c084eb5421136981eac8eea2cff589801226a4"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-cpu-time/checks/environment-positive-2/native-root",
+      "files": 589,
+      "bytes": 23414012,
+      "pathAndContentSha256": "b1a782b374d1bed8bbc9cc4ff67a671c0013f434b91f0ae7ad719cd88d4041be"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-msgqueue/checks/environment-positive-1/native-root",
+      "files": 589,
+      "bytes": 23414012,
+      "pathAndContentSha256": "b793903cca1fa5b0067e73c6ea9615a8837af37e1e4084e17095df87092c53f9"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-nproc/checks/environment-positive-3/native-root",
+      "files": 589,
+      "bytes": 23421170,
+      "pathAndContentSha256": "e55c403f2cb8296cfd98a437a8644c525ead30b1bb18354e54a8d2eec3818e9b"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-nproc/checks/environment-positive-5/native-root",
+      "files": 589,
+      "bytes": 23421169,
+      "pathAndContentSha256": "b048cab25a0b1af3632da1447c30f375b615a9ff3cde6b6bd3b87f058197a885"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-file-positive-1/native-root",
+      "files": 460,
+      "bytes": 13275283,
+      "pathAndContentSha256": "aabc541692da402d98c6022f7905d622d6a56c6df31f4ed0a93c10b05a90a302"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-positive-1/native-root",
+      "files": 589,
+      "bytes": 46577307,
+      "pathAndContentSha256": "cb815a9524d9b7a12c1aea3edd173e52ee5e213ae7ba0a6bd78f6450d07858a4"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-disk-projection-1/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "6491b76aa16400a5444d3017f5ddf68fdc8ab8dc4fe77bd0d3974afdc25bb788"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-host-1/native-root",
+      "files": 8,
+      "bytes": 389,
+      "pathAndContentSha256": "b1cb0451466b912d625377fc9013718f72cbe5e3a0c92bde6c9624d0ec36557f"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-shim-1/native-root",
+      "files": 27,
+      "bytes": 20900,
+      "pathAndContentSha256": "11ed7507b118699f785767bd2531db8efb7f9b7f997d6307a807e0cd1f20c71f"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-1/native-root",
+      "files": 6,
+      "bytes": 9047,
+      "pathAndContentSha256": "b04aefbfdd1ba951a481b96f402d78f80d82385c659dbc8c59c7715e9b91b89a"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-2/native-root",
+      "files": 44,
+      "bytes": 52177,
+      "pathAndContentSha256": "5223a5b7cbda663e2dc43f0d38997aecc608ffbe899590ccb5b484c477706115"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-3/native-root",
+      "files": 582,
+      "bytes": 46610688,
+      "pathAndContentSha256": "406f502982e6d95bf3457a9aa373703e268247046c533afa7ac444abc1bfa5f7"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-disk-projection-2/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "9e7342ab1ea4ba37e0531b379cada188d36995cefcfc5d37bfaf5bcbbb6064c5"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-file-positive-2/native-root",
+      "files": 460,
+      "bytes": 13275243,
+      "pathAndContentSha256": "69ceec50ab40860117114aa74243f36133eecceeaaf21f2c14585d0df416b09b"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-agent-2/native-root",
+      "files": 27,
+      "bytes": 19004,
+      "pathAndContentSha256": "3c80a21d50e348060148cb6bd4c758ef593d5d3fc04d55f9a3e1fb9ab8e04b07"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-host-2/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "8f2da36f4185d582d98d0d9b6222d43056e0d6d102638ac58b36462dacfef93d"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-shim-2/native-root",
+      "files": 27,
+      "bytes": 17886,
+      "pathAndContentSha256": "1aa9340535f0e8c903c689530d78f3574969016627b1314e60fbd9c3ebf41992"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-positive-1/native-root",
+      "files": 589,
+      "bytes": 23411650,
+      "pathAndContentSha256": "0e8bc27dd0b5fe7ed9d26ec39561f40d306ce03210aac7afdede396fe62e4418"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-positive-2/native-root",
+      "files": 589,
+      "bytes": 23414104,
+      "pathAndContentSha256": "8c275c3da853154779bed55d1bdd410a92a891eabc3a341904beb25df634a1d3"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-disk-projection-1/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "193691e82bfe5757ea0b51f3e7fb697c46b0fed5ff9aca2f2b019a378eef8918"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-disk-projection-2/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "98b10f3bb36d7c7a722b46015e20e15899045ce0006def8a7ed33c7d3f8d1dd4"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-agent-1/native-root",
+      "files": 27,
+      "bytes": 18707,
+      "pathAndContentSha256": "6041efd0cb5610c4c0b70805d8972f6f5f3a0fe2f578bd40f4394e5d6d2bcc28"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-agent-2/native-root",
+      "files": 27,
+      "bytes": 18707,
+      "pathAndContentSha256": "c2b7d3a2c8d2a183e9562c0f28990a71c555ecb7bd87153b03b967df5fdb1792"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-host-1/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "96ff0132040b687a1563801ae51691b1db91cc435835e57b481adefaca0053c1"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-host-2/native-root",
+      "files": 8,
+      "bytes": 373,
+      "pathAndContentSha256": "389560aa7bd150da1f14459412391058a32beb2e1f88a2e698b3e9e7a1c610db"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-shim-1/native-root",
+      "files": 16,
+      "bytes": 26216,
+      "pathAndContentSha256": "07c0ae0a429674821fb802adc2619dbfcbfb3d5f33ce3e05953a0f6c6f3dd836"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-shim-2/native-root",
+      "files": 19,
+      "bytes": 18840,
+      "pathAndContentSha256": "af7d603b8844d529a569c1dba51cbb068332335705f05dc26f28331020709c85"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-shim-3/native-root",
+      "files": 27,
+      "bytes": 17597,
+      "pathAndContentSha256": "85e4ab60f57c095fc961deae89af909e8f21544979f80e4f02d6a3c39be3ea0c"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-shim-4/native-root",
+      "files": 27,
+      "bytes": 17597,
+      "pathAndContentSha256": "2ba1563b3434a4111406255b2f8e2a0d312c0b4ea1cca5f300c624a4bcc5f264"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-1/native-root",
+      "files": 6,
+      "bytes": 56,
+      "pathAndContentSha256": "25b6433f890265e52811b3b12e45a00cf9c248f24a6bbaad99e17f779eccb64a"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-2/native-root",
+      "files": 6,
+      "bytes": 7397,
+      "pathAndContentSha256": "3b43976cefbafbea847bd4d0907a7d9e02d2b7fdbcd3dc720dde1652a8989c55"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-3/native-root",
+      "files": 64,
+      "bytes": 66937,
+      "pathAndContentSha256": "583afd69e8ff9109246a283ec8606ed7f5568092b6d2faf0b434e6e0b6478ceb"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-4/native-root",
+      "files": 449,
+      "bytes": 6563604,
+      "pathAndContentSha256": "85df7332bd4f6be9b05008eefd17fcceeba283cb118d8bd98774529e140f6ead"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-5/native-root",
+      "files": 94,
+      "bytes": 81309,
+      "pathAndContentSha256": "66f8a6c4d7b4ae72fd3f54d8de8c950b70156f3931416f64a6f350e787518d39"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-6/native-root",
+      "files": 460,
+      "bytes": 13274723,
+      "pathAndContentSha256": "5c5338dd6d6296429d702cda64f1d481b6095aa045c64cabf0136084a8e11c89"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-7/native-root",
+      "files": 460,
+      "bytes": 13274722,
+      "pathAndContentSha256": "82552d8be9d97f1262b77837bc0e65b092309edc94c77a2bfef4daa839ba6264"
+    },
+    {
+      "root": "docs/evidence/runtime/20261115-oci-sigpending/checks/environment-positive-2/native-root",
+      "files": 589,
+      "bytes": 23414104,
+      "pathAndContentSha256": "3eea64efd5e152af13de5ac6e8e4deee88818c2dde2efb0a73caf7be2d237acd"
+    }
+  ],
+  "files": 8680,
+  "bytes": 340571180,
+  "removed": []
+}

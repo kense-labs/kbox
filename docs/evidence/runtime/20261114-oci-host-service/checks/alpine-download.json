@@ -1,0 +1,17 @@
+{
+  "command": [
+    "curl",
+    "-fL",
+    "--connect-timeout",
+    "10",
+    "--max-time",
+    "60",
+    "--retry",
+    "2",
+    "-o",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+    "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-minirootfs-3.22.5-aarch64.tar.gz"
+  ],
+  "exitCode": 0,
+  "seconds": 2.697415083
+}

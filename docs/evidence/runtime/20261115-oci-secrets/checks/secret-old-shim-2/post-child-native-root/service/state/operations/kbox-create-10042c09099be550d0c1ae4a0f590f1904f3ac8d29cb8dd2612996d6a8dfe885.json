@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "koci.operation.v7",
+  "operationId": "kbox-create-10042c09099be550d0c1ae4a0f590f1904f3ac8d29cb8dd2612996d6a8dfe885",
+  "kind": "create",
+  "containerId": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+  "generation": 1,
+  "requestDigest": "sha256:a0b673dd60df0992f27b9417f55f556105797d193437d2fa7087fa76ac3e1efe",
+  "outcome": {
+    "status": "succeeded",
+    "response": {
+      "state": {
+        "ociVersion": "1.3.0",
+        "id": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+        "status": "created",
+        "pid": 211,
+        "bundle": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-shim-2-ram/case/service/runtime/bundle-handoffs/kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4/kbox-create-10042c09099be550d0c1ae4a0f590f1904f3ac8d29cb8dd2612996d6a8dfe885/bundle",
+        "annotations": {
+          "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1",
+          "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+          "dev.kbox.memory-secret-files": "{\"schemaVersion\":1,\"mountIndices\":[3]}",
+          "dev.kbox.file-grants": "{\"schemaVersion\":1,\"entries\":[{\"mountIndex\":3,\"identity\":\"kbox.hvf.mount.3\",\"sourceIdentity\":{\"device\":16777248,\"inode\":53},\"accessMode\":\"read-only\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"},{\"mountIndex\":4,\"identity\":\"kbox.hvf.mount.4\",\"sourceIdentity\":{\"device\":16777248,\"inode\":54},\"accessMode\":\"read-write\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"}]}",
+          "com.kbox.process-owner": "koci-runtime",
+          "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:bd5737ac280398dd660bdc026e850b84e59b314a2ea81928bc135fd3e7b0637f\",\"size\":4294967296,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+          "com.kbox.isolation-class": "hardware-vm"
+        }
+      },
+      "generation": 1,
+      "driver": "libk-hvf",
+      "isolation": "dedicated-vm",
+      "config_digest": "sha256:d51741ffa1ab2be805376a3fb5a4b1b9cf402508897be21b3f0de6fc4117e95a",
+      "attachments_digest": "sha256:be96fb8201e6a2c6997b94a40dc7bb3c8aa97b77718b21956c945de8fe0c6baa"
+    }
+  }
+}

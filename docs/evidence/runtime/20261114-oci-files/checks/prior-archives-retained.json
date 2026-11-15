@@ -1,0 +1,16 @@
+[
+  {
+    "kind": "boxArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/final-dist-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "34e2a8f09f7c029319e8a86495c1e9607dfb83941fe6a0752ab4972aa617f889",
+    "bytes": 23309401,
+    "retained": true
+  },
+  {
+    "kind": "ociArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-rootfs-1a469ffdee774403b7bae4b58f254647/oci-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "fb1bc50474bea3802325352e1400d0811ed6177c42597a53a78b252acbcadba5",
+    "bytes": 33124162,
+    "retained": true
+  }
+]

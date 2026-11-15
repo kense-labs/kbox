@@ -1,0 +1,203 @@
+ M .gitignore
+ M Cargo.lock
+ M Cargo.toml
+ M crates/box/cli/src/commands/attach.rs
+ M crates/box/cli/src/commands/commit/tests.rs
+ M crates/box/cli/src/commands/common.rs
+ M crates/box/cli/src/commands/compose/args.rs
+ M crates/box/cli/src/commands/cp.rs
+ M crates/box/cli/src/commands/observe_inventory.rs
+ M crates/box/cli/src/commands/run/request_tests.rs
+ M crates/box/cli/src/commands/run/tests/lifecycle.rs
+ M crates/box/cli/src/commands/scale_api.rs
+ M crates/box/cli/src/state/tests.rs
+ M crates/box/cli/tests/command_coverage.rs
+ M crates/box/core/src/compose.rs
+ M crates/box/core/src/snapshot.rs
+ M crates/box/cri/src/image_service.rs
+ M crates/box/cri/src/runtime_service/mod.rs
+ M crates/box/cri/src/runtime_service/supervisor.rs
+ M crates/box/cri/src/runtime_service/tests.rs
+ M crates/box/cri/src/spdy.rs
+ M crates/box/cri/src/streaming.rs
+ M crates/box/deps/libksys/README.md
+ M crates/box/deps/libksys/build.rs
+ M crates/box/deps/libksys/build_support.rs
+ M crates/box/deps/libksys/tests/build_support.rs
+ M crates/box/runtime/Cargo.toml
+ M crates/box/runtime/README.md
+ M crates/box/runtime/examples/linux_kvm_live_session_qualification.rs
+ M crates/box/runtime/examples/linux_kvm_oci_qualification.rs
+ M crates/box/runtime/examples/windows_whpx_oci_qualification.rs
+ M crates/box/runtime/src/box_record.rs
+ M crates/box/runtime/src/box_state.rs
+ D crates/box/runtime/src/engine/assembly.rs
+ D crates/box/runtime/src/engine/assembly_journal.rs
+ D crates/box/runtime/src/engine/assembly_tests.rs
+ M crates/box/runtime/src/engine/controller.rs
+ M crates/box/runtime/src/engine/directory_tests.rs
+ M crates/box/runtime/src/engine/journal.rs
+ M crates/box/runtime/src/engine/mod.rs
+ M crates/box/runtime/src/engine/prewarm.rs
+ M crates/box/runtime/src/engine/prewarm_tests.rs
+ M crates/box/runtime/src/engine/process.rs
+ M crates/box/runtime/src/engine/process_tests.rs
+ M crates/box/runtime/src/engine/protocol.rs
+ M crates/box/runtime/src/engine/tests.rs
+ M crates/box/runtime/src/host_check.rs
+ M crates/box/runtime/src/host_fs/id_mapping.rs
+ M crates/box/runtime/src/host_fs/mod.rs
+ M crates/box/runtime/src/host_fs/mount_alias.rs
+ M crates/box/runtime/src/host_fs/rootfs.rs
+ M crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs
+ M crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_evidence.rs
+ M crates/box/runtime/src/kbox_contract_driver/conformance_tests/security_profile.rs
+ M crates/box/runtime/src/kbox_contract_driver/directory_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_tests.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_tests/primary.rs
+ M crates/box/runtime/src/kbox_contract_driver/exec.rs
+ M crates/box/runtime/src/kbox_contract_driver/mod.rs
+ M crates/box/runtime/src/kbox_contract_driver/paperloom_processing_live_tests.rs
+ M crates/box/runtime/src/kbox_contract_driver/prewarm.rs
+ M crates/box/runtime/src/kbox_contract_driver/prewarm_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/profile_tests.rs
+ M crates/box/runtime/src/kbox_contract_driver/secret.rs
+ M crates/box/runtime/src/kbox_contract_driver/tests.rs
+ M crates/box/runtime/src/lib.rs
+ M crates/box/runtime/src/local_execution/backend.rs
+ M crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs
+ M crates/box/runtime/src/local_execution/mod.rs
+ M crates/box/runtime/src/local_execution/oci_backend.rs
+ M crates/box/runtime/src/local_execution/oci_backend_tests.rs
+ M crates/box/runtime/src/local_execution/oci_backend_tests/process_restart.rs
+ M crates/box/runtime/src/local_execution/oci_migration.rs
+ M crates/box/runtime/src/local_execution/oci_portable_rootfs.rs
+ M crates/box/runtime/src/local_execution/oci_production.rs
+ M crates/box/runtime/src/local_execution/oci_session.rs
+ M crates/box/runtime/src/local_execution/oci_whpx_owner.rs
+ M crates/box/runtime/src/local_execution/resources.rs
+ M crates/box/runtime/src/local_execution/router.rs
+ M crates/box/runtime/src/local_execution/router_tests.rs
+ M crates/box/runtime/src/local_execution/snapshot.rs
+ M crates/box/runtime/src/local_execution/tests.rs
+ M crates/box/runtime/src/local_execution/tests/attached_vm_identity.rs
+ M crates/box/runtime/src/local_execution/tests/owned_vm_close.rs
+ M crates/box/runtime/src/local_execution/vm_backend.rs
+ M crates/box/runtime/src/local_execution/vm_backend_tests.rs
+ M crates/box/runtime/src/oci/build/plan.rs
+ M crates/box/runtime/src/oci/build/plan/tests.rs
+ M crates/box/runtime/src/oci_portable_spec.rs
+ M crates/box/runtime/src/process_path.rs
+ M crates/box/runtime/src/rootfs/baseline.rs
+ M crates/box/runtime/src/rootfs/mod.rs
+ M crates/box/runtime/src/rootfs/oci_ext4/mod.rs
+ M crates/box/runtime/src/rootfs/oci_ext4/runtime.rs
+ M crates/box/runtime/src/rootfs/oci_ext4/tests.rs
+ M crates/box/runtime/src/scale/catalog.rs
+ M crates/box/runtime/src/scale/reconciler.rs
+ M crates/box/runtime/src/vm/boot.rs
+ M crates/box/runtime/src/vm/layout.rs
+ M crates/box/runtime/src/vm/mod.rs
+ M crates/box/runtime/src/vm/oci_microvm.rs
+ M crates/box/runtime/src/vm/reap.rs
+ M crates/box/runtime/src/vm/spec.rs
+ M crates/box/runtime/src/vm/spec/tests/boot.rs
+ M crates/box/runtime/src/vm/spec/tests/general.rs
+ M crates/box/runtime/src/vm/spec/virtiofs_ro.rs
+ M crates/box/runtime/src/vm/spec/volumes.rs
+ M crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs
+ M crates/box/shim/Cargo.toml
+ M crates/box/shim/src/main.rs
+ M crates/box/shim/src/vm_launch.rs
+ M crates/oci-runtime/README.md
+ M crates/oci-runtime/ROADMAP.md
+ M crates/oci-runtime/crates/agent-protocol/src/lib.rs
+ M crates/oci-runtime/crates/agent-protocol/src/vm_attachment.rs
+ M crates/oci-runtime/crates/agent-protocol/src/vm_attachment/directory_tests.rs
+ M crates/oci-runtime/crates/agent/src/vm_attachment.rs
+ M crates/oci-runtime/crates/agent/src/vm_attachment/storage.rs
+ M crates/oci-runtime/crates/kbox/Cargo.toml
+ M crates/oci-runtime/crates/kbox/src/context.rs
+ M crates/oci-runtime/crates/kbox/src/lib.rs
+ M crates/oci-runtime/crates/kbox/src/macos_assets.rs
+ M crates/oci-runtime/crates/kbox/src/macos_context.rs
+ M crates/oci-runtime/crates/kbox/src/macos_vm_attachment.rs
+ M crates/oci-runtime/crates/kbox/src/macos_worker_sandbox.rs
+ M crates/oci-runtime/crates/kbox/src/macos_worker_sandbox_tests.rs
+ M crates/oci-runtime/crates/runtime/src/agent_session/tests.rs
+ M crates/oci-runtime/crates/runtime/src/hvf_driver.rs
+ M crates/oci-runtime/crates/runtime/src/platform/windows.rs
+ M crates/oci-runtime/crates/runtime/src/service/tests.rs
+ M crates/oci-runtime/crates/runtime/src/state/mod.rs
+ M crates/oci-runtime/crates/runtime/src/state/model.rs
+ M crates/oci-runtime/crates/runtime/src/state/operation.rs
+ M crates/oci-runtime/crates/runtime/src/state/process.rs
+ M crates/oci-runtime/crates/runtime/src/utility_vm_driver.rs
+ M crates/oci-runtime/crates/runtime/src/utility_vm_driver/handoff.rs
+ M crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_directory.rs
+ M crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_directory_tests.rs
+ M crates/oci-runtime/crates/runtime/src/utility_vm_driver/vm_attachment_transport.rs
+ M crates/oci-runtime/crates/runtime/src/whpx_driver.rs
+ M crates/oci-runtime/crates/sdk/examples/qualify_hvf_workspace.rs
+ M crates/oci-runtime/crates/sdk/src/attachment.rs
+ M crates/oci-runtime/crates/sdk/src/lib.rs
+ M crates/oci-runtime/crates/sdk/src/process_serde.rs
+ M crates/oci-runtime/docs/macos-hvf.md
+ M crates/oci-runtime/docs/windows-whpx.md
+ D dist/.gitignore
+ D dist/RELEASE_NOTES.md
+ D dist/install.sh
+ M docs/architecture/agent-paas-runtime.md
+ M docs/architecture/cross-platform-compatibility.md
+ M docs/architecture/harness-gateway.md
+ D docs/architecture/krun.md
+ M docs/architecture/support-matrix.json
+ M docs/architecture/windows-arm64-plan.md
+ M docs/kbox-smolvm-inspired-development-plan.md
+ M scripts/e2e-engine/native_prewarm.py
+ M scripts/e2e-engine/native_primary.py
+ M scripts/e2e-engine/native_smoke.py
+ M scripts/package-macos-arm64.sh
+ M scripts/verify-commit.sh
+ M specs/001-krun-engine/spec.md
+ M specs/002-krun-assembly/spec.md
+?? crates/box/runtime/src/host_fs/resource_tests.rs
+?? crates/box/runtime/src/local_execution/oci_hvf.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_native.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_native_behavior.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_native_cli.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_native_faults.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_native_rootfs.rs
+?? crates/box/runtime/src/local_execution/oci_hvf_tests.rs
+?? crates/box/runtime/src/vm/oci_hvf_spec.rs
+?? crates/box/runtime/src/vm/oci_hvf_spec_tests.rs
+?? crates/box/runtime/tests/
+?? crates/box/shim/src/macos_readonly.rs
+?? crates/box/shim/src/tests/macos_readonly.rs
+?? crates/oci-runtime/crates/agent-protocol/src/vm_attachment/rootfs.rs
+?? crates/oci-runtime/crates/kbox/src/macos_readonly.rs
+?? crates/oci-runtime/crates/kbox/src/macos_readonly_tests.rs
+?? crates/oci-runtime/crates/kbox/src/macos_workload_rootfs_tests.rs
+?? crates/oci-runtime/crates/runtime/src/service/tests/exec_capabilities.rs
+?? crates/oci-runtime/crates/runtime/src/state/operation_fingerprint_tests.rs
+?? crates/oci-runtime/crates/runtime/src/utility_vm_driver/rootfs_image.rs
+?? crates/oci-runtime/crates/sdk/src/attachment/rootfs_image.rs
+?? crates/oci-runtime/crates/sdk/src/attachment/rootfs_image_tests.rs
+?? crates/oci-runtime/crates/sdk/src/process_serde_capability_tests.rs
+?? crates/oci-runtime/crates/sdk/src/windows_architecture.rs
+?? crates/oci-runtime/crates/sdk/src/windows_architecture_tests.rs
+?? docs/architecture/local-engine.md
+?? docs/evidence/engine/20261114-generic-engine/
+?? docs/evidence/runtime/
+?? docs/release.md
+?? scripts/e2e-engine/README.md
+?? scripts/e2e-engine/native_readonly.py
+?? scripts/install-package.sh
+?? scripts/test-install-package.py
+?? specs/003-release-baseline/
+?? specs/004-macos-readonly/
+?? specs/005-windows-arm64/
+?? specs/006-final-archive/
+?? specs/007-oci-host-service/
+?? specs/008-oci-rootfs/

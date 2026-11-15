@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/qualification-runner.py",
+    "docs/evidence/runtime/20261115-rootfs-readonly/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 141.662918959
+}

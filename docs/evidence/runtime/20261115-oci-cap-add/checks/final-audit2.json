@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/final-resource-audit2.py"
+  ],
+  "exit": 0,
+  "seconds": 2.374845916
+}

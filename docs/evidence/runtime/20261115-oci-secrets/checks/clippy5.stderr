@@ -1,0 +1,77 @@
+    Checking koci-core v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/core)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+    Checking kbox-mkext4 v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/third_party/mkext4)
+    Checking kbox-contract v0.8.0 (/Users/roylin/code/kense/kbox/crates/runtime)
+error: manual `!RangeInclusive::contains` implementation
+   --> crates/oci-runtime/crates/core/src/hardware_vm.rs:226:8
+    |
+226 |       if memory_mib < MEMORY_MIN_MIB
+    |  ________^
+227 | |         || memory_mib > MEMORY_MAX_MIB
+    | |______________________________________^ help: use: `!(MEMORY_MIN_MIB..=MEMORY_MAX_MIB).contains(&memory_mib)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#manual_range_contains
+    = note: `-D clippy::manual-range-contains` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_range_contains)]`
+
+error: manual implementation of `.is_multiple_of()`
+   --> crates/oci-runtime/crates/core/src/hardware_vm.rs:228:12
+    |
+228 |         || memory_mib % MEMORY_ALIGN_MIB != 0
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with: `!memory_mib.is_multiple_of(MEMORY_ALIGN_MIB)`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#manual_is_multiple_of
+    = note: `-D clippy::manual-is-multiple-of` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::manual_is_multiple_of)]`
+
+error: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `-D unused-imports` implied by `-D warnings`
+  = help: to override `-D warnings` add `#[allow(unused_imports)]`
+
+error: could not compile `koci-core` (lib) due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: this `impl` can be derived
+  --> crates/common/src/privacy.rs:38:1
+   |
+38 | / impl Default for SensitivityLevel {
+39 | |     fn default() -> Self {
+40 | |         Self::Normal
+41 | |     }
+42 | | }
+   | |_^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#derivable_impls
+   = note: `-D clippy::derivable-impls` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::derivable_impls)]`
+help: replace the manual implementation with a derive attribute and mark the default variant
+   |
+18 + #[derive(Default)]
+19 | pub enum SensitivityLevel {
+20 |     Public,
+21 ~     #[default]
+22 ~     Normal,
+   |
+
+error: consider using `sort_by_key`
+   --> crates/common/src/privacy.rs:171:9
+    |
+171 |         matches.sort_by(|a, b| b.start.cmp(&a.start));
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#unnecessary_sort_by
+    = note: `-D clippy::unnecessary-sort-by` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::unnecessary_sort_by)]`
+help: try
+    |
+171 -         matches.sort_by(|a, b| b.start.cmp(&a.start));
+171 +         matches.sort_by_key(|b| std::cmp::Reverse(b.start));
+    |
+
+error: could not compile `kcommon` (lib) due to 2 previous errors
+error: could not compile `kbox-contract` (lib) due to 1 previous error

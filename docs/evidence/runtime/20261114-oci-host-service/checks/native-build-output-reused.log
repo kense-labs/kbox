@@ -1,0 +1,58 @@
+cargo:rerun-if-changed=../../../../libkrun
+cargo:rerun-if-changed=vendor/libksource.tar
+cargo:rerun-if-changed=vendor/kwindows-x64.tar.xz
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.dll
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.lib
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/libkrunfw.dll
+cargo:rerun-if-env-changed=K_DEPS_STUB
+cargo:rerun-if-env-changed=K_BUILD_LIBKRUN
+cargo:rerun-if-env-changed=K_USE_SYSTEM_LIBKRUN
+cargo:rerun-if-env-changed=K_LIBKRUNFW_DYLIB
+cargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET
+cargo:warning=K_BUILD_LIBKRUN set: forcing build from source
+cargo:warning=Building libksys for macOS (using prebuilt libkrunfw)
+cargo:warning=Set LIBCLANG_PATH to /opt/homebrew/opt/llvm/lib
+cargo:warning=Using cached libkrunfw source
+cargo:warning=Building libkrunfw from source...
+make: Nothing to be done for `all'.
+install -d /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib/
+install -m 755 libkrunfw.5.dylib /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib/
+cd /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib/ ; ln -sf libkrunfw.5.dylib libkrunfw.dylib
+cargo:warning=Building libkrun from source...
+cargo build -p libkrun --release --features blk --features net
+rm -f libkrun.pc libkrun.pc-t
+sed -e 's|@prefix@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun|' \
+	    -e 's|@libdir@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib|' \
+	    -e 's|@includedir@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include|' \
+	    -e 's|@PACKAGE_NAME@|libkrun|' \
+	    -e 's|@PACKAGE_VERSION@|1.17.0|' \
+	    libkrun.pc.in > libkrun.pc-t
+mv libkrun.pc-t libkrun.pc
+mv target/release/libkrun.dylib target/release/libkrun.dylib
+cp target/release/libkrun.dylib target/release/libkrun.1.17.0.dylib
+rm -f libkrun.pc libkrun.pc-t
+sed -e 's|@prefix@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun|' \
+	    -e 's|@libdir@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib|' \
+	    -e 's|@includedir@|/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include|' \
+	    -e 's|@PACKAGE_NAME@|libkrun|' \
+	    -e 's|@PACKAGE_VERSION@|1.17.0|' \
+	    libkrun.pc.in > libkrun.pc-t
+mv libkrun.pc-t libkrun.pc
+install -d /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib/
+install -d /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib/pkgconfig
+install -d /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include
+install -m 644 include/libkrun.h /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include
+install -m 644 include/libkrun_display.h /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include
+install -m 644 include/libkrun_input.h /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/include
+install -m 644 libkrun.pc /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib/pkgconfig
+install -m 755 target/release/libkrun.1.17.0.dylib /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib/
+cd /Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib/ ; ln -sf libkrun.1.17.0.dylib libkrun.1.dylib ; ln -sf libkrun.1.dylib libkrun.dylib
+cargo:warning=Fixed and signed libkrunfw.5.dylib
+cargo:warning=Fixed and signed libkrun.1.17.0.dylib
+cargo:rustc-link-search=native=/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib
+cargo:rustc-link-lib=dylib=krun
+cargo:rustc-link-arg=-Wl,-rpath,/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib
+cargo:rustc-link-arg=-Wl,-rpath,/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib
+cargo:warning=Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+cargo:LIBK_K_DEP=/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrun/lib
+cargo:LIBKRUNFW_K_DEP=/Users/roylin/code/kense/kbox/target/release-dist/build/klibksys-28e4ba6bf389d83e/out/libkrunfw/lib

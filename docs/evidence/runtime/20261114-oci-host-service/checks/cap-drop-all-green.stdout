@@ -1,0 +1,8 @@
+
+running 3 tests
+test vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin ... ok
+test vm::oci_hvf_spec::tests::hvf_file_binds_unknown_capabilities_and_invalid_limits_refuse ... ok
+test vm::oci_hvf_spec::tests::hvf_bundle_preserves_host_grants_exact_resources_and_explicit_guest_capability ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2184 filtered out; finished in 0.01s
+

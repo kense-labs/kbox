@@ -1,0 +1,39 @@
+ M crates/box/cli/src/commands/attach.rs
+ M crates/box/runtime/README.md
+ D crates/box/runtime/src/engine/assembly.rs
+ D crates/box/runtime/src/engine/assembly_journal.rs
+ D crates/box/runtime/src/engine/assembly_tests.rs
+ M crates/box/runtime/src/engine/controller.rs
+ M crates/box/runtime/src/engine/directory_tests.rs
+ M crates/box/runtime/src/engine/journal.rs
+ M crates/box/runtime/src/engine/mod.rs
+ M crates/box/runtime/src/engine/prewarm.rs
+ M crates/box/runtime/src/engine/prewarm_tests.rs
+ M crates/box/runtime/src/engine/process.rs
+ M crates/box/runtime/src/engine/process_tests.rs
+ M crates/box/runtime/src/engine/protocol.rs
+ M crates/box/runtime/src/engine/tests.rs
+ M crates/box/runtime/src/kbox_contract_driver/directory_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_process_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_tests.rs
+ M crates/box/runtime/src/kbox_contract_driver/engine_tests/primary.rs
+ M crates/box/runtime/src/kbox_contract_driver/exec.rs
+ M crates/box/runtime/src/kbox_contract_driver/prewarm.rs
+ M crates/box/runtime/src/kbox_contract_driver/prewarm_native.rs
+ M crates/box/runtime/src/kbox_contract_driver/profile_tests.rs
+ D dist/.gitignore
+ D dist/RELEASE_NOTES.md
+ D dist/install.sh
+ M docs/architecture/agent-paas-runtime.md
+ M docs/architecture/cross-platform-compatibility.md
+ M docs/architecture/harness-gateway.md
+ D docs/architecture/krun.md
+ M docs/kbox-smolvm-inspired-development-plan.md
+ M scripts/e2e-engine/native_prewarm.py
+ M scripts/e2e-engine/native_primary.py
+ M scripts/e2e-engine/native_smoke.py
+ M specs/001-krun-engine/spec.md
+ M specs/002-krun-assembly/spec.md
+?? docs/architecture/local-engine.md
+?? docs/evidence/engine/20261114-generic-engine/
+?? specs/003-release-baseline/

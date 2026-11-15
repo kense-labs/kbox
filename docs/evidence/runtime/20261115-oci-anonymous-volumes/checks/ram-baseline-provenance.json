@@ -1,0 +1,42 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261114-oci-named-volumes/checks/initial-ram-devices.json",
+  "currentBeforeFinalMatrices": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "retainedPriorBaseline": true,
+  "initialMountRecord": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/mounts-before.txt"
+}

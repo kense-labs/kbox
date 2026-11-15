@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/final-receipt-review2.py"
+  ],
+  "exit": 1,
+  "seconds": 0.15371004200000002
+}

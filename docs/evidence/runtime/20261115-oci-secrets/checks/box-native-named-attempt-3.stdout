@@ -1,0 +1,7 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime has been running for over 60 seconds
+test local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2270 filtered out; finished in 166.09s
+

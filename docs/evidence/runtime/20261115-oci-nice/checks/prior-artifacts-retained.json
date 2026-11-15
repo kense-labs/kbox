@@ -1,0 +1,14 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/final-dist-msgqueue-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/previous-dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "6b0e49a9a045621d367de3c6e0608f75e578ba752612ee63452afc47758d6709",
+    "bytes": 23392838
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "retained": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/previous-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "37009193a985f12eddced69d1ee5214650ae2e7e1d449ba5787802195bb381e4",
+    "bytes": 33421132
+  }
+]

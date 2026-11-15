@@ -1,0 +1,55 @@
+[
+  {
+    "command": [
+      "/usr/bin/hdiutil",
+      "attach",
+      "-nomount",
+      "ram://1048576"
+    ],
+    "exitCode": 0,
+    "stdout": "/dev/disk13         \t                               \t\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/sbin/newfs_hfs",
+      "-v",
+      "kbox-owned-secret",
+      "/dev/disk13"
+    ],
+    "exitCode": 0,
+    "stdout": "Initialized /dev/rdisk13 as a 512 MB case-insensitive HFS Plus volume\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/sbin/mount",
+      "-t",
+      "hfs",
+      "/dev/disk13",
+      "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/sbin/umount",
+      "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/bin/hdiutil",
+      "detach",
+      "/dev/disk13"
+    ],
+    "exitCode": 0,
+    "stdout": "\"disk13\" ejected.\n",
+    "stderr": ""
+  }
+]

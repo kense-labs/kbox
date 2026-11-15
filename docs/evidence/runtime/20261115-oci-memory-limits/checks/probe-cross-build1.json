@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe.c",
+    "-o",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.207148917
+}

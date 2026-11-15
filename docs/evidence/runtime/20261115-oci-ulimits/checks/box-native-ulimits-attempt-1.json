@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/native-client-ulimits-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::ulimits::native_ulimits_enforce_kernel_effects_all_process_paths_replay_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-rlimits-e5c6b94fd37f/ulimits-attempt-1",
+  "clientSha256": "2514f1cb9c7166cd168ec2aca2b1f773e253abee54c36ad3b4922c0a081354b9",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/installed-rootro-oci-final-2",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 0,
+  "seconds": 150.418280042,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

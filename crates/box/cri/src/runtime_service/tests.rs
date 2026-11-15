@@ -923,8 +923,7 @@ where
 
         let frame = reader.read_frame().await.unwrap().unwrap();
         assert_eq!(frame.frame_type as u8, kbox_core::pty::FRAME_PTY_REQUEST);
-        let request: kbox_core::pty::PtyRequest =
-            serde_json::from_slice(&frame.payload).unwrap();
+        let request: kbox_core::pty::PtyRequest = serde_json::from_slice(&frame.payload).unwrap();
         let Some(assert_request) = assert_request.take() else {
             panic!("PTY stream server received more than one request");
         };
@@ -1241,10 +1240,7 @@ fn test_runtime_options_resolve_runtime_handler_agent_image() {
         )]),
     };
 
-    assert_eq!(
-        options.agent_image_for("ksecure"),
-        "ghcr.io/kbox/secure:v1"
-    );
+    assert_eq!(options.agent_image_for("ksecure"), "ghcr.io/kbox/secure:v1");
     assert_eq!(options.agent_image_for("kbox"), "ghcr.io/kbox/default:v1");
 }
 
@@ -1265,10 +1261,7 @@ fn test_runtime_options_ignore_blank_runtime_handler_override() {
         options.agent_image_for("explicit"),
         "ghcr.io/kbox/explicit:v1"
     );
-    assert_eq!(
-        options.agent_image_for("blank"),
-        "ghcr.io/kbox/default:v1"
-    );
+    assert_eq!(options.agent_image_for("blank"), "ghcr.io/kbox/default:v1");
     assert_eq!(
         options.agent_image_for("missing"),
         "ghcr.io/kbox/default:v1"
@@ -1747,10 +1740,7 @@ async fn test_stream_pod_sandbox_metrics_returns_snapshot() {
     assert_eq!(response.pod_sandbox_metrics.len(), 1);
     assert_eq!(response.pod_sandbox_metrics[0].pod_sandbox_id, "sb-1");
     assert_eq!(
-        pod_metric_value(
-            &response.pod_sandbox_metrics[0],
-            "kbox_pod_sandbox_ready"
-        ),
+        pod_metric_value(&response.pod_sandbox_metrics[0], "kbox_pod_sandbox_ready"),
         0.0,
         "stream metrics must not invent Ready without VM health (#436)"
     );

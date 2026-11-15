@@ -1,0 +1,9 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exit": 0,
+  "seconds": 227.685304,
+  "sourceInputsSha256": "b60caefc24eb123281d699c8d268cdb6ddc9605d25a3487676fee5aa82645689"
+}

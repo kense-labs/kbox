@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/native-client-sigpending-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::sigpending::native_sigpending_limits_enforce_queue_effects_all_entries_and_recovery",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-1",
+  "clientSha256": "8cb08d9a004a596c7319bf215a0b6facd7c772735ab76a389b9887082b34225f",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-1",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 43.883801917,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

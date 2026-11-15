@@ -1,0 +1,31 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.26s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 2 tests
+test utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff ... FAILED
+test utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership ... FAILED
+
+failures:
+
+---- utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff stdout ----
+
+thread 'utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff' (85289277) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/tests/external_storage.rs:22:5:
+assertion failed: !fixture.generation_share().exists()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership stdout ----
+
+thread 'utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership' (85289276) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/tests/external_storage.rs:38:5:
+assertion `left == right` failed
+  left: Conflict
+ right: FailedPrecondition
+
+
+failures:
+    utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership
+    utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 436 filtered out; finished in 0.06s
+
+error: test failed, to rerun pass `-p koci-runtime --lib`

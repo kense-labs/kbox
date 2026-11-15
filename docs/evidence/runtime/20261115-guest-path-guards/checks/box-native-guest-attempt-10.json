@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/native-client-guest-attempt-10",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::path_guards::native_guest_path_guards_enforce_before_exec_and_pty",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-pathguard-90a50b1c75b5/guest-attempt-10",
+  "clientSha256": "1f08826e4c5e65452f8313d31ba7fe6ecf209325712577482a96c0e7f1422e8b",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/installed-rootro-final-1",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "exitCode": 0,
+  "seconds": 38.975958166,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

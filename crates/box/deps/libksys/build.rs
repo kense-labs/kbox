@@ -79,6 +79,11 @@ const LIB_DIR: &str = "lib64";
 const LIB_DIR: &str = "lib";
 
 fn main() {
+    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
+    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
+    let target_abi = env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
+    build_support::validate_windows_target(&target_os, &target_arch, &target_abi)
+        .unwrap_or_else(|reason| panic!("{reason}"));
     // Rebuild if the source submodule or packaged fallback changes.
     println!("cargo:rerun-if-changed=../../../../libkrun");
     println!("cargo:rerun-if-changed=vendor/libksource.tar");
@@ -104,10 +109,16 @@ fn main() {
         return;
     }
 
-    #[cfg(target_os = "windows")]
-    {
+    if target_os == "windows" {
         build_windows();
+        return;
     }
+
+    // shortcut: Unix source builds need a matching host OS/CPU; add a real cross toolchain before admitting other targets.
+    assert!(
+        target_os == env::consts::OS && target_arch == env::consts::ARCH,
+        "Unix libkrun source builds require matching host OS/CPU; use an explicit metadata-only stub for cross checks"
+    );
 
     #[cfg(not(target_os = "windows"))]
     {
@@ -1161,7 +1172,7 @@ fn packaged_windows_files_match(dir: &Path) -> bool {
 ///   3. deps/libksys/prebuilt/x86_64-pc-windows-msvc/ (repository checkout)
 ///   4. Checksum-verified vendor/kwindows-x64.tar.xz (published crate)
 fn build_windows() {
-    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_else(|_| "x86_64".to_string());
+    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
     let triple = format!("{}-pc-windows-msvc", target_arch);
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
 

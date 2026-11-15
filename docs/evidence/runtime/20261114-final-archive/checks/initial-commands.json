@@ -1,0 +1,100 @@
+[
+  {
+    "command": [
+      "git",
+      "status",
+      "--porcelain=v1"
+    ],
+    "exitCode": 0,
+    "log": "initial-00.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--stat"
+    ],
+    "exitCode": 0,
+    "log": "initial-01.log"
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exitCode": 0,
+    "log": "initial-02.log"
+  },
+  {
+    "command": [
+      "git",
+      "submodule",
+      "status"
+    ],
+    "exitCode": 0,
+    "log": "initial-03.log"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "libkrun",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0,
+    "log": "initial-04.log"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "libkrunfw",
+      "status",
+      "--porcelain"
+    ],
+    "exitCode": 0,
+    "log": "initial-05.log"
+  },
+  {
+    "command": [
+      "rustc",
+      "-Vv"
+    ],
+    "exitCode": 0,
+    "log": "initial-06.log"
+  },
+  {
+    "command": [
+      "sw_vers"
+    ],
+    "exitCode": 0,
+    "log": "initial-07.log"
+  },
+  {
+    "command": [
+      "uname",
+      "-a"
+    ],
+    "exitCode": 0,
+    "log": "initial-08.log"
+  },
+  {
+    "command": [
+      "mount"
+    ],
+    "exitCode": 0,
+    "log": "initial-09.log"
+  },
+  {
+    "command": [
+      "ps",
+      "-ax",
+      "-o",
+      "pid=,ppid=,command="
+    ],
+    "exitCode": 0,
+    "log": "initial-10.log"
+  }
+]

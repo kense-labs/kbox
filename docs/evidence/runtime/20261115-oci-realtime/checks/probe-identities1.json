@@ -1,0 +1,14 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe.c": {
+    "sha256": "2205318ab14e243644c53906b78266ffad8f79b972c2f1b8f7dfb17ab0bebbdc",
+    "bytes": 11331
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe": {
+    "sha256": "699aaea1a7272fbb79521bd27464c72d377abb28924115808f19832fa7859281",
+    "bytes": 1612744
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-cli-pty.py": {
+    "sha256": "4f33101acf7a1a4137baeda07f71a521c255806aafd0cbfe9685a1139cdf52cc",
+    "bytes": 2916
+  }
+}

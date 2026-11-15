@@ -1,0 +1,8 @@
+
+running 3 tests
+test vm::oci_hvf_spec::tests::hvf_root_readonly_intent_reaches_existing_guest_executor ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_admission_reuses_supported_guest_control_without_allocations ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_qualification_does_not_promote_other_profiles ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2256 filtered out; finished in 0.06s
+

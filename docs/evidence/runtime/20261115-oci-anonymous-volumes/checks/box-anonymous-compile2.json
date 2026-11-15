@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--all-targets"
+  ],
+  "exit": 101,
+  "seconds": 5.466128166999999
+}

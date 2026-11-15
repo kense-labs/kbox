@@ -1,0 +1,7 @@
+{
+  "host": "macOS-26.6.2-arm64-arm-64bit",
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+  "baseCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+  "recordedAt": "2026-11-13T23:02:23.909442+00:00"
+}

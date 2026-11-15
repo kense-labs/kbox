@@ -1,0 +1,7 @@
+
+running 2 tests
+test local_execution::oci_production::secret_tests::hvf_memory_secret_omission_preserves_spec_bytes_and_disk_refuses ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2269 filtered out; finished in 0.25s
+

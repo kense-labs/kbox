@@ -1,0 +1,14 @@
+{
+  "kbox-oci-regression:b5a32b7386a341808e3e825718b0277d": {
+    "digest": "sha256:9ee5a99380a4001bcb61c3e416f6b0cb62879dc0cf4f027267ad1cc0415242f7",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/af-final2/native-oci/b5a32b7386a341808e3e825718b0277d/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/installed-cpu-time-final-1",
+    "kboxSha256": "2633bc5ccbe76aa290110831f7ec95e911ea4aa50cbff3ca7e7daf9443fb8de5"
+  },
+  "kbox-oci-regression:50818f600ac441af99799447121bfe83": {
+    "digest": "sha256:28260cb22d4717f5e20d6b1ce83130ecceaad361b8f8c8759caf36b877852a3f",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/af-final3/native-oci/50818f600ac441af99799447121bfe83/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/installed-cpu-time-final-2",
+    "kboxSha256": "2633bc5ccbe76aa290110831f7ec95e911ea4aa50cbff3ca7e7daf9443fb8de5"
+  }
+}

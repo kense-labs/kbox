@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/native-client-cleanup-10",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_cleanup_owned_hvf_test_root",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10",
+  "exitCode": 101,
+  "seconds": 4.172312
+}

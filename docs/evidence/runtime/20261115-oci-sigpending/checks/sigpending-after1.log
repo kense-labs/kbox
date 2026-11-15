@@ -1,0 +1,20 @@
+
+running 15 tests
+test local_execution::oci_hvf::tests::native::ulimits::native_ulimits_enforce_kernel_effects_all_process_paths_replay_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test vm::oci_hvf_spec::tests::hvf_cpu_time_ulimits_complete_and_replace_only_declared_resource ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_keep_empty_request_bytes_and_unmentioned_oci_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_sigpending_ulimits_preserve_exact_values_and_nproc_entry_guards ... ok
+test vm::oci_hvf_spec::tests::hvf_memory_ulimits_preserve_cpu_defaults_and_exact_byte_values ... ok
+test vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_refuse_root_names_and_privilege_before_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls ... ok
+test local_execution::oci_production::ulimit_tests::hvf_memory_ulimits_admit_existing_byte_limits_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_refuse_bad_or_unqualified_limits_before_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_cpu_time_ulimits_admit_existing_intent_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_do_not_promote_other_profiles ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_sigpending_ulimits_admit_without_allocating_and_refuse_bad_identity ... ok
+
+test result: ok. 14 passed; 0 failed; 1 ignored; 0 measured; 2276 filtered out; finished in 0.09s
+

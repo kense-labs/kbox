@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-agent-protocol",
+    "--lib",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 5.285281292
+}

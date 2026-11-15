@@ -1,0 +1,18 @@
+
+running 5 tests
+test macos_vm_attachment::storage::tests::raw_storage_sandbox_child ... ignored, invoked by parent in an owned native sandbox process
+
+running 1 test
+{"childExecDenial":1,"hostDenials":{"append":1,"delete":1,"descriptor-reopen":1,"hardlink":1,"parent-create":1,"rename":1,"replace":1,"rw-delete":1,"rw-rename":1,"symlink":1,"truncate":1,"write":1},"retainedRoFdWrite":9,"threadDenial":1,"writableControl":true}
+test macos_vm_attachment::storage::tests::raw_storage_sandbox_child ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 82 filtered out; finished in 0.20s
+
+
+test macos_vm_attachment::storage::tests::raw_storage_host_sandbox_denies_ro_mutations_and_preserves_exact_rw_authority ... ok
+test macos_vm_attachment::storage::tests::raw_ro_pin_refuses_inherited_writers_and_changed_capacity ... ok
+test macos_vm_attachment::storage::tests::raw_pin_keeps_exact_descriptor_access_identity_and_private_unaliased_source ... ok
+test macos_vm_attachment::storage::tests::raw_disk_pins_serialize_writers_and_allow_only_shared_readers ... ok
+
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 78 filtered out; finished in 0.76s
+

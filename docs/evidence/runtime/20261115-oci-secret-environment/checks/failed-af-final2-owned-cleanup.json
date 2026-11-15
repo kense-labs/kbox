@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "ownedProcesses": [],
+  "homes": [
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/native-directory/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "[]\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "volume",
+            "ls",
+            "--quiet"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/work/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/native-oci/e8eca06fceac421f868852fd55abcbcf/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "[]\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "volume",
+            "ls",
+            "--quiet"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/work/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/native-prewarm/0144fdaebaba47f78a2cbb676b4a6fdd/k-home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "[]\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "volume",
+            "ls",
+            "--quiet"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/work/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/native-primary/776f7ab80d1844d390f519cf3aa127ec/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "[]\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "volume",
+            "ls",
+            "--quiet"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/work/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2/native-readonly/9bb76cb46170476bb6ec8d8f2a3e56ec/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "stdout": "[]\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+            "volume",
+            "ls",
+            "--quiet"
+          ],
+          "exitCode": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "resourcesDeletedByAudit": []
+}

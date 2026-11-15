@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-nproc/af-context-final5.json"
+  ],
+  "exit": 0,
+  "seconds": 161.555730916
+}

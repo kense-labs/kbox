@@ -1,0 +1,3 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.11s
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-4869246f58abb2ab)

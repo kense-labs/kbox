@@ -1,0 +1,12 @@
+   Compiling num_cpus v1.17.0
+    Checking windows-sys v0.59.0
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+error: failed to run custom build command for `klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)`
+
+Caused by:
+  process didn't exit successfully: `/Users/roylin/code/kense/kbox/target/debug/build/klibksys-37ea91a8b6e35740/build-script-build` (exit status: 101)
+  --- stderr
+
+  thread 'main' (82501336) panicked at crates/box/deps/libksys/build.rs:86:34:
+  libkrun/libkrunfw Windows runtime requires x86_64-pc-windows-msvc; Windows ARM64 and other ABIs are unsupported by the current native dependencies
+  note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

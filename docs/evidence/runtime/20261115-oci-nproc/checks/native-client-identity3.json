@@ -1,0 +1,7 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/native-client-frozen3",
+  "sha256": "f949c7a849e2f7d6b9a605023e773228a3c6d87a494755e16f494ebc76a0f663",
+  "sourceInputsSha256": "4f9dbe71f19a9d018e40b0a58e5a62e2dd2cde5d07c9698f7e710c9a8f2a648b",
+  "identicalToFrozen2": true,
+  "cargoFreshArtifactProved": true
+}

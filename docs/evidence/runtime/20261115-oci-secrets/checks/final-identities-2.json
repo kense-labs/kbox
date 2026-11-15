@@ -1,0 +1,422 @@
+{
+  "sourceInputsSha256": "8b2df684b2864f52227acf172aa9b370d6383cbed3d7e4918446b0dfc24d9106",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "files": {
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox": {
+      "bytes": 10175168,
+      "sha256": "38305e2b6b02e5323dc30af879c4637f345b21df686a87a6ab2fbeaa0e13fea8"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim": {
+      "bytes": 3401536,
+      "sha256": "ed72c29284e1b6dc9aaff7fa1620876894488d7243cc260541d0dbc441df6532"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-guest-init": {
+      "bytes": 3178560,
+      "sha256": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib": {
+      "bytes": 4529632,
+      "sha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib": {
+      "bytes": 22836688,
+      "sha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci": {
+      "bytes": 6098432,
+      "sha256": "5859ac940da3360e63a2cc05f876ff07d496f88c1a12d93647b5ef9e069f9837"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim": {
+      "bytes": 2952016,
+      "sha256": "5fba958c8582587fe560fdb085b9c638ff4f055fc2c83a27d5c8dcda3bbb7fb6"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent": {
+      "bytes": 5032984,
+      "sha256": "becf4831806d8fa3afde16356dee736f8052cb8277c07c3469dc5d554ebb9d17"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib": {
+      "bytes": 5496272,
+      "sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib": {
+      "bytes": 22952096,
+      "sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4": {
+      "bytes": 67108864,
+      "sha256": "ecd801bf1b1688a39c1bf5baf3a21389f5367409c7124e180d4e54b7b0ed161d"
+    },
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json": {
+      "bytes": 1759,
+      "sha256": "8a596e74d8f2d192e8f494c26b6e0fc972850bca36e3b90a8591d8646de05b8f"
+    }
+  },
+  "embeddedAgentMatchesStandalone": true,
+  "commands": [
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox\nIdentifier=kbox-742598ce93c05cf0\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=79000 flags=0x20002(adhoc,linker-signed) hashes=2465+0 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=b0bce7dda8dc349acca69a8ad10b063a69eef999\nCandidateCDHashFull sha256=b0bce7dda8dc349acca69a8ad10b063a69eef999234ed853c7e010b5f37cc84d\nHash choices=sha256\nCMSDigest=b0bce7dda8dc349acca69a8ad10b063a69eef999234ed853c7e010b5f37cc84d\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=9420800\nExecutable Segment flags=0x1\nPage size=4096\nCDHash=b0bce7dda8dc349acca69a8ad10b063a69eef999\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements=none\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox:\n\t/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61901.120.67)\n\t/usr/lib/liblzma.5.dylib (compatibility version 6.0.0, current version 6.3.0)\n\t/usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.8)\n\t/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit (compatibility version 1.0.0, current version 275.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim\nIdentifier=kbox-shim-55554944ce998719519c334bb7af6669d99a0443\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6987 flags=0x2(adhoc) hashes=207+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=915b2c4e888c41ff8f84ddd6d92084f791c6f0db\nCandidateCDHashFull sha256=915b2c4e888c41ff8f84ddd6d92084f791c6f0db25acba067f662354acdcd6f2\nHash choices=sha256\nCMSDigest=915b2c4e888c41ff8f84ddd6d92084f791c6f0db25acba067f662354acdcd6f2\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=3063808\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=915b2c4e888c41ff8f84ddd6d92084f791c6f0db\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-shim:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 5026.5.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci\nIdentifier=koci-5555494486e11c2e4679382d8a12de59c89305e5\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=12230 flags=0x2(adhoc) hashes=371+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=71195958948be480f4641bd7b13f1b67d63f2ef4\nCandidateCDHashFull sha256=71195958948be480f4641bd7b13f1b67d63f2ef44a6328c95ccdf4dbf7f549c3\nHash choices=sha256\nCMSDigest=71195958948be480f4641bd7b13f1b67d63f2ef44a6328c95ccdf4dbf7f549c3\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=5701632\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=71195958948be480f4641bd7b13f1b67d63f2ef4\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim\nIdentifier=koci-kshim-55554944a1072806d5433390b7a70e25ec96eec6\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6092 flags=0x2(adhoc) hashes=179+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=79406a971bb3e743969fbf51e8946b21da3e5a3f\nCandidateCDHashFull sha256=79406a971bb3e743969fbf51e8946b21da3e5a3f78315db560a0840cd7674b02\nHash choices=sha256\nCMSDigest=79406a971bb3e743969fbf51e8946b21da3e5a3f78315db560a0840cd7674b02\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=2670592\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=79406a971bb3e743969fbf51e8946b21da3e5a3f\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim:\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-guest-init"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/bin/kbox-guest-init: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.17.0.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.1.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrun.dylib:\n\t@rpath/libkrun.1.17.0.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.5.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2/lib/libkrunfw.dylib:\n\t@rpath/libkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib:\n\tlibkrun.1.dylib (compatibility version 1.0.0, current version 1.17.0)\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib:\n\tlibkrunfw.5.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1345.120.2)\n"
+    },
+    {
+      "command": [
+        "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+        "-R",
+        "dump /usr/bin/koci-agent /Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/final-system-agent-2",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/koci-system.ext4"
+      ],
+      "exitCode": 0,
+      "output": "debugfs 1.47.4 (6-Mar-2025)\n"
+    }
+  ],
+  "runtimeMemory": "not measured"
+}

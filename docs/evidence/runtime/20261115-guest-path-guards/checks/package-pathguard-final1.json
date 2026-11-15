@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 29.792093542,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/package-home-pathguard-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "24a5092bcdc88f0ae4156a349ab61cc5be7a39dca135cd5d562d5174ff9f8e03"
+}

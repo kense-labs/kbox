@@ -1,0 +1,50 @@
+[
+  {
+    "archive": "crates/box/deps/libksys/vendor/kwindows-x64.tar.xz",
+    "sha256": "ce178184bc9e309c9f8fef181312cd6c398fc825807124e31afab949b790627e",
+    "files": [
+      {
+        "name": "krun.dll",
+        "bytes": 7428608,
+        "sha256": "f21293b65ee16058c9014b543c708d84c50dc28d7775dbd77bac32faabafa59e",
+        "peMachine": "0x8664"
+      },
+      {
+        "name": "krun.lib",
+        "bytes": 11870,
+        "sha256": "3ac760758158bd4d2d6570db58037d47cd370a8e6ea04ccf54a8b24fd1fdec3d",
+        "format": "COFF import archive"
+      },
+      {
+        "name": "libkrunfw.dll",
+        "bytes": 21473280,
+        "sha256": "44f25540f58155c01258fe123617636fdc6cff27873e38e71dbc75f139602077",
+        "peMachine": "0x8664"
+      }
+    ]
+  },
+  {
+    "archive": "crates/oci-runtime/crates/kbox/runtime/windows-x86_64/kwindows-x64.tar.xz",
+    "sha256": "5650721e43c2a1825314367d60bc2bdace2a88be4a424ba42711f9580c4b69af",
+    "files": [
+      {
+        "name": "krun.dll",
+        "bytes": 7579648,
+        "sha256": "cc18d354fec2c235fdce53b723b96dccb2ef3994a7dda141c923a0efa0bba7db",
+        "peMachine": "0x8664"
+      },
+      {
+        "name": "krun.lib",
+        "bytes": 11870,
+        "sha256": "3ac760758158bd4d2d6570db58037d47cd370a8e6ea04ccf54a8b24fd1fdec3d",
+        "format": "COFF import archive"
+      },
+      {
+        "name": "libkrunfw.dll",
+        "bytes": 29413376,
+        "sha256": "295e8a8e660f396fd0007d48c43175d9ed5b19243570640ad65fc47b41e7596a",
+        "peMachine": "0x8664"
+      }
+    ]
+  }
+]

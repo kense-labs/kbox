@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05/run-binary.py",
+    "docs/evidence/runtime/20261115-guest-path-guards/binary-before-context.json",
+    "7"
+  ],
+  "exit": 101,
+  "seconds": 4.707236709
+}

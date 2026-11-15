@@ -513,12 +513,7 @@ async fn handle_pty_stream(
         rows: 24,
     };
     let payload = serde_json::to_vec(&pty_req)?;
-    write_pty_frame(
-        &mut pty_stream,
-        kbox_core::pty::FRAME_PTY_REQUEST,
-        &payload,
-    )
-    .await?;
+    write_pty_frame(&mut pty_stream, kbox_core::pty::FRAME_PTY_REQUEST, &payload).await?;
 
     // Bidirectional copy between TCP stream and PTY Unix socket
     let (mut tcp_read, mut tcp_write) = tokio::io::split(stream);
@@ -1631,9 +1626,7 @@ mod tests {
                 .unwrap();
         });
 
-        let exec_client = kbox_runtime::ExecClient::connect(&sock_path)
-            .await
-            .unwrap();
+        let exec_client = kbox_runtime::ExecClient::connect(&sock_path).await.unwrap();
         let exec_req = kbox_core::exec::ExecRequest {
             request_id: None,
             cmd: vec!["cat".to_string()],

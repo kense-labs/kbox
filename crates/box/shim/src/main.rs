@@ -13,6 +13,8 @@
 #![allow(clippy::result_large_err)]
 
 mod kbox;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+mod macos_readonly;
 mod managed_oci_log_worker;
 mod vm_launch;
 
@@ -195,6 +197,10 @@ fn run() -> Result<()> {
         hint: None,
     })?;
 
+    #[cfg(windows)]
+    koci_sdk::admit_windows_whpx_host()
+        .map_err(|error| BoxError::ConfigError(error.to_string()))?;
+
     #[cfg(unix)]
     tracing::info!(
         box_id = %spec.box_id,
@@ -259,8 +265,14 @@ fn run() -> Result<()> {
     }
 
     // Configure and start VM
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    let (spec, read_only) = macos_readonly::prepare(spec)?;
     unsafe {
-        configure_and_start_vm(&spec)?;
+        configure_and_start_vm(
+            &spec,
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            &read_only,
+        )?;
     }
 
     Ok(())
@@ -398,35 +410,6 @@ fn linux_process_identity_from_stat(stat: &str) -> Option<(char, u64)> {
     let state = fields.first()?.chars().next()?;
     let start_time = fields.get(19)?.parse().ok()?;
     Some((state, start_time))
-}
-
-/// Parse a Docker-style ulimit string into a krun rlimit string.
-///
-/// Input format: "RESOURCE=SOFT:HARD" (e.g., "nofile=1024:4096")
-/// Output format: "RESOURCE_NUM=SOFT:HARD" (e.g., "7=1024:4096")
-///
-/// Returns None if the resource name is unrecognized.
-fn parse_ulimit(ulimit: &str) -> Option<String> {
-    let (name, limits) = ulimit.split_once('=')?;
-    let resource_num = match name.to_lowercase().as_str() {
-        "core" => 4,        // RLIMIT_CORE
-        "cpu" => 0,         // RLIMIT_CPU
-        "data" => 2,        // RLIMIT_DATA
-        "fsize" => 1,       // RLIMIT_FSIZE
-        "locks" => 10,      // RLIMIT_LOCKS
-        "memlock" => 8,     // RLIMIT_MEMLOCK
-        "msgqueue" => 12,   // RLIMIT_MSGQUEUE
-        "nice" => 13,       // RLIMIT_NICE
-        "nofile" => 7,      // RLIMIT_NOFILE
-        "nproc" => 6,       // RLIMIT_NPROC
-        "rss" => 5,         // RLIMIT_RSS
-        "rtprio" => 14,     // RLIMIT_RTPRIO
-        "rttime" => 15,     // RLIMIT_RTTIME
-        "sigpending" => 11, // RLIMIT_SIGPENDING
-        "stack" => 3,       // RLIMIT_STACK
-        _ => return None,
-    };
-    Some(format!("{}={}", resource_num, limits))
 }
 
 /// Apply CPU pinning via sched_setaffinity (Linux only).

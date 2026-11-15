@@ -1,0 +1,16 @@
+Executable=/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/lib/libkrun.1.17.0.dylib
+Identifier=libkrun.1
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=8962 flags=0x2(adhoc) hashes=275+2 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=a8a1507b2a2342c360915b2c3decd87e3a87c827
+CandidateCDHashFull sha256=a8a1507b2a2342c360915b2c3decd87e3a87c8279a000b1514f4176e01aea91c
+Hash choices=sha256
+CMSDigest=a8a1507b2a2342c360915b2c3decd87e3a87c8279a000b1514f4176e01aea91c
+CMSDigestType=2
+CDHash=a8a1507b2a2342c360915b2c3decd87e3a87c827
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements count=0 size=12

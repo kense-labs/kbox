@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe2.c",
+    "sha256": "5471c5b7953a314a6da1bbec2e1a39b930d4c76fad0bdc8de4102094fa5becab",
+    "bytes": 8871
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-probe-2",
+    "sha256": "85d99def40a8b3cbf9a9697a6e5160a50401e3da213edf1ac93caef1d6cfba80",
+    "bytes": 1583040
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/inputs/msgqueue-cli-pty2.py",
+    "sha256": "345a97ae55923fff98a32fc54549971722425f2add235c597d717c35a214af30",
+    "bytes": 2471
+  }
+]

@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_backend::tests::active_execution_missing_binding_refuses_current_generation_discovery ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2183 filtered out; finished in 0.09s
+

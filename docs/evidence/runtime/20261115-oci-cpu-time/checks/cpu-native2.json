@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-native.py",
+    "docs/evidence/runtime/20261115-oci-cpu-time/run-context-final2.json",
+    "2",
+    "cpu-time"
+  ],
+  "exit": 0,
+  "seconds": 330.685102542
+}

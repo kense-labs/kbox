@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_memory_ulimits_preserve_cpu_defaults_and_exact_byte_values ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_memory_ulimits_admit_existing_byte_limits_without_allocating ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_memory_ulimits_admit_existing_byte_limits_without_allocating
+    vm::oci_hvf_spec::tests::hvf_memory_ulimits_preserve_cpu_defaults_and_exact_byte_values
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2275 filtered out; finished in 0.02s
+

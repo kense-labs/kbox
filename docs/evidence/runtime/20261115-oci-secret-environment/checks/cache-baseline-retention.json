@@ -1,0 +1,9 @@
+[
+  {
+    "kind": "native",
+    "name": "index.json",
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/image-cache/images/index.json",
+    "sha256": "4179c2942d3fe8780eca9a2844ac07f04ded52c021208e0a2f2f5cf631f308c7",
+    "reason": "exact baseline bytes recovered from unchanged prior cache after candidate1 updated current access metadata"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "box_state",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.715014834
+}

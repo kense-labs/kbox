@@ -195,6 +195,9 @@ impl AttachRoute {
 }
 
 fn resolve_attach_route(record: &BoxRecord, tty: bool) -> AttachRoute {
+    if tty && super::exec::uses_managed_session(record) {
+        return AttachRoute::ManagedPty;
+    }
     let managed = record
         .managed_execution
         .as_ref()
@@ -466,7 +469,7 @@ async fn execute_managed_pty_attach(
                 env: vec![],
                 working_dir: None,
                 rootfs: None,
-                user: None,
+                user: super::exec::configured_process_limit_user(record),
                 cols,
                 rows,
             },
@@ -540,6 +543,15 @@ mod tests {
             AttachRoute::LegacyLogs
         );
         assert_eq!(resolve_attach_route(&legacy, true), AttachRoute::LegacyPty);
+
+        let mut box_vm = managed_record();
+        box_vm.managed_execution.as_mut().unwrap().runtime_route =
+            kbox_runtime::ManagedRuntimeRoute::BoxVm;
+        assert_eq!(resolve_attach_route(&box_vm, true), AttachRoute::ManagedPty);
+        assert_eq!(
+            resolve_attach_route(&box_vm, false),
+            AttachRoute::LegacyLogs
+        );
     }
 
     #[test]
@@ -572,10 +584,10 @@ mod tests {
 
     #[test]
     fn missing_console_log_message_mentions_recovery_commands() {
-        let message = missing_console_log_message("web", Path::new("/tmp/krun/web/console.log"));
+        let message = missing_console_log_message("web", Path::new("/tmp/kbox/web/console.log"));
 
         assert!(message.contains("running box web"));
-        assert!(message.contains("/tmp/krun/web/console.log"));
+        assert!(message.contains("/tmp/kbox/web/console.log"));
         assert!(message.contains("kbox logs -f web"));
         assert!(message.contains("kbox ps"));
     }

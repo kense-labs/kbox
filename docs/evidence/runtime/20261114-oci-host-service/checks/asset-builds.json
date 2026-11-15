@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--profile",
+      "release-dist",
+      "-p",
+      "koci-cli",
+      "-p",
+      "koci-kbox"
+    ],
+    "exitCode": 0,
+    "seconds": 63.955185833,
+    "log": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261114-oci-host-service/checks/oci-host-build.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "zigbuild",
+      "--locked",
+      "--profile",
+      "release-dist",
+      "--target",
+      "aarch64-unknown-linux-musl",
+      "-p",
+      "koci-agent"
+    ],
+    "exitCode": 0,
+    "seconds": 43.760826040999994,
+    "log": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261114-oci-host-service/checks/oci-agent-build.log"
+  }
+]

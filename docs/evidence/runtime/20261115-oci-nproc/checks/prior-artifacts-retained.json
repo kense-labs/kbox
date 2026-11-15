@@ -1,0 +1,10 @@
+{
+  "boxArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/final-dist-memory-limits-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "79c97ef7dd7462375270db78ab736e8b72c12a7c900ed01d2b0de860769a9ce3"
+  },
+  "ociArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "542bfe43dd6f2837ad55c3ba79416832584e9032a9b6e1b2bfa4d75bc94203bf"
+  }
+}

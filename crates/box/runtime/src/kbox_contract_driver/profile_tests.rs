@@ -16,7 +16,7 @@ fn native_guest_profile_identity_pins_its_security_semantics() {
 }
 
 #[test]
-fn ordinary_oci_contract_keeps_its_security_defaults_without_acp() {
+fn ordinary_oci_contract_keeps_its_security_defaults() {
     let spec = runtime_spec("ordinary-service", 1, RuntimeUnitClass::Service);
     let request = creation_request(&spec, ExecutionBoundary::Microvm).unwrap();
     assert_eq!(request.config.cap_drop, ["ALL"]);

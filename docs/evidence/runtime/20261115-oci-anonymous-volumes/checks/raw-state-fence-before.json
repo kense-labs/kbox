@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "oci_anonymous_store_fences",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 9.261445417000001
+}

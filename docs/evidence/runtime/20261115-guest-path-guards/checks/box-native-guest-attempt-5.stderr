@@ -1,0 +1,48 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-pathguard-90a50b1c75b5/guest-attempt-5/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (86258753) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_path_guards.rs:46:17:
+mask-effects: 
+running 1 test
+test exec_server::path_guards_tests::path_guard_masks_files_and_directories_idempotently_without_fd_leaks ... FAILED
+
+failures:
+
+failures:
+    exec_server::path_guards_tests::path_guard_masks_files_and_directories_idempotently_without_fd_leaks
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 208 filtered out; finished in 0.00s
+
+
+
+thread 'exec_server::path_guards_tests::path_guard_masks_files_and_directories_idempotently_without_fd_leaks' (19) panicked at crates/box/guest/init/src/exec_server/path_guards_tests.rs:106:9:
+initial: Err(Os { code: 2, kind: NotFound, message: "No such file or directory" }); mounts: 40 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0000//deleted /dev/null rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+41 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0001//deleted /dev/zero rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+42 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0002//deleted /dev/full rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+43 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0003//deleted /dev/random rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+44 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0004//deleted /dev/urandom rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+45 66 0:6 /koci-agent-202/c-0000000000000001/devices/device-0005//deleted /dev/tty rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=212716k,nr_inodes=53179,mode=755
+66 47 254:16 / / rw,nosuid,nodev,relatime - ext4 /dev/vdb rw
+67 66 0:34 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+68 66 0:35 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+69 67 0:24 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup2 rw
+70 66 0:31 / /workspace rw,nosuid,nodev,relatime - virtiofs kdir-9f1d8f8d8a0e23c1c20585d6 rw
+71 66 0:32 /file /guest-path-tests ro,nosuid,nodev,relatime - virtiofs kfile-16a0522743f45549b347f7b9 ro
+72 66 0:36 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+73 66 0:37 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw
+55 68 0:39 / /proc/asound ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs ro,size=4k,nr_inodes=2,mode=000
+56 68 0:38 /source//deleted /proc/kcore ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+57 68 0:38 /source//deleted /proc/keys ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+58 68 0:38 /source//deleted /proc/timer_list ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+59 67 0:40 / /sys/firmware ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs ro,size=4k,nr_inodes=2,mode=000
+54 68 0:35 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw
+60 68 0:35 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw
+61 68 0:35 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw
+62 68 0:35 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw
+63 68 0:35 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::path_guards::native_guest_path_guards_enforce_before_exec_and_pty' (86258752) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_path_guards.rs:54:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

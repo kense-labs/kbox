@@ -255,6 +255,26 @@ Promote-honesty shell gates still pass locally
 (`.github/scripts/linux-kvm-release-matrix-promotion-test.sh`,
 `.github/scripts/linux-kvm-fresh-host-attestation-test.sh`).
 
+### Box/macOS explicit integration in this workspace
+
+The bounded Box adapter composes its persistent router and resource authority
+with the public SDK and independent macOS Host Service. Fixed assets, mixed-route
+and fault qualification are tracked in
+[spec007](../../specs/007-oci-host-service/tasks.md) and its
+[outcome](../../docs/evidence/runtime/20261114-oci-host-service/OUTCOME.md).
+Guest-native workload ext4 ownership transport is tracked separately in
+[spec008](../../specs/008-oci-rootfs/tasks.md) and its
+[rootfs outcome](../../docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md).
+Exact ordinary caller-file RO/RW grants, live content, Host enforcement and
+identity-bound cleanup are qualified in
+[spec009](../../specs/009-oci-file-grants/tasks.md) and its
+[installed-archive outcome](../../docs/evidence/runtime/20261114-oci-files/OUTCOME.md).
+Named allocations, anonymous image VOLUME and the bounded caller-file old-reader
+fence now have installed-archive evidence in specs010–012. Secret allocation
+parity, remaining Box controls, arbitrary rollback and full cutover remain open.
+It retains stopped-only macOS owner-death semantics and explicit profile
+refusals; the default, cross-platform readiness and W4 completion stay unchanged.
+
 ### Ordered remaining gates after honest fresh-host
 
 1. **Fresh-host WHPX R2** and **fresh-host KVM R2L** (x86_64 + AArch64) with
@@ -2835,3 +2855,157 @@ Each coherent, tested increment is committed and pushed to
 `git@github.com:kense-labs/OCI-Runtime.git`. The `kbox` monorepo gitlink is updated
 only after the runtime commit is remotely available and all focused checks
 pass. Unrelated dirty submodules are never staged.
+
+W4 local continuation: spec014 closes the retained Box Guest masked/readonly-path
+setup fail-open with final installed protocol effects and cleanup; see
+[accepted evidence](../../docs/evidence/runtime/20261115-guest-path-guards/OUTCOME.md).
+Spec015 now closes bounded Box tmpfs intent through the existing OCI Guest
+executor,with final archive CLI/effects/restart/stopped recovery,source/loader
+identity and owned cleanup in [accepted evidence](../../docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md).
+This does not close W4/default cutover or promote platforms. The next bounded
+local gap was Box process ulimits, now closed within spec017 below; other unsupported controls still refuse.
+Spec016 closes OCI root read_only through required rootfs-image v2 and existing
+Guest finalization,retaining v1 bytes and failclosed old-Host behavior;
+[final installed/cleanup evidence](../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md).
+Physical disk RO/default cutover/full W4/platform promotion are not claimed.
+
+Spec017 closes bounded Box nofile/fsize/core via the existing OCI rlimit
+executor,including static session inheritance,actual kernel denials,replay,CLI
+and stopped recovery. It also closes a managed BoxVm CLI raw-socket security
+bypass by reusing ExecutionManager sessions. [Installed evidence and cleanup](../../docs/evidence/runtime/20261115-oci-ulimits/OUTCOME.md).
+CPU-time is qualified by spec020 below; full parity,
+W4/default cutover,live continuity and external release gates stay open.
+
+Spec018 qualifies existing managed RAM Secret files via required memory-secret-
+files v1 / Agent manifest v8, shared actual OS backing verification and existing
+Host file PEP. Numeric ownership, old-version refusal, actual denied writes and
+three generations pass through final installed assets. [Evidence and16-home cleanup](../../docs/evidence/runtime/20261115-oci-secrets/OUTCOME.md).
+Environment delivery and raw-disk combinations still refuse; full W4, default
+cutover, fresh-host/native platform gates and Windows ARM64 limitations remain.
+
+Spec019 closes bounded managed Secret environment delivery through required
+memory-secret-filesv2 / Agent manifestv9 and existing process execution. Protected
+RO source pins precede namespace entry; byte consumption follows Start and
+never enters process metadata. [Final installed evidence /15 Rust native,8
+Guest units,3 Python scenarios and19-home cleanup](../../docs/evidence/runtime/20261115-oci-secret-environment/OUTCOME.md).
+Files-onlyv1/v8 is retained; raw-disk combinations/full parity/default cutover
+and external promotion gates remain open. Next local slice: nonroot nproc process-count limits.
+
+Spec020 qualifies Box CPU-time intent on the explicit Mac OCI route through the
+existing process.rlimits executor. Zero refuses; omission/default bytes and
+other limits stay intact. Actual SIGXCPU/SIGKILL, measured CPU usage, idle and
+unlimited controls, init/exec/child/stream/realPTY, CLI/replay/three generations
+and owned cleanup pass the final installed archives. [Final evidence:8 outer
+Rust native,8 Guest units,3 Python scenarios and20-home cleanup](../../docs/evidence/runtime/20261115-oci-cpu-time/OUTCOME.md).
+CPU-time is per-process, separate from wall deadlines and aggregate cgroups.
+Full W4/default cutover/live continuity/platform promotion stay open; Windows
+ARM64 dependencies remain unsupported without a native run. Next local work:
+data/stack/memlock process limits, qualified by spec021 below.
+
+Spec021 qualifies standard data/stack/memlock byte limits through the existing
+Mac OCI executor. Actual malloc/mmap/mlock ENOMEM, stack SIGSEGV on alternate
+stack, unlock/reuse, hard-raise EPERM, unlimited controls, all process paths/CLI,
+replay and stopped recovery pass the final installed archives. [Evidence:5 Rust
+native tests +3 Python scenarios and10-home cleanup](../../docs/evidence/runtime/20261115-oci-memory-limits/OUTCOME.md).
+No VM/cgroup/RSS or privileged-bypass claim; full W4/default cutover/platform
+gates remain open. Nonroot nproc is qualified by spec022 below.
+
+Spec022 qualifies nonroot per-UID nproc through all process paths/CLI/health/real
+PTY/attach, three generations and actual fork/thread EAGAIN/reaping/reuse. Shared
+Agent admission closes the native-observed root-helper equality bypass; required
+Host nproc-admission v1 and manifest v10 bind prior transports and refuse old
+Host/shim/Agent before workload entry. Legacy root defaults remain unchanged.
+The same native matrix found and fixed HVF bare-command PATH resolution in the
+shared session caller. [Final installed evidence:12 Rust native,13 Guest units,3
+Python scenarios plus1 native decoder probe and29-home cleanup](../../docs/evidence/runtime/20261115-oci-nproc/OUTCOME.md).
+Full W4/default Host Service cutover/live continuity and external platform gates
+remain open. Runtime RSS unmeasured; Windows ARM64 dependencies unsupported/no
+native run. Continue the next unqualified existing process-limit type.
+
+Spec023 qualifies nonroot sigpending through the same per-UID entry boundary
+and existing OCI executor. Actual realtime sigqueue EAGAIN, ordered delivery/
+drain/reuse, shared UID budgets, mapped userNS refusal at full quota, zero and
+infinity controls, ordinary kill semantics, all process paths/CLI/health/realTTY/
+attach/replay/recovery pass. [Final installed evidence:10 Rust native +13 Guest
+units +3 Python scenarios and14-home cleanup](../../docs/evidence/runtime/20261115-oci-sigpending/OUTCOME.md).
+Nproc/defaults/identity/routes/fencing remain intact. Full W4/default cutover/
+live continuity/platform gates remain open; RSS unmeasured, Windows ARM64
+dependencies unsupported/no native run. Continue existing msgqueue intent.
+
+Spec024 qualifies nonroot msgqueue through the same UID/capability/NNP boundary
+and existing OCI executor. Actual MQ capacity EMFILE with ordinary FDs available,
+message-capacity EAGAIN/priority+FIFO, unlinked/dup/inherited-FD lifetime, shared
+UID quota/reuse, mapped user+IPC namespace refusal, zero/infinity and all process
+paths/CLI/health/realTTY/attach/replay/recovery pass. [Final installed evidence:
+11 Rust native +13 Guest units +3 Python scenarios and15-home cleanup](../../docs/evidence/runtime/20261115-oci-msgqueue/OUTCOME.md).
+No OCI/Agent/schema/native/dependency change. Full W4/default Host Service
+cutover/live continuity/platform gates remain open; RSS unmeasured, Windows
+ARM64 dependencies unsupported/no native run. Continue existing nice intent.
+
+Spec025 qualifies existing nice intent through the standard OCI executor without
+changing CLI/root defaults or the per-UID counter boundary. Actual -5 success,
+-6 EACCES, inherited child/thread and namespace boundaries, zero/infinity,
+all process paths/CLI/health/realTTY/attach/replay/recovery pass. [Final installed
+evidence:5 Rust native +3 Python scenarios and10-home cleanup](../../docs/evidence/runtime/20261115-oci-nice/OUTCOME.md).
+Only one production enum mapping and its qualification text change; OCI/Agent/
+other resources remain unchanged. Full W4/default Host Service cutover/live
+continuity/platform gates remain open; RSS unmeasured, Windows ARM64 dependencies
+unsupported/no native run. Continue existing rtprio/rttime intent.
+
+Spec026 qualifies existing rtprio/rttime through the unchanged OCI executor:
+FIFO/RR5 allowed/6 EPERM, inherited child/thread and namespace boundaries,
+actual SIGXCPU/SIGKILL with measured CPU, blocking reset/normal-policy controls,
+zero/infinity, all entries/CLI/health/realTTY/attach/replay/recovery. [Final
+installed evidence:5 Rust native +3 Python scenarios and12-home cleanup](../../docs/evidence/runtime/20261115-oci-realtime/OUTCOME.md).
+No CLI/default/UID/schema/native/dependency change; current kernel tick granularity
+is explicit. Full W4/default Host Service cutover/live continuity/platform gates
+remain open; RSS unmeasured, Windows ARM64 dependencies unsupported/no native run.
+Continue the existing managed Secret/raw anonymous-volume combination.
+
+
+Spec027 qualifies managed RAM Secret files/environment with raw anonymous volumes
+through required memory-secret-filesv3 / Agent transportv11, including the existing
+NPROC v10 envelope. Old versions retain meaning and refuse incompatible intent;
+old Host/shim/Agent and disk projections actually refuse. A real cross-volume
+sparse rootfs publication bug is fixed by reusing the existing extent copier.
+[Final installed evidence:12 Rust native +21 top-level Guest units (plus2 isolated
+child test runs) +3 Python scenarios and17-home/8-owned-RAM cleanup](../../docs/evidence/runtime/20261115-oci-raw-secrets/OUTCOME.md).
+Box2 f9f48ab5…:23,393,755compressed/44,171,264installed bytes; OCI1 30eb5e29…:
+33,424,560/114,954,240. Verify2261/43ignored,CLI935,installer8. Full OCI Host
+Service/default cutover/live continuity/platform gates remain open; Windows
+ARM64 dependencies unsupported/no native run, support levels unchanged and RSS
+unmeasured. Continue the existing W4 custom writable-root disk-capacity gap.
+
+
+Spec028 qualifies existing disk_mb on the explicit macOS OciSdk route using the
+existing16MiB..64GiB ext4/rootfs-image/raw-storage contracts. Actual128MiB root+
+anonymous ENOSPC/reuse, independent256MiB CLI controls,8GiB sparse disk, too-small
+image refusal, replay/fences/normal+stopped three generations pass. Root remains
+per-generation ephemeral; anonymous data persists. [Final installed evidence:
+6 Rust native +3 Python scenarios,13-home/107-socket cleanup](../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md).
+Box4 39e6b5b3…:23,393,934compressed/44,171,264installed bytes; OCI30eb5e29…
+unchanged/freshly extracted with honestc07659de… source. Verify2264/44ignored,
+CLI935,installer8. Full W4/default Host Service cutover/live continuity/platform
+gates remain open; Windows ARM64 dependencies unsupported/no native run, support
+levels unchanged and RSS unmeasured. Continue the existing Mac cap_add allowlist gap.
+
+Spec029 qualifies the existing Mac portable cap_add allowlist with explicit
+nonroot inherited/ambient values shared by init and exec. Default10, root empty
+ambient, drop ALL, unknown-cap refusal, per-UID budgets and Host PEP remain.
+Actual MKNOD/SETFCAP effects, SYS_ADMIN mount/drop controls,45 observations,
+CLI/realPTY,three generations and Host RO pass the final installed Box3/unchanged
+OCI assets. Final3Rust native+3Python scenarios pass; verify Runtime2269/45ignored,
+CLI935,installer8. Audit18 homes/235 absent sockets/21 pre-grant source identities
+and zero owned resources passes. [Final assets, failures and evidence](../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md).
+Full W4/default Host Service cutover/live continuity/platform gates stay open;
+Windows ARM64 dependencies remain unsupported/no native run and RSS unmeasured.
+Continue the existing W4 policy.shm_size gap; platform support levels stay fixed.
+
+Spec030 qualifies existing shm_size and size-only /dev/shm on Mac: page-aligned
+4KiB..512MiB,1777/rw/nosuid/nodev/noexec,exact POSIX mapping/lifetime,1/2MiB
+ENOSPC/reuse,noexec/sticky controls,CLI,three generations and7-home cleanup.
+Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
+[Pre-merge assets and evidence](../../docs/evidence/runtime/20261115-oci-shm-size/OUTCOME.md). Full W4/default Host Service
+cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
+unsupported/no native run and RSS unmeasured. The user requests convergence and
+integration now; subsequent merged-source validation is recorded separately.

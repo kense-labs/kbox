@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "runtimePayloadsIdentical": true,
+  "changedFiles": [
+    "build-info.json"
+  ],
+  "fromPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-2",
+  "toPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-3",
+  "retainedNativeResults": "AF3/files2/anonymous2/Host2 retain actual installed2/client2 identities; only the unused capacity fixture differs in client3"
+}

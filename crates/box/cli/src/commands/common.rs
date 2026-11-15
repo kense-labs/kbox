@@ -50,7 +50,6 @@ pub struct CommonBoxArgs {
     /// OCI image reference
     pub image: String,
 
-
     /// Assign a name to the box
     #[arg(long)]
     pub name: Option<String>,

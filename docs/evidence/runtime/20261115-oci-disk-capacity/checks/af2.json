@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-disk-capacity/af-context-final2.json"
+  ],
+  "exit": 1,
+  "seconds": 0.09699041700000001
+}

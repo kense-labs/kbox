@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-memory-limits/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 141.004470375
+}

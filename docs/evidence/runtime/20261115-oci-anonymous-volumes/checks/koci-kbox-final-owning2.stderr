@@ -1,0 +1,7 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.03s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpcNJibP/libkrun.1.17.0.dylib: replacing existing signature
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpcNJibP/libkrunfw.5.dylib: replacing existing signature
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-4869246f58abb2ab)
+     Running tests/cli.rs (target/debug/deps/cli-a84ede5f8baedcf2)

@@ -1,0 +1,153 @@
+{
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sha256": "542bfe43dd6f2837ad55c3ba79416832584e9032a9b6e1b2bfa4d75bc94203bf",
+  "compressedBytes": 33417962,
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "installedDiskBytes": 114925568,
+  "filesVerified": 11,
+  "sourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35",
+  "systemImage": {
+    "architecture": "aarch64",
+    "compatibility_level": "koci-runtime-0.2.0-agent-protocol-v10",
+    "image": {
+      "archive_name": "koci-system.ext4.xz",
+      "archive_sha256": "e809fe1a98a5c316503b6237887e938f52c8f2b9cecff2649dd75d25c065bbcc",
+      "archive_size": 5007644,
+      "directory_hash_seed": "a3a30c1a-2026-4000-8000-000000000002",
+      "filesystem": "ext4",
+      "filesystem_label": "koci-system",
+      "filesystem_uuid": "a3a30c1a-2026-4000-8000-000000000001",
+      "name": "koci-system.ext4",
+      "sha256": "77b2ab47caf668d28ce0dc807cb341cdc4b534c14ddd43989c9d760a509b3886",
+      "size": 67108864
+    },
+    "runtime": {
+      "archive_sha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+      "firmware_sha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+      "kernel_bundle_sha256": "b1180b50148ed14f5fbeadf17288ce8abcf245daa468255b7ff41113bbf01199",
+      "kernel_bundle_size": 22740992,
+      "kernel_entry_address": "0x0000000080000000",
+      "kernel_guest_load_address": "0x0000000080000000",
+      "libkrun_sha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf"
+    },
+    "schema_version": "koci.macos-system-image.v1",
+    "sources": {
+      "agent": {
+        "sha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589",
+        "size": 5053528,
+        "version": "0.3.6"
+      },
+      "alpine": {
+        "archive_sha256": "3fbc6285032ed46821b511292633d7b2a6306a2e254f590e92bdafff56cf2f70",
+        "archive_size": 3966256,
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/releases/aarch64/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+        "version": "3.22.5"
+      },
+      "builder": {
+        "e2fsprogs_version": "1.47.4 (6-Mar-2025)",
+        "source_date_epoch": 1735689600
+      }
+    }
+  },
+  "nativeArchiveSha256": "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc",
+  "identityChecks": [
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci\nIdentifier=koci-55554944a115a1cc83373179bc5eec4a14542c17\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=12230 flags=0x2(adhoc) hashes=371+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29f\nCandidateCDHashFull sha256=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29fb71714c526871f3e8080f92d\nHash choices=sha256\nCMSDigest=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29fb71714c526871f3e8080f92d\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=5701632\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=bb4bf632b5aee5044e144dcfeeb8f5dccd98e29f\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci:\n\t/System/Library/Frameworks/Hypervisor.framework/Versions/A/Hypervisor (compatibility version 1.0.0, current version 259.6.4)\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "codesign",
+        "-dv",
+        "--verbose=4",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "Executable=/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim\nIdentifier=koci-kshim-55554944c7e909bf0b5c362b903a31b00bd8480c\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20400 size=6092 flags=0x2(adhoc) hashes=179+7 location=embedded\nVersionPlatform=1\nVersionMin=720896\nVersionSDK=1705216\nHash type=sha256 size=32\nCandidateCDHash sha256=4ac947f27d4c5ced9cf9d695add04bb73315229b\nCandidateCDHashFull sha256=4ac947f27d4c5ced9cf9d695add04bb73315229b00b32bee92ff8a6eef70ad65\nHash choices=sha256\nCMSDigest=4ac947f27d4c5ced9cf9d695add04bb73315229b00b32bee92ff8a6eef70ad65\nCMSDigestType=2\nExecutable Segment base=0\nExecutable Segment limit=2670592\nExecutable Segment flags=0x1\nPage size=16384\nCDHash=4ac947f27d4c5ced9cf9d695add04bb73315229b\nSignature=adhoc\nInfo.plist=not bound\nTeamIdentifier=not set\nSealed Resources=none\nInternal requirements count=0 size=12\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim:\n\t/usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    },
+    {
+      "command": [
+        "file",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+      ],
+      "exitCode": 0,
+      "output": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib: Mach-O 64-bit dynamically linked shared library arm64\n"
+    }
+  ]
+}

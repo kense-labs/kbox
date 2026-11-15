@@ -1,0 +1,18 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/prepare-old-agent-fixture2.rs",
+    "-L",
+    "dependency=target/debug/deps",
+    "-o",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/prepare-old-agent-fixture2",
+    "--extern",
+    "koci_sdk=target/debug/deps/libkoci_sdk-a66c86b2adf0071f.rlib",
+    "--extern",
+    "koci_agent_protocol=target/debug/deps/libkoci_agent_protocol-25d95e68d5a606bd.rlib"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::anonymous::native_old_host_refuses_raw_volume_capability_before_allocation_or_workload ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2243 filtered out; finished in 0.25s
+

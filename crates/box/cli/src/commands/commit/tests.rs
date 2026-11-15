@@ -422,7 +422,7 @@ fn paused_microvm_commit_fails_closed() {
 fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
     use crate::test_helpers::fixtures::make_record;
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary, OperationId,
+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
     };
     use kbox_runtime::ManagedExecutionMetadata;
     use std::collections::BTreeMap;

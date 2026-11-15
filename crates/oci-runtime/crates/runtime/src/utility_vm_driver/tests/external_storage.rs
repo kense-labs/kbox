@@ -8,6 +8,69 @@ use koci_sdk::{
 
 use super::*;
 
+#[tokio::test]
+async fn terminal_preparation_error_cleans_the_existing_owned_handoff() {
+    let fixture = fixture();
+    let workspace = workspace(&fixture);
+    let request = storage_request(&fixture, &workspace);
+    fixture
+        .driver
+        .prepare_create_bundle(&request)
+        .await
+        .unwrap();
+    assert!(fixture.generation_share().is_dir());
+    std::fs::remove_dir_all(&workspace).unwrap();
+    let error = fixture
+        .driver
+        .prepare_create_bundle(&request)
+        .await
+        .unwrap_err();
+    assert_eq!(error.code, ErrorCode::FailedPrecondition);
+    assert!(!error.retryable);
+    assert!(!fixture.generation_share().exists());
+    assert_eq!(fixture.factory.launches.load(Ordering::Relaxed), 0);
+}
+
+#[tokio::test]
+async fn terminal_preparation_cleanup_failure_retains_retryable_ownership() {
+    let fixture = fixture();
+    let workspace = workspace(&fixture);
+    let request = storage_request(&fixture, &workspace);
+    fixture
+        .driver
+        .prepare_create_bundle(&request)
+        .await
+        .unwrap();
+    let marker = fixture.generation_share().join(".koci-bundle-handoff.json");
+    let original = std::fs::read(&marker).unwrap();
+    let mut replaced: serde_json::Value = serde_json::from_slice(&original).unwrap();
+    replaced["configDigest"] = serde_json::json!(format!("sha256:{}", "0".repeat(64)));
+    std::fs::write(&marker, serde_json::to_vec(&replaced).unwrap()).unwrap();
+    let error = fixture
+        .driver
+        .prepare_create_bundle(&request)
+        .await
+        .unwrap_err();
+    assert_eq!(error.code, ErrorCode::Conflict);
+    assert!(
+        error.retryable,
+        "failed cleanup must retain the durable Create claim"
+    );
+    assert!(fixture.generation_share().is_dir());
+    assert_eq!(
+        std::fs::read(workspace.join("keep.txt")).unwrap(),
+        b"caller-owned"
+    );
+    assert_eq!(fixture.factory.launches.load(Ordering::Relaxed), 0);
+    std::fs::write(marker, original).unwrap();
+    fixture
+        .driver
+        .handoff
+        .cleanup(&request.target, None, true)
+        .await
+        .unwrap();
+}
+
 fn fixture() -> Fixture {
     Fixture::with_profile(
         candidate_capability(),

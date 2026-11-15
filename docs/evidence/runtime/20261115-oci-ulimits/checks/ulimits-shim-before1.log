@@ -1,0 +1,11 @@
+
+running 1 test
+test tests::test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them ... FAILED
+
+failures:
+
+failures:
+    tests::test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 30 filtered out; finished in 0.00s
+

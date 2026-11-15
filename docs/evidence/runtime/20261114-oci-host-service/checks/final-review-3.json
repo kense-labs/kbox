@@ -1,0 +1,82 @@
+{
+  "status": "PASS for this bounded task",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-00.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-01.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-02.log"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-03.log"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrun",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-04.log"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrunfw",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0,
+      "log": "final3-review-05.log"
+    }
+  ],
+  "localReferencesChecked": 75,
+  "newBrokenReferences": [],
+  "preexistingMissingHistoricalReferences": [
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "docs/evidence/2026-10-18-guest-command-status/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "../../docs/evidence/code-harness/20261018-macos-guest-owner/OUTCOME.md"
+    }
+  ],
+  "sourceInputsSha256": "c24d5a84c2e955c2789f0be1d8b7946f63f8d9b8ad8743145ff42d82ed3f9243",
+  "boxArchiveSha256": "1f12f1fb296394f151538dd15073500d0383cd935fb966ada1ac143b993622ad",
+  "ociArchiveSha256": "17ffecf4643a3ec16da398e6db865c87824b70a2a68cc1ca028c2c829682385b",
+  "currentTaskComplete": true
+}

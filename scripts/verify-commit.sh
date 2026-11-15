@@ -23,7 +23,20 @@ python3 scripts/check-support-matrix.py
 echo "== workspace compile (all targets) =="
 cargo check --workspace --all-targets --locked
 
-echo "== engine unit tests =="
-cargo test --locked -p kbox-runtime --lib engine
+echo "== Rust formatting =="
+cargo fmt --all -- --check
+
+echo "== default Runtime, CLI and contract tests =="
+cargo test --locked -p kbox-runtime --lib
+cargo test --locked -p kbox-cli --lib
+cargo test --locked -p kbox-contract
+
+echo "== scoped Clippy =="
+cargo clippy --locked -p kbox-runtime -p kbox-cli -p kbox-contract --all-targets --no-deps
+
+echo "== archive installer regression =="
+sh -n scripts/install-package.sh
+bash -n scripts/package-macos-arm64.sh
+python3 scripts/test-install-package.py
 
 echo "verify-commit: OK"

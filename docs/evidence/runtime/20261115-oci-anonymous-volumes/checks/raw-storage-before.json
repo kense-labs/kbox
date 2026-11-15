@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "--lib",
+    "raw_ext4_storage_keeps",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 5.6850186659999995
+}

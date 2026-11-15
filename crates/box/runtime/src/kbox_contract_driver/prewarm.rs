@@ -10,7 +10,7 @@ use crate::{BoxRecord, ManagedExecutionState};
 
 use super::mapping::{attach_host_services, creation_request_for, validate_creation_spec};
 use super::metadata::map_execution_error;
-use super::{BoxRuntimeDriver, NATIVE_GUEST_PROFILE_DIGEST};
+use super::BoxRuntimeDriver;
 
 #[async_trait]
 pub(crate) trait BoxPrewarmScopePort: Send + Sync {
@@ -26,7 +26,6 @@ pub(super) enum PrewarmScope {
 pub(crate) fn eligible(spec: &RuntimeUnitSpec) -> bool {
     spec.class == RuntimeUnitClass::Service
         && spec.isolation == IsolationLevel::Sandbox
-        && spec.semantics_profile_digest.as_deref() == Some(NATIVE_GUEST_PROFILE_DIGEST)
         && spec.process.command == ["/bin/sleep"]
         && spec.process.args == ["infinity"]
         && spec.process.environment.is_empty()

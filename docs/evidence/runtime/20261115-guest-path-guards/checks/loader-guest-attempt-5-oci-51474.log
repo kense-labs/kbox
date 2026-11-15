@@ -1,0 +1,9 @@
+p51474
+ftxt
+n/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim
+ftxt
+n/usr/lib/dyld
+ftxt
+n/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib
+ftxt
+n/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/oci-rootro-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib

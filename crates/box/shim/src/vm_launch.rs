@@ -83,7 +83,16 @@ pub(super) fn prepare_windows_guest(spec: &InstanceSpec) -> Result<()> {
 /// This function calls unsafe libkrun FFI functions.
 /// It performs process takeover on Unix. The bundled Windows backend returns
 /// after guest shutdown so the shim can finish host-side log processing.
-pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
+pub(super) unsafe fn configure_and_start_vm(
+    spec: &InstanceSpec,
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    read_only: &koci_kbox::MacosReadOnlyMounts,
+) -> Result<()> {
+    // Confine before libkrun or worker threads can open a caller file writable.
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    read_only
+        .confine()
+        .map_err(macos_readonly::boundary_error)?;
     // Initialize libkrun logging
     tracing::debug!("Initializing libkrun logging");
     if let Err(e) = KContext::init_logging() {
@@ -137,13 +146,11 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     }
 
     // Apply custom ulimits (--ulimit RESOURCE=SOFT:HARD)
-    for ulimit in &spec.resource_limits.ulimits {
-        if let Some(rlimit_str) = parse_ulimit(ulimit) {
-            rlimits.push(rlimit_str);
-            tracing::info!(ulimit, "Applying custom ulimit");
-        } else {
-            tracing::warn!(ulimit, "Ignoring unrecognized ulimit format");
-        }
+    let custom_limits =
+        kbox_core::guest_exec::GuestRlimit::parse_specs(&spec.resource_limits.ulimits)
+            .map_err(|error| BoxError::ConfigError(format!("invalid Guest ulimits: {error}")))?;
+    for limit in custom_limits {
+        rlimits.push(limit.guest_spec());
     }
 
     tracing::debug!(rlimits = ?rlimits, "Configuring guest rlimits");
@@ -668,6 +675,10 @@ pub(super) unsafe fn configure_and_start_vm(spec: &InstanceSpec) -> Result<()> {
     // Start VM. start_enter RETURNS with the guest exit status once the guest
     // exits (status >= 0) or on a start failure (status < 0).
     tracing::info!(box_id = %spec.box_id, "Starting VM (process takeover)");
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    read_only
+        .reverify()
+        .map_err(macos_readonly::boundary_error)?;
     let status = ctx.start_enter();
 
     // No guest writes are valid after start_enter returns. Close the shim's

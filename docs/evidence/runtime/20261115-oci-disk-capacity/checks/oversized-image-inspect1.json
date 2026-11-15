@@ -1,0 +1,27 @@
+[
+  {
+    "Config": {
+      "Cmd": [
+        "/bin/sleep",
+        "2147483647"
+      ],
+      "Entrypoint": null,
+      "Env": {
+        "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+      },
+      "ExposedPorts": [],
+      "Healthcheck": null,
+      "Labels": {},
+      "OnBuild": [],
+      "StopSignal": null,
+      "User": "root",
+      "Volumes": [],
+      "WorkingDir": null
+    },
+    "Digest": "sha256:208233f151b6aae9eaf89a76f867113dd7d97ce60cd8b633c7ab6914dc20f8ee",
+    "LayerCount": 4,
+    "PulledAt": "2026-11-15T13:42:07.340903+00:00",
+    "Reference": "docker.io/library/kbox-capacity-oversized:64a2d8b501a94159b8bc63c58861bb0a",
+    "Size": 3989801
+  }
+]

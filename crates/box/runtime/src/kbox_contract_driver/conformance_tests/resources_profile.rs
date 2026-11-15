@@ -311,7 +311,6 @@ fn read_trimmed(path: &Path) -> Result<String> {
         .map_err(|error| super::external(&format!("read {}", path.display()), error))
 }
 
-
 async fn guest_counter(
     fixture: &BoxRuntimeConformanceFixture,
     client: &dyn RuntimeClient,
@@ -342,4 +341,3 @@ async fn guest_counter(
         super::external(&format!("decode guest cgroup counter {file}:{key}"), error)
     })
 }
-

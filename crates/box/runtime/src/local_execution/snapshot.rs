@@ -167,8 +167,20 @@ impl LocalExecutionManager {
                         .await;
                 }
                 let handle = required_handle(&observation, &execution_id)?;
-                self.restore_snapshot_source_state(record, source_state, handle)
+                if source_state == ManagedExecutionState::Running
+                    && observation.state == ExecutionState::Running
+                {
+                    self.complete_with_handle(
+                        record,
+                        ManagedExecutionState::Snapshotting,
+                        source_state,
+                        handle,
+                    )
                     .await?;
+                } else {
+                    self.restore_snapshot_source_state(record, source_state, handle)
+                        .await?;
+                }
                 Ok(())
             }
             Err(ExecutionManagerError::NotFound(_)) if cold_paused_source => {

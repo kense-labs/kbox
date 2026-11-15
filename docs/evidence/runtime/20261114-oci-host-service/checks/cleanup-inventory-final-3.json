@@ -1,0 +1,623 @@
+{
+  "status": "PASS",
+  "executionStores": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-directory/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-readonly/00e836ac5c5e4d10a79faedd07a54048/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-prewarm/3238da157e944aa2bf532c4dbc95f8a4/k-home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-directory/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-oci/8f64f9a519ad4766b3b092b49970f5ac/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-readonly/f184b7cefc674b6e962645744a007b12/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-primary/4eada7ee614a4e9cb4f7bbd3b700738a/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-prewarm/d1f4b2cf754e4363837995b13a7dff16/k-home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-directory/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-oci/7b91cb540a2546498b81cc90126bbf4e/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-readonly/3f79ee2abc7547119ad5de82f7652e24/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-primary/9617254908e145189e5119613ab76f56/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-prewarm/869b687ee2344e2690d334bbe3d9c22a/k-home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-9/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-7/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-6/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-1/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-8/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-4/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-3/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-2/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-5/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-14/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-15/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-12/home/boxes.json",
+      "records": []
+    }
+  ],
+  "volumeStores": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/home/volumes.json",
+      "records": {}
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/home/volumes.json",
+      "records": {}
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-oci/8f64f9a519ad4766b3b092b49970f5ac/home/volumes.json",
+      "records": {}
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-primary/4eada7ee614a4e9cb4f7bbd3b700738a/home/volumes.json",
+      "records": {}
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-oci/7b91cb540a2546498b81cc90126bbf4e/home/volumes.json",
+      "records": {}
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-primary/9617254908e145189e5119613ab76f56/home/volumes.json",
+      "records": {}
+    }
+  ],
+  "cliChecks": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-directory/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-00.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-01.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-readonly/00e836ac5c5e4d10a79faedd07a54048/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-02.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-03.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-prewarm/3238da157e944aa2bf532c4dbc95f8a4/k-home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-04.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-directory/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-05.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-oci/8f64f9a519ad4766b3b092b49970f5ac/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-06.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-readonly/f184b7cefc674b6e962645744a007b12/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-07.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-primary/4eada7ee614a4e9cb4f7bbd3b700738a/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-08.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-3/native-prewarm/d1f4b2cf754e4363837995b13a7dff16/k-home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-09.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-directory/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-10.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-oci/7b91cb540a2546498b81cc90126bbf4e/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-11.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-readonly/3f79ee2abc7547119ad5de82f7652e24/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-12.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-primary/9617254908e145189e5119613ab76f56/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-13.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-prewarm/869b687ee2344e2690d334bbe3d9c22a/k-home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-14.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-9/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-15.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-7/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-16.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-6/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-17.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-1/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-18.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-8/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-19.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-20.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-21.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-4/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-22.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-3/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-23.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-2/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-24.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-5/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-25.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-26.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-14/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-27.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-15/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-28.log"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-3/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "home": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-12/home",
+      "exitCode": 0,
+      "managedExecutions": 0,
+      "log": "cleanup3-cli-29.log"
+    }
+  ],
+  "executionCount": 0,
+  "volumeCount": 0,
+  "ownedSockets": [],
+  "observedExternalSocketsChecked": 180,
+  "ownedProcesses": [],
+  "ownedMountedImages": [],
+  "preexistingRamDevices": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "finalRamDevices": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ]
+}

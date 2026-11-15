@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls
+    vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2261 filtered out; finished in 0.12s
+

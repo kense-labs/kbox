@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "koci.operation.v7",
+  "operationId": "owned-pending-cleanup-kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+  "kind": "delete",
+  "containerId": "kbox-e77e47e0-97af-4965-b04b-eb70e153f5a4",
+  "generation": 1,
+  "requestDigest": "sha256:c67f6a5f14f071169c10deecb466dd20dbef4afadff49cf0391fbe0a1fdb3f8a",
+  "outcome": {
+    "status": "succeeded-empty"
+  }
+}

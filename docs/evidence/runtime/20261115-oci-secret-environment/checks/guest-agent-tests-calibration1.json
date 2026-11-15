@@ -1,0 +1,8 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/guest-agent-tests-calibration1",
+  "sha256": "65abc031768c7157f5c721e1bbf5c7f1a1f806c35374412c57952152700388f8",
+  "bytes": 7541800,
+  "preparationOnly": true,
+  "nativeExecuted": false,
+  "commandReceipt": "guest-agent-tests-build1.json"
+}

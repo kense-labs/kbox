@@ -1,0 +1,50 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/candidate1-memory-limit-probe": {
+    "sha256": "ff650e33f6743c1510297f7269c8f13a5678f9ac4ad6e121f74f5221dacb957b",
+    "bytes": 1433952
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/candidate1-memory-limit-probe.c": {
+    "sha256": "6fda7f6f322cef499e4a5ce94590e4f144e7e3a221135754e9bf8a6c6045cd72",
+    "bytes": 5922
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/cpu-time-probe": {
+    "sha256": "c1d7907fdfa3c7602499378902b0ccf0094d5bc40e8181316bc92d8e7a0e20ca",
+    "bytes": 1509408
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/cpu-time-probe.c": {
+    "sha256": "d35155413e19d31a3a60fa80860d14dbb8e555e7a99fc2044d77eddae52a28b2",
+    "bytes": 4470
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/diagnostic3-memory-limit-probe": {
+    "sha256": "2c195c9e0331c2bd7f6d2f49450c3cab099c091fde981f1ad56ab88f34002319",
+    "bytes": 1497280
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/diagnostic3-memory-limit-probe.c": {
+    "sha256": "673700e8c63700439ab9b05d0a2846d50d362140ea39306d5c846b0750906f06",
+    "bytes": 6426
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe": {
+    "sha256": "0fbd9ed9410148334d6b8cc634efa1c100bcad79363c602ddb6f00e53b8184b1",
+    "bytes": 1504624
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/memory-limit-probe.c": {
+    "sha256": "55c6e4db683b225ebde1772aa3c8a4d17fa55cf90b77c8ca5c56f1a493e260cf",
+    "bytes": 6516
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/native1-memory-limit-probe": {
+    "sha256": "9bc7337fdd03ce80f7ea3a340cd2c6a3cb846396c46d90e287f2057098adc20f",
+    "bytes": 1493640
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/native1-memory-limit-probe.c": {
+    "sha256": "0fa1e16e346c43c9aedfd3077cd928ef910293da5138b0a5932fec90c8617e24",
+    "bytes": 6198
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/rlimit-probe": {
+    "sha256": "e315dd4d5f876615df62bfd564445a13b0343ebc62139960d203eb4469acfb2f",
+    "bytes": 1467688
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/inputs/rlimit-probe.c": {
+    "sha256": "6ebe78167b3a8985f0ce606f3c111123980a076f51a5222845459769dfa2ddf6",
+    "bytes": 2027
+  }
+}

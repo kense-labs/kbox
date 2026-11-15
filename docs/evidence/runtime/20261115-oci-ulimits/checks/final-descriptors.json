@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "-n",
+    "-P",
+    "-Fpcn"
+  ],
+  "exitCode": 0,
+  "ownedDescriptorHolders": [],
+  "scope": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042",
+    "/private/tmp/kbox-rlimits-e5c6b94fd37f"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/build-box-final3.py"
+  ],
+  "exit": 1,
+  "seconds": 31.23704525
+}

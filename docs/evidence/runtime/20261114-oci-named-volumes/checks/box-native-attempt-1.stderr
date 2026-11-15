@@ -1,0 +1,10 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-named-d21528e85dea/attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (85890347) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_named.rs:161:17:
+assertion `left == right` failed
+  left: [104, 111, 115, 116, 32]
+ right: [104, 111, 115, 116, 32, 117, 112, 100, 97, 116, 101, 32, 97, 102, 116, 101, 114, 32, 103, 117, 101, 115, 116, 32, 102, 105, 114, 115, 116, 32, 114, 101, 97, 100, 32, 104, 97, 115, 32, 97, 32, 100, 105, 102, 102, 101, 114, 101, 110, 116, 32, 108, 101, 110, 103, 116, 104]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime' (85890346) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_named.rs:224:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

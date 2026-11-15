@@ -1,0 +1,21 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+warning: unused import: `BTreeMap`
+ --> crates/oci-runtime/crates/agent/src/vm_attachment/storage.rs:3:24
+  |
+3 | use std::collections::{BTreeMap, BTreeSet};
+  |                        ^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: use of deprecated associated function `tokio::io::unix::AsyncFd::<T>::new`: unsound due to lack of I/O safety; use `AsyncFd::register` instead (see https://github.com/tokio-rs/tokio/pull/8587)
+  --> crates/oci-runtime/crates/agent/src/executor/terminal.rs:70:35
+   |
+70 |         let descriptor = AsyncFd::new(self.master).map_err(|error| {
+   |                                   ^^^
+   |
+   = note: `#[warn(deprecated)]` on by default
+
+warning: `koci-agent` (lib) generated 2 warnings (run `cargo fix --lib -p koci-agent` to apply 1 suggestion)
+    Finished `release-dist` profile [optimized] target(s) in 38.82s

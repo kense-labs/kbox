@@ -28,6 +28,7 @@ const BLOCK_ROOT_ENVIRONMENT: &[(&str, &str)] = &[
 
 impl KContext {
     pub(crate) fn create() -> Result<Self> {
+        koci_sdk::admit_windows_whpx_host()?;
         // SAFETY: `kcreate_ctx` accepts no pointers and returns either a
         // non-negative owned context ID or a negative errno-style status.
         let status = unsafe { kcreate_ctx() };

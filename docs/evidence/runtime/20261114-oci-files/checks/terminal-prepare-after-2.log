@@ -1,0 +1,10 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.32s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 2 tests
+test utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff ... ok
+test utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 436 filtered out; finished in 0.07s
+

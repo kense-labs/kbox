@@ -1,0 +1,132 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "run",
+      "-d",
+      "--cpus",
+      "1",
+      "--memory",
+      "512",
+      "--network",
+      "none",
+      "--user",
+      "0",
+      "--cap-drop",
+      "ALL",
+      "--read-only",
+      "--tmpfs",
+      "/scratch:size=1m,mode=1777",
+      "--ulimit",
+      "rtprio=5:5",
+      "--ulimit",
+      "rttime=100000:300000",
+      "--ulimit",
+      "core=0:0",
+      "-v",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe-2:/realtime-probe:ro",
+      "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+      "--",
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "exitCode": 0,
+    "stdout": "bedbaa24-2bdd-47ad-989e-d5dc1568235c\n",
+    "stderr": "Creating box vast_cerf (bedbaa242bdd)...\n"
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "inspect",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c"
+    ],
+    "exitCode": 0,
+    "stdout": "[\n  {\n    \"id\": \"bedbaa24-2bdd-47ad-989e-d5dc1568235c\",\n    \"short_id\": \"bedbaa242bdd\",\n    \"name\": \"vast_cerf\",\n    \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n    \"managed_execution\": {\n      \"operation_id\": \"cli-run-de6be4db-2c8b-44cc-b843-57fd598f43ca\",\n      \"creation_intent_digest\": \"sha256:c87f6148f31720c8e1da9cd6d4ff0f0d431b91529b343ef47948d4a1d86e12f4\",\n      \"generation\": 1,\n      \"request\": {\n        \"external_sandbox_id\": \"cli-run-de6be4db-2c8b-44cc-b843-57fd598f43ca\",\n        \"config\": {\n          \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n          \"workspace\": \"\",\n          \"resources\": {\n            \"vcpus\": 1,\n            \"memory_mb\": 512,\n            \"disk_mb\": 4096,\n            \"timeout\": 3600\n          },\n          \"log_level\": \"Info\",\n          \"debug_grpc\": false,\n          \"tee\": {\n            \"kind\": \"none\"\n          },\n          \"cmd\": [\n            \"/bin/sleep\",\n            \"2147483647\"\n          ],\n          \"stdin_open\": false,\n          \"entrypoint_override\": null,\n          \"user\": \"0\",\n          \"workdir\": null,\n          \"hostname\": null,\n          \"volumes\": [\n            \"/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe-2:/realtime-probe:ro\"\n          ],\n          \"virtiofs_cache\": null,\n          \"extra_env\": [\n            [\n              \"COREPACK_ENABLE_DOWNLOAD_PROMPT\",\n              \"0\"\n            ]\n          ],\n          \"cache\": {\n            \"enabled\": true,\n            \"cache_dir\": null,\n            \"max_rootfs_entries\": 10,\n            \"max_cache_bytes\": 10737418240\n          },\n          \"pool\": {\n            \"enabled\": false,\n            \"prewarm\": null,\n            \"min_idle\": 1,\n            \"max_size\": 5,\n            \"max_concurrent_boots\": 2,\n            \"idle_ttl_secs\": 300,\n            \"scaling\": {\n              \"enabled\": false,\n              \"scale_up_threshold\": 0.3,\n              \"scale_down_threshold\": 0.05,\n              \"max_min_idle\": 0,\n              \"cooldown_secs\": 60,\n              \"window_secs\": 120\n            },\n            \"snapshot_fork\": false\n          },\n          \"deferred_main\": false,\n          \"ksm\": false,\n          \"snapshot_mem_file\": null,\n          \"snapshot_sock\": null,\n          \"restore_from\": null,\n          \"port_map\": [],\n          \"dns\": [],\n          \"egress_allowed_names\": [],\n          \"add_hosts\": [],\n          \"network\": \"none\",\n          \"tmpfs\": [\n            \"/scratch:size=1m,mode=1777\"\n          ],\n          \"resource_limits\": {\n            \"pids_limit\": null,\n            \"cpuset_cpus\": null,\n            \"ulimits\": [\n              \"rtprio=5:5\",\n              \"rttime=100000:300000\",\n              \"core=0:0\"\n            ],\n            \"cpu_shares\": null,\n            \"cpu_quota\": null,\n            \"cpu_period\": null,\n            \"memory_reservation\": null,\n            \"memory_swap\": null,\n            \"sandbox_memory_limit_bytes\": null\n          },\n          \"cap_add\": [],\n          \"cap_drop\": [\n            \"ALL\"\n          ],\n          \"security_opt\": [],\n          \"sysctls\": [],\n          \"privileged\": false,\n          \"read_only\": true,\n          \"sidecar\": null,\n          \"persistent\": true\n        },\n        \"labels\": {},\n        \"policy\": {\n          \"name\": \"vast_cerf\",\n          \"auto_remove\": false,\n          \"restart_policy\": \"no\",\n          \"max_restart_count\": 0,\n          \"health_check\": null,\n          \"healthcheck_disabled\": false,\n          \"log_config\": {\n            \"driver\": \"json-file\",\n            \"options\": {}\n          },\n          \"volume_names\": [],\n          \"platform\": null,\n          \"init\": false,\n          \"devices\": [],\n          \"gpus\": null,\n          \"shm_size\": null,\n          \"stop_signal\": null,\n          \"stop_timeout\": null,\n          \"oom_kill_disable\": false,\n          \"oom_score_adj\": null,\n          \"managed_secret_root\": null\n        },\n        \"rootfs_snapshot_id\": null\n      },\n      \"oci_runtime\": {\n        \"schema_version\": \"kbox.oci-runtime-binding.v2\",\n        \"endpoint\": {\n          \"kind\": \"unix-socket\",\n          \"path\": \"/private/tmp/kbox-realtime-b71041f58773/diagnostic-realtime-2/service/runtime.sock\"\n        },\n        \"target\": {\n          \"id\": \"kbox-bedbaa24-2bdd-47ad-989e-d5dc1568235c\",\n          \"generation\": 1\n        },\n        \"driver\": \"libk-hvf\",\n        \"isolation\": \"dedicated-vm\",\n        \"config_digest\": \"sha256:1e7e2b8aa480da29c0f9eeefb7e0bc19deeaa166b54059e22059ae170b62f39b\",\n        \"attachments_digest\": \"sha256:66e2d327ed7a6335dcb8409298bbc56cf3ceea08f09390061956984a98eb9cd5\"\n      },\n      \"caller_files\": {\n        \"/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe-2\": {\n          \"device\": 16777233,\n          \"inode\": 295143042\n        }\n      },\n      \"runtime_route\": \"oci_sdk\",\n      \"plan\": {\n        \"backend\": \"kbox\",\n        \"isolation_class\": \"hardware-vm\",\n        \"required_controls\": []\n      },\n      \"pending_operation\": null,\n      \"last_restart\": null,\n      \"last_resource_update\": null,\n      \"finished_at\": null,\n      \"paused_with_memory\": true\n    },\n    \"status\": \"running\",\n    \"pid\": null,\n    \"pid_start_time\": null,\n    \"cpus\": 1,\n    \"memory_mb\": 512,\n    \"volumes\": [\n      \"/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe-2:/realtime-probe:ro\"\n    ],\n    \"virtiofs_cache\": null,\n    \"env\": {\n      \"COREPACK_ENABLE_DOWNLOAD_PROMPT\": \"0\"\n    },\n    \"cmd\": [\n      \"/bin/sleep\",\n      \"2147483647\"\n    ],\n    \"entrypoint\": null,\n    \"box_dir\": \"/private/tmp/kbox-realtime-b71041f58773/diagnostic-realtime-2/home/boxes/bedbaa24-2bdd-47ad-989e-d5dc1568235c\",\n    \"exec_socket_path\": \"\",\n    \"console_log\": \"/private/tmp/kbox-realtime-b71041f58773/diagnostic-realtime-2/home/boxes/bedbaa24-2bdd-47ad-989e-d5dc1568235c/logs/console.log\",\n    \"created_at\": \"2026-11-15T11:37:12.316901Z\",\n    \"started_at\": \"2026-11-15T11:37:21.298389Z\",\n    \"auto_remove\": false,\n    \"hostname\": null,\n    \"user\": \"0\",\n    \"workdir\": null,\n    \"restart_policy\": \"no\",\n    \"port_map\": [],\n    \"labels\": {},\n    \"stopped_by_user\": false,\n    \"restart_count\": 0,\n    \"max_restart_count\": 0,\n    \"exit_code\": null,\n    \"health_check\": null,\n    \"healthcheck_disabled\": false,\n    \"health_status\": \"none\",\n    \"health_retries\": 0,\n    \"health_last_check\": null,\n    \"network_mode\": \"none\",\n    \"network_name\": null,\n    \"volume_names\": [],\n    \"tmpfs\": [\n      \"/scratch:size=1m,mode=1777\"\n    ],\n    \"anonymous_volumes\": [],\n    \"resource_limits\": {\n      \"pids_limit\": null,\n      \"cpuset_cpus\": null,\n      \"ulimits\": [\n        \"rtprio=5:5\",\n        \"rttime=100000:300000\",\n        \"core=0:0\"\n      ],\n      \"cpu_shares\": null,\n      \"cpu_quota\": null,\n      \"cpu_period\": null,\n      \"memory_reservation\": null,\n      \"memory_swap\": null,\n      \"sandbox_memory_limit_bytes\": null\n    },\n    \"log_config\": {\n      \"driver\": \"json-file\",\n      \"options\": {}\n    },\n    \"add_host\": [],\n    \"platform\": null,\n    \"init\": false,\n    \"read_only\": true,\n    \"cap_add\": [],\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"security_opt\": [],\n    \"privileged\": false,\n    \"devices\": [],\n    \"gpus\": null,\n    \"shm_size\": null,\n    \"stop_signal\": null,\n    \"stop_timeout\": null,\n    \"oom_kill_disable\": false,\n    \"oom_score_adj\": null,\n    \"status_detail\": {\n      \"state\": \"running\",\n      \"summary\": \"running\",\n      \"active\": true,\n      \"restart_count\": 0\n    },\n    \"State\": {\n      \"Status\": \"running\",\n      \"Running\": true,\n      \"Paused\": false,\n      \"ExitCode\": null\n    }\n  }\n]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c",
+      "--",
+      "/bin/cat",
+      "/proc/self/limits"
+    ],
+    "exitCode": 0,
+    "stdout": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited            unlimited            bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    0                    bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             1661                 1661                 processes \nMax open files            1024                 1024                 files     \nMax locked memory         8388608              8388608              bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       1661                 1661                 signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         0                    0                    \nMax realtime priority     5                    5                    \nMax realtime timeout      100000               300000               us        \n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c",
+      "--",
+      "/bin/cat",
+      "/proc/self/status"
+    ],
+    "exitCode": 0,
+    "stdout": "Name:\tcat\nUmask:\t0022\nState:\tR (running)\nTgid:\t4\nNgid:\t0\nPid:\t4\nPPid:\t0\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t \nNStgid:\t4\nNSpid:\t4\nNSpgid:\t4\nNSsid:\t0\nKthread:\t0\nVmPeak:\t    1772 kB\nVmSize:\t    1744 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t     816 kB\nVmRSS:\t     816 kB\nRssAnon:\t      48 kB\nRssFile:\t     768 kB\nRssShmem:\t       0 kB\nVmData:\t      84 kB\nVmStk:\t     132 kB\nVmExe:\t     840 kB\nVmLib:\t     656 kB\nVmPTE:\t      40 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nuntag_mask:\t0xffffffffffffff\nThreads:\t1\nSigQ:\t0/1661\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t0000000000000000\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\tunknown\nCpus_allowed:\t1\nCpus_allowed_list:\t0\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4\nnonvoluntary_ctxt_switches:\t0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c",
+      "--",
+      "/bin/cat",
+      "/proc/cmdline"
+    ],
+    "exitCode": 0,
+    "stdout": "reboot=k panic=-1 panic_print=0 nomodule console=hvc0 rootfstype=virtiofs rw quiet no-kvmapf init=/init.krun KRUN_INIT=/usr/bin/koci-agent KRUN_WORKDIR=/ KRUN_BLOCK_ROOT_DEVICE=/dev/vda KRUN_BLOCK_ROOT_FSTYPE=ext4 KRUN_BLOCK_ROOT_OPTIONS=ro  \"K_OCI_AGENT_SESSION_TOKEN_FILE=/run/koci-runtime/.koci-bootstrap-koci-agent-2ddda3f0a24dd9e39b8dbe428854038a/session-token\" \"K_OCI_AGENT_RUNTIME_SHARE=koci-runtime\" \"K_OCI_AGENT_VM_ATTACHMENT_MANIFEST_SHA256=sha256:a8b0c4955159b179d53e29f51bb0b2e499db50e0d237490eb38667fe8e7e33f4\" \"K_OCI_AGENT_RECOVERY_REPORT=/run/koci-runtime/.koci-recovery-koci-agent-2ddda3f0a24dd9e39b8dbe428854038a/report.json\" --\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c",
+      "--",
+      "/realtime-probe"
+    ],
+    "exitCode": 0,
+    "stdout": "{\"status\":\"PASS\",\"uid\":0,\"gid\":0,\"emptyCapabilities\":true,\"noNewPrivileges\":true,\"unlimited\":false,\"zero\":false,\"priorityCeiling\":5,\"priorityErrno\":1,\"allowedRangeReused\":true,\"hardRaiseErrno\":1,\"timeHardRaiseErrno\":1,\"childInheritedPolicy\":2,\"childInheritedPriority\":5,\"childPriorityErrno\":1,\"childReaped\":true,\"threadInheritedPolicy\":2,\"threadInheritedPriority\":5,\"threadPriorityErrno\":1,\"threadJoined\":true,\"parentSchedulerRestored\":true,\"parentTimeLimitUnchanged\":true,\"softSignal\":24,\"softSignalCode\":128,\"softCpuMicros\":106147,\"hardSignal\":9,\"hardCpuMicros\":306016,\"blockingResetCpuMicros\":400053,\"normalCpuMicros\":360000,\"unlimitedCpuMicros\":0,\"tty\":false,\"userNamespace\":{\"entered\":true,\"errno\":0,\"mapped\":false,\"mappingErrno\":1,\"priority\":5,\"priorityErrno\":1,\"childReaped\":true}}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "bedbaa24-2bdd-47ad-989e-d5dc1568235c"
+    ],
+    "exitCode": 0,
+    "stdout": "vast_cerf\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

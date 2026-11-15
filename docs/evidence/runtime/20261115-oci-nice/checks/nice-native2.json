@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nice-581649d8a124446983e5432838103584/run-native.py",
+    "docs/evidence/runtime/20261115-oci-nice/run-context.json",
+    "2",
+    "nice"
+  ],
+  "exit": 0,
+  "seconds": 225.094628833
+}

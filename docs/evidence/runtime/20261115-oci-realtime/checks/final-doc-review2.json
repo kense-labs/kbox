@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "9365453fbda6b3b8bd4758ae24c6a7b2817b5a0c130ec90724e75d3e46b3e676",
+  "sourceFiles": 1701,
+  "relativeReferencesChecked": 33,
+  "docsOnlySinceFinalReview": true,
+  "nativeSubmodulesUnchanged": true,
+  "cargoLockUnchanged": true,
+  "gitDiffCheck": 0
+}

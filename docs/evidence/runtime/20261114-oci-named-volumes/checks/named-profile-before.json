@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "hvf_named_volume_profile_admits_existing_plain_store_mount",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 15.772202834
+}

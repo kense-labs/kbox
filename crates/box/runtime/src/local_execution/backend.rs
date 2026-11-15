@@ -10,10 +10,9 @@ use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
-    ExecutionId, ExecutionManagerError, ExecutionManagerResult,
-    ExecutionProcess, ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState,
-    ExecutionStats, FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome,
-    OperationId,
+    ExecutionId, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+    ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionState, ExecutionStats,
+    FileRequest, FileResponse, FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
 };
 use std::collections::HashSet;
 
@@ -30,6 +29,8 @@ use crate::{BoxRecord, ManagedRuntimeRoute};
 pub struct LocalExecutionResourcePlan {
     /// Exact Box-owned anonymous volume identities required by the image.
     pub anonymous_volumes: Vec<String>,
+    /// Exact caller file incarnations; no file/directory is materialized by planning.
+    pub caller_files: std::collections::BTreeMap<PathBuf, koci_sdk::FileSourceIdentity>,
 }
 
 impl LocalExecutionResourcePlan {
@@ -55,6 +56,28 @@ impl LocalExecutionResourcePlan {
                     record.id
                 )));
             }
+        }
+        if !self.caller_files.is_empty() {
+            let metadata = record.managed_execution.as_mut().ok_or_else(|| {
+                ExecutionManagerError::Internal(
+                    "file resource plan has no managed execution".into(),
+                )
+            })?;
+            if !metadata.caller_files.is_empty() {
+                return Err(ExecutionManagerError::Internal(
+                    "new resource plan cannot replace existing caller file authority".into(),
+                ));
+            }
+            for (path, identity) in &self.caller_files {
+                if !path.is_absolute() {
+                    return Err(ExecutionManagerError::Internal(
+                        "planned caller file is not absolute".into(),
+                    ));
+                }
+                koci_sdk::FileSourceIdentity::new(identity.device(), identity.inode())
+                    .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
+            }
+            metadata.caller_files = self.caller_files;
         }
         record.anonymous_volumes = self.anonymous_volumes;
         Ok(())

@@ -2,9 +2,7 @@
 
 use std::{collections::BTreeMap, path::Path};
 
-use kbox_core::{
-    compose::ComposeConfig, CreateExecutionRequest, ExecutionRecordPolicy,
-};
+use kbox_core::{compose::ComposeConfig, CreateExecutionRequest, ExecutionRecordPolicy};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 
@@ -200,10 +198,7 @@ mod tests {
 
     #[test]
     fn catalog_builds_deterministic_labeled_execution_templates() {
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale")
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         assert_eq!(catalog.services(), vec!["api", "worker"]);
 
         let first = catalog.create_request("worker", 3).unwrap();
@@ -232,20 +227,14 @@ mod tests {
             let source = format!(
                 "service \"api\" {{ image = \"api:v1\"; {field} }}\nservice \"db\" {{ image = \"db:v1\" }}"
             );
-            let error = ScaleServiceCatalog::from_kcl_str(
-                &source,
-                "gateway-scale")
-            .unwrap_err();
+            let error = ScaleServiceCatalog::from_kcl_str(&source, "gateway-scale").unwrap_err();
             assert!(error.to_string().contains(expected), "{error}");
         }
     }
 
     #[test]
     fn unknown_service_fails_without_fabricating_a_template() {
-        let catalog = ScaleServiceCatalog::from_kcl_str(
-            CATALOG,
-            "gateway-scale")
-        .unwrap();
+        let catalog = ScaleServiceCatalog::from_kcl_str(CATALOG, "gateway-scale").unwrap();
         let error = catalog.create_request("missing", 0).unwrap_err();
         assert!(error.to_string().contains("not found"));
     }

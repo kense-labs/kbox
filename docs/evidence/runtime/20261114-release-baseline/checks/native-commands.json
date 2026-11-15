@@ -1,0 +1,84 @@
+[
+  {
+    "name": "extract-archive",
+    "command": [
+      "tar",
+      "-xzf",
+      "/Users/roylin/code/kense/kbox/dist/kbox-3.4.3-macos-arm64.tar.gz",
+      "-C",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/archive"
+    ],
+    "exitCode": 0,
+    "seconds": 0.08
+  },
+  {
+    "name": "install-archive",
+    "command": [
+      "sh",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/archive/kbox-3.4.3-macos-arm64/install.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 0.66
+  },
+  {
+    "name": "pull-generic-python",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "pull",
+      "docker.io/library/python:3.13-slim"
+    ],
+    "exitCode": 0,
+    "seconds": 12.95
+  },
+  {
+    "name": "inspect-generic-python",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "image-inspect",
+      "docker.io/library/python:3.13-slim"
+    ],
+    "exitCode": 0,
+    "seconds": 0.18
+  },
+  {
+    "name": "build-generic-fixture",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "build",
+      "--run-pool-socket",
+      "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-qual-pool-yvr4wbpl/pool.sock",
+      "--run-pool-autostart",
+      "--run-pool-image",
+      "docker.io/library/python@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90",
+      "-f",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/fixture-context/Containerfile",
+      "-t",
+      "kbox-qualification-base:local",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/fixture-context"
+    ],
+    "exitCode": 0,
+    "seconds": 23.53
+  },
+  {
+    "name": "stop-fixture-pool",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-qual-pool-yvr4wbpl/pool.sock"
+    ],
+    "exitCode": 0,
+    "seconds": 0.01
+  },
+  {
+    "name": "inspect-generic-fixture",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed/bin/kbox",
+      "image-inspect",
+      "kbox-qualification-base:local"
+    ],
+    "exitCode": 0,
+    "seconds": 0.18
+  }
+]

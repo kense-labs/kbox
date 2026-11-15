@@ -300,16 +300,13 @@ async fn handle_preserves_record_token_and_refuses_mismatch() {
     assert_eq!(first.pid, Some(pid));
     assert_eq!(first.pid_start_time, Some(start_time));
 
-    // Sandbox retains its existing sample/handle contract, not this MicroVM
-    // attachment qualification. No Sandbox launch or external adapter runs.
-    let mut sandbox = self::record(temporary.path());
-    sandbox.pid = Some(pid.wrapping_add(1));
-    sandbox.pid_start_time = None;
-    let sandbox_manager = paused_manager(&backend, &sandbox).await;
-    let handle = backend
-        .handle_from_manager(&sandbox, &sandbox_manager)
-        .await
-        .unwrap();
-    assert_eq!(handle.pid, Some(pid));
-    assert_eq!(handle.pid_start_time, Some(start_time));
+    // A fresh manager must not replace an unproved persisted MicroVM identity.
+    let mut mismatched = self::record(temporary.path());
+    mismatched.pid = Some(pid.wrapping_add(1));
+    mismatched.pid_start_time = None;
+    let manager = paused_manager(&backend, &mismatched).await;
+    assert!(matches!(
+        backend.handle_from_manager(&mismatched, &manager).await,
+        Err(ExecutionManagerError::Unavailable(_))
+    ));
 }

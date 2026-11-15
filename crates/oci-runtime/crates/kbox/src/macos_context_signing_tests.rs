@@ -5,12 +5,7 @@ use std::process::Command;
 fn resigned_runtime_keeps_pinned_code_and_rejects_modified_payloads() {
     let temporary = tempfile::tempdir().unwrap();
     for (name, size, original, code) in [
-        (
-            LIBK_NAME,
-            LIBK_SIZE,
-            LIBK_SHA256,
-            "e2664058cb5282fc99475ec33ae68404c401392b28812864abeba7c5164e93ed",
-        ),
+        (LIBK_NAME, LIBK_SIZE, LIBK_SHA256, LIBK_CODE_SHA256),
         (
             LIBKRUNFW_NAME,
             LIBKRUNFW_SIZE,

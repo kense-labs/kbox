@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "callerSourcesRetained": [
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-1/original-retained",
+      "device": 16777233,
+      "inode": 289125051,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "57e538153f8b1c7d0d877768b63fdf740c79308a92ad5f617415d26a1cf3476f",
+      "bytes": 24
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-1/\u6388\u6743 file/canary",
+      "device": 16777233,
+      "inode": 289125056,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "5a05ad0ee43a4fe8e2e110ba3f77a3b5bac707bb1d9decfd4c3bee546c8c2e1a",
+      "bytes": 26
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-2/original-retained",
+      "device": 16777233,
+      "inode": 289143911,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "57e538153f8b1c7d0d877768b63fdf740c79308a92ad5f617415d26a1cf3476f",
+      "bytes": 24
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-2/\u6388\u6743 file/canary",
+      "device": 16777233,
+      "inode": 289143917,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "5a05ad0ee43a4fe8e2e110ba3f77a3b5bac707bb1d9decfd4c3bee546c8c2e1a",
+      "bytes": 26
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-3/original-retained",
+      "device": 16777233,
+      "inode": 289191793,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "57e538153f8b1c7d0d877768b63fdf740c79308a92ad5f617415d26a1cf3476f",
+      "bytes": 24
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-3/\u6388\u6743 file/canary",
+      "device": 16777233,
+      "inode": 289191804,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "5a05ad0ee43a4fe8e2e110ba3f77a3b5bac707bb1d9decfd4c3bee546c8c2e1a",
+      "bytes": 26
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-6/original-retained",
+      "device": 16777233,
+      "inode": 289331007,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "57e538153f8b1c7d0d877768b63fdf740c79308a92ad5f617415d26a1cf3476f",
+      "bytes": 24
+    },
+    {
+      "path": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-6/\u6388\u6743 file/canary",
+      "device": 16777233,
+      "inode": 289331021,
+      "uid": 501,
+      "gid": 0,
+      "mode": "0o100644",
+      "nlink": 1,
+      "sha256": "5a05ad0ee43a4fe8e2e110ba3f77a3b5bac707bb1d9decfd4c3bee546c8c2e1a",
+      "bytes": 26
+    }
+  ],
+  "sourceBytesAndCanariesUnchanged": true,
+  "scope": "only explicit original-retained/replacement canary fixtures; intentional caller test rename is preserved",
+  "resourcesDeleted": []
+}

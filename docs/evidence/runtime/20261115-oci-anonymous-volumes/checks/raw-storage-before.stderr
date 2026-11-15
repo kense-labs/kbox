@@ -1,0 +1,8 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.19s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+thread 'utility_vm_driver::hvf_directory::tests::raw_ext4_storage_keeps_existing_disk_identity_access_and_detach_contract' (85980664) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_directory_tests.rs:121:52:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("open-utility-vm-runtime-driver"), message: "HVF caller directory is not a plain directory owned by UID 501: /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpnN2PRE/卷-0.ext4", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p koci-runtime --lib`

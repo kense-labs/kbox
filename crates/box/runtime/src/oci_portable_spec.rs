@@ -169,7 +169,7 @@ fn validate_runtime_process_shape(process: &MicrovmRuntimeProcess) -> Result<()>
     Ok(())
 }
 
-fn compile_workload_capabilities(
+pub(crate) fn compile_workload_capabilities(
     added: &[String],
     dropped: &[String],
 ) -> Result<oci_spec::runtime::LinuxCapabilities> {
@@ -221,7 +221,7 @@ fn compile_workload_capabilities(
         .map_err(oci_error)
 }
 
-fn normalize_capability_name(value: &str) -> String {
+pub(crate) fn normalize_capability_name(value: &str) -> String {
     let normalized = value.trim().to_ascii_uppercase();
     normalized
         .strip_prefix("CAP_")

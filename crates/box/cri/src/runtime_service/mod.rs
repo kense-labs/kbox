@@ -1329,10 +1329,7 @@ impl RuntimeService for BoxRuntimeService {
             // guest masks (bind /dev/null or ro tmpfs) / remounts read-only
             // inside the container rootfs.
             if !sc.masked_paths.is_empty() {
-                env.push((
-                    "K_SEC_MASKED_PATHS".to_string(),
-                    sc.masked_paths.join(":"),
-                ));
+                env.push(("K_SEC_MASKED_PATHS".to_string(), sc.masked_paths.join(":")));
             }
             if !sc.readonly_paths.is_empty() {
                 env.push((

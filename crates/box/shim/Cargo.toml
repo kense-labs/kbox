@@ -33,6 +33,9 @@ tracing-subscriber = { workspace = true }
 kbox-netproxy = { path = "../netproxy" }
 libc = { workspace = true }
 
+[target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
+koci-kbox = { path = "../../oci-runtime/crates/kbox" }
+
 [target.'cfg(windows)'.dependencies]
 windows-sys = { version = "0.48", features = [
     "Win32_Foundation",

@@ -1,0 +1,66 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+warning: unused return value of `tempfile::TempDir::keep` that must be used
+  --> crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files.rs:55:13
+   |
+55 |             root.keep();
+   |             ^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_must_use)]` (part of `#[warn(unused)]`) on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+55 |             let _ = root.keep();
+   |             +++++++
+
+warning: `koci-runtime` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.15s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 5 tests
+test utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases ... FAILED
+test utility_vm_driver::hvf_files::tests::live_file_transport_replays_and_cleans_only_private_aliases ... FAILED
+test utility_vm_driver::hvf_files::tests::publication_rejects_replaced_projection_identity_and_symlink_sources ... FAILED
+test utility_vm_driver::hvf_files::tests::source_replacement_cannot_be_reauthorized_or_deleted_by_cleanup ... FAILED
+test utility_vm_driver::hvf_files::tests::malformed_aliases_concurrent_grants_and_partial_preparation_fail_closed ... FAILED
+
+failures:
+
+---- utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases stdout ----
+
+thread 'tokio-rt-worker' (84893413) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:241:82:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("prepare-hvf-files"), message: "file projection is not a private canonical directory", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases' (84893408) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:248:20:
+called `Result::unwrap()` on an `Err` value: RecvError(())
+
+---- utility_vm_driver::hvf_files::tests::live_file_transport_replays_and_cleans_only_private_aliases stdout ----
+
+thread 'utility_vm_driver::hvf_files::tests::live_file_transport_replays_and_cleans_only_private_aliases' (84893409) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:92:10:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("prepare-hvf-files"), message: "file projection is not a private canonical directory", retryable: false }
+
+---- utility_vm_driver::hvf_files::tests::publication_rejects_replaced_projection_identity_and_symlink_sources stdout ----
+
+thread 'utility_vm_driver::hvf_files::tests::publication_rejects_replaced_projection_identity_and_symlink_sources' (84893411) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:209:10:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("prepare-hvf-files"), message: "file projection is not a private canonical directory", retryable: false }
+
+---- utility_vm_driver::hvf_files::tests::source_replacement_cannot_be_reauthorized_or_deleted_by_cleanup stdout ----
+
+thread 'utility_vm_driver::hvf_files::tests::source_replacement_cannot_be_reauthorized_or_deleted_by_cleanup' (84893412) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:157:45:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("prepare-hvf-files"), message: "file projection is not a private canonical directory", retryable: false }
+
+---- utility_vm_driver::hvf_files::tests::malformed_aliases_concurrent_grants_and_partial_preparation_fail_closed stdout ----
+
+thread 'utility_vm_driver::hvf_files::tests::malformed_aliases_concurrent_grants_and_partial_preparation_fail_closed' (84893410) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:182:45:
+called `Result::unwrap()` on an `Err` value: Error { code: FailedPrecondition, operation: Some("prepare-hvf-files"), message: "file projection is not a private canonical directory", retryable: false }
+
+
+failures:
+    utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases
+    utility_vm_driver::hvf_files::tests::live_file_transport_replays_and_cleans_only_private_aliases
+    utility_vm_driver::hvf_files::tests::malformed_aliases_concurrent_grants_and_partial_preparation_fail_closed
+    utility_vm_driver::hvf_files::tests::publication_rejects_replaced_projection_identity_and_symlink_sources
+    utility_vm_driver::hvf_files::tests::source_replacement_cannot_be_reauthorized_or_deleted_by_cleanup
+
+test result: FAILED. 0 passed; 5 failed; 0 ignored; 0 measured; 430 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p koci-runtime --lib`

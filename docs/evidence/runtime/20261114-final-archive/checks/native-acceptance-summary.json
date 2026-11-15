@@ -1,0 +1,88 @@
+[
+  {
+    "case": "oci",
+    "status": "PASS",
+    "seconds": 34.944544334,
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    },
+    "loaderSamples": 7,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-oci/4595896a754545cb883cd61a8bb16fc1/result.json",
+    "verifiedFlags": [
+      "sameExecutionAfterRestart",
+      "ordinaryOciWithoutAcp",
+      "exportedRootfsExcludesMounts",
+      "committedImageRuns",
+      "nativeGuestMatchesDirectBaseline",
+      "zeroPrivateExecutions"
+    ]
+  },
+  {
+    "case": "readonly",
+    "status": "PASS",
+    "seconds": 4.354583583,
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    },
+    "loaderSamples": 2,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-readonly/642c384b51494569a2d2e192502c920c/result.json",
+    "firstDenialErrnos": {
+      "1": 14
+    },
+    "restartDenialErrnos": {
+      "1": 14
+    },
+    "guestChildDenialBeforeAndAfter": [
+      1,
+      1
+    ]
+  },
+  {
+    "case": "primary",
+    "status": "PASS",
+    "seconds": 66.29223024999999,
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    },
+    "loaderSamples": 5,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-primary/8e5cb598f3604ff4ae9073263e0ad8c3/result.json",
+    "lateWriteChecks": {
+      "\u65ad\u5f00 late writes.txt": {
+        "bytes": 6,
+        "sha256": "b7fb217694ae2d305e766608d250f797daa984e4ac4b5fa638a729be352f2fcd",
+        "quietSeconds": 52.74264316600001
+      },
+      "\u5d29\u6e83 late writes.txt": {
+        "bytes": 6,
+        "sha256": "b7fb217694ae2d305e766608d250f797daa984e4ac4b5fa638a729be352f2fcd",
+        "quietSeconds": 51.173128542
+      }
+    }
+  },
+  {
+    "case": "prewarm",
+    "status": "PASS",
+    "seconds": 15.146921165999998,
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "loaderSamples": 2,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-prewarm/4d770578d7954f31b03d0df8bc6de81f/result.json",
+    "generation": 2,
+    "sameOriginalProcess": true
+  },
+  {
+    "case": "directory",
+    "status": "PASS",
+    "seconds": 16.792607708000006,
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "loaderSamples": 3,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-directory/result.json"
+  }
+]

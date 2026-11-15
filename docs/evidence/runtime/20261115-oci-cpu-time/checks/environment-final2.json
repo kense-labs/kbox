@@ -1,0 +1,56 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/bin/zig",
+        "version"
+      ],
+      "exitCode": 0,
+      "stdout": "0.16.0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "405c8b89f151e9e2879438d9e457dd60bfd18b90\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrun",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "3c2889c76460d81e3fb16d6144580fd31eb1bae3\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrunfw",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "fc3ea06895301f1df6a274dad75fbd9317b3bfee\n",
+      "stderr": ""
+    }
+  ],
+  "platformLogs": [
+    "macos.log",
+    "architecture.log",
+    "rust.log"
+  ],
+  "sourceInputsSha256": "ccc6c32ff1d7823cbb6f80aa5e03e799a0f839f170c6844372f5e7341bde77f7",
+  "cargoLockSha256": "0f82d0eaafd8b255f5a73c9de5a9106fc85f711bc2ed1d4ba9c02ef07aa63dbb",
+  "runtimeRSS": "not measured",
+  "realUserHome": "not used"
+}

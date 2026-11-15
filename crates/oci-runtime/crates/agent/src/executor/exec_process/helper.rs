@@ -208,6 +208,14 @@ fn run_container_exec(arguments: HelperArguments) -> Result<()> {
         Ok(prepared) => prepared,
         Err(error) => return reject_exec(&mut control, error),
     };
+    let secret_environment =
+        match crate::executor::secret_env::PreparedMemorySecretEnvironment::prepare(
+            &plan.environment,
+            &plan.memory_secret_environment,
+        ) {
+            Ok(prepared) => prepared,
+            Err(error) => return reject_exec(&mut control, error),
+        };
     if let Err(error) = cpu_affinity::apply_initial(plan.exec_cpu_affinity.as_ref()) {
         return reject_exec(&mut control, error);
     }
@@ -262,6 +270,7 @@ fn run_container_exec(arguments: HelperArguments) -> Result<()> {
             &init_pidfd,
             &namespaces,
             &mut control,
+            &secret_environment,
         );
     }
 
@@ -312,6 +321,7 @@ fn run_exec_payload(
     init_pidfd: &File,
     namespaces: &[HelperNamespace],
     control: &mut StdUnixStream,
+    secret_environment: &crate::executor::secret_env::PreparedMemorySecretEnvironment,
 ) -> Result<()> {
     // The child no longer monitors init itself; its direct helper owns that
     // pidfd and will kill this process group if init exits.
@@ -355,11 +365,9 @@ fn run_exec_payload(
             ),
         );
     }
-    // Secret files are mounted read-only and owned by root. Materialize their
-    // values while this helper still has root credentials, before applying the
-    // workload UID/GID below.
+    // Consume pinned sources only after Start; no plaintext enters the process snapshot.
     let mut process_environment = plan.environment.clone();
-    if let Err(error) = crate::executor::secret_env::materialize(&mut process_environment) {
+    if let Err(error) = secret_environment.materialize(&mut process_environment) {
         return reject_exec(control, error);
     }
     match crate::executor::scheduler::apply(plan.scheduler.as_ref())
@@ -392,7 +400,7 @@ fn prepare_exec_root(plan: &ProcessPlan, rootfs: &File) -> Result<()> {
 }
 
 fn apply_exec_credentials(plan: &ProcessPlan, control: &mut StdUnixStream) -> Result<()> {
-    plan.rlimits.apply()?;
+    plan.rlimits.apply_before_credentials()?;
     let capabilities = plan.capabilities.prepare_for_credentials(plan.uid)?;
     write_capability_warnings(control, capabilities.warnings())?;
     apply_supplementary_groups(&plan.additional_gids, "apply exec supplementary groups")?;
@@ -410,6 +418,7 @@ fn apply_exec_credentials(plan: &ProcessPlan, control: &mut StdUnixStream) -> Re
         }
     }
     capabilities.apply_after_credentials(plan.uid)?;
+    plan.rlimits.finish_credentials()?;
     crate::executor::no_new_privileges::apply(plan.no_new_privileges)?;
     plan.seccomp.install()?;
     Ok(())

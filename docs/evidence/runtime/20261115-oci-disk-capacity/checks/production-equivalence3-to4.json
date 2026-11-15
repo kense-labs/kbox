@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "runtimePayloadsIdentical": true,
+  "changedFiles": [
+    "build-info.json"
+  ],
+  "fromPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-3",
+  "toPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-4"
+}

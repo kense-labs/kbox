@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "completedNativeScenarios": 0,
+  "error": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/run-legacy.py\", line 57, in <module>\n    assert cli('exec',identity,'--','/bin/sh','-c',script)==b'LEGACY_LIMITS_PASS';assert b'LEGACY_LIMITS_PASS' in cli('exec','-t',identity,'--','/bin/sh','-c',script,tty=True);maps=loader();cli('restart',identity);after=inspect();assert after['id']==identity and after['managed_execution']['generation']==generation+1;assert cli('exec',identity,'--','/bin/sh','-c',script)==b'LEGACY_LIMITS_PASS';maps+=loader();cli('rm','-f',identity)\n  File \"/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/run-legacy.py\", line 41, in cli\n    if check:assert status==0,(cmd,status,err.read_text(),out.read_text())\nAssertionError: (['/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/installed-ulimits-final-1/bin/kbox', 'exec', 'a4a67ba8-7fdc-42f2-89a5-ba4a870a8c5e', '--', '/bin/sh', '-c', 'set -eu; test $(ulimit -Sn) = 64; test $(ulimit -Hn) = 128; test $(ulimit -Sc) = 0; test $(ulimit -Hc) = 0; if (ulimit -Hn 129) 2>/tmp/limit-error; then exit 51; fi; printf LEGACY_LIMITS_PASS'], 51, '', '')\n",
+  "seconds": 4.620173417,
+  "zeroManagedExecutions": true,
+  "zeroVolumes": true
+}

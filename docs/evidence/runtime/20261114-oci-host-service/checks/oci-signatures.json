@@ -1,0 +1,28 @@
+[
+  {
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      "--entitlements",
+      "/Users/roylin/code/kense/kbox/crates/oci-runtime/packaging/macos/koci-hvf.entitlements",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci"
+    ],
+    "exitCode": 0,
+    "stderr": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci: replacing existing signature\n"
+  },
+  {
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      "--entitlements",
+      "/Users/roylin/code/kense/kbox/crates/oci-runtime/packaging/macos/koci-hvf.entitlements",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci-kshim"
+    ],
+    "exitCode": 0,
+    "stderr": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci-kshim: replacing existing signature\n"
+  }
+]

@@ -1,0 +1,38 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/cpu-time-probe": {
+    "sha256": "c1d7907fdfa3c7602499378902b0ccf0094d5bc40e8181316bc92d8e7a0e20ca",
+    "bytes": 1509408
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/cpu-time-probe.c": {
+    "sha256": "d35155413e19d31a3a60fa80860d14dbb8e555e7a99fc2044d77eddae52a28b2",
+    "bytes": 4470
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/memory-limit-probe": {
+    "sha256": "0fbd9ed9410148334d6b8cc634efa1c100bcad79363c602ddb6f00e53b8184b1",
+    "bytes": 1504624
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/memory-limit-probe.c": {
+    "sha256": "55c6e4db683b225ebde1772aa3c8a4d17fa55cf90b77c8ca5c56f1a493e260cf",
+    "bytes": 6516
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/nproc-cli-pty.py": {
+    "sha256": "054aa8b3eb223698a1cc8859540673c16042dc45f7b615013fcd8cfa9db3c514",
+    "bytes": 2426
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/nproc-probe": {
+    "sha256": "5256185f6df43b5450f0d5c4857d6c1192434bf0a3680234545fa5f44e7c649a",
+    "bytes": 1617376
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/nproc-probe.c": {
+    "sha256": "7701fb95e4d81bc053d5402f67fd8289321287f970fab9dcff8c1fd114e486bb",
+    "bytes": 7386
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/rlimit-probe": {
+    "sha256": "e315dd4d5f876615df62bfd564445a13b0343ebc62139960d203eb4469acfb2f",
+    "bytes": 1467688
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/rlimit-probe.c": {
+    "sha256": "6ebe78167b3a8985f0ce606f3c111123980a076f51a5222845459769dfa2ddf6",
+    "bytes": 2027
+  }
+}

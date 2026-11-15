@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/native-client-secret-old-shim-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::secrets::native_memory_secret_unsupported_transport_refuses_and_preserves_source",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "seconds": 28.099856459,
+  "root": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-shim-1-ram/case",
+  "clientSha256": "7dee441dca6650b1fe7dde8109c13ef8ba95ad59da1ddb7ec8e56bb5f18e4468",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-2",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final2-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/oci-ulimits-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "loaded": [],
+  "status": "FAIL",
+  "error": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-memory-native-apfs.py\", line 50, in <module>\n    counts=re.findall(r'test result: (?:ok|FAILED)\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;',(case/'native.stdout').read_text());result.update(command=cmd,exitCode=exit_code,actualCounts=counts,seconds=time.monotonic()-started,root=str(root),clientSha256=sha(client),boxPrefix=str(box),ociHostPrefix=str(host_prefix),ociShimPrefix=str(shim_prefix),loaded=list(loaded.values()));(case/'run.json').write_text(json.dumps(result,indent=2)+'\\n');assert exit_code==0 and counts==[('1','0','0')]\nAssertionError\n",
+  "archivedNativeRoot": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secrets/checks/secret-old-shim-1/native-root",
+  "ownedRuntimeProcessesAfter": [],
+  "ramUnmountExitCode": 0,
+  "ramDetachExitCode": 0,
+  "device": "/dev/disk14",
+  "mount": "/private/tmp/kbox-secrets-3b9553cebce5/secret-old-shim-1-ram",
+  "runtimeRSS": "not measured"
+}

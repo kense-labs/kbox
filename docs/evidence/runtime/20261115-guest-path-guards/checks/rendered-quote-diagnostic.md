@@ -1,0 +1,1 @@
+A preparatory Python assertion looking for triple escaped quotes failed; raw Rust source contains the correct single escaped quote. No source edit was needed or made. Cargo ready7 ran with unchanged source and returned fresh=true. Earlier Rust source excerpts were additionally escaped in the tool JSON rendering. This is not a product or native runtime failure.

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "actualMallocCalls": 2,
+  "assemblyLines": [
+    " 1012044:      \tbl\t0x101751c <malloc>",
+    " 1012084:      \tbl\t0x101751c <malloc>"
+  ],
+  "sourceInputsUnchanged": true,
+  "probeSha256": "0fbd9ed9410148334d6b8cc634efa1c100bcad79363c602ddb6f00e53b8184b1"
+}

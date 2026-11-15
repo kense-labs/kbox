@@ -1,0 +1,587 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 7bd726a..19f770c 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -1910,6 +1910,7 @@ dependencies = [
+  "kcommon",
+  "kense-kcl",
+  "koci-core",
++ "koci-kbox",
+  "koci-sdk",
+  "libc",
+  "oci-distribution",
+@@ -1956,6 +1957,7 @@ dependencies = [
+  "kbox-core",
+  "kbox-netproxy",
+  "klibksys",
++ "koci-kbox",
+  "koci-sdk",
+  "libc",
+  "serde",
+@@ -2070,6 +2072,7 @@ dependencies = [
+ name = "koci-kbox"
+ version = "0.3.6"
+ dependencies = [
++ "cap-std",
+  "clap",
+  "klibksys",
+  "koci-agent-protocol",
+diff --git a/Cargo.toml b/Cargo.toml
+index e8ca0b6..7f27e64 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -198,6 +198,7 @@ windows-sys = { version = "0.59", features = [
+     "Win32_System_LibraryLoader",
+     "Win32_System_Pipes",
+     "Win32_System_SystemServices",
++    "Win32_System_SystemInformation",
+     "Win32_System_Threading",
+ ] }
+ 
+diff --git a/crates/box/deps/libksys/README.md b/crates/box/deps/libksys/README.md
+index 64d3361..ae5b99d 100644
+--- a/crates/box/deps/libksys/README.md
++++ b/crates/box/deps/libksys/README.md
+@@ -29,6 +29,15 @@ FFI bindings to [libkrun](https://github.com/containers/libkrun) with **Windows
+ | macOS arm64 | Hypervisor.framework | ✅ Supported |
+ | **Windows x86_64** | **WHPX** | ✅ **Supported** |
+ 
++This table describes FFI availability. Product readiness remains in the
++[kbox support matrix](../../../../docs/architecture/support-matrix.json).
++The current Windows archive is x64 MSVC only. The build checks the Cargo target
++before stub/asset discovery and refuses Windows ARM64, ARM64EC and other ABIs;
++Unix native-source builds require a matching build host OS/CPU. Rust metadata
++checks and x64 emulation do not establish native runtime support. Microsoft WHP
++does expose ARM64 APIs; the selected VMM/firmware has not implemented them.
++See [the current feasibility evidence](../../../../docs/evidence/runtime/20261114-windows-arm64/OUTCOME.md).
++
+ ## Installation
+ 
+ Add to your `Cargo.toml`:
+diff --git a/crates/box/deps/libksys/build.rs b/crates/box/deps/libksys/build.rs
+index 6e10030..89b61ad 100644
+--- a/crates/box/deps/libksys/build.rs
++++ b/crates/box/deps/libksys/build.rs
+@@ -79,6 +79,11 @@ const LIB_DIR: &str = "lib64";
+ const LIB_DIR: &str = "lib";
+ 
+ fn main() {
++    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
++    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
++    let target_abi = env::var("CARGO_CFG_TARGET_ENV").unwrap_or_default();
++    build_support::validate_windows_target(&target_os, &target_arch, &target_abi)
++        .unwrap_or_else(|reason| panic!("{reason}"));
+     // Rebuild if the source submodule or packaged fallback changes.
+     println!("cargo:rerun-if-changed=../../../../libkrun");
+     println!("cargo:rerun-if-changed=vendor/libksource.tar");
+@@ -104,11 +109,17 @@ fn main() {
+         return;
+     }
+ 
+-    #[cfg(target_os = "windows")]
+-    {
++    if target_os == "windows" {
+         build_windows();
++        return;
+     }
+ 
++    // shortcut: Unix source builds need a matching host OS/CPU; add a real cross toolchain before admitting other targets.
++    assert!(
++        target_os == env::consts::OS && target_arch == env::consts::ARCH,
++        "Unix libkrun source builds require matching host OS/CPU; use an explicit metadata-only stub for cross checks"
++    );
++
+     #[cfg(not(target_os = "windows"))]
+     {
+         // The vendored macOS libkrun carries required TSI flow-control and
+@@ -1161,7 +1172,7 @@ fn packaged_windows_files_match(dir: &Path) -> bool {
+ ///   3. deps/libksys/prebuilt/x86_64-pc-windows-msvc/ (repository checkout)
+ ///   4. Checksum-verified vendor/kwindows-x64.tar.xz (published crate)
+ fn build_windows() {
+-    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_else(|_| "x86_64".to_string());
++    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").unwrap_or_default();
+     let triple = format!("{}-pc-windows-msvc", target_arch);
+     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
+ 
+diff --git a/crates/box/deps/libksys/build_support.rs b/crates/box/deps/libksys/build_support.rs
+index d02256a..d6a967d 100644
+--- a/crates/box/deps/libksys/build_support.rs
++++ b/crates/box/deps/libksys/build_support.rs
+@@ -5,6 +5,15 @@ use std::io::{self, Read};
+ use std::path::{Path, PathBuf};
+ use std::process::Command;
+ 
++/// Refuse targets that cannot use the pinned Windows native runtime bundle.
++pub(crate) fn validate_windows_target(os: &str, arch: &str, abi: &str) -> Result<(), &'static str> {
++    if os == "windows" && (arch != "x86_64" || abi != "msvc") {
++        Err("libkrun/libkrunfw Windows runtime requires x86_64-pc-windows-msvc; Windows ARM64 and other ABIs are unsupported by the current native dependencies")
++    } else {
++        Ok(())
++    }
++}
++
+ /// Query the minimum macOS version selected by the pinned Rust compiler.
+ pub(crate) fn macos_deployment_target(rustc: &mut Command, target: &OsStr) -> io::Result<String> {
+     let output = rustc
+diff --git a/crates/box/deps/libksys/tests/build_support.rs b/crates/box/deps/libksys/tests/build_support.rs
+index 9c1f6d2..3628003 100644
+--- a/crates/box/deps/libksys/tests/build_support.rs
++++ b/crates/box/deps/libksys/tests/build_support.rs
+@@ -4,6 +4,31 @@ mod build_support;
+ use std::path::{Path, PathBuf};
+ use std::process::Command;
+ 
++#[test]
++fn windows_runtime_target_refuses_arm64_and_foreign_abis_before_stub_or_asset_selection() {
++    assert_eq!(
++        build_support::validate_windows_target("windows", "x86_64", "msvc"),
++        Ok(())
++    );
++    for (arch, abi) in [
++        ("aarch64", "msvc"),
++        ("arm64ec", "msvc"),
++        ("x86_64", "gnu"),
++        ("x86_64", ""),
++        ("", "msvc"),
++    ] {
++        assert!(build_support::validate_windows_target("windows", arch, abi).is_err());
++    }
++    assert_eq!(
++        build_support::validate_windows_target("linux", "aarch64", "gnu"),
++        Ok(())
++    );
++    assert_eq!(
++        build_support::validate_windows_target("macos", "aarch64", ""),
++        Ok(())
++    );
++}
++
+ #[test]
+ fn native_deployment_target_matches_rust_and_explicit_overrides() {
+     let rustc = std::env::var_os("RUSTC").unwrap_or_else(|| "rustc".into());
+diff --git a/crates/box/runtime/src/host_check.rs b/crates/box/runtime/src/host_check.rs
+index 71d8684..4c66082 100644
+--- a/crates/box/runtime/src/host_check.rs
++++ b/crates/box/runtime/src/host_check.rs
+@@ -66,16 +66,8 @@ pub fn admit_microvm_host_class() -> Result<()> {
+ 
+     #[cfg(windows)]
+     {
+-        #[cfg(target_arch = "x86_64")]
+-        {
+-            Ok(())
+-        }
+-        #[cfg(not(target_arch = "x86_64"))]
+-        {
+-            Err(BoxError::ConfigError(
+-                "Kbox Box on Windows currently requires x86_64 for the WHPX backend.".to_string(),
+-            ))
+-        }
++        koci_sdk::admit_windows_whpx_host()
++            .map_err(|error| BoxError::ConfigError(error.to_string()))
+     }
+ 
+     #[cfg(not(any(target_os = "macos", target_os = "linux", windows)))]
+@@ -204,6 +196,8 @@ fn check_linux_kvm() -> Result<VirtualizationSupport> {
+ /// Check for Windows Hypervisor Platform (WHPX) support on Windows.
+ #[cfg(target_os = "windows")]
+ fn check_windows_whpx() -> Result<VirtualizationSupport> {
++    koci_sdk::admit_windows_whpx_host()
++        .map_err(|error| BoxError::ConfigError(error.to_string()))?;
+     #[cfg(not(target_arch = "x86_64"))]
+     {
+         return Err(BoxError::ConfigError(
+diff --git a/crates/box/shim/src/main.rs b/crates/box/shim/src/main.rs
+index bfa1726..663a8f8 100644
+--- a/crates/box/shim/src/main.rs
++++ b/crates/box/shim/src/main.rs
+@@ -13,6 +13,8 @@
+ #![allow(clippy::result_large_err)]
+ 
+ mod kbox;
++#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
++mod macos_readonly;
+ mod managed_oci_log_worker;
+ mod vm_launch;
+ 
+@@ -195,6 +197,10 @@ fn run() -> Result<()> {
+         hint: None,
+     })?;
+ 
++    #[cfg(windows)]
++    koci_sdk::admit_windows_whpx_host()
++        .map_err(|error| BoxError::ConfigError(error.to_string()))?;
++
+     #[cfg(unix)]
+     tracing::info!(
+         box_id = %spec.box_id,
+@@ -259,8 +265,14 @@ fn run() -> Result<()> {
+     }
+ 
+     // Configure and start VM
++    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
++    let (spec, read_only) = macos_readonly::prepare(spec)?;
+     unsafe {
+-        configure_and_start_vm(&spec)?;
++        configure_and_start_vm(
++            &spec,
++            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
++            &read_only,
++        )?;
+     }
+ 
+     Ok(())
+diff --git a/crates/oci-runtime/crates/kbox/src/context.rs b/crates/oci-runtime/crates/kbox/src/context.rs
+index 642ea7f..b1c18ff 100644
+--- a/crates/oci-runtime/crates/kbox/src/context.rs
++++ b/crates/oci-runtime/crates/kbox/src/context.rs
+@@ -28,6 +28,7 @@ const BLOCK_ROOT_ENVIRONMENT: &[(&str, &str)] = &[
+ 
+ impl KContext {
+     pub(crate) fn create() -> Result<Self> {
++        koci_sdk::admit_windows_whpx_host()?;
+         // SAFETY: `kcreate_ctx` accepts no pointers and returns either a
+         // non-negative owned context ID or a negative errno-style status.
+         let status = unsafe { kcreate_ctx() };
+diff --git a/crates/oci-runtime/crates/runtime/src/agent_session/tests.rs b/crates/oci-runtime/crates/runtime/src/agent_session/tests.rs
+index 39cc4b5..561cb5a 100644
+--- a/crates/oci-runtime/crates/runtime/src/agent_session/tests.rs
++++ b/crates/oci-runtime/crates/runtime/src/agent_session/tests.rs
+@@ -24,6 +24,7 @@ fn valid_output(platform: &str) -> BoundedOutput {
+             "platform": platform,
+             "status": "available",
+             "runtime_bundle_loaded": true,
++            "macos_host_sandbox_enforced": platform == "macos",
+             "context_created": true,
+             "vm_configured": true,
+             "rootfs_configured": true,
+@@ -196,6 +197,27 @@ fn rejects_a_shim_report_for_the_wrong_host() {
+     .is_err());
+ }
+ 
++#[test]
++fn rejects_macos_shim_evidence_without_explicit_host_confinement() {
++    for flag in [Some(json!(false)), Some(json!("true")), None] {
++        let mut output = valid_output("macos");
++        let mut value: Value = serde_json::from_slice(&output.bytes).unwrap();
++        match flag {
++            Some(flag) => value["macos_host_sandbox_enforced"] = flag,
++            None => {
++                value
++                    .as_object_mut()
++                    .unwrap()
++                    .remove("macos_host_sandbox_enforced");
++            }
++        }
++        output.bytes = serde_json::to_vec(&value).unwrap();
++        let error = parse_shim_report(&output, HostPlatform::Macos, false, Some(&"1".repeat(64)))
++            .expect_err("missing or malformed native confinement must refuse");
++        assert!(error.contains("Seatbelt"), "{error}");
++    }
++}
++
+ #[test]
+ fn rejects_a_shim_report_with_a_different_system_image_manifest() {
+     let error = parse_shim_report(
+diff --git a/crates/oci-runtime/crates/runtime/src/platform/windows.rs b/crates/oci-runtime/crates/runtime/src/platform/windows.rs
+index 15db806..e0a8de0 100644
+--- a/crates/oci-runtime/crates/runtime/src/platform/windows.rs
++++ b/crates/oci-runtime/crates/runtime/src/platform/windows.rs
+@@ -253,14 +253,30 @@ fn capability_from_observation(observation: ProbeObservation) -> DriverCapabilit
+ }
+ 
+ pub(crate) fn features() -> RuntimeFeatures {
+-    RuntimeFeatures::current(vec![capability_from_observation(observe_whpx())])
++    RuntimeFeatures::current(vec![whpx_driver_capability()])
+ }
+ 
+ pub(crate) fn whpx_driver_capability() -> DriverCapability {
++    if let Err(error) = koci_sdk::admit_windows_whpx_host() {
++        let unsupported = error.code == koci_sdk::ErrorCode::Unsupported;
++        let mut capability = capability_from_observation(ProbeObservation {
++            dll_loaded: false,
++            hypervisor_present: false,
++            reason: Some(error.to_string()),
++        });
++        if unsupported {
++            capability.status = CapabilityStatus::Unsupported;
++            capability.isolation_classes.clear();
++        }
++        return capability;
++    }
+     capability_from_observation(observe_whpx())
+ }
+ 
+ pub(crate) fn whpx_smoke() -> WhpxSmokeReport {
++    if let Err(error) = koci_sdk::admit_windows_whpx_host() {
++        return WhpxSmokeReport::unavailable(false, false, error.to_string());
++    }
+     let api = match WhpxApi::load() {
+         Ok(api) => api,
+         Err(error) => return WhpxSmokeReport::unavailable(false, false, error.to_string()),
+diff --git a/crates/oci-runtime/crates/runtime/src/whpx_driver.rs b/crates/oci-runtime/crates/runtime/src/whpx_driver.rs
+index cfa868c..fed124c 100644
+--- a/crates/oci-runtime/crates/runtime/src/whpx_driver.rs
++++ b/crates/oci-runtime/crates/runtime/src/whpx_driver.rs
+@@ -171,7 +171,11 @@ impl WhpxRuntimeDriver {
+         let mut capability = crate::platform::whpx_driver_capability();
+         if capability.status != CapabilityStatus::Available {
+             return Err(Error::new(
+-                ErrorCode::Unavailable,
++                if capability.status == CapabilityStatus::Unsupported {
++                    ErrorCode::Unsupported
++                } else {
++                    ErrorCode::Unavailable
++                },
+                 capability
+                     .reason
+                     .clone()
+diff --git a/crates/oci-runtime/crates/sdk/examples/qualify_hvf_workspace.rs b/crates/oci-runtime/crates/sdk/examples/qualify_hvf_workspace.rs
+index 26d846b..1469c1a 100644
+--- a/crates/oci-runtime/crates/sdk/examples/qualify_hvf_workspace.rs
++++ b/crates/oci-runtime/crates/sdk/examples/qualify_hvf_workspace.rs
+@@ -1,11 +1,16 @@
+ //! Real public-SDK qualification of caller-owned macOS workspace directories.
+ 
+ use std::error::Error;
++#[cfg(unix)]
+ use std::fs::{self, File};
++#[cfg(unix)]
+ use std::path::{Path, PathBuf};
++#[cfg(unix)]
+ use std::process::{Command, Stdio};
++#[cfg(unix)]
+ use std::time::Duration;
+ 
++#[cfg(unix)]
+ use koci_sdk::{
+     runtime_bundle_handoff_directory, ContainerId, ContainerTarget, CreateAttachments,
+     CreateRequest, DeleteMode, DeleteRequest, IsolationRequest, LocalIpcEndpoint, OciBundle,
+@@ -16,7 +21,9 @@ use koci_sdk::{
+     RUNTIME_BUNDLE_HANDOFF_MOVE_V2, STORAGE_PATH_RESTRICTIONS_EXTENSION,
+     STORAGE_PATH_RESTRICTIONS_VERSION,
+ };
++#[cfg(unix)]
+ use serde_json::json;
++#[cfg(unix)]
+ use tokio::time::{sleep, timeout, Instant};
+ 
+ #[cfg(unix)]
+@@ -24,6 +31,12 @@ use std::os::unix::fs::PermissionsExt;
+ 
+ type QualificationResult<T> = Result<T, Box<dyn Error + Send + Sync>>;
+ 
++#[cfg(not(unix))]
++fn main() -> QualificationResult<()> {
++    Err("this qualification requires Apple Silicon macOS".into())
++}
++
++#[cfg(unix)]
+ #[tokio::main(flavor = "current_thread")]
+ async fn main() -> QualificationResult<()> {
+     let args: Vec<PathBuf> = std::env::args_os().skip(1).map(PathBuf::from).collect();
+@@ -63,6 +76,7 @@ async fn main() -> QualificationResult<()> {
+     Ok(())
+ }
+ 
++#[cfg(unix)]
+ async fn qualify(
+     service: &Path,
+     fixture: &Path,
+@@ -289,6 +303,7 @@ async fn qualify(
+     )
+ }
+ 
++#[cfg(unix)]
+ fn operation(name: &str) -> koci_sdk::Result<OperationContext> {
+     Ok(OperationContext::new(OperationId::new(name)?))
+ }
+diff --git a/crates/oci-runtime/crates/sdk/src/lib.rs b/crates/oci-runtime/crates/sdk/src/lib.rs
+index 65d51f5..c8d3f13 100644
+--- a/crates/oci-runtime/crates/sdk/src/lib.rs
++++ b/crates/oci-runtime/crates/sdk/src/lib.rs
+@@ -33,6 +33,8 @@ mod service;
+ mod tee;
+ mod transport;
+ mod validation;
++#[cfg(any(windows, test))]
++mod windows_architecture;
+ mod workspace_path;
+ 
+ pub use async_trait::async_trait;
+@@ -152,6 +154,8 @@ pub use validation::{
+     MAX_FILESYSTEM_USER_BYTES, MAX_FILE_TRANSFER_BYTES, MAX_OUTPUT_READ_BYTES,
+     MAX_STDIN_WRITE_BYTES,
+ };
++#[cfg(windows)]
++pub use windows_architecture::admit_windows_whpx_host;
+ pub use workspace_path::{
+     admit_workspace_path, WorkspacePathReject, WORKSPACE_STAGING_DIRECTORY_MODE,
+ };
+diff --git a/crates/oci-runtime/docs/windows-whpx.md b/crates/oci-runtime/docs/windows-whpx.md
+index 6611756..d21985f 100644
+--- a/crates/oci-runtime/docs/windows-whpx.md
++++ b/crates/oci-runtime/docs/windows-whpx.md
+@@ -5,6 +5,14 @@
+ The Windows foundation establishes an honest evidence boundary before OCI
+ lifecycle code is allowed to launch workloads.
+ 
++Box and OCI now share native Windows process/host admission through
++IsWow64Process2. The current native stack requires native x64 MSVC execution;
++ARM64, x64 emulation on ARM64 and unknown architectures refuse before VM
++mutation. Unsupported hosts expose no usable isolation class, and a successful
++HypervisorPresent query cannot override this dependency boundary. ARM64 WHP
++interfaces exist, but the selected VMM, firmware and Windows bundles are x64.
++See [Windows ARM64 feasibility and native handoff](../../../docs/evidence/runtime/20261114-windows-arm64/OUTCOME.md).
++
+ The runtime:
+ 
+ 1. loads `WinHvPlatform.dll` only from the Windows system directory search
+diff --git a/docs/architecture/support-matrix.json b/docs/architecture/support-matrix.json
+index 29518c5..2d68fa7 100644
+--- a/docs/architecture/support-matrix.json
++++ b/docs/architecture/support-matrix.json
+@@ -1,7 +1,7 @@
+ {
+   "schema": "kbox.support-matrix.v1",
+   "status": "machine-readable draft",
+-  "adoption": "Only scripts/check-support-matrix.py consumes this file today. README.md, crates/oci-runtime/docs/feature-coverage.md and dist/RELEASE_NOTES.md are still hand-maintained; generating them and wiring the check into CI is the next step.",
++  "adoption": "Only scripts/check-support-matrix.py consumes this file today. README.md, crates/oci-runtime/docs/feature-coverage.md and docs/release.md are still hand-maintained; generating them and wiring the check into CI is the next step.",
+   "evidence_discipline": "Cross-compilation, mocks, ignored tests and startup alone do not establish runtime support. Only native-tested configurations may be listed as supported. Never delete evidence to support a claim.",
+   "authority": {
+     "product_readiness": "This file. The only source allowed to state kbox product readiness.",
+@@ -10,12 +10,12 @@
+   },
+   "readiness_levels": ["probe-only", "experimental", "supported"],
+   "code_targets_source": "crates/oci-runtime/crates/kbox/src/runtime_assets.rs",
+-  "guest_arch_contract": "CURRENTLY INFERRED, NOT NEGOTIATED: krun/src/package.rs::native_guest_architecture() derives the guest architecture from the host CPU. The guest_arch values below record that assumption; they are not evidence of independently qualified cross-architecture support. See cross-platform-compatibility.md P0-2.",
++  "guest_arch_contract": "Guest OS/CPU follow the selected runtime asset manifest and pinned kernel. Current bundles use native CPU architecture; host diagnostics alone do not prove guest dependencies or cross-architecture support.",
+   "sources": [
+     {"path": "README.md", "role": "human-facing Platforms table, to be generated"},
+     {"path": "crates/oci-runtime/docs/feature-coverage.md", "role": "driver readiness table, to be generated"},
+     {"path": "crates/oci-runtime/ROADMAP.md", "role": "fresh-host qualification gates"},
+-    {"path": "dist/RELEASE_NOTES.md", "role": "per-release covered / not-covered statement, to be generated"},
++    {"path": "docs/release.md", "role": "per-release covered / not-covered statement, to be generated"},
+     {"path": "install.sh", "role": "prebuilt asset naming, to be generated"},
+     {"path": "crates/box/runtime/src/host_check.rs", "role": "hard rejection rules for host OS/CPU combinations"}
+   ],
+@@ -34,7 +34,8 @@
+       "evidence": [
+         "docs/evidence/box/2026-11-06-macos-build-run/OUTCOME.md",
+         "docs/evidence/box/2026-11-05-cli-e2e/OUTCOME.md",
+-        "dist/RELEASE_NOTES.md"
++        "docs/evidence/runtime/20261114-macos-readonly/OUTCOME.md",
++        "docs/release.md"
+       ],
+       "open": [
+         "Signed release-package qualification",
+@@ -44,8 +45,8 @@
+         "longer release soak"
+       ],
+       "limitations": [
+-        "Host-enforced read-only virtio-fs bind is unsupported; :ro is rejected at preflight",
+-        "Guest architecture is currently inferred from the host CPU (see cross-platform-compatibility.md P0-2)"
++        "Directory :ro uses shared OCI host Seatbelt enforcement; ordinary single-file binds, hard-linked input trees and overlapping writable grants are refused",
++        "Current runtime bundles use native guest CPU architecture; cross-architecture execution is not qualified"
+       ]
+     },
+     {
+@@ -132,12 +133,12 @@
+       "status": "planned-unimplemented",
+       "target_readiness": "supported",
+       "current_readiness": "none",
+-      "reason": "Product constraint raised on 2026-11-12. Not yet a target: there is no aarch64 WHPX backend in libkrun, no aarch64 guest kernel in libkrunfw-win, no Windows ARM64 runtime bundle, and zero native evidence.",
++      "reason": "Verified 2026-11-14: official ARM64 WHP APIs exist, but the selected libkrun Windows VMM, firmware and native bundles remain x64. Current dependencies do not support ARM64 and native host qualification is absent; compilation and emulation do not qualify it.",
+       "blocking": [
+         "libkrun Windows backend is x86_64-only (X64 registers / APIC / CPUID / MSR)",
+         "libkrunfw-win accepts only x86_64 ELF vmlinux",
+         "No aarch64 krun.dll / krun.lib / libkrunfw.dll and no fifth runtime bundle",
+-        "host_check.rs and 60+ cfg(all(windows, x86_64)) branches reject aarch64",
++        "Shared native process/host admission and build target/ABI guards explicitly reject unsupported ARM64 and emulated combinations",
+         "No Windows ARM64 native evidence; Windows x86_64 itself is still probe-only"
+       ],
+       "gates": [
+@@ -149,7 +150,7 @@
+         "S5 fresh-host native evidence before any readiness promotion"
+       ],
+       "plan": "docs/architecture/windows-arm64-plan.md",
+-      "evidence": []
++      "evidence": ["docs/evidence/runtime/20261114-windows-arm64/OUTCOME.md"]
+     }
+   ],
+   "rejected": [
+@@ -160,7 +161,7 @@
+     },
+     {
+       "id": "windows-aarch64",
+-      "reason": "CURRENT IMPLEMENTATION ONLY: host_check.rs rejects non-x86_64 Windows and libkrun has no aarch64 WHPX backend. The product requirement has been raised to must-support, so this rejection is scheduled to be lifted, not permanent.",
++      "reason": "CURRENT IMPLEMENTATION ONLY: the selected native VMM/firmware has no Windows ARM64 backend. Native architecture/ABI admission rejects ARM64 and x64 emulation on ARM64. Official ARM64 WHP APIs exist; native host evidence and matching dependency assets are required before lifting the rejection.",
+       "source": "crates/box/runtime/src/host_check.rs",
+       "scope": "current-implementation-rejection",
+       "product_requirement": "must-support",
+@@ -178,7 +179,6 @@
+     }
+   ],
+   "known_gaps": [
+-    "The guest runtime catalog (krun/runtime/base/runtime-catalog.cjs) does not collect Python identity despite the architecture baseline naming Python 3.11.",
+     "libkrun main is 2.0 and explicitly not backwards compatible with the 1.x API/ABI; kbox pins libkrun 1.17.0 and a forked libkrunfw v5.3.0 with fixed SHA-256.",
+     "No built-in driver currently reaches 'supported'; fresh-host evidence for WHPX and Linux KVM is the remaining gate."
+   ]
+diff --git a/docs/architecture/windows-arm64-plan.md b/docs/architecture/windows-arm64-plan.md
+index 8576d10..0b7fdfe 100644
+--- a/docs/architecture/windows-arm64-plan.md
++++ b/docs/architecture/windows-arm64-plan.md
+@@ -1,6 +1,10 @@
+ # Windows ARM64 成为必须支持平台：影响分析与落地规划
+ 
+-状态：**架构规划与影响分析，2026-11-12**。本文不声明任何平台支持，不代表已实施、已编译或已验收。
++状态：**原始规划 2026-11-12；API、架构准入与构建检查已于 2026-11-14 更新**。
++当前完整栈结论为 **当前依赖不支持**；Windows ARM64 运行仍 **缺少原生验证**。
++最新交付和命令见 [F 证据](../evidence/runtime/20261114-windows-arm64/OUTCOME.md) 与
++[有界 spec](../../specs/005-windows-arm64/spec.md)。本文其他硬件/云平台规划保留为
++2026-11-12 的历史调研，不作为本轮重新验证的事实或运行结论。
+ 
+ 证据边界：本次为只读调研（源码、CI、制品清单、上游文档）与公开资料核对，**没有在真实 Windows ARM64 主机上运行任何 WHPX / libkrun / kbox 验收**。按 `AGENTS.md:84,96,105,112`，交叉编译、静态检查、mock 与启动成功都不构成运行时证据；任何 `supported` 声明都必须有该目标上的原生 `docs/evidence/<domain>/<date-slug>/OUTCOME.md`。
+ 
+@@ -11,7 +15,7 @@
+ ## 0. 结论摘要
+ 
+ 1. **平台层面可行，但不是「补一个 target」。** Windows ARM64 宿主 + Linux/aarch64 客体是**同构**组合，不需要 Rosetta / binfmt / 跨架构模拟，理论上比 x86_64 Windows 更干净。真正的代价在 libkrun 上游：它的 Windows 后端是纯 x86_64 实现（X64 寄存器、APIC、CPUID、MSR），`libkrunfw-win` 只有 x86_64 内核，Windows 三件套 DLL 也只有 x64。这是一次**新 VMM 后端**工程，不是 kbox 侧加 cfg。
+-2. **关键事实校正：阻塞性质变了。** 仓库三处文档把 Windows ARM64 归因为「Microsoft WHPX 不暴露 ARM64 partition type，等外部依赖」。但 QEMU 11.0 官方文档（2026-03）明确 WHPX 在 x86_64 **和 arm64** Windows 上都能硬件加速，最低 Windows 11 24H2 + 2025 年 4/5 月更新。两者不是简单矛盾：QEMU 的 WHPX 建立在 `Vid` 之上，用的是与 Linux `mshv` 相同的 hypercalls；libkrun 依赖的是 WHPX 公开 API 里特定的 partition type。**结论：不能再把这件事定性为「等微软」，它已经变成「自己实现或绕开 libkrun 的 aarch64 WHPX 后端」。**
++2. **已核实：公开 ARM64 WHP API 存在。** Microsoft 已发布 ARM64 寄存器、GIC 与 `Arm64Support` 定义，QEMU ARM 后端直接调用 `WHvCreatePartition`、`WHvSetupPartition` 和 `WHvRunVirtualProcessor`。Vid 是 WHP 在 Windows 内部的实现层，不代表 QEMU 绕过公开 WHv API。当前缺口是所选 libkrun 的 ARM64 Windows VMM/固件/ABI 资产及真实宿主验证。见 [官方能力合同](https://learn.microsoft.com/en-us/virtualization/api/hypervisor-platform/funcs/whvgetcapability) 与 [QEMU ARM 源码](https://github.com/qemu/qemu/blob/master/target/arm/whpx/whpx-all.c)。
+ 3. **最重要的排序建议：先把 Windows x86_64 推出 `probe-only`。** 目前 WHPX x86_64 自身仍 `probe-only`，fresh-host 门在 `crates/oci-runtime/README.md:869-872` 全部 `Blocked`。在一个未资格化的兄弟平台上叠加新架构，会让新平台的证据链失去参照基线。S1 必须先把 WHPX 家族的共同基线（fresh-host 矩阵、session owner、handle reclamation、live reattach）做实。
+ 4. **CI 硬件不再是硬阻塞，但 WHPX 有明确的能力门槛：那个 Windows ARM64 必须自己能启动 Hyper-V，即占有 EL2。** 「必须真实物理设备」是过强说法（修正见 §2.4）。WHPX 不是「有 Windows 就行」，它要求宿主 Windows 里 Hyper-V hypervisor 处于运行态；若 Windows 本身是 guest，L0 必须把虚拟化扩展下放给它。满足这一条的现实环境是**物理 Windows on ARM 设备**，或 **ARM64 裸金属服务器上自行安装 Windows 11 ARM**（Linaro 已有在 aarch64 KVM 裸金属上跑 WoA guest 的公开方案，但许可/分发、virtio 驱动、TPM 需自行解决，且不存在 Windows Server for ARM）。GitHub 托管 `windows-11-arm` runner 已 GA（公开仓库免费，2026-09 起默认 VS2026 镜像），底层是 Azure Ampere Altra / Cobalt ARM VM；2026-09 公开资料显示 **Azure / GCP / AWS 的 ARM 实例都不提供嵌套虚拟化**（Microsoft 文档中的 Azure 嵌套虚拟化支持指 x86_64 系列，勿混用）。本机 macOS（M5 Max、macOS 26.6.2、`kern.hv_support=1`）的 OrbStack 只支持 Linux 容器与 Linux 发行版 VM；改用 Parallels / VMware Fusion / UTM 能装起 Windows 11 ARM，但 Apple 只对 **Linux guest** 暴露嵌套虚拟化（M3+ 芯片 + macOS 15+：Tart `--nested` / Lima `vmType: vz, nestedVirtualization: true`），Windows guest 拿不到；且 ARM64 嵌套 KVM 目前**不保证递归嵌套**（kvmtool 2026-03 主线补丁注明 non-VHE guest 会失去 recursive nested virtualisation），所以「macOS → Linux KVM guest → Windows ARM guest → WHPX」三层链也不成立。`kern.hv_support=1` 只说明 macOS 自己能当宿主。结论：**编译与打包可以上云或用本机 Linux VM；WHPX 相关验证延后到一个让 Windows ARM 占有 EL2 的环境。S0 中不依赖 WHPX 的部分现在就能做。**
+ 5. **Prism（x64 模拟）不是合规路径。** 它只翻译用户态指令，内核驱动必须原生 ARM64；虚拟化/底层工具属于官方列为高风险的类别。kbox 的 x64 三件套 DLL 依赖 WHPX 内核接口，模拟环境下不可用；即便「能跑」，按证据纪律也不能算 `supported`。
+@@ -54,11 +58,11 @@
+ 
+ ### 2.3 正确的定性
+ 
+-**不能说「仓库文档过时」，也不能说「平台不可能」。** 更准确的是：
++**按平台接口、当前依赖和原生验证分别判定：**
+ 
+ - Windows 11 24H2+ 的 ARM64 主机上，通过 WHPX/Vid 路径跑硬件加速的 **aarch64 guest 已被 QEMU 证明可行**；
+-- 但 libkrun 依赖的 WHPX 公开 API 路径（ARM64 partition type）与它现有的 x86_64 vCPU 实现，**没有随上述能力一起就绪**；
+-- 因此 S0 必须先做一次 **API 级 spike**，判明 libkrun 需要的能力在目标 Windows 版本上究竟是不可用、还是需要改用 Vid/hypercalls 路径。这个结论决定 S2 是「给 libkrun 加后端」还是「换后端」。
++- 公开 WHv API 已提供 ARM64/GIC 类型；当前所选 libkrun 的 Windows 实现仍使用 X64 vCPU/APIC/CPUID/MSR，Windows DLL 与固件仍是 x64；
++- S0 的剩余原生步骤是验证真实宿主的 HypervisorPresent、Arm64Support、partition/vCPU 与清理；平台 API 可行性已有官方依据，不再保留「必须绕过公开 API」的假设。当前产品入口保持 Unsupported，待原生依赖和证据齐备后再推进。
+ 
+ ---
+ 
+@@ -130,7 +134,7 @@
+ 
+ | 实验 | 判据 | 失败时 |
+ | --- | --- | --- |
+-| S0-1 在一台 Win11 24H2+ ARM64 真机上，用最小 `WinHvPlatform` 程序验证 libkrun 所需的 partition/vCPU 能力；并用 QEMU 11.0 `-accel whpx` 跑起 aarch64 Linux guest 作为「平台能力存在」的对照 | 若 QEMU 成功而 WHPX 公开 API 缺 ARM64 partition type → 路线 A 需改走 Vid/hypercalls；若两者都失败 → 回到 H2 或 B | 停止 S2，改评 H2/D |
++| S0-1 在 Win11 24H2 更新后或更新版本的原生 ARM64 宿主上，用当前 SDK 查询 HypervisorPresent、Arm64Support，并保留 partition/vCPU 与精确清理结果 | API、缓冲区长度、真实架构与清理均需通过；QEMU 可作独立平台对照，不能替代 kbox 验收 | 缺能力位时记录 OS/功能/虚拟化条件；不切换后端，不提升 readiness |
+ | S0-2 在 `windows-11-arm` 托管 runner 上实测 WHPX 是否可用（HypervisorPlatform 功能 + 能否 `WHvCreatePartition`） | 已知 runner 底层为 Azure ARM VM，且主流云 ARM 实例不开嵌套虚拟化 → **预期只能编译、不能跑 WHPX**；此步用于把「预期」变成有记录的实测结果 | 原生验收改由物理 Windows on ARM 设备或裸金属实例承担，不等待 runner |
+ | S0-3 确认 libkrun 1.x 与 2.0 的 fork 基线（当前钉 `libkrun.1.17.0` + `boxlite-ai/libkrunfw v5.3.0`） | 明确在 `stable-*` 分支还是 2.0 上做 aarch64 后端，避免与全平台 ABI 升级叠加 | 拆成两个独立变更 |
+ 
+@@ -211,7 +215,7 @@
+ 
+ | 风险 | 影响 | 缓解 |
+ | --- | --- | --- |
+-| S0-1 证明 libkrun 依赖的 WHPX ARM64 partition type 仍不可用 | 路线 A 需改走 Vid/hypercalls，工作量上升 | S0 用最小程序 + QEMU 对照把结论钉死，再决定是否 B |
++| 原生宿主未满足 ARM64 WHP 能力，或 SDK/bindings 与公开合同不匹配 | 本地编译不能代替宿主 API/vCPU 结果 | 按原生交接记录能力位、ABI、HRESULT 与清理；保留当前明确拒绝 |
+ | 托管 `windows-11-arm` runner / Azure ARM VM 不支持 WHPX（2026-09 社区确认 Azure / GCP / AWS ARM 实例均无嵌套虚拟化） | CI 只能编译与打包，无法产出原生证据 | S0-2 实测留证；原生验收直接规划物理 Windows on ARM 设备或裸金属实例，不抱侥幸 |
+ | libkrun 2.0 不兼容 1.x API/ABI | 与 aarch64 后端叠加成一次全平台 breaking change | S0-3 固定 fork 基线；升级单独排期、四目标重验 |
+ | Windows x86_64 自身 `probe-only`、fresh-host 门 Blocked | 新平台缺参照基线 | S1 先补齐，不跳过 |

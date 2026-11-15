@@ -1,0 +1,18 @@
+{"command": ["/Library/Developer/CommandLineTools/usr/bin/python3", "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-native.py", "docs/evidence/runtime/20261115-oci-cpu-time/run-context-final2.json", "2", "ulimits"], "exit": 0, "seconds": 200.835499833}
+.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-2/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["/Library/Developer/CommandLineTools/usr/bin/python3", "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-native.py", "docs/evidence/runtime/20261115-oci-cpu-time/run-context-final2.json", "2", "rootro"], "exit": 0, "seconds": 310.23151025000004}
+ime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["/Library/Developer/CommandLineTools/usr/bin/python3", "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-native.py", "docs/evidence/runtime/20261115-oci-cpu-time/run-context-final2.json", "2", "tmpfs"], "exit": 0, "seconds": 157.148895583}
+.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-cpu-time-092623a0dfc9/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+

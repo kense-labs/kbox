@@ -1,0 +1,1 @@
+The generic run-binary receipt template inherited the foreign UID image label from run-guest.py. The actual binary fixture always selects K_BOX_TEST_HVF_NAMED_IMAGE (sameUidImage), which is explicit in Rust and the owned managed records. Future receipts report that exact image; old records are retained and are not foreign UID qualifications.

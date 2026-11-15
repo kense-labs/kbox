@@ -494,3 +494,24 @@ Records created before protocol 3 have neither a stored manifest nor an
 attachment digest. The runtime retains that explicit legacy state for old
 lifecycle cleanup, while attachment-aware consumers such as Kbox Box must
 reject it for a new unified-backend binding rather than reinterpret it.
+
+## RAM Secret files with raw storage
+
+Required `dev.kbox.memory-secret-files` version3 permits the existing bounded
+RO file indices and optional protected environment bindings only when exact
+raw-storage v1 intent is also present. Version3 without raw, and versions1/2
+with raw, refuse. Files remain classified Secret with existing caller/detach-only
+ownership; raw allocation ownership and digest/order/binding checks are unchanged.
+Agent transport11 carries both inventories; NPROC's existing schema10 envelope
+may explicitly bind11. The Host advertises3 only with actual RAM-backed projection
+and verifies RAM sources and pinned native raw descriptors independently. Old
+Host/shim/Agent refuse the new contract. This does not reinterpret transport7/8/9
+or add arbitrary storage/Secret mechanisms. [Installed acceptance and preserved
+compatibility evidence](../../../docs/evidence/runtime/20261115-oci-raw-secrets/OUTCOME.md).
+
+Spec028 qualifies the existing bounded rootfs-image/raw-storage capacity fields
+for Mac Box disk_mb, without a new version or lifetime meaning. Guest root
+remains ephemeral per operation; caller-owned anonymous ext4 allocations retain
+their source/allocation identity and data while new attachment evidence derives
+new transport block IDs. This is logical filesystem capacity, not a writable
+layer quota or resize operation. [Installed acceptance](../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md).

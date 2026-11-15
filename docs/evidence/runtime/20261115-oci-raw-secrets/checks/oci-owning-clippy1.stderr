@@ -1,0 +1,20 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-agent v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent)
+    Checking koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+warning: method `memory_secret_environment_sources` is never used
+  --> crates/oci-runtime/crates/agent/src/vm_attachment.rs:67:19
+   |
+40 | impl UtilityVmAttachmentBinding {
+   | ------------------------------- method in this implementation
+...
+67 |     pub(crate) fn memory_secret_environment_sources(&self) -> Vec<MemorySecretEnvironmentSource> {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `koci-agent` (lib test) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.53s

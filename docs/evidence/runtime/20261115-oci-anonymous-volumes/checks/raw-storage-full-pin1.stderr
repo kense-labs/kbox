@@ -1,0 +1,8 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.62s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+thread 'macos_vm_attachment::tests::pins_v7_raw_inventory_and_rejects_source_replacement_before_vm_entry' (86073479) panicked at crates/oci-runtime/crates/kbox/src/macos_vm_attachment_tests.rs:232:170:
+called `Result::unwrap()` on an `Err` value: Error { code: InvalidArgument, operation: Some("validate-agent-vm-attachments"), message: "storage attachment workspace does not bind Host source /private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpJS7Yaz/raw.ext4", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p koci-kbox --lib`

@@ -1,0 +1,13 @@
+{
+  "archiveBytes": 22496416,
+  "installedDuBytes": 42528768,
+  "installedDuCommand": [
+    "du",
+    "-sk",
+    "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed"
+  ],
+  "installedLogicalFileBytes": 42504771,
+  "runtimeMemory": "not measured; no peak/total RSS claim",
+  "guestElfMachine": "0x00b7",
+  "guestHasInterpreter": false
+}

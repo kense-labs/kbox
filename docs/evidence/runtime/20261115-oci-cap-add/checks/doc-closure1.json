@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "sourceUnchanged": true,
+  "lockUnchanged": true,
+  "nativeSubmodulesClean": true,
+  "diffCheckExit": 0,
+  "referencesChecked": 29,
+  "references": [
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/host-environment.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "run-context.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/install-cap-add-final3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/reused-oci-install1.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-identities-3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/prior-artifacts-retained.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/probe-client-driver-identities3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/cap-add-after2.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/box-completion3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/box-backend3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/verify3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/box-native-cap-add-attempt-3.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/af-final3/native-results.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-review4.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "FAILURES.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-fd-holders.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-cache-audit.json"
+    },
+    {
+      "file": "docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md",
+      "target": "checks/final-caller-sources.json"
+    },
+    {
+      "file": "specs/029-oci-cap-add/tasks.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "specs/029-oci-cap-add/tasks.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-cap-add/FAILURES.md"
+    },
+    {
+      "file": "specs/029-oci-cap-add/tasks.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-cap-add/run-context.json"
+    },
+    {
+      "file": "docs/release.md",
+      "target": "evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "crates/box/runtime/README.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/README.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/ROADMAP.md",
+      "target": "../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "crates/oci-runtime/docs/macos-hvf.md",
+      "target": "../../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-cap-add/OUTCOME.md"
+    },
+    {
+      "file": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261115-oci-cap-add/OUTCOME.md"
+    }
+  ]
+}

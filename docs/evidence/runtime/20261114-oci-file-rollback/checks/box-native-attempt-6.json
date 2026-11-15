@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/native-client-attempt-6",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::rollback::native_old_cli_refuses_file_authority_without_activation_or_rewrite",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-rollback-ccc80622aec3/attempt-6",
+  "clientSha256": "5eed111dac5ca0dfdc87f03173b3c94b9425b7ab91b932ab117c99d3efbe3611",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/installed-rollback-final-2",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "exitCode": 0,
+  "seconds": 1.782254375,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

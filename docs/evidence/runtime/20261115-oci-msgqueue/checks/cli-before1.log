@@ -1,0 +1,11 @@
+
+running 1 test
+test commands::exec::session_tests::per_uid_cli_defaults_use_managed_identity_and_keep_other_defaults ... FAILED
+
+failures:
+
+failures:
+    commands::exec::session_tests::per_uid_cli_defaults_use_managed_identity_and_keep_other_defaults
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 934 filtered out; finished in 0.01s
+

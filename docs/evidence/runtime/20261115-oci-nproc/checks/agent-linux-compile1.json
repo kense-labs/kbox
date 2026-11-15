@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "zigbuild",
+    "--locked",
+    "-p",
+    "koci-agent",
+    "--tests",
+    "--target",
+    "aarch64-unknown-linux-musl"
+  ],
+  "exit": 0,
+  "seconds": 30.520949458
+}

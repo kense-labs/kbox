@@ -1,0 +1,11 @@
+
+thread '<unnamed>' (86659694) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_secrets.rs:39:10:
+called `Result::unwrap()` on an `Err` value: Protocol("Box Secret identity requires a SHA-256 specification digest")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/secret-positive-1-ram/case/service/runtime.sock: No such file or directory (os error 2)
+
+thread 'local_execution::oci_hvf::tests::native::secrets::native_memory_secret_files_enforce_host_ro_owner_recovery_and_cleanup' (86659693) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_secrets.rs:282:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

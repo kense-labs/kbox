@@ -1,0 +1,20 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/af-final2/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/af-final2/native-oci/739d08ea2f084fa880a5174d6006beb5/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/af-final2/native-prewarm/f52bd9a4126d42e5a7bcaddf83c652a3/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/af-final2/native-primary/2c2955063f2c4a33882b7d8bab539435/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/af-final2/native-readonly/e03e6dd428614c5fa6c00442acb7b978/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/anonymous-attempt-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/files-attempt-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/named-attempt-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/old-rootro-attempt-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/old-rootro-attempt-2/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/old-rootro-attempt-3/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-2/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-3/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-4/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-5/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-tmpfs-final1-1/home",
+  "/private/tmp/kbox-oci-ro-cc006d2a334b/tmpfs-attempt-1/home"
+]

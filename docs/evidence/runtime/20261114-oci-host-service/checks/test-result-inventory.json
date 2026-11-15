@@ -1,0 +1,294 @@
+{
+  "defaultVerification": {
+    "command": [
+      "bash",
+      "scripts/verify-commit.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 232.200952625,
+    "isolatedHome": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/verification-final-home-2"
+  },
+  "defaultCountLines": [
+    [
+      "2172",
+      "0",
+      "14"
+    ],
+    [
+      "933",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "24",
+      "0",
+      "0"
+    ],
+    [
+      "4",
+      "0",
+      "0"
+    ],
+    [
+      "5",
+      "0",
+      "0"
+    ],
+    [
+      "5",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "41",
+      "0",
+      "0"
+    ],
+    [
+      "4",
+      "0",
+      "0"
+    ],
+    [
+      "3",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "1",
+      "0",
+      "0"
+    ],
+    [
+      "5",
+      "0",
+      "0"
+    ],
+    [
+      "2",
+      "0",
+      "0"
+    ],
+    [
+      "2",
+      "0",
+      "0"
+    ],
+    [
+      "11",
+      "0",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "0"
+    ]
+  ],
+  "ociOwningSuites": {
+    "agent": [
+      "23",
+      "0",
+      "0"
+    ],
+    "runtime": [
+      "426",
+      "0",
+      "0"
+    ],
+    "sdk": [
+      "208",
+      "0",
+      "0"
+    ]
+  },
+  "installedNative": {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/native-client-attempt-14",
+      "--ignored",
+      "--exact",
+      "local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery",
+      "--nocapture"
+    ],
+    "root": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-14",
+    "clientSha256": "6df6de7e8f08f032e1b847403ee6102c7e7b5ab17c50cbb9df6b764bf0b02ac9",
+    "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2",
+    "image": "docker.io/library/kbox-hvf-same-uid@sha256:a248721396855c34760e07392ddae71acc6125d1c1700fbaaaee39d79a81f136",
+    "refusedForeignUidImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+    "exitCode": 0,
+    "seconds": 49.325216000000005,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ],
+    "resultExists": true,
+    "cleanupExists": true
+  },
+  "archiveScenarios": [
+    {
+      "case": "oci",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/image-cache/images",
+        "--base",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci"
+      ],
+      "seconds": 41.646957209,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "readonly",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-readonly"
+      ],
+      "seconds": 4.370731374999998,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-readonly/00e836ac5c5e4d10a79faedd07a54048/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "primary",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary"
+      ],
+      "seconds": 68.90148391700001,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "prewarm",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-prewarm",
+        "--test-binary",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/clients/kbox-runtime-test-final"
+      ],
+      "seconds": 15.184721457999999,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-prewarm/3238da157e944aa2bf532c4dbc95f8a4/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "case": "directory",
+      "status": "PASS",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/clients/kbox-runtime-test-final",
+        "--ignored",
+        "--exact",
+        "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+        "--nocapture"
+      ],
+      "seconds": 17.188606249999992,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-directory/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "cleanup": "PASS"
+}

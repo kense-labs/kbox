@@ -26,7 +26,7 @@ mod directory;
 mod network;
 mod storage;
 
-pub(crate) use storage::UtilityVmStorageSources;
+pub(crate) use storage::{MemorySecretEnvironmentSource, UtilityVmStorageSources};
 
 #[derive(Debug)]
 #[cfg(any(target_os = "linux", test))]
@@ -62,6 +62,11 @@ impl UtilityVmAttachmentBinding {
         }
         let bundle = request.bundle.to_guest_bundle()?;
         self.manifest.validate_bundle(&bundle)
+    }
+
+    pub(crate) fn memory_secret_environment_sources(&self) -> Vec<MemorySecretEnvironmentSource> {
+        self.storage_sources
+            .memory_secret_environment_sources(&self.manifest.guest_bundle().to_path_buf())
     }
 
     #[cfg_attr(not(target_os = "linux"), allow(dead_code))]
@@ -157,13 +162,14 @@ pub fn take_vm_attachment_manifest(
     }
     let manifest = AgentVmAttachmentManifest::from_bytes(&encoded)
         .map_err(|error| attachment_error(format!("invalid VM attachment manifest: {error}")))?;
-    validate_guest_bundle(&manifest)?;
+    let bundle = validate_guest_bundle(&manifest)?;
     verify_host_path_restrictions(
         manifest.storage_path_restrictions_digest(),
         host_restrictions.as_deref(),
     )?;
+    storage::configure_guest_rootfs(&manifest)?;
     directory::configure_guest_directories(&manifest)?;
-    let storage_sources = storage::configure_guest_storage(&manifest)?;
+    let storage_sources = storage::configure_guest_storage(&manifest, &bundle)?;
     network::configure_guest_interfaces(&manifest)?;
     Ok(Some(UtilityVmAttachmentBinding {
         manifest,
@@ -182,7 +188,7 @@ fn verify_host_path_restrictions(expected: Option<&str>, observed: Option<&str>)
 }
 
 #[cfg(target_os = "linux")]
-fn validate_guest_bundle(manifest: &AgentVmAttachmentManifest) -> Result<()> {
+fn validate_guest_bundle(manifest: &AgentVmAttachmentManifest) -> Result<OciBundle> {
     let bundle_directory = manifest.guest_bundle().to_path_buf();
     if bundle_directory.parent() != Some(Path::new(AGENT_RUNTIME_SHARE_GUEST_ROOT)) {
         return Err(attachment_error(format!(
@@ -214,7 +220,8 @@ fn validate_guest_bundle(manifest: &AgentVmAttachmentManifest) -> Result<()> {
         ))
     })?;
     let bundle = OciBundle::from_json(bundle_directory, config_json)?;
-    manifest.validate_bundle(&bundle)
+    manifest.validate_bundle(&bundle)?;
+    Ok(bundle)
 }
 
 #[cfg(target_os = "linux")]

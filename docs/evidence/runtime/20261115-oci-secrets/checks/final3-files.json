@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py",
+    "docs/evidence/runtime/20261115-oci-secrets/run-context.json",
+    "3",
+    "files"
+  ],
+  "exit": 0,
+  "seconds": 47.004868291
+}

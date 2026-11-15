@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/final-review1.py", line 54, in <module>
+    assert all(item['attachment']['accessMode']=='read-write' for item in m['storage'])
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/final-review1.py", line 54, in <genexpr>
+    assert all(item['attachment']['accessMode']=='read-write' for item in m['storage'])
+KeyError: 'attachment'

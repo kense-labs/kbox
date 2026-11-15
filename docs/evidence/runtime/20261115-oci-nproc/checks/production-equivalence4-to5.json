@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "sourceDelta": "only native_nproc fixture, product implementation unchanged",
+  "beforePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-4",
+  "afterPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-5",
+  "payloads": [
+    {
+      "path": "VERSION",
+      "before": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+      "after": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+      "same": true
+    },
+    {
+      "path": "bin/kbox",
+      "before": "40e99305265dd4c34263f5a4798abb8f5ba7b5cbee8447b2ee7f4264aa042529",
+      "after": "40e99305265dd4c34263f5a4798abb8f5ba7b5cbee8447b2ee7f4264aa042529",
+      "same": true
+    },
+    {
+      "path": "bin/kbox-guest-init",
+      "before": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece",
+      "after": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece",
+      "same": true
+    },
+    {
+      "path": "bin/kbox-shim",
+      "before": "296e2ebd53328154a5f697934a9d60159a58ef34adad804e89dadaef3d5ba78b",
+      "after": "296e2ebd53328154a5f697934a9d60159a58ef34adad804e89dadaef3d5ba78b",
+      "same": true
+    },
+    {
+      "path": "build-info.json",
+      "before": "63ecef98335a8b93f8e4105bd33a12ae1fc529ac70f665ee9083db78524e5ef4",
+      "after": "64b42f044a15e531fff97bb454944a0194074ce12fd64af32ecd726d5bdb18cd",
+      "same": false
+    },
+    {
+      "path": "install.sh",
+      "before": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+      "after": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.1.17.0.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.1.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrunfw.5.dylib",
+      "before": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "after": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "same": true
+    },
+    {
+      "path": "lib/libkrunfw.dylib",
+      "before": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "after": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "same": true
+    }
+  ],
+  "retainedNativeRegressions": [
+    {
+      "case": "cpu-time",
+      "receipt": "box-native-cpu-time-attempt-4.json"
+    },
+    {
+      "case": "memory-limits",
+      "receipt": "box-native-memory-limits-attempt-4.json"
+    },
+    {
+      "case": "ulimits",
+      "receipt": "box-native-ulimits-attempt-4.json"
+    }
+  ]
+}

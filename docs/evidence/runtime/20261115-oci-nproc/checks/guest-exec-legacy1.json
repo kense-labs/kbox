@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "hvf_legacy_materialized_exec",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 0.387319959
+}

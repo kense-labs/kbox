@@ -1,0 +1,62 @@
+   Compiling syn v2.0.119
+   Compiling darling_core v0.20.11
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling getset v0.1.7
+   Compiling strum_macros v0.27.2
+   Compiling ref-cast v1.0.25
+   Compiling darling_macro v0.20.11
+   Compiling strum v0.28.0
+   Compiling darling v0.20.11
+   Compiling fluent-uri v0.4.1
+   Compiling referencing v0.48.5
+   Compiling jsonschema v0.48.5
+   Compiling derive_builder_core v0.20.2
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.61s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+
+running 1 test
+test windows_architecture::tests::whpx_admission_requires_native_x64_and_refuses_emulation_unknown_and_arm64ec ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 206 filtered out; finished in 0.00s
+
+     Running tests/client_contract.rs (target/debug/deps/client_contract-4b92bd44a05ae353)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/kbox_bundle.rs (target/debug/deps/kbox_bundle-5bfcceced31bdd70)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/linux_cgroup_path.rs (target/debug/deps/linux_cgroup_path-325c48f2f35a0aa7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/linux_namespace_contract.rs (target/debug/deps/linux_namespace_contract-34a25fa980689f11)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/linux_seccomp_contract.rs (target/debug/deps/linux_seccomp_contract-08191474126734b6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/run_composition.rs (target/debug/deps/run_composition-7a133daea6b49e27)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+

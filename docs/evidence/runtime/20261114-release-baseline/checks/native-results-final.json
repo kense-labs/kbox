@@ -1,0 +1,67 @@
+[
+  {
+    "name": "native-oci-final",
+    "command": [
+      "python3",
+      "scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed-final/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-oci-final"
+    ],
+    "exitCode": 0,
+    "seconds": 77.05,
+    "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+    "scriptSha256": "8e04b00512ff3da8a39a574226f9a9bc24136c9b8d9bc2d187c96064d2bcc7bb",
+    "result.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-oci-final/1010c3842ca44206b221ab89f7829afd/result.json"
+  },
+  {
+    "name": "native-primary-final",
+    "command": [
+      "python3",
+      "scripts/e2e-engine/native_primary.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed-final/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-primary-final"
+    ],
+    "exitCode": 0,
+    "seconds": 77.33,
+    "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+    "scriptSha256": "e2f45a215b13d0ea76d2581f3d0f819050bf2e3edb43adef605ffe01b95ffd0f",
+    "result.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-primary-final/e6da3de7e3ff4262a63e8656d24d72fa/result.json"
+  },
+  {
+    "name": "native-prewarm-final",
+    "command": [
+      "python3",
+      "scripts/e2e-engine/native_prewarm.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/installed-final/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--test-binary",
+      "/Users/roylin/code/kense/kbox/target/debug/deps/kbox_runtime-6ccf01207afc896d",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final"
+    ],
+    "exitCode": 0,
+    "seconds": 30.95,
+    "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+    "scriptSha256": "e5d7dd8aaba6229dca67864c86d56f989c8af9e77514220f1159d6aafdfdb023",
+    "result.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final/4830e3a8ce1f41c08b8becfe0307fe97/result.json",
+    "cleanup-before.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final/4830e3a8ce1f41c08b8becfe0307fe97/cleanup-before.json",
+    "cleanup-after.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final/4830e3a8ce1f41c08b8becfe0307fe97/cleanup-after.json",
+    "command.json": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final/4830e3a8ce1f41c08b8becfe0307fe97/command.json"
+  }
+]

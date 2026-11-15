@@ -1,0 +1,338 @@
+{
+  "utc": "2026-11-14T04:26:42.716257+00:00",
+  "privateHomes": [
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-oci/4595896a754545cb883cd61a8bb16fc1/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-0-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-0-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-readonly/642c384b51494569a2d2e192502c920c/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-1-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-1-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-primary/8e5cb598f3604ff4ae9073263e0ad8c3/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-2-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-2-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-prewarm/4d770578d7954f31b03d0df8bc6de81f/k-home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-3-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-3-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/native-directory/home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-4-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-4-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/verification-home",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-5-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-5-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed",
+      "commands": [
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "ps",
+            "-a",
+            "--format",
+            "json"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-6-0.log"
+        },
+        {
+          "command": [
+            "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox",
+            "volume",
+            "ls",
+            "-q"
+          ],
+          "exitCode": 0,
+          "log": "cleanup-6-1.log"
+        }
+      ],
+      "executions": [],
+      "volumes": []
+    }
+  ],
+  "ownedProcesses": [],
+  "observedOwnedBoxIds": [
+    "10783604-a5cf-46ab-b534-7b9cac72c01e",
+    "17c853fd-1b4a-4c7c-b684-6d6fc8e9159c",
+    "297e0f92-50bd-472b-8748-348d8b62a2db",
+    "298c2b3d-9f10-478b-9602-932be7af9583",
+    "342838ac-bd64-4872-ab3e-5bd3c300062c",
+    "4216df60-467c-4379-adcc-c0e9136fddd7",
+    "65c136af-3dc0-4e29-a1f5-587e0f01e747",
+    "753961e1-bc6a-4ff9-8798-97cc30782543",
+    "83c49097-f850-49e9-97fc-c5e28e31bf9b",
+    "906d22f5-0366-40b5-b4db-437880062343",
+    "9ba7cb84-5ebd-4c4e-95cf-4e2d1a13bb0d",
+    "a992e81c-b5fa-47e6-9075-534f126fa08d",
+    "bcf9b4ba-decb-46aa-8413-c7bd70cc2141",
+    "c8c4c2b7-ecdc-479e-a109-0a61422d591d",
+    "cf2b5ce0-0838-4c7f-9b8e-057a78d6c7b4",
+    "d26652c5-1b20-44a4-9d7b-5e381a557267",
+    "d8c5e5ee-e544-4ca8-8e7d-50dbdb8af9de",
+    "f58e3514-9bee-4a45-ba9f-5d0b844c6ba5"
+  ],
+  "ownedSocketDirectories": {
+    "/private/tmp/kbox-sockets/10783604-a5cf-46ab-b534-7b9cac72c01e": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/17c853fd-1b4a-4c7c-b684-6d6fc8e9159c": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/297e0f92-50bd-472b-8748-348d8b62a2db": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/298c2b3d-9f10-478b-9602-932be7af9583": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/342838ac-bd64-4872-ab3e-5bd3c300062c": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/4216df60-467c-4379-adcc-c0e9136fddd7": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/65c136af-3dc0-4e29-a1f5-587e0f01e747": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/753961e1-bc6a-4ff9-8798-97cc30782543": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/83c49097-f850-49e9-97fc-c5e28e31bf9b": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/906d22f5-0366-40b5-b4db-437880062343": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/9ba7cb84-5ebd-4c4e-95cf-4e2d1a13bb0d": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/a992e81c-b5fa-47e6-9075-534f126fa08d": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/bcf9b4ba-decb-46aa-8413-c7bd70cc2141": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/c8c4c2b7-ecdc-479e-a109-0a61422d591d": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/cf2b5ce0-0838-4c7f-9b8e-057a78d6c7b4": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/d26652c5-1b20-44a4-9d7b-5e381a557267": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/d8c5e5ee-e544-4ca8-8e7d-50dbdb8af9de": {
+      "exists": false,
+      "entries": []
+    },
+    "/private/tmp/kbox-sockets/f58e3514-9bee-4a45-ba9f-5d0b844c6ba5": {
+      "exists": false,
+      "entries": []
+    }
+  },
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "priorRamDevicesUnchanged": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "installedCompanionHashesUnchanged": true,
+  "archiveHashUnchanged": true,
+  "cleanupAction": "native scenario cleanup and default test fixture cleanup only; this final audit did not kill a process, unmount a disk, or remove data"
+}

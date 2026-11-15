@@ -1,0 +1,8 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: Connection refused (os error 61)
+
+thread '<unnamed>' (84178055) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:228:60:
+called `Result::unwrap()` on an `Err` value: Conflict { execution_id: ExecutionId("e5f96615-f517-4dbe-954d-14199cb8ec97"), message: "cannot remove execution in state restart_starting" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_cleanup_owned_hvf_test_root' (84178054) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:260:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

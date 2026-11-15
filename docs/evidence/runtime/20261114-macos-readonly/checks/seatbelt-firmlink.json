@@ -1,0 +1,18 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/artifacts/kbox-ro-firmlink-iboui7my/ro",
+  "alias": "/System/Volumes/Data/Users/roylin/code/kense/kbox/artifacts/kbox-ro-firmlink-iboui7my/ro",
+  "canonical": "/System/Volumes/Data/Users/roylin/code/kense/kbox/artifacts/kbox-ro-firmlink-iboui7my/ro",
+  "sameIdentity": true,
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-p",
+    "(version 1)(allow default)(deny file-write* (subpath \"/Users/roylin/code/kense/kbox/artifacts/kbox-ro-firmlink-iboui7my/ro\"))",
+    "/Library/Developer/CommandLineTools/usr/bin/python3",
+    "-c",
+    "import pathlib,sys,json\ntry: pathlib.Path(sys.argv[1]).write_text('bypass'); print('WRITE ALLOWED')\nexcept OSError as e: print('DENIED errno='+str(e.errno))\n",
+    "/System/Volumes/Data/Users/roylin/code/kense/kbox/artifacts/kbox-ro-firmlink-iboui7my/ro/input"
+  ],
+  "exitCode": 0,
+  "stdout": "DENIED errno=1\n",
+  "stderr": ""
+}

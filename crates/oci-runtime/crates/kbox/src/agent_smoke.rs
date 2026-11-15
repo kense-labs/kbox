@@ -19,6 +19,8 @@ use crate::{fallback_config, KAgentVmSmokeReport, VmConfig};
 /// Optional host/guest handoff paths used by a driver-owned utility VM.
 #[derive(Debug, Clone, Copy, Default)]
 pub struct AgentVmHandoff<'a> {
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    worker_lifetime: crate::macos_agent_smoke::WorkerLifetime,
     runtime_share: Option<&'a Path>,
     guest_token_file: Option<&'a str>,
     guest_recovery_report: Option<&'a str>,
@@ -48,6 +50,8 @@ impl<'a> AgentVmHandoff<'a> {
         guest_recovery_report: Option<&'a str>,
     ) -> Self {
         Self {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            worker_lifetime: crate::macos_agent_smoke::WorkerLifetime::Smoke,
             runtime_share,
             guest_token_file,
             guest_recovery_report,
@@ -67,6 +71,15 @@ impl<'a> AgentVmHandoff<'a> {
             #[cfg(unix)]
             vm_attachment_manifest_sha256: None,
         }
+    }
+
+    /// Use the runtime's lifetime after installing its exact-owner watchdog.
+    /// Direct diagnostic calls retain their bounded smoke deadline.
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    #[must_use]
+    pub const fn with_runtime_owner(mut self) -> Self {
+        self.worker_lifetime = crate::macos_agent_smoke::WorkerLifetime::RuntimeOwner;
+        self
     }
 
     /// Bind the console path to the Unix host reservation created for this
@@ -189,6 +202,7 @@ pub fn agent_vm_smoke(
             return report;
         };
         crate::macos_agent_smoke::agent_vm_smoke(crate::macos_agent_smoke::MacosAgentVmConfig {
+            lifetime: handoff.worker_lifetime,
             system_image_manifest,
             runtime_share,
             guest_token_file,

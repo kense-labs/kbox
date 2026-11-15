@@ -1,0 +1,18 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/inputs/cpu-time-probe": {
+    "sha256": "c1d7907fdfa3c7602499378902b0ccf0094d5bc40e8181316bc92d8e7a0e20ca",
+    "bytes": 1509408
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/inputs/cpu-time-probe.c": {
+    "sha256": "d35155413e19d31a3a60fa80860d14dbb8e555e7a99fc2044d77eddae52a28b2",
+    "bytes": 4470
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/inputs/rlimit-probe": {
+    "sha256": "e315dd4d5f876615df62bfd564445a13b0343ebc62139960d203eb4469acfb2f",
+    "bytes": 1467688
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/inputs/rlimit-probe.c": {
+    "sha256": "6ebe78167b3a8985f0ce606f3c111123980a076f51a5222845459769dfa2ddf6",
+    "bytes": 2027
+  }
+}

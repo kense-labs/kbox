@@ -316,7 +316,11 @@ impl UtilityVmRuntimeDriver {
         }
     }
 
-    pub(super) async fn session_root_is_unowned(&self, binding: &GuestSessionAttachment) -> bool {
+    pub(super) async fn session_root_has_no_other_owner(
+        &self,
+        binding: &GuestSessionAttachment,
+        target: &ContainerTarget,
+    ) -> bool {
         let sessions = self.sessions.lock().await;
         !sessions
             .reusable
@@ -325,7 +329,7 @@ impl UtilityVmRuntimeDriver {
             && !sessions
                 .pending
                 .values()
-                .any(|entry| entry.attachment == *binding)
+                .any(|entry| entry.attachment == *binding && entry.target != *target)
     }
 
     pub(super) async fn admit_new_container(
@@ -580,7 +584,7 @@ impl UtilityVmRuntimeDriver {
                     "{}; failed to reap the utility VM: {}",
                     error.message, cleanup
                 );
-                return error;
+                return error.retryable(true);
             }
         }
 
@@ -630,6 +634,7 @@ impl UtilityVmRuntimeDriver {
         ] {
             if let Err(cleanup) = cleanup {
                 error.message = format!("{}; cleanup failed: {}", error.message, cleanup);
+                error.retryable = true;
             }
         }
         error

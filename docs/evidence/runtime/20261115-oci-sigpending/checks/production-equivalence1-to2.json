@@ -1,0 +1,74 @@
+{
+  "status": "PASS",
+  "beforePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-1",
+  "afterPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-2",
+  "payloads": [
+    {
+      "path": "VERSION",
+      "before": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+      "after": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+      "same": true
+    },
+    {
+      "path": "bin/kbox",
+      "before": "c4319f27c32ffb7d2ada9f286a9ef8433083e957a0237999c27aa9aa4f91abd4",
+      "after": "c4319f27c32ffb7d2ada9f286a9ef8433083e957a0237999c27aa9aa4f91abd4",
+      "same": true
+    },
+    {
+      "path": "bin/kbox-guest-init",
+      "before": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece",
+      "after": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece",
+      "same": true
+    },
+    {
+      "path": "bin/kbox-shim",
+      "before": "296e2ebd53328154a5f697934a9d60159a58ef34adad804e89dadaef3d5ba78b",
+      "after": "296e2ebd53328154a5f697934a9d60159a58ef34adad804e89dadaef3d5ba78b",
+      "same": true
+    },
+    {
+      "path": "build-info.json",
+      "before": "a47c05dccc279d7a34d25e035fb903b3577b767643238d8eea4d2f764e77c988",
+      "after": "8e4df9dfb59ba0e908034f91064fae346f1a280c2f595f4e2af82007dd96616a",
+      "same": false
+    },
+    {
+      "path": "install.sh",
+      "before": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+      "after": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.1.17.0.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.1.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrun.dylib",
+      "before": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "after": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "same": true
+    },
+    {
+      "path": "lib/libkrunfw.5.dylib",
+      "before": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "after": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "same": true
+    },
+    {
+      "path": "lib/libkrunfw.dylib",
+      "before": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "after": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "same": true
+    }
+  ],
+  "sourceDelta": "only native_sigpending canary observation; product implementation unchanged"
+}

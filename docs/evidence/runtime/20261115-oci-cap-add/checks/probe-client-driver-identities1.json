@@ -1,0 +1,22 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe.c": {
+    "bytes": 5492,
+    "sha256": "7f6c1e8c4447acdec2dbe5795b906b4f61f0dbe9c690db1dc3c21cfa6b36446e"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe": {
+    "bytes": 1548504,
+    "sha256": "9688c0a10b4803988869528885811f409008b5f91204f5117ae0fd44ff8307a7"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-cli-pty.py": {
+    "bytes": 2690,
+    "sha256": "315ca01ca32404b20b82a63e8b28a90a13477f5e44d261d30e60a90c483a961d"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/native-client-frozen1": {
+    "bytes": 184263360,
+    "sha256": "2046a3b52fc2578010e18241bf70ad6b813cc47e20b470f04dcee050fec6f8b8"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/run-native.py": {
+    "bytes": 15279,
+    "sha256": "26e73c169787119fffc7c10250e53355da42d00d4b5184fe6bb7da663af238ac"
+  }
+}

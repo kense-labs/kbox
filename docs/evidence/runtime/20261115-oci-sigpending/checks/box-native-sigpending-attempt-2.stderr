@@ -1,0 +1,20 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-sigpending-46afe6c4c9c3/sigpending-attempt-2/service/runtime.sock: Connection refused (os error 61)
+
+thread '<unnamed>' (93024466) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_sigpending.rs:332:10:
+called `Result::unwrap()` on an `Err` value: Internal("failed to start execution 5dc471a5-5ea7-4083-98f4-0cde35cb86ce: Configuration error: macOS read-only single-file mounts are unsupported; grant a plain directory instead")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::sigpending::native_sigpending_limits_enforce_queue_effects_all_entries_and_recovery' (93024465) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_sigpending.rs:557:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

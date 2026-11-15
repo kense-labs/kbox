@@ -1,0 +1,8 @@
+{
+  "kbox-oci-regression:b311c38989184341b2aa9c517eab826a": {
+    "digest": "sha256:bbd4d96b24f78c5ce09abab3acbe54d45bf22c2edaced92baa8b76baa5bcbbaf",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/af-final2/native-oci/b311c38989184341b2aa9c517eab826a/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/installed-disk-capacity-final-4",
+    "kboxSha256": "869f17df047717aed30b77547c19924322d81518ae755c4deff1df4523a933dd"
+  }
+}

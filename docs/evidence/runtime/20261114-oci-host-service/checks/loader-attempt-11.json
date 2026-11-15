@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "oci",
+    "pid": 75957,
+    "parent": 75956,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/system-image/system-image.json --runtime-share /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/service/runtime/shares/kbox-5f38141b-24f8-4f5c-91d0-b571d7560ff8/1 --runtime-share-device 16777233 --runtime-share-inode 287688726 --runtime-state-device 16777233 --runtime-state-inode 287688735 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-ddd6ea02ad470f70d1a2df724697f26e/session-token --console /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/service/runtime/console/kbox-5f38141b-24f8-4f5c-91d0-b571d7560ff8-1.log --socket-path /private/tmp/koci-agent-ddd6ea02ad470f70d1a2df724697f26e/agent.sock --console-device 16777233 --console-inode 287688736 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-ddd6ea02ad470f70d1a2df724697f26e/report.json --vm-attachment-manifest-sha256 sha256:c547dad8808c8e7a84c766754141381ac30aa8d8050f80f0bc5d9848b9c441a0",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "box",
+    "pid": 76054,
+    "parent": 75654,
+    "command": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/bin/kbox-shim --config {\"box_id\":\"34970ce6-bee1-4ec0-8147-4986d435b2bd\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes/34970ce6-bee1-4ec0-8147-4986d435b2bd/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/34970ce6-bee1-4ec0-8147-4986d435b2bd/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/34970ce6-bee1-4ec0-8147-4986d435b2bd/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/34970ce6-bee1-4ec0-8147-4986d435b2bd/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/34970ce6-bee1-4ec0-8147-4986d435b2bd/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes/34970ce6-bee1-4ec0-8147-4986d435b2bd/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes/34970ce6-bee1-4ec0-8147-4986d435b2bd/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/34970ce6-bee1-4ec0-8147-4986d435b2bd/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes/34970ce6-bee1-4ec0-8147-4986d435b2bd/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+    "paths": {
+      "kbox-shim": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/bin/kbox-shim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/previous-dist/kbox-3.4.3-macos-arm64/lib/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/previous-dist/kbox-3.4.3-macos-arm64/lib/libkrunfw.5.dylib"
+    }
+  }
+]

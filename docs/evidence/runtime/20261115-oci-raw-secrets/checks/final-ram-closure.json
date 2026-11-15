@@ -1,0 +1,212 @@
+{
+  "status": "PASS",
+  "ownedRamImages": 8,
+  "ramCases": [
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-file-positive-1/result.json",
+      "status": "PASS",
+      "device": "/dev/disk15",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-file-positive-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-positive-1/result.json",
+      "status": "PASS",
+      "device": "/dev/disk14",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-positive-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-disk-projection-1/result.json",
+      "status": "PASS",
+      "device": "/dev/disk14",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-disk-projection-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-host-1/result.json",
+      "status": "PASS",
+      "device": "/dev/disk15",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-host-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-shim-1/result.json",
+      "status": "PASS",
+      "device": "/dev/disk16",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-shim-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-1/result.json",
+      "status": "FAIL",
+      "device": "/dev/disk14",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-2/result.json",
+      "status": "FAIL",
+      "device": "/dev/disk14",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-2-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    },
+    {
+      "receipt": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-positive-3/result.json",
+      "status": "PASS",
+      "device": "/dev/disk14",
+      "mount": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-3-ram",
+      "unmount": 0,
+      "detach": 0,
+      "ownProcesses": []
+    }
+  ],
+  "detachedRamHomeInventories": [
+    {
+      "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-file-positive-1-ram/case/home",
+      "actualInventory": {
+        "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-file-positive-1-ram/case/home",
+        "empty": true,
+        "commands": [
+          {
+            "args": [
+              "ps",
+              "-a",
+              "--format",
+              "json"
+            ],
+            "exitCode": 0,
+            "stdout": "[]\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "volume",
+              "ls",
+              "--quiet"
+            ],
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      },
+      "archive": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-file-positive-1/native-root",
+      "device": "/dev/disk15",
+      "detached": true
+    },
+    {
+      "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-positive-1-ram/case/home",
+      "actualInventory": {
+        "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/environment-positive-1-ram/case/home",
+        "empty": true,
+        "commands": [
+          {
+            "args": [
+              "ps",
+              "-a",
+              "--format",
+              "json"
+            ],
+            "exitCode": 0,
+            "stdout": "[]\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "volume",
+              "ls",
+              "--quiet"
+            ],
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      },
+      "archive": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/environment-positive-1/native-root",
+      "device": "/dev/disk14",
+      "detached": true
+    },
+    {
+      "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-host-1-ram/case/home",
+      "actualInventory": {
+        "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-host-1-ram/case/home",
+        "empty": true,
+        "commands": [
+          {
+            "args": [
+              "ps",
+              "-a",
+              "--format",
+              "json"
+            ],
+            "exitCode": 0,
+            "stdout": "[]\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "volume",
+              "ls",
+              "--quiet"
+            ],
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      },
+      "archive": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-host-1/native-root",
+      "device": "/dev/disk15",
+      "detached": true
+    },
+    {
+      "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-shim-1-ram/case/home",
+      "actualInventory": {
+        "home": "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-old-shim-1-ram/case/home",
+        "empty": true,
+        "commands": [
+          {
+            "args": [
+              "ps",
+              "-a",
+              "--format",
+              "json"
+            ],
+            "exitCode": 0,
+            "stdout": "[]\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "volume",
+              "ls",
+              "--quiet"
+            ],
+            "exitCode": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      },
+      "archive": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-raw-secrets/checks/raw-environment-old-shim-1/native-root",
+      "device": "/dev/disk16",
+      "detached": true
+    }
+  ]
+}

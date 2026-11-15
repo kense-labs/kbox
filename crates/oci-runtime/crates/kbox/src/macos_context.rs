@@ -13,7 +13,7 @@ use crate::ffi::{path_to_cstring, value_to_cstring, FfiStringArray};
 use crate::macos_assets::{
     MacosRuntimeProvenance, PinnedFile, KERNEL_BUNDLE_SHA256, KERNEL_BUNDLE_SIZE,
     KERNEL_ENTRY_ADDRESS, KERNEL_GUEST_LOAD_ADDRESS, LIBKRUNFW_NAME, LIBKRUNFW_SHA256,
-    LIBKRUNFW_SIZE, LIBK_NAME, LIBK_SHA256, LIBK_SIZE,
+    LIBKRUNFW_SIZE, LIBK_CODE_SHA256, LIBK_NAME, LIBK_SHA256, LIBK_SIZE,
 };
 use crate::macos_runtime_share::MacosRuntimeShare;
 use crate::macos_system_image::MacosSystemImage;
@@ -55,6 +55,7 @@ pub(crate) struct MacosKApi {
     add_disk: KAddDisk,
     set_root_disk_remount: KSetRootDiskRemount,
     add_virtiofs: KAddVirtiofs,
+    add_virtiofs_uncached: KAddVirtiofs,
     set_workdir: KSetWorkdir,
     set_exec: KSetExec,
     set_console_output: KSetConsoleOutput,
@@ -83,12 +84,7 @@ impl MacosKApi {
             LIBKRUNFW_SHA256,
             "a661ecaaa8310276968d029a3f518cbde32de9bd2fdea0d366d57b63958cc5d8",
         )?;
-        verify_pinned_runtime_file(
-            &kfile,
-            LIBK_SIZE,
-            LIBK_SHA256,
-            "e2664058cb5282fc99475ec33ae68404c401392b28812864abeba7c5164e93ed",
-        )?;
+        verify_pinned_runtime_file(&kfile, LIBK_SIZE, LIBK_SHA256, LIBK_CODE_SHA256)?;
         let firmware_loader_path = firmware_file.loader_path();
         let kloader_path = kfile.loader_path();
 
@@ -151,6 +147,11 @@ impl MacosKApi {
             "krun_set_root_disk_remount",
         )?;
         let add_virtiofs = load_symbol(&krun, b"krun_add_virtiofs\0", "krun_add_virtiofs")?;
+        let add_virtiofs_uncached = load_symbol(
+            &krun,
+            b"krun_add_virtiofs_uncached\0",
+            "krun_add_virtiofs_uncached",
+        )?;
         let set_workdir = load_symbol(&krun, b"krun_set_workdir\0", "krun_set_workdir")?;
         let set_exec = load_symbol(&krun, b"krun_set_exec\0", "krun_set_exec")?;
         let set_console_output = load_symbol(
@@ -170,6 +171,7 @@ impl MacosKApi {
             add_disk,
             set_root_disk_remount,
             add_virtiofs,
+            add_virtiofs_uncached,
             set_workdir,
             set_exec,
             set_console_output,
@@ -348,8 +350,65 @@ impl KContext {
             let tag = value_to_cstring("kadd_virtiofs", "directory tag", directory.grant().tag())?;
             let path = path_to_cstring("kadd_virtiofs", &directory.pinned_path())?;
             // SAFETY: this context and its retained directory pins outlive native VM entry.
-            let status = unsafe { (self.api.add_virtiofs)(id, tag.as_ptr(), path.as_ptr()) };
-            check_status("kadd_virtiofs", status, "failed to attach caller directory")?;
+            let status =
+                unsafe { (self.api.add_virtiofs_uncached)(id, tag.as_ptr(), path.as_ptr()) };
+            check_status(
+                "kadd_virtiofs_uncached",
+                status,
+                "failed to attach live caller directory",
+            )?;
+        }
+        for file in attachments.files() {
+            let tag = value_to_cstring("kadd_virtiofs", "file projection tag", file.grant().tag())?;
+            let path = path_to_cstring("kadd_virtiofs", &file.pinned_path())?;
+            // SAFETY: the exact private projection descriptor is retained until VM exit.
+            let status =
+                unsafe { (self.api.add_virtiofs_uncached)(id, tag.as_ptr(), path.as_ptr()) };
+            check_status(
+                "kadd_virtiofs_uncached",
+                status,
+                "failed to attach caller file projection",
+            )?;
+        }
+        if let Some(disk) = attachments.rootfs_disk() {
+            let tag = value_to_cstring(
+                "kadd_disk2",
+                "workload rootfs identifier",
+                "koci-workload-rootfs",
+            )?;
+            let path = path_to_cstring("kadd_disk2", &disk.loader_path())?;
+            // SAFETY: the verified writable disk descriptor is retained until VM exit.
+            let status = unsafe {
+                (self.api.add_disk)(id, tag.as_ptr(), path.as_ptr(), K_DISK_FORMAT_RAW, false)
+            };
+            check_status(
+                "kadd_disk2",
+                status,
+                "failed to attach the workload rootfs disk",
+            )?;
+        }
+        for disk in attachments.storage_disks() {
+            let tag = value_to_cstring(
+                "kadd_disk2",
+                "caller storage identifier",
+                disk.grant().block_id(),
+            )?;
+            let path = path_to_cstring("kadd_disk2", &disk.disk().loader_path())?;
+            // SAFETY: the exact storage descriptor and both strings outlive this native call and VM entry.
+            let status = unsafe {
+                (self.api.add_disk)(
+                    id,
+                    tag.as_ptr(),
+                    path.as_ptr(),
+                    K_DISK_FORMAT_RAW,
+                    disk.grant().access_mode() == koci_sdk::StorageAccessMode::ReadOnly,
+                )
+            };
+            check_status(
+                "kadd_disk2",
+                status,
+                "failed to attach the authorized caller storage disk",
+            )?;
         }
         self.directory_attachments = Some(attachments);
         Ok(())
@@ -501,6 +560,23 @@ impl KContext {
             .iter()
             .map(|directory| directory.pinned_path())
             .collect();
+        let files = self
+            .directory_attachments
+            .as_ref()
+            .map(MacosVmAttachments::files)
+            .unwrap_or_default();
+        let projection_pins: Vec<_> = files.iter().map(|f| f.pinned_path()).collect();
+        let aliases: Vec<_> = files.iter().map(|f| f.alias_path()).collect();
+        let storage_disks = self
+            .directory_attachments
+            .as_ref()
+            .map(MacosVmAttachments::storage_disks)
+            .unwrap_or_default();
+        let storage_fds: Vec<_> = storage_disks
+            .iter()
+            .map(|disk| disk.disk().loader_path())
+            .collect();
+        let metadata_only_files: Vec<_> = files.iter().map(|f| f.source_path()).collect();
         let share_pinned = share.pinned_path();
         let mut read_only_files = vec![
             image.image_path(),
@@ -510,6 +586,22 @@ impl KContext {
             &share_pinned,
         ];
         read_only_files.extend(pinned_paths.iter().map(PathBuf::as_path));
+        read_only_files.extend(projection_pins.iter().map(PathBuf::as_path));
+        read_only_files.extend(files.iter().map(|f| f.path()));
+        for (disk, descriptor) in storage_disks.iter().zip(&storage_fds) {
+            if disk.grant().access_mode() == koci_sdk::StorageAccessMode::ReadOnly {
+                read_only_files.extend([disk.disk().path(), descriptor.as_path()]);
+            }
+        }
+        read_only_files.extend(
+            files
+                .iter()
+                .zip(&aliases)
+                .filter(|(f, _)| {
+                    f.grant().attachment().access_mode() == koci_sdk::StorageAccessMode::ReadOnly
+                })
+                .map(|(_, p)| p.as_path()),
+        );
         let read_only: Vec<_> = directories
             .iter()
             .filter(|directory| {
@@ -526,8 +618,34 @@ impl KContext {
             })
             .map(|directory| directory.path())
             .collect();
+        let workload_disk = self
+            .directory_attachments
+            .as_ref()
+            .and_then(MacosVmAttachments::rootfs_disk);
+        let workload_fd = workload_disk.map(|disk| disk.loader_path());
+        let mut writable_files: Vec<_> = workload_disk
+            .map(|disk| disk.path())
+            .into_iter()
+            .chain(workload_fd.as_deref())
+            .collect();
+        for (disk, descriptor) in storage_disks.iter().zip(&storage_fds) {
+            if disk.grant().access_mode() == koci_sdk::StorageAccessMode::ReadWrite {
+                writable_files.extend([disk.disk().path(), descriptor.as_path()]);
+            }
+        }
+        writable_files.extend(
+            files
+                .iter()
+                .zip(&aliases)
+                .filter(|(f, _)| {
+                    f.grant().attachment().access_mode() == koci_sdk::StorageAccessMode::ReadWrite
+                })
+                .map(|(_, p)| p.as_path()),
+        );
         crate::macos_worker_sandbox::confine(
             &read_only_files,
+            &writable_files,
+            &metadata_only_files,
             share.path(),
             console,
             self.agent_socket.as_deref(),

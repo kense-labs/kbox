@@ -1,0 +1,122 @@
+framework       : 683.160.3
+driver          : 683.160.3
+images          : 7
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 43372
+framework name  : DiskImages
+/dev/disk4		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 49387
+framework name  : DiskImages
+/dev/disk6		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 78023
+framework name  : DiskImages
+/dev/disk7		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 80898
+framework name  : DiskImages
+/dev/disk8		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 82087
+framework name  : DiskImages
+/dev/disk9		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 91464
+framework name  : DiskImages
+/dev/disk10		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets
+================================================
+image-path      : ram://65536
+shadow-path     : <none>
+icon-path       : /System/Library/PrivateFrameworks/DiskImages.framework/Resources/CDiskImage.icns
+image-type      : 读/写
+system-image    : false
+blockcount      : 65536
+blocksize       : 512
+writeable       : TRUE
+autodiskmount   : false
+removable       : TRUE
+image-encrypted : false
+mounting user   : lyon
+mounting mode   : <unknown>
+process ID      : 3150
+framework name  : DiskImages
+/dev/disk11		/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets

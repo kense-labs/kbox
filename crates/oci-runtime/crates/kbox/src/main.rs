@@ -219,6 +219,10 @@ enum Command {
     },
     /// Boot the Linux agent at its fixed guest path and bridge its control vsock.
     AgentVmSmoke {
+        /// Use the exact runtime owner's lifetime instead of the diagnostic deadline.
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        #[arg(long, hide = true)]
+        runtime_owner: bool,
         /// Extracted Linux root filesystem containing /usr/bin/koci-agent.
         #[arg(long, value_name = "DIR")]
         rootfs: PathBuf,
@@ -629,6 +633,8 @@ fn main() -> ExitCode {
             ExitCode::SUCCESS
         }
         Command::AgentVmSmoke {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            runtime_owner,
             rootfs,
             #[cfg(any(
                 all(target_os = "windows", target_arch = "x86_64"),
@@ -895,6 +901,12 @@ fn main() -> ExitCode {
                     recovery.as_ref().map(|recovery| recovery.guest_path()),
                 )
                 .with_transport_qualification(transport_qualification.as_ref());
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                let handoff = if runtime_owner {
+                    handoff.with_runtime_owner()
+                } else {
+                    handoff
+                };
                 #[cfg(any(
                     all(target_os = "macos", target_arch = "aarch64"),
                     all(
@@ -1685,6 +1697,10 @@ fn write_json(value: &impl Serialize) -> Result<(), serde_json::Error> {
     println!();
     Ok(())
 }
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "macos_agent_owner_args_tests.rs"]
+mod macos_agent_owner_args_tests;
 
 #[cfg(all(
     test,

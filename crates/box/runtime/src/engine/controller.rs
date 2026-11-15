@@ -107,13 +107,10 @@ impl LocalEngine {
         match request.command {
             EngineCommand::Discover => {
                 let mut protocols = vec![
-                    "kbox.engine.v1".into(),
+                    "kbox.engine.v2".into(),
                     "engine-diagnostics.v1".into(),
                     "process-stream.primary.v1".into(),
                     super::process_protocol::BOOTSTRAP_PROTOCOL.into(),
-                    "harness-assembly.v1".into(),
-                    super::assembly::GUEST_PROTOCOLS_CAPABILITY.into(),
-                    super::assembly::PACKAGES_CAPABILITY.into(),
                 ];
                 if self.prewarm.is_some() {
                     protocols.push("environment-prewarm.v1".into());
@@ -166,10 +163,6 @@ impl LocalEngine {
                 .inspect_operation(&request_id)
                 .await
                 .map(|operation| EngineReplyValue::Operation(Box::new(operation))),
-            EngineCommand::InspectAssembly { instance_id } => self
-                .inspect_assembly(&instance_id)
-                .await
-                .map(EngineReplyValue::Assembly),
             EngineCommand::ReadLogs {
                 instance_id,
                 cursor,
@@ -200,12 +193,7 @@ impl LocalEngine {
 
     pub async fn accept(&self, intent: EngineIntent) -> EngineResult<AcceptedOperation> {
         intent.validate()?;
-        if self.prewarm.is_none()
-            && intent
-                .assembly
-                .as_ref()
-                .is_some_and(|plan| plan.prewarm_bindings_digest.is_some())
-        {
+        if self.prewarm.is_none() && intent.prewarm_bindings_digest.is_some() {
             return Err(EngineError::new(
                 EngineErrorCode::UnsupportedCapability,
                 "engine has no environment prewarm worker",
@@ -311,13 +299,7 @@ impl LocalEngine {
         if current.runtime_request_id != record.runtime_request_id {
             return Ok(());
         }
-        if self.prewarm.is_some()
-            && !record
-                .intent
-                .assembly
-                .as_ref()
-                .is_some_and(|plan| plan.prewarm_bindings_digest.is_some())
-        {
+        if self.prewarm.is_some() && record.intent.prewarm_bindings_digest.is_none() {
             let had_prewarm = self
                 .journal
                 .lock()
@@ -342,7 +324,6 @@ impl LocalEngine {
                     restore_from_snapshot_operation_id: None,
                 };
                 self.runtime.apply(&request).await?;
-                self.assemble(record, &unit_id).await?;
             }
             DesiredState::Down => {
                 let unit = match self.state.load(&unit_id).await {

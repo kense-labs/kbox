@@ -1,0 +1,26 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/final-dist-rollback-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "preserved": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/dist-before-named/box/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "9856cab0edc2bbe4ff2f0f2da1e0537d2e65ee73a4f44e358656e04a44918078",
+    "bytes": 23333369
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/final-dist-rollback-2/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "preserved": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/dist-before-named/box/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "sha256": "52907431bef4defe303c64a080e65c16d5f240f031491e98cc96d7efa023a27f",
+    "bytes": 96
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "preserved": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/dist-before-named/oci/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "ce2b65c4b93b8843b9d4a9b897e5b37e217a78895458ae5fd7f2e58586fd9239",
+    "bytes": 33333578
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/oci-files-final7-dist/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "preserved": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/dist-before-named/oci/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "sha256": "f7b1be4a9bea215536793ea064cbc931839122276c465116b722e38d8e7cfc60",
+    "bytes": 100
+  }
+]

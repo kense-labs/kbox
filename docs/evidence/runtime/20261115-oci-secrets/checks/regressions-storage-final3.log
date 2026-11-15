@@ -1,0 +1,23 @@
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "files"], "exit": 0, "seconds": 47.004868291}
+file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/files-attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/files-attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/files-attempt-3/service/runtime.sock: No such file or directory (os error 2)
+
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "named"], "exit": 0, "seconds": 167.795849417}
+e/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/named-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/named-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/named-attempt-3/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "anonymous"], "exit": 0, "seconds": 471.78023774999997}
+ck: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/anonymous-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/anonymous-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/anonymous-attempt-3/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "raw-ro"], "exit": 0, "seconds": 8.090373167000001}
+ker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "foreignUidImage": null, "exitCode": 0, "seconds": 8.018182958, "actualCounts": [["1", "0", "0"]], "resultExists": true, "cleanupExists": true}
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/raw-ro-attempt-3/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/raw-ro-attempt-3/service/runtime.sock: No such file or directory (os error 2)
+

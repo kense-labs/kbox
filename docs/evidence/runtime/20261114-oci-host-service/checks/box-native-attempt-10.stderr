@@ -1,0 +1,9 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/service/runtime.sock: Connection refused (os error 61)
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery' (84161538) has overflowed its stack
+fatal runtime error: stack overflow, aborting

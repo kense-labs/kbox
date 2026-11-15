@@ -70,8 +70,6 @@ impl LocalEngine {
                     "requested environment is not ready",
                 ));
             }
-            let journal = self.journal.lock().await;
-            journal.require_assembly(&unit, journal.current(&request.instance_id)?)?;
         }
         let engine = self.clone();
         tokio::task::spawn_blocking(move || {
@@ -152,25 +150,9 @@ impl LocalEngine {
                 "Runtime generation changed before process launch",
             ));
         }
-        let assembly_binding = {
-            let journal = self.journal.lock().await;
-            let record = journal.current(&request.instance_id)?;
-            journal.require_assembly(&unit, record)?;
-            journal
-                .data
-                .assemblies
-                .get(&record.runtime_request_id)
-                .map(|receipt| (receipt.execution_id.clone(), receipt.execution_generation))
-        };
         let (execution_id, generation, process) = self
             .driver
-            .start_runtime_process_bound(
-                &unit,
-                request.exec_request()?,
-                assembly_binding
-                    .as_ref()
-                    .map(|(id, generation)| (id.as_str(), *generation)),
-            )
+            .start_runtime_process(&unit, request.exec_request()?)
             .await?;
         if !bootstrap.is_empty() {
             let input = process.input();

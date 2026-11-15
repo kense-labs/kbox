@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py", line 65, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py", line 42, in main
+    assert completed.returncode == 0, "native test failed; logs retained"
+AssertionError: native test failed; logs retained

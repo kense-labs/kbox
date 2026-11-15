@@ -1,0 +1,94 @@
+[
+  {
+    "name": "test-prewarm",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "prewarm"
+    ],
+    "exitCode": 0,
+    "seconds": 0.55
+  },
+  {
+    "name": "test-profile",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "profile_tests"
+    ],
+    "exitCode": 0,
+    "seconds": 0.22
+  },
+  {
+    "name": "test-exec",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "exec_integration_tests"
+    ],
+    "exitCode": 0,
+    "seconds": 0.32
+  },
+  {
+    "name": "test-cli",
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-cli",
+      "missing_console_log_message_mentions_recovery_commands"
+    ],
+    "exitCode": 0,
+    "seconds": 50.99
+  },
+  {
+    "name": "clippy",
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "-p",
+      "kbox-cli",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "exitCode": 0,
+    "seconds": 30.14
+  },
+  {
+    "name": "workspace-check",
+    "command": [
+      "cargo",
+      "check",
+      "--workspace",
+      "--all-targets",
+      "--locked"
+    ],
+    "exitCode": 0,
+    "seconds": 43.85
+  },
+  {
+    "name": "fmt",
+    "command": [
+      "cargo",
+      "fmt",
+      "--all",
+      "--",
+      "--check"
+    ],
+    "exitCode": 1,
+    "seconds": 2.75
+  }
+]

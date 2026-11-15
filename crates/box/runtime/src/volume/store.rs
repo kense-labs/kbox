@@ -28,6 +28,11 @@ const ANONYMOUS_LABEL: &str = "anonymous";
 const ANONYMOUS_KIND_LABEL: &str = "kbox.volume.kind";
 const ANONYMOUS_KIND: &str = "anonymous-v1";
 const ANONYMOUS_OWNER_LABEL: &str = "kbox.volume.owner";
+pub(crate) const ALLOCATION_ID_LABEL: &str = "kbox.volume.allocation";
+
+#[cfg(test)]
+#[path = "store_named_tests.rs"]
+mod named_tests;
 
 impl VolumeStore {
     /// Create a new store at the given path.
@@ -44,10 +49,46 @@ impl VolumeStore {
         Ok(Self::new(home.join("volumes.json"), home.join("volumes")))
     }
 
-    /// Load all volumes from disk.
+    /// Legacy recovery read that quarantines malformed state; normal resource APIs use strict reads.
     pub fn load(&self) -> Result<HashMap<String, VolumeConfig>> {
-        if !self.path.exists() {
+        self.load_with_quarantine(true)
+    }
+
+    /// Read resource authority without moving corrupt metadata or inventing an empty catalog.
+    pub fn load_strict(&self) -> Result<HashMap<String, VolumeConfig>> {
+        self.load_with_quarantine(false)
+    }
+
+    fn load_with_quarantine(&self, quarantine: bool) -> Result<HashMap<String, VolumeConfig>> {
+        if quarantine && !self.path.exists() {
             return Ok(HashMap::new());
+        }
+
+        if !quarantine {
+            let metadata = match std::fs::symlink_metadata(&self.path) {
+                Ok(metadata) => metadata,
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
+                    return Ok(HashMap::new())
+                }
+                Err(error) => return Err(BoxError::IoError(error)),
+            };
+            if !metadata.is_file() || managed_volume_is_reparse_point(&metadata) {
+                return Err(BoxError::ConfigError(
+                    "volume catalog must be a regular file".into(),
+                ));
+            }
+            match std::fs::symlink_metadata(&self.volumes_dir) {
+                Ok(metadata)
+                    if !metadata.is_dir() || managed_volume_is_reparse_point(&metadata) =>
+                {
+                    return Err(BoxError::ConfigError(
+                        "managed volume root must be a plain directory".into(),
+                    ));
+                }
+                Ok(_) => {}
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+                Err(error) => return Err(BoxError::IoError(error)),
+            }
         }
 
         let data = std::fs::read_to_string(&self.path).map_err(|e| {
@@ -63,6 +104,11 @@ impl VolumeStore {
         // every volume operation. Mirrors the boxes.json hardening.
         let file: VolumesFile = match serde_json::from_str(&data) {
             Ok(f) => f,
+            Err(error) if !quarantine => {
+                return Err(BoxError::ConfigError(format!(
+                    "invalid volume catalog: {error}"
+                )))
+            }
             Err(e) => {
                 let preserved = crate::store_io::quarantine_label(&self.path);
                 tracing::warn!(
@@ -74,11 +120,45 @@ impl VolumeStore {
             }
         };
 
+        if !quarantine {
+            validate_allocation_labels(&file.volumes)?;
+            let mut sources = std::collections::HashSet::new();
+            for (name, volume) in &file.volumes {
+                validate_volume_name(name)?;
+                if volume.name != *name || volume.driver != "local" {
+                    return Err(BoxError::ConfigError(
+                        "volume catalog has an inconsistent identity or unsupported driver".into(),
+                    ));
+                }
+                let expected = self.volumes_dir.join(name);
+                let source = Path::new(&volume.mount_point);
+                if source != expected
+                    && (source
+                        .canonicalize()
+                        .ok()
+                        .zip(expected.canonicalize().ok())
+                        .is_none_or(|(a, b)| a != b))
+                {
+                    return Err(BoxError::ConfigError(
+                        "volume catalog points outside its managed allocation".into(),
+                    ));
+                }
+                if let Ok(canonical) = expected.canonicalize() {
+                    if !sources.insert(canonical) {
+                        return Err(BoxError::ConfigError(
+                            "volume catalog aliases one allocation under multiple names".into(),
+                        ));
+                    }
+                }
+            }
+        }
+
         Ok(file.volumes)
     }
 
     /// Save all volumes to disk (atomic write).
     pub fn save(&self, volumes: &HashMap<String, VolumeConfig>) -> Result<()> {
+        validate_allocation_labels(volumes)?;
         if let Some(parent) = self.path.parent() {
             std::fs::create_dir_all(parent).map_err(|e| {
                 BoxError::ConfigError(format!(
@@ -98,22 +178,15 @@ impl VolumeStore {
         })?;
 
         let tmp_path = self.path.with_extension("json.tmp");
-        std::fs::write(&tmp_path, &json).map_err(|e| {
-            BoxError::ConfigError(format!(
-                "failed to write tmp file {}: {}",
-                tmp_path.display(),
-                e
-            ))
-        })?;
-
-        std::fs::rename(&tmp_path, &self.path).map_err(|e| {
-            BoxError::ConfigError(format!(
-                "failed to rename {} → {}: {}",
-                tmp_path.display(),
-                self.path.display(),
-                e
-            ))
-        })?;
+        kbox_core::fs_atomic::write_durable(&tmp_path, &self.path, json.as_bytes()).map_err(
+            |e| {
+                BoxError::ConfigError(format!(
+                    "failed to write tmp file {}: {}",
+                    tmp_path.display(),
+                    e
+                ))
+            },
+        )?;
 
         Ok(())
     }
@@ -139,15 +212,34 @@ impl VolumeStore {
                 self.path.display()
             ))
         })?;
-        let mut volumes = self.load()?;
+        let mut volumes = self.load_strict()?;
+        let allocations: HashMap<_, _> = volumes
+            .iter()
+            .filter_map(|(name, volume)| {
+                volume
+                    .labels
+                    .get(ALLOCATION_ID_LABEL)
+                    .map(|id| (name.clone(), id.clone()))
+            })
+            .collect();
         let r = f(&mut volumes)?;
+        if allocations.iter().any(|(name, id)| {
+            volumes
+                .get(name)
+                .is_some_and(|volume| volume.labels.get(ALLOCATION_ID_LABEL) != Some(id))
+        }) {
+            return Err(BoxError::ConfigError(
+                "volume allocation identity is immutable".into(),
+            ));
+        }
         self.save(&volumes)?;
         Ok(r)
     }
 
     /// Get a single volume by name.
     pub fn get(&self, name: &str) -> Result<Option<VolumeConfig>> {
-        let volumes = self.load()?;
+        validate_volume_name(name)?;
+        let volumes = self.load_strict()?;
         Ok(volumes.get(name).cloned())
     }
 
@@ -157,6 +249,7 @@ impl VolumeStore {
     /// Errors if the name already exists (use [`Self::get_or_create`] for the
     /// idempotent auto-create on the `run -v name:/path` path).
     pub fn create(&self, config: VolumeConfig) -> Result<VolumeConfig> {
+        validate_volume_name(&config.name)?;
         self.with_write_lock(|volumes| {
             if volumes.contains_key(&config.name) {
                 return Err(BoxError::ConfigError(format!(
@@ -179,6 +272,7 @@ impl VolumeStore {
     /// Return whether this call created the volume, allowing a later failed
     /// execution reservation to roll back only resources owned by that call.
     pub fn get_or_create_with_status(&self, config: VolumeConfig) -> Result<(VolumeConfig, bool)> {
+        validate_volume_name(&config.name)?;
         self.with_write_lock(|volumes| {
             if let Some(existing) = volumes.get(&config.name) {
                 return Ok((existing.clone(), false));
@@ -227,6 +321,31 @@ impl VolumeStore {
         })
     }
 
+    /// Read one exact anonymous capability without claiming or changing its allocation.
+    pub(crate) fn require_anonymous(&self, name: &str, owner: &str) -> Result<VolumeConfig> {
+        validate_anonymous_identity(name, owner)?;
+        let config = self.get(name)?.ok_or_else(|| {
+            BoxError::ConfigError(format!("anonymous volume {name:?} is missing"))
+        })?;
+        validate_anonymous_config(
+            &config,
+            name,
+            owner,
+            &self.volumes_dir.join(name).to_string_lossy(),
+        )?;
+        let path = Path::new(&config.mount_point);
+        let metadata = std::fs::symlink_metadata(path).map_err(BoxError::IoError)?;
+        if !metadata.is_dir()
+            || managed_volume_is_reparse_point(&metadata)
+            || path.canonicalize().map_err(BoxError::IoError)? != path
+        {
+            return Err(BoxError::ConfigError(
+                "anonymous allocation must be a plain canonical directory".into(),
+            ));
+        }
+        Ok(config)
+    }
+
     /// Remove only the anonymous volume capability owned by `owner`.
     ///
     /// The directory is removed while the metadata lock is held, before the
@@ -259,7 +378,28 @@ impl VolumeStore {
         mut config: VolumeConfig,
         volumes: &mut HashMap<String, VolumeConfig>,
     ) -> Result<VolumeConfig> {
+        if config.driver != "local" {
+            return Err(BoxError::ConfigError(
+                "only the local volume driver is supported".into(),
+            ));
+        }
+        config
+            .labels
+            .insert(ALLOCATION_ID_LABEL.into(), uuid::Uuid::new_v4().to_string());
+        config.created_at = chrono::Utc::now().to_rfc3339();
+        ensure_managed_volume_directory(&self.volumes_dir)?;
         let vol_dir = self.volumes_dir.join(&config.name);
+        if let Ok(candidate) = vol_dir.canonicalize() {
+            if volumes.values().any(|volume| {
+                Path::new(&volume.mount_point)
+                    .canonicalize()
+                    .is_ok_and(|path| path == candidate)
+            }) {
+                return Err(BoxError::ConfigError(
+                    "new volume name aliases an existing allocation".into(),
+                ));
+            }
+        }
         ensure_managed_volume_directory(&vol_dir)?;
         config.mount_point = vol_dir.to_string_lossy().into_owned();
         volumes.insert(config.name.clone(), config.clone());
@@ -268,6 +408,7 @@ impl VolumeStore {
 
     /// Remove a volume by name. Returns error if in use.
     pub fn remove(&self, name: &str, force: bool) -> Result<VolumeConfig> {
+        validate_volume_name(name)?;
         self.with_write_lock(|volumes| {
             let config = volumes
                 .get(name)
@@ -302,7 +443,7 @@ impl VolumeStore {
 
     /// List all volumes.
     pub fn list(&self) -> Result<Vec<VolumeConfig>> {
-        let volumes = self.load()?;
+        let volumes = self.load_strict()?;
         Ok(volumes.into_values().collect())
     }
 
@@ -312,6 +453,7 @@ impl VolumeStore {
     /// reads outside the lock and would lose a concurrent update made between
     /// the two calls.
     pub fn update(&self, config: &VolumeConfig) -> Result<()> {
+        validate_volume_name(&config.name)?;
         self.with_write_lock(|volumes| {
             if !volumes.contains_key(&config.name) {
                 return Err(BoxError::ConfigError(format!(
@@ -334,6 +476,7 @@ impl VolumeStore {
     where
         F: FnOnce(&mut VolumeConfig),
     {
+        validate_volume_name(name)?;
         self.with_write_lock(|volumes| match volumes.get_mut(name) {
             Some(config) => {
                 f(config);
@@ -345,7 +488,7 @@ impl VolumeStore {
 
     /// Remove all volumes that are not in use. Returns names of removed volumes.
     pub fn prune(&self) -> Result<Vec<String>> {
-        let volumes = self.load()?;
+        let volumes = self.load_strict()?;
         let candidates: Vec<String> = volumes
             .iter()
             .filter(|(_, config)| !config.is_in_use())
@@ -446,6 +589,36 @@ fn validate_anonymous_config(
             "anonymous volume {name:?} has no compatible ownership contract"
         ))),
     }
+}
+
+fn validate_allocation_labels(volumes: &HashMap<String, VolumeConfig>) -> Result<()> {
+    let mut identities = std::collections::HashSet::new();
+    for volume in volumes.values() {
+        if let Some(value) = volume.labels.get(ALLOCATION_ID_LABEL) {
+            let id = uuid::Uuid::parse_str(value)
+                .map_err(|_| BoxError::ConfigError("invalid volume allocation identity".into()))?;
+            if id.get_version_num() != 4 || id.to_string() != *value || !identities.insert(id) {
+                return Err(BoxError::ConfigError(
+                    "volume allocation identities must be canonical and unique".into(),
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
+fn validate_volume_name(name: &str) -> Result<()> {
+    let mut components = Path::new(name).components();
+    if name.len() > 255
+        || name.contains(['/', '\\', ':', '\0'])
+        || !matches!(components.next(), Some(std::path::Component::Normal(_)))
+        || components.next().is_some()
+    {
+        return Err(BoxError::ConfigError(
+            "volume name must be one bounded plain path component".into(),
+        ));
+    }
+    Ok(())
 }
 
 fn ensure_managed_volume_directory(path: &Path) -> Result<()> {

@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/qualification-runner.py",
+    "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261114-final-archive/run-context.json"
+  ],
+  "sha256": "d02cc2321ceb7f4ec6f7125cef1808651c09ecf6bbef10d4c6a2a0c7173c7525",
+  "kind": "owned diagnostics only; not a shipped product component"
+}

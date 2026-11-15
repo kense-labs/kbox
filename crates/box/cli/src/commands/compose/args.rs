@@ -80,7 +80,6 @@ pub struct ComposeUpArgs {
     #[arg(long, default_value = "120")]
     pub timeout: u64,
 
-
     /// Limit convergence to these services and their dependencies
     #[arg(value_name = "SERVICE")]
     pub services: Vec<String>,

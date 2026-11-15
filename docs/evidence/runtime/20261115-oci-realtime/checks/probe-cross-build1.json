@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-pthread",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe.c",
+    "-o",
+    "artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/inputs/realtime-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.375306167
+}

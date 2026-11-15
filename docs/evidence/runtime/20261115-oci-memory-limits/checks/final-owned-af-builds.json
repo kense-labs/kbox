@@ -1,0 +1,8 @@
+{
+  "kbox-oci-regression:b1f452a32fa049cba8f7059847b08309": {
+    "digest": "sha256:3d7f003f4c77bd860fcd239dff866d0216999183de624ec9c5f8eda2e718cc43",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/af-final1/native-oci/b1f452a32fa049cba8f7059847b08309/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1",
+    "kboxSha256": "0294bde7f262242899e833f7646fe34ab8f37cd874b893777291d6bd03016dbb"
+  }
+}

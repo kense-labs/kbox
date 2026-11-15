@@ -1,0 +1,22 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.97s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 1 test
+test utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases ... FAILED
+
+failures:
+
+---- utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases stdout ----
+
+thread 'utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases' (84890764) panicked at crates/oci-runtime/crates/runtime/src/utility_vm_driver/hvf_files_tests.rs:245:5:
+cancelled preparation published late aliases
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    utility_vm_driver::hvf_files::tests::cancelled_blocking_preparation_cannot_leave_late_file_aliases
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 434 filtered out; finished in 0.03s
+
+error: test failed, to rerun pass `-p koci-runtime --lib`

@@ -12,7 +12,6 @@ use kbox_runtime::{
     ScaleEndpointConfig, ScaleServiceCatalog,
 };
 
-
 #[derive(Args)]
 pub struct ScaleApiArgs {
     /// Address exposed to the trusted Gateway control plane.
@@ -34,7 +33,6 @@ pub struct ScaleApiArgs {
     /// Persist desired state without starting workloads (diagnostic/migration use only).
     #[arg(long, conflicts_with = "services")]
     desired_state_only: bool,
-
 
     /// Address used for runtime-owned replica endpoint listeners.
     #[arg(long, default_value_t = IpAddr::V4(Ipv4Addr::LOCALHOST))]

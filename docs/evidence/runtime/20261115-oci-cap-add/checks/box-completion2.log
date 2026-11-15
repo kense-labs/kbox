@@ -1,0 +1,22 @@
+
+running 17 tests
+test vm::oci_hvf_spec::tests::hvf_cap_drop_all_spellings_override_explicit_guest_admin ... ok
+test vm::oci_hvf_spec::tests::hvf_realtime_ulimits_preserve_exact_values_and_legacy_root_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_nice_ulimits_preserve_exact_values_and_legacy_root_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_keep_empty_request_bytes_and_unmentioned_oci_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_preserves_flags_data_defaults_and_refuses_image_subtree_collisions ... ok
+test vm::oci_hvf_spec::tests::hvf_sigpending_ulimits_preserve_exact_values_and_nproc_entry_guards ... ok
+test vm::oci_hvf_spec::tests::hvf_cpu_time_ulimits_complete_and_replace_only_declared_resource ... ok
+test vm::oci_hvf_spec::tests::hvf_memory_ulimits_preserve_cpu_defaults_and_exact_byte_values ... ok
+test vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults ... ok
+test vm::oci_hvf_spec::tests::hvf_msgqueue_ulimits_preserve_exact_values_and_per_uid_entry_guards ... ok
+test vm::oci_hvf_spec::tests::hvf_file_sources_admit_plain_data_and_refuse_aliases_and_invalid_controls ... ok
+test vm::oci_hvf_spec::tests::hvf_ulimits_intent_reaches_existing_oci_process_executor ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor ... ok
+test vm::oci_hvf_spec::tests::hvf_root_readonly_intent_reaches_existing_guest_executor ... ok
+test vm::oci_hvf_spec::tests::hvf_bundle_preserves_host_grants_exact_resources_and_explicit_guest_capability ... ok
+test vm::oci_hvf_spec::tests::hvf_anonymous_completion_classifies_exact_planned_disk_separately_from_caller_files ... ok
+test vm::oci_hvf_spec::tests::hvf_nonroot_cap_add_retains_only_explicit_undropped_values_across_exec ... ok
+
+test result: ok. 17 passed; 0 failed; 0 ignored; 0 measured; 2297 filtered out; finished in 0.30s
+

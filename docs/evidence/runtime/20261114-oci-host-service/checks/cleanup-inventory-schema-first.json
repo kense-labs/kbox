@@ -1,0 +1,130 @@
+{
+  "executionStores": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-directory/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-readonly/00e836ac5c5e4d10a79faedd07a54048/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-prewarm/3238da157e944aa2bf532c4dbc95f8a4/k-home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-directory/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-oci/7b91cb540a2546498b81cc90126bbf4e/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-readonly/3f79ee2abc7547119ad5de82f7652e24/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-primary/9617254908e145189e5119613ab76f56/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-prewarm/869b687ee2344e2690d334bbe3d9c22a/k-home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-9/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-7/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-6/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-1/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-8/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-10/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-11/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-4/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-3/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-2/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-5/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-14/home/boxes.json",
+      "records": []
+    },
+    {
+      "path": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-12/home/boxes.json",
+      "records": []
+    }
+  ],
+  "volumeStores": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-oci/9c9937f7d40446948ae1c19166febd31/home/volumes.json",
+      "records": {
+        "volumes": {}
+      }
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification-2/native-primary/0aae3bfda02f4f7e9987b71ca6417f6a/home/volumes.json",
+      "records": {
+        "volumes": {}
+      }
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-oci/7b91cb540a2546498b81cc90126bbf4e/home/volumes.json",
+      "records": {
+        "volumes": {}
+      }
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/archive-qualification/native-primary/9617254908e145189e5119613ab76f56/home/volumes.json",
+      "records": {
+        "volumes": {}
+      }
+    }
+  ],
+  "ownedSockets": [],
+  "observedExternalSocketsRemaining": [],
+  "observedExternalSocketsChecked": 100,
+  "ownedProcesses": []
+}

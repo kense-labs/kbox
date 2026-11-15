@@ -63,6 +63,7 @@ use crate::{
 mod agent_transport_recovery;
 mod attestation_operations;
 mod checkpoint_operations;
+mod exec_capabilities;
 mod fault_matrix;
 mod filesystem_operations;
 mod guest_sessions;

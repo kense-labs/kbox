@@ -1,0 +1,18 @@
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "rootro"], "exit": 0, "seconds": 322.108750208}
+untime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/rootro-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/rootro-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/rootro-attempt-3/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "tmpfs"], "exit": 0, "seconds": 168.004214583}
+e/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/tmpfs-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/tmpfs-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/tmpfs-attempt-3/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-native.py", "docs/evidence/runtime/20261115-oci-secrets/run-context.json", "3", "ulimits"], "exit": 0, "seconds": 201.618518417}
+ime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/ulimits-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/ulimits-attempt-3/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secrets-3b9553cebce5/ulimits-attempt-3/service/runtime.sock: Connection refused (os error 61)
+

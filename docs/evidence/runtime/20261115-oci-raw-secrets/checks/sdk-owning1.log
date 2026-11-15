@@ -1,0 +1,286 @@
+
+running 228 tests
+test attachment::memory_secret_files_tests::memory_secret_environment_metadata_parser_refuses_bare_control_key ... ok
+test attachment::storage_paths::tests::rejects_escape_paths_and_writable_exceptions_without_a_denied_ancestor ... ok
+test attachment::rootfs_image::tests::workload_root_versions_preserve_legacy_bytes_and_validate_before_upgrade ... ok
+test attachment::storage_paths::tests::rejects_noncanonical_duplicates_unknown_fields_and_oversized_annotations ... ok
+test attachment::tests::canonical_attachment_inventory_rejects_value_array_order_and_raw_digest_drift ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse ... ok
+test attachment::raw_storage_images::tests::raw_storage_rejects_unknown_or_unbound_annotation_values ... ok
+test attachment::memory_secret_files_tests::memory_secret_environment_cannot_reuse_files_only_v1_semantics ... ok
+test attachment::file_grants::tests::file_descriptor_cannot_claim_runtime_ownership_or_cleanup ... ok
+test attachment::tests::canonical_attachment_value_digest_matches_legacy_sorted_objects ... ok
+test attachment::tests::caller_owned_storage_cannot_be_transferred_with_a_runtime_owned_bundle ... ok
+test attachment::tests::capability_intersection_is_exact_and_wire_inventories_must_be_canonical ... ok
+test attachment::tests::extension_names_follow_the_canonical_capability_order ... ok
+test attachment::file_grants::tests::file_grants_are_required_exact_caller_storage_and_old_hosts_refuse ... ok
+test attachment::memory_secret_files_tests::memory_secret_environment_requires_explicit_v2_and_old_capability_refusal ... ok
+test attachment::tests::canonical_attachment_wire_accepts_legacy_sorted_inventory_across_object_order ... ok
+test attachment::rootfs_image::tests::workload_rootfs_rejects_invalid_identity_capacity_and_root_path ... ok
+test attachment::raw_storage_images::tests::raw_storage_requires_an_exact_token_and_supported_required_capability ... ok
+test attachment::rootfs_image::tests::workload_rootfs_requires_an_explicit_supported_capability ... ok
+test attachment::tests::derives_and_digest_binds_every_standard_attachment_category ... ok
+test attachment::rootfs_image::tests::workload_readonly_root_requires_its_exact_version_and_old_hosts_refuse ... ok
+test attachment::tests::external_storage_handoff_requires_version_two_capability ... ok
+test attachment::tests::joined_network_namespace_requires_caller_preservation_cleanup ... ok
+test attachment::tests::external_storage_handoff_requires_storage_and_required_declaration ... ok
+test attachment::tests::network_enforcement_wire_values_reject_tampering_and_policy_content ... ok
+test attachment::tests::network_and_storage_attachment_order_is_canonical_and_cumulative ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_cannot_drop_required_classification_or_write_access ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices ... ok
+test attachment::tests::network_enforcement_is_opaque_digest_bound_and_independently_negotiated ... ok
+test attachment::tests::handoff_extension_cannot_bypass_annotation_semantics_via_generic_builder ... ok
+test attachment::tests::network_attachments_are_v3_digest_bound_and_canonical ... ok
+test attachment::tests::rejects_drift_unknown_references_and_unversioned_extensions ... ok
+test attachment::tests::required_extensions_are_fail_closed_but_advisory_extensions_are_explicit ... ok
+test attachment::storage_paths::tests::binds_required_extension_to_exact_storage_and_preserves_unicode_paths ... ok
+test attachment::tests::serialized_manifest_contains_no_secret_value_or_runtime_identity ... ok
+test bundle::tests::accepts_both_advertised_specification_version_boundaries ... ok
+test attachment::tests::runtime_bundle_handoff_is_explicit_digest_bound_and_capability_checked ... ok
+test attachment::tests::terminal_attachment_binds_the_oci_console_size ... ok
+test attachment::tests::reusable_guest_session_fails_closed_on_boundary_drift ... ok
+test bundle::tests::preserves_bundle_author_root_names_without_rewriting ... ok
+test bundle::tests::preserves_external_annotation_authoring_choices ... ok
+test attachment::tests::tee_launch_is_required_technology_specific_and_dedicated_vm_only ... ok
+test attachment::tests::storage_attachments_are_v2_digest_bound_and_explicitly_caller_owned ... ok
+test bundle::tests::bundle_round_trip_preserves_standard_scheduler_flag_names ... ok
+test bundle::tests::preserves_the_full_normative_hugetlb_uint64_range ... ok
+test attachment::tests::storage_attachment_validation_rejects_identity_mount_and_access_drift ... ok
+test bundle::tests::rejects_relative_in_memory_bundle_path ... ok
+test bundle::tests::rejects_missing_specification_version ... ok
+test bundle::tests::rejects_non_semver_specification_version ... ok
+test bundle::tests::rejects_future_specification_version ... ok
+test bundle::tests::start_phase_revalidates_the_immutable_bundle_process ... ok
+test attachment::tests::external_storage_handoff_rejects_relative_and_owned_bundle_sources ... ok
+test bundle::tests::requires_both_normative_hugetlb_fields ... ok
+test bundle::tests::wire_deserialization_cannot_bypass_absolute_path_validation ... ok
+test bundle::tests::resolves_validated_image_stop_signal ... ok
+test bundle::tests::wire_deserialization_rejects_digest_tampering ... ok
+test bundle::tests::typed_model_preserves_every_explicit_field_in_upstream_linux_fixtures ... ok
+test attachment::tests::network_enforcement_rejects_unbound_or_mutable_namespace_mechanisms ... ok
+test bundle::tests::wire_round_trip_revalidates_and_preserves_exact_configuration ... ok
+test checkpoint::tests::hardware_vm_checkpoint_pairs_and_guest_arch_follow_the_shared_contract ... ok
+test checkpoint::tests::checkpoint_scalar_types_reject_noncanonical_inputs ... ok
+test attachment::tests::network_attachment_validation_rejects_identity_cleanup_and_target_drift ... ok
+test client::tests::client_is_send_sync ... ok
+test config_annotation::tests::builtin_unsafe_config_annotations_are_exact_sorted_reverse_dns_keys ... ok
+test attachment::tests::tee_launch_rejects_mismatched_duplicate_and_misclassified_mechanisms ... ok
+test checkpoint::tests::reference_creation_requires_a_matching_paused_source_stack ... ok
+test checkpoint::tests::immutable_reference_round_trips_and_binds_the_paused_source ... ok
+test checkpoint::tests::reference_deserialization_rejects_tampered_evidence ... ok
+test conformance::tests::document_digests_are_independent_of_checkout_line_endings ... ok
+test checkpoint::tests::legacy_requests_decode_only_to_fail_closed_validation ... ok
+test attachment::tests::reusable_guest_session_is_v4_digest_bound_and_cumulative ... ok
+test conformance::tests::keyword_scanner_prefers_complete_rfc_2119_terms ... ok
+test checkpoint::tests::restore_requires_exact_config_and_response_correlation ... ok
+test bundle::tests::rejects_symlinked_config_json ... ok
+test bundle::tests::loads_v1_3_fields_without_losing_them ... ok
+test bundle::tests::ignores_unknown_configuration_properties_without_losing_exact_bundle ... ok
+test attachment::memory_secret_files_tests::memory_secret_raw_storage_requires_v3_exact_intent_and_required_capability ... ok
+test attachment::memory_secret_files_tests::memory_secret_environment_refuses_unbound_duplicate_and_malformed_metadata ... ok
+test bundle::tests::requires_config_json_at_bundle_root ... ok
+test conformance::tests::common_external_requirements_retain_reviewed_boundaries ... ok
+test conformance::tests::common_configuration_requirements_have_the_exact_owner_profile ... ok
+test conformance::tests::normative_manifest_has_no_pending_review ... ok
+test conformance::tests::namespace_mapping_and_time_requirements_are_all_owner_bound ... ok
+test conformance::tests::linux_configuration_requirements_have_the_exact_support_profile ... ok
+test bundle::tests::treats_the_supplied_directory_as_the_bundle_root ... ok
+test extension::tests::rejects_invalid_artifacts_ambiguous_isolation_and_legacy_negotiation ... ok
+test extension::tests::catalog_round_trip_retains_canonical_artifact_and_driver_contracts ... ok
+test conformance::tests::linux_features_requirements_are_all_enforced_by_the_feature_report ... ok
+test fingerprint::tests::canonical_json_sorts_nested_unordered_maps_and_preserves_arrays ... ok
+test extension::tests::selects_only_the_driver_that_satisfies_exact_versions ... ok
+test handoff::tests::relative_runtime_root_fails_before_path_construction ... ok
+test handoff::tests::layout_is_exact_and_uses_only_validated_components ... ok
+test id::tests::accepts_path_safe_identifier ... ok
+test id::tests::constructs_the_reserved_init_process_id ... ok
+test extension::tests::runtime_info_from_a_legacy_peer_defaults_to_no_extension_catalog ... ok
+test id::tests::deserialization_cannot_bypass_validation ... ok
+test id::tests::generation_round_trips_as_a_number ... ok
+test id::tests::rejects_unsafe_or_nonportable_path_components ... ok
+test image_annotation::tests::parses_portable_linux_stop_signal_forms ... ok
+test linux_memory_policy::tests::registries_cover_every_oci_memory_policy_value_once ... ok
+test linux_seccomp::tests::registries_are_exact_and_unique ... ok
+test linux_mount_option::tests::registry_covers_the_pinned_oci_linux_mount_option_table_once ... ok
+test linux_capability::tests::registry_covers_every_recognized_kernel_capability_once ... ok
+test linux_support::tests::resource_update_uses_the_same_cgroup_support_profile ... ok
+test linux_support::tests::shared_executor_profile_is_complete_deterministic_and_self_consistent ... ok
+test linux_sysctl::tests::classifies_only_known_namespaced_sysctl_families ... ok
+test linux_support::tests::custom_profiles_are_canonical_and_reject_contradictory_registries ... ok
+test linux_support::tests::shared_executor_profile_accepts_the_complete_native_configuration ... ok
+test linux_sysctl::tests::normalizes_dot_and_slash_notation_without_losing_literal_dots ... ok
+test linux_support::tests::shared_profile_preserves_precise_reasons_for_executor_rejections ... ok
+test linux_sysctl::tests::rejects_hostname_host_global_and_escaping_keys ... ok
+test macos_memory::tests::memory_backing_requires_exact_ram_image_and_device ... ok
+test macos_memory::tests::apfs_requires_every_actual_physical_store_to_be_ram ... ok
+test model::tests::container_stats_reject_inconsistent_normalized_counters ... ok
+test model::tests::exit_status_requires_one_valid_terminal_outcome ... ok
+test model::tests::signal_deserialization_cannot_bypass_validation ... ok
+test linux_support::tests::support_profile_rejects_every_unadvertised_linux_feature_class ... ok
+test process_io::tests::terminal_console_size_supplies_and_fences_initial_dimensions ... ok
+test model::tests::runtime_event_operation_identity_is_additive_and_validated ... ok
+test process_serde::tests::empty_exec_cpu_affinity_is_canonicalized_to_omission ... ok
+test process_serde::tests::serde_adapter_round_trips_only_standard_flag_names ... ok
+test conformance::tests::runtime_lifecycle_requirements_are_all_owner_bound ... ok
+test process_serde::tests::standalone_decoder_accepts_exact_oci_scheduler_flag_names ... ok
+test rootfs_metadata::tests::manifest_round_trips_the_public_contract ... ok
+test process_serde::capability_tests::capability_set_reconstruction_has_stable_wire_order_without_reordering_argv ... ok
+test schema::coverage::tests::evidence_metadata_is_pinned_to_the_schema_release ... ok
+test image_annotation::tests::pins_runtime_referenced_image_spec_sources ... ok
+test conformance::tests::seccomp_requirements_are_all_owner_bound ... ok
+test conformance::tests::vm_requirements_have_the_exact_fail_closed_profile ... ok
+test schema::suite_tests::fixture_digest_is_independent_of_checkout_line_endings ... ok
+test schema::tests::accepts_runtime_spec_image_annotation_keys ... ok
+test schema::coverage::tests::common_configuration_schema_items_have_the_exact_owner_profile ... ok
+test schema::suite_tests::passes_every_pinned_upstream_schema_fixture ... ok
+test schema::tests::invalid_state_returns_stable_sdk_error ... ok
+test schema::coverage::tests::linux_configuration_schema_items_have_the_exact_support_profile ... ok
+test schema::tests::reports_schema_paths_without_network_resolution ... ok
+test schema::coverage::tests::vm_schema_items_have_the_exact_fail_closed_profile ... ok
+test schema::tests::requires_block_io_device_identity ... ok
+test schema::tests::validates_annotation_contracts_for_configuration_and_features ... ok
+test schema::tests::typed_sdk_models_preserve_upstream_state_and_features_fixtures ... ok
+test schema::tests::validates_complete_vm_schema_shapes ... ok
+test schema::tests::validates_linux_device_schema_shapes ... ok
+test schema::tests::validates_official_minimal_documents ... ok
+test schema::tests::validator_is_send_sync ... ok
+test semantic::tests::accepts_applicable_linux_and_vm_platform_sections_together ... ok
+test semantic::tests::accepts_upstream_minimal_linux_configuration_and_start_fixtures ... ok
+test schema::tests::inventory_contains_v1_3_properties_and_enum_values ... ok
+test semantic::tests::accepts_validated_normative_cross_field_boundaries ... ok
+test semantic::tests::idle_io_priority_rejects_nonzero_class_data ... ok
+test semantic::tests::bounds_intel_rdt_names_and_schemata_without_rejecting_new_resource_lines ... ok
+test semantic::tests::rejects_native_non_linux_workload_sections_as_unsupported ... ok
+test semantic::tests::rejects_nul_in_vm_runtime_paths_and_parameters ... ok
+test semantic::tests::rejects_windows_process_fields_as_unsupported ... ok
+test semantic::tests::reports_common_cross_field_violations_with_stable_rules ... ok
+test semantic::tests::requires_a_root_for_linux_workloads ... ok
+test semantic::tests::reports_linux_memory_policy_shape_and_flag_relationships ... ok
+test semantic::tests::requires_rates_for_every_block_io_throttle_list ... ok
+test semantic::tests::reports_linux_namespace_security_and_resource_relationships ... ok
+test semantic::tests::scheduler_semantics_match_the_linux_sched_attr_boundary ... ok
+test semantic::tests::schema_good_net_device_fixture_still_requires_runtime_namespace_semantics ... ok
+test semantic::tests::semantic_rule_registry_is_complete_and_unique ... ok
+test semantic::tests::start_requires_a_process_but_configuration_loading_does_not ... ok
+test semantic::tests::semantic_reports_are_bounded_and_mark_truncation ... ok
+test semantic::tests::validates_device_access_types_and_masks_without_requiring_access ... ok
+test semantic::tests::validates_linux_network_device_names_templates_and_exact_targets ... ok
+test semantic::tests::validates_linux_device_identity_and_conditional_numbers ... ok
+test semantic::tests::validates_pinned_oci_image_annotation_values ... ok
+test semantic::tests::validates_vm_paths_without_inventing_hardware_minima ... ok
+test tee::tests::attestation_response_is_exactly_request_bound ... ok
+test tee::tests::evidence_binds_bounded_payload_size_and_digest ... ok
+test tee::tests::report_data_and_digests_reject_noncanonical_values ... ok
+test tee::tests::launch_annotation_is_canonical_and_technology_specific ... ok
+test transport::connect_honesty_tests::missing_or_refused_connect_stays_retryable_unavailable ... ok
+test transport::connect_honesty_tests::permission_denied_connect_is_not_unavailable ... ok
+test transport::local::tests::unix_endpoint_requires_an_absolute_path ... ok
+test transport::server::tests::negotiation_selects_highest_common_version ... ok
+test transport::tests::client_reports_an_incompatible_server_protocol ... ok
+test transport::tests::client_rejects_a_mismatched_response_id ... ok
+test transport::local::tests::runtime_client_connects_over_a_real_unix_socket ... ok
+test transport::tests::cancelled_request_discards_the_sdk_transport ... ok
+test transport::tests::create_wire_request_requires_bundle_and_container_id ... ok
+test transport::local::tests::runtime_client_reconnects_after_unix_socket_server_restart ... ok
+test conformance::tests::inventory_covers_every_pinned_rfc_2119_occurrence ... ok
+test transport::tests::lifecycle_wire_requests_require_container_id ... ok
+test transport::tests::protocol_eight_rejects_attestation_before_dispatch ... ok
+test transport::tests::protocol_nine_gates_tee_create_restore_and_attestation ... ok
+test transport::tests::protocol_four_rejects_storage_attachments_before_dispatch ... ok
+test transport::tests::protocol_five_rejects_network_attachments_before_dispatch ... ok
+test transport::tests::protocol_eight_round_trips_checkpoint_reference_and_paused_source ... ok
+test transport::tests::protocol_seven_gates_guest_session_create_while_restore_requires_protocol_eight ... ok
+test transport::tests::negotiates_and_round_trips_typed_requests_responses_and_errors ... ok
+test transport::tests::protocol_nine_round_trips_exact_attestation_evidence ... ok
+test transport::tests::runtime_event_operation_identity_round_trips_on_existing_protocol ... ok
+test transport::tests::protocol_six_rejects_guest_session_attachments_before_dispatch ... ok
+test transport::tests::protocol_three_rejects_file_operations_before_dispatch ... ok
+test transport::tests::protocol_six_gates_network_create_while_restore_requires_protocol_eight ... ok
+test transport::tests::server_rejects_protocol_five_network_before_service_dispatch ... ok
+test transport::tests::server_rejects_protocol_four_storage_before_service_dispatch ... ok
+test transport::tests::server_rejects_protocol_seven_checkpoint_before_service_dispatch ... ok
+test transport::tests::server_rejects_the_reserved_zero_request_id ... ok
+test transport::tests::state_wire_request_requires_container_id ... ok
+test transport::tests::transport_client_is_send_sync ... ok
+test transport::tests::server_rejects_protocol_six_guest_session_before_service_dispatch ... ok
+test transport::wire::tests::rejects_empty_and_oversized_frames_before_allocating_payload ... ok
+test transport::wire::tests::rejects_truncated_frame_payload ... ok
+test validation::tests::reserves_the_init_process_id_for_the_container_process ... ok
+test validation::tests::validates_bounded_poll_and_write_requests ... ok
+test validation::tests::validates_exact_filesystem_operation_shapes ... ok
+test validation::tests::validates_exact_file_transfer_shapes ... ok
+test transport::tests::server_validates_untrusted_wire_requests_before_dispatch ... ok
+test windows_architecture::tests::whpx_admission_requires_native_x64_and_refuses_emulation_unknown_and_arm64ec ... ok
+test workspace_path::tests::admits_a_literal_backslash_and_rejects_nul_empty_and_dotdot ... ok
+test validation::tests::validates_exec_process_semantics_and_terminal_contract ... ok
+test validation::tests::validates_resource_updates_and_exact_checkpoint_targets ... ok
+test workspace_path::tests::staging_directory_is_searchable_without_a_public_read_or_write ... ok
+test transport::tests::protocol_six_round_trips_network_enforcement_without_a_wire_bump ... ok
+test conformance::tests::reviewed_external_evidence_requires_a_nonempty_rationale ... ok
+test schema::coverage::tests::evidence_bindings_require_complete_reviewed_support_data ... ok
+test schema::coverage::tests::evidence_rejects_unknown_duplicate_and_generated_item_bindings ... ok
+test conformance::tests::coverage_verifier_rejects_non_semantic_rule_owner_drift ... ok
+test schema::coverage::tests::coverage_verification_rejects_duplicate_ids_and_unknown_rules ... ok
+test conformance::tests::coverage_verifier_rejects_unknown_rule_ids ... ok
+test schema::tests::checked_in_coverage_manifest_matches_reviewed_evidence ... ok
+test conformance::tests::coverage_verifier_rejects_missing_inventory_entries ... ok
+test schema::coverage::tests::coverage_verification_rejects_pending_stale_and_incomplete_items ... ok
+test conformance::tests::checked_in_normative_manifest_matches_the_pinned_corpus ... ok
+test attachment::file_grants::tests::file_grants_refuse_aliases_drift_paths_and_unbounded_values ... ok
+test macos_memory::tests::ordinary_disk_is_not_memory_backing ... ok
+
+test result: ok. 228 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.30s
+
+
+running 1 test
+test client_preserves_complete_oci_spec_and_unknown_properties_at_service_boundary ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 1 test
+test loads_the_exact_kbox_compiler_output ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+
+running 3 tests
+test preserves_absolute_and_relative_oci_cgroup_path_semantics ... ok
+test rejects_ambiguous_or_dangerous_cgroup_paths_before_execution ... ok
+test bounds_the_complete_path_and_each_cgroup_name ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 2 tests
+test schema_preserves_optional_time_offset_members ... ok
+test schema_requires_namespace_and_id_mapping_members ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 3 tests
+test schema_preserves_optional_seccomp_members ... ok
+test schema_rejects_unknown_seccomp_registry_values ... ok
+test schema_requires_complete_seccomp_members ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 8 tests
+test duplicate_operation_ids_fail_before_service_dispatch ... ok
+test cleanup_failure_is_attached_without_hiding_the_primary_error ... ok
+test delete_failure_is_returned_after_a_successful_process_wait ... ok
+test run_composes_exact_foreground_lifecycle_and_forced_cleanup ... ok
+test missing_start_process_fails_before_create_mutation ... ok
+test create_failure_does_not_delete_an_unclaimed_container ... ok
+test cancelled_run_schedules_force_delete_after_create ... ok
+test start_and_wait_failures_still_delete_with_the_stable_context ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

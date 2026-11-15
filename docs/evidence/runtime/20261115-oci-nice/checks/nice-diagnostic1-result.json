@@ -1,0 +1,149 @@
+{
+  "status": "DIAGNOSTIC_COMPLETE",
+  "root": "/private/tmp/kbox-nice-581649d8a124/diagnostic-nice-1",
+  "hostCommand": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci",
+    "macos-hvf-host-service",
+    "--root",
+    "/private/tmp/kbox-nice-581649d8a124/diagnostic-nice-1/service",
+    "--shim",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+    "--system-image-manifest",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json"
+  ],
+  "hostPid": 98104,
+  "commands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "run",
+        "-d",
+        "--cpus",
+        "1",
+        "--memory",
+        "512",
+        "--network",
+        "none",
+        "--user",
+        "0",
+        "--cap-drop",
+        "ALL",
+        "--read-only",
+        "--tmpfs",
+        "/scratch:size=1m,mode=1777",
+        "--ulimit",
+        "nice=25:25",
+        "--ulimit",
+        "core=0:0",
+        "-v",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe:/nice-probe:ro",
+        "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+        "--",
+        "/bin/sleep",
+        "2147483647"
+      ],
+      "exitCode": 0,
+      "stdout": "38c34c69-c19e-4f41-bfa2-27e5f5d6d058\n",
+      "stderr": "Creating box tall_mccarthy (38c34c69c19e)...\n"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "inspect",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058"
+      ],
+      "exitCode": 0,
+      "stdout": "[\n  {\n    \"id\": \"38c34c69-c19e-4f41-bfa2-27e5f5d6d058\",\n    \"short_id\": \"38c34c69c19e\",\n    \"name\": \"tall_mccarthy\",\n    \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n    \"managed_execution\": {\n      \"operation_id\": \"cli-run-06464806-812a-4d66-a6a6-00cd3e29f8e1\",\n      \"creation_intent_digest\": \"sha256:60f67cbdb5e5676a3f2839251dd0a8b01b89e157c56ee6021d5a504fca77be4a\",\n      \"generation\": 1,\n      \"request\": {\n        \"external_sandbox_id\": \"cli-run-06464806-812a-4d66-a6a6-00cd3e29f8e1\",\n        \"config\": {\n          \"image\": \"docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\",\n          \"workspace\": \"\",\n          \"resources\": {\n            \"vcpus\": 1,\n            \"memory_mb\": 512,\n            \"disk_mb\": 4096,\n            \"timeout\": 3600\n          },\n          \"log_level\": \"Info\",\n          \"debug_grpc\": false,\n          \"tee\": {\n            \"kind\": \"none\"\n          },\n          \"cmd\": [\n            \"/bin/sleep\",\n            \"2147483647\"\n          ],\n          \"stdin_open\": false,\n          \"entrypoint_override\": null,\n          \"user\": \"0\",\n          \"workdir\": null,\n          \"hostname\": null,\n          \"volumes\": [\n            \"/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe:/nice-probe:ro\"\n          ],\n          \"virtiofs_cache\": null,\n          \"extra_env\": [\n            [\n              \"COREPACK_ENABLE_DOWNLOAD_PROMPT\",\n              \"0\"\n            ]\n          ],\n          \"cache\": {\n            \"enabled\": true,\n            \"cache_dir\": null,\n            \"max_rootfs_entries\": 10,\n            \"max_cache_bytes\": 10737418240\n          },\n          \"pool\": {\n            \"enabled\": false,\n            \"prewarm\": null,\n            \"min_idle\": 1,\n            \"max_size\": 5,\n            \"max_concurrent_boots\": 2,\n            \"idle_ttl_secs\": 300,\n            \"scaling\": {\n              \"enabled\": false,\n              \"scale_up_threshold\": 0.3,\n              \"scale_down_threshold\": 0.05,\n              \"max_min_idle\": 0,\n              \"cooldown_secs\": 60,\n              \"window_secs\": 120\n            },\n            \"snapshot_fork\": false\n          },\n          \"deferred_main\": false,\n          \"ksm\": false,\n          \"snapshot_mem_file\": null,\n          \"snapshot_sock\": null,\n          \"restore_from\": null,\n          \"port_map\": [],\n          \"dns\": [],\n          \"egress_allowed_names\": [],\n          \"add_hosts\": [],\n          \"network\": \"none\",\n          \"tmpfs\": [\n            \"/scratch:size=1m,mode=1777\"\n          ],\n          \"resource_limits\": {\n            \"pids_limit\": null,\n            \"cpuset_cpus\": null,\n            \"ulimits\": [\n              \"nice=25:25\",\n              \"core=0:0\"\n            ],\n            \"cpu_shares\": null,\n            \"cpu_quota\": null,\n            \"cpu_period\": null,\n            \"memory_reservation\": null,\n            \"memory_swap\": null,\n            \"sandbox_memory_limit_bytes\": null\n          },\n          \"cap_add\": [],\n          \"cap_drop\": [\n            \"ALL\"\n          ],\n          \"security_opt\": [],\n          \"sysctls\": [],\n          \"privileged\": false,\n          \"read_only\": true,\n          \"sidecar\": null,\n          \"persistent\": true\n        },\n        \"labels\": {},\n        \"policy\": {\n          \"name\": \"tall_mccarthy\",\n          \"auto_remove\": false,\n          \"restart_policy\": \"no\",\n          \"max_restart_count\": 0,\n          \"health_check\": null,\n          \"healthcheck_disabled\": false,\n          \"log_config\": {\n            \"driver\": \"json-file\",\n            \"options\": {}\n          },\n          \"volume_names\": [],\n          \"platform\": null,\n          \"init\": false,\n          \"devices\": [],\n          \"gpus\": null,\n          \"shm_size\": null,\n          \"stop_signal\": null,\n          \"stop_timeout\": null,\n          \"oom_kill_disable\": false,\n          \"oom_score_adj\": null,\n          \"managed_secret_root\": null\n        },\n        \"rootfs_snapshot_id\": null\n      },\n      \"oci_runtime\": {\n        \"schema_version\": \"kbox.oci-runtime-binding.v2\",\n        \"endpoint\": {\n          \"kind\": \"unix-socket\",\n          \"path\": \"/private/tmp/kbox-nice-581649d8a124/diagnostic-nice-1/service/runtime.sock\"\n        },\n        \"target\": {\n          \"id\": \"kbox-38c34c69-c19e-4f41-bfa2-27e5f5d6d058\",\n          \"generation\": 1\n        },\n        \"driver\": \"libk-hvf\",\n        \"isolation\": \"dedicated-vm\",\n        \"config_digest\": \"sha256:8771f99480106518f9c6207722151304ddbbf1f44212f0f94d96e2a10aa663a8\",\n        \"attachments_digest\": \"sha256:2a1ee55ff2fcb604fc521bc5294b85b569514484fd7e81882dd6d850e3d1ff73\"\n      },\n      \"caller_files\": {\n        \"/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe\": {\n          \"device\": 16777233,\n          \"inode\": 294592939\n        }\n      },\n      \"runtime_route\": \"oci_sdk\",\n      \"plan\": {\n        \"backend\": \"kbox\",\n        \"isolation_class\": \"hardware-vm\",\n        \"required_controls\": []\n      },\n      \"pending_operation\": null,\n      \"last_restart\": null,\n      \"last_resource_update\": null,\n      \"finished_at\": null,\n      \"paused_with_memory\": true\n    },\n    \"status\": \"running\",\n    \"pid\": null,\n    \"pid_start_time\": null,\n    \"cpus\": 1,\n    \"memory_mb\": 512,\n    \"volumes\": [\n      \"/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe:/nice-probe:ro\"\n    ],\n    \"virtiofs_cache\": null,\n    \"env\": {\n      \"COREPACK_ENABLE_DOWNLOAD_PROMPT\": \"0\"\n    },\n    \"cmd\": [\n      \"/bin/sleep\",\n      \"2147483647\"\n    ],\n    \"entrypoint\": null,\n    \"box_dir\": \"/private/tmp/kbox-nice-581649d8a124/diagnostic-nice-1/home/boxes/38c34c69-c19e-4f41-bfa2-27e5f5d6d058\",\n    \"exec_socket_path\": \"\",\n    \"console_log\": \"/private/tmp/kbox-nice-581649d8a124/diagnostic-nice-1/home/boxes/38c34c69-c19e-4f41-bfa2-27e5f5d6d058/logs/console.log\",\n    \"created_at\": \"2026-11-15T10:56:17.674912Z\",\n    \"started_at\": \"2026-11-15T10:56:27.264606Z\",\n    \"auto_remove\": false,\n    \"hostname\": null,\n    \"user\": \"0\",\n    \"workdir\": null,\n    \"restart_policy\": \"no\",\n    \"port_map\": [],\n    \"labels\": {},\n    \"stopped_by_user\": false,\n    \"restart_count\": 0,\n    \"max_restart_count\": 0,\n    \"exit_code\": null,\n    \"health_check\": null,\n    \"healthcheck_disabled\": false,\n    \"health_status\": \"none\",\n    \"health_retries\": 0,\n    \"health_last_check\": null,\n    \"network_mode\": \"none\",\n    \"network_name\": null,\n    \"volume_names\": [],\n    \"tmpfs\": [\n      \"/scratch:size=1m,mode=1777\"\n    ],\n    \"anonymous_volumes\": [],\n    \"resource_limits\": {\n      \"pids_limit\": null,\n      \"cpuset_cpus\": null,\n      \"ulimits\": [\n        \"nice=25:25\",\n        \"core=0:0\"\n      ],\n      \"cpu_shares\": null,\n      \"cpu_quota\": null,\n      \"cpu_period\": null,\n      \"memory_reservation\": null,\n      \"memory_swap\": null,\n      \"sandbox_memory_limit_bytes\": null\n    },\n    \"log_config\": {\n      \"driver\": \"json-file\",\n      \"options\": {}\n    },\n    \"add_host\": [],\n    \"platform\": null,\n    \"init\": false,\n    \"read_only\": true,\n    \"cap_add\": [],\n    \"cap_drop\": [\n      \"ALL\"\n    ],\n    \"security_opt\": [],\n    \"privileged\": false,\n    \"devices\": [],\n    \"gpus\": null,\n    \"shm_size\": null,\n    \"stop_signal\": null,\n    \"stop_timeout\": null,\n    \"oom_kill_disable\": false,\n    \"oom_score_adj\": null,\n    \"status_detail\": {\n      \"state\": \"running\",\n      \"summary\": \"running\",\n      \"active\": true,\n      \"restart_count\": 0\n    },\n    \"State\": {\n      \"Status\": \"running\",\n      \"Running\": true,\n      \"Paused\": false,\n      \"ExitCode\": null\n    }\n  }\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "exec",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058",
+        "--",
+        "/bin/cat",
+        "/proc/self/limits"
+      ],
+      "exitCode": 0,
+      "stdout": "Limit                     Soft Limit           Hard Limit           Units     \nMax cpu time              unlimited            unlimited            seconds   \nMax file size             unlimited            unlimited            bytes     \nMax data size             unlimited            unlimited            bytes     \nMax stack size            8388608              unlimited            bytes     \nMax core file size        0                    0                    bytes     \nMax resident set          unlimited            unlimited            bytes     \nMax processes             1661                 1661                 processes \nMax open files            1024                 1024                 files     \nMax locked memory         8388608              8388608              bytes     \nMax address space         unlimited            unlimited            bytes     \nMax file locks            unlimited            unlimited            locks     \nMax pending signals       1661                 1661                 signals   \nMax msgqueue size         819200               819200               bytes     \nMax nice priority         25                   25                   \nMax realtime priority     0                    0                    \nMax realtime timeout      unlimited            unlimited            us        \n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "exec",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058",
+        "--",
+        "/bin/cat",
+        "/proc/self/status"
+      ],
+      "exitCode": 0,
+      "stdout": "Name:\tcat\nUmask:\t0022\nState:\tR (running)\nTgid:\t4\nNgid:\t0\nPid:\t4\nPPid:\t0\nTracerPid:\t0\nUid:\t0\t0\t0\t0\nGid:\t0\t0\t0\t0\nFDSize:\t64\nGroups:\t \nNStgid:\t4\nNSpid:\t4\nNSpgid:\t4\nNSsid:\t0\nKthread:\t0\nVmPeak:\t    1772 kB\nVmSize:\t    1744 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t     856 kB\nVmRSS:\t     856 kB\nRssAnon:\t      48 kB\nRssFile:\t     808 kB\nRssShmem:\t       0 kB\nVmData:\t      84 kB\nVmStk:\t     132 kB\nVmExe:\t     840 kB\nVmLib:\t     656 kB\nVmPTE:\t      44 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t0\nuntag_mask:\t0xffffffffffffff\nThreads:\t1\nSigQ:\t0/1661\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000001000\nSigCgt:\t0000000000000000\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t0\nSeccomp_filters:\t0\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\tunknown\nCpus_allowed:\t1\nCpus_allowed_list:\t0\nMems_allowed:\t1\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4\nnonvoluntary_ctxt_switches:\t0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "exec",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058",
+        "--",
+        "/bin/cat",
+        "/proc/cmdline"
+      ],
+      "exitCode": 0,
+      "stdout": "reboot=k panic=-1 panic_print=0 nomodule console=hvc0 rootfstype=virtiofs rw quiet no-kvmapf init=/init.krun KRUN_INIT=/usr/bin/koci-agent KRUN_WORKDIR=/ KRUN_BLOCK_ROOT_DEVICE=/dev/vda KRUN_BLOCK_ROOT_FSTYPE=ext4 KRUN_BLOCK_ROOT_OPTIONS=ro  \"K_OCI_AGENT_SESSION_TOKEN_FILE=/run/koci-runtime/.koci-bootstrap-koci-agent-34bd28d2deb13184f54a32ca95625389/session-token\" \"K_OCI_AGENT_RUNTIME_SHARE=koci-runtime\" \"K_OCI_AGENT_VM_ATTACHMENT_MANIFEST_SHA256=sha256:0119e27700df7791770cf1dd3cb9967740a5418dfe5c5a28acd80a170361650b\" \"K_OCI_AGENT_RECOVERY_REPORT=/run/koci-runtime/.koci-recovery-koci-agent-34bd28d2deb13184f54a32ca95625389/report.json\" --\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "exec",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058",
+        "--",
+        "/nice-probe"
+      ],
+      "exitCode": 80,
+      "stdout": "",
+      "stderr": "probe line65: write(fd,mapping,(size_t)length)==length && close(fd)==0 errno1\nprobe line70: read(pipefd[0],&result,sizeof(result))==sizeof(result) errno0\n"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "rm",
+        "-f",
+        "38c34c69-c19e-4f41-bfa2-27e5f5d6d058"
+      ],
+      "exitCode": 0,
+      "stdout": "tall_mccarthy\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "exitCode": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-1/bin/kbox",
+        "volume",
+        "ls",
+        "--quiet"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "probeSha256": "71724cf0a438c5ee6d388b619e1f13b5e46993caa781d8708052da9ef17347d4",
+  "executionsAfter": [],
+  "volumesAfter": [],
+  "nativeAcceptance": false
+}

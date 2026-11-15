@@ -575,7 +575,7 @@ pub(super) fn volume_staging_path(
 pub(super) fn mount_tmpfs_volumes() -> Result<(), Box<dyn std::error::Error>> {
     #[cfg(target_os = "linux")]
     {
-        use nix::mount::{mount, MsFlags};
+        use nix::mount::mount;
 
         let mut index = 0;
         loop {
@@ -583,29 +583,22 @@ pub(super) fn mount_tmpfs_volumes() -> Result<(), Box<dyn std::error::Error>> {
             match std::env::var(&env_key) {
                 Ok(value) => {
                     let value = kbox_core::guest_exec::decode_guest_mount_spec(&value)?;
-                    let (path, options, read_only) = parse_tmpfs_mount(&value)?;
+                    let parsed = kbox_core::guest_exec::GuestTmpfsMount::parse(&value)?;
+                    let path = parsed.path();
+                    let options = parsed.data_options();
+                    let flags = tmpfs_mount_flags(&parsed);
 
                     info!(
                         path = path,
                         options = ?options,
-                        read_only = read_only,
+                        read_only = parsed.read_only(),
                         "Mounting tmpfs"
                     );
 
                     // Ensure mount point exists
                     std::fs::create_dir_all(path)?;
 
-                    mount(
-                        None::<&str>,
-                        path,
-                        Some("tmpfs"),
-                        if read_only {
-                            MsFlags::MS_RDONLY
-                        } else {
-                            MsFlags::empty()
-                        },
-                        options.as_deref(),
-                    )?;
+                    mount(None::<&str>, path, Some("tmpfs"), flags, options.as_deref())?;
 
                     index += 1;
                 }
@@ -626,43 +619,26 @@ pub(super) fn mount_tmpfs_volumes() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 
-pub(super) fn parse_tmpfs_mount(value: &str) -> std::io::Result<(&str, Option<String>, bool)> {
-    let (path, options) = value
-        .split_once(':')
-        .map_or((value, None), |(path, options)| (path, Some(options)));
-    if path.is_empty() || guest_mount_path_overlaps_runtime_state(path) {
-        return Err(std::io::Error::new(
-            std::io::ErrorKind::InvalidInput,
-            format!("invalid or reserved tmpfs mount path: {path:?}"),
-        ));
+#[cfg(target_os = "linux")]
+pub(super) fn tmpfs_mount_flags(
+    parsed: &kbox_core::guest_exec::GuestTmpfsMount<'_>,
+) -> nix::mount::MsFlags {
+    use kbox_core::guest_exec::TmpfsMountFlag;
+    use nix::mount::MsFlags;
+    let mut flags = MsFlags::empty();
+    for flag in parsed.flags() {
+        flags |= match flag {
+            TmpfsMountFlag::ReadOnly => MsFlags::MS_RDONLY,
+            TmpfsMountFlag::NoSuid => MsFlags::MS_NOSUID,
+            TmpfsMountFlag::NoDev => MsFlags::MS_NODEV,
+            TmpfsMountFlag::NoExec => MsFlags::MS_NOEXEC,
+            TmpfsMountFlag::ReadWrite
+            | TmpfsMountFlag::Suid
+            | TmpfsMountFlag::Dev
+            | TmpfsMountFlag::Exec => MsFlags::empty(),
+        };
     }
-
-    let mut data = Vec::new();
-    let mut read_only = None;
-    for option in options
-        .into_iter()
-        .flat_map(|options| options.split(','))
-        .filter(|option| !option.is_empty())
-    {
-        match option {
-            "ro" | "rw" => {
-                let requested = option == "ro";
-                if read_only.replace(requested).is_some() {
-                    return Err(std::io::Error::new(
-                        std::io::ErrorKind::InvalidInput,
-                        format!("tmpfs mount has duplicate or conflicting access modes: {value:?}"),
-                    ));
-                }
-            }
-            _ => data.push(option),
-        }
-    }
-
-    Ok((
-        path,
-        (!data.is_empty()).then(|| data.join(",")),
-        read_only.unwrap_or(false),
-    ))
+    flags
 }
 
 /// Remount the container rootfs as read-only if `BOX_READONLY=1` is set.
@@ -676,44 +652,9 @@ pub(super) fn remount_rootfs_readonly() -> Result<(), Box<dyn std::error::Error>
         return Ok(());
     }
 
-    use nix::mount::{mount, MsFlags};
-
     info!("Remounting rootfs as read-only (--read-only)");
-
-    // A direct `MS_REMOUNT|MS_RDONLY` of the virtio-fs root often fails with
-    // EBUSY. Fall back to the bind-remount trick (bind / onto itself, then
-    // remount that bind read-only), which succeeds where a direct remount
-    // cannot. If both fail, log and continue WRITABLE — a non-enforced
-    // --read-only is far less harmful than killing the container outright.
-    let direct = mount(
-        None::<&str>,
-        "/",
-        None::<&str>,
-        MsFlags::MS_REMOUNT | MsFlags::MS_RDONLY,
-        None::<&str>,
-    );
-    if direct.is_ok() {
-        info!("Rootfs remounted read-only");
-        return Ok(());
-    }
-
-    let bind = mount(Some("/"), "/", None::<&str>, MsFlags::MS_BIND, None::<&str>).and_then(|_| {
-        mount(
-            None::<&str>,
-            "/",
-            None::<&str>,
-            MsFlags::MS_REMOUNT | MsFlags::MS_BIND | MsFlags::MS_RDONLY,
-            None::<&str>,
-        )
-    });
-    match bind {
-        Ok(()) => info!("Rootfs remounted read-only (via bind)"),
-        Err(error) => warn!(
-            %error,
-            direct_error = ?direct.err(),
-            "Could not remount rootfs read-only; container runs writable"
-        ),
-    }
+    kbox_guest_init::exec_server::remount_rootfs_readonly("/")?;
+    info!("Rootfs remounted and verified read-only");
     Ok(())
 }
 

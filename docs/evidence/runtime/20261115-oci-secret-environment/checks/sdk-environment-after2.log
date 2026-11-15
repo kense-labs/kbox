@@ -1,0 +1,10 @@
+
+running 5 tests
+test attachment::memory_secret_files_tests::memory_secret_environment_cannot_reuse_files_only_v1_semantics ... ok
+test attachment::memory_secret_files_tests::memory_secret_environment_requires_explicit_v2_and_old_capability_refusal ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_cannot_drop_required_classification_or_write_access ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 220 filtered out; finished in 0.03s
+

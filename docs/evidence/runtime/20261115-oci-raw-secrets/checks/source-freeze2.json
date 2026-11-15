@@ -1,0 +1,12 @@
+{
+  "sourceInputsSha256": "540b51f53a939c18fcf86f065886157bade3116e377e353e67cd0e5332ecad19",
+  "files": 1703,
+  "changedFrom1": [
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs.rs",
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs_disk_tests.rs",
+    "crates/box/runtime/src/rootfs/ext4_cache.rs",
+    "crates/box/runtime/src/rootfs/mod.rs"
+  ],
+  "ociSourcesUnchanged": true,
+  "ociOriginalSourceInputsSha256": "c07659de97c45cd962d08dd29f49e882ac9266bed570226b116af767bbc1734c"
+}

@@ -1,0 +1,81 @@
+
+running 71 tests
+test recovery::tests::decoder_enforces_the_wire_size_before_parsing ... ok
+test recovery::tests::record_requires_an_exact_target_and_canonical_digest ... ok
+test recovery::tests::hmac_matches_an_independently_calculated_sha256_vector ... ok
+test fault::tests::combined_stage_registry_round_trips_stable_names ... ok
+test qualification::tests::qualification_round_trip_binds_guest_stage_and_operation_id ... ok
+test qualification::tests::qualification_rejects_host_stages_and_unknown_evidence_schemas ... ok
+test qualification::tests::base64_handoff_round_trip_is_quote_free_and_bounded ... ok
+test inherited_descriptor::tests::kbox_schema_is_stable_and_contains_no_source_identity ... ok
+test recovery::tests::report_is_sorted_authenticated_and_round_trips ... ok
+test tests::acknowledgement::acknowledgement_validation_is_nonempty_unique_and_bounded ... ok
+test recovery::tests::report_rejects_tampering_and_the_wrong_session ... ok
+test tests::protocol::explicit_close_drops_the_transport_while_client_clones_remain ... ok
+test tests::acknowledgement::pre_v10_clients_preserve_the_acknowledgement_noop ... ok
+test tests::acknowledgement::protocol_v10_routes_bounded_operation_acknowledgements ... ok
+test tests::process::protocol_v6_filters_and_rejects_forged_v7_terminal_resize ... ok
+test tests::process::protocol_v5_filters_and_rejects_forged_v6_process_io ... ok
+test tests::protocol::protocol_v1_rejects_a_forged_wait_before_service_dispatch ... ok
+test tests::protocol::rejects_oversized_frames_before_reading_the_payload ... ok
+test tests::protocol::rejects_wrong_session_tokens_and_incompatible_versions ... ok
+test tests::protocol::secrets_are_redacted_and_guest_paths_are_normalized ... ok
+test tests::process::protocol_v2_filters_and_rejects_forged_v3_process_operations ... ok
+test tests::process::mismatched_exec_process_response_permanently_poisons_the_connection ... ok
+test tests::protocol::explicit_close_is_clone_wide_idempotent_and_stops_the_server ... ok
+test tests::protocol::rejects_tampered_bundle_digests_before_guest_dispatch ... ok
+test tests::protocol::explicit_close_waits_for_an_in_flight_request_before_closing_the_stream ... ok
+test tests::protocol::correlation_failure_permanently_poisoned_the_client_connection ... ok
+test tests::response_replay::transport_fault_registries_cover_every_current_operation_and_stage ... ok
+test tests::response_replay::every_host_shutdown_fault_releases_the_connection ... ok
+test tests::process::protocol_v7_resizes_one_exact_process_terminal ... ok
+test tests::protocol::protocol_nine_round_trips_generation_fenced_filesystem_requests ... ok
+test transport::tests::generates_a_valid_unguessable_endpoint_name ... ok
+test transport::tests::generates_nonzero_redacted_session_tokens ... ok
+test transport::tests::negotiation_only_capabilities_do_not_overclaim_an_executor ... ok
+test tests::response_replay::validation_failure_only_crosses_guest_response_write_stages ... ok
+test transport::tests::validates_an_exact_windows_agent_pipe_basename ... ok
+test tests::response_replay::host_fault_injector_reports_versioned_operation_and_shutdown_stages ... ok
+test tests::protocol::negotiates_and_round_trips_the_core_oci_lifecycle ... ok
+test tests::protocol::protocol_v2_wait_returns_and_replays_the_exact_exit_status ... ok
+test tests::process::protocol_v3_exec_signal_and_wait_are_exactly_process_scoped ... ok
+test tests::process::protocol_v8_requires_durable_context_for_process_io_mutations ... ok
+test tests::process::protocol_v6_captures_output_and_controls_stdin ... ok
+test tests::transport_failures::cancelled_request_poisons_and_releases_the_transport ... ok
+test tests::transport_failures::request_write_failure_releases_the_transport_while_client_clones_remain ... ok
+test tests::transport_failures::response_disconnect_releases_the_transport_while_client_clones_remain ... ok
+test tests::process::protocol_v5_updates_resources_and_returns_typed_stats ... ok
+test tests::response_replay::every_host_operation_fault_poisons_and_releases_the_connection ... ok
+test tests::response_replay::response_loss_after_guest_dispatch_replays_one_exact_create_effect ... ok
+test tests::process::protocol_v4_freezes_and_lists_one_exact_container_generation ... ok
+test vm_attachment::directory_tests::directory_transport_binds_public_access_source_and_guest_mapping ... ok
+test tests::protocol::transports_two_independently_fenced_container_generations ... ok
+test vm_attachment::directory_tests::rejects_duplicate_directory_inodes_and_mounts ... ok
+test vm_attachment::file_tests::files_are_explicit_v6_and_require_exact_bundle_incarnation ... ok
+test vm_attachment::directory_tests::rejects_rebinding_directory_source_access_tag_identity_or_schema ... ok
+test vm_attachment::tests::mac_derivation_has_an_architecture_independent_vector ... ok
+test vm_attachment::directory_tests::rejects_directory_grants_without_an_oci_bind_mount ... ok
+test vm_attachment::directory_tests::workload_rootfs_v5_binds_content_and_refuses_legacy_reinterpretation ... ok
+test vm_attachment::directory_tests::workload_readonly_root_v2_manifest_binds_the_exact_bundle_view ... ok
+test vm_attachment::file_tests::nproc_requires_explicit_v10_without_reinterpreting_prior_transports ... ok
+test vm_attachment::file_tests::memory_secret_files_require_a_new_manifest_and_refuse_downgrade ... ok
+test vm_attachment::directory_tests::restricted_directories_cannot_downgrade_or_drop_the_host_enforcement_binding ... ok
+test vm_attachment::tests::raw_storage_round_trips_with_exact_serial_access_and_schema ... ok
+test vm_attachment::tests::raw_storage_rejects_source_access_identity_and_block_rebinding ... ok
+test vm_attachment::file_tests::memory_secret_environment_requires_manifest_v9_and_refuses_files_only_downgrade ... ok
+test vm_attachment::raw_storage::tests::combined_storage_refuses_cross_kind_object_allocation_and_serial_aliases ... ok
+test vm_attachment::raw_storage::tests::combined_storage_is_explicit_v7_and_does_not_reinterpret_legacy_manifest_versions ... ok
+test vm_attachment::tests::rejects_joined_namespaces_and_configuration_drift ... ok
+test vm_attachment::tests::round_trips_and_binds_the_exact_oci_configuration ... ok
+test vm_attachment::tests::rejects_reordered_duplicates_and_digest_drift ... ok
+test vm_attachment::raw_storage::tests::nproc_guard_keeps_raw_storage_file_and_rootfs_transport_semantics ... ok
+test vm_attachment::raw_storage::tests::raw_memory_files_require_v11_and_preserve_nproc_envelope_and_old_transports ... ok
+test tests::fault_matrix::every_current_operation_crosses_every_versioned_transport_fault_stage ... ok
+
+test result: ok. 71 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

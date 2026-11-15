@@ -1,0 +1,27 @@
+
+running 14 tests
+test macos_vm_attachment::storage::tests::raw_storage_sandbox_child ... ignored, invoked by parent in an owned native sandbox process
+test macos_vm_attachment::tests::pins_caller_directory_without_changing_its_permissions ... ok
+test macos_vm_attachment::tests::pins_restrictions_from_the_same_configuration_as_the_directory_grant ... ok
+test macos_vm_attachment::tests::rejects_missing_or_wrong_digest_and_changed_manifest ... ok
+test macos_vm_attachment::file::tests::pinned_file_reverifies_identity_without_freezing_live_bytes ... ok
+test macos_vm_attachment::tests::rejects_shared_or_hardlinked_control_manifest ... ok
+test macos_vm_attachment::tests::rejects_directory_replacement_before_open_and_before_vm_entry ... ok
+
+running 1 test
+{"childExecDenial":1,"hostDenials":{"append":1,"delete":1,"descriptor-reopen":1,"hardlink":1,"parent-create":1,"rename":1,"replace":1,"rw-delete":1,"rw-rename":1,"symlink":1,"truncate":1,"write":1},"retainedRoFdWrite":9,"threadDenial":1,"writableControl":true}
+test macos_vm_attachment::storage::tests::raw_storage_sandbox_child ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 83 filtered out; finished in 0.29s
+
+
+test macos_vm_attachment::storage::tests::raw_storage_host_sandbox_denies_ro_mutations_and_preserves_exact_rw_authority ... ok
+test macos_vm_attachment::workload_tests::workload_disk_pin_refuses_aliases_and_insecure_permissions ... ok
+test macos_vm_attachment::storage::tests::raw_ro_pin_refuses_inherited_writers_and_changed_capacity ... ok
+test macos_vm_attachment::tests::pins_v7_raw_inventory_and_rejects_source_replacement_before_vm_entry ... ok
+test macos_vm_attachment::storage::tests::raw_pin_keeps_exact_descriptor_access_identity_and_private_unaliased_source ... ok
+test macos_vm_attachment::storage::tests::raw_disk_pins_serialize_writers_and_allow_only_shared_readers ... ok
+test macos_vm_attachment::workload_tests::workload_disk_pin_refuses_content_change_and_inode_replacement_at_vm_entry ... ok
+
+test result: ok. 13 passed; 0 failed; 1 ignored; 0 measured; 70 filtered out; finished in 0.79s
+

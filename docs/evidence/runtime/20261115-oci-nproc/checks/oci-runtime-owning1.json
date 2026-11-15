@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 448.715919959
+}

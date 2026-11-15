@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-cli",
+    "per_uid_cli_defaults",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 27.679283249999997
+}

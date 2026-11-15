@@ -1,0 +1,54 @@
+[
+  {
+    "file": "crates/box/runtime/README.md",
+    "target": "../../../../docs/evidence/desktop/20261017-paperloom-secret-readonly-admission/OUTCOME.md"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/run.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/meta_harness.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/loop_checkpoint.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/fact_control.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/completion_attestor.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/context/mod.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/durable_memory.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/tools/mod.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/lib.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/task_scheduler.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../crates/code/core/src/budget.rs"
+  },
+  {
+    "file": "docs/architecture/harness-gateway.md",
+    "target": "../../apps/gateway/src/lib.rs"
+  }
+]

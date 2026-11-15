@@ -1,0 +1,44 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.21s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 4 tests
+test macos_worker_sandbox::file_tests::file_projection_child ... ignored, invoked by parent in a disposable native sandbox process
+test macos_worker_sandbox::tests::confined_worker_child ... ignored, entered only by the parent test in a disposable subprocess
+test macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority ... FAILED
+test macos_worker_sandbox::tests::worker_cannot_read_write_connect_or_exec_outside_its_grants ... ok
+
+failures:
+
+---- macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority stdout ----
+
+thread 'macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority' (84757364) panicked at crates/oci-runtime/crates/kbox/src/macos_file_grant_sandbox_tests.rs:55:5:
+
+running 1 test
+test macos_worker_sandbox::file_tests::file_projection_child ... FAILED
+
+failures:
+
+failures:
+    macos_worker_sandbox::file_tests::file_projection_child
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 74 filtered out; finished in 0.01s
+
+
+
+thread 'macos_worker_sandbox::file_tests::file_projection_child' (84757368) panicked at crates/oci-runtime/crates/kbox/src/macos_file_grant_sandbox_tests.rs:108:5:
+assertion failed: preopened.write_all_at(b"illegal", 0).is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority
+
+test result: FAILED. 1 passed; 1 failed; 2 ignored; 0 measured; 71 filtered out; finished in 0.17s
+
+error: test failed, to rerun pass `-p koci-kbox --lib`

@@ -1,0 +1,79 @@
+{
+  "utc": "2026-11-14T03:09:30.204428+00:00",
+  "command": [
+    "hdiutil",
+    "info",
+    "-plist"
+  ],
+  "privateHomes": [
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-oci/9488f9ae355648a296fcd57214693f33/home",
+      "executionArtifacts": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-readonly/7fa92f86f25348f38fb5e0be6ef8eda7/home",
+      "executionArtifacts": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-primary/1f06ca454cf8463a9b45c7c3607a6646/home",
+      "executionArtifacts": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-prewarm/53640c085be94b0a85e4f848d025c2ca/k-home",
+      "executionArtifacts": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-qualified-92aff37c9486411a905f7b113bdd1655/native-directory-qualified/home",
+      "executionArtifacts": []
+    }
+  ],
+  "ownedVmProcesses": [],
+  "ramDevices": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "priorFixtureDeviceIds": [
+    "/dev/disk10",
+    "/dev/disk11",
+    "/dev/disk4",
+    "/dev/disk6",
+    "/dev/disk7",
+    "/dev/disk8",
+    "/dev/disk9"
+  ],
+  "newRamDeviceIds": [],
+  "note": "Read-only inventory; no disk detach or user cleanup performed. Seven earlier foreign fixtures retained."
+}

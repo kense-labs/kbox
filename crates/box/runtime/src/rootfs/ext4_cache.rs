@@ -504,7 +504,7 @@ fn try_reflink(source: &Path, destination: &Path) -> Result<bool> {
 /// as a normal byte stream would turn a harmless fallback into a host-disk
 /// exhaustion event, so the fallback is explicitly extent preserving and
 /// fails closed when the filesystem cannot report sparse extents.
-fn copy_sparse_file(source: &Path, destination: &Path) -> Result<()> {
+pub(crate) fn copy_sparse_file(source: &Path, destination: &Path) -> Result<()> {
     let mut source_file = File::open(source).map_err(BoxError::IoError)?;
     let source_metadata = source_file.metadata().map_err(BoxError::IoError)?;
     if !source_metadata.is_file() {

@@ -1,0 +1,128 @@
+   Compiling utils v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/utils)
+warning: unused import: `std::sync::OnceLock`
+ --> src/utils/src/time.rs:5:5
+  |
+5 | use std::sync::OnceLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Instant`, `SystemTime`, and `UNIX_EPOCH`
+ --> src/utils/src/time.rs:6:17
+  |
+6 | use std::time::{Instant, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^
+
+   Compiling arch v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/arch)
+   Compiling polly v0.0.1 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/polly)
+error[E0308]: mismatched types
+   --> src/utils/src/macos/epoll.rs:348:17
+    |
+345 |             .ctl(
+    |              --- arguments to this method are incorrect
+...
+348 |                 event_1
+    |                 ^^^^^^^ expected `&EpollEvent`, found `EpollEvent`
+    |
+note: method defined here
+   --> src/utils/src/macos/epoll.rs:137:12
+    |
+137 |     pub fn ctl(
+    |            ^^^
+...
+141 |         event: &EpollEvent,
+    |         ------------------
+help: consider borrowing here
+    |
+348 |                 &event_1
+    |                 +
+
+error[E0308]: mismatched types
+   --> src/utils/src/macos/epoll.rs:360:17
+    |
+355 |             .ctl(
+    |              --- arguments to this method are incorrect
+...
+360 |                 EpollEvent::new(EventSet::IN, 10)
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `&EpollEvent`, found `EpollEvent`
+    |
+note: method defined here
+   --> src/utils/src/macos/epoll.rs:137:12
+    |
+137 |     pub fn ctl(
+    |            ^^^
+...
+141 |         event: &EpollEvent,
+    |         ------------------
+help: consider borrowing here
+    |
+360 |                 &EpollEvent::new(EventSet::IN, 10)
+    |                 +
+
+error[E0061]: this method takes 3 arguments but 2 arguments were supplied
+   --> src/utils/src/macos/epoll.rs:366:34
+    |
+366 |         let mut ev_count = epoll.wait(DEFAULT__TIMEOUT, &mut ready_events[..]).unwrap();
+    |                                  ^^^^ ---------------- argument #1 of type `usize` is missing
+    |
+note: method defined here
+   --> src/utils/src/macos/epoll.rs:234:12
+    |
+234 |     pub fn wait(
+    |            ^^^^
+235 |         &self,
+236 |         max_events: usize,
+    |         -----------------
+help: provide the argument
+    |
+366 |         let mut ev_count = epoll.wait(/* usize */, DEFAULT__TIMEOUT, &mut ready_events[..]).unwrap();
+    |                                       ++++++++++++
+
+error[E0308]: mismatched types
+   --> src/utils/src/macos/epoll.rs:385:17
+    |
+382 |             .ctl(
+    |              --- arguments to this method are incorrect
+...
+385 |                 EpollEvent::default()
+    |                 ^^^^^^^^^^^^^^^^^^^^^ expected `&EpollEvent`, found `EpollEvent`
+    |
+note: method defined here
+   --> src/utils/src/macos/epoll.rs:137:12
+    |
+137 |     pub fn ctl(
+    |            ^^^
+...
+141 |         event: &EpollEvent,
+    |         ------------------
+help: consider borrowing here
+    |
+385 |                 &EpollEvent::default()
+    |                 +
+
+error[E0061]: this method takes 3 arguments but 2 arguments were supplied
+   --> src/utils/src/macos/epoll.rs:390:26
+    |
+390 |         ev_count = epoll.wait(DEFAULT__TIMEOUT, &mut ready_events[..]).unwrap();
+    |                          ^^^^ ---------------- argument #1 of type `usize` is missing
+    |
+note: method defined here
+   --> src/utils/src/macos/epoll.rs:234:12
+    |
+234 |     pub fn wait(
+    |            ^^^^
+235 |         &self,
+236 |         max_events: usize,
+    |         -----------------
+help: provide the argument
+    |
+390 |         ev_count = epoll.wait(/* usize */, DEFAULT__TIMEOUT, &mut ready_events[..]).unwrap();
+    |                               ++++++++++++
+
+   Compiling hvf v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/hvf)
+warning: `utils` (lib) generated 2 warnings (2 duplicates)
+Some errors have detailed explanations: E0061, E0308.
+For more information about an error, try `rustc --explain E0061`.
+warning: `utils` (lib test) generated 2 warnings
+error: could not compile `utils` (lib test) due to 5 previous errors; 2 warnings emitted
+warning: build failed, waiting for other jobs to finish...

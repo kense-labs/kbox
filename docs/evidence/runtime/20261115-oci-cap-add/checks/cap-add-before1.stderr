@@ -1,0 +1,877 @@
+   Compiling libc v0.2.189
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling unicode-ident v1.0.27
+   Compiling cfg-if v1.0.5
+   Compiling find-msvc-tools v0.1.15
+   Compiling shlex v2.0.1
+   Compiling serde_core v1.0.229
+   Compiling version_check v0.9.5
+   Compiling serde v1.0.229
+   Compiling memchr v2.8.3
+   Compiling typenum v1.20.1
+   Compiling itoa v1.0.18
+   Compiling once_cell v1.21.4
+   Compiling subtle v2.6.1
+   Compiling smallvec v1.16.4
+   Compiling parking_lot_core v0.9.12
+   Compiling pin-project-lite v0.2.17
+   Compiling const-oid v0.9.6
+   Compiling scopeguard v1.2.0
+   Compiling pkg-config v0.3.34
+   Compiling autocfg v1.5.1
+   Compiling lock_api v0.4.14
+   Compiling bitflags v2.13.2
+   Compiling zmij v1.0.23
+   Compiling generic-array v0.14.7
+   Compiling getrandom v0.3.4
+   Compiling log v0.4.35
+   Compiling futures-core v0.3.34
+   Compiling fnv v1.0.7
+   Compiling rustix v1.1.6
+   Compiling serde_json v1.0.151
+   Compiling tracing-core v0.1.36
+   Compiling zerocopy v0.8.63
+   Compiling num-traits v0.2.19
+   Compiling futures-sink v0.3.34
+   Compiling equivalent v1.0.3
+   Compiling regex-syntax v0.8.11
+   Compiling percent-encoding v2.3.2
+   Compiling aho-corasick v1.1.5
+   Compiling thiserror v2.0.20
+   Compiling thiserror v1.0.69
+   Compiling slab v0.4.12
+   Compiling core-foundation-sys v0.8.7
+   Compiling futures-channel v0.3.34
+   Compiling unicode-joining-type v1.0.0
+   Compiling base64 v0.22.1
+   Compiling regex-automata v0.4.18
+   Compiling dunce v1.0.5
+   Compiling futures-task v0.3.34
+   Compiling lazy_static v1.5.1
+   Compiling ipnet v2.12.2
+   Compiling futures-io v0.3.34
+   Compiling fs_extra v1.3.0
+   Compiling tinyvec v1.13.3
+   Compiling strsim v0.11.1
+   Compiling base64ct v1.6.0
+   Compiling unicode-normalization v0.1.24
+   Compiling httparse v1.10.1
+   Compiling syn v2.0.119
+   Compiling syn v3.0.9
+   Compiling pem-rfc7468 v0.7.0
+   Compiling flagset v0.4.7
+   Compiling ident_case v1.0.1
+   Compiling unicode-bidi v0.3.18
+   Compiling heck v0.5.0
+   Compiling regex v1.12.4
+   Compiling untrusted v0.9.0
+   Compiling data-encoding v2.11.1
+   Compiling tower-service v0.3.3
+   Compiling utf8_iter v1.0.4
+   Compiling io-lifetimes v2.0.4
+   Compiling hashbrown v0.16.1
+   Compiling aws-lc-rs v1.19.0
+   Compiling io-lifetimes v3.0.1
+   Compiling darling_core v0.20.11
+   Compiling indexmap v2.13.1
+   Compiling serde_derive v1.0.229
+   Compiling tokio-macros v2.7.2
+   Compiling jobserver v0.1.34
+   Compiling cc v1.4.7
+   Compiling errno v0.3.14
+   Compiling signal-hook-registry v1.4.8
+   Compiling parking_lot v0.12.5
+   Compiling mio v1.2.4
+   Compiling zeroize_derive v1.4.3
+   Compiling socket2 v0.6.5
+   Compiling getrandom v0.2.17
+   Compiling zeroize v1.8.2
+   Compiling cpufeatures v0.2.17
+   Compiling tracing-attributes v0.1.31
+   Compiling thiserror-impl v1.0.69
+   Compiling thiserror-impl v2.0.20
+   Compiling cmake v0.1.54
+   Compiling sha2-asm v0.6.4
+   Compiling futures-macro v0.3.34
+   Compiling aws-lc-sys v0.47.0
+   Compiling ring v0.17.14
+   Compiling tracing v0.1.44
+   Compiling rand_core v0.6.4
+   Compiling der_derive v0.7.3
+   Compiling futures-util v0.3.34
+   Compiling darling_macro v0.20.11
+   Compiling ahash v0.8.12
+   Compiling ref-cast v1.0.25
+   Compiling crossbeam-utils v0.8.23
+   Compiling num-integer v0.1.47
+   Compiling time-core v0.1.9
+   Compiling num-bigint v0.4.8
+   Compiling semver v1.0.28
+   Compiling io-extras v0.19.0
+   Compiling num-conv v0.2.2
+   Compiling atomic-waker v1.1.2
+   Compiling try-lock v0.2.5
+   Compiling want v0.3.2
+   Compiling num-rational v0.4.2
+   Compiling time-macros v0.2.32
+   Compiling num-iter v0.1.46
+   Compiling num-complex v0.4.6
+   Compiling ppv-lite86 v0.2.21
+   Compiling idna_mapping v1.1.0
+   Compiling darling v0.20.11
+   Compiling idna_adapter v1.1.0
+   Compiling idna v1.1.0
+   Compiling ref-cast-impl v1.0.25
+   Compiling async-trait v0.1.92
+   Compiling fastrand v2.5.0
+   Compiling deranged v0.5.9
+   Compiling httpdate v1.0.3
+   Compiling minimal-lexical v0.2.1
+   Compiling cap-primitives v4.0.3
+   Compiling ryu v1.0.20
+   Compiling powerfmt v0.2.0
+   Compiling time v0.3.55
+   Compiling crypto-common v0.1.7
+   Compiling block-buffer v0.10.4
+   Compiling digest v0.10.7
+   Compiling hmac v0.12.1
+   Compiling der v0.7.10
+   Compiling sha2 v0.10.9
+   Compiling rustls-pki-types v1.15.1
+   Compiling nom v7.1.3
+   Compiling bytes v1.12.1
+   Compiling tokio v1.53.3
+   Compiling http v1.5.0
+   Compiling http-body v1.1.0
+   Compiling fs-set-times v0.20.3
+   Compiling tempfile v3.27.0
+   Compiling num v0.4.3
+   Compiling ff v0.13.1
+   Compiling lzma-sys v0.1.20
+   Compiling security-framework-sys v2.17.0
+   Compiling socket2 v0.5.10
+   Compiling core-foundation v0.9.4
+   Compiling synstructure v0.13.2
+   Compiling form_urlencoded v1.2.2
+   Compiling sync_wrapper v1.0.2
+   Compiling ambient-authority v0.0.2
+   Compiling crossbeam-epoch v0.9.21
+   Compiling borrow-or-share v0.2.4
+   Compiling tower-layer v0.3.3
+   Compiling rustls v0.23.46
+   Compiling unicode-general-category v1.1.0
+   Compiling getrandom v0.4.3
+   Compiling foldhash v0.2.0
+   Compiling base16ct v0.2.0
+   Compiling maybe-owned v0.3.4
+   Compiling native-tls v0.2.13
+   Compiling unicode-xid v0.2.6
+   Compiling allocator-api2 v0.2.21
+   Compiling cap-std v4.0.2
+   Compiling bit-vec v0.8.0
+   Compiling hashbrown v0.17.1
+   Compiling bit-set v0.8.0
+   Compiling const_format_proc_macros v0.2.34
+   Compiling asn1-rs-derive v0.5.1
+   Compiling security-framework v2.11.1
+   Compiling group v0.13.0
+   Compiling fraction v0.15.4
+   Compiling http-body-util v0.1.5
+   Compiling rusticata-macros v4.1.0
+   Compiling hkdf v0.12.4
+   Compiling crypto-bigint v0.5.5
+   Compiling rand_core v0.9.5
+   Compiling zstd-sys v2.1.2+zstd.1.5.7
+   Compiling strum_macros v0.28.0
+   Compiling displaydoc v0.2.6
+   Compiling derive_builder_core v0.20.2
+   Compiling asn1-rs-impl v0.2.0
+   Compiling is-terminal v0.4.17
+   Compiling filetime v0.2.27
+   Compiling iana-time-zone v0.1.65
+   Compiling indexmap v1.9.3
+   Compiling cap-fs-ext v4.0.2
+   Compiling num-cmp v0.1.0
+   Compiling vsimd v0.8.0
+   Compiling derive_builder_macro v0.20.2
+   Compiling outref v0.5.2
+   Compiling mime v0.3.17
+   Compiling utf8parse v0.2.2
+   Compiling crossbeam-deque v0.8.8
+   Compiling bytecount v0.6.9
+   Compiling micromap v0.3.0
+   Compiling unicase v2.10.0
+   Compiling crc32fast v1.5.3
+   Compiling mime_guess v2.0.5
+   Compiling jsonschema-value v0.48.5
+   Compiling anstyle-parse v1.0.0
+   Compiling strum v0.28.0
+   Compiling derive_builder v0.20.2
+   Compiling asn1-rs v0.6.2
+   Compiling spki v0.7.3
+   Compiling pkcs8 v0.10.2
+   Compiling sec1 v0.7.3
+   Compiling elliptic-curve v0.13.8
+   Compiling uuid-simd v0.8.0
+   Compiling xattr v1.6.1
+   Compiling chrono v0.4.45
+   Compiling tokio-util v0.7.19
+   Compiling h2 v0.4.20
+   Compiling tower v0.5.3
+   Compiling is_terminal_polyfill v1.48.2
+   Compiling rand_chacha v0.9.0
+   Compiling const_format v0.2.35
+   Compiling fancy-regex v0.18.0
+   Compiling email_address v0.2.9
+   Compiling webpki-roots v1.0.11
+   Compiling rustc_version v0.4.1
+   Compiling strum_macros v0.27.2
+   Compiling getset v0.1.7
+   Compiling jsonschema-regex v0.48.5
+   Compiling anstyle-query v1.1.1
+   Compiling option-ext v0.2.0
+   Compiling strum v0.27.2
+   Compiling rayon-core v1.13.0
+   Compiling colorchoice v1.0.2
+   Compiling heapless v0.8.0
+   Compiling hyper v1.12.0
+   Compiling hashbrown v0.12.3
+   Compiling anstyle v1.0.14
+   Compiling simd-adler32 v0.3.10
+   Compiling adler2 v2.0.1
+   Compiling oid-registry v0.7.1
+   Compiling sha1_smol v1.0.1
+   Compiling byteorder v1.5.0
+   Compiling rustversion v1.0.23
+   Compiling hash32 v0.3.1
+   Compiling uuid v1.26.1
+   Compiling miniz_oxide v0.9.1
+   Compiling anstream v1.0.0
+   Compiling fluent-uri v0.4.1
+   Compiling hyper-util v0.1.19
+   Compiling xz2 v0.1.7
+   Compiling referencing v0.48.5
+   Compiling dirs-sys v0.4.1
+   Compiling crc32c v0.6.8
+   Compiling webpki-roots v0.26.11
+   Compiling rand v0.9.5
+   Compiling tokio-native-tls v0.3.1
+   Compiling tar v0.4.46
+   Compiling koci-core v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/core)
+   Compiling url v2.5.8
+   Compiling serde_urlencoded v0.7.1
+   Compiling rfc6979 v0.4.0
+   Compiling sha1 v0.10.7
+   Compiling signature v2.2.0
+   Compiling bzip2-sys v0.1.13+1.0.8
+   Compiling serde_ignored v0.1.14
+   Compiling protobuf v3.7.2
+   Compiling clap_lex v1.0.1
+   Compiling stable_deref_trait v1.2.1
+   Compiling utf-8 v0.7.6
+   Compiling zstd-safe v7.3.0
+   Compiling smoltcp v0.11.0
+   Compiling unsafe-libyaml v0.2.11
+   Compiling ryu-js v1.0.3
+   Compiling kense-kcl v0.3.0 (/Users/roylin/code/kense/kcl)
+   Compiling tungstenite v0.26.2
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling jsonschema v0.48.5
+   Compiling clap_builder v4.6.7
+   Compiling ecdsa v0.16.9
+   Compiling tower-http v0.6.11
+   Compiling hyper-tls v0.6.0
+   Compiling flate2 v1.1.10
+   Compiling dirs v5.0.1
+   Compiling kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+   Compiling primeorder v0.13.6
+   Compiling protobuf-support v3.7.2
+   Compiling clap_derive v4.6.7
+   Compiling base64 v0.13.1
+   Compiling either v1.19.0
+   Compiling prometheus v0.14.0
+   Compiling managed v0.8.0
+   Compiling serde_yaml v0.9.21
+   Compiling bitflags v1.3.2
+   Compiling clap v4.6.7
+   Compiling jwt v0.16.0
+   Compiling tokio-tungstenite v0.26.2
+   Compiling yasna v0.5.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling futures-executor v0.3.34
+   Compiling olpc-cjson v0.1.4
+   Compiling rand_chacha v0.3.1
+   Compiling axum-macros v0.5.0
+   Compiling fs2 v0.4.3
+   Compiling serde_path_to_error v0.1.20
+   Compiling matchers v0.2.0
+   Compiling sharded-slab v0.1.7
+   Compiling pem v3.0.6
+   Compiling tracing-log v0.2.0
+   Compiling http-auth v0.1.9
+   Compiling thread_local v1.1.10
+   Compiling axum-core v0.5.2
+   Compiling libloading v0.8.9
+   Compiling nu-ansi-term v0.50.3
+   Compiling hashbrown v0.14.5
+   Compiling matchit v0.8.4
+   Compiling tracing-subscriber v0.3.23
+   Compiling dashmap v6.2.1
+   Compiling kbox-contract v0.8.0 (/Users/roylin/code/kense/kbox/crates/runtime)
+   Compiling rayon v1.12.0
+   Compiling rand v0.8.8
+   Compiling futures v0.3.34
+   Compiling p384 v0.13.1
+   Compiling p256 v0.13.2
+   Compiling tokio-stream v0.1.19
+   Compiling x509-cert v0.2.5
+   Compiling hex v0.4.3
+   Compiling sysinfo v0.30.13
+   Compiling bzip2 v0.5.2
+   Compiling kbox-mkext4 v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/third_party/mkext4)
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+   Compiling zstd v0.13.3
+   Compiling kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+   Compiling axum v0.8.4
+   Compiling der-parser v9.0.0
+   Compiling x509-parser v0.16.0
+   Compiling rcgen v0.13.2
+   Compiling rustls-webpki v0.103.16
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling tokio-rustls v0.26.6
+   Compiling hyper-rustls v0.27.2
+   Compiling reqwest v0.12.28
+   Compiling oci-distribution v0.11.0
+   Compiling kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+warning: unused import: `ExecutionBoundary`
+    --> crates/box/runtime/src/kbox_contract_driver/lifecycle.rs:1142:44
+     |
+1142 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, OperationId,
+     |                                            ^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `std::path::Path`
+ --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/resources_profile.rs:1:5
+  |
+1 | use std::path::Path;
+  |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `RuntimeFeature`
+ --> crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:8:20
+  |
+8 |     RestartPolicy, RuntimeFeature, RuntimeInspection, RuntimeUnitClass, RuntimeUnitState,
+  |                    ^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/inspection_cancellation_tests.rs:8:40
+  |
+8 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionId, ExecutionManager,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionGeneration`
+ --> crates/box/runtime/src/local_execution/oci_hvf_native_named.rs:3:39
+  |
+3 | use kbox_core::{volume::VolumeConfig, ExecutionGeneration, ExecutionId};
+  |                                       ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/remove.rs:220:44
+    |
+220 |         BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionManager,
+    |                                            ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/local_execution/resources.rs:703:33
+    |
+703 |         CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, ExecutionSnapshotId,
+    |                                 ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/vm_backend_tests.rs:10:40
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests/owned_vm_close.rs:10:40
+   |
+10 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/local_execution/tests/attached_vm_identity.rs:7:40
+  |
+7 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, OperationId, VmHandler, VmMetrics,
+  |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+  --> crates/box/runtime/src/local_execution/tests.rs:15:40
+   |
+15 |     BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
+   |                                        ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `HttpBody`
+ --> crates/box/runtime/src/oci/registry/push_tests.rs:4:24
+  |
+4 | use axum::body::{Body, HttpBody};
+  |                        ^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+ --> crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:7:29
+  |
+7 |     CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration, NetworkMode, OperationId,
+  |                             ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/api.rs:252:9
+    |
+252 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, ExecutionState,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionBoundary`
+   --> crates/box/runtime/src/scale/reconciler.rs:709:9
+    |
+709 |         ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult, KillOutcome,
+    |         ^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ExecutionManager`
+  --> crates/box/runtime/src/kbox_contract_driver/host_service_live_tests.rs:13:30
+   |
+13 | use kbox_core::{ExecRequest, ExecutionManager, ExecutionSessionManager, HostServiceSocket};
+   |                              ^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::vmm::VmHandler`
+ --> crates/box/runtime/src/local_execution/tests/owned_vm_jobs.rs:5:5
+  |
+5 | use crate::vmm::VmHandler;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `fixture`
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/recovery_profile.rs:401:5
+    |
+401 |     fixture: &BoxRuntimeConformanceFixture,
+    |     ^^^^^^^ help: if this is intentional, prefix it with an underscore: `_fixture`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `record`
+    --> crates/box/runtime/src/local_execution/oci_backend_tests.rs:1605:9
+     |
+1605 |         record: &BoxRecord,
+     |         ^^^^^^ help: if this is intentional, prefix it with an underscore: `_record`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1187:13
+     |
+1187 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1201:13
+     |
+1201 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1232:13
+     |
+1232 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: variable does not need to be mutable
+ --> crates/box/runtime/src/local_execution/tests/stop_ownership.rs:8:9
+  |
+8 |     let mut create = request("stop-unready-owner");
+  |         ----^^^^^^
+  |         |
+  |         help: remove this `mut`
+  |
+  = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> crates/box/runtime/src/local_execution/tests.rs:434:9
+    |
+434 |     let mut request = request(external_id);
+    |         ----^^^^^^^
+    |         |
+    |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1293:9
+     |
+1293 |     let mut create = request("cold-pause-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1321:9
+     |
+1321 |     let mut create = request("warm-pause-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1358:9
+     |
+1358 |     let mut create = request("warm-resume-vanished");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1400:9
+     |
+1400 |     let mut create = request("observe-pausing-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1443:9
+     |
+1443 |     let mut create = request("observe-resuming-creating");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1487:9
+     |
+1487 |     let mut create = request("observe-pausing-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1532:9
+     |
+1532 |     let mut create = request("observe-killing-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1569:9
+     |
+1569 |     let mut create = request("observe-running-stopped");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1599:9
+     |
+1599 |     let mut create = request("warm-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1637:9
+     |
+1637 |     let mut create = request("warm-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1679:9
+     |
+1679 |     let mut create = request("cold-pause-stopped-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1717:9
+     |
+1717 |     let mut create = request("cold-pause-crash");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1755:9
+     |
+1755 |     let mut create = request("cold-resume-terminal");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1796:9
+     |
+1796 |     let mut create = request("cold-resume-failure");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1971:9
+     |
+1971 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:1997:9
+     |
+1997 |     let mut create = request("sandbox-1");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2025:9
+     |
+2025 |     let mut create = request("sandbox-exit-status");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2051:9
+     |
+2051 |     let mut create = request("sandbox-signaled-exit");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2079:9
+     |
+2079 |     let mut create = request("already-stopped-no-invent");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2112:9
+     |
+2112 |     let mut create = request("kill-not-found-no-user-stop");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: variable does not need to be mutable
+    --> crates/box/runtime/src/local_execution/tests.rs:2203:9
+     |
+2203 |     let mut create = request("option-aware-kill");
+     |         ----^^^^^^
+     |         |
+     |         help: remove this `mut`
+
+warning: function `validate_id_mapping_plan` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:24:15
+   |
+24 | pub(crate) fn validate_id_mapping_plan(plan: &IdMappingPlan) -> Result<()> {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `validate_mapping_set` is never used
+  --> crates/box/runtime/src/host_fs/id_mapping.rs:43:4
+   |
+43 | fn validate_mapping_set(mappings: &[IdMapping], maximum: u32, kind: &str) -> Result<()> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `prepare_rootfs_ownership_with_preference` is never used
+   --> crates/box/runtime/src/host_fs/rootfs.rs:727:15
+    |
+727 | pub(crate) fn prepare_rootfs_ownership_with_preference(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `TMPFS_MAGIC` is never used
+  --> crates/box/runtime/src/kbox_contract_driver/secret.rs:28:7
+   |
+28 | const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
+   |       ^^^^^^^^^^^
+
+warning: field `private_artifact_root` is never read
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:255:5
+    |
+245 | pub(super) struct BoxRuntimeConformanceFixture {
+    |                   ---------------------------- field in this struct
+...
+255 |     private_artifact_root: PathBuf,
+    |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `private_artifact_source` and `private_artifact_root` are never used
+   --> crates/box/runtime/src/kbox_contract_driver/conformance_tests/fixture.rs:404:19
+    |
+263 | impl BoxRuntimeConformanceFixture {
+    | --------------------------------- methods in this implementation
+...
+404 |     pub(super) fn private_artifact_source(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^^^
+...
+408 |     pub(super) fn private_artifact_root(&self) -> &Path {
+    |                   ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `insert` is never used
+   --> crates/box/runtime/src/kbox_contract_driver/test_support.rs:355:19
+    |
+354 | impl DriverFakeSecretMaterializer {
+    | --------------------------------- method in this implementation
+355 |     pub(super) fn insert(&self, reference: impl Into<String>, value: impl Into<Vec<u8>>) {
+    |                   ^^^^^^
+
+warning: function `reject_removed_sandbox_migration_env` is never used
+   --> crates/box/runtime/src/local_execution/oci_migration.rs:587:4
+    |
+587 | fn reject_removed_sandbox_migration_env() -> ExecutionManagerResult<()> {
+    |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: methods `drive_cold_paused_snapshot`, `pause_for_snapshot`, and `capture_snapshot_rootfs` are never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:245:14
+    |
+ 24 | impl LocalExecutionManager {
+    | -------------------------- methods in this implementation
+...
+245 |     async fn drive_cold_paused_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+294 |     async fn pause_for_snapshot(
+    |              ^^^^^^^^^^^^^^^^^^
+...
+345 |     async fn capture_snapshot_rootfs(
+    |              ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `execution_state` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:536:4
+    |
+536 | fn execution_state(state: ManagedExecutionState) -> ExecutionManagerResult<ExecutionState> {
+    |    ^^^^^^^^^^^^^^^
+
+warning: function `build_snapshot_metadata` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:807:4
+    |
+807 | fn build_snapshot_metadata(
+    |    ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `snapshot_error` is never used
+   --> crates/box/runtime/src/local_execution/snapshot.rs:844:4
+    |
+844 | fn snapshot_error(
+    |    ^^^^^^^^^^^^^^
+
+warning: fields `store`, `home_dir`, and `lifecycle` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:78:9
+   |
+76 |     StartSelected {
+   |     ------------- fields in this variant
+77 |         record: BoxRecord,
+78 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+79 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+80 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+
+warning: fields `store`, `home_dir`, `lifecycle`, and `physical_budget` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:84:9
+   |
+82 |     StopSelected {
+   |     ------------ fields in this variant
+83 |         record: BoxRecord,
+84 |         store: crate::ManagedExecutionStore,
+   |         ^^^^^
+85 |         home_dir: PathBuf,
+   |         ^^^^^^^^
+86 |         lifecycle: Arc<super::ExecutionLifecycleLock>,
+   |         ^^^^^^^^^
+87 |         physical_budget: kbox_core::vmm::OwnedCloseBudget,
+   |         ^^^^^^^^^^^^^^^
+
+warning: fields `execution_id` and `generation` are never read
+  --> crates/box/runtime/src/local_execution/store.rs:90:9
+   |
+89 |     ReconcileRetainedRemove {
+   |     ----------------------- fields in this variant
+90 |         execution_id: ExecutionId,
+   |         ^^^^^^^^^^^^
+91 |         generation: ExecutionGeneration,
+   |         ^^^^^^^^^^
+
+warning: field `completion` is never read
+  --> crates/box/runtime/src/local_execution/store.rs:98:5
+   |
+97 | pub struct OwnedLifecycleOutcome {
+   |            --------------------- field in this struct
+98 |     completion: OwnedLifecycleCompletion,
+   |     ^^^^^^^^^^
+
+warning: methods `boot_original_component` and `cleanup_original_anonymous` are never used
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:2281:14
+     |
+2151 | impl VmLocalExecutionBackend {
+     | ---------------------------- methods in this implementation
+...
+2281 |     async fn boot_original_component(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^
+...
+2400 |     async fn cleanup_original_anonymous(
+     |              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sandbox_request` is never used
+   --> crates/box/runtime/src/local_execution/tests.rs:433:4
+    |
+433 | fn sandbox_request(external_id: &str) -> CreateExecutionRequest {
+    |    ^^^^^^^^^^^^^^^
+
+warning: field `prefer_image_rootfs_metadata` is never read
+   --> crates/box/runtime/src/vm/mod.rs:214:16
+    |
+182 | pub(crate) struct BoxLayout {
+    |                   --------- field in this struct
+...
+214 |     pub(crate) prefer_image_rootfs_metadata: bool,
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `boot_original_owned` is never used
+  --> crates/box/runtime/src/vm/boot.rs:22:25
+   |
+ 5 | impl VmManager {
+   | -------------- method in this implementation
+...
+22 |     pub(crate) async fn boot_original_owned(
+   |                         ^^^^^^^^^^^^^^^^^^^
+
+warning: function `cleanup_recorded_sandbox_runtime_in` is never used
+   --> crates/box/runtime/src/vm/reap.rs:684:15
+    |
+684 | pub(crate) fn cleanup_recorded_sandbox_runtime_in(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `kbox-runtime` (lib test) generated 66 warnings (run `cargo fix --lib -p kbox-runtime --tests` to apply 43 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 17s
+     Running unittests src/lib.rs (target/debug/deps/kbox_runtime-1f7c9c129cc1351e)
+
+thread 'local_execution::oci_production::capability_tests::hvf_cap_add_retains_drop_precedence_and_unknown_refusal' (96190922) panicked at crates/box/runtime/src/local_execution/oci_production_capability_tests.rs:5:60:
+called `Result::unwrap()` on an `Err` value: ConfigError("HVF OCI configuration: this bounded profile admits only explicit guest SYS_ADMIN additions")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_production::capability_tests::hvf_cap_add_preserves_shared_default_and_explicit_sets' (96190921) panicked at crates/box/runtime/src/local_execution/oci_production_capability_tests.rs:5:60:
+called `Result::unwrap()` on an `Err` value: ConfigError("HVF OCI configuration: this bounded profile admits only explicit guest SYS_ADMIN additions")
+
+thread 'local_execution::oci_production::capability_tests::hvf_cap_add_admission_is_readonly_and_other_profiles_stay_closed' (96190919) panicked at crates/box/runtime/src/local_execution/oci_production_capability_tests.rs:49:82:
+called `Result::unwrap()` on an `Err` value: InvalidRequest("Configuration error: HVF OCI configuration: this bounded profile admits only explicit guest SYS_ADMIN additions")
+
+thread 'local_execution::oci_production::capability_tests::hvf_cap_add_preserves_per_uid_unprivileged_admission' (96190920) panicked at crates/box/runtime/src/local_execution/oci_production_capability_tests.rs:69:86:
+called `Result::unwrap()` on an `Err` value: InvalidRequest("Configuration error: HVF OCI configuration: this bounded profile admits only explicit guest SYS_ADMIN additions")
+error: test failed, to rerun pass `-p kbox-runtime --lib`

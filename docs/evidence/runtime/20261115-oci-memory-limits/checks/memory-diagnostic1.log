@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox",
+      "exec",
+      "eb1c792f-860b-4100-abb1-cb9cf394b21a",
+      "--",
+      "/memory-limit-probe"
+    ],
+    "exitCode": 16,
+    "stdout": "",
+    "stderr": "data-allocation mismatch: unlimited=0 returned=1 errno=0 soft=4194304 hard=4194304\n"
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "eb1c792f-860b-4100-abb1-cb9cf394b21a"
+    ],
+    "exitCode": 0,
+    "stdout": "neat_wozniak\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-memory-limits-4568317803ce4e869498610571bb3d13/installed-memory-limits-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

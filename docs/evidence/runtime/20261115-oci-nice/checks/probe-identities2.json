@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe2.c",
+    "sha256": "982440063e369838143cea29527b6540eded9c9f527aa0db9d108996355137ab",
+    "bytes": 6782
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-probe-2",
+    "sha256": "bac2cdd9909061f4cce44562f1cc1a2fe9dabf69aa5adf84f1405ad01a1fa323",
+    "bytes": 1589216
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/inputs/nice-cli-pty2.py",
+    "sha256": "11f364e0cd078f1e88c39dc9a2d1e7ecb30477df3ef799d151e94d5de6423659",
+    "bytes": 2537
+  }
+]

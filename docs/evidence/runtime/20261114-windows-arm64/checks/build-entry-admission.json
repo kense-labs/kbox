@@ -1,0 +1,100 @@
+{
+  "kind": "actual build-script entry checks; not native runtime execution",
+  "utc": "2026-11-14T03:04:28.529430+00:00",
+  "host": {
+    "os": "macos",
+    "arch": "arm64"
+  },
+  "builder": "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build",
+  "builderSha256": "33599889181c756c4bacc7b90ac14177163b259e4e6ebf3ed5f08651f39b82e7",
+  "sources": {
+    "crates/box/deps/libksys/build.rs": "dbfa53d65335322c863dbebb6a4eb9aba16d6ee7d199db6be5d89ed9db0f04c7",
+    "crates/box/deps/libksys/build_support.rs": "e13d1b5ba58e4af9a4069c801a209c748788109d513bd11d5000f2332c4d51d7"
+  },
+  "cases": [
+    {
+      "case": "arm64-stub",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "aarch64-pc-windows-msvc",
+      "stub": true,
+      "exitCode": 101,
+      "seconds": 0.016147542000000004,
+      "expectedSuccess": false,
+      "assertionsPass": true,
+      "log": "arm64-stub-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/arm64-stub"
+    },
+    {
+      "case": "arm64-native",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "aarch64-pc-windows-msvc",
+      "stub": false,
+      "exitCode": 101,
+      "seconds": 0.0036425,
+      "expectedSuccess": false,
+      "assertionsPass": true,
+      "log": "arm64-native-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/arm64-native"
+    },
+    {
+      "case": "arm64ec-stub",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "arm64ec-pc-windows-msvc",
+      "stub": true,
+      "exitCode": 101,
+      "seconds": 0.0037625839999999994,
+      "expectedSuccess": false,
+      "assertionsPass": true,
+      "log": "arm64ec-stub-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/arm64ec-stub"
+    },
+    {
+      "case": "x64-gnu-stub",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "x86_64-pc-windows-gnu",
+      "stub": true,
+      "exitCode": 101,
+      "seconds": 0.0034552909999999992,
+      "expectedSuccess": false,
+      "assertionsPass": true,
+      "log": "x64-gnu-stub-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/x64-gnu-stub"
+    },
+    {
+      "case": "x64-msvc-stub",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "x86_64-pc-windows-msvc",
+      "stub": true,
+      "exitCode": 0,
+      "seconds": 0.007302250000000003,
+      "expectedSuccess": true,
+      "assertionsPass": true,
+      "log": "x64-msvc-stub-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/x64-msvc-stub"
+    },
+    {
+      "case": "unix-mismatched-host",
+      "command": [
+        "target/debug/build/klibksys-388b6fd591a4cc17/build-script-build"
+      ],
+      "target": "aarch64-unknown-linux-musl",
+      "stub": false,
+      "exitCode": 101,
+      "seconds": 0.003691084000000011,
+      "expectedSuccess": false,
+      "assertionsPass": true,
+      "log": "unix-mismatched-host-build-entry.log",
+      "outDir": "artifacts/windows-arm64-admission-36b2ab8251d1459eb0a10d2d99340fb4/unix-mismatched-host"
+    }
+  ]
+}

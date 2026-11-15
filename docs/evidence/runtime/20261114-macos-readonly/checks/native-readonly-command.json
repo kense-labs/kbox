@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "scripts/e2e-engine/native_readonly.py",
+    "--kbox",
+    "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/frozen/bin/kbox",
+    "--image-store",
+    "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home/images",
+    "--image",
+    "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+    "--output",
+    "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/native-readonly"
+  ],
+  "root": "/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71"
+}

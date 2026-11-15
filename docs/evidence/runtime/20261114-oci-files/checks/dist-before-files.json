@@ -1,0 +1,19 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/dist-before-files",
+  "files": {
+    "kbox-3.4.3-macos-arm64/SHA256SUMS": "a6b1406b9dd33ecbcebaae4c32679a0a21bd5223e885bfaaa36e207190897055",
+    "kbox-3.4.3-macos-arm64/VERSION": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+    "kbox-3.4.3-macos-arm64/bin/kbox": "59ab2868fecd36d50d4ed863fcbeb9d7d6aa281bd5a09b549fb0696b26b590eb",
+    "kbox-3.4.3-macos-arm64/bin/kbox-guest-init": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a",
+    "kbox-3.4.3-macos-arm64/bin/kbox-shim": "5089c1de0f08014079335db2afde6dd12b93333db55f432b9f17d0c54a1c9e66",
+    "kbox-3.4.3-macos-arm64/build-info.json": "8cf43914de3dcba658d26323eecc89819b6d39a84906eac07941ca61682f441a",
+    "kbox-3.4.3-macos-arm64/install.sh": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+    "kbox-3.4.3-macos-arm64/lib/libkrun.1.17.0.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "kbox-3.4.3-macos-arm64/lib/libkrun.1.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "kbox-3.4.3-macos-arm64/lib/libkrun.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "kbox-3.4.3-macos-arm64/lib/libkrunfw.5.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "kbox-3.4.3-macos-arm64/lib/libkrunfw.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "kbox-3.4.3-macos-arm64.tar.gz": "34e2a8f09f7c029319e8a86495c1e9607dfb83941fe6a0752ab4972aa617f889",
+    "kbox-3.4.3-macos-arm64.tar.gz.sha256": "08c2d4dc78e8c4faefea3e5a01f2f98aab0a264e8ceda90780afff6004f86b68"
+  }
+}

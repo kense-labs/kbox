@@ -1,0 +1,33 @@
+{
+  "homes": [
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/seed-home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-oci-final/1010c3842ca44206b221ab89f7829afd/home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-oci/2180baedac964476b9cdb8da06f0298c/home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-primary-final/e6da3de7e3ff4262a63e8656d24d72fa/home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-primary/5800b5670d2b471ba4e5fa6d82333953/home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm-final/4830e3a8ce1f41c08b8becfe0307fe97/k-home",
+      "executions": []
+    },
+    {
+      "home": "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm/a9b0aab95c7e4d4ba14709b23279976a/k-home",
+      "executions": []
+    }
+  ],
+  "remainingOwnedRuntimeProcesses": []
+}

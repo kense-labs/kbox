@@ -1,0 +1,14 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/inputs/rlimit-probe",
+    "copied": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/inputs/rlimit-probe",
+    "sha256": "e315dd4d5f876615df62bfd564445a13b0343ebc62139960d203eb4469acfb2f",
+    "bytes": 1467688
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/inputs/rlimit-probe.c",
+    "copied": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/inputs/rlimit-probe.c",
+    "sha256": "6ebe78167b3a8985f0ce606f3c111123980a076f51a5222845459769dfa2ddf6",
+    "bytes": 2027
+  }
+]

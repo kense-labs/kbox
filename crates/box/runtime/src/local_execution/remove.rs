@@ -170,7 +170,10 @@ fn validate_owned_paths(home_dir: &Path, record: &BoxRecord) -> ExecutionManager
     Ok(())
 }
 
-fn remove_anonymous_volumes(home_dir: &Path, record: &BoxRecord) -> ExecutionManagerResult<()> {
+pub(super) fn remove_anonymous_volumes(
+    home_dir: &Path,
+    record: &BoxRecord,
+) -> ExecutionManagerResult<()> {
     if record.anonymous_volumes.is_empty() {
         return Ok(());
     }

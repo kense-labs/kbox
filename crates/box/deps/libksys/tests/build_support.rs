@@ -5,6 +5,31 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 #[test]
+fn windows_runtime_target_refuses_arm64_and_foreign_abis_before_stub_or_asset_selection() {
+    assert_eq!(
+        build_support::validate_windows_target("windows", "x86_64", "msvc"),
+        Ok(())
+    );
+    for (arch, abi) in [
+        ("aarch64", "msvc"),
+        ("arm64ec", "msvc"),
+        ("x86_64", "gnu"),
+        ("x86_64", ""),
+        ("", "msvc"),
+    ] {
+        assert!(build_support::validate_windows_target("windows", arch, abi).is_err());
+    }
+    assert_eq!(
+        build_support::validate_windows_target("linux", "aarch64", "gnu"),
+        Ok(())
+    );
+    assert_eq!(
+        build_support::validate_windows_target("macos", "aarch64", ""),
+        Ok(())
+    );
+}
+
+#[test]
 fn native_deployment_target_matches_rust_and_explicit_overrides() {
     let rustc = std::env::var_os("RUSTC").unwrap_or_else(|| "rustc".into());
     for version in ["11.0", "12.0"] {

@@ -1,0 +1,8 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (86086098) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_raw_ro.rs:65:221:
+called `Result::unwrap()` on an `Err` value: Error { code: InvalidArgument, operation: Some("validate-attachments"), message: "runtime bundle handoff requires annotation dev.kbox.bundle-handoff=move-to-runtime-v1", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::raw_ro::native_raw_ro_disks_reject_guest_remount_child_and_writes_with_unchanged_host_image' (86086097) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_raw_ro.rs:85:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

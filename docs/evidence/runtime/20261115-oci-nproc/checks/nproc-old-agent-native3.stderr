@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/run-native.py", line 143, in <module>
+    assert logs, 'missing actual old asset mandatory-v10 rejection log'
+AssertionError: missing actual old asset mandatory-v10 rejection log

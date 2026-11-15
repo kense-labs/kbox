@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/run-native.py",
+    "docs/evidence/runtime/20261115-oci-shm-size/run-context.json",
+    "1",
+    "shm-size"
+  ],
+  "exit": 0,
+  "seconds": 102.999916708
+}

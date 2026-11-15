@@ -1,0 +1,72 @@
+[
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--profile",
+      "release-dist",
+      "-p",
+      "koci-cli",
+      "-p",
+      "koci-kbox"
+    ],
+    "exitCode": 0,
+    "seconds": 60.380269041999995
+  },
+  {
+    "command": [
+      "cargo",
+      "zigbuild",
+      "--locked",
+      "--profile",
+      "release-dist",
+      "--target",
+      "aarch64-unknown-linux-musl",
+      "-p",
+      "koci-agent"
+    ],
+    "exitCode": 0,
+    "seconds": 40.515331042
+  },
+  {
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      "--entitlements",
+      "crates/oci-runtime/packaging/macos/koci-hvf.entitlements",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci"
+    ],
+    "exitCode": 0,
+    "seconds": 0.03676679199999455
+  },
+  {
+    "command": [
+      "codesign",
+      "--force",
+      "--sign",
+      "-",
+      "--entitlements",
+      "crates/oci-runtime/packaging/macos/koci-hvf.entitlements",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-kshim"
+    ],
+    "exitCode": 0,
+    "seconds": 0.021159417000006897
+  },
+  {
+    "command": [
+      "bash",
+      "crates/oci-runtime/scripts/build-macos-system-image.sh",
+      "--alpine-archive",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+      "--agent",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/koci-agent",
+      "--output-dir",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-installed/system-image"
+    ],
+    "exitCode": 0,
+    "seconds": 7.314586582999993
+  }
+]

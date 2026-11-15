@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/final-receipt-review2.py", line 16, in <module>
+    assert c['boxPrefix'] in row['command'] or c['nativeClient'] in row['command']
+AssertionError

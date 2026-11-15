@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "540b51f53a939c18fcf86f065886157bade3116e377e353e67cd0e5332ecad19",
+  "sourceFiles": 1703,
+  "ociOriginalSourceInputsSha256": "c07659de97c45cd962d08dd29f49e882ac9266bed570226b116af767bbc1734c",
+  "boxOnlySourceDelta": [
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs.rs",
+    "crates/box/runtime/src/local_execution/oci_portable_rootfs_disk_tests.rs",
+    "crates/box/runtime/src/rootfs/ext4_cache.rs",
+    "crates/box/runtime/src/rootfs/mod.rs"
+  ],
+  "nativeRustTests": 12,
+  "guestUnitTests": 21,
+  "guestNestedChildTestRuns": 2,
+  "guestExecutionCounts": [
+    8,
+    8,
+    5
+  ],
+  "pythonNativeScenarios": 3,
+  "cliRealPtyCases": 2,
+  "receipts": [
+    "box-native-nproc-attempt-2.json",
+    "box-native-anonymous-attempt-2.json",
+    "box-native-host-service-attempt-2.json",
+    "box-native-files-attempt-2.json"
+  ],
+  "verifyRuntime": [
+    2261,
+    0,
+    43
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "installerTests": 8,
+  "cleanup": {
+    "status": "PASS",
+    "homes": 17,
+    "diskHomes": 13,
+    "detachedRamHomes": 4,
+    "ownedRamImagesClosed": 8,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 119,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 23,
+    "afSourceCacheFilesChecked": 381,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

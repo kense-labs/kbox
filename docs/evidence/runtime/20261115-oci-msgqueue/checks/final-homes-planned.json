@@ -1,0 +1,17 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/af-final1/native-oci/6d7cbcbd3d7e4acc9b0a8fba4ed00d28/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/af-final1/native-prewarm/5dc6b7d9e8414b49bc9f6d283c683731/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/af-final1/native-primary/6eaa592a1d6a402fbc0e5186949cc9f7/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-msgqueue-e437302b77104ac0a5c447e1455be2c9/af-final1/native-readonly/44c37bc7e19e4796999503232f08e872/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/cpu-time-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/diagnostic-msgqueue-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/files-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/host-service-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/memory-limits-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/msgqueue-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/msgqueue-attempt-2/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/nproc-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/sigpending-attempt-1/home",
+  "/private/tmp/kbox-msgqueue-e437302b7710/ulimits-attempt-1/home"
+]

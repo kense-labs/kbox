@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "-p",
+    "koci-agent-protocol",
+    "-p",
+    "koci-runtime",
+    "-p",
+    "koci-kbox",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 497.425735083
+}

@@ -1,0 +1,14 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-final1/native-oci/ba3ccf9460ec452587c263de14edc1e2/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-final1/native-prewarm/f2070909ee66409d9f0d338cdc90b549/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-final1/native-primary/d0e8c9c31eeb432cbd0395c5ce9b9a27/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/af-final1/native-readonly/8678d8ae92fa450c95a2f15cc5d21099/home",
+  "/private/tmp/kbox-realtime-b71041f58773/diagnostic-realtime-1/home",
+  "/private/tmp/kbox-realtime-b71041f58773/diagnostic-realtime-2/home",
+  "/private/tmp/kbox-realtime-b71041f58773/files-attempt-2/home",
+  "/private/tmp/kbox-realtime-b71041f58773/host-service-attempt-2/home",
+  "/private/tmp/kbox-realtime-b71041f58773/realtime-attempt-1/home",
+  "/private/tmp/kbox-realtime-b71041f58773/realtime-attempt-2/home",
+  "/private/tmp/kbox-realtime-b71041f58773/realtime-attempt-3/home"
+]

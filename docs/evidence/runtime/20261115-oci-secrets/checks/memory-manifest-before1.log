@@ -1,0 +1,11 @@
+
+running 1 test
+test vm_attachment::file_tests::memory_secret_files_require_a_new_manifest_and_refuse_downgrade ... FAILED
+
+failures:
+
+failures:
+    vm_attachment::file_tests::memory_secret_files_require_a_new_manifest_and_refuse_downgrade
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 66 filtered out; finished in 0.04s
+

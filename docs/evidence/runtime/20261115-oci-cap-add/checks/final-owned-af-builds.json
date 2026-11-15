@@ -1,0 +1,20 @@
+{
+  "kbox-oci-regression:7bff2b14cdbb4124a128e6a6bb407fb1": {
+    "digest": "sha256:b7c68c98fb6b3c93c6b383e2714f6441dbbcdc8f21708d27b37085ded275636a",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/af-final1/native-oci/7bff2b14cdbb4124a128e6a6bb407fb1/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/installed-cap-add-final-1",
+    "kboxSha256": "cc5e90d2a33511868c95ce228f7ef8589f8d8a81e0173e06244384cd985e4de7"
+  },
+  "kbox-oci-regression:f9a76742996941babe197f852053068a": {
+    "digest": "sha256:9313233f3a06df757a69f09d2904a5310205b140528e47892a0abfc342309a42",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/af-final2/native-oci/f9a76742996941babe197f852053068a/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/installed-cap-add-final-2",
+    "kboxSha256": "e8489267963075a9621ddb2cab4324c11189aa5c90f1a33c0e5b5618d79881bc"
+  },
+  "kbox-oci-regression:3c3f68820ffa424b82cfa94a4f35c996": {
+    "digest": "sha256:d6e582537e6d7c8ab6e7a4ad14eda2186bd022e4d7cbf425805397e488f7093f",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/af-final3/native-oci/3c3f68820ffa424b82cfa94a4f35c996/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/installed-cap-add-final-3",
+    "kboxSha256": "8cc58d96645ed826ec5e31820d272d0fefefb47b339c22c16030a71c67727d15"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "kbox.release-build.v1",
+  "sourceCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+  "sourceInputsSha256": "abf1bceaafef07f9d627261a726bf55d5bcb2beed4d40959953892cde36b3f52",
+  "cargoLockSha256": "7854f6e8f8d0349ad1fcfe71cbc646d6905870293845180b794076d206f65de9",
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "target": "macos-aarch64",
+  "guestTarget": "aarch64-unknown-linux-musl",
+  "nativeSources": {
+    "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+    "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+  }
+}

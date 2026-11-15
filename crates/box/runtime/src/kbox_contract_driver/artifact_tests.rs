@@ -389,6 +389,40 @@ async fn persistent_volume_plan_reuses_data_without_becoming_an_artifact_store()
     assert!(store.list().unwrap()[0].in_use_by.is_empty());
 }
 
+#[test]
+fn persistent_volume_accepts_only_its_contract_labels_and_store_allocation_identity() {
+    let directory = fixture_tempdir();
+    let (driver, _) = fake_driver(&directory);
+    let home = &driver.config.home_dir;
+    let resolved =
+        super::volume_storage::resolve_persistent_volume(home, "workspace-main", true).unwrap();
+    let store = volume_store(home);
+    let original = store.get(&resolved.name).unwrap().unwrap();
+    assert!(original
+        .labels
+        .contains_key(crate::volume::ALLOCATION_ID_LABEL));
+    assert_eq!(
+        super::volume_storage::resolve_persistent_volume(home, "workspace-main", false)
+            .unwrap()
+            .path,
+        resolved.path
+    );
+    for (key, value) in [
+        ("unexpected-label", "untrusted"),
+        ("kbox_contract.volume-id", "another-volume"),
+    ] {
+        let mut conflicting = original.clone();
+        conflicting.labels.insert(key.into(), value.into());
+        store.update(&conflicting).unwrap();
+        let bytes = std::fs::read(home.join("volumes.json")).unwrap();
+        assert!(matches!(
+            super::volume_storage::resolve_persistent_volume(home, "workspace-main", true),
+            Err(RuntimeError::ProviderUnavailable(_))
+        ));
+        assert_eq!(std::fs::read(home.join("volumes.json")).unwrap(), bytes);
+    }
+}
+
 #[tokio::test]
 async fn task_output_restart_resets_staging_and_replay_recaptures_one_exact_result() {
     let directory = fixture_tempdir();

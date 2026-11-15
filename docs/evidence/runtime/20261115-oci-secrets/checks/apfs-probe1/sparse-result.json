@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "volume": "/dev/disk14s1",
+  "container": "disk14",
+  "physical": "/dev/disk13",
+  "mount": "/private/tmp/kbox-secrets-3b9553cebce5/owned-apfs-probe",
+  "logicalBytes": 4294967296,
+  "allocatedBytes": 0,
+  "ramImage": "ram://1048576"
+}

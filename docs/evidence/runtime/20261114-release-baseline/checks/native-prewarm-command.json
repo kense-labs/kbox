@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/release-baseline-cb6c4b1f6bac450ca5519f26a754ce8d/native-prewarm/a9b0aab95c7e4d4ba14709b23279976a/native-client",
+    "--ignored",
+    "--exact",
+    "kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources",
+    "--nocapture"
+  ],
+  "image": "docker.io/library/kbox-qualification-base@sha256:15d5b9a98bd45f61e1af0d1dc4e35f8c04b7b35f9d062e41daa07cfa3b64bc5d",
+  "testSha256": "e679425f250c1c69d558db7785fbe0935b9e19e03cd5a1b9819521d707ee0bba",
+  "kboxSha256": "f6bcb2a2375add4c2cda7e40bc4d934c41512a5930b2427fbeaf3980003cd6ee"
+}

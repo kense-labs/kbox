@@ -7,9 +7,9 @@ use std::path::Path;
 use kbox_core::error::{BoxError, Result};
 
 use super::ext4::{
-    validate_ext4_image, validate_ext4_image_for_resume, Ext4Artifact, Ext4ArtifactManifest,
-    Ext4ArtifactOptions, Ext4ResumeValidation, DISK_FILE_NAME, EXT4_ARTIFACT_SCHEMA,
-    EXT4_BUILDER_ID, LEGACY_EXT4_BUILDER_IDS, MANIFEST_FILE_NAME,
+    validate_ext4_image_for_resume, Ext4Artifact, Ext4ArtifactManifest, Ext4ArtifactOptions,
+    Ext4ResumeValidation, DISK_FILE_NAME, EXT4_ARTIFACT_SCHEMA, EXT4_BUILDER_ID,
+    LEGACY_EXT4_BUILDER_IDS, MANIFEST_FILE_NAME,
 };
 
 const MAX_ARTIFACT_MANIFEST_BYTES: u64 = 64 * 1024;
@@ -114,12 +114,13 @@ fn open_ext4_artifact_inner(
             disk.display()
         )));
     }
-    let validation = if allow_journal_recovery {
-        validate_ext4_image_for_resume(&disk, manifest.capacity_bytes, fs_uuid)?
-    } else {
-        validate_ext4_image(&disk, manifest.capacity_bytes)?;
-        Ext4ResumeValidation::Clean
-    };
+    let validation = validate_ext4_image_for_resume(&disk, manifest.capacity_bytes, fs_uuid)?;
+    if !allow_journal_recovery && validation != Ext4ResumeValidation::Clean {
+        return Err(BoxError::BuildError(format!(
+            "ext4 artifact {} requires Guest journal recovery",
+            disk.display()
+        )));
+    }
 
     Ok((
         Ext4Artifact {

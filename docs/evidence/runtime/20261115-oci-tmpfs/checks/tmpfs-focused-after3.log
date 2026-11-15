@@ -1,0 +1,33 @@
+
+running 2 tests
+test guest_exec::tmpfs::tests::tmpfs_parser_refuses_escaping_reserved_conflicting_and_unbounded_input ... ok
+test guest_exec::tmpfs::tests::tmpfs_flags_do_not_become_kernel_data ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 480 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+
+
+running 16 tests
+test oci::build::engine::handlers::tests::test_instruction_to_string_run_with_tmpfs_mount ... ok
+test oci::build::dockerfile::tests::tests::test_parse_run_buildkit_tmpfs_mount ... ok
+test oci::build::dockerfile::tests::tests::test_parse_run_buildkit_tmpfs_mount_rejects_size ... ok
+test oci::build::engine::handlers::tests::test_filter_run_mount_paths_excludes_tmpfs_target ... ok
+test oci::build::engine::handlers::tests::test_run_tmpfs_mount_overlay_staging_does_not_follow_image_symlink ... ok
+test oci::build::engine::handlers::tests::test_run_tmpfs_mount_overlays_empty_dir_and_restores_target ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_preserves_flags_data_defaults_and_refuses_image_subtree_collisions ... ok
+test kbox_contract_driver::tests::mapping_compiles_bounded_tmpfs_mounts_and_read_only_intent ... ok
+test vm::spec::tests::general::anonymous_volume_plan_honors_explicit_tmpfs_without_hidden_allocations ... ok
+test kbox_contract_driver::tests::mapping_rejects_protected_or_unencodable_tmpfs_targets ... ok
+test vm::oci_hvf_spec::tests::hvf_tmpfs_intent_reaches_the_existing_guest_mount_executor ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_admits_bounded_intent_without_allocations ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_refuses_unqualified_input_before_allocating ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_support_does_not_promote_other_profiles ... ok
+test vm::spec::tests::general::test_build_microvm_spec_encodes_unicode_mount_and_tmpfs_paths ... ok
+test oci::build::engine::tests::tests::test_build_run_pool_tmpfs_mount_is_not_committed ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 2239 filtered out; finished in 0.12s
+

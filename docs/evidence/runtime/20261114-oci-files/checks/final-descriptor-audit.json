@@ -1,0 +1,12 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "-nP",
+    "-Fpcfn"
+  ],
+  "exitCode": 0,
+  "ownedRuntimeDescriptorHolders": [],
+  "scopedOpenFiles": [],
+  "stderr": "",
+  "scope": "same-user observable descriptors in this run roots; combined with exact owned-process census, not a global descriptor claim"
+}

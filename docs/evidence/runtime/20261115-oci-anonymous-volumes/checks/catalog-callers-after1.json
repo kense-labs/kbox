@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "preserves_corrupt_volume_catalog",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 8.003923875000002
+}

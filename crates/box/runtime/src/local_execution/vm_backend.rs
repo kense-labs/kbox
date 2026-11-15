@@ -178,7 +178,15 @@ impl VmLocalExecutionBackend {
     ) -> ExecutionManagerResult<VmManager> {
         self.require_legacy_lineage(&record.id)?;
         let metadata = self.metadata_for_route(record, crate::ManagedRuntimeRoute::OciSdk)?;
-        self.new_manager_from_metadata(record, metadata)
+        let manager = self.new_manager_from_metadata(record, metadata)?;
+        #[cfg(target_os = "macos")]
+        let manager = {
+            let mut manager = manager;
+            // OCI owns guest entry and consumes a directory bundle, not Box's guest-init ext4 artifact.
+            manager.rootfs_provider = Arc::new(crate::rootfs::CaseSensitiveApfsProvider);
+            manager
+        };
+        Ok(manager)
     }
 
     fn new_manager_from_metadata(
@@ -219,7 +227,9 @@ impl VmLocalExecutionBackend {
         manager.transient_registry_auth = if record.is_unclaimed_prewarm() {
             Some(crate::oci::RegistryAuth::anonymous())
         } else {
-            self.transient_registry_auth.as_ref().and_then(|broker| broker.take(manager.box_id()))
+            self.transient_registry_auth
+                .as_ref()
+                .and_then(|broker| broker.take(manager.box_id()))
         };
     }
 
@@ -287,8 +297,7 @@ impl VmLocalExecutionBackend {
                 "runtime returned no host PID for {execution_id}"
             ))
         })?;
-        let has_record_binding =
-            record.pid.is_some() || record.pid_start_time.is_some();
+        let has_record_binding = record.pid.is_some() || record.pid_start_time.is_some();
         let pid_start_time = if has_record_binding {
             self.metadata(record)?;
             let (_, original_start_time) = require_attached_record_identity(
@@ -478,7 +487,6 @@ impl VmLocalExecutionBackend {
             &record.box_dir,
             exit_code,
             crate::rootfs::ProviderExitPolicy::RequireGuestProof,
-
         );
         #[cfg(target_os = "windows")]
         let authenticated = authenticate_windows_managed_terminal_exit(
@@ -737,7 +745,7 @@ impl VmLocalExecutionBackend {
                 crate::VolumeStore::new(home_dir.join("volumes.json"), home_dir.join("volumes"));
             let prefix = format!("anon_{short_id}_");
             let mut names = store
-                .load()?
+                .load_strict()?
                 .into_values()
                 .filter(|volume| {
                     volume
@@ -963,10 +971,29 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
         record: &BoxRecord,
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         self.require_legacy_lineage(&record.id)?;
-        let _metadata = self.metadata(record)?;
-        // MicroVM create does not pre-resolve Sandbox-style anonymous volume
-        // identities; VolumeStore claims remain in `start`.
-        Ok(LocalExecutionResourcePlan::default())
+        self.metadata(record)?;
+        let Some(image) = crate::resolved_image::load_resolved_image_config(&record.box_dir)
+            .map_err(|error| runtime_error("plan image volumes", record, error))?
+        else {
+            return Ok(LocalExecutionResourcePlan::default());
+        };
+        let manager = self.new_manager(record)?;
+        let plans = manager
+            .plan_anonymous_volumes(&image.into())
+            .map_err(|error| runtime_error("plan image volumes", record, error))?;
+        Ok(LocalExecutionResourcePlan {
+            anonymous_volumes: plans
+                .into_iter()
+                .map(|plan| {
+                    if record.anonymous_volumes.contains(&plan.legacy_name) {
+                        plan.legacy_name
+                    } else {
+                        plan.name
+                    }
+                })
+                .collect(),
+            ..Default::default()
+        })
     }
 
     async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
@@ -977,7 +1004,11 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
     async fn preflight(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {
         self.require_legacy_lineage(&record.id)?;
         if let Some(metadata) = record.managed_execution.as_ref() {
-            #[cfg(not(any(target_os = "linux", target_os = "windows")))]
+            #[cfg(not(any(
+                target_os = "linux",
+                target_os = "windows",
+                all(target_os = "macos", target_arch = "aarch64")
+            )))]
             VmManager::validate_virtiofs_mount_support(&metadata.request.config)
                 .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
             if !metadata.request.config.host_services.is_empty() {

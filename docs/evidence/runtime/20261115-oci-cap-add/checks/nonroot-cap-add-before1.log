@@ -1,0 +1,11 @@
+
+running 1 test
+test vm::oci_hvf_spec::tests::hvf_nonroot_cap_add_retains_only_explicit_undropped_values_across_exec ... FAILED
+
+failures:
+
+failures:
+    vm::oci_hvf_spec::tests::hvf_nonroot_cap_add_retains_only_explicit_undropped_values_across_exec
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2313 filtered out; finished in 0.01s
+

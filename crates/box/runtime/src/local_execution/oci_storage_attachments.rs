@@ -31,7 +31,7 @@ pub(super) fn attach_box_owned_volume_storage(
     record: &BoxRecord,
     anonymous_volumes: &[String],
 ) -> ExecutionManagerResult<CreateAttachments> {
-    let mounts = oci_bind_mounts(bundle)?;
+    let mounts = oci_storage_mounts(bundle)?;
     let mut attachments = attach_named_and_anonymous_volumes(
         bundle,
         attachments,
@@ -63,7 +63,7 @@ pub(super) fn attach_staged_caller_bind_aliases(
         return Ok(attachments);
     };
 
-    let mounts = oci_bind_mounts(bundle)?;
+    let mounts = oci_storage_mounts(bundle)?;
     let already = classified_bind_indices(&attachments)?;
     let mut attachments = attachments;
     for (index, mount) in mounts.iter().enumerate() {
@@ -101,7 +101,7 @@ pub(super) fn reject_unclassified_bind_mounts(
     bundle: &OciBundle,
     attachments: CreateAttachments,
 ) -> ExecutionManagerResult<CreateAttachments> {
-    let mounts = oci_bind_mounts(bundle)?;
+    let mounts = oci_storage_mounts(bundle)?;
     let classified = classified_bind_indices(&attachments)?;
     for (index, mount) in mounts.iter().enumerate() {
         if mount.source.is_none() {
@@ -194,24 +194,22 @@ fn mount_index_from_pointer(pointer: &str) -> Option<usize> {
     rest.parse().ok()
 }
 
-fn attach_named_and_anonymous_volumes(
-    bundle: &OciBundle,
-    attachments: CreateAttachments,
+fn box_owned_volume_sources(
     home_dir: &Path,
     record: &BoxRecord,
     anonymous_volumes: &[String],
-    mounts: &[OciBindMount],
-) -> ExecutionManagerResult<CreateAttachments> {
+    raw_anonymous: bool,
+) -> ExecutionManagerResult<HashMap<PathBuf, String>> {
     let mut owned_names = std::collections::HashSet::new();
     for name in record.volume_names.iter().chain(anonymous_volumes.iter()) {
         owned_names.insert(name.as_str());
     }
     if owned_names.is_empty() {
-        return Ok(attachments);
+        return Ok(HashMap::new());
     }
 
     let store = VolumeStore::new(home_dir.join("volumes.json"), home_dir.join("volumes"));
-    let volumes = store.load().map_err(|error| {
+    let volumes = store.load_strict().map_err(|error| {
         ExecutionManagerError::Unavailable(format!(
             "failed to load volume store for storage attachments: {error}"
         ))
@@ -225,15 +223,84 @@ fn attach_named_and_anonymous_volumes(
                 record.id
             )));
         };
-        let source = PathBuf::from(&volume.mount_point)
-            .canonicalize()
-            .map_err(|error| {
-                ExecutionManagerError::Unavailable(format!(
-                    "volume '{name}' mount point {} is not reachable for storage attachment: {error}",
-                    volume.mount_point
-                ))
-            })?;
-        if let Some(previous) = by_source.insert(source.clone(), (*name).to_string()) {
+        let is_named = record.volume_names.iter().any(|named| named == *name);
+        let raw = raw_anonymous && !is_named;
+        let checked = if raw {
+            Some(
+                store
+                    .require_anonymous(name, &record.id)
+                    .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?,
+            )
+        } else {
+            None
+        };
+        let volume = checked.as_ref().unwrap_or(volume);
+        if volume.size_limit != 0 {
+            return Err(ExecutionManagerError::InvalidRequest(format!(
+                "volume {name:?} quota is not enforced by this OCI storage path"
+            )));
+        }
+        let expected = home_dir.join("volumes").join(name);
+        let metadata = std::fs::symlink_metadata(&expected)
+            .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))?;
+        if !metadata.is_dir() || metadata.file_type().is_symlink() {
+            return Err(ExecutionManagerError::InvalidRequest(
+                "named volume source is not a plain managed directory".into(),
+            ));
+        }
+        let source_path = if raw {
+            crate::volume::anonymous_ext4_disk_path(Path::new(&volume.mount_point))
+        } else {
+            PathBuf::from(&volume.mount_point)
+        };
+        if raw {
+            let metadata = std::fs::symlink_metadata(&source_path)
+                .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+            if !metadata.is_file() || metadata.file_type().is_symlink() {
+                return Err(ExecutionManagerError::InvalidRequest(
+                    "anonymous disk is not a plain raw image".into(),
+                ));
+            }
+        }
+        let source = source_path.canonicalize().map_err(|error| {
+            ExecutionManagerError::Unavailable(format!(
+                "volume '{name}' mount point {} is not reachable for storage attachment: {error}",
+                volume.mount_point
+            ))
+        })?;
+        if raw && source != source_path {
+            return Err(ExecutionManagerError::InvalidRequest(
+                "anonymous raw image path aliases another source".into(),
+            ));
+        }
+        let identity = if is_named || raw {
+            if let Some(allocation) = volume.labels.get(crate::volume::ALLOCATION_ID_LABEL) {
+                let allocation = uuid::Uuid::parse_str(allocation).map_err(|_| {
+                    ExecutionManagerError::InvalidRequest(
+                        "named volume allocation identity is invalid".into(),
+                    )
+                })?;
+                format!("kbox.volume.v1.{}", allocation.simple())
+            } else {
+                if raw {
+                    return Err(ExecutionManagerError::InvalidRequest(
+                        "raw allocation has no store-issued identity".into(),
+                    ));
+                }
+                chrono::DateTime::parse_from_rfc3339(&volume.created_at).map_err(|_| {
+                    ExecutionManagerError::InvalidRequest(
+                        "named volume has no valid allocation creation identity".into(),
+                    )
+                })?;
+                use sha2::{Digest, Sha256};
+                let encoded = serde_json::to_vec(&(&volume.name, &volume.created_at, &source))
+                    .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+                format!("kbox.volume.v1.{:x}", Sha256::digest(encoded))
+            }
+        } else {
+            (*name).to_string()
+        };
+        if let Some(previous) = by_source.insert(source.clone(), identity) {
             return Err(ExecutionManagerError::Internal(format!(
                 "volumes '{previous}' and '{name}' share mount point {} for execution {}",
                 source.display(),
@@ -242,6 +309,60 @@ fn attach_named_and_anonymous_volumes(
         }
     }
 
+    Ok(by_source)
+}
+
+#[cfg(feature = "vm")]
+pub(super) fn validate_box_named_volume_sources(
+    home_dir: &Path,
+    record: &BoxRecord,
+) -> ExecutionManagerResult<()> {
+    let metadata = record.managed_execution.as_ref().ok_or_else(|| {
+        ExecutionManagerError::InvalidRequest(
+            "named volume admission requires managed metadata".into(),
+        )
+    })?;
+    if metadata.request.policy.volume_names != record.volume_names {
+        return Err(ExecutionManagerError::InvalidRequest(
+            "named volume declarations differ from the persisted request".into(),
+        ));
+    }
+    if record.volume_names.is_empty() {
+        return Ok(());
+    }
+    let named = box_owned_volume_sources(home_dir, record, &[], false)?;
+    let mut bound = HashMap::<PathBuf, usize>::new();
+    for value in &metadata.request.config.volumes {
+        let source = crate::VmManager::parse_volume_spec(value)
+            .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?
+            .host_path;
+        let canonical = source
+            .canonicalize()
+            .map_err(|error| ExecutionManagerError::Unavailable(error.to_string()))?;
+        if named.contains_key(&canonical) {
+            *bound.entry(canonical).or_default() += 1;
+        }
+    }
+    if named.keys().any(|source| bound.get(source) != Some(&1)) {
+        return Err(ExecutionManagerError::InvalidRequest(
+            "each declared named volume requires one exact bind mount".into(),
+        ));
+    }
+    Ok(())
+}
+
+fn attach_named_and_anonymous_volumes(
+    bundle: &OciBundle,
+    attachments: CreateAttachments,
+    home_dir: &Path,
+    record: &BoxRecord,
+    anonymous_volumes: &[String],
+    mounts: &[OciStorageMount],
+) -> ExecutionManagerResult<CreateAttachments> {
+    let raw = attachments
+        .raw_storage_images(bundle)
+        .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
+    let by_source = box_owned_volume_sources(home_dir, record, anonymous_volumes, raw)?;
     let mut attachments = attachments;
     let mut attached = 0usize;
     for (index, mount) in mounts.iter().enumerate() {
@@ -272,7 +393,7 @@ fn attach_workspace_bind(
     bundle: &OciBundle,
     attachments: CreateAttachments,
     record: &BoxRecord,
-    mounts: &[OciBindMount],
+    mounts: &[OciStorageMount],
 ) -> ExecutionManagerResult<CreateAttachments> {
     let workspace = record.box_dir.join("workspace");
     let Ok(workspace) = workspace.canonicalize() else {
@@ -340,13 +461,15 @@ fn attach_storage(
 }
 
 #[derive(Debug)]
-struct OciBindMount {
+struct OciStorageMount {
     source: Option<PathBuf>,
     destination: Option<PathBuf>,
     read_only: bool,
 }
 
-fn oci_bind_mounts(bundle: &OciBundle) -> ExecutionManagerResult<Vec<OciBindMount>> {
+fn oci_storage_mounts(bundle: &OciBundle) -> ExecutionManagerResult<Vec<OciStorageMount>> {
+    let raw = koci_sdk::raw_storage_images_requested(bundle)
+        .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
     let configuration: serde_json::Value =
         serde_json::from_str(bundle.config_json()).map_err(|error| {
             ExecutionManagerError::Internal(format!(
@@ -382,8 +505,12 @@ fn oci_bind_mounts(bundle: &OciBundle) -> ExecutionManagerResult<Vec<OciBindMoun
                 })
                 .unwrap_or_default();
             let read_only = options.contains(&"ro");
-            OciBindMount {
-                source: if typ == Some("bind") { source } else { None },
+            OciStorageMount {
+                source: if typ == Some("bind") || (raw && typ == Some("ext4")) {
+                    source
+                } else {
+                    None
+                },
                 destination,
                 read_only,
             }
@@ -398,7 +525,7 @@ mod tests {
     use koci_sdk::ProcessIo;
     use serde_json::json;
 
-    fn make_record(home_dir: &Path, id: &str) -> BoxRecord {
+    pub(super) fn make_record(home_dir: &Path, id: &str) -> BoxRecord {
         serde_json::from_value(json!({
             "id": id,
             "short_id": &id[..8],
@@ -472,7 +599,23 @@ mod tests {
                 .unwrap();
         assert_eq!(attached.schema_version(), "koci.attachments.v2");
         assert_eq!(attached.storage().len(), 1);
-        assert_eq!(attached.storage()[0].identity().as_str(), "dataset-a");
+        assert!(attached.storage()[0]
+            .identity()
+            .as_str()
+            .starts_with("kbox.volume.v1."));
+        assert_ne!(attached.storage()[0].identity().as_str(), "dataset-a");
+        let retry = attach_box_owned_volume_storage(
+            &bundle,
+            CreateAttachments::from_bundle(&bundle, ProcessIo::default()).unwrap(),
+            home.path(),
+            &record,
+            &[],
+        )
+        .unwrap();
+        assert_eq!(
+            attached.storage()[0].identity(),
+            retry.storage()[0].identity()
+        );
         assert_eq!(
             attached.storage()[0].access_mode(),
             StorageAccessMode::ReadWrite
@@ -702,3 +845,7 @@ mod tests {
         assert_eq!(accepted.storage().len(), 1);
     }
 }
+
+#[cfg(test)]
+#[path = "oci_named_storage_tests.rs"]
+mod named_tests;

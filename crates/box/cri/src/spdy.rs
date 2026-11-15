@@ -27,8 +27,8 @@ use std::path::Path;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
 
-use kbox_core::exec::{ExecEvent, StreamType as ExecStream};
 use flate2::{Compress, Compression, FlushCompress, Status};
+use kbox_core::exec::{ExecEvent, StreamType as ExecStream};
 
 use crate::streaming::StreamingSession;
 

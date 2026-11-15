@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "command": [
+    "/usr/sbin/lsof",
+    "-nP",
+    "-a",
+    "-u",
+    "501",
+    "-Fpcfn"
+  ],
+  "exit": 0,
+  "ownedRuntimeDescriptorHolders": [],
+  "scope": "same-UID runtime processes; only paths belonging to this run are retained; no global file listing persisted",
+  "resourcesDeleted": []
+}

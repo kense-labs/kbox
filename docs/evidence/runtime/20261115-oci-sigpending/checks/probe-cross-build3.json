@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/inputs/sigpending-probe.c",
+    "-o",
+    "artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/inputs/sigpending-probe-3"
+  ],
+  "exit": 0,
+  "seconds": 0.147980709
+}

@@ -14,6 +14,7 @@
 #[cfg(target_os = "macos")]
 mod apfs;
 mod baseline;
+pub(crate) use baseline::install_baseline_bytes_if_absent;
 mod builder;
 #[cfg(unix)]
 mod ext4;
@@ -28,6 +29,8 @@ mod guest_native_migration;
 mod layout;
 #[cfg(any(target_os = "macos", all(unix, test)))]
 mod oci_ext4;
+#[cfg(any(target_os = "macos", all(unix, test)))]
+pub(crate) use oci_ext4::OciWorkloadRootfs;
 pub(crate) mod overlay;
 mod provider;
 mod staging_path;
@@ -47,10 +50,14 @@ pub use ext4::{
     EXT4_ARTIFACT_SCHEMA, EXT4_BUILDER_ID,
 };
 #[cfg(target_os = "macos")]
+pub(crate) use ext4_cache::copy_sparse_file as copy_sparse_ext4_file;
+#[cfg(target_os = "macos")]
 pub(crate) use ext4_cache::{Ext4ArtifactCache, Ext4CacheIdentity};
 #[cfg(target_os = "macos")]
 pub use guest_native_ext4::GuestNativeExt4Provider;
 pub use layout::{GuestLayout, GUEST_WORKDIR};
+#[cfg(target_os = "macos")]
+pub(crate) use provider::CaseSensitiveApfsProvider;
 pub use provider::{
     default_provider, default_provider_for_box, CopyProvider, OverlayProvider, ResumedRootfs,
     RootfsArtifactCacheOptions, RootfsFinalizeOptions, RootfsOciPrepareOptions,
@@ -309,6 +316,12 @@ pub fn guest_native_ext4_disk_mib(box_dir: &Path) -> Result<Option<u32>> {
             box_dir.join("rootfs-ext4-v1").display()
         )))
     }
+}
+
+/// Validate a mutable volume; the Guest owns any required journal replay.
+#[cfg(target_os = "macos")]
+pub(crate) fn resume_volume_ext4_artifact(artifact_directory: &Path) -> Result<Ext4Artifact> {
+    ext4_artifact::open_ext4_artifact_for_resume(artifact_directory).map(|(artifact, _)| artifact)
 }
 
 /// Open a clean guest-native generation for an immutable filesystem snapshot.

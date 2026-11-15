@@ -1,0 +1,16 @@
+Executable=/Users/roylin/code/kense/kbox/artifacts/final-archive-cf1a062d97174e699fd16a7cdf6a981c/installed/bin/kbox
+Identifier=kbox-742598ce93c05cf0
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=66744 flags=0x20002(adhoc,linker-signed) hashes=2082+0 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=9b49547ccf88b44cb48dce6bdbafbbf1a7ffc043
+CandidateCDHashFull sha256=9b49547ccf88b44cb48dce6bdbafbbf1a7ffc0438f33b15b98e0891e2cc789bd
+Hash choices=sha256
+CMSDigest=9b49547ccf88b44cb48dce6bdbafbbf1a7ffc0438f33b15b98e0891e2cc789bd
+CMSDigestType=2
+CDHash=9b49547ccf88b44cb48dce6bdbafbbf1a7ffc043
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements=none

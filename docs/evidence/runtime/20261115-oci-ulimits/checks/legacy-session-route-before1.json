@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "persisted_box_and_oci_sessions_use_the_execution_manager",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 3.754455542
+}

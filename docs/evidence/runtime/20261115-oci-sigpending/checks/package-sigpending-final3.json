@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 29.592599458,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/package-home-sigpending-final3",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "b0d1c272758563f69ee10d20d6b62a59f29e6d7e5e15b1f9c7370eb97af18129"
+}

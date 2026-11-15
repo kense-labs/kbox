@@ -1,0 +1,82 @@
+{
+  "status": "PASS for current task; two preexisting historical targets missing",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "final-review-00.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exitCode": 0,
+      "log": "final-review-01.log"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "final-review-02.log"
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "log": "final-review-03.log"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrun",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0,
+      "log": "final-review-04.log"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "libkrunfw",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0,
+      "log": "final-review-05.log"
+    }
+  ],
+  "localReferencesChecked": 67,
+  "newBrokenReferences": [],
+  "preexistingBrokenReferences": [
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "docs/evidence/2026-10-18-guest-command-status/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "../../docs/evidence/code-harness/20261018-macos-guest-owner/OUTCOME.md"
+    }
+  ],
+  "preexistingBrokenReferencesConfirmedInHead": true,
+  "sourceInputsSha256": "c9a60cf9a6efddec179aac6ecf22f0213db34752ffe44fc081f6e7e5246897b9",
+  "boxArchiveSha256": "f5f1752afd9c20af91429e2eda61cad4f7d3b0848c10fd0d224c5cfc559a4eb4",
+  "ociArchiveSha256": "17ffecf4643a3ec16da398e6db865c87824b70a2a68cc1ca028c2c829682385b"
+}

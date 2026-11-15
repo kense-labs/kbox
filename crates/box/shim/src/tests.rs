@@ -1,3 +1,9 @@
+fn parse_ulimit(value: &str) -> Option<String> {
+    kbox_core::guest_exec::GuestRlimit::parse(value)
+        .ok()
+        .map(|limit| limit.guest_spec())
+}
+
 use super::*;
 
 #[cfg(target_os = "macos")]
@@ -270,6 +276,20 @@ fn test_parse_ulimit_all_resources() {
     assert!(parse_ulimit("rtprio=10:20").is_some());
     assert!(parse_ulimit("rttime=100:200").is_some());
     assert!(parse_ulimit("sigpending=100:200").is_some());
+}
+
+#[test]
+fn test_parse_ulimit_refuses_malformed_limits_instead_of_forwarding_them() {
+    for input in [
+        "nofile=2:1",
+        "nofile=garbage",
+        "nofile=1:2:3",
+        "nofile=-2:-1",
+        "nofile=18446744073709551616:18446744073709551616",
+        "nofile=1:2\0",
+    ] {
+        assert_eq!(parse_ulimit(input), None, "{input:?}");
+    }
 }
 
 #[cfg(all(not(target_os = "windows"), not(target_os = "macos")))]

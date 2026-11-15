@@ -1,0 +1,39 @@
+test_checksum_corruption_and_missing_companion_preserve_previous_install (__main__.InstallerTests) ... ok
+test_failed_rename_never_deletes_previous_runtime (__main__.InstallerTests) ... ok
+test_installed_executable_failure_rolls_back (__main__.InstallerTests) ... ok
+test_success_preserves_workload_data_and_unrelated_runtime_files (__main__.InstallerTests) ... FAIL
+test_unexpected_companion_symlink_is_refused (__main__.InstallerTests) ... ok
+test_wrong_guest_architecture_is_refused_even_with_matching_checksum (__main__.InstallerTests) ... ok
+
+======================================================================
+FAIL: test_success_preserves_workload_data_and_unrelated_runtime_files (__main__.InstallerTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-install-package.py", line 99, in test_success_preserves_workload_data_and_unrelated_runtime_files
+    self.assertEqual(result.returncode, 0, result.stderr)
+AssertionError: 1 != 0 : error: /Library/Developer/CommandLineTools/usr/bin/lipo: unknown architecture specification flag: /var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-install-case-d5ecteqm/package/bin/kbox in specifying -verify_arch operation
+/Library/Developer/CommandLineTools/usr/bin/lipo: known architecture flags are: any little big ppc64 x86_64 x86_64h arm64 ppc970-64 arm64_32 arm64e ppc i386 m68k hppa sparc m88k i860 veo arm ppc601 ppc603 ppc603e ppc603ev ppc604 ppc604e ppc750 ppc7400 ppc7450 ppc970 i486 i486SX pentium i586 pentpro i686 pentIIm3 pentIIm5 pentium4 m68030 m68040 hppa7100LC veo1 veo2 veo3 veo4 armv4t armv5 xscale armv6 armv6m armv7 armv7f armv7s armv7k armv7m armv7em armv8m.main armv8m.base armv8.1m.main arm64v8
+usage: lipo <input_file> <command> [<options> ...]
+  command is one of:
+    -archs
+    -create
+    -detailed_info
+    -extract <arch_type> [-extract <arch_type> ...]
+    -extract_family <arch_type> [-extract_family <arch_type> ...]
+    -info
+    -remove <arch_type> [-remove <arch_type> ...]
+    -replace <arch_type> <file_name> [-replace <arch_type> <file_name> ...]
+    -thin <arch_type>
+    -verify_arch <arch_type> ...
+  options are one or more of:
+    -arch <arch_type> <input_file>
+    -hideARM64
+    -output <output_file>
+    -segalign <arch_type> <alignment>
+kbox-install: wrong architecture: bin/kbox
+
+
+----------------------------------------------------------------------
+Ran 6 tests in 1.083s
+
+FAILED (failures=1)

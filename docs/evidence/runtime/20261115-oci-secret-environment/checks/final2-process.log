@@ -1,0 +1,23 @@
+{"command": ["python3", "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/run-native.py", "docs/evidence/runtime/20261115-oci-secret-environment/run-context.json", "2", "rootro"], "exit": 0, "seconds": 325.829486917}
+ck: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/rootro-attempt-2/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/run-native.py", "docs/evidence/runtime/20261115-oci-secret-environment/run-context.json", "2", "tmpfs"], "exit": 0, "seconds": 169.84985195800002}
+.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/tmpfs-attempt-2/service/runtime.sock: Connection refused (os error 61)
+
+{"command": ["python3", "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/run-native.py", "docs/evidence/runtime/20261115-oci-secret-environment/run-context.json", "2", "ulimits"], "exit": 101, "seconds": 2.030891792}
+t: failed to connect SDK Unix socket /private/tmp/kbox-secret-env-1ac68d946a68/ulimits-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (88228263) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_ulimits.rs:221:226:
+assertion failed: binary.is_absolute() && binary.is_file()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::ulimits::native_ulimits_enforce_kernel_effects_all_process_paths_replay_and_recovery' (88228262) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_ulimits.rs:238:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+
+

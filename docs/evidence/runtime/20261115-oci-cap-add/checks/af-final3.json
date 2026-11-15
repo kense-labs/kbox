@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-cap-add/af-context-final3.json"
+  ],
+  "exit": 0,
+  "seconds": 155.112591875
+}

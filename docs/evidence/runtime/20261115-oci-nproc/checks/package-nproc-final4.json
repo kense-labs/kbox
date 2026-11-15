@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 104.148013042,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/package-home-nproc-final4",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "5ffb2a148451957f423d2f01696cb2b586ef07aacbc7bfd84b287b9f0ac288fd"
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "kind": "oci",
+    "pid": 42929,
+    "parent": 42927,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/service/runtime/shares/raw-ro-native/1 --runtime-share-device 16777233 --runtime-share-inode 292353235 --runtime-state-device 16777233 --runtime-state-inode 292353250 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-3cd8d8a52d17c3baab0ea822fbc69243/session-token --console /private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/service/runtime/console/raw-ro-native-1.log --socket-path /private/tmp/koci-agent-3cd8d8a52d17c3baab0ea822fbc69243/agent.sock --console-device 16777233 --console-inode 292353251 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-3cd8d8a52d17c3baab0ea822fbc69243/report.json --vm-attachment-manifest-sha256 sha256:f2235b8a2415ce956a7a24fc0694a0d03525aee86393e6171d33f6c818e185bd",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    },
+    "nativeDiskDescriptorProof": {
+      "log": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/descriptors-raw-ro-attempt-2-oci-42929-native.log",
+      "sources": {
+        "readonly": [
+          {
+            "fd": "9",
+            "access": "r",
+            "path": "/private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/raw-inputs/readonly/rootfs.ext4"
+          },
+          {
+            "fd": "29",
+            "access": "r",
+            "path": "/private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/raw-inputs/readonly/rootfs.ext4"
+          }
+        ],
+        "writable": [
+          {
+            "fd": "10",
+            "access": "u",
+            "path": "/private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/raw-inputs/writable/rootfs.ext4"
+          },
+          {
+            "fd": "34",
+            "access": "u",
+            "path": "/private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/raw-inputs/writable/rootfs.ext4"
+          }
+        ]
+      }
+    }
+  }
+]

@@ -1,0 +1,93 @@
+[
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-core",
+      "-p",
+      "koci-sdk",
+      "--all-targets"
+    ],
+    "exitCode": 0,
+    "seconds": 0.856805625,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-sdk-final.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "aarch64-pc-windows-msvc",
+      "-p",
+      "koci-runtime",
+      "--all-targets"
+    ],
+    "exitCode": 0,
+    "seconds": 9.697628292,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/arm64-runtime-all-targets.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--locked",
+      "--target",
+      "x86_64-pc-windows-msvc",
+      "-p",
+      "koci-sdk",
+      "-p",
+      "koci-runtime",
+      "-p",
+      "koci-kbox",
+      "--lib"
+    ],
+    "exitCode": 0,
+    "seconds": 17.864811209,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/x64-oci-libraries.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "koci-sdk",
+      "--lib"
+    ],
+    "exitCode": 0,
+    "seconds": 2.2928110000000004,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/sdk-full.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "klibksys",
+      "--test",
+      "build_support"
+    ],
+    "exitCode": 0,
+    "seconds": 1.4250324999999968,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/build-support-full.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "koci-runtime",
+      "--lib"
+    ],
+    "exitCode": 101,
+    "seconds": 337.094444958,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/oci-runtime-full.log"
+  }
+]

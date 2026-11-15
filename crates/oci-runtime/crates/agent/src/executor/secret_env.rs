@@ -18,6 +18,9 @@ use koci_sdk::{Error, ErrorCode, Result};
 use serde::Deserialize;
 use zeroize::{Zeroize, Zeroizing};
 
+mod bound;
+pub(super) use bound::{requested_sources, PreparedMemorySecretEnvironment};
+
 const SECRET_ENVIRONMENT_MANIFEST: &str = "K_BOX_SECRET_ENV_V1";
 const SECRET_GUEST_ROOT: &str = "/.kbox-secrets";
 const MAX_BINDINGS: usize = 128;
@@ -109,36 +112,7 @@ fn materialize_from(environment: &mut Vec<String>, root: &Path) -> Result<()> {
             )
         })?;
         validate_secret_metadata(&metadata)?;
-        let mut bytes = Zeroizing::new(Vec::with_capacity(metadata.len() as usize));
-        file.take(MAX_SECRET_BYTES + 1)
-            .read_to_end(&mut bytes)
-            .map_err(|error| {
-                secret_error(
-                    ErrorCode::FailedPrecondition,
-                    format!("could not read Box Secret environment file: {error}"),
-                )
-            })?;
-        if bytes.is_empty() || bytes.len() as u64 > MAX_SECRET_BYTES {
-            return Err(secret_error(
-                ErrorCode::FailedPrecondition,
-                "Box Secret environment value has an invalid size",
-            ));
-        }
-        let mut value = std::str::from_utf8(&bytes)
-            .map_err(|_| {
-                secret_error(
-                    ErrorCode::FailedPrecondition,
-                    "Box Secret environment value is not UTF-8",
-                )
-            })?
-            .to_owned();
-        if value.contains('\0') {
-            value.zeroize();
-            return Err(secret_error(
-                ErrorCode::FailedPrecondition,
-                "Box Secret environment value contains a NUL byte",
-            ));
-        }
+        let value = read_secret_value(file, metadata.len())?;
         additions.push((binding.variable, value));
     }
 
@@ -149,6 +123,40 @@ fn materialize_from(environment: &mut Vec<String>, root: &Path) -> Result<()> {
             .map(|(variable, value)| format!("{variable}={value}")),
     );
     Ok(())
+}
+
+fn read_secret_value(file: impl Read, size: u64) -> Result<String> {
+    let mut bytes = Zeroizing::new(Vec::with_capacity(size as usize));
+    file.take(MAX_SECRET_BYTES + 1)
+        .read_to_end(&mut bytes)
+        .map_err(|error| {
+            secret_error(
+                ErrorCode::FailedPrecondition,
+                format!("could not read Box Secret environment file: {error}"),
+            )
+        })?;
+    if bytes.is_empty() || bytes.len() as u64 > MAX_SECRET_BYTES {
+        return Err(secret_error(
+            ErrorCode::FailedPrecondition,
+            "Box Secret environment value has an invalid size",
+        ));
+    }
+    let mut value = std::str::from_utf8(&bytes)
+        .map_err(|_| {
+            secret_error(
+                ErrorCode::FailedPrecondition,
+                "Box Secret environment value is not UTF-8",
+            )
+        })?
+        .to_owned();
+    if value.contains('\0') {
+        value.zeroize();
+        return Err(secret_error(
+            ErrorCode::FailedPrecondition,
+            "Box Secret environment value contains a NUL byte",
+        ));
+    }
+    Ok(value)
 }
 
 fn validate_variable(variable: &str) -> Result<()> {

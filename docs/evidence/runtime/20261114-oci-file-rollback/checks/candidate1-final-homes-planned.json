@@ -1,0 +1,13 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-oci/150a4bc3103b45038a5eabffa4c4cbcc/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-prewarm/0a94dafaf36c4afd86362bf13b8d3d8e/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-primary/d4f9edc558b949e4a7227a7a4064b64f/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/af-final1/native-readonly/e34c21262e654928b0dcace50f54a20c/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-rollback-ccc80622aec3439491048d99d16b2897/package-home-rollback-final1",
+  "/private/tmp/kbox-rollback-ccc80622aec3/attempt-1/home",
+  "/private/tmp/kbox-rollback-ccc80622aec3/attempt-2/home",
+  "/private/tmp/kbox-rollback-ccc80622aec3/attempt-3/home",
+  "/private/tmp/kbox-rollback-ccc80622aec3/attempt-4/home",
+  "/private/tmp/kbox-rollback-ccc80622aec3/attempt-5/home"
+]

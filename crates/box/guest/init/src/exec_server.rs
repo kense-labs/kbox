@@ -2174,7 +2174,16 @@ fn build_command(
                 let masked = parse_sec_path_list(spec.env, "K_SEC_MASKED_PATHS=");
                 let readonly = parse_sec_path_list(spec.env, "K_SEC_READONLY_PATHS=");
                 if !masked.is_empty() || !readonly.is_empty() {
-                    apply_container_path_restrictions(rootfs, &masked, &readonly);
+                    if let Err(error) =
+                        apply_container_path_restrictions(rootfs, &masked, &readonly)
+                    {
+                        return Err(ExecOutput {
+                            stdout: vec![],
+                            stderr: format!("Rootfs path restriction failed: {error}").into_bytes(),
+                            exit_code: 1,
+                            truncated: false,
+                        });
+                    }
                 }
                 // CRI readonly_rootfs: remount the container root read-only
                 // AFTER the pseudo-filesystems and path restrictions are set up,
@@ -2184,7 +2193,15 @@ fn build_command(
                     .iter()
                     .any(|entry| entry == "K_SEC_READONLY_ROOTFS=1")
                 {
-                    remount_rootfs_readonly(rootfs);
+                    if let Err(error) = remount_rootfs_readonly(rootfs) {
+                        return Err(ExecOutput {
+                            stdout: vec![],
+                            stderr: format!("Rootfs read-only enforcement failed: {error}")
+                                .into_bytes(),
+                            exit_code: 1,
+                            truncated: false,
+                        });
+                    }
                 }
             }
             Ok(_) => {
@@ -3125,145 +3142,11 @@ pub(crate) fn parse_sec_path_list<'a>(env: &'a [String], prefix: &str) -> Vec<&'
         .unwrap_or_default()
 }
 
-/// Apply CRI `MaskedPaths` and `ReadonlyPaths` inside a container `rootfs`.
-///
-/// Mirrors the standard OCI runtime behaviour, mounting under `<rootfs>` (in the
-/// guest mount namespace) before the container `chroot`s in:
-/// - a masked *file* is shadowed by a bind mount of `/dev/null` (so execing or
-///   reading it yields EACCES — "Permission denied");
-/// - a masked *directory* is shadowed by an empty read-only `tmpfs`;
-/// - a read-only path is bind-mounted onto itself and remounted `MS_RDONLY`
-///   (so writes yield EROFS — "Read-only file system").
-///
-/// Best-effort: an absent path is skipped and any mount failure is logged.
 #[cfg(target_os = "linux")]
-pub(crate) fn apply_container_path_restrictions(rootfs: &str, masked: &[&str], readonly: &[&str]) {
-    use nix::mount::{mount, MsFlags};
-
-    use std::os::unix::fs::MetadataExt;
-
-    // Reject entries that are not safe absolute paths (must be rooted, no `..`
-    // component) so a crafted MaskedPaths/ReadonlyPaths value cannot escape the
-    // container rootfs through the join below.
-    let is_safe = |path: &str| path.starts_with('/') && !path.split('/').any(|c| c == "..");
-
-    // A target is already restricted if it is a distinct mount — its st_dev
-    // differs from its parent directory's. This makes re-application on every
-    // exec idempotent (build_command runs per-exec) instead of stacking mounts.
-    let is_mountpoint = |target: &str| -> bool {
-        // lstat, not stat: a masked symlink (e.g. busybox's /bin/ls) must be
-        // compared as the link entry itself. Following it would resolve to a
-        // different filesystem (the guest-root busybox), making st_dev differ
-        // from the parent and wrongly reporting "already a mount" — which would
-        // skip masking the symlink on the very first exec.
-        let Ok(dev) = std::fs::symlink_metadata(target).map(|m| m.dev()) else {
-            return false;
-        };
-        std::path::Path::new(target)
-            .parent()
-            .and_then(|p| std::fs::metadata(p).ok())
-            .map(|pm| pm.dev() != dev)
-            .unwrap_or(false)
-    };
-
-    for path in masked {
-        if !is_safe(path) {
-            warn!("Skipping unsafe masked path {path}");
-            continue;
-        }
-        let target = format!("{rootfs}{path}");
-        if is_mountpoint(&target) {
-            continue; // already masked
-        }
-        // lstat (no symlink follow): a masked symlink must be treated as a file
-        // so we mask the entry itself, not whatever it points at.
-        match std::fs::symlink_metadata(&target) {
-            Ok(meta) if meta.is_dir() => {
-                if let Err(e) = mount(
-                    Some("tmpfs"),
-                    target.as_str(),
-                    Some("tmpfs"),
-                    MsFlags::MS_RDONLY,
-                    Some("size=0k"),
-                ) {
-                    warn!("Failed to mask directory {target}: {e}");
-                }
-            }
-            Ok(_) => {
-                // Bind /dev/null over the entry WITHOUT following it: open with
-                // O_PATH|O_NOFOLLOW and mount onto /proc/self/fd/N so a symlinked
-                // target (e.g. busybox's /bin/ls -> /bin/busybox) masks the
-                // symlink itself — exec'ing it then yields EACCES — instead of
-                // resolving the link against the guest root and masking the wrong
-                // file. (Same technique container runtimes use against symlink
-                // attacks.)
-                use std::os::fd::AsRawFd;
-                match nix::fcntl::open(
-                    target.as_str(),
-                    nix::fcntl::OFlag::O_PATH
-                        | nix::fcntl::OFlag::O_NOFOLLOW
-                        | nix::fcntl::OFlag::O_CLOEXEC,
-                    nix::sys::stat::Mode::empty(),
-                ) {
-                    Ok(entry_fd) => {
-                        let fd_path = format!("/proc/self/fd/{}", entry_fd.as_raw_fd());
-                        if let Err(e) = mount(
-                            Some("/dev/null"),
-                            fd_path.as_str(),
-                            None::<&str>,
-                            MsFlags::MS_BIND,
-                            None::<&str>,
-                        ) {
-                            warn!("Failed to mask file {target}: {e}");
-                        }
-                    }
-                    Err(e) => warn!("Failed to open masked file {target}: {e}"),
-                }
-            }
-            Err(_) => {} // path absent in this rootfs; nothing to mask
-        }
-    }
-
-    for path in readonly {
-        if !is_safe(path) {
-            warn!("Skipping unsafe readonly path {path}");
-            continue;
-        }
-        let target = format!("{rootfs}{path}");
-        if !std::path::Path::new(&target).exists() {
-            continue;
-        }
-        // Idempotent: skip if already read-only — re-binding would stack mounts
-        // on every exec into the container.
-        if nix::sys::statvfs::statvfs(target.as_str())
-            .map(|s| s.flags().contains(nix::sys::statvfs::FsFlags::ST_RDONLY))
-            .unwrap_or(false)
-        {
-            continue;
-        }
-        // A fresh bind is read-write regardless of the source, so bind then
-        // remount read-only — the order matters.
-        if let Err(e) = mount(
-            Some(target.as_str()),
-            target.as_str(),
-            None::<&str>,
-            MsFlags::MS_BIND | MsFlags::MS_REC,
-            None::<&str>,
-        ) {
-            warn!("Failed to bind {target} for read-only: {e}");
-            continue;
-        }
-        if let Err(e) = mount(
-            None::<&str>,
-            target.as_str(),
-            None::<&str>,
-            MsFlags::MS_BIND | MsFlags::MS_REMOUNT | MsFlags::MS_RDONLY,
-            None::<&str>,
-        ) {
-            warn!("Failed to remount {target} read-only: {e}");
-        }
-    }
-}
+#[path = "exec_server/path_restrictions.rs"]
+mod path_restrictions;
+#[cfg(target_os = "linux")]
+pub(crate) use path_restrictions::apply_container_path_restrictions;
 
 /// Remount a container `rootfs` read-only (CRI `readonly_rootfs`).
 ///
@@ -3272,37 +3155,49 @@ pub(crate) fn apply_container_path_restrictions(rootfs: &str, masked: &[&str], r
 /// and volumes mounted inside it (separate mounts) stay writable. Idempotent: a
 /// rootfs that is already read-only is left untouched, so re-exec into the
 /// container does not stack mounts.
+///
+/// Returns an error for invalid roots or failed mount/readback; callers must refuse launch.
 #[cfg(target_os = "linux")]
-pub(crate) fn remount_rootfs_readonly(rootfs: &str) {
+pub fn remount_rootfs_readonly(rootfs: &str) -> std::io::Result<()> {
     use nix::mount::{mount, MsFlags};
 
-    if nix::sys::statvfs::statvfs(rootfs)
-        .map(|s| s.flags().contains(nix::sys::statvfs::FsFlags::ST_RDONLY))
-        .unwrap_or(false)
+    if !std::fs::metadata(rootfs)?.is_dir() {
+        return Err(std::io::Error::new(
+            std::io::ErrorKind::InvalidInput,
+            "read-only rootfs must be a directory",
+        ));
+    }
+    if nix::sys::statvfs::statvfs(rootfs)?
+        .flags()
+        .contains(nix::sys::statvfs::FsFlags::ST_RDONLY)
     {
-        return; // already read-only
+        return Ok(());
     }
     // A fresh bind is read-write regardless of the source, so bind (recursively,
     // to carry the inner pseudo-filesystems) then remount the top read-only.
-    if let Err(e) = mount(
+    mount(
         Some(rootfs),
         rootfs,
         None::<&str>,
         MsFlags::MS_BIND | MsFlags::MS_REC,
         None::<&str>,
-    ) {
-        warn!("Failed to bind rootfs {rootfs} for read-only: {e}");
-        return;
-    }
-    if let Err(e) = mount(
+    )?;
+    mount(
         None::<&str>,
         rootfs,
         None::<&str>,
         MsFlags::MS_BIND | MsFlags::MS_REMOUNT | MsFlags::MS_RDONLY,
         None::<&str>,
-    ) {
-        warn!("Failed to remount rootfs {rootfs} read-only: {e}");
+    )?;
+    if !nix::sys::statvfs::statvfs(rootfs)?
+        .flags()
+        .contains(nix::sys::statvfs::FsFlags::ST_RDONLY)
+    {
+        return Err(std::io::Error::other(
+            "rootfs remains writable after read-only remount",
+        ));
     }
+    Ok(())
 }
 
 #[cfg_attr(not(unix), allow(dead_code))]
@@ -3361,6 +3256,14 @@ fn bounded_exec_output_with_truncation(
         truncated,
     }
 }
+
+#[cfg(all(test, target_os = "linux"))]
+#[path = "exec_server/path_guards_tests.rs"]
+mod path_guards_tests;
+
+#[cfg(all(test, target_os = "linux"))]
+#[path = "exec_server/rootfs_readonly_tests.rs"]
+mod readonly_tests;
 
 #[cfg(test)]
 mod tests {

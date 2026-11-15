@@ -356,7 +356,7 @@ pub(crate) async fn run_probe_for_record(
         streaming: false,
     };
 
-    if crate::commands::exec::uses_oci_session(record) {
+    if crate::commands::exec::uses_managed_session(record) {
         return match crate::commands::exec::execute_captured(record, request).await {
             Ok(output) => output.exit_code == 0,
             Err(_) => false,

@@ -1,0 +1,15 @@
+cargo:rerun-if-changed=../../../../libkrun
+cargo:rerun-if-changed=vendor/libksource.tar
+cargo:rerun-if-changed=vendor/kwindows-x64.tar.xz
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.dll
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/krun.lib
+cargo:rerun-if-changed=prebuilt/x86_64-pc-windows-msvc/libkrunfw.dll
+cargo:rerun-if-env-changed=K_DEPS_STUB
+cargo:rerun-if-env-changed=K_BUILD_LIBKRUN
+cargo:rerun-if-env-changed=K_USE_SYSTEM_LIBKRUN
+cargo:rerun-if-env-changed=K_LIBKRUNFW_DYLIB
+cargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET
+cargo:warning=K_DEPS_STUB mode: skipping libkrun build
+cargo:rustc-link-lib=dylib=krun
+cargo:LIBK_K_DEP=/nonexistent
+cargo:LIBKRUNFW_K_DEP=/nonexistent

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "workload_readonly_root",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 2.988509292
+}

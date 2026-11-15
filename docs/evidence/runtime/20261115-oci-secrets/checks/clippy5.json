@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "-p",
+    "koci-sdk",
+    "-p",
+    "koci-runtime",
+    "-p",
+    "koci-kbox",
+    "-p",
+    "koci-agent-protocol",
+    "--all-targets",
+    "--",
+    "-D",
+    "warnings"
+  ],
+  "exit": 101,
+  "seconds": 3.663189
+}

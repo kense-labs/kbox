@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-rootro-cc006d2a334b4da188696678cf03f32a/native-client-rootro-attempt-2",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::root_readonly::native_root_readonly_intent_enforces_all_access_paths_and_preserves_inner_mounts",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-oci-ro-cc006d2a334b/rootro-attempt-2",
+  "clientSha256": "51a998cb06a31946e898166cabf356acf7763db7f684b4d9f82f7dd0501b5ea2",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/installed-tmpfs-final-1",
+  "image": "docker.io/library/kbox-hvf-volumes@sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+  "foreignUidImage": null,
+  "exitCode": 101,
+  "seconds": 86.852119875,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "resultExists": false,
+  "cleanupExists": true
+}

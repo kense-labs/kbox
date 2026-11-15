@@ -1,0 +1,87 @@
+{
+  "client": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-crossfs-client-final2",
+  "clientSha256": "9faac02cf3f04eb295293904980e1d7c9815fdefad32cace5775cd2dee133298",
+  "mount": "/private/tmp/kbox-files-38d1ee741be9/crossfs-final2",
+  "runtimeFilesystemDevice": 16777233,
+  "commands": [
+    {
+      "command": [
+        "hdiutil",
+        "attach",
+        "-nomount",
+        "ram://65536"
+      ],
+      "exitCode": 0,
+      "seconds": 0.09096516700000001,
+      "output": "/dev/disk13         \t                               \t\n"
+    },
+    {
+      "command": [
+        "newfs_hfs",
+        "-v",
+        "kfile-38d1ee741",
+        "/dev/disk13"
+      ],
+      "exitCode": 0,
+      "seconds": 0.01276904199999998,
+      "output": "Initialized /dev/rdisk13 as a 32 MB case-insensitive HFS Plus volume\n"
+    },
+    {
+      "command": [
+        "mount",
+        "-t",
+        "hfs",
+        "/dev/disk13",
+        "/private/tmp/kbox-files-38d1ee741be9/crossfs-final2"
+      ],
+      "exitCode": 0,
+      "seconds": 0.01103879100000002,
+      "output": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-crossfs-client-final2",
+        "--ignored",
+        "--exact",
+        "utility_vm_driver::hvf_files::tests::native_cross_filesystem_file_grant_refuses_without_copying",
+        "--nocapture"
+      ],
+      "exitCode": 0,
+      "seconds": 0.523026042,
+      "output": "\nrunning 1 test\ntest utility_vm_driver::hvf_files::tests::native_cross_filesystem_file_grant_refuses_without_copying ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 435 filtered out; finished in 0.03s\n\n"
+    },
+    {
+      "command": [
+        "/sbin/umount",
+        "/private/tmp/kbox-files-38d1ee741be9/crossfs-final2"
+      ],
+      "exitCode": 0,
+      "seconds": 0.009943332999999943,
+      "output": ""
+    },
+    {
+      "command": [
+        "hdiutil",
+        "detach",
+        "-force",
+        "/dev/disk13"
+      ],
+      "exitCode": 0,
+      "seconds": 0.013424749999999985,
+      "output": "\"disk13\" ejected.\n"
+    }
+  ],
+  "ownedDevice": "/dev/disk13",
+  "callerFilesystemDevice": 16777245,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "unmountExitCode": 0,
+  "detachExitCode": 0,
+  "mountedAfter": false,
+  "status": "PASS"
+}

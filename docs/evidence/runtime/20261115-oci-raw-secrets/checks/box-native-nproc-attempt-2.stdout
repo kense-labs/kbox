@@ -1,0 +1,7 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery has been running for over 60 seconds
+test local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2303 filtered out; finished in 235.25s
+

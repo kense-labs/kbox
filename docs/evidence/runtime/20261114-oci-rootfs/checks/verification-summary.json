@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "a54f07ddea510d319125b0deec7c1aeb48c2e94f6c2af70e74f1911b251069c3",
+  "verifyCommit": {
+    "command": [
+      "bash",
+      "scripts/verify-commit.sh"
+    ],
+    "log": "docs/evidence/runtime/20261114-oci-rootfs/checks/verify-commit-candidate2.log",
+    "exitCode": 0,
+    "runtime": {
+      "passed": 2175,
+      "failed": 0,
+      "ignored": 14
+    },
+    "cli": {
+      "passed": 933,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  "oci": {
+    "agent": 24,
+    "protocol": 62,
+    "kbox": 71,
+    "kboxIgnored": 2,
+    "sdk": 210,
+    "runtime": 430,
+    "failed": 0,
+    "scope": "OCI inputs identical after final five-file Box-only baseline fix"
+  },
+  "native": {
+    "finalTest": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    },
+    "afScenarios": {
+      "passed": 5,
+      "failed": 0
+    },
+    "cliTargetedSmoke": "PASS",
+    "countsAndResultFilesChecked": true
+  },
+  "cleanup": {
+    "status": "PASS",
+    "homes": 14,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 175,
+    "existingSockets": [],
+    "immutableSourceBlobs": 8,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  },
+  "runtimeMemory": "not measured",
+  "sourceAndArtifactsMatch": true,
+  "readinessPromotion": false,
+  "defaultCutover": false,
+  "windowsArm64": "current dependencies unsupported; no native verification"
+}

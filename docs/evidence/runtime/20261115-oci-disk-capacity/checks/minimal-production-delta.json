@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "reversePatchMatchesPriorProduction": true,
+  "paths": [
+    {
+      "path": "crates/box/runtime/src/local_execution/oci_production.rs",
+      "reversePatchSha256": "3feccfb3d1d191c813b0ea5aebd3c21f7aa50409971f7da08ce210242dd82bc3",
+      "priorSha256": "3feccfb3d1d191c813b0ea5aebd3c21f7aa50409971f7da08ce210242dd82bc3"
+    },
+    {
+      "path": "crates/box/runtime/src/vm/oci_hvf_spec.rs",
+      "reversePatchSha256": "dcbae719399811eaec9afdfc851d847d01502a2a7e9312dcd998f503da07d061",
+      "priorSha256": "dcbae719399811eaec9afdfc851d847d01502a2a7e9312dcd998f503da07d061"
+    }
+  ]
+}

@@ -62,7 +62,7 @@ impl Fixture {
             instance_id: EngineKey::parse("instance").unwrap(),
             request_id: EngineKey::parse("primary-1").unwrap(),
             generation: 1,
-            command: vec!["/harness/launch".into(), "".into()],
+            command: vec!["/application/launch".into(), "".into()],
             environment: BTreeMap::from([("TOKEN".into(), "synthetic-secret".into())]),
             working_directory: Some("/workspace".into()),
             timeout_ms: None,
@@ -303,7 +303,7 @@ async fn engine_primary_stream_preserves_bytes_eof_exit_and_fences_replays() {
         let frame = reader.read_frame().await.unwrap().unwrap();
         let request: ExecRequest = serde_json::from_slice(&frame.payload).unwrap();
         assert_eq!(request.timeout_ns, UNLIMITED_STREAM_TIMEOUT_NS);
-        assert_eq!(request.cmd, ["/harness/launch", ""]);
+        assert_eq!(request.cmd, ["/application/launch", ""]);
         assert!(request.env.iter().any(|v| v == "TOKEN=synthetic-secret"));
         writer
             .write_data(

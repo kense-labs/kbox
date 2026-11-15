@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "manager_applies_persisted_shared_memory_policy_to_runtime_config",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 0.302867667
+}

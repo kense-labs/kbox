@@ -1,0 +1,1 @@
+The first focused test compilation failed with error[E0603]: function runtime_spec is private. The test was corrected to reuse the existing engine intent fixture. The initial full log was overwritten by the rerun; this note retains the observed diagnostic. The final test-engine.log contains the successful rerun.

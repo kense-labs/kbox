@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "hvf_cap_drop_all_spellings"
+  ],
+  "exitCode": 101,
+  "seconds": 11.157692916
+}

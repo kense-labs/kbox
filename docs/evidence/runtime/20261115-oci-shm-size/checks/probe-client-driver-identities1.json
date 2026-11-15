@@ -1,0 +1,22 @@
+{
+  "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-probe.c": {
+    "bytes": 5849,
+    "sha256": "630bf872bf92112f525e3f40ec151be7dabfdac64f90bfa3eef4281663a551d8"
+  },
+  "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-probe": {
+    "bytes": 1556144,
+    "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+  },
+  "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-cli-pty.py": {
+    "bytes": 2814,
+    "sha256": "e136c6745ffd11b2db2430e741672b200a8b6897b4526f8885c7955387dbdcf0"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/native-client-frozen1": {
+    "bytes": 184597328,
+    "sha256": "e040d1e253b9910661a174be61f0f92666ba4398c649b186d5333d035dbe9f2b"
+  },
+  "artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/run-native.py": {
+    "bytes": 15533,
+    "sha256": "259ea3bc2394d61d2d667f2207ef236e3697ecd697fa3f837763d28ea5c721fb"
+  }
+}

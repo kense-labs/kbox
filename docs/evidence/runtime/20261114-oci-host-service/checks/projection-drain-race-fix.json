@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "projection_death_between_ready_and_drain"
+  ],
+  "exitCode": 0,
+  "seconds": 10.347684708
+}

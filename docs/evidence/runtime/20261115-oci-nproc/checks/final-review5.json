@@ -1,0 +1,104 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "cc9e1c37a0012ce51169262970c27f90d110ef47648fea8a373952fbcd32d4d0",
+  "sourceFiles": 1697,
+  "nativeRustTests": 12,
+  "guestUnitTests": 13,
+  "pythonNativeScenarios": 3,
+  "standaloneNativeVmDecoderProbes": 1,
+  "nprocObservations": 15,
+  "cliRealPtyCases": 2,
+  "receipts": [
+    "box-native-nproc-attempt-5.json",
+    "box-native-nproc-old-host-attempt-5.json",
+    "box-native-nproc-old-shim-attempt-5.json",
+    "box-native-nproc-old-agent-attempt-5.json",
+    "box-native-host-service-attempt-5.json",
+    "box-native-files-attempt-5.json",
+    "box-native-cpu-time-attempt-4.json",
+    "box-native-memory-limits-attempt-4.json",
+    "box-native-ulimits-attempt-4.json"
+  ],
+  "retainedRegressions": "attempt4; every packaged runtime payload byte-identical to5, except build-info.json",
+  "verifyRuntime": [
+    2251,
+    0,
+    38
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "owningProtocolSdkCounts": [
+    [
+      70,
+      0,
+      0
+    ],
+    [
+      227,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      2,
+      0,
+      0
+    ],
+    [
+      3,
+      0,
+      0
+    ],
+    [
+      8,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "homes": 29,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 210,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 23,
+    "afSourceCacheFilesChecked": 297,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "b60caefc24eb123281d699c8d268cdb6ddc9605d25a3487676fee5aa82645689",
+  "sourceFrozenUnchanged": true,
+  "supplementalMatch": true,
+  "referenceChecks": 37,
+  "preservedArchives": 16,
+  "parentNativeWorktreesClean": true,
+  "stagedPaths": [],
+  "diffCheck": "PASS",
+  "tests": "no tests rerun by this documentation/identity review; frozen3 actual results retained"
+}

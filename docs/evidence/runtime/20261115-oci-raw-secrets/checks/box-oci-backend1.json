@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "oci_backend",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 12.279568208
+}

@@ -1,9 +1,9 @@
 #![cfg(test)]
 
-#[path = "tests/stop_ownership.rs"]
-mod stop_ownership;
 #[path = "tests/prewarm.rs"]
 mod prewarm;
+#[path = "tests/stop_ownership.rs"]
+mod stop_ownership;
 
 use std::collections::{BTreeMap, HashMap};
 use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
@@ -12,10 +12,10 @@ use std::sync::{Arc, Mutex};
 use async_trait::async_trait;
 use chrono::{TimeZone, Utc};
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionHealthCheck, ExecutionId,
-    ExecutionBoundary, ExecutionManager, ExecutionManagerError, ExecutionManagerResult,
-    ExecutionSnapshotId, ExecutionState, KillExecutionOptions, KillOutcome, NetworkMode,
-    OperationId, ReconcileOutcome, RestartExecutionOptions, SnapshotImageConfig,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
+    ExecutionHealthCheck, ExecutionId, ExecutionManager, ExecutionManagerError,
+    ExecutionManagerResult, ExecutionSnapshotId, ExecutionState, KillExecutionOptions, KillOutcome,
+    NetworkMode, OperationId, ReconcileOutcome, RestartExecutionOptions, SnapshotImageConfig,
 };
 #[cfg(unix)]
 use kbox_core::{ExecEvent, ExecRequest, ExecutionSessionManager};

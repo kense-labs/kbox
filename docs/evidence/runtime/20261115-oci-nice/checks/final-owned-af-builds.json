@@ -1,0 +1,8 @@
+{
+  "kbox-oci-regression:a6b9dc66f1cc49948c8722585bf97424": {
+    "digest": "sha256:7f91828d5f5ddadb61a68b4b2b1b1b7b55527ba0bdcd858f634231717386a6b2",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/af-final1/native-oci/a6b9dc66f1cc49948c8722585bf97424/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nice-581649d8a124446983e5432838103584/installed-nice-final-2",
+    "kboxSha256": "a331f4e8d17bf0edc45d80d49eceac0addf7758a6893f2ceb0ec74647fd99bf6"
+  }
+}

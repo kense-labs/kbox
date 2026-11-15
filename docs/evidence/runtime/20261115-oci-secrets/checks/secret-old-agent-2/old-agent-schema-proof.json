@@ -1,0 +1,16 @@
+{
+  "nativeProbePath": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-7/native-root/old-agent-schema-proof.json",
+  "nativeProbeReceiptSha256": "2f3be8f7ceeca13233c3fa63ee14bb4d81280237f51de7f20cd5108bec3bcb3d",
+  "oldImageManifestSha256": "c0b851e6af0b8e6c24899e93104c9cdca257bd2583b5bd94392e4ea14eb2aa72",
+  "proof": {
+    "actualManifestSha256": "sha256:20ab25a5d6d2c91e3b941db5d06225900f4ecca6c0e41991f13fa79aaa66cf4d",
+    "agent": "/Users/roylin/code/kense/kbox/artifacts/oci-ulimits-e5c6b94fd37f419bb3be11cecf9d3042/oci-ulimits-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-agent",
+    "agentSha256": "3f3f16a7e5b39e2c8f15befa04fc0f05233f80f01fb59a1139fcb5d0f361c8ad",
+    "exitCode": 1,
+    "nativeGuest": "linux arm64 on macOS HVF",
+    "schema": "koci.agent-vm-attachments.v8",
+    "status": "PASS",
+    "stderr": "koci-agent: invalid VM attachment manifest: unsupported utility-VM attachment manifest schema koci.agent-vm-attachments.v8\n",
+    "temporaryRuntimeMountRemoved": true
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "sourceInputsSha256": "a7729b6ebe537df41c36745c2798399525e54bd4fed039f1f88a2e5073c5b0a5",
+  "inputs": 1695,
+  "changedFrom021": {
+    "crates/box/cli/src/commands/attach.rs": {
+      "before": "941fcbccbf2d78fc05afc33a46de1ae540bd61b02e2a975c4d66ef42bbf46772",
+      "after": "b816613568d662f6cd8d76632cf97a21453527a3e1e5829980a71df29d3dd79d"
+    },
+    "crates/box/cli/src/commands/exec.rs": {
+      "before": "6e90ed67f02b3bcdf94fc7463a060de76f5ba6a7b2340e507b1164da7b11f18d",
+      "after": "0eca313e918ea95f2c46673ee4a8a4aa79abdab6397fbcc871cea8f83f74ed65"
+    },
+    "crates/box/cli/src/commands/exec_session_tests.rs": {
+      "before": "845632302687515df0c9bdf5f97fba5650622fe5a366851d8695a82a10d8b4e8",
+      "after": "a11c9bcd3c27080afe5502799cdcd0ba8fafb728630b5b681b764152e7c5f3fc"
+    },
+    "crates/box/runtime/src/local_execution/mod.rs": {
+      "before": "de00282a9564a00551c0c0d67bfa41bbcfd2c2627328e89ab2bc50579e983bba",
+      "after": "20ca0c4668c8f35251b6dd1db12b1bf878e4834c7df8141e7f6ccf6d9740334b"
+    },
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs": {
+      "before": "61e0c7db64c7ae9ec056cf30ab9ef9fd3eeee980e5bc9e30918d1b7ef48d6fe8",
+      "after": "640ceb49df300b57890c48aa636c5a2f3a8cf25a8ef08f286d1abafd732cf7fd"
+    },
+    "crates/box/runtime/src/local_execution/oci_hvf_native_nproc.rs": {
+      "before": null,
+      "after": "01d152813c976f689e5e251e52aaf58e3fcf89b739f79df5d08f900b91a7b8be"
+    },
+    "crates/box/runtime/src/local_execution/oci_production_ulimit_tests.rs": {
+      "before": "735c45fe30b4a9a91cf068d3207ca13b3af6b1f22384bb3263c6ea48e26e27ac",
+      "after": "766499af72f82959a0971ea17eb3b35fd1c691487c5be76d4ab8eac327db7407"
+    },
+    "crates/box/runtime/src/local_execution/oci_session.rs": {
+      "before": "22e58155913e96e411d520f3a0f67552ca9c43768fc92c52b2c4f5a16ad447c8",
+      "after": "423cd381b914d6562ad70aab793eb7315312228403451a3351d1de514d407a32"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_rlimits.rs": {
+      "before": "b05b074defb08ff1f428d4b99f6d2f19b867d0f975231c1672100f842248defb",
+      "after": "8da1952311b55d890fde643260bea4864519f10455b7ba3630d658be905577c5"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs": {
+      "before": "3fe8ff1d49e7e87ec4ae9a4ce7ca8eed544adf26716b69522027922c0a7d0911",
+      "after": "b61066ee381a25582051dbc737349bb1991ffaf42221b260444d92923c9359d6"
+    }
+  },
+  "unchangedOciInputs": true,
+  "ociOriginalSourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35"
+}

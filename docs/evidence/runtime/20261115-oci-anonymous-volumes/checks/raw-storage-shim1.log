@@ -1,0 +1,7 @@
+
+running 2 tests
+test macos_vm_attachment::storage::tests::raw_ro_pin_refuses_inherited_writers_and_changed_capacity ... ok
+test macos_vm_attachment::storage::tests::raw_pin_keeps_exact_descriptor_access_identity_and_private_unaliased_source ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 78 filtered out; finished in 0.57s
+

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "archiveSha256": "8a405ba0ddd4d2653b2e3caa85918830949034dd143d4d869ba78e8908fb8005",
+  "legacyJournalSha256": "8e0e43a17f8eb84560bd8d719fa02564de2c225a55746bb1da1ddfcd8e63ce7e",
+  "legacyJournalPreserved": true,
+  "legacyIntentRefused": true,
+  "v2JournalUnchanged": true,
+  "protocols": [
+    "kbox.engine.v2",
+    "engine-diagnostics.v1",
+    "process-stream.primary.v1",
+    "process-stream.bootstrap.v1",
+    "environment-prewarm.v1",
+    "directory-grants.v1"
+  ],
+  "engineShutdownClean": true,
+  "virtualMachinesStarted": false
+}

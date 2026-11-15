@@ -1,0 +1,16 @@
+
+running 6 tests
+test local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::nproc::native_old_nproc_assets_refuse_without_workload_or_route_fallback ... ignored, requires exact installed current and old HVF assets in an owned root
+test vm::oci_hvf_spec::tests::hvf_nproc_ulimits_bind_actual_nonroot_process_without_rewriting_defaults ... ok
+test local_execution::oci_backend::tests::nproc_host_capability_refuses_before_bundle_or_resource_mutation ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_refuse_root_names_and_privilege_before_allocating ... ok
+
+failures:
+
+failures:
+    local_execution::oci_backend::tests::nproc_host_capability_refuses_before_bundle_or_resource_mutation
+
+test result: FAILED. 3 passed; 1 failed; 2 ignored; 0 measured; 2278 filtered out; finished in 0.02s
+

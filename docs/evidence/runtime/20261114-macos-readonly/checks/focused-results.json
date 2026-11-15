@@ -1,0 +1,71 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "koci-kbox",
+      "--lib"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/runtime/20261114-macos-readonly/checks/shared-platform-tests.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "-p",
+      "kbox-shim",
+      "macos_readonly",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/runtime/20261114-macos-readonly/checks/shim-platform-tests.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "readonly_mount_admission",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/runtime/20261114-macos-readonly/checks/runtime-readonly-tests.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-runtime",
+      "test_parse_volume_mount_read_only",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/runtime/20261114-macos-readonly/checks/runtime-volume-tests.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "kbox-cli",
+      "--test",
+      "command_coverage",
+      "test_macos_read_only_volume",
+      "--",
+      "--nocapture"
+    ],
+    "exit_code": 0,
+    "log": "docs/evidence/runtime/20261114-macos-readonly/checks/cli-readonly-tests.log"
+  }
+]

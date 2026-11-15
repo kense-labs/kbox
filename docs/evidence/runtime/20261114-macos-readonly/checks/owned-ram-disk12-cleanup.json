@@ -1,0 +1,11 @@
+{
+  "command": [
+    "diskutil",
+    "eject",
+    "/dev/disk12"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Volume failed to eject\n",
+  "ownership": "Created by macos-refusal-focused.log: Initialized /dev/rdisk12 as ksecret-test"
+}

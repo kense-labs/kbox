@@ -1,0 +1,55 @@
+   Compiling memchr v2.8.3
+   Compiling cc v1.4.7
+   Compiling smallvec v1.16.4
+   Compiling serde_json v1.0.151
+   Compiling getrandom v0.3.4
+   Compiling generic-array v0.14.7
+   Compiling syn v2.0.119
+   Compiling num-bigint v0.4.8
+   Compiling once_cell v1.21.4
+   Compiling unicode-normalization v0.1.24
+   Compiling parking_lot_core v0.9.12
+   Compiling idna_adapter v1.1.0
+   Compiling aho-corasick v1.1.5
+   Compiling parking_lot v0.12.5
+   Compiling idna v1.1.0
+   Compiling tokio v1.53.3
+   Compiling sha2-asm v0.6.4
+   Compiling lzma-sys v0.1.20
+   Compiling num-rational v0.4.2
+   Compiling regex-automata v0.4.18
+   Compiling num v0.4.3
+   Compiling fraction v0.15.4
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.7
+   Compiling digest v0.10.7
+   Compiling darling_core v0.20.11
+   Compiling ahash v0.8.12
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling getset v0.1.7
+   Compiling strum_macros v0.27.2
+   Compiling zeroize_derive v1.4.3
+   Compiling jsonschema-value v0.48.5
+   Compiling ref-cast v1.0.25
+   Compiling zeroize v1.8.2
+   Compiling sha2 v0.10.9
+   Compiling regex v1.12.4
+   Compiling fancy-regex v0.18.0
+   Compiling xz2 v0.1.7
+   Compiling darling_macro v0.20.11
+   Compiling strum v0.28.0
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+   Compiling darling v0.20.11
+   Compiling fluent-uri v0.4.1
+   Compiling referencing v0.48.5
+   Compiling derive_builder_core v0.20.2
+   Compiling jsonschema v0.48.5
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+   Compiling koci-cli v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/cli)
+    Finished `release-dist` profile [optimized] target(s) in 1m 03s

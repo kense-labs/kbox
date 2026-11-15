@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "exec",
+      "4ccb0011-88a0-4865-92bf-06e6f54ce3a3",
+      "--",
+      "/realtime-probe"
+    ],
+    "exitCode": 80,
+    "stdout": "",
+    "stderr": "probe line30: sched_getparam(0,&p)==0 errno38\n"
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "rm",
+      "-f",
+      "4ccb0011-88a0-4865-92bf-06e6f54ce3a3"
+    ],
+    "exitCode": 0,
+    "stdout": "lucid_neumann\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "ps",
+      "-a",
+      "--format",
+      "json"
+    ],
+    "exitCode": 0,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-realtime-b71041f587734cec8ffe7d63a68940ca/installed-realtime-final-1/bin/kbox",
+      "volume",
+      "ls",
+      "--quiet"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

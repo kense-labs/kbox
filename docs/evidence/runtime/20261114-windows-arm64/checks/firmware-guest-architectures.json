@@ -1,0 +1,29 @@
+[
+  {
+    "archive": "crates/box/deps/libksys/vendor/kwindows-x64.tar.xz",
+    "file": "libkrunfw.dll",
+    "elfHeaders": [
+      {
+        "offset": 17622920,
+        "elfType": 3,
+        "elfMachine": "0x003e"
+      }
+    ]
+  },
+  {
+    "archive": "crates/oci-runtime/crates/kbox/runtime/windows-x86_64/kwindows-x64.tar.xz",
+    "file": "libkrunfw.dll",
+    "elfHeaders": [
+      {
+        "offset": 73296,
+        "elfType": 2,
+        "elfMachine": "0x003e"
+      },
+      {
+        "offset": 19746384,
+        "elfType": 3,
+        "elfMachine": "0x003e"
+      }
+    ]
+  }
+]

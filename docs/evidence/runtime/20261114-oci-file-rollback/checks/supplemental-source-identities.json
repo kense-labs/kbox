@@ -1,0 +1,21 @@
+{
+  "purpose": "Inputs outside existing package digest; bind actual validation scripts and unchanged native fixture/manifests",
+  "files": {
+    "scripts/test-install-package.py": {
+      "sha256": "f56a5fc232a06473ab529b3fbf3904509dedbbb08e44bdb8d1fe1f3cf5af375b",
+      "bytes": 8376
+    },
+    "crates/oci-runtime/crates/kbox/runtime/runtime-assets.json": {
+      "sha256": "8489d6544a919a991e9302c5d435b8fb3737ae357e0ebb2efb886e0e039340d4",
+      "bytes": 4039
+    },
+    "crates/oci-runtime/crates/kbox/runtime/macos-aarch64/uncached-source.json": {
+      "sha256": "66673c7c07072b48515557510034a7eb12a56f2fe3c842fcdbf9418b7d6b8cb5",
+      "bytes": 1221
+    },
+    "crates/box/runtime/tests/fixtures/hvf_file_probe.c": {
+      "sha256": "4d06848e4fca49b3952eaa0c6739de8df31152898911f04a8b64c9e923e97111",
+      "bytes": 4192
+    }
+  }
+}

@@ -1,0 +1,26 @@
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.25s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 18 tests
+test agent_session::tests::detects_asset_bootstrap_and_runtime_share_path_overlap ... ok
+test agent_session::tests::canonicalization_rejects_an_identity_change ... ok
+test agent_session::tests::vm_attachment_manifest_digest_requires_canonical_sha256 ... ok
+test agent_session::tests::driver_bound_manifest_digest_rejects_prelaunch_drift ... ok
+test agent_session::tests::rejects_a_shim_report_for_the_wrong_host ... ok
+test agent_session::tests::rejects_incomplete_or_truncated_shim_evidence ... ok
+test agent_session::tests::rejects_a_shim_report_with_a_different_system_image_manifest ... ok
+test agent_session::tests::rejects_a_windows_shim_report_with_a_different_system_image_manifest ... ok
+test agent_session::tests::rejects_injected_kvm_failure_as_normal_success_evidence ... ok
+test agent_session::tests::retains_only_bounded_versioned_failure_evidence ... ok
+test agent_session::tests::requires_explicit_runtime_share_evidence_for_the_driver_path ... ok
+test agent_session::tests::accepts_complete_shim_evidence ... ok
+test agent_session::tests::rejects_macos_shim_evidence_without_explicit_host_confinement ... ok
+test agent_session::tests::rejects_windows_shim_evidence_without_exact_in_process_handle_reclamation ... ok
+test agent_session::tests::rejects_a_symlink_before_canonicalizing_a_trusted_file ... ok
+test agent_session::tests::shutdown_completion_survives_a_cancelled_waiter ... ok
+test agent_session::tests::captures_kernel_identity_for_plain_files_and_directories ... ok
+test agent_session::tests::spawns_the_pinned_shim_via_canonical_path_on_macos ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 406 filtered out; finished in 0.32s
+

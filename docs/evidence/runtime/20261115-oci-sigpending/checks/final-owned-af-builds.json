@@ -1,0 +1,8 @@
+{
+  "kbox-oci-regression:5d611bc765404799bfb1550a97beb45e": {
+    "digest": "sha256:14cb05e20b311bbad4c6bb611ff6d6eb7f53bc9c0cb277fee8d85e60cd62b724",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/af-final1/native-oci/5d611bc765404799bfb1550a97beb45e/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-sigpending-46afe6c4c9c348f0912c1d19503acba5/installed-sigpending-final-3",
+    "kboxSha256": "c4319f27c32ffb7d2ada9f286a9ef8433083e957a0237999c27aa9aa4f91abd4"
+  }
+}

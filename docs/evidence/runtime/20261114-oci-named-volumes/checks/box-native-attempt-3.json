@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/native-client-attempt-3",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-named-d21528e85dea/attempt-3",
+  "clientSha256": "61f08158ca1aa103adec836e0b711744ef3a49aa69c5a772a17c312470cb201b",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/installed-named-final-1",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "exitCode": 0,
+  "seconds": 163.508873958,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "resultExists": true,
+  "cleanupExists": true
+}

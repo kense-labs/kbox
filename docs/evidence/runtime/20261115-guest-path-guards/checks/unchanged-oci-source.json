@@ -1,0 +1,16 @@
+{
+  "priorSource": "87966c0e77c51d463f8a1e31c7847002f3ef38a63ce1993257ad85472a948a4b",
+  "currentSource": "24a5092bcdc88f0ae4156a349ab61cc5be7a39dca135cd5d562d5174ff9f8e03",
+  "changedSourceFiles": [
+    "crates/box/guest/init/src/exec_server.rs",
+    "crates/box/guest/init/src/exec_server/path_guards_tests.rs",
+    "crates/box/guest/init/src/exec_server/path_restrictions.rs",
+    "crates/box/guest/init/src/pty_server.rs",
+    "crates/box/guest/init/src/pty_server_path_guards_tests.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_path_guards.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_path_guards_binary.rs"
+  ],
+  "ociProductionInputsUnchanged": true,
+  "reusedArchiveSource": "dada28865aa4e06e0e3462d046f179eaea58d6cad73195af424efbdf1dba1046"
+}

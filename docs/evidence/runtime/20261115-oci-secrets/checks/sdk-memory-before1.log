@@ -1,0 +1,13 @@
+
+running 2 tests
+test attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse ... FAILED
+test attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices ... FAILED
+
+failures:
+
+failures:
+    attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices
+    attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 217 filtered out; finished in 0.03s
+

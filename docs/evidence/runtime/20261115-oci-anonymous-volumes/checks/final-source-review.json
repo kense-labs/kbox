@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "dada28865aa4e06e0e3462d046f179eaea58d6cad73195af424efbdf1dba1046",
+  "indexEmpty": true,
+  "parentNative": {
+    "libkrun": {
+      "status": "",
+      "head": "3c2889c76460d81e3fb16d6144580fd31eb1bae3"
+    },
+    "libkrunfw": {
+      "status": "",
+      "head": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  },
+  "preservedArchives": [
+    {
+      "source": "/Users/roylin/code/kense/kbox/dist/kbox-3.4.3-macos-arm64.tar.gz",
+      "copy": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/previous-dist/global-box-kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "d4209a7ff4048690770089126c0026bfc09abe0cc26d5b074992cf8fc83595cc",
+      "bytes": 23344608,
+      "checksum": "d4209a7ff4048690770089126c0026bfc09abe0cc26d5b074992cf8fc83595cc  kbox-3.4.3-macos-arm64.tar.gz\n"
+    },
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/final-dist-named-1/kbox-3.4.3-macos-arm64.tar.gz",
+      "copy": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/previous-dist/accepted-box-kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "d4209a7ff4048690770089126c0026bfc09abe0cc26d5b074992cf8fc83595cc",
+      "bytes": 23344608,
+      "checksum": "d4209a7ff4048690770089126c0026bfc09abe0cc26d5b074992cf8fc83595cc  kbox-3.4.3-macos-arm64.tar.gz\n"
+    },
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-named-d21528e85dea4edf863f24f89312cd0b/oci-named-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "copy": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/previous-dist/accepted-oci-koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "5f9578d20cf4db524b7fb83223443f83d0aca257688370b854772d191c478288",
+      "bytes": 33334546,
+      "checksum": "5f9578d20cf4db524b7fb83223443f83d0aca257688370b854772d191c478288  koci-hvf-0.3.6-macos-arm64.tar.gz\n"
+    }
+  ],
+  "evidenceRunnerSha256": {
+    "build-box-final1.py": "dda96e934b59959279e39cbf01fd4b31324f1545ab11a448ac1c494ea97eca67",
+    "build-oci-candidate1.py": "fdf1a1b6ac960421b8b24b2b439ba8521a2b2743b7a16bd64ab8723067eba611",
+    "build-oci-candidate2.py": "6f11b31b46597bddc6337bbcd7acfa34b118f29c4da177bc84e443f215651307",
+    "build-oci-candidate3.py": "9781f62a3b4e5b9ea231992c6bb5ab243d77daffdd68ac8a12c7a6118f93cfd9",
+    "build-volume-fixture.py": "d7ff274b500fea596b024da794bb1817af559fec7e2d884cac8d7959f8feaf9f",
+    "check-final-identities1.py": "450a997139f3b10430d2f886075280c528bc0469d88604c5654a36249e12743b",
+    "descriptor-audit.py": "0dc72a943adba561d5ca66458fdf5a5b1cce2281ac7bc21f953da76e8bfd53dd",
+    "final-receipt-review.py": "61692f34d4b8fe45f5dd07857f82cfd13c88497107f8ae634a35965d0781e6de",
+    "final-resource-audit.py": "6cc2dc49a0dd8539423958c2ca75e89f46c3e165b52960dbb745fc9f9b238396",
+    "package-oci-final1.py": "c151c6a57baaa7d2b76391bbfc6021898689f98c3b07a884c46fdcfd5ef08980",
+    "qualification-runner.py": "7a2a83a8100da20721515c6333147ce60be833591e284c08cc3dc350146126f8",
+    "run-anonymous.py": "c716fb16ecfb149479c47d8ed98add872b3ffd42d0d86cb1a202d57ce1535de8",
+    "run-check.py": "aaf0a3927db4e1ae283374691cce06cab99ce470a3eb9cc54be855a623a68b92",
+    "run-failed-create-final.py": "b9802aa828434a3c9ec44188c0da0d234e306138abac5f4b991aa97e128de862",
+    "run-full-final.py": "bc9169d5a3e7372d5e6803d714e7fd65a8aa40a991e45dae41d3d3279e51374e",
+    "run-named-final.py": "da758dee2aa950af0e0c8a07e17b75a2d02b5d03ce0b829976902b92670bfd67",
+    "run-raw-ro-cleanup.py": "4dbccf51fe3fd995c817ad40fa9434975e04f5f607e6292b51a3eee924d9381a",
+    "source_snapshot.py": "8a64178eaf825ce4541bd53fdfb00f4d45662d50acc508844be469e7782ec93a"
+  },
+  "runtimeMemory": "not measured",
+  "globalDistRebuilt": {
+    "path": "/Users/roylin/code/kense/kbox/dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "6e2e961d5da356beeadd1875fedace6dfc3c91615f10dd30eb7fe61f2431371e",
+    "matchesFinalArchive": true,
+    "oldBytesPreservedIn": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/previous-dist/global-box-kbox-3.4.3-macos-arm64.tar.gz"
+  }
+}

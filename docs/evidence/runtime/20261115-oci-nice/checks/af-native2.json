@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nice-581649d8a124446983e5432838103584/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261115-oci-nice/af-context-final2.json"
+  ],
+  "exit": 0,
+  "seconds": 146.454322959
+}

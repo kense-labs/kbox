@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "memory_secret_files",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.215355875
+}

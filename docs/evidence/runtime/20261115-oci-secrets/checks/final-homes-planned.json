@@ -1,0 +1,15 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-oci/fbefa72579a44e0d831874de5ba2f5d6/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-prewarm/bd715616591643678efc36a2599d4ad1/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-primary/1c2d1041e7be4c1ca3c7035ec03480a5/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/af-final3/native-readonly/e8c737f631cc4c76972f346b226ee891/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/anonymous-attempt-3/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/files-attempt-1/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/files-attempt-3/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/named-attempt-3/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/rootro-attempt-3/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/tmpfs-attempt-3/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/ulimits-attempt-1/home",
+  "/private/tmp/kbox-secrets-3b9553cebce5/ulimits-attempt-3/home"
+]

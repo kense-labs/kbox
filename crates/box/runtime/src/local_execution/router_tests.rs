@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 
 use async_trait::async_trait;
 use kbox_core::{
-    BoxConfig, CreateExecutionRequest, ExecutionId, ExecutionBoundary, ExecutionManager,
+    BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionId, ExecutionManager,
     ExecutionManagerError, ExecutionManagerResult, ExecutionState, KillOutcome, OperationId,
 };
 
@@ -104,6 +104,7 @@ impl LocalExecutionBackend for RoutedProbeBackend {
     ) -> ExecutionManagerResult<LocalExecutionResourcePlan> {
         Ok(LocalExecutionResourcePlan {
             anonymous_volumes: self.planned_anonymous_volumes.lock().unwrap().clone(),
+            ..Default::default()
         })
     }
 
@@ -152,18 +153,9 @@ fn migration_policies_stay_the_existing_set() {
         OciMigrationPolicy::LegacyOnly,
         OciMigrationPolicy::MicrovmViaOci,
         OciMigrationPolicy::AllViaOci,
-        OciMigrationPolicy::MicrovmViaOci,
     ];
     let names: Vec<_> = policies.into_iter().map(policy_name).collect();
-    assert_eq!(
-        names,
-        [
-            "legacy-only",
-            "sandbox-via-oci",
-            "all-via-oci",
-            "microvm-via-oci",
-        ]
-    );
+    assert_eq!(names, ["legacy-only", "microvm-via-oci", "all-via-oci",]);
 }
 
 fn policy_name(policy: OciMigrationPolicy) -> &'static str {
@@ -175,7 +167,7 @@ fn policy_name(policy: OciMigrationPolicy) -> &'static str {
 }
 
 #[tokio::test]
-async fn sandbox_preflight_error_does_not_retarget_to_microvm() {
+async fn oci_preflight_retry_never_retargets_to_legacy() {
     let temporary = tempfile::tempdir().unwrap();
     let state_path = temporary.path().join("boxes.json");
     let legacy = Arc::new(RoutedProbeBackend::default());
@@ -199,15 +191,15 @@ async fn sandbox_preflight_error_does_not_retarget_to_microvm() {
     assert_eq!(legacy.isolation_preflights(), 0);
     assert_eq!(oci.observed_isolations(), vec![ExecutionBoundary::Microvm]);
 
-    manager
-        .preflight_launch()
-        .await
-        .expect("microvm stays on the legacy backend after the sandbox error");
+    assert!(matches!(
+        manager.preflight_launch().await,
+        Err(ExecutionManagerError::Unavailable(_))
+    ));
+    assert_eq!(legacy.isolation_preflights(), 0);
     assert_eq!(
-        legacy.observed_isolations(),
-        vec![ExecutionBoundary::Microvm]
+        oci.observed_isolations(),
+        vec![ExecutionBoundary::Microvm; 2]
     );
-    assert_eq!(oci.observed_isolations(), vec![ExecutionBoundary::Microvm]);
     assert!(!state_path.exists());
     assert!(!temporary.path().join("boxes").exists());
 }
@@ -304,10 +296,7 @@ async fn sandbox_policy_stamps_oci_route_before_preflight_and_reservation() {
     );
 
     let reservation = manager
-        .create(
-            request(),
-            &OperationId::new("route-sandbox").unwrap(),
-        )
+        .create(request(), &OperationId::new("route-sandbox").unwrap())
         .await
         .unwrap();
     let record = manager
@@ -330,7 +319,7 @@ async fn sandbox_policy_stamps_oci_route_before_preflight_and_reservation() {
 }
 
 #[tokio::test]
-async fn microvm_qualification_policy_keeps_sandbox_on_box_backend() {
+async fn new_policy_preserves_old_legacy_records_and_routes_new_microvms_to_oci() {
     let temporary = tempfile::tempdir().unwrap();
     let legacy = Arc::new(RoutedProbeBackend::default());
     let oci = Arc::new(RoutedProbeBackend::default());
@@ -340,30 +329,33 @@ async fn microvm_qualification_policy_keeps_sandbox_on_box_backend() {
         Arc::new(LocalExecutionBackendRouter::new(
             legacy.clone(),
             oci.clone(),
-            OciMigrationPolicy::MicrovmViaOci,
+            OciMigrationPolicy::LegacyOnly,
         )),
     );
 
-    let sandbox = manager
-        .create(
-            request(),
-            &OperationId::new("route-sandbox-kept").unwrap(),
-        )
+    let existing = manager
+        .create(request(), &OperationId::new("route-legacy-kept").unwrap())
         .await
         .unwrap();
+    let manager = LocalExecutionManager::new(
+        temporary.path().join("boxes.json"),
+        temporary.path(),
+        Arc::new(LocalExecutionBackendRouter::new(
+            legacy.clone(),
+            oci.clone(),
+            OciMigrationPolicy::MicrovmViaOci,
+        )),
+    );
     let microvm = manager
-        .create(
-            request(),
-            &OperationId::new("route-microvm-oci").unwrap(),
-        )
+        .create(request(), &OperationId::new("route-microvm-oci").unwrap())
         .await
         .unwrap();
 
-    let sandbox_record = manager
-        .get(&sandbox.execution_id)
+    let existing_record = manager
+        .get(&existing.execution_id)
         .await
         .unwrap()
-        .expect("sandbox record");
+        .expect("existing record");
     let microvm_record = manager
         .get(&microvm.execution_id)
         .await
@@ -371,7 +363,7 @@ async fn microvm_qualification_policy_keeps_sandbox_on_box_backend() {
         .expect("microvm record");
 
     assert_eq!(
-        sandbox_record
+        existing_record
             .managed_execution
             .as_ref()
             .unwrap()
@@ -420,7 +412,7 @@ async fn invalid_backend_resource_plan_is_never_reserved() {
 }
 
 #[tokio::test]
-async fn sandbox_policy_keeps_microvm_on_the_persisted_legacy_route() {
+async fn explicit_legacy_policy_keeps_microvm_on_the_persisted_legacy_route() {
     let temporary = tempfile::tempdir().unwrap();
     let legacy = Arc::new(RoutedProbeBackend::default());
     let oci = Arc::new(RoutedProbeBackend::default());
@@ -430,15 +422,12 @@ async fn sandbox_policy_keeps_microvm_on_the_persisted_legacy_route() {
         Arc::new(LocalExecutionBackendRouter::new(
             legacy.clone(),
             oci.clone(),
-            OciMigrationPolicy::MicrovmViaOci,
+            OciMigrationPolicy::LegacyOnly,
         )),
     );
 
     let reservation = manager
-        .create(
-            request(),
-            &OperationId::new("route-microvm").unwrap(),
-        )
+        .create(request(), &OperationId::new("route-microvm").unwrap())
         .await
         .unwrap();
     let record = manager
@@ -473,10 +462,7 @@ async fn selected_oci_preflight_failure_never_falls_back_or_reserves() {
     );
 
     let error = manager
-        .create(
-            request(),
-            &OperationId::new("route-no-fallback").unwrap(),
-        )
+        .create(request(), &OperationId::new("route-no-fallback").unwrap())
         .await
         .unwrap_err();
 

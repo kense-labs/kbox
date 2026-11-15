@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "zigbuild",
+    "--locked",
+    "--profile",
+    "release-dist",
+    "--target",
+    "aarch64-unknown-linux-musl",
+    "-p",
+    "kbox-guest-init",
+    "--tests",
+    "--message-format=json"
+  ],
+  "exit": 0,
+  "seconds": 11.404352875
+}

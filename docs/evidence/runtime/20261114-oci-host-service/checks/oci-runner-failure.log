@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/qualification-runner.py", line 134, in <module>
+    status = wait_process(case, command, checks / (case + '.stdout'),
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/qualification-runner.py", line 69, in wait_process
+    capture_loaded(case)
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/qualification-runner.py", line 55, in capture_loaded
+    assert path.resolve().is_relative_to(root), path
+AssertionError: /Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed/bin/kbox-shim

@@ -1,0 +1,13 @@
+{
+  "status": "IN_PROGRESS",
+  "observations": 15,
+  "softCpuSeconds": [
+    0.99458,
+    1.021307
+  ],
+  "hardCpuSeconds": [
+    2.000611,
+    2.015758
+  ],
+  "runtimeRSS": "not measured"
+}

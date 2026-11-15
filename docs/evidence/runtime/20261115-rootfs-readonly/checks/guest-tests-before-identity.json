@@ -1,0 +1,7 @@
+{
+  "source": "/Users/roylin/code/kense/kbox/target/aarch64-unknown-linux-musl/release-dist/deps/kbox_guest_init-a848bee291637ce1",
+  "frozen": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/guest-tests-before1",
+  "sha256": "a0847df24e44b23f404e32d493eb2d36ee623786b8cf29f55aaabde252a1a40b",
+  "target": "aarch64-unknown-linux-musl",
+  "note": "build only; actual Guest execution pending"
+}

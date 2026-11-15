@@ -24,9 +24,7 @@ pub(super) enum SupervisedWorkload {
 }
 
 impl SupervisedWorkload {
-    async fn next_event(
-        &mut self,
-    ) -> kbox_core::error::Result<Option<kbox_core::exec::ExecEvent>> {
+    async fn next_event(&mut self) -> kbox_core::error::Result<Option<kbox_core::exec::ExecEvent>> {
         match self {
             Self::Exec(stream) => stream.next_event().await,
             Self::Pty(stream) => stream.next_event().await,

@@ -1,0 +1,206 @@
+[
+  {
+    "check": "anonymous-plan-after1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "anonymous-plan-before.json",
+    "exit": 101,
+    "actualCounts": []
+  },
+  {
+    "check": "anonymous-plan-before2.json",
+    "exit": 101,
+    "actualCounts": [
+      [
+        "FAILED",
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "anonymous-plan-before3.json",
+    "exit": 101,
+    "actualCounts": [
+      [
+        "FAILED",
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "artifact-uuid-before.json",
+    "exit": 101,
+    "actualCounts": [
+      [
+        "FAILED",
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "clean-uuid-before.json",
+    "exit": 101,
+    "actualCounts": [
+      [
+        "FAILED",
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "ext4-uuid-after1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "18",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "fmt-012-1.json",
+    "exit": 0,
+    "actualCounts": []
+  },
+  {
+    "check": "fmt-012-2.json",
+    "exit": 0,
+    "actualCounts": []
+  },
+  {
+    "check": "fmt-012-3.json",
+    "exit": 0,
+    "actualCounts": []
+  },
+  {
+    "check": "fmt-012-4.json",
+    "exit": 0,
+    "actualCounts": []
+  },
+  {
+    "check": "fmt-012-5.json",
+    "exit": 0,
+    "actualCounts": []
+  },
+  {
+    "check": "raw-storage-before.json",
+    "exit": 101,
+    "actualCounts": [
+      [
+        "FAILED",
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "raw-storage-protocol1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "65",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "raw-storage-runtime1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "10",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "raw-storage-sdk1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ],
+      [
+        "ok",
+        "0",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "check": "volume-subtree-tests1.json",
+    "exit": 0,
+    "actualCounts": [
+      [
+        "ok",
+        "10",
+        "0",
+        "0"
+      ]
+    ]
+  }
+]

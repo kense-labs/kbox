@@ -1,0 +1,12 @@
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+error[E0433]: cannot find module or crate `hex` in this scope
+   --> crates/oci-runtime/crates/agent-protocol/src/vm_attachment/file.rs:141:9
+    |
+141 |         hex::encode(hash.finalize())[..24].to_string()
+    |         ^^^ use of unresolved module or unlinked crate `hex`
+    |
+    = help: if you wanted to use a crate named `hex`, use `cargo add hex` to add it to your `Cargo.toml`
+
+For more information about this error, try `rustc --explain E0433`.
+error: could not compile `koci-agent-protocol` (lib) due to 1 previous error

@@ -1,0 +1,63 @@
+[
+  {
+    "command": [
+      "zig",
+      "cc",
+      "-target",
+      "aarch64-linux-musl",
+      "-static",
+      "-O2",
+      "-Wall",
+      "-Werror",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/old-agent-stderr-launcher.c",
+      "-o",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/old-agent-stderr-launcher"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "file",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/old-agent-stderr-launcher"
+    ],
+    "exit": 0,
+    "stdout": "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/old-agent-stderr-launcher: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+      "-w",
+      "-f",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/debugfs.commands",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/koci-system.ext4"
+    ],
+    "exit": 0,
+    "stdout": "debugfs: rm /usr/bin/koci-agent\n\ndebugfs: write /Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/old-agent-stderr-launcher /usr/bin/koci-agent\nAllocated inode: 317\ndebugfs: set_inode_field /usr/bin/koci-agent mode 0100755\ndebugfs: write /Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-agent /usr/bin/koci-old-agent\nAllocated inode: 533\ndebugfs: set_inode_field /usr/bin/koci-old-agent mode 0100755\n",
+    "stderr": "debugfs 1.47.4 (6-Mar-2025)\n"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+      "-R",
+      "dump /usr/bin/koci-agent /Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/extracted-launcher",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/koci-system.ext4"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "debugfs 1.47.4 (6-Mar-2025)\n"
+  },
+  {
+    "command": [
+      "/opt/homebrew/opt/e2fsprogs/sbin/debugfs",
+      "-R",
+      "dump /usr/bin/koci-old-agent /Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/extracted-old-agent",
+      "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture/koci-system.ext4"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "debugfs 1.47.4 (6-Mar-2025)\n"
+  }
+]

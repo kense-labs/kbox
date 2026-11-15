@@ -18,7 +18,7 @@ fn primary(engine: &EngineKey) -> EnginePrimaryOpen {
         request_id: EngineKey::parse("primary-1").unwrap(),
         generation: 1,
         command: vec![
-            "/harness/bin/launch".into(),
+            "/application/bin/launch".into(),
             "".into(),
             "--private-extension".into(),
         ],

@@ -62,7 +62,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--kbox", required=True, type=Path)
     parser.add_argument("--image-store", required=True, type=Path)
-    parser.add_argument("--base", default="krun-coding-fixture:0.1.0")
+    parser.add_argument("--base", required=True, help="OCI image containing python3 and bwrap")
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
     assert args.kbox.is_file() and args.image_store.is_dir()
@@ -79,7 +79,7 @@ def main():
     events = []
     engines = []
     counter = 0
-    committed = f"krun-oci-commit:{nonce}"
+    committed = f"kbox-oci-commit:{nonce}"
     pool_root = tempfile.TemporaryDirectory(prefix="ko-pool-", dir="/private/tmp" if Path("/private/tmp").is_dir() else "/tmp")
     Path(pool_root.name).chmod(0o700)
     build_socket = str(Path(pool_root.name) / "pool.sock")
@@ -106,13 +106,13 @@ def main():
             f"FROM {args.base}\nUSER root\nCOPY marker /oci-marker\n"
             "RUN python3 -c 'from pathlib import Path; Path(\"/image-build-proof\").write_text(Path(\"/oci-marker\").read_text())'\n"
             'ENTRYPOINT []\nCMD ["sleep", "2147483647"]\n')
-        tag = f"krun-oci-regression:{nonce}"
+        tag = f"kbox-oci-regression:{nonce}"
         cli("build", "--run-pool-socket", build_socket, "--run-pool-autostart",
             "--run-pool-image", args.base, "-f", context / "Containerfile", "-t", tag, context)
         cli("pool", "stop", "--socket", build_socket)
         image = json.loads(cli("image-inspect", tag))[0]
         digest = image["Digest"]
-        reference = "docker.io/library/krun-oci-regression"
+        reference = "docker.io/library/kbox-oci-regression"
         cli("volume", "create", "ordinary-data")
         cli("run", "-d", "--name", "ordinary", "-v",
             f"{workspace}:/workspace", "-v", "ordinary-data:/data", tag)
@@ -197,9 +197,9 @@ def main():
                               "ephemeral_storage_bytes": None, "execution_timeout_ms": None},
                 "isolation": "sandbox", "health": None, "service_lifecycle": None, "restart": {"kind": "never"},
             }
-            intent = {"schema": "kbox.engine.intent.v1", "engineId": discovery["engineId"],
+            intent = {"schema": "kbox.engine.intent.v2", "engineId": discovery["engineId"],
                       "instanceId": nonce, "requestId": "up-1", "revision": 1,
-                      "desiredState": "up", "workload": "oci-service",
+                      "desiredState": "up",
                       "planDigest": "sha256:" + hashlib.sha256(nonce.encode()).hexdigest(), "service": service}
             accepted = rpc(endpoint, {"op": "apply_intent", "intent": intent})
 
@@ -237,8 +237,8 @@ def main():
                 "--cpus", "1", "--memory", "512m", tag)
             baseline = json.loads(cli("exec", "native-baseline", "--", "python3", "-c", security_probe))
             cli("rm", "-f", "native-baseline")
-            native_service = dict(service, resources=dict(service["resources"], pids=4294967295))
-            native_up = dict(intent, requestId="native-up-3", revision=3, workload="acp-harness", service=native_service)
+            native_service = dict(service, semantics_profile_digest="sha256:daf902bf6663b433b3d9a97dffefc5044661decf3b872916209348a7e439baeb", resources=dict(service["resources"], pids=4294967295))
+            native_up = dict(intent, requestId="native-up-3", revision=3, service=native_service)
             rpc(endpoint, {"op": "apply_intent", "intent": native_up})
             native_execution = wait_for(running)
             native = json.loads(cli("exec", native_execution["provider_resource_id"], "--", "python3", "-c", security_probe))

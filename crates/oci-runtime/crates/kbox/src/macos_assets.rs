@@ -7,11 +7,13 @@ use koci_sdk::{Error, ErrorCode, Result};
 use sha2::{Digest, Sha256};
 
 pub(crate) const MACOS_RUNTIME_ARCHIVE_SHA256: &str =
-    "5486f38e91eb4da0e58888b543c93fe669c918ad4b84dd495f0d1dfdffc43b56";
+    "d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc";
+pub(crate) const LIBK_CODE_SHA256: &str =
+    "5d580288b0234ec5526d283615b6b11ba6506b78824c4ebe1e6c51a60f00908d";
 pub(crate) const LIBK_NAME: &str = "libkrun.1.17.0.dylib";
-pub(crate) const LIBK_SIZE: u64 = 4_557_488;
+pub(crate) const LIBK_SIZE: u64 = 5_496_272;
 pub(crate) const LIBK_SHA256: &str =
-    "c5353f9cbd91564ce26eceaf1bdc33341097b43280fe029203ccca02807c082d";
+    "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf";
 pub(crate) const LIBKRUNFW_NAME: &str = "libkrunfw.5.dylib";
 pub(crate) const LIBKRUNFW_SIZE: u64 = 22_952_096;
 pub(crate) const LIBKRUNFW_SHA256: &str =
@@ -74,22 +76,67 @@ impl PinnedFile {
         Self::open_with_limit(path, description, Some(max_size))
     }
 
+    /// Pin a generation-owned disk writable by virtio-blk, with the same content checks.
+    pub(crate) fn open_workload_disk(path: &Path, max_size: u64) -> Result<Self> {
+        Self::open_with_access(
+            path,
+            "macOS workload rootfs disk",
+            Some(max_size),
+            true,
+            false,
+        )
+    }
+
+    pub(crate) fn open_storage_disk(path: &Path, size: u64, writable: bool) -> Result<Self> {
+        Self::open_with_access(
+            path,
+            "macOS caller storage disk",
+            Some(size),
+            writable,
+            true,
+        )
+    }
+
     fn open_with_limit(
         path: &Path,
         description: &'static str,
         max_size: Option<u64>,
     ) -> Result<Self> {
+        Self::open_with_access(path, description, max_size, false, false)
+    }
+
+    fn open_with_access(
+        path: &Path,
+        description: &'static str,
+        max_size: Option<u64>,
+        writable: bool,
+        storage_lock: bool,
+    ) -> Result<Self> {
         let path = canonical_plain_file(path, description)?;
         let file = OpenOptions::new()
             .read(true)
+            .write(writable)
             .custom_flags(libc::O_CLOEXEC | libc::O_NOFOLLOW)
             .open(&path)
             .map_err(|error| {
                 asset_error(
                     description,
-                    format!("failed to pin asset {} read-only: {error}", path.display()),
+                    format!("failed to pin asset {}: {error}", path.display()),
                 )
             })?;
+        if storage_lock {
+            let locked = if writable {
+                file.try_lock()
+            } else {
+                file.try_lock_shared()
+            };
+            locked.map_err(|error| {
+                asset_error(
+                    description,
+                    format!("storage disk is already attached or cannot be locked: {error}"),
+                )
+            })?;
+        }
         let metadata = file.metadata().map_err(|error| {
             asset_error(
                 description,

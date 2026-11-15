@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 119.286974791,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/package-home-files-final4",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "55fdf88d46cfb2668e2c0534d5e9e44715112524dcea6068711eddcc9599f753"
+}

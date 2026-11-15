@@ -1,0 +1,24 @@
+{
+  "macMinimums": {
+    "bin/kbox": "11.0",
+    "bin/kbox-shim": "11.0",
+    "lib/libkrun.1.17.0.dylib": "11.0",
+    "lib/libkrunfw.5.dylib": "11.0"
+  },
+  "rpaths": {
+    "bin/kbox-shim": [
+      "@executable_path/../lib"
+    ]
+  },
+  "archiveSigning": "ad-hoc only; strict verification passed; not notarized",
+  "productReadiness": "unchanged; support matrix remains authoritative",
+  "referencesRead": [
+    "AGENTS.md",
+    ".specify/memory/constitution.md",
+    "docs/release.md",
+    "scripts/package-macos-arm64.sh",
+    "scripts/install-package.sh",
+    "scripts/e2e-engine/README.md"
+  ],
+  "sourceBehaviorChangesThisRound": false
+}

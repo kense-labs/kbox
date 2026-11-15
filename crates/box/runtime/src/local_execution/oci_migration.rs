@@ -502,6 +502,29 @@ impl LocalExecutionManager {
         let state_path = state_path.into();
         let home_dir = home_dir.into();
 
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        {
+            match super::MacosHvfOciMigrationConfig::from_environment()? {
+                Some(config) => {
+                    Self::with_macos_hvf_oci_and_pull_progress(
+                        state_path,
+                        home_dir,
+                        config,
+                        pull_progress_fn,
+                    )
+                    .await
+                }
+                None => legacy_backend(state_path, home_dir, pull_progress_fn),
+            }
+        }
+
+        #[cfg(not(all(target_os = "macos", target_arch = "aarch64")))]
+        if std::env::var_os(super::oci_hvf::OCI_HVF_ENDPOINT_ENV).is_some() {
+            return Err(ExecutionManagerError::Unavailable(
+                "explicit HVF endpoint requires macOS arm64; no backend fallback".into(),
+            ));
+        }
+
         #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
         {
             match WindowsWhpxOciMigrationConfig::from_environment(&home_dir)? {
@@ -535,6 +558,7 @@ impl LocalExecutionManager {
 
         #[cfg(not(any(
             target_os = "linux",
+            all(target_os = "macos", target_arch = "aarch64"),
             all(target_os = "windows", target_arch = "x86_64")
         )))]
         {
@@ -1182,7 +1206,7 @@ fn default_service_root(home_dir: &Path) -> PathBuf {
     home_dir.join("run").join("oci-host")
 }
 
-fn validate_absolute_normalized(path: &Path, label: &str) -> ExecutionManagerResult<()> {
+pub(super) fn validate_absolute_normalized(path: &Path, label: &str) -> ExecutionManagerResult<()> {
     if !path.is_absolute()
         || path.parent().is_none()
         || path

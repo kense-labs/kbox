@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-memory-native-apfs.py", line 54, in <module>
+    if mode=='old-agent':assert (case/'old-agent-schema-proof.json').is_file(),'no actual old Agent v8 rejection proof'
+AssertionError: no actual old Agent v8 rejection proof

@@ -1,0 +1,7 @@
+/Users/roylin/code/kense/kbox/artifacts/macos-readonly-40df3a5afe4e4326ad3bdade292bbe71/native-readonly/2cf679dffc7140edb0bd979e9c02d7e9
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py", line 143, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py", line 119, in main
+    assert b'read-only' in overlap.stderr
+AssertionError

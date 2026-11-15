@@ -11,7 +11,7 @@ use crate::macos_system_image::MacosSystemImage;
 use crate::unix_process::{
     prepare_console_output, read_bounded_worker_output, resolve_agent_socket,
     resolve_console_with_identity, terminate_and_wait, wait_for_worker, ConsoleIdentity,
-    PinnedCurrentExecutable,
+    PinnedCurrentExecutable, WorkerExit,
 };
 use crate::{KAgentVmSmokeReport, MacosBootAssetsEvidence, VmConfig};
 use koci_agent_protocol::{
@@ -27,6 +27,28 @@ const WORKER_COMMAND: &str = "__macos-agent-vm-worker";
 const WORKER_SCHEMA_VERSION: &str = "koci.macos-agent-vm-worker.v2";
 const WORKER_TIMEOUT: Duration = Duration::from_secs(90);
 const MAX_WORKER_OUTPUT_BYTES: u64 = 64 * 1024;
+
+#[derive(Debug, Clone, Copy, Default)]
+pub(crate) enum WorkerLifetime {
+    #[default]
+    Smoke,
+    RuntimeOwner,
+}
+
+fn wait_for_agent_worker(
+    child: &mut std::process::Child,
+    lifetime: WorkerLifetime,
+    smoke_timeout: Duration,
+) -> io::Result<WorkerExit> {
+    match lifetime {
+        WorkerLifetime::Smoke => wait_for_worker(child, smoke_timeout),
+        // The exact-owner watchdog and driver shutdown own the product VM lifetime.
+        WorkerLifetime::RuntimeOwner => child.wait().map(|status| WorkerExit {
+            status,
+            timed_out: false,
+        }),
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 struct WorkerEvidence {
@@ -70,6 +92,7 @@ impl WorkerEvidence {
 }
 
 pub(crate) struct MacosAgentVmConfig<'a> {
+    pub(crate) lifetime: WorkerLifetime,
     pub(crate) system_image_manifest: &'a Path,
     pub(crate) runtime_share: &'a Path,
     pub(crate) guest_token_file: &'a str,
@@ -85,6 +108,7 @@ pub(crate) struct MacosAgentVmConfig<'a> {
 
 pub(crate) fn agent_vm_smoke(configuration: MacosAgentVmConfig<'_>) -> KAgentVmSmokeReport {
     let MacosAgentVmConfig {
+        lifetime,
         system_image_manifest,
         runtime_share,
         guest_token_file,
@@ -223,7 +247,7 @@ pub(crate) fn agent_vm_smoke(configuration: MacosAgentVmConfig<'_>) -> KAgentVmS
     let output_reader = child.stdout.take().map(|stdout| {
         thread::spawn(move || read_bounded_worker_output(stdout, MAX_WORKER_OUTPUT_BYTES))
     });
-    let worker_exit = match wait_for_worker(&mut child, WORKER_TIMEOUT) {
+    let worker_exit = match wait_for_agent_worker(&mut child, lifetime, WORKER_TIMEOUT) {
         Ok(worker_exit) => Some(worker_exit),
         Err(error) => {
             let cleanup_error = terminate_and_wait(&mut child).err();
@@ -571,6 +595,10 @@ fn fail_worker(evidence: &mut WorkerEvidence, reason: String) -> bool {
     }
     false
 }
+
+#[cfg(test)]
+#[path = "macos_agent_lifetime_tests.rs"]
+mod lifetime_tests;
 
 #[cfg(test)]
 mod tests {

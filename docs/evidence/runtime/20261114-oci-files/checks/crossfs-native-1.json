@@ -1,0 +1,87 @@
+{
+  "client": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-crossfs-client",
+  "clientSha256": "74513bb78fd53fd01b16af52b906d70b3cdea8c1bb593445930fd13e37879276",
+  "mount": "/private/tmp/kbox-files-38d1ee741be9/crossfs",
+  "runtimeFilesystemDevice": 16777233,
+  "commands": [
+    {
+      "command": [
+        "hdiutil",
+        "attach",
+        "-nomount",
+        "ram://65536"
+      ],
+      "exitCode": 0,
+      "seconds": 0.09842883399999999,
+      "output": "/dev/disk13         \t                               \t\n"
+    },
+    {
+      "command": [
+        "newfs_hfs",
+        "-v",
+        "kfile-38d1ee741",
+        "/dev/disk13"
+      ],
+      "exitCode": 0,
+      "seconds": 0.013967583000000006,
+      "output": "Initialized /dev/rdisk13 as a 32 MB case-insensitive HFS Plus volume\n"
+    },
+    {
+      "command": [
+        "mount",
+        "-t",
+        "hfs",
+        "/dev/disk13",
+        "/private/tmp/kbox-files-38d1ee741be9/crossfs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.009234584000000018,
+      "output": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-crossfs-client",
+        "--ignored",
+        "--exact",
+        "utility_vm_driver::hvf_files::tests::native_cross_filesystem_file_grant_refuses_without_copying",
+        "--nocapture"
+      ],
+      "exitCode": 0,
+      "seconds": 1.184514667,
+      "output": "\nrunning 1 test\ntest utility_vm_driver::hvf_files::tests::native_cross_filesystem_file_grant_refuses_without_copying ... ok\n\ntest result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 435 filtered out; finished in 0.03s\n\n"
+    },
+    {
+      "command": [
+        "/sbin/umount",
+        "/private/tmp/kbox-files-38d1ee741be9/crossfs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.011675541999999872,
+      "output": ""
+    },
+    {
+      "command": [
+        "hdiutil",
+        "detach",
+        "-force",
+        "/dev/disk13"
+      ],
+      "exitCode": 0,
+      "seconds": 0.01600025000000005,
+      "output": "\"disk13\" ejected.\n"
+    }
+  ],
+  "ownedDevice": "/dev/disk13",
+  "callerFilesystemDevice": 16777245,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "unmountExitCode": 0,
+  "detachExitCode": 0,
+  "mountedAfter": false,
+  "status": "PASS"
+}

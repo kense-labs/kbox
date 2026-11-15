@@ -1,0 +1,15 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-oci/5f8fe3da1c944871b59efc3a47c78228/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-prewarm/d14ba5f2d8b94666ba60daddd57c2619/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-primary/373523bc4ae74341a5763e69dc1feed7/home",
+  "/Users/roylin/code/kense/kbox/artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/af-final1/native-readonly/2f2eae9a5d1c4d4794f1af6ef2f861f8/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/anonymous-attempt-2/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/files-attempt-2/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/host-service-attempt-2/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/nproc-attempt-2/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-disk-projection-1-disk/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-1-disk-home/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-2-disk-home/home",
+  "/private/tmp/kbox-raw-secrets-0291dc5e2dfb/raw-environment-positive-3-disk-home/home"
+]

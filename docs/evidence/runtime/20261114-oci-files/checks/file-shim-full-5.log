@@ -1,0 +1,86 @@
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.75s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-2397d30244d2c991)
+
+running 76 tests
+test macos_readonly::tests::confined_child ... ignored, entered by the parent test in a disposable native process
+test macos_guest_command::tests::entered_exit_settles_and_a_pre_entry_failure_refuses ... ok
+test macos_guest_command::tests::init_command_is_fixed_and_carries_no_caller_text ... ok
+test ffi::tests::ffi_array_allocates_the_full_libkpointer_table ... ok
+test ffi::tests::ffi_array_reserves_one_null_terminator_slot ... ok
+test macos_assets::tests::missing_asset_error_keeps_the_typed_description ... ok
+test macos_agent_smoke::tests::worker_evidence_uses_the_latest_valid_record ... ok
+test macos_assets::tests::rejects_symlinked_assets ... ok
+test macos_context::tests::modified_runtime_asset_fails_closed_before_loading ... ok
+test macos_assets::tests::detects_same_size_content_mutation ... ok
+test macos_assets::tests::detects_growth_and_enforces_read_bound ... ok
+test macos_runtime_share::tests::detects_permission_drift_before_vm_entry ... ok
+test macos_runtime_share::tests::detects_generation_replacement_before_vm_entry ... ok
+test macos_assets::tests::hashes_and_reads_the_pinned_file ... ok
+test macos_assets::tests::detects_replacement_through_the_path ... ok
+test macos_system_image::tests::rejects_noncanonical_digests ... ok
+test macos_runtime_share::tests::pins_private_generation_and_exposes_descriptor_path ... ok
+test macos_system_image::tests::rejects_unknown_manifest_fields ... ok
+test macos_runtime_share::tests::rejects_a_different_worker_handoff_identity ... ok
+test macos_assets::tests::loader_path_reads_the_retained_descriptor_after_path_replacement ... ok
+test macos_runtime_share::tests::rejects_relative_public_and_symbolic_generation_paths ... ok
+test macos_runtime_share::tests::pins_and_rechecks_runtime_state_directory ... ok
+test macos_runtime_share::tests::rejects_a_different_worker_handoff_state_identity ... ok
+test macos_vm_marker::tests::fifo_marker_is_rejected_without_opening_or_removing_it ... ok
+test macos_readonly::tests::refuses_writable_aliases_hardlinks_and_replaced_sources ... ok
+test macos_vm_marker::tests::marker_cleanup_preserves_a_replacement_inode ... ok
+test macos_vm_marker::tests::hard_linked_marker_is_rejected_without_deleting_either_link ... ok
+test macos_vm_marker::tests::marker_name_requires_a_fresh_hex_nonce ... ok
+test macos_vm_marker::tests::marker_consumption_is_descriptor_relative_and_bounded ... ok
+test macos_vm_marker::tests::marker_token_requires_a_nonzero_lowercase_256_bit_value ... ok
+test macos_vm_marker::tests::marker_symlinks_are_rejected_without_touching_the_target ... ok
+test macos_vm_marker::tests::marker_with_non_private_mode_is_rejected_and_left_untouched ... ok
+test macos_vm_marker::tests::marker_with_wrong_nonce_is_left_untouched ... ok
+test macos_vm_smoke::tests::worker_evidence_uses_the_latest_valid_record ... ok
+test macos_vm_marker::tests::oversized_marker_is_rejected_without_deleting_the_entry ... ok
+test macos_worker_sandbox::file_tests::file_projection_child ... ignored, invoked by parent in a disposable native sandbox process
+test macos_worker_sandbox::tests::confined_worker_child ... ignored, entered only by the parent test in a disposable subprocess
+test macos_vm_attachment::tests::rejects_missing_or_wrong_digest_and_changed_manifest ... ok
+test report::tests::macos_agent_success_requires_explicit_host_confinement_evidence ... ok
+test macos_readonly::tests::host_denies_mutations_through_paths_descriptors_threads_and_children ... ok
+test macos_vm_attachment::tests::pins_caller_directory_without_changing_its_permissions ... ok
+test runtime_assets::tests::every_supported_target_has_one_complete_bundle ... ok
+test macos_vm_attachment::tests::pins_restrictions_from_the_same_configuration_as_the_directory_grant ... ok
+test macos_vm_attachment::file::tests::pinned_file_reverifies_identity_without_freezing_live_bytes ... ok
+test tests::accepts_certified_smoke_configuration ... ok
+test tests::accepts_profile_vcpu_and_aligned_memory ... ok
+test tests::fallback_config_matches_vm_smoke_resources ... ok
+test tests::rejects_resources_outside_the_shared_hardware_vm_profile ... ok
+test tests::rejects_zero_resources ... ok
+test runtime_assets::tests::malformed_manifests_fail_closed ... ok
+test unix_process::tests::current_executable_pin_accepts_an_invocation_symlink ... ok
+test unix_process::tests::cleanup_leaves_a_replacement_console_untouched ... ok
+test unix_process::tests::expected_console_never_recreates_a_missing_host_directory ... ok
+test macos_vm_attachment::tests::rejects_shared_or_hardlinked_control_manifest ... ok
+test macos_vm_attachment::tests::rejects_directory_replacement_before_open_and_before_vm_entry ... ok
+test unix_process::tests::pinned_console_ignores_a_later_path_replacement ... ok
+test unix_process::tests::host_reserved_console_is_not_removed_by_worker_drop ... ok
+test unix_process::tests::prepared_console_is_private_and_uses_the_pinned_descriptor ... ok
+test unix_process::tests::prepared_console_opens_the_expected_host_reservation ... ok
+test unix_process::tests::prepared_console_refuses_an_unclaimed_existing_file ... ok
+test unix_process::tests::prepared_console_rejects_a_replaced_host_reservation ... ok
+test unix_process::tests::worker_created_console_is_removed_when_the_guard_drops ... ok
+test unix_process::tests::current_executable_is_pinned_through_the_descriptor_namespace ... ok
+test macos_worker_sandbox::file_tests::exact_file_projection_preserves_live_data_without_parent_or_metadata_authority ... ok
+test unix_process::tests::timed_out_worker_is_killed_and_reaped ... ok
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGZ9iTh/libkrun.1.17.0.dylib: replacing existing signature
+test macos_worker_sandbox::tests::worker_cannot_read_write_connect_or_exec_outside_its_grants ... ok
+test macos_system_image::tests::rejects_manifest_and_image_symlinks ... ok
+test macos_vm_attachment::workload_tests::workload_disk_pin_refuses_aliases_and_insecure_permissions ... ok
+test macos_context::tests::checksum_verified_runtime_exports_the_required_context_api ... ok
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGZ9iTh/libkrunfw.5.dylib: replacing existing signature
+test macos_system_image::tests::detects_image_replacement_before_vm_entry ... ok
+test macos_system_image::tests::rejects_raw_image_content_tampering ... ok
+test macos_system_image::tests::detects_every_runtime_provenance_drift_before_vm_entry ... ok
+test macos_vm_attachment::workload_tests::workload_disk_pin_refuses_content_change_and_inode_replacement_at_vm_entry ... ok
+test macos_context::signing_tests::resigned_runtime_keeps_pinned_code_and_rejects_modified_payloads ... ok
+test macos_system_image::tests::detects_manifest_and_image_changes_before_vm_entry ... ok
+test runtime_assets::tests::every_checked_in_archive_matches_its_manifest ... ok
+
+test result: ok. 73 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 2.06s
+

@@ -1,3 +1,0 @@
-# Build outputs — only packaging scripts and release notes belong in git.
-kbox-*/
-*.tar.gz

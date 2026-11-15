@@ -1238,10 +1238,7 @@ async fn retained_backend_recovers_after_runtime_owner_process_restart() {
     );
     let operation = box_operation("runtime-owner-process-restart-operation");
     let running = manager
-        .create_and_start(
-            request("runtime-owner-process-restart"),
-            &operation,
-        )
+        .create_and_start(request("runtime-owner-process-restart"), &operation)
         .await
         .expect("initial launch through first runtime-owner process");
     let mut exec = box_exec_request(None);
@@ -1409,10 +1406,7 @@ async fn retained_backend_recovers_filesystem_session_after_runtime_owner_proces
     );
     let operation = box_operation("runtime-owner-filesystem-restart-operation");
     let running = manager
-        .create_and_start(
-            request("runtime-owner-filesystem-restart"),
-            &operation,
-        )
+        .create_and_start(request("runtime-owner-filesystem-restart"), &operation)
         .await
         .expect("initial launch through first runtime-owner process");
 
@@ -1698,10 +1692,7 @@ async fn retained_backend_preserves_pause_state_across_runtime_owner_process_res
     );
     let operation = box_operation("runtime-owner-pause-restart-operation");
     let running = manager
-        .create_and_start(
-            request("runtime-owner-pause-restart"),
-            &operation,
-        )
+        .create_and_start(request("runtime-owner-pause-restart"), &operation)
         .await
         .expect("initial launch through the first runtime-owner process");
 

@@ -1,0 +1,8 @@
+
+running 3 tests
+test vm::oci_anonymous::tests::anonymous_disk_stage_preserves_legacy_data_and_require_rejects_path_aliases ... ok
+test vm::oci_anonymous::tests::anonymous_disk_publication_refuses_other_owners_reallocated_names_and_busy_catalogs ... ok
+test vm::oci_anonymous::tests::anonymous_disk_publication_is_atomic_private_and_reuse_never_reseeds_data ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2230 filtered out; finished in 0.15s
+

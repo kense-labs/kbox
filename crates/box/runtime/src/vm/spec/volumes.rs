@@ -13,7 +13,49 @@ pub(crate) struct PlannedAnonymousVolume {
 }
 
 impl VmManager {
-    #[cfg(not(any(target_os = "linux", target_os = "windows")))]
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    pub(crate) fn validate_macos_exports(spec: &InstanceSpec) -> Result<()> {
+        Self::validate_macos_directory_exports(spec, &std::collections::BTreeMap::new())
+    }
+
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    pub(crate) fn validate_macos_directory_exports(
+        spec: &InstanceSpec,
+        files: &std::collections::BTreeMap<PathBuf, koci_sdk::FileSourceIdentity>,
+    ) -> Result<()> {
+        let read_only: Vec<_> = spec
+            .fs_mounts
+            .iter()
+            .filter(|mount| mount.read_only && !files.contains_key(&mount.host_path))
+            .map(|mount| mount.host_path.as_path())
+            .collect();
+        let mut writable: Vec<_> = spec
+            .fs_mounts
+            .iter()
+            .filter(|mount| !mount.read_only && !files.contains_key(&mount.host_path))
+            .map(|mount| mount.host_path.as_path())
+            .collect();
+        if !matches!(
+            spec.rootfs,
+            RootfsSource::Ext4Disk {
+                read_only: true,
+                ..
+            }
+        ) {
+            writable.push(spec.rootfs.path());
+        }
+        koci_kbox::MacosReadOnlyMounts::open(&read_only, &writable)
+            .map(|_| ())
+            .map_err(|error| {
+                BoxError::ConfigError(format!("macOS read-only export admission failed: {error}"))
+            })
+    }
+
+    #[cfg(not(any(
+        target_os = "linux",
+        target_os = "windows",
+        all(target_os = "macos", target_arch = "aarch64")
+    )))]
     pub(crate) fn validate_virtiofs_mount_support(config: &kbox_core::BoxConfig) -> Result<()> {
         for volume in &config.volumes {
             let volume = Self::parse_volume_spec(volume)?;
@@ -64,7 +106,7 @@ impl VmManager {
         })
     }
 
-    pub(super) fn normalize_guest_mount_path(guest_path: &str) -> Result<String> {
+    pub(in crate::vm) fn normalize_guest_mount_path(guest_path: &str) -> Result<String> {
         if !guest_path.starts_with('/')
             || guest_path.contains('\0')
             || guest_path.split('/').any(|component| component == "..")
@@ -94,7 +136,7 @@ impl VmManager {
         Ok(normalized)
     }
 
-    pub(super) fn validate_guest_mount_path(guest_path: &str) -> Result<()> {
+    pub(crate) fn validate_guest_mount_path(guest_path: &str) -> Result<()> {
         Self::normalize_guest_mount_path(guest_path).map(|_| ())
     }
 
@@ -107,7 +149,7 @@ impl VmManager {
         &self,
         oci_config: &crate::oci::OciImageConfig,
     ) -> Result<Vec<PlannedAnonymousVolume>> {
-        let explicit_destinations = self
+        let mut explicit_destinations = self
             .config
             .volumes
             .iter()
@@ -116,6 +158,11 @@ impl VmManager {
                 Self::normalize_guest_mount_path(&parsed.guest_path)
             })
             .collect::<Result<std::collections::HashSet<_>>>()?;
+        for value in &self.config.tmpfs {
+            let mount = kbox_core::guest_exec::GuestTmpfsMount::parse(value)
+                .map_err(|error| BoxError::ConfigError(error.to_string()))?;
+            explicit_destinations.insert(Self::normalize_guest_mount_path(mount.path())?);
+        }
         let mut declared_destinations = oci_config
             .volumes
             .iter()
@@ -224,6 +271,12 @@ impl VmManager {
             })?;
 
         let host_path = if host_path.is_file() {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            if volume.read_only && managed_secret_root.is_none() {
+                return Err(BoxError::ConfigError(
+                    "macOS read-only single-file mounts are unsupported; grant a plain directory instead".into(),
+                ));
+            }
             if let Some(root) = managed_secret_root.filter(|root| host_path.starts_with(root)) {
                 Self::stage_managed_secret_file_mount(
                     &host_path,
@@ -244,8 +297,8 @@ impl VmManager {
             host_path
         };
         // Host-enforce :ro for virtio-fs via a private RO alias (Linux MS_RDONLY
-        // bind / Windows BindFlt). Guest MS_RDONLY alone is not write denial on
-        // the host share; other hosts refuse :ro until native denial exists.
+        // bind / Windows BindFlt) or the macOS shim's shared OCI Seatbelt
+        // boundary. Guest MS_RDONLY alone is not host write denial.
         let host_path = if volume.read_only {
             super::virtiofs_ro::stage_virtiofs_ro_share(&host_path, filemounts_dir, index)?
         } else {

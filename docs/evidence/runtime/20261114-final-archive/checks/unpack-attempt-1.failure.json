@@ -1,0 +1,8 @@
+{
+  "stage": "Python diagnostic extraction, before installer invocation",
+  "command": "tarfile.TarFile.extractall(unpacked, filter=\"data\")",
+  "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+  "exitCode": 1,
+  "error": "TypeError: extractall() got an unexpected keyword argument 'filter'",
+  "resolution": "retain the failure; validate all member and symlink paths, then use the available Python extraction API"
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci",
+    "macos-hvf-host-service-smoke",
+    "--shim",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/koci-kshim",
+    "--system-image-manifest",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-installed/system-image/system-image.json",
+    "--bundle",
+    "/private/tmp/kbox-hvf-ebc8e8fb7890/sdk-fixture",
+    "--work-parent",
+    "/private/tmp/kbox-hvf-ebc8e8fb7890/s",
+    "--iterations",
+    "25",
+    "--source-revision",
+    "405c8b89f151e9e2879438d9e457dd60bfd18b90"
+  ],
+  "exitCode": 0,
+  "seconds": 24.690401125
+}

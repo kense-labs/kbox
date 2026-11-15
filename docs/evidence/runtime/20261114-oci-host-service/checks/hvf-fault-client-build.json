@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "oci_hvf::tests::native",
+    "--no-run"
+  ],
+  "exitCode": 101,
+  "seconds": 14.579377083
+}

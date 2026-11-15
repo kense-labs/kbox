@@ -1,0 +1,8 @@
+
+running 3 tests
+test macos_memory::tests::memory_backing_requires_exact_ram_image_and_device ... ok
+test macos_memory::tests::apfs_requires_every_actual_physical_store_to_be_ram ... ok
+test macos_memory::tests::ordinary_disk_is_not_memory_backing ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 84 filtered out; finished in 0.21s
+

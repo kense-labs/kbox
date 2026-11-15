@@ -282,7 +282,7 @@ mod tests {
     use async_trait::async_trait;
     use chrono::{TimeZone, Utc};
     use kbox_core::{
-        BoxConfig, CreateExecutionRequest, ExecutionGeneration, ExecutionBoundary,
+        BoxConfig, CreateExecutionRequest, ExecutionBoundary, ExecutionGeneration,
         ExecutionManagerError, ExecutionManagerResult, ExecutionResourceUpdate,
         ExecutionSnapshotId, KillOutcome, OperationId,
     };

@@ -1,0 +1,10 @@
+
+running 5 tests
+test vm::oci_hvf_spec::tests::hvf_shm_size_keeps_default_omission_and_exact_safe_mount ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_only_tmpfs_admission_preserves_reserved_boundaries ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_rejects_bad_sizes_and_conflicting_tmpfs_before_claims ... ok
+test local_execution::oci_production::shm_tests::shm_size_does_not_promote_other_profiles_or_oom_overrides ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_admits_bounded_policy_without_claims ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 2314 filtered out; finished in 0.08s
+

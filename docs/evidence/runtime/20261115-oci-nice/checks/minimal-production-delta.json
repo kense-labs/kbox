@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "onlyProductionFile": "crates/box/runtime/src/vm/oci_hvf_rlimits.rs",
+  "reversePatchMatchesPriorSha256": "364cc3f71b77142e819d2fcd0d161c8e75ddac33bbf3695ad1458b88db2fef99",
+  "change": "one Nice standard enum mapping and qualification error text",
+  "cliOciAgentNativeSourceUnchanged": true,
+  "retainedUnchangedResourceEvidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-msgqueue",
+  "nativeScope": "new Nice plus complete Host/file PEP/A-F from installed assets; other unchanged resource/Secret/Guest counts remain historical024, not new runs"
+}

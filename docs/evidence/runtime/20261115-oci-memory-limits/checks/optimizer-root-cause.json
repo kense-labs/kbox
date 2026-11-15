@@ -1,0 +1,9 @@
+{
+  "status": "CONFIRMED_FIXTURE_CAUSE",
+  "diagnostic": "docs/evidence/runtime/20261115-oci-memory-limits/checks/memory-diagnostic1-result.json",
+  "probeDisassembly": "docs/evidence/runtime/20261115-oci-memory-limits/checks/probe-disassembly3.log",
+  "actualMallocCallsInMain": 0,
+  "observedDiagnosticExitCode": 16,
+  "change": "compile probe with -fno-builtin-malloc -fno-builtin-free so allocation effects cannot be removed",
+  "boxAndOciInputsUnchanged": true
+}

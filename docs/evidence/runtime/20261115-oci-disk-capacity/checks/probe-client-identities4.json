@@ -1,0 +1,14 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe.c": {
+    "bytes": 4542,
+    "sha256": "0eec6cdad300d561125ba4efd06e8084e7fc8a8de186615338792b6219fe536c"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/inputs/disk-capacity-probe": {
+    "bytes": 1553632,
+    "sha256": "f75ed21e33aca699e83119ee7d2ac5ff71b7c32adfcebbcb29e5d84d95cc1d75"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-disk-capacity-64a2d8b501a94159b8bc63c58861bb0a/native-client-frozen4": {
+    "bytes": 183971312,
+    "sha256": "30cd1883d4d18961d8db133c0d406b9e37529f6d7e09705348f8b750bad0adbc"
+  }
+}

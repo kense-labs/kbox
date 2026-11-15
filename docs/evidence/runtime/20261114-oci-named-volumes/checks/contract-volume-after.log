@@ -1,0 +1,13 @@
+
+running 8 tests
+test kbox_contract_driver::artifact_tests::artifact_port_advertises_only_the_storage_surface_it_enables ... ok
+test kbox_contract_driver::artifact_tests::artifact_and_directory_ports_compose_in_either_builder_order ... ok
+test kbox_contract_driver::artifact_tests::missing_artifact_port_fails_before_box_reservation ... ok
+test kbox_contract_driver::artifact_tests::artifact_and_volume_bindings_precede_secrets_and_artifacts_are_read_only ... ok
+test kbox_contract_driver::artifact_tests::persistent_volume_accepts_only_its_contract_labels_and_store_allocation_identity ... ok
+test kbox_contract_driver::artifact_tests::failed_task_never_publishes_output_but_removal_cleans_staging ... ok
+test kbox_contract_driver::artifact_tests::task_output_restart_resets_staging_and_replay_recaptures_one_exact_result ... ok
+test kbox_contract_driver::artifact_tests::persistent_volume_plan_reuses_data_without_becoming_an_artifact_store ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 2218 filtered out; finished in 0.47s
+

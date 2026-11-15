@@ -1,0 +1,11 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-disk-capacity-64a2d8b501a9/disk-capacity-attempt-2/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (95191086) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_disk_capacity.rs:280:9:
+["exec", "e02c7ef3-9b75-408f-81d5-9626335cb6ad", "--", "/bin/cat", "/cli-capacity-marker"]: cat: can't open '/cli-capacity-marker': No such file or directory
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::disk_capacity::native_custom_disk_capacity_enforces_root_and_anonymous_disks_replay_and_recovery' (95191085) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_disk_capacity.rs:459:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

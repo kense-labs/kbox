@@ -1,0 +1,13 @@
+
+running 2 tests
+test vm::oci_hvf_spec::tests::hvf_cpu_time_ulimits_complete_and_replace_only_declared_resource ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_cpu_time_ulimits_admit_existing_intent_without_allocating ... FAILED
+
+failures:
+
+failures:
+    local_execution::oci_production::ulimit_tests::hvf_cpu_time_ulimits_admit_existing_intent_without_allocating
+    vm::oci_hvf_spec::tests::hvf_cpu_time_ulimits_complete_and_replace_only_declared_resource
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2272 filtered out; finished in 0.03s
+

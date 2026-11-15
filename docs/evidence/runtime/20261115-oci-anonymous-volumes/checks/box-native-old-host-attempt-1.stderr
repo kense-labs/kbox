@@ -1,0 +1,8 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-anonymous-dc919588a169/old-host-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (86077776) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_anonymous.rs:268:145:
+called `Result::unwrap()` on an `Err` value: InvalidRequest("Box/HVF OCI qualification rejected: custom disk size or lifetime timeout is not qualified for this OCI profile")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::anonymous::native_old_host_refuses_raw_volume_capability_before_allocation_or_workload' (86077775) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_anonymous.rs:281:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

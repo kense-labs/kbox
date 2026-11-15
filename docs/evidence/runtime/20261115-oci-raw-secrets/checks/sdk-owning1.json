@@ -1,0 +1,11 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk"
+  ],
+  "exit": 0,
+  "seconds": 11.772601
+}

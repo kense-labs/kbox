@@ -699,7 +699,12 @@ impl BoxRuntimeConformanceFixture {
             self.home_dir.join("boxes.json.lock"),
             self.home_dir.join("boxes.json.tmp"),
         ] {
-            if let Err(error) = remove_file(&path) {
+            let removed = if path.is_dir() {
+                remove_tree(&path)
+            } else {
+                remove_file(&path)
+            };
+            if let Err(error) = removed {
                 failures.push(format!("remove provider state {}: {error}", path.display()));
             }
         }

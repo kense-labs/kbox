@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "volume_names_cannot_create_or_reclaim_a_caller_directory",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 10.13057
+}

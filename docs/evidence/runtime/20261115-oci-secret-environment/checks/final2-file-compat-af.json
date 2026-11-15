@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/file-compat-af-final2.py"
+  ],
+  "exit": 1,
+  "seconds": 437.460461333
+}

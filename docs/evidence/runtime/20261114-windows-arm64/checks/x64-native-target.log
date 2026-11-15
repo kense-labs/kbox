@@ -1,0 +1,6 @@
+   Compiling windows_x86_64_msvc v0.52.6
+   Compiling libc v0.2.189
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+    Checking windows-targets v0.52.6
+    Checking windows-sys v0.59.0
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.16s

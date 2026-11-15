@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "keyed_exec_with_reconstructed_capability"
+  ],
+  "exitCode": 101,
+  "seconds": 5.773839333
+}

@@ -24,6 +24,7 @@ fn valid_output(platform: &str) -> BoundedOutput {
             "platform": platform,
             "status": "available",
             "runtime_bundle_loaded": true,
+            "macos_host_sandbox_enforced": platform == "macos",
             "context_created": true,
             "vm_configured": true,
             "rootfs_configured": true,
@@ -194,6 +195,27 @@ fn rejects_a_shim_report_for_the_wrong_host() {
         Some(&"1".repeat(64)),
     )
     .is_err());
+}
+
+#[test]
+fn rejects_macos_shim_evidence_without_explicit_host_confinement() {
+    for flag in [Some(json!(false)), Some(json!("true")), None] {
+        let mut output = valid_output("macos");
+        let mut value: Value = serde_json::from_slice(&output.bytes).unwrap();
+        match flag {
+            Some(flag) => value["macos_host_sandbox_enforced"] = flag,
+            None => {
+                value
+                    .as_object_mut()
+                    .unwrap()
+                    .remove("macos_host_sandbox_enforced");
+            }
+        }
+        output.bytes = serde_json::to_vec(&value).unwrap();
+        let error = parse_shim_report(&output, HostPlatform::Macos, false, Some(&"1".repeat(64)))
+            .expect_err("missing or malformed native confinement must refuse");
+        assert!(error.contains("Seatbelt"), "{error}");
+    }
 }
 
 #[test]

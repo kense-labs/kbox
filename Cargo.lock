@@ -1910,6 +1910,7 @@ dependencies = [
  "kcommon",
  "kense-kcl",
  "koci-core",
+ "koci-kbox",
  "koci-sdk",
  "libc",
  "oci-distribution",
@@ -1956,6 +1957,7 @@ dependencies = [
  "kbox-core",
  "kbox-netproxy",
  "klibksys",
+ "koci-kbox",
  "koci-sdk",
  "libc",
  "serde",
@@ -2070,6 +2072,7 @@ dependencies = [
 name = "koci-kbox"
 version = "0.3.6"
 dependencies = [
+ "cap-std",
  "clap",
  "klibksys",
  "koci-agent-protocol",

@@ -1,0 +1,9 @@
+{"command": ["/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-client-attempt-7", "--ignored", "--exact", "local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep", "--nocapture"], "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-7", "clientSha256": "f3b2f5c1c70d5425751c553cce85d732835dbfba1fcee55b2f7c3db21f1f7c10", "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/installed-files-final-2", "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "exitCode": 101, "seconds": 87.36440075, "actualCounts": [["0", "1", "0"]], "resultExists": false, "cleanupExists": true}
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-7/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (85040586) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:318:30:
+called `Result::unwrap()` on an `Err` value: Unavailable("Kbox OCI create: timed out waiting for the libkrun shim to connect the agent bridge")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep' (85040585) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:345:10:
+called `Result::unwrap()` on an `Err` value: Any { .. }

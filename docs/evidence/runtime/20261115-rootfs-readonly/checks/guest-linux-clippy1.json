@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "--profile",
+    "release-dist",
+    "--target",
+    "aarch64-unknown-linux-musl",
+    "-p",
+    "kbox-guest-init",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 101,
+  "seconds": 1.294449041
+}

@@ -1,0 +1,315 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35",
+  "sourceInputs": 1692,
+  "archives": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/final-dist-secret-env-2/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "b9b77584fb0776990717c511e6676166c3e5b0c780e0faccd425c5bd2d1f6df9",
+      "compressedBytes": 23390394,
+      "installedDiskBytes": 44154880,
+      "filesVerified": 11
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "542bfe43dd6f2837ad55c3ba79416832584e9032a9b6e1b2bfa4d75bc94203bf",
+      "compressedBytes": 33417962,
+      "installedDiskBytes": 114925568,
+      "filesVerified": 11
+    }
+  ],
+  "nativeRustTests": [
+    {
+      "case": "environment-positive",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 256.08962787499996,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-positive-2/result.json"
+    },
+    {
+      "case": "environment-file-positive",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 233.55590004099997,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-file-positive-2/result.json"
+    },
+    {
+      "case": "environment-old-host",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 2.096273917,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-host-2/result.json"
+    },
+    {
+      "case": "environment-old-shim",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 37.228035417,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-shim-2/result.json"
+    },
+    {
+      "case": "environment-old-agent",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 41.392378,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-old-agent-2/result.json"
+    },
+    {
+      "case": "environment-disk-projection",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 2.151616167,
+      "result": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secret-environment/checks/environment-disk-projection-2/result.json"
+    },
+    {
+      "case": "files",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 48.115579333,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/files-attempt-2/result.json"
+    },
+    {
+      "case": "named",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 174.254066,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/named-attempt-2/result.json"
+    },
+    {
+      "case": "anonymous",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 455.780769291,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/anonymous-attempt-2/result.json"
+    },
+    {
+      "case": "raw-ro",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 5.743494583,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/raw-ro-attempt-2/result.json"
+    },
+    {
+      "case": "rootro",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 325.762386625,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/rootro-attempt-2/result.json"
+    },
+    {
+      "case": "tmpfs",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 169.781947084,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/tmpfs-attempt-2/result.json"
+    },
+    {
+      "case": "ulimits",
+      "actualCounts": [
+        1,
+        0,
+        0
+      ],
+      "seconds": 192.81613841700002,
+      "result": "/private/tmp/kbox-secret-env-1ac68d946a68/ulimits-attempt-3/result.json"
+    }
+  ],
+  "af": [
+    {
+      "case": "oci",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-image-cache/images",
+        "--base",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-oci"
+      ],
+      "seconds": 35.679668792,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-oci/0440aad8d495453584c0d5e0599ab52b/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "readonly",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-readonly"
+      ],
+      "seconds": 4.332737125000001,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-readonly/7c94312cbe64436fb6f24b8faa134b70/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "primary",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-primary"
+      ],
+      "seconds": 66.879008666,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-primary/a6785a5108a94b63ba2f91ce11e832a6/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "prewarm",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/installed-secrets-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-image-cache/images",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-prewarm",
+        "--test-binary",
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/native-client-frozen2"
+      ],
+      "seconds": 16.182079458000004,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-prewarm/7589047faf114615b11e70f5c888072b/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "case": "directory",
+      "status": "PASS",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/native-client-frozen2",
+        "--ignored",
+        "--exact",
+        "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+        "--nocapture"
+      ],
+      "seconds": 17.956076915999986,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/af-final2-retry1/native-directory/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "nativeRustTestsExecuted": 15,
+  "completedPythonNativeScenarios": 3,
+  "guestLinuxUnitTestsExecuted": 8,
+  "verify": {
+    "command": [
+      "bash",
+      "scripts/verify-commit.sh"
+    ],
+    "exit": 0,
+    "seconds": 201.259846542
+  },
+  "cleanup": {
+    "status": "PASS",
+    "homes": 19,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 175,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 23,
+    "afSourceCacheFilesChecked": 227,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  },
+  "scriptHashes": {
+    "build-box-final1.py": "a2ff1c652dcd8e3f20dcfc40cddc0de0db55a26edcca719a11ba79111cdc87bc",
+    "build-box-final2.py": "0de623683bba25bc6ce3faa560adfd36723512e27bcfc2aebef8aebf72420c53",
+    "build-oci-candidate1.py": "687402aea6f64dc2cc47c4b83fd815c495785c8ebae6df960a8dfa5f3ccfbb5f",
+    "build-oci-candidate2.py": "5d924463d036c71cfa7daebbaec65237f9b7972228fcf0f613252122e508adcc",
+    "check-final-identities1.py": "8a569e006b957d498e9db92bd98a0fb4e14aed3e1fae170afa4ada06fddd9036",
+    "check-final-identities2.py": "244a5040c5cd405da08643f63e6785503de8bf33f39b7ecda00f55bf1dc1fac3",
+    "file-compat-af-final2.py": "f44bf38c8ef1bd2383ec44bc9ccdf3ff4d37b1a17adbe3e4eb21c8c67e40c595",
+    "final-receipt-review2.py": "bf42895652f68340a89d3b0bae477e59bce4809c6da058667a6c88c4b88a7e48",
+    "final-resource-audit.py": "c6ec1d1a235b68ae927206db6128f03609aba22351716007c504d3fe332990d4",
+    "package-oci-final1.py": "578fdd478e5585086a9f7b9c4b1accc19837bc48b9cad025a29935938822c23a",
+    "package-oci-final2.py": "a4dce847cebb2f44082d53627b4deaabee37f09dac4efacf12a21340d1f236e5",
+    "process-final2.py": "b11b5a4f1bd608391e5222b6236a4412d342fc10f823b878e92aaa68f1090cba",
+    "qualification-runner-final2-retry1.py": "3184d133c44a7d79f7ef1623b5f923e4d5176d6d015ee7462104ae82d2457b2c",
+    "qualification-runner.py": "7a2a83a8100da20721515c6333147ce60be833591e284c08cc3dc350146126f8",
+    "run-check.py": "d6429f24ebbb66f249d3adee8de15f0d4485d0e4ea9e1df06a3037ef154f68c2",
+    "run-memory-native.py": "ceb7ec22ed55254ec1e63b7b1504f2e35f2144db4fb407dcf1d44d71fa663d29",
+    "run-native.py": "93677b570f021fc0eaaf8f71ee7ed24558d2a3290b8e32effc30797ed391f5d3",
+    "source_snapshot.py": "8a64178eaf825ce4541bd53fdfb00f4d45662d50acc508844be469e7782ec93a",
+    "storage-final2.py": "3f14c16158f3e57e74dc1f12e8e84c894483485d58e9f9f9d11f562a69640cb8"
+  },
+  "runtimeRSS": "not measured",
+  "fullW4Closed": false,
+  "nextLocalTask": "next executable W4 local gap after accepted019"
+}

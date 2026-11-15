@@ -1,0 +1,33 @@
+   Compiling devices v3.2.7 (/Users/roylin/code/kense/libkrun-oci-files-38d1ee741be9/src/devices)
+warning: unused import: `std::sync::OnceLock`
+ --> src/utils/src/time.rs:5:5
+  |
+5 | use std::sync::OnceLock;
+  |     ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `Instant`, `SystemTime`, and `UNIX_EPOCH`
+ --> src/utils/src/time.rs:6:17
+  |
+6 | use std::time::{Instant, SystemTime, UNIX_EPOCH};
+  |                 ^^^^^^^  ^^^^^^^^^^  ^^^^^^^^^^
+
+warning: `utils` (lib) generated 2 warnings (run `cargo fix --lib -p utils` to apply 2 suggestions)
+warning: type alias `RawFdType` is never used
+  --> src/devices/src/virtio/vsock/muxer.rs:39:10
+   |
+39 | pub type RawFdType = RawFd;
+   |          ^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `devices` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s
+     Running unittests src/lib.rs (target/debug/deps/devices-45f78a7fa6ed6f8a)
+
+running 1 test
+test virtio::fs::device::cache_tests::uncached_export_disables_data_and_metadata_caches_without_changing_default ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 59 filtered out; finished in 0.00s
+

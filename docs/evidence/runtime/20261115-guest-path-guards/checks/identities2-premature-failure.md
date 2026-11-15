@@ -1,0 +1,1 @@
+The first check-final-identities2 invocation failed its source binding assertion because the packaging helper had stopped before updating the installed prefix (it still pointed at source24a candidate1). No identity result file was written. Retained package-final2-helper-failure.json explains the guarded path mistake. Re-run only after the archive copy/install resume succeeds.

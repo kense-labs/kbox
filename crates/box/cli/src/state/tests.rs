@@ -1198,7 +1198,6 @@ fn test_box_record_round_trips_sandbox_isolation() {
 
     let json = serde_json::to_string(&record).unwrap();
     let parsed: BoxRecord = serde_json::from_str(&json).unwrap();
-
 }
 
 // --- Restart policy validation tests ---

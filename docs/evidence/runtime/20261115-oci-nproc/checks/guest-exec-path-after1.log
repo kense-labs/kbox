@@ -1,0 +1,12 @@
+
+running 7 tests
+test vm::spec::tests::boot::test_guest_init_exec_path_prefers_sbin ... ok
+test vm::spec::tests::boot::test_guest_init_exec_path_supports_usr_sbin_without_sbin ... ok
+test vm::spec::tests::boot::test_guest_init_exec_path_rejects_sbin_escape ... ok
+test vm::spec::tests::boot::test_guest_init_exec_path_resolves_multi_hop_guest_sbin_symlink ... ok
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_uses_guest_lookup_and_effective_image_path ... ok
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_preserves_overrides_and_refuses_escape ... ok
+test local_execution::oci_session::path_tests::other_driver_exec_path_still_requires_a_host_prepared_executable ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 2280 filtered out; finished in 0.05s
+

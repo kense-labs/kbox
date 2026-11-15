@@ -1,0 +1,38 @@
+[
+  {
+    "source": "dist/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/global/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "sha256": "16c55afc261592474af21bbcf8a1db693d10897d6b6858a9c8eb3bddae088d61",
+    "bytes": 96
+  },
+  {
+    "source": "dist/kbox-3.4.3-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/global/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "6e2e961d5da356beeadd1875fedace6dfc3c91615f10dd30eb7fe61f2431371e",
+    "bytes": 23362761
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/final-dist-anonymous-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/accepted012/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "6e2e961d5da356beeadd1875fedace6dfc3c91615f10dd30eb7fe61f2431371e",
+    "bytes": 23362761
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/final-dist-anonymous-1/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/accepted012/kbox-3.4.3-macos-arm64.tar.gz.sha256",
+    "sha256": "16c55afc261592474af21bbcf8a1db693d10897d6b6858a9c8eb3bddae088d61",
+    "bytes": 96
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/oci-anonymous-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/accepted012/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "df4b882c40f607b56e098b9f971552ad879f8a156fdc35703cc79fd8faf71a2a",
+    "bytes": 33345582
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/oci-anonymous-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "copy": "/Users/roylin/code/kense/kbox/artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/previous-dist/accepted012/koci-hvf-0.3.6-macos-arm64.tar.gz.sha256",
+    "sha256": "aa5515750946fdc50f480d7a5604fcf28544002118ce2839f68897c50c265b90",
+    "bytes": 100
+  }
+]

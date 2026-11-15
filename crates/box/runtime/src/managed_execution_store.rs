@@ -340,6 +340,7 @@ impl ManagedExecutionStore {
                 .as_ref()
                 .ok_or_else(|| ManagedExecutionStoreError::Unmanaged(execution_id.clone()))?;
             if updated_metadata.operation_id != original_metadata.operation_id
+                || updated_metadata.caller_files != original_metadata.caller_files
                 || updated_metadata.creation_intent_digest
                     != original_metadata.creation_intent_digest
                 || !same_creation_intent(updated_metadata, &original_metadata)?

@@ -1,0 +1,106 @@
+    Checking memchr v2.8.3
+    Checking smallvec v1.16.4
+    Checking generic-array v0.14.7
+    Checking getrandom v0.3.4
+    Checking num-bigint v0.4.8
+    Checking sha2-asm v0.6.4
+    Checking bytes v1.12.1
+    Checking unicode-normalization v0.1.24
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking tracing v0.1.44
+    Checking uuid v1.26.1
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+    Checking lzma-sys v0.1.20
+   Compiling kbox-shim v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/shim)
+    Checking xz2 v0.1.7
+    Checking ahash v0.8.12
+    Checking tempfile v3.27.0
+    Checking parking_lot_core v0.9.12
+    Checking aho-corasick v1.1.5
+    Checking serde_json v1.0.151
+    Checking parking_lot v0.12.5
+    Checking idna_adapter v1.1.0
+    Checking crypto-common v0.1.7
+    Checking block-buffer v0.10.4
+    Checking idna v1.1.0
+    Checking tokio v1.53.3
+    Checking digest v0.10.7
+    Checking sha2 v0.10.9
+    Checking num-rational v0.4.2
+    Checking regex-automata v0.4.18
+    Checking kense-kcl v0.3.0 (/Users/roylin/code/kense/kcl)
+    Checking referencing v0.48.5
+    Checking num v0.4.3
+    Checking fraction v0.15.4
+    Checking jsonschema-value v0.48.5
+    Checking regex v1.12.4
+    Checking fancy-regex v0.18.0
+    Checking matchers v0.2.0
+    Checking tracing-subscriber v0.3.23
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking jsonschema v0.48.5
+    Checking kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+warning: this `if` statement can be collapsed
+   --> crates/oci-runtime/crates/kbox/src/macos_context.rs:758:16
+    |
+758 |           } else if command == 0x19
+    |  ________________^
+759 | |             && size >= 72
+760 | |             && bytes.get(offset + 8..offset + 24)? == b"__LINKEDIT\0\0\0\0\0\0"
+...   |
+765 | |         }
+    | |_________^
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#collapsible_if
+    = note: `#[warn(clippy::collapsible_if)]` on by default
+help: collapse nested if block
+    |
+760 ~             && bytes.get(offset + 8..offset + 24)? == b"__LINKEDIT\0\0\0\0\0\0"
+761 ~             && linkedit.replace(offset).is_some() {
+762 |                 return None;
+763 ~             }
+    |
+
+warning: `koci-kbox` (lib) generated 1 warning (run `cargo clippy --fix --lib -p koci-kbox -- --no-deps` to apply 1 suggestion)
+warning: `koci-kbox` (lib test) generated 1 warning (1 duplicate)
+warning: spawned process is never `wait()`ed on
+   --> crates/oci-runtime/crates/kbox/src/owner_process_macos_tests.rs:179:19
+    |
+179 |       let _worker = Command::new(std::env::current_exe().unwrap())
+    |  ___________________^
+180 | |         .args([
+181 | |             "--ignored",
+182 | |             "--exact",
+...   |
+189 | |         .spawn()
+190 | |         .unwrap();
+    | |_________________^
+    |
+    = help: consider calling `.wait()`
+    = note: not doing so might leave behind zombie processes
+    = note: see https://doc.rust-lang.org/stable/std/process/struct.Child.html#warning
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#zombie_processes
+    = note: `#[warn(clippy::zombie_processes)]` on by default
+
+warning: `koci-kbox` (bin "koci-kshim" test) generated 1 warning
+warning: klibksys@3.2.7: K_BUILD_LIBKRUN set: forcing build from source
+warning: klibksys@3.2.7: Building libksys for macOS (using prebuilt libkrunfw)
+warning: klibksys@3.2.7: Set LIBCLANG_PATH to /opt/homebrew/opt/llvm/lib
+warning: klibksys@3.2.7: Downloading https://github.com/boxlite-ai/libkrunfw/releases/download/v5.3.0/libkrunfw-prebuilt-aarch64.tgz...
+warning: klibksys@3.2.7: SHA256 verified: 12b9401d7735d1682450e4d025273c5016ec2237dcbfb76b2f0a152be6e606d6
+warning: klibksys@3.2.7: Extracted libkrunfw to /Users/roylin/code/kense/kbox/target/debug/build/klibksys-fe667df6b73b1cb6/out/libkrunfw-src/libkrunfw
+warning: klibksys@3.2.7: Building libkrunfw from source...
+warning: klibksys@3.2.7: Building libkrun from source...
+warning: klibksys@3.2.7: Fixed and signed libkrunfw.5.dylib
+warning: klibksys@3.2.7: Fixed and signed libkrun.1.17.0.dylib
+warning: klibksys@3.2.7: Staged macOS runtime libraries in /Users/roylin/code/kense/kbox/target/lib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.17.0.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.1.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrun.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.5.dylib
+warning: kbox-shim@3.2.7: staged /Users/roylin/code/kense/kbox/target/debug/libkrunfw.dylib
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 37.23s

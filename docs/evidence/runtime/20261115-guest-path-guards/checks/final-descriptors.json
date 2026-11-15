@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "-n",
+    "-P",
+    "-Fpcn"
+  ],
+  "exitCode": 0,
+  "ownedDescriptorHolders": [],
+  "scope": [
+    "/Users/roylin/code/kense/kbox/artifacts/path-guards-90a50b1c75b5416bb6741f5c12536c05",
+    "/private/tmp/kbox-pathguard-90a50b1c75b5"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-raw-secrets-0291dc5e2dfb47a2981ced4ccba0ca49/run-memory-native2.py",
+    "docs/evidence/runtime/20261115-oci-raw-secrets/run-context.json",
+    "2",
+    "raw-positive"
+  ],
+  "exit": 1,
+  "seconds": 61.050512333
+}

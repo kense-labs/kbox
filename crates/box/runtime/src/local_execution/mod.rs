@@ -11,6 +11,8 @@ pub use lifecycle_lock::{
 };
 mod logs;
 mod oci_backend;
+#[cfg(feature = "vm")]
+mod oci_hvf;
 #[cfg(all(feature = "vm", target_os = "linux"))]
 mod oci_kvm_owner;
 #[cfg(all(feature = "vm", target_os = "linux"))]
@@ -79,6 +81,8 @@ mod oci_whpx_owner {
         Ok(format!(r"\\.\pipe\kbox-whpx-owner-{}", &digest[..32]))
     }
 }
+#[cfg(all(feature = "vm", target_os = "macos", target_arch = "aarch64"))]
+pub(crate) mod oci_file_grants;
 #[cfg(all(feature = "vm", target_os = "linux"))]
 pub(crate) mod oci_host_netdevice;
 #[cfg(feature = "vm")]
@@ -90,6 +94,8 @@ mod oci_production;
 #[cfg(feature = "vm")]
 mod oci_secret_attachments;
 mod oci_session;
+#[cfg(all(feature = "vm", target_os = "macos", target_arch = "aarch64"))]
+pub(crate) use oci_session::parse_process_user;
 mod oci_storage_attachments;
 mod operations;
 mod port;
@@ -134,10 +140,14 @@ pub use oci_backend::{
     OciRuntimeLaunch, OCI_RUNTIME_BINDING_SCHEMA_VERSION,
 };
 #[cfg(feature = "vm")]
+pub use oci_hvf::MacosHvfOciMigrationConfig;
+#[cfg(feature = "vm")]
 pub use oci_migration::{
     LinuxKvmBoxOwnedOwner, LinuxKvmOciMigrationConfig, WindowsWhpxBoxOwnedOwner,
     WindowsWhpxOciMigrationConfig,
 };
+#[cfg(feature = "vm")]
+pub use oci_production::MacosHvfOciBundleProvider;
 #[cfg(feature = "vm")]
 pub use oci_production::{LinuxKvmOciBundleProvider, WindowsWhpxOciBundleProvider};
 use record::{build_managed_record, status_from_record};

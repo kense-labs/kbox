@@ -1,0 +1,36 @@
+{
+  "assets": [
+    {
+      "path": "bin/kbox",
+      "previousSha256": "81b4e330bb0faa40e213a8efdbae290d00bf6e30987886fbed85f71d3705df8f",
+      "finalSha256": "81b4e330bb0faa40e213a8efdbae290d00bf6e30987886fbed85f71d3705df8f",
+      "identical": true
+    },
+    {
+      "path": "bin/kbox-shim",
+      "previousSha256": "0b8574e7c9f0b4c846887d34d2f5a6e1937fa87fe57c918b9af6cbedea51c255",
+      "finalSha256": "0b8574e7c9f0b4c846887d34d2f5a6e1937fa87fe57c918b9af6cbedea51c255",
+      "identical": true
+    },
+    {
+      "path": "bin/kbox-guest-init",
+      "previousSha256": "80cdd638ba8ec683963c41e0505c8aafa75e57097b3d9cd5c6161f0560f8ed3f",
+      "finalSha256": "80cdd638ba8ec683963c41e0505c8aafa75e57097b3d9cd5c6161f0560f8ed3f",
+      "identical": true
+    },
+    {
+      "path": "lib/libkrun.1.17.0.dylib",
+      "previousSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "finalSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "identical": true
+    },
+    {
+      "path": "lib/libkrunfw.5.dylib",
+      "previousSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "finalSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "identical": true
+    }
+  ],
+  "allIdentical": true,
+  "priorActualResults": "af-final2/native-results.json"
+}

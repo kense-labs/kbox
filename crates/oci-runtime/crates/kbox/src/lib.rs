@@ -67,6 +67,10 @@ mod macos_context;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 mod macos_guest_command;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+mod macos_readonly;
+#[cfg(target_os = "macos")]
+pub use koci_sdk::{macos_path_is_on_ram_disk, parse_macos_mount_line};
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 mod macos_runtime_share;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 mod macos_system_image;
@@ -111,6 +115,8 @@ pub use koci_agent_protocol::{AgentVsockEndpoint, AGENT_VSOCK_PORT};
 use koci_core::CapabilityStatus;
 use koci_core::HostPlatform;
 use koci_sdk::{Error, ErrorCode, Result};
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+pub use macos_readonly::MacosReadOnlyMounts;
 pub use report::{
     KAgentVmSmokeReport, KContextSmokeReport, KSystemImageContextSmokeReport, KVmSmokeReport,
     LinuxBootAssetsEvidence, MacosBootAssetsEvidence, WindowsBootAssetsEvidence,

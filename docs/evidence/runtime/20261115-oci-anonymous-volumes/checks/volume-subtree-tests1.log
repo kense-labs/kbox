@@ -1,0 +1,15 @@
+
+running 10 tests
+test rootfs::oci_ext4::tests::rejects_a_layer_changed_after_image_authentication ... ok
+test rootfs::oci_ext4::tests::rejects_guest_init_that_disagrees_with_its_cache_identity ... ok
+test rootfs::oci_ext4::tests::rejects_an_empty_guest_init_before_artifact_publication ... ok
+test rootfs::oci_ext4::tests::rejects_internal_paths_and_symlink_parent_escapes ... ok
+test rootfs::oci_ext4::tests::assembles_an_authenticated_gzip_layer ... ok
+test rootfs::oci_ext4::tests::volume_ext4_seeds_only_its_resolved_subtree_with_foreign_metadata_and_links ... ok
+test rootfs::oci_ext4::tests::assembles_layers_without_a_host_namespace ... ok
+test rootfs::oci_ext4::tests::workload_ext4_preserves_oci_ownership_links_and_layers_without_boot_injection ... ok
+test rootfs::oci_ext4::tests::failed_capacity_check_never_publishes_a_partial_generation ... ok
+test rootfs::oci_ext4::tests::workload_capacity_failure_cleans_partial_disk_and_spool ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 2220 filtered out; finished in 0.66s
+

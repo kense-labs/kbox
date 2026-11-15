@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "oci",
+    "pid": 81406,
+    "parent": 81405,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/service/runtime/shares/kbox-4e28bfa3-b3f8-4de2-8cf6-6b43a16dbc88/1 --runtime-share-device 16777233 --runtime-share-inode 287773720 --runtime-state-device 16777233 --runtime-state-inode 287773729 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-ef19953f3e1d4831b0bdc5a77c858500/session-token --console /private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/service/runtime/console/kbox-4e28bfa3-b3f8-4de2-8cf6-6b43a16dbc88-1.log --socket-path /private/tmp/koci-agent-ef19953f3e1d4831b0bdc5a77c858500/agent.sock --console-device 16777233 --console-inode 287773730 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-ef19953f3e1d4831b0bdc5a77c858500/report.json --vm-attachment-manifest-sha256 sha256:81c95af5e8b64597ebfdf833e9da7a21057c769abc2a35c528f868b1a853c3fb",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/oci-v7-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "box",
+    "pid": 81611,
+    "parent": 80976,
+    "command": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/bin/kbox-shim --config {\"box_id\":\"5d576c01-4fd4-48a9-b635-9cec0bf7fdc5\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/boxes/5d576c01-4fd4-48a9-b635-9cec0bf7fdc5/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+    "paths": {
+      "kbox-shim": "/private/tmp/kbox-hvf-ebc8e8fb7890/attempt-13/home/bin/kbox-shim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed/lib/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/installed/lib/libkrunfw.5.dylib"
+    }
+  }
+]

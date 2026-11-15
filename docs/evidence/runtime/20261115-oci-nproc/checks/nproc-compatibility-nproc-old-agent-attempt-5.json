@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "oldPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "oldAgentSha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589",
+  "logs": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-nproc/checks/old-agent-direct6.json",
+      "proof": {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+          "__macos-agent-vm-worker",
+          "--system-image-manifest",
+          "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/old-agent-console-fixture2/system-image.json",
+          "--runtime-share",
+          "/private/tmp/kbox-nproc-bcf6f36c2d7d/old-agent-direct-6/share",
+          "--runtime-share-device",
+          "16777233",
+          "--runtime-share-inode",
+          "293999430",
+          "--runtime-state-device",
+          "16777233",
+          "--runtime-state-inode",
+          "293999431",
+          "--guest-token-file",
+          "/run/koci-runtime/run/test.token",
+          "--console",
+          "/private/tmp/kbox-nproc-bcf6f36c2d7d/old-agent-direct-6/console.log",
+          "--socket-path",
+          "/private/tmp/koci-agent-1ylctiug/agent.sock",
+          "--vm-attachment-manifest-sha256",
+          "sha256:25e10c454e85fd9b9f217c48a9b484f4cf89730de03ad3ad192ff7a3fcea4ad3"
+        ],
+        "fixtureCommand": [
+          "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/prepare-old-agent-fixture2",
+          "/private/tmp/kbox-nproc-bcf6f36c2d7d/old-agent-direct-6"
+        ],
+        "pid": 79210,
+        "exitCode": 0,
+        "seconds": 2.093667042,
+        "root": "/private/tmp/kbox-nproc-bcf6f36c2d7d/old-agent-direct-6",
+        "socketDirectory": "/private/tmp/koci-agent-1ylctiug",
+        "agentSha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589",
+        "oldSystemImageManifestSha256": "b8854cc84ba844cd376b53ac3f24023fb3a63f1fdd8a4d9bf2e8fef81979b282",
+        "consoleFixtureManifestSha256": "08adf57f8839e6ee807163d2f46478d835c616bca22c94ecb915cde0bd476af6",
+        "consoleFixtureIdentity": {
+          "launcherSha256": "9da6ebf81e8a30f3ba4293c2094909248846e73f20de5436e1cb3a4c261a4a68",
+          "oldAgentSha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589",
+          "imageSha256": "7efd14d3f26378f31a1376ccbccbf7e4fc5155cabece04f839e0245b682470fe",
+          "imageBytes": 67108864,
+          "originalManifestSha256": "b8854cc84ba844cd376b53ac3f24023fb3a63f1fdd8a4d9bf2e8fef81979b282",
+          "scope": "test-only stderr redirect and waitpid; exact unmodified old Agent and original kernel/native dependencies"
+        },
+        "vmAttachmentManifestSha256": "sha256:25e10c454e85fd9b9f217c48a9b484f4cf89730de03ad3ad192ff7a3fcea4ad3",
+        "stderr": "",
+        "stdout": "{\"schema_version\":\"koci.macos-agent-vm-worker.v2\",\"runtime_bundle_loaded\":true,\"context_created\":true,\"vm_configured\":true,\"rootfs_configured\":true,\"runtime_share_configured\":true,\"macos_boot_assets\":{\"manifest_sha256\":\"08adf57f8839e6ee807163d2f46478d835c616bca22c94ecb915cde0bd476af6\",\"system_image_sha256\":\"7efd14d3f26378f31a1376ccbccbf7e4fc5155cabece04f839e0245b682470fe\",\"system_image_size\":67108864,\"runtime_archive_sha256\":\"d7a398ec8afe454b0c77452adf1feab1ff88240be51a6199eee37d0076f024bc\",\"libkrun_sha256\":\"7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf\",\"firmware_sha256\":\"841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4\",\"kernel_bundle_sha256\":\"b1180b50148ed14f5fbeadf17288ce8abcf245daa468255b7ff41113bbf01199\",\"kernel_bundle_size\":22740992,\"kernel_guest_load_address\":\"0x0000000080000000\",\"kernel_entry_address\":\"0x0000000080000000\",\"root_disk_read_only\":true,\"runtime_share_separate\":true},\"agent_binary_present\":true,\"agent_vsock_configured\":true,\"workload_configured\":true,\"console_configured\":true,\"host_sandbox_enforced\":true,\"enter_attempted\":true}\n",
+        "workerPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-final5-installed/koci-hvf-0.3.6-macos-arm64",
+        "oldAgentPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+        "fixtureGeneratorSha256": "11ab18f6042c44cee6be91919183ac2604f84362e28f2f3db5bf59fedab7a58f",
+        "console": "init.krun: entered main argc=1\r\ninit.krun: mount_filesystems ok\r\ninit.krun: after cmdline env import KRUN_INIT=/usr/bin/koci-agent KRUN_INIT_PID1=<null> BOX_EXEC_EXEC=<null>\r\ninit.krun: root propagation ok\r\ninit.krun: tty/session configured\r\ninit.krun: config parsed\r\ninit.krun: selected exec=/usr/bin/koci-agent init_pid1=0\r\ninit.krun: setup_redirects ok\r\ninit.krun: execvp(/usr/bin/koci-agent) starting\r\nkoci-agent: invalid VM attachment manifest: failed to decode utility-VM attachment manifest: unknown field `nprocTransportSchema`, expected one of `schemaVersion`, `target`, `guestBundle`, `configDigest`, `attachmentDigest`, `network`, `storage`, `directories`, `storagePathRestrictionsDigest`, `rootfsImage`, `files` at line 1 column 71\r\nold-agent-native-exit=1\r\n",
+        "guestAgentExitCode": 1,
+        "status": "PASS",
+        "schema": "koci.agent-vm-attachments.v10",
+        "actualNativeVmProbes": 1,
+        "guestDecoderRefusedBeforeToken": true,
+        "workloadStarted": false,
+        "socketDirectoryRemoved": true,
+        "workerReaped": true
+      }
+    }
+  ]
+}

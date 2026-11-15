@@ -46,9 +46,8 @@ instead of creating a second Box lifecycle path. The driver owns provider
 identity, generation fencing, recovery, Service endpoints, health observations,
 logs, exec, resource controls, and cleanup.
 
-The provider pins `kbox_contract` 0.5.0 at
-`aeb1dd96b5d3f823464d51fcabe99b6052874aee` and advertises its atomic
-`ServiceLifecycle` feature. `RuntimeUnitSpec::health` remains readiness for
+The provider consumes the local workspace `kbox_contract` 0.8 contract and
+advertises its atomic `ServiceLifecycle` feature. `RuntimeUnitSpec::health` remains readiness for
 traffic admission. `RuntimeServiceLifecycle::liveness` independently drives
 recovery according to the declared restart policy, while
 `shutdown_grace_seconds` is persisted as an exact `SIGTERM` grace interval
@@ -96,13 +95,15 @@ owns reference authorization and transport; Box owns only node-local
 materialization, deterministic isolation-specific read-only mounts, recovery
 validation, log redaction, and lifecycle cleanup.
 
-On macOS, a validated `ram://` root proves memory-backed storage only. Guest
-environment/file Secrets still require host-enforced read-only virtio-fs
-exports, which the current backend does not provide. Managed MicroVM creation
-now refuses those mounts during preflight, before execution reservation or
-container Secret resolution. A RAM-root capability probe is not proof that a
-Secret-bearing workload can run. See the
-[actual processing admission evidence](../../../../docs/evidence/desktop/20261017-paperloom-secret-readonly-admission/OUTCOME.md).
+On macOS arm64, the Box and OCI VM workers share a host Seatbelt read-only
+boundary. Read-only directories are descriptor-pinned; overlapping writable
+grants, pre-existing hard-linked files, trees above 100000 entries and pre-opened
+writable source descriptors refuse before VM entry. Caller-owned writes stay
+live. A validated `ram://` root proves memory-backed Secret storage only; it
+does not by itself qualify a Secret-bearing workload. The retained BoxVm route
+refuses ordinary read-only single-file mounts. The explicit OciSdk profile below
+supports exact single-file grants without exporting their parent. See the
+[host enforcement evidence](../../../docs/evidence/runtime/20261114-macos-readonly/OUTCOME.md).
 
 `BoxTransientSecretStore` exposes that same validated tmpfs owner to Box's
 local Compose adapter. Compose creates a private scope only after the parent
@@ -130,48 +131,44 @@ workload-visible references, redacts exact values longest-first, and hashes only
 redacted content into its cursor. Registry credentials are never injected into
 the workload and therefore never become log-redaction inputs.
 
-## Local engine and native guest profile
+MicroVM providers currently refuse `BoxRuntimeDriverConfig.state_snapshot=true`
+with typed `UnsupportedCapabilities` before creating state. They do not advertise
+Runtime `StateSnapshot`. CLI rootfs/image snapshots have their separate existing
+contract; Runtime live filesystem and memory capture are not implemented.
 
-### Optional live directory grants
+## Local execution engine
 
-`RuntimeMountSource::Directory` names a mutable caller-owned directory through a
-reference, independently of OCI image or ACP workload type. A plain
-`BoxRuntimeDriver` does not expose it. Callers opt in with `BoxDirectoryPort`;
-Box still owns the actual share, execution generation and teardown. Immutable
-Artifact inputs keep their existing read-only contract.
+`kbox engine serve` exposes a same-user, owner-only Unix control endpoint over
+`ManagedRuntimeClient` and `ExecutionManager`. Runtime owns operation receipts;
+ExecutionManager owns actual VM, process, mount, network and teardown effects.
+The engine accepts OCI Service definitions and opaque process input. Package
+installation, application readiness, guest dependency checks and application
+protocols belong to the caller.
 
-The local engine advertises `directory-grants.v1` and accepts explicit grants
-in the immutable intent. References bind exact paths; a grant must match every
-Directory mount and cannot expand a read-only authorization to write access.
-Resolution checks the full accepted Runtime specification and generation,
-including previous attempts needed for teardown. Missing or moved caller paths
-do not prevent retiring an already bound execution. No parent directory is
-implicitly exposed, and removal retains caller data.
+### Versioned contracts
 
-MicroVM mount controls encode non-ASCII and quoted paths across libkrun's
-ASCII-only kernel command line; ordinary ASCII controls preserve their wire
-form. Package the matching guest-init with the host runtime. The native macOS
-directory and ordinary OCI results are recorded in
-[assembly evidence](../../../docs/evidence/engine/20261111-assembly/OUTCOME.md).
+Discovery advertises `kbox.engine.v2`. The request/response envelopes remain
+`kbox.engine.request.v1` and `kbox.engine.response.v1`; intents now use
+`kbox.engine.intent.v2` and the durable journal uses `kbox.engine.journal.v2`.
+Service intent has no workload classification or package-assembly field.
+Unknown fields and unsupported schemas are refused.
 
-`kbox engine serve` adds a same-user, owner-only Unix control endpoint over
-`ManagedRuntimeClient` and `ExecutionManager`. It persists accepted intent and
-immutable operation references; Runtime retains its receipts and Box retains
-actual execution resources. Ordinary OCI CLI commands and Runtime consumers do
-not require this endpoint, ACP, or KRun.
+Existing v1 journals are retained and refused rather than rewritten or reset.
+Before upgrading an existing engine home, stop its workloads and unclaimed
+reservations with the previous executable, and retain the old home for rollback.
+Use a fresh `K_HOME` for the new engine. The ordinary Box CLI storage contract
+is unchanged. This cleanup does not migrate external clients.
 
-The explicit `kbox.native-guest.v1` policy is pinned by
-`NATIVE_GUEST_PROFILE_DIGEST` in the Runtime specification's
-`semantics_profile_digest`. It requires independent-kernel Sandbox isolation,
-selects full guest capabilities, disables guest seccomp filtering and
-`no-new-privileges`, and preserves explicitly requested resource, mount and
-network policy. It grants no host mounts, devices or services. Other specs keep
-the existing provider security defaults. The engine selects this policy for an
-ACP Harness environment; it does not inspect ACP traffic or impose task-loop
-limits. Credentials remain references and this profile does not authorize
-inline secret storage.
+### Explicit guest policy
 
-The canonical LF bytes hashed by that identity are:
+`EngineServiceTemplate.semantics_profile_digest` passes the caller's explicit
+Runtime profile through unchanged. Omitting it keeps the provider's ordinary
+security defaults. The optional `kbox.native-guest.v1` profile requires an
+independent-kernel Sandbox, enables guest capabilities, and disables guest
+seccomp and `no-new-privileges`. It grants no host mounts, devices or services.
+No application type selects privileges automatically.
+
+The canonical LF bytes pinned by `NATIVE_GUEST_PROFILE_DIGEST` are:
 
 ```text
 kbox.native-guest.v1
@@ -182,94 +179,46 @@ no-new-privileges=false
 resources=explicit
 ```
 
-Native control-plane, OCI regression and guest-policy comparison evidence is
-recorded in [OUTCOME](../../../docs/evidence/box/20261110-krun-engine/OUTCOME.md).
-The separately discovered `process-stream.primary.v1` capability opens an
-exclusive primary process per environment generation. An owner-only control
-connection and a one-use data attachment keep disconnect detection independent
-of data backpressure. Raw stdout / stderr, explicit stdin half-close and one
-exact exit preserve the native process transport. Lost streams are not resumed
-or replayed: their receipt and the next empty environment attempt are published
-atomically, and Runtime retires the old resources before preparing the next
-generation. This primary policy does not prohibit other execution sessions;
-ordinary command / PTY / file APIs and unary Runtime `Exec` retain their contracts.
+### Live directory grants
 
-`process-stream.bootstrap.v1` adds a bounded opaque launch input on the
-authenticated primary control connection. A client sets `bootstrap` in the
-open request, receives its ticket, and sends a little-endian 32-bit byte count
-and 1 byte to 4 MiB of data before attaching. The engine receives the complete
-frame before launch and forwards it through the generation-bound guest stdin
-before admitting the separate data stream. Bootstrap bytes stay out of the
-serialized request, its fingerprint and the journal. The caller and trusted
-guest launcher own the meaning of those bytes.
+`RuntimeMountSource::Directory` names a mutable caller-owned directory.
+`directory-grants.v1` binds exact paths and permissions to the accepted Runtime
+specification and generation. Missing or moved paths do not prevent retirement
+of an already bound execution. No parent directory is implicitly exposed;
+removal retains caller data. Immutable Artifact inputs remain read-only.
 
-### Optional Harness package assembly
+### Process streams
 
-`harness-assembly.v1` is explicitly selected by an ACP Harness intent. The
-engine verifies a bounded immutable ZIP copy on the host and streams it through
-the existing generation-fenced process API to the trusted guest installer.
-Package contents and hooks never execute on the host. The receipt binds the
-accepted operation, Runtime specification and generation, package digest and
-actual Box execution identity and generation. A running VM alone is not an
-assembly receipt. Primary startup checks that binding again at the actual
-execution boundary; superseded assembly cannot publish readiness.
+`process-stream.primary.v1` opens an exclusive primary process per environment
+generation. Control and one-use data attachments preserve raw stdout/stderr,
+stdin half-close and one exact exit. Disconnected streams are not replayed or
+resumed; Runtime retires the old generation before preparing another attempt.
+Other exec, PTY and file APIs keep their contracts.
 
-An assembly may require a named guest protocol. The engine checks it against
-the installer response before publishing the bound receipt. Existing assembly
-plans without the field use the original readiness check.
+`process-stream.bootstrap.v1` forwards a bounded opaque launch input through
+guest stdin before admitting the data stream. Bootstrap bytes stay out of the
+serialized request, its fingerprint and the journal. The caller owns their meaning.
+Process launch checks the actual execution identity and generation through the
+existing driver; the engine does not inspect application output or receipts.
 
-`harness-assembly.guest-protocols.v1` adds the optional
-`requiredGuestProtocols` list. Every requested protocol must appear in the
-installer response. The original singular field remains readable and empty
-lists are omitted from legacy wire data. A digest- and protocol-bound
-`krun.guest-installation-error.v1` response can report a missing runtime
-requirement. KBox records `RUNTIME_REQUIREMENTS_UNMET` and KRun reports failed
-assembly. The trusted guest installer owns component version and file checks.
+### Clean environment prewarm
 
-This optional path reserves `/opt/krun` for its trusted installer and published
-packages, and uses an indefinite bootstrap process. Those requirements do not
-apply to ordinary OCI or to intents that do not select package assembly. Legacy
-intents omit the new optional field and keep their existing wire identity.
-KRun stores plans and operation references; it does not own another VM registry.
+`environment-prewarm.v1` is selected through the intent's optional
+`prewarmBindingsDigest`, independently of any package or application. A prewarmed
+Service must be an independent-kernel Sandbox running `/bin/sleep infinity`,
+with no process environment, Secrets, health check or restart policy. Either the
+ordinary guest policy or an explicitly selected guest profile may be used.
 
-Native three-package streaming, public KRun CLI and ordinary OCI regression
-results are recorded in
-[assembly evidence](../../../docs/evidence/engine/20261111-mate-assembly/OUTCOME.md).
-That evidence does not qualify VM prewarm, memory credentials, arbitrary package
-dependencies, real-model tasks or other native platforms.
+The compatibility key includes the pinned image, boot configuration, resources,
+exact directory identities, caller bindings digest, platform, runtime assets and
+engine authority. ExecutionManager owns reservations and atomically advances
+the generation when claiming one. Unclaimed environments reject workload access.
+After a running Service opts in, the engine maintains one compatible spare.
+Stop stays `CLEANUP_PENDING` until owned unclaimed reservations are removed.
 
-### Canonical environment prewarm handoff
-
-The local engine advertises `environment-prewarm.v1` for assembly intents
-that opt in. ExecutionManager owns each idle reservation. The compatibility key
-covers the pinned image, boot configuration, resource policy, exact directory
-identities, capability bindings, platform, runtime asset generations and engine
-authority. Compatible Harness packages can use the same idle environment.
-
-After an opted-in instance becomes available, the engine keeps one compatible
-spare and starts it through a generation-bound worker. The worker holds the
-canonical lifecycle lock through startup and can finish if the engine exits.
-Runtime apply claims a compatible running spare or uses the normal create path.
-Drivers without prewarm composition and ordinary OCI requests use normal create.
-
-The idle VM starts the trusted bootstrap. Unclaimed reservations permit
-inventory and lifecycle teardown. The manager and direct CLI entry points
-require claim before workload access, including exec, PTY, file and port
-sessions. Claim atomically transfers ownership and advances the Box generation
-while retaining the same physical runtime and exact OCI binding. The claimed
-VM follows normal workload teardown, with its prewarm provenance kept for fencing.
-For an instance with prewarm history, engine stop stays `CLEANUP_PENDING`
-until its unclaimed reservations are removed, even after the workload is gone.
-
-The explicit driver composition exercises HVF identity reuse, cross-unit claim,
-external files and teardown. [Native handoff evidence](../../../docs/evidence/engine/20261111-prewarm-native/OUTCOME.md)
-The production CLI test also exercises an engine restart during prewarm, a real
-Aster-to-Dsh handoff, unclaimed access rejection and an ordinary OCI workload
-running throughout the handoff. [Engine prewarm evidence](../../../docs/evidence/engine/20261111-prewarm-schedule/OUTCOME.md)
-
-The independent OCI regression uses a prefix with only KBox and its runtime
-assets. It covers pull, build, run, external files, volumes, HTTP, live export,
-commit and run, snapshot restore and engine restart. [Native OCI evidence](../../../docs/evidence/engine/20261111-credential-bootstrap/OUTCOME.md)
+Current change verification and limits are recorded in
+[generic engine evidence](../../../docs/evidence/engine/20261114-generic-engine/OUTCOME.md).
+See [local engine boundaries](../../../docs/architecture/local-engine.md).
 
 ## Cloud image-build boundary
 
@@ -440,6 +389,290 @@ The runtime communicates with the guest agent over Unix socket (bridged to vsock
 Agent-level operations (sessions, generation, skills) are handled by the
 kbox crate, not the Box runtime.
 
+## Explicit macOS OCI Host Service
+
+On macOS arm64, `LocalExecutionManager::with_macos_hvf_oci_qualification`
+connects the public SDK to an independently started `koci
+macos-hvf-host-service`. Box retains execution/resource authority; the service
+owns the HVF worker and authenticated guest transport. The service must use its
+fixed signed shim, pinned native bundle, system image and manifest.
+
+CLI discovery uses `K_BOX_OCI_HVF_ENDPOINT=/absolute/service/runtime.sock` and
+`K_BOX_OCI_MIGRATION=microvm`. The runtime root is the sibling `runtime`
+directory (`K_BOX_OCI_HOST_ROOT`, if supplied, must match it). Use the same
+endpoint with `K_BOX_OCI_MIGRATION=off` to create BoxVm executions while keeping
+stored OciSdk routes usable. Missing explicit endpoints or unsupported modes
+refuse; macOS with no migration input keeps its existing BoxVm default.
+
+The bounded profile requires Linux arm64, one vCPU, 512 MiB physical guest
+memory and `network=none`. It admits plain caller directory workspace/binds,
+host-enforced directory `:ro`, typed cgroup limits and explicit guest SYS_ADMIN
+(with cap_drop precedence). Init and exec share this admitted capability
+ceiling. Secret/raw-disk combinations, custom devices/network,
+snapshots/pools and unsupported overrides refuse instead of changing isolation or silently ignoring intent.
+
+Existing named VolumeStore allocations support one explicit RO or RW bind per
+allocation per execution. Box retains allocation/deletion authority and reference
+counts; the Host receives Caller/DetachOnly storage with a stable allocation
+identity. Normal restart and stopped recovery retain data and identity; deleting
+an execution only detaches its reference. Caller directory exports use uncached
+live data, including Host content growth after a guest has read a file.
+Corrupt catalogs, path/name aliases, missing or duplicate bindings, custom drivers
+and unenforced quotas refuse. New allocations receive a protected UUID in the
+existing labels map; legacy catalogs retain their bytes and stable identity.
+Normal volume APIs preserve malformed metadata instead of quarantining it into
+an empty catalog. See [named-volume implementation and current acceptance](../../../docs/evidence/runtime/20261114-oci-named-volumes/OUTCOME.md).
+
+Image-declared VOLUME allocations use the existing durable anonymous plan,
+VolumeStore owner and protected allocation UUID. Required
+`dev.kbox.raw-storage-images` v1 / Agent attachment manifest v7 carries the
+allocation's private ext4 image alongside the existing rootfs, directory and
+ordinary-file transports. The seed comes from the layered Guest namespace,
+preserving numeric ownership, modes, links and xattrs without Host chown.
+Explicit caller/named mounts override the same image destination. Restart and
+stopped recovery reuse the same allocation/data; new executions get independent
+allocations. Normal remove and ephemeral stop delete only their owned anonymous
+volumes; explicit restart retains them. Unenforced quotas, legacy nonempty data
+without a valid artifact, identity/size drift and missing Host capability refuse.
+Raw disks retain exact RO/RW descriptors and OS locks; Host confinement grants
+file data only, and Runtime cleanup remains Caller/DetachOnly. See
+[spec012 implementation and acceptance status](../../../docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md).
+
+New explicit HVF executions require `dev.kbox.rootfs-image` v1 and carry the
+OCI workload in guest-native ext4. Verified OCI layers preserve numeric UID/GID,
+modes and links without host foreign chown or Box guest-init injection. The
+Host transfers a private operation disk into one exact generation outside its
+guest-exported runtime share; no two executions share a writable disk. The
+immutable VM system image remains separate. Old directory records retain their
+transport and foreign-UID refusal; a Host missing the new capability refuses
+new preparation. These workload roots are ephemeral: explicit restart builds a
+fresh root in the new generation. Caller directory lifetime is unchanged.
+See [spec008](../../../specs/008-oci-rootfs/spec.md) and its
+[rootfs evidence](../../../docs/evidence/runtime/20261114-oci-rootfs/OUTCOME.md).
+
+Ordinary caller-owned single files use required `dev.kbox.file-grants` v1 and
+Agent manifest v6. Box retains their device/inode identities across restart;
+replacing a source pathname refuses reuse. Host-pinned private live projections
+export only the granted file. RO remains enforced by the Host after privileged
+remount, fresh mount and child-process attacks. RW permits data writes/truncation,
+without caller-parent enumeration, sibling access, link, rename or deletion.
+Sources must be unaliased regular files on the projection filesystem; unsafe
+overlaps, writable inherited descriptors and cross-filesystem projection refuse.
+Cleanup removes runtime aliases and retains caller files. See
+[spec009 and installed-archive evidence](../../../docs/evidence/runtime/20261114-oci-files/OUTCOME.md).
+Caller-file and macOS OciSdk anonymous-volume state roots use a versioned
+directory at `boxes.json`, containing
+`records.v1.json`; it remains the same BoxStateStore and uses the same sibling
+lock. Normal current loads adopt earlier flat file-bearing records atomically
+on macOS; read-only snapshots do not migrate. Other legacy roots keep their flat format. Older readers fail I/O before their quarantine fallback, and stale
+flat writers cannot replace the directory. Missing, corrupt or future directory
+records fail closed; adopted roots stay in that format after cleanup. Backups
+must preserve the whole state directory. Manual flattening or arbitrary old-
+binary rollback is unsupported. See
+[compatibility work and current acceptance status](../../../docs/evidence/runtime/20261114-oci-file-rollback/OUTCOME.md).
+
+Host SIGKILL uses authenticated **stopped-only** recovery; active process
+sessions explicitly fail. Reconstructed clients retain persisted routes and
+exact bindings. An explicit restart advances the generation; old input cannot
+reach the replacement. Terminal reconciliation releases the exact OCI runtime
+binding while retaining Box identity, route and generation history.
+
+See [the bounded task](../../../specs/007-oci-host-service/spec.md) and
+[native evidence](../../../docs/evidence/runtime/20261114-oci-host-service/OUTCOME.md).
+This opt-in integration does not close full OCI Host Service cutover or raise
+platform support levels.
+
 ## License
 
 MIT
+
+Guest rootfs read-only enforcement now uses one fallible init/exec/PTY helper:
+failed mounts/stat/readback refuse launch; already read-only roots are idempotent
+and inner mounts keep their explicit permissions. Installed BoxVm root EROFS,
+exec/PTY/restart and real Linux Guest failure paths are covered in
+[spec013 evidence](../../../docs/evidence/runtime/20261115-rootfs-readonly/OUTCOME.md).
+Masked/readonly-path setup is closed in the spec014 slice below; this does not
+qualify full OCI control parity or change the default backend.
+
+The shared Box Guest masked/readonly-path guard now refuses setup errors before
+exec/PTY launch, pins target components, verifies actual masks and recursively
+sets readonly mount attributes. Unsafe symlink components refuse; private empty
+readonly file sources retain original data and avoid unlinked-device attachment
+failures. Existing managed K_SEC_* filtering and generation authority are unchanged.
+[Spec014 final installed evidence](../../../docs/evidence/runtime/20261115-guest-path-guards/OUTCOME.md)
+records actual Guest protocol/EROFS/restart results and retained fixture corrections.
+These Guest path controls require updated booted companions and do not establish
+Host inode RO, full OCI control parity or a default backend change.
+
+The explicit Mac HVF profile now carries bounded Box tmpfs intent through the
+existing OCI Guest executor: disjoint targets,RO/RW,size/mode/UID/GID and common
+safety flags. The shared Core parser keeps mount flags out of kernel data;
+BoxVm keeps its advanced data options. Image VOLUME exact-target overrides do
+not allocate hidden anonymous disks; unqualified/overlapping targets refuse.
+[Spec015 installed effects and cleanup](../../../docs/evidence/runtime/20261115-oci-tmpfs/OUTCOME.md)
+record actual tmpfs/EROFS/ENOSPC/noexec,CLI,generation reset and stopped recovery,
+with caller/named data retained. Kernel nosuid/nodev readback is recorded
+separately from independent privilege probes. Full W4/default cutover and OCI
+Secret parity remains open; no platform support promotion.
+
+The explicit Mac profile also maps Box read_only to the existing OCI root view.
+It requires rootfs-image v2; v1 remains writable-only with identical bytes.
+Old Host capability refusal occurs before preparation and does not prove the
+feature. Actual init/exec/stream/PTY/File/FS EROFS,inner RW,restart/stopped
+recovery,explicit OCI writable control and CLI are qualified in
+[spec016 evidence](../../../docs/evidence/runtime/20261115-oci-root-readonly/OUTCOME.md).
+The physical private boot disk remains writable for runtime boot; this does not
+revoke explicitly granted Guest SYS_ADMIN or replace caller Host RO. No default
+cutover,promotion or live continuity; Secret/unqualified controls/other parity remains open.
+
+Bounded Mac nofile/fsize/core now map through standard OCI process.rlimits for
+init/exec/stream/PTY/children, retaining omitted defaults and fingerprints.
+Malformed legacy Shim input refuses through the shared Core parser. Managed
+BoxVm and OciSdk CLI process sessions both use ExecutionManager security and
+generation fencing; raw sockets no longer bypass stored cap_drop ALL.
+[Spec017 final installed evidence](../../../docs/evidence/runtime/20261115-oci-ulimits/OUTCOME.md)
+records kernel EMFILE/EFBIG/EPERM,real attach/spoof controls,three generations,
+CLI and owned cleanup. This is bounded process enforcement,not a management
+filesystem quota or full W4/default cutover. Secret environment transport is next local work.
+
+Bounded managed Secret files now use the existing readonly file grant mechanism
+with required memory-secret-files v1 / Agent manifest v8. Both the source and
+projection must be on actual validated RAM storage, including APFS only when
+every physical store is a hdiutil ram:// image. The Host advertises capability
+only for a RAM runtime share; source numeric mode/owner and exact file identity
+remain unchanged. Old assets, physical runtime roots, raw disk combinations and
+Secret environment manifests refuse. [Spec018 installed evidence](../../../docs/evidence/runtime/20261115-oci-secrets/OUTCOME.md)
+qualifies actual Host denials, init/exec/stream/PTY, independent files, CLI,
+three generations and exact owned RAM cleanup. Full Secret parity, W4/default
+cutover and Windows ARM64 remain unqualified; continue environment delivery.
+
+Managed Secret environment projection is now qualified on the explicit Mac OCI
+route through memory-secret-files v2 / Agent manifestv9. The existing manifest
+is validated against exact RO RAM grants, consumed before process launch and
+omitted from workload env. Sources are pinned in the protected Agent namespace
+before workload root entry, so replacing a visible path cannot redirect an
+exec read. Only metadata enters private plans; rejected bindings are validated
+before plan writes. Files-onlyv1/v8 and legacy native Secret checks remain intact.
+[Spec019 final installed evidence](../../../docs/evidence/runtime/20261115-oci-secret-environment/OUTCOME.md)
+qualifies actual Guest8/process paths/CLI/compatibility/three generations and
+19-home cleanup. Raw-disk combinations, other parity and full W4 remain open;
+next bounded local work is nonroot nproc process-count limits.
+
+Spec020 qualifies Box CPU-time intent on the explicit Mac OCI route through the
+existing process.rlimits executor. Zero refuses; omission/default bytes and
+other limits stay intact. Actual SIGXCPU/SIGKILL, measured CPU usage, idle and
+unlimited controls, init/exec/child/stream/realPTY, CLI/replay/three generations
+and owned cleanup pass the final installed archives. [Final evidence:8 outer
+Rust native,8 Guest units,3 Python scenarios and20-home cleanup](../../../docs/evidence/runtime/20261115-oci-cpu-time/OUTCOME.md).
+CPU-time is per-process, separate from wall deadlines and aggregate cgroups.
+Full W4/default cutover/live continuity/platform promotion stay open; Windows
+ARM64 dependencies remain unsupported without a native run. Next local work:
+data/stack/memlock process limits, qualified by spec021 below.
+
+Spec021 qualifies standard data/stack/memlock byte limits through the existing
+Mac OCI executor. Actual malloc/mmap/mlock ENOMEM, stack SIGSEGV on alternate
+stack, unlock/reuse, hard-raise EPERM, unlimited controls, all process paths/CLI,
+replay and stopped recovery pass the final installed archives. [Evidence:5 Rust
+native tests +3 Python scenarios and10-home cleanup](../../../docs/evidence/runtime/20261115-oci-memory-limits/OUTCOME.md).
+No VM/cgroup/RSS or privileged-bypass claim; full W4/default cutover/platform
+gates remain open. Nonroot nproc is qualified by spec022 below.
+
+Spec022 qualifies nonroot per-UID nproc through all process paths/CLI/health/real
+PTY/attach, three generations and actual fork/thread EAGAIN/reaping/reuse. Shared
+Agent admission closes the native-observed root-helper equality bypass; required
+Host nproc-admission v1 and manifest v10 bind prior transports and refuse old
+Host/shim/Agent before workload entry. Legacy root defaults remain unchanged.
+The same native matrix found and fixed HVF bare-command PATH resolution in the
+shared session caller. [Final installed evidence:12 Rust native,13 Guest units,3
+Python scenarios plus1 native decoder probe and29-home cleanup](../../../docs/evidence/runtime/20261115-oci-nproc/OUTCOME.md).
+Full W4/default Host Service cutover/live continuity and external platform gates
+remain open. Runtime RSS unmeasured; Windows ARM64 dependencies unsupported/no
+native run. Continue the next unqualified existing process-limit type.
+
+Spec023 qualifies nonroot sigpending through the same per-UID entry boundary
+and existing OCI executor. Actual realtime sigqueue EAGAIN, ordered delivery/
+drain/reuse, shared UID budgets, mapped userNS refusal at full quota, zero and
+infinity controls, ordinary kill semantics, all process paths/CLI/health/realTTY/
+attach/replay/recovery pass. [Final installed evidence:10 Rust native +13 Guest
+units +3 Python scenarios and14-home cleanup](../../../docs/evidence/runtime/20261115-oci-sigpending/OUTCOME.md).
+Nproc/defaults/identity/routes/fencing remain intact. Full W4/default cutover/
+live continuity/platform gates remain open; RSS unmeasured, Windows ARM64
+dependencies unsupported/no native run. Continue existing msgqueue intent.
+
+Spec024 qualifies nonroot msgqueue through the same UID/capability/NNP boundary
+and existing OCI executor. Actual MQ capacity EMFILE with ordinary FDs available,
+message-capacity EAGAIN/priority+FIFO, unlinked/dup/inherited-FD lifetime, shared
+UID quota/reuse, mapped user+IPC namespace refusal, zero/infinity and all process
+paths/CLI/health/realTTY/attach/replay/recovery pass. [Final installed evidence:
+11 Rust native +13 Guest units +3 Python scenarios and15-home cleanup](../../../docs/evidence/runtime/20261115-oci-msgqueue/OUTCOME.md).
+No OCI/Agent/schema/native/dependency change. Full W4/default Host Service
+cutover/live continuity/platform gates remain open; RSS unmeasured, Windows
+ARM64 dependencies unsupported/no native run. Continue existing nice intent.
+
+Spec025 qualifies existing nice intent through the standard OCI executor without
+changing CLI/root defaults or the per-UID counter boundary. Actual -5 success,
+-6 EACCES, inherited child/thread and namespace boundaries, zero/infinity,
+all process paths/CLI/health/realTTY/attach/replay/recovery pass. [Final installed
+evidence:5 Rust native +3 Python scenarios and10-home cleanup](../../../docs/evidence/runtime/20261115-oci-nice/OUTCOME.md).
+Only one production enum mapping and its qualification text change; OCI/Agent/
+other resources remain unchanged. Full W4/default Host Service cutover/live
+continuity/platform gates remain open; RSS unmeasured, Windows ARM64 dependencies
+unsupported/no native run. Continue existing rtprio/rttime intent.
+
+Spec026 qualifies existing rtprio/rttime through the unchanged OCI executor:
+FIFO/RR5 allowed/6 EPERM, inherited child/thread and namespace boundaries,
+actual SIGXCPU/SIGKILL with measured CPU, blocking reset/normal-policy controls,
+zero/infinity, all entries/CLI/health/realTTY/attach/replay/recovery. [Final
+installed evidence:5 Rust native +3 Python scenarios and12-home cleanup](../../../docs/evidence/runtime/20261115-oci-realtime/OUTCOME.md).
+No CLI/default/UID/schema/native/dependency change; current kernel tick granularity
+is explicit. Full W4/default Host Service cutover/live continuity/platform gates
+remain open; RSS unmeasured, Windows ARM64 dependencies unsupported/no native run.
+Continue the existing managed Secret/raw anonymous-volume combination.
+
+
+Spec027 qualifies managed RAM Secret files/environment with raw anonymous volumes
+through required memory-secret-filesv3 / Agent transportv11, including the existing
+NPROC v10 envelope. Old versions retain meaning and refuse incompatible intent;
+old Host/shim/Agent and disk projections actually refuse. A real cross-volume
+sparse rootfs publication bug is fixed by reusing the existing extent copier.
+[Final installed evidence:12 Rust native +21 top-level Guest units (plus2 isolated
+child test runs) +3 Python scenarios and17-home/8-owned-RAM cleanup](../../../docs/evidence/runtime/20261115-oci-raw-secrets/OUTCOME.md).
+Box2 f9f48ab5…:23,393,755compressed/44,171,264installed bytes; OCI1 30eb5e29…:
+33,424,560/114,954,240. Verify2261/43ignored,CLI935,installer8. Full OCI Host
+Service/default cutover/live continuity/platform gates remain open; Windows
+ARM64 dependencies unsupported/no native run, support levels unchanged and RSS
+unmeasured. Continue the existing W4 custom writable-root disk-capacity gap.
+
+
+Spec028 qualifies existing disk_mb on the explicit macOS OciSdk route using the
+existing16MiB..64GiB ext4/rootfs-image/raw-storage contracts. Actual128MiB root+
+anonymous ENOSPC/reuse, independent256MiB CLI controls,8GiB sparse disk, too-small
+image refusal, replay/fences/normal+stopped three generations pass. Root remains
+per-generation ephemeral; anonymous data persists. [Final installed evidence:
+6 Rust native +3 Python scenarios,13-home/107-socket cleanup](../../../docs/evidence/runtime/20261115-oci-disk-capacity/OUTCOME.md).
+Box4 39e6b5b3…:23,393,934compressed/44,171,264installed bytes; OCI30eb5e29…
+unchanged/freshly extracted with honestc07659de… source. Verify2264/44ignored,
+CLI935,installer8. Full W4/default Host Service cutover/live continuity/platform
+gates remain open; Windows ARM64 dependencies unsupported/no native run, support
+levels unchanged and RSS unmeasured. Continue the existing Mac cap_add allowlist gap.
+
+Spec029 qualifies the existing Mac portable cap_add allowlist with explicit
+nonroot inherited/ambient values shared by init and exec. Default10, root empty
+ambient, drop ALL, unknown-cap refusal, per-UID budgets and Host PEP remain.
+Actual MKNOD/SETFCAP effects, SYS_ADMIN mount/drop controls,45 observations,
+CLI/realPTY,three generations and Host RO pass the final installed Box3/unchanged
+OCI assets. Final3Rust native+3Python scenarios pass; verify Runtime2269/45ignored,
+CLI935,installer8. Audit18 homes/235 absent sockets/21 pre-grant source identities
+and zero owned resources passes. [Final assets, failures and evidence](../../../docs/evidence/runtime/20261115-oci-cap-add/OUTCOME.md).
+Full W4/default Host Service cutover/live continuity/platform gates stay open;
+Windows ARM64 dependencies remain unsupported/no native run and RSS unmeasured.
+Continue the existing W4 policy.shm_size gap; platform support levels stay fixed.
+
+Spec030 qualifies existing shm_size and size-only /dev/shm on Mac: page-aligned
+4KiB..512MiB,1777/rw/nosuid/nodev/noexec,exact POSIX mapping/lifetime,1/2MiB
+ENOSPC/reuse,noexec/sticky controls,CLI,three generations and7-home cleanup.
+Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
+[Pre-merge assets and evidence](../../../docs/evidence/runtime/20261115-oci-shm-size/OUTCOME.md). Full W4/default Host Service
+cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
+unsupported/no native run and RSS unmeasured. The user requests convergence and
+integration now; subsequent merged-source validation is recorded separately.

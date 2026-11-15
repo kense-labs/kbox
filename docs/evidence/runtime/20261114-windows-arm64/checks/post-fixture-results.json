@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "koci-runtime",
+      "agent_session::tests",
+      "--",
+      "--nocapture"
+    ],
+    "exitCode": 0,
+    "seconds": 7.809024416,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/agent-session-evidence-fixed.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "clippy",
+      "--locked",
+      "-p",
+      "koci-sdk",
+      "-p",
+      "koci-runtime",
+      "-p",
+      "koci-kbox",
+      "-p",
+      "klibksys",
+      "-p",
+      "kbox-shim",
+      "--all-targets",
+      "--no-deps"
+    ],
+    "exitCode": 0,
+    "seconds": 16.807072417,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/affected-clippy.log"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--locked",
+      "-p",
+      "koci-runtime",
+      "--lib"
+    ],
+    "exitCode": 0,
+    "seconds": 371.717895166,
+    "log": "docs/evidence/runtime/20261114-windows-arm64/checks/oci-runtime-full-fixed.log"
+  }
+]

@@ -171,7 +171,11 @@ impl WhpxRuntimeDriver {
         let mut capability = crate::platform::whpx_driver_capability();
         if capability.status != CapabilityStatus::Available {
             return Err(Error::new(
-                ErrorCode::Unavailable,
+                if capability.status == CapabilityStatus::Unsupported {
+                    ErrorCode::Unsupported
+                } else {
+                    ErrorCode::Unavailable
+                },
                 capability
                     .reason
                     .clone()

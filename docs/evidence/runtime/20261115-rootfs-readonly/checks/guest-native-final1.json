@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "artifacts/rootfs-ro-a4e38db72f6b41dc9fe5be63ef11dc48/run-guest-final.py",
+    "docs/evidence/runtime/20261115-rootfs-readonly/run-context.json",
+    "5"
+  ],
+  "exit": 0,
+  "seconds": 39.347877666
+}

@@ -31,6 +31,8 @@ mod directory_cleanup;
 mod handoff;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 pub(crate) mod hvf_directory;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+mod hvf_files;
 #[cfg(all(
     target_os = "linux",
     any(target_arch = "x86_64", target_arch = "aarch64")
@@ -47,7 +49,17 @@ pub(crate) mod layout;
     any(target_arch = "x86_64", target_arch = "aarch64")
 ))]
 pub(crate) mod operation_reopen;
+#[cfg(any(
+    all(target_os = "macos", target_arch = "aarch64"),
+    all(
+        target_os = "linux",
+        any(target_arch = "x86_64", target_arch = "aarch64")
+    )
+))]
+mod raw_storage;
 pub(crate) mod recovery;
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+mod rootfs_image;
 mod session_lifecycle;
 mod session_marker;
 mod sessions;
@@ -301,7 +313,21 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
         match self.handoff.prepare(request).await {
             Ok(bundle) => Ok(bundle),
             Err(error) if error.retryable => Err(error),
-            Err(error) => {
+            Err(mut error) => {
+                let remove_session = match request.attachment_contract.guest_session() {
+                    Some(session) => {
+                        self.session_root_has_no_other_owner(session, &request.target)
+                            .await
+                    }
+                    None => true,
+                };
+                if let Err(cleanup) = self.handoff.cleanup_prepared(request, remove_session).await {
+                    error.message = format!(
+                        "{}; prepared handoff cleanup failed: {}",
+                        error.message, cleanup
+                    );
+                    return Err(error.retryable(true));
+                }
                 if let Some(session) = request.attachment_contract.guest_session() {
                     self.clear_pending_session(&request.target, session).await;
                 }
@@ -509,11 +535,10 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
             Ok(existing) => existing,
             Err(mut error) => {
                 if !error.retryable {
-                    if let Some(binding) = guest_session.as_ref() {
-                        self.clear_pending_session(&target, binding).await;
-                    }
                     let remove_session = match guest_session.as_ref() {
-                        Some(binding) => self.session_root_is_unowned(binding).await,
+                        Some(binding) => {
+                            self.session_root_has_no_other_owner(binding, &target).await
+                        }
                         None => true,
                     };
                     if let Err(cleanup) = self
@@ -525,6 +550,9 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
                             "{}; failed to remove rejected exact-generation handoff: {}",
                             error.message, cleanup
                         );
+                        error.retryable = true;
+                    } else if let Some(binding) = guest_session.as_ref() {
+                        self.clear_pending_session(&target, binding).await;
                     }
                 }
                 return Err(error);
@@ -549,11 +577,10 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
                 Ok(container) => container,
                 Err(error) if error.retryable => return Err(error),
                 Err(mut error) => {
-                    if let Some(binding) = guest_session.as_ref() {
-                        self.clear_pending_session(&target, binding).await;
-                    }
                     let remove_session = match guest_session.as_ref() {
-                        Some(binding) => self.session_root_is_unowned(binding).await,
+                        Some(binding) => {
+                            self.session_root_has_no_other_owner(binding, &target).await
+                        }
                         None => true,
                     };
                     if let Err(cleanup) = self
@@ -565,6 +592,9 @@ impl RuntimeDriver for UtilityVmRuntimeDriver {
                             "{}; failed to remove runtime-owned utility-VM bundle: {}",
                             error.message, cleanup
                         );
+                        error.retryable = true;
+                    } else if let Some(binding) = guest_session.as_ref() {
+                        self.clear_pending_session(&target, binding).await;
                     }
                     return Err(error);
                 }

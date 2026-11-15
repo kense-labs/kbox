@@ -241,7 +241,7 @@ fn existing_baseline_is_regular(destination: &Path) -> Result<bool> {
     }
 }
 
-fn install_baseline_bytes_if_absent(box_dir: &Path, encoded: &[u8]) -> Result<()> {
+pub(crate) fn install_baseline_bytes_if_absent(box_dir: &Path, encoded: &[u8]) -> Result<()> {
     let destination = box_dir.join(DIFF_BASELINE_FILE);
     let temporary = box_dir.join(format!(
         ".{DIFF_BASELINE_FILE}.{}.tmp",
@@ -335,7 +335,7 @@ fn walk_recursive(
     Ok(())
 }
 
-fn rootfs_path_string(relative: &Path) -> String {
+pub(super) fn rootfs_path_string(relative: &Path) -> String {
     let segments = relative
         .components()
         .filter_map(|component| match component {

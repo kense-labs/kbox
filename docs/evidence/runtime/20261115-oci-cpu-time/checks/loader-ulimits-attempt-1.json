@@ -1,0 +1,68 @@
+[
+  {
+    "kind": "oci",
+    "pid": 85857,
+    "parent": 85856,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9/1 --runtime-share-device 16777233 --runtime-share-inode 292609304 --runtime-state-device 16777233 --runtime-state-inode 292610040 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-52fba387ed90f9b16ffe2923c87cb0e7/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9-1.log --socket-path /private/tmp/koci-agent-52fba387ed90f9b16ffe2923c87cb0e7/agent.sock --console-device 16777233 --console-inode 292610041 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-52fba387ed90f9b16ffe2923c87cb0e7/report.json --vm-attachment-manifest-sha256 sha256:65342fb83b0a033eda2de393fdb6178deeeb271a6d51ed83f068f7a347148f70",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "oci",
+    "pid": 89064,
+    "parent": 89063,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9/2 --runtime-share-device 16777233 --runtime-share-inode 292624903 --runtime-state-device 16777233 --runtime-state-inode 292625044 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-e949504c3ad332619522a0f301dce2c0/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9-2.log --socket-path /private/tmp/koci-agent-e949504c3ad332619522a0f301dce2c0/agent.sock --console-device 16777233 --console-inode 292625045 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-e949504c3ad332619522a0f301dce2c0/report.json --vm-attachment-manifest-sha256 sha256:a0ce494b417662d7e75c5660ede2c08a2098b5dc56520c9cd87cbcf036877b0e",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "oci",
+    "pid": 99415,
+    "parent": 99414,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9/3 --runtime-share-device 16777233 --runtime-share-inode 292643618 --runtime-state-device 16777233 --runtime-state-inode 292643699 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-e1a85fc8db5fbeecde8c4d37c49298af/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-8570426d-cf2f-4bf8-92f2-d88a672373f9-3.log --socket-path /private/tmp/koci-agent-e1a85fc8db5fbeecde8c4d37c49298af/agent.sock --console-device 16777233 --console-inode 292643700 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-e1a85fc8db5fbeecde8c4d37c49298af/report.json --vm-attachment-manifest-sha256 sha256:cdc0277b78eb88c230527075a3e68cccda63e3690b3a20fa1d5553949dd12a29",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "oci",
+    "pid": 13052,
+    "parent": 13051,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-46ec59ad-bcf5-47b3-bf64-a137d364753b/1 --runtime-share-device 16777233 --runtime-share-inode 292647034 --runtime-state-device 16777233 --runtime-state-inode 292648144 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-0f1b40ec716456b06fb11a52ffea122e/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-46ec59ad-bcf5-47b3-bf64-a137d364753b-1.log --socket-path /private/tmp/koci-agent-0f1b40ec716456b06fb11a52ffea122e/agent.sock --console-device 16777233 --console-inode 292648145 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-0f1b40ec716456b06fb11a52ffea122e/report.json --vm-attachment-manifest-sha256 sha256:e334f69980ff7fd51d7d0be604f6b0b451bd806de596fa8334df8323e41aa481",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "oci",
+    "pid": 16667,
+    "parent": 16650,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-db57deb9-a254-4d46-8173-569b6bfea3cb/1 --runtime-share-device 16777233 --runtime-share-inode 292654802 --runtime-state-device 16777233 --runtime-state-inode 292656416 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-94421e35f2cdce67f099999661985203/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-db57deb9-a254-4d46-8173-569b6bfea3cb-1.log --socket-path /private/tmp/koci-agent-94421e35f2cdce67f099999661985203/agent.sock --console-device 16777233 --console-inode 292656417 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-94421e35f2cdce67f099999661985203/report.json --vm-attachment-manifest-sha256 sha256:538f4cb6b25f9c89026f03a7fb8146a8294bc2c0c37707f7e769dc6893c52c9e",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  },
+  {
+    "kind": "oci",
+    "pid": 21289,
+    "parent": 21288,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/shares/kbox-db57deb9-a254-4d46-8173-569b6bfea3cb/2 --runtime-share-device 16777233 --runtime-share-inode 292664587 --runtime-state-device 16777233 --runtime-state-inode 292665220 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-b45f3a22b7451981ae686d993cb03f94/session-token --console /private/tmp/kbox-cpu-time-092623a0dfc9/ulimits-attempt-1/service/runtime/console/kbox-db57deb9-a254-4d46-8173-569b6bfea3cb-2.log --socket-path /private/tmp/koci-agent-b45f3a22b7451981ae686d993cb03f94/agent.sock --console-device 16777233 --console-inode 292665221 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-b45f3a22b7451981ae686d993cb03f94/report.json --vm-attachment-manifest-sha256 sha256:830a14e1b96f7668deecf3a3acdd731370ab257a0729d387575777807be86598",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/oci-reused-installed/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  }
+]

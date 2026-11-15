@@ -1,0 +1,11 @@
+
+running 6 tests
+test rootfs::ext4_cache::tests::cache_key_covers_every_immutable_input ... ok
+test rootfs::ext4_cache::tests::cache_lock_reclaims_crash_staging_without_following_links ... ok
+test rootfs::ext4_cache::tests::cache_hit_does_not_invoke_source_publisher ... ok
+test rootfs::ext4_cache::tests::cache_hit_materializes_without_source_tree ... ok
+test rootfs::ext4_cache::tests::pruning_counts_allocated_sparse_bytes_and_protects_current_entry ... ok
+test rootfs::ext4_cache::tests::corrupted_cache_entry_is_never_cloned_and_is_rebuilt ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 2298 filtered out; finished in 0.58s
+

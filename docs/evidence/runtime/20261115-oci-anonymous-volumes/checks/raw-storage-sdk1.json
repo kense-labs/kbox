@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "raw_storage_images",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.507836375
+}

@@ -1,0 +1,16 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+error: cannot find macro `json` in this scope
+  --> crates/oci-runtime/crates/runtime/src/service/tests/exec_capabilities.rs:31:23
+   |
+31 |     process["args"] = json!(["/bin/false"]);
+   |                       ^^^^
+
+error: cannot find macro `json` in this scope
+  --> crates/oci-runtime/crates/runtime/src/service/tests/exec_capabilities.rs:22:31
+   |
+22 |     process["capabilities"] = json!({"bounding":["CAP_SYS_ADMIN","CAP_CHOWN","CAP_DAC_OVERRIDE"],"effective":["CAP_SYS_ADMIN","CAP_C...
+   |                               ^^^^
+
+error: could not compile `koci-runtime` (lib test) due to 2 previous errors

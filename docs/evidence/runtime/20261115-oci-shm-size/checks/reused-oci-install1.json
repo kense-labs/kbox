@@ -1,0 +1,19 @@
+{
+  "command": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/oci-reused-installed"
+  ],
+  "status": "PASS",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sha256": "30eb5e29bbe0e3676a55a6c67f95b20d2752e5aacbf791a2cd70222e9f4f8d62",
+  "compressedBytes": 33424560,
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "installedDiskBytes": 114954240,
+  "filesVerified": 11,
+  "originalSourceInputsSha256": "c07659de97c45cd962d08dd29f49e882ac9266bed570226b116af767bbc1734c",
+  "sourceArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "sourceEvidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-cap-add"
+}

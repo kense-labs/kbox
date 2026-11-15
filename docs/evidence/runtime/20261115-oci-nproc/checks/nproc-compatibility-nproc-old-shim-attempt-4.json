@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "oldPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/oci-reused-installed/koci-hvf-0.3.6-macos-arm64",
+  "oldAgentSha256": "fa5e1d36b31083388ec902c6a8dde1de7953791a69f63dabf4d88f5c51954589",
+  "logs": [
+    {
+      "path": "/private/tmp/kbox-nproc-bcf6f36c2d7d/nproc-old-shim-attempt-4/nproc-compatibility-refusal.txt",
+      "line": "Unavailable(\"Kbox OCI create: libkrun shim exited before connecting the authenticated agent bridge; shim stdout: {\\n  \\\"schema_version\\\": \\\"koci.kagent-vm-smoke.v7\\\",\\n  \\\"platform\\\": \\\"macos\\\",\\n  \\\"status\\\": \\\"unavailable\\\",\\n  \\\"runtime_bundle_loaded\\\": false,\\n  \\\"context_created\\\": false,\\n  \\\"vm_configured\\\": false,\\n  \\\"rootfs_configured\\\": false,\\n  \\\"runtime_share_configured\\\": false,\\n  \\\"kvm_device_opened\\\": false,\\n  \\\"kvm_api_verified\\\": false,\\n  \\\"kvm_post_probe_failure_injected\\\": false,\\n  \\\"macos_host_sandbox_enforced\\\": false,\\n  \\\"agent_binary_present\\\": false,\\n  \\\"agent_vsock_configured\\\": false,\\n  \\\"workload_configured\\\": false,\\n  \\\"console_configured\\\": false,\\n  \\\"vm_entered\\\": false,\\n  \\\"console_created\\\": true,\\n  \\\"vcpus\\\": 1,\\n  \\\"memory_mib\\\": 512,\\n  \\\"reason\\\": \\\"failed to decode utility-VM attachment manifest: unknown field `nprocTransportSchema`, expected one of `schemaVersion`, `target`, `guestBundle`, `configDigest`, `attachmentDigest`, `network`, `storage`, `directories`, `storagePathRestrictionsDigest`, `rootfsImage`, `files` at line 1 column 71\\\"\\n}\")"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "published_artifact_refuses_a_manifest_uuid",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 9.037530833
+}

@@ -1,0 +1,10 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.74s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8fb0f650bc18cf8b)
+
+running 2 tests
+test attachment::file_grants::tests::file_grants_are_required_exact_caller_storage_and_old_hosts_refuse ... ok
+test attachment::file_grants::tests::file_grants_refuse_aliases_drift_paths_and_unbounded_values ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 210 filtered out; finished in 0.14s
+

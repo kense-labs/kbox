@@ -6,9 +6,9 @@ use tokio::net::UnixStream;
 use tokio::sync::oneshot;
 
 use crate::engine::{
-    serve_engine, DesiredState, EngineAssemblyPlan, EngineCommand, EngineErrorCode, EngineIntent,
-    EngineJournal, EngineKey, EngineReply, EngineReplyBody, EngineReplyValue, EngineRequest,
-    EngineServiceTemplate, EngineWorkload, LocalEngine,
+    serve_engine, DesiredState, EngineCommand, EngineErrorCode, EngineIntent, EngineJournal,
+    EngineKey, EngineReply, EngineReplyBody, EngineReplyValue, EngineRequest,
+    EngineServiceTemplate, LocalEngine,
 };
 use crate::pool::client::{read_frame, write_frame, MAX_FRAME_SIZE};
 
@@ -48,10 +48,15 @@ async fn engine_diagnostics_do_not_submit_work_or_modify_the_journal() {
     else {
         panic!("expected discovery")
     };
-    assert!(discovery
-        .protocols
-        .iter()
-        .any(|value| value == "engine-diagnostics.v1"));
+    assert_eq!(
+        discovery.protocols,
+        [
+            "kbox.engine.v2",
+            "engine-diagnostics.v1",
+            "process-stream.primary.v1",
+            "process-stream.bootstrap.v1",
+        ]
+    );
     let before = std::fs::read(directory.join("intent.json")).unwrap();
     let EngineReplyValue::Diagnostics(diagnostics) = engine
         .dispatch(request(EngineCommand::Diagnose {}))
@@ -88,15 +93,7 @@ async fn engine_down_observation_waits_for_owned_stopped_spare_removal() {
     let mut journal = EngineJournal::open(directory.join("intent.json")).unwrap();
     let id = journal.engine_id().clone();
     let mut up = intent(&id, 1, DesiredState::Up);
-    up.workload = EngineWorkload::AcpHarness;
-    up.assembly = Some(EngineAssemblyPlan {
-        capability_packages: Vec::new(),
-        archive: root.path().join("package.zip"),
-        digest: format!("sha256:{}", "2".repeat(64)),
-        prewarm_bindings_digest: Some(format!("sha256:{}", "3".repeat(64))),
-        required_guest_protocol: None,
-        required_guest_protocols: Vec::new(),
-    });
+    up.prewarm_bindings_digest = Some(format!("sha256:{}", "3".repeat(64)));
     let mut spec = runtime_spec("spare", 1, RuntimeUnitClass::Service);
     spec.semantics_profile_digest = Some(super::NATIVE_GUEST_PROFILE_DIGEST.into());
     spec.process.command = vec!["/bin/sleep".into()];
@@ -106,6 +103,7 @@ async fn engine_down_observation_waits_for_owned_stopped_spare_removal() {
     spec.restart = RestartPolicy::Never;
     let service = up.service.as_mut().unwrap();
     service.process = spec.process.clone();
+    service.semantics_profile_digest = spec.semantics_profile_digest.clone();
     service.health = None;
     service.restart = RestartPolicy::Never;
     journal.accept(up.clone()).unwrap();
@@ -122,8 +120,7 @@ async fn engine_down_observation_waits_for_owned_stopped_spare_removal() {
         .kill(&spare.execution_id, spare.generation)
         .await
         .unwrap();
-    let mut down = intent(&id, 2, DesiredState::Down);
-    down.workload = EngineWorkload::AcpHarness;
+    let down = intent(&id, 2, DesiredState::Down);
     journal.accept(down.clone()).unwrap();
     drop(journal);
     let engine = LocalEngine::with_runtime(directory, driver.clone()).unwrap();
@@ -177,17 +174,17 @@ fn intent(engine: &EngineKey, revision: u64, desired_state: DesiredState) -> Eng
         health: spec.health,
         service_lifecycle: spec.service_lifecycle,
         restart: spec.restart,
+        semantics_profile_digest: spec.semantics_profile_digest,
     };
     EngineIntent {
         directories: Vec::new(),
-        assembly: None,
-        schema: "kbox.engine.intent.v1".into(),
+        prewarm_bindings_digest: None,
+        schema: "kbox.engine.intent.v2".into(),
         engine_id: engine.clone(),
         instance_id: EngineKey::parse("instance").unwrap(),
         request_id: EngineKey::parse(format!("request-{revision}")).unwrap(),
         revision,
         desired_state,
-        workload: EngineWorkload::OciService,
         plan_digest: format!("sha256:{}", "1".repeat(64)),
         service: (desired_state == DesiredState::Up).then_some(template),
     }
@@ -252,7 +249,7 @@ async fn wait_state(path: &std::path::Path, running: bool) {
 }
 
 #[tokio::test]
-async fn engine_harness_uses_explicit_native_guest_profile_and_preserves_creation_identity() {
+async fn engine_uses_only_the_explicit_service_profile_and_preserves_creation_identity() {
     let root = fixture_tempdir();
     let (driver, _) = fake_driver(&root);
     let driver = Arc::new(driver);
@@ -261,7 +258,8 @@ async fn engine_harness_uses_explicit_native_guest_profile_and_preserves_creatio
     );
     let id = discover(&engine).await;
     let mut up = intent(&id, 1, DesiredState::Up);
-    up.workload = EngineWorkload::AcpHarness;
+    up.service.as_mut().unwrap().semantics_profile_digest =
+        Some(super::NATIVE_GUEST_PROFILE_DIGEST.into());
     engine.accept(up).await.unwrap();
     let path = root.path().join("control/s");
     let (stop, stopped) = oneshot::channel();
@@ -281,8 +279,7 @@ async fn engine_harness_uses_explicit_native_guest_profile_and_preserves_creatio
     assert!(config.privileged);
     assert!(config.cap_drop.is_empty());
     assert!(config.security_opt.is_empty());
-    let mut down = intent(&id, 2, DesiredState::Down);
-    down.workload = EngineWorkload::AcpHarness;
+    let down = intent(&id, 2, DesiredState::Down);
     engine.accept(down).await.unwrap();
     wait_state(&path, false).await;
     assert!(driver.manager.managed_records().await.unwrap().is_empty());

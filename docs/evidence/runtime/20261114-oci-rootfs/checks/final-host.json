@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "sysctl",
+      "-n",
+      "machdep.cpu.brand_string"
+    ],
+    "exitCode": 0,
+    "output": "Apple M5 Max"
+  },
+  {
+    "command": [
+      "uname",
+      "-m"
+    ],
+    "exitCode": 0,
+    "output": "arm64"
+  },
+  {
+    "command": [
+      "id",
+      "-u"
+    ],
+    "exitCode": 0,
+    "output": "501"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "env",
+    "CC_aarch64_unknown_linux_musl=/Users/roylin/Library/Caches/cargo-zigbuild/0.23.4/wrappers/8f92/zigcc-aarch64-unknown-linux-musl-5d3b.sh",
+    "CXX_aarch64_unknown_linux_musl=/Users/roylin/Library/Caches/cargo-zigbuild/0.23.4/wrappers/8f92/zigcxx-aarch64-unknown-linux-musl-5d3b.sh",
+    "AR_aarch64_unknown_linux_musl=/Users/roylin/Library/Caches/cargo-zigbuild/0.23.4/wrappers/8f92/ar",
+    "cargo",
+    "clippy",
+    "--locked",
+    "--profile",
+    "release-dist",
+    "--target",
+    "aarch64-unknown-linux-musl",
+    "-p",
+    "kbox-guest-init",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 0,
+  "seconds": 1.202089625
+}

@@ -1,0 +1,10 @@
+{
+  "bin/kbox": "f6bcb2a2375add4c2cda7e40bc4d934c41512a5930b2427fbeaf3980003cd6ee",
+  "bin/kbox-guest-init": "1c22454224db8ed48e9c2cf52243ca863d33a0553ffd6d9e80357a6a1935b06a",
+  "bin/kbox-shim": "60978aa73abc2ed4c971bb6a64e9eabdb903f9c5798bdceece8f7e93e77d01b3",
+  "lib/libkrun.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+  "lib/libkrun.1.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+  "lib/libkrun.1.17.0.dylib": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+  "lib/libkrunfw.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+  "lib/libkrunfw.5.dylib": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49"
+}

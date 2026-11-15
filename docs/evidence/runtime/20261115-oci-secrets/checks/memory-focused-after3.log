@@ -1,0 +1,60 @@
+
+running 2 tests
+test local_execution::oci_production::secret_tests::hvf_memory_secret_omission_preserves_spec_bytes_and_disk_refuses ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2267 filtered out; finished in 0.10s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 86 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 3 tests
+test attachment::memory_secret_files_tests::memory_secret_files_require_exact_extension_and_old_hosts_refuse ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_cannot_drop_required_classification_or_write_access ... ok
+test attachment::memory_secret_files_tests::memory_secret_files_refuse_bad_or_unbound_indices ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 217 filtered out; finished in 0.04s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s
+

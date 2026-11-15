@@ -1,6 +1,19 @@
 use super::*;
 
 #[test]
+fn instance_spec_preserves_corrupt_volume_catalog_without_recovery_to_empty() {
+    let home = tempdir().unwrap();
+    let layout_dir = tempdir().unwrap();
+    let layout = test_layout(layout_dir.path(), Some(test_oci_config(None, None)), true);
+    let mut vm = test_vm_manager(BoxConfig::default());
+    vm.home_dir = home.path().to_path_buf();
+    let catalog = home.path().join("volumes.json");
+    std::fs::write(&catalog, b"{corrupt-authority").unwrap();
+    assert!(vm.build_instance_spec(&layout).is_err());
+    assert_eq!(std::fs::read(&catalog).unwrap(), b"{corrupt-authority");
+}
+
+#[test]
 fn anonymous_volume_plan_normalizes_deduplicates_and_honors_explicit_mounts() {
     let explicit = tempfile::tempdir().unwrap();
     let vm = test_vm_manager(BoxConfig {
@@ -17,6 +30,19 @@ fn anonymous_volume_plan_normalizes_deduplicates_and_honors_explicit_mounts() {
 
     let plan = vm.plan_anonymous_volumes(&image).unwrap();
 
+    assert_eq!(plan.len(), 1);
+    assert_eq!(plan[0].guest_path, "/cache");
+}
+
+#[test]
+fn anonymous_volume_plan_honors_explicit_tmpfs_without_hidden_allocations() {
+    let vm = test_vm_manager(BoxConfig {
+        tmpfs: vec!["/data/./:size=1m,rw".into()],
+        ..Default::default()
+    });
+    let mut image = test_oci_config(None, None);
+    image.volumes = vec!["/data".into(), "/data/".into(), "/cache".into()];
+    let plan = vm.plan_anonymous_volumes(&image).unwrap();
     assert_eq!(plan.len(), 1);
     assert_eq!(plan[0].guest_path, "/cache");
 }
@@ -226,20 +252,30 @@ fn test_parse_volume_mount_read_only() {
     let mount = match VmManager::parse_volume_mount(&volume, 1, &filemounts) {
         Ok(mount) => mount,
         Err(error) => {
-            let message = error.to_string();
-            assert!(
-                message.contains(":ro")
-                    || message.contains("host-enforced")
-                    || message.contains("BindFlt")
-                    || message.contains("CAP_SYS")
-                    || message.contains("bind"),
-                "{message}"
-            );
-            return;
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            panic!("macOS read-only staging must succeed: {error}");
+            #[cfg(not(all(target_os = "macos", target_arch = "aarch64")))]
+            {
+                let message = error.to_string();
+                assert!(
+                    message.contains(":ro")
+                        || message.contains("host-enforced")
+                        || message.contains("BindFlt")
+                        || message.contains("CAP_SYS")
+                        || message.contains("bind"),
+                    "{message}"
+                );
+                return;
+            }
         }
     };
     assert_eq!(mount.tag, "vol1");
     assert!(mount.read_only);
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    {
+        assert_eq!(mount.host_path, temp.path().canonicalize().unwrap());
+        assert!(!filemounts.join("ro-aliases").exists());
+    }
     #[cfg(any(target_os = "linux", target_os = "windows"))]
     {
         assert!(
@@ -250,6 +286,42 @@ fn test_parse_volume_mount_read_only() {
         crate::vm::cleanup_virtiofs_ro_shares(box_dir.path()).unwrap();
         assert!(!filemounts.join("ro-aliases").exists());
     }
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[test]
+fn macos_exports_refuse_writable_parent_before_provider_launch() {
+    let directory = tempdir().unwrap();
+    let source = directory.path().join("readonly");
+    fs::create_dir(&source).unwrap();
+    let spec = InstanceSpec {
+        rootfs: RootfsSource::directory(directory.path()),
+        fs_mounts: vec![FsMount {
+            tag: "vol0".into(),
+            host_path: source,
+            read_only: true,
+        }],
+        ..Default::default()
+    };
+    assert!(matches!(
+        VmManager::validate_macos_exports(&spec),
+        Err(BoxError::ConfigError(_))
+    ));
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[test]
+fn macos_readonly_single_file_refuses_before_alias_or_copy() {
+    let directory = tempdir().unwrap();
+    let file = directory.path().join("input");
+    fs::write(&file, b"original").unwrap();
+    let staging = directory.path().join("staging");
+    let error =
+        VmManager::parse_volume_mount(&format!("{}:/input:ro", file.display()), 0, &staging)
+            .unwrap_err();
+    assert!(matches!(error, BoxError::ConfigError(_)));
+    assert!(!staging.exists());
+    assert_eq!(fs::read(file).unwrap(), b"original");
 }
 
 #[test]

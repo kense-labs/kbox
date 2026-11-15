@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::guest_readonly::native_guest_readonly_guards_refuse_unenforced_root_before_exec_or_pty ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2246 filtered out; finished in 32.42s
+

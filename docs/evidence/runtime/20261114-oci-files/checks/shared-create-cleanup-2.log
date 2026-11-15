@@ -1,0 +1,49 @@
+    Blocking waiting for file lock on build directory
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.17s
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-5a25ee77afcdfdea)
+
+running 40 tests
+test utility_vm_driver::tests::external_storage::old_handoff_capability_rejects_storage_transfer_without_touching_caller_paths ... ok
+test utility_vm_driver::tests::isolation::insecure_handoff_source_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::isolation::absolute_portable_bind_source_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::isolation::drifted_handoff_config_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::external_storage::unclassified_absolute_bind_source_is_rejected_with_a_valid_storage_grant ... ok
+test utility_vm_driver::tests::isolation::create_requires_dedicated_vm_and_an_exact_generation_before_handoff ... ok
+test utility_vm_driver::tests::isolation::linked_handoff_source_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::interrupted_create_reclaims_the_staged_bundle_and_starts_one_vm ... ok
+test utility_vm_driver::tests::isolation::current_directory_rootfs_is_a_portable_bundle_root ... ok
+test utility_vm_driver::tests::cancelled_terminal_create_keeps_owner_reaping_alive ... ok
+test utility_vm_driver::tests::concurrent_create_reuses_one_exact_generation_vm ... ok
+test utility_vm_driver::tests::isolation::linked_portable_rootfs_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::isolation::shared_isolation_does_not_implicitly_advertise_attachment_v4 ... ok
+test utility_vm_driver::tests::isolation::missing_handoff_source_does_not_create_an_exact_runtime_share ... ok
+test utility_vm_driver::tests::cancelled_shutdown_keeps_owner_reaping_alive ... ok
+test utility_vm_driver::tests::external_storage::storage_alias_and_runtime_control_directory_are_rejected_before_move ... ok
+test utility_vm_driver::tests::graceful_shutdown_is_bounded_to_one_owner_and_exposes_stopped_cleanup ... ok
+test utility_vm_driver::tests::external_storage::cleanup_preserves_moved_caller_data_without_reopening_its_source ... ok
+test utility_vm_driver::tests::cancelled_delete_keeps_owner_reaping_alive ... ok
+test utility_vm_driver::tests::external_storage::terminal_preparation_error_cleans_the_existing_owned_handoff ... ok
+test utility_vm_driver::tests::external_storage::move_replay_and_delete_preserve_external_storage_and_its_permissions ... ok
+test utility_vm_driver::tests::external_storage::terminal_preparation_cleanup_failure_retains_retryable_ownership ... ok
+test utility_vm_driver::tests::operations::exact_session_delegates_every_advertised_workload_operation ... ok
+test utility_vm_driver::tests::retryable_launch_failure_retains_handoff_for_exact_retry ... ok
+test utility_vm_driver::tests::shutdown_waits_for_an_in_flight_launch_before_snapshotting_guests ... ok
+test utility_vm_driver::tests::session_concurrency::distinct_sessions_prepare_and_launch_without_a_global_gate ... ok
+test utility_vm_driver::tests::terminal_create_failure_reaps_vm_and_removes_runtime_handoff ... ok
+test utility_vm_driver::tests::sessions::pending_session_admission_rejects_contract_drift_before_bundle_move ... ok
+test utility_vm_driver::tests::terminal_launch_failure_removes_the_unowned_generation ... ok
+test utility_vm_driver::tests::sessions::replacement_owner_rejects_an_orphaned_session_root_before_handoff ... ok
+test utility_vm_driver::tests::sessions::same_session_incarnation_rejects_contract_drift_before_handoff ... ok
+test utility_vm_driver::tests::sessions::driver_shutdown_reaps_one_shared_owner_and_leaves_exact_tombstones ... ok
+test utility_vm_driver::tests::stale_generation_cannot_replace_or_leak_beside_a_live_vm ... ok
+test utility_vm_driver::tests::session_concurrency::concurrent_members_serialize_one_session_launch ... ok
+test utility_vm_driver::tests::session_concurrency::occupied_incarnation_fences_a_new_session_generation ... ok
+test utility_vm_driver::tests::sessions::cancelled_session_rotation_keeps_old_owner_reaping_alive ... ok
+test utility_vm_driver::tests::sessions::shared_session_capacity_rejects_a_new_member_without_reaping_the_vm ... ok
+test utility_vm_driver::tests::sessions::terminal_member_failure_does_not_reap_an_occupied_shared_vm ... ok
+test utility_vm_driver::tests::sessions::shared_members_use_one_vm_and_session_scoped_guest_paths ... ok
+test utility_vm_driver::tests::sessions::retained_empty_session_is_reused_then_rotated_by_a_new_generation ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 399 filtered out; finished in 0.71s
+

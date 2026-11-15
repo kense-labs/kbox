@@ -7,8 +7,38 @@ use kbox_core::error::{BoxError, Result};
 pub(crate) const DEFAULT_CONTAINER_PATH: &str =
     "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 
+pub(crate) trait ProcessRootfs {
+    fn ensure_directory(&mut self, path: &str) -> Result<()>;
+    fn executable_exists(&mut self, path: &str) -> Result<bool>;
+    fn read_text(&mut self, path: &str) -> Result<Option<String>>;
+}
+
+impl ProcessRootfs for &Path {
+    fn ensure_directory(&mut self, path: &str) -> Result<()> {
+        crate::oci::rootfs::ensure_guest_directory(self, path.trim_start_matches('/'))?;
+        Ok(())
+    }
+
+    fn executable_exists(&mut self, path: &str) -> Result<bool> {
+        runtime_executable_exists(self, path)
+    }
+
+    fn read_text(&mut self, path: &str) -> Result<Option<String>> {
+        crate::oci::rootfs::read_guest_file_to_string(self, path.trim_start_matches('/'))
+    }
+}
+
 pub(crate) fn resolve_runtime_executable(
-    rootfs: &Path,
+    mut rootfs: &Path,
+    cwd: &str,
+    path: &str,
+    command: &str,
+) -> Result<String> {
+    resolve_runtime_executable_in(&mut rootfs, cwd, path, command)
+}
+
+pub(crate) fn resolve_runtime_executable_in(
+    rootfs: &mut impl ProcessRootfs,
     cwd: &str,
     path: &str,
     command: &str,
@@ -30,7 +60,7 @@ pub(crate) fn resolve_runtime_executable(
         let directory = normalize_linux_guest_path(cwd, directory, "PATH entry")?;
         let candidate =
             normalize_linux_guest_path(&directory, command, "PATH-resolved process executable")?;
-        if runtime_executable_exists(rootfs, &candidate)? {
+        if rootfs.executable_exists(&candidate)? {
             return Ok(candidate);
         }
     }
@@ -42,8 +72,8 @@ pub(crate) fn resolve_runtime_executable(
     })
 }
 
-fn require_runtime_executable(rootfs: &Path, guest_path: &str) -> Result<()> {
-    if runtime_executable_exists(rootfs, guest_path)? {
+fn require_runtime_executable(rootfs: &mut impl ProcessRootfs, guest_path: &str) -> Result<()> {
+    if rootfs.executable_exists(guest_path)? {
         Ok(())
     } else {
         Err(BoxError::BoxBootError {

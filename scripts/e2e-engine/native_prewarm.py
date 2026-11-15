@@ -29,7 +29,7 @@ def main():
     for file in (binary.parent.parent / "lib").iterdir():
         (home / "lib" / file.name).symlink_to(file.resolve())
     (home / "images").symlink_to(args.image_store.resolve(), target_is_directory=True)
-    (home / ".krun-prewarm-native").write_text("owned-prewarm-native-test\n")
+    (home / ".kbox-prewarm-native").write_text("owned-prewarm-native-test\n")
     test = root / "native-client"
     shutil.copy2(args.test_binary.resolve(), test)
     environment = dict(os.environ, K_HOME=str(home), K_BOX_TEST_STREAM_IMAGE=args.image)

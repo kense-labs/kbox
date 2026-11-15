@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "git",
+      "status",
+      "--porcelain=v1"
+    ],
+    "exit_code": 0,
+    "log": "initial-0.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--stat"
+    ],
+    "exit_code": 0,
+    "log": "initial-1.log"
+  },
+  {
+    "command": [
+      "git",
+      "submodule",
+      "status"
+    ],
+    "exit_code": 0,
+    "log": "initial-2.log"
+  },
+  {
+    "command": [
+      "rustc",
+      "-Vv"
+    ],
+    "exit_code": 0,
+    "log": "initial-3.log"
+  },
+  {
+    "command": [
+      "sw_vers"
+    ],
+    "exit_code": 0,
+    "log": "initial-4.log"
+  },
+  {
+    "command": [
+      "uname",
+      "-a"
+    ],
+    "exit_code": 0,
+    "log": "initial-5.log"
+  }
+]

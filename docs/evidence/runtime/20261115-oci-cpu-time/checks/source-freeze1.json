@@ -1,0 +1,29 @@
+{
+  "sourceInputsSha256": "6615f84bc0724b27fd6494c66a2a7f7b3e1fa26c5744bb8157e6aba230df7005",
+  "inputs": 1693,
+  "sourceCommit": "405c8b89f151e9e2879438d9e457dd60bfd18b90",
+  "changedFrom019": {
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs": {
+      "before": "712b2112a59b573be5e23d74c6b8e96e1a04795c475c15f3d82179b5bf4124dc",
+      "after": "a2ea85b7ec17e59c31eb8513fbb8d9ae8326044d2c3bcc1163c6c5e2ec07b6c7"
+    },
+    "crates/box/runtime/src/local_execution/oci_hvf_native_cpu_time.rs": {
+      "before": null,
+      "after": "0627d7995af6f7ecb65e5eace11fc75e05a04260193e0907d12db80ee2c5d0fa"
+    },
+    "crates/box/runtime/src/local_execution/oci_production_ulimit_tests.rs": {
+      "before": "82fc17c29d1b4cce830e0ac4a9f99cd9831276508034af486f0d75e5d0e60eff",
+      "after": "d61c888d30eaec452d46728202573c6b2e039c60b69497ff89a4d98175b70b3e"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_rlimits.rs": {
+      "before": "602cff7dd574e0908bcc6404db19068aa285818e3617d3e47aa711ac51154d75",
+      "after": "a1b4f242396a6061b6b62c97fbe8958caca52e465af96b09103ca63ee57493fc"
+    },
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs": {
+      "before": "70d8784589f5d2ca702ad1e2b65264e9ce27984d13ff0cab3b9533a580bcedfb",
+      "after": "0c3f88bff3b9134b7cc63ad578210c47a599a7f245560b82de42def4669f9211"
+    }
+  },
+  "unchangedOciInputs": true,
+  "ociOriginalSourceInputsSha256": "03a62c3e7d246fa4f8eb1e758d338aa3fc9bb25a75ee6f6ce94259c736986b35"
+}

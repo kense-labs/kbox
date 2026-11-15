@@ -205,13 +205,14 @@ async fn secret_nondisclosure(
             .request,
     )
     .map_err(|error| super::external("encode Secret creation intent", error))?;
-    let boxes = std::fs::read(fixture.home_dir.join("boxes.json"))
+    let store = crate::BoxStateStore::load_readonly(fixture.home_dir.join("boxes.json"))
+        .map_err(|error| super::external("open Box state for Secret nondisclosure", error))?;
+    let data_path = store
+        .data_path()
+        .map_err(|error| super::external("resolve Box state for Secret nondisclosure", error))?;
+    let boxes = std::fs::read(data_path)
         .map_err(|error| super::external("read Box state for Secret nondisclosure", error))?;
-    super::security_evidence::verify_secret_persistence(
-        &record,
-        &creation_intent,
-        &boxes,
-    )?;
+    super::security_evidence::verify_secret_persistence(&record, &creation_intent, &boxes)?;
 
     let calls_before_reconstruction = fixture.secret_materialization_calls();
     let restarted_driver = fixture.restarted_driver()?;

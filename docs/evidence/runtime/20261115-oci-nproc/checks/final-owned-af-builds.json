@@ -1,0 +1,14 @@
+{
+  "kbox-oci-regression:4cfe7563e1034706a22253d627e583c2": {
+    "digest": "sha256:37d60b7783ce4d30b52fdd68f0369768d01a4a4ed93b371eb99dd02f65bfeaeb",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/af-final3/native-oci/4cfe7563e1034706a22253d627e583c2/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-3",
+    "kboxSha256": "d7e5402ec31f2483d7b554624f8ae2f2f3b422d211a4d3b2c430a97fd150dbdf"
+  },
+  "kbox-oci-regression:d28be1b8203744ff9f5ec2be001a5532": {
+    "digest": "sha256:05e938c6b547969b83ed40e108a5f5b4262a652c62fce3f141598cc775368d80",
+    "result": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/af-final5/native-oci/d28be1b8203744ff9f5ec2be001a5532/result.json",
+    "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/installed-nproc-final-5",
+    "kboxSha256": "40e99305265dd4c34263f5a4798abb8f5ba7b5cbee8447b2ee7f4264aa042529"
+  }
+}

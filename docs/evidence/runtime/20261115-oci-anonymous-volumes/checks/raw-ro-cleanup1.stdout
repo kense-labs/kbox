@@ -1,0 +1,6 @@
+
+running 1 test
+test local_execution::oci_hvf::tests::native::raw_ro::native_cleanup_owned_raw_ro_fixture ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2245 filtered out; finished in 3.40s
+

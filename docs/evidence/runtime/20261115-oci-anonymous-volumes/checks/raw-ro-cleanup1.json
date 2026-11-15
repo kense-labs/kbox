@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-anonymous-dc919588a1694bb6875ff6b1c6e1dacf/native-client-raw-ro-cleanup1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::raw_ro::native_cleanup_owned_raw_ro_fixture",
+    "--nocapture"
+  ],
+  "exitCode": 0,
+  "seconds": 5.059256625,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "root": "/private/tmp/kbox-anonymous-dc919588a169/raw-ro-attempt-2",
+  "clientSha256": "83b555bc1ee67191ab0bdf663e84cf7b3a64c5e973ae1ff37f3725ba839c9bc8"
+}

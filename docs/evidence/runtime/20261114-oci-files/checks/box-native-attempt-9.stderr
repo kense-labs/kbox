@@ -1,0 +1,83 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-9/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-9/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-9/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-9/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-files-38d1ee741be9/attempt-9/service/runtime.sock: Connection refused (os error 61)
+
+thread '<unnamed>' (85122833) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_cli.rs:21:9:
+CLI ["exec", "3e153c6f-b113-45b2-8e77-afa6ad14814d", "--", "/bin/echo", "cli-created-oci"]: Error: execution backend unavailable: Kbox OCI exec: guest-agent connection is closed after an earlier protocol failure (reuse --request-id cli-exec-e3a6d66a1b384da4af573de57dcba161)
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread '<unnamed>' (85122833) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:253:51:
+called `Result::unwrap()` on an `Err` value: Conflict { execution_id: ExecutionId("cec5a035-fb8f-4c1c-8833-fd1b57033393"), message: "cannot remove execution in state killing" }
+
+thread '<unnamed>' (85122833) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:83:9:
+Host graceful shutdown failed
+stack backtrace:
+   0:        0x103a88aa0 - std[7648081134ee26d8]::backtrace_rs::backtrace::libunwind::trace
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/libunwind.rs:117:9
+   1:        0x103a88aa0 - std[7648081134ee26d8]::backtrace_rs::backtrace::trace_unsynchronized::<std[7648081134ee26d8]::sys::backtrace::_print_fmt::{closure#1}>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/mod.rs:66:14
+   2:        0x103a88aa0 - std[7648081134ee26d8]::sys::backtrace::_print_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:74:9
+   3:        0x103a88aa0 - <<std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print::DisplayBacktrace as core[318a34b566a36fe]::fmt::Display>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:44:26
+   4:        0x103a9f3e4 - <core[318a34b566a36fe]::fmt::rt::Argument>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/rt.rs:152:76
+   5:        0x103a9f3e4 - core[318a34b566a36fe]::fmt::write
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/mod.rs:1687:22
+   6:        0x103a8e724 - std[7648081134ee26d8]::io::default_write_fmt::<std[7648081134ee26d8]::sys::stdio::unix::Stderr>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:622:11
+   7:        0x103a8e724 - <std[7648081134ee26d8]::sys::stdio::unix::Stderr as std[7648081134ee26d8]::io::Write>::write_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:1977:13
+   8:        0x103a68a78 - <std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:47:25
+   9:        0x103a68a78 - std[7648081134ee26d8]::panicking::default_hook::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:292:27
+  10:        0x103a7f910 - std[7648081134ee26d8]::panicking::default_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:319:9
+  11:        0x103a7fc38 - std[7648081134ee26d8]::panicking::panic_with_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:825:13
+  12:        0x103a68b38 - std[7648081134ee26d8]::panicking::panic_handler::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:691:13
+  13:        0x103a5df24 - std[7648081134ee26d8]::sys::backtrace::__rust_end_short_backtrace::<std[7648081134ee26d8]::panicking::panic_handler::{closure#0}, !>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:182:18
+  14:        0x103a69884 - __rustc[6ef78fba13ac776c]::rust_begin_unwind
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:689:5
+  15:        0x103aff4dc - core[318a34b566a36fe]::panicking::panic_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:80:14
+  16:        0x100ed5ab0 - drop
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native.rs:83:9
+  17:        0x100e74aa4 - drop_glue<kbox_runtime::local_execution::oci_hvf::tests::native::Host>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:825:1
+  18:        0x100cbaad8 - run
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native.rs:234:1
+  19:        0x100f2ff98 - call_once<fn(), ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  20:        0x101b30f98 - __rust_begin_short_backtrace<fn(), ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/sys/backtrace.rs:166:18
+  21:        0x10148baac - {closure#0}<fn(), ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:70:13
+  22:        0x102138b6c - call_once<(), std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/panic/unwind_safe.rs:275:9
+  23:        0x100629160 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  24:        0x10148c790 - ___rust_try
+  25:        0x101488d50 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  26:        0x101488d50 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  27:        0x101488d50 - {closure#1}<fn(), ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  28:        0x100e81b18 - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<fn(), ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  29:        0x103a87728 - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  30:        0x103a87728 - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  31:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (85122833) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

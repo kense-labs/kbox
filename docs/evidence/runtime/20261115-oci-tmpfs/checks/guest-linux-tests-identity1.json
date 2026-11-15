@@ -1,0 +1,9 @@
+{
+  "command": [
+    "file",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/guest-init-tests-final1"
+  ],
+  "output": "/Users/roylin/code/kense/kbox/artifacts/oci-tmpfs-06c672b2c50b40b5ae90b3703bae89f7/guest-init-tests-final1: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, stripped\n",
+  "sha256": "2067a9efdae45ced0f772399733da5651e03a7c80065aca2a51cf85839ac62b4",
+  "sourceInputsSha256": "31aeb63a32b8b388fe5526eddf9f3172eb3c577656fd8e1b6342309a17fbcb16"
+}

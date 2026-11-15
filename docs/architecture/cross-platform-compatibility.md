@@ -1,10 +1,12 @@
 # kbox 跨平台与兼容性优化：调研与分层方案
 
+> 历史调研快照：上层应用引用与旧装配接口不再是 kbox 合同；当前边界见 [本地引擎](local-engine.md)。
+
 状态：**架构调研与提案，2026-11-11**。本文不是实现记录，不声明任何新的平台支持，不代表已通过原生验收，也不改动默认构建链。
 
 证据边界：本次为只读调研（源码、文档、CI 配置、证据链与公开生态资料），未运行任何 HVF／KVM／WHPX 原生验收，未修改构建链或执行后端。文中所有「建议」必须按 `AGENTS.md` 的证据纪律单独实施与验证：`Cross-compilation proves compilation only. Native runtime claims require native tests on the affected target.`（`AGENTS.md:84`）。
 
-参考图：[KRun 集成边界](krun.md) · [沙箱控制](sandbox-control.md) · [KRun 架构](../../../krun/docs/architecture.md) · [运行器决定](../../../krun/docs/decisions/0001-mcp-service-runners.md)
+参考图：[本地引擎边界](local-engine.md) · [沙箱控制](sandbox-control.md) · [KRun 架构](../../../krun/docs/architecture.md) · [运行器决定](../../../krun/docs/decisions/0001-mcp-service-runners.md)
 
 ---
 
@@ -46,7 +48,7 @@
 | `crates/box/deps/libksys/README.md:27-30` | 四平台全标 ✅ Supported | **FFI 层口径** |
 | `README.md:92-93` | Linux／Windows「path in-tree, build + qualify locally」 | 容易被读成已支持 |
 
-同一份代码库里「Supported」有三种互相矛盾的含义。**这不是文档瑕疵，是兼容性风险**：上层（KRun、kstudio、调用方）会据此判断能否派发，而 `doctor` 的 `diagnose` 只证明宿主虚拟化探测，明确不证明客体依赖、认证或任务可用性（`docs/architecture/krun.md:41-42`）。
+同一份代码库里「Supported」有三种互相矛盾的含义。**这不是文档瑕疵，是兼容性风险**：上层（KRun、kstudio、调用方）会据此判断能否派发，而 `doctor` 的 `diagnose` 只证明宿主虚拟化探测，明确不证明客体依赖、认证或任务可用性（[当前诊断边界](local-engine.md)）。
 
 ### 2.3 平台代码扩散（可优化）
 
@@ -84,7 +86,7 @@
 
 ### 3.3 已知能力缺口与供应链风险
 
-- **macOS 宿主强制只读 virtio-fs bind 不支持**：`:ro` 在启动前被拒（`docs/evidence/box/20261110-dsh-acp-acceptance/OUTCOME.md:115`、`crates/box/runtime/README.md:99-105`）。这直接影响 Secret 只读授权与外部只读目录，是 KRun 能力的实质缺口，不只是平台声明问题。
+- **macOS arm64 目录只读已在本机 HVF 验证**：Box 与 OCI 复用宿主 Seatbelt 边界。特权 guest 成功 remount 为可写并重新挂载后，创建、修改、截断、删除、重命名、链接和子进程写入仍收到宿主 EPERM。普通单文件、预先存在硬链接的输入树及重叠可写授权明确拒绝；未提升产品 readiness，也未切换存量路由。见 [E 原生证据](../evidence/runtime/20261114-macos-readonly/OUTCOME.md)。
 - **客体运行清单覆盖不全**：`krun/runtime/base/runtime-catalog.cjs:21-36` 只采集 bubblewrap／glibc／node／openssl 四项；架构基线里写了 Python 3.11（`krun/docs/architecture.md:148`），但生产清单未采集其身份。
 - **上游 ABI 断裂风险**：libkrun 官方说明 `main` 已是 2.0，**不向后兼容 1.x API/ABI**，且 2.0 仍在变动，生产应使用 `stable-*` 分支。kbox 当前钉的是 `libkrunfw v5.3.0` 的 `boxlite-ai` fork 预编译包 + 固定 SHA256（`libksys/build.rs:20-37`）、`libkrun.1.17.0.dylib`（`scripts/package-macos-arm64.sh:41-62`）。**任何上游升级都是一次全平台 breaking change，需要独立 ADR 与四目标重验。**
 - Windows WHPX 上游限制：单 vCPU、无 libkrunfw-windows、无 virtio-gpu、x86_64 only（`libkrun/README.md:408-413`）；Windows interactive stdin 未实现，通道仅 Unix（`docs/evidence/box/2026-11-06-interactive-stdin/OUTCOME.md:41`）。
@@ -172,8 +174,8 @@
 
 以下为现有合同原文或等价约束，任何优化都不得绕过：
 
-- **不收窄通用 OCI 合同**：`kbox/docs/architecture/krun.md:15`、`krun/docs/architecture.md:17` —— 普通 OCI 路径不要求 ACP／Harness／KRun；新增 profile 不能成为全局准入条件。每个引擎变更批次必须跑独立 OCI 回归。
-- **不建第二套执行状态机**：`kbox/docs/architecture/krun.md:35`、`krun/docs/architecture.md:192`、`AGENTS.md:22` —— Box ExecutionManager 是唯一权威，KRun 只记录 desired state 与回执。
+- **不收窄通用 OCI 合同**：[当前执行边界](local-engine.md)、`krun/docs/architecture.md:17` —— 普通 OCI 路径不要求 ACP／Harness／KRun；新增 profile 不能成为全局准入条件。每个引擎变更批次必须跑独立 OCI 回归。
+- **不建第二套执行状态机**：[当前资源权威](local-engine.md)、`krun/docs/architecture.md:192`、`AGENTS.md:22` —— Box ExecutionManager 是唯一权威，KRun 只记录 desired state 与回执。
 - **原生等价**：`krun/docs/architecture.md:30`、`implementation-plan.md:30,141` —— 不得用转译到 Wasm、裁剪工具、静默禁用能力完成接入；未验证的能力差异不能改称「不支持」后算通过。
 - **证据纪律**：`AGENTS.md:27,84,96,112`、`constitution.md:47,85-87` —— 交叉编译／mock／ignored test／启动成功都不等于运行时支持；证据不可删除；支持矩阵只含原生实测配置。
 - **默认构建链**：`cargo build --locked`、`release-dist`、`scripts/package-macos-arm64.sh`、四目标 CI 矩阵、`build.rs` 的默认路径不因本提案改动；任何实验性后端走独立 target／独立 runner。

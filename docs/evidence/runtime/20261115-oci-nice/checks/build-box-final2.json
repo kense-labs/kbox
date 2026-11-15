@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-nice-581649d8a124446983e5432838103584/build-box-final2.py"
+  ],
+  "exit": 0,
+  "seconds": 29.275349083000002
+}

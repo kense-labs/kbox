@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "references": [
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/raw-ro-probe-assumption.md",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/raw-ro-probe-assumption.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/raw-ro-descriptor-sampling.md",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/raw-ro-descriptor-sampling.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "run-context.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/run-context.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/final-identities-1.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/final-identities-1.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/actual-counts-source1.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/actual-counts-source1.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/final-receipt-review.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/final-receipt-review.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/af-final1/native-results.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/af-final1/native-results.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/final-cleanup.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/final-cleanup.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/final-descriptor-audit.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/final-descriptor-audit.json"
+    },
+    {
+      "source": "docs/evidence/runtime/20261115-oci-anonymous-volumes/OUTCOME.md",
+      "reference": "checks/final-source-review.json",
+      "target": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-anonymous-volumes/checks/final-source-review.json"
+    }
+  ],
+  "sourceUnchanged": true,
+  "accepted": true,
+  "nextLocalTask": "013 Box tmpfs mounts"
+}

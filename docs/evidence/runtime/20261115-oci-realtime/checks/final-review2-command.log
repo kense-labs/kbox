@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "9365453fbda6b3b8bd4758ae24c6a7b2817b5a0c130ec90724e75d3e46b3e676",
+  "sourceFiles": 1701,
+  "nativeRustTests": 5,
+  "guestUnitTests": 0,
+  "pythonNativeScenarios": 3,
+  "realtimeObservations": 15,
+  "cliRealPtyCases": 2,
+  "receipts": [
+    "box-native-realtime-attempt-3.json",
+    "box-native-host-service-attempt-2.json",
+    "box-native-files-attempt-2.json"
+  ],
+  "verifyRuntime": [
+    2259,
+    0,
+    42
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "installerTests": 8,
+  "cleanup": {
+    "status": "PASS",
+    "homes": 12,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 93,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 23,
+    "afSourceCacheFilesChecked": 367,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

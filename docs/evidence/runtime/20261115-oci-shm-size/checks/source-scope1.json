@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "changedPaths": [
+    "crates/box/runtime/src/local_execution/oci_hvf_native.rs",
+    "crates/box/runtime/src/local_execution/oci_hvf_native_shm.rs",
+    "crates/box/runtime/src/local_execution/oci_production.rs",
+    "crates/box/runtime/src/local_execution/oci_production_shm_tests.rs",
+    "crates/box/runtime/src/local_execution/vm_backend_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_spec_tests.rs",
+    "crates/box/runtime/src/vm/oci_hvf_tmpfs.rs"
+  ],
+  "ociSdkAgentSourcesUnchanged": true,
+  "capabilityCompilerAndInitExecApplicationUnchanged": true
+}

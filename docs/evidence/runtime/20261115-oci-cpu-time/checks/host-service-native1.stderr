@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-cpu-time-092623a0dfc94f14995861ff217ee4cf/run-native.py", line 111, in <module>
+    assert counts == [('1', '0', '0')]
+AssertionError

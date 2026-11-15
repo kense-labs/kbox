@@ -29,7 +29,7 @@ required-features = ["vm"]
 
 [features]
 default = ["vm", "pool", "scale", "compose", "operator", "build"]
-vm = []
+vm = ["dep:koci-kbox"]
 pool = ["vm"]
 scale = ["dep:axum", "compose"]
 compose = ["vm"]
@@ -154,6 +154,9 @@ xz2 = "0.1"
 
 [target.'cfg(any(target_os = "linux", target_os = "macos"))'.dependencies]
 kbox-contract = { workspace = true }
+
+[target.'cfg(all(target_os = "macos", target_arch = "aarch64"))'.dependencies]
+koci-kbox = { path = "../../oci-runtime/crates/kbox", optional = true }
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["test-util"] }

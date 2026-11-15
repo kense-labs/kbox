@@ -1,0 +1,23 @@
+{
+  "command": [
+    "rg",
+    "--hidden",
+    "-n",
+    "\\bKRun\\b|\\bKrun\\b|krun\\.guest|/opt/krun|\\bharness-assembly\\b|\\bacp-harness\\b|_guest-install|EngineWorkload|EngineAssembly|\\.\\./krun",
+    "crates",
+    "scripts",
+    "--glob",
+    "!**/docs/**",
+    "--glob",
+    "!**/assets/**",
+    "--glob",
+    "!**/deps/**",
+    "--glob",
+    "!**/vendor/**",
+    "--glob",
+    "!**/__pycache__/**"
+  ],
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": ""
+}

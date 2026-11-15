@@ -1,0 +1,11 @@
+
+running 1 test
+test box_state::compat::oci_anonymous_store_fences_unaware_readers_without_changing_ownership_or_route ... FAILED
+
+failures:
+
+failures:
+    box_state::compat::oci_anonymous_store_fences_unaware_readers_without_changing_ownership_or_route
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2238 filtered out; finished in 0.01s
+

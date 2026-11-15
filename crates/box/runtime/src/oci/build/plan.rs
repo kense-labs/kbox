@@ -7,12 +7,12 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use kbox_core::platform::Platform;
 use kcl::{
     canonical_bytes_with_schema, canonical_digest_with_schema, parse_with_limits,
     validate_document, AttributeSchema, Block, BlockSchema, CanonicalError, Cardinality, Document,
     ParseLimits, Schema, SchemaDiagnosticCode, Value, ValueSchema,
 };
-use kbox_core::platform::Platform;
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 

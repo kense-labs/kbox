@@ -1,0 +1,11 @@
+{
+  "box": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/final-dist-secret-env-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "b9b77584fb0776990717c511e6676166c3e5b0c780e0faccd425c5bd2d1f6df9"
+  },
+  "oci": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-secret-env-1ac68d946a6840fe9fff3d0b9791a84f/oci-environment-final2-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "542bfe43dd6f2837ad55c3ba79416832584e9032a9b6e1b2bfa4d75bc94203bf"
+  },
+  "cargoLockSha256": "0f82d0eaafd8b255f5a73c9de5a9106fc85f711bc2ed1d4ba9c02ef07aa63dbb"
+}

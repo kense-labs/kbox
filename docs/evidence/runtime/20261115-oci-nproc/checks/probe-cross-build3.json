@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/opt/homebrew/bin/zig",
+    "cc",
+    "-target",
+    "aarch64-linux-musl",
+    "-static",
+    "-pthread",
+    "-O2",
+    "-Wall",
+    "-Werror",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/nproc-probe.c",
+    "-o",
+    "artifacts/oci-nproc-bcf6f36c2d7d42a0bd0fc9ea6dcec09e/inputs/nproc-probe"
+  ],
+  "exit": 0,
+  "seconds": 0.101266292
+}

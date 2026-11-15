@@ -1,0 +1,21 @@
+{"command": ["/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/native-client-attempt-9", "--ignored", "--exact", "local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery", "--nocapture"], "root": "/private/tmp/kbox-files-38d1ee741be9/attempt-9", "clientSha256": "8b2bd010398d377a0316b5705f5d562218e7f7280ca6d131cc37160afd072936", "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-files-38d1ee741be94955907fc6c8b3fad645/installed-files-final-3", "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "foreignUidImage": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "exitCode": -6, "seconds": 353.921712958, "actualCounts": [], "resultExists": false, "cleanupExists": false}
+  23:        0x100629160 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  24:        0x10148c790 - ___rust_try
+  25:        0x101488d50 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  26:        0x101488d50 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<fn(), ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  27:        0x101488d50 - {closure#1}<fn(), ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  28:        0x100e81b18 - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<fn(), ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  29:        0x103a87728 - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  30:        0x103a87728 - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  31:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (85122833) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

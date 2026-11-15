@@ -1,0 +1,33 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/native-client-secret-positive-2",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::secrets::native_memory_secret_files_enforce_host_ro_owner_recovery_and_cleanup",
+    "--nocapture"
+  ],
+  "exitCode": 101,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "seconds": 1.9790917090000002,
+  "root": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-2-ram/case",
+  "clientSha256": "c9e222d7ffae093914088274eee9bfad25daa75d785920be6d1191d232ec0012",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/installed-secrets-final-1",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/oci-memory-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "loaded": [],
+  "status": "FAIL",
+  "error": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/artifacts/oci-secrets-3b9553cebce5421bb376de8b21634a4e/run-memory-native.py\", line 42, in <module>\n    counts=re.findall(r'test result: (?:ok|FAILED)\\. (\\d+) passed; (\\d+) failed; (\\d+) ignored;',(case/'native.stdout').read_text());result.update(command=cmd,exitCode=exit_code,actualCounts=counts,seconds=time.monotonic()-started,root=str(root),clientSha256=sha(client),boxPrefix=str(box),ociHostPrefix=str(host_prefix),ociShimPrefix=str(shim_prefix),loaded=list(loaded.values()));(case/'run.json').write_text(json.dumps(result,indent=2)+'\\n');assert exit_code==0 and counts==[('1','0','0')]\nAssertionError\n",
+  "archivedNativeRoot": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261115-oci-secrets/checks/secret-positive-2/native-root",
+  "ownedRuntimeProcessesAfter": [],
+  "ramUnmountExitCode": 0,
+  "ramDetachExitCode": 0,
+  "device": "/dev/disk13",
+  "mount": "/private/tmp/kbox-secrets-3b9553cebce5/secret-positive-2-ram",
+  "runtimeRSS": "not measured"
+}

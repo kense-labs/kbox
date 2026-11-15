@@ -1,0 +1,38 @@
+{
+  "status": "LOCAL_COMMIT_PASS_REMOTE_BLOCKED",
+  "utc": "2026-11-15T22:50:19Z",
+  "branch": "main",
+  "sourceCommit": "7327411e51d40b48ee1ed600d5495672dc2b2b16",
+  "parent": "e01bd356861c678b81ac7061ad3fbe4320e2c187",
+  "command": [
+    "git",
+    "commit",
+    "-m",
+    "feat(hvf): honor exact VM CPU and memory resources"
+  ],
+  "observedExitCode": 0,
+  "hookOutputObserved": "Can't find lefthook in PATH",
+  "manualVerification": "verify-final2 retains6 external native-disk failures; separate scoped checks/native/archive/cleanup evidence retained; hook not disabled",
+  "sourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "sourceFilesMatchFinalArchive": true,
+  "worktreeAfterSourceCommit": "",
+  "previousBaselineBranchAncestor": true,
+  "cachedOriginComparison": {
+    "command": [
+      "git",
+      "rev-list",
+      "--left-right",
+      "--count",
+      "origin/main...HEAD"
+    ],
+    "output": "0\t4",
+    "notFreshRemoteComparison": true
+  },
+  "freshRemoteFetch": false,
+  "actualPushAttemptedThisPhase": false,
+  "remoteEqualityVerified": false,
+  "blockerReceipt": "git-prerequisites1.json",
+  "priorActualPushFailure": "../20261116-native-tool-diagnostics/checks/git-push1.json",
+  "nativeGitlinksUnchanged": true,
+  "publicationPerformed": false
+}

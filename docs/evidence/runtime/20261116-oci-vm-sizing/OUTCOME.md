@@ -4,8 +4,8 @@ Bounded implementation, final installed-archive native acceptance and owned
 cleanup are complete on this existing macOS arm64 host. Full default verification
 is **FAIL**, with six retained native disk-service cases; the SDK suite also has
 one retained DiskManagement failure. This phase is not enterprise GA or W4 Pass.
-The latest user authorizes commit/merge/push; local main convergence follows this
-acceptance, while actual remote synchronization remains blocked.
+The latest user authorizes commit/merge/push. Source commit `7327411e51d40b48ee1ed600d5495672dc2b2b16` is on local
+main; actual remote synchronization remains blocked.
 
 ## Implemented contract
 
@@ -180,10 +180,15 @@ The older unknown-actor seven-RAM preservation failure remains a failure.
 
 ## Git convergence and next action
 
+Source commit `7327411e51d40b48ee1ed600d5495672dc2b2b16` is on local main with all prior work retained. The
+worktree was clean immediately after that commit; final compiled input hashes
+match both accepted installed archives. Actual local receipt:
+checks/git-local-closeout1.json. The host hook reported missing lefthook; manual
+verification was run and its failures were retained, without disabling the hook.
 All prior work is retained on local main. `git merge-base --is-ancestor
 codex/macos-oci-release-baseline HEAD` returns0, so the earlier baseline branch is
 already integrated locally. The source/evidence diff is reviewed before staging;
-Git closeout result is recorded separately after commit.
+Local closeout is recorded in that receipt; remote closeout remains unfinished.
 
 Fresh UID501 lookup still fails and github.com DNS still returns error8
 (checks/git-prerequisites1.json); the prior real push failed128 and HTTPS fetch

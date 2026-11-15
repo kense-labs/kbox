@@ -61,8 +61,10 @@ unrelated global-process socket discovery is retained and excluded by actual
 ownership proof, never by deleting user resources. Earlier7-RAM failure remains.
 All command handles terminal. Evidence: docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md.
 
-Next concrete action: final diff/reference review, stage this phase only and
-commit to current local main under latest explicit authorization. The prior
+Local source commit `7327411e51d40b48ee1ed600d5495672dc2b2b16` is on main, source/archive hashes exact and
+worktree clean immediately afterward. Local receipt is in E36 checks/git-local-closeout1.json.
+Local documentation closeout records that receipt. The remaining convergence
+action is real fetch/integration/push after external prerequisites return. The prior
 baseline branch is already an ancestor of main. UID501 lookup and GitHub DNS
 still block actual fetch/remote integration/push; no force or system setting
 change. Record actual local result and leave remote synchronization open. Full

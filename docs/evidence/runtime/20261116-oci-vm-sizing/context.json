@@ -162,7 +162,7 @@
     "Windows ARM64 dependencies unsupported; no native run",
     "Runtime RSS unmeasured"
   ],
-  "status": "Bounded VM-sizing acceptance and scoped cleanup complete; default gate6 + SDK1 native-disk failures and remote Git prerequisites remain open. Latest request is commit/local-main convergence, no next feature.",
+  "status": "Source committed on local main; final source/installed/native/15-home cleanup evidence accepted for bounded phase. Remote integration/push and full GA remain open.",
   "writePaths": [
     "crates/oci-runtime/crates/sdk/src/macos_memory.rs",
     "crates/oci-runtime/crates/sdk/src/macos_memory_tests.rs",
@@ -194,8 +194,8 @@
   "nativeClientSha256": "0de73bda9497c695c3b7539845f85e116f402111852848098c16d6bed5615e24",
   "nativeImageStore": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-image-cache",
   "afImageStore": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/af-image-cache",
-  "sourceFixCommit": "4268a36f4d8e7ef4093de69ddc3d74497b532459",
-  "gitPushStatus": "FAILED128: SSH local UID501 lookup; HTTPS fetch also blocked by github.com DNS",
+  "sourceFixCommit": "7327411e51d40b48ee1ed600d5495672dc2b2b16",
+  "gitPushStatus": "Blocked: UID501 lookup and GitHub DNS; no repeated push under unchanged prerequisites",
   "remoteEqualityVerified": false,
   "baseCommit": "e01bd356861c678b81ac7061ad3fbe4320e2c187",
   "priorContext": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-native-tool-diagnostics/context.json",
@@ -253,5 +253,6 @@
     "runtimeMemoryMeasured": false,
     "resourcesDeletedByAudit": [],
     "scope": "Current phase only; prior unknown-actor seven-RAM preservation failure remains open"
-  }
+  },
+  "localMainSourceCommit": "7327411e51d40b48ee1ed600d5495672dc2b2b16"
 }

@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use koci_agent_protocol::GuestAgentService;
-use koci_core::{CapabilityStatus, DriverReadiness, IsolationClass};
+use koci_core::{CapabilityStatus, DriverCapability, DriverReadiness, IsolationClass};
 use koci_sdk::{async_trait, Error, ErrorCode, Result};
 
 use crate::agent_driver::AgentDriverClient;
@@ -137,27 +137,8 @@ impl HvfRuntimeDriver {
                         ErrorCode::Internal,
                         format!("HVF memory capability probe failed: {error}"),
                     )
-                })??;
-        capability.evidence.insert(
-            "memory_secret_files".into(),
-            if memory_backed {
-                "available-with-ram-source-and-projection"
-            } else {
-                "unavailable-runtime-share-is-not-memory-backed"
-            }
-            .into(),
-        );
-        let mut attachments = koci_sdk::AttachmentCapabilities::base_v2();
-        if memory_backed {
-            attachments = attachments.with_extension(
-                koci_sdk::MEMORY_SECRET_FILES_EXTENSION,
-                vec![
-                    koci_sdk::MEMORY_SECRET_FILES_VERSION,
-                    koci_sdk::MEMORY_SECRET_ENVIRONMENT_VERSION,
-                    koci_sdk::MEMORY_SECRET_RAW_STORAGE_VERSION,
-                ],
-            )?;
-        }
+                })?;
+        let attachments = memory_secret_capabilities(&mut capability, memory_backed)?;
         let recovery = RecoveryStore::new(prepared.recovery_directory.clone());
         let factory: Arc<dyn UtilityVmFactory> = Arc::new(LiveHvfVmFactory {
             shim: prepared.shim,
@@ -228,6 +209,48 @@ impl HvfRuntimeDriver {
 }
 
 delegate_utility_vm_runtime_driver!(HvfRuntimeDriver, inner);
+
+fn memory_secret_capabilities(
+    capability: &mut DriverCapability,
+    probe: Result<bool>,
+) -> Result<koci_sdk::AttachmentCapabilities> {
+    let memory_backed = match probe {
+        Ok(proven) => proven,
+        Err(error) if error.code == ErrorCode::FailedPrecondition => {
+            // Unverified RAM backing denies Secrets without disabling unrelated VM execution.
+            capability.evidence.insert(
+                "memory_secret_files".into(),
+                "unavailable-memory-backing-not-verified".into(),
+            );
+            capability
+                .evidence
+                .insert("memory_secret_files_probe_error".into(), error.to_string());
+            return Ok(koci_sdk::AttachmentCapabilities::base_v2());
+        }
+        Err(error) => return Err(error),
+    };
+    capability.evidence.insert(
+        "memory_secret_files".into(),
+        if memory_backed {
+            "available-with-ram-source-and-projection"
+        } else {
+            "unavailable-runtime-share-is-not-memory-backed"
+        }
+        .into(),
+    );
+    let mut attachments = koci_sdk::AttachmentCapabilities::base_v2();
+    if memory_backed {
+        attachments = attachments.with_extension(
+            koci_sdk::MEMORY_SECRET_FILES_EXTENSION,
+            vec![
+                koci_sdk::MEMORY_SECRET_FILES_VERSION,
+                koci_sdk::MEMORY_SECRET_ENVIRONMENT_VERSION,
+                koci_sdk::MEMORY_SECRET_RAW_STORAGE_VERSION,
+            ],
+        )?;
+    }
+    Ok(attachments)
+}
 
 struct LiveHvfVmFactory {
     shim: PathBuf,
@@ -311,3 +334,7 @@ fn hvf_report_error(operation: &'static str, report: crate::AgentVmSmokeReport) 
         .unwrap_or_else(|| "authenticated HVF utility VM did not satisfy its contract".to_string());
     Error::new(ErrorCode::Unavailable, reason).for_operation(operation)
 }
+
+#[cfg(test)]
+#[path = "hvf_driver_tests.rs"]
+mod tests;

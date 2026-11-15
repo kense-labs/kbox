@@ -1,0 +1,1 @@
+Error: Error { code: InvalidArgument, operation: Some("validate-attachments"), message: "runtime bundle handoff requires annotation dev.kbox.bundle-handoff=move-to-runtime-v1", retryable: false }

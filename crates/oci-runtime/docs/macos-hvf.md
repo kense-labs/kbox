@@ -1383,6 +1383,11 @@ actual source and projection must be on RAM; APFS volume identity must resolve
 only to hdiutil ram:// physical stores. Host capability is absent on a physical
 runtime root, and the Shim rechecks backing before Seatbelt plus pinned identity
 after it. No source-mode/owner translation or copy-to-disk fallback is allowed.
+If the optional RAM-backing probe cannot establish its prerequisite, discovery
+explicitly omits every memory-secret version and retains the probe cause;
+ordinary DedicatedVm execution may still run. Secret requests and durable
+records requiring that missing extension refuse. Unexpected probe errors still
+abort opening. [Installed failure/refusal and ordinary recovery evidence](../../../docs/evidence/runtime/20261116-hvf-optional-memory-probe/OUTCOME.md).
 [Spec018 final installed evidence](../../../docs/evidence/runtime/20261115-oci-secrets/OUTCOME.md)
 records actual Host refusals, old Host/Shim/Agent controls and exact RAM cleanup.
 Secret environment delivery and raw storage combinations remain refused; this

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 113.027667875,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/package-home-probe-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "25b4cf5f312a998a6132b2ead24b65286ff10bdb848d6e2e780c6861aa8215ef"
+}

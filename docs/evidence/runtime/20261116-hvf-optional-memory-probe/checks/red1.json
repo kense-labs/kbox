@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "--lib",
+    "hvf_driver::tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 29.868132041
+}

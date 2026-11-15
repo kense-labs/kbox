@@ -1,0 +1,17 @@
+{
+  "bindingVariantsRefused": 4,
+  "fileRoundtrip": true,
+  "filesystemGrant": true,
+  "oldGenerationRefused": true,
+  "readonlyFileApiRefused": true,
+  "readonlyProbe": {
+    "freshWritableMount": true,
+    "guestChildDenied": true,
+    "hostDenials": 14,
+    "status": "PASS",
+    "writableRemount": true
+  },
+  "resourceReadback": true,
+  "resourceUpdate": true,
+  "status": "PASS"
+}

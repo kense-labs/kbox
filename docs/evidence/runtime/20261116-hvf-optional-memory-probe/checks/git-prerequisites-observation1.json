@@ -1,0 +1,6 @@
+{
+  "observedUtc": "2026-11-15T20:23:09.877643+00:00",
+  "uid": 501,
+  "userLookupError": "'getpwuid(): uid not found: 501'",
+  "githubLookupError": "[Errno 8] nodename nor servname provided, or not known"
+}

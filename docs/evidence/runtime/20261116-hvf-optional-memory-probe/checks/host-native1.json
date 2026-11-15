@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/run-native.py",
+    "docs/evidence/runtime/20261116-hvf-optional-memory-probe/files-context-final1.json",
+    "1",
+    "host-service"
+  ],
+  "exit": 0,
+  "seconds": 387.59521712500003
+}

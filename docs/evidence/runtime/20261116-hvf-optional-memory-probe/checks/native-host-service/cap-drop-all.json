@@ -1,0 +1,11 @@
+{
+  "kernelMasks": [
+    "CapInh:\t0000000000000000",
+    "CapPrm:\t0000000000000000",
+    "CapEff:\t0000000000000000",
+    "CapBnd:\t0000000000000000",
+    "CapAmb:\t0000000000000000"
+  ],
+  "spelling": " cap_all ",
+  "status": "PASS"
+}

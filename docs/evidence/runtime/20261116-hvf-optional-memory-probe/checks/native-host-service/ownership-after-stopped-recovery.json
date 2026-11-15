@@ -1,0 +1,9 @@
+{
+  "foreignGidPermissionsExit": 0,
+  "generation": 2,
+  "negativeStderr": "cat: can't open '/ownership/secret': Permission denied\n/bin/sh: can't create /ownership/denied: Permission denied\n",
+  "otherUidDeniedExit": 0,
+  "ownerWriteExit": 0,
+  "stat": "/:0:0:755\n/ownership:1001:2002:700\n/ownership/secret:1001:2002:600\n/ownership/alias:1001:2002:600\n/ownership/link:1001:2002:777\n/gid-owned:0:3003:770\n/gid-owned/group:0:3003:640\n/root-owned:0:0:600\n",
+  "status": "PASS"
+}

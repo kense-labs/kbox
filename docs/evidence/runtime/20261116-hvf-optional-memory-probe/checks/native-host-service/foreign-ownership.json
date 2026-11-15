@@ -1,0 +1,59 @@
+{
+  "disks": [
+    [
+      "/private/tmp/kbox-hvf-probe-ed388b4f5a64/host-service-attempt-1/service/runtime/shares/kbox-9d300708-9742-44b2-8545-35986af970bd/1.rootfs.ext4",
+      {
+        "image": {
+          "imageDigest": "sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "schemaVersion": 1,
+          "sha256": "sha256:fdffc26957d32c0116096d5cf452a9ba58f7f43fe07bcda313915373522ba52b",
+          "size": 4294967296
+        },
+        "sourceIdentity": {
+          "device": 16777233,
+          "inode": 299766936,
+          "rawDevice": 0,
+          "size": 4294967296
+        }
+      }
+    ],
+    [
+      "/private/tmp/kbox-hvf-probe-ed388b4f5a64/host-service-attempt-1/service/runtime/shares/kbox-f80072ef-998b-4567-85fc-3ca2dd338caf/1.rootfs.ext4",
+      {
+        "image": {
+          "imageDigest": "sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "schemaVersion": 1,
+          "sha256": "sha256:7628365da801b6a7a8d3843ae3d07a8188a0867b234e853a53dda43ef23fd40e",
+          "size": 4294967296
+        },
+        "sourceIdentity": {
+          "device": 16777233,
+          "inode": 299767776,
+          "rawDevice": 0,
+          "size": 4294967296
+        }
+      }
+    ]
+  ],
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "independentWritableInstances": true,
+  "initial": {
+    "foreignGidPermissionsExit": 0,
+    "generation": 1,
+    "negativeStderr": "cat: can't open '/ownership/secret': Permission denied\n/bin/sh: can't create /ownership/denied: Permission denied\n",
+    "otherUidDeniedExit": 0,
+    "ownerWriteExit": 0,
+    "stat": "/:0:0:755\n/ownership:1001:2002:700\n/ownership/secret:1001:2002:600\n/ownership/alias:1001:2002:600\n/ownership/link:1001:2002:777\n/gid-owned:0:3003:770\n/gid-owned/group:0:3003:640\n/root-owned:0:0:600\n",
+    "status": "PASS"
+  },
+  "oldGenerationRejected": true,
+  "restart": {
+    "foreignGidPermissionsExit": 0,
+    "generation": 2,
+    "negativeStderr": "cat: can't open '/ownership/secret': Permission denied\n/bin/sh: can't create /ownership/denied: Permission denied\n",
+    "otherUidDeniedExit": 0,
+    "ownerWriteExit": 0,
+    "stat": "/:0:0:755\n/ownership:1001:2002:700\n/ownership/secret:1001:2002:600\n/ownership/alias:1001:2002:600\n/ownership/link:1001:2002:777\n/gid-owned:0:3003:770\n/gid-owned/group:0:3003:640\n/root-owned:0:0:600\n",
+    "status": "PASS"
+  }
+}

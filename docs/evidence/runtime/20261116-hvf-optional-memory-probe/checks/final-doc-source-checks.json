@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "localLinksChecked": 121,
+  "sourceInputsSha256": "25b4cf5f312a998a6132b2ead24b65286ff10bdb848d6e2e780c6861aa8215ef",
+  "compiledInputCount": 1710,
+  "sourceUnchangedSinceBuild": true,
+  "allEvidenceJsonParsed": true,
+  "cargoLockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+  "cargoFmtCheckExit": 0,
+  "gitDiffCheckExit": 0
+}

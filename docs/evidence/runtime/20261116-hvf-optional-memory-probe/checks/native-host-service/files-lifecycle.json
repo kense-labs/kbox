@@ -1,0 +1,10 @@
+{
+  "activeReplacementPinned": true,
+  "callerFilesRetained": true,
+  "concurrentSourcesIndependent": true,
+  "executions": 2,
+  "normalRestart": true,
+  "replacementRestartRefused": true,
+  "staleGenerationRefused": true,
+  "status": "PASS"
+}

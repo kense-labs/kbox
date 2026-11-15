@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-capability.py", line 29, in <module>
+    assert result.returncode == 0, 'public SDK capability/refusal client failed'
+AssertionError: public SDK capability/refusal client failed

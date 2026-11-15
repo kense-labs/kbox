@@ -1,0 +1,8 @@
+
+running 3 tests
+test hvf_driver::tests::unexpected_memory_probe_errors_are_not_converted_to_capability_absence ... ok
+test hvf_driver::tests::optional_memory_capability_requires_positive_backing_proof ... ok
+test hvf_driver::tests::optional_memory_probe_failure_preserves_ordinary_admission_and_refuses_secrets ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 440 filtered out; finished in 0.03s
+

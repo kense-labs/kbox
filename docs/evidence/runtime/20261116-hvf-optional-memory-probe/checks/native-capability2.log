@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci",
+    "macos-hvf-host-service",
+    "--root",
+    "/private/tmp/kbox-hvf-probe-ed388b4f5a64/capability-2/service",
+    "--shim",
+    "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+    "--system-image-manifest",
+    "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json"
+  ],
+  "root": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/capability-2",
+  "sourceInputsSha256": "25b4cf5f312a998a6132b2ead24b65286ff10bdb848d6e2e780c6861aa8215ef",
+  "hostPid": 16420,
+  "clientCommand": [
+    "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-capability-client",
+    "/private/tmp/kbox-hvf-probe-ed388b4f5a64/capability-2/service/runtime.sock",
+    "/private/tmp/kbox-hvf-probe-ed388b4f5a64/capability-2",
+    "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-hvf-optional-memory-probe/checks/native-capability-result2.json"
+  ],
+  "clientSha256": "49179bfbabcda2c1eafd8a3c0da114ce28522ebe31542b399373a6b4d2487869",
+  "clientExit": 0,
+  "status": "PASS",
+  "hostExit": 0,
+  "socketAbsentAfterShutdown": true,
+  "resourcesOutsideOwnedRootTouched": false
+}

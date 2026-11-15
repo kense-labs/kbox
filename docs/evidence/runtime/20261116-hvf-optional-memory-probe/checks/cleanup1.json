@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 1.775655292
+}

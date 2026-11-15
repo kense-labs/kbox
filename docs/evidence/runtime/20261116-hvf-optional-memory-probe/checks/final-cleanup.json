@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "Current phase owned resources only; historical RAM preservation failure remains open",
+  "sourceInputsSha256": "25b4cf5f312a998a6132b2ead24b65286ff10bdb848d6e2e780c6861aa8215ef",
+  "sourceCommit": "440e179630c4432e5a4c580bcb4d1cb4f7ab6ee2",
+  "compiledInputCount": 1710,
+  "homes": 4,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 9,
+  "observedSocketPaths": 36,
+  "remainingSockets": [],
+  "caches": [
+    {
+      "store": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-image-cache",
+      "immutableFilesCompared": 31,
+      "mutableCatalog": [
+        {
+          "path": "index.json",
+          "before": "2ccea7d61ae58fcdc11839c8b3e59d657ba189b379f3bfeb9148bd4160716ebd",
+          "after": "da03544d9ca278dea2fcdde8d8aeb29379a623cd7d6c466b2d0ae411165d9162"
+        }
+      ]
+    }
+  ],
+  "newlyExecutedPythonNativeScenarios": 0,
+  "completedRustNativeTests": 2,
+  "completedPublicSdkNativeScenarios": 1,
+  "failedProbeHarnessRuns": 1,
+  "reusedUnchangedPriorAfRows": 5,
+  "resourcesDeletedByAudit": [],
+  "priorArchivesRetainedUnchanged": true
+}

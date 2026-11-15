@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-capability.py",
+    "2"
+  ],
+  "exit": 0,
+  "seconds": 1.7890455840000001
+}

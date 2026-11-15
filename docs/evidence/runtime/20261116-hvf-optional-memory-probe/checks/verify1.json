@@ -1,0 +1,10 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exit": 101,
+  "seconds": 112.441251541
+}

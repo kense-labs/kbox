@@ -1,0 +1,27 @@
+{
+  "cliChecked": true,
+  "createReplay": true,
+  "execIo": true,
+  "legacyId": "06c779bb-c0ba-43e1-9aa0-f86baca5d434",
+  "mixedRoutes": true,
+  "ociBinding": {
+    "attachments_digest": "sha256:3eb9db62102cfcd19c36881cdd8854f64194a37e1fa6f7abc84c34c0d99fd7fa",
+    "config_digest": "sha256:cfb3f405297863b6f807b0c8ac57984c324b31d96ddd8a08f81a353974c14cfc",
+    "driver": "libk-hvf",
+    "endpoint": {
+      "kind": "unix-socket",
+      "path": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/host-service-attempt-1/service/runtime.sock"
+    },
+    "isolation": "dedicated-vm",
+    "schema_version": "kbox.oci-runtime-binding.v2",
+    "target": {
+      "generation": 1,
+      "id": "kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5"
+    }
+  },
+  "ociId": "b5cefab1-4b8e-493e-8680-6dd2ffab81f5",
+  "policyChangePreservesRoutes": true,
+  "reconstructedManager": true,
+  "schema": "kbox.hvf-oci-qualification.v1",
+  "status": "PASS"
+}

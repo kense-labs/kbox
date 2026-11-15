@@ -69,3 +69,11 @@ failure and independent OCI Host startup require DiskManagement recovery.
 Current-phase six-home cleanup passes; the earlier unknown-actor RAM
 disappearance remains a retained failure. The user's latest request is Git
 convergence before another local feature; no W4 or platform gate is promoted.
+
+After that local convergence, the active continuous goal resumes bounded local
+gaps while Git prerequisites remain blocked. The
+[optional memory-capability fix](../20261116-hvf-optional-memory-probe/OUTCOME.md)
+restores ordinary independent Host availability with explicit Secret absence and
+real required-extension refusal. Current installed file/mixed-route/recovery
+tests and four-home cleanup pass; full default disk-service/RAM-positive gates
+stay open. Next local parity gap remains typed custom VM CPU/memory sizing.

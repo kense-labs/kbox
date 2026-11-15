@@ -1,0 +1,84 @@
+{
+  "newlyRunRustTests": 2,
+  "expectedEachRustCounts": {
+    "passed": 1,
+    "failed": 0,
+    "ignored": 0
+  },
+  "completedSdkApiScenarios": 1,
+  "fileProofRows": [
+    {
+      "file": "native-files/files-pep-g1.json",
+      "generation": 1,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    },
+    {
+      "file": "native-host-service/files-alpha-g2.json",
+      "generation": 2,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    },
+    {
+      "file": "native-host-service/files-main-g1.json",
+      "generation": 1,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    },
+    {
+      "file": "native-host-service/files-main-g2.json",
+      "generation": 2,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    },
+    {
+      "file": "native-host-service/files-alpha-g1.json",
+      "generation": 1,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    },
+    {
+      "file": "native-host-service/files-beta-g1.json",
+      "generation": 1,
+      "proof": {
+        "childDenied": true,
+        "freshMounts": 2,
+        "hostDenials": 16,
+        "privateEntriesEach": 1,
+        "writableRemount": true
+      }
+    }
+  ],
+  "directoryHostDenialsPerProbe": 14,
+  "directoryProofFiles": [
+    "native-host-service/readonly-probe-1.json",
+    "native-host-service/readonly-probe-2.json"
+  ],
+  "unaffectedAFReuse": 5,
+  "newlyRunAFScenarios": 0
+}

@@ -1,0 +1,36 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "docs/evidence/runtime/20261116-hvf-optional-memory-probe/checks/native-capability-client.rs",
+    "-L",
+    "dependency=target/debug/deps",
+    "-o",
+    "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-capability-client",
+    "--extern",
+    "koci_sdk=target/debug/deps/libkoci_sdk-281cc940c60c66d1.rlib",
+    "--extern",
+    "tokio=target/debug/deps/libtokio-32f02a3ee6fd4e38.rlib",
+    "--extern",
+    "serde_json=target/debug/deps/libserde_json-c59b8a50eef12e80.rlib"
+  ],
+  "exit": 0,
+  "seconds": 0.41236904199999996,
+  "dependencies": {
+    "koci_sdk": {
+      "path": "target/debug/deps/libkoci_sdk-281cc940c60c66d1.rlib",
+      "sha256": "239e480f208db60dfcd957a41de9053dd2a5dafe34a50abb8d2e4961e4507f8a"
+    },
+    "tokio": {
+      "path": "target/debug/deps/libtokio-32f02a3ee6fd4e38.rlib",
+      "sha256": "efb4198c9c3d2df137cdacc7fe6bd30e73c72e60f8d233bfaf9d8b0aa8c1c6e0"
+    },
+    "serde_json": {
+      "path": "target/debug/deps/libserde_json-c59b8a50eef12e80.rlib",
+      "sha256": "ecddef6176088c893230d2d7929694e71b131e44156072acdd98d905a9f767e4"
+    }
+  },
+  "stdout": "",
+  "stderr": "",
+  "clientSourceSha256": "518e3efcd18b50b982991a8cac370fa394b6096e7374a4420f9b5b90c559d917"
+}

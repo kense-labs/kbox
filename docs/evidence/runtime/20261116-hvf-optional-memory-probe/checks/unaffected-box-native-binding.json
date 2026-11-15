@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "file": "bin/kbox",
+      "priorSha256": "b4aabb376066d9ade1fedc9f0260e17aec31a118f03ff5dcba4734da5da4672d",
+      "currentSha256": "b4aabb376066d9ade1fedc9f0260e17aec31a118f03ff5dcba4734da5da4672d",
+      "equal": true
+    },
+    {
+      "file": "bin/kbox-shim",
+      "priorSha256": "234e273bb78bb0385d87ed3cfd9b5ceb4c32769331b9224b39a383fcbbcba94d",
+      "currentSha256": "234e273bb78bb0385d87ed3cfd9b5ceb4c32769331b9224b39a383fcbbcba94d",
+      "equal": true
+    },
+    {
+      "file": "bin/kbox-guest-init",
+      "priorSha256": "0fba36afc534c83e54f6f4715ab6d2936561f0b1b2fb57075758802bbe1e423c",
+      "currentSha256": "0fba36afc534c83e54f6f4715ab6d2936561f0b1b2fb57075758802bbe1e423c",
+      "equal": true
+    },
+    {
+      "file": "lib/libkrun.1.17.0.dylib",
+      "priorSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "currentSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+      "equal": true
+    },
+    {
+      "file": "lib/libkrunfw.5.dylib",
+      "priorSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "currentSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+      "equal": true
+    }
+  ],
+  "priorNativeResults": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-native-tool-diagnostics/checks/af-final1/native-results.json",
+  "newAFScenariosExecuted": 0,
+  "reason": "All five actually executed Box companions are byte-identical; do not relabel historical five A-F scenarios as newly run. New independent OCI Host is qualified separately."
+}

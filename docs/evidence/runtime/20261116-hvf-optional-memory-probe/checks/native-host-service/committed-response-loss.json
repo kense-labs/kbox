@@ -1,0 +1,112 @@
+{
+  "committedResponseDropped": {
+    "protocol": 9,
+    "request_id": 2,
+    "result": {
+      "response": {
+        "operation": "exec",
+        "response": {
+          "pid": 254,
+          "target": {
+            "container": {
+              "generation": 1,
+              "id": "kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5"
+            },
+            "process_id": "kbox-exec-process-e1537ee9fe5dd7d78562595e6574f7eeada232687a08f318fa2b4914d91fafa5"
+          },
+          "terminal": false
+        }
+      },
+      "status": "ok"
+    },
+    "type": "response"
+  },
+  "request": {
+    "protocol": 9,
+    "request": {
+      "operation": "exec",
+      "request": {
+        "container": {
+          "generation": 1,
+          "id": "kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5"
+        },
+        "context": {
+          "operation_id": "kbox-exec-d47b6436888576a36ad658f6345a458772e3363f205d1281adf683b2c93e29d3"
+        },
+        "io": {
+          "stderr": "capture",
+          "stdin": "null",
+          "stdout": "capture"
+        },
+        "process": {
+          "args": [
+            "/bin/sh",
+            "-c",
+            "printf x >> /writable/exec-count; printf replay-marker"
+          ],
+          "capabilities": {
+            "ambient": [],
+            "bounding": [
+              "CAP_CHOWN",
+              "CAP_DAC_OVERRIDE",
+              "CAP_FOWNER",
+              "CAP_FSETID",
+              "CAP_KILL",
+              "CAP_NET_BIND_SERVICE",
+              "CAP_SETGID",
+              "CAP_SETPCAP",
+              "CAP_SETUID",
+              "CAP_SYS_ADMIN",
+              "CAP_SYS_CHROOT"
+            ],
+            "effective": [
+              "CAP_CHOWN",
+              "CAP_DAC_OVERRIDE",
+              "CAP_FOWNER",
+              "CAP_FSETID",
+              "CAP_KILL",
+              "CAP_NET_BIND_SERVICE",
+              "CAP_SETGID",
+              "CAP_SETPCAP",
+              "CAP_SETUID",
+              "CAP_SYS_ADMIN",
+              "CAP_SYS_CHROOT"
+            ],
+            "inheritable": [],
+            "permitted": [
+              "CAP_CHOWN",
+              "CAP_DAC_OVERRIDE",
+              "CAP_FOWNER",
+              "CAP_FSETID",
+              "CAP_KILL",
+              "CAP_NET_BIND_SERVICE",
+              "CAP_SETGID",
+              "CAP_SETPCAP",
+              "CAP_SETUID",
+              "CAP_SYS_ADMIN",
+              "CAP_SYS_CHROOT"
+            ]
+          },
+          "cwd": "/",
+          "env": [],
+          "noNewPrivileges": true,
+          "rlimits": [
+            {
+              "hard": 1024,
+              "soft": 1024,
+              "type": "RLIMIT_NOFILE"
+            }
+          ],
+          "terminal": false,
+          "user": {
+            "gid": 0,
+            "uid": 0
+          }
+        },
+        "process_id": "kbox-exec-process-e1537ee9fe5dd7d78562595e6574f7eeada232687a08f318fa2b4914d91fafa5"
+      }
+    },
+    "request_id": 2,
+    "type": "request"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/diskutil",
+    "apfs",
+    "list",
+    "-plist"
+  ],
+  "exit": 1,
+  "seconds": 0.009067416000000002
+}

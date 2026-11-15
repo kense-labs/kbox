@@ -1,0 +1,6 @@
+{
+  "source": "target/debug/deps/kbox_runtime-7c8059cccee42dfc",
+  "frozen": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/native-client-frozen1",
+  "sha256": "ee668a98491db72810b2a1e8b672ca5c3191ccbfeda1bd0637c6ea99186baa6d",
+  "sourceInputsSha256": "25b4cf5f312a998a6132b2ead24b65286ff10bdb848d6e2e780c6861aa8215ef"
+}

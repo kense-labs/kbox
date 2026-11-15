@@ -1,0 +1,21 @@
+{
+  "state": {
+    "ociVersion": "1.3.0",
+    "id": "kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5",
+    "status": "stopped",
+    "bundle": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/host-service-attempt-1/service/runtime/bundle-handoffs/kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5/kbox-create-46455c90ec364fd4e80da0bd0da3b207ab4309dd980169b4fa10d78bbd561e44/bundle",
+    "annotations": {
+      "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1",
+      "com.kbox.isolation-class": "hardware-vm",
+      "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+      "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:3e160f88223af3e602ecc8d9ad083fcad2af46e8246339c7b21151b589f3acaa\",\"size\":4294967296,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+      "com.kbox.process-owner": "koci-runtime",
+      "dev.kbox.file-grants": "{\"schemaVersion\":1,\"entries\":[{\"mountIndex\":5,\"identity\":\"kbox.hvf.mount.5\",\"sourceIdentity\":{\"device\":16777233,\"inode\":299773454},\"accessMode\":\"read-only\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"},{\"mountIndex\":6,\"identity\":\"kbox.hvf.mount.6\",\"sourceIdentity\":{\"device\":16777233,\"inode\":299773455},\"accessMode\":\"read-write\",\"ownership\":\"caller\",\"cleanup\":\"detach-only\"}]}"
+    }
+  },
+  "generation": 1,
+  "driver": "libk-hvf",
+  "isolation": "dedicated-vm",
+  "config_digest": "sha256:cfb3f405297863b6f807b0c8ac57984c324b31d96ddd8a08f81a353974c14cfc",
+  "attachments_digest": "sha256:3eb9db62102cfcd19c36881cdd8854f64194a37e1fa6f7abc84c34c0d99fd7fa"
+}

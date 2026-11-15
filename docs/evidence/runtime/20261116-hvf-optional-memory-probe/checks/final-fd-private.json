@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-hvf-probe-ed388b4f5a64"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

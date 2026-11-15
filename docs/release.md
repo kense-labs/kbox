@@ -411,3 +411,11 @@ owned resources are clear across six homes; prior historical RAM-preservation
 failure remains unresolved. OpenSSL lock patches, exact artifacts and Git
 convergence limits are linked there. Full W4/default cutover, Windows ARM64
 dependency limitations and platform support levels remain unchanged.
+
+The [optional RAM capability fix](evidence/runtime/20261116-hvf-optional-memory-probe/OUTCOME.md)
+restores ordinary independent HVF Host execution under that disk-service outage,
+while explicitly omitting Secret capability and refusing an actual required
+Secret Create. Current installed file and mixed-route/recovery tests pass;
+the six default disk-service failures remain. Newly rebuilt archive identities,
+four-home cleanup and exact reuse of unchanged Box A–F companions are recorded.
+This does not qualify RAM Secret positives, the full gate or enterprise GA.

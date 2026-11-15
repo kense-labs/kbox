@@ -1,0 +1,26 @@
+{
+  "clientDisconnect": true,
+  "committedResponseLoss": true,
+  "concurrentReplayEffects": 1,
+  "killedHostPid": 16433,
+  "legacySurvived": true,
+  "oldInputRefused": true,
+  "recoveredState": "stopped",
+  "replacementHostPid": 65031,
+  "restartedBinding": {
+    "attachments_digest": "sha256:1da79b1d021f6caf88dc9ec60235a687da45d16ab9abb18c786ff7fb052d6ed4",
+    "config_digest": "sha256:7be19661b074d8705349e80c39573a9b9e364b051301bfb49f56c11f60f5b5f5",
+    "driver": "libk-hvf",
+    "endpoint": {
+      "kind": "unix-socket",
+      "path": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/host-service-attempt-1/service/runtime.sock"
+    },
+    "isolation": "dedicated-vm",
+    "schema_version": "kbox.oci-runtime-binding.v2",
+    "target": {
+      "generation": 2,
+      "id": "kbox-b5cefab1-4b8e-493e-8680-6dd2ffab81f5"
+    }
+  },
+  "status": "PASS"
+}

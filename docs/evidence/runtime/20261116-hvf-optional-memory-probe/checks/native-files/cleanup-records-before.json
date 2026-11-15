@@ -1,0 +1,236 @@
+[
+  {
+    "id": "5ef3da4e-77e0-47be-ac90-aa7e6bd225b9",
+    "short_id": "5ef3da4e77e0",
+    "name": "managed-5ef3da4e77e0",
+    "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+    "managed_execution": {
+      "operation_id": "file-pep-create",
+      "creation_intent_digest": "sha256:703009d18e8e443c9694352f7c7772bec021aa1ac756a14e236e0823e1fda440",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "file-pep",
+        "config": {
+          "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "workspace": "",
+          "resources": {
+            "vcpus": 1,
+            "memory_mb": 512,
+            "disk_mb": 4096,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sleep",
+            "2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/只读 input:/exact-ro:ro",
+            "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/empty rw:/exact-rw:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "none",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [
+            "SYS_ADMIN"
+          ],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": false,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": false
+        },
+        "labels": {},
+        "policy": {
+          "name": null,
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": {
+        "schema_version": "kbox.oci-runtime-binding.v2",
+        "endpoint": {
+          "kind": "unix-socket",
+          "path": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/service/runtime.sock"
+        },
+        "target": {
+          "id": "kbox-5ef3da4e-77e0-47be-ac90-aa7e6bd225b9",
+          "generation": 1
+        },
+        "driver": "libk-hvf",
+        "isolation": "dedicated-vm",
+        "config_digest": "sha256:b4788cd98dad15a6e0ee5d80decb9328998af7543b6aad6410d6f492a3e299c1",
+        "attachments_digest": "sha256:7600cbd8f7a32b469dcf87a55697cf305b76c810798fb0b65509fd544d1785a7"
+      },
+      "caller_files": {
+        "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/empty rw": {
+          "device": 16777233,
+          "inode": 299748356
+        },
+        "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/只读 input": {
+          "device": 16777233,
+          "inode": 299748355
+        }
+      },
+      "runtime_route": "oci_sdk",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "running",
+    "pid": null,
+    "pid_start_time": null,
+    "cpus": 1,
+    "memory_mb": 512,
+    "volumes": [
+      "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/只读 input:/exact-ro:ro",
+      "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/caller-files-pep/empty rw:/exact-rw:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {},
+    "cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/home/boxes/5ef3da4e-77e0-47be-ac90-aa7e6bd225b9",
+    "exec_socket_path": "",
+    "console_log": "/private/tmp/kbox-hvf-probe-ed388b4f5a64/files-attempt-1/home/boxes/5ef3da4e-77e0-47be-ac90-aa7e6bd225b9/logs/console.log",
+    "created_at": "2026-11-15T20:14:31.076427Z",
+    "started_at": "2026-11-15T20:15:03.930926Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "none",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [
+      "SYS_ADMIN"
+    ],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": false,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null
+  }
+]

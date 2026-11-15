@@ -1,0 +1,8 @@
+
+running 3 tests
+test vm_config_cli_tests::resource_parser_rejects_invalid_values_and_never_defaults_explicit_intent ... ok
+test vm_config_cli_tests::both_handoffs_preserve_legacy_absence_and_exact_explicit_resources ... ok
+test vm_config_cli_tests::both_handoffs_reject_partial_resource_arguments_before_dispatch ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s
+

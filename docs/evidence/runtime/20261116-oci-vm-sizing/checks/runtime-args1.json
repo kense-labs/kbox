@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-runtime",
+    "--lib",
+    "agent_session::vm_config_tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 14.408037084
+}

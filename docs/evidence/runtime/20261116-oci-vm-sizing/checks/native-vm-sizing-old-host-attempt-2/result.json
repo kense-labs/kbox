@@ -1,0 +1,7 @@
+{
+  "cleanupWithoutStart": true,
+  "noRouteOrSizingFallback": true,
+  "oldHost": true,
+  "status": "PASS",
+  "workloadMarkerAbsent": true
+}

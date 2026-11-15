@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "compiledInputCount": 1717,
+  "actualSourceFilesMatchFrozen": true,
+  "markdownLinks": [
+    {
+      "source": "docs/release.md",
+      "target": "docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md"
+    },
+    {
+      "source": "crates/box/runtime/README.md",
+      "target": "crates/box/runtime/../../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/README.md",
+      "target": "crates/oci-runtime/../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/ROADMAP.md",
+      "target": "crates/oci-runtime/../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md"
+    },
+    {
+      "source": "crates/oci-runtime/docs/macos-hvf.md",
+      "target": "crates/oci-runtime/docs/../../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md"
+    },
+    {
+      "source": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "docs/evidence/runtime/20261114-oci-host-service/../20261116-oci-vm-sizing/OUTCOME.md"
+    }
+  ],
+  "missingLinks": [],
+  "commands": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "codex/macos-oci-release-baseline",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check-support-matrix.py"
+      ],
+      "exit": 0,
+      "stdout": "targets=4 supported=0 rejected=4 required=1\ncheck-support-matrix: OK\n",
+      "stderr": ""
+    }
+  ],
+  "previousBaselineBranchAlreadyIntegrated": true,
+  "existingStagedFiles": []
+}

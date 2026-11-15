@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "koci-sdk",
+    "--target",
+    "aarch64-pc-windows-msvc",
+    "--all-targets"
+  ],
+  "exit": 0,
+  "seconds": 16.258097542
+}

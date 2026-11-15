@@ -57,10 +57,16 @@ fn hvf_custom_disk_capacity_refuses_out_of_bounds_and_other_controls() {
             _ => unreachable!(),
         }
         let before = std::fs::read(store.path()).unwrap();
-        assert!(matches!(
-            validate_dedicated_vm_qualification(&record, DedicatedVmOciProfile::MacosHvf),
-            Err(ExecutionManagerError::InvalidRequest(_))
-        ));
+        let result = validate_dedicated_vm_qualification(&record, DedicatedVmOciProfile::MacosHvf);
+        if matches!(control, "cpu" | "memory") {
+            // These values are now qualified, but the stored counts still name1/512.
+            assert!(matches!(result, Err(ExecutionManagerError::Internal(_))));
+        } else {
+            assert!(matches!(
+                result,
+                Err(ExecutionManagerError::InvalidRequest(_))
+            ));
+        }
         assert_eq!(std::fs::read(store.path()).unwrap(), before);
         assert!(!home.join("boxes").exists());
     }

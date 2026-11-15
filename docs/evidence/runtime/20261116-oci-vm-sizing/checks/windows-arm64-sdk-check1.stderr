@@ -1,0 +1,16 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Checking once_cell v1.21.4
+    Checking ref-cast v1.0.25
+    Checking strum v0.28.0
+    Checking derive_builder v0.20.2
+    Checking fluent-uri v0.4.1
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking ahash v0.8.12
+    Checking tempfile v3.27.0
+    Checking jsonschema-value v0.48.5
+    Checking referencing v0.48.5
+    Checking jsonschema v0.48.5
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 16.22s

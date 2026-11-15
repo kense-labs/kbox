@@ -1,0 +1,1 @@
+InvalidRequest("Box/HVF OCI qualification rejected: Host lacks required dev.kbox.vm-resources version1 CPU/memory sizing")

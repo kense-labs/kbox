@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "logs": [
+    {
+      "path": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/vm-sizing-compatibility-refusal.txt",
+      "line": "Unavailable(\"Kbox OCI create: libkrun shim exited before connecting the authenticated agent bridge; shim stderr: error: unexpected argument '--vm-vcpus' found\\n\\nUsage: koci-kshim agent-vm-smoke [OPTIONS] --rootfs <DIR> --system-image-manifest <FILE> --console <FILE> --pipe-name <NAME> --socket-path <FILE> --owner-pid <PID> --runtime-share <DIR>\\n\\nFor more information, try '--help'.\")"
+    }
+  ]
+}

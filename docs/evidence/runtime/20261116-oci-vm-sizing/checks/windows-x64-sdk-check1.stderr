@@ -1,0 +1,25 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling syn v2.0.119
+    Checking once_cell v1.21.4
+    Checking ahash v0.8.12
+    Checking tempfile v3.27.0
+    Checking jsonschema-value v0.48.5
+   Compiling darling_core v0.20.11
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling getset v0.1.7
+   Compiling strum_macros v0.27.2
+    Checking ref-cast v1.0.25
+   Compiling darling_macro v0.20.11
+    Checking strum v0.28.0
+   Compiling darling v0.20.11
+    Checking fluent-uri v0.4.1
+    Checking referencing v0.48.5
+   Compiling derive_builder_core v0.20.2
+    Checking jsonschema v0.48.5
+   Compiling derive_builder_macro v0.20.2
+    Checking derive_builder v0.20.2
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.45s

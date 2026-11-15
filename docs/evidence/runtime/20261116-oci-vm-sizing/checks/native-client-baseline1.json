@@ -1,0 +1,8 @@
+{
+  "source": "target/debug/deps/kbox_runtime-7c8059cccee42dfc",
+  "frozen": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/native-client-baseline1",
+  "sha256": "72b97d9784fb4a6226c8ff39c9989908ed61decd619bb77339612395fa579d61",
+  "sourceInputsSha256": "3d1d49b70666d39397863262fe529b18ebaed63e0d80bda8f1ed1fd2ed99b3bb",
+  "compiledInputCount": 1717,
+  "purpose": "research baseline with previously installed legacy1/512 assets; not final current-source package acceptance"
+}

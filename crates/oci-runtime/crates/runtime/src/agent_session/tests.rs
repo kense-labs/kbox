@@ -107,6 +107,7 @@ fn accepts_complete_shim_evidence() {
         HostPlatform::Linux,
         true,
         Some(&"0".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .expect("valid Linux KVM shim evidence");
     assert_eq!(report["guest_exit_code"], 0);
@@ -116,6 +117,7 @@ fn accepts_complete_shim_evidence() {
         HostPlatform::Windows,
         true,
         Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .expect("valid Windows shim evidence");
     assert_eq!(report["guest_exit_code"], 0);
@@ -125,9 +127,51 @@ fn accepts_complete_shim_evidence() {
         HostPlatform::Macos,
         false,
         Some(&"1".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .expect("valid macOS shim evidence");
     assert_eq!(report["guest_exit_code"], 0);
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[test]
+fn shim_report_resources_must_match_the_exact_admitted_vm_configuration() {
+    for (cpus, memory) in [(1, 128), (2, 768), (8, 8192)] {
+        let expected = koci_sdk::VmConfig::new(cpus, memory).unwrap();
+        let mut output = valid_output("macos");
+        let mut value: Value = serde_json::from_slice(&output.bytes).unwrap();
+        value["vcpus"] = json!(cpus);
+        value["memory_mib"] = json!(memory);
+        output.bytes = serde_json::to_vec(&value).unwrap();
+        parse_shim_report(
+            &output,
+            HostPlatform::Macos,
+            true,
+            Some(&"1".repeat(64)),
+            expected,
+        )
+        .expect("exact custom resource report must permit owned cleanup");
+        for field in ["vcpus", "memory_mib"] {
+            let mut changed = value.clone();
+            changed[field] = if field == "vcpus" {
+                json!(4)
+            } else {
+                json!(512)
+            };
+            output.bytes = serde_json::to_vec(&changed).unwrap();
+            assert_eq!(
+                parse_shim_report(
+                    &output,
+                    HostPlatform::Macos,
+                    true,
+                    Some(&"1".repeat(64)),
+                    expected
+                )
+                .unwrap_err(),
+                "libkrun shim evidence has unexpected VM resources"
+            );
+        }
+    }
 }
 
 #[test]
@@ -141,6 +185,7 @@ fn rejects_incomplete_or_truncated_shim_evidence() {
         HostPlatform::Windows,
         true,
         Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .is_err());
 
@@ -151,6 +196,7 @@ fn rejects_incomplete_or_truncated_shim_evidence() {
         HostPlatform::Windows,
         true,
         Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .is_err());
 }
@@ -162,8 +208,14 @@ fn rejects_injected_kvm_failure_as_normal_success_evidence() {
     value["kvm_post_probe_failure_injected"] = json!(true);
     output.bytes = serde_json::to_vec(&value).expect("serialize test evidence");
 
-    let error = parse_shim_report(&output, HostPlatform::Linux, true, Some(&"0".repeat(64)))
-        .expect_err("qualification injection must not satisfy normal VM success");
+    let error = parse_shim_report(
+        &output,
+        HostPlatform::Linux,
+        true,
+        Some(&"0".repeat(64)),
+        koci_sdk::VmConfig::default(),
+    )
+    .expect_err("qualification injection must not satisfy normal VM success");
     assert!(error.contains("post-probe failure"));
 }
 
@@ -193,6 +245,7 @@ fn rejects_a_shim_report_for_the_wrong_host() {
         HostPlatform::Macos,
         false,
         Some(&"1".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .is_err());
 }
@@ -212,8 +265,14 @@ fn rejects_macos_shim_evidence_without_explicit_host_confinement() {
             }
         }
         output.bytes = serde_json::to_vec(&value).unwrap();
-        let error = parse_shim_report(&output, HostPlatform::Macos, false, Some(&"1".repeat(64)))
-            .expect_err("missing or malformed native confinement must refuse");
+        let error = parse_shim_report(
+            &output,
+            HostPlatform::Macos,
+            false,
+            Some(&"1".repeat(64)),
+            koci_sdk::VmConfig::default(),
+        )
+        .expect_err("missing or malformed native confinement must refuse");
         assert!(error.contains("Seatbelt"), "{error}");
     }
 }
@@ -225,6 +284,7 @@ fn rejects_a_shim_report_with_a_different_system_image_manifest() {
         HostPlatform::Macos,
         false,
         Some(&"9".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .expect_err("host and shim manifest digests must agree");
     assert!(error.contains("manifest digest does not match"));
@@ -236,14 +296,25 @@ fn requires_explicit_runtime_share_evidence_for_the_driver_path() {
     let mut value: Value = serde_json::from_slice(&output.bytes).expect("decode test evidence");
     value["runtime_share_configured"] = json!(false);
     output.bytes = serde_json::to_vec(&value).expect("serialize test evidence");
-    assert!(
-        parse_shim_report(&output, HostPlatform::Windows, true, Some(&"7".repeat(64)),).is_err()
-    );
+    assert!(parse_shim_report(
+        &output,
+        HostPlatform::Windows,
+        true,
+        Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
+    )
+    .is_err());
 
     value["runtime_share_configured"] = json!(true);
     output.bytes = serde_json::to_vec(&value).expect("serialize test evidence");
-    parse_shim_report(&output, HostPlatform::Windows, true, Some(&"7".repeat(64)))
-        .expect("runtime-share driver evidence");
+    parse_shim_report(
+        &output,
+        HostPlatform::Windows,
+        true,
+        Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
+    )
+    .expect("runtime-share driver evidence");
 }
 
 #[test]
@@ -253,6 +324,7 @@ fn rejects_a_windows_shim_report_with_a_different_system_image_manifest() {
         HostPlatform::Windows,
         true,
         Some(&"0".repeat(64)),
+        koci_sdk::VmConfig::default(),
     )
     .expect_err("host and Windows shim manifest digests must agree");
     assert!(error.contains("manifest digest does not match"));
@@ -271,8 +343,14 @@ fn rejects_windows_shim_evidence_without_exact_in_process_handle_reclamation() {
         report[field] = value;
         output.bytes = serde_json::to_vec(&report).expect("serialize test evidence");
 
-        let error = parse_shim_report(&output, HostPlatform::Windows, true, Some(&"7".repeat(64)))
-            .expect_err("Windows shim handle drift must fail closed");
+        let error = parse_shim_report(
+            &output,
+            HostPlatform::Windows,
+            true,
+            Some(&"7".repeat(64)),
+            koci_sdk::VmConfig::default(),
+        )
+        .expect_err("Windows shim handle drift must fail closed");
         assert!(error.contains("handle"), "unexpected error: {error}");
     }
 
@@ -283,9 +361,14 @@ fn rejects_windows_shim_evidence_without_exact_in_process_handle_reclamation() {
         .expect("test report object")
         .remove("windows_handles_after_vm");
     missing.bytes = serde_json::to_vec(&report).expect("serialize test evidence");
-    assert!(
-        parse_shim_report(&missing, HostPlatform::Windows, true, Some(&"7".repeat(64)),).is_err()
-    );
+    assert!(parse_shim_report(
+        &missing,
+        HostPlatform::Windows,
+        true,
+        Some(&"7".repeat(64)),
+        koci_sdk::VmConfig::default(),
+    )
+    .is_err());
 }
 
 #[test]

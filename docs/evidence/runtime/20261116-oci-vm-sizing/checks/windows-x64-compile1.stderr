@@ -1,0 +1,76 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+    Checking ref-cast v1.0.25
+    Checking strum v0.28.0
+    Checking derive_builder v0.20.2
+    Checking koci-core v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/core)
+    Checking tempfile v3.27.0
+    Checking zeroize v1.8.2
+   Compiling lzma-sys v0.1.20
+    Checking filetime v0.2.27
+   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)
+   Compiling xz2 v0.1.7
+   Compiling winapi v0.3.9
+    Checking fluent-uri v0.4.1
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking tar v0.4.46
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+warning: lzma-sys@0.1.20: In file included from xz-5.2/src/common/tuklib_cpucores.c:13:
+warning: lzma-sys@0.1.20: In file included from xz-5.2/src/common/tuklib_cpucores.h:16:
+warning: lzma-sys@0.1.20: In file included from xz-5.2/src/common/tuklib_common.h:18:
+warning: lzma-sys@0.1.20: In file included from xz-5.2/src/common/tuklib_config.h:2:
+warning: lzma-sys@0.1.20: xz-5.2/src/common/sysdefs.h:127:10: fatal error: 'stdlib.h' file not found
+warning: lzma-sys@0.1.20:   127 | #include <stdlib.h>
+warning: lzma-sys@0.1.20:       |          ^~~~~~~~~~
+warning: lzma-sys@0.1.20: 1 error generated.
+error: failed to run custom build command for `lzma-sys v0.1.20`
+
+Caused by:
+  process didn't exit successfully: `/Users/roylin/code/kense/kbox/target/debug/build/lzma-sys-bcd7656cd75bb886/build-script-build` (exit status: 1)
+  --- stdout
+  cargo:rerun-if-changed=build.rs
+  cargo:rerun-if-env-changed=LZMA_API_STATIC
+  cargo:root=/Users/roylin/code/kense/kbox/target/x86_64-pc-windows-msvc/debug/build/lzma-sys-650e61d6e0d27cc1/out
+  cargo:include=/Users/roylin/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lzma-sys-0.1.20/xz-5.2/src/liblzma/api
+  cargo:rerun-if-env-changed=CC_FORCE_DISABLE
+  CC_FORCE_DISABLE = None
+  cargo:rerun-if-env-changed=VCINSTALLDIR
+  VCINSTALLDIR = None
+  cargo:rerun-if-env-changed=CC_x86_64-pc-windows-msvc
+  CC_x86_64-pc-windows-msvc = None
+  cargo:rerun-if-env-changed=CC_x86_64_pc_windows_msvc
+  CC_x86_64_pc_windows_msvc = None
+  cargo:rerun-if-env-changed=TARGET_CC
+  TARGET_CC = None
+  cargo:rerun-if-env-changed=CC
+  CC = None
+  cargo:rerun-if-env-changed=CROSS_COMPILE
+  CROSS_COMPILE = None
+  cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
+  cargo:rerun-if-env-changed=CRATE_CC_NO_DEFAULTS
+  CRATE_CC_NO_DEFAULTS = None
+  cargo:rerun-if-env-changed=CFLAGS
+  CFLAGS = None
+  cargo:rerun-if-env-changed=TARGET_CFLAGS
+  TARGET_CFLAGS = None
+  cargo:rerun-if-env-changed=CFLAGS_x86_64_pc_windows_msvc
+  CFLAGS_x86_64_pc_windows_msvc = None
+  cargo:rerun-if-env-changed=CFLAGS_x86_64-pc-windows-msvc
+  CFLAGS_x86_64-pc-windows-msvc = None
+  cargo:warning=In file included from xz-5.2/src/common/tuklib_cpucores.c:13:
+  cargo:warning=In file included from xz-5.2/src/common/tuklib_cpucores.h:16:
+  cargo:warning=In file included from xz-5.2/src/common/tuklib_common.h:18:
+  cargo:warning=In file included from xz-5.2/src/common/tuklib_config.h:2:
+  cargo:warning=xz-5.2/src/common/sysdefs.h:127:10: fatal error: 'stdlib.h' file not found
+  cargo:warning=  127 | #include <stdlib.h>
+  cargo:warning=      |          ^~~~~~~~~~
+  cargo:warning=1 error generated.
+
+  --- stderr
+
+
+  error occurred in cc-rs: command did not execute successfully (status code exit status: 1): LC_ALL="C" "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-m64" "--target=x86_64-pc-windows-msvc" "-I" "xz-5.2/src/liblzma/api" "-I" "xz-5.2/src/liblzma/lzma" "-I" "xz-5.2/src/liblzma/lz" "-I" "xz-5.2/src/liblzma/check" "-I" "xz-5.2/src/liblzma/simple" "-I" "xz-5.2/src/liblzma/delta" "-I" "xz-5.2/src/liblzma/common" "-I" "xz-5.2/src/liblzma/rangecoder" "-I" "xz-5.2/src/common" "-I" "/Users/roylin/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/lzma-sys-0.1.20" "-Wall" "-Wextra" "-DHAVE_CONFIG_H=1" "-o" "/Users/roylin/code/kense/kbox/target/x86_64-pc-windows-msvc/debug/build/lzma-sys-650e61d6e0d27cc1/out/af5978f7ddeedb57-tuklib_cpucores.o" "-c" "xz-5.2/src/common/tuklib_cpucores.c"
+
+
+warning: build failed, waiting for other jobs to finish...

@@ -382,6 +382,11 @@ impl OciBundleProvider for DedicatedVmOciBundleProvider {
             )));
         }
         validate_dedicated_vm_qualification(record, self.profile)?;
+        validate_vm_resource_intent(
+            record,
+            self.profile,
+            Some(context.attachment_capabilities()),
+        )?;
         if self.profile == DedicatedVmOciProfile::MacosHvf {
             super::oci_storage_attachments::validate_box_named_volume_sources(
                 self.preparer.home_dir(),
@@ -477,6 +482,7 @@ impl OciBundleProvider for DedicatedVmOciBundleProvider {
     ) -> ExecutionManagerResult<super::LocalExecutionResourcePlan> {
         #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
         if self.profile == DedicatedVmOciProfile::MacosHvf {
+            validate_vm_resource_intent(record, self.profile, Some(_capabilities))?;
             let mut manager = self.preparer.new_oci_preparation_manager(record)?;
             let anonymous_volumes =
                 manager
@@ -753,12 +759,7 @@ fn validate_dedicated_vm_qualification(
         crate::vm::oci_hvf_spec::validate(&configured)
             .map_err(|error| ExecutionManagerError::InvalidRequest(error.to_string()))?;
     }
-    if config.resources.vcpus != 1 || config.resources.memory_mb != 512 {
-        return Err(unqualified(
-            profile,
-            "the fixed profile requires exactly 1 vCPU and 512 MiB of memory",
-        ));
-    }
+    validate_vm_resource_intent(record, profile, None)?;
     if (!macos && config.resources.disk_mb != defaults.disk_mb)
         || config.resources.timeout != defaults.timeout
         || config.resources.ephemeral_storage_bytes.is_some()
@@ -858,11 +859,60 @@ fn validate_dedicated_vm_qualification(
             },
         ));
     }
-    if record.cpus != 1 || record.memory_mb != 512 {
+    Ok(())
+}
+
+fn validate_vm_resource_intent(
+    record: &BoxRecord,
+    profile: DedicatedVmOciProfile,
+    capabilities: Option<&koci_sdk::AttachmentCapabilities>,
+) -> ExecutionManagerResult<()> {
+    let metadata = record.managed_execution.as_ref().ok_or_else(|| {
+        ExecutionManagerError::Internal(format!(
+            "execution {} has no managed lifecycle metadata",
+            record.id
+        ))
+    })?;
+    let resources = &metadata.request.config.resources;
+    let configuration = if profile == DedicatedVmOciProfile::MacosHvf {
+        let vcpus = u8::try_from(resources.vcpus).map_err(|_| {
+            unqualified(
+                profile,
+                "VM CPU count is outside the shared hardware profile",
+            )
+        })?;
+        koci_sdk::VmConfig::new(vcpus, resources.memory_mb)
+            .map_err(|error| unqualified(profile, &error.to_string()))?
+    } else {
+        if resources.vcpus != 1 || resources.memory_mb != 512 {
+            return Err(unqualified(
+                profile,
+                "the fixed profile requires exactly 1 vCPU and 512 MiB of memory",
+            ));
+        }
+        koci_sdk::VmConfig::default()
+    };
+    if record.cpus != u32::from(configuration.vcpus())
+        || record.memory_mb != configuration.memory_mib()
+    {
         return Err(ExecutionManagerError::Internal(format!(
-            "Box record resources drifted from the fixed {} qualification profile",
+            "Box record resources drifted from the immutable {} VM resource request",
             profile.label()
         )));
+    }
+    if profile == DedicatedVmOciProfile::MacosHvf
+        && configuration != koci_sdk::VmConfig::default()
+        && capabilities.is_some_and(|capabilities| {
+            !capabilities.supports_extension(
+                koci_sdk::VM_RESOURCES_EXTENSION,
+                koci_sdk::VM_RESOURCES_VERSION,
+            )
+        })
+    {
+        return Err(unqualified(
+            profile,
+            "Host lacks required dev.kbox.vm-resources version1 CPU/memory sizing",
+        ));
     }
     Ok(())
 }
@@ -1021,3 +1071,7 @@ mod disk_tests;
 #[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
 #[path = "oci_production_capability_tests.rs"]
 mod capability_tests;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "oci_production_vm_sizing_tests.rs"]
+mod vm_sizing_tests;

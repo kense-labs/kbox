@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-15T22:19:22Z",
+  "uid": 501,
+  "actualPushAttemptedThisPhase": false,
+  "priorActualPushEvidence": "docs/evidence/runtime/20261116-native-tool-diagnostics/checks/git-push1.json",
+  "localUserLookupAvailable": false,
+  "localUserError": "'getpwuid(): uid not found: 501'",
+  "githubDnsAvailable": false,
+  "dnsError": "[Errno 8] nodename nor servname provided, or not known",
+  "remoteEqualityVerified": false,
+  "fetchDeferred": "Unchanged externally proven UID501/DNS blockers; no repeated SSH push attempt"
+}

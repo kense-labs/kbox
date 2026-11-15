@@ -186,6 +186,10 @@ pub(crate) fn agent_vm_smoke(configuration: MacosAgentVmConfig<'_>) -> KAgentVmS
         .env_clear()
         .env("TMPDIR", &runtime_share)
         .arg(WORKER_COMMAND)
+        .arg("--vm-vcpus")
+        .arg(config.vcpus().to_string())
+        .arg("--vm-memory-mib")
+        .arg(config.memory_mib().to_string())
         .arg("--system-image-manifest")
         .arg(system_image_manifest)
         .arg("--runtime-share")
@@ -349,6 +353,7 @@ pub(crate) fn agent_vm_smoke(configuration: MacosAgentVmConfig<'_>) -> KAgentVmS
 }
 
 pub(crate) struct MacosAgentVmWorkerConfig<'a> {
+    pub(crate) vm: VmConfig,
     pub(crate) system_image_manifest: &'a Path,
     pub(crate) runtime_share: &'a Path,
     pub(crate) runtime_share_identity: Option<(u64, u64)>,
@@ -364,6 +369,7 @@ pub(crate) struct MacosAgentVmWorkerConfig<'a> {
 
 pub(crate) fn run_worker(configuration: MacosAgentVmWorkerConfig<'_>) -> bool {
     let MacosAgentVmWorkerConfig {
+        vm: config,
         system_image_manifest,
         runtime_share,
         runtime_share_identity,
@@ -456,7 +462,6 @@ pub(crate) fn run_worker(configuration: MacosAgentVmWorkerConfig<'_>) -> bool {
     }
     evidence.agent_binary_present = true;
     evidence.macos_boot_assets = Some(system_image.evidence(true));
-    let config = crate::fallback_config();
     let mut context = match KContext::create(api) {
         Ok(context) => {
             evidence.context_created = true;

@@ -1,0 +1,13 @@
+    Blocking waiting for file lock on package cache
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+   Compiling koci-runtime v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/runtime)
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.48s
+     Running unittests src/lib.rs (target/debug/deps/koci_kbox-8c62829b4b13e713)
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpqZJuuO/libkrun.1.17.0.dylib: replacing existing signature
+/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpqZJuuO/libkrunfw.5.dylib: replacing existing signature
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-17593474c16cf308)
+     Running tests/cli.rs (target/debug/deps/cli-a584c5adf072774b)
+     Running unittests src/lib.rs (target/debug/deps/koci_runtime-4e8186da8a301284)
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-0ebe5f4e3ece2468)
+error: test failed, to rerun pass `-p koci-sdk --lib`

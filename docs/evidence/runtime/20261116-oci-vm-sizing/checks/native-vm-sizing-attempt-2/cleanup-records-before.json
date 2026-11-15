@@ -1,0 +1,452 @@
+[
+  {
+    "id": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+    "short_id": "d9e176e9a4e4",
+    "name": "managed-d9e176e9a4e4",
+    "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+    "managed_execution": {
+      "operation_id": "vm-main",
+      "creation_intent_digest": "sha256:5c859ff36e03a8df478352ab833514a94bc0aa3ed3352fa2bc641ebeb4086fcb",
+      "generation": 3,
+      "request": {
+        "external_sandbox_id": "sized-main",
+        "config": {
+          "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 768,
+            "disk_mb": 128,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sleep",
+            "2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/readonly:/readonly:ro",
+            "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/writable:/writable:rw",
+            "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/只读 input:/exact-ro:ro",
+            "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/empty rw:/exact-rw:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "none",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": 24,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": 512,
+            "cpu_quota": 50000,
+            "cpu_period": 100000,
+            "memory_reservation": 16777216,
+            "memory_swap": -1,
+            "sandbox_memory_limit_bytes": 134217728
+          },
+          "cap_add": [
+            "SYS_ADMIN"
+          ],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": false,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": false
+        },
+        "labels": {},
+        "policy": {
+          "name": null,
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": {
+        "schema_version": "kbox.oci-runtime-binding.v2",
+        "endpoint": {
+          "kind": "unix-socket",
+          "path": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/service/runtime.sock"
+        },
+        "target": {
+          "id": "kbox-d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+          "generation": 3
+        },
+        "driver": "libk-hvf",
+        "isolation": "dedicated-vm",
+        "config_digest": "sha256:7bc6774c22b97a18b2d347325fe53d895d92b241028cdde520d1b8fd8407c0d6",
+        "attachments_digest": "sha256:df843632982d905acb7a56d804d722407255f8f793195e392bf1deee6f38bcfb"
+      },
+      "caller_files": {
+        "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/empty rw": {
+          "device": 16777233,
+          "inode": 300116141
+        },
+        "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/只读 input": {
+          "device": 16777233,
+          "inode": 300116140
+        }
+      },
+      "runtime_route": "oci_sdk",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": {
+        "operation_id": "native-restart-after-owner-death",
+        "source_generation": 2,
+        "target_generation": 3,
+        "outcome": "running",
+        "stop_timeout_secs": null
+      },
+      "last_resource_update": {
+        "operation_id": "native-update-pids",
+        "generation": 1,
+        "update": {
+          "pids_limit": 24
+        }
+      },
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "running",
+    "pid": null,
+    "pid_start_time": null,
+    "cpus": 2,
+    "memory_mb": 768,
+    "volumes": [
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/readonly:/readonly:ro",
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/writable:/writable:rw",
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/只读 input:/exact-ro:ro",
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/caller-files-main/empty rw:/exact-rw:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {},
+    "cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/home/boxes/d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+    "exec_socket_path": "",
+    "console_log": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/home/boxes/d9e176e9-a4e4-4fca-bc32-0909c2fcfc72/logs/console.log",
+    "created_at": "2026-11-15T22:32:58.541370Z",
+    "started_at": "2026-11-15T22:33:46.708063Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "none",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": 24,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": 512,
+      "cpu_quota": 50000,
+      "cpu_period": 100000,
+      "memory_reservation": 16777216,
+      "memory_swap": -1,
+      "sandbox_memory_limit_bytes": 134217728
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [
+      "SYS_ADMIN"
+    ],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": false,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null
+  },
+  {
+    "id": "3d4b91f7-edb8-4f68-8557-8c004cd65bad",
+    "short_id": "3d4b91f7edb8",
+    "name": "managed-3d4b91f7edb8",
+    "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+    "managed_execution": {
+      "operation_id": "vm-legacy",
+      "creation_intent_digest": "sha256:e4ee40d08d1df3b0b8301fe0ff117ac602fccc600882dcf2fe6c3367dde2d0a2",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "sizing-legacy",
+        "config": {
+          "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "workspace": "",
+          "resources": {
+            "vcpus": 1,
+            "memory_mb": 512,
+            "disk_mb": 4096,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sleep",
+            "2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [],
+          "virtiofs_cache": null,
+          "extra_env": [],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "none",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": false,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": false
+        },
+        "labels": {},
+        "policy": {
+          "name": null,
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "box_vm",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": null,
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "running",
+    "pid": 42165,
+    "pid_start_time": 1794782017794282,
+    "cpus": 1,
+    "memory_mb": 512,
+    "volumes": [],
+    "virtiofs_cache": null,
+    "env": {},
+    "cmd": [
+      "/bin/sleep",
+      "2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/home/boxes/3d4b91f7-edb8-4f68-8557-8c004cd65bad",
+    "exec_socket_path": "/private/tmp/kbox-sockets/3d4b91f7-edb8-4f68-8557-8c004cd65bad/exec.sock",
+    "console_log": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/home/boxes/3d4b91f7-edb8-4f68-8557-8c004cd65bad/logs/console.log",
+    "created_at": "2026-11-15T22:33:37.328287Z",
+    "started_at": "2026-11-15T22:33:38.604292Z",
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "none",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": false,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null
+  }
+]

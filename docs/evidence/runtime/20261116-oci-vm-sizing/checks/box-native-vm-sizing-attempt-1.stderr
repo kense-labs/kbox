@@ -1,0 +1,90 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (104265340) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_vm_sizing.rs:122:86:
+called `Result::unwrap()` on an `Err` value: Unavailable("Kbox OCI delete: guest-agent connection was explicitly closed")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread '<unnamed>' (104265340) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:349:51:
+called `Result::unwrap()` on an `Err` value: Conflict { execution_id: ExecutionId("10472cf7-f807-48b9-8a9c-2d0dc4b2f50c"), message: "cannot remove execution in state killing" }
+
+thread '<unnamed>' (104265340) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:167:9:
+Host graceful shutdown failed
+stack backtrace:
+   0:        0x107d161f8 - std[7648081134ee26d8]::backtrace_rs::backtrace::libunwind::trace
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/libunwind.rs:117:9
+   1:        0x107d161f8 - std[7648081134ee26d8]::backtrace_rs::backtrace::trace_unsynchronized::<std[7648081134ee26d8]::sys::backtrace::_print_fmt::{closure#1}>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/mod.rs:66:14
+   2:        0x107d161f8 - std[7648081134ee26d8]::sys::backtrace::_print_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:74:9
+   3:        0x107d161f8 - <<std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print::DisplayBacktrace as core[318a34b566a36fe]::fmt::Display>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:44:26
+   4:        0x107d2cb78 - <core[318a34b566a36fe]::fmt::rt::Argument>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/rt.rs:152:76
+   5:        0x107d2cb78 - core[318a34b566a36fe]::fmt::write
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/mod.rs:1687:22
+   6:        0x107d1be7c - std[7648081134ee26d8]::io::default_write_fmt::<std[7648081134ee26d8]::sys::stdio::unix::Stderr>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:622:11
+   7:        0x107d1be7c - <std[7648081134ee26d8]::sys::stdio::unix::Stderr as std[7648081134ee26d8]::io::Write>::write_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:1977:13
+   8:        0x107cf61c0 - <std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:47:25
+   9:        0x107cf61c0 - std[7648081134ee26d8]::panicking::default_hook::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:292:27
+  10:        0x107d0d068 - std[7648081134ee26d8]::panicking::default_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:319:9
+  11:        0x107d0d390 - std[7648081134ee26d8]::panicking::panic_with_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:825:13
+  12:        0x107cf6280 - std[7648081134ee26d8]::panicking::panic_handler::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:691:13
+  13:        0x107ceb66c - std[7648081134ee26d8]::sys::backtrace::__rust_end_short_backtrace::<std[7648081134ee26d8]::panicking::panic_handler::{closure#0}, !>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:182:18
+  14:        0x107cf6fcc - __rustc[6ef78fba13ac776c]::rust_begin_unwind
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:689:5
+  15:        0x107d8e3e4 - core[318a34b566a36fe]::panicking::panic_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:80:14
+  16:        0x105c83ecc - drop
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native.rs:167:9
+  17:        0x105c1efa8 - drop_glue<kbox_runtime::local_execution::oci_hvf::tests::native::Host>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:825:1
+  18:        0x10575bf8c - {closure#0}
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native_vm_sizing.rs:166:5
+  19:        0x10470ca70 - __rust_begin_short_backtrace<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/sys/backtrace.rs:166:18
+  20:        0x104418380 - {closure#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:70:13
+  21:        0x1059d861c - call_once<(), std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/panic/unwind_safe.rs:275:9
+  22:        0x1059406bc - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  23:        0x104419dcc - ___rust_try
+  24:        0x104411bd4 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  25:        0x104411bd4 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  26:        0x104411bd4 - {closure#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  27:        0x105c2d00c - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  28:        0x107d14e80 - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  29:        0x107d14e80 - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  30:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (104265340) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

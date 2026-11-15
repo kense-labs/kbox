@@ -234,10 +234,7 @@ impl KContextSmokeReport {
 
     #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
     pub(crate) fn failed(reason: String) -> Self {
-        let mut report = Self::windows(VmConfig {
-            vcpus: 1,
-            memory_mib: 128,
-        });
+        let mut report = Self::windows(crate::fallback_context_config());
         report.reason = Some(reason);
         report
     }

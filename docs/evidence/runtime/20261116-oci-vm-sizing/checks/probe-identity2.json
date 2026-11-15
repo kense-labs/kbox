@@ -1,0 +1,8 @@
+{
+  "sourceSha256": "a005ea9416a7b979f3aac87a391e757d2c7a387c09e336dcd3acec62347529f7",
+  "binarySha256": "ef994dc662c60ffbec89d34995a8c092e53a5e74b9f55d117607ff4eb9c0e9c0",
+  "binaryBytes": 1495752,
+  "file": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/vm-hardware-probe: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped\n",
+  "assertions": "NDEBUG explicitly undefined before assert.h",
+  "runtime": "host self-check and cross-compilation only; Guest execution pending"
+}

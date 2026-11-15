@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/run-native.py", line 204, in <module>
+    assert logs, 'missing actual old Shim rejection of explicit sizing arguments'
+AssertionError: missing actual old Shim rejection of explicit sizing arguments

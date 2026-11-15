@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/run-native.py",
+    "docs/evidence/runtime/20261116-oci-vm-sizing/context.json",
+    "1",
+    "vm-sizing-legacy-old-shim"
+  ],
+  "exit": 0,
+  "seconds": 13.89405025
+}

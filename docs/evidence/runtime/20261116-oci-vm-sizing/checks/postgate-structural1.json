@@ -1,0 +1,64 @@
+[
+  {
+    "command": [
+      "sh",
+      "-n",
+      "scripts/install-package.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 0.003934083000000001,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "bash",
+      "-n",
+      "scripts/package-macos-arm64.sh"
+    ],
+    "exitCode": 0,
+    "seconds": 0.0023400420000000005,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-workspace-layout.py"
+    ],
+    "exitCode": 1,
+    "seconds": 0.016251166,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/Users/roylin/code/kense/kbox/scripts/check-workspace-layout.py\", line 22, in <module>\n    import tomllib\nModuleNotFoundError: No module named 'tomllib'\n"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-wire-contracts.py"
+    ],
+    "exitCode": 0,
+    "seconds": 3.361025542,
+    "stdout": "kbox: 17 wire identifiers found, 17 declared\nkrun side: not checked (pass --krun <path> for cross-repo verification)\nPASS: wire schema identifiers match the declared contract\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-unsafe-safety-docs.py"
+    ],
+    "exitCode": 0,
+    "seconds": 0.21645995800000017,
+    "stdout": "first-party .rs files        : 1569\nunsafe fn declarations       : 35\nmissing # Safety sections    : 0\nblanket missing_safety_doc allows: 0\nPASS: every unsafe fn has a # Safety section\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/check-kcl-source.py"
+    ],
+    "exitCode": 0,
+    "seconds": 0.6590780000000005,
+    "stdout": "pinned KCL repo          : https://github.com/kense-labs/kcl.git\npinned KCL rev           : 76bf580454f1d69d7b826223ac50161efa685f85\nkbox manifests scanned   : 19\ncross-repository mode    : off (pass --krun <path> to verify both sides)\nPASS: pinned KCL dependency contract\n",
+    "stderr": ""
+  }
+]

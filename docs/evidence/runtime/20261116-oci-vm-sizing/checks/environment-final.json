@@ -1,0 +1,17 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "uname": {
+    "system": "Darwin",
+    "node": "RoyLins-MacBook-Pro-M5-Max.local",
+    "release": "25.6.0",
+    "version": "Darwin Kernel Version 25.6.0: Fri Jul 31 19:19:08 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6050",
+    "machine": "arm64"
+  },
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+  "utc": "2026-11-15T22:43:48Z",
+  "lockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+  "nativeGitlinks": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+  "runtimeMemoryMeasured": false
+}

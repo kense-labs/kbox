@@ -1,0 +1,14 @@
+{
+  "execution": "93b78d98-61a2-427b-b320-d328858cd5ac",
+  "generation": 1,
+  "guest": {
+    "bootRamBytes": 536870912,
+    "freshReadonlySysfs": true,
+    "guestMountRemoved": true,
+    "memoryNodes": 1,
+    "onlineCpus": 2,
+    "presentCpus": 2
+  },
+  "requestedMemoryMib": 512,
+  "requestedVcpus": 2
+}

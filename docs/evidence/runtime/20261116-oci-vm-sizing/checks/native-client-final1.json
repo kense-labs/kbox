@@ -1,0 +1,7 @@
+{
+  "source": "target/debug/deps/kbox_runtime-7c8059cccee42dfc",
+  "frozen": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/native-client-final1",
+  "sha256": "0de73bda9497c695c3b7539845f85e116f402111852848098c16d6bed5615e24",
+  "sourceInputsSha256": "4d8e2d8776169c25c786467c8c7df51ea315ab4a7247016c567f00fa423be562",
+  "compiledBy": "checks/native-client-build2.json and verify-final1"
+}

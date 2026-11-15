@@ -1,0 +1,16 @@
+
+running 5 tests
+test attachment::vm_config::tests::legacy_vm_profile_has_no_new_extension_or_changed_default ... ok
+test attachment::vm_config::tests::explicit_vm_resources_are_bound_as_required_and_old_hosts_refuse ... FAILED
+test attachment::vm_config::tests::vm_annotation_cannot_bypass_admission_with_a_legacy_manifest ... FAILED
+test attachment::vm_config::tests::malformed_vm_resource_descriptors_fail_closed ... ok
+test attachment::vm_config::tests::vm_resources_reuse_profile_bounds_and_preserve_windows_gate ... ok
+
+failures:
+
+failures:
+    attachment::vm_config::tests::explicit_vm_resources_are_bound_as_required_and_old_hosts_refuse
+    attachment::vm_config::tests::vm_annotation_cannot_bypass_admission_with_a_legacy_manifest
+
+test result: FAILED. 3 passed; 2 failed; 0 ignored; 0 measured; 230 filtered out; finished in 0.04s
+

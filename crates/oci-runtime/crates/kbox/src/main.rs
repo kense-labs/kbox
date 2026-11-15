@@ -219,6 +219,13 @@ enum Command {
     },
     /// Boot the Linux agent at its fixed guest path and bridge its control vsock.
     AgentVmSmoke {
+        /// Explicit host VM resources; both values are required together.
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        #[arg(long, hide = true, requires = "vm_memory_mib")]
+        vm_vcpus: Option<u8>,
+        #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+        #[arg(long, hide = true, requires = "vm_vcpus")]
+        vm_memory_mib: Option<u32>,
         /// Use the exact runtime owner's lifetime instead of the diagnostic deadline.
         #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
         #[arg(long, hide = true)]
@@ -371,6 +378,10 @@ enum Command {
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     #[command(name = "__macos-agent-vm-worker", hide = true)]
     MacosAgentVmWorker {
+        #[arg(long, hide = true, requires = "vm_memory_mib")]
+        vm_vcpus: Option<u8>,
+        #[arg(long, hide = true, requires = "vm_vcpus")]
+        vm_memory_mib: Option<u32>,
         #[arg(long, value_name = "FILE")]
         system_image_manifest: PathBuf,
         #[arg(long, value_name = "DIR")]
@@ -442,6 +453,25 @@ enum Command {
         vm_attachment_manifest_sha256: Option<String>,
     },
 }
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+fn parse_vm_config(
+    vcpus: Option<u8>,
+    memory_mib: Option<u32>,
+) -> koci_sdk::Result<Option<koci_kbox::VmConfig>> {
+    match (vcpus, memory_mib) {
+        (None, None) => Ok(None),
+        (Some(vcpus), Some(memory_mib)) => koci_kbox::VmConfig::new(vcpus, memory_mib).map(Some),
+        _ => Err(koci_sdk::Error::new(
+            koci_sdk::ErrorCode::InvalidArgument,
+            "VM CPU and memory arguments must be supplied together",
+        )),
+    }
+}
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "vm_config_cli_tests.rs"]
+mod vm_config_cli_tests;
 
 fn main() -> ExitCode {
     match Cli::parse().command {
@@ -635,6 +665,10 @@ fn main() -> ExitCode {
         Command::AgentVmSmoke {
             #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
             runtime_owner,
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            vm_vcpus,
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            vm_memory_mib,
             rootfs,
             #[cfg(any(
                 all(target_os = "windows", target_arch = "x86_64"),
@@ -712,6 +746,15 @@ fn main() -> ExitCode {
             #[cfg(unix)]
             vm_attachment_manifest_sha256,
         } => {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            let vm_config = match parse_vm_config(vm_vcpus, vm_memory_mib) {
+                Ok(config) => config,
+                Err(error) => {
+                    eprintln!("koci-kshim: {error}");
+                    return ExitCode::FAILURE;
+                }
+            };
+
             let endpoint = match koci_kbox::AgentVsockEndpoint::new(pipe_name) {
                 Ok(endpoint) => endpoint,
                 Err(error) => {
@@ -933,6 +976,11 @@ fn main() -> ExitCode {
                 #[cfg(unix)]
                 let handoff = handoff
                     .with_vm_attachment_manifest_sha256(vm_attachment_manifest_sha256.as_deref());
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                let handoff = match vm_config {
+                    Some(config) => handoff.with_vm_config(config),
+                    None => handoff,
+                };
                 if let Err(error) = bootstrap.reverify() {
                     eprintln!(
                         "koci-kshim: refusing VM entry because the guest bootstrap token changed: {error}"
@@ -1065,6 +1113,8 @@ fn main() -> ExitCode {
         }
         #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
         Command::MacosAgentVmWorker {
+            vm_vcpus,
+            vm_memory_mib,
             system_image_manifest,
             runtime_share,
             runtime_share_device,
@@ -1079,6 +1129,14 @@ fn main() -> ExitCode {
             guest_recovery_report,
             vm_attachment_manifest_sha256,
         } => {
+            let vm_config = match parse_vm_config(vm_vcpus, vm_memory_mib) {
+                Ok(config) => config,
+                Err(error) => {
+                    eprintln!("koci-kshim: {error}");
+                    return ExitCode::FAILURE;
+                }
+            };
+
             let (runtime_share_identity, runtime_state_identity) =
                 match parse_runtime_share_identities(
                     runtime_share_device,
@@ -1123,6 +1181,10 @@ fn main() -> ExitCode {
             .with_guest_recovery_report(guest_recovery_report.as_deref())
             .with_vm_attachment_manifest_sha256(vm_attachment_manifest_sha256.as_deref())
             .with_transport_qualification(transport_qualification.as_ref());
+            let handoff = match vm_config {
+                Some(config) => handoff.with_vm_config(config),
+                None => handoff,
+            };
             if koci_kbox::run_macos_agent_vm_worker_handoff(handoff) {
                 ExitCode::SUCCESS
             } else {

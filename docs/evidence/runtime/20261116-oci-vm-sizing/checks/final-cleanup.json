@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "utc": "2026-11-15T22:39:57Z",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "sourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "compiledInputCount": 1717,
+  "homes": 15,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 18,
+  "observedSocketPaths": 73,
+  "remainingSockets": [],
+  "caches": [
+    {
+      "store": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/native-image-cache",
+      "immutableFilesCompared": 31,
+      "mutableCatalog": [
+        {
+          "path": "index.json",
+          "before": "da03544d9ca278dea2fcdde8d8aeb29379a623cd7d6c466b2d0ae411165d9162",
+          "after": "42dbaa1a05293cc77354071cf187766621e1e254d1c33c855bfd30a1c52855be"
+        }
+      ]
+    },
+    {
+      "store": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/af-image-cache",
+      "immutableFilesCompared": 531,
+      "mutableCatalog": [
+        {
+          "path": "index.json",
+          "before": "e7d5faaf5ce49caf4698ca710a2a72df6cd6e2a89892f2539c967ae0edd6e02a",
+          "after": "426e00b8ff571c021e34591ad911e5487262029368f26eca0dfaace68c0a76f7"
+        }
+      ]
+    }
+  ],
+  "qualifiedRustNativeTests": 6,
+  "qualifiedPythonNativeScenarios": 3,
+  "hardwareReadbacks": 12,
+  "separateMaintenanceRustTests": 2,
+  "separateMaintenanceSdkScenarios": 2,
+  "priorArchivesRetainedUnchanged": true,
+  "callerSourcesRetained": true,
+  "runtimeMemoryMeasured": false,
+  "resourcesDeletedByAudit": [],
+  "scope": "Current phase only; prior unknown-actor seven-RAM preservation failure remains open"
+}

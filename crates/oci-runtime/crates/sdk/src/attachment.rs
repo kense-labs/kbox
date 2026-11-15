@@ -11,6 +11,9 @@ use crate::{
     INTEL_TDX_LAUNCH_EXTENSION, TEE_LAUNCH_EXTENSION_VERSION,
 };
 
+mod vm_config;
+pub use vm_config::{VmConfig, VM_RESOURCES_EXTENSION, VM_RESOURCES_VERSION};
+
 mod file_grants;
 pub use file_grants::{
     FileGrant, FileGrants, FileSourceIdentity, FILE_GRANTS_EXTENSION, FILE_GRANTS_VERSION,
@@ -290,6 +293,17 @@ impl CreateAttachments {
                     &configuration,
                     ROOTFS_IMAGE_EXTENSION,
                     image.version(),
+                    true,
+                )?,
+            );
+        }
+        if VmConfig::from_bundle(bundle)?.is_some() {
+            attachments.extensions.insert(
+                VM_RESOURCES_EXTENSION.into(),
+                RuntimeExtensionAttachment::from_annotation(
+                    &decode_configuration(bundle)?,
+                    VM_RESOURCES_EXTENSION,
+                    VM_RESOURCES_VERSION,
                     true,
                 )?,
             );
@@ -934,6 +948,7 @@ impl CreateAttachments {
         self.validate_runtime_bundle_handoff(bundle, &configuration)?;
         self.storage_path_restrictions(bundle)?;
         self.rootfs_image(bundle)?;
+        self.vm_config(bundle)?;
         self.raw_storage_images(bundle)?;
         self.file_grants(bundle)?;
         self.memory_secret_files(bundle)?;

@@ -1,0 +1,176 @@
+{
+  "cliChecked": true,
+  "hardwareRows": [
+    {
+      "execution": "d38bc368-1ae2-48b4-afea-bc619f70f0b5",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 134217728,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 1,
+        "presentCpus": 1
+      },
+      "requestedMemoryMib": 128,
+      "requestedVcpus": 1
+    },
+    {
+      "execution": "93b78d98-61a2-427b-b320-d328858cd5ac",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 536870912,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 2,
+        "presentCpus": 2
+      },
+      "requestedMemoryMib": 512,
+      "requestedVcpus": 2
+    },
+    {
+      "execution": "f68498cd-40fc-4e7b-b598-0b26b2894ffe",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 805306368,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 4,
+        "presentCpus": 4
+      },
+      "requestedMemoryMib": 768,
+      "requestedVcpus": 4
+    },
+    {
+      "execution": "d15aa0b9-3a4a-4fd9-95f8-78b1ba6218cd",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 1073741824,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 8,
+        "presentCpus": 8
+      },
+      "requestedMemoryMib": 1024,
+      "requestedVcpus": 8
+    },
+    {
+      "execution": "ed4a59d1-2048-44a9-a509-ddca378a6554",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 8589934592,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 1,
+        "presentCpus": 1
+      },
+      "requestedMemoryMib": 8192,
+      "requestedVcpus": 1
+    },
+    {
+      "execution": "cf436991-3177-4432-99c0-498b0c7e0815",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 134217728,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 8,
+        "presentCpus": 8
+      },
+      "requestedMemoryMib": 128,
+      "requestedVcpus": 8
+    },
+    {
+      "execution": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 805306368,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 2,
+        "presentCpus": 2
+      },
+      "requestedMemoryMib": 768,
+      "requestedVcpus": 2
+    },
+    {
+      "execution": "436ccfaa-95eb-4497-bef2-81f598c04ab6",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 1073741824,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 4,
+        "presentCpus": 4
+      },
+      "requestedMemoryMib": 1024,
+      "requestedVcpus": 4
+    },
+    {
+      "execution": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 805306368,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 2,
+        "presentCpus": 2
+      },
+      "requestedMemoryMib": 768,
+      "requestedVcpus": 2
+    },
+    {
+      "execution": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+      "generation": 2,
+      "guest": {
+        "bootRamBytes": 805306368,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 2,
+        "presentCpus": 2
+      },
+      "requestedMemoryMib": 768,
+      "requestedVcpus": 2
+    },
+    {
+      "execution": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+      "generation": 3,
+      "guest": {
+        "bootRamBytes": 805306368,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 2,
+        "presentCpus": 2
+      },
+      "requestedMemoryMib": 768,
+      "requestedVcpus": 2
+    },
+    {
+      "execution": "83546e13-3f7d-4707-a2fa-8333751b91ca",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 1073741824,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 4,
+        "presentCpus": 4
+      },
+      "requestedMemoryMib": 1024,
+      "requestedVcpus": 4
+    }
+  ],
+  "mode": "matrix",
+  "runtimeRssMeasured": false,
+  "status": "PASS"
+}

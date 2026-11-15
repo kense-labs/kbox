@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/reconcile-failed.py", line 26, in <module>
+    cmd=[str(Path(c["root"])/"owned-sdk-delete"),str(root/"service/runtime.sock"),record["state"]["id"],record["configDigest"],str(checks/("reconcile-sdk-"+label+".json"))]
+KeyError: 'configDigest'

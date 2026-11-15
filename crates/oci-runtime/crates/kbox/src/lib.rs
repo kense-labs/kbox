@@ -114,7 +114,7 @@ pub use agent_smoke::{agent_vm_smoke, AgentVmHandoff};
 pub use koci_agent_protocol::{AgentVsockEndpoint, AGENT_VSOCK_PORT};
 use koci_core::CapabilityStatus;
 use koci_core::HostPlatform;
-use koci_sdk::{Error, ErrorCode, Result};
+pub use koci_sdk::VmConfig;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 pub use macos_readonly::MacosReadOnlyMounts;
 pub use report::{
@@ -151,48 +151,6 @@ pub fn whpx_handle_reclamation_smoke(
 
 #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
 const VM_SMOKE_TOKEN: &str = "koci-whpx-vm-smoke-v1";
-
-/// Validated utility-VM resource configuration.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct VmConfig {
-    vcpus: u8,
-    memory_mib: u32,
-}
-
-impl VmConfig {
-    /// Validate a libkrun VM resource request.
-    ///
-    /// The shared hardware-vm profile admits the request first. The Windows
-    /// WHPX host gate then keeps the certified one-vCPU limit.
-    pub fn new(vcpus: u8, memory_mib: u32) -> Result<Self> {
-        koci_core::hardware_vm::validate_profile_resources(u32::from(vcpus), memory_mib)
-            .map_err(|error| Error::new(ErrorCode::InvalidArgument, error.to_string()))?;
-        #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
-        if vcpus != 1 {
-            return Err(Error::new(
-                ErrorCode::InvalidArgument,
-                format!(
-                    "the certified Windows WHPX path currently supports exactly 1 vCPU; \
-                     requested {vcpus}"
-                ),
-            ));
-        }
-
-        Ok(Self { vcpus, memory_mib })
-    }
-
-    /// Virtual CPU count accepted by libkrun.
-    #[must_use]
-    pub const fn vcpus(self) -> u8 {
-        self.vcpus
-    }
-
-    /// Guest memory in MiB.
-    #[must_use]
-    pub const fn memory_mib(self) -> u32 {
-        self.memory_mib
-    }
-}
 
 /// Create, configure, and release one real libkrun context.
 #[must_use]
@@ -535,17 +493,16 @@ pub fn system_image_context_smoke(manifest_path: &Path) -> KSystemImageContextSm
 }
 
 #[cfg(any(
+    all(target_os = "windows", target_arch = "x86_64"),
     all(target_os = "macos", target_arch = "aarch64"),
     all(
         target_os = "linux",
         any(target_arch = "x86_64", target_arch = "aarch64")
     )
 ))]
-const fn fallback_context_config() -> VmConfig {
-    VmConfig {
-        vcpus: 1,
-        memory_mib: 128,
-    }
+fn fallback_context_config() -> VmConfig {
+    // One vCPU and128MiB satisfy the immutable shared profile and every host gate.
+    VmConfig::new(1, 128).expect("shared context-smoke resource constants are valid")
 }
 
 /// Enter a real utility VM, execute `/bin/sh`, and verify a guest-written marker.
@@ -758,6 +715,7 @@ pub fn run_macos_guest_command_worker(
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 #[doc(hidden)]
 pub struct MacosAgentVmWorkerHandoff<'a> {
+    vm_config: Option<VmConfig>,
     system_image_manifest: &'a Path,
     runtime_share: &'a Path,
     runtime_share_identity: Option<(u64, u64)>,
@@ -783,6 +741,7 @@ impl<'a> MacosAgentVmWorkerHandoff<'a> {
         socket: &'a Path,
     ) -> Self {
         Self {
+            vm_config: None,
             system_image_manifest,
             runtime_share,
             runtime_share_identity: None,
@@ -819,6 +778,13 @@ impl<'a> MacosAgentVmWorkerHandoff<'a> {
         self
     }
 
+    /// Carry the exact validated hardware resources into the private worker.
+    #[must_use]
+    pub const fn with_vm_config(mut self, config: VmConfig) -> Self {
+        self.vm_config = Some(config);
+        self
+    }
+
     #[must_use]
     pub const fn with_vm_attachment_manifest_sha256(mut self, digest: Option<&'a str>) -> Self {
         self.vm_attachment_manifest_sha256 = digest;
@@ -847,6 +813,7 @@ impl<'a> MacosAgentVmWorkerHandoff<'a> {
 #[must_use]
 pub fn run_macos_agent_vm_worker_handoff(handoff: MacosAgentVmWorkerHandoff<'_>) -> bool {
     let MacosAgentVmWorkerHandoff {
+        vm_config,
         system_image_manifest,
         runtime_share,
         runtime_share_identity,
@@ -865,6 +832,7 @@ pub fn run_macos_agent_vm_worker_handoff(handoff: MacosAgentVmWorkerHandoff<'_>)
         return false;
     };
     macos_agent_smoke::run_worker(macos_agent_smoke::MacosAgentVmWorkerConfig {
+        vm: vm_config.unwrap_or_else(fallback_config),
         system_image_manifest,
         runtime_share,
         runtime_share_identity: Some(runtime_share_identity),
@@ -1201,10 +1169,7 @@ pub fn run_linux_agent_vm_worker_with_compatibility_drift(
 }
 
 pub(crate) fn fallback_config() -> VmConfig {
-    VmConfig {
-        vcpus: 1,
-        memory_mib: 512,
-    }
+    VmConfig::default()
 }
 
 #[cfg(all(target_os = "windows", target_arch = "x86_64"))]

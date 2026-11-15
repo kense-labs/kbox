@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "oci_hvf_spec::vm_config_tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 10.275531666
+}

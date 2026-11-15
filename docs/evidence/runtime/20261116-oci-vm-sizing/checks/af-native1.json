@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/qualification-runner.py",
+    "docs/evidence/runtime/20261116-oci-vm-sizing/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 187.325433709
+}

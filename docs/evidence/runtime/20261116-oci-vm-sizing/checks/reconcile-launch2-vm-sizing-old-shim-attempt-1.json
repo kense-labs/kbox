@@ -1,0 +1,50 @@
+{
+  "root": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1",
+  "recordBefore": {
+    "state": {
+      "ociVersion": "1.3.0",
+      "id": "kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1",
+      "status": "created",
+      "pid": 217,
+      "bundle": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime/bundle-handoffs/kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1/kbox-create-c04c84267a3f3a5d28f83ab2dfa666e16675a4cfff8c972490aa3db56fa54f9a/bundle",
+      "annotations": {
+        "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+        "com.kbox.process-owner": "koci-runtime",
+        "dev.kbox.vm-resources": "{\"schemaVersion\":1,\"vcpus\":2,\"memoryMib\":768}",
+        "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:fbf002a06ddd79c6b325b915620a1679f98b5e872fd714cd3a3fa33ed2a50b09\",\"size\":134217728,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+        "com.kbox.isolation-class": "hardware-vm",
+        "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1"
+      }
+    },
+    "generation": 1,
+    "driver": "libk-hvf",
+    "isolation": "dedicated-vm",
+    "config_digest": "sha256:e182fa627ef74158e04e0dfb9a0a059aba8df96b29d820f8239b130fc0f61a02",
+    "attachments_digest": "sha256:d4bd88495741ef3e5b3d2bdb2898eef4d1e56b39ce77f0e5081c14bbf2026b38"
+  },
+  "hostCommand": [
+    "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64/koci",
+    "macos-hvf-host-service",
+    "--root",
+    "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service",
+    "--shim",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+    "--system-image-manifest",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json"
+  ],
+  "workloadStartsBefore": 0,
+  "sdkDelete": {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/owned-sdk-delete",
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock",
+      "kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1",
+      "sha256:e182fa627ef74158e04e0dfb9a0a059aba8df96b29d820f8239b130fc0f61a02",
+      "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-oci-vm-sizing/checks/reconcile-sdk2-vm-sizing-old-shim-attempt-1.json"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "hostExit": 0,
+  "socketAbsentAfterSdkDeleteShutdown": true
+}

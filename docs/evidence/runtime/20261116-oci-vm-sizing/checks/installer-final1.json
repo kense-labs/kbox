@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "scripts/test-install-package.py"
+  ],
+  "exit": 0,
+  "seconds": 3.632711583
+}

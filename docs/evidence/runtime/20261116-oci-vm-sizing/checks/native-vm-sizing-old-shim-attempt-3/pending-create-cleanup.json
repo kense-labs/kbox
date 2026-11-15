@@ -1,0 +1,17 @@
+{
+  "records": [
+    {
+      "configDigest": "sha256:b1822174778e7c0552bc63a581fb3b3ff8d1a4c28a660d83bd9150f69cb83d83",
+      "createResumed": true,
+      "exactForceDelete": true,
+      "originalOperation": "kbox-create-fa5db0b0a834bc49bc9e648caf3eb0bb6f7151b54b83e1238195903a4fd8bc83",
+      "originalRequestDigest": "sha256:0c39eb7c263b9829a12021b088433ff9dd10f539a7f4a4fe50991f61684b7f8c",
+      "target": {
+        "generation": 1,
+        "id": "kbox-703b9563-92e6-466b-99ea-cc4537b213cc"
+      }
+    }
+  ],
+  "status": "PASS",
+  "workloadStartsAdded": 0
+}

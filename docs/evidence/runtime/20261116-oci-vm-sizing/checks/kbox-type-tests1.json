@@ -1,0 +1,14 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-kbox",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 7.698104166
+}

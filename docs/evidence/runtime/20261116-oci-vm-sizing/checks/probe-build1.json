@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "cc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "docs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c",
+      "-o",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/probe-selftest-host"
+    ],
+    "exit": 0,
+    "seconds": 0.058709000000000004,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/probe-selftest-host",
+      "--self-test"
+    ],
+    "exit": 0,
+    "seconds": 0.098018084,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/opt/homebrew/bin/zig",
+      "cc",
+      "-target",
+      "aarch64-linux-musl",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-static",
+      "docs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c",
+      "-o",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/vm-hardware-probe"
+    ],
+    "exit": 1,
+    "seconds": 0.464579334,
+    "stdout": "",
+    "stderr": "docs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c:45:21: error: unused variable 'bad' [-Werror,-Wunused-variable]\n   45 |         const char *bad[] = {\"\", \"0-\", \"3-1\", \"0-3,2-4\", \"0,0\", \"0,\", \"4096\"};\n      |                     ^~~\ndocs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c:48:25: error: unused variable 'eight_gib' [-Werror,-Wunused-variable]\n   48 |     const unsigned char eight_gib[] = {0, 0, 0, 2, 0, 0, 0, 0};\n      |                         ^~~~~~~~~\ndocs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c:69:9: error: unused variable 'length' [-Werror,-Wunused-variable]\n   69 |     int length = snprintf(path, size, \"%s/%s\", root, tail);\n      |         ^~~~~~\n3 errors generated.\n"
+  }
+]

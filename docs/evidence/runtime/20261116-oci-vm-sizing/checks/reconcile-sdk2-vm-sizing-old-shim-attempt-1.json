@@ -1,0 +1,53 @@
+{
+  "after": [],
+  "before": [
+    {
+      "attachments_digest": "sha256:d4bd88495741ef3e5b3d2bdb2898eef4d1e56b39ce77f0e5081c14bbf2026b38",
+      "config_digest": "sha256:e182fa627ef74158e04e0dfb9a0a059aba8df96b29d820f8239b130fc0f61a02",
+      "driver": "libk-hvf",
+      "generation": 1,
+      "isolation": "dedicated-vm",
+      "state": {
+        "annotations": {
+          "com.kbox.isolation-class": "hardware-vm",
+          "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1",
+          "com.kbox.process-owner": "koci-runtime",
+          "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+          "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:fbf002a06ddd79c6b325b915620a1679f98b5e872fd714cd3a3fa33ed2a50b09\",\"size\":134217728,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+          "dev.kbox.vm-resources": "{\"schemaVersion\":1,\"vcpus\":2,\"memoryMib\":768}"
+        },
+        "bundle": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime/bundle-handoffs/kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1/kbox-create-c04c84267a3f3a5d28f83ab2dfa666e16675a4cfff8c972490aa3db56fa54f9a/bundle",
+        "id": "kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1",
+        "ociVersion": "1.3.0",
+        "status": "stopped"
+      }
+    }
+  ],
+  "exactTarget": {
+    "generation": 1,
+    "id": "kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1"
+  },
+  "observed": {
+    "attachments_digest": "sha256:d4bd88495741ef3e5b3d2bdb2898eef4d1e56b39ce77f0e5081c14bbf2026b38",
+    "config_digest": "sha256:e182fa627ef74158e04e0dfb9a0a059aba8df96b29d820f8239b130fc0f61a02",
+    "driver": "libk-hvf",
+    "generation": 1,
+    "isolation": "dedicated-vm",
+    "state": {
+      "annotations": {
+        "com.kbox.isolation-class": "hardware-vm",
+        "com.kbox.microvm.schema": "kbox.portable-microvm-bundle.v1",
+        "com.kbox.process-owner": "koci-runtime",
+        "dev.kbox.bundle-handoff": "move-to-runtime-v2",
+        "dev.kbox.rootfs-image": "{\"schemaVersion\":1,\"sha256\":\"sha256:fbf002a06ddd79c6b325b915620a1679f98b5e872fd714cd3a3fa33ed2a50b09\",\"size\":134217728,\"imageDigest\":\"sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa\"}",
+        "dev.kbox.vm-resources": "{\"schemaVersion\":1,\"vcpus\":2,\"memoryMib\":768}"
+      },
+      "bundle": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime/bundle-handoffs/kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1/kbox-create-c04c84267a3f3a5d28f83ab2dfa666e16675a4cfff8c972490aa3db56fa54f9a/bundle",
+      "id": "kbox-fe55c43a-6685-4573-9f9c-eb218ac561e1",
+      "ociVersion": "1.3.0",
+      "status": "stopped"
+    }
+  },
+  "startInvoked": false,
+  "status": "PASS"
+}

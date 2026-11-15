@@ -1,0 +1,11 @@
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.02s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8496bfeaaa67e355)
+
+thread 'attachment::vm_config::tests::explicit_vm_resources_are_bound_as_required_and_old_hosts_refuse' (103279851) panicked at crates/oci-runtime/crates/sdk/src/attachment/vm_config_tests.rs:22:10:
+explicit VM resources must be declared to old Hosts
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'attachment::vm_config::tests::vm_annotation_cannot_bypass_admission_with_a_legacy_manifest' (103279854) panicked at crates/oci-runtime/crates/sdk/src/attachment/vm_config_tests.rs:42:47:
+called `Result::unwrap_err()` on an `Ok` value: ()
+error: test failed, to rerun pass `-p koci-sdk --lib`

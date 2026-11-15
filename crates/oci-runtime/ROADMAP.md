@@ -3009,3 +3009,11 @@ Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
 cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
 unsupported/no native run and RSS unmeasured. The user requests convergence and
 integration now; subsequent merged-source validation is recorded separately.
+
+- [x] Spec031: explicit Mac VM CPU/memory attachment through Host/Shim/private
+  worker and exact shutdown validation, actual hardware readback/CLI/recovery/
+  old-component refusal. [Final installed evidence](../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md)
+  records6 Rust native tests,3 Python scenarios and15-home cleanup. This bounded
+  item does not close full W4/default cutover/GA; default gate6 disk-service
+  failures and one SDK failure remain. Windows ARM64 dependencies are unsupported
+  and have no native validation; RSS is unmeasured.

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-kbox",
+    "--bin",
+    "koci-kshim",
+    "vm_config_cli_tests",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 15.041667749999998
+}

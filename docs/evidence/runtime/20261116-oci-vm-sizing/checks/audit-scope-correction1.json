@@ -1,0 +1,7 @@
+{
+  "ownedProcesses": [],
+  "globalProcessRows": 2786,
+  "rawSnapshotRetained": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/audit-candidate1-platform-resources.json",
+  "rawSnapshotSha256": "c5b64a1f86554ec21ecd70c3d87bf063f5080a13c9517f868c387328d10c1a2f",
+  "scopeCorrection": "Global process listing is read-only discovery, not proof of phase ownership. The first audit incorrectly mined it for owned socket IDs; all foreign resources remain untouched."
+}

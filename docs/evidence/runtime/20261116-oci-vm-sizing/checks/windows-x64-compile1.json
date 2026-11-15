@@ -1,0 +1,21 @@
+{
+  "command": [
+    "env",
+    "K_DEPS_STUB=1",
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "koci-sdk",
+    "-p",
+    "koci-kbox",
+    "-p",
+    "koci-runtime",
+    "--target",
+    "x86_64-pc-windows-msvc",
+    "--all-targets"
+  ],
+  "exit": 101,
+  "seconds": 14.619184916
+}

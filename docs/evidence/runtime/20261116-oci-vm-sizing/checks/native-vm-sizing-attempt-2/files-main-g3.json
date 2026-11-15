@@ -1,0 +1,14 @@
+{
+  "execution": "d9e176e9-a4e4-4fca-bc32-0909c2fcfc72",
+  "generation": 3,
+  "liveRead": "live host main generation 3 changed length",
+  "proof": {
+    "childDenied": true,
+    "freshMounts": 2,
+    "hostDenials": 16,
+    "privateEntriesEach": 1,
+    "writableRemount": true
+  },
+  "rwBytes": "native-writeback",
+  "status": "PASS"
+}

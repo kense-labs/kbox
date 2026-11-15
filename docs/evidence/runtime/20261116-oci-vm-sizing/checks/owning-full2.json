@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "koci-sdk",
+    "-p",
+    "koci-kbox",
+    "-p",
+    "koci-runtime",
+    "--all-targets"
+  ],
+  "exit": 101,
+  "seconds": 352.37435712499996
+}

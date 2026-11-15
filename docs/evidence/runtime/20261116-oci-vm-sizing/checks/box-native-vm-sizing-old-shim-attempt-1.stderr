@@ -1,0 +1,103 @@
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+waiting for owned Host: execution backend unavailable: Kbox OCI connect: failed to connect SDK Unix socket /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-1/service/runtime.sock: No such file or directory (os error 2)
+
+thread '<unnamed>' (104265068) panicked at crates/box/runtime/src/local_execution/oci_hvf_native_pending.rs:104:14:
+called `Result::unwrap()` on an `Err` value: Error { code: Unavailable, operation: Some("agent-protocol"), message: "guest-agent connection was explicitly closed", retryable: false }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread '<unnamed>' (104265068) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:349:51:
+called `Result::unwrap()` on an `Err` value: Conflict { execution_id: ExecutionId("fe55c43a-6685-4573-9f9c-eb218ac561e1"), message: "cannot remove execution in state killing" }
+
+thread '<unnamed>' (104265068) panicked at crates/box/runtime/src/local_execution/oci_hvf_native.rs:167:9:
+Host graceful shutdown failed
+stack backtrace:
+   0:        0x10875a1f8 - std[7648081134ee26d8]::backtrace_rs::backtrace::libunwind::trace
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/libunwind.rs:117:9
+   1:        0x10875a1f8 - std[7648081134ee26d8]::backtrace_rs::backtrace::trace_unsynchronized::<std[7648081134ee26d8]::sys::backtrace::_print_fmt::{closure#1}>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/../../backtrace/src/backtrace/mod.rs:66:14
+   2:        0x10875a1f8 - std[7648081134ee26d8]::sys::backtrace::_print_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:74:9
+   3:        0x10875a1f8 - <<std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print::DisplayBacktrace as core[318a34b566a36fe]::fmt::Display>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:44:26
+   4:        0x108770b78 - <core[318a34b566a36fe]::fmt::rt::Argument>::fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/rt.rs:152:76
+   5:        0x108770b78 - core[318a34b566a36fe]::fmt::write
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/fmt/mod.rs:1687:22
+   6:        0x10875fe7c - std[7648081134ee26d8]::io::default_write_fmt::<std[7648081134ee26d8]::sys::stdio::unix::Stderr>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:622:11
+   7:        0x10875fe7c - <std[7648081134ee26d8]::sys::stdio::unix::Stderr as std[7648081134ee26d8]::io::Write>::write_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/io/mod.rs:1977:13
+   8:        0x10873a1c0 - <std[7648081134ee26d8]::sys::backtrace::BacktraceLock>::print
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:47:25
+   9:        0x10873a1c0 - std[7648081134ee26d8]::panicking::default_hook::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:292:27
+  10:        0x108751068 - std[7648081134ee26d8]::panicking::default_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:319:9
+  11:        0x108751390 - std[7648081134ee26d8]::panicking::panic_with_hook
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:825:13
+  12:        0x10873a280 - std[7648081134ee26d8]::panicking::panic_handler::{closure#0}
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:691:13
+  13:        0x10872f66c - std[7648081134ee26d8]::sys::backtrace::__rust_end_short_backtrace::<std[7648081134ee26d8]::panicking::panic_handler::{closure#0}, !>
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/backtrace.rs:182:18
+  14:        0x10873afcc - __rustc[6ef78fba13ac776c]::rust_begin_unwind
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/panicking.rs:689:5
+  15:        0x1087d23e4 - core[318a34b566a36fe]::panicking::panic_fmt
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:80:14
+  16:        0x1066c7ecc - drop
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native.rs:167:9
+  17:        0x106662fa8 - drop_glue<kbox_runtime::local_execution::oci_hvf::tests::native::Host>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:825:1
+  18:        0x1064b65d4 - drop_glue<core::option::Option<kbox_runtime::local_execution::oci_hvf::tests::native::Host>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ptr/mod.rs:825:1
+  19:        0x1061a0728 - {closure#0}
+                               at /Users/roylin/code/kense/kbox/crates/box/runtime/src/local_execution/oci_hvf_native_vm_sizing.rs:292:5
+  20:        0x105150a84 - __rust_begin_short_backtrace<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/sys/backtrace.rs:166:18
+  21:        0x104e5c508 - {closure#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:70:13
+  22:        0x10641c650 - call_once<(), std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/panic/unwind_safe.rs:275:9
+  23:        0x1063846f0 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  24:        0x104e5ddcc - ___rust_try
+  25:        0x104e55e68 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  26:        0x104e55e68 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  27:        0x104e55e68 - {closure#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  28:        0x106671028 - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback::{closure_env#0}, ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  29:        0x108758e80 - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  30:        0x108758e80 - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  31:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (104265068) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

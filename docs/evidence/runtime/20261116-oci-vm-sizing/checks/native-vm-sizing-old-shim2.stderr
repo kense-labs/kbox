@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/run-native.py", line 178, in <module>
+    if mode.startswith('vm-sizing-old-'): assert not loaded, 'old components entered a VM despite mandatory sizing'
+AssertionError: old components entered a VM despite mandatory sizing

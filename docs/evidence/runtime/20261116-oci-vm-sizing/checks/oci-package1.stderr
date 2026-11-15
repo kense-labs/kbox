@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/package-oci-final1.py", line 13, in <module>
+    native_source=json.loads(Path(c['nativeArchive']).with_name('uncached-source.json').read_text());info['nativeArchiveSha256']=native_source['archiveSha256'];info['nativeSource']=native_source;info['nativeSelection']='pinned '+Path(c['nativeArchive']).name+' from separately qualified uncommitted libkrun worktree; exact retained OCI firmware; parent gitlinks unchanged'
+KeyError: 'nativeArchive'

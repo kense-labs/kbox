@@ -1,0 +1,7 @@
+
+running 2 tests
+test agent_session::vm_config_tests::explicit_hvf_resources_follow_the_subcommand_and_are_never_omitted ... ok
+test agent_session::vm_config_tests::legacy_hvf_shim_command_retains_its_exact_argument_prefix ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 443 filtered out; finished in 0.00s
+

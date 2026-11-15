@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/final-audit.py", line 52, in <module>
+    directory=Path("/private/tmp/kbox-sockets")/identity;assert not directory.exists(),directory
+AssertionError: /private/tmp/kbox-sockets/fa9f4564-715b-4799-8806-d5635cd63973

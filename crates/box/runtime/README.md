@@ -404,8 +404,11 @@ endpoint with `K_BOX_OCI_MIGRATION=off` to create BoxVm executions while keeping
 stored OciSdk routes usable. Missing explicit endpoints or unsupported modes
 refuse; macOS with no migration input keeps its existing BoxVm default.
 
-The bounded profile requires Linux arm64, one vCPU, 512 MiB physical guest
-memory and `network=none`. It admits plain caller directory workspace/binds,
+The bounded profile requires Linux arm64 and `network=none`. VM hardware accepts
+1/2/4/8 vCPUs and 128..8192 MiB in 128 MiB steps. Custom pairs require the exact
+`dev.kbox.vm-resources` v1 attachment; absence retains 1 vCPU / 512 MiB. See
+[actual Guest hardware, recovery and installed-archive acceptance](../../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md).
+It admits plain caller directory workspace/binds,
 host-enforced directory `:ro`, typed cgroup limits and explicit guest SYS_ADMIN
 (with cap_drop precedence). Init and exec share this admitted capability
 ceiling. Secret/raw-disk combinations, custom devices/network,

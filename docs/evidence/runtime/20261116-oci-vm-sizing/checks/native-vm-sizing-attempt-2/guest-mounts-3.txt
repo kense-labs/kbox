@@ -1,0 +1,42 @@
+43 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0000//deleted /dev/null rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+44 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0001//deleted /dev/zero rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+45 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0002//deleted /dev/full rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+46 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0003//deleted /dev/random rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+47 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0004//deleted /dev/urandom rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+48 72 0:6 /koci-agent-210/c-0000000000000001/devices/device-0005//deleted /dev/tty rw,nosuid,noexec,relatime - devtmpfs devtmpfs rw,size=340804k,nr_inodes=85201,mode=755
+72 50 254:16 / / rw,nosuid,nodev,relatime - ext4 /dev/vdb rw
+73 72 0:37 / /sys ro,nosuid,nodev,noexec,relatime - sysfs sysfs ro
+74 72 0:38 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw
+75 73 0:24 / /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime - cgroup2 cgroup2 rw
+76 72 0:31 / /workspace rw,nosuid,nodev,relatime - virtiofs kdir-c3f5f31e3f032f252f86203d rw
+77 72 0:32 / /readonly rw,relatime - virtiofs kdir-f60c096d52373db1338a7172 rw
+78 72 0:33 / /writable rw,nosuid,nodev,relatime - virtiofs kdir-cd4c6f131b0da1cfbfd04768 rw
+79 72 0:34 /file /exact-ro rw,relatime - virtiofs kfile-304084407da8753439ba8c64 rw
+80 72 0:35 /file /exact-rw rw,nosuid,nodev,relatime - virtiofs kfile-438773a04c2c6692542184eb rw
+81 72 0:39 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,gid=5,mode=620,ptmxmode=666
+82 72 0:40 / /dev/shm rw,nosuid,nodev,noexec,relatime - tmpfs shm rw
+58 74 0:42 / /proc/asound ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs ro,size=4k,nr_inodes=2,mode=000
+59 74 0:41 /source//deleted /proc/kcore ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+60 74 0:41 /source//deleted /proc/keys ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+61 74 0:41 /source//deleted /proc/timer_list ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs rw,size=4k,nr_inodes=2,mode=700
+62 73 0:43 / /sys/firmware ro,nosuid,nodev,noexec,relatime - tmpfs tmpfs ro,size=4k,nr_inodes=2,mode=000
+57 74 0:38 /bus /proc/bus ro,nosuid,nodev,noexec,relatime - proc proc rw
+63 74 0:38 /fs /proc/fs ro,nosuid,nodev,noexec,relatime - proc proc rw
+64 74 0:38 /irq /proc/irq ro,nosuid,nodev,noexec,relatime - proc proc rw
+65 74 0:38 /sys /proc/sys ro,nosuid,nodev,noexec,relatime - proc proc rw
+66 74 0:38 /sysrq-trigger /proc/sysrq-trigger ro,nosuid,nodev,noexec,relatime - proc proc rw
+/readonly:
+total 8
+drwxr-xr-x    2 501      root            64 Nov 15 22:32 empty
+-rw-r--r--    1 501      root            12 Nov 15 22:32 input
+-rw-r--r--    1 501      root            11 Nov 15 22:32 replacement
+
+/writable:
+total 12
+-rw-r--r--    1 root     root             1 Nov 15 22:33 concurrent-count
+-rw-r--r--    1 root     root             1 Nov 15 22:33 exec-count
+lrwxrwxrwx    1 root     root             9 Nov 15 22:34 indir -> /readonly
+lrwxrwxrwx    1 root     root            15 Nov 15 22:34 inward -> /readonly/input
+-rw-r--r--    1 root     root             8 Nov 15 22:34 output
+drwxr-xr-x    2 root     root            64 Nov 15 22:33 typed 目录
+lrwxr-xr-x    1 501      root            70 Nov 15 22:32 ungranted-link -> /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-2/ungranted

@@ -1470,3 +1470,15 @@ Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
 cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
 unsupported/no native run and RSS unmeasured. The user requests convergence and
 integration now; subsequent merged-source validation is recorded separately.
+
+Spec031 qualifies explicit VM hardware resources on the existing Mac arm64
+OciSdk path:1/2/4/8 CPUs,128..8192MiB in128MiB steps, with required
+`dev.kbox.vm-resources` v1. Legacy absence retains1/512. Exact typed intent
+reaches native set_vm_config and is retained for shutdown validation. Native
+Guest online/present CPU and device-tree RAM readback, CLI, independent VMs,
+cgroup-update separation, normal/stopped recovery and old Host/Shim refusal
+are recorded in [final archive acceptance](../../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md).
+6 Rust native tests plus3 Python scenarios and15-home cleanup pass. Full default
+gate still fails6 disk-service cases; one SDK disk check also fails. Full OCI
+Host Service cutover, live continuity, platform promotion and GA remain open.
+Windows ARM64 dependencies remain unsupported/no native run; RSS is unmeasured.

@@ -1,0 +1,22 @@
+{
+  "cliChecked": false,
+  "hardwareRows": [
+    {
+      "execution": "412333b6-9ad0-4bb8-a870-a3bdb5480824",
+      "generation": 1,
+      "guest": {
+        "bootRamBytes": 536870912,
+        "freshReadonlySysfs": true,
+        "guestMountRemoved": true,
+        "memoryNodes": 1,
+        "onlineCpus": 1,
+        "presentCpus": 1
+      },
+      "requestedMemoryMib": 512,
+      "requestedVcpus": 1
+    }
+  ],
+  "mode": "baseline",
+  "runtimeRssMeasured": false,
+  "status": "PASS"
+}

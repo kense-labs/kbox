@@ -1,0 +1,210 @@
+[
+  {
+    "id": "875766bc-61de-4a36-8be0-2e82114dd49d",
+    "short_id": "875766bc61de",
+    "name": "managed-875766bc61de",
+    "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+    "managed_execution": {
+      "operation_id": "vm-sizing-compat-create",
+      "creation_intent_digest": "sha256:0ac679b3bfd0c88a728849d657a30d66d4b1dc1a6ea552d84a2dcd136f14a9c1",
+      "generation": 1,
+      "request": {
+        "external_sandbox_id": "vm-sizing-compatibility",
+        "config": {
+          "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+          "workspace": "",
+          "resources": {
+            "vcpus": 2,
+            "memory_mb": 768,
+            "disk_mb": 128,
+            "timeout": 3600
+          },
+          "log_level": "Info",
+          "debug_grpc": false,
+          "tee": {
+            "kind": "none"
+          },
+          "cmd": [
+            "/bin/sh",
+            "-c",
+            "printf forbidden > /compat/entered; exec /bin/sleep 2147483647"
+          ],
+          "stdin_open": false,
+          "entrypoint_override": null,
+          "user": null,
+          "workdir": null,
+          "hostname": null,
+          "volumes": [
+            "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/compat-entry:/compat:rw"
+          ],
+          "virtiofs_cache": null,
+          "extra_env": [],
+          "cache": {
+            "enabled": true,
+            "cache_dir": null,
+            "max_rootfs_entries": 10,
+            "max_cache_bytes": 10737418240
+          },
+          "pool": {
+            "enabled": false,
+            "prewarm": null,
+            "min_idle": 1,
+            "max_size": 5,
+            "max_concurrent_boots": 2,
+            "idle_ttl_secs": 300,
+            "scaling": {
+              "enabled": false,
+              "scale_up_threshold": 0.3,
+              "scale_down_threshold": 0.05,
+              "max_min_idle": 0,
+              "cooldown_secs": 60,
+              "window_secs": 120
+            },
+            "snapshot_fork": false
+          },
+          "deferred_main": false,
+          "ksm": false,
+          "snapshot_mem_file": null,
+          "snapshot_sock": null,
+          "restore_from": null,
+          "port_map": [],
+          "dns": [],
+          "egress_allowed_names": [],
+          "add_hosts": [],
+          "network": "none",
+          "tmpfs": [],
+          "resource_limits": {
+            "pids_limit": null,
+            "cpuset_cpus": null,
+            "ulimits": [],
+            "cpu_shares": null,
+            "cpu_quota": null,
+            "cpu_period": null,
+            "memory_reservation": null,
+            "memory_swap": null,
+            "sandbox_memory_limit_bytes": null
+          },
+          "cap_add": [],
+          "cap_drop": [],
+          "security_opt": [],
+          "sysctls": [],
+          "privileged": false,
+          "read_only": false,
+          "sidecar": null,
+          "persistent": false
+        },
+        "labels": {},
+        "policy": {
+          "name": null,
+          "auto_remove": false,
+          "restart_policy": "no",
+          "max_restart_count": 0,
+          "health_check": null,
+          "healthcheck_disabled": false,
+          "log_config": {
+            "driver": "json-file",
+            "options": {}
+          },
+          "volume_names": [],
+          "platform": null,
+          "init": false,
+          "devices": [],
+          "gpus": null,
+          "shm_size": null,
+          "stop_signal": null,
+          "stop_timeout": null,
+          "oom_kill_disable": false,
+          "oom_score_adj": null,
+          "managed_secret_root": null
+        },
+        "rootfs_snapshot_id": null
+      },
+      "oci_runtime": null,
+      "runtime_route": "oci_sdk",
+      "plan": {
+        "backend": "kbox",
+        "isolation_class": "hardware-vm",
+        "required_controls": []
+      },
+      "pending_operation": {
+        "kind": "start"
+      },
+      "last_restart": null,
+      "last_resource_update": null,
+      "finished_at": null,
+      "paused_with_memory": true
+    },
+    "status": "starting",
+    "pid": null,
+    "pid_start_time": null,
+    "cpus": 2,
+    "memory_mb": 768,
+    "volumes": [
+      "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/compat-entry:/compat:rw"
+    ],
+    "virtiofs_cache": null,
+    "env": {},
+    "cmd": [
+      "/bin/sh",
+      "-c",
+      "printf forbidden > /compat/entered; exec /bin/sleep 2147483647"
+    ],
+    "entrypoint": null,
+    "box_dir": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/home/boxes/875766bc-61de-4a36-8be0-2e82114dd49d",
+    "exec_socket_path": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/home/boxes/875766bc-61de-4a36-8be0-2e82114dd49d/sockets/exec.sock",
+    "console_log": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-old-shim-attempt-4/home/boxes/875766bc-61de-4a36-8be0-2e82114dd49d/logs/console.log",
+    "created_at": "2026-11-15T22:35:51.558166Z",
+    "started_at": null,
+    "auto_remove": false,
+    "hostname": null,
+    "user": null,
+    "workdir": null,
+    "restart_policy": "no",
+    "port_map": [],
+    "labels": {},
+    "stopped_by_user": false,
+    "restart_count": 0,
+    "max_restart_count": 0,
+    "exit_code": null,
+    "health_check": null,
+    "healthcheck_disabled": false,
+    "health_status": "none",
+    "health_retries": 0,
+    "health_last_check": null,
+    "network_mode": "none",
+    "network_name": null,
+    "volume_names": [],
+    "tmpfs": [],
+    "anonymous_volumes": [],
+    "resource_limits": {
+      "pids_limit": null,
+      "cpuset_cpus": null,
+      "ulimits": [],
+      "cpu_shares": null,
+      "cpu_quota": null,
+      "cpu_period": null,
+      "memory_reservation": null,
+      "memory_swap": null,
+      "sandbox_memory_limit_bytes": null
+    },
+    "log_config": {
+      "driver": "json-file",
+      "options": {}
+    },
+    "add_host": [],
+    "platform": null,
+    "init": false,
+    "read_only": false,
+    "cap_add": [],
+    "cap_drop": [],
+    "security_opt": [],
+    "privileged": false,
+    "devices": [],
+    "gpus": null,
+    "shm_size": null,
+    "stop_signal": null,
+    "stop_timeout": null,
+    "oom_kill_disable": false,
+    "oom_score_adj": null
+  }
+]

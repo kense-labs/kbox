@@ -137,6 +137,7 @@ pub(crate) struct AgentVmSession {
     console: PathBuf,
     runtime_share_required: bool,
     expected_system_image_manifest_sha256: Option<String>,
+    expected_vm_config: koci_sdk::VmConfig,
     /// Runtime share that holds the opt-in Live binding; cleared on intentional shutdown.
     #[cfg(any(
         all(target_os = "windows", target_arch = "x86_64"),
@@ -205,7 +206,25 @@ impl ShutdownCompletion {
     }
 }
 
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+fn configure_hvf_agent_vm_command(command: &mut Command, config: Option<koci_sdk::VmConfig>) {
+    command.arg("agent-vm-smoke").arg("--runtime-owner");
+    if let Some(config) = config {
+        command
+            .arg("--vm-vcpus")
+            .arg(config.vcpus().to_string())
+            .arg("--vm-memory-mib")
+            .arg(config.memory_mib().to_string());
+    }
+}
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "agent_session_vm_config_tests.rs"]
+mod vm_config_tests;
+
 struct AgentVmConnectOptions<'a> {
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    vm_config: Option<koci_sdk::VmConfig>,
     system_image_manifest: Option<&'a Path>,
     expected_system_image_manifest_sha256: Option<&'a str>,
     runtime_share: Option<&'a Path>,
@@ -314,12 +333,15 @@ impl UtilityVmSession {
         console: &Path,
         recovery_report: Option<&Path>,
         vm_attachment_manifest_sha256: Option<&str>,
+        vm_config: Option<koci_sdk::VmConfig>,
     ) -> std::result::Result<Self, AgentVmSmokeReport> {
         let owner = AgentVmSession::connect_inner(
             shim,
             runtime_share,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config,
                 system_image_manifest: Some(system_image_manifest),
                 expected_system_image_manifest_sha256: Some(expected_system_image_manifest_sha256),
                 runtime_share: Some(runtime_share),
@@ -398,6 +420,8 @@ impl UtilityVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest: Some(system_image_manifest),
                 expected_system_image_manifest_sha256: Some(expected_system_image_manifest_sha256),
                 runtime_share: Some(runtime_share),
@@ -493,6 +517,8 @@ impl UtilityVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share: Some(runtime_share),
@@ -536,6 +562,8 @@ impl UtilityVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share: Some(runtime_share),
@@ -672,6 +700,8 @@ impl AgentVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256,
                 runtime_share,
@@ -702,6 +732,8 @@ impl AgentVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share,
@@ -733,6 +765,8 @@ impl AgentVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share,
@@ -764,6 +798,8 @@ impl AgentVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share,
@@ -795,6 +831,8 @@ impl AgentVmSession {
             rootfs,
             console,
             AgentVmConnectOptions {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                vm_config: None,
                 system_image_manifest,
                 expected_system_image_manifest_sha256: None,
                 runtime_share,
@@ -816,6 +854,8 @@ impl AgentVmSession {
         options: AgentVmConnectOptions<'_>,
     ) -> std::result::Result<Self, AgentVmSmokeReport> {
         let AgentVmConnectOptions {
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            vm_config,
             system_image_manifest,
             expected_system_image_manifest_sha256,
             runtime_share,
@@ -1211,7 +1251,7 @@ impl AgentVmSession {
         };
         let mut command = Command::new(prepared_shim.command_path());
         #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
-        command.arg("agent-vm-smoke").arg("--runtime-owner");
+        configure_hvf_agent_vm_command(&mut command, vm_config);
         #[cfg(not(all(target_os = "macos", target_arch = "aarch64")))]
         command.arg("agent-vm-smoke");
         command
@@ -1673,6 +1713,16 @@ impl AgentVmSession {
                 }
             },
             expected_system_image_manifest_sha256,
+            expected_vm_config: {
+                #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+                {
+                    vm_config.unwrap_or_default()
+                }
+                #[cfg(not(all(target_os = "macos", target_arch = "aarch64")))]
+                {
+                    koci_sdk::VmConfig::default()
+                }
+            },
             #[cfg(any(
                 all(target_os = "windows", target_arch = "x86_64"),
                 all(
@@ -1730,6 +1780,7 @@ impl AgentVmSession {
             console,
             runtime_share_required,
             expected_system_image_manifest_sha256,
+            expected_vm_config,
             #[cfg(any(
                 all(target_os = "windows", target_arch = "x86_64"),
                 all(
@@ -1828,6 +1879,7 @@ impl AgentVmSession {
             report.platform,
             runtime_share_required,
             expected_system_image_manifest_sha256.as_deref(),
+            expected_vm_config,
         ) {
             Ok(shim_report) => shim_report,
             Err(reason) => return failed_with_output(report, &reason, &completed),
@@ -2478,6 +2530,7 @@ fn parse_shim_report(
     platform: HostPlatform,
     runtime_share_required: bool,
     expected_system_image_manifest_sha256: Option<&str>,
+    expected_vm_config: koci_sdk::VmConfig,
 ) -> Result<Value, String> {
     if output.truncated {
         return Err(format!(
@@ -2753,8 +2806,9 @@ fn parse_shim_report(
     if object.get("reason").is_some_and(|reason| !reason.is_null()) {
         return Err("successful libkrun shim evidence unexpectedly contains a reason".into());
     }
-    if object.get("vcpus").and_then(Value::as_u64) != Some(1)
-        || object.get("memory_mib").and_then(Value::as_u64) != Some(512)
+    if object.get("vcpus").and_then(Value::as_u64) != Some(u64::from(expected_vm_config.vcpus()))
+        || object.get("memory_mib").and_then(Value::as_u64)
+            != Some(u64::from(expected_vm_config.memory_mib()))
     {
         return Err("libkrun shim evidence has unexpected VM resources".into());
     }

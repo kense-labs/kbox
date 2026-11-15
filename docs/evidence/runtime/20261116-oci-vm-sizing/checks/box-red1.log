@@ -1,0 +1,17 @@
+
+running 5 tests
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_refuse_persisted_count_drift_from_the_immutable_request ... FAILED
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_admit_profile_values_without_source_or_allocation_mutation ... FAILED
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_require_host_capability_before_planning_allocations ... FAILED
+test local_execution::oci_production::vm_sizing_tests::vm_sizing_does_not_promote_other_platform_qualification_profiles ... ok
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_reject_invalid_values_without_truncation_or_allocation ... ok
+
+failures:
+
+failures:
+    local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_admit_profile_values_without_source_or_allocation_mutation
+    local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_refuse_persisted_count_drift_from_the_immutable_request
+    local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_require_host_capability_before_planning_allocations
+
+test result: FAILED. 2 passed; 3 failed; 0 ignored; 0 measured; 2323 filtered out; finished in 0.17s
+

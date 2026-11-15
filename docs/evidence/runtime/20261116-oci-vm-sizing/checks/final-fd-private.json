@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-vm-sizing-bcb75b402f59"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

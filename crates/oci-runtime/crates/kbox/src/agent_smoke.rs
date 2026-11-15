@@ -20,6 +20,8 @@ use crate::{fallback_config, KAgentVmSmokeReport, VmConfig};
 #[derive(Debug, Clone, Copy, Default)]
 pub struct AgentVmHandoff<'a> {
     #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    vm_config: Option<VmConfig>,
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
     worker_lifetime: crate::macos_agent_smoke::WorkerLifetime,
     runtime_share: Option<&'a Path>,
     guest_token_file: Option<&'a str>,
@@ -51,6 +53,8 @@ impl<'a> AgentVmHandoff<'a> {
     ) -> Self {
         Self {
             #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+            vm_config: None,
+            #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
             worker_lifetime: crate::macos_agent_smoke::WorkerLifetime::Smoke,
             runtime_share,
             guest_token_file,
@@ -79,6 +83,14 @@ impl<'a> AgentVmHandoff<'a> {
     #[must_use]
     pub const fn with_runtime_owner(mut self) -> Self {
         self.worker_lifetime = crate::macos_agent_smoke::WorkerLifetime::RuntimeOwner;
+        self
+    }
+
+    /// Bind explicit validated hardware intent to the macOS VM worker.
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    #[must_use]
+    pub const fn with_vm_config(mut self, config: VmConfig) -> Self {
+        self.vm_config = Some(config);
         self
     }
 
@@ -155,6 +167,9 @@ pub fn agent_vm_smoke(
             return report;
         }
     };
+
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    let config = handoff.vm_config.unwrap_or(config);
 
     #[cfg(all(target_os = "windows", target_arch = "x86_64"))]
     {

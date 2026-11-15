@@ -76,4 +76,10 @@ gaps while Git prerequisites remain blocked. The
 restores ordinary independent Host availability with explicit Secret absence and
 real required-extension refusal. Current installed file/mixed-route/recovery
 tests and four-home cleanup pass; full default disk-service/RAM-positive gates
-stay open. Next local parity gap remains typed custom VM CPU/memory sizing.
+stay open. Typed custom VM CPU/memory sizing is now qualified by
+[spec031 installed acceptance](../20261116-oci-vm-sizing/OUTCOME.md): 12 actual
+Guest hardware readbacks, exact old-component refusal, 6 Rust native tests plus
+3 Python scenarios and 15-home cleanup. The final default gate remains
+2278pass/6fail/48ignored, with a separate SDK disk-service failure. This closes
+only that bounded parity gap. Latest priority is local Git convergence; fresh
+remote integration/push still requires UID501 lookup and GitHub DNS recovery.

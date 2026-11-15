@@ -156,6 +156,10 @@ impl HvfRuntimeDriver {
                         vec![koci_sdk::NPROC_ADMISSION_VERSION],
                     )?
                     .with_extension(
+                        koci_sdk::VM_RESOURCES_EXTENSION,
+                        vec![koci_sdk::VM_RESOURCES_VERSION],
+                    )?
+                    .with_extension(
                         koci_sdk::RAW_STORAGE_IMAGES_EXTENSION,
                         vec![koci_sdk::RAW_STORAGE_IMAGES_VERSION],
                     )?
@@ -263,6 +267,7 @@ struct LiveHvfVmFactory {
 #[async_trait]
 impl UtilityVmFactory for LiveHvfVmFactory {
     async fn launch(&self, request: UtilityVmLaunchRequest<'_>) -> Result<LaunchedUtilityVm> {
+        let vm_config = request.attachment_contract.vm_config(request.bundle)?;
         let manifest_digest = crate::utility_vm_driver::hvf_directory::prepare(&request).await?;
         let UtilityVmLaunchRequest {
             target,
@@ -295,6 +300,7 @@ impl UtilityVmFactory for LiveHvfVmFactory {
                 &console,
                 Some(&recovery_report),
                 manifest_digest.as_deref(),
+                vm_config,
             )
             .await
             .map_err(hvf_launch_error)?,

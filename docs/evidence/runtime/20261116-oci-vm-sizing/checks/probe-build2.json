@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "cc",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "docs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c",
+      "-o",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/probe-selftest-host"
+    ],
+    "exit": 0,
+    "seconds": 0.042828917,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/probe-selftest-host",
+      "--self-test"
+    ],
+    "exit": 0,
+    "seconds": 0.747474459,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/opt/homebrew/bin/zig",
+      "cc",
+      "-target",
+      "aarch64-linux-musl",
+      "-std=c11",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-static",
+      "docs/evidence/runtime/20261116-oci-vm-sizing/checks/vm-hardware-probe.c",
+      "-o",
+      "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/inputs/vm-hardware-probe"
+    ],
+    "exit": 0,
+    "seconds": 0.16031666600000005,
+    "stdout": "",
+    "stderr": ""
+  }
+]

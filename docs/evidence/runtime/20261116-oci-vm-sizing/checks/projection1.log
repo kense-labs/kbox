@@ -1,0 +1,7 @@
+
+running 2 tests
+test vm::oci_hvf_spec::vm_config_tests::unowned_annotation_cannot_override_box_resource_authority ... ok
+test vm::oci_hvf_spec::vm_config_tests::vm_resource_projection_preserves_legacy_and_binds_custom_intent ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 2328 filtered out; finished in 0.06s
+

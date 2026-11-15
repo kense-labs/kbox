@@ -1,0 +1,35 @@
+{
+  "command": [
+    "rustc",
+    "--edition=2021",
+    "docs/evidence/runtime/20261116-oci-vm-sizing/checks/owned-sdk-delete.rs",
+    "-L",
+    "dependency=target/debug/deps",
+    "-o",
+    "artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/owned-sdk-delete",
+    "--extern",
+    "koci_sdk=target/debug/deps/libkoci_sdk-281cc940c60c66d1.rlib",
+    "--extern",
+    "tokio=target/debug/deps/libtokio-32f02a3ee6fd4e38.rlib",
+    "--extern",
+    "serde_json=target/debug/deps/libserde_json-c59b8a50eef12e80.rlib"
+  ],
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "sourceSha256": "b1dd99c27bcc68daa8486335eb1670d4ef76499d134a7ef0de747f64f8a6a40f",
+  "dependencies": {
+    "koci_sdk": {
+      "path": "target/debug/deps/libkoci_sdk-281cc940c60c66d1.rlib",
+      "sha256": "34df17087a0dd00bd1c256ce87c094bf88eca2562146b5a16af05f9aacb2eeec"
+    },
+    "tokio": {
+      "path": "target/debug/deps/libtokio-32f02a3ee6fd4e38.rlib",
+      "sha256": "efb4198c9c3d2df137cdacc7fe6bd30e73c72e60f8d233bfaf9d8b0aa8c1c6e0"
+    },
+    "serde_json": {
+      "path": "target/debug/deps/libserde_json-c59b8a50eef12e80.rlib",
+      "sha256": "ecddef6176088c893230d2d7929694e71b131e44156072acdd98d905a9f767e4"
+    }
+  }
+}

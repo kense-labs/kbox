@@ -1,0 +1,21 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "clippy",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "-p",
+    "koci-kbox",
+    "-p",
+    "koci-runtime",
+    "-p",
+    "kbox-runtime",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 0,
+  "seconds": 30.733469666
+}

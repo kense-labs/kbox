@@ -2009,3 +2009,13 @@ consolidation. The original parallel warm-boot timeout remains unresolved despit
 an unchanged isolated retry passing. Full W4/default Host Service cutover and
 platform promotion remain open; Windows ARM64 dependencies remain unsupported
 with no native run. Runtime RSS is unmeasured.
+
+Spec031 binds explicit Mac VM resources with required `dev.kbox.vm-resources`
+v1 and the existing validated `koci_sdk::VmConfig` (also re-exported by koci-kbox).
+Typed CPU/memory intent reaches the actual private worker and exact shutdown
+report validation. Legacy absence remains1/512; old components refuse explicit
+intent. [Installed hardware/recovery/cleanup evidence](../../docs/evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md)
+records12 Guest readbacks and6 Rust native tests plus3 Python scenarios. Full
+W4/default cutover and platform promotion remain open; the full default gate
+still has6 disk-service failures. Windows ARM64 dependencies remain unsupported,
+with no native run; runtime RSS is unmeasured.

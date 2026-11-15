@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "local_execution::oci_production",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 0.766617
+}

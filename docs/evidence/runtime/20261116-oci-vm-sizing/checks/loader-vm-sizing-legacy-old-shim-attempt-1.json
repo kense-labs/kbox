@@ -1,0 +1,13 @@
+[
+  {
+    "kind": "oci",
+    "pid": 33696,
+    "parent": 33694,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim __macos-agent-vm-worker --system-image-manifest /Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64/system-image/system-image.json --runtime-share /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-legacy-old-shim-attempt-1/service/runtime/shares/kbox-412333b6-9ad0-4bb8-a870-a3bdb5480824/1 --runtime-share-device 16777233 --runtime-share-inode 300097486 --runtime-state-device 16777233 --runtime-state-inode 300097591 --guest-token-file /run/koci-runtime/.koci-bootstrap-koci-agent-2c4e71b2159475e58522c8ae4a0af7c4/session-token --console /private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-legacy-old-shim-attempt-1/service/runtime/console/kbox-412333b6-9ad0-4bb8-a870-a3bdb5480824-1.log --socket-path /private/tmp/koci-agent-2c4e71b2159475e58522c8ae4a0af7c4/agent.sock --console-device 16777233 --console-inode 300097593 --guest-recovery-report /run/koci-runtime/.koci-recovery-koci-agent-2c4e71b2159475e58522c8ae4a0af7c4/report.json --vm-attachment-manifest-sha256 sha256:a0016a62b561688d70c0c8504f32138444736d6236469e328b10eb734f9658a3",
+    "paths": {
+      "koci-kshim": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kshim",
+      "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrun.1.17.0.dylib",
+      "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/hvf-optional-memory-probe-ed388b4f5a644712b93b24521bf10b9f/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64/koci-kbox-runtime/libkrunfw.5.dylib"
+    }
+  }
+]

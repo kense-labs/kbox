@@ -25,7 +25,12 @@ fn sys_admin(value: &str) -> bool {
     crate::oci_portable_spec::normalize_capability_name(value) == "SYS_ADMIN"
 }
 
-pub(crate) fn validate(config: &BoxConfig) -> Result<()> {
+pub(crate) fn validate(config: &BoxConfig) -> Result<koci_sdk::VmConfig> {
+    let configuration = koci_sdk::VmConfig::new(
+        u8::try_from(config.resources.vcpus).map_err(error)?,
+        config.resources.memory_mb,
+    )
+    .map_err(error)?;
     crate::rootfs::Ext4ArtifactOptions::from_disk_mib(config.resources.disk_mb, [0; 16])?;
     tmpfs::mounts(config)?;
     rlimits::limits(config)?;
@@ -49,7 +54,7 @@ pub(crate) fn validate(config: &BoxConfig) -> Result<()> {
             ));
         }
     }
-    Ok(())
+    Ok(configuration)
 }
 
 pub(crate) fn workload_capabilities(
@@ -103,7 +108,8 @@ pub(super) fn complete_with_anonymous(
     files: &std::collections::BTreeMap<PathBuf, koci_sdk::FileSourceIdentity>,
     anonymous: &[(PathBuf, String)],
 ) -> Result<()> {
-    validate(config)?;
+    let configuration = validate(config)?;
+    complete_vm_resources(spec, configuration)?;
     spec.root_mut()
         .as_mut()
         .ok_or_else(|| error("missing portable root config"))?
@@ -279,6 +285,29 @@ pub(super) fn complete_with_anonymous(
         .set_resources(Some(resources));
     Ok(())
 }
+
+fn complete_vm_resources(spec: &mut Spec, configuration: koci_sdk::VmConfig) -> Result<()> {
+    if spec
+        .annotations()
+        .as_ref()
+        .is_some_and(|annotations| annotations.contains_key(koci_sdk::VM_RESOURCES_EXTENSION))
+    {
+        return Err(error(
+            "VM resource annotations must originate from the Box resource request",
+        ));
+    }
+    if configuration != koci_sdk::VmConfig::default() {
+        spec.annotations_mut().get_or_insert_default().insert(
+            koci_sdk::VM_RESOURCES_EXTENSION.into(),
+            configuration.annotation_value().map_err(error)?,
+        );
+    }
+    Ok(())
+}
+
+#[cfg(test)]
+#[path = "oci_hvf_vm_config_tests.rs"]
+mod vm_config_tests;
 
 pub(crate) fn apply_workload_capabilities(
     config: &BoxConfig,

@@ -419,3 +419,15 @@ Secret Create. Current installed file and mixed-route/recovery tests pass;
 the six default disk-service failures remain. Newly rebuilt archive identities,
 four-home cleanup and exact reuse of unchanged Box A–F companions are recorded.
 This does not qualify RAM Secret positives, the full gate or enterprise GA.
+
+[Spec031 final installed acceptance](evidence/runtime/20261116-oci-vm-sizing/OUTCOME.md)
+qualifies exact custom Mac HVF VM CPU/memory sizing, including actual Guest
+hardware, CLI, old-component refusal, normal/stopped recovery and15-home cleanup.
+6 Rust native tests plus3 Python native scenarios pass; the full default gate
+remains2278pass/6fail/48ignored and SDK235pass/1fail because disk services are
+unavailable. Both source-bound final archives and every failed candidate are
+retained. Full OCI Host Service/default cutover, live continuity and enterprise
+GA are unfinished. Windows ARM64 dependencies remain unsupported and lack a
+native run; platform support levels are unchanged. Runtime RSS is unmeasured.
+Local commit/main convergence is authorized; actual remote synchronization
+requires restoration of local UID501 lookup and GitHub DNS.

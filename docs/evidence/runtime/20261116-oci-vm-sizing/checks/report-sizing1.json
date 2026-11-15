@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "koci-runtime",
+    "--lib",
+    "agent_session::tests"
+  ],
+  "exit": 0,
+  "seconds": 6.483764208
+}

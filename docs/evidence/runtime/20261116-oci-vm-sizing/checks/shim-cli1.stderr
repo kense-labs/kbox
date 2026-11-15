@@ -1,0 +1,20 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+warning: unused imports: `ErrorCode`, `Error`, and `Result`
+   --> crates/oci-runtime/crates/kbox/src/lib.rs:118:16
+    |
+118 | use koci_sdk::{Error, ErrorCode, Result};
+    |                ^^^^^  ^^^^^^^^^  ^^^^^^
+    |
+    = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `koci-kbox` (lib) generated 1 warning (run `cargo fix --lib -p koci-kbox` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 14.55s
+     Running unittests src/main.rs (target/debug/deps/koci_kshim-17593474c16cf308)
+
+thread 'vm_config_cli_tests::both_handoffs_preserve_legacy_absence_and_exact_explicit_resources' (103695589) panicked at crates/oci-runtime/crates/kbox/src/vm_config_cli_tests.rs:56:63:
+called `Result::unwrap()` on an `Err` value: ErrorInner { kind: MissingRequiredArgument, context: FlatMap { keys: [InvalidArg, Usage], values: [Strings(["--owner-pid <PID>"]), StyledStr(StyledStr("\u{1b}[1m\u{1b}[4mUsage:\u{1b}[0m \u{1b}[1mkoci-kshim agent-vm-smoke\u{1b}[0m \u{1b}[1m--rootfs\u{1b}[0m <DIR> \u{1b}[1m--system-image-manifest\u{1b}[0m <FILE> \u{1b}[1m--console\u{1b}[0m <FILE> \u{1b}[1m--pipe-name\u{1b}[0m <NAME> \u{1b}[1m--socket-path\u{1b}[0m <FILE> \u{1b}[1m--owner-pid\u{1b}[0m <PID> \u{1b}[1m--runtime-share\u{1b}[0m <DIR>"))] }, message: None, source: None, help_flag: Some("--help"), styles: Styles { header: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, error: Style { fg: Some(Ansi(Red)), bg: None, underline: None, effects: Effects(BOLD) }, usage: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD | UNDERLINE) }, literal: Style { fg: None, bg: None, underline: None, effects: Effects(BOLD) }, placeholder: Style { fg: None, bg: None, underline: None, effects: Effects() }, valid: Style { fg: Some(Ansi(Green)), bg: None, underline: None, effects: Effects() }, invalid: Style { fg: Some(Ansi(Yellow)), bg: None, underline: None, effects: Effects() }, context: Style { fg: None, bg: None, underline: None, effects: Effects() }, context_value: None }, color_when: Auto, color_help_when: Auto, backtrace: None }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p koci-kbox --bin koci-kshim`

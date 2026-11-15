@@ -103,6 +103,8 @@ mod raw_secrets;
 mod secret_environment;
 #[path = "oci_hvf_native_secrets.rs"]
 mod secrets;
+#[path = "oci_hvf_native_vm_sizing.rs"]
+mod vm_sizing;
 
 struct Host {
     child: Option<Child>,

@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/package-oci-final1.py"
+  ],
+  "exit": 1,
+  "seconds": 0.29450979200000005
+}

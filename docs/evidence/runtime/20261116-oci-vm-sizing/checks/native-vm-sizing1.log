@@ -1,0 +1,21 @@
+{"command": ["/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/native-client-vm-sizing-attempt-1", "--ignored", "--exact", "local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent", "--nocapture"], "root": "/private/tmp/kbox-vm-sizing-bcb75b402f59/vm-sizing-attempt-1", "clientSha256": "0de73bda9497c695c3b7539845f85e116f402111852848098c16d6bed5615e24", "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/installed-sizing-final-1", "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final2-unpacked/koci-hvf-0.3.6-macos-arm64", "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final2-unpacked/koci-hvf-0.3.6-macos-arm64", "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final2-unpacked/koci-hvf-0.3.6-macos-arm64", "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "foreignUidImage": null, "exitCode": -6, "seconds": 9.691770167000001, "actualCounts": [], "resultExists": false, "cleanupExists": false}
+  22:        0x1059406bc - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  23:        0x104419dcc - ___rust_try
+  24:        0x104411bd4 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  25:        0x104411bd4 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  26:        0x104411bd4 - {closure#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  27:        0x105c2d00c - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<kbox_runtime::local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent::{closure_env#0}, ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  28:        0x107d14e80 - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  29:        0x107d14e80 - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  30:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (104265340) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

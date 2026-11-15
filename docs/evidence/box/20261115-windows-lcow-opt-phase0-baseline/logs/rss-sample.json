@@ -1,0 +1,28 @@
+[
+  {
+    "name": "kbox-shim",
+    "pid": 9768,
+    "ws_mb": 11.9,
+    "private_mb": 2.34
+  },
+  {
+    "name": "kbox-shim",
+    "pid": 69936,
+    "ws_mb": 117.3,
+    "private_mb": 1052.14
+  },
+  {
+    "name": "kbox-shim.exe",
+    "pid": 69936,
+    "ws_mb": 117.29,
+    "private_mb": 1052.1,
+    "cmd": "\"C:\\Users\\admin\\.kbox\\bin\\kbox-shim.exe\" --config {\\\"box_id\\\":\\\"edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\",\\\"vcpus\\\":1,\\\"memory_mib\\\":512,\\\"rootfs\\\":{\\\"kind\\\":\\\"directory\\\",\\\"path\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\rootfs\\\"},\\\"exec_socket_path\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\sockets\\\\exec.sock\\\",\\\"pty_socket_path\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\sockets\\\\pty.sock\\\",\\\"attest_socket_path\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\sockets\\\\attest.sock\\\",\\\"port_forward_socket_path\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\sockets\\\\portfwd.sock\\\",\\\"fs_mounts\\\":[{\\\"tag\\\":\\\"workspace\\\",\\\"host_path\\\":\\\"\\\\\\\\?\\\\D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\workspace\\\",\\\"read_only\\\":false},{\\\"tag\\\":\\\"kterminal\\\",\\\"host_path\\\":\\\"\\\\\\\\?\\\\D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\runtime-control\\\",\\\"read_only\\\":false},{\\\"tag\\\":\\\"kboot\\\",\\\"host_path\\\":\\\"\\\\\\\\?\\\\D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\sockets\\\\boot-control\\\",\\\"read_only\\\":true}],\\\"entrypoint\\\":{\\\"executable\\\":\\\"/sbin/init\\\",\\\"args\\\":[],\\\"env\\\":[[\\\"BOX_BOOT_CONFIG_FILE\\\",\\\"/run/kbox/boot/config.json\\\"],[\\\"K_SEC_SECCOMP\\\",\\\"default\\\"],[\\\"K_SEC_NO_NEW_PRIVS\\\",\\\"1\\\"],[\\\"KRUN_INIT_PID1\\\",\\\"1\\\"],[\\\"BOX_WINDOWS_PORT_FWD\\\",\\\"1\\\"],[\\\"BOX_PERSIST_ROOTFS_METADATA\\\",\\\"1\\\"]]},\\\"ksm\\\":false,\\\"snapshot_mem_file\\\":null,\\\"snapshot_sock\\\":null,\\\"restore_from\\\":null,\\\"console_output\\\":\\\"D:\\\\code\\\\kense\\\\kbox\\\\docs\\\\evidence\\\\box\\\\20261115-windows-lcow-opt-phase0-baseline\\\\k-home-phase0\\\\boxes\\\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\\\logs\\\\console.log\\\",\\\"stdin_open\\\":false,\\\"workdir\\\":\\\"/workspace\\\",\\\"tee_config\\\":null,\\\"port_map\\\":[],\\\"user\\\":null,\\\"network\\\":null,\\\"disable_tsi\\\":true,\\\"resource_limits\\\":{\\\"pids_limit\\\":null,\\\"cpuset_cpus\\\":null,\\\"ulimits\\\":[],\\\"cpu_shares\\\":null,\\\"cpu_quota\\\":null,\\\"cpu_period\\\":null,\\\"memory_reservation\\\":null,\\\"memory_swap\\\":null,\\\"sandbox_memory_limit_bytes\\\":null},\\\"log_config\\\":{\\\"driver\\\":\\\"json-file\\\",\\\"options\\\":{}}}"
+  },
+  {
+    "name": "kbox-shim.exe",
+    "pid": 9768,
+    "ws_mb": 11.9,
+    "private_mb": 2.34,
+    "cmd": "\"C:\\Users\\admin\\.kbox\\bin\\kbox-shim.exe\" --port-fwd-worker --box-id edfdcd0c-7f97-457f-81b0-9adf2fb85ac6 --parent-pid 69936 --ready-file C:\\Users\\admin\\AppData\\Local\\Temp\\kbox-portfwd-edfdcd0c7f97457f81b09adf2fb85ac6-69936.ready --stop-request D:\\code\\kense\\kbox\\docs\\evidence\\box\\20261115-windows-lcow-opt-phase0-baseline\\k-home-phase0\\boxes\\edfdcd0c-7f97-457f-81b0-9adf2fb85ac6\\sockets\\stop.signal"
+  }
+]

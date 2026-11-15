@@ -1,0 +1,13 @@
+{
+  "os": "Microsoft Windows NT 10.0.22631.0",
+  "build": "22631.4890",
+  "edition": "Professional",
+  "product": "Windows 10 Pro",
+  "hypervisor_present": true,
+  "hns_service": 4,
+  "vmms_service": 4,
+  "containers_feature_query": "Get-WindowsOptionalFeature required elevation; not used as product dependency",
+  "kbox_bin": "C:\\Users\\admin\\.kbox\\bin\\kbox.exe",
+  "k_home": "D:\\code\\kense\\kbox\\docs\\evidence\\box\\20261115-windows-lcow-opt-phase0-baseline\\k-home-phase0",
+  "note": "Hyper-V related services may run when WHPX is enabled; Phase 0 does not call HNS/Containers APIs"
+}

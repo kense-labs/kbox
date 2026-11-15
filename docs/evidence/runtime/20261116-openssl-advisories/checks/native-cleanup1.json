@@ -1,0 +1,18 @@
+{
+  "status": "PASS for this owned smoke scope",
+  "homes": [
+    "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/native-home1"
+  ],
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "observedRuntimeSocketDirectories": [
+    "7c349d89-dd41-44b3-918f-c57db3a58aa6"
+  ],
+  "remainingRuntimeSocketDirectories": [],
+  "fdHolders": [],
+  "resourcesDeletedByAudit": [],
+  "fullVerify": "FAIL6 external disk-service-related cases; no overall acceptance claim",
+  "native": "1 actual installed CLI/VM/Guest exec control passed; Linux OpenSSL runtime not verified"
+}

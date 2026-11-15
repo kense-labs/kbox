@@ -1,0 +1,11 @@
+
+running 1 test
+test rootfs::provider::tests::case_sensitive_apfs_provider_preserves_distinct_names ... FAILED
+
+failures:
+
+failures:
+    rootfs::provider::tests::case_sensitive_apfs_provider_preserves_distinct_names
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2322 filtered out; finished in 3.05s
+

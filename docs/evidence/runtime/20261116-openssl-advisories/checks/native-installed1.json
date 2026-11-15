@@ -1,0 +1,23 @@
+{
+  "status": "PASS for ordinary installed CLI/VM control; no Linux OpenSSL runtime claim",
+  "run": {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/installed-openssl-final-1/bin/kbox",
+      "run",
+      "-d",
+      "--name",
+      "openssl-native-check",
+      "--network",
+      "none",
+      "--cpus",
+      "1",
+      "--memory",
+      "512m",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7"
+    ],
+    "exit": 0,
+    "seconds": 3.411702292,
+    "stdout": "7c349d89-dd41-44b3-918f-c57db3a58aa6\n",
+    "stderr": "2026-11-15T19:15:15.279264Z  INFO Using cached image requested_reference=docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7 matched_reference=kbox-qualification-tools:local digest=sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\nCreating box openssl-native-check (7c349d89dd41)...\n2026-11-15T19:15:15.329562Z  INFO Using guest-native ext4 rootfs provider\n2026-11-15T19:15:15.329651Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}: Booting VM box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6\n2026-11-15T19:15:15.330324Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:prepare_layout: Pulling OCI image from registry reference=docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\n2026-11-15T19:15:15.364381Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:prepare_layout: Using cached image requested_reference=docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7 matched_reference=kbox-qualification-tools:local digest=sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\n2026-11-15T19:15:17.174609Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:prepare_layout: Prepared guest-native ext4 directly from OCI layers disk=/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/native-home1/boxes/7c349d89-dd41-44b3-918f-c57db3a58aa6/rootfs-ext4-v1/rootfs.ext4 layers=6\n2026-11-15T19:15:17.183205Z DEBUG Using guest init as PID 1 env_count=3\n2026-11-15T19:15:17.187138Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:vm_start: Starting VM subprocess box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6 vcpus=1 memory_mib=512\n2026-11-15T19:15:17.187207Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:vm_start: Spawning shim subprocess shim=/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/installed-openssl-final-1/bin/kbox-shim box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6\n2026-11-15T19:15:17.187295Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:vm_start: Redirecting shim stdio to per-box files box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6 stdout=/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/native-home1/boxes/7c349d89-dd41-44b3-918f-c57db3a58aa6/logs/shim.stdout.log stderr=/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/native-home1/boxes/7c349d89-dd41-44b3-918f-c57db3a58aa6/logs/shim.stderr.log\n2026-11-15T19:15:17.189721Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:vm_start: Shim subprocess spawned box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6 pid=7464\n2026-11-15T19:15:17.189798Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:wait_for_ready: Confirming VM process started\n2026-11-15T19:15:17.274526Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:wait_for_ready: VM process is running\n2026-11-15T19:15:17.274548Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:wait_for_ready: Waiting for exec server readiness socket_path=/private/tmp/kbox-sockets/7c349d89-dd41-44b3-918f-c57db3a58aa6/exec.sock timeout_ms=15000\n2026-11-15T19:15:18.525166Z DEBUG vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}:wait_for_ready: Exec server heartbeat passed\n2026-11-15T19:15:18.547199Z  INFO vm_boot{box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6}: VM ready box_id=7c349d89-dd41-44b3-918f-c57db3a58aa6\n"
+  }
+}

@@ -1,0 +1,33 @@
+   Compiling syn v2.0.119
+   Compiling ahash v0.8.12
+   Compiling tempfile v3.27.0
+   Compiling jsonschema-value v0.48.5
+   Compiling darling_core v0.20.11
+   Compiling ref-cast-impl v1.0.25
+   Compiling strum_macros v0.28.0
+   Compiling getset v0.1.7
+   Compiling strum_macros v0.27.2
+   Compiling ref-cast v1.0.25
+   Compiling fluent-uri v0.4.1
+   Compiling darling_macro v0.20.11
+   Compiling strum v0.28.0
+   Compiling darling v0.20.11
+   Compiling referencing v0.48.5
+   Compiling derive_builder_core v0.20.2
+   Compiling jsonschema v0.48.5
+   Compiling derive_builder_macro v0.20.2
+   Compiling derive_builder v0.20.2
+   Compiling oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+   Compiling koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 13.96s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8496bfeaaa67e355)
+
+thread 'macos_memory::tests::failed_native_tool_bounds_unicode_stderr_without_exposing_arguments' (101772487) panicked at crates/oci-runtime/crates/sdk/src/macos_memory_tests.rs:38:5:
+assertion `left == right` failed
+  left: 0
+ right: 1024
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'macos_memory::tests::failed_native_tool_preserves_program_status_and_service_context' (101772488) panicked at crates/oci-runtime/crates/sdk/src/macos_memory_tests.rs:17:5:
+could not inspect actual macOS disk-image backing
+error: test failed, to rerun pass `-p koci-sdk --lib`

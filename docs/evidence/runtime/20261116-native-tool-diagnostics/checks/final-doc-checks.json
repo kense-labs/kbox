@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "localLinksChecked": 145,
+  "missing": [],
+  "cargoLockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+  "gitDiffCheck": {
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "auditScriptSha256": "5e630fea701eb643cf8d41e635474cb5c0b3849eb9822d8e3b8865e1dfbb30d7"
+}

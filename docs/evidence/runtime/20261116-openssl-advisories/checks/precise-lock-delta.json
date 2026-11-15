@@ -1,0 +1,163 @@
+{
+  "status": "PASS for known8 advisory ranges and generated lock scope",
+  "packageCount": 573,
+  "newPackages": [],
+  "removedPackages": [],
+  "changes": [
+    {
+      "before": {
+        "name": "openssl",
+        "version": "0.10.73",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "8505734d46c8ab1e19a1dce3aef597ad87dcb4c37e7188231769bd6bd51cebf8",
+        "dependencies": [
+          "bitflags 2.13.2",
+          "cfg-if 1.0.5",
+          "foreign-types",
+          "libc",
+          "once_cell",
+          "openssl-macros",
+          "openssl-sys"
+        ]
+      },
+      "after": {
+        "name": "openssl",
+        "version": "0.10.80",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "a45fa2aa886c42762255da344f0a0d313e254066c46aad76f300c3d3da62d967",
+        "dependencies": [
+          "bitflags 2.13.2",
+          "cfg-if 1.0.5",
+          "foreign-types",
+          "libc",
+          "openssl-macros",
+          "openssl-sys"
+        ]
+      }
+    },
+    {
+      "before": {
+        "name": "openssl-sys",
+        "version": "0.9.109",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "90096e2e47630d78b7d1c20952dc621f957103f8bc2c8359ec81290d75238571",
+        "dependencies": [
+          "cc",
+          "libc",
+          "pkg-config",
+          "vcpkg"
+        ]
+      },
+      "after": {
+        "name": "openssl-sys",
+        "version": "0.9.118",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "19c413d6ec9ebaf5e1c829d355cb3e9f783778d700f135be0921d52fce3c60ae",
+        "dependencies": [
+          "cc",
+          "libc",
+          "pkg-config",
+          "vcpkg"
+        ]
+      }
+    },
+    {
+      "before": {
+        "name": "tempfile",
+        "version": "3.27.0",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd",
+        "dependencies": [
+          "fastrand",
+          "getrandom 0.3.4",
+          "once_cell",
+          "rustix 1.1.6",
+          "windows-sys 0.61.2"
+        ]
+      },
+      "after": {
+        "name": "tempfile",
+        "version": "3.27.0",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "32497e9a4c7b38532efcdebeef879707aa9f794296a4f0244f6f69e9bc8574bd",
+        "dependencies": [
+          "fastrand",
+          "getrandom 0.4.3",
+          "once_cell",
+          "rustix 1.1.6",
+          "windows-sys 0.61.2"
+        ]
+      }
+    }
+  ],
+  "resolverNormalization": "tempfile3.27.0 allows >=0.3,<0.5 getrandom; Cargo reuses already locked0.4.3; tempfile version/checksum unchanged",
+  "advisories": [
+    {
+      "number": 13,
+      "ghsa": "GHSA-phqj-4mhp-q6mq",
+      "affectedRange": ">= 0.10.50, < 0.10.80",
+      "firstPatchedVersion": "0.10.80",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/13"
+    },
+    {
+      "number": 12,
+      "ghsa": "GHSA-xv59-967r-8726",
+      "affectedRange": ">= 0.10.0, < 0.10.79",
+      "firstPatchedVersion": "0.10.79",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/12"
+    },
+    {
+      "number": 7,
+      "ghsa": "GHSA-xp3w-r5p5-63rr",
+      "affectedRange": ">= 0.9.7, < 0.10.79",
+      "firstPatchedVersion": "0.10.79",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/7"
+    },
+    {
+      "number": 6,
+      "ghsa": "GHSA-pqf5-4pqq-29f5",
+      "affectedRange": ">= 0.9.27, < 0.10.78",
+      "firstPatchedVersion": "0.10.78",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/6"
+    },
+    {
+      "number": 5,
+      "ghsa": "GHSA-xmgf-hq76-4vx2",
+      "affectedRange": ">= 0.9.0, < 0.10.78",
+      "firstPatchedVersion": "0.10.78",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/5"
+    },
+    {
+      "number": 4,
+      "ghsa": "GHSA-8c75-8mhr-p7r9",
+      "affectedRange": ">= 0.10.24, < 0.10.78",
+      "firstPatchedVersion": "0.10.78",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/4"
+    },
+    {
+      "number": 3,
+      "ghsa": "GHSA-ghm9-cr32-g9qj",
+      "affectedRange": ">= 0.10.39, < 0.10.78",
+      "firstPatchedVersion": "0.10.78",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/3"
+    },
+    {
+      "number": 2,
+      "ghsa": "GHSA-hppc-g8h3-xhp3",
+      "affectedRange": ">= 0.9.24, < 0.10.78",
+      "firstPatchedVersion": "0.10.78",
+      "selectedVersion": "0.10.80",
+      "source": "https://github.com/kense-labs/kbox/security/dependabot/2"
+    }
+  ],
+  "cargoLockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+  "networkDownloads": false,
+  "nativeRuntimeSupportNotInferred": true
+}

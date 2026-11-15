@@ -1,0 +1,6 @@
+{
+  "status": "FAIL; retained preparation assumption",
+  "reason": "Initial review asserted exactly2 changed entries, but Cargo also normalizes tempfile existing getrandom edge within declared >=0.3,<0.5; no new version/package",
+  "followOnLaunches": "2 failed to open the not-yet-written wrapper; no tests ran",
+  "resolution": "Inspect upstream cached manifest/index, require exact2 version changes and exact1 allowed edge, then run fresh checks"
+}

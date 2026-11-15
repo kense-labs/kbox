@@ -1,0 +1,2 @@
+label=main success=true code=Some(0) signal=None stdout_bytes=359 stderr=""
+label=thread success=true code=Some(0) signal=None stdout_bytes=359 stderr=""

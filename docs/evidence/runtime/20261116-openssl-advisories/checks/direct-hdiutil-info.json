@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/bin/hdiutil",
+    "info",
+    "-plist"
+  ],
+  "exit": 0,
+  "stdoutBytes": 359,
+  "stderr": ""
+}

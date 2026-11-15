@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/qualification-runner.py",
+    "docs/evidence/runtime/20261116-native-tool-diagnostics/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 149.936652041
+}

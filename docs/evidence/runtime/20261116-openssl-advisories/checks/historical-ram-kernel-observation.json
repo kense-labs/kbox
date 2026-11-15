@@ -1,0 +1,44 @@
+[
+  {
+    "previousDevice": "/dev/disk4",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk6",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk7",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk8",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk9",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk10",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  },
+  {
+    "previousDevice": "/dev/disk11",
+    "mountPoint": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets",
+    "kernelMountLines": [],
+    "kernelStillMounted": false
+  }
+]

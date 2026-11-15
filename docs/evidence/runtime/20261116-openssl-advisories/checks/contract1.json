@@ -1,0 +1,13 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-contract"
+  ],
+  "exit": 0,
+  "seconds": 186.702213833
+}

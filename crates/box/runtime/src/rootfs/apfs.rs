@@ -89,7 +89,8 @@ impl CaseSensitiveApfsProvider {
                 })?;
             if !output.status.success() {
                 return Err(BoxError::BuildError(format!(
-                    "Failed to create case-sensitive APFS rootfs image: {}",
+                    "Failed to create case-sensitive APFS rootfs image: hdiutil {}: {}",
+                    output.status,
                     String::from_utf8_lossy(&output.stderr).trim()
                 )));
             }
@@ -112,8 +113,9 @@ impl CaseSensitiveApfsProvider {
             })?;
         if !output.status.success() {
             return Err(BoxError::BuildError(format!(
-                "Failed to mount case-sensitive APFS rootfs image {}: {}",
+                "Failed to mount case-sensitive APFS rootfs image {}: hdiutil {}: {}",
                 image.display(),
+                output.status,
                 String::from_utf8_lossy(&output.stderr).trim()
             )));
         }

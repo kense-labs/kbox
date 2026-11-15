@@ -15,5 +15,22 @@
   "priorBoxArchive": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final-dist-readiness-1/kbox-3.4.3-macos-arm64.tar.gz",
   "imageStore": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
   "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
-  "status": "Starting precise offline lockfile resolution; preserve existing runtime source and concurrent local commit"
+  "status": "Lock patch and new installed archive recorded;1 ordinary native control passes/owned cleanup passes, full default gate remains FAIL6 host DiskManagement cases; Linux crate fetch blocked",
+  "cargoLockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+  "sourceInputsSha256": "f3392138916733048e58f9130260ce90bb76e7e1049d9bbca9a2544c9996db91",
+  "sourceInputCount": 1709,
+  "nativeBlockers": [
+    "Current session cannot use DiskManagement/DiskArbitration: diskutil exits1; launchctl domain query141",
+    "Linux build needs uncached openssl0.10.80 and registry DNS is unavailable"
+  ],
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/installed-openssl-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/installed-openssl-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/installed-openssl-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/final-dist-openssl-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+  "nativeHome": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/native-home1",
+  "nativeImageStore": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/image-cache",
+  "activeSessions": []
 }

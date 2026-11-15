@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/unpacked-diagnostics-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/final-dist-diagnostics-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/unpacked-diagnostics-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 1.1881015000000161,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/installed-diagnostics-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/final-dist-diagnostics-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "d3ddf08ab914668b01fb0da79ecfc7e3b5009a46dc93192a165bef3e79ead36a",
+  "compressedBytes": 23398692,
+  "installedDiskBytes": 44175360,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967",
+    "sourceInputsSha256": "fce46075b91dabe6f8a7f0a9437d2e5c4cc4b1ec10184e72e3b49cbbe9ce39d6",
+    "cargoLockSha256": "3cec984fb77851fcf5e6bbd3838cad56b71c2249cb29e5ec01ec19c36918adf8",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

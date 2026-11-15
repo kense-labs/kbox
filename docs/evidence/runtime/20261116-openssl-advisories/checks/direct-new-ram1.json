@@ -1,0 +1,10 @@
+{
+  "command": [
+    "target/debug/deps/kbox_runtime-7c8059cccee42dfc",
+    "--exact",
+    "kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 0.019276709000000003
+}

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/native-client-files-attempt-1",
+    "--ignored",
+    "--exact",
+    "local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-native-diag-a0dcc02256ac/files-attempt-1",
+  "clientSha256": "ee668a98491db72810b2a1e8b672ca5c3191ccbfeda1bd0637c6ea99186baa6d",
+  "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/installed-diagnostics-final-1",
+  "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+  "foreignUidImage": null,
+  "exitCode": -6,
+  "seconds": 40.466155207999996,
+  "actualCounts": [],
+  "resultExists": false,
+  "cleanupExists": false
+}

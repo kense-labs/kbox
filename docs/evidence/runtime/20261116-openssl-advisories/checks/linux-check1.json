@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "K_DEPS_STUB=1",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "check",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--target",
+    "aarch64-unknown-linux-musl",
+    "--lib"
+  ],
+  "exit": 101,
+  "seconds": 0.463460833
+}

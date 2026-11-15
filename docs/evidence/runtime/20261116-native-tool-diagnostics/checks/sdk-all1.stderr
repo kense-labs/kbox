@@ -1,0 +1,3 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.11s
+     Running unittests src/lib.rs (target/debug/deps/koci_sdk-8496bfeaaa67e355)
+error: test failed, to rerun pass `-p koci-sdk --lib`

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/bin/launchctl",
+    "print",
+    "system/com.apple.diskarbitrationd"
+  ],
+  "exit": 141,
+  "stdoutBytes": 0,
+  "stderr": "Could not print domain: 141: Reentrancy avoided\n"
+}

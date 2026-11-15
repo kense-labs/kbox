@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/check-final-identities.py"
+  ],
+  "exit": 0,
+  "seconds": 0.606208291
+}

@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "scope": "Current phase owned resources only; historical RAM preservation failure remains open",
+  "sourceInputsSha256": "fce46075b91dabe6f8a7f0a9437d2e5c4cc4b1ec10184e72e3b49cbbe9ce39d6",
+  "sourceCommit": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967",
+  "compiledInputCount": 1709,
+  "homes": 6,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 18,
+  "observedSocketPaths": 73,
+  "remainingSockets": [],
+  "caches": [
+    {
+      "store": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/native-image-cache",
+      "immutableFilesCompared": 31,
+      "mutableCatalog": [
+        {
+          "path": "index.json",
+          "before": "2ccea7d61ae58fcdc11839c8b3e59d657ba189b379f3bfeb9148bd4160716ebd",
+          "after": "2ccea7d61ae58fcdc11839c8b3e59d657ba189b379f3bfeb9148bd4160716ebd"
+        }
+      ]
+    },
+    {
+      "store": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/af-image-cache",
+      "immutableFilesCompared": 604,
+      "mutableCatalog": [
+        {
+          "path": "index.json",
+          "before": "0b29b31a929f80ee9fdafcb1bbbe0267acc19fdb1ecbe6b183ef27829031e72b",
+          "after": "e7d5faaf5ce49caf4698ca710a2a72df6cd6e2a89892f2539c967ae0edd6e02a"
+        }
+      ]
+    }
+  ],
+  "completedPythonNativeScenarios": 3,
+  "completedRustNativeTests": 2,
+  "abortedRustNativeTests": 1,
+  "resourcesDeletedByAudit": []
+}

@@ -1,0 +1,4 @@
+
+thread 'kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume' (101257870) panicked at crates/box/runtime/src/kbox_contract_driver/secret.rs:996:9:
+Runtime provider is unavailable: could not inspect actual macOS disk-image backing
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 98.37658583300001,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2/package-home-openssl-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "f3392138916733048e58f9130260ce90bb76e7e1049d9bbca9a2544c9996db91"
+}

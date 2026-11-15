@@ -683,3 +683,9 @@ zero remaining owned resources across9 homes. A parallel OCI warm-boot timeout
 remains unresolved despite an unchanged isolated retry passing. Default BoxVm,
 stopped-only HVF recovery, full W4/platform gates and Windows ARM64 limitations
 remain unchanged; runtime RSS is unmeasured.
+
+[Current native-tool diagnostics and installed assets](../../../docs/evidence/runtime/20261116-native-tool-diagnostics/OUTCOME.md)
+retain bounded OS failure details and five passing installed native scenarios.
+The full gate still fails six disk-service cases on this session; independent
+OCI Host startup also requires DiskManagement recovery. Scoped six-home cleanup
+passes. This does not qualify the whole release or change default routing.

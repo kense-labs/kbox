@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/usr/sbin/diskutil",
+    "apfs",
+    "list",
+    "-plist"
+  ],
+  "exit": 1,
+  "stdoutBytes": 0,
+  "stderr": "Unable to run because unable to use the DiskManagement framework.\nCommon reasons include, but are not limited to, the DiskArbitration\nframework being unavailable due to being booted in single-user mode.\n"
+}

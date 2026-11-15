@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 2.268990708
+}

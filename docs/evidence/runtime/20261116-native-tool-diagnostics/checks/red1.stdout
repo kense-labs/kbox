@@ -1,0 +1,13 @@
+
+running 2 tests
+test macos_memory::tests::failed_native_tool_bounds_unicode_stderr_without_exposing_arguments ... FAILED
+test macos_memory::tests::failed_native_tool_preserves_program_status_and_service_context ... FAILED
+
+failures:
+
+failures:
+    macos_memory::tests::failed_native_tool_bounds_unicode_stderr_without_exposing_arguments
+    macos_memory::tests::failed_native_tool_preserves_program_status_and_service_context
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 228 filtered out; finished in 0.01s
+

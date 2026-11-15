@@ -106,7 +106,18 @@ fn apfs_device_is_ram(
 fn read_plist(command: &mut Command) -> Result<serde_json::Value> {
     let plist = command.output().map_err(io_error)?;
     if !plist.status.success() {
-        return Err(failure("could not inspect actual macOS disk-image backing"));
+        // Retain the OS cause without dumping unbounded output or command arguments.
+        let stderr = &plist.stderr[..plist.stderr.len().min(4096)];
+        let stderr = String::from_utf8_lossy(stderr)
+            .chars()
+            .take(1024)
+            .collect::<String>();
+        return Err(failure(&format!(
+            "could not inspect actual macOS disk-image backing: {} returned {}: {}",
+            command.get_program().to_string_lossy(),
+            plist.status,
+            stderr.trim()
+        )));
     }
     let mut convert = Command::new("/usr/bin/plutil")
         .args(["-convert", "json", "-o", "-", "-"])

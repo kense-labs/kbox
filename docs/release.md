@@ -401,3 +401,13 @@ retry passes, without proving its cause fixed. Full W4/default Host Service
 cutover and platform promotion remain open; Windows ARM64 dependencies remain
 unsupported with no native run. Runtime RSS is unmeasured. Git convergence does
 not publish a release or change these qualification limits.
+
+The [current diagnostics checkpoint](evidence/runtime/20261116-native-tool-diagnostics/OUTCOME.md)
+records newer rebuilt Box/OCI archives and five installed A–F native scenarios
+passing. Full verification currently fails six Runtime disk-service tests and
+one SDK test; independent OCI Host startup is blocked by unavailable macOS
+DiskManagement. These candidates do not replace a green release gate. Current
+owned resources are clear across six homes; prior historical RAM-preservation
+failure remains unresolved. OpenSSL lock patches, exact artifacts and Git
+convergence limits are linked there. Full W4/default cutover, Windows ARM64
+dependency limitations and platform support levels remain unchanged.

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "koci-sdk",
+    "--lib",
+    "macos_memory::tests::failed_native_tool",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 2.006365708
+}

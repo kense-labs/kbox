@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/run-native.py",
+    "docs/evidence/runtime/20261116-native-tool-diagnostics/files-context-final1.json",
+    "1",
+    "files"
+  ],
+  "exit": 250,
+  "seconds": 42.215172417000005
+}

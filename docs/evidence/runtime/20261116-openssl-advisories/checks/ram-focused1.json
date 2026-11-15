@@ -1,0 +1,18 @@
+{
+  "command": [
+    "env",
+    "CARGO_NET_OFFLINE=true",
+    "cargo",
+    "test",
+    "--locked",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume",
+    "--",
+    "--exact",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 0.9111170000000001
+}

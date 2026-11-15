@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-native-diag-a0dcc02256ac"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

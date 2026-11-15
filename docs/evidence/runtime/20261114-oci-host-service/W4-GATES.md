@@ -61,3 +61,11 @@ parallel OCI warm-boot readiness timeout is retained as a failure; its isolated
 retry passes unchanged, without resolving the startup risk. Next technical work
 is owned-log reproduction of that timeout. This does not close default cutover,
 full parity, long soak or external platform qualification.
+
+The [later diagnostic/Git checkpoint](../20261116-native-tool-diagnostics/OUTCOME.md)
+rebuilt both final archives and passed five installed A–F scenarios. Overall
+acceptance remains incomplete: six Runtime disk-service failures, one SDK
+failure and independent OCI Host startup require DiskManagement recovery.
+Current-phase six-home cleanup passes; the earlier unknown-actor RAM
+disappearance remains a retained failure. The user's latest request is Git
+convergence before another local feature; no W4 or platform gate is promoted.

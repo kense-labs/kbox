@@ -1,0 +1,10 @@
+{
+  "command": [
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/native-client-frozen1",
+    "--exact",
+    "kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume",
+    "--nocapture"
+  ],
+  "exit": 101,
+  "seconds": 0.072256542
+}

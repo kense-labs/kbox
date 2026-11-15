@@ -1,0 +1,21 @@
+{"command": ["/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/native-client-files-attempt-1", "--ignored", "--exact", "local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep", "--nocapture"], "root": "/private/tmp/kbox-native-diag-a0dcc02256ac/files-attempt-1", "clientSha256": "ee668a98491db72810b2a1e8b672ca5c3191ccbfeda1bd0637c6ea99186baa6d", "boxAssetsPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/installed-diagnostics-final-1", "ociHostPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64", "ociShimPrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64", "systemImagePrefix": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64", "image": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa", "foreignUidImage": null, "exitCode": -6, "seconds": 40.466155207999996, "actualCounts": [], "resultExists": false, "cleanupExists": false}
+  22:        0x105e12498 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:581:40
+  23:        0x1049693fc - ___rust_try
+  24:        0x10495cab8 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep::{closure_env#0}, ()>>>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panicking.rs:544:19
+  25:        0x10495cab8 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::lifecycle::spawn_unchecked::{closure#1}::{closure_env#0}<kbox_runtime::local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep::{closure_env#0}, ()>>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/panic.rs:359:14
+  26:        0x10495cab8 - {closure#1}<kbox_runtime::local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep::{closure_env#0}, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/lifecycle.rs:68:26
+  27:        0x10609026c - call_once<std::thread::lifecycle::spawn_unchecked::{closure_env#1}<kbox_runtime::local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep::{closure_env#0}, ()>, ()>
+                               at /Users/roylin/.rustup/toolchains/1.97.1-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/function.rs:250:5
+  28:        0x10823200c - <alloc[fd24334a81e9fcd2]::boxed::Box<dyn core[318a34b566a36fe]::ops::function::FnOnce<(), Output = ()> + core[318a34b566a36fe]::marker::Send> as core[318a34b566a36fe]::ops::function::FnOnce<()>>::call_once
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/alloc/src/boxed.rs:2275:9
+  29:        0x10823200c - <std[7648081134ee26d8]::sys::thread::unix::Thread>::new::thread_start
+                               at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/std/src/sys/thread/unix.rs:118:17
+  30:        0x18dd67c58 - __pthread_cond_wait
+
+thread '<unnamed>' (102178530) panicked at /rustc/8bab26f4f68e0e26f0bb7960be334d5b520ea452/library/core/src/panicking.rs:233:5:
+panic in a destructor during cleanup
+thread caused non-unwinding panic. aborting.

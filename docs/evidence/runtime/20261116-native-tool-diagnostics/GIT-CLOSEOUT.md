@@ -19,8 +19,23 @@ No second feature, default cutover or platform promotion is included.
 An independent temporary HTTPS fetch using the existing gh credential helper
 also fails with exit128: `Could not resolve host: github.com`.
 No remote/credential/DNS configuration is rewritten. Remote status remains
-unknown until a successful fetch. Actual local commit and push receipts follow
-in this directory when those operations have been attempted.
+unknown until a successful fetch.
+
+The source/tests and retained qualification evidence are committed on local
+`main` as `4268a36f4d8e7ef4093de69ddc3d74497b532459`, parent9d279a1c.
+The integration merge remains an ancestor; no synthetic second merge or history
+rewrite is needed. All1709 committed compiled inputs equal the final archived
+build snapshot. [Commit/source binding](checks/git-local-commit.json).
+
+Actual `git push origin main` fails with exit128 before any remote update:
+`No user exists for uid 501`. [Push receipt](checks/git-push1.json).
+The documentation/receipt closeout is a subsequent local commit. Neither new
+commit is claimed pushed. No remote head equality, merge against unseen remote
+changes or CI success is claimed. SSH/HTTPS fetch prerequisites remain blocked.
+
+The commit hook reports `Can't find lefthook in PATH`; no hook is disabled or
+bypassed. Manual focused tests/Clippy/fmt and the actual failed full gate are
+retained in OUTCOME. Git convergence does not convert those failures to passes.
 
 After the host user-lookup/network prerequisites recover, the next commands are:
 

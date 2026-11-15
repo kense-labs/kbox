@@ -1,0 +1,11 @@
+{
+  "sourceFixCommit": "4268a36f4d8e7ef4093de69ddc3d74497b532459",
+  "parent": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967",
+  "branch": "main",
+  "priorIntegrationMergeRetained": true,
+  "sourceInputsSha256": "fce46075b91dabe6f8a7f0a9437d2e5c4cc4b1ec10184e72e3b49cbbe9ce39d6",
+  "compiledInputCount": 1709,
+  "frozenBuildInputsEqualCommittedInputs": true,
+  "statusBeforePush": "",
+  "hookObservation": "Commit hook printed Can't find lefthook in PATH; no hook was disabled; manually executed gate remains failed as documented"
+}

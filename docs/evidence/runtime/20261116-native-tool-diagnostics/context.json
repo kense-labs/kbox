@@ -41,5 +41,8 @@
   "ociOriginalSourceInputsSha256": "fce46075b91dabe6f8a7f0a9437d2e5c4cc4b1ec10184e72e3b49cbbe9ce39d6",
   "privateRoot": "/private/tmp/kbox-native-diag-a0dcc02256ac",
   "nativeImageStore": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/native-image-cache",
-  "afImageStore": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/af-image-cache"
+  "afImageStore": "/Users/roylin/code/kense/kbox/artifacts/native-tool-diagnostics-a0dcc02256ac4fd2a15a1dc22c8e5c03/af-image-cache",
+  "sourceFixCommit": "4268a36f4d8e7ef4093de69ddc3d74497b532459",
+  "gitPushStatus": "FAILED128: SSH local UID501 lookup; HTTPS fetch also blocked by github.com DNS",
+  "remoteEqualityVerified": false
 }

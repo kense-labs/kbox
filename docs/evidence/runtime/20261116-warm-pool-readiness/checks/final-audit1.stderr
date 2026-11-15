@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final_audit.py", line 5, in <module>
+    frozen=json.loads((root/'source-frozen-1.json').read_text());assert runpy.run_path(str(root/'source_snapshot.py'))['snapshot']()==frozen
+AssertionError

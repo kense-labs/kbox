@@ -1,0 +1,78 @@
+{
+  "previousPhaseRam": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "currentRam": [],
+  "removed": [
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk4",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmp4j0QhB/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk6",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpGkqfEw/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk7",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpSGRttY/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk8",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpRUIJOX/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk9",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpih1kQN/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk10",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpDPMuSA/secrets"
+    },
+    {
+      "content-hint": "",
+      "dev-entry": "/dev/disk11",
+      "mount-point": "/private/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/.tmpBojuCT/secrets"
+    }
+  ],
+  "added": []
+}

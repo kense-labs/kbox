@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final_audit.py", line 70, in <module>
+    assert historical_ram_preserved,'previous-phase RAM inventory changed; retain the failing gate and clarify its actor before claiming preservation'
+AssertionError: previous-phase RAM inventory changed; retain the failing gate and clarify its actor before claiming preservation

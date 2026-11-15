@@ -1,0 +1,10 @@
+{
+  "command": [
+    "cargo",
+    "info",
+    "--locked",
+    "openssl@0.10.80",
+    "--verbose"
+  ],
+  "exit": 101
+}

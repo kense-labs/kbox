@@ -1,0 +1,11 @@
+{
+  "command": [
+    "gh",
+    "api",
+    "--paginate",
+    "repos/kense-labs/kbox/dependabot/alerts?state=open",
+    "--slurp"
+  ],
+  "exit": 0,
+  "seconds": 6.056614792
+}

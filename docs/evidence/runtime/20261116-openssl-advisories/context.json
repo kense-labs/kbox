@@ -1,0 +1,19 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/openssl-advisories-9f921204fdec43cb87f3f63669a793e2",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-openssl-advisories",
+  "startedUtc": "2026-11-15T18:47:29.984065+00:00",
+  "baseCommit": "e9f2a25267057fba47623e194bfef903da6f3a1a",
+  "priorCargoLockSha256": "c10845a30dd6cdf3a77b06afa54c6d271961f7b215b4af600b2fab482a36e129",
+  "officialAdvisoryCount": 8,
+  "package": "openssl",
+  "beforeVersion": "0.10.73",
+  "targetVersion": "0.10.80",
+  "registryChecksum": "a45fa2aa886c42762255da344f0a0d313e254066c46aad76f300c3d3da62d967",
+  "officialSource": "https://github.com/rust-openssl/rust-openssl/security/advisories/GHSA-phqj-4mhp-q6mq",
+  "networkBlocker": "index.crates.io and static.crates.io fail DNS; cached official sparse metadata exists; no repeated network retries",
+  "priorBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1",
+  "priorBoxArchive": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final-dist-readiness-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/image-cache",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "status": "Starting precise offline lockfile resolution; preserve existing runtime source and concurrent local commit"
+}

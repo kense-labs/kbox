@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/final_audit.py"
+  ],
+  "exit": 1,
+  "seconds": 3.236943042
+}

@@ -58,3 +58,25 @@ call tree are retained in the artifact root. Do not close remote alerts or
 claim native Linux/Windows TLS validation from this Mac. Next local GA slice
 after current archive/native/cleanup: update the existing lock entry and verify
 its precise dependency delta, policy/registry/TLS callers and actual build gates.
+
+## Latest checkpoint
+
+All build/default/native handles closed. Full verifyPASS297.90s,Runtime2277/46
+ignored,CLI935,installer8. Final Box fd20bacc… rebuilt/installed with11 companions;
+new clienta43a2833… includes the actual deadline tests. Final wave3 passes4 OCI/
+engine scenarios; pool-wave4 passes4 daemons/16 idle VMs/4 Guest commands; A–F
+passes5 actual rows (2Rust1/0/0+3Python).21 owned homes and106 runtime socket
+directories/441 paths are empty,443 cloned original image blobs match, no owned
+FD/mount/process remains. See OUTCOME/FAILURES for exact results.
+
+Do not label overall audit accepted: historical7 RAM devices are now absent;
+strict audit3 retainsFAIL while owned-resource checks pass. User clarification
+requested asynchronously about a concurrent local actor. A separate actor also
+committed70df92be; all1709 compiled inputs remain exactly the frozen d4cc47ff…
+from base69fffadb, and the ancestry/content binding is retained. Preserve it.
+No source overwrite, unrelated cleanup or mount restoration was performed.
+
+Next independent work: patch existing openssl0.10.73 lock resolution using
+verified cached metadata; index/static crates.io DNS both fail and must not be
+blindly retried. Preserve all8 official advisories and honest target limits.
+Full enterprise goal remains active, not narrowed to this readiness fix.

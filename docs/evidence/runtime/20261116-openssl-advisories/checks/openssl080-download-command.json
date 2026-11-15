@@ -1,0 +1,18 @@
+{
+  "command": [
+    "curl",
+    "--fail",
+    "--location",
+    "--retry",
+    "0",
+    "--connect-timeout",
+    "5",
+    "--max-time",
+    "15",
+    "https://static.crates.io/crates/openssl/openssl-0.10.80.crate",
+    "-o",
+    "artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/openssl-0.10.80.crate"
+  ],
+  "exit": 6,
+  "stderr": "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n\n  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0curl: (6) Could not resolve host: static.crates.io\n"
+}

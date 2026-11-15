@@ -1,0 +1,138 @@
+[
+  {
+    "number": 13,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "medium",
+    "ghsa": "GHSA-phqj-4mhp-q6mq",
+    "summary": "rust-openssl: Potential out-of-bounds write in `CipherCtxRef::cipher_update_inplace` for AES-KW-PAD ciphers",
+    "vulnerable": ">= 0.10.50, < 0.10.80",
+    "patched": {
+      "identifier": "0.10.80"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/13"
+  },
+  {
+    "number": 12,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "medium",
+    "ghsa": "GHSA-xv59-967r-8726",
+    "summary": "rust-openssl vulnerable to heap buffer overflow when encrypting with AES key-wrap-with-padding",
+    "vulnerable": ">= 0.10.0, < 0.10.79",
+    "patched": {
+      "identifier": "0.10.79"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/12"
+  },
+  {
+    "number": 7,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "high",
+    "ghsa": "GHSA-xp3w-r5p5-63rr",
+    "summary": "rust-openssl has undefined behavior in X509Ref::ocsp_responders for certificates with non-UTF-8 OCSP URLs",
+    "vulnerable": ">= 0.9.7, < 0.10.79",
+    "patched": {
+      "identifier": "0.10.79"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/7"
+  },
+  {
+    "number": 6,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "high",
+    "ghsa": "GHSA-pqf5-4pqq-29f5",
+    "summary": "rust-openssl: Deriver::derive and PkeyCtxRef::derive can overflow short buffers on OpenSSL 1.1.1",
+    "vulnerable": ">= 0.9.27, < 0.10.78",
+    "patched": {
+      "identifier": "0.10.78"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/6"
+  },
+  {
+    "number": 5,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "low",
+    "ghsa": "GHSA-xmgf-hq76-4vx2",
+    "summary": "rust-opennssl has an Out-of-bounds read in PEM password callback when returning an oversized length",
+    "vulnerable": ">= 0.9.0, < 0.10.78",
+    "patched": {
+      "identifier": "0.10.78"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/5"
+  },
+  {
+    "number": 4,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "high",
+    "ghsa": "GHSA-8c75-8mhr-p7r9",
+    "summary": "rust-openssl has incorrect bounds assertion in aes key wrap",
+    "vulnerable": ">= 0.10.24, < 0.10.78",
+    "patched": {
+      "identifier": "0.10.78"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/4"
+  },
+  {
+    "number": 3,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "high",
+    "ghsa": "GHSA-ghm9-cr32-g9qj",
+    "summary": "rust-openssl: rustMdCtxRef::digest_final() writes past caller buffer with no length check",
+    "vulnerable": ">= 0.10.39, < 0.10.78",
+    "patched": {
+      "identifier": "0.10.78"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/3"
+  },
+  {
+    "number": 2,
+    "state": "open",
+    "package": {
+      "ecosystem": "rust",
+      "name": "openssl"
+    },
+    "manifest": "Cargo.lock",
+    "severity": "high",
+    "ghsa": "GHSA-hppc-g8h3-xhp3",
+    "summary": "rust-openssl: Unchecked callback length in PSK/cookie trampolines leaks adjacent memory to peer",
+    "vulnerable": ">= 0.9.24, < 0.10.78",
+    "patched": {
+      "identifier": "0.10.78"
+    },
+    "url": "https://github.com/kense-labs/kbox/security/dependabot/2"
+  }
+]

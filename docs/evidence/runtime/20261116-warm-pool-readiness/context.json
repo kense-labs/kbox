@@ -12,13 +12,13 @@
   "maxReproductionWaves": 4,
   "maxSecondsPerWave": 420,
   "platform": "macOS-26.6.2-arm64-arm-64bit",
-  "status": "Final installed Box archive ready; final concurrent installed native acceptance next",
+  "status": "Deadline guard verified with fresh archive/default/native evidence; overall historical RAM preservation remains FAIL pending actor clarification",
   "kstudio": "absent; global k-loop not runnable, no framework initialized; repository task workflow used",
   "remaining": [
-    "Reproduce and retain failed VM console/shim logs",
-    "Fix proven shared cause with negative regression",
-    "Focused/default gates, rebuild/install affected source, native repeat and owned cleanup",
-    "Continue next GA blocker; full cutover/platform/release gates remain open"
+    "Identify actor for7 previous-phase RAM removals; keep strict audit failing until resolved",
+    "Original intermittent startup cause remains open",
+    "OpenSSL precise patch/build checks and next GA parity work",
+    "Full W4/cutover/platform/GA gates remain open"
   ],
   "imageStoreClonedFrom": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-image-cache/images",
   "activeSession": null,
@@ -41,5 +41,10 @@
   "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/warm-pool-readiness-bfa18104e9e9434b9b89e85e425ff763/installed-readiness-final-1",
   "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-final1-unpacked/koci-hvf-0.3.6-macos-arm64",
   "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-final1-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
-  "ociOriginalSourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c"
+  "ociOriginalSourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+  "implementationVerified": true,
+  "accepted": false,
+  "reviewedUtc": "2026-11-15T18:45:18.368601+00:00",
+  "observedCommit": "e9f2a25267057fba47623e194bfef903da6f3a1a",
+  "currentGap": "Independent8 OpenSSL lockfile advisories; crate DNS blocked, cached metadata available"
 }

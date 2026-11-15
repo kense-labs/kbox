@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/qualification-runner-final1.py", line 139, in <module>
+    assert status == 0, ('native driver failed', status)
+AssertionError: ('native driver failed', 1)

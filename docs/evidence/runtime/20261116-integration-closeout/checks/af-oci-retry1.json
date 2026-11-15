@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/qualification-oci-retry1.py",
+    "docs/evidence/runtime/20261116-integration-closeout/af-context-final2.json"
+  ],
+  "exit": 0,
+  "seconds": 36.099894375000005
+}

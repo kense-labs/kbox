@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/run-native.py",
+    "docs/evidence/runtime/20261116-integration-closeout/run-context.json",
+    "1",
+    "files"
+  ],
+  "exit": 0,
+  "seconds": 65.335055208
+}

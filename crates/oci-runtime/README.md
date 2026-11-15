@@ -2000,3 +2000,12 @@ Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
 cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
 unsupported/no native run and RSS unmeasured. The user requests convergence and
 integration now; subsequent merged-source validation is recorded separately.
+
+[Merged-source installed acceptance](../../docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md)
+records freshly rebuilt Host/Agent/system-image packaging and Box integration,
+5 Rust native tests plus3 Python scenarios, and9-home/99-socket cleanup. The shared
+image builder now reads the actual Agent package version after workspace
+consolidation. The original parallel warm-boot timeout remains unresolved despite
+an unchanged isolated retry passing. Full W4/default Host Service cutover and
+platform promotion remain open; Windows ARM64 dependencies remain unsupported
+with no native run. Runtime RSS is unmeasured.

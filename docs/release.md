@@ -391,3 +391,13 @@ Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
 cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
 unsupported/no native run and RSS unmeasured. The user requests convergence and
 integration now; subsequent merged-source validation is recorded separately.
+
+The [merged-source closeout](evidence/runtime/20261116-integration-closeout/OUTCOME.md)
+records freshly rebuilt and isolated installed Box/OCI archives, exact source and
+dependency identities, Runtime2274/CLI935/installer8, and5 Rust native tests plus3
+Python native scenarios. All9 owned homes and99 socket paths are clear. The first
+parallel OCI warm-boot timeout remains a recorded failure; an unchanged isolated
+retry passes, without proving its cause fixed. Full W4/default Host Service
+cutover and platform promotion remain open; Windows ARM64 dependencies remain
+unsupported with no native run. Runtime RSS is unmeasured. Git convergence does
+not publish a release or change these qualification limits.

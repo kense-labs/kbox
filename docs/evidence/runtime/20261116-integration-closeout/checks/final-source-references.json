@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "checkedUtc": "2026-11-15T17:19:06.202807+00:00",
+  "sourceCommit": "466f52caf5f53c60fc4589dbe110675bced0a523",
+  "sourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+  "compiledInputCount": 1708,
+  "sharedImageBuilder": {
+    "status": "corrected existing shared caller",
+    "path": "crates/oci-runtime/scripts/lib/build-system-image.sh",
+    "sha256": "5e5af3d720df6b75afb67829e83b3862ac0c2e3563e216985e588f68ac788bea",
+    "agentManifest": "crates/oci-runtime/crates/agent/Cargo.toml",
+    "agentVersion": "0.3.6",
+    "deletedNestedWorkspaceNotRestored": true,
+    "compiledRustInputsUnchanged": true
+  },
+  "fixtureSources": 4,
+  "submodules": {
+    "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+    "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+  },
+  "references": [
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "TASKS.md"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "context.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/versioned-probe-sources.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/layout2.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/unsafe1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/wire2.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/kcl1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/workspace-clippy2.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/windows-clippy2.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/verify3.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/host-environment.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "run-context.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/install-integration-final1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/oci-merged-final1-install.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/final-identities-1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/system-image-builder-fix.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/premerge-payload-comparison1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/box-native-files-attempt-1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/box-native-cap-add-attempt-1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/box-native-shm-size-attempt-1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/af-final1/native-results.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/af-final2/native-results.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/final-af-results.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/af-reconciliation.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "FAILURES.md"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/final-cleanup.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/final-caller-sources.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "checks/final-review1.json"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md",
+      "target": "../LOCAL-RUNTIME-STATE.json"
+    },
+    {
+      "document": "crates/box/runtime/tests/fixtures/README.md",
+      "target": "../../../../../docs/evidence/runtime/20261116-integration-closeout/TASKS.md"
+    },
+    {
+      "document": "docs/release.md",
+      "target": "evidence/runtime/20261116-integration-closeout/OUTCOME.md"
+    },
+    {
+      "document": "crates/box/runtime/README.md",
+      "target": "../../../docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md"
+    },
+    {
+      "document": "crates/oci-runtime/README.md",
+      "target": "../../docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md"
+    },
+    {
+      "document": "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+      "target": "../20261116-integration-closeout/OUTCOME.md"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/TASKS.md",
+      "target": "OUTCOME.md"
+    },
+    {
+      "document": "docs/evidence/runtime/20261116-integration-closeout/TASKS.md",
+      "target": "checks/final-review1.json"
+    }
+  ],
+  "defaultAndNativeResults": "checks/final-review1.json",
+  "originalParallelBootFailureRetained": true,
+  "remaining": "Scoped commit, local main fast-forward, non-force push and local/remote main ref equality."
+}

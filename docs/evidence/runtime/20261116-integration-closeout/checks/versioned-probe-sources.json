@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "sourceBytesUnchanged": true,
+  "fixtures": [
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe.c",
+      "fixture": "crates/box/runtime/tests/fixtures/hvf_capability_probe.c",
+      "sha256": "8372b6fe8c5a156ed113b2698ddfd0808211e5b5ebb0fbe13baec839058c57ce",
+      "bytes": 6488
+    },
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-cli-pty.py",
+      "fixture": "crates/box/runtime/tests/fixtures/hvf_capability_cli_pty.py",
+      "sha256": "e2c0dcfa607d69901b101915866aaff0a146748ace039d7a85249efaa9b694f7",
+      "bytes": 2753
+    },
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-probe.c",
+      "fixture": "crates/box/runtime/tests/fixtures/hvf_shm_probe.c",
+      "sha256": "630bf872bf92112f525e3f40ec151be7dabfdac64f90bfa3eef4281663a551d8",
+      "bytes": 5849
+    },
+    {
+      "source": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-cli-pty.py",
+      "fixture": "crates/box/runtime/tests/fixtures/hvf_shm_cli_pty.py",
+      "sha256": "e136c6745ffd11b2db2430e741672b200a8b6897b4526f8885c7955387dbdcf0",
+      "bytes": 2814
+    }
+  ],
+  "compiledInputsAndRustSourceUnchanged": true
+}

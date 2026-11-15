@@ -1,0 +1,5 @@
+{
+  "home": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-oci/04d14ab92d77479d9dc51c083993b04f/home",
+  "reason": "build failed before a managed execution catalog existed; still included in all CLI/resource audits",
+  "includedInAudit": true
+}

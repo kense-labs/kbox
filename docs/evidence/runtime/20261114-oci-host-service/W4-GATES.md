@@ -53,3 +53,11 @@ matrices remain open above.
 Bounded process limits and the managed CLI raw-socket security bypass are closed
 by [spec017 final installed evidence](../20261115-oci-ulimits/OUTCOME.md). Full
 W4 and default cutover remain open; unqualified resource types still refuse.
+
+User-authorized Git convergence is validated separately by the
+[merged-source installed closeout](../20261116-integration-closeout/OUTCOME.md):
+5 Rust native tests plus3 Python scenarios and9-home/99-socket cleanup. The first
+parallel OCI warm-boot readiness timeout is retained as a failure; its isolated
+retry passes unchanged, without resolving the startup risk. Next technical work
+is owned-log reproduction of that timeout. This does not close default cutover,
+full parity, long soak or external platform qualification.

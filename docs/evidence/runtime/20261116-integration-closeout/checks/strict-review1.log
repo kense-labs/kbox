@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "sourceCommit": "466f52caf5f53c60fc4589dbe110675bced0a523",
+  "sourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+  "sourceFiles": 1708,
+  "sharedImageBuilder": {
+    "status": "corrected existing shared caller",
+    "path": "crates/oci-runtime/scripts/lib/build-system-image.sh",
+    "sha256": "5e5af3d720df6b75afb67829e83b3862ac0c2e3563e216985e588f68ac788bea",
+    "agentManifest": "crates/oci-runtime/crates/agent/Cargo.toml",
+    "agentVersion": "0.3.6",
+    "deletedNestedWorkspaceNotRestored": true,
+    "compiledRustInputsUnchanged": true
+  },
+  "nativeRustTests": 5,
+  "pythonNativeScenarios": 3,
+  "guestAgentPayloadUnchanged": true,
+  "flakyParallelWarmBootObserved": true,
+  "originalAfAggregateRetainedAsFailure": true,
+  "capabilityObservations": 45,
+  "shmObservations": 25,
+  "boundaryDefaultObservations": 3,
+  "verifyRuntime": [
+    2274,
+    0,
+    46
+  ],
+  "verifyCli": [
+    935,
+    0,
+    0
+  ],
+  "installerTests": 8,
+  "cleanup": {
+    "status": "PASS",
+    "homes": 9,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "newRamDevices": [],
+    "baselineRamDevicesPreserved": 7,
+    "workloadDisksRemaining": [],
+    "observedSocketPaths": 99,
+    "existingSockets": [],
+    "sourceCacheFilesChecked": 35,
+    "afSourceCacheFilesChecked": 465,
+    "changedSourceBlobs": [],
+    "guestAgents": "owned VM workers reaped; no separate host Agent remains",
+    "resourcesDeletedByAudit": [],
+    "scope": "only this run; initial seven RAM devices and unrelated mounted image untouched"
+  }
+}

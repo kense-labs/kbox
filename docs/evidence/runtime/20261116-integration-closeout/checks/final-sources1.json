@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/final-sources-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 0.044114875
+}

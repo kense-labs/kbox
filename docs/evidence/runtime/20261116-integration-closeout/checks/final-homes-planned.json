@@ -1,0 +1,11 @@
+[
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-directory/home",
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-oci/04d14ab92d77479d9dc51c083993b04f/home",
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-prewarm/ef47bfa010fa4823a850bf806bddc9e0/k-home",
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-primary/498d9a31a09e452da860c2c0ec1f0e5b/home",
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final1/native-readonly/d555bfb7369a4415ad3a0f8246151f98/home",
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final2/native-oci/db0387862bd74d15a87308d8c58adf09/home",
+  "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/home",
+  "/private/tmp/kbox-integration-d5cfdcaeba85/files-attempt-1/home",
+  "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/home"
+]

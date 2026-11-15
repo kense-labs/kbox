@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/unpacked-integration-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/final-dist-integration-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/unpacked-integration-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 0.9518786250000062,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/installed-integration-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/final-dist-integration-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "db1ddbef1296ae17b46a8ff84b3d618e45a49eab1b2992c41a83bf104f91d5ff",
+  "compressedBytes": 23400361,
+  "installedDiskBytes": 44175360,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "466f52caf5f53c60fc4589dbe110675bced0a523",
+    "sourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+    "cargoLockSha256": "c10845a30dd6cdf3a77b06afa54c6d271961f7b215b4af600b2fab482a36e129",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

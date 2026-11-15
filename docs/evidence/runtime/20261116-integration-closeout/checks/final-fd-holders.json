@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/private/tmp/kbox-integration-d5cfdcaeba85"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/sbin/lsof",
+      "+D",
+      "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+]

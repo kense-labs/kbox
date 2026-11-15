@@ -1,0 +1,170 @@
+[
+  {
+    "component": "box",
+    "path": "build-info.json",
+    "oldSha256": "bca88ac1bb1af5527cdc6086fe41f73f60c8465b60f45d5e5cf7661f2afeac9d",
+    "newSha256": "9534a1918347982e37c39964b76ee75350f5ac2d284a6a28c1a1dd488b29a9f7",
+    "identical": false
+  },
+  {
+    "component": "box",
+    "path": "install.sh",
+    "oldSha256": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+    "newSha256": "f307ce23ce26cb82b0087fced9ccaaa4c35302db7d37fc6c0d728ff915da930d",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "VERSION",
+    "oldSha256": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+    "newSha256": "0ca6c7591d8ed155ad3e925e2279149da5c782c0b57266a016fdd862dcc647da",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "SHA256SUMS",
+    "oldSha256": "81add879336ebfeb2cdd8926c01e102dffc3c3eef35851543ff9e16c6064f7b2",
+    "newSha256": "d9a457dbea3f6a9081f58ef557f15b164ff386e153572b9b3145f14513a41039",
+    "identical": false
+  },
+  {
+    "component": "box",
+    "path": "bin/kbox",
+    "oldSha256": "8637f8fdee2f8d6ba49bae608b3c8a504fd2e66e7ee99f5cce529399b6756a08",
+    "newSha256": "52dc445c15843fb32af84b0f7a797f98599b48060227530b4438a5bce280d773",
+    "identical": false
+  },
+  {
+    "component": "box",
+    "path": "bin/kbox-guest-init",
+    "oldSha256": "f2b6d3278dcad3033389148bd7335113cc14d0cd21cab48de0bc7e5e8ce2cece",
+    "newSha256": "0fba36afc534c83e54f6f4715ab6d2936561f0b1b2fb57075758802bbe1e423c",
+    "identical": false
+  },
+  {
+    "component": "box",
+    "path": "bin/kbox-shim",
+    "oldSha256": "db45857a129491727b246dad75222cb3b53f79bd9eb401d5cbbed76fecaf034e",
+    "newSha256": "c39f2b9912c1099b73b14fdc36fc3d6bd194b477bfc963235ea845490bc502da",
+    "identical": false
+  },
+  {
+    "component": "box",
+    "path": "lib/libkrun.dylib",
+    "oldSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "newSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "lib/libkrun.1.dylib",
+    "oldSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "newSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "lib/libkrun.1.17.0.dylib",
+    "oldSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "newSha256": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "lib/libkrunfw.dylib",
+    "oldSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "newSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "identical": true
+  },
+  {
+    "component": "box",
+    "path": "lib/libkrunfw.5.dylib",
+    "oldSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "newSha256": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "build-info.json",
+    "oldSha256": "58592f0ec7bc9158611857a6fa8c32a82cf16d5c67ba2fed7d8bed07a490c896",
+    "newSha256": "7d3fd169f9316089f2066fcff89b6ed620612bc227ada8a13b21a1be660788e1",
+    "identical": false
+  },
+  {
+    "component": "oci",
+    "path": "koci",
+    "oldSha256": "f0f565cf028806e3fb30ab8f2f0490ffbd9a46dc20b42e97f4ebe2478288d258",
+    "newSha256": "f74d529346a1082c0dc024bcb81d5289c8efa59e410fd07e34a2996cf66855fc",
+    "identical": false
+  },
+  {
+    "component": "oci",
+    "path": "koci-agent",
+    "oldSha256": "a7159a45271c2843901f8cc958bbaf83355ed8ebac5b5bf24e921e79194fd566",
+    "newSha256": "a7159a45271c2843901f8cc958bbaf83355ed8ebac5b5bf24e921e79194fd566",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "native-source.json",
+    "oldSha256": "66673c7c07072b48515557510034a7eb12a56f2fe3c842fcdbf9418b7d6b8cb5",
+    "newSha256": "66673c7c07072b48515557510034a7eb12a56f2fe3c842fcdbf9418b7d6b8cb5",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "README.txt",
+    "oldSha256": "9f2389498a02a8587877e4b31262b1d208ec2a7d7dffa7cdb4af65948e627f41",
+    "newSha256": "9dea3faf9a59ed6d731a84dae1c80e5e3b534606bb43a366c9b2af4caf789f98",
+    "identical": false
+  },
+  {
+    "component": "oci",
+    "path": "koci-kshim",
+    "oldSha256": "d22ae39533a765406c0cf5fbfffdafc290b1433cc12ccd638d4b527b0d3c47d4",
+    "newSha256": "d22ae39533a765406c0cf5fbfffdafc290b1433cc12ccd638d4b527b0d3c47d4",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "SHA256SUMS",
+    "oldSha256": "167a17d43acedeb144cdc8f2928cc286a95ba96af3f41bc0ef9bcdea1ae34edf",
+    "newSha256": "4e3bee7f74d452001677ebf8698472bc1f250cf919ba362d59013bb88f980d7c",
+    "identical": false
+  },
+  {
+    "component": "oci",
+    "path": "koci-kbox-runtime/libkrun.1.17.0.dylib",
+    "oldSha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf",
+    "newSha256": "7dcaf94032e22d2044aed36b7c43f17dd311fed65369f0f292c2e65337856ddf",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "koci-kbox-runtime/libkrunfw.5.dylib",
+    "oldSha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+    "newSha256": "841bc9d5eecbc2aeeb6098fbc75d484427680d7503f5ed9bcdfe9d072a9420d4",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "system-image/system-image.json",
+    "oldSha256": "8e15bef709cedfec9acaf9dd6ce42cee9ecc00de824bd7e37fa5cd3c7f8700c6",
+    "newSha256": "8e15bef709cedfec9acaf9dd6ce42cee9ecc00de824bd7e37fa5cd3c7f8700c6",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "system-image/koci-system.ext4",
+    "oldSha256": "abf7fd96e5a6b8604362e005d4418663871e1547116c67cd933ccf69b4fad0ae",
+    "newSha256": "abf7fd96e5a6b8604362e005d4418663871e1547116c67cd933ccf69b4fad0ae",
+    "identical": true
+  },
+  {
+    "component": "oci",
+    "path": "system-image/koci-system.ext4.xz",
+    "oldSha256": "0852b9f9eac649a8ecb7118d0d1d42dacf6776ec2b09b7656886197357be1e1f",
+    "newSha256": "0852b9f9eac649a8ecb7118d0d1d42dacf6776ec2b09b7656886197357be1e1f",
+    "identical": true
+  }
+]

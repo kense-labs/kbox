@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/check-final-identities1.py"
+  ],
+  "exit": 0,
+  "seconds": 1.4040849160000002
+}

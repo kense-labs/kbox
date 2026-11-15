@@ -676,3 +676,10 @@ Final4Rustnative+3Python pass; verify Runtime2274/46ignored CLI935installer8.
 cutover/live continuity/platform gates stay open; Windows ARM64 dependencies
 unsupported/no native run and RSS unmeasured. The user requests convergence and
 integration now; subsequent merged-source validation is recorded separately.
+
+[Merged-source installed acceptance](../../../docs/evidence/runtime/20261116-integration-closeout/OUTCOME.md)
+records rebuilt Box/OCI archives,5 Rust native tests plus3 Python scenarios and
+zero remaining owned resources across9 homes. A parallel OCI warm-boot timeout
+remains unresolved despite an unchanged isolated retry passing. Default BoxVm,
+stopped-only HVF recovery, full W4/platform gates and Windows ARM64 limitations
+remain unchanged; runtime RSS is unmeasured.

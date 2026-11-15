@@ -1,0 +1,14 @@
+{
+  "command": [
+    "bash",
+    "crates/oci-runtime/scripts/build-macos-system-image.sh",
+    "--alpine-archive",
+    "/Users/roylin/code/kense/kbox/artifacts/oci-host-service-ebc8e8fb78904d1b8c7696506ae725a7/inputs/alpine-minirootfs-3.22.5-aarch64.tar.gz",
+    "--agent",
+    "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-candidate-1/koci-agent",
+    "--output-dir",
+    "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/oci-merged-candidate-1/system-image"
+  ],
+  "exit": 0,
+  "seconds": 6.47613225
+}

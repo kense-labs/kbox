@@ -1,0 +1,14 @@
+[
+  {
+    "kind": "boxArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/final-dist-shm-size-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "bytes": 23396001,
+    "sha256": "ad8d6f67d06e1e949ed94659606a7ab4bdf8a57d961e768b389075e081c264b3"
+  },
+  {
+    "kind": "ociArchive",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/oci-reused-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "bytes": 33424560,
+    "sha256": "30eb5e29bbe0e3676a55a6c67f95b20d2752e5aacbf791a2cd70222e9f4f8d62"
+  }
+]

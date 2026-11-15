@@ -1,0 +1,9 @@
+{
+  "status": "corrected existing shared caller",
+  "path": "crates/oci-runtime/scripts/lib/build-system-image.sh",
+  "sha256": "5e5af3d720df6b75afb67829e83b3862ac0c2e3563e216985e588f68ac788bea",
+  "agentManifest": "crates/oci-runtime/crates/agent/Cargo.toml",
+  "agentVersion": "0.3.6",
+  "deletedNestedWorkspaceNotRestored": true,
+  "compiledRustInputsUnchanged": true
+}

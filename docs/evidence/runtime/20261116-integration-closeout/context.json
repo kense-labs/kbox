@@ -6,7 +6,7 @@
   "acceptedSource": "c7e0c86543bd475639bc5b56261d34fac6d115f0deed5f0c11fdb02683a8d1dd",
   "preMergeEvidence": "docs/evidence/runtime/20261115-oci-shm-size",
   "scope": "Converge, commit, merge remote main, verify merged source and affected native assets, merge and push",
-  "status": "merge conflicts resolved; layout2 unsafe1 wire2 kcl1 PASS; verify2 running",
+  "status": "Merged-source artifacts and checks accepted with retained intermittent warm-boot risk; Git delivery pending",
   "root": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd",
   "privateRoot": "/private/tmp/kbox-integration-d5cfdcaeba85",
   "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-integration-closeout",
@@ -80,5 +80,11 @@
     "shmCliProbe": "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-cli-pty.py",
     "acceptedUtc": "2026-11-15T16:19:35.393423+00:00"
   },
-  "verifySession": 84137
+  "verifySession": 84137,
+  "mergedCommit": "466f52caf5f53c60fc4589dbe110675bced0a523",
+  "mergedSourceInputsSha256": "d8f86d9b3e6fbcc137d0ee16448d2d00437b8ab06ae417691faeb6631d435e8c",
+  "validatedUtc": "2026-11-15T17:19:06.202807+00:00",
+  "finalReview": "checks/final-review1.json",
+  "sourceReferences": "checks/final-source-references.json",
+  "deliveryReceipt": "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/delivery-receipt.json"
 }

@@ -1,0 +1,262 @@
+[
+  {
+    "kind": "native",
+    "baselineFilesChecked": 35,
+    "unchangedFiles": 34,
+    "mutableIndexSha256": "2ccea7d61ae58fcdc11839c8b3e59d657ba189b379f3bfeb9148bd4160716ebd",
+    "originalEntryIdentityPreserved": true,
+    "originalEntryMetadataChanges": [
+      {
+        "reference": "docker.io/library/kbox-hvf-volumes@sha256:fe35e9f94e93a4523f84648414bad12d177ffda00bebbd8a6d92823f2eab8ef4",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-hvf-same-uid:qualification",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "docker.io/library/kbox-capacity-oversized:64a2d8b501a94159b8bc63c58861bb0a",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa",
+        "changedFields": [
+          "last_used",
+          "path"
+        ]
+      }
+    ],
+    "addedEntries": []
+  },
+  {
+    "kind": "af",
+    "baselineFilesChecked": 465,
+    "unchangedFiles": 464,
+    "mutableIndexSha256": "4c9f94265cc45b04d79949d78ff0500b39baaeaf3cd7916190cab9d82d7f7e89",
+    "originalEntryIdentityPreserved": true,
+    "originalEntryMetadataChanges": [
+      {
+        "reference": "kbox-oci-regression:0440aad8d495453584c0d5e0599ab52b",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:6d4fd4ac440649e8aa07a53d09f4c089",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:bf2d8b1951bc44a3a32077657703e48c",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:f9a76742996941babe197f852053068a",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:7bff2b14cdbb4124a128e6a6bb407fb1",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:50818f600ac441af99799447121bfe83",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:6d7cbcbd3d7e4acc9b0a8fba4ed00d28",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:b1f452a32fa049cba8f7059847b08309",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:a6b9dc66f1cc49948c8722585bf97424",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:0b47261d6de947c98c7e88de3a0acd1d",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:ac25b5cc9d6740d3bd9dde90c908cd5c",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:b5a32b7386a341808e3e825718b0277d",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:d28be1b8203744ff9f5ec2be001a5532",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:41f9f7299cf44bdc99d605c3fbcb7b20",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:ba3ccf9460ec452587c263de14edc1e2",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:a642a84119104354960a33bc119fd2e7",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:e63cdc4bfb624741addce5be2492e49b",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "docker.io/library/busybox:1.37.0",
+        "changedFields": [
+          "last_used",
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:d2a4a7a5d57a4d5eb39a09e8ba745705",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:9621391ad04b41b5a98232e93106171f",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:b311c38989184341b2aa9c517eab826a",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:150a4bc3103b45038a5eabffa4c4cbcc",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:fbefa72579a44e0d831874de5ba2f5d6",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:ab64678ae888431eb33a72a51286e179",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:0e1b603a9b014109bdddfa5ce7890a77",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:5f8fe3da1c944871b59efc3a47c78228",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:739d08ea2f084fa880a5174d6006beb5",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-qualification-tools:local",
+        "changedFields": [
+          "last_used",
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:e8eca06fceac421f868852fd55abcbcf",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:5d611bc765404799bfb1550a97beb45e",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:3c3f68820ffa424b82cfa94a4f35c996",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:8909ab76df62461a82ee45c0049b37e0",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:a599f4dec228407fbf8a30b1a09e3dd0",
+        "changedFields": [
+          "path"
+        ]
+      },
+      {
+        "reference": "kbox-oci-regression:4cfe7563e1034706a22253d627e583c2",
+        "changedFields": [
+          "path"
+        ]
+      }
+    ],
+    "addedEntries": [
+      {
+        "reference": "kbox-oci-regression:db0387862bd74d15a87308d8c58adf09",
+        "digest": "sha256:4e9a1cd06a5a054435ee8292b24625c8996458957ab0eef95a643c1a03074e0d",
+        "size_bytes": 78030209,
+        "pulled_at": "2026-11-15T17:06:39.027597Z",
+        "last_used": "2026-11-15T17:06:57.462173Z",
+        "path": "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/af-final2/native-oci/db0387862bd74d15a87308d8c58adf09/home/images/sha256/4e9a1cd06a5a054435ee8292b24625c8996458957ab0eef95a643c1a03074e0d"
+      }
+    ]
+  }
+]

@@ -1,0 +1,1 @@
+{"status": "PASS", "sourceFiles": 17, "attempts": [{"root": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1", "sourceFiles": 10}, {"root": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1", "sourceFiles": 7}]}

@@ -90,13 +90,13 @@ kbuild_system_image() {
   local image_size=67108864
   local filesystem_label="koci-system"
   local compatibility_level="koci-runtime-0.2.0-agent-protocol-v10"
-  local cargo_toml="$K_SYSTEM_IMAGE_LIB_DIR/../../Cargo.toml"
+  local cargo_toml="$K_SYSTEM_IMAGE_LIB_DIR/../../crates/agent/Cargo.toml"
   local agent_version
   agent_version="$(
-    sed -n '/^\[workspace.package\]/,/^\[/s/^version = "\([^"]*\)"/\1/p' "$cargo_toml"
+    sed -n '/^\[package\]/,/^\[/s/^version = "\([^"]*\)"/\1/p' "$cargo_toml"
   )"
   if [[ ! "$agent_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-    echo "refusing to build a system image without a workspace package version" >&2
+    echo "refusing to build a system image without an Agent package version" >&2
     return 2
   fi
 

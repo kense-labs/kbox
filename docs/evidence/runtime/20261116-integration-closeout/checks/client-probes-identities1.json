@@ -1,0 +1,26 @@
+{
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/native-client-frozen1": {
+    "bytes": 184624608,
+    "sha256": "7cd527b76f0e89a4f686ab85b1eb07a5f998c3ba3b37b90f22d6cae1ecbfafa5"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/run-native.py": {
+    "bytes": 15533,
+    "sha256": "259ea3bc2394d61d2d667f2207ef236e3697ecd697fa3f837763d28ea5c721fb"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-probe": {
+    "bytes": 1556144,
+    "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-shm-size-c4f98908041047b2b2af040555b77d89/inputs/shm-cli-pty.py": {
+    "bytes": 2814,
+    "sha256": "e136c6745ffd11b2db2430e741672b200a8b6897b4526f8885c7955387dbdcf0"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-probe": {
+    "bytes": 1559720,
+    "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+  },
+  "/Users/roylin/code/kense/kbox/artifacts/oci-cap-add-05c0ae87abb246feb912f52b32af137a/inputs/capability-cli-pty.py": {
+    "bytes": 2753,
+    "sha256": "e2c0dcfa607d69901b101915866aaff0a146748ace039d7a85249efaa9b694f7"
+  }
+}

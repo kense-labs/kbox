@@ -1,0 +1,6 @@
+{
+  "uname": "Darwin RoyLins-MacBook-Pro-M5-Max.local 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:19:08 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6050 arm64\n",
+  "swVers": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "euid": 501,
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)\n"
+}

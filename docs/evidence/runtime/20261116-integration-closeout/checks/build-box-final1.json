@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/build-box-final1.py"
+  ],
+  "exit": 0,
+  "seconds": 245.25254387500001
+}

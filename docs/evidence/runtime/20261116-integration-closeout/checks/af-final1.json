@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/integration-d5cfdcaeba8544c38f9c8f1fae5974fd/qualification-runner-final1.py",
+    "docs/evidence/runtime/20261116-integration-closeout/af-context-final1.json"
+  ],
+  "exit": 1,
+  "seconds": 142.121789875
+}

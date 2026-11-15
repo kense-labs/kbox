@@ -1,0 +1,443 @@
+{
+  "status": "PASS",
+  "sourceFiles": 17,
+  "attempts": [
+    {
+      "root": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1",
+      "sourceFiles": 10
+    },
+    {
+      "root": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1",
+      "sourceFiles": 7
+    }
+  ],
+  "allMetadataCapturedBeforeGrant": true,
+  "rows": [
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-cli-nonroot.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297880077,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-cli-nonroot-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-cli-nonroot-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297880077,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-cli.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297879396,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-cli-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-cli-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297879396,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-drop-all.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297863120,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-drop-all-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-drop-all-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297863120,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-host-ro.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297872863,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-host-ro-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-host-ro-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297872863,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-main.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297849376,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-main-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-main-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297849376,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-nonroot-added.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297865138,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-added-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-added-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297865138,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-nonroot-admin.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297869138,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-admin-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-admin-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297869138,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-nonroot-dropped.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297866102,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-dropped-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-dropped-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297866102,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-nonroot-nproc.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297864128,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-nproc-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-nonroot-nproc-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297864128,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-source-specific-drop.json",
+      "preGrant": {
+        "bytes": 1559720,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297862037,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-specific-drop-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/cap-add-attempt-1/capability-specific-drop-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297862037,
+        "bytes": 1559720,
+        "nlink": 1,
+        "sha256": "c8262932ea421a273f1b7384ea96ce1cef81b75ae212367238e03f1977c1e18b"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-cli.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297865777,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-cli-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-cli-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297865777,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-default.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297865307,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-default-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-default-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297865307,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-direct.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297863345,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-direct-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-direct-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297863345,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-independent.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297862199,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-independent-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-independent-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297862199,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-main.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297849382,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-main-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-main-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297849382,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-maximum.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297864785,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-maximum-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-maximum-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297864785,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    },
+    {
+      "snapshot": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-source-minimum.json",
+      "preGrant": {
+        "bytes": 1556144,
+        "device": 16777233,
+        "gid": 0,
+        "inode": 297864411,
+        "mode": 493,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76",
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-minimum-probe",
+        "uid": 501
+      },
+      "current": {
+        "source": "/private/tmp/kbox-integration-d5cfdcaeba85/shm-size-attempt-1/shm-minimum-probe",
+        "uid": 501,
+        "gid": 0,
+        "mode": 493,
+        "device": 16777233,
+        "inode": 297864411,
+        "bytes": 1556144,
+        "nlink": 1,
+        "sha256": "93a7060f0b9ff4b838a498ab363452c41853d6e471b4679d61e63186d7975b76"
+      }
+    }
+  ],
+  "removedByAudit": []
+}

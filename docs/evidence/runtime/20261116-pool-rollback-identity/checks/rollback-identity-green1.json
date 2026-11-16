@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "rollback_reselects_requested_identity_when_idle_membership_changes",
+    "--",
+    "--nocapture"
+  ],
+  "exit": 0,
+  "seconds": 13.127584833,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-rb-c67c2a3047e3/check-home-rollback-identity-green1",
+    "TMPDIR": "/private/tmp/kbox-pool-rb-c67c2a3047e3/t"
+  }
+}

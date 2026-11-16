@@ -158,3 +158,11 @@ Final5Rust+3Python,4daemon/16Ready/4commands and31-home audit pass. Internal
 boot/allocation/template/unpublished/legacy and rollbackselection remain local
 work. Full default OCI cutover/live continuity/W4/GA remain incomplete; Windows
 ARM64 unsupported/no native run, support levels unchanged.
+
+[041 exact rollback identity](../20261116-pool-rollback-identity/OUTCOME.md)
+closes proven stale-index wrong-target deletion; exact current IDs are removed
+atomically and registered before waits. Hermetic0/1->1/0;Pool71/0/5,CLI949/Clippy,
+default2336/6/55. Final3Rust+3Python/16Ready/26home audit pass. Drain cancellation,
+internal boot/template/unpublished/legacy and full default OCI cutover/live
+continuity/W4/GA remain open. WindowsARM64 unsupported/no native run; no levels
+promotion. Continue the proven published drain detachment-before-stats gap.

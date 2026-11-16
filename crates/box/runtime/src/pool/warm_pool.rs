@@ -885,40 +885,22 @@ impl WarmPool {
     /// Used when a fill partially fails and needs to roll back
     /// successfully added VMs.
     async fn remove_idle_vms(&self, box_ids: &[String]) {
-        // First pass: collect indices of VMs to remove
-        let indices_to_remove: Vec<usize> = {
-            let idle = self.idle.lock().await;
-            idle.iter()
-                .enumerate()
-                .filter(|(_, wm)| box_ids.iter().any(|id| id == wm.vm.box_id()))
-                .map(|(i, _)| i)
-                .collect()
-        };
-
-        if indices_to_remove.is_empty() {
-            return;
-        }
-
-        // Second pass: remove and collect VMs to destroy
-        // We do this in reverse order to avoid index shifting issues
-        let mut to_destroy: Vec<WarmVm> = Vec::new();
-        {
+        let to_destroy = {
             let mut idle = self.idle.lock().await;
-            for idx in indices_to_remove.into_iter().rev() {
-                if idx < idle.len() {
-                    let warm_vm = idle.remove(idx);
-                    to_destroy.push(warm_vm);
+            let mut stats = self.stats.lock().await;
+            let mut selected = Vec::new();
+            // Indices cannot survive an idle-list unlock; select identity at removal.
+            for index in (0..idle.len()).rev() {
+                if box_ids.iter().any(|id| id == idle[index].vm.box_id()) {
+                    selected.push(idle.remove(index));
                 }
             }
-        }
-
-        // Update stats before destroying (approximate, since VMs still exist in to_destroy)
-        {
-            let idle_count = self.idle.lock().await.len();
-            if let Ok(mut stats) = self.stats.try_lock() {
-                stats.idle_count = idle_count;
-            }
-            Self::sync_idle_metric(self.metrics.as_ref(), idle_count);
+            stats.idle_count = idle.len();
+            Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
+            selected
+        };
+        if to_destroy.is_empty() {
+            return;
         }
 
         // Destroy collected VMs (outside of pool lock).
@@ -1873,6 +1855,10 @@ mod shutdown_native;
 #[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
 #[path = "warm_pool/batch_native.rs"]
 mod batch_native;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/rollback_native.rs"]
+mod rollback_native;
 
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]

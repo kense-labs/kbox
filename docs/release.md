@@ -534,3 +534,16 @@ legacy ownership, rollback selection and full OCI Host Service cutover/live
 continuity/W4/GA stay open. WindowsARM64 dependencies unsupported/no native run,
 platform levels unchanged; RSS unmeasured. Git push still needs UID501/DNS
 recovery; local bundles are transport evidence, not publication.
+
+### 2026-11-16 exact pool rollback qualification
+
+[041 installed evidence](evidence/runtime/20261116-pool-rollback-identity/OUTCOME.md)
+fixes real wrong-target working-data deletion: select exact current IDs once,
+keep counts coherent and register before later waits. Hermetic0/1 becomes1/0;
+Pool71/0/5,CLI949/Clippy; default2336/6/55 retains six disk failures. Final
+Box55887560…/sourcec0552f3e… is23427222 compressed/44208128 installed bytes.
+Actual3Rust+3Python,4daemon/16Ready/4commands and26-home audit pass; initial
+audit invocation typo/failure retained. Drain cancellation/internal boot/template/
+unpublished/legacy and full OCI Host Service cutover/live continuity/W4/GA stay
+open. WindowsARM64 dependencies unsupported/no native run, support levels
+unchanged; RSS unmeasured. Git push still needs UID501/DNS recovery.

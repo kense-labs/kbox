@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 110.413593375,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/package-home-poolrb-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "c0552f3ed494fdad67e7669b25b9640a00b66b15d24894cf9a6a5ad0067a3f6f"
+}

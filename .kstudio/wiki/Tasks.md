@@ -77,3 +77,10 @@
 - **证据**: [原生0/1至1/0、最终包及31home审计](../../docs/evidence/runtime/20261116-pool-batch-ownership/OUTCOME.md)。
 - **验证**: Pool68/0/4、CLI949/Clippy；默认2333/6/54；5Rust+3Python、4daemon/16Ready/4命令；失败源码/client保留。
 - **限制**: 内部boot/template/unpublished/legacy/rollback与GA继续，Git UID501/DNS阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-rollback-identity
+
+- **结果**: 回滚只选择当前精确ID，修复实际工作数据误删；计数一致，等待前登记owner。
+- **证据**: [0/1至1/0、最终包与26home审计](../../docs/evidence/runtime/20261116-pool-rollback-identity/OUTCOME.md)。
+- **验证**: Pool71/0/5、CLI949/Clippy；默认2336/6/55；3Rust+3Python、4daemon/16Ready/4命令；审计命令拼写失败保留。
+- **限制**: drain取消/internal/template/unpublished/legacy及GA继续；GitUID501/DNS外阻塞，WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。

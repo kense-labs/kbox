@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-rollback-identity/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 144.514801875,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-rb-c67c2a3047e3/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-rb-c67c2a3047e3/t"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/unpacked-poolrb-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/final-dist-poolrb-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/unpacked-poolrb-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 0.7060938340000007,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/final-dist-poolrb-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "5588756009f175db37c023f5e6aac0f5efed11f6520a40fecf0629e761c058b5",
+  "compressedBytes": 23427222,
+  "installedDiskBytes": 44208128,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "15d6fa8829c692e49942422c2bcb65c1a3153ccb",
+    "sourceInputsSha256": "c0552f3ed494fdad67e7669b25b9640a00b66b15d24894cf9a6a5ad0067a3f6f",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/native-client-rollback1",
+    "--ignored",
+    "--exact",
+    "pool::warm_pool::rollback_native::native_rollback_preserves_unrelated_vm_and_allocation_across_idle_mutation",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1",
+  "exit": 0,
+  "seconds": 14.499281333,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 94150,
+      "parent": 86723,
+      "command": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"fa4cb282-84b7-45fd-b262-7410de0b16f2\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/fa4cb282-84b7-45fd-b262-7410de0b16f2/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/fa4cb282-84b7-45fd-b262-7410de0b16f2/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/fa4cb282-84b7-45fd-b262-7410de0b16f2/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/fa4cb282-84b7-45fd-b262-7410de0b16f2/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/volumes/anon_fa4cb282_9ea2e2a364f3e5ae8eb155757933dad9\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/fa4cb282-84b7-45fd-b262-7410de0b16f2/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1/lib/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 97123,
+      "parent": 86723,
+      "command": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"80998db7-f49a-4203-9afb-004c4d47e0a5\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/80998db7-f49a-4203-9afb-004c4d47e0a5/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/80998db7-f49a-4203-9afb-004c4d47e0a5/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/80998db7-f49a-4203-9afb-004c4d47e0a5/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/80998db7-f49a-4203-9afb-004c4d47e0a5/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/volumes/anon_80998db7_a1731716070db4427438f87c9060279f\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/80998db7-f49a-4203-9afb-004c4d47e0a5/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/fa4cb282-84b7-45fd-b262-7410de0b16f2/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-rollback-identity/checks/native-rollback1-live-logs/boxes/80998db7-f49a-4203-9afb-004c4d47e0a5/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "clientSha256": "8ee2845e12fbac759217867dabd4fd71b5414ecadf99d33389d3fc28c8448c4d",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/installed-poolrb-final-1",
+  "sourceInputsSha256": "c0552f3ed494fdad67e7669b25b9640a00b66b15d24894cf9a6a5ad0067a3f6f"
+}

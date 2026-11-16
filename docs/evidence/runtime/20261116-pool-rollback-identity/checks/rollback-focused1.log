@@ -1,0 +1,27 @@
+
+running 22 tests
+test local_execution::oci_hvf::tests::native::rollback::native_old_cli_refuses_file_authority_without_activation_or_rewrite ... ignored, requires sentinel-owned root, installed HVF assets and the accepted older Box CLI
+test tee::rollback::tests::test_version_store_new ... ok
+test tee::rollback::tests::test_version_store_check_version_ok ... ok
+test tee::rollback::tests::test_unseal_versioned_forged_version_rejected ... ok
+test tee::rollback::tests::test_unseal_versioned_same_version_ok ... ok
+test tee::rollback::tests::test_seal_versioned_roundtrip ... ok
+test tee::rollback::tests::test_version_store_check_version_rollback ... ok
+test tee::rollback::tests::test_seal_versioned_increments ... ok
+test tee::rollback::tests::test_version_store_remove ... ok
+test tee::rollback::tests::test_version_store_persistence ... ok
+test tee::rollback::tests::test_unseal_versioned_rollback_rejected ... ok
+test tee::rollback::tests::test_version_store_update_version ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_rollback_stats_wait_keeps_the_idle_owner_and_count ... ok
+test tee::rollback::tests::test_versioned_sealed_data_serde ... ok
+test tee::rollback::tests::test_independent_contexts ... ok
+test local_execution::vm_backend::owned_vm_close_tests::selected_missing_creation_intent_refuses_without_owner_or_rollback_claim ... ok
+test tee::rollback::tests::test_version_store_advance ... ok
+test local_execution::resources::tests::preexisting_resource_ownership_survives_start_rollback ... ok
+test local_execution::resources::tests::rollback_fails_closed_when_volume_detach_cannot_persist ... ok
+test pool::warm_pool::shutdown_ownership_tests::rollback_reselects_requested_identity_when_idle_membership_changes ... ok
+test pool::warm_pool::shutdown_ownership_tests::rollback_duplicate_or_absent_ids_never_target_other_owned_managers ... ok
+test local_execution::oci_backend::tests::pause_retry_after_rollback_uses_a_new_durable_mutation_identity ... ok
+
+test result: ok. 21 passed; 0 failed; 1 ignored; 0 measured; 2374 filtered out; finished in 0.18s
+

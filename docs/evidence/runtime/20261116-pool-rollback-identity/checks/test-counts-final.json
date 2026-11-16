@@ -1,0 +1,86 @@
+{
+  "rollback-identity-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "rollback-identity-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "rollback-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "21",
+        "0",
+        "1"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "71",
+        "0",
+        "5"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2336",
+        "6",
+        "55"
+      ]
+    ]
+  },
+  "native-rollback-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "af-check-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check1": {
+    "exit": 2,
+    "actualRustResults": []
+  },
+  "final-audit-check2": {
+    "exit": 0,
+    "actualRustResults": []
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "target": {
+    "allocation": {
+      "created_at": "2026-11-16T07:49:54.452354+00:00",
+      "driver": "local",
+      "in_use_by": [
+        "fa4cb282-84b7-45fd-b262-7410de0b16f2"
+      ],
+      "labels": {
+        "anonymous": "true",
+        "kbox.volume.allocation": "d8e4786c-6c45-4a49-a632-eabca61d7486",
+        "kbox.volume.kind": "anonymous-v1",
+        "kbox.volume.owner": "fa4cb282-84b7-45fd-b262-7410de0b16f2"
+      },
+      "mount_point": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/volumes/anon_fa4cb282_9ea2e2a364f3e5ae8eb155757933dad9",
+      "name": "anon_fa4cb282_9ea2e2a364f3e5ae8eb155757933dad9",
+      "size_limit": 0
+    },
+    "execution": "fa4cb282-84b7-45fd-b262-7410de0b16f2",
+    "pid": 94150
+  },
+  "unrelated": {
+    "allocation": {
+      "created_at": "2026-11-16T07:49:57.892971+00:00",
+      "driver": "local",
+      "in_use_by": [
+        "80998db7-f49a-4203-9afb-004c4d47e0a5"
+      ],
+      "labels": {
+        "anonymous": "true",
+        "kbox.volume.allocation": "262c7fc4-a75b-4169-8c73-3be31fb38dda",
+        "kbox.volume.kind": "anonymous-v1",
+        "kbox.volume.owner": "80998db7-f49a-4203-9afb-004c4d47e0a5"
+      },
+      "mount_point": "/private/tmp/kbox-pool-rb-c67c2a3047e3/native-rollback-attempt-1/home/volumes/anon_80998db7_a1731716070db4427438f87c9060279f",
+      "name": "anon_80998db7_a1731716070db4427438f87c9060279f",
+      "size_limit": 0
+    },
+    "execution": "80998db7-f49a-4203-9afb-004c4d47e0a5",
+    "pid": 97123,
+    "volumeIdentity": [
+      16777233,
+      304807449
+    ]
+  }
+}

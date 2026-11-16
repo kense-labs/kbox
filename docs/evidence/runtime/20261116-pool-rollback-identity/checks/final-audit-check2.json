@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-rollback-identity-c67c2a3047e341a6a8e3aee3ee494673/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 3.4233934169999998,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-rb-c67c2a3047e3/check-home-final-audit-check2",
+    "TMPDIR": "/private/tmp/kbox-pool-rb-c67c2a3047e3/t"
+  }
+}

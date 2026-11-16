@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "exit": 0,
+  "seconds": 0.27437104199999995,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-rb-c67c2a3047e3/check-home-freeze-client1",
+    "TMPDIR": "/private/tmp/kbox-pool-rb-c67c2a3047e3/t"
+  }
+}

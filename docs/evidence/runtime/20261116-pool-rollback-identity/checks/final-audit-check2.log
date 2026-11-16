@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "c0552f3ed494fdad67e7669b25b9640a00b66b15d24894cf9a6a5ad0067a3f6f",
+  "compiledInputCount": 1728,
+  "homes": 26,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 36,
+  "checkedSocketPaths": 150,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 769,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "80893bba3494c2850be18364c10decfac77ad3773ca16c39f7a6ca2721b98e00",
+      "after": "c955bfa9d693c4c43ad7088cd0c599e1813e942e6b0ac6c6f83cbaf942da0ecd"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.M5hVql"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticWrongTargetDeletionFailuresRetained": 1,
+  "stopFault": "No synthetic stop fault in current rollback native test; actual target stopped and unrelated PID/allocation/writes preserved",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

@@ -1,0 +1,10 @@
+[
+  {
+    "command": [
+      "git",
+      "submodule",
+      "status"
+    ],
+    "output": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n"
+  }
+]

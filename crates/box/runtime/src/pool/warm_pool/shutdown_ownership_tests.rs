@@ -1,5 +1,6 @@
 use super::*;
 use crate::vm::BoxState;
+use futures::FutureExt;
 use std::sync::atomic::AtomicUsize;
 
 struct RefuseFirstStop {
@@ -601,6 +602,211 @@ async fn completed_batch_queued_boot_rechecks_admission_after_its_permit() {
     assert!(pool.retiring.lock().is_empty());
     assert_eq!(pool.stats().await.total_created, 0);
     pool.drain_idle().await.unwrap();
+}
+
+#[tokio::test]
+async fn rollback_reselects_requested_identity_when_idle_membership_changes() {
+    let (_root_a, vm_a, calls_a, drops_a) = fixture().await;
+    let (_root_b, vm_b, calls_b, drops_b) = fixture().await;
+    let (_root_c, vm_c, calls_c, drops_c) = fixture().await;
+    calls_b.store(1, Ordering::SeqCst);
+    calls_c.store(1, Ordering::SeqCst);
+    let id_a = vm_a.box_id().to_owned();
+    let id_b = vm_b.box_id().to_owned();
+    let id_c = vm_c.box_id().to_owned();
+    let dir_b = vm_b.home_dir.join("boxes").join(&id_b);
+    let dir_c = vm_c.home_dir.join("boxes").join(&id_c);
+    let state_b = vm_b.state.clone();
+    let target_state = state_b.write().await;
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 3,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    let mut idle = pool.idle.lock().await;
+    idle.push(WarmVm {
+        vm: vm_a,
+        created_at: Instant::now(),
+    });
+    idle.push(WarmVm {
+        vm: vm_b,
+        created_at: Instant::now(),
+    });
+    pool.stats.lock().await.idle_count = 2;
+    let selected = [id_b];
+    let rollback = pool.remove_idle_vms(&selected);
+    tokio::pin!(rollback);
+    assert!(futures::poll!(rollback.as_mut()).is_pending());
+    let changed = async {
+        let mut members = pool.idle.lock().await;
+        let position = members
+            .iter()
+            .position(|warm| warm.vm.box_id() == id_a)
+            .unwrap();
+        let removed = members.remove(position).vm;
+        members.push(WarmVm {
+            vm: vm_c,
+            created_at: Instant::now(),
+        });
+        removed
+    };
+    tokio::pin!(changed);
+    assert!(futures::poll!(changed.as_mut()).is_pending());
+    drop(idle);
+    assert!(futures::poll!(rollback.as_mut()).is_pending());
+    let mut external = changed.await;
+    drop(target_state);
+    rollback.await;
+    let observed = std::panic::AssertUnwindSafe(async {
+        assert_eq!(
+            std::fs::read(dir_c.join("rootfs/canary")).unwrap(),
+            b"owned-working-data",
+            "rollback must preserve the newly returned unrelated VM's actual working data"
+        );
+        assert_eq!(
+            calls_c.load(Ordering::SeqCst),
+            1,
+            "unrelated handler must receive no stop attempt"
+        );
+        assert_eq!(drops_c.load(Ordering::SeqCst), 0);
+        assert_eq!(calls_b.load(Ordering::SeqCst), 2);
+        assert_eq!(drops_b.load(Ordering::SeqCst), 1);
+        assert!(!dir_b.exists());
+        let members = pool.idle.lock().await;
+        assert_eq!(members.len(), 1);
+        assert_eq!(members[0].vm.box_id(), id_c);
+    })
+    .catch_unwind()
+    .await;
+    // Both the successful and regression paths close only this fixture's owners.
+    if external.destroy().await.is_err() {
+        external.destroy().await.unwrap();
+    }
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls_a.load(Ordering::SeqCst), 2);
+    assert_eq!(drops_a.load(Ordering::SeqCst), 1);
+    assert_eq!(drops_c.load(Ordering::SeqCst), 1);
+    if let Err(error) = observed {
+        std::panic::resume_unwind(error);
+    }
+}
+
+#[tokio::test]
+async fn cancelled_rollback_stats_wait_keeps_the_idle_owner_and_count() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let id = vm.box_id().to_owned();
+    let box_dir = vm.home_dir.join("boxes").join(&id);
+    let pool = Arc::new(
+        WarmPool::start(
+            PoolConfig {
+                min_idle: 0,
+                max_size: 1,
+                ..PoolConfig::default()
+            },
+            BoxConfig::default(),
+            EventEmitter::new(16),
+        )
+        .await
+        .unwrap(),
+    );
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    pool.idle.lock().await.push(WarmVm {
+        vm,
+        created_at: Instant::now(),
+    });
+    pool.stats.lock().await.idle_count = 1;
+    let stats = pool.stats.lock().await;
+    let source = pool.clone();
+    let removing = tokio::spawn(async move { source.remove_idle_vms(&[id]).await });
+    tokio::time::timeout(Duration::from_secs(2), async {
+        while pool.idle.try_lock().is_ok() {
+            tokio::task::yield_now().await;
+        }
+    })
+    .await
+    .unwrap();
+    removing.abort();
+    assert!(removing.await.unwrap_err().is_cancelled());
+    assert_eq!(stats.idle_count, 1);
+    assert_eq!(pool.idle.lock().await.len(), 1);
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    drop(stats);
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+}
+
+#[tokio::test]
+async fn rollback_duplicate_or_absent_ids_never_target_other_owned_managers() {
+    let (_root_a, mut external, calls_a, drops_a) = fixture().await;
+    let (_root_b, vm_b, calls_b, drops_b) = fixture().await;
+    let (_root_c, vm_c, calls_c, drops_c) = fixture().await;
+    calls_b.store(1, Ordering::SeqCst);
+    let id_b = vm_b.box_id().to_owned();
+    let dir_b = vm_b.home_dir.join("boxes").join(&id_b);
+    let dir_c = vm_c.home_dir.join("boxes").join(vm_c.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 3,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    pool.idle.lock().await.extend([
+        WarmVm {
+            vm: vm_b,
+            created_at: Instant::now(),
+        },
+        WarmVm {
+            vm: vm_c,
+            created_at: Instant::now(),
+        },
+    ]);
+    let requested = [id_b.clone(), id_b, external.box_id().to_owned()];
+    pool.remove_idle_vms(&requested).await;
+    pool.remove_idle_vms(&requested).await;
+    assert_eq!(calls_b.load(Ordering::SeqCst), 2);
+    assert_eq!(drops_b.load(Ordering::SeqCst), 1);
+    assert!(!dir_b.exists());
+    assert_eq!(calls_a.load(Ordering::SeqCst), 0);
+    assert_eq!(drops_a.load(Ordering::SeqCst), 0);
+    assert_eq!(calls_c.load(Ordering::SeqCst), 0);
+    assert_eq!(drops_c.load(Ordering::SeqCst), 0);
+    assert_eq!(
+        std::fs::read(dir_c.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    assert_eq!(pool.stats().await.idle_count, 1);
+    assert!(external.destroy().await.is_err());
+    external.destroy().await.unwrap();
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(drops_a.load(Ordering::SeqCst), 1);
+    assert_eq!(drops_c.load(Ordering::SeqCst), 1);
 }
 
 #[cfg(unix)]

@@ -745,3 +745,11 @@ and late close keeps actual owners for retry. [040 installed evidence](../../../
 records native0/1->1/0,5Rust+3Python/16Ready and31-home audit. Internal incomplete
 boot/template/unpublished/legacy and rollbackselection remain open, as do full
 W4/default OCI Host Service cutover/GA.
+
+Selected fill rollback now removes exact current BoxIds under one idle lock,
+updates actual counts and registers selected managers before any later wait.
+An already acquired or unrelated idle VM cannot become a stale-index target.
+[041 installed evidence](../../../docs/evidence/runtime/20261116-pool-rollback-identity/OUTCOME.md)
+records actual working-data deletion0/1->1/0,3Rust+3Python/16Ready/26home audit.
+Drain detachment cancellation, incomplete boot/template/unpublished/legacy and
+full W4/default OCI Host Service cutover/GA remain open.

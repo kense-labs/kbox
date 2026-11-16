@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "cfabba20a920f5a7202d15aa0ff42bce66e1163688a4ec72caf237358da284af",
+  "compiledInputCount": 1726,
+  "references": [
+    "crates/box/cli/src/commands/pool.rs",
+    "crates/box/cli/src/commands/pool/tests/shutdown.rs",
+    "crates/box/runtime/README.md",
+    "docs/release.md",
+    "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+    "docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md",
+    "docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md",
+    ".kstudio/evidence/index.json",
+    ".kstudio/evidence/T2026-11-16-pool-socket-ownership/OUTCOME.md",
+    ".kstudio/wiki/Tasks.md"
+  ],
+  "trackedChanged": [
+    ".kstudio/evidence/index.json",
+    ".kstudio/wiki/Tasks.md",
+    "crates/box/cli/src/commands/pool.rs",
+    "crates/box/cli/src/commands/pool/tests/shutdown.rs",
+    "crates/box/runtime/README.md",
+    "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+    "docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md",
+    "docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md",
+    "docs/release.md"
+  ],
+  "untrackedCount": 214,
+  "unknownFiles": [],
+  "diffCheck": {
+    "exit": 0,
+    "output": ""
+  }
+}

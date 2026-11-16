@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "homes": 4,
+  "ownedProcesses": [],
+  "existingPoolSockets": [],
+  "managedExecutions": [],
+  "callerTemplateIdentitiesRetained": true,
+  "unsupportedSnapshotColdControl": true,
+  "templateCanaries": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/pool-wave-final2/0/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        302114679
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/pool-wave-final2/1/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        302114696
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/pool-wave-final2/2/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        302114713
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/pool-wave-final2/3/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        302114745
+      ]
+    }
+  ]
+}

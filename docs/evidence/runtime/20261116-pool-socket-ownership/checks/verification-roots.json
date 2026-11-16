@@ -1,0 +1,12 @@
+[
+  {
+    "home": "/private/tmp/kbox-pool-sock-d41adac09951/t/kbox-verify.4k3Bck/home",
+    "shortTemporary": "/private/tmp/kv.8g2Xgp",
+    "commandReceipt": "verify1.json"
+  },
+  {
+    "home": "/private/tmp/kbox-pool-sock-d41adac09951/t/kbox-verify.6PBZQ4/home",
+    "shortTemporary": "/private/tmp/kv.eh0OdF",
+    "commandReceipt": "verify2.json"
+  }
+]

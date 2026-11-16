@@ -129,3 +129,13 @@ Runtime2322/6/52 still has six disk-service failures. Initial endpoint binding a
 pre-admission/legacy local owner loss remain required local work. This does not
 close OCI pool parity, full default Host Service cutover/live continuity/W4/GA;
 Windows ARM64 remains unsupported/no native run, platform levels unchanged.
+
+[038 pool endpoint ownership](../20261116-pool-socket-ownership/OUTCOME.md) closes
+initial path clobber and real Darwin full-accept-queue false-stale detection.
+Receipt-bound lifetime locks preserve caller objects/live endpoints; unproven
+legacy stale sockets explicitly refuse. Final CLI949,contracts106 top-level
+(+12 child receipts),installer8/Clippy pass; default2322/6/52 retains disk failures.
+Installed13negative+duplicate-live/crash-recovery/2autostart commands,
+2Rust+3Python AF,4daemon/16initialReady/4commands and53-home audit pass.
+Pre-admission/legacy actual-owner lifetime, full W4/default OCI cutover/live
+continuity/GA stay open; WindowsARM64 unsupported/no native run, levels unchanged.

@@ -1,0 +1,488 @@
+{
+  "cli-full1": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "948",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "cli-full2": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "verify1": {
+    "exit": 101,
+    "rustRawResultRows": [
+      [
+        "2322",
+        "6",
+        "52"
+      ]
+    ],
+    "pythonUnittestSummary": [
+      "4"
+    ]
+  },
+  "verify2": {
+    "exit": 101,
+    "rustRawResultRows": [
+      [
+        "2322",
+        "6",
+        "52"
+      ]
+    ],
+    "pythonUnittestSummary": [
+      "4"
+    ]
+  },
+  "contract1": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "24",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "41",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "11",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "installer1": {
+    "exit": 0,
+    "rustRawResultRows": [],
+    "pythonUnittestSummary": [
+      "8"
+    ]
+  },
+  "endpoint-focused4": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "11",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "contract": {
+    "topLevelHarnesses": 11,
+    "topLevelPassed": 106,
+    "topLevelFailed": 0,
+    "topLevelIgnored": 0,
+    "doctests": 0,
+    "additionalSuccessfulFilteredChildReceipts": 12,
+    "rawResultRows": [
+      [
+        1,
+        0,
+        0,
+        0,
+        23
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        23
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        23
+      ],
+      [
+        24,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        40
+      ],
+      [
+        41,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        4,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        3,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        1,
+        0,
+        0,
+        0,
+        4
+      ],
+      [
+        5,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        2,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        11,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "warning": "A total118 sums parent tests and successful nested child receipts; it is not118 distinct top-level tests."
+  },
+  "afNative": [
+    {
+      "case": "oci",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/image-cache",
+        "--base",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-oci"
+      ],
+      "seconds": 35.723118958,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-oci/e1bd836fc493421ab5b62f54e191bc82/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "readonly",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/image-cache",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-readonly"
+      ],
+      "seconds": 4.8543802500000055,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-readonly/91e4ea36f0264cd096b9e90c93600fae/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "primary",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/image-cache",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-primary"
+      ],
+      "seconds": 69.133377833,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-primary/9537a751332845938be930a38746ef80/result.json",
+      "actualCounts": {
+        "completedNativeScenarios": 1
+      }
+    },
+    {
+      "case": "prewarm",
+      "status": "PASS",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/python3",
+        "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+        "--kbox",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "--image-store",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/image-cache",
+        "--image",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--output",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-prewarm",
+        "--test-binary",
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/native-client-final2"
+      ],
+      "seconds": 14.966887582999988,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-prewarm/8ac5c35240414163b24b51e9bd52e3df/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    },
+    {
+      "case": "directory",
+      "status": "PASS",
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/native-client-final2",
+        "--ignored",
+        "--exact",
+        "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+        "--nocapture"
+      ],
+      "seconds": 17.600412541999987,
+      "result": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/af-final2/native-directory/result.json",
+      "actualCounts": {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    }
+  ],
+  "endpointProof": 13,
+  "cliFinal": {
+    "passed": 949,
+    "failed": 0,
+    "ignored": 0
+  },
+  "clippyFinal": 0
+}

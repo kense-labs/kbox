@@ -1,0 +1,30 @@
+
+running 11 tests
+test commands::pool::tests::shutdown::pool_locks_refuse_fifo_without_waiting_or_modifying_it ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file ... ok
+test commands::pool::tests::shutdown::pool_endpoint_refuses_shared_nonsticky_parent_before_creating_a_lock ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_links_directories_and_non_stream_sockets ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue ... ok
+test commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation ... ok
+test commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint ... ok
+test commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner ... FAILED
+test commands::pool::tests::shutdown::cancelled_lease_drain_keeps_the_entry_owner_and_permit_for_retry ... ok
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... ok
+test commands::pool::tests::shutdown::stop_ack_waits_for_existing_requests_and_excludes_its_own_connection ... ok
+
+failures:
+
+---- commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner stdout ----
+
+thread 'commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner' (111420828) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:135:27:
+assertion `left == right` failed
+  left: PermissionDenied
+ right: WouldBlock
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner
+
+test result: FAILED. 10 passed; 1 failed; 0 ignored; 0 measured; 935 filtered out; finished in 0.06s
+

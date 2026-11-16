@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-socket-ownership/checks/af-final2-context.json"
+  ],
+  "exit": 0,
+  "seconds": 142.326641417,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-af-final2",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

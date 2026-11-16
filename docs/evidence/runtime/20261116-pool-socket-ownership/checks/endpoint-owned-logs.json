@@ -1,0 +1,67 @@
+[
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stdout.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stdout.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stderr.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/console.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/shim.stdout.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/shim.stdout.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/console.err.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/shim.stderr.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/shim.stderr.log.38105d3d231e",
+    "sha256": "38105d3d231edc3fb3d45b986108b3b6897ceddc2c3287f142e09a73db3fb01e"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/console.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/shim.stdout.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/shim.stdout.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/console.err.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/shim.stderr.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/shim.stderr.log.38105d3d231e",
+    "sha256": "38105d3d231edc3fb3d45b986108b3b6897ceddc2c3287f142e09a73db3fb01e"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/console.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/console.err.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+  },
+  {
+    "source": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stderr.log",
+    "saved": "docs/evidence/runtime/20261116-pool-socket-ownership/checks/endpoint-owned-logs/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/shim.stderr.log.f827c4f1b92a",
+    "sha256": "f827c4f1b92a0cf8fd3ca79c694333bc3b470ff4c64faef54c3a662f2bb17ae3"
+  }
+]

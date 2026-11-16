@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 75.40095783400001,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/package-home-poolsock-final2",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "cfabba20a920f5a7202d15aa0ff42bce66e1163688a4ec72caf237358da284af"
+}

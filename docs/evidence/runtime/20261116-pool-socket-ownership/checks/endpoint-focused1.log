@@ -1,0 +1,14 @@
+
+running 9 tests
+test commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file ... ok
+test commands::pool::tests::shutdown::pool_endpoint_refuses_shared_nonsticky_parent_before_creating_a_lock ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_links_directories_and_non_stream_sockets ... ok
+test commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint ... ok
+test commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation ... ok
+test commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner ... ok
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... ok
+test commands::pool::tests::shutdown::cancelled_lease_drain_keeps_the_entry_owner_and_permit_for_retry ... ok
+test commands::pool::tests::shutdown::stop_ack_waits_for_existing_requests_and_excludes_its_own_connection ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 935 filtered out; finished in 0.06s
+

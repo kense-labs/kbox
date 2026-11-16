@@ -1,0 +1,18 @@
+
+running 1 test
+test commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue ... FAILED
+
+failures:
+
+---- commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue stdout ----
+
+thread 'commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue' (111365307) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:113:5:
+full live queue must not be mistaken for a stale socket
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 945 filtered out; finished in 0.01s
+

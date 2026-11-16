@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-contract"
+  ],
+  "exit": 0,
+  "seconds": 192.416083917,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-contract1",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

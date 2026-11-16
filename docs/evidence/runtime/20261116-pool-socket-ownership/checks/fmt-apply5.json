@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--all"
+  ],
+  "exit": 0,
+  "seconds": 2.853572417,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-fmt-apply5",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

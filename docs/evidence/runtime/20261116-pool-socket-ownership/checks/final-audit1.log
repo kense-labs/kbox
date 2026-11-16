@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "cfabba20a920f5a7202d15aa0ff42bce66e1163688a4ec72caf237358da284af",
+  "compiledInputCount": 1726,
+  "homes": 53,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 37,
+  "checkedSocketPaths": 154,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 727,
+  "initialCacheMetadataCompared": false,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "b95ec3d4747e8778e5eba51439fe69978c03cec9daf03e4c5e899d2c516f6958",
+      "after": "96726e4ea3aaa531beb2f4fab9843b5ae70c944a4ecfdc9af4170e91d0599811"
+    }
+  ],
+  "qualifiedRustNativeTests": 2,
+  "afPythonScenarios": 3,
+  "endpointNegativeCases": 13,
+  "additionalDuplicateLiveRefusal": true,
+  "realAutostartGuestCommands": 2,
+  "ownedIdleCrashRecovered": true,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.8g2Xgp",
+    "/private/tmp/kv.eh0OdF"
+  ],
+  "failedInstalledCandidateRunsRetained": 1,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "regularOwnershipLockReceiptsRetained": true,
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

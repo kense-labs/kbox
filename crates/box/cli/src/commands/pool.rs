@@ -84,35 +84,161 @@ impl PoolAutoStartConfig {
 }
 
 #[cfg(unix)]
-struct PoolAutoStartLock {
-    _file: std::fs::File,
+const POOL_LISTENER_MAGIC: &[u8; 16] = b"kbox-pool-sock1\0";
+
+#[cfg(unix)]
+struct PoolSocketLock {
+    file: std::fs::File,
+    path: std::path::PathBuf,
+    created: bool,
 }
 
 #[cfg(unix)]
-impl PoolAutoStartLock {
+impl PoolSocketLock {
     fn acquire(socket: &str) -> std::io::Result<Self> {
-        use std::os::unix::io::AsRawFd;
+        Self::acquire_path(pool_autostart_lock_path(socket), libc::LOCK_EX)
+    }
 
-        let lock_path = pool_autostart_lock_path(socket);
-        if let Some(parent) = lock_path
+    fn acquire_listener(socket: &str) -> std::io::Result<Self> {
+        let mut path = std::ffi::OsString::from(socket);
+        path.push(".listener.lock");
+        let lock = Self::acquire_path(path.into(), libc::LOCK_EX | libc::LOCK_NB)?;
+        if lock.created {
+            lock.write_listener_identity(None)?;
+        } else {
+            lock.listener_identity()?;
+        }
+        Ok(lock)
+    }
+
+    fn acquire_path(lock_path: std::path::PathBuf, operation: i32) -> std::io::Result<Self> {
+        use std::os::unix::{
+            fs::{MetadataExt, OpenOptionsExt},
+            io::AsRawFd,
+        };
+        // SAFETY: geteuid has no arguments, memory access or retained resources.
+        let uid = unsafe { libc::geteuid() };
+        let parent = lock_path
             .parent()
             .filter(|parent| !parent.as_os_str().is_empty())
-        {
-            std::fs::create_dir_all(parent)?;
+            .unwrap_or_else(|| std::path::Path::new("."));
+        std::fs::create_dir_all(parent)?;
+        let parent = parent.canonicalize()?;
+        for ancestor in parent.ancestors().collect::<Vec<_>>().into_iter().rev() {
+            let metadata = std::fs::symlink_metadata(ancestor)?;
+            if !metadata.is_dir()
+                || !((metadata.uid() == uid || metadata.uid() == 0) && metadata.mode() & 0o022 == 0
+                    || metadata.uid() == 0 && metadata.mode() & 0o1000 != 0)
+            {
+                return Err(std::io::Error::new(std::io::ErrorKind::PermissionDenied,
+                    "Pool endpoint ancestors must be owner-controlled or root-owned sticky directories"));
+            }
         }
-        let file = std::fs::OpenOptions::new()
+        let name = lock_path.file_name().ok_or_else(|| {
+            std::io::Error::new(
+                std::io::ErrorKind::InvalidInput,
+                "Pool lock requires a filename",
+            )
+        })?;
+        let lock_path = parent.join(name);
+        let mut options = std::fs::OpenOptions::new();
+        options
             .read(true)
             .write(true)
-            .create(true)
-            .truncate(false)
-            .open(&lock_path)?;
+            .mode(0o600)
+            .custom_flags(libc::O_CLOEXEC | libc::O_NOFOLLOW | libc::O_NONBLOCK);
+        let (file, created) = match options.create_new(true).open(&lock_path) {
+            Ok(file) => (file, true),
+            Err(error) if error.kind() == std::io::ErrorKind::AlreadyExists => {
+                (options.create_new(false).open(&lock_path)?, false)
+            }
+            Err(error) => return Err(error),
+        };
+        let guard = Self {
+            file,
+            path: lock_path,
+            created,
+        };
+        guard.verify_identity()?;
         // SAFETY: `file` is a live `File` opened above, so `as_raw_fd()` is a valid
         // descriptor for this call. `flock` takes only the integer and retains no
         // pointer; the `File` is stored in the returned guard to hold the lock.
-        if unsafe { libc::flock(file.as_raw_fd(), libc::LOCK_EX) } != 0 {
+        // The creator publishes its record after locking; an opener may briefly
+        // hold the new empty file but must not make its creator abandon it.
+        let operation = if guard.created {
+            operation & !libc::LOCK_NB
+        } else {
+            operation
+        };
+        // SAFETY: guard retains the live file descriptor throughout flock.
+        if unsafe { libc::flock(guard.file.as_raw_fd(), operation) } != 0 {
             return Err(std::io::Error::last_os_error());
         }
-        Ok(Self { _file: file })
+        guard.verify_identity()?;
+        Ok(guard)
+    }
+
+    fn verify_identity(&self) -> std::io::Result<()> {
+        use std::os::unix::fs::MetadataExt;
+        let opened = self.file.metadata()?;
+        let visible = std::fs::symlink_metadata(&self.path)?;
+        // SAFETY: geteuid has no arguments, memory access or retained resources.
+        let uid = unsafe { libc::geteuid() };
+        if !opened.is_file()
+            || opened.uid() != uid
+            || opened.nlink() != 1
+            || opened.mode() & 0o022 != 0
+            || !visible.is_file()
+            || visible.dev() != opened.dev()
+            || visible.ino() != opened.ino()
+        {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "Pool lock must retain its single-link owner-writable regular file identity",
+            ));
+        }
+        Ok(())
+    }
+
+    fn listener_identity(&self) -> std::io::Result<Option<(u64, u64)>> {
+        use std::os::unix::fs::FileExt;
+        let mut record = [0; 32];
+        let length = self.file.metadata()?.len();
+        if length == 0 {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::WouldBlock,
+                "Pool listener ownership record is incomplete; path retained",
+            ));
+        }
+        if length != record.len() as u64 {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "Pool listener lock has no recognized endpoint ownership record",
+            ));
+        }
+        self.file.read_exact_at(&mut record, 0)?;
+        if &record[..16] != POOL_LISTENER_MAGIC {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "Pool listener lock ownership record is unsupported",
+            ));
+        }
+        let device = u64::from_le_bytes(record[16..24].try_into().map_err(std::io::Error::other)?);
+        let inode = u64::from_le_bytes(record[24..32].try_into().map_err(std::io::Error::other)?);
+        Ok((inode != 0).then_some((device, inode)))
+    }
+
+    fn write_listener_identity(&self, identity: Option<&std::fs::Metadata>) -> std::io::Result<()> {
+        use std::os::unix::fs::{FileExt, MetadataExt};
+        self.verify_identity()?;
+        let mut record = [0; 32];
+        record[..16].copy_from_slice(POOL_LISTENER_MAGIC);
+        if let Some(metadata) = identity {
+            self.listener_identity()?;
+            record[16..24].copy_from_slice(&metadata.dev().to_le_bytes());
+            record[24..32].copy_from_slice(&metadata.ino().to_le_bytes());
+        }
+        self.file.write_all_at(&record, 0)
     }
 }
 
@@ -135,7 +261,9 @@ pub(crate) async fn ensure_pool_daemon_running(
     }
 
     #[cfg(unix)]
-    let _autostart_lock = PoolAutoStartLock::acquire(&config.socket)?;
+    let lock_socket = config.socket.clone();
+    let _autostart_lock =
+        tokio::task::spawn_blocking(move || PoolSocketLock::acquire(&lock_socket)).await??;
 
     if kbox_runtime::pool::client::status_client(&config.socket)
         .await
@@ -1208,7 +1336,7 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
         // a timeout. Requests may connect immediately and naturally wait on the
         // per-pool creation lock until the first VM is truly exec-ready.
         #[cfg(not(windows))]
-        let bound = BoundPoolListener::bind(&args.socket)?;
+        let bound = BoundPoolListener::bind(&args.socket).await?;
         #[cfg(not(windows))]
         let shutdown_tx = bound.shutdown_tx.clone();
         #[cfg(not(windows))]
@@ -1480,23 +1608,103 @@ async fn drain_pool_registry_on_shutdown(
 #[cfg(not(windows))]
 struct BoundPoolListener {
     listener: tokio::net::UnixListener,
+    path: std::path::PathBuf,
     identity: std::fs::Metadata,
     shutdown_tx: tokio::sync::mpsc::UnboundedSender<()>,
     shutdown_rx: tokio::sync::mpsc::UnboundedReceiver<()>,
+    _lock: PoolSocketLock,
 }
 
 #[cfg(not(windows))]
 impl BoundPoolListener {
-    fn bind(socket: &str) -> std::io::Result<Self> {
-        let _ = std::fs::remove_file(socket);
-        let listener = tokio::net::UnixListener::bind(socket)?;
-        let identity = std::fs::symlink_metadata(socket)?;
+    async fn bind(socket: &str) -> std::io::Result<Self> {
+        use std::os::unix::fs::{FileTypeExt, MetadataExt, PermissionsExt};
+        let path = socket.to_owned();
+        let (lock, path, existing) = tokio::task::spawn_blocking(move || {
+            let requested = std::path::Path::new(&path);
+            let name = requested.file_name().ok_or_else(|| std::io::Error::new(
+                std::io::ErrorKind::InvalidInput, "Pool socket requires a filename"))?;
+            let parent = requested.parent().unwrap_or_else(|| std::path::Path::new(""));
+            if parent.join(name).as_os_str() != requested.as_os_str() {
+                return Err(std::io::Error::new(std::io::ErrorKind::InvalidInput,
+                    "Pool socket requires a regular filename without a trailing directory component"));
+            }
+            let lock = PoolSocketLock::acquire_listener(&path)?;
+            let path = lock.path.with_file_name(name);
+            let existing = match std::fs::symlink_metadata(&path) {
+                Ok(metadata) => {
+                    if !metadata.file_type().is_socket()
+                        || metadata.uid() != lock.file.metadata()?.uid()
+                    {
+                        return Err(std::io::Error::new(
+                            std::io::ErrorKind::PermissionDenied,
+                            "Refusing to replace a non-socket or foreign-owned pool endpoint",
+                        ));
+                    }
+                    if lock.listener_identity()? != Some((metadata.dev(), metadata.ino())) {
+                        return Err(std::io::Error::new(
+                            std::io::ErrorKind::AddrInUse,
+                            "Pool endpoint ownership is unproven; existing path retained",
+                        ));
+                    }
+                    Some(metadata)
+                }
+                Err(error) if error.kind() == std::io::ErrorKind::NotFound => None,
+                Err(error) => return Err(error),
+            };
+            Ok((lock, path, existing))
+        })
+        .await??;
+        if existing.is_some() {
+            match tokio::time::timeout(
+                std::time::Duration::from_secs(1),
+                tokio::net::UnixStream::connect(&path),
+            )
+            .await
+            {
+                Ok(Err(error)) if error.kind() == std::io::ErrorKind::ConnectionRefused => {}
+                Ok(Err(error)) => return Err(error),
+                Ok(Ok(_)) | Err(_) => {
+                    return Err(std::io::Error::new(
+                        std::io::ErrorKind::AddrInUse,
+                        "Pool endpoint has a live or unproven owner",
+                    ))
+                }
+            }
+        }
+        let (listener, identity, lock, path) = tokio::task::spawn_blocking(move || {
+            lock.verify_identity()?;
+            if let Some(expected) = existing {
+                let current = std::fs::symlink_metadata(&path)?;
+                if !current.file_type().is_socket()
+                    || current.dev() != expected.dev()
+                    || current.ino() != expected.ino()
+                {
+                    return Err(std::io::Error::new(
+                        std::io::ErrorKind::PermissionDenied,
+                        "Pool endpoint changed during stale recovery; replacement retained",
+                    ));
+                }
+                // shortcut: cooperative starts are locked; hostile same-UID namespace mutation is not qualified.
+                std::fs::remove_file(&path)?;
+            }
+            let listener = std::os::unix::net::UnixListener::bind(&path)?;
+            listener.set_nonblocking(true)?;
+            std::fs::set_permissions(&path, std::fs::Permissions::from_mode(0o600))?;
+            let identity = std::fs::symlink_metadata(&path)?;
+            lock.write_listener_identity(Some(&identity))?;
+            Ok::<_, std::io::Error>((listener, identity, lock, path))
+        })
+        .await??;
+        let listener = tokio::net::UnixListener::from_std(listener)?;
         let (shutdown_tx, shutdown_rx) = tokio::sync::mpsc::unbounded_channel();
         Ok(Self {
             listener,
+            path,
             identity,
             shutdown_tx,
             shutdown_rx,
+            _lock: lock,
         })
     }
 }
@@ -1515,9 +1723,11 @@ async fn serve(
     use std::os::unix::fs::{FileTypeExt, MetadataExt};
     let BoundPoolListener {
         listener,
+        path: owned_path,
         identity: owned_socket,
         shutdown_tx,
         mut shutdown_rx,
+        _lock,
     } = bound;
     if !json {
         println!(
@@ -1549,13 +1759,13 @@ async fn serve(
             }
         }
     }
-    match std::fs::symlink_metadata(socket) {
+    match std::fs::symlink_metadata(&owned_path) {
         Ok(current)
             if current.file_type().is_socket()
                 && current.dev() == owned_socket.dev()
                 && current.ino() == owned_socket.ino() =>
         {
-            std::fs::remove_file(socket)?
+            std::fs::remove_file(&owned_path)?
         }
         Ok(_) => {
             return Err(std::io::Error::new(
@@ -2090,13 +2300,13 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let socket = tmp.path().join("pool.sock").display().to_string();
         let lock_path = pool_autostart_lock_path(&socket);
-        let guard = PoolAutoStartLock::acquire(&socket).unwrap();
+        let guard = PoolSocketLock::acquire(&socket).unwrap();
         assert!(lock_path.exists());
 
         let thread_socket = socket.clone();
         let (tx, rx) = mpsc::channel();
         let waiter = std::thread::spawn(move || {
-            let _guard = PoolAutoStartLock::acquire(&thread_socket).unwrap();
+            let _guard = PoolSocketLock::acquire(&thread_socket).unwrap();
             tx.send(()).unwrap();
         });
 
@@ -2750,7 +2960,7 @@ mod tests {
                 registry,
                 &server_socket,
                 true,
-                BoundPoolListener::bind(&server_socket).unwrap(),
+                BoundPoolListener::bind(&server_socket).await.unwrap(),
             )
             .await
             .expect("pool server should stop cleanly");

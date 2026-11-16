@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-socket-ownership/context.json",
+    "final2"
+  ],
+  "exit": 0,
+  "seconds": 27.686347083,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-pool-wave-final2",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

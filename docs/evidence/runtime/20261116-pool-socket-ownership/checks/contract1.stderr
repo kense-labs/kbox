@@ -1,0 +1,104 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+warning: `kbox-contract` (lib test) generated 1 warning (1 duplicate)
+warning: variants `Transport`, `Hang`, and `Panic` are never constructed
+  --> crates/runtime/tests/support/fault_driver.rs:33:5
+   |
+32 | pub enum FaultMode {
+   |          --------- variants in this enum
+33 |     Transport,
+   |     ^^^^^^^^^
+34 |     Hang,
+   |     ^^^^
+35 |     Panic,
+   |     ^^^^^
+   |
+   = note: `FaultMode` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `arm`, `trace`, `resource_count`, `resource_state`, and `effect_count` are never used
+   --> crates/runtime/tests/support/fault_driver.rs:84:12
+    |
+ 71 | impl DeterministicFaultDriver {
+    | ----------------------------- methods in this implementation
+...
+ 84 |     pub fn arm(&self, operation: FaultOperation, boundary: FaultBoundary, mode: FaultMode) {
+    |            ^^^
+...
+ 94 |     pub fn trace(&self) -> Vec<TraceEvent> {
+    |            ^^^^^
+...
+ 98 |     pub fn resource_count(&self, unit_id: &str) -> usize {
+    |            ^^^^^^^^^^^^^^
+...
+107 |     pub fn resource_state(&self, unit_id: &str, generation: u64) -> Option<RuntimeUnitState> {
+    |            ^^^^^^^^^^^^^^
+...
+116 |     pub fn effect_count(&self, operation: FaultOperation) -> usize {
+    |            ^^^^^^^^^^^^
+
+warning: function `apply_request` is never used
+  --> crates/runtime/tests/support/fixtures.rs:54:8
+   |
+54 | pub fn apply_request(request_id: &str, unit_id: &str) -> RuntimeApplyRequest {
+   |        ^^^^^^^^^^^^^
+
+warning: function `action_request` is never used
+  --> crates/runtime/tests/support/fixtures.rs:64:8
+   |
+64 | pub fn action_request(request_id: &str, unit_id: &str) -> RuntimeActionRequest {
+   |        ^^^^^^^^^^^^^^
+
+warning: function `exec_request` is never used
+  --> crates/runtime/tests/support/fixtures.rs:74:8
+   |
+74 | pub fn exec_request(request_id: &str, unit_id: &str) -> RuntimeExecRequest {
+   |        ^^^^^^^^^^^^
+
+warning: variants `Hang` and `Panic` are never constructed
+  --> crates/runtime/tests/support/fault_driver.rs:34:5
+   |
+32 | pub enum FaultMode {
+   |          --------- variants in this enum
+33 |     Transport,
+34 |     Hang,
+   |     ^^^^
+35 |     Panic,
+   |     ^^^^^
+   |
+   = note: `FaultMode` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `resource_state` is never used
+   --> crates/runtime/tests/support/fault_driver.rs:107:12
+    |
+ 71 | impl DeterministicFaultDriver {
+    | ----------------------------- method in this implementation
+...
+107 |     pub fn resource_state(&self, unit_id: &str, generation: u64) -> Option<RuntimeUnitState> {
+    |            ^^^^^^^^^^^^^^
+
+warning: `kbox-contract` (test "host_services") generated 5 warnings
+warning: `kbox-contract` (test "admission_guard") generated 4 warnings (2 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.18s
+     Running unittests src/lib.rs (target/debug/deps/kbox_contract-1c896976703727a3)
+     Running tests/admission_guard.rs (target/debug/deps/admission_guard-502ef93388212aa3)
+     Running tests/conformance_profiles.rs (target/debug/deps/conformance_profiles-21c4c0919191f44b)
+     Running tests/deterministic_faults.rs (target/debug/deps/deterministic_faults-96d46b67fa147b81)
+     Running tests/general_runtime.rs (target/debug/deps/general_runtime-4767cef6a82d3f2c)
+     Running tests/host_services.rs (target/debug/deps/host_services-a8381e8b17392112)
+     Running tests/mcp_service_consumer_profile.rs (target/debug/deps/mcp_service_consumer_profile-14bcd1e0754db4b0)
+     Running tests/process_races.rs (target/debug/deps/process_races-e0cfaebed0dbe46f)
+     Running tests/protocol_golden.rs (target/debug/deps/protocol_golden-ecaaeeea24ba097c)
+     Running tests/service_endpoints.rs (target/debug/deps/service_endpoints-ced84e92e4f5e6e7)
+     Running tests/unified_consumer_profiles.rs (target/debug/deps/unified_consumer_profiles-b5241f640dfcd5ab)
+   Doc-tests kbox_contract

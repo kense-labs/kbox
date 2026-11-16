@@ -490,3 +490,18 @@ shutdown preserves a replaced socket object. Final3Rust+3Python native controls,
 disk failures. Initial endpoint binding, pre-admission/legacy owner lifetime,
 full OCI Host Service/default cutover/W4/GA remain open. Windows ARM64 dependencies
 unsupported/no native run; support levels unchanged and RSS unmeasured.
+
+### 2026-11-16 pool endpoint ownership qualification
+
+The [038 installed evidence](evidence/runtime/20261116-pool-socket-ownership/OUTCOME.md)
+qualifies safe pool endpoint binding, exact owned stale recovery and real
+autostart/prewarm/control regressions. Final Box782cd1ae… sourcecfabba20… is
+23422934 compressed/44208128 installed bytes. Unproven legacy sockets refuse:
+ECONNREFUSED alone can mean a full live queue on this Mac. CLI949,contracts106
+top-level(+12 child receipts),installer8/Clippy pass; default2322/6/52 remains
+blocked by disk services. Final2Rust+3Python AF,13negative endpoint cases,
+2autostart Guest commands,4daemon/16initialReady and53-home audit pass.
+Full OCI Host Service cutover/W4/live continuity/GA and local pre-admission/
+legacy-owner work remain incomplete. WindowsARM64 dependencies unsupported,
+no native run; platform levels unchanged. Runtime RSS unmeasured. Remote Git
+synchronization still needs UID501/DNS recovery; no publication claim.

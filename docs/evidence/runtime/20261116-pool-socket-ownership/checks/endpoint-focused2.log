@@ -1,0 +1,61 @@
+
+running 11 tests
+test commands::pool::tests::shutdown::pool_locks_refuse_fifo_without_waiting_or_modifying_it ... ok
+test commands::pool::tests::shutdown::pool_endpoint_refuses_shared_nonsticky_parent_before_creating_a_lock ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file ... ok
+test commands::pool::tests::shutdown::initial_bind_preserves_a_live_listener_with_a_full_accept_queue ... ok
+test commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation ... FAILED
+test commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint ... FAILED
+test commands::pool::tests::shutdown::initial_bind_preserves_links_directories_and_non_stream_sockets ... ok
+test commands::pool::tests::shutdown::cancelled_lease_drain_keeps_the_entry_owner_and_permit_for_retry ... ok
+test commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner ... FAILED
+test commands::pool::tests::shutdown::stop_ack_waits_for_existing_requests_and_excludes_its_own_connection ... ok
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... FAILED
+
+failures:
+
+---- commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation stdout ----
+
+thread 'commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation' (111402432) panicked at crates/box/cli/src/commands/pool.rs:200:22:
+copy_from_slice: source slice length (17) does not match destination slice length (16)
+
+---- commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint stdout ----
+
+thread 'tokio-rt-worker' (111402442) panicked at crates/box/cli/src/commands/pool.rs:200:22:
+copy_from_slice: source slice length (17) does not match destination slice length (16)
+
+thread 'commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint' (111402427) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:61:5:
+assertion `left == right` failed
+  left: Other
+ right: AddrInUse
+
+---- commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner stdout ----
+
+thread 'tokio-rt-worker' (111402447) panicked at crates/box/cli/src/commands/pool.rs:200:22:
+copy_from_slice: source slice length (17) does not match destination slice length (16)
+
+thread 'commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner' (111402426) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:126:27:
+assertion `left == right` failed
+  left: Other
+ right: WouldBlock
+
+---- commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object stdout ----
+
+thread 'tokio-rt-worker' (111402445) panicked at crates/box/cli/src/commands/pool.rs:200:22:
+copy_from_slice: source slice length (17) does not match destination slice length (16)
+
+thread 'commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object' (111402434) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:388:52:
+called `Result::unwrap()` on an `Err` value: Custom { kind: Other, error: "task panicked" }
+
+thread 'commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object' (111402434) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:402:6:
+called `Result::unwrap()` on an `Err` value: Elapsed(())
+
+
+failures:
+    commands::pool::tests::shutdown::concurrent_initial_binds_keep_exactly_one_live_owner
+    commands::pool::tests::shutdown::initial_bind_keeps_live_listener_and_recovers_only_its_stale_endpoint
+    commands::pool::tests::shutdown::pool_locks_refuse_aliases_shared_writers_and_replaced_identities_without_mutation
+    commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object
+
+test result: FAILED. 7 passed; 4 failed; 0 ignored; 0 measured; 935 filtered out; finished in 2.00s
+

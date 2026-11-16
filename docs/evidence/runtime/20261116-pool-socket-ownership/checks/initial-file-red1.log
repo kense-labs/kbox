@@ -1,0 +1,18 @@
+
+running 1 test
+test commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file ... FAILED
+
+failures:
+
+---- commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file stdout ----
+
+thread 'commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file' (111283832) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:12:5:
+pool start must refuse a caller regular file
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 938 filtered out; finished in 0.00s
+

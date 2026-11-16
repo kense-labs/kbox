@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "commands::pool::tests::shutdown"
+  ],
+  "exit": 101,
+  "seconds": 5.8534175,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-endpoint-focused2",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

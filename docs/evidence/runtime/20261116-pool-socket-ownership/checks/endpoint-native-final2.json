@@ -1,0 +1,448 @@
+{
+  "status": "PASS",
+  "root": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "sourceInputsSha256": "cfabba20a920f5a7202d15aa0ff42bce66e1163688a4ec72caf237358da284af",
+  "negativeCases": 13,
+  "additionalDuplicateLiveRefusal": true,
+  "actualFullQueue": true,
+  "fullQueueError": "ConnectionRefusedError(61, 'Connection refused')",
+  "ownedIdleCrashRecovered": true,
+  "autostartGuestCommands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "run",
+        "--rm",
+        "--pool-autostart",
+        "--pool-socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/auto",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--",
+        "python3",
+        "-c",
+        "import time; time.sleep(.5); print(\"autostart-0\")"
+      ],
+      "exit": 0,
+      "stdout": "autostart-0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "run",
+        "--rm",
+        "--pool-autostart",
+        "--pool-socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/auto",
+        "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+        "--",
+        "python3",
+        "-c",
+        "import time; time.sleep(.5); print(\"autostart-1\")"
+      ],
+      "exit": 0,
+      "stdout": "autostart-1\n",
+      "stderr": ""
+    }
+  ],
+  "loaded": [
+    {
+      "pid": 32789,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim --config {\"box_id\":\"6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9\",\"vcpus\":2,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/6c7392c1-6ff0-4a9d-8c77-3ea1ae5e99e9/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":false,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 33124,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim --config {\"box_id\":\"bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1\",\"vcpus\":2,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/bf9e4c0d-bb22-46c1-b2f9-1ea870039ff1/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":false,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 33127,
+      "command": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim --config {\"box_id\":\"04c7d6d5-8254-4848-af8a-a0c1ae99af1f\",\"vcpus\":2,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/workspace\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto/boxes/04c7d6d5-8254-4848-af8a-a0c1ae99af1f/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":false,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "loaded": {
+        "kbox-shim": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "homes": [
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-file",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-link",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-directory",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-trailing",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-dot",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-fifo",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-datagram",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-legacy-stale",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-live",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-full",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-link",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-hardlink",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-format",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-idle",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-duplicate-live",
+    "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto"
+  ],
+  "remainingRuntimeSockets": [],
+  "callerIdentitiesPreserved": true,
+  "callerFileIdentity": [
+    16777233,
+    302108439,
+    33184,
+    501,
+    0
+  ],
+  "runtimeMemoryMeasured": false,
+  "commands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/caller-file",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.007155582999999998,
+      "stdout": "",
+      "stderr": "Error: Refusing to replace a non-socket or foreign-owned pool endpoint\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-file"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/link",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.006976166999999998,
+      "stdout": "",
+      "stderr": "Error: Refusing to replace a non-socket or foreign-owned pool endpoint\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-link"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/caller-dir",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.006069333,
+      "stdout": "",
+      "stderr": "Error: Refusing to replace a non-socket or foreign-owned pool endpoint\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-directory"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/caller-dir/",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.006135834,
+      "stdout": "",
+      "stderr": "Error: Pool socket requires a regular filename without a trailing directory component\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-trailing"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/caller-dir/.",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.0054602919999999985,
+      "stdout": "",
+      "stderr": "Error: Pool socket requires a regular filename without a trailing directory component\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-dot"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/fifo",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.006453666999999996,
+      "stdout": "",
+      "stderr": "Error: Refusing to replace a non-socket or foreign-owned pool endpoint\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-fifo"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/datagram",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005776499999999997,
+      "stdout": "",
+      "stderr": "Error: Pool endpoint ownership is unproven; existing path retained\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-datagram"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/legacy",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005578667000000002,
+      "stdout": "",
+      "stderr": "Error: Pool endpoint ownership is unproven; existing path retained\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-legacy-stale"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/live",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005429249999999997,
+      "stdout": "",
+      "stderr": "Error: Pool endpoint ownership is unproven; existing path retained\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-live"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/live",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005606834000000005,
+      "stdout": "",
+      "stderr": "Error: Pool endpoint ownership is unproven; existing path retained\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-full"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/lock-case",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005243625000000002,
+      "stdout": "",
+      "stderr": "Error: Too many levels of symbolic links (os error 62)\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-link"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/lock-case",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.0057550840000000075,
+      "stdout": "",
+      "stderr": "Error: Pool lock must retain its single-link owner-writable regular file identity\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-hardlink"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/lock-case",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.005520459000000005,
+      "stdout": "",
+      "stderr": "Error: Pool listener lock has no recognized endpoint ownership record\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-lock-format"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "status",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/idle",
+        "--json"
+      ],
+      "exit": 0,
+      "seconds": 0.00792754200000001,
+      "stdout": "[]\n",
+      "stderr": "",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-idle"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "start",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/idle",
+        "--size",
+        "1",
+        "--max",
+        "1",
+        "--json"
+      ],
+      "exit": 1,
+      "seconds": 0.006167833999999983,
+      "stdout": "",
+      "stderr": "Error: Resource temporarily unavailable (os error 35)\n",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-duplicate-live"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "status",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/idle",
+        "--json"
+      ],
+      "exit": 0,
+      "seconds": 0.005437542000000017,
+      "stdout": "[]\n",
+      "stderr": "",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-idle"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "stop",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/idle",
+        "--json"
+      ],
+      "exit": 0,
+      "seconds": 0.005948791000000009,
+      "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+      "stderr": "",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-idle"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "pool",
+        "stop",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/auto",
+        "--json"
+      ],
+      "exit": 0,
+      "seconds": 12.592033291,
+      "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+      "stderr": "",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto"
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "seconds": 0.021051999999997406,
+      "stdout": "[]\n",
+      "stderr": "",
+      "home": "/private/tmp/kbox-pool-sock-d41adac09951/native-bind-final2/h-auto"
+    }
+  ]
+}

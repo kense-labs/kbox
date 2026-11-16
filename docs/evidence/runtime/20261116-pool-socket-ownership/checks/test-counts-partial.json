@@ -1,0 +1,194 @@
+{
+  "cli-full1": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "948",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "cli-full2": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "verify1": {
+    "exit": 101,
+    "rustRawResultRows": [
+      [
+        "2322",
+        "6",
+        "52"
+      ]
+    ],
+    "pythonUnittestSummary": [
+      "4"
+    ]
+  },
+  "verify2": {
+    "exit": 101,
+    "rustRawResultRows": [
+      [
+        "2322",
+        "6",
+        "52"
+      ]
+    ],
+    "pythonUnittestSummary": [
+      "4"
+    ]
+  },
+  "contract1": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "24",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "41",
+        "0",
+        "0"
+      ],
+      [
+        "4",
+        "0",
+        "0"
+      ],
+      [
+        "3",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "1",
+        "0",
+        "0"
+      ],
+      [
+        "5",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "2",
+        "0",
+        "0"
+      ],
+      [
+        "11",
+        "0",
+        "0"
+      ],
+      [
+        "0",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  },
+  "installer1": {
+    "exit": 0,
+    "rustRawResultRows": [],
+    "pythonUnittestSummary": [
+      "8"
+    ]
+  },
+  "endpoint-focused4": {
+    "exit": 0,
+    "rustRawResultRows": [
+      [
+        "11",
+        "0",
+        "0"
+      ]
+    ],
+    "pythonUnittestSummary": []
+  }
+}

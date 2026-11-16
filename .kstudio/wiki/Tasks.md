@@ -56,3 +56,10 @@
 - **证据**: [回归、最终安装包与原生清理](../../docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md)。
 - **验证**: Runtime2322/6/52、CLI938、contract library24、installer8；3Rust+3Python native、4daemon/16初始Ready/4命令、52home审计通过。
 - **限制**: 初始endpoint准入、pre-admission/legacy owner路径和GA继续；Git UID501/DNS阻塞远端；Windows ARM64/快照原生/RSS未验证，tokens/cost未知。
+
+## T2026-11-16-pool-socket-ownership
+
+- **结果**: 初始端点保留调用方对象/活动满队列；精确receipt和生命周期锁恢复自有失效socket，无法证明的旧端点拒绝。
+- **证据**: [失败、最终归档与53home审计](../../docs/evidence/runtime/20261116-pool-socket-ownership/OUTCOME.md)。
+- **验证**: CLI949、contracts106顶层+12子回执、installer8/Clippy；默认2322/6/52；2Rust+3Python AF、13拒绝+重复启动、2autostart命令、4daemon/16Ready/4命令。
+- **限制**: pre-admission/legacy owner和GA继续；远端Git UID501/DNS阻塞，WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。历史036的contract118计数含子回执，正确独立顶层数为106。

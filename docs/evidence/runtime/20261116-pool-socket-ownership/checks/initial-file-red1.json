@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "initial_bind_preserves_a_caller_regular_file",
+    "--",
+    "--exact",
+    "commands::pool::tests::shutdown::initial_bind_preserves_a_caller_regular_file"
+  ],
+  "exit": 101,
+  "seconds": 6.393902083,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-initial-file-red1",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

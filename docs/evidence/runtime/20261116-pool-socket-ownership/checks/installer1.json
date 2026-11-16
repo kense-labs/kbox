@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "scripts/test-install-package.py"
+  ],
+  "exit": 0,
+  "seconds": 15.533757709,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-installer1",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "step": "late cache metadata preparation",
+  "observed": "AssertionError while requiring mutable index.json to match initial hash after native autostart began",
+  "productFailure": false,
+  "correction": "Initial byte map retained; only immutable cache bytes are asserted. Catalog mutation is recorded. No before-native metadata claim."
+}

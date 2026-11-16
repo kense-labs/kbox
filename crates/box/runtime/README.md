@@ -723,3 +723,10 @@ Pool/lease Stop errors keep owners available for retry; closed pools refuse new
 and queued acquisition. [Final installed Native effects and limits](../../../docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md)
 cover registered close, not initial endpoint binding or all pre-admission/legacy
 manager lifetimes. Those remaining local gaps and whole GA stay open.
+
+Pool CLI initial binding now preserves caller/live endpoints and requires exact
+versioned listener ownership for stale recovery. On this Mac, a full live queue
+returns ECONNREFUSED, so legacy/unproven endpoints refuse rather than being
+unlinked. The [038 installed qualification](../../../docs/evidence/runtime/20261116-pool-socket-ownership/OUTCOME.md)
+records endpoint/autostart/pool/AF proofs and53-home cleanup. This does not close
+pre-admission/legacy manager lifetime, OCI pool parity/default cutover/W4/GA.

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "box",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/final-dist-poolstop-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "6326607e094f4390c561eedf11b15ea6719b36769506e73aa4eebf59c6b1dafe",
+    "compressedBytes": 23415039
+  },
+  {
+    "name": "oci",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+    "compressedBytes": 33429314
+  }
+]

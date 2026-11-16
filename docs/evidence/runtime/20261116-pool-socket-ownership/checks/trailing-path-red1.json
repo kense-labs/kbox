@@ -1,0 +1,41 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-1/bin/kbox",
+    "pool",
+    "start",
+    "--size",
+    "1",
+    "--max",
+    "1",
+    "--socket",
+    "/private/tmp/kbox-pool-sock-d41adac09951/trailing-path-red1/caller/",
+    "--json"
+  ],
+  "home": "/private/tmp/kbox-pool-sock-d41adac09951/trailing-path-red1/home",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sourceInputsSha256": "0a0f5826808da9d59880a3791120aa2ccef71ad800f7d8ada5d8d014d15445f6",
+  "observed": {
+    "exitBeforeStop": null,
+    "unexpectedSocketCreated": true,
+    "socket": "/private/tmp/kbox-pool-sock-d41adac09951/trailing-path-red1/caller/caller"
+  },
+  "exitAfterOwnedStop": 0,
+  "cleanupCommands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-1/bin/kbox",
+        "pool",
+        "stop",
+        "--socket",
+        "/private/tmp/kbox-pool-sock-d41adac09951/trailing-path-red1/caller/caller",
+        "--json"
+      ],
+      "exit": 0,
+      "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+      "stderr": ""
+    }
+  ],
+  "callerCanaryPreserved": true,
+  "remainingSockets": [],
+  "status": "FAIL"
+}

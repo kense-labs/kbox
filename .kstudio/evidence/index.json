@@ -42,6 +42,12 @@
       "path": "T2026-11-16-pool-shutdown-ownership/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Registered pool/lease shutdown retains actual owners, truthful Stop and cleanup retry;3Rust+3Python/16initialReady/52home audit pass; remaining local and GA gaps open"
+    },
+    {
+      "id": "T2026-11-16-pool-socket-ownership",
+      "path": "T2026-11-16-pool-socket-ownership/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Owned endpoint admission preserves caller/live/full-queue sockets; installed native/53home audit pass; pre-admission/legacy and GA open"
     }
   ]
 }

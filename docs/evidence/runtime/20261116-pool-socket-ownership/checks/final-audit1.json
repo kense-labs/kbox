@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 3.329410458,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-sock-d41adac09951/check-home-final-audit1",
+    "TMPDIR": "/private/tmp/kbox-pool-sock-d41adac09951/t"
+  }
+}

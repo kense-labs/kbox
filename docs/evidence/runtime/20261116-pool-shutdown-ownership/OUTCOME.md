@@ -181,3 +181,11 @@ synchronization; only local commits/previous baseline ancestry are proved.
 
 After current final native/audit/source/diff/commit closeout, continue the next
 local owner/bind gap. Goal remains active; there is no whole-project completion.
+
+### Later038 counting correction
+
+The historical full-contract118 figure sums106 top-level tests and12 successful
+filtered child receipts; it is not118 independent top-level tests. The fresh038
+full run independently confirms106 top-level passes, with child receipts counted
+separately in [contract-counts.json](../20261116-pool-socket-ownership/checks/contract-counts.json).
+Old logs and results remain retained;037 itself ran only library24, as stated.

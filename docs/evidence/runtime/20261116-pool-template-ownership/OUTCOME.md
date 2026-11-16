@@ -157,3 +157,11 @@ error8 (git-prerequisites2.json). Existing baseline branch is already an ancesto
 of main; current remote equality/push are unproved. No force push or publication.
 After final acceptance/audit/local commit, continue actual outer owner retention
 and the remaining authorized local work; no whole-goal completion is claimed.
+
+### Later038 counting correction
+
+The historical full-contract118 figure sums106 top-level tests and12 successful
+filtered child receipts; it is not118 independent top-level tests. The fresh038
+full run independently confirms106 top-level passes, with child receipts counted
+separately in [contract-counts.json](../20261116-pool-socket-ownership/checks/contract-counts.json).
+Old logs and results remain retained;037 itself ran only library24, as stated.

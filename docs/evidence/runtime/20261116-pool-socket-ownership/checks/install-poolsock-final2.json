@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/unpacked-poolsock-final-2/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/unpacked-poolsock-final-2"
+  ],
+  "exitCode": 0,
+  "seconds": 0.6608550420000086,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/installed-poolsock-final-2",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "782cd1ae14a8fe1e2dc83a841c8834b0b05cccf11663f94541eb8d455df87151",
+  "compressedBytes": 23422934,
+  "installedDiskBytes": 44208128,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "f5478a4afc31bca7b4260c25b539fdba80cbdbc2",
+    "sourceInputsSha256": "cfabba20a920f5a7202d15aa0ff42bce66e1163688a4ec72caf237358da284af",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

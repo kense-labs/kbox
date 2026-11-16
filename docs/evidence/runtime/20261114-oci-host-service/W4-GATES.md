@@ -149,3 +149,12 @@ Final4Rust+3Python,4daemon/16Ready/4commands and32-home audit pass. Internal
 allocation/boot/template/batch/unpublished/legacy source lifetime remains local
 required work; full default OCI cutover/live continuity/W4/GA is still open.
 WindowsARM64 unsupported/no native run, support levels unchanged.
+
+[040 completed batch ownership](../20261116-pool-batch-ownership/OUTCOME.md)
+qualifies producer registration/guarded queued results/exact publication and
+owned late-result close for existing published pools. Actual native0/1->1/0,
+Pool68/0/4,CLI949/Clippy; default2333/6/54 retains six external disk failures.
+Final5Rust+3Python,4daemon/16Ready/4commands and31-home audit pass. Internal
+boot/allocation/template/unpublished/legacy and rollbackselection remain local
+work. Full default OCI cutover/live continuity/W4/GA remain incomplete; Windows
+ARM64 unsupported/no native run, support levels unchanged.

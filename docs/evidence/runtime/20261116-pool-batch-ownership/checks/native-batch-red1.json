@@ -1,0 +1,60 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc/native-client-batch-red1",
+    "--ignored",
+    "--exact",
+    "pool::warm_pool::batch_native::native_completed_batch_owner_survives_consumer_cancellation_and_actual_drain",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1",
+  "exit": 101,
+  "seconds": 9.497544333,
+  "actualCounts": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 42353,
+      "parent": 40116,
+      "command": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"b44e008c-d14d-470e-816e-8e6cc7c6ce0e\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/volumes/anon_b44e008c_124551f28a266d7fdc710b3f2221c63c\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-batch-ownership/checks/native-batch-red1-live-logs/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-batch-ownership/checks/native-batch-red1-live-logs/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-batch-ownership/checks/native-batch-red1-live-logs/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-batch-2991d356111a/native-batch-red-attempt-1/home/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-batch-ownership/checks/native-batch-red1-live-logs/boxes/b44e008c-d14d-470e-816e-8e6cc7c6ce0e/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    }
+  ],
+  "clientSha256": "a1886b712cb33e1d4b9dcfcee88d87f9f79428742989602b5d7d2439b99ffc3b",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1",
+  "sourceInputsSha256": "e1ecd6533df14bf5135b726b9632ff5a912bef36c1108fd531b672a93d0a956c"
+}

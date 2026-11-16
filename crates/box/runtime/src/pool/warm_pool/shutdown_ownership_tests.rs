@@ -403,6 +403,206 @@ async fn selected_maintenance_cleanup_does_not_finalize_a_foreground_owner() {
     assert!(!box_dir.exists());
 }
 
+#[tokio::test]
+async fn completed_batch_task_output_drop_keeps_the_registered_actual_owner() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let completed = WarmPool::register_vm(vm, &pool.retiring, &pool.shutdown_tx);
+    let produced = tokio::spawn(async move { completed });
+    tokio::time::timeout(Duration::from_secs(2), async {
+        while !produced.is_finished() {
+            tokio::task::yield_now().await;
+        }
+    })
+    .await
+    .unwrap();
+    drop(produced);
+    tokio::time::timeout(Duration::from_secs(2), async {
+        while pool.ensure_admission_open().is_ok() {
+            tokio::task::yield_now().await;
+        }
+    })
+    .await
+    .unwrap();
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn completed_batch_vector_drop_preserves_every_actual_manager_until_retry() {
+    let (_root1, vm1, calls1, drops1) = fixture().await;
+    let (_root2, vm2, calls2, drops2) = fixture().await;
+    let dirs = [
+        vm1.home_dir.join("boxes").join(vm1.box_id()),
+        vm2.home_dir.join("boxes").join(vm2.box_id()),
+    ];
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 2,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let results: Vec<Result<CompletedBoot>> = vec![
+        Ok(WarmPool::register_vm(
+            vm1,
+            &pool.retiring,
+            &pool.shutdown_tx,
+        )),
+        Ok(WarmPool::register_vm(
+            vm2,
+            &pool.retiring,
+            &pool.shutdown_tx,
+        )),
+    ];
+    drop(results);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(pool.retiring.lock().len(), 2);
+    assert_eq!(
+        (drops1.load(Ordering::SeqCst), drops2.load(Ordering::SeqCst)),
+        (0, 0)
+    );
+    for dir in &dirs {
+        assert_eq!(
+            std::fs::read(dir.join("rootfs/canary")).unwrap(),
+            b"owned-working-data"
+        );
+    }
+    assert!(pool.drain_idle().await.is_err());
+    assert_eq!(pool.retiring.lock().len(), 2);
+    pool.drain_idle().await.unwrap();
+    assert_eq!(
+        (calls1.load(Ordering::SeqCst), calls2.load(Ordering::SeqCst)),
+        (2, 2)
+    );
+    assert_eq!(
+        (drops1.load(Ordering::SeqCst), drops2.load(Ordering::SeqCst)),
+        (1, 1)
+    );
+    assert!(dirs.iter().all(|dir| !dir.exists()));
+}
+
+#[tokio::test]
+async fn completed_batch_closed_admission_refuses_before_waiting_on_boot_permits() {
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            max_concurrent_boots: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let permit = pool.boot_limiter.clone().acquire_owned().await.unwrap();
+    pool.signal_shutdown();
+    let results = tokio::time::timeout(
+        Duration::from_secs(2),
+        WarmPool::boot_batch(BootBatch {
+            snapshot_fork: false,
+            box_config: &pool.box_config,
+            event_emitter: &pool.event_emitter,
+            template: &pool.template,
+            template_resources: &pool.template_resources,
+            needed: 1,
+            max_concurrent_boots: 1,
+            metrics: None,
+            boot_limiter: pool.boot_limiter.clone(),
+            global_boot_limiter: None,
+            retained: &pool.retiring,
+            shutdown: &pool.shutdown_tx,
+        }),
+    )
+    .await
+    .unwrap();
+    assert_eq!(results.len(), 1);
+    assert!(matches!(results[0], Err(BoxError::PoolError(_))));
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(pool.stats().await.total_created, 0);
+    drop(permit);
+    pool.drain_idle().await.unwrap();
+}
+
+#[tokio::test]
+async fn completed_batch_queued_boot_rechecks_admission_after_its_permit() {
+    let pool = Arc::new(
+        WarmPool::start(
+            PoolConfig {
+                min_idle: 0,
+                max_size: 1,
+                max_concurrent_boots: 1,
+                ..PoolConfig::default()
+            },
+            BoxConfig::default(),
+            EventEmitter::new(16),
+        )
+        .await
+        .unwrap(),
+    );
+    let permit = pool.boot_limiter.clone().acquire_owned().await.unwrap();
+    let source = pool.clone();
+    let produced = tokio::spawn(async move {
+        WarmPool::boot_batch(BootBatch {
+            snapshot_fork: false,
+            box_config: &source.box_config,
+            event_emitter: &source.event_emitter,
+            template: &source.template,
+            template_resources: &source.template_resources,
+            needed: 1,
+            max_concurrent_boots: 1,
+            metrics: None,
+            boot_limiter: source.boot_limiter.clone(),
+            global_boot_limiter: None,
+            retained: &source.retiring,
+            shutdown: &source.shutdown_tx,
+        })
+        .await
+    });
+    tokio::time::sleep(Duration::from_millis(20)).await;
+    assert!(
+        !produced.is_finished(),
+        "the worker must actually be queued behind the held permit"
+    );
+    pool.signal_shutdown();
+    drop(permit);
+    let results = tokio::time::timeout(Duration::from_secs(2), produced)
+        .await
+        .unwrap()
+        .unwrap();
+    assert_eq!(results.len(), 1);
+    assert!(matches!(results[0], Err(BoxError::PoolError(_))));
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(pool.stats().await.total_created, 0);
+    pool.drain_idle().await.unwrap();
+}
+
 #[cfg(unix)]
 #[tokio::test]
 async fn cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry() {

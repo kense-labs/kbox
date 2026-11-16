@@ -1,0 +1,10 @@
+{
+  "libkrun": {
+    "head": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+    "clean": true
+  },
+  "libkrunfw": {
+    "head": "fc3ea06895301f1df6a274dad75fbd9317b3bfee",
+    "clean": true
+  }
+}

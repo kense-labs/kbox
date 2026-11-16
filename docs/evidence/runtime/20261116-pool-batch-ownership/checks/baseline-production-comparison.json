@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "baseCommit": "cf7240c9935a4817e05ce476aa0aa29f717c7ad2",
+  "onlyWarmPoolChangeBeforeRed": "cfg(test) native harness module declaration",
+  "baselineProbeSourceInputsSha256": "e1ecd6533df14bf5135b726b9632ff5a912bef36c1108fd531b672a93d0a956c",
+  "baselineInstalledProductionSourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355",
+  "baselineClientSha256": "a1886b712cb33e1d4b9dcfcee88d87f9f79428742989602b5d7d2439b99ffc3b"
+}

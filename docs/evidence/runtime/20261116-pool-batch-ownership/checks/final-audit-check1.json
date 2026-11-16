@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 4.33742475,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-batch-2991d356111a/check-home-final-audit-check1",
+    "TMPDIR": "/private/tmp/kbox-pool-batch-2991d356111a/t"
+  }
+}

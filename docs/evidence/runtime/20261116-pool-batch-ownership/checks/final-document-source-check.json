@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "2f56ae1ef4ccb1693587de2a71069b2a62571c5fca63a7a29a1f935347ac88dd",
+  "compiledInputCount": 1727,
+  "references": [
+    "crates/box/runtime/src/pool/warm_pool.rs",
+    "crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs",
+    "crates/box/runtime/src/pool/warm_pool/batch_native.rs",
+    "crates/box/runtime/README.md",
+    "docs/release.md",
+    "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+    ".kstudio/evidence/T2026-11-16-pool-batch-ownership/OUTCOME.md",
+    ".kstudio/evidence/index.json",
+    ".kstudio/wiki/Tasks.md"
+  ],
+  "unknownFiles": [],
+  "diffCheckExit": 0
+}

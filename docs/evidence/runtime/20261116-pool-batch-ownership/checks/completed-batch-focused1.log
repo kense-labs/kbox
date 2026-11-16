@@ -1,0 +1,10 @@
+
+running 5 tests
+test pool::warm_pool::batch_native::native_completed_batch_owner_survives_consumer_cancellation_and_actual_drain ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_closed_admission_refuses_before_waiting_on_boot_permits ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_task_output_drop_keeps_the_registered_actual_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_vector_drop_preserves_every_actual_manager_until_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_queued_boot_rechecks_admission_after_its_permit ... ok
+
+test result: ok. 4 passed; 0 failed; 1 ignored; 0 measured; 2388 filtered out; finished in 0.03s
+

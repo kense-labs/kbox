@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-batch-ownership/context.json",
+    "final1"
+  ],
+  "exit": 0,
+  "seconds": 31.607813542,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-batch-2991d356111a/check-home-pool-wave-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-batch-2991d356111a/t"
+  }
+}

@@ -70,3 +70,10 @@
 - **证据**: [失败、最终包和32home审计](../../docs/evidence/runtime/20261116-pool-handoff-ownership/OUTCOME.md)。
 - **验证**: Pool64/0/3、CLI949/Clippy；默认2329/6/53；4Rust+3Python、4daemon/16Ready/4命令；wrapper冲突失败保留，实际原生1/0已独立核验。
 - **限制**: 内部boot/allocation/template/batch/unpublished/legacy owner与GA继续；Git UID501/DNS外阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-batch-ownership
+
+- **结果**: 完成的boot批次先登记实际owner，结果携带取消guard；等待后精确发布，关闭失败保留重试。
+- **证据**: [原生0/1至1/0、最终包及31home审计](../../docs/evidence/runtime/20261116-pool-batch-ownership/OUTCOME.md)。
+- **验证**: Pool68/0/4、CLI949/Clippy；默认2333/6/54；5Rust+3Python、4daemon/16Ready/4命令；失败源码/client保留。
+- **限制**: 内部boot/template/unpublished/legacy/rollback与GA继续，Git UID501/DNS阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。

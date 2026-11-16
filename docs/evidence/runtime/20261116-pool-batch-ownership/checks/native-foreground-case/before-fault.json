@@ -1,0 +1,26 @@
+{
+  "allocation": {
+    "created_at": "2026-11-16T06:56:53.072773+00:00",
+    "driver": "local",
+    "in_use_by": [
+      "9a3d6535-d065-4c2c-8bbf-4d915ff763ed"
+    ],
+    "labels": {
+      "anonymous": "true",
+      "kbox.volume.allocation": "5391dd86-a0b0-4ff7-98b6-b48f17508a33",
+      "kbox.volume.kind": "anonymous-v1",
+      "kbox.volume.owner": "9a3d6535-d065-4c2c-8bbf-4d915ff763ed"
+    },
+    "mount_point": "/private/tmp/kbox-pool-batch-2991d356111a/native-foreground-attempt-1/home/volumes/anon_9a3d6535_515ad6d56d69d9ede66e77897cb70045",
+    "name": "anon_9a3d6535_515ad6d56d69d9ede66e77897cb70045",
+    "size_limit": 0
+  },
+  "authenticated": true,
+  "execution": "9a3d6535-d065-4c2c-8bbf-4d915ff763ed",
+  "pid": 95785,
+  "socketDir": "/private/tmp/kbox-sockets/9a3d6535-d065-4c2c-8bbf-4d915ff763ed",
+  "volumeIdentity": [
+    16777233,
+    302750064
+  ]
+}

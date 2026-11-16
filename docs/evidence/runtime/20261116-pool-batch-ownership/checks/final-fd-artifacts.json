@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

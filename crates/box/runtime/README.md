@@ -738,3 +738,10 @@ finalize unrelated handoffs. [039 installed evidence](../../../docs/evidence/run
 records real healthy handoff/cancel/refusal/actual retry,4Rust+3Python and32-home
 audit. Internal boot/allocation/template/batch/unpublished/legacy ownership and
 full W4/default OCI Host Service cutover/GA remain open.
+
+Completed warm boot workers now return registered actual owners plus cancellation
+guards; both batch consumers wait for idle/stat/admission before exact transfer,
+and late close keeps actual owners for retry. [040 installed evidence](../../../docs/evidence/runtime/20261116-pool-batch-ownership/OUTCOME.md)
+records native0/1->1/0,5Rust+3Python/16Ready and31-home audit. Internal incomplete
+boot/template/unpublished/legacy and rollbackselection remain open, as do full
+W4/default OCI Host Service cutover/GA.

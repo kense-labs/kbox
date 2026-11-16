@@ -1,0 +1,94 @@
+{
+  "compile-baseline-client1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "native-batch-red-check1": {
+    "exit": 101,
+    "actualRustResults": []
+  },
+  "completed-batch-compile1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "64",
+        "0",
+        "4"
+      ]
+    ]
+  },
+  "completed-batch-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "4",
+        "0",
+        "1"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "68",
+        "0",
+        "4"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2333",
+        "6",
+        "54"
+      ]
+    ]
+  },
+  "native-batch-green-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "native-foreground-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "native-shutdown-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "baselineNative": [
+    [
+      "0",
+      "1",
+      "0"
+    ]
+  ],
+  "currentBatchNative": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ]
+}

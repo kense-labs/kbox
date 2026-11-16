@@ -1,0 +1,6 @@
+
+running 1 test
+test pool::warm_pool::batch_native::native_completed_batch_owner_survives_consumer_cancellation_and_actual_drain ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2392 filtered out; finished in 10.93s
+

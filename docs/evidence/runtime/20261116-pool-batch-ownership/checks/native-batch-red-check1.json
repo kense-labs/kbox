@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc/native-batch-red1.py"
+  ],
+  "exit": 101,
+  "seconds": 11.443580209,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-batch-2991d356111a/check-home-native-batch-red-check1",
+    "TMPDIR": "/private/tmp/kbox-pool-batch-2991d356111a/t"
+  }
+}

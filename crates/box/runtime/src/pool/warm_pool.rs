@@ -34,27 +34,29 @@ enum PoolCloseScope {
     AllRetained,
 }
 
-struct ForegroundHandoff<'a> {
-    pool: &'a WarmPool,
+struct ForegroundHandoff {
+    retained: RetainedVms,
+    shutdown: watch::Sender<bool>,
     owner: std::sync::Weak<Mutex<VmManager>>,
 }
 
-impl Drop for ForegroundHandoff<'_> {
+impl Drop for ForegroundHandoff {
     fn drop(&mut self) {
         if let Some(owner) = self.owner.upgrade() {
             let retained = self
-                .pool
-                .retiring
+                .retained
                 .lock()
                 .iter()
                 .any(|vm| Arc::ptr_eq(vm, &owner));
             if retained {
                 // A cancelled transfer must not keep launching beside its unclosed VM.
-                self.pool.signal_shutdown();
+                let _ = self.shutdown.send(true);
             }
         }
     }
 }
+
+type CompletedBoot = (RetainedVm, ForegroundHandoff);
 
 type BootVmFuture<'a> = Pin<Box<dyn Future<Output = Result<VmManager>> + Send + 'a>>;
 
@@ -261,6 +263,8 @@ struct BootBatch<'a> {
     metrics: Option<crate::prom::RuntimeMetrics>,
     boot_limiter: Arc<Semaphore>,
     global_boot_limiter: Option<Arc<Semaphore>>,
+    retained: &'a RetainedVms,
+    shutdown: &'a watch::Sender<bool>,
 }
 
 impl WarmPool {
@@ -976,18 +980,35 @@ impl WarmPool {
         Ok(())
     }
 
-    fn retain_foreground_vm(&self, vm: VmManager) -> (RetainedVm, ForegroundHandoff<'_>) {
+    fn retain_foreground_vm(&self, vm: VmManager) -> CompletedBoot {
+        Self::register_vm(vm, &self.retiring, &self.shutdown_tx)
+    }
+
+    fn register_vm(
+        vm: VmManager,
+        retained: &RetainedVms,
+        shutdown: &watch::Sender<bool>,
+    ) -> CompletedBoot {
         let owner = Arc::new(Mutex::new(vm));
-        self.retiring.lock().push(owner.clone());
+        retained.lock().push(owner.clone());
         let handoff = ForegroundHandoff {
-            pool: self,
+            retained: retained.clone(),
+            shutdown: shutdown.clone(),
             owner: Arc::downgrade(&owner),
         };
         (owner, handoff)
     }
 
     fn take_foreground_vm(&self, owner: RetainedVm) -> Result<VmManager> {
-        let mut owners = self.retiring.lock();
+        Self::take_registered_vm(owner, &self.retiring, &self.shutdown_tx)
+    }
+
+    fn take_registered_vm(
+        owner: RetainedVm,
+        retained: &RetainedVms,
+        shutdown: &watch::Sender<bool>,
+    ) -> Result<VmManager> {
+        let mut owners = retained.lock();
         if let Some(index) = owners
             .iter()
             .position(|candidate| Arc::ptr_eq(candidate, &owner))
@@ -1001,7 +1022,7 @@ impl WarmPool {
             owners.push(owner);
         }
         drop(owners);
-        self.signal_shutdown();
+        let _ = shutdown.send(true);
         Err(BoxError::PoolError(
             "Pooled VM ownership is closing or unavailable; retained for cleanup".into(),
         ))
@@ -1126,7 +1147,7 @@ impl WarmPool {
     /// resource burst, so only `max_concurrent_boots` tasks are in flight at
     /// once. Each task owns cloned inputs, allowing the set to remain
     /// `'static` while the caller retains its pool state.
-    async fn boot_batch(batch: BootBatch<'_>) -> Vec<Result<VmManager>> {
+    async fn boot_batch(batch: BootBatch<'_>) -> Vec<Result<CompletedBoot>> {
         if batch.needed == 0 {
             return Vec::new();
         }
@@ -1146,18 +1167,27 @@ impl WarmPool {
                 let pool_boot_limiter = batch.boot_limiter.clone();
                 let daemon_boot_limiter = batch.global_boot_limiter.clone();
                 let snapshot_fork = batch.snapshot_fork;
+                let retained = batch.retained.clone();
+                let shutdown = batch.shutdown.clone();
                 set.spawn(async move {
+                    if *shutdown.borrow() {
+                        return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                    }
                     let _boot_permits =
                         acquire_boot_permits(pool_boot_limiter, daemon_boot_limiter).await?;
+                    if *shutdown.borrow() {
+                        return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                    }
                     let _boot_guard = BootMetricGuard::new(boot_metrics);
-                    WarmPool::boot_or_restore(
+                    let vm = WarmPool::boot_or_restore(
                         snapshot_fork,
                         &config,
                         &emitter,
                         &shared_template,
                         &shared_resources,
                     )
-                    .await
+                    .await?;
+                    Ok(Self::register_vm(vm, &retained, &shutdown))
                 });
                 launched += 1;
             }
@@ -1479,20 +1509,41 @@ impl WarmPool {
             metrics: self.metrics.clone(),
             boot_limiter: self.boot_limiter.clone(),
             global_boot_limiter: self.global_boot_limiter.clone(),
+            retained: &self.retiring,
+            shutdown: &self.shutdown_tx,
         })
         .await;
 
         for result in results {
             match result {
-                Ok(vm) => {
-                    let box_id = vm.box_id().to_string();
+                Ok((owner, _handoff)) => {
                     let mut idle = self.idle.lock().await;
+                    let mut stats = self.stats.lock().await;
+                    if *self.shutdown_rx.borrow() {
+                        drop(stats);
+                        drop(idle);
+                        let (_, closed) =
+                            Self::destroy_one(owner, self.retiring.clone(), Some(2000)).await;
+                        if let Err(error) = closed {
+                            tracing::warn!(%error, "Completed fill VM retained for shutdown retry");
+                        }
+                        failed = true;
+                        continue;
+                    }
+                    let vm = match self.take_foreground_vm(owner) {
+                        Ok(vm) => vm,
+                        Err(error) => {
+                            failed = true;
+                            tracing::warn!(%error, "Completed fill VM remains owned during cleanup");
+                            continue;
+                        }
+                    };
+                    let box_id = vm.box_id().to_owned();
                     idle.push(WarmVm {
                         vm,
                         created_at: Instant::now(),
                     });
                     Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
-                    let mut stats = self.stats.lock().await;
                     stats.total_created += 1;
                     stats.idle_count = idle.len();
                     added_ids.push(box_id.clone());
@@ -1632,13 +1683,14 @@ impl WarmPool {
                                 metrics: metrics.clone(),
                                 boot_limiter: boot_limiter.clone(),
                                 global_boot_limiter: global_boot_limiter.clone(),
+                                retained: &retiring,
+                                shutdown: &shutdown_tx,
                             })
                             .await;
                             let mut batch_failed = false;
                             for result in results {
                                 match result {
-                                    Ok(vm) => {
-                                        let box_id = vm.box_id().to_string();
+                                    Ok((owner, _handoff)) => {
                                         // If shutdown landed while this batch was
                                         // booting, drain_idle has already cleared
                                         // `idle` and will not run again, so a VM
@@ -1650,29 +1702,33 @@ impl WarmPool {
                                         // atomic against it — closing the TOCTOU window
                                         // that an unlocked `borrow()` check left open.
                                         let mut pool = idle.lock().await;
+                                        let mut s = stats.lock().await;
                                         if *shutdown_rx.borrow() {
+                                            drop(s);
                                             drop(pool);
                                             tracing::debug!(
-                                                box_id = %box_id,
                                                 "Pool shutting down mid-replenish; destroying freshly-booted VM"
                                             );
-                                            if let Err(error) = Self::destroy_vms(
-                                                vec![WarmVm { vm, created_at: Instant::now() }],
-                                                &retiring,
-                                                Some(2000),
-                                                "shutdown during replenishment",
-                                                PoolCloseScope::Selected,
-                                            ).await {
+                                            let (_, closed) = Self::destroy_one(owner, retiring.clone(), Some(2000)).await;
+                                            if let Err(error) = closed {
                                                 tracing::warn!(%error, "Late pool VM retained for shutdown retry");
                                             }
                                             continue;
                                         }
+                                        let vm = match Self::take_registered_vm(owner, &retiring, &shutdown_tx) {
+                                            Ok(vm) => vm,
+                                            Err(error) => {
+                                                batch_failed = true;
+                                                tracing::warn!(%error, "Completed pool VM remains owned during cleanup");
+                                                continue;
+                                            }
+                                        };
+                                        let box_id = vm.box_id().to_owned();
                                         pool.push(WarmVm {
                                             vm,
                                             created_at: Instant::now(),
                                         });
                                         Self::sync_idle_metric(metrics.as_ref(), pool.len());
-                                        let mut s = stats.lock().await;
                                         s.total_created += 1;
                                         s.idle_count = pool.len();
                                         drop(s);
@@ -1813,6 +1869,10 @@ mod shutdown_ownership_tests;
 #[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
 #[path = "warm_pool/shutdown_native.rs"]
 mod shutdown_native;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/batch_native.rs"]
+mod batch_native;
 
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]

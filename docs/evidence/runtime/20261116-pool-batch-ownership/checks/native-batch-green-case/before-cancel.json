@@ -1,0 +1,13 @@
+{
+  "actualVm": {
+    "anonymousVolumes": [
+      "anon_96958b40_46afdeaaeb2a67982b2ab3641390855e"
+    ],
+    "authenticatedReady": true,
+    "execution": "96958b40-6c6d-4ccb-bab2-da7301266a5e",
+    "pid": 90327,
+    "socketDir": "/private/tmp/kbox-sockets/96958b40-6c6d-4ccb-bab2-da7301266a5e"
+  },
+  "callerBytes": 1,
+  "registeredOwners": 1
+}

@@ -520,3 +520,17 @@ allocation/batch/template/unpublished/legacy ownership, full OCI Host Service
 cutover/live continuity/W4/GA remain open. WindowsARM64 dependencies unsupported/
 no native run, platform levels unchanged, RSS unmeasured. Git remote still
 blocked by UID501/DNS; local verified bundle is transport only, not publication.
+
+### 2026-11-16 completed pool result qualification
+
+[040 installed evidence](evidence/runtime/20261116-pool-batch-ownership/OUTCOME.md)
+closes completed boot-batch result ownership loss on a published pool. Native
+0/1 baseline becomes1/0 with exact owner/live VM/admission/actual-drain proof.
+Final Box28849f6c…/source2f56ae1e… is23427559 compressed/44208128 installed bytes.
+Pool68/0/4,CLI949/Clippy pass; default2333/6/54 remains six disk-service failures.
+Actual5Rust+3Python,4daemon/16Ready/4commands and31-home audit pass; original
+failure/source/client retained. Internal incomplete boot/template/unpublished/
+legacy ownership, rollback selection and full OCI Host Service cutover/live
+continuity/W4/GA stay open. WindowsARM64 dependencies unsupported/no native run,
+platform levels unchanged; RSS unmeasured. Git push still needs UID501/DNS
+recovery; local bundles are transport evidence, not publication.

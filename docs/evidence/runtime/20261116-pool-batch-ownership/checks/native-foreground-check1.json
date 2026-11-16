@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-batch-ownership-2991d356111a4062a26f4954f197efdc/native-foreground1.py"
+  ],
+  "exit": 0,
+  "seconds": 31.650995958,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-batch-2991d356111a/check-home-native-foreground-check1",
+    "TMPDIR": "/private/tmp/kbox-pool-batch-2991d356111a/t"
+  }
+}

@@ -1,0 +1,9 @@
+
+thread '<unnamed>' (113056681) panicked at crates/box/runtime/src/pool/warm_pool/batch_native.rs:69:17:
+assertion `left == right` failed: completed producer must register its actual VM before handing results to a cancellable consumer
+  left: 0
+ right: 1
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'pool::warm_pool::batch_native::native_completed_batch_owner_survives_consumer_cancellation_and_actual_drain' (113056679) panicked at crates/box/runtime/src/pool/warm_pool/batch_native.rs:107:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

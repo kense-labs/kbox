@@ -1,0 +1,17 @@
+{
+  "status": "FAIL",
+  "productNativeExit": 0,
+  "wrapperExit": 1,
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/run-check.py",
+    "native-foreground1",
+    "python3",
+    "native-foreground1.py"
+  ],
+  "reason": "Outer wrapper and native driver used the same receipt/stdout/stderr stem; wrapper refused to overwrite the existing native receipt.",
+  "observedToolError": "run-check.py line5: assert not receipt.exists(); AssertionError",
+  "nativeReceiptRetained": true,
+  "nativeRerun": false,
+  "correction": "Use distinct outer check stem for subsequent drivers; independently checked native stdout/count/receipt/proof/cleanup in foreground-native-receipt-check1.json."
+}

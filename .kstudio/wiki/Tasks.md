@@ -63,3 +63,10 @@
 - **证据**: [失败、最终归档与53home审计](../../docs/evidence/runtime/20261116-pool-socket-ownership/OUTCOME.md)。
 - **验证**: CLI949、contracts106顶层+12子回执、installer8/Clippy；默认2322/6/52；2Rust+3Python AF、13拒绝+重复启动、2autostart命令、4daemon/16Ready/4命令。
 - **限制**: pre-admission/legacy owner和GA继续；远端Git UID501/DNS阻塞，WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。历史036的contract118计数含子回执，正确独立顶层数为106。
+
+## T2026-11-16-pool-handoff-ownership
+
+- **结果**: published acquire/release 保留实际owner，独占交接；取消关闭准入，维护只清理所选对象。
+- **证据**: [失败、最终包和32home审计](../../docs/evidence/runtime/20261116-pool-handoff-ownership/OUTCOME.md)。
+- **验证**: Pool64/0/3、CLI949/Clippy；默认2329/6/53；4Rust+3Python、4daemon/16Ready/4命令；wrapper冲突失败保留，实际原生1/0已独立核验。
+- **限制**: 内部boot/allocation/template/batch/unpublished/legacy owner与GA继续；Git UID501/DNS外阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。

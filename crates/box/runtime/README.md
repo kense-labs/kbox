@@ -730,3 +730,11 @@ returns ECONNREFUSED, so legacy/unproven endpoints refuse rather than being
 unlinked. The [038 installed qualification](../../../docs/evidence/runtime/20261116-pool-socket-ownership/OUTCOME.md)
 records endpoint/autostart/pool/AF proofs and53-home cleanup. This does not close
 pre-admission/legacy manager lifetime, OCI pool parity/default cutover/W4/GA.
+
+Published foreground pool acquire/release now registers actual owners through
+health/stat waits and transfers only exclusive handles. Cancellation with an
+unclosed registered owner closes existing admission; selected maintenance cannot
+finalize unrelated handoffs. [039 installed evidence](../../../docs/evidence/runtime/20261116-pool-handoff-ownership/OUTCOME.md)
+records real healthy handoff/cancel/refusal/actual retry,4Rust+3Python and32-home
+audit. Internal boot/allocation/template/batch/unpublished/legacy ownership and
+full W4/default OCI Host Service cutover/GA remain open.

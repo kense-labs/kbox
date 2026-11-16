@@ -505,3 +505,18 @@ Full OCI Host Service cutover/W4/live continuity/GA and local pre-admission/
 legacy-owner work remain incomplete. WindowsARM64 dependencies unsupported,
 no native run; platform levels unchanged. Runtime RSS unmeasured. Remote Git
 synchronization still needs UID501/DNS recovery; no publication claim.
+
+### 2026-11-16 foreground pool owner qualification
+
+[039 installed evidence](evidence/runtime/20261116-pool-handoff-ownership/OUTCOME.md)
+qualifies published acquire/release ownership through health/stat waits,
+cancellation and refused close, with exact synchronous transfer and closed
+admission when an unfinished transfer is abandoned. Final Box1223c6b1…/
+source87247f93… is23424953 compressed/44208128 installed bytes. Pool64/0/3,
+CLI949/0 andClippy pass; default2329/6/53 retains disk-service failures.
+Actual4Rust+3Python AF/fault tests,4daemon/16Ready/4commands and32-home audit
+pass; evidence-wrapper collision failure is retained separately. Internal boot/
+allocation/batch/template/unpublished/legacy ownership, full OCI Host Service
+cutover/live continuity/W4/GA remain open. WindowsARM64 dependencies unsupported/
+no native run, platform levels unchanged, RSS unmeasured. Git remote still
+blocked by UID501/DNS; local verified bundle is transport only, not publication.

@@ -42,7 +42,17 @@ impl VmHandler for RefuseOnce {
 #[test]
 #[ignore = "requires owned sentinel home, VOLUME image and final installed companions"]
 fn native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry() {
-    std::thread::Builder::new().stack_size(32 * 1024 * 1024).spawn(|| {
+    native_pool_owner_close(false);
+}
+
+#[test]
+#[ignore = "requires owned sentinel home, VOLUME image and final installed companions"]
+fn native_foreground_release_retains_vm_across_cancel_refusal_and_actual_close_retry() {
+    native_pool_owner_close(true);
+}
+
+fn native_pool_owner_close(foreground: bool) {
+    std::thread::Builder::new().stack_size(32 * 1024 * 1024).spawn(move || {
         let home = PathBuf::from(std::env::var_os("K_HOME").unwrap());
         assert_eq!(home.canonicalize().unwrap(), home);
         assert_eq!(std::fs::read_to_string(home.join(".kbox-pool-stop-native")).unwrap(), "owned-pool-shutdown-native-test\n");
@@ -87,8 +97,17 @@ fn native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry
             });
             let mut draining = None;
             let outcome = std::panic::AssertUnwindSafe(async {
+                source.as_mut().unwrap().boot().await.unwrap();
+                if foreground {
+                    pool.release(source.take().unwrap()).await.unwrap();
+                    assert_eq!(pool.stats().await.idle_count, 1);
+                    let acquired = pool.acquire().await.unwrap();
+                    assert_eq!(acquired.box_id(), id);
+                    assert_eq!(pool.stats().await.total_acquired, 1);
+                    assert_eq!(pool.stats().await.total_released, 1);
+                    source = Some(acquired);
+                }
                 let vm = source.as_mut().unwrap();
-                vm.boot().await.unwrap();
                 assert_eq!(vm.state().await, BoxState::Ready);
                 assert!(vm.exec_client().is_some());
                 let pid = vm.handler.read().await.as_ref().unwrap().pid();
@@ -108,11 +127,18 @@ fn native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry
                 *vm.handler.write().await = Some(Box::new(RefuseOnce { inner: actual, refused: false }));
                 // Only the test control endpoint is withheld; the actual Guest keeps writing.
                 vm.exec_socket_path = Some(blocked.clone());
-                let mut idle = pool.idle.lock().await;
-                idle.push(WarmVm { vm: source.take().unwrap(), created_at: Instant::now() });
-                drop(idle);
-                let owner = pool.clone();
-                draining = Some(tokio::spawn(async move { owner.drain_idle().await }));
+                if foreground {
+                    vm.exec_client = None;
+                    let vm = source.take().unwrap();
+                    let owner = pool.clone();
+                    draining = Some(tokio::spawn(async move { owner.release(vm).await }));
+                } else {
+                    let mut idle = pool.idle.lock().await;
+                    idle.push(WarmVm { vm: source.take().unwrap(), created_at: Instant::now() });
+                    drop(idle);
+                    let owner = pool.clone();
+                    draining = Some(tokio::spawn(async move { owner.drain_idle().await }));
+                }
                 tokio::time::timeout(Duration::from_secs(5), &mut observed).await.unwrap().unwrap();
                 let task = draining.take().unwrap();
                 task.abort();
@@ -137,7 +163,15 @@ fn native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry
                     assert!(tokio::time::Instant::now() < deadline, "actual VM must remain live after cancellation");
                     tokio::time::sleep(Duration::from_millis(50)).await;
                 }
-                assert!(matches!(pool.drain_idle().await, Err(BoxError::StateError(_))));
+                let (refused, owner) = if foreground {
+                    let vm = pool.take_foreground_vm(owner).unwrap();
+                    let refused = pool.release(vm).await;
+                    let owner = pool.retiring.lock()[0].clone();
+                    (refused, owner)
+                } else {
+                    (pool.drain_idle().await, owner)
+                };
+                assert!(matches!(refused, Err(BoxError::StateError(_))));
                 assert_eq!(pool.retiring.lock().len(), 1);
                 assert_eq!(store.require_anonymous(&name, &id).map(|v| serde_json::to_value(v).unwrap()).unwrap(), before);
                 assert_eq!((std::fs::metadata(&volume).unwrap().dev(), std::fs::metadata(&volume).unwrap().ino()), identity);
@@ -157,7 +191,7 @@ fn native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry
                 tokio::time::sleep(Duration::from_millis(500)).await;
                 assert_eq!(std::fs::read(caller.join("writes")).unwrap(), writes);
                 assert_eq!(std::fs::read(caller.join("canary")).unwrap(), b"caller-owned-retained");
-                std::fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","execution":id,"pid":pid,"socketDir":socket_dir,"templatePath":template_path,"cancelledGuestControlWait":true,"syntheticOneShotStopError":true,"actualOsStopFailureClaimed":false,"liveWritesAfterCancellationAndRefusal":true,"exactOwnerAndAllocationRetained":true,"retryActuallyStoppedVm":true,"templateRetainedUntilBackendFinalization":true,"nativeSnapshotRestoreClaimed":false,"noLateWrites":true,"callerBytesRetained":writes.len(),"callerCanaryRetained":true,"runtimeRssMeasured":false})).unwrap()).unwrap();
+                std::fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","execution":id,"pid":pid,"socketDir":socket_dir,"templatePath":template_path,"foregroundRelease":foreground,"healthyReleaseAndAcquireProved":foreground,"cancelledHealthWait":foreground,"cancelledGuestControlWait":!foreground,"syntheticOneShotStopError":true,"actualOsStopFailureClaimed":false,"liveWritesAfterCancellationAndRefusal":true,"exactOwnerAndAllocationRetained":true,"retryActuallyStoppedVm":true,"templateRetainedUntilBackendFinalization":true,"nativeSnapshotRestoreClaimed":false,"noLateWrites":true,"callerBytesRetained":writes.len(),"callerCanaryRetained":true,"runtimeRssMeasured":false})).unwrap()).unwrap();
             }).catch_unwind().await;
             if let Some(task) = draining.take() { task.abort(); let _ = task.await; }
             let _ = finish.send(());

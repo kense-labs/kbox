@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 96.55692675,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/package-home-poolxfer-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355"
+}

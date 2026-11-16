@@ -29,6 +29,33 @@ struct WarmVm {
 type RetainedVm = Arc<Mutex<VmManager>>;
 type RetainedVms = Arc<parking_lot::Mutex<Vec<RetainedVm>>>;
 
+enum PoolCloseScope {
+    Selected,
+    AllRetained,
+}
+
+struct ForegroundHandoff<'a> {
+    pool: &'a WarmPool,
+    owner: std::sync::Weak<Mutex<VmManager>>,
+}
+
+impl Drop for ForegroundHandoff<'_> {
+    fn drop(&mut self) {
+        if let Some(owner) = self.owner.upgrade() {
+            let retained = self
+                .pool
+                .retiring
+                .lock()
+                .iter()
+                .any(|vm| Arc::ptr_eq(vm, &owner));
+            if retained {
+                // A cancelled transfer must not keep launching beside its unclosed VM.
+                self.pool.signal_shutdown();
+            }
+        }
+    }
+}
+
 type BootVmFuture<'a> = Pin<Box<dyn Future<Output = Result<VmManager>> + Send + 'a>>;
 
 /// Keeps the in-flight warm-pool boot gauge balanced even when a boot task is
@@ -448,31 +475,40 @@ impl WarmPool {
             let warm_vm = {
                 let mut idle = self.idle.lock().await;
                 self.ensure_admission_open()?;
-                let warm_vm = idle.pop();
+                let mut stats = self.stats.lock().await;
+                self.ensure_admission_open()?;
+                let warm_vm = idle.pop().map(|warm| self.retain_foreground_vm(warm.vm));
                 if warm_vm.is_some() {
                     Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
-                    let mut stats = self.stats.lock().await;
                     stats.idle_count = idle.len();
                 }
                 warm_vm
             };
 
-            let Some(warm_vm) = warm_vm else {
+            let Some((warm_vm, _handoff)) = warm_vm else {
                 break;
             };
 
             // Publish authenticated once; idle TTL only ages by wall clock.
             // Guest exec can die while shim PID / in-memory Ready remain —
             // refuse inventing a lease from pool membership alone (#423).
-            match warm_vm.vm.health_check().await {
+            let (health, box_id) = {
+                let vm = warm_vm.lock().await;
+                (vm.health_check().await, vm.box_id().to_owned())
+            };
+            match health {
                 Ok(true) => {
                     self.fork_reauth_failures.store(0, Ordering::Relaxed);
+                    let mut scaler = match &self.scaler {
+                        Some(scaler) => Some(scaler.lock().await),
+                        None => None,
+                    };
                     let mut stats = self.stats.lock().await;
+                    self.ensure_admission_open()?;
+                    let vm = self.take_foreground_vm(warm_vm)?;
                     stats.total_acquired += 1;
-                    drop(stats);
-
-                    if let Some(ref scaler) = self.scaler {
-                        scaler.lock().await.record_acquire(true);
+                    if let Some(scaler) = scaler.as_mut() {
+                        scaler.record_acquire(true);
                     }
 
                     if let Some(ref m) = self.metrics {
@@ -481,24 +517,22 @@ impl WarmPool {
 
                     self.event_emitter.emit(BoxEvent::with_string(
                         "pool.vm.acquired",
-                        format!("Acquired VM {} from pool", warm_vm.vm.box_id()),
+                        format!("Acquired VM {box_id} from pool"),
                     ));
 
                     tracing::debug!(
-                        box_id = %warm_vm.vm.box_id(),
+                        %box_id,
                         "Acquired authenticated VM from warm pool"
                     );
 
-                    return Ok(warm_vm.vm);
+                    return Ok(vm);
                 }
                 Ok(false) | Err(_) => {
-                    let box_id = warm_vm.vm.box_id().to_string();
                     tracing::warn!(
                         %box_id,
                         "Idle pool VM failed exec re-auth; destroying instead of inventing Ready"
                     );
-                    let mut vm = warm_vm.vm;
-                    let _ = Self::destroy_manager_or_reap(&mut vm, Some(2000)).await;
+                    self.retire_foreground_vm(warm_vm, Some(2000)).await?;
                     let mut stats = self.stats.lock().await;
                     stats.total_evicted += 1;
                     drop(stats);
@@ -530,8 +564,11 @@ impl WarmPool {
         }
 
         let vm = self.boot_new_vm().await?;
+        let (owner, _handoff) = self.retain_foreground_vm(vm);
 
         let mut stats = self.stats.lock().await;
+        self.ensure_admission_open()?;
+        let vm = self.take_foreground_vm(owner)?;
         stats.total_acquired += 1;
 
         Ok(vm)
@@ -545,18 +582,21 @@ impl WarmPool {
     ///
     /// If the pool is at capacity, the VM is destroyed instead.
     pub async fn release(&self, vm: VmManager) -> Result<()> {
+        let (owner, _handoff) = self.retain_foreground_vm(vm);
         // Fail closed before taking the idle lock: health_check is async and
         // must not hold idle while dialing exec.
-        match vm.health_check().await {
+        let (health, box_id) = {
+            let vm = owner.lock().await;
+            (vm.health_check().await, vm.box_id().to_owned())
+        };
+        match health {
             Ok(true) => {}
             Ok(false) | Err(_) => {
-                let box_id = vm.box_id().to_string();
                 tracing::warn!(
                     %box_id,
                     "Released VM failed exec re-auth; destroying instead of inventing idle Ready"
                 );
-                let mut vm = vm;
-                Self::destroy_manager_or_reap(&mut vm, Some(2000)).await?;
+                self.retire_foreground_vm(owner, Some(2000)).await?;
                 let mut stats = self.stats.lock().await;
                 stats.total_evicted += 1;
                 return Ok(());
@@ -564,24 +604,24 @@ impl WarmPool {
         }
 
         let mut idle = self.idle.lock().await;
+        let mut stats = self.stats.lock().await;
 
         // Don't return a VM to a pool that is shutting down: drain_idle has (or
         // soon will have) cleared `idle` and won't run again, so a push here leaks
         // the VM (no Drop reaper). Checked under the idle lock so it is atomic with
         // a concurrent drain_idle. Destroy the VM instead.
         if *self.shutdown_rx.borrow() {
+            drop(stats);
             drop(idle);
-            let mut vm = vm;
-            Self::destroy_manager_or_reap(&mut vm, None).await?;
+            self.retire_foreground_vm(owner, None).await?;
             return Ok(());
         }
 
         if idle.len() >= self.config.max_size {
             // Pool is full — destroy the VM
+            drop(stats);
             drop(idle); // Release lock before async destroy
-            let mut vm = vm;
-            let box_id = vm.box_id().to_string();
-            Self::destroy_manager_or_reap(&mut vm, None).await?;
+            self.retire_foreground_vm(owner, None).await?;
 
             tracing::debug!(
                 box_id = %box_id,
@@ -590,13 +630,12 @@ impl WarmPool {
             return Ok(());
         }
 
-        let box_id = vm.box_id().to_string();
+        let vm = self.take_foreground_vm(owner)?;
         idle.push(WarmVm {
             vm,
             created_at: Instant::now(),
         });
 
-        let mut stats = self.stats.lock().await;
         stats.total_released += 1;
         stats.idle_count = idle.len();
 
@@ -658,7 +697,14 @@ impl WarmPool {
         let count = idle_vms.len();
 
         self.stats.lock().await.idle_count = 0;
-        Self::destroy_vms(idle_vms, &self.retiring, None, "drain").await?;
+        Self::destroy_vms(
+            idle_vms,
+            &self.retiring,
+            None,
+            "drain",
+            PoolCloseScope::AllRetained,
+        )
+        .await?;
 
         self.clear_snapshot_template().await?;
 
@@ -697,7 +743,14 @@ impl WarmPool {
         let count = idle_vms.len();
         let timeout_ms = (!self.box_config.persistent).then_some(EPHEMERAL_DRAIN_TIMEOUT_MS);
         self.stats.lock().await.idle_count = 0;
-        Self::destroy_vms(idle_vms, &self.retiring, timeout_ms, "drain_idle").await?;
+        Self::destroy_vms(
+            idle_vms,
+            &self.retiring,
+            timeout_ms,
+            "drain_idle",
+            PoolCloseScope::AllRetained,
+        )
+        .await?;
         self.clear_snapshot_template().await?;
         tracing::info!(destroyed = count, "Warm pool idle VMs drained");
         Ok(())
@@ -736,12 +789,21 @@ impl WarmPool {
         retained: &RetainedVms,
         timeout_ms: Option<u64>,
         operation: &'static str,
+        scope: PoolCloseScope,
     ) -> Result<()> {
         // Register every actual manager before any teardown can yield or be cancelled.
         let mut pending = {
             let mut owners = retained.lock();
-            owners.extend(vms.into_iter().map(|warm| Arc::new(Mutex::new(warm.vm))));
-            owners.clone().into_iter()
+            let selected = vms
+                .into_iter()
+                .map(|warm| Arc::new(Mutex::new(warm.vm)))
+                .collect::<Vec<_>>();
+            owners.extend(selected.iter().cloned());
+            match scope {
+                PoolCloseScope::Selected => selected,
+                PoolCloseScope::AllRetained => owners.clone(),
+            }
+            .into_iter()
         };
         let mut tasks = JoinSet::new();
         for _ in 0..MAX_DRAIN_CONCURRENCY {
@@ -856,8 +918,14 @@ impl WarmPool {
         }
 
         // Destroy collected VMs (outside of pool lock).
-        if let Err(error) =
-            Self::destroy_vms(to_destroy, &self.retiring, None, "fill rollback").await
+        if let Err(error) = Self::destroy_vms(
+            to_destroy,
+            &self.retiring,
+            None,
+            "fill rollback",
+            PoolCloseScope::Selected,
+        )
+        .await
         {
             self.signal_shutdown();
             tracing::warn!(%error, "Pool fill rollback retained unfinished VMs");
@@ -885,13 +953,17 @@ impl WarmPool {
             }
         }
         let vm = result?;
+        let box_id = vm.box_id().to_owned();
+        let (owner, _handoff) = self.retain_foreground_vm(vm);
 
         let mut stats = self.stats.lock().await;
+        self.ensure_admission_open()?;
+        let vm = self.take_foreground_vm(owner)?;
         stats.total_created += 1;
 
         self.event_emitter.emit(BoxEvent::with_string(
             "pool.vm.created",
-            format!("Booted new VM {}", vm.box_id()),
+            format!("Booted new VM {box_id}"),
         ));
 
         Ok(vm)
@@ -902,6 +974,45 @@ impl WarmPool {
             return Err(BoxError::PoolError("Warm pool is shutting down".into()));
         }
         Ok(())
+    }
+
+    fn retain_foreground_vm(&self, vm: VmManager) -> (RetainedVm, ForegroundHandoff<'_>) {
+        let owner = Arc::new(Mutex::new(vm));
+        self.retiring.lock().push(owner.clone());
+        let handoff = ForegroundHandoff {
+            pool: self,
+            owner: Arc::downgrade(&owner),
+        };
+        (owner, handoff)
+    }
+
+    fn take_foreground_vm(&self, owner: RetainedVm) -> Result<VmManager> {
+        let mut owners = self.retiring.lock();
+        if let Some(index) = owners
+            .iter()
+            .position(|candidate| Arc::ptr_eq(candidate, &owner))
+        {
+            drop(owners.swap_remove(index));
+            match Arc::try_unwrap(owner) {
+                Ok(vm) => return Ok(vm.into_inner()),
+                Err(owner) => owners.push(owner),
+            }
+        } else {
+            owners.push(owner);
+        }
+        drop(owners);
+        self.signal_shutdown();
+        Err(BoxError::PoolError(
+            "Pooled VM ownership is closing or unavailable; retained for cleanup".into(),
+        ))
+    }
+
+    async fn retire_foreground_vm(&self, owner: RetainedVm, timeout_ms: Option<u64>) -> Result<()> {
+        let (_, result) = Self::destroy_one(owner, self.retiring.clone(), timeout_ms).await;
+        if result.is_err() {
+            self.signal_shutdown();
+        }
+        result
     }
 
     /// Fill one slot: restore from the snapshot-fork template when enabled, else cold
@@ -1275,6 +1386,7 @@ impl WarmPool {
                 &self.retiring,
                 Some(2000),
                 "invalidate-snapshot-template",
+                PoolCloseScope::Selected,
             )
             .await
             {
@@ -1549,6 +1661,7 @@ impl WarmPool {
                                                 &retiring,
                                                 Some(2000),
                                                 "shutdown during replenishment",
+                                                PoolCloseScope::Selected,
                                             ).await {
                                                 tracing::warn!(%error, "Late pool VM retained for shutdown retry");
                                             }
@@ -1630,7 +1743,14 @@ impl WarmPool {
 
         let evicted_count = expired.len();
         Self::sync_idle_metric(metrics, after_count);
-        let finalized = Self::destroy_vms(expired, retiring, None, "eviction").await;
+        let finalized = Self::destroy_vms(
+            expired,
+            retiring,
+            None,
+            "eviction",
+            PoolCloseScope::Selected,
+        )
+        .await;
 
         if evicted_count > 0 {
             let mut s = stats.lock().await;

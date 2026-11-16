@@ -1,0 +1,11 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners ... FAILED
+
+failures:
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2384 filtered out; finished in 0.01s
+

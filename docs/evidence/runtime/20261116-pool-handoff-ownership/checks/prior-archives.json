@@ -1,0 +1,14 @@
+[
+  {
+    "name": "box",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "782cd1ae14a8fe1e2dc83a841c8834b0b05cccf11663f94541eb8d455df87151",
+    "compressedBytes": 23422934
+  },
+  {
+    "name": "oci",
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+    "compressedBytes": 33429314
+  }
+]

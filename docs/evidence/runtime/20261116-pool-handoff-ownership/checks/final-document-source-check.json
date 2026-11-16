@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355",
+  "compiledInputCount": 1726,
+  "references": [
+    "crates/box/runtime/src/pool/warm_pool.rs",
+    "crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs",
+    "crates/box/runtime/src/pool/warm_pool/shutdown_native.rs",
+    "crates/box/runtime/README.md",
+    "docs/release.md",
+    "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+    ".kstudio/evidence/T2026-11-16-pool-handoff-ownership/OUTCOME.md",
+    ".kstudio/evidence/index.json",
+    ".kstudio/wiki/Tasks.md"
+  ],
+  "unknownFiles": [],
+  "diffCheckExit": 0
+}

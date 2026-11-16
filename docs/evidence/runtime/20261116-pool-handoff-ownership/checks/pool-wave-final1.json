@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-handoff-ownership/context.json",
+    "final1"
+  ],
+  "exit": 0,
+  "seconds": 27.919660292,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-xfer-6b342296abe1/check-home-pool-wave-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-xfer-6b342296abe1/t"
+  }
+}

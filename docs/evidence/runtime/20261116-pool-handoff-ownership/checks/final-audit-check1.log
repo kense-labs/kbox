@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355",
+  "compiledInputCount": 1726,
+  "homes": 32,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 741,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "96726e4ea3aaa531beb2f4fab9843b5ae70c944a4ecfdc9af4170e91d0599811",
+      "after": "71c9412b7664d7d195ff6c6bb7a0131d2afaf4d92ba3b88790cd7b93fb17a672"
+    }
+  ],
+  "qualifiedRustNativeTests": 4,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.LicldT"
+  ],
+  "failedNativeRunsRetained": 0,
+  "stopFault": "Synthetic health/stop ACK stalls and one-shot refusal; real healthy handoff, VM writes/allocation identity/finalization proved in both foreground and old shutdown cases",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

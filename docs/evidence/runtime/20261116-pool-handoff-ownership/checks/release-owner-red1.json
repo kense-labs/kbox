@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "foreground_release_retains_the_exact_owner_after_stop_refusal"
+  ],
+  "exit": 101,
+  "seconds": 13.079170875,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-xfer-6b342296abe1/check-home-release-owner-red1",
+    "TMPDIR": "/private/tmp/kbox-pool-xfer-6b342296abe1/t"
+  }
+}

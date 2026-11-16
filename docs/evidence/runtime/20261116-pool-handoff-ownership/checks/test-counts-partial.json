@@ -1,0 +1,102 @@
+{
+  "release-owner-red1": {
+    "exit": 101,
+    "rustCounts": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "release-owner-green1": {
+    "exit": 0,
+    "rustCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "foreground-focused1": {
+    "exit": 101,
+    "rustCounts": [
+      [
+        "4",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "cancel-foreground2": {
+    "exit": 101,
+    "rustCounts": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "foreground-focused2": {
+    "exit": 0,
+    "rustCounts": [
+      [
+        "5",
+        "0",
+        "1"
+      ]
+    ]
+  },
+  "cancelled-admission-red3": {
+    "exit": 101,
+    "rustCounts": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "foreground-focused3": {
+    "exit": 0,
+    "rustCounts": [
+      [
+        "6",
+        "0",
+        "1"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "rustCounts": [
+      [
+        "64",
+        "0",
+        "3"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "rustCounts": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "verify1": {
+    "exit": 101,
+    "rustCounts": [
+      [
+        "2329",
+        "6",
+        "53"
+      ]
+    ]
+  }
+}

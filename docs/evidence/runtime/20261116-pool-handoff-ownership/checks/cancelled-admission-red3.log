@@ -1,0 +1,18 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners' (112214440) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:197:9:
+cancelled owner transfer must close admission before more VMs can be launched
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2385 filtered out; finished in 0.01s
+

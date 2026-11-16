@@ -108,6 +108,301 @@ async fn published_pool_drain_retains_failed_manager_and_reports_failure_until_r
     assert!(!box_dir.exists());
 }
 
+#[tokio::test]
+async fn foreground_release_retains_the_exact_owner_after_stop_refusal() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let error = pool
+        .release(vm)
+        .await
+        .expect_err("failed close must refuse release");
+    assert!(matches!(error, BoxError::StateError(_)));
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "release must retain the actual handler after refused stop"
+    );
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert_eq!(pool.stats().await.total_released, 0);
+    assert_eq!(pool.stats().await.idle_count, 0);
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn foreground_acquire_stop_refusal_closes_admission_without_launching_a_replacement() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    pool.idle.lock().await.push(WarmVm {
+        vm,
+        created_at: Instant::now(),
+    });
+    pool.stats.lock().await.idle_count = 1;
+    assert!(matches!(pool.acquire().await, Err(BoxError::StateError(_))));
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert_eq!(pool.stats().await.total_acquired, 0);
+    assert_eq!(pool.stats().await.total_created, 0);
+    assert_eq!(pool.stats().await.idle_count, 0);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn cancelled_foreground_stats_wait_keeps_the_original_idle_member_and_count() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let pool = Arc::new(
+        WarmPool::start(
+            PoolConfig {
+                min_idle: 0,
+                max_size: 1,
+                ..PoolConfig::default()
+            },
+            BoxConfig::default(),
+            EventEmitter::new(16),
+        )
+        .await
+        .unwrap(),
+    );
+    pool.idle.lock().await.push(WarmVm {
+        vm,
+        created_at: Instant::now(),
+    });
+    pool.stats.lock().await.idle_count = 1;
+    let stats = pool.stats.lock().await;
+    let owner = pool.clone();
+    let waiting = tokio::spawn(async move { owner.acquire().await.map(drop) });
+    tokio::time::timeout(Duration::from_secs(2), async {
+        while pool.idle.try_lock().is_ok() {
+            tokio::task::yield_now().await;
+        }
+    })
+    .await
+    .unwrap();
+    waiting.abort();
+    assert!(waiting.await.unwrap_err().is_cancelled());
+    assert_eq!(stats.idle_count, 1);
+    assert_eq!(pool.idle.lock().await.len(), 1);
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    drop(stats);
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+}
+
+#[tokio::test]
+async fn cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners() {
+    for acquire in [false, true] {
+        let (_root, vm, calls, drops) = fixture().await;
+        let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+        let state = vm.state.clone();
+        let state_guard = state.write().await;
+        let pool = Arc::new(
+            WarmPool::start(
+                PoolConfig {
+                    min_idle: 0,
+                    max_size: 1,
+                    ..PoolConfig::default()
+                },
+                BoxConfig::default(),
+                EventEmitter::new(16),
+            )
+            .await
+            .unwrap(),
+        );
+        let owner = pool.clone();
+        let waiting = if acquire {
+            pool.idle.lock().await.push(WarmVm {
+                vm,
+                created_at: Instant::now(),
+            });
+            pool.stats.lock().await.idle_count = 1;
+            tokio::spawn(async move { owner.acquire().await.map(drop) })
+        } else {
+            tokio::spawn(async move { owner.release(vm).await })
+        };
+        tokio::time::timeout(Duration::from_secs(2), async {
+            while pool.retiring.lock().is_empty() {
+                tokio::task::yield_now().await;
+            }
+        })
+        .await
+        .unwrap();
+        waiting.abort();
+        assert!(waiting.await.unwrap_err().is_cancelled());
+        drop(state_guard);
+        assert_eq!(
+            drops.load(Ordering::SeqCst),
+            0,
+            "cancelled health must preserve the actual handler"
+        );
+        assert_eq!(calls.load(Ordering::SeqCst), 0);
+        assert!(
+            pool.ensure_admission_open().is_err(),
+            "cancelled owner transfer must close admission before more VMs can be launched"
+        );
+        assert_eq!(pool.stats().await.idle_count, 0);
+        assert_eq!(pool.stats().await.total_acquired, 0);
+        assert_eq!(pool.stats().await.total_released, 0);
+        assert_eq!(
+            std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+            b"owned-working-data"
+        );
+        let close = pool.drain_idle().await;
+        assert!(
+            matches!(close, Err(BoxError::StateError(_))),
+            "acquire={acquire}: {close:?}, stop calls={}",
+            calls.load(Ordering::SeqCst)
+        );
+        pool.drain_idle().await.unwrap();
+        assert_eq!(calls.load(Ordering::SeqCst), 2);
+        assert_eq!(drops.load(Ordering::SeqCst), 1);
+        assert!(!box_dir.exists());
+    }
+}
+
+#[tokio::test]
+async fn foreground_transfer_requires_exclusive_actual_ownership_and_preserves_retry() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let (owner, _handoff) = pool.retain_foreground_vm(vm);
+    let closing = owner.clone();
+    assert!(matches!(
+        pool.take_foreground_vm(owner),
+        Err(BoxError::PoolError(_))
+    ));
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(Arc::ptr_eq(&pool.retiring.lock()[0], &closing));
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert!(pool.ensure_admission_open().is_err());
+    drop(closing);
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn exclusive_foreground_transfer_returns_the_same_actual_manager() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let id = vm.box_id().to_owned();
+    let box_dir = vm.home_dir.join("boxes").join(&id);
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let (owner, _handoff) = pool.retain_foreground_vm(vm);
+    let mut transferred = pool.take_foreground_vm(owner).unwrap();
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(transferred.box_id(), id);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert!(pool.ensure_admission_open().is_ok());
+    assert!(transferred.destroy().await.is_err());
+    transferred.destroy().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn selected_maintenance_cleanup_does_not_finalize_a_foreground_owner() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let (owner, _handoff) = pool.retain_foreground_vm(vm);
+    WarmPool::destroy_vms(
+        Vec::new(),
+        &pool.retiring,
+        None,
+        "test selection",
+        PoolCloseScope::Selected,
+    )
+    .await
+    .unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert!(Arc::ptr_eq(&pool.retiring.lock()[0], &owner));
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    drop(owner);
+    assert!(pool.drain_idle().await.is_err());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
 #[cfg(unix)]
 #[tokio::test]
 async fn cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry() {

@@ -1,0 +1,67 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f",
+  "privateRoot": "/private/tmp/kbox-pool-xfer-6b342296abe1",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-handoff-ownership",
+  "baseCommit": "5b8d68f758af507bc3995a68b05ab54e2a2274d3",
+  "image": "kbox-stop-preservation-native:proof",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/image-cache",
+  "priorArchives": {
+    "box": "/Users/roylin/code/kense/kbox/artifacts/pool-socket-ownership-d41adac0995149faa6cf946513f069fa/final-dist-poolsock-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "oci": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz"
+  },
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/installed-poolxfer-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/final-dist-poolxfer-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/native-client-final1",
+  "nativeClientSha256": "250f42e3feececcade438576e194f636f27579151e775a745635c3f0b3df05d7",
+  "sourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355",
+  "status": "Bounded039 source/archive/native/audit accepted; task-only local commit next",
+  "cleanup": {
+    "status": "PASS",
+    "sourceInputsSha256": "87247f938bd5e8fe1eef03ad154adc72a6e8942d368708d69b518c55c9520355",
+    "compiledInputCount": 1726,
+    "homes": 32,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "ownedDiskImages": [],
+    "ownedFdHolders": [],
+    "observedVmSocketDirectories": 35,
+    "checkedSocketPaths": 146,
+    "remainingSockets": [],
+    "observedEngines": 2,
+    "immutableCacheFilesCompared": 741,
+    "mutableCatalog": [
+      {
+        "path": "index.json",
+        "before": "96726e4ea3aaa531beb2f4fab9843b5ae70c944a4ecfdc9af4170e91d0599811",
+        "after": "71c9412b7664d7d195ff6c6bb7a0131d2afaf4d92ba3b88790cd7b93fb17a672"
+      }
+    ],
+    "qualifiedRustNativeTests": 4,
+    "qualifiedPythonScenarios": 3,
+    "coldPoolDaemons": 4,
+    "initialReadyPoolVms": 16,
+    "actualPoolGuestCommands": 4,
+    "preexistingPoolDirectoriesPreserved": 4,
+    "verifierShortRoots": [
+      "/private/tmp/kv.LicldT"
+    ],
+    "failedNativeRunsRetained": 0,
+    "stopFault": "Synthetic health/stop ACK stalls and one-shot refusal; real healthy handoff, VM writes/allocation identity/finalization proved in both foreground and old shutdown cases",
+    "actualOsStopFailureClaimed": false,
+    "callerSourcesRetained": true,
+    "previousArchivesRetained": true,
+    "resourcesDeletedByAudit": [],
+    "runtimeMemoryMeasured": false,
+    "outerPoolOwnerLifetimeSolved": false,
+    "gaComplete": false
+  }
+}

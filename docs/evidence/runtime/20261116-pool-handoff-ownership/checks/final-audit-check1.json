@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 3.1442052919999997,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-xfer-6b342296abe1/check-home-final-audit-check1",
+    "TMPDIR": "/private/tmp/kbox-pool-xfer-6b342296abe1/t"
+  }
+}

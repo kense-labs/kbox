@@ -139,3 +139,13 @@ Installed13negative+duplicate-live/crash-recovery/2autostart commands,
 2Rust+3Python AF,4daemon/16initialReady/4commands and53-home audit pass.
 Pre-admission/legacy actual-owner lifetime, full W4/default OCI cutover/live
 continuity/GA stay open; WindowsARM64 unsupported/no native run, levels unchanged.
+
+[039 foreground owner handoff](../20261116-pool-handoff-ownership/OUTCOME.md)
+closes published idle acquire/release health/stat/cancel/refused-close loss and
+prevents maintenance sweeping unrelated in-flight owners. Exact retained handles,
+exclusive transfer and existing watch preserve resource authority. Pool64/0/3,
+CLI949 andClippy pass; default2329/6/53 remains six disk-service failures.
+Final4Rust+3Python,4daemon/16Ready/4commands and32-home audit pass. Internal
+allocation/boot/template/batch/unpublished/legacy source lifetime remains local
+required work; full default OCI cutover/live continuity/W4/GA is still open.
+WindowsARM64 unsupported/no native run, support levels unchanged.

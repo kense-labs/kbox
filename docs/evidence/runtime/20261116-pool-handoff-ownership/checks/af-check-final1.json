@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-handoff-ownership-6b342296abe142e18c1b80b5da4aba9f/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-handoff-ownership/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 142.337243333,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-xfer-6b342296abe1/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-xfer-6b342296abe1/t"
+  }
+}

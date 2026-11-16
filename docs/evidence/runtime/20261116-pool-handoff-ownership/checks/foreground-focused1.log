@@ -1,0 +1,22 @@
+
+running 5 tests
+test pool::warm_pool::shutdown_ownership_tests::exclusive_foreground_transfer_returns_the_same_actual_manager ... ok
+test pool::warm_pool::shutdown_ownership_tests::foreground_release_retains_the_exact_owner_after_stop_refusal ... ok
+test pool::warm_pool::shutdown_ownership_tests::foreground_transfer_requires_exclusive_actual_ownership_and_preserves_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners ... FAILED
+test local_execution::vm_backend::tests::startup_terminal_observation_preserves_assets_for_foreground_drain ... ok
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners' (112074298) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:164:9:
+assertion failed: matches!(pool.drain_idle().await, Err(BoxError::StateError(_)))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners
+
+test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 2379 filtered out; finished in 0.02s
+

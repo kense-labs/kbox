@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "nativeExecuted": 1,
+  "nativePass": 1,
+  "nativeFail": 0,
+  "rawStdoutAndReceiptAgree": true,
+  "proof": {
+    "actualOsStopFailureClaimed": false,
+    "callerBytesRetained": 8,
+    "callerCanaryRetained": true,
+    "cancelledGuestControlWait": false,
+    "cancelledHealthWait": true,
+    "exactOwnerAndAllocationRetained": true,
+    "execution": "0e9293ce-a5d1-43e8-8bea-7401fb252267",
+    "foregroundRelease": true,
+    "healthyReleaseAndAcquireProved": true,
+    "liveWritesAfterCancellationAndRefusal": true,
+    "nativeSnapshotRestoreClaimed": false,
+    "noLateWrites": true,
+    "pid": 70622,
+    "retryActuallyStoppedVm": true,
+    "runtimeRssMeasured": false,
+    "socketDir": "/private/tmp/kbox-sockets/0e9293ce-a5d1-43e8-8bea-7401fb252267",
+    "status": "PASS",
+    "syntheticOneShotStopError": true,
+    "templatePath": "/private/tmp/kbox-pool-xfer-6b342296abe1/native-foreground-attempt-1/home/pool/tpl-XmDJ1j",
+    "templateRetainedUntilBackendFinalization": true
+  },
+  "cleanup": {
+    "boxDirectoryAbsent": true,
+    "destroyOk": true,
+    "remainingVolumes": [],
+    "socketDirectoryAbsent": true,
+    "templateDirectoryAbsent": true
+  }
+}

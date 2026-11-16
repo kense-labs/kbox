@@ -1,0 +1,5 @@
+sample 0 Sampling process 79002 for 2 seconds with 1 millisecond of run time between samples
+Sampling completed, processing symbols...
+Sample analysis of process 79002 written to file /Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-startup-owner/checks/failure-directory-sample1.log
+
+79002     1 Mon Nov 16 18:35:33 2026     /Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/bin/kbox-shim --config {"box_id":"dcda5822-2a3a-46fa-9f3a-1466c01e4f5d","vcpus":1,"memory_mib":512,"rootfs":{"kind":"ext4_disk","path":"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-fina

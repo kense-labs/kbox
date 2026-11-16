@@ -119,3 +119,10 @@
 - **证据**: [失败、归档、分开的原生计数和清理](../../docs/evidence/runtime/20261116-pool-boot-admission/OUTCOME.md)。
 - **验证**: Pool80/0/9、CLI949/Clippy；默认2348/6/60；3Rust实际VM+1Rust拒绝(0VM)+3Python、4daemon/16Ready/4命令/27home审计。
 - **限制**: unpublished/providerinner/legacy/from_pid及GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-startup-owner
+
+- **结果**: CLI先持有实际pool再初始化，取消后同一owner重试/清理；复用原锁，0/1至1/0。
+- **证据**: [失败、两候选包、真实VM和清理](../../docs/evidence/runtime/20261116-pool-startup-owner/OUTCOME.md)。
+- **验证**: Pool81/0/10、CLI950/Clippy2；默认2349/6/61；3RustVM+3Python、4daemon/16Ready/4命令/63home；socket同例20次/OS探针40次分开计数。
+- **限制**: 首轮两项启动超时和自动清理失败未解决；操作者清理并隔离保留两个失败home，最终归档验收未完成。兼容构造future/整个registry Drop、初始恶意同UID绑定及其他owner/GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。

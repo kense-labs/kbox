@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/check-final-identities2.py"
+  ],
+  "exit": 0,
+  "seconds": 1.463813833,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-identities-final2",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

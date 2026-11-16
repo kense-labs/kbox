@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py", line 326, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py", line 145, in main
+    current = wait_for(lambda: running(1))
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 57, in wait_for
+    raise TimeoutError("native condition did not become true")
+TimeoutError: native condition did not become true

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-runner4.py", line 153, in <module>
+    assert status == 0, ('native driver failed', status)
+AssertionError: ('native driver failed', 1)

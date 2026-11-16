@@ -1,0 +1,1829 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-oci/3475ca83f1ea4d9a832b0dd3c0f5a2f0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-prewarm/966ddc3c806349e58e9b6b2e62d78cb0/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-readonly/651c24570627401a82df8e3be4ea5be0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final3/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final3/native-primary/742c6083e5fb4fac8274101541e0eb52/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/pool-wave-final2/0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/pool-wave-final2/1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/pool-wave-final2/2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/pool-wave-final2/3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-af-check-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-af-failed-diagnostic3",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-build-box-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-build-box-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-cli-full1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-cli-full2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-clippy1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-clippy2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failed-owned-cleanup1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failed-owned-resource1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failure-environment1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failure-environment2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-final-audit-check2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-final-audit-check3",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-fmt1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-fmt2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-fmt3",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-freeze-client1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-freeze-client2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-identities-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-native-startup-check2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-pool-focused1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-pool-wave-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-fixed1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-matrix1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-0",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-10",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-11",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-12",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-13",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-14",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-15",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-16",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-17",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-18",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-19",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-3",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-4",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-5",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-6",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-7",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-8",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-parallel-9",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-socket-rename-probe1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-startup-registry-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-startup-registry-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-verify1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-verify2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/native-startup-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/t/kbox-verify.0eusRm/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-start-307fbf4272cd/t/kbox-verify.AOdtZE/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

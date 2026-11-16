@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-"
+  ],
+  "exit": 0,
+  "seconds": 2.331297125,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failed-owned-resource1",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

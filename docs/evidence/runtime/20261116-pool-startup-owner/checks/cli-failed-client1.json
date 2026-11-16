@@ -1,0 +1,6 @@
+{
+  "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/cli-client-failed1",
+  "sha256": "695f5e13f172eeb082e54d5482c73092d5cd16deee92fda2f40a7b515ff3897e",
+  "sourceInputsSha256": "0d49f6b5dae7ea508380363be45708a72e1af38832fafbebff0d3f16608b021c",
+  "originalFailure": "cli-full1 949pass/1fail, renamed socket reconnect errno61"
+}

@@ -1,0 +1,18 @@
+
+running 1 test
+test commands::pool::tests::cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain ... FAILED
+
+failures:
+
+---- commands::pool::tests::cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain stdout ----
+
+thread 'commands::pool::tests::cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain' (121383578) panicked at crates/box/cli/src/commands/pool.rs:3185:18:
+actual pool owner must be registered before cancellable initial fill
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::pool::tests::cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 949 filtered out; finished in 0.01s
+

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 3.2613461669999997,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-cli-full2",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

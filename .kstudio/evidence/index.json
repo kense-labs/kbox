@@ -96,6 +96,12 @@
       "path": "T2026-11-16-pool-boot-admission/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Queued shutdown refuses before boot;2/2->4/0,Pool80/CLI949;3RustVM+1zero-VM-negative+3Python/owned audit; startup/GA open"
+    },
+    {
+      "id": "T2026-11-16-pool-startup-owner",
+      "path": "T2026-11-16-pool-startup-owner/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Prepared CLI owner0/1->1/0;CLI950; selected native3Rust+3Python; two startup failures unresolved, operator cleanup/quarantine, final archive acceptance incomplete"
     }
   ]
 }

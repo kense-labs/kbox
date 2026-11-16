@@ -1485,3 +1485,46 @@ async fn closed_cold_boot_entry_refuses_before_validation() {
 async fn queued_cold_boot_template_wait_rechecks_closed_admission() {
     assert_closed_cold_boot_refuses_before_validation(true).await;
 }
+
+#[tokio::test]
+async fn prepared_pool_initialization_is_inert_idempotent_and_refuses_after_drain() {
+    let metrics = crate::prom::RuntimeMetrics::try_new().unwrap();
+    let pool = WarmPool::prepare_with_metrics_and_boot_limiter(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+        Some(metrics.clone()),
+        None,
+    )
+    .unwrap();
+    assert_eq!(
+        metrics.warm_pool_initial_fill_duration.get_sample_count(),
+        0
+    );
+    assert!(pool.replenish_handle.lock().await.is_none());
+    assert_eq!(pool.stats().await.total_created, 0);
+    pool.initialize_first_ready().await.unwrap();
+    assert_eq!(
+        metrics.warm_pool_initial_fill_duration.get_sample_count(),
+        1
+    );
+    pool.initialize_first_ready().await.unwrap();
+    assert_eq!(
+        metrics.warm_pool_initial_fill_duration.get_sample_count(),
+        1,
+        "repeated admission must not start another initial fill"
+    );
+    pool.drain_idle().await.unwrap();
+    assert!(matches!(
+        pool.initialize_first_ready().await,
+        Err(BoxError::PoolError(_))
+    ));
+    assert_eq!(
+        metrics.warm_pool_initial_fill_duration.get_sample_count(),
+        1
+    );
+}

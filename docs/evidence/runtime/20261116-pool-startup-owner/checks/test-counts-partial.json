@@ -1,0 +1,94 @@
+{
+  "startup-registry-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "startup-registry-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "81",
+        "0",
+        "10"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "949",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "cli-full2": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "950",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "shutdown-fixed1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "shutdown-matrix1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2349",
+        "6",
+        "61"
+      ]
+    ]
+  },
+  "verify2": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2349",
+        "6",
+        "61"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "scope": "Unrelated process command lines excluded from versioned evidence; originals retained, no failure result removed.",
+  "originals": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/failure-process-snapshot1-unfiltered.log",
+      "sha256": "a758a62cd6d2105bebf54bc44d4d8071f3bd1f8126cd4eaeed8ab65c5c58ced9"
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/failure-environment2-results-unfiltered.json",
+      "sha256": "433944e0107fd7cf22bf131acc48e4da55f17861745517b28e2c61786b4709b3"
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/failure-environment2-unfiltered.log",
+      "sha256": "433944e0107fd7cf22bf131acc48e4da55f17861745517b28e2c61786b4709b3"
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/failed-owned-hdiutil1-unfiltered.plist",
+      "sha256": "3ae54634f6869eef82415655f722c32cd91b4afce3d83a6845d3c5f66c4073e3"
+    }
+  ]
+}

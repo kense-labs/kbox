@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "shutdown_socket_cleanup_does_not_unlink_a_replacement_object"
+  ],
+  "exit": 0,
+  "seconds": 5.58345975,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-shutdown-fixed1",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

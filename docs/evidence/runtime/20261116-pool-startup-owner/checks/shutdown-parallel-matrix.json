@@ -1,0 +1,522 @@
+[
+  {
+    "case": 0,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-0",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 1,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-1",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 2,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-2",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 3,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-3",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 4,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-4",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 5,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-5",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 6,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-6",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 7,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-7",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 8,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-8",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 9,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-9",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 10,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-10",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 11,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-11",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 12,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-12",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 13,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-13",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 14,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-14",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 15,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-15",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 16,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-16",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 17,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-17",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 18,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-18",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  {
+    "case": 19,
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/run-check.py",
+      "shutdown-parallel-19",
+      "cargo",
+      "test",
+      "--locked",
+      "--offline",
+      "-p",
+      "kbox-cli",
+      "--lib",
+      "commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object",
+      "--",
+      "--exact"
+    ],
+    "exit": 0,
+    "actualCounts": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  }
+]

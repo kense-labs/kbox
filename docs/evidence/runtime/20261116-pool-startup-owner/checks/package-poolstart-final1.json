@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 110.748387708,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/package-home-poolstart-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "0d49f6b5dae7ea508380363be45708a72e1af38832fafbebff0d3f16608b021c"
+}

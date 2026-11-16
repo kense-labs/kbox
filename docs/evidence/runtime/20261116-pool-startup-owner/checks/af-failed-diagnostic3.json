@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-failed-diagnostic.py",
+    "docs/evidence/runtime/20261116-pool-startup-owner/checks/af-final3-context.json"
+  ],
+  "exit": 0,
+  "seconds": 84.529199125,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-af-failed-diagnostic3",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

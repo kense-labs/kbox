@@ -1,0 +1,75 @@
+{
+  "time": "2026-11-16T10:49:01.128025+00:00",
+  "currentSourceInputsSha256": "d38e6a13e9199070fc38d0122eee25cd5867cdb9bfc9638c930e18779c80a9be",
+  "remoteOperationAttempted": false,
+  "remotePrerequisites": "docs/evidence/runtime/20261116-pool-startup-owner/checks/failure-environment2-results.json",
+  "reasonNoRepeatedPush": "UID501 passwd and GitHub DNS still fail; no change since previous proven SSH/HTTPS transport failures.",
+  "results": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "20c72422ec99ce80eeae3db85628b4c185585bd2\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "refs/remotes/origin/main"
+      ],
+      "exit": 0,
+      "stdout": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "codex/macos-oci-release-baseline",
+        "main"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "origin/main",
+        "main"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "--merges",
+        "--format=%H %P %s",
+        "origin/main..main"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "exit": 0,
+      "stdout": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+      "stderr": ""
+    }
+  ]
+}

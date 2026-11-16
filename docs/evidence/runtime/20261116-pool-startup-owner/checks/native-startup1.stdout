@@ -1,0 +1,6 @@
+
+running 1 test
+test pool::warm_pool::startup_native::native_prepared_startup_owner_survives_cancelled_first_ready_fill_and_drain ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2415 filtered out; finished in 53.19s
+

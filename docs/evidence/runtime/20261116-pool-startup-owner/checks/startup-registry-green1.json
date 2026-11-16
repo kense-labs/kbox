@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain"
+  ],
+  "exit": 0,
+  "seconds": 24.389044292,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-startup-registry-green1",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

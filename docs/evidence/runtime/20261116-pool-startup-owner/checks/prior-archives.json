@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/final-dist-pooladmit-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "0da9ec212b955898378a114289cf978a466d803d53bce61de113ad0a920c2b8a",
+    "bytes": 23428828
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+    "bytes": 33429314
+  }
+]

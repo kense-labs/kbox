@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-runner4.py", line 113, in directory_case
+    assert status == 0, status
+AssertionError: 101
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-runner4.py", line 168, in <module>
+    command, result, count = directory_case(case, output)
+  File "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-runner4.py", line 120, in directory_case
+    inventory = subprocess.run([str(prefix / 'bin/kbox'), 'ps', '-a', '--format', 'json'],
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py", line 528, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox', 'ps', '-a', '--format', 'json']' returned non-zero exit status 1.

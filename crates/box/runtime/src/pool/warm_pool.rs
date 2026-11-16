@@ -352,6 +352,29 @@ impl WarmPool {
         global_boot_limiter: Option<Arc<Semaphore>>,
         initial_fill: InitialFill,
     ) -> Result<Self> {
+        let pool = Self::prepare_with_metrics_and_boot_limiter(
+            config,
+            box_config,
+            event_emitter,
+            metrics,
+            global_boot_limiter,
+        )?;
+        pool.initialize_with_fill(initial_fill).await;
+        Ok(pool)
+    }
+
+    /// Prepare a pool without starting VMs or maintenance.
+    ///
+    /// Retain this owner before awaiting [`Self::initialize_first_ready`] when
+    /// initialization can be cancelled. Compatibility constructors own their
+    /// pool inside the returned future until they finish.
+    pub fn prepare_with_metrics_and_boot_limiter(
+        config: PoolConfig,
+        box_config: BoxConfig,
+        event_emitter: EventEmitter,
+        metrics: Option<crate::prom::RuntimeMetrics>,
+        global_boot_limiter: Option<Arc<Semaphore>>,
+    ) -> Result<Self> {
         if config.max_size == 0 {
             return Err(BoxError::PoolError(
                 "Pool max_size must be greater than 0".to_string(),
@@ -422,32 +445,42 @@ impl WarmPool {
             metrics.warm_pool_capacity.set(pool.config.max_size as i64);
         }
 
-        // Initial fill. Lazy pools only wait for the first ready VM; the
-        // maintenance loop immediately schedules the remaining capacity.
+        Ok(pool)
+    }
+
+    /// Initialize through an already retained owner, waiting for the first ready VM.
+    pub async fn initialize_first_ready(&self) -> Result<()> {
+        self.initialize_with_fill(InitialFill::FirstReady).await;
+        self.ensure_admission_open()
+    }
+
+    async fn initialize_with_fill(&self, initial_fill: InitialFill) {
+        // The same slot serializes initialization, retry and shutdown joining.
+        let mut maintenance = self.replenish_handle.lock().await;
+        if *self.shutdown_rx.borrow() || maintenance.is_some() {
+            return;
+        }
         let initial_target = match initial_fill {
-            InitialFill::Eager => pool.config.min_idle,
-            InitialFill::FirstReady => pool.config.min_idle.min(1),
+            InitialFill::Eager => self.config.min_idle,
+            InitialFill::FirstReady => self.config.min_idle.min(1),
         };
         let initial_fill_started = Instant::now();
-        pool.fill_to_target(initial_target).await;
-        if let Some(metrics) = &pool.metrics {
+        self.fill_to_target(initial_target).await;
+        if let Some(metrics) = &self.metrics {
             metrics
                 .warm_pool_initial_fill_duration
                 .observe(initial_fill_started.elapsed().as_secs_f64());
         }
-
-        // Start background maintenance loop
-        let handle = pool.spawn_maintenance_loop();
-        *pool.replenish_handle.lock().await = Some(handle);
-
+        if *self.shutdown_rx.borrow() {
+            return;
+        }
+        *maintenance = Some(self.spawn_maintenance_loop());
         tracing::info!(
-            min_idle = pool.config.min_idle,
-            max_size = pool.config.max_size,
-            idle_ttl_secs = pool.config.idle_ttl_secs,
+            min_idle = self.config.min_idle,
+            max_size = self.config.max_size,
+            idle_ttl_secs = self.config.idle_ttl_secs,
             "Warm pool started"
         );
-
-        Ok(pool)
     }
 
     /// Attach Prometheus metrics to this pool.
@@ -1934,6 +1967,10 @@ mod drain_native;
 #[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
 #[path = "warm_pool/boot_owner_native.rs"]
 mod boot_owner_native;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/startup_native.rs"]
+mod startup_native;
 
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]

@@ -1,0 +1,35 @@
+{
+  "time": "2026-11-16T10:40:16.016488+00:00",
+  "uid": 501,
+  "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failure-environment2",
+  "passwd": {
+    "error": "KeyError",
+    "message": "'getpwuid(): uid not found: 501'"
+  },
+  "githubDns": {
+    "error": "gaierror",
+    "message": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  "/usr/bin/vm_stat": {
+    "exit": 0,
+    "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   221339.\nPages active:                                1517785.\nPages inactive:                              1796174.\nPages speculative:                             16849.\nPages throttled:                                   0.\nPages wired down:                             346235.\nPages purgeable:                                7606.\n\"Translation faults\":                    46324681748.\nPages copy-on-write:                      3998016226.\nPages zero filled:                       24420188685.\nPages reactivated:                         157821152.\nPages purged:                               29834483.\nFile-backed pages:                           2156681.\nAnonymous pages:                             1174127.\nPages stored in compressor:                   902375.\nPages occupied by compressor:                 212639.\nDecompressions:                            141929928.\nCompressions:                             3196086490.\nPageins:                                   972011904.\nPageouts:                                     771174.\nSwapins:                                    31583617.\nSwapouts:                                   71809995.\nPages tagged:                                 159669.\nPages tagged resident:                        147421.\nPages tagged compressed:                       12248.\nPages tag-storage:                            131072.\nPages tag-storage holding tags:                 6962.\nPages tag-storage free:                        20974.\nPages tag-storage non-tag pageable:           103126.\nPages tag-storage non-tag wired:                  10.\nBytes of compressed tags:                    1787840.\nTagged compressions:                         1337541.\nTagged decompressions:                        959654.\n",
+    "stderr": ""
+  },
+  "/bin/df -h /private/tmp": {
+    "exit": 0,
+    "stdout": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   1.8Ti   905Gi   928Gi    50%    5.0M  9.7G    0%   /System/Volumes/Data\n",
+    "stderr": ""
+  },
+  "/usr/sbin/sysctl hw.memsize kern.maxprocperuid vm.loadavg": {
+    "exit": 0,
+    "stdout": "hw.memsize: 68719476736\nkern.maxprocperuid: 10666\nvm.loadavg: { 6.93 7.78 6.99 }\n",
+    "stderr": ""
+  },
+  "processCount": 2882,
+  "/bin/ps -axo pid=,ppid=,command=": {
+    "exit": 0,
+    "stdout": "79002     1 /Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/bin/kbox-shim --config {\"box_id\":\"dcda5822-2a3a-46fa-9f3a-1466c01e4f5d\",\"vcpus\":1,\"memory_mib\":512,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/boxes/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/boxes/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/\u539f\u751f workspace with spaces\",\"read_only\":true},{\"tag\":\"vol1\",\"host_path\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/\u5916\u90e8 external with spaces\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/boxes/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"kbox-b64-v1:dm9sMDovVXNlcnMvcm95bGluL2NvZGUva2Vuc2Uva2JveC9hcnRpZmFjdHMvcG9vbC1zdGFydHVwLW93bmVyLTMwN2ZiZjQyNzJjZDQwZTRhZTIwMTU2ZWJiNmUwNjdlL2FmLWZpbmFsMi9uYXRpdmUtZGlyZWN0b3J5L+WOn+eUnyB3b3Jrc3BhY2Ugd2l0aCBzcGFjZXM6cm8=\"],[\"BOX_VOL_1\",\"vol1:/external with spaces\"],[\"K_SEC_SECCOMP\",\"unconfined\"],[\"K_SEC_NO_NEW_PRIVS\",\"0\"],[\"K_SEC_PRIVILEGED\",\"1\"],[\"K_SEC_CAP_ADD\",\"ALL\"],[\"K_SEC_PIDS_LIMIT\",\"4294967295\"],[\"K_SEC_CPU_QUOTA\",\"50000\"],[\"K_SEC_CPU_PERIOD\",\"100000\"],[\"K_SEC_MEM_SWAP\",\"536870912\"],[\"BOX_CRI_PORT_FWD\",\"1\"],[\"BOX_PERSIST_ROOTFS_METADATA\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/af-final2/native-directory/home/boxes/dcda5822-2a3a-46fa-9f3a-1466c01e4f5d/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/work\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":4294967295,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":50000,\"cpu_period\":100000,\"memory_reservation\":null,\"memory_swap\":536870912,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+    "stderr": ""
+  },
+  "scope": "Only task-owned VM command lines are versioned; unfiltered environment diagnostics preserved locally under ignored artifact root."
+}

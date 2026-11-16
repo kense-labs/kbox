@@ -803,11 +803,14 @@ impl PoolRegistry {
         if self.draining.load(std::sync::atomic::Ordering::Acquire) {
             return Err("warm-pool daemon is shutting down".to_string());
         }
-        {
-            let pools = self.pools.lock().await;
-            if let Some(entry) = pools.get(&key) {
-                return Ok(entry.clone());
-            }
+        let existing = self.pools.lock().await.get(&key).cloned();
+        if let Some(entry) = existing {
+            entry
+                .pool
+                .initialize_first_ready()
+                .await
+                .map_err(|error| error.to_string())?;
+            return Ok(entry);
         }
 
         let max_size = self.max.max(size);
@@ -837,14 +840,13 @@ impl PoolRegistry {
             ksm: self.ksm,
             ..Default::default()
         };
-        let pool = WarmPool::start_with_metrics_and_boot_limiter_first_ready(
+        let pool = WarmPool::prepare_with_metrics_and_boot_limiter(
             pool_config,
             box_config,
             EventEmitter::new(256),
             self.metrics.clone(),
             Some(self.boot_limiter.clone()),
         )
-        .await
         .map_err(|e| e.to_string())?;
         let pool = std::sync::Arc::new(pool);
         let entry = PoolEntry {
@@ -855,17 +857,17 @@ impl PoolRegistry {
             max_size,
         };
 
-        let publish = {
+        {
             let mut pools = self.pools.lock().await;
-            let admitted = !self.draining.load(std::sync::atomic::Ordering::Acquire);
-            // Even a late initializer must publish its actual owner for shutdown retry.
+            if self.draining.load(std::sync::atomic::Ordering::Acquire) {
+                return Err("warm-pool daemon is shutting down".to_string());
+            }
+            // Registry ownership must precede any cancellable VM initialization.
             pools.insert(key, entry.clone());
-            admitted
-        };
-        if !publish {
-            pool.signal_shutdown();
-            return Err("warm-pool daemon is shutting down".to_string());
         }
+        pool.initialize_first_ready()
+            .await
+            .map_err(|error| error.to_string())?;
         Ok(entry)
     }
 
@@ -3169,5 +3171,40 @@ mod tests {
         a.write_all(&[1u8, 0]).await.unwrap(); // partial 4-byte length prefix
         drop(a);
         assert!(read_frame(&mut b).await.is_err());
+    }
+    #[cfg(not(windows))]
+    #[tokio::test]
+    async fn cancelled_initializer_retains_the_same_registered_pool_for_retry_and_drain() {
+        let mut registry = test_registry_with_lease_ttl(0);
+        std::sync::Arc::get_mut(&mut registry).unwrap().boot_limiter =
+            std::sync::Arc::new(tokio::sync::Semaphore::new(0));
+        let key = PoolKey::default_for_image("alpine:latest");
+        let first = {
+            let creating = registry.get_or_create(key.clone());
+            tokio::pin!(creating);
+            assert!(futures::poll!(creating.as_mut()).is_pending());
+            registry
+                .pools
+                .lock()
+                .await
+                .get(&key)
+                .cloned()
+                .expect("actual pool owner must be registered before cancellable initial fill")
+        };
+        {
+            let retry = registry.get_or_create(key.clone());
+            tokio::pin!(retry);
+            assert!(
+                futures::poll!(retry.as_mut()).is_pending(),
+                "retry must resume unfinished initialization, not return an inert entry"
+            );
+            let retained = registry.pools.lock().await.get(&key).cloned().unwrap();
+            assert!(std::sync::Arc::ptr_eq(&first.pool, &retained.pool));
+        }
+        assert_eq!(first.pool.stats().await.total_created, 0);
+        registry.drain_all().await.unwrap();
+        let retained = registry.pools.lock().await.get(&key).cloned().unwrap();
+        assert!(std::sync::Arc::ptr_eq(&first.pool, &retained.pool));
+        assert_eq!(retained.pool.stats().await.idle_count, 0);
     }
 }

@@ -1,0 +1,126 @@
+{
+  "startup-registry-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "startup-registry-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "81",
+        "0",
+        "10"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "949",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "cli-full2": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "950",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "shutdown-fixed1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "shutdown-matrix1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "socket-rename-probe1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2349",
+        "6",
+        "61"
+      ]
+    ]
+  },
+  "verify2": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2349",
+        "6",
+        "61"
+      ]
+    ]
+  },
+  "native-startup-check2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "af-check-final2": {
+    "exit": 1,
+    "actualRustResults": []
+  },
+  "af-failed-diagnostic3": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "failed-owned-cleanup1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check2": {
+    "exit": 1,
+    "actualRustResults": []
+  },
+  "final-audit-check3": {
+    "exit": 0,
+    "actualRustResults": []
+  }
+}

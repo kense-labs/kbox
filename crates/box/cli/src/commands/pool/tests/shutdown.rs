@@ -458,26 +458,19 @@ async fn shutdown_socket_cleanup_does_not_unlink_a_replacement_object() {
     let moved = root.path().join("owned-moved.sock");
     let registry = test_registry_with_lease_ttl(0);
     let socket = path.to_str().unwrap().to_owned();
+    let (bound_tx, bound_rx) = tokio::sync::oneshot::channel();
     let serving = tokio::spawn(async move {
-        serve(
-            registry,
-            &socket,
-            true,
-            BoundPoolListener::bind(&socket).await.unwrap(),
-        )
-        .await
-        .map_err(|e| e.to_string())
+        let bound = BoundPoolListener::bind(&socket).await.unwrap();
+        // Connectability precedes the ownership receipt; mutate only after bind completes.
+        bound_tx.send(()).unwrap();
+        serve(registry, &socket, true, bound)
+            .await
+            .map_err(|e| e.to_string())
     });
-    tokio::time::timeout(std::time::Duration::from_secs(2), async {
-        loop {
-            if tokio::net::UnixStream::connect(&path).await.is_ok() {
-                break;
-            }
-            tokio::task::yield_now().await;
-        }
-    })
-    .await
-    .unwrap();
+    tokio::time::timeout(std::time::Duration::from_secs(2), bound_rx)
+        .await
+        .unwrap()
+        .unwrap();
     std::fs::rename(&path, &moved).unwrap();
     std::fs::write(&path, b"caller-replacement-must-survive").unwrap();
     let mut client = tokio::net::UnixStream::connect(&moved).await.unwrap();

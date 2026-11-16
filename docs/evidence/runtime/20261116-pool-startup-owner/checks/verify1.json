@@ -1,0 +1,12 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exit": 101,
+  "seconds": 83.62698054100001,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-verify1",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

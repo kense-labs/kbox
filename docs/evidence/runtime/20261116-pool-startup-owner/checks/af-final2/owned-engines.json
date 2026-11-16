@@ -1,0 +1,8 @@
+[
+  {
+    "pid": 28618,
+    "parent": 28612,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/installed-poolstart-final-2/bin/kbox engine serve --socket /private/tmp/kp-ednt0vwl/s",
+    "socket": "/private/tmp/kp-ednt0vwl/s"
+  }
+]

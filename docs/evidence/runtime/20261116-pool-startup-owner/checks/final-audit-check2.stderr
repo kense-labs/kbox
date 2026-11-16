@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/final-audit.py", line 13, in <module>
+    rows=json.loads((C/'af-final2/native-results.json').read_text());assert len(rows)==5 and all(row['status']=='PASS' for row in rows)
+AssertionError

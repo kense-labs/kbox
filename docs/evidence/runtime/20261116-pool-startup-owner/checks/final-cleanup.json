@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "d38e6a13e9199070fc38d0122eee25cd5867cdb9bfc9638c930e18779c80a9be",
+  "compiledInputCount": 1732,
+  "homes": 63,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 147,
+  "remainingSockets": [],
+  "observedEngines": 3,
+  "immutableCacheFilesCompared": 853,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "7f27d07abc314e57dffea08b068eb4cdcda31a1ef1becf411bc8b66fb56361f8",
+      "after": "c7c240ce9d0fc477583df2172e2e382d95884743ce994fb0925200b5477593ae"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.HWT7kN",
+    "/private/tmp/kv.TKVPV2"
+  ],
+  "failedNativeRunsRetained": 2,
+  "quarantinedManagedRecords": 2,
+  "operatorCleanupUsed": true,
+  "failedRunAutomatedCleanupPassed": false,
+  "firstStartupRootCauseResolved": false,
+  "wholeArchiveAcceptanceComplete": false,
+  "hermeticMissingRegistryOwnerFailuresRetained": 1,
+  "stopFault": "Prepared caller-owned pool before real first-ready initialization; actual VM ready/publication wait cancelled, same manager/PID/allocation/writes retained, actual drain/noLate; no fabricated OS stop error",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

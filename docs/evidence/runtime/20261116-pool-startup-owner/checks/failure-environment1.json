@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-"
+  ],
+  "exit": 1,
+  "seconds": 0.034808167,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-failure-environment1",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

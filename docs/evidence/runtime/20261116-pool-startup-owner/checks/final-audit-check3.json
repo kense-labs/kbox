@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/final-audit3.py"
+  ],
+  "exit": 0,
+  "seconds": 4.1799859999999995,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-final-audit-check3",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

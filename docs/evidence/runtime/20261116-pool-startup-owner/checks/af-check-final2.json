@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-startup-owner/checks/af-final2-context.json"
+  ],
+  "exit": 1,
+  "seconds": 438.725286208,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-start-307fbf4272cd/check-home-af-check-final2",
+    "TMPDIR": "/private/tmp/kbox-pool-start-307fbf4272cd/t"
+  }
+}

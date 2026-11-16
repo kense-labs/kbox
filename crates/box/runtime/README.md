@@ -692,3 +692,10 @@ retain bounded OS failure details and five passing installed native scenarios.
 The full gate still fails six disk-service cases on this session; independent
 OCI Host startup also requires DiskManagement recovery. Scoped six-home cleanup
 passes. This does not qualify the whole release or change default routing.
+
+Failed-boot diagnostics retain flat, descriptor-confined single-link logs under
+`diag/failed-boots/<id>/`:64 files,1MiB tails and8MiB total, with a private observed
+limit/skip report. Links and unsafe prior target trees are refused; cleanup waits
+for blocking retention before removing the working directory. This is best-effort
+evidence, not an atomic whole-tree snapshot or global retention quota.
+[Source, native attacks and current archive](../../../docs/evidence/runtime/20261116-boot-diagnostics-boundaries/OUTCOME.md).

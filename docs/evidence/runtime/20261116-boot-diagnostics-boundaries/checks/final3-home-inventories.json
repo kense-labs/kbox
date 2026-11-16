@@ -1,0 +1,466 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-prewarm/4365452813f34988b4334621bc4a8008/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-primary/2267aa37aa21478f9e2a03c7ef077c23/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final3/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final3/native-oci/8883818df1dd4d97ad679545e06ed969/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final3/native-prewarm/f627bebb48f04287b826513089566e28/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final3/native-primary/76dc7c4c7c294b98b061c17085ed4991/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final3/native-readonly/4e389cd518694f47afaa0bfc21db9d49/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final4/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final4/native-oci/e29a14ae5bcf48cf9c9541ef2c27ac26/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final4/native-prewarm/7ac68f9f519c44d3a3c963b6a11da197/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final4/native-primary/9bf8ef6cc1e345b3b5ec724dd74c9578/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final4/native-readonly/78c9bf0af241431fb9ad3b4e0dd945f2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

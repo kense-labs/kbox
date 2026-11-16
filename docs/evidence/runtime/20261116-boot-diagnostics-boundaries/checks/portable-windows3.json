@@ -1,0 +1,37 @@
+[
+  {
+    "command": [
+      "rustc",
+      "--edition=2021",
+      "--crate-name",
+      "boot_diag_portable",
+      "--crate-type",
+      "lib",
+      "--target",
+      "x86_64-pc-windows-msvc",
+      "--emit=metadata",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/portable-diagnostics.rs",
+      "-L",
+      "dependency=target/x86_64-pc-windows-msvc/debug/deps",
+      "-L",
+      "dependency=target/debug/deps",
+      "-o",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/boot-diag-x86_64-pc-windows-msvc.rmeta",
+      "--extern",
+      "cap_std=target/x86_64-pc-windows-msvc/debug/deps/libcap_std-c2ed6d5b15a84f1c.rmeta",
+      "--extern",
+      "cap_fs_ext=target/x86_64-pc-windows-msvc/debug/deps/libcap_fs_ext-89f58010882af38b.rmeta",
+      "--extern",
+      "serde=target/x86_64-pc-windows-msvc/debug/deps/libserde-f8c3c5791edebd01.rmeta",
+      "--extern",
+      "serde_json=target/x86_64-pc-windows-msvc/debug/deps/libserde_json-65a0d4b9bf4576fd.rmeta",
+      "--extern",
+      "uuid=target/x86_64-pc-windows-msvc/debug/deps/libuuid-fd90f75384939e02.rmeta",
+      "--extern",
+      "tracing=/Users/roylin/code/kense/kbox/target/x86_64-pc-windows-msvc/debug/deps/libtracing-bb5d771decf477a8.rmeta"
+    ],
+    "exit": 0,
+    "target": "x86_64-pc-windows-msvc",
+    "nativeRuntimeClaim": false
+  }
+]

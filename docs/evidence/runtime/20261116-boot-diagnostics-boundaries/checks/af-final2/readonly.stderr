@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py", line 156, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py", line 101, in main
+    cli('run', '-d', '--name', 'readonly', '--memory', '512', '--privileged',
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py", line 97, in cli
+    assert result.returncode == 0, ('command failed; logs retained', index, result.stderr.decode(errors='replace'))
+AssertionError: ('command failed; logs retained', 1, 'Error: Registry error: docker.io - Failed to pull manifest: error sending request for url (https://index.docker.io/v2/library/kbox-hvf-ownership/manifests/sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa)\n')

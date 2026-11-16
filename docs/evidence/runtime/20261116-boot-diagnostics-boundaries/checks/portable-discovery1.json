@@ -1,0 +1,7 @@
+{
+  "status": "Harness discovery refused ambiguous tracing metadata before invoking rustc; choose matching fingerprint with default attributes",
+  "candidates": [
+    "target/x86_64-pc-windows-msvc/debug/deps/libtracing-c23cee2c1efa7655.rmeta",
+    "target/x86_64-pc-windows-msvc/debug/deps/libtracing-bb5d771decf477a8.rmeta"
+  ]
+}

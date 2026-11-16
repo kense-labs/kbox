@@ -260,6 +260,7 @@ async fn test_cleanup_boot_failure_stops_handler_and_removes_created_volumes() {
 
     let box_dir = tmp.path().join("boxes").join(&box_id);
     std::fs::create_dir_all(box_dir.join("logs")).unwrap();
+    std::fs::write(box_dir.join("logs/console.log"), b"failed-boot-canary").unwrap();
 
     let store = crate::volume::VolumeStore::new(
         tmp.path().join("volumes.json"),
@@ -277,6 +278,14 @@ async fn test_cleanup_boot_failure_stops_handler_and_removes_created_volumes() {
     assert!(store.get("anon_created").unwrap().is_none());
     assert!(store.get("anon_reused").unwrap().is_some());
     assert!(!box_dir.exists());
+    assert_eq!(
+        std::fs::read(
+            tmp.path()
+                .join("diag/failed-boots/box-test/logs/console.log")
+        )
+        .unwrap(),
+        b"failed-boot-canary"
+    );
 }
 
 #[tokio::test]

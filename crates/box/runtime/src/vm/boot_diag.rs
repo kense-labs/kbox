@@ -3,123 +3,191 @@
 //! evidence for why the guest exec server never became ready; keep one
 //! bounded copy per box id under `<home>/diag/failed-boots/<box_id>/`.
 
-use std::path::Path;
+use cap_fs_ext::{DirExt, FollowSymlinks, MetadataExt, OpenOptionsFollowExt};
+use cap_std::fs::{Dir, DirBuilder, OpenOptions};
+#[cfg(unix)]
+use cap_std::fs::{DirBuilderExt, OpenOptionsExt};
+use std::ffi::OsStr;
+use std::io::{self, Read, Seek, SeekFrom, Write};
+use std::path::{Component, Path};
+
+const MAX_ENTRIES: usize = 64;
+const MAX_FILE_BYTES: u64 = 1024 * 1024;
+const MAX_SNAPSHOT_BYTES: u64 = 8 * MAX_FILE_BYTES;
+const PRIORITY_LOGS: [&str; 4] = [
+    "console.log",
+    "console.err.log",
+    "shim.stdout.log",
+    "shim.stderr.log",
+];
+
+#[derive(Debug, Default, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct Snapshot {
+    files: usize,
+    bytes: u64,
+    skipped: usize,
+    truncated: usize,
+    limit_reached: bool,
+}
 
 /// Copy `box_dir/logs` into the retained diagnostics location. One copy per
 /// box id, replaced on retry. Best-effort: failures are logged and never
 /// propagate into the boot-failure path.
 pub(crate) fn retain_boot_failure_logs(home_dir: &Path, box_dir: &Path, box_id: &str) {
-    let source = box_dir.join("logs");
-    if !source.is_dir() {
-        tracing::warn!(box_id, "No logs directory to retain for failed boot");
-        return;
-    }
-    let target = home_dir
-        .join("diag")
-        .join("failed-boots")
-        .join(box_id)
-        .join("logs");
-    if let Err(error) = copy_tree(&source, &target) {
-        tracing::error!(
-            box_id,
-            %error,
-            path = %target.display(),
-            "Failed to retain boot-failure logs"
-        );
+    match retain(home_dir, box_dir, box_id) {
+        Ok(snapshot) => tracing::debug!(box_id, ?snapshot, "Retained bounded boot-failure logs"),
+        Err(error) => tracing::warn!(box_id, %error, "Failed to retain boot-failure logs"),
     }
 }
 
-fn copy_tree(source: &Path, target: &Path) -> std::io::Result<()> {
-    // A prior retained copy is replaced, never merged, so the retained
-    // snapshot always matches exactly one failed boot attempt.
-    if target.exists() {
-        std::fs::remove_dir_all(target)?;
+fn retain(home_dir: &Path, box_dir: &Path, box_id: &str) -> io::Result<Snapshot> {
+    let mut components = Path::new(box_id).components();
+    if box_id.len() > 128
+        || !matches!(components.next(), Some(Component::Normal(name)) if name == OsStr::new(box_id))
+        || components.next().is_some()
+        || box_dir != home_dir.join("boxes").join(box_id)
+    {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidInput,
+            "invalid diagnostic scope",
+        ));
     }
-    std::fs::create_dir_all(target)?;
-    for entry in std::fs::read_dir(source)? {
-        let entry = entry?;
-        let from = entry.path();
-        let to = target.join(entry.file_name());
-        if from.is_dir() {
-            copy_tree(&from, &to)?;
-        } else {
-            std::fs::copy(&from, &to)?;
+    let home = Dir::open_ambient_dir(home_dir, cap_std::ambient_authority())?;
+    let source = home
+        .open_dir_nofollow("boxes")?
+        .open_dir_nofollow(box_id)?
+        .open_dir_nofollow("logs")?;
+    let diag = private_child(&home, "diag")?;
+    let failures = private_child(&diag, "failed-boots")?;
+    let slot = private_child(&failures, box_id)?;
+    let target = private_child(&slot, "logs")?;
+    clear_bounded_slot(&target)?;
+    match slot.remove_file_or_symlink("retention.json") {
+        Ok(()) => {}
+        Err(error) if error.kind() == io::ErrorKind::NotFound => {}
+        Err(error) => return Err(error),
+    }
+    let snapshot = copy_logs(&source, &target)?;
+    let temporary = format!(".retention-{}", uuid::Uuid::new_v4());
+    write_report(&slot, &temporary, &snapshot)?;
+    Ok(snapshot)
+}
+
+fn write_report(slot: &Dir, temporary: &str, snapshot: &Snapshot) -> io::Result<()> {
+    let mut file = slot.open_with(temporary, &private_file_options())?;
+    let report = (|| {
+        serde_json::to_writer_pretty(&mut file, snapshot)?;
+        file.write_all(b"\n")?;
+        drop(file);
+        slot.rename(temporary, slot, "retention.json")
+    })();
+    if report.is_err() {
+        let _ = slot.remove_file_or_symlink(temporary);
+    }
+    report
+}
+
+fn private_child(parent: &Dir, name: &str) -> io::Result<Dir> {
+    match parent.open_dir_nofollow(name) {
+        Ok(directory) => Ok(directory),
+        Err(error) if error.kind() == io::ErrorKind::NotFound => {
+            let mut builder = DirBuilder::new();
+            #[cfg(unix)]
+            builder.mode(0o700);
+            match parent.create_dir_with(name, &builder) {
+                Ok(()) => {}
+                Err(error) if error.kind() == io::ErrorKind::AlreadyExists => {}
+                Err(error) => return Err(error),
+            }
+            parent.open_dir_nofollow(name)
         }
+        Err(error) => Err(error),
+    }
+}
+
+fn private_file_options() -> OpenOptions {
+    let mut options = OpenOptions::new();
+    options
+        .write(true)
+        .create_new(true)
+        .follow(FollowSymlinks::No);
+    #[cfg(unix)]
+    options.mode(0o600);
+    options
+}
+
+fn clear_bounded_slot(target: &Dir) -> io::Result<()> {
+    let mut names = Vec::new();
+    for entry in target.entries()?.take(MAX_ENTRIES + 1) {
+        let entry = entry?;
+        if names.len() == MAX_ENTRIES || entry.file_type()?.is_dir() {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidData,
+                "unsafe prior diagnostic slot",
+            ));
+        }
+        names.push(entry.file_name());
+    }
+    for name in names {
+        target.remove_file_or_symlink(name)?;
     }
     Ok(())
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    fn temp_root(tag: &str) -> std::path::PathBuf {
-        let dir = std::env::temp_dir().join(format!("boot-diag-{tag}-{}", uuid::Uuid::new_v4()));
-        std::fs::create_dir_all(&dir).unwrap();
-        dir
+fn copy_logs(source: &Dir, target: &Dir) -> io::Result<Snapshot> {
+    let mut snapshot = Snapshot::default();
+    for name in PRIORITY_LOGS {
+        copy_log(source, target, OsStr::new(name), &mut snapshot)?;
     }
-
-    #[test]
-    fn copies_console_and_shim_logs_into_the_retained_slot() {
-        let root = temp_root("copy");
-        let home = root.join("home");
-        let box_dir = home.join("boxes").join("box-1");
-        std::fs::create_dir_all(box_dir.join("logs")).unwrap();
-        std::fs::write(
-            box_dir.join("logs/console.log"),
-            "K_BOOT_ABORT: stage=event_loop",
-        )
-        .unwrap();
-        std::fs::write(box_dir.join("logs/shim.log"), "shim ready").unwrap();
-
-        retain_boot_failure_logs(&home, &box_dir, "box-1");
-
-        let retained = home.join("diag/failed-boots/box-1/logs");
-        assert_eq!(
-            std::fs::read_to_string(retained.join("console.log")).unwrap(),
-            "K_BOOT_ABORT: stage=event_loop"
-        );
-        assert_eq!(
-            std::fs::read_to_string(retained.join("shim.log")).unwrap(),
-            "shim ready"
-        );
-        // The working box directory is untouched; teardown owns it.
-        assert!(box_dir.join("logs/console.log").exists());
-        let _ = std::fs::remove_dir_all(root);
+    for (index, entry) in source.entries()?.take(MAX_ENTRIES + 1).enumerate() {
+        if index == MAX_ENTRIES || snapshot.files == MAX_ENTRIES {
+            snapshot.limit_reached = true;
+            break;
+        }
+        let name = entry?.file_name();
+        if !PRIORITY_LOGS.iter().any(|priority| name == *priority) {
+            copy_log(source, target, &name, &mut snapshot)?;
+        }
     }
-
-    #[test]
-    fn a_retry_replaces_the_prior_retained_copy() {
-        let root = temp_root("replace");
-        let home = root.join("home");
-        let box_dir = home.join("boxes").join("box-2");
-        std::fs::create_dir_all(box_dir.join("logs")).unwrap();
-        std::fs::write(box_dir.join("logs/console.log"), "first attempt").unwrap();
-        retain_boot_failure_logs(&home, &box_dir, "box-2");
-
-        std::fs::write(box_dir.join("logs/console.log"), "second attempt").unwrap();
-        std::fs::write(box_dir.join("logs/guest-init.stderr.log"), "stderr").unwrap();
-        retain_boot_failure_logs(&home, &box_dir, "box-2");
-
-        let retained = home.join("diag/failed-boots/box-2/logs");
-        assert_eq!(
-            std::fs::read_to_string(retained.join("console.log")).unwrap(),
-            "second attempt"
-        );
-        assert!(retained.join("guest-init.stderr.log").exists());
-        let _ = std::fs::remove_dir_all(root);
-    }
-
-    #[test]
-    fn a_missing_logs_directory_is_a_logged_no_op() {
-        let root = temp_root("noop");
-        let home = root.join("home");
-        let box_dir = home.join("boxes").join("box-3");
-        std::fs::create_dir_all(&box_dir).unwrap();
-
-        retain_boot_failure_logs(&home, &box_dir, "box-3");
-
-        assert!(!home.join("diag/failed-boots/box-3").exists());
-        let _ = std::fs::remove_dir_all(root);
-    }
+    Ok(snapshot)
 }
+
+fn copy_log(source: &Dir, target: &Dir, name: &OsStr, snapshot: &mut Snapshot) -> io::Result<()> {
+    let metadata = match source.symlink_metadata(name) {
+        Ok(metadata) => metadata,
+        Err(error) if error.kind() == io::ErrorKind::NotFound => return Ok(()),
+        Err(error) => return Err(error),
+    };
+    if !metadata.is_file() {
+        snapshot.skipped += 1;
+        return Ok(());
+    }
+    let mut options = OpenOptions::new();
+    options.read(true).follow(FollowSymlinks::No);
+    #[cfg(unix)]
+    options.custom_flags(libc::O_NONBLOCK);
+    let mut input = source.open_with(name, &options)?;
+    let metadata = input.metadata()?;
+    if !metadata.is_file() || metadata.nlink() != 1 {
+        snapshot.skipped += 1;
+        return Ok(());
+    }
+    let remaining = MAX_SNAPSHOT_BYTES - snapshot.bytes;
+    if remaining == 0 {
+        snapshot.limit_reached = true;
+        return Ok(());
+    }
+    let length = metadata.len().min(MAX_FILE_BYTES).min(remaining);
+    input.seek(SeekFrom::Start(metadata.len() - length))?;
+    let mut output = target.open_with(name, &private_file_options())?;
+    let bytes = io::copy(&mut input.take(length), &mut output)?;
+    snapshot.files += 1;
+    snapshot.bytes += bytes;
+    snapshot.truncated += usize::from(bytes < metadata.len());
+    Ok(())
+}
+
+#[cfg(test)]
+#[path = "boot_diag_tests.rs"]
+mod tests;

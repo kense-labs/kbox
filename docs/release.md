@@ -439,3 +439,13 @@ real VM and late writes;3 Rust native tests,3 A-F Python scenarios and a separat
 4-daemon/16-ready-VM/4-command matrix pass.10-home cleanup passes. Default gate
 still has6 disk-service failures; original intermittent15s startup cause and
 full W4/default Host Service cutover/GA remain open. No platform promotion.
+
+[Bounded boot diagnostics](evidence/runtime/20261116-boot-diagnostics-boundaries/OUTCOME.md)
+now pins log/target directories, refuses aliases, retains bounded private tails
+and waits off the async executor before teardown. Final20 focused cases,3 Rust
+native tests plus3 A–F Python scenarios and owned-resource audit pass. Default
+Runtime2299/6/50 retains six disk-service failures. New source-bound final Box
+archive and all failed candidates are retained. Full OCI Host Service/default
+cutover/GA remain unfinished; Windows ARM64 dependencies unsupported/no native
+run, platform levels unchanged and RSS unmeasured. Remote Git still requires
+UID501 lookup and GitHub DNS recovery.

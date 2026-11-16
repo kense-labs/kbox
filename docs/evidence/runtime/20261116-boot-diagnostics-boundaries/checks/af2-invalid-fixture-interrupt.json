@@ -1,0 +1,6 @@
+{
+  "pid": 14976,
+  "observation": "14976 14470 /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py --kbox /Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox --image-store /Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/image-cache --image docker.io/library/kbox-hvf-ownership@sha256:a6845bea2508837efa7717113f0715fa3cf86303497c9c39816a59a83d9708fa --output /Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-primary\n",
+  "reason": "AF candidate2 context inherited an obsolete unavailable ownership image, unlike the actual accepted qualification-tools image. Registry refusal retained. Interrupt only this owned blocked primary driver so its finally block cleans its exact engine; no test pass claimed.",
+  "signal": "SIGINT"
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/qualification-runner.py", line 146, in <module>
+    assert status == 0, ('native driver failed', status)
+AssertionError: ('native driver failed', -2)

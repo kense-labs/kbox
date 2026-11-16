@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "26203e5c1b6fac93a29aef2d683da675c916e440e740b7f0b2ed1a5630b268d0",
+  "compiledInputCount": 1719,
+  "homes": 10,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 3,
+  "checkedSocketPaths": 15,
+  "remainingSockets": [],
+  "immutableCacheFilesCompared": 646,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "5cc3278d1c629aa28901e918e741d4b64f44466a29d3353e23e9d4a26f244b2c",
+      "after": "63d92bd5ab31dee1a63be10a40fb4b78a319b2eb820ce8264e7bfefb584da017"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonNativeScenarios": 3,
+  "retainedFailedRustNativeTests": 1,
+  "retainedTailBytes": 1048576,
+  "retentionReport": {
+    "bytes": 1048645,
+    "files": 6,
+    "limitReached": false,
+    "skipped": 2,
+    "truncated": 1
+  },
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "runtimeMemoryMeasured": false,
+  "resourcesDeletedByAudit": [],
+  "scope": "Current033 only; six disk-service default failures, historical RAM loss, remote Git and full GA gates stay open"
+}

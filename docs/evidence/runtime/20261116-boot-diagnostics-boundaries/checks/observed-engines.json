@@ -1,0 +1,9 @@
+[
+  {
+    "pid": 14990,
+    "parent": 14976,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox engine serve --socket /private/tmp/kp-ba0wj7z7/s",
+    "socket": "/private/tmp/kp-ba0wj7z7/s",
+    "provenance": "actual scoped ps output preceding af2-invalid-fixture-interrupt"
+  }
+]

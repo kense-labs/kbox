@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "9e7b9442c02c43efbbff79f7e79caee4f0b0c318f3af41e354d1ae8ebdec530c",
+  "compiledInputCount": 1719,
+  "homes": 16,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedSocketDirectories": 38,
+  "checkedSocketPaths": 157,
+  "remainingSockets": [],
+  "immutableCacheFilesCompared": 646,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "5cc3278d1c629aa28901e918e741d4b64f44466a29d3353e23e9d4a26f244b2c",
+      "after": "9c1b3dfe578868dc15aa46aa1d3f8fac10827c7fd21c5c0c8f4256138efb4dba"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonNativeScenarios": 3,
+  "retainedFailedDiagnosticRustNativeTests": 1,
+  "retainedFailedInvalidFixtureRustNativeTests": 2,
+  "retainedInvalidFixtureAfRows": 5,
+  "retainedTailBytes": 1048576,
+  "retentionReport": {
+    "bytes": 1048645,
+    "files": 6,
+    "limitReached": false,
+    "skipped": 2,
+    "truncated": 1
+  },
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "runtimeMemoryMeasured": false,
+  "resourcesDeletedByAudit": [],
+  "priorExactCleanupReceipt": "invalid-fixture-volume-cleanup.json",
+  "scope": "Current033 only; six disk-service default failures, historical RAM loss, remote Git and full GA gates stay open"
+}

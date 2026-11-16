@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/final-audit.py", line 24, in <module>
+    assert json.loads(commands[0]['stdout'])==[] and not commands[1]['stdout'].strip(),home
+AssertionError: /Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-primary/2267aa37aa21478f9e2a03c7ef077c23/home

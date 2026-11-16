@@ -1,0 +1,11 @@
+
+running 1 test
+test vm::boot_diag::tests::native_guest_log_aliases_are_confined_during_failed_boot_cleanup ... FAILED
+
+failures:
+
+failures:
+    vm::boot_diag::tests::native_guest_log_aliases_are_confined_during_failed_boot_cleanup
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2353 filtered out; finished in 18.50s
+

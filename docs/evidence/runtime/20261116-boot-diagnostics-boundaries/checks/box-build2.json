@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/build-box-final2.py"
+  ],
+  "exit": 0,
+  "seconds": 29.748138333
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 284, in <module>
+    main()
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 110, in main
+    cli("build", "--run-pool-socket", build_socket, "--run-pool-autostart",
+  File "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py", line 96, in cli
+    raise RuntimeError(f"kbox command {counter} failed; see retained logs")
+RuntimeError: kbox command 2 failed; see retained logs

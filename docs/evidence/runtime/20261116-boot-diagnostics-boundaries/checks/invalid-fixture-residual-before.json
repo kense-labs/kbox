@@ -1,0 +1,28 @@
+{
+  "home": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-primary/2267aa37aa21478f9e2a03c7ef077c23/home",
+  "commands": [
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox",
+        "ps",
+        "-a",
+        "--format",
+        "json"
+      ],
+      "exit": 0,
+      "stdout": "[]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox",
+        "volume",
+        "ls",
+        "--quiet"
+      ],
+      "exit": 0,
+      "stdout": "kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412\n",
+      "stderr": ""
+    }
+  ]
+}

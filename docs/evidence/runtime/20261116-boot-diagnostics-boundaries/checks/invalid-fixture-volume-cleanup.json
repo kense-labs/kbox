@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox",
+    "volume",
+    "rm",
+    "kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412"
+  ],
+  "exit": 0,
+  "stdout": "kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412\n",
+  "stderr": "",
+  "volumeId": "f40e789b27424fc88fc015c79a04fe74",
+  "ownedBindings": [
+    "volumes.json",
+    "engine/intent.json",
+    "engine/runtime/units/1f761541299bb51c0a8b48a379393fb6bb356f39ca76ba1094fc6953b5540555/record.json",
+    "engine/runtime/units/1f761541299bb51c0a8b48a379393fb6bb356f39ca76ba1094fc6953b5540555/requests/6634a57da9cf31538f970dfa0349c8a8808aacd6a605c2df003a2c231b9cf611.json"
+  ],
+  "emptyBefore": true,
+  "noFdHolders": true,
+  "scope": "Only invalid-fixture run-owned persistent test volume after its engine stopped; no caller or user data"
+}

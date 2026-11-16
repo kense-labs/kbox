@@ -1,0 +1,263 @@
+
+running 24 tests
+test contract::protocol::tests::log_discontinuity_reasons_have_stable_wire_names ... ok
+test contract::protocol::effective_deadline_tests::absolute_deadline_does_not_gain_control_plane_slack ... ok
+test provider::tests::provider_ids_are_portable_and_have_no_default_policy ... ok
+test contract::protocol::effective_deadline_tests::relative_only_exec_reserves_control_plane_slack ... ok
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+test state::file::tests::subprocess_atomic_write_helper ... ok
+test state::file::tests::subprocess_receipt_first_completion_helper ... ok
+test contract::unit::tests::health_checks_reference_declared_ports ... ok
+test contract::unit::tests::lifecycle_specific_fields_fail_closed ... ok
+test contract::unit::tests::service_lifecycle_is_service_only_readiness_bound_and_bounded ... ok
+test contract::unit::tests::registry_credential_is_a_typed_unique_secret_target ... ok
+test contract::unit::tests::task_and_service_specs_are_general_and_digest_stable ... ok
+test contract::unit::directory_tests::live_directory_references_have_an_independent_closed_mount_kind ... ok
+test driver::snapshot_tests::snapshot_receipt_validates_and_round_trips ... ok
+test driver::snapshot_tests::snapshot_request_validates_and_round_trips ... ok
+test driver::snapshot_tests::drivers_without_the_feature_keep_the_default_refusal ... ok
+test state::transition_tests::state_transition_002_terminal_identity_time_and_class_rules_fail_closed ... ok
+test state::transition_tests::state_transition_001_task_and_service_matrices_have_complete_oracles ... ok
+
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... test state::file::tests::state_fs_004_noncanonical_egress_digest_is_rejected_without_rewriting_state ... ok
+test state::file::tests::state_fs_001_hard_linked_lock_record_and_receipt_files_fail_closed ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... test state::file::tests::state_fs_002_corrupt_permission_and_non_regular_boundaries_fail_closed ... ok
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+test state::file::tests::state_fs_003_storage_faults_preserve_prior_state_and_reject_dispatch ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... test state::file::tests::state_crash_001_receipt_first_process_kills_reconcile_every_result_kind ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... test state::file::tests::state_crash_002_atomic_write_process_kills_preserve_a_complete_record ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.91s
+
+
+running 4 tests
+test superseded_while_waiting_for_unit_lease_never_dispatches ... ok
+test restarted_client_cannot_resume_a_superseded_pending_apply ... ok
+test rechecks_fence_after_durable_reservation_and_before_dispatch ... ok
+test completed_receipt_replays_after_fence_changes_without_new_effect ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
+
+
+running 5 tests
+test conf_profile_004_all_advertised_optional_families_activate ... ok
+test conf_profile_005_requirements_expand_every_advertised_behavior ... ok
+test conf_profile_002_missing_mandatory_profile_fails_before_provider_work ... ok
+test conf_profile_003_incomplete_evidence_fails_and_still_cleans_up ... ok
+test conf_profile_001_base_and_capability_profiles_run_without_inventory_delta ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.06s
+
+
+running 5 tests
+test fault_apply_004_provider_panic_releases_the_operation_lease ... ok
+test fault_read_005_capabilities_inspect_and_logs_fail_without_state_mutation ... ok
+test fault_apply_001_transport_boundaries_replay_without_duplicate_resources ... ok
+test fault_apply_003_timeout_after_effect_needs_a_new_request_to_reconcile ... ok
+test fault_mutation_002_stop_remove_and_exec_replay_each_provider_boundary ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.74s
+
+
+running 41 tests
+
+running 1 test
+test subprocess_operation_lease_helper ... test expired_requests_never_reserve_or_dispatch ... ok
+test deadline_is_rechecked_after_the_operation_lease_wait ... ok
+test file_operation_leases_serialize_one_unit_but_not_different_units ... ok
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.10s
+
+test file_operation_lease_serializes_independent_processes ... ok
+test file_state_store_rejects_symbolic_link_boundaries ... ok
+test exec_result_must_bind_the_complete_unit_spec ... ok
+test ambiguous_apply_is_reentered_with_the_same_identity ... ok
+test exec_uses_the_smaller_relative_or_absolute_deadline ... ok
+test completed_exec_replays_durably_after_client_restart_and_rejects_conflicts ... ok
+test lc_exec_002_oversized_provider_result_stays_pending ... ok
+test cancelled_exec_releases_the_lease_and_remains_replayable ... ok
+test generation_reconciliation_retires_the_previous_resource_on_success ... ok
+test deadlines_bound_capability_queries_and_provider_dispatch ... ok
+test provider_identity_mismatch_fails_before_state_or_provider_work ... ok
+test provider_registry_never_falls_back_or_replaces_a_factory ... ok
+test generation_reconciliation_recovers_create_before_error_after_restart ... ok
+test provider_registry_rejects_a_factory_client_identity_mismatch ... ok
+test lc_exec_003_provider_receives_the_durable_effective_deadline ... ok
+test optional_resource_controls_gate_only_workloads_that_request_them ... ok
+test subprocess_operation_lease_helper ... ok
+test log_and_exec_capabilities_use_the_active_generation ... ok
+test expired_pending_request_remains_pending_and_is_not_redispatched ... ok
+test top_level_log_exec_and_inspection_records_require_current_schemas ... ok
+test apply_stop_and_exec_postconditions_fail_closed ... ok
+test unsupported_capabilities_fail_before_state_or_provider_work ... ok
+test completed_mutations_replay_after_deadline_provider_loss_and_removal ... ok
+test provider_identity_substitution_and_unordered_logs_are_rejected ... ok
+test pending_exec_reattaches_after_an_ambiguous_after_effect_error ... ok
+test provider_loss_becomes_a_durable_unknown_observation ... ok
+test maximum_exec_output_and_truncation_are_durable ... ok
+test request_journal_layout_is_versioned_owner_only_and_fail_closed ... ok
+test terminal_observations_are_immutable ... ok
+test request_and_generation_conflicts_fail_closed ... ok
+test output_and_confidential_capabilities_fail_closed_and_outputs_are_exact ... ok
+test exported_conformance_suite_exercises_task_and_service_lifecycles ... ok
+test same_generation_apply_recovers_a_lost_provider_unit_once ... ok
+test task_and_service_share_one_general_client ... ok
+test stop_remove_and_absence_are_durable_and_idempotent ... ok
+test concurrent_file_reservations_preserve_every_request ... ok
+test lc_exec_001_pending_replay_cannot_extend_original_relative_deadline ... ok
+test request_journal_preserves_more_than_ten_thousand_exact_replays has been running for over 60 seconds
+test request_journal_preserves_more_than_ten_thousand_exact_replays ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 179.76s
+
+
+running 4 tests
+test host_service_requests_are_bounded_and_cannot_alias_ports_or_references ... ok
+test explicit_host_services_require_capability_without_enabling_ip_networking ... ok
+test empty_host_services_preserve_legacy_wire_and_spec_digest ... ok
+test optional_egress_policy_preserves_locked_wire_and_binds_explicit_restrictions ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 3 tests
+test rmcp_fix_001_uses_only_the_generic_runtime_service_contract ... ok
+test rmcp_endpoint_001_binds_unit_generation_profile_and_typed_endpoint ... ok
+test rmcp_fence_001_rejects_stale_generation_and_profile_evidence ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 5 tests
+test subprocess_process_race_operation_helper ... ok
+
+running 1 test
+test subprocess_process_race_operation_helper ... 
+running 1 test
+test subprocess_process_race_operation_helper ... 
+running 1 test
+
+running 1 test
+
+running 1 test
+test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.31s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.32s
+
+test race_inventory_001_duplicate_resources_fail_closed_before_provider_mutation ... ok
+test race_gen_001_concurrent_generations_converge_to_one_newest_resource ... ok
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.14s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.14s
+
+test crash_gen_001_killed_generation_handoff_exact_replay_converges_once ... ok
+
+running 1 test
+
+running 1 test
+test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.06s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.11s
+
+
+running 1 test
+
+running 1 test
+test subprocess_process_race_operation_helper ... test subprocess_process_race_operation_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.06s
+
+ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.06s
+
+test race_ops_001_apply_stop_remove_process_races_have_deterministic_oracles ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+
+
+running 2 tests
+test ct_digest_001_golden_request_and_spec_digests_are_stable ... ok
+test ct_schema_001_every_top_level_wire_record_has_a_versioned_golden_fixture ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 2 tests
+test service_protocol_matching_is_capability_exact ... ok
+test typed_service_endpoint_is_exact_loopback_evidence ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+
+running 11 tests
+test rcon_boundary_001_runtime_wire_stays_product_neutral ... ok
+test rcon_mcp_001_reuses_the_same_stateless_service_requirements ... ok
+test rcon_agent_001_admits_one_generic_stateful_service_profile ... ok
+test rcon_function_001_admits_task_and_stateless_service_without_a_new_unit_class ... ok
+test rcon_lifecycle_002_validates_capability_dependencies_and_liveness_probe_kind ... ok
+test rcon_cell_001_admits_named_state_without_a_new_unit_class ... ok
+test rcon_fence_001_fails_closed_on_missing_profile_capability_or_evidence ... ok
+test rcon_identity_003_confidential_binding_cannot_drop_its_attestation ... ok
+test rcon_identity_002_attachment_profile_does_not_imply_attestation_support ... ok
+test rcon_lifecycle_001_fails_closed_on_missing_capability_or_liveness_evidence ... ok
+test rcon_identity_001_binds_one_opaque_attachment_to_exact_attested_evidence ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

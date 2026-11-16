@@ -1,0 +1,16 @@
+{
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "uname": [
+    "Darwin",
+    "RoyLins-MacBook-Pro-M5-Max.local",
+    "25.6.0",
+    "Darwin Kernel Version 25.6.0: Fri Jul 31 19:19:08 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6050",
+    "arm64",
+    "arm"
+  ],
+  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+  "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+  "osVersion": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+  "runtimeRssMeasured": false,
+  "environmentProbeFirstFailure": "Python3.9 lacks tomllib; exact lock byte-delta proof used without adding a dependency"
+}

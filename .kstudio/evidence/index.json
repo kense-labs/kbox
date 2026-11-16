@@ -12,6 +12,12 @@
       "path": "T2026-11-16-pool-postboot-cleanup/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Default cold-pool post-boot cleanup; real VM fault/control/10-home audit pass; default disk gates and full GA remain open"
+    },
+    {
+      "id": "T2026-11-16-boot-diagnostics-boundaries",
+      "path": "T2026-11-16-boot-diagnostics-boundaries/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Bounded descriptor-confined boot diagnostics; final installed native/owned audit pass; six default disk-service failures and full GA stay open"
     }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "boxDirectoryAbsent": true,
+  "execution": "32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1",
+  "guestPlanted": true,
+  "handlerReleased": true,
+  "outsideCanaryRetained": true,
+  "pid": 49811,
+  "report": {
+    "bytes": 1048645,
+    "files": 6,
+    "limitReached": false,
+    "skipped": 2,
+    "truncated": 1
+  },
+  "retainedTailBytes": 1048576,
+  "runtimeRssMeasured": false,
+  "socketDir": "/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1",
+  "socketDirectoryAbsent": true,
+  "status": "PASS"
+}

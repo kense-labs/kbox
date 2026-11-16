@@ -45,6 +45,8 @@ build = ["dep:kcl"]
 runtime-provider-qualification = ["vm"]
 
 [dependencies]
+cap-std = { workspace = true }
+cap-fs-ext = { workspace = true }
 kbox-core = { version = "3.2", path = "../core" }
 ktransport = { workspace = true }
 

@@ -1,0 +1,92 @@
+warning: variable does not need to be mutable
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:95:17
+   |
+95 |             let mut builder = DirBuilder::new();
+   |                 ----^^^^^^^
+   |                 |
+   |                 help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `MAX_ENTRIES` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:14:7
+   |
+14 | const MAX_ENTRIES: usize = 64;
+   |       ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: constant `MAX_FILE_BYTES` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:15:7
+   |
+15 | const MAX_FILE_BYTES: u64 = 1024 * 1024;
+   |       ^^^^^^^^^^^^^^
+
+warning: constant `MAX_SNAPSHOT_BYTES` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:16:7
+   |
+16 | const MAX_SNAPSHOT_BYTES: u64 = 8 * MAX_FILE_BYTES;
+   |       ^^^^^^^^^^^^^^^^^^
+
+warning: constant `PRIORITY_LOGS` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:17:7
+   |
+17 | const PRIORITY_LOGS: [&str; 4] = [
+   |       ^^^^^^^^^^^^^
+
+warning: struct `Snapshot` is never constructed
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:26:8
+   |
+26 | struct Snapshot {
+   |        ^^^^^^^^
+
+warning: function `retain_boot_failure_logs` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:37:15
+   |
+37 | pub(crate) fn retain_boot_failure_logs(home_dir: &Path, box_dir: &Path, box_id: &str) {
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `retain` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:44:4
+   |
+44 | fn retain(home_dir: &Path, box_dir: &Path, box_id: &str) -> io::Result<Snapshot> {
+   |    ^^^^^^
+
+warning: function `write_report` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:77:4
+   |
+77 | fn write_report(slot: &Dir, temporary: &str, snapshot: &Snapshot) -> io::Result<()> {
+   |    ^^^^^^^^^^^^
+
+warning: function `private_child` is never used
+  --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:91:4
+   |
+91 | fn private_child(parent: &Dir, name: &str) -> io::Result<Dir> {
+   |    ^^^^^^^^^^^^^
+
+warning: function `private_file_options` is never used
+   --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:109:4
+    |
+109 | fn private_file_options() -> OpenOptions {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `clear_bounded_slot` is never used
+   --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:120:4
+    |
+120 | fn clear_bounded_slot(target: &Dir) -> io::Result<()> {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `copy_logs` is never used
+   --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:138:4
+    |
+138 | fn copy_logs(source: &Dir, target: &Dir) -> io::Result<Snapshot> {
+    |    ^^^^^^^^^
+
+warning: function `copy_log` is never used
+   --> /Users/roylin/code/kense/kbox/crates/box/runtime/src/vm/boot_diag.rs:156:4
+    |
+156 | fn copy_log(source: &Dir, target: &Dir, name: &OsStr, snapshot: &mut Snapshot) -> io::Result<()> {
+    |    ^^^^^^^^
+
+warning: 14 warnings emitted
+

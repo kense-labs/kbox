@@ -31,9 +31,17 @@ impl VmManager {
     /// Retain the console and shim logs of a failed boot under
     /// `<home>/diag/failed-boots/<box_id>/` before the teardown deletes the
     /// box directory. Best-effort; the teardown itself is unchanged.
-    pub(crate) fn retain_boot_failure_diagnostics(&self) {
+    pub(crate) async fn retain_boot_failure_diagnostics(&self) {
+        let home_dir = self.home_dir.clone();
+        let box_id = self.box_id.clone();
         let box_dir = self.home_dir.join("boxes").join(&self.box_id);
-        crate::vm::boot_diag::retain_boot_failure_logs(&self.home_dir, &box_dir, &self.box_id);
+        if let Err(error) = tokio::task::spawn_blocking(move || {
+            crate::vm::boot_diag::retain_boot_failure_logs(&home_dir, &box_dir, &box_id);
+        })
+        .await
+        {
+            tracing::warn!(box_id = %self.box_id, %error, "Boot diagnostic worker failed");
+        }
     }
 
     /// Destroy the VM with the default shutdown timeout and SIGTERM.

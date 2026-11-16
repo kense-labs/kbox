@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "vm::boot_diag::tests::report_collision_preserves_existing_file_and_failed_rename_removes_only_its_temporary"
+  ],
+  "exit": 101,
+  "seconds": 9.275585957999999
+}

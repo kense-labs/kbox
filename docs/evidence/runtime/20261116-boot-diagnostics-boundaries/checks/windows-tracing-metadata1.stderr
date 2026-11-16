@@ -1,0 +1,7 @@
+    Blocking waiting for file lock on build directory
+    Checking log v0.4.35
+    Checking tracing-core v0.1.36
+   Compiling syn v2.0.119
+   Compiling tracing-attributes v0.1.31
+    Checking tracing v0.1.44
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.92s

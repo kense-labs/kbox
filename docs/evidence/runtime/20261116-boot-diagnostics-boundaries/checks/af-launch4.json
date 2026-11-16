@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-boot-diagnostics-boundaries/af-context-final4.json"
+  ],
+  "exit": 0,
+  "seconds": 142.291495875
+}

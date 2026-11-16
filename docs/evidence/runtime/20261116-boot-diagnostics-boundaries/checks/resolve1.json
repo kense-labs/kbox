@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 13.156347292000001
+}

@@ -1,0 +1,13 @@
+test_checksum_corruption_and_missing_companion_preserve_previous_install (__main__.InstallerTests) ... ok
+test_failed_rename_never_deletes_previous_runtime (__main__.InstallerTests) ... ok
+test_installed_executable_failure_rolls_back (__main__.InstallerTests) ... ok
+test_root_alias_prefix_is_refused_before_installation (__main__.InstallerTests) ... ok
+test_success_preserves_workload_data_and_unrelated_runtime_files (__main__.InstallerTests) ... ok
+test_unexpected_companion_symlink_is_refused (__main__.InstallerTests) ... ok
+test_versioned_state_directory_survives_install_and_rollback (__main__.InstallerTests) ... ok
+test_wrong_guest_architecture_is_refused_even_with_matching_checksum (__main__.InstallerTests) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.882s
+
+OK

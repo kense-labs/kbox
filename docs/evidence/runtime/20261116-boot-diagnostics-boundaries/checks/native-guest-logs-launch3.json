@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/native_guest_logs3.py"
+  ],
+  "exit": 0,
+  "seconds": 13.155127667
+}

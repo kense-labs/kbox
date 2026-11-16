@@ -1,0 +1,77 @@
+
+running 12 tests
+test vm::boot_diag::tests::a_missing_logs_directory_is_a_logged_no_op ... ok
+test vm::boot_diag::tests::source_file_symlink_never_copies_ungranted_bytes ... FAILED
+test vm::boot_diag::tests::destination_ancestor_symlink_never_writes_outside_the_retained_scope ... FAILED
+test vm::boot_diag::tests::source_logs_root_symlink_is_refused ... FAILED
+test vm::boot_diag::tests::each_log_is_a_bounded_tail_instead_of_an_unbounded_copy ... FAILED
+test vm::boot_diag::tests::copies_console_and_shim_logs_into_the_retained_slot ... ok
+test vm::boot_diag::tests::source_directory_symlink_is_not_traversed ... FAILED
+test vm::boot_diag::tests::box_identity_cannot_escape_the_retention_directory ... FAILED
+test vm::boot_diag::tests::a_retry_replaces_the_prior_retained_copy ... ok
+test vm::boot_diag::tests::source_hardlink_never_copies_ungranted_bytes ... FAILED
+test vm::boot_diag::tests::total_snapshot_bytes_are_bounded_even_with_many_large_files ... FAILED
+test vm::boot_diag::tests::entry_limit_still_keeps_the_known_console_diagnostic ... FAILED
+
+failures:
+
+---- vm::boot_diag::tests::source_file_symlink_never_copies_ungranted_bytes stdout ----
+
+thread 'vm::boot_diag::tests::source_file_symlink_never_copies_ungranted_bytes' (104581812) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:20:5:
+assertion failed: !home.join("diag/failed-boots/attack/logs/alias").exists()
+
+---- vm::boot_diag::tests::destination_ancestor_symlink_never_writes_outside_the_retained_scope stdout ----
+
+thread 'vm::boot_diag::tests::destination_ancestor_symlink_never_writes_outside_the_retained_scope' (104581808) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:60:5:
+assertion failed: !root.path().join("foreign/failed-boots").exists()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- vm::boot_diag::tests::source_logs_root_symlink_is_refused stdout ----
+
+thread 'vm::boot_diag::tests::source_logs_root_symlink_is_refused' (104581814) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:50:5:
+assertion failed: !home.join("diag/failed-boots/attack").exists()
+
+---- vm::boot_diag::tests::each_log_is_a_bounded_tail_instead_of_an_unbounded_copy stdout ----
+
+thread 'vm::boot_diag::tests::each_log_is_a_bounded_tail_instead_of_an_unbounded_copy' (104581809) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:74:5:
+diagnostic bytes must have a per-file bound
+
+---- vm::boot_diag::tests::source_directory_symlink_is_not_traversed stdout ----
+
+thread 'vm::boot_diag::tests::source_directory_symlink_is_not_traversed' (104581811) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:40:5:
+assertion failed: !home.join("diag/failed-boots/attack/logs/alias").exists()
+
+---- vm::boot_diag::tests::box_identity_cannot_escape_the_retention_directory stdout ----
+
+thread 'vm::boot_diag::tests::box_identity_cannot_escape_the_retention_directory' (104581806) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:110:5:
+assertion failed: !home.join("escaped").exists()
+
+---- vm::boot_diag::tests::source_hardlink_never_copies_ungranted_bytes stdout ----
+
+thread 'vm::boot_diag::tests::source_hardlink_never_copies_ungranted_bytes' (104581813) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:30:5:
+assertion failed: !home.join("diag/failed-boots/attack/logs/alias").exists()
+
+---- vm::boot_diag::tests::total_snapshot_bytes_are_bounded_even_with_many_large_files stdout ----
+
+thread 'vm::boot_diag::tests::total_snapshot_bytes_are_bounded_even_with_many_large_files' (104581815) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:102:5:
+diagnostic total must be bounded
+
+---- vm::boot_diag::tests::entry_limit_still_keeps_the_known_console_diagnostic stdout ----
+
+thread 'vm::boot_diag::tests::entry_limit_still_keeps_the_known_console_diagnostic' (104581810) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:88:5:
+assertion failed: std::fs::read_dir(&retained).unwrap().count() <= 64
+
+
+failures:
+    vm::boot_diag::tests::box_identity_cannot_escape_the_retention_directory
+    vm::boot_diag::tests::destination_ancestor_symlink_never_writes_outside_the_retained_scope
+    vm::boot_diag::tests::each_log_is_a_bounded_tail_instead_of_an_unbounded_copy
+    vm::boot_diag::tests::entry_limit_still_keeps_the_known_console_diagnostic
+    vm::boot_diag::tests::source_directory_symlink_is_not_traversed
+    vm::boot_diag::tests::source_file_symlink_never_copies_ungranted_bytes
+    vm::boot_diag::tests::source_hardlink_never_copies_ungranted_bytes
+    vm::boot_diag::tests::source_logs_root_symlink_is_refused
+    vm::boot_diag::tests::total_snapshot_bytes_are_bounded_even_with_many_large_files
+
+test result: FAILED. 3 passed; 9 failed; 0 ignored; 0 measured; 2334 filtered out; finished in 0.05s
+

@@ -1,0 +1,10 @@
+{
+  "command": "Assert byte equivalence of before/after root lockfile after removing precisely two newly resolved kbox-runtime dependency names",
+  "status": "PASS",
+  "addedDirectDependencies": [
+    "cap-fs-ext =4.0.2",
+    "cap-std =4.0.2"
+  ],
+  "newPackages": 0,
+  "versionChanges": 0
+}

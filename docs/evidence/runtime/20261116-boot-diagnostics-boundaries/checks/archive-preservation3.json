@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "archives": [
+    {
+      "archive": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/final-dist-bootdiag-1/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "e44e1b8c54afafd1e7ce31d2b5708b26deacc5b788be81f9b8b9c575bb19b37c",
+      "compressedBytes": 23410964
+    },
+    {
+      "archive": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/final-dist-bootdiag-2/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "92b68cf84b17a131fa57c32cf1f4c32d186e8d1cf167ebed4f6323fba5dd9bb9",
+      "compressedBytes": 23410968
+    },
+    {
+      "archive": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/final-dist-bootdiag-3/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "5b59a54662f4b9c1303caf070ee336adac62d259ada02cd7ae60dd5c725b7cf2",
+      "compressedBytes": 23410852
+    },
+    {
+      "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-postboot-cleanup-0b717b3c20f543679b0d676ed54a1294/final-dist-postboot-1/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "fb8ca51fe430a20514b173a39d71bfc3ebc5c3c984d68609c156e989dc8e18c6",
+      "compressedBytes": 23404277
+    },
+    {
+      "archive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+      "compressedBytes": 33429314
+    }
+  ]
+}

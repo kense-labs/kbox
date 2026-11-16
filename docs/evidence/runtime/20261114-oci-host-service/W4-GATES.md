@@ -90,3 +90,10 @@ refusal stops the VM before return, no late writes,10-home cleanup and separate
 16-ready-VM concurrency control. This is separate from OCI-profile pool parity
 and does not locate the original15s startup failure. Continuous GA work resumes
 unblocked safety gaps while Git/disk-service prerequisites remain parked.
+
+Default-libkrun boot diagnostic confinement is qualified by
+[spec033](../20261116-boot-diagnostics-boundaries/OUTCOME.md):20 focused tests,
+3 Rust native +3 Python scenarios and current owned cleanup pass; bounded
+copy/no-follow/private report/off-executor caller preserve useful failure logs.
+Original15s cause and stop-failure ownership remain open, as do full W4/default
+Host Service cutover/live continuity/GA. Six default disk-service failures remain.

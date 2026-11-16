@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 57613,
+    "parent": 57611,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox engine serve --socket /private/tmp/kp-9t2wwdt4/s",
+    "socket": "/private/tmp/kp-9t2wwdt4/s"
+  },
+  {
+    "pid": 60696,
+    "parent": 57611,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/bin/kbox engine serve --socket /private/tmp/kp-9t2wwdt4/s",
+    "socket": "/private/tmp/kp-9t2wwdt4/s"
+  }
+]

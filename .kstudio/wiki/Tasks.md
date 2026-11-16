@@ -14,6 +14,13 @@
 - **验证**: focused4、pool87；3 Rust native +3 Python场景及4-daemon/16-VM并发控制通过；默认门禁仍6项磁盘服务失败。
 - **限制**: 原始15s启动超时、stop失败所有权边界、完整GA及外部平台门槛未完成；RSS未测量；tokens/cost unknown。
 
+## T2026-11-16-boot-diagnostics-boundaries
+
+- **结果**: 固定目录描述符并限制启动失败日志；原生链接攻击/尾部保留与清理通过。
+- **证据**: [完整记录](../../docs/evidence/runtime/20261116-boot-diagnostics-boundaries/OUTCOME.md)。
+- **验证**: focused20、CLI935、contracts118、installer8；3 Rust native+3 Python；默认2299/6/50，磁盘服务失败保留。
+- **限制**: 原始15s故障、stop失败所有权、完整GA和外部Git/平台门槛未完成；RSS/tokens/cost未知。
+
 ## T2026-11-16-k-init
 
 - **完成日期**: 2026-11-16

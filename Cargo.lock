@@ -2268,6 +2268,8 @@ dependencies = [
  "base64 0.22.1",
  "bytes",
  "bzip2",
+ "cap-fs-ext",
+ "cap-std",
  "chrono",
  "dashmap",
  "der",

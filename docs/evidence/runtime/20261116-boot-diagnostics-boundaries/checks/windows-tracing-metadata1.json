@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "tracing",
+    "--target",
+    "x86_64-pc-windows-msvc",
+    "--target",
+    "aarch64-pc-windows-msvc"
+  ],
+  "exit": 0,
+  "seconds": 7.960008665999999
+}

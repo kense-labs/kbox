@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/portable-checks.py", line 14, in <module>
+    assert len(files)==1,(target,name,files);cmd+=['--extern',name+'='+str(files[0])]
+AssertionError: ('aarch64-pc-windows-msvc', 'uuid', [])

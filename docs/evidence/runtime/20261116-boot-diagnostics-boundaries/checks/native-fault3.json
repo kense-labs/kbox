@@ -1,0 +1,60 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/native-client-guest-logs3",
+    "--ignored",
+    "--exact",
+    "vm::boot_diag::tests::native_guest_log_aliases_are_confined_during_failed_boot_cleanup",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3",
+  "exit": 0,
+  "seconds": 8.95836025,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 49811,
+      "parent": 49078,
+      "command": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/bin/kbox-shim --config {\"box_id\":\"32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/attack-logs\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-boot-diagnostics-boundaries/checks/native-fault-live-logs/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-boot-diagnostics-boundaries/checks/native-fault-live-logs/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-boot-diagnostics-boundaries/checks/native-fault-live-logs/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-boot-diag-d9408c1fc6d8/guest-logs-attempt-3/home/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-boot-diagnostics-boundaries/checks/native-fault-live-logs/boxes/32fd2628-c71d-4a1b-8a0b-4c1920f0a3b1/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    }
+  ],
+  "clientSha256": "75e3992f7c2e074853e95fb76e4fe612f7135c241d3de0ed82f7443e9f10b4bb",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-3",
+  "sourceInputsSha256": "9e7b9442c02c43efbbff79f7e79caee4f0b0c318f3af41e354d1ae8ebdec530c"
+}

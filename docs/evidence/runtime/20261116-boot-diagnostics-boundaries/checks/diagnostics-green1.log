@@ -1,0 +1,23 @@
+
+running 18 tests
+test vm::boot_diag::tests::a_missing_logs_directory_is_a_logged_no_op ... ok
+test vm::boot_diag::tests::box_identity_cannot_escape_the_retention_directory ... ok
+test vm::boot_diag::tests::invalid_scope_has_no_retention_side_effects ... ok
+test vm::boot_diag::tests::destination_ancestor_symlink_never_writes_outside_the_retained_scope ... ok
+test vm::boot_diag::tests::source_directory_symlink_is_not_traversed ... ok
+test vm::boot_diag::tests::source_logs_root_symlink_is_refused ... ok
+test vm::boot_diag::tests::source_hardlink_never_copies_ungranted_bytes ... ok
+test vm::boot_diag::tests::pinned_directories_survive_source_and_destination_path_replacement ... ok
+test vm::boot_diag::tests::copies_console_and_shim_logs_into_the_retained_slot ... ok
+test vm::boot_diag::tests::source_file_symlink_never_copies_ungranted_bytes ... ok
+test vm::boot_diag::tests::replacing_old_slot_aliases_never_changes_their_targets ... ok
+test vm::boot_diag::tests::each_log_is_a_bounded_tail_instead_of_an_unbounded_copy ... ok
+test vm::boot_diag::tests::report_records_bounded_tail_and_non_ascii_empty_file ... ok
+test vm::boot_diag::tests::source_fifo_is_skipped_without_opening_a_writer ... ok
+test vm::boot_diag::tests::a_retry_replaces_the_prior_retained_copy ... ok
+test vm::boot_diag::tests::unsafe_previous_slots_are_preserved_without_recursive_deletion ... ok
+test vm::boot_diag::tests::entry_limit_still_keeps_the_known_console_diagnostic ... ok
+test vm::boot_diag::tests::total_snapshot_bytes_are_bounded_even_with_many_large_files ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 2334 filtered out; finished in 0.05s
+

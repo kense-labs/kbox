@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/installed-bootdiag-final-2/bin/kbox",
+    "volume",
+    "inspect",
+    "kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412"
+  ],
+  "exit": 0,
+  "stdout": "[\n  {\n    \"CreatedAt\": \"2026-11-16T00:06:41.652973+00:00\",\n    \"Driver\": \"local\",\n    \"Labels\": {\n      \"kbox.volume.allocation\": \"f2e6068c-388c-4056-9d82-b30694a76458\",\n      \"kbox_contract.volume-id\": \"f40e789b27424fc88fc015c79a04fe74\",\n      \"kbox_contract.volume-role\": \"persistent\"\n    },\n    \"Mountpoint\": \"/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/af-final2/native-primary/2267aa37aa21478f9e2a03c7ef077c23/home/volumes/kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412\",\n    \"Name\": \"kbox_contract-volume-35b8d0be9eecbf8601f6ed58e44b1303f6adb9d8987ca8545ac6747ffa43f412\",\n    \"Options\": {},\n    \"Scope\": \"local\"\n  }\n]\n",
+  "stderr": ""
+}

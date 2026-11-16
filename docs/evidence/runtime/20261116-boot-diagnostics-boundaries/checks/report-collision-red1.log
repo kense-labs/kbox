@@ -1,0 +1,18 @@
+
+running 1 test
+test vm::boot_diag::tests::report_collision_preserves_existing_file_and_failed_rename_removes_only_its_temporary ... FAILED
+
+failures:
+
+---- vm::boot_diag::tests::report_collision_preserves_existing_file_and_failed_rename_removes_only_its_temporary stdout ----
+
+thread 'vm::boot_diag::tests::report_collision_preserves_existing_file_and_failed_rename_removes_only_its_temporary' (105089260) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:494:64:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    vm::boot_diag::tests::report_collision_preserves_existing_file_and_failed_rename_removes_only_its_temporary
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2354 filtered out; finished in 0.00s
+

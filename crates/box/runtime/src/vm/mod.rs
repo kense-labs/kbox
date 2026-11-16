@@ -762,7 +762,7 @@ impl VmManager {
             net_manager.stop();
         }
 
-        self.retain_boot_failure_diagnostics();
+        self.retain_boot_failure_diagnostics().await;
         let anon_volumes_clean = self.cleanup_created_anonymous_volumes();
         self.cleanup_box_dir(anon_volumes_clean);
     }

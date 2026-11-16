@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 101,
+  "seconds": 19.716872708
+}

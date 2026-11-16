@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/native_guest_logs.py", line 52, in <module>
+    assert p.returncode==0 and counts==[('1','0','0')],errpath.read_text()[-5000:]
+AssertionError: 
+thread '<unnamed>' (104782415) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:421:17:
+assertion `left == right` failed: ExecOutput { stdout: [], stderr: [70, 97, 105, 108, 101, 100, 32, 116, 111, 32, 115, 112, 97, 119, 110, 32, 99, 111, 109, 109, 97, 110, 100, 32, 39, 47, 117, 115, 114, 47, 98, 105, 110, 47, 112, 121, 116, 104, 111, 110, 51, 39, 58, 32, 78, 111, 32, 115, 117, 99, 104, 32, 102, 105, 108, 101, 32, 111, 114, 32, 100, 105, 114, 101, 99, 116, 111, 114, 121, 32, 40, 111, 115, 32, 101, 114, 114, 111, 114, 32, 50, 41], exit_code: 127, truncated: false }
+  left: 127
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'vm::boot_diag::tests::native_guest_log_aliases_are_confined_during_failed_boot_cleanup' (104782414) panicked at crates/box/runtime/src/vm/boot_diag_tests.rs:447:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }
+

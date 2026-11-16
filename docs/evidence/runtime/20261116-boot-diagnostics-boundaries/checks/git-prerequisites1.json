@@ -1,0 +1,11 @@
+{
+  "uid": 501,
+  "localUserError": "'getpwuid(): uid not found: 501'",
+  "githubDnsError": "[Errno 8] nodename nor servname provided, or not known",
+  "remoteFreshnessKnown": false,
+  "pushAttemptedUnderUnchangedBlocker": false,
+  "baselineBranchAncestorOfMainExit": 0,
+  "head": "151709fa192d8dc6fd46d27d9923aa99bc3b9713",
+  "nativeGitlinks": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+  "nativeTreesClean": true
+}

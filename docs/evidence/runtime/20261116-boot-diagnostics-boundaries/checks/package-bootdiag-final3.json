@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 96.09600404199999,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/package-home-bootdiag-final3",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "9e7b9442c02c43efbbff79f7e79caee4f0b0c318f3af41e354d1ae8ebdec530c"
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "f522f929ddce4c89c0101f457ac44a1debc8b289e3f7c9399cb6d00d71c4f772",
+  "compiledInputCount": 1729,
+  "homes": 26,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 783,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "c955bfa9d693c4c43ad7088cd0c599e1813e942e6b0ac6c6f83cbaf942da0ecd",
+      "after": "60d7ceec0943b8a8fb660a60b69b604046da6eca2dd0b8ef99fc0d4220162ab4"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.K5znoS"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticHandlerDropFailuresRetained": 3,
+  "stopFault": "No synthetic stop fault in native drain test; both public variants preserve exact idle owner/PID/allocation/live writes after cancellation, then physically finalize on retry",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

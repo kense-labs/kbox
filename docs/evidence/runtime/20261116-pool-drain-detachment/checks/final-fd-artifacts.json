@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

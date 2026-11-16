@@ -84,3 +84,10 @@
 - **证据**: [0/1至1/0、最终包与26home审计](../../docs/evidence/runtime/20261116-pool-rollback-identity/OUTCOME.md)。
 - **验证**: Pool71/0/5、CLI949/Clippy；默认2336/6/55；3Rust+3Python、4daemon/16Ready/4命令；审计命令拼写失败保留。
 - **限制**: drain取消/internal/template/unpublished/legacy及GA继续；GitUID501/DNS外阻塞，WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-drain-detachment
+
+- **结果**: 两种drain及失效处理在移出VM前等待统计锁，取消保留实际owner；0/3至3/0。
+- **证据**: [最终包、原生和清理](../../docs/evidence/runtime/20261116-pool-drain-detachment/OUTCOME.md)。
+- **验证**: Pool74/0/6、CLI949/Clippy；默认2339/6/56；3Rust+3Python、4daemon/16Ready/4命令/26home审计；AF准备失败保留。
+- **限制**: maintenancejoin/internal/template/unpublished/legacy与GA继续；GitUID501/DNS外阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。

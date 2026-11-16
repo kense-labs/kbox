@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 107.136906958,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/package-home-pooldetach-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "f522f929ddce4c89c0101f457ac44a1debc8b289e3f7c9399cb6d00d71c4f772"
+}

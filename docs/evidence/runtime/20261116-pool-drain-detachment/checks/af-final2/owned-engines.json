@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 60873,
+    "parent": 60788,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox engine serve --socket /private/tmp/kp-bzsefmio/s",
+    "socket": "/private/tmp/kp-bzsefmio/s"
+  },
+  {
+    "pid": 67868,
+    "parent": 60788,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox engine serve --socket /private/tmp/kp-bzsefmio/s",
+    "socket": "/private/tmp/kp-bzsefmio/s"
+  }
+]

@@ -1,0 +1,8 @@
+
+running 3 tests
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2397 filtered out; finished in 0.04s
+

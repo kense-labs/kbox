@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "cancelled_idle_detachment"
+  ],
+  "exit": 101,
+  "seconds": 36.791364375,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-det-c7d4914f49e8/check-home-detachment-red1",
+    "TMPDIR": "/private/tmp/kbox-pool-det-c7d4914f49e8/t"
+  }
+}

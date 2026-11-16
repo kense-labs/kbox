@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "clippy",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "-p",
+    "kbox-cli",
+    "-p",
+    "kbox-contract",
+    "--all-targets",
+    "--no-deps"
+  ],
+  "exit": 0,
+  "seconds": 29.853270791,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-det-c7d4914f49e8/check-home-clippy1",
+    "TMPDIR": "/private/tmp/kbox-pool-det-c7d4914f49e8/t"
+  }
+}

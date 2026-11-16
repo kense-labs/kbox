@@ -1,0 +1,416 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stdout.log.0e23964be3a0",
+    "sha256": "0e23964be3a0999302e381dd02747484f30e0c1fffd7444cbeeec7e19d178b73",
+    "bytes": 1028
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/shim.stdout.log.22d642f09839",
+    "sha256": "22d642f0983935aa539aafdf7f9278151b1d01491081f959b9c1346e8611d7ab",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/7f827b04-f7ca-4687-a414-fb3fd7183a7c/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/shim.stdout.log.81ec4bf8e067",
+    "sha256": "81ec4bf8e06743dff47fd59f5682668f3a4f5948bce8d412af360ddca96ac30f",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/11299f7d-92e5-4151-9580-0528c430a22f/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/shim.stdout.log.820267189699",
+    "sha256": "8202671896993b8aaff54f0a37ba4501d7c35b3b65bd3fc72caf39389adc0b82",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/7cee7f07-5db9-4c42-9376-30615184f086/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/shim.stdout.log.cb27ffe90d34",
+    "sha256": "cb27ffe90d347c90c39025acf89b25747506ee5345bdb5b44c181d57865b4e07",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/1307e4c3-6ad5-4f0f-a3a1-7de9a29a218f/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/shim.stdout.log.a73dab9bfcf7",
+    "sha256": "a73dab9bfcf7b4c1024bc0242113a70626aee17756be4aa59838130f5a08fdbe",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/8e0c9795-6cba-4fee-85ba-fefaa12ab0ac/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/shim.stdout.log.08fe52764c93",
+    "sha256": "08fe52764c9358e0eff19e4a19c53935a800e332990cbad81cde42e9fd8634b4",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.err.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/shim.stdout.log.19384387c6f8",
+    "sha256": "19384387c6f8cb55901efb63ba453df4d4092ca372a2c0c3b71dc5e550506cd2",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/090188af-cfd3-4614-9207-a04576d3a10b/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/shim.stdout.log.0404d82cc34f",
+    "sha256": "0404d82cc34fb2620b2b8bc71ef05b77c6619a1a25e95fa1140653a75dc10235",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.err.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stdout.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/shim.stdout.log.e42fcfe288e2",
+    "sha256": "e42fcfe288e2ca95e464eca1347f4aebe6af312e2c2e3d2f8a7e213a428af180",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/df7a784d-0859-4bce-88c6-3a6534c5db72/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/shim.stdout.log.bb2e02d73c07",
+    "sha256": "bb2e02d73c0701776f41d48451ffbe8abe8291869f0eee653afc286a1416ed02",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.err.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/shim.stdout.log.d6c75e383e69",
+    "sha256": "d6c75e383e6900647a50274c570d5d22823bfe09b2622af4259a7536d9df8055",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/e9be124c-6f7d-4784-9360-4af91f6544a1/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/shim.stdout.log.4e6f1084f572",
+    "sha256": "4e6f1084f5724eab9e885b7d57bce5d02aa120577997753456f79a044da8ee05",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/64840b04-dab2-4323-ac10-4bf3c863587f/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b706394f-3d74-45f6-b595-079f5809eac2/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/104392a2-90df-4408-9f43-fac808c0f4d2/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/shim.stdout.log.0037197550ac",
+    "sha256": "0037197550acebb6062004d63c19dd7eaf11efe76107044545854ba6563b193e",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/1/home/boxes/8fb18d48-2b8f-4a11-acc8-d2c41828e682/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/shim.stdout.log.26f82463846b",
+    "sha256": "26f82463846bfa0c8a9d0434005f4e29e62f181f36b024dd3a66e283021d1517",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/9e862c0e-6466-45dc-822c-17130a81f825/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/shim.stdout.log.ead7ce1a3c10",
+    "sha256": "ead7ce1a3c1076469453b9caf94ebadcc830721c119cec1516c399ae21f93522",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/2/home/boxes/5ad53d7c-94ab-4f5f-86a3-c54d5ca5b67a/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/shim.stdout.log.a73cf2262e4f",
+    "sha256": "a73cf2262e4f6b62bebf565010d32ecd8190d2fea60a5c0ef3c2b64ac18ce34c",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/3bd2a530-e7dd-4bbd-9da6-486436fa979e/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/pool-wave-final1/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-drain-detachment/checks/pool-wave-final1/owned-box-logs/3/home/boxes/7dc06793-bde1-4d71-8b19-833ae4d8b722/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  }
+]

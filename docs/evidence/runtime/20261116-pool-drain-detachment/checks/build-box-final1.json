@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/build-box-final1.py"
+  ],
+  "exit": 0,
+  "seconds": 108.621760083,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-det-c7d4914f49e8/check-home-build-box-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-det-c7d4914f49e8/t"
+  }
+}

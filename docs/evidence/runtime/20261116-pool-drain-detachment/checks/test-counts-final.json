@@ -1,0 +1,76 @@
+{
+  "detachment-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "3",
+        "0"
+      ]
+    ]
+  },
+  "detachment-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "3",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "74",
+        "0",
+        "6"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2339",
+        "6",
+        "56"
+      ]
+    ]
+  },
+  "native-drain-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "af-check-final1": {
+    "exit": 1,
+    "actualRustResults": []
+  },
+  "af-check-final2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  }
+}

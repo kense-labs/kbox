@@ -1,0 +1,25 @@
+{
+  "allocation": {
+    "created_at": "2026-11-16T08:08:53.520543+00:00",
+    "driver": "local",
+    "in_use_by": [
+      "efa0a602-eb1d-46a4-a80d-a861374d3b70"
+    ],
+    "labels": {
+      "anonymous": "true",
+      "kbox.volume.allocation": "62d45390-466d-424f-97bf-717ecd12ac40",
+      "kbox.volume.kind": "anonymous-v1",
+      "kbox.volume.owner": "efa0a602-eb1d-46a4-a80d-a861374d3b70"
+    },
+    "mount_point": "/private/tmp/kbox-pool-det-c7d4914f49e8/native-drain-attempt-1/home/volumes/anon_efa0a602_5228ab9bc5ddaa9ffea76aecf5c3b559",
+    "name": "anon_efa0a602_5228ab9bc5ddaa9ffea76aecf5c3b559",
+    "size_limit": 0
+  },
+  "execution": "efa0a602-eb1d-46a4-a80d-a861374d3b70",
+  "operation": "drain_idle",
+  "pid": 123,
+  "volumeIdentity": [
+    16777233,
+    304972164
+  ]
+}

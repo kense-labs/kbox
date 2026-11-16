@@ -1,0 +1,38 @@
+
+running 3 tests
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner ... FAILED
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner ... FAILED
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner' (117675259) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1170:5:
+assertion `left == right` failed: cancelled stats wait must not drop the actual handler
+  left: 1
+ right: 0
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner' (117675257) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1170:5:
+assertion `left == right` failed: cancelled stats wait must not drop the actual handler
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner' (117675258) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1170:5:
+assertion `left == right` failed: cancelled stats wait must not drop the actual handler
+  left: 1
+ right: 0
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner
+    pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner
+    pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 2397 filtered out; finished in 0.01s
+

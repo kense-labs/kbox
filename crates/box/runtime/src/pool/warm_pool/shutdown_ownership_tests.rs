@@ -1123,3 +1123,112 @@ async fn shutdown_admission_refuses_idle_and_queued_cold_acquisition() {
     pool.drain_idle().await.unwrap();
     assert_eq!(pool.stats().await.total_created, 0);
 }
+
+#[derive(Clone, Copy)]
+enum IdleDetachment {
+    Drain,
+    DrainIdle,
+    Invalidate,
+}
+
+async fn assert_cancelled_idle_detachment_keeps_owner(operation: IdleDetachment) {
+    let (root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let mut pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    if matches!(operation, IdleDetachment::Invalidate) {
+        let directory = TemplateDirectory::create(root.path()).unwrap();
+        *pool.template.lock().await = TemplateState::Ready(PoolTemplate {
+            mem_file: directory.path().join("template.ram").display().to_string(),
+            state_file: directory
+                .path()
+                .join("template.state")
+                .display()
+                .to_string(),
+            rootfs_cache_key: None,
+            directory: directory.clone(),
+        });
+        pool.template_resources.lock().await.directory = Some(directory);
+    }
+    pool.idle.lock().await.push(WarmVm {
+        vm,
+        created_at: Instant::now(),
+    });
+    pool.stats.lock().await.idle_count = 1;
+    let stats_arc = pool.stats.clone();
+    let stats = stats_arc.lock().await;
+    {
+        let pending = async {
+            match operation {
+                IdleDetachment::Drain => pool.drain().await.unwrap(),
+                IdleDetachment::DrainIdle => pool.drain_idle().await.unwrap(),
+                IdleDetachment::Invalidate => {
+                    pool.invalidate_snapshot_fork_template("owned test").await
+                }
+            }
+        };
+        tokio::pin!(pending);
+        assert!(futures::poll!(pending.as_mut()).is_pending());
+    }
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "cancelled stats wait must not drop the actual handler"
+    );
+    assert_eq!(
+        calls.load(Ordering::SeqCst),
+        0,
+        "nothing has physically finalized yet"
+    );
+    assert_eq!(pool.idle.lock().await.len(), 1);
+    assert_eq!(stats.idle_count, 1);
+    assert!(pool.retiring.lock().is_empty());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    if !matches!(operation, IdleDetachment::Invalidate) {
+        assert!(pool.ensure_admission_open().is_err());
+    }
+    drop(stats);
+    assert!(matches!(
+        pool.drain_idle().await,
+        Err(BoxError::StateError(_))
+    ));
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(box_dir.join("rootfs/canary").is_file());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn cancelled_idle_detachment_drain_keeps_owner() {
+    assert_cancelled_idle_detachment_keeps_owner(IdleDetachment::Drain).await;
+}
+
+#[tokio::test]
+async fn cancelled_idle_detachment_shared_drain_keeps_owner() {
+    assert_cancelled_idle_detachment_keeps_owner(IdleDetachment::DrainIdle).await;
+}
+
+#[tokio::test]
+async fn cancelled_idle_detachment_invalidation_keeps_owner() {
+    assert_cancelled_idle_detachment_keeps_owner(IdleDetachment::Invalidate).await;
+}

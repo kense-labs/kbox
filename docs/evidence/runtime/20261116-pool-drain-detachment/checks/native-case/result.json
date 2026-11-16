@@ -1,0 +1,74 @@
+{
+  "cases": [
+    {
+      "actualRetryFinalized": true,
+      "admissionClosed": true,
+      "before": {
+        "allocation": {
+          "created_at": "2026-11-16T08:08:48.840411+00:00",
+          "driver": "local",
+          "in_use_by": [
+            "cb05b6ad-4f04-4a48-8f6e-5df4d38cd760"
+          ],
+          "labels": {
+            "anonymous": "true",
+            "kbox.volume.allocation": "3af6900f-d1b3-47a7-b2c8-1adcb20a01fd",
+            "kbox.volume.kind": "anonymous-v1",
+            "kbox.volume.owner": "cb05b6ad-4f04-4a48-8f6e-5df4d38cd760"
+          },
+          "mount_point": "/private/tmp/kbox-pool-det-c7d4914f49e8/native-drain-attempt-1/home/volumes/anon_cb05b6ad_7251898f935e37a0e4062356b0cccf7a",
+          "name": "anon_cb05b6ad_7251898f935e37a0e4062356b0cccf7a",
+          "size_limit": 0
+        },
+        "execution": "cb05b6ad-4f04-4a48-8f6e-5df4d38cd760",
+        "operation": "drain",
+        "pid": 97471,
+        "volumeIdentity": [
+          16777233,
+          304971922
+        ]
+      },
+      "callerBytesRetained": 2,
+      "exactIdleOwnerPreserved": true,
+      "guestContinuedWriting": true,
+      "noLateWritesAfterOwnedCleanup": true,
+      "sameActualPidAndAllocationPreserved": true
+    },
+    {
+      "actualRetryFinalized": true,
+      "admissionClosed": true,
+      "before": {
+        "allocation": {
+          "created_at": "2026-11-16T08:08:53.520543+00:00",
+          "driver": "local",
+          "in_use_by": [
+            "efa0a602-eb1d-46a4-a80d-a861374d3b70"
+          ],
+          "labels": {
+            "anonymous": "true",
+            "kbox.volume.allocation": "62d45390-466d-424f-97bf-717ecd12ac40",
+            "kbox.volume.kind": "anonymous-v1",
+            "kbox.volume.owner": "efa0a602-eb1d-46a4-a80d-a861374d3b70"
+          },
+          "mount_point": "/private/tmp/kbox-pool-det-c7d4914f49e8/native-drain-attempt-1/home/volumes/anon_efa0a602_5228ab9bc5ddaa9ffea76aecf5c3b559",
+          "name": "anon_efa0a602_5228ab9bc5ddaa9ffea76aecf5c3b559",
+          "size_limit": 0
+        },
+        "execution": "efa0a602-eb1d-46a4-a80d-a861374d3b70",
+        "operation": "drain_idle",
+        "pid": 123,
+        "volumeIdentity": [
+          16777233,
+          304972164
+        ]
+      },
+      "callerBytesRetained": 9,
+      "exactIdleOwnerPreserved": true,
+      "guestContinuedWriting": true,
+      "noLateWritesAfterOwnedCleanup": true,
+      "sameActualPidAndAllocationPreserved": true
+    }
+  ],
+  "runtimeRssMeasured": false,
+  "status": "PASS"
+}

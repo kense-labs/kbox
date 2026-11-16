@@ -694,13 +694,15 @@ impl WarmPool {
         // maintenance loop can be blocked for the entire drain duration.
         let idle_vms = {
             let mut idle = self.idle.lock().await;
+            // Wait before detaching: cancellation must leave actual managers owned.
+            let mut stats = self.stats.lock().await;
             let idle_vms = idle.drain(..).collect::<Vec<_>>();
+            stats.idle_count = idle.len();
             Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
             idle_vms
         };
         let count = idle_vms.len();
 
-        self.stats.lock().await.idle_count = 0;
         Self::destroy_vms(
             idle_vms,
             &self.retiring,
@@ -740,13 +742,15 @@ impl WarmPool {
         // widens the shutdown race window for a replenishment batch.
         let idle_vms = {
             let mut idle = self.idle.lock().await;
+            // Wait before detaching: cancellation must leave actual managers owned.
+            let mut stats = self.stats.lock().await;
             let idle_vms = idle.drain(..).collect::<Vec<_>>();
+            stats.idle_count = idle.len();
             Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
             idle_vms
         };
         let count = idle_vms.len();
         let timeout_ms = (!self.box_config.persistent).then_some(EPHEMERAL_DRAIN_TIMEOUT_MS);
-        self.stats.lock().await.idle_count = 0;
         Self::destroy_vms(
             idle_vms,
             &self.retiring,
@@ -1386,10 +1390,10 @@ impl WarmPool {
         }
         let drained: Vec<WarmVm> = {
             let mut idle = self.idle.lock().await;
-            let drained = idle.drain(..).collect();
-            Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
             let mut stats = self.stats.lock().await;
+            let drained = idle.drain(..).collect();
             stats.idle_count = idle.len();
+            Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
             drained
         };
         if !drained.is_empty() {
@@ -1859,6 +1863,10 @@ mod batch_native;
 #[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
 #[path = "warm_pool/rollback_native.rs"]
 mod rollback_native;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/drain_native.rs"]
+mod drain_native;
 
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]

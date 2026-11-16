@@ -1,0 +1,966 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008587207999999985,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009044667000000006,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008790457999999973,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009723916999999999,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00936862500000002,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008136041999999954,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008680458000000058,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009123041999999915,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011830624999999984,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011020790999999974,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010728250000000106,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010953957999999986,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009536124999999895,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009112666999999908,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008661041999999952,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008566708000000034,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00917699999999999,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010613125000000112,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008236542000000124,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00881075000000009,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009342082999999946,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007687499999999847,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006958958999999876,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007241875000000064,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007545874999999924,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006358915999999937,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.005807749999999778,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.005761917000000061,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010393792000000346,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009241167000000328,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009078916999999631,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011605959000000166,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011161792000000226,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01045150000000028,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007966750000000022,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0076488750000001104,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011071750000000158,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010544083000000093,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010886167000000224,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01041545800000021,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008089041999999935,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009225875000000272,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00747858300000015,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00861704200000002,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008882625000000033,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008329125000000381,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008809042000000211,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008601542000000073,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010208957999999768,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008224291000000328,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00988737499999992,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008503957999999479,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008846665999999281,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008116832999999879,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008638542000000804,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007887666999999432,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008173499999999834,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007113999999999621,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006350166999999907,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006957916000000175,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-2')"
+    ],
+    "exit": 0,
+    "seconds": 0.07559670799999996,
+    "stdout": "pool-native-2\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-3')"
+    ],
+    "exit": 0,
+    "seconds": 0.07769441700000002,
+    "stdout": "pool-native-3\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-1')"
+    ],
+    "exit": 0,
+    "seconds": 0.08457720799999979,
+    "stdout": "pool-native-1\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-0')"
+    ],
+    "exit": 0,
+    "seconds": 0.0898406249999999,
+    "stdout": "pool-native-0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.781367791999998,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.802759709000002,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.902227833000001,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/installed-pooldetach-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-793ce5443d7a-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 22.013057667,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  }
+]

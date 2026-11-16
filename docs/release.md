@@ -547,3 +547,16 @@ audit invocation typo/failure retained. Drain cancellation/internal boot/templat
 unpublished/legacy and full OCI Host Service cutover/live continuity/W4/GA stay
 open. WindowsARM64 dependencies unsupported/no native run, support levels
 unchanged; RSS unmeasured. Git push still needs UID501/DNS recovery.
+
+### 2026-11-16 drain detachment qualification
+
+[042 installed evidence](evidence/runtime/20261116-pool-drain-detachment/OUTCOME.md)
+Both public drain variants/template invalidation wait stats before detaching
+actual idle owners. Actual0/3 becomes3/0 with typed refusal/retry intact.
+Pool74/0/6,CLI949/Clippy; default2339/6/56 retains six disk failures. Final
+Boxf5f41897…/sourcef522f929… is23427053 compressed/44208128 installed bytes.
+Actual3Rust+3Python/4daemon/16Ready/4commands/26home audit pass. AF setup
+failure before any native subprocess is retained. Cancelled maintenance join,
+internal boot/template/unpublished/legacy/full OCI cutover/W4/GA remain open.
+WindowsARM64 unsupported/no native run; levels unchanged; RSS unmeasured.
+Git remote remains UID501/DNS blocked; local commit/bundle is not publication.

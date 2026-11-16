@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-drain-detachment/checks/af-final1-context.json"
+  ],
+  "exit": 1,
+  "seconds": 0.048605833,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-det-c7d4914f49e8/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-det-c7d4914f49e8/t"
+  }
+}

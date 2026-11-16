@@ -1,0 +1,4 @@
+{
+  "scripts/verify-commit.sh": "67bdfd46c69bd531576e8c0f6121e9a85ada7c5fc4e94fbb44a05050e71bc87d",
+  "scripts/test-verify-isolation.py": "46acf60d80e6bf2e81a013eefadf8ca99c3010d586ad39f570ab87b628079bdd"
+}

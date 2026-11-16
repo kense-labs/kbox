@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-verify-iso-634baeeab45e"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

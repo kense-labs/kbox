@@ -1,0 +1,70 @@
+{
+  "stage": "035-verify-home-isolation",
+  "root": "/Users/roylin/code/kense/kbox/artifacts/verify-home-isolation-634baeeab45e45819c06b5f07d54c7a8",
+  "privateRoot": "/private/tmp/kbox-verify-iso-634baeeab45e",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-verify-home-isolation",
+  "baseCommit": "c634d76e800d2ae24af38dabc9788c6dd0751032",
+  "status": "035 script isolation/audit/evidence correction accepted; local commit next, full GA active",
+  "scope": "Verification boundary; runtime compiled inputs unchanged; source bundle034 retained",
+  "observedKhome": null,
+  "priorClaimCorrection": "Default-gate runs were not evidence that real user K_HOME stayed untouched. Native owned-home qualification remains valid.",
+  "priorOutcome": "../20261116-boot-stop-preservation/OUTCOME.md",
+  "remainingRequiredWork": [
+    "Template directory ownership: canonical cleanup without ownership, and shared image-hash allocation",
+    "Pool and legacy caller lifetime after stop/boot errors",
+    "Original15s boot cause",
+    "Full W4/default Host Service cutover/live continuity/GA"
+  ],
+  "externalBlockers": [
+    "UID501 lookup/GitHub DNS",
+    "DiskManagement/APFS",
+    "Other native hosts",
+    "Windows ARM64 unsupported dependencies/no native run"
+  ],
+  "ownedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/real-gate-temporary/kbox-verify.AAmimw/home",
+  "inheritedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/inherited-caller-home",
+  "workflowInputs": {
+    "scripts/verify-commit.sh": "f5b78c5d814760e593ec7d6800d04261f358ccbb61c4f33db6780633245690c1",
+    "scripts/test-verify-isolation.py": "d65ff4850cc53ad653d556a3b87fd92260dce3ed62019995fed64095fcb67b5f",
+    "AGENTS.md": "d2eff80f44fc096b726b99a591ac57078eb07d4a6af3c31a6e8386ddd207da75"
+  },
+  "compiledInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+  "ownedTmpdir": "/private/tmp/kv.DIFGdE",
+  "audit": {
+    "status": "PASS",
+    "isolationRegressionCases": 4,
+    "actualRuntimeCounts": [
+      2302,
+      6,
+      51
+    ],
+    "originalLongTmpCounts": [
+      2300,
+      8,
+      51
+    ],
+    "longTmpSocketFailuresFixed": true,
+    "ownedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/real-gate-temporary/kbox-verify.AAmimw/home",
+    "ownedTmpdir": "/private/tmp/kv.DIFGdE",
+    "privateModes": true,
+    "callerCanaryRetained": true,
+    "parentEnvironmentUnchanged": true,
+    "ownedLiveProcesses": [],
+    "ownedMounts": [],
+    "ownedDiskImages": [],
+    "ownedFdHolders": [],
+    "remainingSockets": [],
+    "forensicFilesRetained": 146,
+    "compiledInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+    "runtimeArchive": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/final-dist-bootstop-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "runtimeArchiveSha256": "4093b9d508588359e25012206deb5767053c41c0fdde3960705d70fd1a796b2e",
+    "runtimeManifestFilesVerified": 11,
+    "runtimeNativeReexecutedThisPhase": false,
+    "previousNativeQualification": "034:3 Rust native +3 Python scenarios; unchanged compiled inputs",
+    "historicalUserHomeNonModificationClaimEstablished": false,
+    "realUserHomeModifiedOrCleanedByThisAudit": false,
+    "resourcesDeletedByAudit": [],
+    "gaComplete": false
+  },
+  "activeChecks": {}
+}

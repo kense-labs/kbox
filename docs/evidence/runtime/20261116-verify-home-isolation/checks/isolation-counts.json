@@ -1,0 +1,12 @@
+[
+  {
+    "log": "short-temp-green1.stderr",
+    "actualIsolationCases": 4,
+    "unittestOk": true
+  },
+  {
+    "log": "verify2.stderr",
+    "actualIsolationCases": 4,
+    "unittestOk": true
+  }
+]

@@ -142,3 +142,12 @@ Next local causal task: failed boot cleanup takes a handler and deletes resource
 even if physical stop fails. Existing normal destroy retains the owner; reuse
 that invariant and cover its boot/pool callers, without touching real ~/.kbox or
 inventing another state authority. Overall continuous GA work remains active.
+
+## Verification-home evidence correction (recorded in035)
+
+The default gate wrapper inherited K_HOME, and the caller environment was later
+confirmed unset. Default tests can fall back to real ~/.kbox. This outcome's
+blanket real-home nonmodification statement is not established for default gate
+commands. The explicit isolated native homes/loader/cleanup evidence remains
+valid. [035 records the corrected private verifier, real rerun and limitations](../20261116-verify-home-isolation/OUTCOME.md).
+Prior logs are retained; no real-home cleanup or historical restoration attempted.

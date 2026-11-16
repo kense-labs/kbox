@@ -458,3 +458,12 @@ scenarios pass. Source-bound rebuilt archive4093b9d5… is retained. Default2302
 keeps six disk-service failures. Outer pool/caller ownership after errors remains
 required work; full OCI Host Service/default cutover/GA incomplete. Windows ARM64
 dependencies unsupported/no native run; platform levels unchanged, RSS unmeasured.
+
+[Verification home correction](evidence/runtime/20261116-verify-home-isolation/OUTCOME.md)
+allocates private K_HOME and short owned TMPDIR for every real gate. Four boundary
+checks and the actual rerun pass isolation; Runtime remains2302/6/51 with six disk
+failures. Earlier default-gate claims that real ~/.kbox was untouched lack an
+isolated environment record; appended corrections retain the logs. Explicit
+native archive qualification remains valid; compiled034 inputs/archive4093b9d5…
+are unchanged. Full OCI Host Service/default cutover/GA and Windows ARM64 native
+support remain unqualified; platform levels unchanged, RSS unmeasured.

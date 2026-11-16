@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "isolationRegressionCases": 4,
+  "actualRuntimeCounts": [
+    2302,
+    6,
+    51
+  ],
+  "originalLongTmpCounts": [
+    2300,
+    8,
+    51
+  ],
+  "longTmpSocketFailuresFixed": true,
+  "ownedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/real-gate-temporary/kbox-verify.AAmimw/home",
+  "ownedTmpdir": "/private/tmp/kv.DIFGdE",
+  "privateModes": true,
+  "callerCanaryRetained": true,
+  "parentEnvironmentUnchanged": true,
+  "ownedLiveProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "remainingSockets": [],
+  "forensicFilesRetained": 146,
+  "compiledInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+  "runtimeArchive": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/final-dist-bootstop-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "runtimeArchiveSha256": "4093b9d508588359e25012206deb5767053c41c0fdde3960705d70fd1a796b2e",
+  "runtimeManifestFilesVerified": 11,
+  "runtimeNativeReexecutedThisPhase": false,
+  "previousNativeQualification": "034:3 Rust native +3 Python scenarios; unchanged compiled inputs",
+  "historicalUserHomeNonModificationClaimEstablished": false,
+  "realUserHomeModifiedOrCleanedByThisAudit": false,
+  "resourcesDeletedByAudit": [],
+  "gaComplete": false
+}

@@ -1,0 +1,5 @@
+{
+  "scripts/verify-commit.sh": "f5b78c5d814760e593ec7d6800d04261f358ccbb61c4f33db6780633245690c1",
+  "scripts/test-verify-isolation.py": "d65ff4850cc53ad653d556a3b87fd92260dce3ed62019995fed64095fcb67b5f",
+  "AGENTS.md": "d2eff80f44fc096b726b99a591ac57078eb07d4a6af3c31a6e8386ddd207da75"
+}

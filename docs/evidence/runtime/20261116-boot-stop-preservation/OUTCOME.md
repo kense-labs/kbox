@@ -117,3 +117,12 @@ disk-service failures, prior SDK failure and historical unknown-actor RAM loss
 remain failures. Git UID501 lookup/GitHub DNS prerequisites remain parked from
 033; remote merge/push unproved, baseline branch already a local-main ancestor.
 No real ~/.kbox, unrelated resources, new workspace, force push or publication.
+
+## Verification-home evidence correction (recorded in035)
+
+The default gate wrapper inherited K_HOME, and the caller environment was later
+confirmed unset. Default tests can fall back to real ~/.kbox. This outcome's
+blanket real-home nonmodification statement is not established for default gate
+commands. The explicit isolated native homes/loader/cleanup evidence remains
+valid. [035 records the corrected private verifier, real rerun and limitations](../20261116-verify-home-isolation/OUTCOME.md).
+Prior logs are retained; no real-home cleanup or historical restoration attempted.

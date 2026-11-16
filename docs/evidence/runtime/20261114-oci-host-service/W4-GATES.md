@@ -104,3 +104,10 @@ Real VM with one-shot injected refusal/actual stop retry and3Rust+3Python native
 controls pass; source-bound archive/owned audit retained. Outer pool/caller owner
 lifetime after errors remains required next work, not closed by this inner fix.
 Full W4/default Host Service cutover/GA and six disk-service gates remain open.
+
+The [035 verification-home correction](../20261116-verify-home-isolation/OUTCOME.md)
+adds private K_HOME/short temporary roots and four environment/Host socket checks.
+Real gate2302/6/51 retains six external disk failures. Earlier default-gate
+real-home nonmodification claims were not established; explicit isolated native
+archive evidence remains valid. Pool/template ownership and outer caller lifetime
+remain required local work; full W4/GA and external gates remain open.

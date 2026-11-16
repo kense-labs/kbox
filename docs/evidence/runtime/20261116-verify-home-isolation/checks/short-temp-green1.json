@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "scripts/test-verify-isolation.py"
+  ],
+  "exit": 0,
+  "seconds": 4.540818959
+}

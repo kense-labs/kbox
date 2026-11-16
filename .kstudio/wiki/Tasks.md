@@ -28,6 +28,13 @@
 - **验证**: focused3、VM236、CLI935、contracts24、installer8；3Rust+3Python native；默认2302/6/51。
 - **限制**: stop错误为合成注入，VM和写入/实际重试停止为原生；外层pool/caller丢弃owner仍待做，GA未完成；RSS/tokens/cost未知。
 
+## T2026-11-16-verify-home-isolation
+
+- **结果**: 门禁强制私有K_HOME与短TMPDIR，原始退出码和留证保留。
+- **证据**: [真实执行与历史目录声明更正](../../docs/evidence/runtime/20261116-verify-home-isolation/OUTCOME.md)。
+- **验证**: 4个边界/实际Host socket检查；真实Runtime2302/6/51，归档源码未变，本轮未重跑VM原生。
+- **限制**: 旧默认门禁未建立真实用户目录不变的证明；显式隔离原生证据仍有效；pool/template/GA待办继续；RSS/tokens/cost未知。
+
 ## T2026-11-16-k-init
 
 - **完成日期**: 2026-11-16

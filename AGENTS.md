@@ -93,6 +93,11 @@ kbox is one Rust workspace for OCI execution, MicroVM resources, Agent Runtime c
 
 For each handwritten Rust behavior change, run:
 
+Before any local test invocation, set `K_HOME` to a fresh task-owned isolated
+directory. This includes targeted `cargo test` commands. `scripts/verify-commit.sh`
+allocates and reports its own private home, retained for audit on either result.
+An unset `K_HOME` uses the real user installation and is not an isolation boundary.
+
 ```bash
 cargo fmt --all -- --check
 cargo test --locked -p <owning-package> <focused-filter>

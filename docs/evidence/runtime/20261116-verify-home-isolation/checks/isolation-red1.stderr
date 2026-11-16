@@ -1,0 +1,36 @@
+FFF
+======================================================================
+FAIL: test_inherited_home_is_replaced_only_in_the_verification_child (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 67, in test_inherited_home_is_replaced_only_in_the_verification_child
+    self.run_verifier(inherited=True)
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 51, in run_verifier
+    self.assertNotEqual(home, previous, "inherited caller home must stay outside verification")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-892uqjby/caller-home') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-892uqjby/caller-home') : inherited caller home must stay outside verification
+
+======================================================================
+FAIL: test_tool_failure_is_preserved_with_its_owned_home (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 73, in test_tool_failure_is_preserved_with_its_owned_home
+    self.run_verifier(inherited=True, failure="check")
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 51, in run_verifier
+    self.assertNotEqual(home, previous, "inherited caller home must stay outside verification")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-henu758z/caller-home') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-henu758z/caller-home') : inherited caller home must stay outside verification
+
+======================================================================
+FAIL: test_unset_home_gets_a_private_owned_directory (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 70, in test_unset_home_gets_a_private_owned_directory
+    self.run_verifier(inherited=False)
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 45, in run_verifier
+    self.assertEqual(result.returncode, 42 if failure else 0, result.stdout + result.stderr)
+AssertionError: 96 != 0 : == whitespace and conflict markers ==
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.821s
+
+FAILED (failures=3)

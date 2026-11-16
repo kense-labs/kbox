@@ -1,0 +1,45 @@
+FFFF
+======================================================================
+FAIL: test_inherited_home_is_replaced_only_in_the_verification_child (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 87, in test_inherited_home_is_replaced_only_in_the_verification_child
+    self.run_verifier(inherited=True)
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 68, in run_verifier
+    self.assertNotEqual(child_temporary, temporary, "long caller TMPDIR must not control IPC path lengths")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-3g09h16o/temporary 空格') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-3g09h16o/temporary 空格') : long caller TMPDIR must not control IPC path lengths
+
+======================================================================
+FAIL: test_long_temporary_base_still_provides_a_usable_native_socket_directory (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 96, in test_long_temporary_base_still_provides_a_usable_native_socket_directory
+    self.run_verifier(inherited=True, long_base=True)
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 68, in run_verifier
+    self.assertNotEqual(child_temporary, temporary, "long caller TMPDIR must not control IPC path lengths")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-1gmzsc0w/temporary 空格/long-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-1gmzsc0w/temporary 空格/long-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx') : long caller TMPDIR must not control IPC path lengths
+
+======================================================================
+FAIL: test_tool_failure_is_preserved_with_its_owned_home (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 93, in test_tool_failure_is_preserved_with_its_owned_home
+    self.run_verifier(inherited=True, failure="check")
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 68, in run_verifier
+    self.assertNotEqual(child_temporary, temporary, "long caller TMPDIR must not control IPC path lengths")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-l8li3dba/temporary 空格') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-l8li3dba/temporary 空格') : long caller TMPDIR must not control IPC path lengths
+
+======================================================================
+FAIL: test_unset_home_gets_a_private_owned_directory (__main__.VerifyIsolation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 90, in test_unset_home_gets_a_private_owned_directory
+    self.run_verifier(inherited=False)
+  File "/Users/roylin/code/kense/kbox/scripts/test-verify-isolation.py", line 68, in run_verifier
+    self.assertNotEqual(child_temporary, temporary, "long caller TMPDIR must not control IPC path lengths")
+AssertionError: PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-vcqebenh/temporary 空格') == PosixPath('/var/folders/3d/0pn3wn612t7cs79b5ml89x440000gn/T/kbox-verify-test-vcqebenh/temporary 空格') : long caller TMPDIR must not control IPC path lengths
+
+----------------------------------------------------------------------
+Ran 4 tests in 3.919s
+
+FAILED (failures=4)

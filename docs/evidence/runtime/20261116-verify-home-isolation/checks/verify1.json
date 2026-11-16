@@ -1,0 +1,19 @@
+{
+  "command": [
+    "bash",
+    "scripts/verify-commit.sh"
+  ],
+  "exit": 101,
+  "seconds": 35.103578334,
+  "inheritedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/inherited-caller-home",
+  "ownedKhome": "/private/tmp/kbox-verify-iso-634baeeab45e/real-gate-temporary/kbox-verify.hz6rii/home",
+  "temporaryBase": "/private/tmp/kbox-verify-iso-634baeeab45e/real-gate-temporary",
+  "privateRoot": "/private/tmp/kbox-verify-iso-634baeeab45e",
+  "callerCanaryRetained": true,
+  "parentKhomeAfter": null,
+  "compiledInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+  "workflowInputs": {
+    "scripts/verify-commit.sh": "67bdfd46c69bd531576e8c0f6121e9a85ada7c5fc4e94fbb44a05050e71bc87d",
+    "scripts/test-verify-isolation.py": "46acf60d80e6bf2e81a013eefadf8ca99c3010d586ad39f570ab87b628079bdd"
+  }
+}

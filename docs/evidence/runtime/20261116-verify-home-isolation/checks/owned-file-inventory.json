@@ -1,0 +1,1024 @@
+[
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "inherited-caller-home",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": ".owned-verify-isolation",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 33
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpBqm3JH:",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 192
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/xcrun_db",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 657
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/.kbox-verify-tmp",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 23
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/.kbox-verify-owner",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 25
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/images",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/pool",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/4b4296a8-0da0-443e-94f3-a374fa0d27fd",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/7142c99c-07ea-4d1a-9d93-080aa4106c31",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/3e07f479-d8a0-4937-ac21-08b475c19fed",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/2e5b753e-358c-499f-bfd1-373dc83c3202",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/206650eb-4fec-4ac9-8b1e-6fc6eed0b7b3",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/4b4296a8-0da0-443e-94f3-a374fa0d27fd/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/4b4296a8-0da0-443e-94f3-a374fa0d27fd/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/7142c99c-07ea-4d1a-9d93-080aa4106c31/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/7142c99c-07ea-4d1a-9d93-080aa4106c31/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/3e07f479-d8a0-4937-ac21-08b475c19fed/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/3e07f479-d8a0-4937-ac21-08b475c19fed/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/2e5b753e-358c-499f-bfd1-373dc83c3202/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/2e5b753e-358c-499f-bfd1-373dc83c3202/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/206650eb-4fec-4ac9-8b1e-6fc6eed0b7b3/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/diag/failed-boots/206650eb-4fec-4ac9-8b1e-6fc6eed0b7b3/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/cache.lock",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs/6debc3d2df8471b06bb21bb9fff744763e26e7ff95af7525988361337220b713",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 95
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs/e1e1a4f21445b0bb64413e6f1ada0ced35f3d3e358f00f4b0441c57acfae4b88",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 116
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs/08e8e7d04ed75817be1e023372d047022f15b5fce53e5dcccabee0194961d540",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 113
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs/c21ce4f48794b7a8b16c816519e43c7f07991ee5a93ea117962ab786f1cc68da",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 111
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/blobs/8d286324394e2f529f275285e1ea65a3ac9176bed3efa135a85b803386a6536e",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 106
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys/539cafe645f84048f7b9ed36d3a1a06b4f037e2cc5336fd23dc38ac55dad692f",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys/041380c048b277519e32a811464cd16bf86e6d85917c9c9bc82da08df6d9d542",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys/684526e5e1d704d1afe336064773e08b55f10d5e257fb8754ffe732a87f3aba8",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 164
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys/cfc5ad9b72c96fe0133243b3911dcd79d3e2d0d72235197e2731ab7d0a0ea73b",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/buildcache/keys/40a449ff6327072c064f902fd078fe4347240d45c7ad885043f93bc15a1906cf",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.AAmimw/home/pool/tpl-c60655af9c459e71.lock",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpBqm3JH:/data",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-20/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-18/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-22/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 103
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/.tmpegntAf/home-0/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/.kbox-verify-owner",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 25
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/images",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/pool",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d5f95f74-15a7-4a75-9144-a5eb932f10e9",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/b9ce81ef-018d-47b4-9338-91922db13174",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d42b343e-fbc3-46a8-8eb0-d585fe481cf6",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d32b2fca-1607-4613-a6e9-f854048f704a",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/59c1979c-54e9-42ea-8869-d5ce80ae3145",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 128
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d5f95f74-15a7-4a75-9144-a5eb932f10e9/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d5f95f74-15a7-4a75-9144-a5eb932f10e9/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/b9ce81ef-018d-47b4-9338-91922db13174/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/b9ce81ef-018d-47b4-9338-91922db13174/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d42b343e-fbc3-46a8-8eb0-d585fe481cf6/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d42b343e-fbc3-46a8-8eb0-d585fe481cf6/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d32b2fca-1607-4613-a6e9-f854048f704a/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/d32b2fca-1607-4613-a6e9-f854048f704a/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/59c1979c-54e9-42ea-8869-d5ce80ae3145/retention.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 90
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/diag/failed-boots/59c1979c-54e9-42ea-8869-d5ce80ae3145/logs",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/cache.lock",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 224
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs/b49fca6cc55b596b1221c1de244c4d8d50fc9f9b0e65bc2ac96de30d8a4ce8b2",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs/824857cf52e37737598d979db007eb3f9903ca9f6f05995191f26e66d97dd375",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 111
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs/c9d7b7cec541956d4d8bd94edc610fee1242b193b0a5652bfa95a3db352ef43c",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 105
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs/242e9cc5a14da7927ed4ba572ce5e35537078c4e9c1944422033cda1bdd69c77",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 114
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/blobs/38b9168407b7cc4a4376da26e2422e820f2c0fbae121a3b16d0c0d7af370358d",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 116
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys/539cafe645f84048f7b9ed36d3a1a06b4f037e2cc5336fd23dc38ac55dad692f",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys/041380c048b277519e32a811464cd16bf86e6d85917c9c9bc82da08df6d9d542",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys/684526e5e1d704d1afe336064773e08b55f10d5e257fb8754ffe732a87f3aba8",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 164
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys/cfc5ad9b72c96fe0133243b3911dcd79d3e2d0d72235197e2731ab7d0a0ea73b",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/buildcache/keys/40a449ff6327072c064f902fd078fe4347240d45c7ad885043f93bc15a1906cf",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 165
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "real-gate-temporary/kbox-verify.hz6rii/home/pool/tpl-c60655af9c459e71.lock",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kbox-verify-iso-634baeeab45e",
+    "path": "inherited-caller-home/canary",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 20
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".kbox-verify-owner",
+    "mode": "0o644",
+    "kind": 32768,
+    "bytes": 81
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpGAWNk9:",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 192
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": "xcrun_db",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 657
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpGAWNk9:/data",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 64
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-19/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-18/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-22/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 103
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes/test-box",
+    "mode": "0o755",
+    "kind": 16384,
+    "bytes": 96
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes/test-box/runtime-control",
+    "mode": "0o700",
+    "kind": 16384,
+    "bytes": 160
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes/test-box/runtime-control/baseline.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes/test-box/runtime-control/status.json",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  },
+  {
+    "root": "/private/tmp/kv.DIFGdE",
+    "path": ".tmpWq7PHE/home-0/boxes/test-box/runtime-control/staged-environment",
+    "mode": "0o600",
+    "kind": 32768,
+    "bytes": 0
+  }
+]

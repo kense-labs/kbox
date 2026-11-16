@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--all"
+  ],
+  "exit": 0,
+  "seconds": 3.5121345,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-handler-dd7d5776d97d/check-home-fmt1",
+    "TMPDIR": "/private/tmp/kbox-handler-dd7d5776d97d/t"
+  }
+}

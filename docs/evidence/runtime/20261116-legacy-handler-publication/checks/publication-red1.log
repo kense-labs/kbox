@@ -1,0 +1,20 @@
+
+running 1 test
+test vm::owned_vm_lifecycle_tests::returned_legacy_child_survives_install_waiter_cancellation ... FAILED
+
+failures:
+
+---- vm::owned_vm_lifecycle_tests::returned_legacy_child_survives_install_waiter_cancellation stdout ----
+
+thread 'vm::owned_vm_lifecycle_tests::returned_legacy_child_survives_install_waiter_cancellation' (119159925) panicked at crates/box/runtime/src/vm/tests/owned_vm_lifecycle.rs:570:5:
+assertion `left == right` failed: the actual returned legacy handler must remain owned after installation cancellation
+  left: None
+ right: Some(14884)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    vm::owned_vm_lifecycle_tests::returned_legacy_child_survives_install_waiter_cancellation
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2404 filtered out; finished in 0.06s
+

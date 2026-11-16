@@ -1,0 +1,60 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/native-client-publication1",
+    "--ignored",
+    "--exact",
+    "vm::owned_vm_lifecycle_tests::native::native_legacy_returned_vm_handler_survives_cancel_and_actual_cleanup",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1",
+  "exit": 0,
+  "seconds": 12.527152291,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 3527,
+      "parent": 97896,
+      "command": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"58a26709-5093-4a7d-b683-70b07d9fcfd3\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/58a26709-5093-4a7d-b683-70b07d9fcfd3/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/58a26709-5093-4a7d-b683-70b07d9fcfd3/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/58a26709-5093-4a7d-b683-70b07d9fcfd3/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/58a26709-5093-4a7d-b683-70b07d9fcfd3/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/volumes/anon_58a26709_5c939c3768d208ef14f80dfb91f83fd4\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/58a26709-5093-4a7d-b683-70b07d9fcfd3/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-legacy-handler-publication/checks/native-publication1-live-logs/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-legacy-handler-publication/checks/native-publication1-live-logs/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-legacy-handler-publication/checks/native-publication1-live-logs/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-legacy-handler-publication/checks/native-publication1-live-logs/boxes/58a26709-5093-4a7d-b683-70b07d9fcfd3/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    }
+  ],
+  "clientSha256": "69e8b3bc6e8b29389aca37ec0dd197388085b671a67a920f472c5ef8e99ebf61",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1",
+  "sourceInputsSha256": "27b4f58eba9b28592fd55c41b3b2c1d200bdc1efa365ea64cb90634dc544a8ea"
+}

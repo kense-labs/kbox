@@ -644,6 +644,10 @@ impl VmManager {
 
     /// Remove host-side boot artifacts after a failed boot attempt.
     async fn cleanup_boot_failure(&mut self) {
+        if let Err(error) = self.install_pending_handler().await {
+            tracing::warn!(box_id = %self.box_id, %error, "Boot cleanup retains conflicting handlers and working data");
+            return;
+        }
         // Sandbox peer-auth may have dropped this process to the real UID.
         // Overlay unmount needs effective root / CAP_SYS_ADMIN.
         #[cfg(target_os = "linux")]
@@ -694,7 +698,10 @@ impl VmManager {
                     error = %error,
                     "Failed to stop VM handler after boot failure; retaining runtime ownership"
                 );
-                *self.handler.write().await = Some(handler);
+                self.pending_handler = Some(handler);
+                if let Err(error) = self.install_pending_handler().await {
+                    tracing::warn!(box_id = %self.box_id, %error, "Failed boot handler remains pending for cleanup");
+                }
                 self.retain_boot_failure_diagnostics().await;
                 return;
             }

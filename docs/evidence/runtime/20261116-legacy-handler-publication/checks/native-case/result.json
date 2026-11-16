@@ -1,0 +1,36 @@
+{
+  "actualStopCalls": 1,
+  "before": {
+    "allocation": {
+      "created_at": "2026-11-16T08:42:50.134811+00:00",
+      "driver": "local",
+      "in_use_by": [
+        "58a26709-5093-4a7d-b683-70b07d9fcfd3"
+      ],
+      "labels": {
+        "anonymous": "true",
+        "kbox.volume.allocation": "7665165f-1661-450c-bdeb-7e00c2795065",
+        "kbox.volume.kind": "anonymous-v1",
+        "kbox.volume.owner": "58a26709-5093-4a7d-b683-70b07d9fcfd3"
+      },
+      "mount_point": "/private/tmp/kbox-handler-dd7d5776d97d/native-publication-attempt-1/home/volumes/anon_58a26709_5c939c3768d208ef14f80dfb91f83fd4",
+      "name": "anon_58a26709_5c939c3768d208ef14f80dfb91f83fd4",
+      "size_limit": 0
+    },
+    "execution": "58a26709-5093-4a7d-b683-70b07d9fcfd3",
+    "pid": 3527,
+    "volumeIdentity": [
+      16777233,
+      305702569
+    ]
+  },
+  "callerBytesRetained": 2,
+  "guestContinuedWriting": true,
+  "noLateWritesAfterOwnedCleanup": true,
+  "pendingOwnerSurvivedCancellation": true,
+  "productPhysicallyFinalized": true,
+  "repeatAcquisitionRefused": true,
+  "runtimeRssMeasured": false,
+  "sameActualPidAndAllocationPreserved": true,
+  "status": "PASS"
+}

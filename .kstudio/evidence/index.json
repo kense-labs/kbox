@@ -78,6 +78,12 @@
       "path": "T2026-11-16-pool-maintenance-join/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Cancelled maintenance join retains actual worker;0/2->2/0, installed3Rust+3Python/scoped audit; legacy/internal/GA open"
+    },
+    {
+      "id": "T2026-11-16-legacy-handler-publication",
+      "path": "T2026-11-16-legacy-handler-publication/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Returned legacy handlers retained before installation,0/1->1/0; VM246/CLI949/installed3Rust+3Python/scoped audit; internal/GA open"
     }
   ]
 }

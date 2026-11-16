@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "returned_legacy_child_survives_install_waiter_cancellation"
+  ],
+  "exit": 101,
+  "seconds": 18.581130541,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-handler-dd7d5776d97d/check-home-publication-red1",
+    "TMPDIR": "/private/tmp/kbox-handler-dd7d5776d97d/t"
+  }
+}

@@ -98,3 +98,10 @@
 - **证据**: [最终包、真实VM和清理](../../docs/evidence/runtime/20261116-pool-maintenance-join/OUTCOME.md)。
 - **验证**: Pool76/0/7、CLI949/Clippy；默认2341/6/57；3Rust+3Python、4daemon/16Ready/4命令/25home审计。
 - **限制**: legacy publication/internal/template/unpublished等owner及GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-legacy-handler-publication
+
+- **结果**: 复用pending槽保留返回handler，取消/重复获取/冲突不丢owner；默认清理接通，0/1至1/0。
+- **证据**: [失败、归档、真实VM和清理](../../docs/evidence/runtime/20261116-legacy-handler-publication/OUTCOME.md)。
+- **验证**: VM246/0/3、CLI949/Clippy；默认2344/6/58；3Rust+3Python、4daemon/16Ready/4命令/26home审计；受控实际handler交接，救援未用。
+- **限制**: internalboot/unpublished/legacy/from_pid与GA继续；GitUID501/DNS仍外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。

@@ -92,6 +92,7 @@ impl VmManager {
         timeout_ms: u64,
         preserve_rootfs: bool,
     ) -> Result<()> {
+        self.install_pending_handler().await?;
         let state_lock = Arc::clone(&self.state);
         let mut state = state_lock.write().await;
 

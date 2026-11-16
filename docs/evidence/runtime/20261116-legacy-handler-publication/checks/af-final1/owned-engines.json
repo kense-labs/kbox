@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 44099,
+    "parent": 44086,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1/bin/kbox engine serve --socket /private/tmp/kp-1jjqn5wn/s",
+    "socket": "/private/tmp/kp-1jjqn5wn/s"
+  },
+  {
+    "pid": 48470,
+    "parent": 44086,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1/bin/kbox engine serve --socket /private/tmp/kp-1jjqn5wn/s",
+    "socket": "/private/tmp/kp-1jjqn5wn/s"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "27b4f58eba9b28592fd55c41b3b2c1d200bdc1efa365ea64cb90634dc544a8ea",
+  "compiledInputCount": 1730,
+  "homes": 26,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 811,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "03237d48eb255a9c5b7bd362addd3d69b9e36a90e2bd6d7f0c602f7b8970a5bd",
+      "after": "6e1cd6b768ce7adbbd518c1e111ec651ab45efda45ea74bb807fb9d13d67b42f"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.I6EosF"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticLostReturnedHandlerFailuresRetained": 1,
+  "stopFault": "Controlled return of an already launched actual VM handler through a proxy with rescue access; no synthetic stop error, actual pending ownership/live writes/product finalization proved, rescue unused",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

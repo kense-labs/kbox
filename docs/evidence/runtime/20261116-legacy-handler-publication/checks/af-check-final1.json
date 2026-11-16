@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-legacy-handler-publication/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 174.051191791,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-handler-dd7d5776d97d/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-handler-dd7d5776d97d/t"
+  }
+}

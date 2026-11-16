@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kv.I6EosF"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

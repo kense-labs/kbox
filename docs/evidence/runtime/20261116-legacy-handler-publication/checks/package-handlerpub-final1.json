@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 118.218213625,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/package-home-handlerpub-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "27b4f58eba9b28592fd55c41b3b2c1d200bdc1efa365ea64cb90634dc544a8ea"
+}

@@ -71,6 +71,44 @@ impl VmManager {
         Ok(())
     }
 
+    pub(super) async fn start_legacy_handler(
+        &mut self,
+        spec: &crate::vmm::InstanceSpec,
+    ) -> Result<()> {
+        if self.pending_handler.is_some() {
+            return Err(BoxError::StateError(
+                "returned VM handler is awaiting installation".into(),
+            ));
+        }
+        let provider = self
+            .provider
+            .as_ref()
+            .ok_or_else(|| BoxError::BoxBootError {
+                message: "VMM provider not initialized".into(),
+                hint: Some("Ensure VmManager has a provider set before boot".into()),
+            })?;
+        self.provider_launch = ProviderLaunch::Attempted;
+        let handler = provider.start(spec).await?;
+        // Retain the returned acquisition before its installation can yield.
+        self.pending_handler = Some(handler);
+        self.install_pending_handler().await
+    }
+
+    pub(super) async fn install_pending_handler(&mut self) -> Result<()> {
+        if self.pending_handler.is_none() {
+            return Ok(());
+        }
+        self.completed_cleanup = None;
+        let mut destination = self.handler.write().await;
+        if destination.is_some() {
+            return Err(BoxError::StateError(
+                "conflicting VM handlers remain retained".into(),
+            ));
+        }
+        *destination = self.pending_handler.take();
+        Ok(())
+    }
+
     async fn cleanup_failed_boot_if_legacy(&mut self, selected: bool) {
         if !selected {
             self.cleanup_boot_failure().await;
@@ -355,8 +393,7 @@ impl VmManager {
             self.provider = Some(Box::new(controller));
         }
 
-        // 4. Start VM via provider. Selected ownership is retained before
-        // the installation await; the legacy branch preserves its contract.
+        // 4. Retain either acquisition before the handler installation can yield.
         let launch_result = {
             let _phase = self.boot_phase_timer("launch");
             let vm_start_span = tracing::info_span!(parent: &boot_span, "vm_start");
@@ -364,19 +401,7 @@ impl VmManager {
                 if let Some((scope, acquisition)) = selected.as_mut() {
                     self.start_original_handler(&spec, scope, acquisition).await
                 } else {
-                    let provider =
-                        self.provider
-                            .as_ref()
-                            .ok_or_else(|| BoxError::BoxBootError {
-                                message: "VMM provider not initialized".into(),
-                                hint: Some(
-                                    "Ensure VmManager has a provider set before boot".into(),
-                                ),
-                            })?;
-                    self.provider_launch = ProviderLaunch::Attempted;
-                    let handler = provider.start(&spec).await?;
-                    *self.handler.write().await = Some(handler);
-                    Ok(())
+                    self.start_legacy_handler(&spec).await
                 }
             }
             .instrument(vm_start_span)

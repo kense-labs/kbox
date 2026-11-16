@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/build-box-final1.py"
+  ],
+  "exit": 0,
+  "seconds": 121.067991416,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-handler-dd7d5776d97d/check-home-build-box-final1",
+    "TMPDIR": "/private/tmp/kbox-handler-dd7d5776d97d/t"
+  }
+}

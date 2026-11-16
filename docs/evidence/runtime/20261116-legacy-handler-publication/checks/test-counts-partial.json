@@ -1,0 +1,66 @@
+{
+  "publication-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "publication-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "owned-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "9",
+        "0",
+        "1"
+      ]
+    ]
+  },
+  "vm-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "246",
+        "0",
+        "3"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2344",
+        "6",
+        "58"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073",
+  "privateRoot": "/private/tmp/kbox-handler-dd7d5776d97d",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-legacy-handler-publication",
+  "baseCommit": "388241460a148ac13449ff4ddeda7dd25b1a2892",
+  "image": "kbox-stop-preservation-native:proof",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/image-cache",
+  "priorArchives": {
+    "box": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/final-dist-pooljoin-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "oci": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz"
+  },
+  "status": "Bounded044 source/archive/native/audit accepted; task-only local commit next",
+  "sourceInputsSha256": "27b4f58eba9b28592fd55c41b3b2c1d200bdc1efa365ea64cb90634dc544a8ea",
+  "sourceInputCount": 1730,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/installed-handlerpub-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/final-dist-handlerpub-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/native-client-final1",
+  "nativeClientSha256": "69e8b3bc6e8b29389aca37ec0dd197388085b671a67a920f472c5ef8e99ebf61",
+  "cleanup": {
+    "status": "PASS",
+    "sourceInputsSha256": "27b4f58eba9b28592fd55c41b3b2c1d200bdc1efa365ea64cb90634dc544a8ea",
+    "compiledInputCount": 1730,
+    "homes": 26,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "ownedDiskImages": [],
+    "ownedFdHolders": [],
+    "observedVmSocketDirectories": 35,
+    "checkedSocketPaths": 146,
+    "remainingSockets": [],
+    "observedEngines": 2,
+    "immutableCacheFilesCompared": 811,
+    "mutableCatalog": [
+      {
+        "path": "index.json",
+        "before": "03237d48eb255a9c5b7bd362addd3d69b9e36a90e2bd6d7f0c602f7b8970a5bd",
+        "after": "6e1cd6b768ce7adbbd518c1e111ec651ab45efda45ea74bb807fb9d13d67b42f"
+      }
+    ],
+    "qualifiedRustNativeTests": 3,
+    "qualifiedPythonScenarios": 3,
+    "coldPoolDaemons": 4,
+    "initialReadyPoolVms": 16,
+    "actualPoolGuestCommands": 4,
+    "preexistingPoolDirectoriesPreserved": 4,
+    "verifierShortRoots": [
+      "/private/tmp/kv.I6EosF"
+    ],
+    "failedNativeRunsRetained": 0,
+    "hermeticLostReturnedHandlerFailuresRetained": 1,
+    "stopFault": "Controlled return of an already launched actual VM handler through a proxy with rescue access; no synthetic stop error, actual pending ownership/live writes/product finalization proved, rescue unused",
+    "actualOsStopFailureClaimed": false,
+    "callerSourcesRetained": true,
+    "previousArchivesRetained": true,
+    "resourcesDeletedByAudit": [],
+    "runtimeMemoryMeasured": false,
+    "outerPoolOwnerLifetimeSolved": false,
+    "gaComplete": false
+  }
+}

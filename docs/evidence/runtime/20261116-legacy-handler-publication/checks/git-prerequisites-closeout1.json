@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-11-16T08:45:09.860651+00:00",
+  "uid": 501,
+  "command": [
+    "python3",
+    "pwd.getpwuid(os.getuid()); socket.getaddrinfo(github.com,22)"
+  ],
+  "pushAttempted": false,
+  "passwd": {
+    "supported": false,
+    "error": "'getpwuid(): uid not found: 501'"
+  },
+  "githubDns": {
+    "supported": false,
+    "errno": 8,
+    "error": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  "canAttemptSshTransport": false,
+  "cachedOriginMain": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967"
+}

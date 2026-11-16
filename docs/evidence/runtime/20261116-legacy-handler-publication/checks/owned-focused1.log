@@ -1,0 +1,15 @@
+
+running 10 tests
+test vm::owned_vm_lifecycle_tests::native::native_legacy_returned_vm_handler_survives_cancel_and_actual_cleanup ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test vm::owned_vm_lifecycle_tests::original_fixture_uuid_socket_paths_and_owned_drop_are_isolated ... ok
+test vm::owned_vm_lifecycle_tests::provider_entry_is_attempted_before_yield_error_and_reentry_never_reacquires ... ok
+test vm::owned_vm_lifecycle_tests::returned_legacy_child_survives_install_waiter_cancellation ... ok
+test vm::owned_vm_lifecycle_tests::original_close_forwards_exact_budget_and_retains_handler_after_expiry_or_error ... ok
+test vm::owned_vm_lifecycle_tests::finalization_failure_keeps_exact_provider_paths_and_direct_managers_unqualified ... ok
+test vm::owned_vm_lifecycle_tests::legacy_pending_handler_conflict_retains_both_owners_and_working_data ... ok
+test vm::owned_vm_lifecycle_tests::legacy_pending_handler_cleanup_ignores_stale_completed_cache ... ok
+test vm::owned_vm_lifecycle_tests::returned_owned_child_survives_install_waiter_drop_and_conflicting_slot ... ok
+test vm::owned_vm_lifecycle_tests::finalization_requires_actual_bound_child_and_config_none_plus_actual_none ... ok
+
+test result: ok. 9 passed; 0 failed; 1 ignored; 0 measured; 2398 filtered out; finished in 0.20s
+

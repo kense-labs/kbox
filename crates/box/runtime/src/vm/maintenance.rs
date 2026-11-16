@@ -154,20 +154,10 @@ impl VmManager {
             let shim = VmController::find_shim()?;
             self.provider = Some(Box::new(VmController::new(shim)?));
         }
-        let start_result = self
-            .provider
-            .as_ref()
-            .ok_or_else(|| BoxError::StateError("VMM provider is missing".to_string()))?
-            .start(&spec)
-            .await;
-        let handler = match start_result {
-            Ok(handler) => handler,
-            Err(error) => {
-                self.cleanup_boot_failure().await;
-                return Err(error);
-            }
-        };
-        *self.handler.write().await = Some(handler);
+        if let Err(error) = self.start_legacy_handler(&spec).await {
+            self.cleanup_boot_failure().await;
+            return Err(error);
+        }
 
         if let Err(error) = async {
             self.wait_for_vm_running().await?;

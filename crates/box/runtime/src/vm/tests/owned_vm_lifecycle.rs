@@ -542,3 +542,125 @@ fn original_fixture_uuid_socket_paths_and_owned_drop_are_isolated() {
     drop(second);
     assert!(!second_socket.exists());
 }
+
+#[cfg(unix)]
+#[tokio::test]
+async fn returned_legacy_child_survives_install_waiter_cancellation() {
+    let temp = tempfile::tempdir().unwrap();
+    let mut vm = VmManager::new(BoxConfig::default(), EventEmitter::new(16));
+    vm.home_dir = temp.path().into();
+    vm.rootfs_provider = Arc::new(crate::rootfs::CopyProvider);
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    std::fs::create_dir_all(box_dir.join("rootfs")).unwrap();
+    std::fs::write(box_dir.join("rootfs/canary"), b"retained-working-data").unwrap();
+    let (returned, _) = child(false);
+    let pid = returned.pid();
+    let calls = Arc::new(AtomicUsize::new(0));
+    vm.provider = Some(Box::new(ReturnProvider {
+        handler: StdMutex::new(Some(returned)),
+        calls: calls.clone(),
+    }));
+    let slot = vm.handler.clone();
+    let locked = slot.write().await;
+    {
+        let spec = InstanceSpec::default();
+        let future = vm.start_legacy_handler(&spec);
+        tokio::pin!(future);
+        poll_pending(future.as_mut()).await;
+    }
+    assert_eq!(
+        vm.pending_handler.as_ref().map(|handler| handler.pid()),
+        Some(pid),
+        "the actual returned legacy handler must remain owned after installation cancellation"
+    );
+    assert!(vm.pending_handler.as_ref().unwrap().is_running());
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert!(matches!(
+        vm.start_legacy_handler(&InstanceSpec::default()).await,
+        Err(BoxError::StateError(_))
+    ));
+    assert_eq!(
+        calls.load(Ordering::SeqCst),
+        1,
+        "pending acquisition cannot be repeated"
+    );
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"retained-working-data"
+    );
+    drop(locked);
+    vm.destroy_with_timeout(0).await.unwrap();
+    assert!(vm.pending_handler.is_none() && vm.handler.read().await.is_none());
+    assert!(!box_dir.exists());
+}
+
+#[cfg(unix)]
+#[tokio::test]
+async fn legacy_pending_handler_cleanup_ignores_stale_completed_cache() {
+    for boot_failure in [false, true] {
+        let root = tempfile::tempdir().unwrap();
+        let mut vm = VmManager::new(BoxConfig::default(), EventEmitter::new(16));
+        vm.home_dir = root.path().into();
+        vm.rootfs_provider = Arc::new(crate::rootfs::CopyProvider);
+        let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+        std::fs::create_dir_all(box_dir.join("rootfs")).unwrap();
+        std::fs::write(box_dir.join("rootfs/canary"), b"pending-owner-data").unwrap();
+        let (handler, _) = child(false);
+        vm.pending_handler = Some(handler);
+        vm.completed_cleanup = Some(false);
+        *vm.state.write().await = BoxState::Stopped;
+        if boot_failure {
+            vm.cleanup_boot_failure().await;
+        } else {
+            vm.destroy_with_timeout(0).await.unwrap();
+        }
+        assert!(
+            vm.pending_handler.is_none() && vm.handler.read().await.is_none(),
+            "cached stopped cleanup cannot hide a newly returned actual handler"
+        );
+        assert!(!box_dir.exists());
+    }
+}
+
+#[cfg(unix)]
+#[tokio::test]
+async fn legacy_pending_handler_conflict_retains_both_owners_and_working_data() {
+    let root = tempfile::tempdir().unwrap();
+    let mut vm = VmManager::new(BoxConfig::default(), EventEmitter::new(16));
+    vm.home_dir = root.path().into();
+    vm.rootfs_provider = Arc::new(crate::rootfs::CopyProvider);
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    std::fs::create_dir_all(box_dir.join("rootfs")).unwrap();
+    std::fs::write(box_dir.join("rootfs/canary"), b"conflicting-owner-data").unwrap();
+    let (pending, _) = child(false);
+    let pending_pid = pending.pid();
+    let (installed, _) = child(false);
+    let installed_pid = installed.pid();
+    vm.pending_handler = Some(pending);
+    *vm.handler.write().await = Some(installed);
+    assert!(matches!(
+        vm.destroy_with_timeout(0).await,
+        Err(BoxError::StateError(_))
+    ));
+    vm.cleanup_boot_failure().await;
+    assert_eq!(vm.pending_handler.as_ref().unwrap().pid(), pending_pid);
+    assert_eq!(
+        vm.handler.read().await.as_ref().unwrap().pid(),
+        installed_pid
+    );
+    assert!(vm.pending_handler.as_ref().unwrap().is_running());
+    assert!(vm.handler.read().await.as_ref().unwrap().is_running());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"conflicting-owner-data"
+    );
+    let mut other = vm.handler.write().await.take().unwrap();
+    other.stop(15, 0).unwrap();
+    vm.destroy_with_timeout(0).await.unwrap();
+    assert!(vm.pending_handler.is_none() && vm.handler.read().await.is_none());
+    assert!(!box_dir.exists());
+}
+
+#[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+#[path = "handler_publication_native.rs"]
+mod native;

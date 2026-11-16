@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "190148b3347368ac965c1ff6f7450269a35f5d2fa3ce17073bfb9bbd7c8b8052",
+  "compiledInputCount": 1731,
+  "homes": 27,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 839,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "51838f095edfda719c9f4841003706786a55ae13b452523f42d1d12c491919bd",
+      "after": "7f27d07abc314e57dffea08b068eb4cdcda31a1ef1becf411bc8b66fb56361f8"
+    }
+  ],
+  "qualifiedRustNativeTests": 4,
+  "qualifiedVmRustNativeTests": 3,
+  "qualifiedPrelaunchRefusalRustTests": 1,
+  "refusalCaseActualVmLaunches": 0,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.MrRL9O"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticAdmissionFailuresRetained": 2,
+  "stopFault": "Controlled gate before actual VmController start; actual fresh native VM boot cancelled at retained pending publication, no fabricated OS stop error; actual owner/PID/allocation/writes/product drain proved",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

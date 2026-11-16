@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 107.610492334,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/package-home-pooladmit-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "190148b3347368ac965c1ff6f7450269a35f5d2fa3ce17073bfb9bbd7c8b8052"
+}

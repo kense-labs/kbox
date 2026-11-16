@@ -90,6 +90,12 @@
       "path": "T2026-11-16-pool-boot-owner/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Early actual published pool boot ownership,0/1->1/0; Pool78/CLI949/installed3Rust+3Python/owned audit; startup/admission/GA open"
+    },
+    {
+      "id": "T2026-11-16-pool-boot-admission",
+      "path": "T2026-11-16-pool-boot-admission/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Queued shutdown refuses before boot;2/2->4/0,Pool80/CLI949;3RustVM+1zero-VM-negative+3Python/owned audit; startup/GA open"
     }
   ]
 }

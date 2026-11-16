@@ -112,3 +112,10 @@
 - **证据**: [失败、归档、真实VM和清理](../../docs/evidence/runtime/20261116-pool-boot-owner/OUTCOME.md)。
 - **验证**: Pool78/0/8、CLI949/Clippy；默认2346/6/59；3Rust+3Python、4daemon/16Ready/4命令/28home审计；编译失败保留/修复。
 - **限制**: unpublished/queuedshutdown/providerinner/legacy/from_pid与GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-boot-admission
+
+- **结果**: shutdown后在新claim/boot前拒绝，恢复不再冷回退；定向2/2至4/0，EM既有判定不变。
+- **证据**: [失败、归档、分开的原生计数和清理](../../docs/evidence/runtime/20261116-pool-boot-admission/OUTCOME.md)。
+- **验证**: Pool80/0/9、CLI949/Clippy；默认2348/6/60；3Rust实际VM+1Rust拒绝(0VM)+3Python、4daemon/16Ready/4命令/27home审计。
+- **限制**: unpublished/providerinner/legacy/from_pid及GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。

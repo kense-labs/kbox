@@ -1,0 +1,785 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/af-final1/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/af-final1/native-oci/ecd5be5e03d84855aba5620df10b1fb2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/af-final1/native-prewarm/3857bcb0c3ae4f7fa5fee73c11fb77c9/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/af-final1/native-primary/baa7f69fca07400d886b0fb24aec5606/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/af-final1/native-readonly/f3410ac4fd96497ead9142cb6fb68ff2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-admission-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-admission-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-af-check-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-build-box-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-cli-full1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-clippy1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-final-audit-check1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-fmt1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-freeze-client1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-identities-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-native-admission-check1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-native-boot-check1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-pool-focused1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-pool-wave-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-verify1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/native-admission-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/native-boot-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-admit-fbf62892dbbc/t/kbox-verify.lYiNTR/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

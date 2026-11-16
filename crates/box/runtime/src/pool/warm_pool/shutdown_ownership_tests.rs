@@ -1420,3 +1420,68 @@ async fn clean_prelaunch_cold_boot_failure_releases_owner_and_preserves_admissio
     );
     pool.drain_idle().await.unwrap();
 }
+
+async fn assert_closed_cold_boot_refuses_before_validation(queued: bool) {
+    let root = tempfile::tempdir().unwrap();
+    let mut vm = VmManager::new(
+        BoxConfig {
+            snapshot_mem_file: Some("incomplete-snapshot-request".into()),
+            ..BoxConfig::default()
+        },
+        EventEmitter::new(16),
+    );
+    vm.home_dir = root.path().join("home");
+    vm.rootfs_provider = Arc::new(crate::rootfs::CopyProvider);
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    let result = {
+        let resources = pool.template_resources.lock().await;
+        let boot = WarmPool::boot_cold_vm(
+            vm,
+            &pool.template_resources,
+            &pool.retiring,
+            &pool.shutdown_tx,
+        );
+        tokio::pin!(boot);
+        if queued {
+            assert!(futures::poll!(boot.as_mut()).is_pending());
+        }
+        pool.signal_shutdown();
+        drop(resources);
+        boot.await
+    };
+    assert!(
+        matches!(result, Err(BoxError::PoolError(_))),
+        "closed admission must refuse before even validating boot inputs"
+    );
+    assert!(
+        pool.retiring.lock().is_empty(),
+        "known never-started owner must finalize exactly"
+    );
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(pool.stats().await.total_created, 0);
+    pool.drain_idle().await.unwrap();
+}
+
+#[tokio::test]
+async fn closed_cold_boot_entry_refuses_before_validation() {
+    assert_closed_cold_boot_refuses_before_validation(false).await;
+}
+
+#[tokio::test]
+async fn queued_cold_boot_template_wait_rechecks_closed_admission() {
+    assert_closed_cold_boot_refuses_before_validation(true).await;
+}

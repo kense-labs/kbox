@@ -1,0 +1,27 @@
+
+running 4 tests
+test pool::warm_pool::shutdown_ownership_tests::clean_prelaunch_cold_boot_failure_releases_owner_and_preserves_admission ... ok
+test pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation ... FAILED
+test pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission ... FAILED
+test pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner ... ok
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation' (120832475) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1448:5:
+closed admission must refuse before even validating boot inputs
+
+---- pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission' (120832476) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1448:5:
+closed admission must refuse before even validating boot inputs
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation
+    pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission
+
+test result: FAILED. 2 passed; 2 failed; 0 ignored; 0 measured; 2409 filtered out; finished in 0.02s
+

@@ -1,0 +1,72 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840",
+  "privateRoot": "/private/tmp/kbox-pool-admit-fbf62892dbbc",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-boot-admission",
+  "baseCommit": "6d8ca72941edd78ce7efe36b1c616d8e5713c2a7",
+  "image": "kbox-stop-preservation-native:proof",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/image-cache",
+  "priorArchives": {
+    "box": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/final-dist-poolboot-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "oci": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz"
+  },
+  "status": "Bounded046 source/archive/native/audit accepted; task-only local commit next",
+  "sourceInputsSha256": "190148b3347368ac965c1ff6f7450269a35f5d2fa3ce17073bfb9bbd7c8b8052",
+  "sourceInputCount": 1731,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/final-dist-pooladmit-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/native-client-final1",
+  "nativeClientSha256": "6789300ad93e9c7a7413d6ae22e2d561aa775be37ca5b359cb3a3fc6cd9427a6",
+  "cleanup": {
+    "status": "PASS",
+    "sourceInputsSha256": "190148b3347368ac965c1ff6f7450269a35f5d2fa3ce17073bfb9bbd7c8b8052",
+    "compiledInputCount": 1731,
+    "homes": 27,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "ownedDiskImages": [],
+    "ownedFdHolders": [],
+    "observedVmSocketDirectories": 35,
+    "checkedSocketPaths": 146,
+    "remainingSockets": [],
+    "observedEngines": 2,
+    "immutableCacheFilesCompared": 839,
+    "mutableCatalog": [
+      {
+        "path": "index.json",
+        "before": "51838f095edfda719c9f4841003706786a55ae13b452523f42d1d12c491919bd",
+        "after": "7f27d07abc314e57dffea08b068eb4cdcda31a1ef1becf411bc8b66fb56361f8"
+      }
+    ],
+    "qualifiedRustNativeTests": 4,
+    "qualifiedVmRustNativeTests": 3,
+    "qualifiedPrelaunchRefusalRustTests": 1,
+    "refusalCaseActualVmLaunches": 0,
+    "qualifiedPythonScenarios": 3,
+    "coldPoolDaemons": 4,
+    "initialReadyPoolVms": 16,
+    "actualPoolGuestCommands": 4,
+    "preexistingPoolDirectoriesPreserved": 4,
+    "verifierShortRoots": [
+      "/private/tmp/kv.MrRL9O"
+    ],
+    "failedNativeRunsRetained": 0,
+    "hermeticAdmissionFailuresRetained": 2,
+    "stopFault": "Controlled gate before actual VmController start; actual fresh native VM boot cancelled at retained pending publication, no fabricated OS stop error; actual owner/PID/allocation/writes/product drain proved",
+    "actualOsStopFailureClaimed": false,
+    "callerSourcesRetained": true,
+    "previousArchivesRetained": true,
+    "resourcesDeletedByAudit": [],
+    "runtimeMemoryMeasured": false,
+    "outerPoolOwnerLifetimeSolved": false,
+    "gaComplete": false
+  }
+}

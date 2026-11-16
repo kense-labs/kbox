@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "cold_boot_"
+  ],
+  "exit": 101,
+  "seconds": 13.643103457999999,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-admission-red1",
+    "TMPDIR": "/private/tmp/kbox-pool-admit-fbf62892dbbc/t"
+  }
+}

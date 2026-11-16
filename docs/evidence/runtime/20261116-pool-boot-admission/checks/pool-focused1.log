@@ -1,0 +1,94 @@
+
+running 89 tests
+test pool::warm_pool::batch_native::native_completed_batch_owner_survives_consumer_cancellation_and_actual_drain ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::boot_owner_native::native_in_progress_pool_boot_retains_actual_vm_across_cancellation_and_drain ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::boot_owner_native::native_queued_template_shutdown_refuses_before_actual_provider_entry ... ignored, requires owned sentinel home, pinned image and installed companions; refusal case launches zero VMs
+test pool::warm_pool::drain_native::native_cancelled_drain_stats_wait_preserves_exact_vm_until_actual_retry ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::drain_native::native_cancelled_maintenance_join_preserves_worker_and_vm_until_retry ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::post_boot_tests::native_lost_post_boot_channel_stops_real_vm_and_late_writes ... ignored, requires sentinel-owned home, cached image and installed Box companions
+test pool::warm_pool::rollback_native::native_rollback_preserves_unrelated_vm_and_allocation_across_idle_mutation ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::shutdown_native::native_foreground_release_retains_vm_across_cancel_refusal_and_actual_close_retry ... ignored, requires owned sentinel home, VOLUME image and final installed companions
+test pool::warm_pool::shutdown_native::native_published_pool_retains_vm_across_cancel_refusal_and_actual_close_retry ... ignored, requires owned sentinel home, VOLUME image and final installed companions
+test pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker ... ok
+test pool::warm_pool::shutdown_ownership_tests::clean_prelaunch_cold_boot_failure_releases_owner_and_preserves_admission ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_closed_admission_refuses_before_waiting_on_boot_permits ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_rollback_stats_wait_keeps_the_idle_owner_and_count ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_drain_keeps_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_shared_drain_keeps_owner ... ok
+test pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_stats_wait_keeps_the_original_idle_member_and_count ... ok
+test pool::warm_pool::post_boot_tests::authenticated_post_boot_vm_remains_owned_and_ready ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry ... ok
+test pool::warm_pool::post_boot_tests::process_prewarm_refusal_still_retires_the_owned_vm ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_task_output_drop_keeps_the_registered_actual_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_queued_boot_rechecks_admission_after_its_permit ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_idle_detachment_invalidation_keeps_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::exclusive_foreground_transfer_returns_the_same_actual_manager ... ok
+test pool::warm_pool::shutdown_ownership_tests::foreground_release_retains_the_exact_owner_after_stop_refusal ... ok
+test pool::warm_pool::shutdown_ownership_tests::shutdown_admission_refuses_idle_and_queued_cold_acquisition ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_foreground_health_wait_retains_idle_acquire_and_release_owners ... ok
+test pool::warm_pool::shutdown_ownership_tests::foreground_acquire_stop_refusal_closes_admission_without_launching_a_replacement ... ok
+test pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal ... ok
+test pool::warm_pool::tests::acquire_boot_permits_releases_both_scopes ... ok
+test pool::warm_pool::tests::boot_batch_limit_is_bounded_and_never_deadlocks ... ok
+test pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry ... ok
+test pool::warm_pool::tests::boot_or_restore_future_stays_heap_indirected ... ok
+test pool::warm_pool::tests::boot_metric_guard_balances_inflight_gauge ... ok
+test pool::warm_pool::shutdown_ownership_tests::selected_maintenance_cleanup_does_not_finalize_a_foreground_owner ... ok
+test pool::warm_pool::shutdown_ownership_tests::foreground_transfer_requires_exclusive_actual_ownership_and_preserves_retry ... ok
+test pool::warm_pool::tests::feature_missing_classifies_absent_snapshot_socket ... ok
+test pool::warm_pool::tests::feature_missing_classifies_platform_stubs ... ok
+test pool::warm_pool::tests::feature_missing_ignores_transient_boot_errors ... ok
+test pool::warm_pool::tests::replenish_backoff_is_exponential_and_capped ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_no_ttl ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_short_ttl ... ok
+test pool::warm_pool::tests::snapshot_fork_auto_enables_deferred_main ... ok
+test pool::warm_pool::shutdown_ownership_tests::incomplete_persistent_handoff_does_not_become_clean_on_retry ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_very_short_ttl ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_batch_vector_drop_preserves_every_actual_manager_until_retry ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_with_ttl ... ok
+test pool::warm_pool::tests::test_pool_accepts_min_idle_zero ... ok
+test pool::warm_pool::tests::test_pool_config_default_values ... ok
+test pool::warm_pool::tests::test_pool_config_deserialization_with_defaults ... ok
+test pool::warm_pool::tests::test_pool_config_roundtrip ... ok
+test pool::warm_pool::tests::test_pool_drain_empty_pool ... ok
+test pool::warm_pool::tests::test_pool_drain_emits_event ... ok
+test pool::warm_pool::tests::test_pool_idle_count_initial ... ok
+test pool::warm_pool::tests::test_pool_rejects_min_idle_exceeds_max ... ok
+test pool::warm_pool::tests::test_pool_rejects_zero_max_concurrent_boots ... ok
+test pool::warm_pool::tests::test_pool_rejects_zero_max_size ... ok
+test pool::warm_pool::tests::test_pool_start_with_metrics_installs_sink_before_fill ... ok
+test pool::warm_pool::tests::test_pool_set_metrics_attaches ... ok
+test pool::warm_pool::tests::test_pool_stats_all_fields ... ok
+test pool::warm_pool::tests::test_pool_stats_clone ... ok
+test pool::warm_pool::tests::test_pool_stats_debug ... ok
+test pool::warm_pool::tests::test_pool_stats_default ... ok
+test pool::warm_pool::tests::test_pool_stats_initial ... ok
+test pool::warm_pool::tests::test_warm_vm_created_at_is_recent ... ok
+test pool::warm_pool::tests::unsupported_snapshot_fork_is_rejected_before_template_construction ... ok
+test pool::warm_pool::template_ownership_tests::build_retry_cannot_overwrite_unfinalized_template_input ... ok
+test pool::warm_pool::tests::warm_pool_release_refuses_idle_without_authenticated_heartbeat ... ok
+test pool::warm_pool::template_ownership_tests::template_cleanup_waits_for_actual_consumer_close_and_can_retry ... ok
+test pool::warm_pool::template_ownership_tests::source_stop_refusal_retains_exact_manager_and_input_until_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_preserving_close_can_still_remove_its_ephemeral_resources ... ok
+test pool::warm_pool::template_ownership_tests::completed_removal_remains_recorded_when_its_waiter_is_dropped ... ok
+test pool::warm_pool::tests::clear_snapshot_template_removes_owned_dir_when_failing ... ok
+test pool::warm_pool::tests::clear_snapshot_template_removes_ready_template_directory ... ok
+test pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory ... ok
+test pool::warm_pool::template_ownership_tests::independent_pool_cleanup_does_not_remove_other_pool_or_caller_input ... ok
+test pool::warm_pool::shutdown_ownership_tests::rollback_duplicate_or_absent_ids_never_target_other_owned_managers ... ok
+test pool::warm_pool::shutdown_tests::drain_idle_signals_and_joins_in_progress_maintenance ... ok
+test pool::warm_pool::tests::test_pool_acquire_from_empty_pool_fails_without_shim ... ok
+test pool::warm_pool::tests::warm_pool_acquire_refuses_ready_without_authenticated_heartbeat ... ok
+test pool::warm_pool::shutdown_ownership_tests::rollback_reselects_requested_identity_when_idle_membership_changes ... ok
+test pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations ... ok
+test pool::warm_pool::tests::test_pool_accepts_min_idle_equals_max ... ok
+test pool::warm_pool::tests::trigger_snapshot_fails_fast_when_socket_never_appears ... ok
+
+test result: ok. 80 passed; 0 failed; 9 ignored; 0 measured; 2325 filtered out; finished in 1.68s
+

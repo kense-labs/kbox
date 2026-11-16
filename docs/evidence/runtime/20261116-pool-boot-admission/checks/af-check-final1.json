@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-boot-admission/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 141.586006333,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-admit-fbf62892dbbc/t"
+  }
+}

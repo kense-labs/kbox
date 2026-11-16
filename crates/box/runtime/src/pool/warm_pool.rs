@@ -1048,6 +1048,9 @@ impl WarmPool {
                     .await
                 {
                     Ok(tpl) => {
+                        if *shutdown.borrow() {
+                            return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                        }
                         let mut cfg = box_config.clone();
                         cfg.snapshot_mem_file = Some(tpl.mem_file.clone());
                         cfg.restore_from = Some(tpl.state_file.clone());
@@ -1059,6 +1062,13 @@ impl WarmPool {
                         let restored = {
                             let mut vm = owner.lock().await;
                             async {
+                                if *shutdown.borrow() {
+                                    // This newly prepared manager has never entered boot.
+                                    if let Some(template_use) = vm.template_use.take() {
+                                        template_use.closed();
+                                    }
+                                    return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                                }
                                 vm.boot().await?;
                                 vm.wait_for_exec_available(std::time::Duration::from_secs(120))
                                     .await?;
@@ -1086,7 +1096,7 @@ impl WarmPool {
                                 Self::destroy_one(owner.clone(), retained.clone(), Some(2000))
                                     .await
                                     .1?;
-                                if matches!(error, BoxError::ConfigError(_)) {
+                                if *shutdown.borrow() || matches!(error, BoxError::ConfigError(_)) {
                                     return Err(error);
                                 }
                                 tracing::warn!(
@@ -1120,16 +1130,30 @@ impl WarmPool {
         let (owner, handoff) = Self::register_vm(vm, retained, shutdown);
         let (result, finalized) = {
             let mut vm = owner.lock().await;
+            let mut refused_before_boot = false;
             let result = async {
-                if let Some(directory) = &template_resources.lock().await.directory {
-                    // Failed snapshot attempts still own private inputs during cold fallback.
-                    vm.template_use = Some(directory.claim()?);
+                if *shutdown.borrow() {
+                    refused_before_boot = true;
+                    return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                }
+                {
+                    let resources = template_resources.lock().await;
+                    if *shutdown.borrow() {
+                        refused_before_boot = true;
+                        return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+                    }
+                    if let Some(directory) = &resources.directory {
+                        // Failed snapshot attempts still own private inputs during cold fallback.
+                        vm.template_use = Some(directory.claim()?);
+                    }
                 }
                 vm.boot().await?;
                 Self::complete_cold_boot(&mut vm).await
             }
             .await;
-            let finalized = vm.boot_failed_before_provider_start() || vm.cleanup_is_complete();
+            let finalized = refused_before_boot
+                || vm.boot_failed_before_provider_start()
+                || vm.cleanup_is_complete();
             (result, finalized)
         };
         if let Err(error) = result {

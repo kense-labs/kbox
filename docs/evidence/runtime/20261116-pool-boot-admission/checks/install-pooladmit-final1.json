@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/unpacked-pooladmit-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/final-dist-pooladmit-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/unpacked-pooladmit-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 0.8083661670000026,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/final-dist-pooladmit-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "0da9ec212b955898378a114289cf978a466d803d53bce61de113ad0a920c2b8a",
+  "compressedBytes": 23428828,
+  "installedDiskBytes": 44224512,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "6d8ca72941edd78ce7efe36b1c616d8e5713c2a7",
+    "sourceInputsSha256": "190148b3347368ac965c1ff6f7450269a35f5d2fa3ce17073bfb9bbd7c8b8052",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

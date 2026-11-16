@@ -1,0 +1,56 @@
+{
+  "admission-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2",
+        "2",
+        "0"
+      ]
+    ]
+  },
+  "admission-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "4",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "80",
+        "0",
+        "9"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2348",
+        "6",
+        "60"
+      ]
+    ]
+  }
+}

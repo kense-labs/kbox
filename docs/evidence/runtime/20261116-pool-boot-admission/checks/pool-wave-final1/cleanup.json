@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "homes": 4,
+  "ownedProcesses": [],
+  "existingPoolSockets": [],
+  "managedExecutions": [],
+  "callerTemplateIdentitiesRetained": true,
+  "unsupportedSnapshotColdControl": true,
+  "templateCanaries": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/0/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        307943876
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/1/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        307943893
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/2/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        307943910
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool-wave-final1/3/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        307943946
+      ]
+    }
+  ]
+}

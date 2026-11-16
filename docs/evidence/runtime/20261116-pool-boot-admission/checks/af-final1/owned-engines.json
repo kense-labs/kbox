@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 95337,
+    "parent": 95335,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox engine serve --socket /private/tmp/kp-ojgcl6kc/s",
+    "socket": "/private/tmp/kp-ojgcl6kc/s"
+  },
+  {
+    "pid": 95425,
+    "parent": 95335,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox engine serve --socket /private/tmp/kp-ojgcl6kc/s",
+    "socket": "/private/tmp/kp-ojgcl6kc/s"
+  }
+]

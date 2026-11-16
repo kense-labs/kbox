@@ -1,0 +1,9 @@
+
+running 4 tests
+test pool::warm_pool::shutdown_ownership_tests::queued_cold_boot_template_wait_rechecks_closed_admission ... ok
+test pool::warm_pool::shutdown_ownership_tests::closed_cold_boot_entry_refuses_before_validation ... ok
+test pool::warm_pool::shutdown_ownership_tests::clean_prelaunch_cold_boot_failure_releases_owner_and_preserves_admission ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2409 filtered out; finished in 0.01s
+

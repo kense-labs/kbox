@@ -1,0 +1,17 @@
+[
+  {
+    "path": "crates/box/runtime/src/vm/boot.rs",
+    "sha256": "0057575de0d96ebbe9ca4f9164e43c2b73ebfb5568332a788b44740fd7e98b16",
+    "identicalToBase": true
+  },
+  {
+    "path": "crates/box/runtime/src/vm/lifecycle.rs",
+    "sha256": "09b62529bf6e4dfa54475f21e74b17ced52463d429187f1a8c5804cd32877b44",
+    "identicalToBase": true
+  },
+  {
+    "path": "crates/box/runtime/src/local_execution/vm_backend.rs",
+    "sha256": "70ac3add98ccca2f9313bcfde64a95254432f75a98b8cb96153757f9deab05e7",
+    "identicalToBase": true
+  }
+]

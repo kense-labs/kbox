@@ -1,0 +1,854 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008629958000000021,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008937500000000015,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008691417000000007,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008880500000000013,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009521792000000029,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009438874999999958,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009603249999999952,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009736958999999934,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00841483300000001,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010574583000000026,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009406625000000002,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009697875000000078,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008479416999999989,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008376208999999912,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00845770800000012,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008421082999999996,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008846915999999982,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00837666700000006,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008429332999999817,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008990916999999987,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008965125000000018,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009093124999999702,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009756207999999766,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009336832999999878,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009892124999999918,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008307333999999944,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010147292000000085,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009781208000000152,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01087329100000023,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010691582999999838,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010720207999999953,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01039633300000009,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009079041000000121,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009055082999999797,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008386333999999884,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007660416000000225,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008725709000000137,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007948708000000249,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008077249999999925,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007875666000000336,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0224403750000004,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00894837500000012,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009433875000000036,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009916458999999378,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008512791000000242,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00965758300000008,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007970124999999939,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008181207999999884,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008278374999999727,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007906374999999244,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0079209579999997,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007926458000000025,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-1')"
+    ],
+    "exit": 0,
+    "seconds": 0.0652518750000004,
+    "stdout": "pool-native-1\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-3')"
+    ],
+    "exit": 0,
+    "seconds": 0.07589474999999979,
+    "stdout": "pool-native-3\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-2')"
+    ],
+    "exit": 0,
+    "seconds": 0.08095999999999925,
+    "stdout": "pool-native-2\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-0')"
+    ],
+    "exit": 0,
+    "seconds": 0.09086741700000012,
+    "stdout": "pool-native-0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.776833374999999,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.808278625,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.869274542000001,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/installed-pooladmit-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-57d00c987840-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 22.001238208,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  }
+]

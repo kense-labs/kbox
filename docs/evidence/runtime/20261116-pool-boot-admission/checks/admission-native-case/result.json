@@ -1,0 +1,16 @@
+{
+  "actualVmLaunches": 0,
+  "admissionClosed": true,
+  "callerIdentity": [
+    16777233,
+    307900354
+  ],
+  "noLateWorkloadWrites": true,
+  "noWorkloadWrites": true,
+  "prelaunchRefusalOnly": true,
+  "preparedOwnerFinalized": true,
+  "providerEntered": false,
+  "queuedShutdownRefused": true,
+  "runtimeRssMeasured": false,
+  "status": "PASS"
+}

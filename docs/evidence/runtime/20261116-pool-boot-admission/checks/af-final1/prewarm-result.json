@@ -1,0 +1,22 @@
+{
+  "childProcess": true,
+  "claimedGeneration": 2,
+  "coldPrepareMs": 8651,
+  "differentRuntimeUnitClaimedCompatibleBase": true,
+  "dirtyVmNotReused": true,
+  "externalFileBytes": 2097152,
+  "externalFileSha256": "1e075c8d478ad21844e33e830a695ef03a4d2488b69ee275bd8947618bb1be1e",
+  "firstExecutionId": "dab907f4-5c61-4e6f-ab91-485fbacba83d",
+  "reconstructedDriverReusedReservation": true,
+  "replacementExecutionId": "68ad6f39-19b7-4557-aa82-7ec9e127cec3",
+  "sameOriginalProcess": true,
+  "sourceGenerationRefused": true,
+  "status": "PASS",
+  "unclaimedExecRefused": true,
+  "warmClaimMs": 78,
+  "zeroPrivateExecutions": true,
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "zeroPrivateVolumes": true,
+  "testSha256": "6789300ad93e9c7a7413d6ae22e2d561aa775be37ca5b359cb3a3fc6cd9427a6",
+  "kboxSha256": "387c3ec1e5a4f5d6c7e1b727e174ab5137aab3c79bcf0dbd7e8f81571d994b57"
+}

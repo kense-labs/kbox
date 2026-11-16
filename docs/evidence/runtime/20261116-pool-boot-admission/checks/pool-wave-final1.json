@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-boot-admission-fbf62892dbbc4268809857d00c987840/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-boot-admission/context.json",
+    "final1"
+  ],
+  "exit": 0,
+  "seconds": 27.800281208,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-admit-fbf62892dbbc/check-home-pool-wave-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-admit-fbf62892dbbc/t"
+  }
+}

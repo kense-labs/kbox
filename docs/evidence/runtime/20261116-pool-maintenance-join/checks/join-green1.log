@@ -1,0 +1,8 @@
+
+running 3 tests
+test pool::warm_pool::drain_native::native_cancelled_maintenance_join_preserves_worker_and_vm_until_retry ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker ... ok
+
+test result: ok. 2 passed; 0 failed; 1 ignored; 0 measured; 2401 filtered out; finished in 0.01s
+

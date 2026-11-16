@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 106.7638055,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/package-home-pooljoin-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "1353d5cf2cfed86722f8a85fa74507781438ca1acc5e08aaff8e0603c91146c5"
+}

@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1,0 +1,392 @@
+[
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/shim.stdout.log.4c34bffc9356",
+    "sha256": "4c34bffc93561d37b9b126e55fb37e81e427d7e091c05d81d6d7b1203f47e586",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.err.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/49adf5d9-6e22-4e54-b420-b9203b110bab/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/shim.stdout.log.425cce3442d9",
+    "sha256": "425cce3442d9c9ee3b2d8c50dec5c832037b3a2482d3a23ae7b791020e90413c",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/924132ce-5e1d-4972-984a-906e3655abd2/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/shim.stdout.log.03a4bd7416c5",
+    "sha256": "03a4bd7416c57332bccdb3391166278d132f001d20a7c1313a95e3172fc89c1a",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/6b0e1a88-6f8b-4489-ae6c-34000e109cd9/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/shim.stdout.log.3d3496895522",
+    "sha256": "3d34968955226e265e330c0f6cad5f7a99ab45f89526d64fdae224f199418cdb",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/dbc7bbe5-ea94-4059-82bc-70d0f90a33d3/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/shim.stdout.log.af12274aeef6",
+    "sha256": "af12274aeef63de2459d7ebdb02129e0d49d602ce74b8a51219d5641589c54f9",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/ff7635d3-79d7-41cb-bc57-c3d64bd35897/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/shim.stdout.log.8c19bf374749",
+    "sha256": "8c19bf3747498d600b93f45efc6f7c9ea2a78238751869f427b49879c1168c05",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/b83bf8c7-2cd8-442e-b201-760763944ecf/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/shim.stdout.log.61414d3ff9de",
+    "sha256": "61414d3ff9de16f85b0d7bf2642d4e63a7d52d1f3562294e2bea5b738555d310",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/34a46d2c-4209-4942-b3ff-b678bb871be3/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/shim.stdout.log.7fba220a6350",
+    "sha256": "7fba220a6350f4620ec5e3ec157fe898091d079689e11aadd659976edbe0c3f4",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/0b82ed5a-973e-4b15-a2fc-994b63e0b0ff/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/shim.stdout.log.a27d15185831",
+    "sha256": "a27d15185831181197b3a3b81ddf2853f8205ba21660ed8669bd2ebd022223ea",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/1b798440-01c6-4162-8f5b-7196e5d96796/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/shim.stdout.log.2cbc69839736",
+    "sha256": "2cbc69839736ecf6b30e0c924b31e72f34bbc15aca51d1022a6a4c6b96fc4208",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/8b675bdc-ba05-405f-ab6b-6acb0fdafb7f/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/shim.stdout.log.284c5da9eca4",
+    "sha256": "284c5da9eca47c6b22b53b7607803651c39ea877738e766e28650cd5ba723da2",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/d95ff458-cba7-4794-8f2a-24eb04792d0d/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/shim.stdout.log.a6a2932413eb",
+    "sha256": "a6a2932413eb3e1c19bd399baa7a9f00f3c936332db457601e6bfa5943510bec",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/4f9bf5f2-093e-44b1-b648-178c794c23d0/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/shim.stdout.log.d632e745c2b3",
+    "sha256": "d632e745c2b38fb608c89e62ad901c77806cd066c7084ae97f877e90555aa96e",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/0/home/boxes/cf32a48f-7587-4525-9843-551fc54308ce/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/shim.stdout.log.bba55d5b98b4",
+    "sha256": "bba55d5b98b479894d7f72dfe1cd3a800fc7871499755eced3efa43c7fd5ca60",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/1/home/boxes/a8296d50-8ae2-4bd0-a4b0-85cf349ffc6f/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/shim.stdout.log.bf086f83c2d5",
+    "sha256": "bf086f83c2d5e9e3fa0222ce6b0179094461139a3eaf1d8be6b59d5ceeaceccc",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/2/home/boxes/e99e67fb-7de3-4e24-9259-4bd3473c7cbd/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/console.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/console.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/shim.stdout.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/shim.stdout.log.c1d3298fca58",
+    "sha256": "c1d3298fca585594c388a4cfe86b5b7bd627235c933fe8e84301417e4b75aa84",
+    "bytes": 4725
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/console.err.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/console.err.log.dd53e52575a3",
+    "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89",
+    "bytes": 69
+  },
+  {
+    "source": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool-wave-final1/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/shim.stderr.log",
+    "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/pool-wave-final1/owned-box-logs/3/home/boxes/58bfdd5e-015c-4242-b1ae-010c21bff872/logs/shim.stderr.log.e3b0c44298fc",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  }
+]

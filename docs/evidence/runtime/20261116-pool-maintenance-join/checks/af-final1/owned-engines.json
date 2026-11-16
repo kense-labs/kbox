@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 51306,
+    "parent": 51302,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/bin/kbox engine serve --socket /private/tmp/kp-3ieaj86y/s",
+    "socket": "/private/tmp/kp-3ieaj86y/s"
+  },
+  {
+    "pid": 58952,
+    "parent": 51302,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/bin/kbox engine serve --socket /private/tmp/kp-3ieaj86y/s",
+    "socket": "/private/tmp/kp-3ieaj86y/s"
+  }
+]

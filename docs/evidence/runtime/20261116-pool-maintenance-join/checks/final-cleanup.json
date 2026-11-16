@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "1353d5cf2cfed86722f8a85fa74507781438ca1acc5e08aaff8e0603c91146c5",
+  "compiledInputCount": 1729,
+  "homes": 25,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 797,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "60d7ceec0943b8a8fb660a60b69b604046da6eca2dd0b8ef99fc0d4220162ab4",
+      "after": "03237d48eb255a9c5b7bd362addd3d69b9e36a90e2bd6d7f0c602f7b8970a5bd"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.5a9xlI"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticLostJoinHandleFailuresRetained": 2,
+  "stopFault": "Controlled maintenance completion gate, no synthetic stop error; actual registered VM/PID/allocation/writes survive cancelled join, retry waits and physically finalizes",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

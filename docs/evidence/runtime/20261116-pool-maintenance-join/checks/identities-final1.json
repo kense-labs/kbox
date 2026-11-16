@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/check-final-identities1.py"
+  ],
+  "exit": 0,
+  "seconds": 0.610944542,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-join-723bc11bc46c/check-home-identities-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-join-723bc11bc46c/t"
+  }
+}

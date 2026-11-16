@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-maintenance-join/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 143.652741541,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-join-723bc11bc46c/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-join-723bc11bc46c/t"
+  }
+}

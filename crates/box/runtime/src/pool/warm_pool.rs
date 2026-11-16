@@ -679,15 +679,22 @@ impl WarmPool {
         tracing::info!("Warm pool shutdown signaled");
     }
 
+    async fn join_maintenance(&self) {
+        let mut handle = self.replenish_handle.lock().await;
+        // Keep the join owner in its slot so cancelling a drain can retry the wait.
+        if let Some(task) = handle.as_mut() {
+            let _ = task.await;
+        }
+        *handle = None;
+    }
+
     /// Gracefully drain all VMs and stop the pool.
     pub async fn drain(&mut self) -> Result<()> {
         // Signal shutdown to background task
         let _ = self.shutdown_tx.send(true);
 
         // Wait for background task to finish
-        if let Some(handle) = self.replenish_handle.lock().await.take() {
-            let _ = handle.await;
-        }
+        self.join_maintenance().await;
 
         // Detach idle VMs before destroying them. VM teardown is asynchronous
         // and must not hold the pool lock, otherwise acquire/release and the
@@ -733,9 +740,7 @@ impl WarmPool {
         // Otherwise a replenishment batch can finish after this method drains
         // the vector and publish a VM that no owner remains to destroy.
         self.signal_shutdown();
-        if let Some(handle) = self.replenish_handle.lock().await.take() {
-            let _ = handle.await;
-        }
+        self.join_maintenance().await;
 
         // Detach idle VMs before destroying them. Keeping `idle` locked while
         // awaiting VM teardown blocks concurrent acquire/release operations and

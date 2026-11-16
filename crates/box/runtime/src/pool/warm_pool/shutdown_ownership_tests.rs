@@ -1232,3 +1232,87 @@ async fn cancelled_idle_detachment_shared_drain_keeps_owner() {
 async fn cancelled_idle_detachment_invalidation_keeps_owner() {
     assert_cancelled_idle_detachment_keeps_owner(IdleDetachment::Invalidate).await;
 }
+
+async fn assert_cancelled_maintenance_join_keeps_worker(shared: bool) {
+    let mut pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    let mut shutdown = pool.shutdown_rx.clone();
+    let (observed_tx, observed_rx) = tokio::sync::oneshot::channel();
+    let (finish_tx, finish_rx) = tokio::sync::oneshot::channel();
+    let (done_tx, done_rx) = tokio::sync::oneshot::channel();
+    *pool.replenish_handle.lock().await = Some(tokio::spawn(async move {
+        shutdown.wait_for(|stop| *stop).await.unwrap();
+        observed_tx.send(()).unwrap();
+        finish_rx.await.unwrap();
+        done_tx.send(()).unwrap();
+    }));
+    let mut finish = Some(finish_tx);
+    let outcome = std::panic::AssertUnwindSafe(async {
+        {
+            let draining = async {
+                if shared {
+                    pool.drain_idle().await
+                } else {
+                    pool.drain().await
+                }
+            };
+            tokio::pin!(draining);
+            assert!(futures::poll!(draining.as_mut()).is_pending());
+        }
+        observed_rx.await.unwrap();
+        assert!(
+            pool.replenish_handle.lock().await.is_some(),
+            "cancellation must retain the actual unfinished JoinHandle"
+        );
+        {
+            let retry = async {
+                if shared {
+                    pool.drain_idle().await
+                } else {
+                    pool.drain().await
+                }
+            };
+            tokio::pin!(retry);
+            assert!(
+                futures::poll!(retry.as_mut()).is_pending(),
+                "retry must wait for actual maintenance completion"
+            );
+            finish.take().unwrap().send(()).unwrap();
+            retry.await.unwrap();
+        }
+        assert!(pool.replenish_handle.lock().await.is_none());
+    })
+    .catch_unwind()
+    .await;
+    if let Some(finish) = finish.take() {
+        let _ = finish.send(());
+    }
+    done_rx.await.unwrap();
+    pool.drain_idle().await.unwrap();
+    if let Err(error) = outcome {
+        std::panic::resume_unwind(error);
+    }
+}
+
+#[tokio::test]
+async fn cancelled_maintenance_join_drain_keeps_worker() {
+    assert_cancelled_maintenance_join_keeps_worker(false).await;
+}
+
+#[tokio::test]
+async fn cancelled_maintenance_join_shared_drain_keeps_worker() {
+    assert_cancelled_maintenance_join_keeps_worker(true).await;
+}

@@ -6,7 +6,17 @@ use std::path::PathBuf;
 #[test]
 #[ignore = "requires owned sentinel home, VOLUME image and installed companions"]
 fn native_cancelled_drain_stats_wait_preserves_exact_vm_until_actual_retry() {
-    std::thread::Builder::new().stack_size(32 * 1024 * 1024).spawn(|| {
+    run_cancelled_drain(false);
+}
+
+#[test]
+#[ignore = "requires owned sentinel home, VOLUME image and installed companions"]
+fn native_cancelled_maintenance_join_preserves_worker_and_vm_until_retry() {
+    run_cancelled_drain(true);
+}
+
+fn run_cancelled_drain(join: bool) {
+    std::thread::Builder::new().stack_size(32 * 1024 * 1024).spawn(move || {
         let home = PathBuf::from(std::env::var_os("K_HOME").unwrap());
         assert_eq!(home.canonicalize().unwrap(), home);
         assert_eq!(std::fs::read_to_string(home.join(".kbox-pool-drain-native")).unwrap(), "owned-pool-drain-native-test\n");
@@ -28,6 +38,7 @@ fn native_cancelled_drain_stats_wait_preserves_exact_vm_until_actual_retry() {
                 let mut pool = WarmPool::start(PoolConfig { min_idle: 0, max_size: 1, ..PoolConfig::default() }, config, EventEmitter::new(16)).await.unwrap();
                 if let Some(task) = pool.replenish_handle.lock().await.take() { task.abort(); let _ = task.await; }
                 let mut direct = None;
+                let mut finish = None;
                 let outcome = std::panic::AssertUnwindSafe(async {
                     let mut results = WarmPool::boot_batch(BootBatch {
                         snapshot_fork: false, box_config: &pool.box_config,
@@ -58,19 +69,39 @@ fn native_cancelled_drain_stats_wait_preserves_exact_vm_until_actual_retry() {
                         assert!(tokio::time::Instant::now() < deadline);
                         tokio::time::sleep(Duration::from_millis(50)).await;
                     }
-                    pool.idle.lock().await.push(WarmVm { vm: direct.take().unwrap(), created_at: Instant::now() });
-                    pool.stats.lock().await.idle_count = 1;
+                    if join {
+                        let (owner, handoff) = pool.retain_foreground_vm(direct.take().unwrap());
+                        let retained = pool.retiring.clone();
+                        let (finish_tx, finish_rx) = tokio::sync::oneshot::channel();
+                        finish = Some(finish_tx);
+                        *pool.replenish_handle.lock().await = Some(tokio::spawn(async move {
+                            finish_rx.await.unwrap();
+                            WarmPool::destroy_one(owner, retained, Some(2000)).await.1.unwrap();
+                            drop(handoff);
+                        }));
+                    } else {
+                        pool.idle.lock().await.push(WarmVm { vm: direct.take().unwrap(), created_at: Instant::now() });
+                        pool.stats.lock().await.idle_count = 1;
+                    }
                     let stats_arc = pool.stats.clone();
-                    let stats = stats_arc.lock().await;
+                    let stats = if join { None } else { Some(stats_arc.lock().await) };
                     {
                         let drain = async { if shared { pool.drain_idle().await } else { pool.drain().await } };
                         tokio::pin!(drain);
                         assert!(futures::poll!(drain.as_mut()).is_pending());
                     }
                     assert!(pool.ensure_admission_open().is_err());
-                    assert!(pool.retiring.lock().is_empty());
-                    assert_eq!(stats.idle_count, 1);
-                    {
+                    if join {
+                        assert!(pool.replenish_handle.lock().await.is_some(), "cancelled join must keep its actual worker handle");
+                        let owners = pool.retiring.lock().clone();
+                        assert_eq!(owners.len(), 1);
+                        let actual = owners[0].lock().await;
+                        assert_eq!(actual.box_id(), id);
+                        assert!(Arc::ptr_eq(&actual.handler, &handler));
+                        assert_eq!(pool.stats().await.idle_count, 0);
+                    } else {
+                        assert!(pool.retiring.lock().is_empty());
+                        assert_eq!(stats.as_ref().unwrap().idle_count, 1);
                         let idle = pool.idle.lock().await;
                         assert_eq!(idle.len(), 1);
                         assert_eq!(idle[0].vm.box_id(), id);
@@ -88,8 +119,23 @@ fn native_cancelled_drain_stats_wait_preserves_exact_vm_until_actual_retry() {
                         tokio::time::sleep(Duration::from_millis(50)).await;
                     }
                     drop(stats);
-                    serde_json::json!({"before":before,"exactIdleOwnerPreserved":true,"sameActualPidAndAllocationPreserved":true,"guestContinuedWriting":true,"admissionClosed":true})
+                    if join {
+                        {
+                            let retry = async { if shared { pool.drain_idle().await } else { pool.drain().await } };
+                            tokio::pin!(retry);
+                            assert!(futures::poll!(retry.as_mut()).is_pending(), "retry cannot report drained while maintenance still owns the live VM");
+                            assert_eq!(handler.read().await.as_ref().unwrap().pid(), pid);
+                            assert!(handler.read().await.as_ref().unwrap().is_running());
+                            assert!(volume.is_dir() && box_dir.is_dir());
+                            finish.take().unwrap().send(()).unwrap();
+                            retry.await.unwrap();
+                        }
+                        assert!(pool.replenish_handle.lock().await.is_none());
+                        assert!(handler.read().await.is_none());
+                    }
+                    serde_json::json!({"before":before,"exactIdleOwnerPreserved":!join,"exactMaintenanceOwnerPreserved":join,"retryWaitedForActualMaintenance":join,"sameActualPidAndAllocationPreserved":true,"guestContinuedWriting":true,"admissionClosed":true})
                 }).catch_unwind().await;
+                if let Some(finish) = finish.take() { let _ = finish.send(()); }
                 if let Some(vm) = direct.take() {
                     let (owner, handoff) = pool.retain_foreground_vm(vm);
                     drop(owner);

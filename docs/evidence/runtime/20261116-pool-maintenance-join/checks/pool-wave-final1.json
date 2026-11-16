@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-maintenance-join/context.json",
+    "final1"
+  ],
+  "exit": 0,
+  "seconds": 27.845048167,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-join-723bc11bc46c/check-home-pool-wave-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-join-723bc11bc46c/t"
+  }
+}

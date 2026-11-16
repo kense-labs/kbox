@@ -1,0 +1,25 @@
+
+running 2 tests
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker ... FAILED
+test pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker' (118481920) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1263:9:
+cancellation must retain the actual unfinished JoinHandle
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker' (118481919) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1263:9:
+cancellation must retain the actual unfinished JoinHandle
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_drain_keeps_worker
+    pool::warm_pool::shutdown_ownership_tests::cancelled_maintenance_join_shared_drain_keeps_worker
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 2401 filtered out; finished in 0.01s
+

@@ -91,3 +91,10 @@
 - **证据**: [最终包、原生和清理](../../docs/evidence/runtime/20261116-pool-drain-detachment/OUTCOME.md)。
 - **验证**: Pool74/0/6、CLI949/Clippy；默认2339/6/56；3Rust+3Python、4daemon/16Ready/4命令/26home审计；AF准备失败保留。
 - **限制**: maintenancejoin/internal/template/unpublished/legacy与GA继续；GitUID501/DNS外阻塞；WindowsARM64依赖不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-maintenance-join
+
+- **结果**: 两种drain取消等待后保留实际JoinHandle，重试等待后台物理清理；0/2至2/0。
+- **证据**: [最终包、真实VM和清理](../../docs/evidence/runtime/20261116-pool-maintenance-join/OUTCOME.md)。
+- **验证**: Pool76/0/7、CLI949/Clippy；默认2341/6/57；3Rust+3Python、4daemon/16Ready/4命令/25home审计。
+- **限制**: legacy publication/internal/template/unpublished等owner及GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。

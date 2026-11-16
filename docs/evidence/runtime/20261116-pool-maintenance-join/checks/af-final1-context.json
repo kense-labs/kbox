@@ -1,0 +1,27 @@
+{
+  "root": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/af-final1",
+  "privateRoot": "/private/tmp/kbox-pool-join-723bc11bc46c",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/af-final1",
+  "baseCommit": "2dd7550134b6d0e9cc2ceaa85bdfa49fcaa93419",
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/image-cache",
+  "priorArchives": {
+    "box": "/Users/roylin/code/kense/kbox/artifacts/pool-drain-detachment-c7d4914f49e840e681a3793ce5443d7a/final-dist-pooldetach-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "oci": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz"
+  },
+  "status": "043 in progress; no final asset/native/acceptance claim",
+  "sourceInputsSha256": "1353d5cf2cfed86722f8a85fa74507781438ca1acc5e08aaff8e0603c91146c5",
+  "sourceInputCount": 1729,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/final-dist-pooljoin-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/native-client-final1",
+  "nativeClientSha256": "0468cfff3a7f5993f1c995b1afd1461bb22d0001bc209e85deb7466039d8b6ea",
+  "checks": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/af-final1"
+}

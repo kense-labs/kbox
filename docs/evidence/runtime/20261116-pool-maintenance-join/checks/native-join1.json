@@ -1,0 +1,94 @@
+{
+  "command": [
+    "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/native-client-join1",
+    "--ignored",
+    "--exact",
+    "pool::warm_pool::drain_native::native_cancelled_maintenance_join_preserves_worker_and_vm_until_retry",
+    "--nocapture"
+  ],
+  "root": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1",
+  "exit": 0,
+  "seconds": 15.439205209,
+  "actualCounts": [
+    [
+      "1",
+      "0",
+      "0"
+    ]
+  ],
+  "loaded": [
+    {
+      "pid": 13898,
+      "parent": 9748,
+      "command": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"594115d9-7090-4d61-8709-317fbb8a593f\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/594115d9-7090-4d61-8709-317fbb8a593f/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/594115d9-7090-4d61-8709-317fbb8a593f/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/594115d9-7090-4d61-8709-317fbb8a593f/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/594115d9-7090-4d61-8709-317fbb8a593f/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/volumes/anon_594115d9_4bd842ac0266b448c2c2871992a28bbc\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/594115d9-7090-4d61-8709-317fbb8a593f/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/lib/libkrunfw.5.dylib"
+      }
+    },
+    {
+      "pid": 15962,
+      "parent": 9748,
+      "command": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"f99866b0-ec06-4579-bbdc-5ab57b248603\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/f99866b0-ec06-4579-bbdc-5ab57b248603/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/f99866b0-ec06-4579-bbdc-5ab57b248603/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/f99866b0-ec06-4579-bbdc-5ab57b248603/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/f99866b0-ec06-4579-bbdc-5ab57b248603/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/volumes/anon_f99866b0_09a30b0bfb7ff991744179d0a119fb1d\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/f99866b0-ec06-4579-bbdc-5ab57b248603/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}",
+      "paths": {
+        "kbox-shim": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/bin/kbox-shim",
+        "libkrun.1.17.0.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/lib/libkrun.1.17.0.dylib",
+        "libkrunfw.5.dylib": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1/lib/libkrunfw.5.dylib"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/594115d9-7090-4d61-8709-317fbb8a593f/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/console.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/console.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/shim.stdout.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/shim.stdout.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/console.err.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/console.err.log.dd53e52575a3",
+      "bytes": 69,
+      "sha256": "dd53e52575a36b150550347f6d811a3da7814854868155e5e91a3987b6857b89"
+    },
+    {
+      "source": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/shim.stderr.log",
+      "saved": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-maintenance-join/checks/native-join1-live-logs/boxes/f99866b0-ec06-4579-bbdc-5ab57b248603/logs/shim.stderr.log.e3b0c44298fc",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "clientSha256": "0468cfff3a7f5993f1c995b1afd1461bb22d0001bc209e85deb7466039d8b6ea",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-maintenance-join-723bc11bc46c4d4d9c19fffa6f8e8022/installed-pooljoin-final-1",
+  "sourceInputsSha256": "1353d5cf2cfed86722f8a85fa74507781438ca1acc5e08aaff8e0603c91146c5"
+}

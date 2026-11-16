@@ -1,0 +1,78 @@
+{
+  "cases": [
+    {
+      "actualRetryFinalized": true,
+      "admissionClosed": true,
+      "before": {
+        "allocation": {
+          "created_at": "2026-11-16T08:22:45.689278+00:00",
+          "driver": "local",
+          "in_use_by": [
+            "594115d9-7090-4d61-8709-317fbb8a593f"
+          ],
+          "labels": {
+            "anonymous": "true",
+            "kbox.volume.allocation": "48b39790-21f2-46dc-99c7-2adad26b9820",
+            "kbox.volume.kind": "anonymous-v1",
+            "kbox.volume.owner": "594115d9-7090-4d61-8709-317fbb8a593f"
+          },
+          "mount_point": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/volumes/anon_594115d9_4bd842ac0266b448c2c2871992a28bbc",
+          "name": "anon_594115d9_4bd842ac0266b448c2c2871992a28bbc",
+          "size_limit": 0
+        },
+        "execution": "594115d9-7090-4d61-8709-317fbb8a593f",
+        "operation": "drain",
+        "pid": 13898,
+        "volumeIdentity": [
+          16777233,
+          305125104
+        ]
+      },
+      "callerBytesRetained": 2,
+      "exactIdleOwnerPreserved": false,
+      "exactMaintenanceOwnerPreserved": true,
+      "guestContinuedWriting": true,
+      "noLateWritesAfterOwnedCleanup": true,
+      "retryWaitedForActualMaintenance": true,
+      "sameActualPidAndAllocationPreserved": true
+    },
+    {
+      "actualRetryFinalized": true,
+      "admissionClosed": true,
+      "before": {
+        "allocation": {
+          "created_at": "2026-11-16T08:22:50.431053+00:00",
+          "driver": "local",
+          "in_use_by": [
+            "f99866b0-ec06-4579-bbdc-5ab57b248603"
+          ],
+          "labels": {
+            "anonymous": "true",
+            "kbox.volume.allocation": "48c5ebb1-44dc-4605-8f83-929a80262d38",
+            "kbox.volume.kind": "anonymous-v1",
+            "kbox.volume.owner": "f99866b0-ec06-4579-bbdc-5ab57b248603"
+          },
+          "mount_point": "/private/tmp/kbox-pool-join-723bc11bc46c/native-join-attempt-1/home/volumes/anon_f99866b0_09a30b0bfb7ff991744179d0a119fb1d",
+          "name": "anon_f99866b0_09a30b0bfb7ff991744179d0a119fb1d",
+          "size_limit": 0
+        },
+        "execution": "f99866b0-ec06-4579-bbdc-5ab57b248603",
+        "operation": "drain_idle",
+        "pid": 15962,
+        "volumeIdentity": [
+          16777233,
+          305125309
+        ]
+      },
+      "callerBytesRetained": 4,
+      "exactIdleOwnerPreserved": false,
+      "exactMaintenanceOwnerPreserved": true,
+      "guestContinuedWriting": true,
+      "noLateWritesAfterOwnedCleanup": true,
+      "retryWaitedForActualMaintenance": true,
+      "sameActualPidAndAllocationPreserved": true
+    }
+  ],
+  "runtimeRssMeasured": false,
+  "status": "PASS"
+}

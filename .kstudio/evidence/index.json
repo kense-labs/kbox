@@ -72,6 +72,12 @@
       "path": "T2026-11-16-pool-drain-detachment/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Drain stats-wait cancellation retains exact idle owners;0/3->3/0, installed3Rust+3Python/owned audit; maintenance join and GA open"
+    },
+    {
+      "id": "T2026-11-16-pool-maintenance-join",
+      "path": "T2026-11-16-pool-maintenance-join/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Cancelled maintenance join retains actual worker;0/2->2/0, installed3Rust+3Python/scoped audit; legacy/internal/GA open"
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "uid": 501,
+  "freshRemoteSynchronizationProved": false,
+  "pushAttempted": false,
+  "systemChanges": [],
+  "uidLookupError": "KeyError('getpwuid(): uid not found: 501')",
+  "githubDnsError": {
+    "errno": 8,
+    "message": "[Errno 8] nodename nor servname provided, or not known"
+  }
+}

@@ -157,3 +157,19 @@ After source/diff/task-only commit closeout, create/verify a local incremental
 Git bundle for transport, recording its exact commit/prerequisite/SHA. A bundle
 is not a remote push or publication. Then continue the existing boot-producer
 and legacy owner gaps; the continuous goal stays active.
+
+### Actual Git transport checkpoint
+
+Accepted code/evidence is committed on main85eebd65d50198c3ee8f547c836eb79a6d40cd81,
+tree3e5004b4dcc7353d74c9c2472b04752e9040fc02. Its compiled inputs exactly match
+the final archive. The local incremental `accepted-main-incremental.bundle` in
+the artifact root is1919973 bytes, SHA256
+4427bf7e63ed5b8ccac5a1dcb7bf62309ddd0f7d1b9a6a0549b9143f90650fd8.
+Git bundle verify succeeds; it includes13 unpublished commits relative to cached
+origin/main9d279a1cd0a11d1fb035e5cd845a15f5d70a2967. That base is a prerequisite,
+not a fresh remote observation. [Fresh prerequisite check](checks/git-prerequisites-closeout1.json)
+still fails getpwuid501 and GitHub DNSerrno8. No push is attempted against those
+unchanged failures. This documentation-only checkpoint is committed separately;
+`accepted-main-closeout.bundle` and its actual final-ref receipt are then created
+in the artifact root. The earlier bundle is retained. Neither bundle means push,
+external merge or publication. Continue the existing local producer gap.

@@ -97,3 +97,10 @@ Default-libkrun boot diagnostic confinement is qualified by
 copy/no-follow/private report/off-executor caller preserve useful failure logs.
 Original15s cause and stop-failure ownership remain open, as do full W4/default
 Host Service cutover/live continuity/GA. Six default disk-service failures remain.
+
+Shared default-libkrun failed-boot cleanup now preserves data and the exact
+handler after stop refusal: [spec034](../20261116-boot-stop-preservation/OUTCOME.md).
+Real VM with one-shot injected refusal/actual stop retry and3Rust+3Python native
+controls pass; source-bound archive/owned audit retained. Outer pool/caller owner
+lifetime after errors remains required next work, not closed by this inner fix.
+Full W4/default Host Service cutover/GA and six disk-service gates remain open.

@@ -699,3 +699,9 @@ limit/skip report. Links and unsafe prior target trees are refused; cleanup wait
 for blocking retention before removing the working directory. This is best-effort
 evidence, not an atomic whole-tree snapshot or global retention quota.
 [Source, native attacks and current archive](../../../docs/evidence/runtime/20261116-boot-diagnostics-boundaries/OUTCOME.md).
+
+If failed-boot backend finalization refuses, VmManager retains the exact handler
+and working/anonymous resources, with bounded diagnostics, for a later cleanup
+retry. A process exit alone does not finalize its backend. Callers must retain
+the manager until successful close; outer pool/drop-on-error lifetime remains an
+open task. [Native effects and limitations](../../../docs/evidence/runtime/20261116-boot-stop-preservation/OUTCOME.md).

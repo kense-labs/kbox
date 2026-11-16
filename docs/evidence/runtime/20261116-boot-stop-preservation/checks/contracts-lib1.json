@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-contract",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 12.716488042
+}

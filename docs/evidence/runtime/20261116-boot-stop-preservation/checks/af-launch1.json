@@ -1,0 +1,9 @@
+{
+  "command": [
+    "python3",
+    "artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-boot-stop-preservation/af-context-final1.json"
+  ],
+  "exit": 0,
+  "seconds": 145.51316304099998
+}

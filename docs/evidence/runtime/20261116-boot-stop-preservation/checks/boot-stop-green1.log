@@ -1,0 +1,8 @@
+
+running 3 tests
+test vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations ... ok
+test vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses ... ok
+test vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2355 filtered out; finished in 0.10s
+

@@ -1,0 +1,32 @@
+
+running 3 tests
+test vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses ... FAILED
+test vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources ... FAILED
+test vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations ... FAILED
+
+failures:
+
+---- vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses stdout ----
+
+thread 'vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses' (105264172) panicked at crates/box/runtime/src/vm/tests/boot_stop.rs:149:5:
+process exit does not finalize backend resources
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources stdout ----
+
+thread 'vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources' (105264173) panicked at crates/box/runtime/src/vm/tests/boot_stop.rs:117:5:
+the same owner must be retryable
+
+---- vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations stdout ----
+
+thread 'vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations' (105264174) panicked at crates/box/runtime/src/vm/tests/boot_stop.rs:78:9:
+an unfinalized backend must retain working data
+
+
+failures:
+    vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses
+    vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources
+    vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations
+
+test result: FAILED. 0 passed; 3 failed; 0 ignored; 0 measured; 2355 filtered out; finished in 0.12s
+

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "vm::tests::boot_stop"
+  ],
+  "exit": 0,
+  "seconds": 15.415656667
+}

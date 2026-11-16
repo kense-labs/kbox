@@ -1,0 +1,6 @@
+
+running 1 test
+test vm::tests::boot_stop::native_failed_stop_preserves_live_vm_then_retries_real_finalization ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2358 filtered out; finished in 10.15s
+

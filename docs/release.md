@@ -449,3 +449,12 @@ archive and all failed candidates are retained. Full OCI Host Service/default
 cutover/GA remain unfinished; Windows ARM64 dependencies unsupported/no native
 run, platform levels unchanged and RSS unmeasured. Remote Git still requires
 UID501 lookup and GitHub DNS recovery.
+
+[Failed-boot stop refusal preservation](evidence/runtime/20261116-boot-stop-preservation/OUTCOME.md)
+now retains the same handler and working/anonymous resources until finalization
+succeeds. Real-VM one-shot injected refusal, continued writes, exact allocation,
+retry-stop/no-late-writes and scoped cleanup pass; final3 Rust native+3 Python
+scenarios pass. Source-bound rebuilt archive4093b9d5… is retained. Default2302/6/51
+keeps six disk-service failures. Outer pool/caller ownership after errors remains
+required work; full OCI Host Service/default cutover/GA incomplete. Windows ARM64
+dependencies unsupported/no native run; platform levels unchanged, RSS unmeasured.

@@ -1,0 +1,92 @@
+{
+  "stage": "034-boot-stop-preservation",
+  "root": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a",
+  "privateRoot": "/private/tmp/kbox-boot-stop-3f488eca5000",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-boot-stop-preservation",
+  "baseCommit": "a85fb534b7bf8cfec580f16ac65c85521d4ca5d4",
+  "priorOutcome": "../20261116-boot-diagnostics-boundaries/OUTCOME.md",
+  "status": "Bounded034 source/archive/native/audit accepted; local commit next, full GA and outer caller ownership active",
+  "broaderGoal": "Full enterprise GA remains active",
+  "remainingPoolOwnerGap": "Pool drops a local VmManager on errors; no new queue/state in034; next required bounded task",
+  "externalBlockers": [
+    "UID501 lookup/GitHub DNS",
+    "Disk services",
+    "Other native hosts",
+    "Windows ARM64 dependencies unsupported/no native run"
+  ],
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/image-cache",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "image": "kbox-stop-preservation-native:proof",
+  "fixtureHome": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home",
+  "nativeStarted": true,
+  "sourceFrozen": true,
+  "activeChecks": {},
+  "lastAcceptedCommit": "a85fb534b7bf8cfec580f16ac65c85521d4ca5d4",
+  "sourceInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+  "sourceInputCount": 1720,
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "priorArchives": {
+    "boxArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/boot-diagnostics-d9408c1fc6d840b2aaea332dfd213f96/final-dist-bootdiag-3/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "5b59a54662f4b9c1303caf070ee336adac62d259ada02cd7ae60dd5c725b7cf2"
+    },
+    "ociArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79"
+    }
+  },
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/native-client-final1",
+  "nativeClientSha256": "2663ebf949afedb2a7e8c7c1762ed67f9a2a9773dfda2f00bbbbe5a22a590f90",
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/final-dist-bootstop-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "cleanup": {
+    "status": "PASS",
+    "sourceInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42",
+    "compiledInputCount": 1720,
+    "homes": 7,
+    "managedExecutions": 0,
+    "managedVolumes": 0,
+    "ownedProcesses": [],
+    "ownedMounts": [],
+    "ownedDiskImages": [],
+    "ownedFdHolders": [],
+    "observedVmSocketDirectories": 19,
+    "checkedSocketPaths": 78,
+    "remainingSockets": [],
+    "observedEngines": 2,
+    "immutableCacheFilesCompared": 685,
+    "mutableCatalog": [
+      {
+        "path": "index.json",
+        "before": "4d4765e1dbf35058f36abe73febe3ddf998d31d64c456cae7b34c6014b9d2423",
+        "after": "7071832fdaf1caa8b20cf9e46b611b5f56a6cf24b9b03b3a0873300a54a3dcd5"
+      }
+    ],
+    "qualifiedRustNativeTests": 3,
+    "qualifiedPythonScenarios": 3,
+    "stopFault": "Synthetic one-shot; real VM/live writes/allocation identity/actual retry-stop observed",
+    "actualOsStopFailureClaimed": false,
+    "callerSourcesRetained": true,
+    "previousArchivesRetained": true,
+    "resourcesDeletedByAudit": [],
+    "runtimeMemoryMeasured": false,
+    "outerPoolOwnerLifetimeSolved": false,
+    "gaComplete": false
+  },
+  "nativeImageIdentity": {
+    "reference": "kbox-stop-preservation-native:proof",
+    "digest": "sha256:12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db",
+    "beforeAndAfterDigestEqual": true,
+    "configDigest": "sha256:4253bbbbf222446071e4e43fa8ec097ceed05b2b1b6bcbdeb698913fe2bd2b27",
+    "architecture": "arm64",
+    "os": "linux",
+    "volumes": {
+      "/scratch": {}
+    }
+  }
+}

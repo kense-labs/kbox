@@ -368,3 +368,6 @@ impl VmHandler for FailingHandler {
 mod lifecycle;
 #[path = "tests/platform.rs"]
 mod platform;
+
+#[path = "tests/boot_stop.rs"]
+mod boot_stop;

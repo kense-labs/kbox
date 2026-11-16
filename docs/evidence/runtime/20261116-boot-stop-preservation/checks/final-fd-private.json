@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-boot-stop-3f488eca5000"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

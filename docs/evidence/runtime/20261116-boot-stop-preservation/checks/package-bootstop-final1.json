@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 124.329703208,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/package-home-bootstop-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "629e2bac05b4102ad569ae699a45814de438cf873dfa0d70a0c98867acf30a42"
+}

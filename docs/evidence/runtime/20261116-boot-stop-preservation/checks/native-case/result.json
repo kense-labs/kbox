@@ -1,0 +1,18 @@
+{
+  "actualOsStopFailureClaimed": false,
+  "anonymousVolumeRemoved": "anon_8ca0c3c1_ae881e4e96b11077a26832146363d808",
+  "boxDirectoryAbsent": true,
+  "callerBytesRetained": 2,
+  "callerCanaryRetained": true,
+  "exactOwnerAndAllocationRetained": true,
+  "execution": "8ca0c3c1-7836-4c22-9283-db4d4ce53e8e",
+  "liveWritesAfterRefusal": true,
+  "noLateWrites": true,
+  "pid": 1946,
+  "retryActuallyStoppedVm": true,
+  "runtimeRssMeasured": false,
+  "socketDir": "/private/tmp/kbox-sockets/8ca0c3c1-7836-4c22-9283-db4d4ce53e8e",
+  "socketDirectoryAbsent": true,
+  "status": "PASS",
+  "syntheticOneShotStopError": true
+}

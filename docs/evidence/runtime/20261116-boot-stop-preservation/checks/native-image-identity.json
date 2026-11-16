@@ -1,0 +1,11 @@
+{
+  "reference": "kbox-stop-preservation-native:proof",
+  "digest": "sha256:12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db",
+  "beforeAndAfterDigestEqual": true,
+  "configDigest": "sha256:4253bbbbf222446071e4e43fa8ec097ceed05b2b1b6bcbdeb698913fe2bd2b27",
+  "architecture": "arm64",
+  "os": "linux",
+  "volumes": {
+    "/scratch": {}
+  }
+}

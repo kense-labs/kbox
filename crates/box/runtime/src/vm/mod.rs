@@ -647,7 +647,8 @@ impl VmManager {
         #[cfg(target_os = "windows")]
         let guest_exit_before_cleanup = windows_guest_persisted_exit_code(&box_dir);
 
-        if let Some(mut handler) = self.handler.write().await.take() {
+        let handler = self.handler.write().await.take();
+        if let Some(mut handler) = handler {
             // A short-lived workload can finish before the runtime publishes
             // its readiness endpoint. That is a normal terminal completion,
             // not a failed rootfs build. Preserve its writable generation so a
@@ -678,8 +679,11 @@ impl VmManager {
                 tracing::warn!(
                     box_id = %self.box_id,
                     error = %error,
-                    "Failed to stop VM handler after boot failure"
+                    "Failed to stop VM handler after boot failure; retaining runtime ownership"
                 );
+                *self.handler.write().await = Some(handler);
+                self.retain_boot_failure_diagnostics().await;
+                return;
             }
             let provider_exit_code = handler.exit_code().or(self.shim_exit_code);
             #[cfg(not(target_os = "windows"))]

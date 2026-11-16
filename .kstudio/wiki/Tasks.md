@@ -21,6 +21,13 @@
 - **验证**: focused20、CLI935、contracts118、installer8；3 Rust native+3 Python；默认2299/6/50，磁盘服务失败保留。
 - **限制**: 原始15s故障、stop失败所有权、完整GA和外部Git/平台门槛未完成；RSS/tokens/cost未知。
 
+## T2026-11-16-boot-stop-preservation
+
+- **结果**: 启动失败的stop拒绝保留原handler和工作资源；重试完成才清理。
+- **证据**: [原生故障注入、归档和清理](../../docs/evidence/runtime/20261116-boot-stop-preservation/OUTCOME.md)。
+- **验证**: focused3、VM236、CLI935、contracts24、installer8；3Rust+3Python native；默认2302/6/51。
+- **限制**: stop错误为合成注入，VM和写入/实际重试停止为原生；外层pool/caller丢弃owner仍待做，GA未完成；RSS/tokens/cost未知。
+
 ## T2026-11-16-k-init
 
 - **完成日期**: 2026-11-16

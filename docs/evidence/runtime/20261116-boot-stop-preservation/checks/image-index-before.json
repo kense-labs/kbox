@@ -1,0 +1,404 @@
+{
+  "images": [
+    {
+      "reference": "kbox-oci-regression:0440aad8d495453584c0d5e0599ab52b",
+      "digest": "sha256:b0372ca9d0fdc4fd232289b260533e03efdc52de1365da0fc34644c82cad703a",
+      "size_bytes": 78030225,
+      "pulled_at": "2026-11-15T05:02:42.734824Z",
+      "last_used": "2026-11-15T05:03:01.022294Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/b0372ca9d0fdc4fd232289b260533e03efdc52de1365da0fc34644c82cad703a"
+    },
+    {
+      "reference": "kbox-oci-regression:9621391ad04b41b5a98232e93106171f",
+      "digest": "sha256:3dc4c6551f826ffbe842b9fae7f9b15cd6817b5cb97f1a4919b54701833d1e4a",
+      "size_bytes": 78030222,
+      "pulled_at": "2026-11-15T16:09:16.620659Z",
+      "last_used": "2026-11-15T16:09:47.306635Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/3dc4c6551f826ffbe842b9fae7f9b15cd6817b5cb97f1a4919b54701833d1e4a"
+    },
+    {
+      "reference": "kbox-oci-regression:8267828df1ad40f69503ab2de11468b9",
+      "digest": "sha256:fcfcefba55752414320f102bd4232528c37f0f170e074df8698f38522a927333",
+      "size_bytes": 78030248,
+      "pulled_at": "2026-11-15T18:29:54.227731Z",
+      "last_used": "2026-11-15T18:30:16.197821Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/fcfcefba55752414320f102bd4232528c37f0f170e074df8698f38522a927333"
+    },
+    {
+      "reference": "kbox-oci-regression:41f9f7299cf44bdc99d605c3fbcb7b20",
+      "digest": "sha256:8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a",
+      "size_bytes": 78030220,
+      "pulled_at": "2026-11-14T22:57:22.466462Z",
+      "last_used": "2026-11-14T22:57:40.907596Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/8da098f50a8be54329ab63b3bd2b4c25bdbe7b4bbd6dffe22a799fd1932dc35a"
+    },
+    {
+      "reference": "docker.io/library/busybox:1.37.0",
+      "digest": "sha256:a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec",
+      "size_bytes": 1902122,
+      "pulled_at": "2026-11-14T01:02:38.148591Z",
+      "last_used": "2026-11-16T00:20:04.238530Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/a7dbc319b1438115a207e11930dc4bb3e643dcb3ec0bdd694bb36cd8fad289ec"
+    },
+    {
+      "reference": "kbox-oci-regression:bf2d8b1951bc44a3a32077657703e48c",
+      "digest": "sha256:5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192",
+      "size_bytes": 78030213,
+      "pulled_at": "2026-11-14T10:12:35.777663Z",
+      "last_used": "2026-11-14T10:12:53.081024Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/5648a7d96dcf85d88cf41e1f423ea4c1a6d2f71a9e3ca0c7baed435879088192"
+    },
+    {
+      "reference": "kbox-oci-regression:1264fc4406a64e3684a7130a390b0f29",
+      "digest": "sha256:548cb9cd2aab2286439078506f9f692d73602ce03aed3b73fdc06a62989c0a1d",
+      "size_bytes": 78030220,
+      "pulled_at": "2026-11-15T19:45:18.570478Z",
+      "last_used": "2026-11-15T19:45:36.123048Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/548cb9cd2aab2286439078506f9f692d73602ce03aed3b73fdc06a62989c0a1d"
+    },
+    {
+      "reference": "kbox-oci-regression:b28fa3ddbaa84915ab8dbc181e2f0006",
+      "digest": "sha256:ad24c93c66f81a1b9560d122e7c687123a62261a5bb862906bc7a48091c002de",
+      "size_bytes": 78030236,
+      "pulled_at": "2026-11-15T18:29:53.716842Z",
+      "last_used": "2026-11-15T18:30:15.213124Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/ad24c93c66f81a1b9560d122e7c687123a62261a5bb862906bc7a48091c002de"
+    },
+    {
+      "reference": "kbox-oci-regression:ca7ca4c5aa37423a8204d6ed55172c22",
+      "digest": "sha256:16f9feac7a9068338c0545194c06d9a069b5c88688313da8696ab15f10f2c739",
+      "size_bytes": 78030244,
+      "pulled_at": "2026-11-15T18:29:54.341726Z",
+      "last_used": "2026-11-15T18:30:16.942506Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/16f9feac7a9068338c0545194c06d9a069b5c88688313da8696ab15f10f2c739"
+    },
+    {
+      "reference": "kbox-qualification-tools:local",
+      "digest": "sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "size_bytes": 77799778,
+      "pulled_at": "2026-11-14T01:06:48.965537Z",
+      "last_used": "2026-11-16T00:35:59.122201Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7"
+    },
+    {
+      "reference": "kbox-oci-regression:c1959a45a8c04bc6a4a9a61cc85ad3ee",
+      "digest": "sha256:aefb5a3bfdd904b6e5e995f0736d5276adefef549d4a36366e6f29f59b1d1a21",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T17:26:54.371698Z",
+      "last_used": "2026-11-15T17:27:17.068593Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/aefb5a3bfdd904b6e5e995f0736d5276adefef549d4a36366e6f29f59b1d1a21"
+    },
+    {
+      "reference": "kbox-oci-regression:d28be1b8203744ff9f5ec2be001a5532",
+      "digest": "sha256:05e938c6b547969b83ed40e108a5f5b4262a652c62fce3f141598cc775368d80",
+      "size_bytes": 78030217,
+      "pulled_at": "2026-11-15T09:04:56.327447Z",
+      "last_used": "2026-11-15T09:05:23.745857Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/05e938c6b547969b83ed40e108a5f5b4262a652c62fce3f141598cc775368d80"
+    },
+    {
+      "reference": "kbox-oci-regression:ba3ccf9460ec452587c263de14edc1e2",
+      "digest": "sha256:8a8aee2eec6a6ef7cd6b87240a9b6f4f58a2a0bd497b32eff86b0612be336880",
+      "size_bytes": 78030214,
+      "pulled_at": "2026-11-15T11:45:28.701477Z",
+      "last_used": "2026-11-15T11:45:44.859101Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/8a8aee2eec6a6ef7cd6b87240a9b6f4f58a2a0bd497b32eff86b0612be336880"
+    },
+    {
+      "reference": "kbox-oci-regression:960d36909bb547aaa00f7f763a8e6a21",
+      "digest": "sha256:49b088a762103e69dec348c23e678f8e3fe2f79992ba85cfae2926b9cb4a1c51",
+      "size_bytes": 78030220,
+      "pulled_at": "2026-11-15T18:29:53.529423Z",
+      "last_used": "2026-11-15T18:30:14.073639Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/49b088a762103e69dec348c23e678f8e3fe2f79992ba85cfae2926b9cb4a1c51"
+    },
+    {
+      "reference": "kbox-oci-regression:6d7cbcbd3d7e4acc9b0a8fba4ed00d28",
+      "digest": "sha256:ab09bcdfcb625db3e59bc43844a40fefc93036dad3b93e857bfe2ebe527e94c9",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T10:23:01.530279Z",
+      "last_used": "2026-11-15T10:23:21.641778Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/ab09bcdfcb625db3e59bc43844a40fefc93036dad3b93e857bfe2ebe527e94c9"
+    },
+    {
+      "reference": "kbox-oci-regression:5d611bc765404799bfb1550a97beb45e",
+      "digest": "sha256:14cb05e20b311bbad4c6bb611ff6d6eb7f53bc9c0cb277fee8d85e60cd62b724",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T09:46:52.922640Z",
+      "last_used": "2026-11-15T09:47:31.506045Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/14cb05e20b311bbad4c6bb611ff6d6eb7f53bc9c0cb277fee8d85e60cd62b724"
+    },
+    {
+      "reference": "kbox-oci-regression:4cfe7563e1034706a22253d627e583c2",
+      "digest": "sha256:37d60b7783ce4d30b52fdd68f0369768d01a4a4ed93b371eb99dd02f65bfeaeb",
+      "size_bytes": 78030214,
+      "pulled_at": "2026-11-15T08:12:50.151050Z",
+      "last_used": "2026-11-15T08:13:07.476263Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/37d60b7783ce4d30b52fdd68f0369768d01a4a4ed93b371eb99dd02f65bfeaeb"
+    },
+    {
+      "reference": "kbox-oci-regression:a599f4dec228407fbf8a30b1a09e3dd0",
+      "digest": "sha256:6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7",
+      "size_bytes": 78030213,
+      "pulled_at": "2026-11-15T01:17:59.302217Z",
+      "last_used": "2026-11-15T01:18:32.076361Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/6bc14442fadff3e56857d871ad97f2e6c19232e79782d15f70ef5fb19530e2f7"
+    },
+    {
+      "reference": "kbox-oci-regression:fcddf6eaa0f94e99950b69ad2f1e3bb3",
+      "digest": "sha256:232f1680b2caa89a61eae6d64a1fbb1d1eabb52b0dcb9e7d0bb65a6ff451767a",
+      "size_bytes": 78030220,
+      "pulled_at": "2026-11-15T17:26:54.216421Z",
+      "last_used": "2026-11-15T17:27:15.582064Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/232f1680b2caa89a61eae6d64a1fbb1d1eabb52b0dcb9e7d0bb65a6ff451767a"
+    },
+    {
+      "reference": "kbox-oci-regression:a6b9dc66f1cc49948c8722585bf97424",
+      "digest": "sha256:7f91828d5f5ddadb61a68b4b2b1b1b7b55527ba0bdcd858f634231717386a6b2",
+      "size_bytes": 78030224,
+      "pulled_at": "2026-11-15T11:06:01.296287Z",
+      "last_used": "2026-11-15T11:06:20.200753Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/7f91828d5f5ddadb61a68b4b2b1b1b7b55527ba0bdcd858f634231717386a6b2"
+    },
+    {
+      "reference": "kbox-oci-regression:3f5e18a514204a9db3eba0b06bef53dd",
+      "digest": "sha256:e8e4996b4a9fb499eb678af273df7ed8b455ec975fcbcf1da81c6c4f982dfaec",
+      "size_bytes": 78030218,
+      "pulled_at": "2026-11-15T23:16:04.684324Z",
+      "last_used": "2026-11-15T23:16:23.371588Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/e8e4996b4a9fb499eb678af273df7ed8b455ec975fcbcf1da81c6c4f982dfaec"
+    },
+    {
+      "reference": "kbox-oci-regression:e63cdc4bfb624741addce5be2492e49b",
+      "digest": "sha256:c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec",
+      "size_bytes": 78030216,
+      "pulled_at": "2026-11-14T09:55:11.576431Z",
+      "last_used": "2026-11-14T09:55:43.770499Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/c0a1ecf04d28cb342ef2f1ff5e13ab266a2c8e7da3339b3dc245691374347fec"
+    },
+    {
+      "reference": "kbox-oci-regression:e29a14ae5bcf48cf9c9541ef2c27ac26",
+      "digest": "sha256:d9ddbbed6ce2c8c21c69fe6b42ccf76a108d5d3bd5bdb7d1bccac8b3718a37fd",
+      "size_bytes": 78030210,
+      "pulled_at": "2026-11-16T00:20:19.431294Z",
+      "last_used": "2026-11-16T00:20:37.421989Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/d9ddbbed6ce2c8c21c69fe6b42ccf76a108d5d3bd5bdb7d1bccac8b3718a37fd"
+    },
+    {
+      "reference": "kbox-oci-regression:52eb62121dbb4842b682d1b2d11885ef",
+      "digest": "sha256:75b48d5ae4877d797083e73cc047f74d21130538dfef2029bb0a255a0c1e1289",
+      "size_bytes": 78030244,
+      "pulled_at": "2026-11-15T22:32:45.087063Z",
+      "last_used": "2026-11-15T22:33:24.949137Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/75b48d5ae4877d797083e73cc047f74d21130538dfef2029bb0a255a0c1e1289"
+    },
+    {
+      "reference": "kbox-oci-regression:b5a32b7386a341808e3e825718b0277d",
+      "digest": "sha256:9ee5a99380a4001bcb61c3e416f6b0cb62879dc0cf4f027267ad1cc0415242f7",
+      "size_bytes": 78030216,
+      "pulled_at": "2026-11-15T05:27:36.559723Z",
+      "last_used": "2026-11-15T05:28:00.587629Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/9ee5a99380a4001bcb61c3e416f6b0cb62879dc0cf4f027267ad1cc0415242f7"
+    },
+    {
+      "reference": "kbox-oci-regression:4be987dd0ef741babeb07c38b50f8324",
+      "digest": "sha256:2817a4955248fed442dad5f0c4fc0771907749583008103b9e3c214da7e293fa",
+      "size_bytes": 78030222,
+      "pulled_at": "2026-11-15T17:26:53.963279Z",
+      "last_used": "2026-11-15T17:27:14.547058Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/2817a4955248fed442dad5f0c4fc0771907749583008103b9e3c214da7e293fa"
+    },
+    {
+      "reference": "kbox-oci-regression:d2a4a7a5d57a4d5eb39a09e8ba745705",
+      "digest": "sha256:fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd",
+      "size_bytes": 78030216,
+      "pulled_at": "2026-11-14T21:20:09.491765Z",
+      "last_used": "2026-11-14T21:20:27.285874Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/fb6bac15d2bf8bf5811f1c6a0a7eb35c017acd7ac19420fcee2cd65563b150dd"
+    },
+    {
+      "reference": "kbox-oci-regression:2be41a7ea9304fcf9fe9679eb8862417",
+      "digest": "sha256:8defd8a53cc0ec65a4d3f585c358f1fb734b42d33693669cf7f3036d7e8d0056",
+      "size_bytes": 78030247,
+      "pulled_at": "2026-11-15T18:29:54.337007Z",
+      "last_used": "2026-11-15T18:30:16.388093Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/8defd8a53cc0ec65a4d3f585c358f1fb734b42d33693669cf7f3036d7e8d0056"
+    },
+    {
+      "reference": "kbox-oci-regression:3c3f68820ffa424b82cfa94a4f35c996",
+      "digest": "sha256:d6e582537e6d7c8ab6e7a4ad14eda2186bd022e4d7cbf425805397e488f7093f",
+      "size_bytes": 78030239,
+      "pulled_at": "2026-11-15T15:44:58.030883Z",
+      "last_used": "2026-11-15T15:45:18.659004Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/d6e582537e6d7c8ab6e7a4ad14eda2186bd022e4d7cbf425805397e488f7093f"
+    },
+    {
+      "reference": "kbox-oci-regression:e8eca06fceac421f868852fd55abcbcf",
+      "digest": "sha256:824b8d3f044f86ce4dd31b041b89ac6932d073e40b2a222f4208c6e777d230ec",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T04:56:32.475047Z",
+      "last_used": "2026-11-15T04:56:49.314975Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/824b8d3f044f86ce4dd31b041b89ac6932d073e40b2a222f4208c6e777d230ec"
+    },
+    {
+      "reference": "kbox-oci-regression:db0387862bd74d15a87308d8c58adf09",
+      "digest": "sha256:4e9a1cd06a5a054435ee8292b24625c8996458957ab0eef95a643c1a03074e0d",
+      "size_bytes": 78030209,
+      "pulled_at": "2026-11-15T17:06:39.027597Z",
+      "last_used": "2026-11-15T17:06:57.462173Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/4e9a1cd06a5a054435ee8292b24625c8996458957ab0eef95a643c1a03074e0d"
+    },
+    {
+      "reference": "kbox-oci-regression:a642a84119104354960a33bc119fd2e7",
+      "digest": "sha256:440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1",
+      "size_bytes": 78030214,
+      "pulled_at": "2026-11-14T18:04:28.142654Z",
+      "last_used": "2026-11-14T18:04:45.920234Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/440483bb21e8effdbb21dfde66a211c50f81a57079fe746dfe47ff3f66e0ebc1"
+    },
+    {
+      "reference": "kbox-oci-regression:50818f600ac441af99799447121bfe83",
+      "digest": "sha256:28260cb22d4717f5e20d6b1ce83130ecceaad361b8f8c8759caf36b877852a3f",
+      "size_bytes": 78030215,
+      "pulled_at": "2026-11-15T05:36:00.141008Z",
+      "last_used": "2026-11-15T05:36:31.886320Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/28260cb22d4717f5e20d6b1ce83130ecceaad361b8f8c8759caf36b877852a3f"
+    },
+    {
+      "reference": "kbox-oci-regression:5f8fe3da1c944871b59efc3a47c78228",
+      "digest": "sha256:1c1caad268bb5c1887a2debcb37a7bc66b9340af9a0b73a34db2e1416994040f",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T13:05:23.199928Z",
+      "last_used": "2026-11-15T13:05:42.110807Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/1c1caad268bb5c1887a2debcb37a7bc66b9340af9a0b73a34db2e1416994040f"
+    },
+    {
+      "reference": "kbox-oci-regression:fbefa72579a44e0d831874de5ba2f5d6",
+      "digest": "sha256:0b1dc72cd513d32b3a7314062db309e7a259a9be4f6ab99eb3937c21d6814f8e",
+      "size_bytes": 78030222,
+      "pulled_at": "2026-11-15T03:13:47.422580Z",
+      "last_used": "2026-11-15T03:14:05.308041Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/0b1dc72cd513d32b3a7314062db309e7a259a9be4f6ab99eb3937c21d6814f8e"
+    },
+    {
+      "reference": "kbox-oci-regression:7bff2b14cdbb4124a128e6a6bb407fb1",
+      "digest": "sha256:b7c68c98fb6b3c93c6b383e2714f6441dbbcdc8f21708d27b37085ded275636a",
+      "size_bytes": 78030213,
+      "pulled_at": "2026-11-15T14:52:59.460087Z",
+      "last_used": "2026-11-15T14:53:16.160794Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/b7c68c98fb6b3c93c6b383e2714f6441dbbcdc8f21708d27b37085ded275636a"
+    },
+    {
+      "reference": "kbox-oci-regression:b311c38989184341b2aa9c517eab826a",
+      "digest": "sha256:bbd4d96b24f78c5ce09abab3acbe54d45bf22c2edaced92baa8b76baa5bcbbaf",
+      "size_bytes": 78030217,
+      "pulled_at": "2026-11-15T13:48:57.673063Z",
+      "last_used": "2026-11-15T13:49:28.101511Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/bbd4d96b24f78c5ce09abab3acbe54d45bf22c2edaced92baa8b76baa5bcbbaf"
+    },
+    {
+      "reference": "kbox-oci-regression:8909ab76df62461a82ee45c0049b37e0",
+      "digest": "sha256:820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14",
+      "size_bytes": 78030226,
+      "pulled_at": "2026-11-14T16:31:00.580700Z",
+      "last_used": "2026-11-14T16:31:17.327027Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/820704b160073b23f7bf85ef42f413988fa8ff1b527c60e9d27661aedf01bc14"
+    },
+    {
+      "reference": "kbox-oci-regression:d5709e6b79364ecbbc36c49f89db69b7",
+      "digest": "sha256:d0e9ce4e15b7f72a511aa359fa7cc641591b9b8bf5d3110b9a78557fd7a158ac",
+      "size_bytes": 78030219,
+      "pulled_at": "2026-11-15T17:26:54.320257Z",
+      "last_used": "2026-11-15T17:27:16.397244Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/d0e9ce4e15b7f72a511aa359fa7cc641591b9b8bf5d3110b9a78557fd7a158ac"
+    },
+    {
+      "reference": "kbox-oci-regression:0e1b603a9b014109bdddfa5ce7890a77",
+      "digest": "sha256:709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e",
+      "size_bytes": 78030221,
+      "pulled_at": "2026-11-14T12:30:04.974853Z",
+      "last_used": "2026-11-14T12:30:38.301181Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/709da5bd39bb93e8e62bb04e7bf916cfa595c095246740699bf29c75876da08e"
+    },
+    {
+      "reference": "kbox-oci-regression:8883818df1dd4d97ad679545e06ed969",
+      "digest": "sha256:a869ddab7820a892f46774318b02361726a695b8aca8d12ac34c40868e424fe1",
+      "size_bytes": 78030214,
+      "pulled_at": "2026-11-16T00:08:08.345304Z",
+      "last_used": "2026-11-16T00:08:35.403543Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/a869ddab7820a892f46774318b02361726a695b8aca8d12ac34c40868e424fe1"
+    },
+    {
+      "reference": "kbox-oci-regression:0b47261d6de947c98c7e88de3a0acd1d",
+      "digest": "sha256:7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406",
+      "size_bytes": 78030225,
+      "pulled_at": "2026-11-14T23:45:19.734400Z",
+      "last_used": "2026-11-14T23:45:51.721867Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/7d31d37cb5017a4416cb431117b8c0baecc0d51bdfbfeff5884315a3aea4c406"
+    },
+    {
+      "reference": "kbox-oci-regression:150a4bc3103b45038a5eabffa4c4cbcc",
+      "digest": "sha256:4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962",
+      "size_bytes": 78030223,
+      "pulled_at": "2026-11-14T16:19:45.858129Z",
+      "last_used": "2026-11-14T16:20:16.294751Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/4c2e8687cea9e53cff66156de2bd52ef2d9a262f8a5f375971b99d5220f25962"
+    },
+    {
+      "reference": "kbox-oci-regression:b1f452a32fa049cba8f7059847b08309",
+      "digest": "sha256:3d7f003f4c77bd860fcd239dff866d0216999183de624ec9c5f8eda2e718cc43",
+      "size_bytes": 78030214,
+      "pulled_at": "2026-11-15T06:20:54.946587Z",
+      "last_used": "2026-11-15T06:21:11.583484Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/3d7f003f4c77bd860fcd239dff866d0216999183de624ec9c5f8eda2e718cc43"
+    },
+    {
+      "reference": "kbox-oci-regression:ab64678ae888431eb33a72a51286e179",
+      "digest": "sha256:6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3",
+      "size_bytes": 78030203,
+      "pulled_at": "2026-11-15T01:28:40.265900Z",
+      "last_used": "2026-11-15T01:29:08.798187Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/6dad0377869b86499efac104bf87799d3e2bc026b1c0b4feba0eee75fc374af3"
+    },
+    {
+      "reference": "kbox-stop-preservation-native:proof",
+      "digest": "sha256:12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db",
+      "size_bytes": 77800013,
+      "pulled_at": "2026-11-16T00:36:01.927225Z",
+      "last_used": "2026-11-16T00:36:01.927225Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db"
+    },
+    {
+      "reference": "kbox-oci-regression:f9a76742996941babe197f852053068a",
+      "digest": "sha256:9313233f3a06df757a69f09d2904a5310205b140528e47892a0abfc342309a42",
+      "size_bytes": 78030223,
+      "pulled_at": "2026-11-15T15:38:05.173004Z",
+      "last_used": "2026-11-15T15:38:22.700473Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/9313233f3a06df757a69f09d2904a5310205b140528e47892a0abfc342309a42"
+    },
+    {
+      "reference": "kbox-oci-regression:739d08ea2f084fa880a5174d6006beb5",
+      "digest": "sha256:9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7",
+      "size_bytes": 78030215,
+      "pulled_at": "2026-11-15T00:37:55.062807Z",
+      "last_used": "2026-11-15T00:38:19.429581Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/9b543c2c5268393e9e395c8f35108d7c902a7544a18f6d06d16dfbaedd6142d7"
+    },
+    {
+      "reference": "kbox-oci-regression:ac25b5cc9d6740d3bd9dde90c908cd5c",
+      "digest": "sha256:c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a",
+      "size_bytes": 78030216,
+      "pulled_at": "2026-11-14T20:26:18.261477Z",
+      "last_used": "2026-11-14T20:26:36.284988Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/c6b44b4d6963f8cad89629d0548c0d7a1d075ef66e1b0d12ebfe6502f95bf63a"
+    },
+    {
+      "reference": "kbox-oci-regression:6d4fd4ac440649e8aa07a53d09f4c089",
+      "digest": "sha256:7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1",
+      "size_bytes": 78030211,
+      "pulled_at": "2026-11-14T15:36:59.499808Z",
+      "last_used": "2026-11-14T15:37:16.509485Z",
+      "path": "/private/tmp/kbox-boot-stop-3f488eca5000/image-build/home/images/sha256/7800d7843ff4c9b959605cd037a94322bfad3242d10e5a415376ff56adfa4db1"
+    }
+  ]
+}

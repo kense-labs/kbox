@@ -1,0 +1,8 @@
+{
+  "command": [
+    "python3",
+    "artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/build-box-final1.py"
+  ],
+  "exit": 0,
+  "seconds": 125.76292433399999
+}

@@ -1,0 +1,108 @@
+[
+  {
+    "case": "oci",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-oci"
+    ],
+    "seconds": 35.853465707999995,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-oci/6a5c0f4fbfb846f1b4454d6dda6f9ae1/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "readonly",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-readonly"
+    ],
+    "seconds": 6.5340327500000015,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-readonly/b63dde6ecf6b4589b4bec956ba41cce4/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "primary",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-primary"
+    ],
+    "seconds": 69.182655333,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-primary/c37e9289c2cb4f9d8591cf0f93a50384/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "prewarm",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/installed-bootstop-final-1/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-prewarm",
+      "--test-binary",
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/native-client-final1"
+    ],
+    "seconds": 15.835075375000002,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-prewarm/8c7e6e00b8854d3783543f148badc1a6/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  {
+    "case": "directory",
+    "status": "PASS",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/native-client-final1",
+      "--ignored",
+      "--exact",
+      "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+      "--nocapture"
+    ],
+    "seconds": 18.057307166,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/af-final1/native-directory/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  }
+]

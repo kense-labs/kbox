@@ -1,0 +1,6 @@
+Building from /private/tmp/kbox-boot-stop-3f488eca5000/image-build/context/Containerfile
+Step 1/4: FROM docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7
+Step 2/4: VOLUME /scratch
+Step 3/4: ENTRYPOINT []
+Step 4/4: CMD ["sleep", "2147483647"]
+Successfully built kbox-stop-preservation-native:proof (6 layers, 74.2 MB, linux/arm64)

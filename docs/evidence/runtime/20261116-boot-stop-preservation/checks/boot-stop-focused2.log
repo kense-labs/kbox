@@ -1,0 +1,9 @@
+
+running 4 tests
+test vm::tests::boot_stop::native_failed_stop_preserves_live_vm_then_retries_real_finalization ... ignored, requires sentinel-owned home, VOLUME image and installed Box companions
+test vm::tests::boot_stop::failed_boot_stop_refusal_preserves_the_exact_handler_data_and_allocations ... ok
+test vm::tests::boot_stop::failed_boot_cleanup_retries_the_retained_handler_before_releasing_resources ... ok
+test vm::tests::boot_stop::exited_provider_still_retains_owner_when_backend_finalization_refuses ... ok
+
+test result: ok. 3 passed; 0 failed; 1 ignored; 0 measured; 2355 filtered out; finished in 0.12s
+

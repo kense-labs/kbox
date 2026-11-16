@@ -1,0 +1,8 @@
+
+running 3 tests
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... ok
+test commands::pool::tests::shutdown::cancelled_lease_drain_keeps_the_entry_owner_and_permit_for_retry ... ok
+test commands::pool::tests::shutdown::stop_ack_waits_for_existing_requests_and_excludes_its_own_connection ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 935 filtered out; finished in 0.06s
+

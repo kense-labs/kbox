@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "cancelled_guest_stop_delivery_keeps_the_actual_handler"
+  ],
+  "exit": 0,
+  "seconds": 9.751974,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cancel-handler-green1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

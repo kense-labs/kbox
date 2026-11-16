@@ -1,0 +1,20 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data' (109284734) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:250:5:
+assertion `left == right` failed: Stopped is not proof of host cleanup
+  left: 1
+ right: 2
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2374 filtered out; finished in 0.01s
+

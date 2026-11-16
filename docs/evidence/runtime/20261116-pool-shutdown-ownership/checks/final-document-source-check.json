@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "dde4c61ac1c2348111de6c8ca72d512836d47637cd7bacc6744fc20cb6bdd33d",
+  "sourceInputCount": 1726,
+  "references": [
+    "crates/box/runtime/README.md",
+    "docs/release.md",
+    "docs/evidence/runtime/20261114-oci-host-service/W4-GATES.md",
+    ".kstudio/wiki/Tasks.md",
+    ".kstudio/evidence/T2026-11-16-pool-shutdown-ownership/OUTCOME.md"
+  ],
+  "diffCheck": {
+    "exit": 0,
+    "output": ""
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool_stress.py",
+    "docs/evidence/runtime/20261116-pool-shutdown-ownership/context.json",
+    "final2"
+  ],
+  "exit": 0,
+  "seconds": 28.200306834000003,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-pool-wave-final2",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

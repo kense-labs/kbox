@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib",
+    "commands::pool"
+  ],
+  "exit": 0,
+  "seconds": 3.899372459,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-pool-focused1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

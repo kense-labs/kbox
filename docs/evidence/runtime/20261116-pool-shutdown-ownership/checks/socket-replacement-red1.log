@@ -1,0 +1,18 @@
+
+running 1 test
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... FAILED
+
+failures:
+
+---- commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object stdout ----
+
+thread 'commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object' (110075522) panicked at crates/box/cli/src/commands/pool/tests/shutdown.rs:121:30:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 937 filtered out; finished in 0.00s
+

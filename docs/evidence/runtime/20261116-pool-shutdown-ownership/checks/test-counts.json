@@ -1,0 +1,101 @@
+{
+  "close-controls1": {
+    "rust": [
+      {
+        "passed": 6,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "cli-shutdown-green2": {
+    "rust": [
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "close-admission-green1": {
+    "rust": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "verify1": {
+    "rust": [
+      {
+        "passed": 2321,
+        "failed": 6,
+        "ignored": 52
+      }
+    ],
+    "privateRoots": {
+      "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.CMALWn/home",
+      "shortTemporary": "/private/tmp/kv.HRYrx6"
+    }
+  },
+  "verify2": {
+    "rust": [
+      {
+        "passed": 2322,
+        "failed": 6,
+        "ignored": 52
+      }
+    ],
+    "privateRoots": {
+      "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.r02hAp/home",
+      "shortTemporary": "/private/tmp/kv.mXoF6i"
+    }
+  },
+  "cli-full1": {
+    "rust": [
+      {
+        "passed": 938,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "cli-full2": {
+    "rust": [
+      {
+        "passed": 938,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "contract-lib1": {
+    "rust": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "installer1": {
+    "rust": [],
+    "stderrTail": "main__.InstallerTests) ... ok\ntest_success_preserves_workload_data_and_unrelated_runtime_files (__main__.InstallerTests) ... ok\ntest_unexpected_companion_symlink_is_refused (__main__.InstallerTests) ... ok\ntest_versioned_state_directory_survives_install_and_rollback (__main__.InstallerTests) ... ok\ntest_wrong_guest_architecture_is_refused_even_with_matching_checksum (__main__.InstallerTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 3.679s\n\nOK\n"
+  }
+}

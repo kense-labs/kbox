@@ -1,0 +1,69 @@
+
+running 24 tests
+test contract::protocol::effective_deadline_tests::relative_only_exec_reserves_control_plane_slack ... ok
+test contract::protocol::effective_deadline_tests::absolute_deadline_does_not_gain_control_plane_slack ... ok
+test contract::protocol::tests::log_discontinuity_reasons_have_stable_wire_names ... ok
+test provider::tests::provider_ids_are_portable_and_have_no_default_policy ... ok
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+test state::file::tests::subprocess_atomic_write_helper ... ok
+test contract::unit::tests::health_checks_reference_declared_ports ... ok
+test contract::unit::tests::lifecycle_specific_fields_fail_closed ... ok
+test contract::unit::tests::service_lifecycle_is_service_only_readiness_bound_and_bounded ... ok
+test contract::unit::tests::registry_credential_is_a_typed_unique_secret_target ... ok
+test state::file::tests::subprocess_receipt_first_completion_helper ... ok
+test contract::unit::tests::task_and_service_specs_are_general_and_digest_stable ... ok
+test contract::unit::directory_tests::live_directory_references_have_an_independent_closed_mount_kind ... ok
+test driver::snapshot_tests::drivers_without_the_feature_keep_the_default_refusal ... ok
+test driver::snapshot_tests::snapshot_receipt_validates_and_round_trips ... ok
+test driver::snapshot_tests::snapshot_request_validates_and_round_trips ... ok
+test state::transition_tests::state_transition_002_terminal_identity_time_and_class_rules_fail_closed ... ok
+test state::transition_tests::state_transition_001_task_and_service_matrices_have_complete_oracles ... ok
+
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... test state::file::tests::state_fs_004_noncanonical_egress_digest_is_rejected_without_rewriting_state ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... test state::file::tests::state_fs_001_hard_linked_lock_record_and_receipt_files_fail_closed ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+test state::file::tests::state_fs_002_corrupt_permission_and_non_regular_boundaries_fail_closed ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_io_fault_helper ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.01s
+
+test state::file::tests::state_fs_003_storage_faults_preserve_prior_state_and_reject_dispatch ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_receipt_first_completion_helper ... test state::file::tests::state_crash_001_receipt_first_process_kills_reconcile_every_result_kind ... ok
+
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... 
+running 1 test
+test state::file::tests::subprocess_atomic_write_helper ... test state::file::tests::state_crash_002_atomic_write_process_kills_preserve_a_complete_record ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.95s
+

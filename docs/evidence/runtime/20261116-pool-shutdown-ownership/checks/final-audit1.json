@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 3.665099833,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-final-audit1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

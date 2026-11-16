@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--all-targets"
+  ],
+  "exit": 0,
+  "seconds": 18.376497875000002,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-native-fixture-check1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

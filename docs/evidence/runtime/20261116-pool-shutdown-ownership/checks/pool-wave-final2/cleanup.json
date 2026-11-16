@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "homes": 4,
+  "ownedProcesses": [],
+  "existingPoolSockets": [],
+  "managedExecutions": [],
+  "callerTemplateIdentitiesRetained": true,
+  "unsupportedSnapshotColdControl": true,
+  "templateCanaries": [
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/0/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        301987693
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/1/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        301987710
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/2/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        301987727
+      ]
+    },
+    {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/3/home/pool/tpl-5cd29809094dcb0d",
+      "identity": [
+        16777233,
+        301987763
+      ]
+    }
+  ]
+}

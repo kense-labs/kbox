@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--no-default-features",
+    "--features",
+    "vm"
+  ],
+  "exit": 0,
+  "seconds": 3.751589708,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-vm-only1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

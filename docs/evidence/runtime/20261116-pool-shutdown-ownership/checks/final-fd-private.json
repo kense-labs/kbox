@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-pool-stop-fe886a631080"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

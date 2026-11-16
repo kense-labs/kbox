@@ -1,0 +1,18 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations' (109684288) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:297:10:
+anonymous owner mismatch must not become clean close: ()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2376 filtered out; finished in 0.08s
+

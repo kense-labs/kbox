@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "scripts/test-install-package.py"
+  ],
+  "exit": 0,
+  "seconds": 3.7214709999999998,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-installer1",
+    "TMPDIR": "/private/tmp/kbox-pool-stop-fe886a631080/t"
+  }
+}

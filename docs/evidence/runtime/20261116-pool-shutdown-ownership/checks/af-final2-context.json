@@ -1,0 +1,55 @@
+{
+  "stage": "037-pool-shutdown-ownership",
+  "root": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2",
+  "privateRoot": "/private/tmp/kbox-pool-stop-fe886a631080",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-shutdown-ownership",
+  "baseCommit": "86a6bf080d5dbcc7a642e15fa8ece823ad819454",
+  "priorOutcome": "../20261116-pool-template-ownership/OUTCOME.md",
+  "status": "Source2 frozen after late-replenish retention, bound listener ownership and admission recheck",
+  "nativeStarted": true,
+  "sourceFrozen": true,
+  "broaderGoal": "Full enterprise GA active; default libkrun unchanged",
+  "externalBlockers": [
+    "Git UID501/GitHub DNS",
+    "Six disk-service failures",
+    "Other native hosts/Windows ARM64 deps unsupported"
+  ],
+  "remainingOwnerScope": "Startup/unpublished pools and foreground boot/legacy caller loss require separate continued work; do not claim solved by published shutdown",
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "nativeImageIdentity": {
+    "reference": "kbox-stop-preservation-native:proof",
+    "digest": "sha256:12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db",
+    "beforeAndAfterDigestEqual": true,
+    "configDigest": "sha256:4253bbbbf222446071e4e43fa8ec097ceed05b2b1b6bcbdeb698913fe2bd2b27",
+    "architecture": "arm64",
+    "os": "linux",
+    "volumes": {
+      "/scratch": {}
+    }
+  },
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/image-cache",
+  "priorArchives": {
+    "boxArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/final-dist-pooltpl-2/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "d5393321f1f4ba5344b6693c6d697a9c8ef3e0c35c2fd890484a0a548b67108f"
+    },
+    "ociArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79"
+    }
+  },
+  "sourceInputsSha256": "dde4c61ac1c2348111de6c8ca72d512836d47637cd7bacc6744fc20cb6bdd33d",
+  "sourceInputCount": 1726,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/final-dist-poolstop-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/native-client-final2",
+  "nativeClientSha256": "6f75291a6869e67f3f096e18d11d10ad76f189a691676bd27d2a2a763a299cde",
+  "checks": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-shutdown-ownership/checks/af-final2"
+}

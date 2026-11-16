@@ -506,6 +506,8 @@ pub struct VmManager {
     provider_launch: ProviderLaunch,
 
     pub(crate) template_use: Option<TemplateUse>,
+    // Remember successful cleanup and whether rootfs was retained; Stopped alone is insufficient.
+    completed_cleanup: Option<bool>,
 
     /// Path to the exec Unix socket (set after boot)
     pub(crate) exec_socket_path: Option<PathBuf>,
@@ -577,6 +579,7 @@ impl VmManager {
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
             template_use: None,
+            completed_cleanup: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -625,6 +628,7 @@ impl VmManager {
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
             template_use: None,
+            completed_cleanup: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -779,39 +783,44 @@ impl VmManager {
         }
 
         self.retain_boot_failure_diagnostics().await;
-        let anon_volumes_clean = self.cleanup_created_anonymous_volumes();
+        let anon_volumes_clean = self.cleanup_created_anonymous_volumes().is_ok();
         self.cleanup_box_dir(anon_volumes_clean);
     }
 
-    /// Returns whether every created anonymous volume was removed (fail closed).
-    fn cleanup_created_anonymous_volumes(&mut self) -> bool {
+    /// Retain failed allocation identities and the original typed refusal for retry.
+    fn cleanup_created_anonymous_volumes(&mut self) -> Result<()> {
         if self.created_anonymous_volumes.is_empty() {
-            return true;
+            return Ok(());
         }
 
         let created = std::mem::take(&mut self.created_anonymous_volumes);
-        let created_set: std::collections::HashSet<_> = created.iter().cloned().collect();
+        let mut removed = std::collections::HashSet::new();
         let store = crate::volume::VolumeStore::new(
             self.home_dir.join("volumes.json"),
             self.home_dir.join("volumes"),
         );
 
-        let mut clean = true;
-        for volume_name in &created {
-            if let Err(error) = store.remove_anonymous(volume_name, &self.box_id) {
-                tracing::error!(
-                    box_id = %self.box_id,
-                    volume = volume_name,
-                    error = %error,
-                    "Refusing to invent clean boot-failure cleanup while anonymous volume remove failed"
-                );
-                clean = false;
+        let mut failure = None;
+        for volume_name in created {
+            match store.remove_anonymous(&volume_name, &self.box_id) {
+                Ok(_) => {
+                    removed.insert(volume_name);
+                }
+                Err(error) => {
+                    tracing::error!(box_id = %self.box_id, volume = volume_name, %error,
+                        "Anonymous allocation retained after cleanup refusal");
+                    self.created_anonymous_volumes.push(volume_name);
+                    failure.get_or_insert(error);
+                }
             }
         }
 
         self.anonymous_volumes
-            .retain(|name| !created_set.contains(name));
-        clean
+            .retain(|name| !removed.contains(name));
+        match failure {
+            Some(error) => Err(error),
+            None => Ok(()),
+        }
     }
 
     /// Remove transient host boot artifacts, retaining persistent guest data.
@@ -995,6 +1004,7 @@ impl VmManager {
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
             template_use: None,
+            completed_cleanup: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,

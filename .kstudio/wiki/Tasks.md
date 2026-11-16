@@ -49,3 +49,10 @@
 - **证据**: [失败、最终归档和清理](../../docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md)。
 - **验证**: ownership19、close4、CLI935、contract118、installer8；3Rust+3Python native、4daemon/16初始Ready VM/4命令、41home清理；默认2315/6/51。
 - **限制**: Mac 冷池证明不等于 Linux snapshot 原生；外层 pool/legacy owner 丢失和 GA 未完成，Git UID501/DNS 外阻塞；RSS/tokens/cost未知。
+
+## T2026-11-16-pool-shutdown-ownership
+
+- **结果**: 已登记池/租约的关闭失败与取消保留实际owner；Stop等待清理，rootfs/匿名卷失败可精确重试，替代socket对象保留。
+- **证据**: [回归、最终安装包与原生清理](../../docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md)。
+- **验证**: Runtime2322/6/52、CLI938、contract library24、installer8；3Rust+3Python native、4daemon/16初始Ready/4命令、52home审计通过。
+- **限制**: 初始endpoint准入、pre-admission/legacy owner路径和GA继续；Git UID501/DNS阻塞远端；Windows ARM64/快照原生/RSS未验证，tokens/cost未知。

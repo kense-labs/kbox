@@ -75,6 +75,7 @@ fn make_vm_manager_with_home(home_dir: &Path) -> VmManager {
         pending_handler: None,
         provider_launch: super::super::ProviderLaunch::NotAttempted,
         template_use: None,
+        completed_cleanup: None,
         exec_socket_path: None,
         pty_socket_path: None,
         port_forward_socket_path: None,

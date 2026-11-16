@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 101.737511916,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/package-home-poolstop-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "2fb83f2319b5601f14e09fe03d4b24b78e87915a9b09ab3c83ae335026d36548"
+}

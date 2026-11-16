@@ -1,0 +1,19 @@
+{
+  "actualOsStopFailureClaimed": false,
+  "callerBytesRetained": 3,
+  "callerCanaryRetained": true,
+  "cancelledGuestControlWait": true,
+  "exactOwnerAndAllocationRetained": true,
+  "execution": "7e2f5abf-afc0-4ea7-9558-67783fb88a96",
+  "liveWritesAfterCancellationAndRefusal": true,
+  "nativeSnapshotRestoreClaimed": false,
+  "noLateWrites": true,
+  "pid": 99993,
+  "retryActuallyStoppedVm": true,
+  "runtimeRssMeasured": false,
+  "socketDir": "/private/tmp/kbox-sockets/7e2f5abf-afc0-4ea7-9558-67783fb88a96",
+  "status": "PASS",
+  "syntheticOneShotStopError": true,
+  "templatePath": "/private/tmp/kbox-pool-stop-fe886a631080/native-pool-attempt-2/home/pool/tpl-8dbgLV",
+  "templateRetainedUntilBackendFinalization": true
+}

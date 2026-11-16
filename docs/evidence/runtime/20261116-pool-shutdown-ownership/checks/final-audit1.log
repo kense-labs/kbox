@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "dde4c61ac1c2348111de6c8ca72d512836d47637cd7bacc6744fc20cb6bdd33d",
+  "compiledInputCount": 1726,
+  "homes": 52,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 713,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "2483a8d45ba4f7b444e3c07c4c6a1931d34a70b8427cfa28bc0cd70c2ad09c38",
+      "after": "b95ec3d4747e8778e5eba51439fe69978c03cec9daf03e4c5e899d2c516f6958"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.HRYrx6",
+    "/private/tmp/kv.mXoF6i"
+  ],
+  "failedNativeRunsRetained": 0,
+  "stopFault": "Synthetic control ACK stall/cancellation and one-shot stop refusal; actual VM/live writes/allocation identity/real finalization observed",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

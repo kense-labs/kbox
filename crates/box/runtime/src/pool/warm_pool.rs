@@ -26,6 +26,9 @@ struct WarmVm {
     created_at: Instant,
 }
 
+type RetainedVm = Arc<Mutex<VmManager>>;
+type RetainedVms = Arc<parking_lot::Mutex<Vec<RetainedVm>>>;
+
 type BootVmFuture<'a> = Pin<Box<dyn Future<Output = Result<VmManager>> + Send + 'a>>;
 
 /// Keeps the in-flight warm-pool boot gauge balanced even when a boot task is
@@ -138,6 +141,7 @@ pub struct WarmPool {
     /// fill — the pool cold-boots instead.
     template: Arc<Mutex<TemplateState>>,
     template_resources: Arc<Mutex<TemplateResources>>,
+    retiring: RetainedVms,
     /// Consecutive idle acquire re-auth failures while a snapshot-fork template
     /// is `Ready`. Hollow restores can pass publish then fail `health_check`;
     /// after a small bound the template is invalidated so cold-boot serves
@@ -379,6 +383,7 @@ impl WarmPool {
             global_boot_limiter,
             template: Arc::new(Mutex::new(TemplateState::Unbuilt)),
             template_resources: Arc::new(Mutex::new(TemplateResources::default())),
+            retiring: Arc::new(parking_lot::Mutex::new(Vec::new())),
             fork_reauth_failures: AtomicU32::new(0),
         };
 
@@ -438,9 +443,11 @@ impl WarmPool {
     /// health before handoff (#423 / #421). Stale idle VMs are destroyed and
     /// the next candidate (or an on-demand boot) is tried.
     pub async fn acquire(&self) -> Result<VmManager> {
+        self.ensure_admission_open()?;
         loop {
             let warm_vm = {
                 let mut idle = self.idle.lock().await;
+                self.ensure_admission_open()?;
                 let warm_vm = idle.pop();
                 if warm_vm.is_some() {
                     Self::sync_idle_metric(self.metrics.as_ref(), idle.len());
@@ -650,7 +657,8 @@ impl WarmPool {
         };
         let count = idle_vms.len();
 
-        Self::destroy_vms(idle_vms, None, "drain").await;
+        self.stats.lock().await.idle_count = 0;
+        Self::destroy_vms(idle_vms, &self.retiring, None, "drain").await?;
 
         self.clear_snapshot_template().await?;
 
@@ -688,8 +696,8 @@ impl WarmPool {
         };
         let count = idle_vms.len();
         let timeout_ms = (!self.box_config.persistent).then_some(EPHEMERAL_DRAIN_TIMEOUT_MS);
-        Self::destroy_vms(idle_vms, timeout_ms, "drain_idle").await;
         self.stats.lock().await.idle_count = 0;
+        Self::destroy_vms(idle_vms, &self.retiring, timeout_ms, "drain_idle").await?;
         self.clear_snapshot_template().await?;
         tracing::info!(destroyed = count, "Warm pool idle VMs drained");
         Ok(())
@@ -723,44 +731,64 @@ impl WarmPool {
         Ok(())
     }
 
-    async fn destroy_vms(vms: Vec<WarmVm>, timeout_ms: Option<u64>, operation: &'static str) {
-        if vms.is_empty() {
-            return;
-        }
-
-        let concurrency = vms.len().min(MAX_DRAIN_CONCURRENCY);
-        let mut pending = vms.into_iter();
+    async fn destroy_vms(
+        vms: Vec<WarmVm>,
+        retained: &RetainedVms,
+        timeout_ms: Option<u64>,
+        operation: &'static str,
+    ) -> Result<()> {
+        // Register every actual manager before any teardown can yield or be cancelled.
+        let mut pending = {
+            let mut owners = retained.lock();
+            owners.extend(vms.into_iter().map(|warm| Arc::new(Mutex::new(warm.vm))));
+            owners.clone().into_iter()
+        };
         let mut tasks = JoinSet::new();
-
-        for _ in 0..concurrency {
-            if let Some(warm_vm) = pending.next() {
-                tasks.spawn(Self::destroy_one(warm_vm, timeout_ms));
+        for _ in 0..MAX_DRAIN_CONCURRENCY {
+            if let Some(vm) = pending.next() {
+                tasks.spawn(Self::destroy_one(vm, Arc::clone(retained), timeout_ms));
             }
         }
-
+        let mut failure = None;
         while let Some(result) = tasks.join_next().await {
             match result {
-                Ok((box_id, Ok(()))) => {
-                    tracing::debug!(%box_id, operation, "Destroyed pooled VM");
-                }
+                Ok((box_id, Ok(()))) => tracing::debug!(%box_id, operation, "Destroyed pooled VM"),
                 Ok((box_id, Err(error))) => {
-                    tracing::warn!(%box_id, %error, operation, "Failed to destroy pooled VM");
+                    tracing::warn!(%box_id, %error, operation, "Pooled VM retained for finalization retry");
+                    failure.get_or_insert(error);
                 }
                 Err(error) => {
-                    tracing::warn!(%error, operation, "Pooled VM teardown task failed");
+                    failure.get_or_insert_with(|| {
+                        BoxError::PoolError(format!("Pooled VM teardown task failed: {error}"))
+                    });
                 }
             }
-
-            if let Some(warm_vm) = pending.next() {
-                tasks.spawn(Self::destroy_one(warm_vm, timeout_ms));
+            if let Some(vm) = pending.next() {
+                tasks.spawn(Self::destroy_one(vm, Arc::clone(retained), timeout_ms));
             }
+        }
+        match failure {
+            Some(error) => Err(error),
+            None => Ok(()),
         }
     }
 
-    async fn destroy_one(warm_vm: WarmVm, timeout_ms: Option<u64>) -> (String, Result<()>) {
-        let box_id = warm_vm.vm.box_id().to_string();
-        let mut vm = warm_vm.vm;
-        let result = Self::destroy_manager_or_reap(&mut vm, timeout_ms).await;
+    async fn destroy_one(
+        owner: RetainedVm,
+        retained: RetainedVms,
+        timeout_ms: Option<u64>,
+    ) -> (String, Result<()>) {
+        let mut vm = owner.lock().await;
+        let box_id = vm.box_id().to_owned();
+        let result = match timeout_ms {
+            Some(timeout) => vm.destroy_with_timeout(timeout).await,
+            None => vm.destroy().await,
+        };
+        if result.is_ok() {
+            retained
+                .lock()
+                .retain(|candidate| !Arc::ptr_eq(candidate, &owner));
+        }
         (box_id, result)
     }
 
@@ -828,7 +856,12 @@ impl WarmPool {
         }
 
         // Destroy collected VMs (outside of pool lock).
-        Self::destroy_vms(to_destroy, None, "fill rollback").await;
+        if let Err(error) =
+            Self::destroy_vms(to_destroy, &self.retiring, None, "fill rollback").await
+        {
+            self.signal_shutdown();
+            tracing::warn!(%error, "Pool fill rollback retained unfinished VMs");
+        }
     }
 
     /// Boot a new VM using the pool's template config.
@@ -836,6 +869,7 @@ impl WarmPool {
         let _boot_permits =
             acquire_boot_permits(self.boot_limiter.clone(), self.global_boot_limiter.clone())
                 .await?;
+        self.ensure_admission_open()?;
         let _boot_guard = BootMetricGuard::new(self.metrics.clone());
         let result = Self::boot_or_restore(
             self.config.snapshot_fork,
@@ -861,6 +895,13 @@ impl WarmPool {
         ));
 
         Ok(vm)
+    }
+
+    fn ensure_admission_open(&self) -> Result<()> {
+        if *self.shutdown_rx.borrow() {
+            return Err(BoxError::PoolError("Warm pool is shutting down".into()));
+        }
+        Ok(())
     }
 
     /// Fill one slot: restore from the snapshot-fork template when enabled, else cold
@@ -1229,7 +1270,17 @@ impl WarmPool {
             drained
         };
         if !drained.is_empty() {
-            Self::destroy_vms(drained, Some(2000), "invalidate-snapshot-template").await;
+            if let Err(error) = Self::destroy_vms(
+                drained,
+                &self.retiring,
+                Some(2000),
+                "invalidate-snapshot-template",
+            )
+            .await
+            {
+                self.signal_shutdown();
+                tracing::warn!(%error, "Invalidated pool retained unfinished VMs");
+            }
         }
     }
 
@@ -1367,10 +1418,12 @@ impl WarmPool {
     fn spawn_maintenance_loop(&self) -> JoinHandle<()> {
         let idle = Arc::clone(&self.idle);
         let stats = Arc::clone(&self.stats);
+        let retiring = Arc::clone(&self.retiring);
         let config = self.config.clone();
         let box_config = self.box_config.clone();
         let event_emitter = self.event_emitter.clone();
         let mut shutdown_rx = self.shutdown_rx.clone();
+        let shutdown_tx = self.shutdown_tx.clone();
         let scaler = self.scaler.clone();
         let template = Arc::clone(&self.template);
         let template_resources = Arc::clone(&self.template_resources);
@@ -1411,13 +1464,18 @@ impl WarmPool {
                     _ = maintenance.tick() => {
                         // Evict expired VMs
                         if config.idle_ttl_secs > 0 {
-                            Self::evict_expired_static(
+                            if let Err(error) = Self::evict_expired_static(
                                 &idle,
                                 &stats,
                                 &event_emitter,
                                 metrics.as_ref(),
                                 config.idle_ttl_secs,
-                            ).await;
+                                &retiring,
+                            ).await {
+                                let _ = shutdown_tx.send(true);
+                                tracing::warn!(%error, "Pool admission closed after eviction finalizer failure");
+                                break;
+                            }
                         }
 
                         // Evaluate autoscaler
@@ -1467,7 +1525,7 @@ impl WarmPool {
                             let mut batch_failed = false;
                             for result in results {
                                 match result {
-                                    Ok(mut vm) => {
+                                    Ok(vm) => {
                                         let box_id = vm.box_id().to_string();
                                         // If shutdown landed while this batch was
                                         // booting, drain_idle has already cleared
@@ -1486,9 +1544,14 @@ impl WarmPool {
                                                 box_id = %box_id,
                                                 "Pool shutting down mid-replenish; destroying freshly-booted VM"
                                             );
-                                            let _ =
-                                                Self::destroy_manager_or_reap(&mut vm, Some(2000))
-                                                    .await;
+                                            if let Err(error) = Self::destroy_vms(
+                                                vec![WarmVm { vm, created_at: Instant::now() }],
+                                                &retiring,
+                                                Some(2000),
+                                                "shutdown during replenishment",
+                                            ).await {
+                                                tracing::warn!(%error, "Late pool VM retained for shutdown retry");
+                                            }
                                             continue;
                                         }
                                         pool.push(WarmVm {
@@ -1546,7 +1609,8 @@ impl WarmPool {
         event_emitter: &EventEmitter,
         metrics: Option<&crate::prom::RuntimeMetrics>,
         idle_ttl_secs: u64,
-    ) {
+        retiring: &RetainedVms,
+    ) -> Result<()> {
         let ttl = std::time::Duration::from_secs(idle_ttl_secs);
 
         let mut pool = idle.lock().await;
@@ -1566,7 +1630,7 @@ impl WarmPool {
 
         let evicted_count = expired.len();
         Self::sync_idle_metric(metrics, after_count);
-        Self::destroy_vms(expired, None, "eviction").await;
+        let finalized = Self::destroy_vms(expired, retiring, None, "eviction").await;
 
         if evicted_count > 0 {
             let mut s = stats.lock().await;
@@ -1578,6 +1642,7 @@ impl WarmPool {
                 format!("Evicted {} expired VMs", evicted_count),
             ));
         }
+        finalized
     }
 }
 
@@ -1620,6 +1685,14 @@ fn template_error_is_feature_missing(error: &BoxError) -> bool {
 
 #[cfg(test)]
 mod shutdown_tests;
+
+#[cfg(test)]
+#[path = "warm_pool/shutdown_ownership_tests.rs"]
+mod shutdown_ownership_tests;
+
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/shutdown_native.rs"]
+mod shutdown_native;
 
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]

@@ -713,3 +713,13 @@ independent pools do not share image-hash RAM paths. Cleanup/rewrite refuses
 active/unproven consumers and observed replacement, preserving unrelated caller
 directories. [Installed Mac cold-pool, filesystem and cleanup evidence](../../../docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md)
 does not qualify Linux snapshot restore or close outer pool/legacy owner-loss paths.
+
+Registered idle-pool teardown now retains the actual manager until backend and
+host cleanup succeed, including after a cancelled Guest-control wait. Failed
+rootfs cleanup preserves working data; failed created anonymous allocations keep
+their exact retry identity. Stopped workload state alone does not prove host
+cleanup, and a successful preserving stop still permits later ephemeral removal.
+Pool/lease Stop errors keep owners available for retry; closed pools refuse new
+and queued acquisition. [Final installed Native effects and limits](../../../docs/evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md)
+cover registered close, not initial endpoint binding or all pre-admission/legacy
+manager lifetimes. Those remaining local gaps and whole GA stay open.

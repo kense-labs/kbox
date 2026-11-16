@@ -1,0 +1,18 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry' (108548415) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:72:10:
+unfinalized VM must not be reported clean: ()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2372 filtered out; finished in 0.01s
+

@@ -511,9 +511,12 @@ impl PoolKey {
 }
 
 #[cfg(not(windows))]
+type LeaseVmOwner = std::sync::Arc<tokio::sync::Mutex<kbox_runtime::VmManager>>;
+
+#[cfg(not(windows))]
 struct LeasedVm {
     key: PoolKey,
-    vm: std::sync::Arc<tokio::sync::Mutex<kbox_runtime::VmManager>>,
+    vm: LeaseVmOwner,
     last_used_ms: std::sync::Arc<std::sync::atomic::AtomicU64>,
     active_execs: std::sync::Arc<std::sync::atomic::AtomicUsize>,
     _permit: tokio::sync::OwnedSemaphorePermit,
@@ -726,16 +729,13 @@ impl PoolRegistry {
 
         let publish = {
             let mut pools = self.pools.lock().await;
-            if self.draining.load(std::sync::atomic::Ordering::Acquire) {
-                false
-            } else {
-                pools.insert(key, entry.clone());
-                true
-            }
+            let admitted = !self.draining.load(std::sync::atomic::Ordering::Acquire);
+            // Even a late initializer must publish its actual owner for shutdown retry.
+            pools.insert(key, entry.clone());
+            admitted
         };
         if !publish {
             pool.signal_shutdown();
-            let _ = pool.drain_idle().await;
             return Err("warm-pool daemon is shutting down".to_string());
         }
         Ok(entry)
@@ -766,15 +766,18 @@ impl PoolRegistry {
 
     /// Stop replenishment and destroy idle VMs across all pools (shutdown).
     #[cfg(not(windows))]
-    async fn drain_all(&self) {
+    async fn drain_all(&self) -> Result<(), String> {
         self.draining
             .store(true, std::sync::atomic::Ordering::Release);
-        // Remove leases from the registry before awaiting VM destruction so
-        // concurrent lease requests cannot be blocked by a slow teardown.
+        // Snapshot actual handles; entries and capacity permits survive failed/cancelled close.
         let leases = {
-            let mut leases = self.leases.lock().await;
-            leases.drain().collect::<Vec<_>>()
+            let leases = self.leases.lock().await;
+            leases
+                .iter()
+                .map(|(id, leased)| (id.clone(), leased.vm.clone()))
+                .collect::<Vec<_>>()
         };
+        let mut failure = None;
 
         // Lease teardown is independent per VM. Keep a small bounded fan-out so
         // a large lease set does not serialize shutdown or overwhelm the host.
@@ -787,14 +790,16 @@ impl PoolRegistry {
         }
         while let Some(result) = lease_tasks.join_next().await {
             match result {
-                Ok((lease_id, box_id, Ok(()))) => {
+                Ok((lease_id, box_id, owner, Ok(()))) => {
+                    self.forget_closed_lease(&lease_id, &owner).await;
                     tracing::debug!(
                         %lease_id,
                         %box_id,
                         "Destroyed warm-pool lease during shutdown"
                     );
                 }
-                Ok((lease_id, box_id, Err(error))) => {
+                Ok((lease_id, box_id, _owner, Err(error))) => {
+                    failure.get_or_insert_with(|| error.to_string());
                     tracing::warn!(
                         %lease_id,
                         %box_id,
@@ -803,6 +808,9 @@ impl PoolRegistry {
                     );
                 }
                 Err(error) => {
+                    failure.get_or_insert_with(|| {
+                        format!("Warm-pool lease teardown task failed: {error}")
+                    });
                     tracing::warn!(%error, "Warm-pool lease teardown task failed");
                 }
             }
@@ -839,15 +847,21 @@ impl PoolRegistry {
             match result {
                 Ok(Ok(())) => {}
                 Ok(Err(error)) => {
+                    failure.get_or_insert_with(|| error.to_string());
                     tracing::warn!(%error, "Failed to drain warm pool during shutdown");
                 }
                 Err(error) => {
+                    failure.get_or_insert_with(|| format!("Warm-pool drain task failed: {error}"));
                     tracing::warn!(%error, "Warm-pool drain task failed");
                 }
             }
             if let Some(pool) = pending_pools.next() {
                 pool_tasks.spawn(async move { pool.drain_idle().await });
             }
+        }
+        match failure {
+            Some(error) => Err(error),
+            None => Ok(()),
         }
     }
 
@@ -927,6 +941,9 @@ impl PoolRegistry {
 
     #[cfg(not(windows))]
     async fn exec_lease(&self, req: PoolLeaseExecRequest) -> PoolRunResponse {
+        if self.draining.load(std::sync::atomic::Ordering::Acquire) {
+            return err_resp("warm-pool daemon is shutting down");
+        }
         let (vm, _guard) = {
             let leases = self.leases.lock().await;
             let Some(leased) = leases.get(&req.lease_id) else {
@@ -967,15 +984,29 @@ impl PoolRegistry {
 
     #[cfg(not(windows))]
     async fn release_lease(&self, req: PoolLeaseReleaseRequest) -> Option<String> {
-        let leased = match self.leases.lock().await.remove(&req.lease_id) {
-            Some(leased) => leased,
+        let owner = match self.leases.lock().await.get(&req.lease_id) {
+            Some(leased) => leased.vm.clone(),
             None => return Some(format!("unknown pool lease '{}'", req.lease_id)),
         };
-        let mut vm = leased.vm.lock().await;
-        destroy_vm_or_reap(&mut vm)
-            .await
-            .err()
-            .map(|e| e.to_string())
+        let result = owner.lock().await.destroy().await;
+        match result {
+            Ok(()) => {
+                self.forget_closed_lease(&req.lease_id, &owner).await;
+                None
+            }
+            Err(error) => Some(error.to_string()),
+        }
+    }
+
+    #[cfg(not(windows))]
+    async fn forget_closed_lease(&self, id: &str, owner: &LeaseVmOwner) {
+        let mut leases = self.leases.lock().await;
+        if leases
+            .get(id)
+            .is_some_and(|leased| std::sync::Arc::ptr_eq(&leased.vm, owner))
+        {
+            leases.remove(id);
+        }
     }
 
     #[cfg(not(windows))]
@@ -996,38 +1027,33 @@ impl PoolRegistry {
     #[cfg(not(windows))]
     async fn reap_expired_leases(&self) -> usize {
         let expired_ids = self.expired_lease_ids(now_millis()).await;
-        if expired_ids.is_empty() {
-            return 0;
-        }
-
-        let mut expired = Vec::new();
-        {
-            let mut leases = self.leases.lock().await;
-            for lease_id in expired_ids {
-                if let Some(leased) = leases.remove(&lease_id) {
-                    expired.push((lease_id, leased));
+        let mut count = 0;
+        for lease_id in expired_ids {
+            let owner = {
+                let leases = self.leases.lock().await;
+                let Some(leased) = leases.get(&lease_id) else {
+                    continue;
+                };
+                leased.vm.clone()
+            };
+            let mut vm = owner.lock().await;
+            {
+                let leases = self.leases.lock().await;
+                if !leases.get(&lease_id).is_some_and(|leased| {
+                    std::sync::Arc::ptr_eq(&leased.vm, &owner)
+                        && lease_is_expired(leased, self.lease_ttl, now_millis())
+                }) {
+                    continue;
                 }
             }
-        }
-
-        let mut count = 0;
-        for (lease_id, leased) in expired {
-            if !lease_is_expired(&leased, self.lease_ttl, now_millis()) {
-                self.leases.lock().await.insert(lease_id, leased);
-                continue;
-            }
-            tracing::warn!(lease_id = %lease_id, "Reclaiming expired warm-pool lease");
-            let mut vm = leased.vm.lock().await;
-            match destroy_vm_or_reap(&mut vm).await {
-                Ok(()) => count += 1,
-                Err(error) => {
-                    tracing::warn!(
-                        %lease_id,
-                        box_id = %vm.box_id(),
-                        %error,
-                        "Failed to destroy expired warm-pool lease after orphan reap attempt"
-                    );
+            tracing::warn!(%lease_id, "Reclaiming expired warm-pool lease");
+            match vm.destroy().await {
+                Ok(()) => {
+                    self.forget_closed_lease(&lease_id, &owner).await;
                     count += 1;
+                }
+                Err(error) => {
+                    tracing::warn!(%lease_id, box_id = %vm.box_id(), %error, "Unfinalized expired lease retained for retry")
                 }
             }
         }
@@ -1054,16 +1080,22 @@ async fn destroy_vm_or_reap(
     result
 }
 
-/// Destroy a leased VM; on Linux, reap orphans if destroy fails.
+/// Finalize an actual lease owner; the registry removes it only after success.
 #[cfg(not(windows))]
 async fn destroy_leased_vm(
     lease_id: String,
-    leased: LeasedVm,
-) -> (String, String, Result<(), kbox_core::error::BoxError>) {
-    let mut vm = leased.vm.lock().await;
-    let box_id = vm.box_id().to_string();
-    let result = destroy_vm_or_reap(&mut vm).await;
-    (lease_id, box_id, result)
+    owner: LeaseVmOwner,
+) -> (
+    String,
+    String,
+    LeaseVmOwner,
+    Result<(), kbox_core::error::BoxError>,
+) {
+    let mut vm = owner.lock().await;
+    let box_id = vm.box_id().to_owned();
+    let result = vm.destroy().await;
+    drop(vm);
+    (lease_id, box_id, owner, result)
 }
 
 async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Error>> {
@@ -1176,17 +1208,22 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
         // a timeout. Requests may connect immediately and naturally wait on the
         // per-pool creation lock until the first VM is truly exec-ready.
         #[cfg(not(windows))]
+        let bound = BoundPoolListener::bind(&args.socket)?;
+        #[cfg(not(windows))]
+        let shutdown_tx = bound.shutdown_tx.clone();
+        #[cfg(not(windows))]
         let serve_task = {
             let serve_registry = registry.clone();
             let serve_socket = args.socket.clone();
             let serve_json = args.json;
             tokio::spawn(async move {
-                serve(serve_registry, &serve_socket, serve_json)
+                serve(serve_registry, &serve_socket, serve_json, bound)
                     .await
                     .map_err(|error| error.to_string())
             })
         };
 
+        let startup_request = registry.request_guard();
         let prewarm_result = async {
             // Validate all explicit warm sizes before booting the default image.
             // This avoids wasting VM boots when a multi-image deployment contains
@@ -1239,6 +1276,7 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
         }
         .await;
 
+        drop(startup_request);
         let (default_stats, warmed_extra) = match prewarm_result {
             Ok(result) => result,
             Err(error) => {
@@ -1248,10 +1286,16 @@ async fn execute_start(args: PoolStartArgs) -> Result<(), Box<dyn std::error::Er
                 // partial Dify deployment can leave a live socket and orphan VMs.
                 #[cfg(not(windows))]
                 {
-                    registry.drain_all().await;
-                    serve_task.abort();
+                    if let Err(cleanup_error) =
+                        drain_pool_registry_on_shutdown(&registry, args.json).await
+                    {
+                        tracing::error!(%cleanup_error, "Startup failed; pool owner/socket retained for cleanup retry");
+                        // Keep the owning daemon alive until the operator completes cleanup.
+                        let _ = serve_task.await;
+                        return Err(error);
+                    }
+                    let _ = shutdown_tx.send(());
                     let _ = serve_task.await;
-                    let _ = std::fs::remove_file(&args.socket);
                 }
                 return Err(error);
             }
@@ -1415,39 +1459,72 @@ async fn pool_shutdown_signal() {
 }
 
 #[cfg(not(windows))]
-async fn drain_pool_registry_on_shutdown(registry: &PoolRegistry, socket: &str, json: bool) {
-    let _ = std::fs::remove_file(socket);
+async fn drain_pool_registry_on_shutdown(
+    registry: &PoolRegistry,
+    json: bool,
+) -> Result<(), String> {
+    registry
+        .draining
+        .store(true, std::sync::atomic::Ordering::Release);
     if !json {
         println!("Draining warm pools...");
     }
-    registry.drain_all().await;
-    if !registry.wait_for_requests(POOL_DRAIN_TIMEOUT).await && !json {
-        eprintln!("Timed out waiting for in-flight pool requests to finish");
+    if !registry.wait_for_requests(POOL_DRAIN_TIMEOUT).await {
+        return Err(
+            "Timed out waiting for in-flight pool requests; owners retained for retry".into(),
+        );
+    }
+    registry.drain_all().await
+}
+
+#[cfg(not(windows))]
+struct BoundPoolListener {
+    listener: tokio::net::UnixListener,
+    identity: std::fs::Metadata,
+    shutdown_tx: tokio::sync::mpsc::UnboundedSender<()>,
+    shutdown_rx: tokio::sync::mpsc::UnboundedReceiver<()>,
+}
+
+#[cfg(not(windows))]
+impl BoundPoolListener {
+    fn bind(socket: &str) -> std::io::Result<Self> {
+        let _ = std::fs::remove_file(socket);
+        let listener = tokio::net::UnixListener::bind(socket)?;
+        let identity = std::fs::symlink_metadata(socket)?;
+        let (shutdown_tx, shutdown_rx) = tokio::sync::mpsc::unbounded_channel();
+        Ok(Self {
+            listener,
+            identity,
+            shutdown_tx,
+            shutdown_rx,
+        })
     }
 }
 
 /// Accept `pool run` connections until SIGTERM/SIGINT, serving each request
 /// concurrently so independent sandboxes don't queue behind one another. On
-/// shutdown, stop the replenisher and destroy idle VMs (in-flight requests keep
-/// their own acquired VM).
+/// shutdown, close admission and wait for requests before finalizing owned VMs.
+/// Refused cleanup keeps the registry and listener available for retry.
 #[cfg(not(windows))]
 async fn serve(
     registry: std::sync::Arc<PoolRegistry>,
     socket: &str,
     json: bool,
+    bound: BoundPoolListener,
 ) -> Result<(), Box<dyn std::error::Error>> {
-    use tokio::net::UnixListener;
-
-    let _ = std::fs::remove_file(socket);
-    let listener = UnixListener::bind(socket)?;
+    use std::os::unix::fs::{FileTypeExt, MetadataExt};
+    let BoundPoolListener {
+        listener,
+        identity: owned_socket,
+        shutdown_tx,
+        mut shutdown_rx,
+    } = bound;
     if !json {
         println!(
             "Listening on {} (Ctrl-C or SIGTERM to drain and stop)",
             socket
         );
     }
-
-    let (shutdown_tx, mut shutdown_rx) = tokio::sync::mpsc::unbounded_channel::<()>();
 
     loop {
         tokio::select! {
@@ -1456,21 +1533,39 @@ async fn serve(
                 let registry = registry.clone();
                 let shutdown_tx = shutdown_tx.clone();
                 tokio::spawn(async move {
-                    let _request_guard = registry.request_guard();
                     if let Err(e) = handle_conn(&registry, &shutdown_tx, &mut stream).await {
                         tracing::warn!(error = %e, "pool connection failed");
                     }
                 });
             }
             _ = shutdown_rx.recv() => {
-                drain_pool_registry_on_shutdown(&registry, socket, json).await;
                 break;
             }
             _ = pool_shutdown_signal() => {
-                drain_pool_registry_on_shutdown(&registry, socket, json).await;
-                break;
+                match drain_pool_registry_on_shutdown(&registry, json).await {
+                    Ok(()) => break,
+                    Err(error) => tracing::warn!(%error, "Pool owner remains available for cleanup retry"),
+                }
             }
         }
+    }
+    match std::fs::symlink_metadata(socket) {
+        Ok(current)
+            if current.file_type().is_socket()
+                && current.dev() == owned_socket.dev()
+                && current.ino() == owned_socket.ino() =>
+        {
+            std::fs::remove_file(socket)?
+        }
+        Ok(_) => {
+            return Err(std::io::Error::new(
+                std::io::ErrorKind::PermissionDenied,
+                "Pool socket identity changed; replacement retained",
+            )
+            .into())
+        }
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
+        Err(error) => return Err(error.into()),
     }
     Ok(())
 }
@@ -1545,6 +1640,7 @@ async fn handle_conn(
         serde_json::from_slice(&read_frame_with_timeout(stream, FRAME_READ_TIMEOUT).await?)
             .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
 
+    let _request_guard = (!matches!(&req, PoolRequest::Stop)).then(|| registry.request_guard());
     let run = match req {
         PoolRequest::Attach(request) => return attach::handle(registry, request, stream).await,
         PoolRequest::Status => {
@@ -1556,10 +1652,14 @@ async fn handle_conn(
             return write_frame(stream, &bytes).await;
         }
         PoolRequest::Stop => {
-            let bytes = serde_json::to_vec(&PoolStopResponse { error: None })
+            let error = drain_pool_registry_on_shutdown(registry, true).await.err();
+            let closed = error.is_none();
+            let bytes = serde_json::to_vec(&PoolStopResponse { error })
                 .map_err(|e| std::io::Error::new(std::io::ErrorKind::InvalidData, e))?;
             write_frame(stream, &bytes).await?;
-            let _ = shutdown_tx.send(());
+            if closed {
+                let _ = shutdown_tx.send(());
+            }
             return Ok(());
         }
         PoolRequest::Lease(lease) => {
@@ -1857,6 +1957,8 @@ fn format_stats_json(image: &str, stats: &PoolStats) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(not(windows))]
+    mod shutdown;
     #[cfg(not(windows))]
     use kbox_runtime::pool::client::read_frame;
     use kbox_runtime::pool::PoolStats;
@@ -2200,7 +2302,7 @@ mod tests {
     async fn test_drain_all_marks_registry_draining_and_clears_empty_state() {
         let registry = test_registry_with_lease_ttl(0);
 
-        registry.drain_all().await;
+        registry.drain_all().await.unwrap();
 
         assert!(registry.draining.load(std::sync::atomic::Ordering::Acquire));
         assert!(registry.leases.lock().await.is_empty());
@@ -2644,9 +2746,14 @@ mod tests {
         });
 
         let server = tokio::spawn(async move {
-            serve(registry, &server_socket, true)
-                .await
-                .expect("pool server should stop cleanly");
+            serve(
+                registry,
+                &server_socket,
+                true,
+                BoundPoolListener::bind(&server_socket).unwrap(),
+            )
+            .await
+            .expect("pool server should stop cleanly");
         });
 
         for _ in 0..50 {

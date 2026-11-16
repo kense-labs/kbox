@@ -92,11 +92,17 @@ impl VmManager {
         timeout_ms: u64,
         preserve_rootfs: bool,
     ) -> Result<()> {
-        let mut state = self.state.write().await;
+        let state_lock = Arc::clone(&self.state);
+        let mut state = state_lock.write().await;
 
-        if *state == BoxState::Stopped {
+        if *state == BoxState::Stopped
+            && self
+                .completed_cleanup
+                .is_some_and(|preserved| !preserved || preserve_rootfs)
+        {
             return Ok(());
         }
+        let already_stopped = *state == BoxState::Stopped;
 
         tracing::info!(box_id = %self.box_id, signal, timeout_ms, "Destroying VM");
 
@@ -118,8 +124,12 @@ impl VmManager {
             } else {
                 false
             };
-        let handler = self.handler.write().await.take();
-        if let Some(mut handler) = handler {
+        // Keep the actual handler in its owner across cancellable guest-control waits.
+        let mut handler_slot = self.handler.write().await;
+        #[cfg(unix)]
+        let verify_handoff =
+            requires_guest_rootfs_handoff && (handler_slot.is_some() || already_stopped);
+        if let Some(handler) = handler_slot.as_mut() {
             let workload_already_finished =
                 crate::rootfs::read_persisted_exit_code(&box_dir).is_some();
             let provider_already_exited =
@@ -335,7 +345,6 @@ impl VmManager {
                 Ok(()) => true,
                 Err(e) => {
                     tracing::error!(box_id = %self.box_id, error = %e, "Failed to stop VM handler; retaining runtime ownership");
-                    *self.handler.write().await = Some(handler);
                     return Err(e);
                 }
             };
@@ -375,34 +384,6 @@ impl VmManager {
                 };
             }
 
-            #[cfg(unix)]
-            let clean_guest_rootfs_handoff = _handler_stopped
-                && requires_guest_rootfs_handoff
-                && crate::rootfs::guest_rootfs_handoff_complete(&box_dir);
-            #[cfg(unix)]
-            if _handler_stopped && requires_guest_rootfs_handoff && !clean_guest_rootfs_handoff {
-                let error = BoxError::StateError(format!(
-                    "Guest-owned persistent rootfs for {} stopped without a verified read-only handoff; the raw disk was retained but must not be treated as clean",
-                    self.box_id
-                ));
-                tracing::error!(box_id = %self.box_id, %error);
-                if stop_error.is_none() {
-                    stop_error = Some(error);
-                }
-            }
-
-            #[cfg(unix)]
-            if clean_guest_rootfs_handoff && stop_error.is_none() {
-                if let Err(error) = self.rootfs_provider.record_clean_stop(&box_dir) {
-                    tracing::error!(
-                        box_id = %self.box_id,
-                        %error,
-                        "Failed to publish the verified rootfs clean-stop transition"
-                    );
-                    stop_error = Some(error);
-                }
-            }
-
             #[cfg(windows)]
             if stop_request.is_some() {
                 if let Err(error) = windows_stop::clear(&self.socket_dir()) {
@@ -435,6 +416,35 @@ impl VmManager {
             }
         }
 
+        #[cfg(unix)]
+        let clean_guest_rootfs_handoff =
+            verify_handoff && crate::rootfs::guest_rootfs_handoff_complete(&box_dir);
+        #[cfg(unix)]
+        if verify_handoff && !clean_guest_rootfs_handoff {
+            let error = BoxError::StateError(format!(
+                "Guest-owned persistent rootfs for {} stopped without a verified read-only handoff; the raw disk was retained but must not be treated as clean",
+                self.box_id
+            ));
+            tracing::error!(box_id = %self.box_id, %error);
+            if stop_error.is_none() {
+                stop_error = Some(error);
+            }
+        }
+
+        #[cfg(unix)]
+        if clean_guest_rootfs_handoff && stop_error.is_none() {
+            if let Err(error) = self.rootfs_provider.record_clean_stop(&box_dir) {
+                tracing::error!(
+                    box_id = %self.box_id,
+                    %error,
+                    "Failed to publish the verified rootfs clean-stop transition"
+                );
+                stop_error = Some(error);
+            }
+        }
+
+        handler_slot.take();
+        drop(handler_slot);
         *state = BoxState::Stopped;
 
         // Stop network backend if running
@@ -478,16 +488,16 @@ impl VmManager {
         }
 
         // Cleanup rootfs provider (unmount overlay if applicable)
-        if let Err(error) = self.rootfs_provider.cleanup(&box_dir, preserve_rootfs) {
-            tracing::error!(
-                box_id = %self.box_id,
-                error = %error,
-                "Failed to cleanup rootfs provider"
-            );
-            if stop_error.is_none() {
-                stop_error = Some(error);
+        let rootfs_clean = match self.rootfs_provider.cleanup(&box_dir, preserve_rootfs) {
+            Ok(()) => true,
+            Err(error) => {
+                tracing::error!(box_id = %self.box_id, %error, "Failed to cleanup rootfs provider");
+                if stop_error.is_none() {
+                    stop_error = Some(error);
+                }
+                false
             }
-        }
+        };
 
         match std::fs::remove_dir_all(&socket_dir) {
             Ok(()) => {}
@@ -566,7 +576,20 @@ impl VmManager {
             }
         };
 
-        if !preserve_rootfs && mount_aliases_clean && host_net_clean && virtiofs_ro_clean {
+        let attachments_clean =
+            rootfs_clean && mount_aliases_clean && host_net_clean && virtiofs_ro_clean;
+        let anonymous_clean = if !preserve_rootfs && attachments_clean {
+            match self.cleanup_created_anonymous_volumes() {
+                Ok(()) => true,
+                Err(error) => {
+                    stop_error.get_or_insert(error);
+                    false
+                }
+            }
+        } else {
+            true
+        };
+        if !preserve_rootfs && attachments_clean && anonymous_clean {
             match std::fs::remove_dir_all(&box_dir) {
                 Ok(()) => {}
                 Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
@@ -588,20 +611,25 @@ impl VmManager {
         }
 
         // Record Prometheus metrics
-        if let Some(ref prom) = self.prom {
+        if let Some(prom) = self.prom.as_ref().filter(|_| !already_stopped) {
             prom.vm_destroyed_total.inc();
             prom.vm_count.with_label_values(&["ready"]).dec();
             prom.remove_vm_resource_metrics(&self.box_id);
         }
 
         // Emit stopped event
-        self.event_emitter.emit(BoxEvent::empty("box.stopped"));
+        if !already_stopped {
+            self.event_emitter.emit(BoxEvent::empty("box.stopped"));
+        }
 
         // Host teardown above is complete; surface a handler-stop failure now so
         // the caller still learns the stop was imperfect.
         match stop_error {
             Some(e) => Err(e),
-            None => Ok(()),
+            None => {
+                self.completed_cleanup = Some(preserve_rootfs);
+                Ok(())
+            }
         }
     }
 

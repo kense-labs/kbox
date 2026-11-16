@@ -1,0 +1,20 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry' (109080269) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:152:5:
+assertion `left == right` failed: guest-control cancellation must not drop the actual handler
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2373 filtered out; finished in 0.01s
+

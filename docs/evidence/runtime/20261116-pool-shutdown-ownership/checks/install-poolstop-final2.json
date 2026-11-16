@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/unpacked-poolstop-final-2/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/final-dist-poolstop-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/unpacked-poolstop-final-2"
+  ],
+  "exitCode": 0,
+  "seconds": 0.6918266670000008,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/final-dist-poolstop-2/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "6326607e094f4390c561eedf11b15ea6719b36769506e73aa4eebf59c6b1dafe",
+  "compressedBytes": 23415039,
+  "installedDiskBytes": 44191744,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "86a6bf080d5dbcc7a642e15fa8ece823ad819454",
+    "sourceInputsSha256": "dde4c61ac1c2348111de6c8ca72d512836d47637cd7bacc6744fc20cb6bdd33d",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

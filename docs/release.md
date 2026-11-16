@@ -479,3 +479,14 @@ legacy caller owner loss, full OCI Host Service/default cutover/W4/GA and extern
 platform gates remain open. Linux snapshot native is unverified here; Windows
 ARM64 dependencies unsupported/no native run, support levels unchanged and RSS
 unmeasured. Git UID501/DNS still block remote synchronization.
+
+[Registered pool shutdown](evidence/runtime/20261116-pool-shutdown-ownership/OUTCOME.md)
+retains actual owners on failed/cancelled finalization, reports Stop failure and
+keeps retry available. Shared cleanup preserves data/failed anonymous allocation
+identities, retries incomplete host cleanup and binds rootfs retention policy;
+shutdown preserves a replaced socket object. Final3Rust+3Python native controls,
+4-daemon/16-initial-ready-VM matrix and52-home audit pass. Sourcedde4c61a…/Box6326607e…:
+23415039 compressed/44191744 installed bytes; default2322/6/52 keeps six external
+disk failures. Initial endpoint binding, pre-admission/legacy owner lifetime,
+full OCI Host Service/default cutover/W4/GA remain open. Windows ARM64 dependencies
+unsupported/no native run; support levels unchanged and RSS unmeasured.

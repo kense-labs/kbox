@@ -1,0 +1,57 @@
+
+running 52 tests
+test pool::warm_pool::post_boot_tests::native_lost_post_boot_channel_stops_real_vm_and_late_writes ... ignored, requires sentinel-owned home, cached image and installed Box companions
+test pool::warm_pool::tests::boot_batch_limit_is_bounded_and_never_deadlocks ... ok
+test pool::warm_pool::tests::feature_missing_classifies_absent_snapshot_socket ... ok
+test pool::warm_pool::tests::feature_missing_classifies_platform_stubs ... ok
+test pool::warm_pool::tests::acquire_boot_permits_releases_both_scopes ... ok
+test pool::warm_pool::tests::feature_missing_ignores_transient_boot_errors ... ok
+test pool::warm_pool::tests::replenish_backoff_is_exponential_and_capped ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_no_ttl ... ok
+test pool::warm_pool::tests::boot_or_restore_future_stays_heap_indirected ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_short_ttl ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_very_short_ttl ... ok
+test pool::warm_pool::tests::test_maintenance_check_interval_with_ttl ... ok
+test pool::warm_pool::tests::boot_metric_guard_balances_inflight_gauge ... ok
+test pool::warm_pool::template_ownership_tests::build_retry_cannot_overwrite_unfinalized_template_input ... ok
+test pool::warm_pool::tests::test_pool_config_default_values ... ok
+test pool::warm_pool::tests::snapshot_fork_auto_enables_deferred_main ... ok
+test pool::warm_pool::tests::test_pool_accepts_min_idle_zero ... ok
+test pool::warm_pool::template_ownership_tests::completed_removal_remains_recorded_when_its_waiter_is_dropped ... ok
+test pool::warm_pool::tests::test_pool_drain_emits_event ... ok
+test pool::warm_pool::template_ownership_tests::template_cleanup_waits_for_actual_consumer_close_and_can_retry ... ok
+test pool::warm_pool::tests::clear_snapshot_template_removes_ready_template_directory ... ok
+test pool::warm_pool::tests::test_pool_drain_empty_pool ... ok
+test pool::warm_pool::tests::test_pool_idle_count_initial ... ok
+test pool::warm_pool::tests::clear_snapshot_template_removes_owned_dir_when_failing ... ok
+test pool::warm_pool::tests::test_pool_config_deserialization_with_defaults ... ok
+test pool::warm_pool::tests::test_pool_rejects_min_idle_exceeds_max ... ok
+test pool::warm_pool::tests::test_pool_rejects_zero_max_concurrent_boots ... ok
+test pool::warm_pool::tests::test_pool_rejects_zero_max_size ... ok
+test pool::warm_pool::tests::test_pool_stats_all_fields ... ok
+test pool::warm_pool::tests::test_pool_stats_default ... ok
+test pool::warm_pool::tests::test_pool_set_metrics_attaches ... ok
+test pool::warm_pool::tests::test_pool_stats_clone ... ok
+test pool::warm_pool::tests::test_pool_start_with_metrics_installs_sink_before_fill ... ok
+test pool::warm_pool::tests::test_pool_stats_debug ... ok
+test pool::warm_pool::tests::test_warm_vm_created_at_is_recent ... ok
+test pool::warm_pool::tests::test_pool_stats_initial ... ok
+test pool::warm_pool::tests::unsupported_snapshot_fork_is_rejected_before_template_construction ... ok
+test pool::warm_pool::tests::test_pool_config_roundtrip ... ok
+test pool::warm_pool::template_ownership_tests::source_stop_refusal_retains_exact_manager_and_input_until_retry ... ok
+test pool::warm_pool::tests::warm_pool_release_refuses_idle_without_authenticated_heartbeat ... ok
+test pool::warm_pool::template_ownership_tests::independent_pool_cleanup_does_not_remove_other_pool_or_caller_input ... ok
+test pool::warm_pool::post_boot_tests::missing_post_boot_exec_path_retires_the_owned_vm ... ok
+test pool::warm_pool::post_boot_tests::process_prewarm_refusal_still_retires_the_owned_vm ... ok
+test pool::warm_pool::post_boot_tests::authenticated_post_boot_vm_remains_owned_and_ready ... ok
+test pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry ... ok
+test pool::warm_pool::tests::test_pool_acquire_from_empty_pool_fails_without_shim ... ok
+test pool::warm_pool::tests::warm_pool_acquire_refuses_ready_without_authenticated_heartbeat ... ok
+test pool::warm_pool::tests::test_pool_accepts_min_idle_equals_max ... ok
+test pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory ... ok
+test pool::warm_pool::post_boot_tests::lost_post_boot_exec_channel_retires_the_owned_vm_after_refusal ... ok
+test pool::warm_pool::shutdown_tests::drain_idle_signals_and_joins_in_progress_maintenance ... ok
+test pool::warm_pool::tests::trigger_snapshot_fails_fast_when_socket_never_appears ... ok
+
+test result: ok. 51 passed; 0 failed; 1 ignored; 0 measured; 2321 filtered out; finished in 1.62s
+

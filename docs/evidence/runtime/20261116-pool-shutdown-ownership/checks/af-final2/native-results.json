@@ -1,0 +1,108 @@
+[
+  {
+    "case": "oci",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-oci"
+    ],
+    "seconds": 35.395170583,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-oci/43ba372aedeb402c8a9bb5df23550733/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "readonly",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-readonly"
+    ],
+    "seconds": 4.380673457999997,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-readonly/d5519e823e6b47da87e2ec74ee192636/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "primary",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-primary"
+    ],
+    "seconds": 67.886743292,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-primary/e3385c1a83a2496585848dfca5e69e86/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "prewarm",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-prewarm",
+      "--test-binary",
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/native-client-final2"
+    ],
+    "seconds": 15.328919666000004,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-prewarm/6f0a930c52cc4b888da5913d0b62faa0/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  {
+    "case": "directory",
+    "status": "PASS",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/native-client-final2",
+      "--ignored",
+      "--exact",
+      "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+      "--nocapture"
+    ],
+    "seconds": 18.116219083000004,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-directory/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  }
+]

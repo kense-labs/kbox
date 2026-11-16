@@ -1,0 +1,18 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::shutdown_admission_refuses_idle_and_queued_cold_acquisition ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::shutdown_admission_refuses_idle_and_queued_cold_acquisition stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::shutdown_admission_refuses_idle_and_queued_cold_acquisition' (110508595) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:409:5:
+assertion failed: tokio::time::timeout(Duration::from_millis(20), &mut pending).await.is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::shutdown_admission_refuses_idle_and_queued_cold_acquisition
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2379 filtered out; finished in 0.02s
+

@@ -1,0 +1,11 @@
+
+running 6 tests
+test pool::warm_pool::shutdown_ownership_tests::incomplete_persistent_handoff_does_not_become_clean_on_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::published_pool_drain_retains_failed_manager_and_reports_failure_until_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::stopped_vm_does_not_hide_unfinished_host_cleanup_or_wipe_its_working_data ... ok
+test pool::warm_pool::shutdown_ownership_tests::cancelled_guest_stop_delivery_keeps_the_actual_handler_for_retry ... ok
+test pool::warm_pool::shutdown_ownership_tests::completed_preserving_close_can_still_remove_its_ephemeral_resources ... ok
+test pool::warm_pool::shutdown_ownership_tests::ephemeral_close_retries_only_its_created_anonymous_allocations ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 2373 filtered out; finished in 0.10s
+

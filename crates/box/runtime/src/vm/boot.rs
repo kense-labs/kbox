@@ -93,6 +93,7 @@ impl VmManager {
                 return Err(BoxError::StateError("VM already booted".to_string()));
             }
         }
+        self.completed_cleanup = None;
         super::validate_snapshot_launch(&self.config)?;
 
         let box_dir = self.home_dir.join("boxes").join(&self.box_id);

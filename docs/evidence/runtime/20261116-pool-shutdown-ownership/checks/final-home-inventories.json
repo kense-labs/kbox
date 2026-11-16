@@ -1,0 +1,1510 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-oci/43ba372aedeb402c8a9bb5df23550733/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-prewarm/6f0a930c52cc4b888da5913d0b62faa0/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-primary/e3385c1a83a2496585848dfca5e69e86/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/af-final2/native-readonly/d5519e823e6b47da87e2ec74ee192636/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/pool-wave-final2/3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-af-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-anonymous-close-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-anonymous-close-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-anonymous-close-red2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-bulk-focused1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cancel-handler-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cancel-handler-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-bound-owner1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-full1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-full2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-pool-focused1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-shutdown-green2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-stop-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-cli-stop-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-clippy1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-clippy2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-close-admission-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-close-admission-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-close-admission-red2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-close-controls1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-contract-lib1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-drain-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-drain-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-final-audit1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-freeze-client1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-freeze-client2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-host-cleanup-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-host-cleanup-green2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-host-cleanup-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-host-cleanup-red2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-installer1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-late-replenish1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-native-fixture-check1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-pool-focus2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-pool-wave-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-socket-replacement-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-verify1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-verify2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-vm-focus1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/check-home-vm-only1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/native-pool-attempt-2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.CMALWn/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.r02hAp/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-shutdown-ownership-fe886a631080491db66abe1b4f2deac8/installed-poolstop-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

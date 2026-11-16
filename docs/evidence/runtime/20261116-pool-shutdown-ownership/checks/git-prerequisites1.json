@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "check": "uidAccount",
+      "ok": false,
+      "error": "'getpwuid(): uid not found: 501'"
+    },
+    {
+      "check": "githubDns",
+      "ok": false,
+      "error": "[Errno 8] nodename nor servname provided, or not known"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "86a6bf080d5dbcc7a642e15fa8ece823ad819454\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "codex/macos-oci-release-baseline",
+        "main"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "exit": 0,
+      "stdout": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+      "stderr": ""
+    }
+  ],
+  "remoteSynchronizationProved": false,
+  "pushRetriedWithUnchangedBlocker": false
+}

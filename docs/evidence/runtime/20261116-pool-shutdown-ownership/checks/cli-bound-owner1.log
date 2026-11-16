@@ -1,0 +1,46 @@
+
+running 41 tests
+test commands::pool::tests::resolve_pool_lease_request_id_mints_cli_prefix_when_omitted ... ok
+test commands::pool::tests::resolve_pool_lease_request_id_rejects_invalid_ids ... ok
+test commands::pool::tests::annotate_pool_lease_unavailable_surfaces_request_id ... ok
+test commands::pool::tests::test_format_stats_json_fields ... ok
+test commands::pool::tests::test_execute_status_no_daemon_succeeds_empty ... ok
+test commands::pool::tests::test_format_stats_json_is_valid_structure ... ok
+test commands::pool::tests::test_format_stats_json_zero_acquired ... ok
+test commands::pool::tests::test_execute_start_size_zero_fails ... ok
+test commands::pool::tests::test_execute_start_size_exceeds_max_fails ... ok
+test commands::pool::tests::test_execute_start_zero_boot_concurrency_fails_before_startup ... ok
+test commands::pool::tests::test_execute_stop_json_reports_reaped_when_daemon_absent ... ok
+test commands::pool::tests::test_keepalive_cmd_is_a_sleep_loop ... ok
+test commands::pool::tests::test_execute_stop_is_ok ... ok
+test commands::pool::tests::test_lease_reaper_interval_is_bounded ... ok
+test commands::pool::tests::test_lease_min_idle_skips_prewarm_for_volume_bound_leases ... ok
+test commands::pool::tests::test_parse_warm_spec ... ok
+test commands::pool::tests::test_pool_key_includes_boot_time_dimensions ... ok
+test commands::pool::tests::test_registry_rejects_pool_size_above_max_without_booting ... ok
+test commands::pool::tests::test_pool_autostart_start_args ... ok
+test commands::pool::tests::test_drain_all_marks_registry_draining_and_clears_empty_state ... ok
+test commands::pool::tests::test_read_frame_truncated_errors ... ok
+test commands::pool::tests::test_pool_creation_lock_is_key_scoped ... ok
+test commands::pool::tests::test_draining_registry_rejects_lazy_pool_creation ... ok
+test commands::pool::tests::test_frame_roundtrip ... ok
+test commands::pool::tests::test_deferred_spec_json ... ok
+test commands::pool::tests::test_timeout_duration_uses_request_or_default ... ok
+test commands::pool::tests::test_run_request_response_roundtrip ... ok
+test commands::pool::tests::test_expired_lease_ids_disabled_when_ttl_zero ... ok
+test commands::pool::tests::test_execute_start_warm_count_exceeding_max_fails_before_boot ... ok
+test commands::pool::tests::test_expired_lease_ids_only_reports_idle_stale_leases ... ok
+test commands::pool::tests::test_request_envelope_tagging ... ok
+test commands::pool::tests::test_lease_exec_guard_marks_busy_and_refreshes_activity ... ok
+test commands::pool::tests::test_execute_start_prewarm_failure_cleans_up_socket ... ok
+test commands::pool::tests::test_socket_request_response_protocol ... ok
+test commands::pool::tests::shutdown::shutdown_socket_cleanup_does_not_unlink_a_replacement_object ... ok
+test commands::pool::tests::shutdown::cancelled_lease_drain_keeps_the_entry_owner_and_permit_for_retry ... ok
+test commands::pool::tests::test_request_guard_waits_for_inflight_handlers ... ok
+test commands::pool::tests::test_stop_request_shuts_down_daemon ... ok
+test commands::pool::tests::shutdown::stop_ack_waits_for_existing_requests_and_excludes_its_own_connection ... ok
+test commands::pool::tests::test_backpressure_bounds_concurrency ... ok
+test commands::pool::tests::test_pool_autostart_lock_serializes_same_socket ... ok
+
+test result: ok. 41 passed; 0 failed; 0 ignored; 0 measured; 897 filtered out; finished in 0.11s
+

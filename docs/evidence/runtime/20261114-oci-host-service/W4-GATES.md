@@ -120,3 +120,12 @@ Runtime2315/6/51 retains six external disk failures; Linux snapshot native remai
 unqualified here. Outer pool/legacy caller lifetime, complete OCI pool parity,
 full W4/default Host Service cutover/live continuity/GA remain open. Windows ARM64
 dependencies remain unsupported/no native run; platform levels stay unchanged.
+
+[037 registered-close ownership](../20261116-pool-shutdown-ownership/OUTCOME.md)
+qualifies retained actual pool/lease owners, truthful Stop response, cancelled
+Guest-control ownership, host/anonymous cleanup retry and source-bound native
+closure. Final3Rust+3Python,4daemon/16initialReady matrix and52-home audit pass;
+Runtime2322/6/52 still has six disk-service failures. Initial endpoint binding and
+pre-admission/legacy local owner loss remain required local work. This does not
+close OCI pool parity, full default Host Service cutover/live continuity/W4/GA;
+Windows ARM64 remains unsupported/no native run, platform levels unchanged.

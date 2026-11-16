@@ -1,0 +1,12 @@
+[
+  {
+    "command": "verify1",
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.CMALWn/home",
+    "shortTemporary": "/private/tmp/kv.HRYrx6"
+  },
+  {
+    "command": "verify2",
+    "home": "/private/tmp/kbox-pool-stop-fe886a631080/t/kbox-verify.r02hAp/home",
+    "shortTemporary": "/private/tmp/kv.mXoF6i"
+  }
+]

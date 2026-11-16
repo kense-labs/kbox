@@ -58,7 +58,7 @@ impl Drop for ForegroundHandoff {
 
 type CompletedBoot = (RetainedVm, ForegroundHandoff);
 
-type BootVmFuture<'a> = Pin<Box<dyn Future<Output = Result<VmManager>> + Send + 'a>>;
+type BootVmFuture<'a> = Pin<Box<dyn Future<Output = Result<CompletedBoot>> + Send + 'a>>;
 
 /// Keeps the in-flight warm-pool boot gauge balanced even when a boot task is
 /// cancelled or panics while its JoinSet is being drained.
@@ -940,6 +940,8 @@ impl WarmPool {
             &self.event_emitter,
             &self.template,
             &self.template_resources,
+            &self.retiring,
+            &self.shutdown_tx,
         )
         .await;
         if result.is_err() {
@@ -947,13 +949,11 @@ impl WarmPool {
                 metrics.warm_pool_boot_failures_total.inc();
             }
         }
-        let vm = result?;
-        let box_id = vm.box_id().to_owned();
-        let (owner, _handoff) = self.retain_foreground_vm(vm);
-
+        let (owner, _handoff) = result?;
         let mut stats = self.stats.lock().await;
         self.ensure_admission_open()?;
         let vm = self.take_foreground_vm(owner)?;
+        let box_id = vm.box_id().to_owned();
         stats.total_created += 1;
 
         self.event_emitter.emit(BoxEvent::with_string(
@@ -1035,6 +1035,8 @@ impl WarmPool {
         event_emitter: &'a EventEmitter,
         template: &'a Arc<Mutex<TemplateState>>,
         template_resources: &'a Arc<Mutex<TemplateResources>>,
+        retained: &'a RetainedVms,
+        shutdown: &'a watch::Sender<bool>,
     ) -> BootVmFuture<'a> {
         Box::pin(async move {
             if snapshot_fork && crate::vm::native_snapshot_fork_supported() {
@@ -1053,32 +1055,37 @@ impl WarmPool {
                         let mut vm = VmManager::new(cfg, event_emitter.clone());
                         vm.restore_rootfs_cache_key = tpl.rootfs_cache_key.clone();
                         vm.template_use = Some(tpl.directory.claim()?);
-                        let restored = async {
-                            vm.boot().await?;
-                            vm.wait_for_exec_available(std::time::Duration::from_secs(120))
-                                .await?;
-                            // Drop the boot handshake and re-prove so a single
-                            // lucky connect cannot publish a hollow restore (#563).
-                            vm.exec_client = None;
-                            vm.wait_for_exec_available(std::time::Duration::from_secs(30))
-                                .await?;
-                            // Align BoxState::Ready after authenticated heartbeat —
-                            // #414 may leave Created after restore soft-probe (#416).
-                            if !vm.set_boot_completion_state().await {
-                                return Err(BoxError::BoxBootError {
-                                    message: "restored pool VM exec authenticated but Ready was not published"
-                                        .to_string(),
-                                    hint: None,
-                                });
-                            }
-                            vm.start_prewarmed_exec().await?;
-                            Ok(())
-                        }
-                        .await;
+                        let (owner, handoff) = Self::register_vm(vm, retained, shutdown);
+                        let restored = {
+                            let mut vm = owner.lock().await;
+                            async {
+                                vm.boot().await?;
+                                vm.wait_for_exec_available(std::time::Duration::from_secs(120))
+                                    .await?;
+                                // Drop the boot handshake and re-prove so a single
+                                // lucky connect cannot publish a hollow restore (#563).
+                                vm.exec_client = None;
+                                vm.wait_for_exec_available(std::time::Duration::from_secs(30))
+                                    .await?;
+                                // Align BoxState::Ready after authenticated heartbeat —
+                                // #414 may leave Created after restore soft-probe (#416).
+                                if !vm.set_boot_completion_state().await {
+                                    return Err(BoxError::BoxBootError {
+                                        message: "restored pool VM exec authenticated but Ready was not published"
+                                            .to_string(),
+                                        hint: None,
+                                    });
+                                }
+                                vm.start_prewarmed_exec().await?;
+                                Ok(())
+                            }.await
+                        };
                         match restored {
-                            Ok(()) => return Ok(vm),
+                            Ok(()) => return Ok((owner, handoff)),
                             Err(error) => {
-                                let _ = Self::destroy_manager_or_reap(&mut vm, Some(2000)).await;
+                                Self::destroy_one(owner.clone(), retained.clone(), Some(2000))
+                                    .await
+                                    .1?;
                                 if matches!(error, BoxError::ConfigError(_)) {
                                     return Err(error);
                                 }
@@ -1099,15 +1106,41 @@ impl WarmPool {
                     "snapshot-fork is unavailable on this build; cold-booting without snapshot side effects"
                 );
             }
-            let mut vm = VmManager::new(box_config.clone(), event_emitter.clone());
-            if let Some(directory) = &template_resources.lock().await.directory {
-                // Failed snapshot attempts still own private inputs during cold fallback.
-                vm.template_use = Some(directory.claim()?);
-            }
-            vm.boot().await?;
-            Self::complete_cold_boot(&mut vm).await?;
-            Ok(vm)
+            let vm = VmManager::new(box_config.clone(), event_emitter.clone());
+            Self::boot_cold_vm(vm, template_resources, retained, shutdown).await
         })
+    }
+
+    async fn boot_cold_vm(
+        vm: VmManager,
+        template_resources: &Arc<Mutex<TemplateResources>>,
+        retained: &RetainedVms,
+        shutdown: &watch::Sender<bool>,
+    ) -> Result<CompletedBoot> {
+        let (owner, handoff) = Self::register_vm(vm, retained, shutdown);
+        let (result, finalized) = {
+            let mut vm = owner.lock().await;
+            let result = async {
+                if let Some(directory) = &template_resources.lock().await.directory {
+                    // Failed snapshot attempts still own private inputs during cold fallback.
+                    vm.template_use = Some(directory.claim()?);
+                }
+                vm.boot().await?;
+                Self::complete_cold_boot(&mut vm).await
+            }
+            .await;
+            let finalized = vm.boot_failed_before_provider_start() || vm.cleanup_is_complete();
+            (result, finalized)
+        };
+        if let Err(error) = result {
+            if finalized {
+                Self::destroy_one(owner.clone(), retained.clone(), Some(2000))
+                    .await
+                    .1?;
+            }
+            return Err(error);
+        }
+        Ok((owner, handoff))
     }
 
     async fn complete_cold_boot(vm: &mut VmManager) -> Result<()> {
@@ -1170,15 +1203,16 @@ impl WarmPool {
                         return Err(BoxError::PoolError("Warm pool is shutting down".into()));
                     }
                     let _boot_guard = BootMetricGuard::new(boot_metrics);
-                    let vm = WarmPool::boot_or_restore(
+                    WarmPool::boot_or_restore(
                         snapshot_fork,
                         &config,
                         &emitter,
                         &shared_template,
                         &shared_resources,
+                        &retained,
+                        &shutdown,
                     )
-                    .await?;
-                    Ok(Self::register_vm(vm, &retained, &shutdown))
+                    .await
                 });
                 launched += 1;
             }
@@ -1873,6 +1907,10 @@ mod rollback_native;
 #[path = "warm_pool/drain_native.rs"]
 mod drain_native;
 
+#[cfg(all(test, target_os = "macos", target_arch = "aarch64"))]
+#[path = "warm_pool/boot_owner_native.rs"]
+mod boot_owner_native;
+
 #[cfg(test)]
 #[path = "warm_pool/template_ownership_tests.rs"]
 mod template_ownership_tests;
@@ -1905,7 +1943,11 @@ mod tests {
         let emitter = test_event_emitter();
         let template = Arc::new(Mutex::new(TemplateState::Unbuilt));
         let resources = Arc::new(Mutex::new(TemplateResources::default()));
-        let future = WarmPool::boot_or_restore(false, &config, &emitter, &template, &resources);
+        let retained = Arc::default();
+        let (shutdown, _) = watch::channel(false);
+        let future = WarmPool::boot_or_restore(
+            false, &config, &emitter, &template, &resources, &retained, &shutdown,
+        );
 
         assert!(
             std::mem::size_of_val(&future) <= 2 * std::mem::size_of::<usize>(),

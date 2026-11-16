@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner"
+  ],
+  "exit": 0,
+  "seconds": 13.497605666,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-boot-da5ff89af232/check-home-boot-owner-green1",
+    "TMPDIR": "/private/tmp/kbox-pool-boot-da5ff89af232/t"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "8aec11912bdc6195f6b57df29fc17aa2b51487abd737b2575e1353d4a9186571",
+  "compiledInputCount": 1731,
+  "homes": 28,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 825,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "6e1cd6b768ce7adbbd518c1e111ec651ab45efda45ea74bb807fb9d13d67b42f",
+      "after": "51838f095edfda719c9f4841003706786a55ae13b452523f42d1d12c491919bd"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.OMdPFT"
+  ],
+  "failedNativeRunsRetained": 0,
+  "hermeticLostInProgressHandlerFailuresRetained": 1,
+  "stopFault": "Controlled gate before actual VmController start; actual fresh native VM boot cancelled at retained pending publication, no fabricated OS stop error; actual owner/PID/allocation/writes/product drain proved",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

@@ -1,0 +1,20 @@
+
+running 1 test
+test pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner stdout ----
+
+thread 'pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner' (120018827) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_ownership_tests.rs:1340:5:
+assertion `left == right` failed: in-progress boot cancellation must retain the actual manager's handler
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_ownership_tests::cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2408 filtered out; finished in 0.01s
+

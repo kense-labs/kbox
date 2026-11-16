@@ -44,6 +44,11 @@ impl VmManager {
         }
     }
 
+    /// Observe successful physical and selected host cleanup, rather than Stopped alone.
+    pub(crate) fn cleanup_is_complete(&self) -> bool {
+        self.completed_cleanup.is_some()
+    }
+
     /// Destroy the VM with the default shutdown timeout and SIGTERM.
     pub async fn destroy(&mut self) -> Result<()> {
         self.destroy_with_options(default_stop_signal(), DEFAULT_SHUTDOWN_TIMEOUT_MS)

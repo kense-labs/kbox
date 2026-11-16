@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--all"
+  ],
+  "exit": 0,
+  "seconds": 2.7960849999999997,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-boot-da5ff89af232/check-home-fmt3",
+    "TMPDIR": "/private/tmp/kbox-pool-boot-da5ff89af232/t"
+  }
+}

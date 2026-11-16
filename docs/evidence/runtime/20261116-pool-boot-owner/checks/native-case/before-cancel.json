@@ -1,0 +1,25 @@
+{
+  "allocation": {
+    "created_at": "2026-11-16T09:16:14.557826+00:00",
+    "driver": "local",
+    "in_use_by": [
+      "c8ccf61f-14cf-4a81-af72-c5847ad74fdb"
+    ],
+    "labels": {
+      "anonymous": "true",
+      "kbox.volume.allocation": "c0529eee-2906-49cc-8b73-69f51dc2df9e",
+      "kbox.volume.kind": "anonymous-v1",
+      "kbox.volume.owner": "c8ccf61f-14cf-4a81-af72-c5847ad74fdb"
+    },
+    "mount_point": "/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/volumes/anon_c8ccf61f_c52fc02a709eb09616e1bb98f3a86645",
+    "name": "anon_c8ccf61f_c52fc02a709eb09616e1bb98f3a86645",
+    "size_limit": 0
+  },
+  "command": "/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/bin/kbox-shim --config {\"box_id\":\"c8ccf61f-14cf-4a81-af72-c5847ad74fdb\",\"vcpus\":2,\"memory_mib\":1024,\"rootfs\":{\"kind\":\"ext4_disk\",\"path\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/boxes/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/rootfs-ext4-v1/rootfs.ext4\",\"read_only\":false},\"exec_socket_path\":\"/private/tmp/kbox-sockets/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/exec.sock\",\"pty_socket_path\":\"/private/tmp/kbox-sockets/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/pty.sock\",\"attest_socket_path\":\"/private/tmp/kbox-sockets/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/attest.sock\",\"port_forward_socket_path\":\"/private/tmp/kbox-sockets/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/portfwd.sock\",\"fs_mounts\":[{\"tag\":\"workspace\",\"host_path\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/boxes/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/workspace\",\"read_only\":false},{\"tag\":\"vol0\",\"host_path\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/caller\",\"read_only\":false},{\"tag\":\"vol1\",\"host_path\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/volumes/anon_c8ccf61f_c52fc02a709eb09616e1bb98f3a86645\",\"read_only\":false},{\"tag\":\"kterminal\",\"host_path\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/boxes/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/runtime-control\",\"read_only\":false},{\"tag\":\"kboot\",\"host_path\":\"/private/tmp/kbox-sockets/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/boot-control\",\"read_only\":true}],\"entrypoint\":{\"executable\":\"/sbin/init\",\"args\":[],\"env\":[[\"BOX_BOOT_CONFIG_FILE\",\"/run/kbox/boot/config.json\"],[\"BOX_VOL_0\",\"vol0:/owned\"],[\"BOX_VOL_1\",\"vol1:/scratch:copy\"],[\"K_SEC_SECCOMP\",\"default\"],[\"K_SEC_NO_NEW_PRIVS\",\"1\"],[\"BOX_CRI_PORT_FWD\",\"1\"]]},\"ksm\":false,\"snapshot_mem_file\":null,\"snapshot_sock\":null,\"restore_from\":null,\"console_output\":\"/private/tmp/kbox-pool-boot-da5ff89af232/native-boot-attempt-1/home/boxes/c8ccf61f-14cf-4a81-af72-c5847ad74fdb/logs/console.log\",\"stdin_open\":false,\"workdir\":\"/workspace\",\"tee_config\":null,\"port_map\":[],\"user\":null,\"network\":null,\"disable_tsi\":true,\"resource_limits\":{\"pids_limit\":null,\"cpuset_cpus\":null,\"ulimits\":[],\"cpu_shares\":null,\"cpu_quota\":null,\"cpu_period\":null,\"memory_reservation\":null,\"memory_swap\":null,\"sandbox_memory_limit_bytes\":null},\"log_config\":{\"driver\":\"json-file\",\"options\":{}}}\n",
+  "execution": "c8ccf61f-14cf-4a81-af72-c5847ad74fdb",
+  "pid": 31004,
+  "volumeIdentity": [
+    16777233,
+    306543196
+  ]
+}

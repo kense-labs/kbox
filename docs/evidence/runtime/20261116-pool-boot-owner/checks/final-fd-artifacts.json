@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

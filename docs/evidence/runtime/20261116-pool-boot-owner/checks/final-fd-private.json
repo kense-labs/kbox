@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-pool-boot-da5ff89af232"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

@@ -1316,3 +1316,107 @@ async fn cancelled_maintenance_join_drain_keeps_worker() {
 async fn cancelled_maintenance_join_shared_drain_keeps_worker() {
     assert_cancelled_maintenance_join_keeps_worker(true).await;
 }
+
+#[tokio::test]
+async fn cancelled_in_progress_cold_boot_keeps_the_actual_pool_owner() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let state_arc = vm.state.clone();
+    let mut state = state_arc.write().await;
+    *state = BoxState::Created;
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    {
+        let boot = WarmPool::boot_cold_vm(
+            vm,
+            &pool.template_resources,
+            &pool.retiring,
+            &pool.shutdown_tx,
+        );
+        tokio::pin!(boot);
+        assert!(futures::poll!(boot.as_mut()).is_pending());
+    }
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "in-progress boot cancellation must retain the actual manager's handler"
+    );
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    drop(state);
+    assert!(matches!(
+        pool.drain_idle().await,
+        Err(BoxError::StateError(_))
+    ));
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert_eq!(drops.load(Ordering::SeqCst), 0);
+    assert!(box_dir.is_dir());
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(!box_dir.exists());
+}
+
+#[tokio::test]
+async fn clean_prelaunch_cold_boot_failure_releases_owner_and_preserves_admission() {
+    let root = tempfile::tempdir().unwrap();
+    let mut vm = VmManager::new(
+        BoxConfig {
+            snapshot_mem_file: Some("incomplete-snapshot-request".into()),
+            ..BoxConfig::default()
+        },
+        EventEmitter::new(16),
+    );
+    vm.home_dir = root.path().join("home");
+    vm.rootfs_provider = Arc::new(crate::rootfs::CopyProvider);
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..PoolConfig::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    if let Some(task) = pool.replenish_handle.lock().await.take() {
+        task.abort();
+        let _ = task.await;
+    }
+    let result = WarmPool::boot_cold_vm(
+        vm,
+        &pool.template_resources,
+        &pool.retiring,
+        &pool.shutdown_tx,
+    )
+    .await;
+    assert!(
+        matches!(result, Err(BoxError::ConfigError(_))),
+        "preserve the original configuration failure"
+    );
+    assert!(pool.retiring.lock().is_empty());
+    assert!(
+        pool.ensure_admission_open().is_ok(),
+        "a fully finalized prelaunch failure is not an unclosed manager"
+    );
+    pool.drain_idle().await.unwrap();
+}

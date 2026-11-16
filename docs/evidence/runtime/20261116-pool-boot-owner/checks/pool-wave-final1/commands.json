@@ -1,0 +1,966 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008668083999999993,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008442208000000007,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008416209000000008,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008378707999999985,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009412415999999979,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010113832999999905,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010068791000000021,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010069749999999988,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009680667000000032,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009559042000000018,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009073292000000066,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010275417000000009,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011862625000000016,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011009124999999953,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01065670799999996,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011119167000000152,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008882459000000065,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008314375000000096,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0083233330000001,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008458625000000053,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008770833000000255,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008266290999999981,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008308541999999974,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008228166999999953,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008425208999999878,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008077000000000112,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00826199999999977,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007977583000000177,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007805374999999781,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006457500000000227,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006714124999999793,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006893958000000033,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010206541999999708,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01079245800000006,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.013049833000000177,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009396750000000065,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010884959000000194,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00909987499999998,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010007250000000134,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.012299125000000188,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008662124999999854,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008942958000000445,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009360000000000035,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008849458999999449,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00965579199999933,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008652207999999995,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008799041999999702,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009279250000000516,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008840750000000064,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010041165999999713,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009688041000000425,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00972366699999938,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01070525,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008790417000000161,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008834165999999755,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008696792000000286,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009281624999999849,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008671207999999986,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008652708000000509,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00823391700000009,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-3')"
+    ],
+    "exit": 0,
+    "seconds": 0.06374658299999947,
+    "stdout": "pool-native-3\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-2')"
+    ],
+    "exit": 0,
+    "seconds": 0.07721304200000034,
+    "stdout": "pool-native-2\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-1')"
+    ],
+    "exit": 0,
+    "seconds": 0.0792290419999997,
+    "stdout": "pool-native-1\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-0')"
+    ],
+    "exit": 0,
+    "seconds": 0.08378212499999993,
+    "stdout": "pool-native-0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.857788333000002,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.863176084000001,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 12.872515917000001,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/installed-poolboot-final-1/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-07a6b6b515c4-final1/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 21.999717834000002,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  }
+]

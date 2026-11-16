@@ -105,3 +105,10 @@
 - **证据**: [失败、归档、真实VM和清理](../../docs/evidence/runtime/20261116-legacy-handler-publication/OUTCOME.md)。
 - **验证**: VM246/0/3、CLI949/Clippy；默认2344/6/58；3Rust+3Python、4daemon/16Ready/4命令/26home审计；受控实际handler交接，救援未用。
 - **限制**: internalboot/unpublished/legacy/from_pid与GA继续；GitUID501/DNS仍外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。
+
+## T2026-11-16-pool-boot-owner
+
+- **结果**: 冷/恢复启动在await前登记实际owner，前台和批次消费同一guard；0/1至1/0，干净失败仍可准入。
+- **证据**: [失败、归档、真实VM和清理](../../docs/evidence/runtime/20261116-pool-boot-owner/OUTCOME.md)。
+- **验证**: Pool78/0/8、CLI949/Clippy；默认2346/6/59；3Rust+3Python、4daemon/16Ready/4命令/28home审计；编译失败保留/修复。
+- **限制**: unpublished/queuedshutdown/providerinner/legacy/from_pid与GA继续；GitUID501/DNS外阻塞；WindowsARM64不支持/无原生，RSS/tokens/cost未知。

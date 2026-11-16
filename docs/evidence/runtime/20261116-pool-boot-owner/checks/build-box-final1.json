@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-boot-owner-da5ff89af2324e6eb09e07a6b6b515c4/build-box-final1.py"
+  ],
+  "exit": 0,
+  "seconds": 99.752627792,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-pool-boot-da5ff89af232/check-home-build-box-final1",
+    "TMPDIR": "/private/tmp/kbox-pool-boot-da5ff89af232/t"
+  }
+}

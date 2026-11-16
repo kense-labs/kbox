@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/legacy-handler-publication-dd7d5776d97d4be9b34355c9d1fc4073/final-dist-handlerpub-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "d24cb38d756dd3990cabccf192514813956e22b1786db166d2e80ce9bc750dfb",
+    "bytes": 23428487
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+    "bytes": 33429314
+  }
+]

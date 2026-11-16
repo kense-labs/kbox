@@ -1,0 +1,76 @@
+{
+  "boot-owner-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "boot-owner-green1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "pool-focused1": {
+    "exit": 101,
+    "actualRustResults": []
+  },
+  "pool-focused2": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "78",
+        "0",
+        "8"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "949",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2346",
+        "6",
+        "59"
+      ]
+    ]
+  },
+  "native-boot-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "af-check-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check1": {
+    "exit": 0,
+    "actualRustResults": []
+  }
+}

@@ -1,0 +1,35 @@
+
+running 1 test
+test pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory ... FAILED
+
+failures:
+
+---- pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory stdout ----
+
+thread 'pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory' (106322996) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_tests.rs:133:5:
+isolated child failed:
+
+running 1 test
+test pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory ... FAILED
+
+failures:
+
+failures:
+    pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2359 filtered out; finished in 0.01s
+
+
+
+thread 'pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory' (106322998) panicked at crates/box/runtime/src/pool/warm_pool/shutdown_tests.rs:106:17:
+stopping an unbuilt pool must not delete a caller template: /private/tmp/kbox-tpl-own-d2a56efc8988/t/.tmpNtH4QB/home 空格/pool/tpl-48d559916cdf2d47
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2359 filtered out; finished in 0.02s
+

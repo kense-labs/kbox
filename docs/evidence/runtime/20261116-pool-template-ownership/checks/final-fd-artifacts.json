@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

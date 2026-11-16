@@ -1,0 +1,1191 @@
+[
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final2/native-directory/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final2/native-oci/e02861e994f34eb281de7ceaa88b75c7/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final2/native-prewarm/f678542b2c1a46928c5cec823dc3ffa4/k-home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final2/native-primary/e8cf3c5baebe4b28866e9dbb9308a033/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final2/native-readonly/79fd2736c3ad49a9938fae707f8450ec/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/pool-wave-final2/0/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/pool-wave-final2/1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/pool-wave-final2/2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/pool-wave-final2/3/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-af-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-cli-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-cli1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-clippy1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-clippy2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-completed-waiter1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-contracts1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-directory-primitives1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-directory-primitives2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-final-audit1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-freeze-client1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-freeze-client2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-installer1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-ownership-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-pool-final1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-pool-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-pool-wave-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-removed-retry-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-template-focused1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-template-focused2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-unowned-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-verify1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-verify2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-vm-only-green1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-vm-only-red1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-vm-stop-final2",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-vm-template-stop1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-wiring-check1",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/stop-failure-attempt-1/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/stop-failure-attempt-2/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/t/kbox-verify.F8vHbN/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  },
+  {
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/t/kbox-verify.wpbOwP/home",
+    "commands": [
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "ps",
+          "-a",
+          "--format",
+          "json"
+        ],
+        "exit": 0,
+        "stdout": "[]\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+          "volume",
+          "ls",
+          "--quiet"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "workloadDisks": []
+  }
+]

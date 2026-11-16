@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory"
+  ],
+  "exit": 101,
+  "seconds": 16.653116,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-unowned-red1",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

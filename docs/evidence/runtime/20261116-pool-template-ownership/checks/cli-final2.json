@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-cli",
+    "--lib"
+  ],
+  "exit": 0,
+  "seconds": 17.000226417,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-cli-final2",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

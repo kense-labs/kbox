@@ -705,3 +705,11 @@ and working/anonymous resources, with bounded diagnostics, for a later cleanup
 retry. A process exit alone does not finalize its backend. Callers must retain
 the manager until successful close; outer pool/drop-on-error lifetime remains an
 open task. [Native effects and limitations](../../../docs/evidence/runtime/20261116-boot-stop-preservation/OUTCOME.md).
+
+Pool template cleanup now uses remembered private descriptor-pinned allocations,
+with VM consumer references released only after actual backend finalization or
+proven prelaunch failure. Failed template sources remain owned for cleanup retry;
+independent pools do not share image-hash RAM paths. Cleanup/rewrite refuses
+active/unproven consumers and observed replacement, preserving unrelated caller
+directories. [Installed Mac cold-pool, filesystem and cleanup evidence](../../../docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md)
+does not qualify Linux snapshot restore or close outer pool/legacy owner-loss paths.

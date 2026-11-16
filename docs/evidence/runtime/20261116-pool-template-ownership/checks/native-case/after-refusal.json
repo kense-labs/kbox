@@ -1,0 +1,11 @@
+{
+  "liveAfterInjectedStopError": true,
+  "pid": 15840,
+  "sameAllocation": true,
+  "sameDirectoryIdentity": [
+    16777233,
+    301629502
+  ],
+  "sourceRetained": true,
+  "workloadWroteAfterRefusal": true
+}

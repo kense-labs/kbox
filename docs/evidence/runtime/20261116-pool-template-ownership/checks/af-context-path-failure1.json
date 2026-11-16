@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-pool-template-ownership/checks/af-final2-context.json"
+  ],
+  "exit": 1,
+  "error": "Prelaunch harness root assertion: nested checks/context path changed context.parents[4]; resolve repository from owned script instead, same artifact confinement assertion retained",
+  "nativeTestsExecuted": 0,
+  "resourcesCreatedByFailure": []
+}

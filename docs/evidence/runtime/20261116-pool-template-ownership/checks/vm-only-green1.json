@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--no-default-features",
+    "--features",
+    "vm"
+  ],
+  "exit": 0,
+  "seconds": 7.478218083,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-vm-only-green1",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

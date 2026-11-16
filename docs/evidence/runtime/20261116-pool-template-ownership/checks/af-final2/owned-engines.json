@@ -1,0 +1,14 @@
+[
+  {
+    "pid": 46773,
+    "parent": 46746,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox engine serve --socket /private/tmp/kp-l4ggzb4g/s",
+    "socket": "/private/tmp/kp-l4ggzb4g/s"
+  },
+  {
+    "pid": 50668,
+    "parent": 46746,
+    "command": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox engine serve --socket /private/tmp/kp-l4ggzb4g/s",
+    "socket": "/private/tmp/kp-l4ggzb4g/s"
+  }
+]

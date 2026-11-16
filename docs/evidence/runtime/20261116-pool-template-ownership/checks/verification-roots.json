@@ -1,0 +1,12 @@
+[
+  {
+    "command": "verify1",
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/t/kbox-verify.wpbOwP/home",
+    "shortTemporary": "/private/tmp/kv.w1sdqw"
+  },
+  {
+    "command": "verify2",
+    "home": "/private/tmp/kbox-tpl-own-d2a56efc8988/t/kbox-verify.F8vHbN/home",
+    "shortTemporary": "/private/tmp/kv.28WFy8"
+  }
+]

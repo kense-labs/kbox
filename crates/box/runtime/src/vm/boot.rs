@@ -11,6 +11,9 @@ impl VmManager {
         let result = self.boot_inner(None).await;
         if result.is_err() && self.provider_launch == ProviderLaunch::NotAttempted {
             self.provider_launch = ProviderLaunch::FailedBeforeLaunch;
+            if let Some(template_use) = self.template_use.take() {
+                template_use.closed();
+            }
         }
         result
     }

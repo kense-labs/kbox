@@ -111,3 +111,12 @@ Real gate2302/6/51 retains six external disk failures. Earlier default-gate
 real-home nonmodification claims were not established; explicit isolated native
 archive evidence remains valid. Pool/template ownership and outer caller lifetime
 remain required local work; full W4/GA and external gates remain open.
+
+[036 template ownership](../20261116-pool-template-ownership/OUTCOME.md) closes
+proven unowned hash-directory deletion/shared template writes with private pinned
+allocations and actual consumer-close proof. Final3Rust+3Python native controls,
+4-daemon/16-ready-VM cold-pool matrix,4 caller identities and41-home audit pass.
+Runtime2315/6/51 retains six external disk failures; Linux snapshot native remains
+unqualified here. Outer pool/legacy caller lifetime, complete OCI pool parity,
+full W4/default Host Service cutover/live continuity/GA remain open. Windows ARM64
+dependencies remain unsupported/no native run; platform levels stay unchanged.

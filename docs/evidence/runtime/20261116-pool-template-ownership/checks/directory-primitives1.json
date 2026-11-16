@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "pool::warm_pool::template_directory"
+  ],
+  "exit": 101,
+  "seconds": 18.175528875,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-directory-primitives1",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "actualOsStopFailureClaimed": false,
+  "anonymousVolumeRemoved": "anon_1ea82a47_0d135e0b83c26749eb038d6779e2167b",
+  "boxDirectoryAbsent": true,
+  "callerBytesRetained": 2,
+  "callerCanaryRetained": true,
+  "exactOwnerAndAllocationRetained": true,
+  "execution": "1ea82a47-7641-4e5d-a1cc-3f2aab83b15c",
+  "liveWritesAfterRefusal": true,
+  "nativeSnapshotRestoreClaimed": false,
+  "noLateWrites": true,
+  "pid": 15840,
+  "retryActuallyStoppedVm": true,
+  "runtimeRssMeasured": false,
+  "socketDir": "/private/tmp/kbox-sockets/1ea82a47-7641-4e5d-a1cc-3f2aab83b15c",
+  "socketDirectoryAbsent": true,
+  "status": "PASS",
+  "syntheticOneShotStopError": true,
+  "templatePath": "/private/tmp/kbox-tpl-own-d2a56efc8988/stop-failure-attempt-2/pool/tpl-x2OuFD",
+  "templateRetainedUntilBackendFinalization": true
+}

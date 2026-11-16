@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-tpl-own-d2a56efc8988"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

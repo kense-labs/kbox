@@ -42,3 +42,10 @@
 - **产物**: `.kstudio/`（含 skills、workflow/bootstrap、wiki、evidence）、`.cursor/{commands,rules,skills}/`
 - **证据**: `.kstudio/evidence/T2026-11-16-k-init/OUTCOME.md`
 - **限制**: 未跑 `cargo test`；未声明产品 Pass；skill picker 刷新未观测；usage/prices unknown
+
+## T2026-11-16-pool-template-ownership
+
+- **结果**: 独立私有模板和实际 consumer/finalizer 约束清理；保留 caller 目录，修复原生复现的 APFS 重复清理失败。
+- **证据**: [失败、最终归档和清理](../../docs/evidence/runtime/20261116-pool-template-ownership/OUTCOME.md)。
+- **验证**: ownership19、close4、CLI935、contract118、installer8；3Rust+3Python native、4daemon/16初始Ready VM/4命令、41home清理；默认2315/6/51。
+- **限制**: Mac 冷池证明不等于 Linux snapshot 原生；外层 pool/legacy owner 丢失和 GA 未完成，Git UID501/DNS 外阻塞；RSS/tokens/cost未知。

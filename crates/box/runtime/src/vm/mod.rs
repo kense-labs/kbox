@@ -5,7 +5,9 @@ mod boot_diag;
 mod execution;
 mod layout;
 mod lifecycle;
+mod template_directory;
 pub(crate) use lifecycle::OriginalVmFinalization;
+pub(crate) use template_directory::{TemplateDirectory, TemplateUse};
 mod maintenance;
 mod network;
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
@@ -449,6 +451,7 @@ pub struct VmManager {
     pub(crate) exec_client: Option<ExecClient>,
 
     /// Application process initialized while this VM was idle in a warm pool.
+    #[cfg(feature = "pool")]
     pub(crate) prewarmed_exec: Option<crate::pool::PrewarmedExec>,
 
     /// Network backend manager for bridge networking (None if TSI mode).
@@ -502,6 +505,8 @@ pub struct VmManager {
     pending_handler: Option<Box<dyn VmHandler>>,
     provider_launch: ProviderLaunch,
 
+    pub(crate) template_use: Option<TemplateUse>,
+
     /// Path to the exec Unix socket (set after boot)
     pub(crate) exec_socket_path: Option<PathBuf>,
 
@@ -554,6 +559,7 @@ impl VmManager {
             provider: None,
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            #[cfg(feature = "pool")]
             prewarmed_exec: None,
             net_manager: None,
             home_dir,
@@ -570,6 +576,7 @@ impl VmManager {
             original_scope: None,
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
+            template_use: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -600,6 +607,7 @@ impl VmManager {
             provider: None,
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            #[cfg(feature = "pool")]
             prewarmed_exec: None,
             net_manager: None,
             home_dir,
@@ -616,6 +624,7 @@ impl VmManager {
             original_scope: None,
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
+            template_use: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,
@@ -684,6 +693,9 @@ impl VmManager {
                 *self.handler.write().await = Some(handler);
                 self.retain_boot_failure_diagnostics().await;
                 return;
+            }
+            if let Some(template_use) = self.template_use.take() {
+                template_use.closed();
             }
             let provider_exit_code = handler.exit_code().or(self.shim_exit_code);
             #[cfg(not(target_os = "windows"))]
@@ -965,6 +977,7 @@ impl VmManager {
             provider: Some(provider),
             handler: Arc::new(RwLock::new(None)),
             exec_client: None,
+            #[cfg(feature = "pool")]
             prewarmed_exec: None,
             net_manager: None,
             home_dir,
@@ -981,6 +994,7 @@ impl VmManager {
             original_scope: None,
             pending_handler: None,
             provider_launch: ProviderLaunch::NotAttempted,
+            template_use: None,
             exec_socket_path: None,
             pty_socket_path: None,
             port_forward_socket_path: None,

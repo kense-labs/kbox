@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "cc8175d2d34ecbdc36f293db062891c2942d71d9839bc321459cbfa4870dffea",
+  "compiledInputCount": 1723,
+  "homes": 41,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 35,
+  "checkedSocketPaths": 146,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 699,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "7071832fdaf1caa8b20cf9e46b611b5f56a6cf24b9b03b3a0873300a54a3dcd5",
+      "after": "2483a8d45ba4f7b444e3c07c4c6a1931d34a70b8427cfa28bc0cd70c2ad09c38"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.w1sdqw",
+    "/private/tmp/kv.28WFy8"
+  ],
+  "failedNativeRunsRetained": 1,
+  "stopFault": "Synthetic one-shot; real VM/live writes/allocation identity/actual retry-stop observed",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

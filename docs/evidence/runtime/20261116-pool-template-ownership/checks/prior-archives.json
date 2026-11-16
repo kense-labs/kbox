@@ -1,0 +1,10 @@
+{
+  "boxArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/final-dist-bootstop-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "4093b9d508588359e25012206deb5767053c41c0fdde3960705d70fd1a796b2e"
+  },
+  "ociArchive": {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79"
+  }
+}

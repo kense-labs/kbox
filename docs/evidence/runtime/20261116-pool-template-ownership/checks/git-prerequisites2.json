@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "check": "uidAccount",
+      "ok": false,
+      "error": "'getpwuid(): uid not found: 501'"
+    },
+    {
+      "check": "githubDns",
+      "ok": false,
+      "error": "[Errno 8] nodename nor servname provided, or not known"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "074321a6d8f2950ef384d4aedcdaaf9ec90f6680\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "merge-base",
+        "--is-ancestor",
+        "codex/macos-oci-release-baseline",
+        "main"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "submodule",
+        "status"
+      ],
+      "exit": 0,
+      "stdout": " 3c2889c76460d81e3fb16d6144580fd31eb1bae3 libkrun (heads/main)\n fc3ea06895301f1df6a274dad75fbd9317b3bfee libkrunfw (heads/main)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "log",
+        "--oneline",
+        "origin/main..HEAD"
+      ],
+      "exit": 0,
+      "stdout": "074321a6 fix(verify): isolate test homes and native temporary paths\nc634d76e fix(runtime): retain boot resources when backend stop refuses\na85fb534 fix(runtime): confine and bound boot-failure diagnostics\n151709fa fix(pool): retire cold VM after post-boot admission failure\nffd92b00 docs(evidence): record VM sizing local convergence and Git blocker\n7327411e feat(hvf): honor exact VM CPU and memory resources\ne01bd356 fix(hvf): isolate unavailable optional RAM capability\n440e1796 docs(evidence): record local convergence and blocked Git push\n4268a36f fix(runtime): retain bounded native disk-tool failure context\n",
+      "stderr": ""
+    }
+  ],
+  "remoteSynchronizationProved": false
+}

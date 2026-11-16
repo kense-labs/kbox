@@ -57,6 +57,7 @@ fn make_vm_manager_with_home(home_dir: &Path) -> VmManager {
         provider: None,
         handler: Arc::new(RwLock::new(None)),
         exec_client: None,
+        #[cfg(feature = "pool")]
         prewarmed_exec: None,
         net_manager: None,
         home_dir: home_dir.to_path_buf(),
@@ -73,6 +74,7 @@ fn make_vm_manager_with_home(home_dir: &Path) -> VmManager {
         original_scope: None,
         pending_handler: None,
         provider_launch: super::super::ProviderLaunch::NotAttempted,
+        template_use: None,
         exec_socket_path: None,
         pty_socket_path: None,
         port_forward_socket_path: None,

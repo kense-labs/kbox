@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--all-targets"
+  ],
+  "exit": 101,
+  "seconds": 22.56171325,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-wiring-check1",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

@@ -1,0 +1,22 @@
+
+running 3 tests
+test pool::warm_pool::template_directory::tests::independent_allocations_preserve_caller_files_and_have_private_mode ... FAILED
+test pool::warm_pool::template_directory::tests::deletion_requires_explicit_consumer_close_not_manager_drop ... ok
+test pool::warm_pool::template_directory::tests::replacing_an_owned_path_does_not_delete_the_replacement ... ok
+
+failures:
+
+---- pool::warm_pool::template_directory::tests::independent_allocations_preserve_caller_files_and_have_private_mode stdout ----
+
+thread 'pool::warm_pool::template_directory::tests::independent_allocations_preserve_caller_files_and_have_private_mode' (106624126) panicked at crates/box/runtime/src/pool/warm_pool/template_directory_tests.rs:13:9:
+assertion `left == right` failed
+  left: 493
+ right: 448
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::template_directory::tests::independent_allocations_preserve_caller_files_and_have_private_mode
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 2360 filtered out; finished in 0.01s
+

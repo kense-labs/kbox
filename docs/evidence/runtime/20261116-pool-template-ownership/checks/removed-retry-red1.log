@@ -1,0 +1,18 @@
+
+running 1 test
+test pool::warm_pool::template_directory::tests::removed_directory_can_be_finalized_again_without_touching_its_replacement ... FAILED
+
+failures:
+
+---- pool::warm_pool::template_directory::tests::removed_directory_can_be_finalized_again_without_touching_its_replacement stdout ----
+
+thread 'pool::warm_pool::template_directory::tests::removed_directory_can_be_finalized_again_without_touching_its_replacement' (107827232) panicked at crates/box/runtime/src/pool/warm_pool/template_directory_tests.rs:144:24:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    pool::warm_pool::template_directory::tests::removed_directory_can_be_finalized_again_without_touching_its_replacement
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2370 filtered out; finished in 0.00s
+

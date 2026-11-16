@@ -94,6 +94,9 @@ impl VmManager {
                 service.validate_host_path(unsafe { libc::geteuid() })?;
             }
         }
+        if let Some(template_use) = &self.template_use {
+            template_use.validate_grant(&layout.workspace_path)?;
+        }
         // Build filesystem mounts
         let mut fs_mounts = vec![FsMount {
             tag: "workspace".to_string(),
@@ -129,6 +132,13 @@ impl VmManager {
             })
             .collect::<Result<Vec<_>>>()?;
         for (i, volume) in parsed_volumes.iter().enumerate() {
+            if let Some(template_use) = &self.template_use {
+                template_use
+                    .validate_grant(&volume.host_path)
+                    .map_err(|error| {
+                        BoxError::ConfigError(format!("Unsafe snapshot workload mount: {error}"))
+                    })?;
+            }
             #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
             if !include_guest_controls
                 && std::fs::symlink_metadata(&volume.host_path)

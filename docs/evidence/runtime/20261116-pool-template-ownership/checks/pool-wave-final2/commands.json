@@ -1,0 +1,854 @@
+[
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00916508399999999,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008322416999999999,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009406791999999997,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009966957999999998,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009728791999999986,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011068458000000003,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008669332999999946,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.010110332999999971,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011096040999999945,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01034983299999992,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009721791000000035,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009658457999999981,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009379999999999944,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008837375000000147,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008828124999999964,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00931495800000004,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0096004999999999,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008319124999999872,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00736237499999981,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007180332999999983,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007647374999999901,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.0069094579999999794,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007403500000000118,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006880165999999743,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008906625000000279,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009043375000000076,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00951241600000019,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009915625000000095,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.04593691700000013,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00865404099999978,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00940604200000017,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.011289542000000097,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009319708000000038,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008629083000000204,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.01212325000000014,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008392999999999873,
+    "stdout": "[]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.00877695799999989,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007993707999999877,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008410209000000002,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008261624999999828,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008734834000000191,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009044709000000317,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008458166999999683,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007841666000000025,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009046624999999864,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008464958000000244,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.008278707999999746,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007326082999999706,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":1,\"active\":0,\"leased\":0,\"total_created\":1,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007427290999999947,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006504333000000528,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007179125000000397,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "status",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.006272667000000176,
+    "stdout": "[{\"image\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"pool\":\"docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7\",\"max\":4,\"idle\":4,\"active\":0,\"leased\":0,\"total_created\":4,\"total_acquired\":0,\"total_evicted\":0}]\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-1')"
+    ],
+    "exit": 0,
+    "seconds": 0.06643912500000049,
+    "stdout": "pool-native-1\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-0')"
+    ],
+    "exit": 0,
+    "seconds": 0.07798316700000019,
+    "stdout": "pool-native-0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-2')"
+    ],
+    "exit": 0,
+    "seconds": 0.07906879199999928,
+    "stdout": "pool-native-2\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "run",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--",
+      "python3",
+      "-c",
+      "print('pool-native-3')"
+    ],
+    "exit": 0,
+    "seconds": 0.08452270799999972,
+    "stdout": "pool-native-3\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/0.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009108582999999726,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/1.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009120792000000044,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/3.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.007816333000000064,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-2/bin/kbox",
+      "pool",
+      "stop",
+      "--socket",
+      "/private/tmp/kbox-warm-53fdfbfc8594-final2/2.sock",
+      "--json"
+    ],
+    "exit": 0,
+    "seconds": 0.009220874999999573,
+    "stdout": "{\"stopped\":true,\"reaped\":0}\n",
+    "stderr": ""
+  }
+]

@@ -158,6 +158,28 @@ async fn exited_provider_still_retains_owner_when_backend_finalization_refuses()
     assert_eq!(vm.exit_code(), Some(137));
 }
 
+#[tokio::test]
+async fn snapshot_consumer_closes_only_after_backend_finalization() {
+    let stopped = Arc::new(AtomicBool::new(false));
+    let (root, mut vm, _store) = fixture(Box::new(InjectedStopFailure {
+        inner: Box::new(RecordingHandler {
+            stopped: stopped.clone(),
+        }),
+        remaining: 1,
+    }))
+    .await;
+    let directory = crate::vm::TemplateDirectory::create(root.path()).unwrap();
+    vm.template_use = Some(directory.claim().unwrap());
+    vm.cleanup_boot_failure().await;
+    assert!(vm.template_use.is_some());
+    assert!(directory.remove().is_err());
+    assert!(!stopped.load(Ordering::SeqCst));
+    vm.cleanup_boot_failure().await;
+    assert!(vm.template_use.is_none());
+    assert!(stopped.load(Ordering::SeqCst));
+    directory.remove().unwrap();
+}
+
 #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
 #[test]
 #[ignore = "requires sentinel-owned home, VOLUME image and installed Box companions"]
@@ -182,6 +204,11 @@ fn native_failed_stop_preserves_live_vm_then_retries_real_finalization() {
                 ..BoxConfig::default()
             };
             let mut vm = VmManager::new(config, EventEmitter::new(16));
+            // Cold-boot consumer lifetime only; this is not a native snapshot restore.
+            let template_directory = crate::vm::TemplateDirectory::create(&root.join("pool")).unwrap();
+            let template_path = template_directory.path().to_path_buf();
+            std::fs::write(template_path.join("template.ram"), b"owned-input-kept-until-finalization").unwrap();
+            vm.template_use = Some(template_directory.claim().unwrap());
             assert_eq!(vm.home_dir, home);
             let id = vm.box_id().to_owned();
             let box_dir = home.join("boxes").join(&id);
@@ -209,6 +236,9 @@ fn native_failed_stop_preserves_live_vm_then_retries_real_finalization() {
                 *vm.handler.write().await = Some(Box::new(InjectedStopFailure { inner: original, remaining: 1 }));
                 vm.cleanup_boot_failure().await;
                 assert_eq!(vm.state().await, BoxState::Ready);
+                assert!(vm.template_use.is_some());
+                assert_eq!(template_directory.remove().unwrap_err().kind(), std::io::ErrorKind::WouldBlock);
+                assert_eq!(std::fs::read(template_path.join("template.ram")).unwrap(), b"owned-input-kept-until-finalization");
                 assert!(box_dir.exists() && socket_dir.exists());
                 let handler = vm.handler.read().await;
                 assert_eq!(handler.as_ref().unwrap().pid(), pid);
@@ -229,6 +259,9 @@ fn native_failed_stop_preserves_live_vm_then_retries_real_finalization() {
                 std::fs::write(root.join("after-refusal.json"), serde_json::to_vec_pretty(&serde_json::json!({"pid":pid,"liveAfterInjectedStopError":true,"sameAllocation":true,"sameDirectoryIdentity":identity,"workloadWroteAfterRefusal":true,"sourceRetained":true})).unwrap()).unwrap();
                 vm.cleanup_boot_failure().await;
                 assert!(vm.handler.read().await.is_none());
+                assert!(vm.template_use.is_none());
+                template_directory.remove().unwrap();
+                assert!(!template_path.exists());
                 assert!(!box_dir.exists() && !socket_dir.exists());
                 assert!(store.get(&name).unwrap().is_none());
                 assert!(!volume.exists());
@@ -236,12 +269,14 @@ fn native_failed_stop_preserves_live_vm_then_retries_real_finalization() {
                 tokio::time::sleep(std::time::Duration::from_millis(500)).await;
                 assert_eq!(std::fs::read(caller.join("writes")).unwrap(), writes);
                 assert_eq!(std::fs::read(caller.join("canary")).unwrap(), b"caller-owned-retained");
-                std::fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","execution":id,"pid":pid,"socketDir":socket_dir,"syntheticOneShotStopError":true,"actualOsStopFailureClaimed":false,"liveWritesAfterRefusal":true,"exactOwnerAndAllocationRetained":true,"retryActuallyStoppedVm":true,"boxDirectoryAbsent":true,"socketDirectoryAbsent":true,"anonymousVolumeRemoved":name,"noLateWrites":true,"callerBytesRetained":writes.len(),"callerCanaryRetained":true,"runtimeRssMeasured":false})).unwrap()).unwrap();
+                std::fs::write(root.join("result.json"), serde_json::to_vec_pretty(&serde_json::json!({"status":"PASS","execution":id,"pid":pid,"socketDir":socket_dir,"syntheticOneShotStopError":true,"actualOsStopFailureClaimed":false,"liveWritesAfterRefusal":true,"exactOwnerAndAllocationRetained":true,"retryActuallyStoppedVm":true,"templatePath":template_path,"templateRetainedUntilBackendFinalization":true,"nativeSnapshotRestoreClaimed":false,"boxDirectoryAbsent":true,"socketDirectoryAbsent":true,"anonymousVolumeRemoved":name,"noLateWrites":true,"callerBytesRetained":writes.len(),"callerCanaryRetained":true,"runtimeRssMeasured":false})).unwrap()).unwrap();
             }).catch_unwind().await;
             let cleanup = vm.destroy_with_timeout(0).await;
+            let template_cleanup = template_directory.remove();
             std::fs::write(root.join("native-cleanup.json"), serde_json::to_vec_pretty(&serde_json::json!({"destroyOk":cleanup.is_ok(),"boxDirectoryAbsent":!box_dir.exists(),"socketDirectoryAbsent":!vm.socket_dir().exists(),"remainingVolumes":store.list().unwrap()})).unwrap()).unwrap();
             if let Err(error) = result { std::panic::resume_unwind(error); }
             cleanup.unwrap();
+            template_cleanup.unwrap();
         });
     }).unwrap().join().unwrap();
 }

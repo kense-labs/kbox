@@ -58,3 +58,82 @@ async fn drain_idle_signals_and_joins_in_progress_maintenance() {
     assert_eq!(pool.idle_count().await, 0);
     assert_eq!(pool.stats().await.idle_count, 0);
 }
+
+#[test]
+fn stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory() {
+    const CHILD: &str = "K_BOX_TEST_UNOWNED_POOL_TEMPLATE_CHILD";
+    const CASE: &str = "pool::warm_pool::shutdown_tests::stopping_an_unbuilt_pool_preserves_a_preexisting_template_directory";
+    if std::env::var_os(CHILD).is_some() {
+        let home = std::path::PathBuf::from(std::env::var_os("K_HOME").unwrap());
+        assert_eq!(
+            std::fs::read_to_string(home.join(".owned-template-test")).unwrap(),
+            "isolated-pool-template-test\n"
+        );
+        tokio::runtime::Builder::new_current_thread()
+            .enable_all()
+            .build()
+            .unwrap()
+            .block_on(async {
+                let image = "pool-template:unowned-preservation";
+                let directory = home
+                    .join("pool")
+                    .join(format!("tpl-{:016x}", crate::vm::fnv1a_hash(image)));
+                std::fs::create_dir_all(&directory).unwrap();
+                std::fs::write(
+                    directory.join("caller-canary"),
+                    b"caller-template-not-owned-by-this-pool",
+                )
+                .unwrap();
+                let pool = WarmPool::start(
+                    PoolConfig {
+                        min_idle: 0,
+                        max_size: 1,
+                        ..PoolConfig::default()
+                    },
+                    BoxConfig {
+                        image: image.into(),
+                        ..BoxConfig::default()
+                    },
+                    EventEmitter::new(16),
+                )
+                .await
+                .unwrap();
+                assert!(matches!(
+                    *pool.template.lock().await,
+                    TemplateState::Unbuilt
+                ));
+                pool.drain_idle().await.unwrap();
+                assert!(
+                    directory.is_dir(),
+                    "stopping an unbuilt pool must not delete a caller template: {}",
+                    directory.display()
+                );
+                assert_eq!(
+                    std::fs::read(directory.join("caller-canary")).unwrap(),
+                    b"caller-template-not-owned-by-this-pool"
+                );
+                assert_eq!(pool.idle_count().await, 0);
+            });
+        return;
+    }
+    let root = tempfile::tempdir().unwrap();
+    let home = root.path().join("home 空格");
+    std::fs::create_dir(&home).unwrap();
+    std::fs::write(
+        home.join(".owned-template-test"),
+        b"isolated-pool-template-test\n",
+    )
+    .unwrap();
+    let child = std::process::Command::new(std::env::current_exe().unwrap())
+        .args(["--exact", CASE, "--nocapture"])
+        .env(CHILD, "1")
+        .env("K_HOME", &home)
+        .output()
+        .unwrap();
+    assert!(
+        child.status.success(),
+        "isolated child failed:\n{}\n{}",
+        String::from_utf8_lossy(&child.stdout),
+        String::from_utf8_lossy(&child.stderr)
+    );
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/final-audit.py"
+  ],
+  "exit": 0,
+  "seconds": 3.592211584,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-tpl-own-d2a56efc8988/check-home-final-audit1",
+    "TMPDIR": "/private/tmp/kbox-tpl-own-d2a56efc8988/t"
+  }
+}

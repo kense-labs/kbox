@@ -1,0 +1,84 @@
+    Checking serde_json v1.0.151
+    Checking ahash v0.8.12
+    Checking hyper v1.12.0
+    Checking tower v0.5.3
+    Checking tower-http v0.6.11
+    Checking referencing v0.48.5
+    Checking jsonschema-value v0.48.5
+    Checking oci-spec v0.10.0 (/Users/roylin/code/kense/kbox/crates/oci-runtime/vendor/oci-spec-0.10.0)
+    Checking kcommon v0.1.1 (/Users/roylin/code/kense/kbox/crates/common)
+    Checking jwt v0.16.0
+    Checking olpc-cjson v0.1.4
+    Checking kbox-contract v0.8.0 (/Users/roylin/code/kense/kbox/crates/runtime)
+    Checking hyper-util v0.1.19
+warning: unused import: `RuntimeUnitSpec`
+ --> crates/runtime/src/driver.rs:4:62
+  |
+4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,
+  |                                                              ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+    Checking jsonschema v0.48.5
+    Checking kbox-core v3.4.3 (/Users/roylin/code/kense/kbox/crates/box/core)
+    Checking hyper-tls v0.6.0
+    Checking hyper-rustls v0.27.2
+    Checking reqwest v0.12.28
+warning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)
+    Checking oci-distribution v0.11.0
+    Checking koci-sdk v0.3.2 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/sdk)
+    Checking kbox-netproxy v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/netproxy)
+    Checking koci-agent-protocol v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/agent-protocol)
+    Checking koci-kbox v0.3.6 (/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox)
+    Checking kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)
+error[E0433]: cannot find `pool` in `crate`
+   --> crates/box/runtime/src/vm/mod.rs:452:46
+    |
+452 |     pub(crate) prewarmed_exec: Option<crate::pool::PrewarmedExec>,
+    |                                              ^^^^ could not find `pool` in the crate root
+    |
+note: found an item that was configured out
+   --> crates/box/runtime/src/lib.rs:63:9
+    |
+ 62 | #[cfg(feature = "pool")]
+    |       ---------------- the item is gated behind the `pool` feature
+ 63 | pub mod pool;
+    |         ^^^^
+
+error[E0433]: cannot find `pool` in `crate`
+   --> crates/box/runtime/src/vm/mod.rs:505:44
+    |
+505 |     pub(crate) template_use: Option<crate::pool::warm_pool::TemplateUse>,
+    |                                            ^^^^ could not find `pool` in the crate root
+    |
+note: found an item that was configured out
+   --> crates/box/runtime/src/lib.rs:63:9
+    |
+ 62 | #[cfg(feature = "pool")]
+    |       ---------------- the item is gated behind the `pool` feature
+ 63 | pub mod pool;
+    |         ^^^^
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1190:13
+     |
+1190 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+     |
+     = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1204:13
+     |
+1204 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+warning: unused variable: `metadata`
+    --> crates/box/runtime/src/local_execution/vm_backend.rs:1235:13
+     |
+1235 |         let metadata = self.metadata(record)?;
+     |             ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_metadata`
+
+For more information about this error, try `rustc --explain E0433`.
+warning: `kbox-runtime` (lib) generated 3 warnings
+error: could not compile `kbox-runtime` (lib) due to 2 previous errors; 3 warnings emitted

@@ -1,0 +1,195 @@
+{
+  "pool-final1": {
+    "rust": [
+      {
+        "passed": 54,
+        "failed": 0,
+        "ignored": 1
+      }
+    ]
+  },
+  "pool-final2": {
+    "rust": [
+      {
+        "passed": 55,
+        "failed": 0,
+        "ignored": 1
+      }
+    ]
+  },
+  "ownership-final2": {
+    "rust": [
+      {
+        "passed": 19,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "vm-stop-final2": {
+    "rust": [
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 1
+      }
+    ]
+  },
+  "verify1": {
+    "rust": [
+      {
+        "passed": 2313,
+        "failed": 6,
+        "ignored": 51
+      }
+    ],
+    "isolationStderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 3.258s\n\nOK\nwarning: unused import: `RuntimeUnitSpec`\n --> crates/runtime/src/driver.rs:4:62\n  |\n4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,\n  |                                                              ^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)\n    Checking kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)\n   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)\nwarning: variants `Hang` and `Panic` are never constructed\n  --> crates/runtime/tests/support/fault_driver.rs:34:5\n   |\n32 | pub enum FaultMode {\n   |          --------- variants in this enum\n33 |     Transport,\n34 |     Hang,\n   |     ^^^^\n35 |     Panic,\n   |     ^^^^^\n   |\n   = note: `FaultMode` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: method `resource_state` is never used\n   --> crates/runtime/tests/support/fault_driver.rs:107:12\n    |\n 71 | impl DeterministicFaultDriver {\n    | ----------------------------- method in this implementation\n...\n107 |     pub fn resource_state(&self, unit_id: &str, generation: u64) -> Option<RuntimeUnitState> {\n    |            ^^^^^^^^^^^^^^\n\nwarning: function `action_request` is n"
+  },
+  "verify2": {
+    "rust": [
+      {
+        "passed": 2315,
+        "failed": 6,
+        "ignored": 51
+      }
+    ],
+    "isolationStderr": "....\n----------------------------------------------------------------------\nRan 4 tests in 2.955s\n\nOK\nwarning: unused import: `RuntimeUnitSpec`\n --> crates/runtime/src/driver.rs:4:62\n  |\n4 |     RuntimeRemoval, RuntimeSnapshot, RuntimeSnapshotRequest, RuntimeUnitSpec,\n  |                                                              ^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\nwarning: `kbox-contract` (lib) generated 1 warning (run `cargo fix --lib -p kbox-contract` to apply 1 suggestion)\n    Checking kbox-runtime v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/runtime)\n   Compiling klibksys v3.2.7 (/Users/roylin/code/kense/kbox/crates/box/deps/libksys)\nwarning: variants `Transport`, `Hang`, and `Panic` are never constructed\n  --> crates/runtime/tests/support/fault_driver.rs:33:5\n   |\n32 | pub enum FaultMode {\n   |          --------- variants in this enum\n33 |     Transport,\n   |     ^^^^^^^^^\n34 |     Hang,\n   |     ^^^^\n35 |     Panic,\n   |     ^^^^^\n   |\n   = note: `FaultMode` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis\n   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default\n\nwarning: methods `arm`, `trace`, `resource_count`, `resource_state`, and `effect_count` are never used\n   --> crates/runtime/tests/support/fault_driver.rs:84:12\n    |\n 71 | impl DeterministicFaultDriver {\n    | ----------------------------- methods in this implementation\n...\n 84 |     pub fn arm(&self, operation: FaultOperation, boundary: FaultBoundary, mode"
+  },
+  "cli1": {
+    "rust": [
+      {
+        "passed": 935,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "contracts1": {
+    "rust": [
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 24,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 41,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 4,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 3,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 1,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 5,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 2,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0
+      },
+      {
+        "passed": 0,
+        "failed": 0,
+        "ignored": 0
+      }
+    ]
+  },
+  "installer1": {
+    "rust": [],
+    "stderrTail": "main__.InstallerTests) ... ok\ntest_success_preserves_workload_data_and_unrelated_runtime_files (__main__.InstallerTests) ... ok\ntest_unexpected_companion_symlink_is_refused (__main__.InstallerTests) ... ok\ntest_versioned_state_directory_survives_install_and_rollback (__main__.InstallerTests) ... ok\ntest_wrong_guest_architecture_is_refused_even_with_matching_checksum (__main__.InstallerTests) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 3.761s\n\nOK\n"
+  }
+}

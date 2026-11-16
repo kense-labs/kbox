@@ -339,6 +339,9 @@ impl VmManager {
                     return Err(e);
                 }
             };
+            if let Some(template_use) = self.template_use.take() {
+                template_use.closed();
+            }
             #[cfg(not(windows))]
             {
                 self.shim_exit_code =

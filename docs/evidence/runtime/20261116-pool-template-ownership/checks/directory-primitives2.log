@@ -1,0 +1,8 @@
+
+running 3 tests
+test pool::warm_pool::template_directory::tests::deletion_requires_explicit_consumer_close_not_manager_drop ... ok
+test pool::warm_pool::template_directory::tests::independent_allocations_preserve_caller_files_and_have_private_mode ... ok
+test pool::warm_pool::template_directory::tests::replacing_an_owned_path_does_not_delete_the_replacement ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2360 filtered out; finished in 0.00s
+

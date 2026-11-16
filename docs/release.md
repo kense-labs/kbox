@@ -467,3 +467,15 @@ isolated environment record; appended corrections retain the logs. Explicit
 native archive qualification remains valid; compiled034 inputs/archive4093b9d5…
 are unchanged. Full OCI Host Service/default cutover/GA and Windows ARM64 native
 support remain unqualified; platform levels unchanged, RSS unmeasured.
+
+[Pool template ownership](evidence/runtime/20261116-pool-template-ownership/OUTCOME.md)
+removes hash-derived deletion and shared template writes. Private pinned input
+directories follow actual consumer/backend close, retaining failed source owners
+and refusing unsafe cleanup/rewrite. Final installed3Rust+3Python native controls,
+4-daemon/16-ready-VM pool matrix and41-home cleanup pass, with all4 caller template
+identities preserved. Sourcecc8175d2…/Boxd5393321…:23412340 compressed/44191744
+installed bytes. Runtime2315/6/51 still has six disk-service failures. Outer pool/
+legacy caller owner loss, full OCI Host Service/default cutover/W4/GA and external
+platform gates remain open. Linux snapshot native is unverified here; Windows
+ARM64 dependencies unsupported/no native run, support levels unchanged and RSS
+unmeasured. Git UID501/DNS still block remote synchronization.

@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/unpacked-pooltpl-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/final-dist-pooltpl-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/unpacked-pooltpl-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 0.7520888749999983,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/final-dist-pooltpl-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "fd27b0b4e9062100a2a8d8ddad9d2af569e09ab0863c73b59f417fde9fac271c",
+  "compressedBytes": 23412402,
+  "installedDiskBytes": 44191744,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "074321a6d8f2950ef384d4aedcdaaf9ec90f6680",
+    "sourceInputsSha256": "039d2717878562656ee248beff4c9cf4a82a08ff8af3777bc1f13ef8b29d70e4",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "stage": "036-pool-template-ownership",
+  "root": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/af-final1",
+  "privateRoot": "/private/tmp/kbox-tpl-own-d2a56efc8988",
+  "evidence": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-template-ownership",
+  "baseCommit": "074321a6d8f2950ef384d4aedcdaaf9ec90f6680",
+  "status": "Focused pools and VM-finalizer guards checked; full checks/source freeze next",
+  "broaderGoal": "Full enterprise GA remains active",
+  "priorOutcome": "../20261116-verify-home-isolation/OUTCOME.md",
+  "requirements": [
+    "Allocate independent private template directories; no shared image-hash writes",
+    "Remember actual pinned directory ownership and VM consumers before deleting",
+    "Keep failures/source VM resources until finalization proves release",
+    "Retain deletion assertions for genuinely owned artifacts and add unowned preservation controls",
+    "Rebuild/final isolated native Box+affected regressions/default gate/audit before commit"
+  ],
+  "remainingOuterOwnerGap": "Other pool/CLI legacy paths can discard VmManager after error; required continuing task, not solved by prior034",
+  "platformLimit": "Snapshot-fork real backend only Linux x86_64 KVM; unavailable here. Continue filesystem/source/Mac cold-pool native checks, no snapshot-native promotion.",
+  "activeChecks": {},
+  "nativeStarted": false,
+  "sourceFrozen": true,
+  "image": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "baseImage": "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+  "ociPrefix": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-unpacked/koci-hvf-0.3.6-macos-arm64",
+  "ociArchive": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+  "ociOriginalSourceInputsSha256": "d2b442f175f89b34d6ba9b63e6d2df4a478dc2a6c3493f8ca647a761e9012871",
+  "nativeArchive": "/Users/roylin/code/kense/kbox/crates/oci-runtime/crates/kbox/runtime/macos-aarch64/kmacos-arm64-uncached-files-v2.tar.xz",
+  "nativeImageIdentity": {
+    "reference": "kbox-stop-preservation-native:proof",
+    "digest": "sha256:12762ced0b57498e6330dad350e35e388d0eab8765e39e38e4a7702a90abe3db",
+    "beforeAndAfterDigestEqual": true,
+    "configDigest": "sha256:4253bbbbf222446071e4e43fa8ec097ceed05b2b1b6bcbdeb698913fe2bd2b27",
+    "architecture": "arm64",
+    "os": "linux",
+    "volumes": {
+      "/scratch": {}
+    }
+  },
+  "imageStore": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/image-cache",
+  "priorArchives": {
+    "boxArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/boot-stop-preservation-3f488eca50004416875e318fc753940a/final-dist-bootstop-1/kbox-3.4.3-macos-arm64.tar.gz",
+      "sha256": "4093b9d508588359e25012206deb5767053c41c0fdde3960705d70fd1a796b2e"
+    },
+    "ociArchive": {
+      "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+      "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79"
+    }
+  },
+  "sourceInputsSha256": "039d2717878562656ee248beff4c9cf4a82a08ff8af3777bc1f13ef8b29d70e4",
+  "sourceInputCount": 1723,
+  "boxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-1",
+  "installedPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-1",
+  "finalBoxPrefix": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/installed-pooltpl-final-1",
+  "boxArchive": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/final-dist-pooltpl-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "nativeClient": "/Users/roylin/code/kense/kbox/artifacts/pool-template-ownership-d2a56efc8988451dbfcc53fdfbfc8594/native-client-final1",
+  "nativeClientSha256": "20cbd5411240e7753ae7c6557bd21f7869425cb06ffe0ef5aa8578e450935bc1",
+  "checks": "/Users/roylin/code/kense/kbox/docs/evidence/runtime/20261116-pool-template-ownership/checks/af-final1"
+}

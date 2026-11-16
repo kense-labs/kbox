@@ -1,0 +1,7 @@
+
+thread '<unnamed>' (107774300) panicked at crates/box/runtime/src/vm/tests/boot_stop.rs:279:30:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'vm::tests::boot_stop::native_failed_stop_preserves_live_vm_then_retries_real_finalization' (107774299) panicked at crates/box/runtime/src/vm/tests/boot_stop.rs:281:24:
+called `Result::unwrap()` on an `Err` value: Any { .. }

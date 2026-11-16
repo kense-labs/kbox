@@ -102,6 +102,12 @@
       "path": "T2026-11-16-pool-startup-owner/OUTCOME.md",
       "date": "2026-11-16",
       "summary": "Prepared CLI owner0/1->1/0;CLI950; selected native3Rust+3Python; two startup failures unresolved, operator cleanup/quarantine, final archive acceptance incomplete"
+    },
+    {
+      "id": "T2026-11-16-execution-start-owner",
+      "path": "T2026-11-16-execution-start-owner/OUTCOME.md",
+      "date": "2026-11-16",
+      "summary": "Admitted original start survives caller timeout; API3/0/Driver1/0/native1/0/AF and scoped cleanup; old cold delay/runtime shutdown/GA open"
     }
   ]
 }

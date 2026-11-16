@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--locked",
+    "--offline",
+    "-p",
+    "kbox-runtime",
+    "--lib",
+    "kbox_contract_driver"
+  ],
+  "exit": 101,
+  "seconds": 50.335107167000004,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-driver-focused2",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

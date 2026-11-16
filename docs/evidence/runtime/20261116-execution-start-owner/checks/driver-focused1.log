@@ -1,0 +1,155 @@
+
+running 130 tests
+test kbox_contract_driver::conformance_tests::box_runtime_microvm_passes_all_advertised_profiles ... ignored, requires a dedicated Kbox OS KVM MicroVM certification home
+test kbox_contract_driver::conformance_tests::box_runtime_passes_all_advertised_profiles ... ignored, requires a dedicated Kbox OS Sandbox certification home
+test kbox_contract_driver::conformance_tests::box_runtime_sev_snp_hardware_passes_all_advertised_profiles ... ignored, requires a dedicated AMD SEV-SNP hardware certification home
+test kbox_contract_driver::conformance_tests::box_runtime_sev_snp_simulated_passes_all_advertised_profiles ... ignored, requires a dedicated Kbox OS KVM MicroVM certification home
+test kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup ... ignored, requires owned K_HOME, signed native assets and pinned Python OCI image; no host Harness
+test kbox_contract_driver::conformance_tests::security_evidence::identity_tests::rejects_incomplete_or_extra_identity_tokens ... ok
+test kbox_contract_driver::conformance_tests::security_evidence::identity_tests::accepts_hypervisor_with_optional_tee_suffix ... ok
+test kbox_contract_driver::engine_process_native::native_process_stream_backpressure_timeout_and_cleanup ... ignored, requires an owned home, the Linux guest-init artifact, signed HVF/KVM assets and a cached Python OCI image
+test kbox_contract_driver::engine_process_native::native_process_stream_with_persistent_volume ... ignored, requires an owned native test home and the same signed VM assets as the stream case
+test kbox_contract_driver::directory::tests::directory_requires_an_explicit_port_before_execution_reservation ... ok
+test kbox_contract_driver::artifact_tests::artifact_port_advertises_only_the_storage_surface_it_enables ... ok
+test kbox_contract_driver::artifact_tests::missing_artifact_port_fails_before_box_reservation ... ok
+test kbox_contract_driver::directory::tests::directory_grants_refuse_wrong_units_and_write_escalation ... ok
+test kbox_contract_driver::artifact_tests::artifact_and_directory_ports_compose_in_either_builder_order ... ok
+test kbox_contract_driver::directory::tests::directory_source_must_be_canonical_and_plain_when_acquired ... ok
+test kbox_contract_driver::artifact_tests::artifact_and_volume_bindings_precede_secrets_and_artifacts_are_read_only ... ok
+test kbox_contract_driver::engine_tests::engine_diagnostics_do_not_submit_work_or_modify_the_journal ... ok
+test kbox_contract_driver::engine_tests::engine_rejects_malformed_and_oversized_control_without_poisoning_listener ... ok
+test kbox_contract_driver::exec::tests::effective_timeout_honors_relative_bound_and_rejects_overflow ... ok
+test kbox_contract_driver::artifact_tests::persistent_volume_accepts_only_its_contract_labels_and_store_allocation_identity ... ok
+test kbox_contract_driver::exec::tests::effective_timeout_reserves_time_for_the_provider_response ... ok
+test kbox_contract_driver::exec::tests::invalid_utf8_fails_closed ... ok
+test kbox_contract_driver::engine_tests::engine_new_stop_fences_previously_accepted_up_and_late_first_delivery ... ok
+test kbox_contract_driver::health::tests::millisecond_timeout_conversion_remains_bounded ... ok
+test kbox_contract_driver::health::tests::parses_only_bounded_http_status_lines ... ok
+test kbox_contract_driver::health::tests::probe_messages_are_single_line_and_bounded ... ok
+test kbox_contract_driver::health::tests::probe_tracker_requires_consecutive_successes_and_resets_on_failure ... ok
+test kbox_contract_driver::health::tests::probe_tracker_settles_only_after_the_failure_threshold ... ok
+test kbox_contract_driver::health::tests::start_period_is_derived_from_the_provider_start_time ... ok
+test kbox_contract_driver::host_service_live_tests::paperloom_gateway_vsock_ocr_has_no_ambient_egress ... ignored, requires owned PaperLoom home, real HVF/KVM assets and an authenticated Gateway Unix socket
+test kbox_contract_driver::directory::tests::directory_grant_is_live_and_teardown_does_not_require_the_source_to_remain ... ok
+test kbox_contract_driver::exec_integration_tests::exec_binds_identity_timeout_replay_and_truncation_to_the_running_generation ... ok
+test kbox_contract_driver::artifact_tests::failed_task_never_publishes_output_but_removal_cleans_staging ... ok
+test kbox_contract_driver::lifecycle::runtime_state_honesty_tests::service_dead_without_exit_does_not_invent_stopped ... ok
+test kbox_contract_driver::lifecycle::runtime_state_honesty_tests::service_failed_with_exit_zero_is_stopped ... ok
+test kbox_contract_driver::host_services::tests::unknown_or_reserved_host_service_fails_before_creating_execution ... ok
+test kbox_contract_driver::lifecycle::runtime_state_honesty_tests::service_failed_with_nonzero_exit_is_failed ... ok
+test kbox_contract_driver::lifecycle::runtime_state_honesty_tests::service_failed_without_exit_does_not_invent_stopped ... ok
+test kbox_contract_driver::lifecycle::runtime_state_honesty_tests::service_stopped_without_exit_stays_stopped ... ok
+test kbox_contract_driver::exec_integration_tests::process_stream_bridge_preserves_raw_bytes_half_close_and_execution_identity ... ok
+test kbox_contract_driver::host_services::tests::host_services_require_explicit_request_and_configured_resolver ... ok
+test kbox_contract_driver::host_services::tests::admitted_host_binding_is_persisted_detects_drift_and_can_retire_after_revocation ... ok
+test kbox_contract_driver::artifact_tests::task_output_restart_resets_staging_and_replay_recaptures_one_exact_result ... ok
+test kbox_contract_driver::lifecycle_tests::confidential_attestation_failure_retries_without_recreating_the_execution ... ok
+test kbox_contract_driver::lifecycle_tests::cancelled_task_inspection_completes_before_replay ... ok
+test kbox_contract_driver::engine_tests::engine_down_observation_waits_for_owned_stopped_spare_removal ... ok
+test kbox_contract_driver::artifact_tests::persistent_volume_plan_reuses_data_without_becoming_an_artifact_store ... ok
+test kbox_contract_driver::lifecycle_tests::cached_registry_artifact_does_not_resolve_its_credential ... ok
+test kbox_contract_driver::lifecycle_tests::confidential_restart_rotates_attestation_with_execution_generation ... ok
+test kbox_contract_driver::lifecycle_tests::confidential_service_persists_replays_and_validates_attestation ... ok
+test kbox_contract_driver::lifecycle_tests::confidential_service_rejects_valid_but_non_live_persisted_evidence ... ok
+test kbox_contract_driver::lifecycle_tests::confidential_task_is_attested_before_each_deferred_main_generation ... ok
+test kbox_contract_driver::engine_tests::engine_uses_only_the_explicit_service_profile_and_preserves_creation_identity ... ok
+test kbox_contract_driver::engine_tests::engine_oci_service_replays_lost_response_survives_restart_and_cleans_owned_resources ... ok
+test kbox_contract_driver::lifecycle_tests::startup_control_timeout_keeps_original_completion_before_retry ... FAILED
+test kbox_contract_driver::lifecycle_tests::restart_completion_during_startup_uses_persisted_terminal_evidence ... ok
+test kbox_contract_driver::lifecycle_tests::unconfigured_secret_port_rejects_before_provider_mutation ... ok
+test kbox_contract_driver::logs::tests::cursor_digest_uses_redacted_data_instead_of_secret_plaintext ... ok
+test kbox_contract_driver::lifecycle_tests::generation_handoff_leaves_exactly_one_current_execution ... ok
+test kbox_contract_driver::logs::tests::cursor_resume_preserves_same_timestamp_total_order_and_filtering ... ok
+test kbox_contract_driver::logs::tests::exact_overlapping_secret_values_are_redacted_longest_first ... ok
+test kbox_contract_driver::logs::tests::missing_valid_cursor_reports_an_explicit_gap ... ok
+test kbox_contract_driver::logs::tests::replacement_markers_are_not_reprocessed_as_secret_material ... ok
+test kbox_contract_driver::paperloom_processing_live_tests::paperloom_secret_mount_runs_with_native_readonly_support ... ignored, requires runner-owned RAM Secret root and actual macOS MicroVM admission
+test kbox_contract_driver::paperloom_processing_live_tests::paperloom_service_completes_real_gateway_ocr_job_and_retires_secrets ... ignored, requires a runner-owned memory Secret root, Gateway Unix socket and real Paperloom MicroVM image
+test kbox_contract_driver::lifecycle_tests::service_failure_restarts_the_same_durable_execution ... ok
+test kbox_contract_driver::lifecycle_tests::uncached_sandbox_registry_credentials_are_staged_before_resource_planning ... ok
+test kbox_contract_driver::prewarm_native::native_prewarm_handoff_preserves_vm_identity_and_retires_dirty_resources ... ignored, requires an owned native home, signed KBox assets and pinned Node OCI base
+test kbox_contract_driver::profile_tests::explicit_native_guest_keeps_resources_and_mounts_without_extra_guest_security_filters ... ok
+test kbox_contract_driver::profile_tests::native_guest_profile_identity_pins_its_security_semantics ... ok
+test kbox_contract_driver::profile_tests::ordinary_oci_contract_keeps_its_security_defaults ... ok
+test kbox_contract_driver::secret::tests::material_debug_output_never_contains_plaintext ... ok
+test kbox_contract_driver::secret::tests::mount_lines_keep_the_device_and_mount_point ... ok
+test kbox_contract_driver::secret::tests::registry_credential_is_bounded_and_redacted ... ok
+test kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume ... FAILED
+test kbox_contract_driver::secret::tests::private_directory_allows_only_sandbox_search_access ... ok
+test kbox_contract_driver::lifecycle_tests::startup_failure_without_exit_code_preserves_the_provider_error ... ok
+test kbox_contract_driver::lifecycle_tests::registry_credentials_resolve_only_for_an_uncached_start_and_never_persist ... ok
+test kbox_contract_driver::lifecycle_tests::service_replay_reopens_the_same_identity_and_stop_remove_are_idempotent ... ok
+test kbox_contract_driver::lifecycle_tests::response_loss_reattaches_and_confirmed_provider_loss_replaces_once ... ok
+test kbox_contract_driver::lifecycle_tests::task_restart_completion_during_startup_reports_the_second_generation ... ok
+test kbox_contract_driver::service_endpoint_tests::endpoints_relay_bidirectional_udp_datagrams ... ok
+test kbox_contract_driver::service_endpoint_tests::capabilities_advertise_service_udp_and_outbound ... ok
+test kbox_contract_driver::lifecycle_tests::tasks_report_success_failure_and_timeout_with_terminal_evidence ... ok
+test kbox_contract_driver::tests::capabilities_claim_only_the_mapped_box_surface ... ok
+test kbox_contract_driver::tests::confidential_capabilities_require_explicit_sev_snp_configuration ... ok
+test kbox_contract_driver::tests::confidential_configuration_rejects_unverifiable_policy_shapes ... ok
+test kbox_contract_driver::tests::confidential_mapping_is_exact_and_never_changes_sandbox_requests ... ok
+test kbox_contract_driver::service_endpoint_tests::inspect_retires_service_when_retained_advertised_url_stops_answering ... ok
+test kbox_contract_driver::service_endpoint_tests::driver_restart_reconstructs_only_its_in_memory_endpoint_owner ... ok
+test kbox_contract_driver::tests::driver_allows_explicit_microvm_selection ... ok
+test kbox_contract_driver::tests::discovery_rejects_a_runtime_record_hidden_by_unit_label_tamper ... ok
+test kbox_contract_driver::tests::driver_defaults_to_microvm_without_shared_kernel_fallback ... ok
+test kbox_contract_driver::tests::discovery_rejects_a_runtime_operation_that_lost_all_labels ... ok
+test kbox_contract_driver::tests::mapping_accepts_oci_indexes_and_rejects_unpinned_mismatched_or_unsupported_artifacts ... ok
+test kbox_contract_driver::tests::mapping_compiles_bounded_tmpfs_mounts_and_read_only_intent ... ok
+test kbox_contract_driver::tests::mapping_compiles_deterministic_non_secret_environment_and_file_bindings ... ok
+test kbox_contract_driver::tests::lifecycle_bound_reserves_the_full_grace_before_provider_timeout ... ok
+test kbox_contract_driver::tests::mapping_omits_the_removed_sandbox_memory_limit ... ok
+test kbox_contract_driver::tests::mapping_keeps_none_and_service_on_the_isolated_vsock_path ... ok
+test kbox_contract_driver::engine_tests::primary::engine_primary_drains_tail_when_guest_stdin_closes_before_exit ... ok
+test kbox_contract_driver::tests::mapping_outbound_uses_tsi_socket_proxy_egress ... ok
+test kbox_contract_driver::service_endpoint_tests::retained_service_lease_is_withdrawn_when_guest_relay_later_rejects ... ok
+test kbox_contract_driver::tests::mapping_preserves_digest_resources_timeout_and_hardening ... ok
+test kbox_contract_driver::engine_tests::engine_replacement_retires_previous_generation_and_reports_the_target_generation ... ok
+test kbox_contract_driver::tests::mapping_rejects_numeric_overflow_before_mutation ... ok
+test kbox_contract_driver::tests::mapping_rejects_path_like_unit_identity_before_mutation ... ok
+test kbox_contract_driver::tests::mapping_rejects_protected_or_unencodable_tmpfs_targets ... ok
+test kbox_contract_driver::engine_tests::primary::engine_incomplete_bootstrap_never_reaches_the_guest ... ok
+test kbox_contract_driver::tests::mapping_rejects_secret_collisions_and_unencodable_targets ... ok
+test kbox_contract_driver::tests::runtime_health_does_not_enable_cli_or_image_health_policy ... ok
+test kbox_contract_driver::tests::service_lifecycle_maps_to_sigterm_and_the_exact_grace_deadline ... ok
+test kbox_contract_driver::tests::microvm_capabilities_map_outbound_to_tsi ... ok
+test kbox_contract_driver::tests::microvm_does_not_advertise_unimplemented_snapshot_capability ... ok
+test kbox_contract_driver::tests::qualification_constructor_rejects_unbounded_provider_build ... ok
+test kbox_contract_driver::engine_tests::primary::engine_lost_primary_ticket_retires_environment_without_launching_the_process ... ok
+test kbox_contract_driver::tests::qualification_constructor_freezes_explicit_provider_build ... ok
+test kbox_contract_driver::tests::unsupported_snapshot_configuration_is_refused_without_creating_provider_state ... ok
+test kbox_contract_driver::engine_tests::primary::engine_bootstrap_is_sent_before_user_input_and_absent_from_durable_records ... ok
+test kbox_contract_driver::tests::metadata_rejects_a_record_with_changed_creation_policy ... ok
+test kbox_contract_driver::tests::metadata_tamper_is_rejected_fail_closed ... ok
+test kbox_contract_driver::engine_tests::primary::engine_shutdown_retires_live_primary_and_restart_prepares_without_replaying ... ok
+test kbox_contract_driver::service_lifecycle_tests::unhealthy_liveness_restarts_once_and_returns_new_generation_health ... ok
+test kbox_contract_driver::engine_tests::primary::engine_control_disconnect_interrupts_a_backpressured_input_with_data_still_open ... ok
+test kbox_contract_driver::engine_tests::primary::engine_primary_stream_preserves_bytes_eof_exit_and_fences_replays ... ok
+test kbox_contract_driver::service_endpoint_tests::local_generation_replacement_rotates_and_closes_the_endpoint ... ok
+test kbox_contract_driver::service_endpoint_tests::delayed_guest_accept_still_publishes_within_publish_grace ... ok
+test kbox_contract_driver::service_endpoint_tests::stop_remove_and_provider_loss_close_every_endpoint ... ok
+test kbox_contract_driver::service_endpoint_tests::endpoints_are_exact_stable_unique_and_relay_bidirectional_tcp ... ok
+test kbox_contract_driver::service_endpoint_tests::rejecting_guest_relay_does_not_publish_advertised_endpoints ... ok
+
+failures:
+
+---- kbox_contract_driver::lifecycle_tests::startup_control_timeout_keeps_original_completion_before_retry stdout ----
+
+thread 'kbox_contract_driver::lifecycle_tests::startup_control_timeout_keeps_original_completion_before_retry' (123020013) panicked at crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:86:35:
+called `Result::unwrap()` on an `Err` value: NoPermits
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume stdout ----
+
+thread 'kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume' (123020036) panicked at crates/box/runtime/src/kbox_contract_driver/secret.rs:996:9:
+Runtime provider is unavailable: could not inspect actual macOS disk-image backing: /usr/sbin/diskutil returned exit status: 1: Unable to run because unable to use the DiskManagement framework.
+Common reasons include, but are not limited to, the DiskArbitration
+framework being unavailable due to being booted in single-user mode.
+
+
+failures:
+    kbox_contract_driver::lifecycle_tests::startup_control_timeout_keeps_original_completion_before_retry
+    kbox_contract_driver::secret::tests::macos_secret_root_rejects_disk_and_accepts_a_ram_volume
+
+test result: FAILED. 117 passed; 2 failed; 11 ignored; 0 measured; 2291 filtered out; finished in 12.44s
+

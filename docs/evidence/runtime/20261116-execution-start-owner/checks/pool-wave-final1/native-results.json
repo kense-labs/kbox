@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "daemons": 4,
+  "initialReadyVms": 16,
+  "commands": [
+    {
+      "case": 0,
+      "stdout": "pool-native-0\n"
+    },
+    {
+      "case": 1,
+      "stdout": "pool-native-1\n"
+    },
+    {
+      "case": 2,
+      "stdout": "pool-native-2\n"
+    },
+    {
+      "case": 3,
+      "stdout": "pool-native-3\n"
+    }
+  ]
+}

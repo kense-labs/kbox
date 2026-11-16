@@ -1,0 +1,34 @@
+{
+  "command": [
+    "sh",
+    "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/unpacked-execstart-final-1/kbox-3.4.3-macos-arm64/install.sh"
+  ],
+  "extractCommand": [
+    "tar",
+    "-xzf",
+    "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/final-dist-execstart-1/kbox-3.4.3-macos-arm64.tar.gz",
+    "-C",
+    "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/unpacked-execstart-final-1"
+  ],
+  "exitCode": 0,
+  "seconds": 1.2846927079999944,
+  "prefix": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/installed-execstart-final-1",
+  "archive": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/final-dist-execstart-1/kbox-3.4.3-macos-arm64.tar.gz",
+  "sha256": "8f0d6e6da26b0af4bb4bf2f4bbce0205f2d3eff0259d77effff11093bb403fb5",
+  "compressedBytes": 23428541,
+  "installedDiskBytes": 44208128,
+  "filesVerified": 11,
+  "buildInfo": {
+    "schema": "kbox.release-build.v1",
+    "sourceCommit": "3ebbd363b234bf57b7f60700f0a24dce048ae802",
+    "sourceInputsSha256": "96876d6a77023bf934325fc17291b2e41d9fa16c69a8e062eaf30903f8265ded",
+    "cargoLockSha256": "8497275783877e36efa1dcea71fc76927dcdf42d1994ea522a8500ea86414734",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+    "target": "macos-aarch64",
+    "guestTarget": "aarch64-unknown-linux-musl",
+    "nativeSources": {
+      "libkrun": "3c2889c76460d81e3fb16d6144580fd31eb1bae3",
+      "libkrunfw": "fc3ea06895301f1df6a274dad75fbd9317b3bfee"
+    }
+  }
+}

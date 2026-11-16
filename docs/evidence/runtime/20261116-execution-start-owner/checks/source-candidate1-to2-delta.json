@@ -1,0 +1,7 @@
+{
+  "old": "96876d6a77023bf934325fc17291b2e41d9fa16c69a8e062eaf30903f8265ded",
+  "new": "50884bbc7a517c113a434242d8ca3fbd6b532eca29c50a1f01f49bf4410bf5c9",
+  "changed": [
+    "crates/box/runtime/src/local_execution/startup_native.rs"
+  ]
+}

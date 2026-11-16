@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/pool-startup-owner-307fbf4272cd40e4ae20156ebb6e067e/final-dist-poolstart-2/kbox-3.4.3-macos-arm64.tar.gz",
+    "sha256": "f6ae774aff6e58df48c663ae154c5074b391f5259dfa13912338edc38689bcd4",
+    "bytes": 23427926
+  },
+  {
+    "path": "/Users/roylin/code/kense/kbox/artifacts/oci-vm-sizing-bcb75b402f5943f7af5ccfe32a91e081/oci-merged-final3-dist/koci-hvf-0.3.6-macos-arm64.tar.gz",
+    "sha256": "d5f599951c86696d19d0e775993c50573bf74fd597f17e325f477be407874a79",
+    "bytes": 33429314
+  }
+]

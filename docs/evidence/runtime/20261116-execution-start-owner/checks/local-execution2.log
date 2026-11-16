@@ -1,0 +1,407 @@
+
+running 388 tests
+test local_execution::oci_backend::tests::binding_validation_rejects_schema_identity_generation_and_evidence_drift ... ok
+test local_execution::logs::tests::rejects_invalid_complete_entries ... ok
+test local_execution::oci_backend::tests::bundle_handoff_capability_fails_before_store_or_preparation ... ok
+test local_execution::oci_backend::tests::durable_state_rejects_a_runtime_binding_owned_by_another_product_execution ... ok
+test local_execution::logs::tests::reads_rotated_logs_oldest_first_and_ignores_a_partial_live_tail ... ok
+test local_execution::lifecycle_lock::tests::same_execution_is_serialized_across_file_handles ... ok
+test local_execution::oci_backend::tests::create_persists_provider_resource_plan_before_any_runtime_preparation ... ok
+test local_execution::inspection_cancellation_tests::cancelled_start_before_admission_leaves_the_reservation_unstarted ... ok
+test local_execution::oci_backend::tests::captured_exec_timeout_kills_and_returns_legacy_terminal_shape ... ok
+test local_execution::oci_backend::tests::captured_exec_replays_after_lost_response_within_one_execute ... ok
+test local_execution::oci_backend::tests::exec_rejects_a_second_rootfs_before_runtime_mutation ... ok
+test local_execution::oci_backend::tests::exact_generation_processes_stats_and_events_use_the_public_sdk ... ok
+test local_execution::oci_backend::tests::file_sessions_reject_invalid_download_limits_before_dispatch ... ok
+test local_execution::oci_backend::tests::active_execution_missing_binding_refuses_current_generation_discovery ... ok
+test local_execution::oci_backend::tests::exec_capability_and_box_generation_fail_before_runtime_mutation ... ok
+test local_execution::oci_backend::tests::file_and_filesystem_sessions_preserve_exact_targets_and_replay_mutations_once ... ok
+test local_execution::oci_backend::tests::isolation_preflight_rejects_probe_only_driver_without_product_mutation ... ok
+test local_execution::oci_backend::tests::lifecycle_operation_ids_are_stable_and_fenced_by_runtime_target ... ok
+test local_execution::oci_backend::tests::file_and_filesystem_sessions_reject_runtime_target_drift ... ok
+test local_execution::inspection_cancellation_tests::cancelled_inspection_keeps_its_lifecycle_lock_until_projection_finishes ... ok
+test local_execution::oci_backend::tests::bundle_handoff_uses_the_exact_context_sent_to_runtime_create ... ok
+test local_execution::oci_backend::tests::macos_handoff_comparison_accepts_only_fixed_system_aliases ... ok
+test local_execution::oci_backend::tests::dropped_exec_future_keeps_its_exact_timeout_watchdog ... ok
+test local_execution::oci_backend::tests::graceful_kill_timeout_escalates_through_a_distinct_sdk_signal ... ok
+test local_execution::oci_backend::tests::maps_microvm_boundary_to_dedicated_vm ... ok
+test local_execution::inspection_cancellation_tests::cancelled_start_cannot_publish_running_after_a_serialized_stop ... ok
+test local_execution::inspection_cancellation_tests::cancelled_start_keeps_its_original_operation_until_durable_completion ... ok
+test local_execution::oci_backend::tests::interrupted_starting_record_starts_created_runtime_without_duplicate_create ... ok
+test local_execution::oci_backend::tests::interrupted_resource_update_claim_replays_after_backend_reopen ... ok
+test local_execution::oci_backend::tests::invalid_exec_identity_and_empty_command_fail_before_runtime_mutation ... ok
+test local_execution::oci_backend::tests::file_and_filesystem_capabilities_and_box_generation_fail_before_dispatch ... ok
+test local_execution::oci_backend::tests::nproc_host_capability_refuses_before_bundle_or_resource_mutation ... ok
+test local_execution::oci_backend::tests::keyed_exec_rejects_changed_content_without_starting_a_second_process ... ok
+test local_execution::oci_backend::tests::log_projection_is_ready_before_start_and_created_state_recovers_without_duplicate_create ... ok
+test local_execution::oci_backend::tests::launch_persists_exact_runtime_binding_for_microvm ... ok
+test local_execution::oci_backend::tests::preflight_rejects_host_services_before_oci_store_or_preparation ... ok
+test local_execution::oci_backend::tests::lost_create_response_starts_the_existing_generation_without_duplicate_create ... ok
+test local_execution::oci_backend::tests::preflight_rejects_probe_only_isolation_before_store_or_preparation ... ok
+test local_execution::oci_backend::tests::lost_start_response_reconciles_the_existing_generation_without_duplicate_create ... ok
+test local_execution::oci_backend::tests::process_restart::pause_restart_module_docs_refuse_b2_overclaim ... ok
+test local_execution::oci_backend::tests::preflight_requires_attachment_v1_before_store_or_preparation ... ok
+test local_execution::oci_backend::tests::process_restart::process_restart_module_docs_refuse_b2_overclaim ... ok
+test local_execution::oci_backend::tests::mismatched_runtime_attachment_evidence_forces_exact_cleanup ... ok
+test local_execution::oci_backend::tests::mutating_file_and_filesystem_ops_reuse_content_addressed_identity_across_outer_calls ... ok
+test local_execution::oci_backend::tests::lost_kill_response_recovers_within_one_kill ... ok
+test local_execution::oci_backend::tests::mismatched_runtime_config_evidence_forces_exact_cleanup ... ok
+test local_execution::oci_backend::tests::lost_delete_response_recovers_within_one_delete ... ok
+test local_execution::oci_backend::tests::observability_rejects_runtime_target_and_event_order_drift ... ok
+test local_execution::oci_backend::tests::omit_path_captured_exec_inner_retry_reuses_minted_process_identity ... ok
+test local_execution::oci_backend::tests::lost_resource_update_response_recovers_within_one_update ... ok
+test local_execution::oci_backend::tests::invalid_preparation_is_cleaned_before_runtime_create ... ok
+test local_execution::oci_backend::tests::resource_update_contract::couples_derived_cpu_quota_with_period_updates ... ok
+test local_execution::oci_backend::tests::pause_requires_advertised_sdk_operation_before_runtime_mutation ... ok
+test local_execution::oci_backend::tests::paused_exact_generation_remains_observable ... ok
+test local_execution::oci_backend::tests::pty_routes_merged_output_resize_and_signal_to_the_exact_sdk_process ... ok
+test local_execution::oci_backend::tests::projection_death_between_ready_and_drain_is_confirmed_before_cleanup ... ok
+test local_execution::oci_backend::tests::reopened_backend_cleans_stopped_generation_without_inventing_exit_status ... ok
+test local_execution::oci_backend::tests::runtime_process_identity_exposes_only_shared_host_kernel_pid ... ok
+test local_execution::oci_backend::tests::reopened_backend_treats_undrained_projection_death_as_owner_loss ... ok
+test local_execution::oci_backend::tests::reopened_backend_observes_natural_terminal_status_before_stopped_only_delete ... ok
+test local_execution::oci_backend::tests::pause_retry_after_rollback_uses_a_new_durable_mutation_identity ... ok
+test local_execution::oci_backend::tests::resource_update_contract::emits_only_selected_oci_resource_fields ... ok
+test local_execution::oci_backend::tests::reopened_backend_kills_with_persisted_signal_and_preserves_exact_exit ... ok
+test local_execution::oci_backend::tests::pause_resume_use_exact_runtime_target_and_unique_box_generations ... ok
+test local_execution::oci_backend::tests::relative_exec_tracks_the_prepared_rootfs_layout ... ok
+test local_execution::oci_backend::tests::terminal_status_conversion_is_exact_and_rejects_overflow ... ok
+test local_execution::oci_backend::tests::prewarm::claim_preserves_the_exact_oci_provider_binding_and_uses_the_new_box_generation ... ok
+test local_execution::oci_backend::tests::reopened_backend_reconciles_lost_pause_and_resume_responses_without_replay ... ok
+test local_execution::oci_backend::tests::resource_update_persists_complete_intent_and_replays_locally ... ok
+test local_execution::oci_backend::tests::retained_backend_reconnects_and_reconciles_after_local_runtime_server_restart ... ok
+test local_execution::oci_backend::tests::stdin_journal_rejects_payload_drift_on_the_same_operation ... ok
+test local_execution::oci_backend::tests::resource_update_racing_natural_exit_settles_the_terminal_record ... ok
+test local_execution::oci_hvf::tests::hvf_explicit_endpoint_and_creation_policy_are_separate ... ok
+test local_execution::oci_file_grants::tests::file_resource_planning_rejects_aliases_without_changing_caller_data ... ok
+test local_execution::oci_hvf::tests::native::anonymous::native_anonymous_volumes_preserve_guest_metadata_identity_restart_and_owned_cleanup ... ignored, requires sentinel-owned root and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::hvf_missing_or_wrong_endpoint_and_unknown_modes_refuse ... ok
+test local_execution::oci_hvf::tests::native::anonymous::native_old_host_refuses_raw_volume_capability_before_allocation_or_workload ... ignored, requires sentinel-owned root, the previous installed Host and archived unaware CLI
+test local_execution::oci_backend::tests::streaming_exec_retries_lost_stdin_and_preserves_exact_process_control ... ok
+test local_execution::oci_hvf::tests::native::capabilities::native_cap_add_enforces_guest_permissions_drop_controls_all_entries_and_recovery ... ignored, requires sentinel-owned root and fixed installed independent HVF assets
+test local_execution::oci_backend::tests::streaming_close_stdin_inner_retry_reuses_mutation_sequence ... ok
+test local_execution::oci_hvf::tests::native::cpu_time::native_cpu_time_limits_signal_all_process_paths_replay_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_file_grants::tests::file_resource_plan_persists_incarnation_and_refuses_replacement_or_replanning ... ok
+test local_execution::oci_backend::tests::streaming_signal_inner_retry_reuses_mutation_sequence ... ok
+test local_execution::oci_hvf::tests::native::disk_capacity::native_custom_disk_capacity_enforces_root_and_anonymous_disks_replay_and_recovery ... ignored, requires sentinel-owned root and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::failed_create::native_failed_create_preserves_authority_and_reconciles_owned_resources ... ignored, requires sentinel-owned root and installed HVF assets; withdraws entitlement on an owned copy
+test local_execution::oci_hvf::tests::native::guest_readonly::native_guest_readonly_guards_refuse_unenforced_root_before_exec_or_pty ... ignored, requires sentinel-owned root, installed HVF assets and a fixed Linux Guest test binary
+test local_execution::oci_hvf::tests::native::lifetime::native_box_hvf_owner_outlives_smoke_deadline ... ignored, requires sentinel-owned root, installed HVF assets and 95 seconds
+test local_execution::oci_hvf::tests::native::memory_limits::native_memory_limits_enforce_all_process_paths_replay_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::msgqueue::native_msgqueue_limits_enforce_byte_budget_all_entries_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::named::native_named_volumes_preserve_identity_live_data_ro_and_shared_lifetime ... ignored, requires sentinel-owned home and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::native_box_hvf_host_service_preserves_routes_and_recovery ... ignored, requires sentinel-owned private home and fixed signed independent HVF Host assets
+test local_execution::oci_backend::tests::new_runtime_operations_require_advertised_capabilities_before_dispatch ... ok
+test local_execution::oci_hvf::tests::native::native_box_hvf_single_file_host_pep ... ignored, requires sentinel-owned root and fixed signed native HVF assets
+test local_execution::oci_backend::tests::unbound_kill::kill_of_a_never_started_reservation_still_proves_runtime_absence ... ok
+test local_execution::oci_hvf::tests::native::native_cleanup_owned_hvf_test_root ... ignored, maintenance only: requires the existing sentinel-owned HVF test root
+test local_execution::oci_hvf::tests::native::nice::native_nice_limits_enforce_priority_floor_all_entries_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::nproc::native_nproc_enforces_nonroot_budget_all_process_paths_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_backend::tests::unsupported_running_snapshot_refuses_before_freezer_effects ... ok
+test local_execution::oci_hvf::tests::native::nproc::native_old_nproc_assets_refuse_without_workload_or_route_fallback ... ignored, requires exact installed current and old HVF assets in an owned root
+test local_execution::oci_backend::tests::process_restart::retained_backend_recovers_after_runtime_owner_process_restart ... ok
+test local_execution::oci_hvf::tests::native::path_guards::binary::native_installed_guest_path_guards_refuse_and_enforce_exec_and_pty ... ignored, requires sentinel-owned root and fixed installed Box/HVF companions
+test local_execution::oci_hvf::tests::native::path_guards::native_guest_path_guards_enforce_before_exec_and_pty ... ignored, requires sentinel-owned root, installed HVF assets and a fixed Linux Guest test binary
+test local_execution::oci_hvf::tests::native::pending::native_reconcile_owned_pending_creates ... ignored, maintenance only: requires sentinel-owned root with known pending Create
+test local_execution::oci_hvf::tests::native::raw_ro::native_cleanup_owned_raw_ro_fixture ... ignored, maintenance only: exact Create replay for this sentinel-owned failed SDK fixture
+test local_execution::oci_hvf::tests::native::raw_ro::native_raw_ro_disks_reject_guest_remount_child_and_writes_with_unchanged_host_image ... ignored, requires sentinel-owned root and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::raw_secrets::native_raw_secret_files_environment_disks_entries_and_recovery ... ignored, requires actual owned RAM control root, disk home and installed combined-v3/v11 assets
+test local_execution::oci_hvf::tests::native::realtime::native_realtime_limits_enforce_scheduler_budget_all_entries_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::rollback::native_old_cli_refuses_file_authority_without_activation_or_rewrite ... ignored, requires sentinel-owned root, installed HVF assets and the accepted older Box CLI
+test local_execution::oci_backend::tests::resume_requires_advertised_sdk_operation_before_runtime_mutation ... ok
+test local_execution::oci_hvf::tests::native::root_readonly::native_old_host_refuses_readonly_root_before_preparation_without_fallback ... ignored, requires sentinel-owned home and installed old Host without rootfs-image v2
+test local_execution::oci_hvf::tests::native::root_readonly::native_root_readonly_intent_enforces_all_access_paths_and_preserves_inner_mounts ... ignored, requires sentinel-owned home and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::secret_environment::native_memory_secret_environment_all_process_paths_recovery_and_cleanup ... ignored, requires actual owned RAM and exact installed memory-environment archives
+test local_execution::oci_hvf::tests::native::secrets::native_memory_secret_files_enforce_host_ro_owner_recovery_and_cleanup ... ignored, requires owned RAM roots and exact installed HVF archives
+test local_execution::oci_hvf::tests::native::secrets::native_memory_secret_unsupported_transport_refuses_and_preserves_source ... ignored, requires owned RAM Secret source and exact old Host or shim assets
+test local_execution::oci_hvf::tests::native::shm::native_shm_size_enforces_capacity_posix_effects_all_entries_and_recovery ... ignored, requires sentinel-owned root and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::sigpending::native_sigpending_limits_enforce_queue_effects_all_entries_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::tmpfs::native_tmpfs_intent_enforces_flags_quota_identity_restart_and_stopped_recovery ... ignored, requires sentinel-owned home and fixed installed independent HVF assets
+test local_execution::oci_hvf::tests::native::ulimits::native_ulimits_enforce_kernel_effects_all_process_paths_replay_and_recovery ... ignored, requires sentinel-owned home,installed HVF assets and immutable Linux rlimit probe
+test local_execution::oci_hvf::tests::native::vm_sizing::native_old_vm_sizing_assets_refuse_before_workload_without_fallback ... ignored, requires sentinel-owned private home and fixed installed old/current assets
+test local_execution::oci_hvf::tests::native::vm_sizing::native_vm_hardware_sizes_match_persisted_intent ... ignored, requires sentinel-owned private home and fixed installed HVF/Box assets
+test local_execution::oci_migration::tests::kvm_box_owned_flag_rejects_unknown_values ... ok
+test local_execution::oci_migration::tests::linux_kvm_environment_requires_explicit_socket_and_accepts_microvm ... ok
+test local_execution::oci_migration::tests::linux_kvm_box_owned_requires_service_artifacts_and_fences_endpoint ... ok
+test local_execution::oci_migration::tests::windows_environment_without_endpoint_fail_closed_or_accepts_qualification_pipe ... ok
+test local_execution::oci_migration::tests::windows_box_owned_environment_derives_pipe_from_service_root ... ok
+test local_execution::oci_backend::tests::snapshot_recovery_does_not_replay_a_completed_pause_after_thaw ... ok
+test local_execution::oci_log_projection::tests::markers_follow_runtime_generation_across_box_control_generations ... ok
+test local_execution::oci_backend::tests::process_restart::retained_backend_preserves_pause_state_across_runtime_owner_process_restart ... ok
+test local_execution::oci_backend::tests::snapshot_restore_prepares_the_managed_lower_before_oci_bundle_creation ... ok
+test local_execution::oci_network_attachments::tests::attaches_net_devices_and_promotes_schema_to_v3 ... ok
+test local_execution::oci_log_projection::tests::marker_reader_rejects_oversized_or_invalid_evidence ... ok
+test local_execution::oci_network_attachments::tests::joined_namespace_uses_preserve_caller_cleanup ... ok
+test local_execution::oci_network_attachments::tests::leaves_schema_unchanged_without_net_devices ... ok
+test local_execution::oci_portable_rootfs::tests::rejects_invalid_link_contract_without_publishing ... ok
+test local_execution::oci_network_attachments::tests::attaches_every_net_device_under_shared_namespace_cleanup_ids ... ok
+test local_execution::oci_portable_rootfs::tests::rejects_normalized_duplicates_without_publishing ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_preserves_shared_default_and_explicit_sets ... ok
+test local_execution::oci_backend::tests::process_restart::retained_backend_recovers_filesystem_session_after_runtime_owner_process_restart ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_retains_drop_precedence_and_unknown_refusal ... ok
+test local_execution::oci_portable_rootfs::tests::publishes_exact_portable_contract_and_consumes_box_manifest ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_admission_is_readonly_and_other_profiles_stay_closed ... ok
+test local_execution::oci_production::capability_tests::hvf_cap_add_preserves_per_uid_unprivileged_admission ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_refuses_excess_inventory_before_claiming_allocations ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_admission_reuses_supported_guest_control_without_allocations ... ok
+test local_execution::oci_backend::tests::session_mode_capabilities_are_checked_before_exec_dispatch ... ok
+test local_execution::oci_portable_rootfs::tests::rejects_runtime_internal_and_unsafe_paths_without_publishing ... ok
+test local_execution::oci_portable_rootfs::tests::publish_portable_bundle_ignores_non_contract_metadata_annotation_values ... ok
+test local_execution::oci_production::anonymous_tests::hvf_raw_secret_plan_requires_combined_capability_before_claiming_allocations ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_omission_preserves_spec_bytes_and_disk_refuses ... ok
+test local_execution::oci_production::anonymous_tests::hvf_anonymous_plan_reserves_normalized_image_volumes_before_materialization ... ok
+test local_execution::oci_production::named_tests::hvf_named_volume_profile_admits_existing_plain_store_mount ... ok
+test local_execution::oci_portable_rootfs::tests::publish_portable_bundle_uses_private_directory_mode ... ok
+test local_execution::oci_production::readonly_tests::hvf_root_readonly_qualification_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_only_tmpfs_admission_preserves_reserved_boundaries ... ok
+test local_execution::oci_production::disk_tests::custom_disk_capacity_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_rejects_bad_sizes_and_conflicting_tmpfs_before_claims ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_admits_bounded_intent_without_allocations ... ok
+test local_execution::oci_production::shm_tests::shm_size_does_not_promote_other_profiles_or_oom_overrides ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_preflight_refuses_unqualified_input_before_allocating ... ok
+test local_execution::oci_production::tmpfs_tests::hvf_tmpfs_support_does_not_promote_other_profiles ... ok
+test local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation ... FAILED
+test local_execution::oci_production::ulimit_tests::hvf_memory_ulimits_admit_existing_byte_limits_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_cpu_time_ulimits_admit_existing_intent_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_msgqueue_ulimits_admit_without_allocating_and_refuse_bad_identity ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nice_ulimits_admit_without_allocating_and_refuse_privilege_bypasses ... ok
+test local_execution::oci_production::ulimit_tests::hvf_realtime_ulimits_admit_without_allocating_and_refuse_privilege_bypasses ... ok
+test local_execution::oci_portable_rootfs::tests::publish_portable_bundle_writes_metadata_only_when_annotation_requests_it ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_admit_capability_free_explicit_nonroot_without_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_nproc_ulimits_refuse_root_names_and_privilege_before_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_sigpending_ulimits_admit_without_allocating_and_refuse_bad_identity ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_refuse_bad_or_unqualified_limits_before_allocating ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_admission_reuses_bounded_oci_process_controls ... ok
+test local_execution::oci_production::ulimit_tests::hvf_ulimits_do_not_promote_other_profiles ... ok
+test local_execution::oci_backend::tests::unbound_kill::kill_cannot_forget_an_unbound_runtime_after_an_interrupted_create ... ok
+test local_execution::oci_production::shm_tests::hvf_shm_size_admits_bounded_policy_without_claims ... ok
+test local_execution::oci_secret_attachments::tests::leaves_attachments_unchanged_without_secret_root ... ok
+test local_execution::oci_session::tests::process_users_preserve_legacy_numeric_fallbacks ... ok
+test local_execution::oci_secret_attachments::tests::marks_bind_under_managed_secret_root ... ok
+test local_execution::oci_secret_attachments::tests::ignores_binds_outside_secret_root_and_fails_if_none_match ... ok
+test local_execution::oci_production::disk_tests::hvf_custom_disk_capacity_admits_existing_builder_bounds_without_mutation ... ok
+test local_execution::oci_production::named_tests::named_preflight_rejects_missing_duplicate_and_drifted_bindings_without_mutation ... ok
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_keeps_path_entry_escape_rejection_atomic ... ok
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_uses_guest_lookup_and_effective_image_path ... ok
+test local_execution::oci_session::path_tests::hvf_guest_exec_path_preserves_overrides_and_refuses_escape ... ok
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_refuse_persisted_count_drift_from_the_immutable_request ... ok
+test local_execution::oci_session::path_tests::other_driver_exec_path_still_requires_a_host_prepared_executable ... ok
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_require_host_capability_before_planning_allocations ... ok
+test local_execution::oci_session::path_tests::hvf_legacy_materialized_exec_keeps_resolved_argv_and_environment_bytes ... ok
+test local_execution::port::tests::microvm_port_channel_rejects_oversized_guest_frames ... ok
+test local_execution::oci_storage_attachments::tests::still_rejects_external_binds_outside_alias_root ... ok
+test local_execution::port::tests::microvm_port_channel_relays_bidirectional_bytes ... ok
+test local_execution::oci_storage_attachments::tests::rejects_external_binds_without_volume_ownership ... ok
+test local_execution::port::tests::microvm_port_channel_reports_guest_rejection ... ok
+test local_execution::oci_storage_attachments::tests::attaches_workspace_bind_as_box_owned_storage ... ok
+test local_execution::port::tests::microvm_udp_channel_preserves_datagrams_and_receive_bounds ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_corrupt_catalog_refuses_without_quarantining_or_changing_data ... ok
+test local_execution::oci_storage_attachments::tests::accepts_volume_owned_binds_after_classification ... ok
+test local_execution::prepared_rootfs::tests::rejects_absent_and_empty_layouts ... ok
+test local_execution::oci_storage_attachments::tests::attaches_staged_caller_bind_alias_and_passes_reject_gate ... ok
+test local_execution::oci_storage_attachments::tests::attaches_named_volume_and_promotes_schema_to_v2 ... ok
+test local_execution::oci_storage_attachments::named_tests::legacy_named_storage_delegation_preserves_unlabelled_catalog_bytes ... ok
+test local_execution::prepared_rootfs::tests::prefers_the_overlay_runtime_view ... ok
+test local_execution::oci_storage_attachments::named_tests::anonymous_raw_storage_uses_exact_allocation_identity_and_retains_box_cleanup_authority ... ok
+test local_execution::prepared_rootfs::tests::resolves_copy_and_legacy_apfs_layouts ... ok
+test local_execution::oci_storage_attachments::named_tests::recreating_a_volume_from_its_previous_config_gets_a_new_allocation_identity ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_identity_is_stable_per_allocation_and_changes_after_recreation ... ok
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_admit_profile_values_without_source_or_allocation_mutation ... ok
+test local_execution::oci_production::vm_sizing_tests::vm_sizing_does_not_promote_other_platform_qualification_profiles ... ok
+test local_execution::resources::tests::snapshot_restore_rejects_a_symlinked_rootfs_escape ... ok
+test local_execution::router_tests::explicit_legacy_policy_keeps_microvm_on_the_persisted_legacy_route ... ok
+test local_execution::resources::tests::rollback_fails_closed_when_volume_detach_cannot_persist ... ok
+test local_execution::remove::tests::removal_claim_cleans_owned_paths_before_forgetting_the_record ... ok
+test local_execution::router_tests::invalid_backend_resource_plan_is_never_reserved ... ok
+test local_execution::resources::tests::preexisting_resource_ownership_survives_start_rollback ... ok
+test local_execution::router_tests::migration_policies_stay_the_existing_set ... ok
+test local_execution::router_tests::microvm_preflight_error_does_not_retarget_to_sandbox ... ok
+test local_execution::resources::tests::snapshot_restore_rejects_a_conflicting_existing_marker ... ok
+test local_execution::resources::tests::successful_start_keeps_prepared_resources ... ok
+test local_execution::router_tests::persisted_routes_ignore_a_later_policy_change ... ok
+test local_execution::router_tests::oci_preflight_retry_never_retargets_to_legacy ... ok
+test local_execution::session::microvm_exec_request_id_tests::caller_id_is_accepted ... ok
+test local_execution::session::microvm_exec_request_id_tests::empty_and_nul_ids_are_rejected ... ok
+test local_execution::session::microvm_exec_request_id_tests::omit_path_stays_unkeyed ... ok
+test local_execution::session_support::tests::malformed_request_entries_are_preserved_after_inherited_values ... ok
+test local_execution::oci_production::disk_tests::hvf_custom_disk_capacity_refuses_out_of_bounds_and_other_controls ... ok
+test local_execution::router_tests::pre_routing_records_use_durable_runtime_evidence_not_current_policy ... ok
+test local_execution::startup_native::native_timed_out_start_retains_original_vm_and_durable_completion ... ignored, requires owned sentinel home, VOLUME image and installed companions
+test local_execution::session_support::tests::request_environment_overrides_inherited_container_values ... ok
+test local_execution::router_tests::selected_oci_isolation_preflight_fails_closed_without_fallback_or_state ... ok
+test local_execution::router_tests::selected_oci_preflight_failure_never_falls_back_or_reserves ... ok
+test local_execution::oci_storage_attachments::named_tests::named_storage_rejects_unenforced_driver_quota_and_catalog_path_escape ... ok
+test local_execution::resources::tests::failed_start_rolls_back_only_resources_acquired_by_that_attempt ... ok
+test local_execution::router_tests::sandbox_policy_stamps_oci_route_before_preflight_and_reservation ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_uses_existing_authority_and_keeps_other_allocations ... ok
+test local_execution::resources::anonymous_tests::retained_and_explicit_restart_cleanup_preserve_anonymous_data ... ok
+test local_execution::resources::tests::terminal_release_detaches_all_record_resources ... ok
+test local_execution::router_tests::new_policy_preserves_old_legacy_records_and_routes_new_microvms_to_oci ... ok
+test local_execution::resources::anonymous_tests::ephemeral_cleanup_cannot_delete_after_state_or_generation_ownership_moves ... ok
+test local_execution::resources::tests::restart_release_and_prepare_rebind_resources_exactly_once ... ok
+test local_execution::tests::create_rejects_unsupported_microvm_security_before_store_or_backend ... ok
+test local_execution::resources::tests::snapshot_marker_is_canonical_atomic_and_rolled_back_with_the_start_attempt ... ok
+test local_execution::tests::create_preserves_complete_caller_record_policy ... ok
+test local_execution::oci_production::vm_sizing_tests::hvf_vm_resources_reject_invalid_values_without_truncation_or_allocation ... ok
+test local_execution::tests::a_different_operation_cannot_take_over_an_in_progress_restart ... ok
+test local_execution::tests::already_stopped_kill_does_not_invent_signal_exit_code ... ok
+test local_execution::tests::concurrent_create_calls_start_one_internal_execution ... ok
+test local_execution::tests::ambiguous_pause_error_uses_backend_evidence_and_publishes_success ... ok
+test local_execution::tests::abandoned_starting_claim_force_kills_to_stopped_then_removes ... ok
+test local_execution::tests::create_persists_trusted_identity_and_returns_running_lease ... ok
+test local_execution::resources::tests::concurrent_preparation_allocates_distinct_network_endpoints ... ok
+test local_execution::tests::crashed_generation_during_warm_pause_publishes_failed_not_pausing ... ok
+test local_execution::tests::ambiguous_restart_start_error_uses_backend_evidence ... ok
+test local_execution::tests::create_reserves_without_start_and_start_is_generation_fenced ... ok
+test local_execution::tests::crashed_generation_during_cold_pause_publishes_failed_not_paused ... ok
+test local_execution::oci_portable_rootfs::disk_tests::portable_disk_publication_preserves_sparse_capacity_bytes_and_source ... ok
+test local_execution::tests::concurrent_retries_of_one_restart_start_the_new_generation_once ... ok
+test local_execution::tests::managed_record_rejects_invalid_microvm_vcpu_count ... ok
+test local_execution::tests::failed_filesystem_only_pause_rolls_back_to_the_running_generation ... ok
+test local_execution::tests::failed_pause_rolls_back_without_changing_backend_or_generation ... ok
+test local_execution::tests::inspect_retires_abandoned_starting_claim_when_backend_is_absent ... ok
+test local_execution::tests::failed_filesystem_only_resume_remains_retryable_without_advancing_generation ... ok
+test local_execution::tests::first_start_initializes_health_state_from_persisted_policy ... ok
+test local_execution::tests::legacy_snapshot_without_image_config_is_rejected_before_reservation ... ok
+test local_execution::tests::inspection_persists_an_external_terminal_observation ... ok
+test local_execution::tests::inspect_does_not_retire_restart_starting_when_backend_is_absent ... ok
+test local_execution::tests::failed_restart_start_is_terminal_at_the_new_generation ... ok
+test local_execution::tests::filesystem_only_pause_and_resume_publish_ambiguous_backend_successes ... ok
+test local_execution::tests::legacy_creating_reservation_remains_recoverable_after_upgrade ... ok
+test local_execution::tests::observe_pausing_creating_projects_creating_not_running ... ok
+test local_execution::tests::kill_is_generation_fenced_and_idempotent ... ok
+test local_execution::tests::filesystem_only_pause_restarts_the_runtime_and_preserves_generation_fencing ... ok
+test local_execution::tests::observe_killing_stopped_with_exit_attributes_stopped_by_user ... ok
+test local_execution::tests::not_found_kill_does_not_invent_stopped_by_user ... ok
+test local_execution::tests::observe_pausing_stopped_without_exit_publishes_failed_not_clean_stopped ... ok
+test local_execution::tests::observe_stable_running_stopped_without_exit_stays_stopped ... ok
+test local_execution::tests::microvm_snapshot_reconcile_refuses_sandbox_only_publish ... ok
+test local_execution::tests::observe_resuming_creating_projects_creating_not_paused ... ok
+test local_execution::tests::microvm_cold_paused_snapshot_reconcile_restores_paused_not_failed ... ok
+test local_execution::tests::microvm_cold_paused_snapshot_reconcile_restores_paused_without_live_handle ... ok
+test local_execution::tests::option_aware_kill_derives_exit_code_when_backend_cannot_reap_it ... ok
+test local_execution::tests::option_aware_kill_persists_authoritative_backend_exit_code ... ok
+test local_execution::tests::inspection_releases_resources_after_an_external_terminal_observation ... ok
+test local_execution::tests::option_aware_kill_persists_intent_and_replays_it_after_a_crash ... ok
+test local_execution::tests::ordinary_start_never_revives_a_terminal_managed_execution ... ok
+test local_execution::tests::reconciliation_reports_created_reservation_without_starting_it ... ok
+test local_execution::tests::process_session_inherits_environment_and_enforces_persisted_security ... ok
+test local_execution::tests::repeated_create_rejects_caller_policy_drift ... ok
+test local_execution::tests::prewarm::stopping_a_reserved_environment_fences_a_late_boot_worker ... ok
+test local_execution::tests::pause_and_resume_are_generation_fenced_and_persist_policy ... ok
+test local_execution::tests::reconcile_finishes_a_crashed_filesystem_only_pause ... ok
+test local_execution::tests::reconciliation_completes_pause_after_backend_side_effect ... ok
+test local_execution::tests::repeated_create_is_idempotent_and_request_drift_conflicts ... ok
+test local_execution::tests::prewarm::prewarm_cannot_run_hooks_or_mutate_an_unclaimed_environment ... ok
+test local_execution::tests::prewarm::prewarm_requires_exact_scope_resources_mounts_and_a_live_provider ... ok
+test local_execution::tests::prewarm::concurrent_prewarm_reservation_and_claim_have_one_canonical_winner ... ok
+test local_execution::tests::restart_of_an_unstarted_reservation_starts_generation_two_without_kill ... ok
+test local_execution::tests::prewarm::prewarm_claim_rebinds_the_same_running_vm_once_and_fences_the_old_generation ... ok
+test local_execution::tests::reconcile_publishes_a_cold_resume_started_before_record_commit ... ok
+test local_execution::tests::stale_restart_generation_has_no_backend_side_effects ... ok
+test local_execution::tests::restart_observation_with_exact_exit_code_completes_as_stopped ... ok
+test local_execution::tests::restart_completion_with_exact_exit_code_is_persisted_as_stopped ... ok
+test local_execution::transient_registry_auth::tests::existing_authorization_can_be_leased_for_boot ... ok
+test local_execution::transient_registry_auth::tests::lease_does_not_remove_a_newer_handoff_after_consumption ... ok
+test local_execution::transient_registry_auth::tests::planning_can_clone_and_promote_authorization_without_persisting_it ... ok
+test local_execution::tests::restart_persists_stop_options_and_rejects_retry_drift ... ok
+test local_execution::tests::restart_recovers_after_generation_advance_before_backend_start ... ok
+test local_execution::vm_backend::attached_vm_identity_tests::attach_rechecks_original_identity_after_heartbeat_await ... ok
+test local_execution::vm_backend::attached_vm_identity_tests::recovery_refuses_missing_original_binding ... ok
+test local_execution::tests::startup_completion_with_exact_exit_code_is_persisted_as_stopped ... ok
+test local_execution::vm_backend::attached_vm_identity_tests::handle_preserves_record_token_and_refuses_mismatch ... ok
+test local_execution::tests::startup_reconciliation_reports_the_secondary_inspection_error ... ok
+test local_execution::tests::restart_recovers_when_kill_succeeded_but_its_response_was_lost ... ok
+test local_execution::tests::startup_reconciliation_persists_an_exact_terminal_result_as_stopped ... ok
+test local_execution::tests::restart_running_execution_advances_generation_once_and_is_idempotent ... ok
+test local_execution::tests::startup_reconciliation_publishes_an_already_started_backend_once ... ok
+test local_execution::vm_backend::attached_vm_identity_tests::attach_refuses_located_record_mismatch ... ok
+test local_execution::vm_backend::owned_vm_close_tests::legacy_and_missing_entries_remain_unproved_without_observation_side_effects ... ok
+test local_execution::tests::stop_ownership::stop_failure_without_a_started_process_can_retire_a_creation ... ok
+test local_execution::vm_backend::owned_vm_close_tests::failed_first_insertion_stays_consumed_after_slot_becomes_vacant ... ok
+test local_execution::vm_backend::owned_vm_close_tests::consumed_capability_never_recreates_absent_or_foreign_owner ... ok
+test local_execution::vm_backend::owned_vm_close_tests::default_ports_refuse_without_legacy_fallback_or_store_changes ... ok
+test local_execution::tests::stop_ownership::stop_failure_preserves_owner_if_backend_becomes_unready ... ok
+test local_execution::vm_backend::owned_vm_close_tests::nonselected_actual_reserved_remains_unproved_and_has_no_admission ... ok
+test local_execution::vm_backend::owned_vm_close_tests::legacy_mutators_and_extraction_refuse_actual_admitted_before_effects ... ok
+test local_execution::vm_backend::owned_vm_close_tests::router_keeps_durable_route_original_budget_and_id_only_box_probe ... ok
+test local_execution::vm_backend::owned_vm_close_tests::different_actual_store_origin_cannot_reuse_or_rearm_original_slot ... ok
+test local_execution::vm_backend::owned_vm_close_tests::genuine_reserved_wrapper_admits_once_without_materializing_and_existing_cannot_mint ... ok
+test local_execution::vm_backend::owned_vm_close_tests::selected_missing_creation_intent_refuses_without_owner_or_rollback_claim ... ok
+test local_execution::tests::startup_reconciliation_restarts_a_claim_without_backend_evidence ... ok
+test local_execution::vm_backend::owned_vm_close_tests::original_scope_and_each_creation_identity_field_are_exact ... ok
+test local_execution::vm_backend::owned_vm_close_tests::public_reservation_and_committed_result_without_wrapper_cannot_mint_lineage ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::actual_file_guard_outlives_waiter_and_releases_before_unpolled_ready ... ok
+test local_execution::vm_backend::tests::created_observation_stays_creating_without_exec_heartbeat ... ok
+test local_execution::tests::stopped_generation_with_exit_during_cold_pause_publishes_stopped_not_paused ... ok
+test local_execution::vm_backend::tests::anonymous_recovery_preserves_corrupt_volume_catalog_without_empty_ownership ... ok
+test local_execution::vm_backend::tests::filesystem_only_pause_fails_before_starting_a_runtime ... ok
+test local_execution::vm_backend::tests::handle_from_manager_refuses_created_without_authenticated_ready ... ok
+test local_execution::tests::vanished_runtime_during_warm_pause_publishes_failed_not_pausing ... ok
+test local_execution::vm_backend::tests::handle_from_manager_allows_paused_for_pause_lease_bookkeeping ... ok
+test local_execution::vm_backend::tests::health_check_refuses_paused_without_inventing_ready ... ok
+test local_execution::vm_backend::tests::cached_image_resource_planning_preserves_volume_ownership_without_runtime_side_effects ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::panic_inside_actual_finalization_retains_join_error_poison_and_identity ... ok
+test local_execution::vm_backend::tests::managed_kill_rejects_stop_timeout_overflow ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::stale_original_store_route_registry_and_settings_refuse_before_new_effects ... ok
+test local_execution::vm_backend::tests::launch_preflight_fails_closed_before_a_box_directory_exists ... ok
+test local_execution::vm_backend::tests::manager_uses_the_full_persisted_request_config ... ok
+test local_execution::vm_backend::tests::manager_applies_persisted_shared_memory_policy_to_runtime_config ... ok
+test local_execution::tests::terminal_generation_during_cold_resume_publishes_stopped_not_paused ... ok
+test local_execution::tests::terminal_generation_during_warm_resume_publishes_stopped_not_resuming ... ok
+test local_execution::vm_backend::tests::manager_uses_the_backend_pull_progress_callback ... ok
+test local_execution::vm_backend::tests::disappearing_live_handle_waits_for_delayed_terminal_status ... ok
+test local_execution::vm_backend::tests::managed_kill_uses_persisted_stop_signal_and_timeout ... ok
+test local_execution::vm_backend::tests::manager_uses_the_mutable_record_network_config ... ok
+test local_execution::tests::vanished_runtime_during_warm_resume_publishes_failed_not_resuming ... ok
+test local_execution::vm_backend::tests::oci_preparation_uses_directory_transport_without_changing_box_boot ... ok
+test local_execution::vm_backend::tests::promote_if_ready_refuses_ready_without_authenticated_exec_client ... ok
+test local_execution::vm_backend::tests::missing_pid_without_observed_boot_failure_is_not_terminal_proof ... ok
+test local_execution::vm_backend::tests::prelaunch_boot_failure_is_failed_without_fabricating_an_exit_status ... ok
+test local_execution::vm_backend::tests::starting_observation_stays_creating_without_exec_heartbeat ... ok
+test local_execution::vm_backend::tests::start_refuses_handle_when_ready_lacks_exec_heartbeat ... ok
+test local_execution::vm_backend::tests::start_refuses_handle_when_boot_left_created_without_exec_heartbeat ... ok
+test local_execution::vm_backend::tests::restart_teardown_preserves_old_runtime_visibility_until_generation_advance ... ok
+test local_execution::vm_backend::tests::stop_ownership::stop_failure_retains_registered_vm_owner ... ok
+test local_execution::vm_backend::tests::readonly_mount_admission_preserves_route_and_mode_without_source_access ... ok
+test local_execution::vm_backend::tests::transitional_states_retry_idempotent_pause_and_resume_operations ... ok
+test local_execution::vm_backend::tests::warm_pause_attach_projects_paused_only_for_stopped_warm_runtime ... ok
+test local_execution::vm_backend::tests::validation_rejects_a_host_path_derived_from_external_input ... ok
+test local_execution::vm_process::tests::command_match_rejects_lookalikes_and_malformed_json ... ok
+test local_execution::vm_process::tests::command_match_requires_exact_binary_argument_and_internal_id ... ok
+test local_execution::vm_backend::tests::unsupported_backend_capabilities_are_unavailable ... ok
+test local_execution::vm_backend::tests::visible_state_rejects_terminal_records ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::ready_storage_and_expired_attempt_keep_actual_result_without_duplicate_work ... ok
+test local_execution::vm_process::tests::recorded_non_shim_process_is_never_accepted ... ok
+test local_execution::vm_backend::tests::terminal_kill_cleans_a_cold_paused_rootfs_without_runtime_evidence ... ok
+test local_execution::vm_backend::tests::terminal_observation_accepts_cached_shim_zero_with_durable_guest_exit ... ok
+test local_execution::vm_backend::tests::startup_terminal_observation_preserves_assets_for_foreground_drain ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::separate_cleanup_deadline_and_late_failure_never_erase_original_physical_proof ... ok
+test local_execution::vm_backend::tests::retained_stops_preserve_anonymous_volumes_but_auto_remove_kill_removes_them ... ok
+test scale::reconciler::tests::local_execution_facade_resumes_a_retained_paused_slot ... ok
+test local_execution::tests::restart_supports_paused_stopped_and_failed_executions ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::partial_resource_failure_retains_real_claim_and_selected_drop_never_rolls_back ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::finalization_policy_mismatch_refuses_idle_ready_and_retry_without_replay ... ok
+test scale::reconciler::tests::local_execution_facade_converges_and_recovers_lost_start_response ... ok
+test local_execution::vm_backend::tests::terminal_health_probe_waits_for_delayed_durable_exit_status_before_cleanup ... ok
+test local_execution::vm_backend::owned_vm_jobs_tests::all_five_closed_families_keep_actual_handle_before_after_effect_and_late_outcome ... ok
+test local_execution::vm_backend::tests::cold_resume_observation_preserves_rootfs_when_the_replacement_exits ... ok
+test local_execution::vm_backend::tests::terminal_observation_retains_runtime_without_an_exact_exit_status ... ok
+test local_execution::vm_backend::tests::terminal_observation_refuses_cached_shim_zero_without_durable_guest_exit ... ok
+
+failures:
+
+---- local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation stdout ----
+
+thread 'local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation' (123004413) panicked at crates/box/runtime/src/local_execution/oci_production_secret_tests.rs:29:5:
+invalid execution request: Runtime provider is unavailable: could not inspect actual macOS disk-image backing: /usr/sbin/diskutil returned exit status: 1: Unable to run because unable to use the DiskManagement framework.
+Common reasons include, but are not limited to, the DiskArbitration
+framework being unavailable due to being booted in single-user mode.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    local_execution::oci_production::secret_tests::hvf_memory_secret_disk_root_and_environment_refuse_before_preparation
+
+test result: FAILED. 350 passed; 1 failed; 37 ignored; 0 measured; 2033 filtered out; finished in 11.33s
+

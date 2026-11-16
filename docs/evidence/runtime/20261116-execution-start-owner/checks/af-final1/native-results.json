@@ -1,0 +1,108 @@
+[
+  {
+    "case": "oci",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_smoke.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/installed-execstart-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/image-cache",
+      "--base",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-oci"
+    ],
+    "seconds": 34.793617333,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-oci/93598fbe290847a78200391c1d443952/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "readonly",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_readonly.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/installed-execstart-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-readonly"
+    ],
+    "seconds": 4.866239707999995,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-readonly/1269c9a993764113b53b63bca9a65a83/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "primary",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_primary.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/installed-execstart-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-primary"
+    ],
+    "seconds": 69.18518045900001,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-primary/8a54492c75da436aa918578b507636aa/result.json",
+    "actualCounts": {
+      "completedNativeScenarios": 1
+    }
+  },
+  {
+    "case": "prewarm",
+    "status": "PASS",
+    "command": [
+      "/Library/Developer/CommandLineTools/usr/bin/python3",
+      "/Users/roylin/code/kense/kbox/scripts/e2e-engine/native_prewarm.py",
+      "--kbox",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/installed-execstart-final-2/bin/kbox",
+      "--image-store",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/image-cache",
+      "--image",
+      "docker.io/library/kbox-qualification-tools@sha256:74dc9800a03c96762c1061646bd5d9100b1a8361c0945fc9d9de2c271ce2b3f7",
+      "--output",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-prewarm",
+      "--test-binary",
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/native-client-final2"
+    ],
+    "seconds": 14.921891792000011,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-prewarm/49dd928429884e0080407e2e2503c712/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  },
+  {
+    "case": "directory",
+    "status": "PASS",
+    "command": [
+      "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/native-client-final2",
+      "--ignored",
+      "--exact",
+      "kbox_contract_driver::directory::native::native_directory_grants_preserve_live_files_fences_and_cleanup",
+      "--nocapture"
+    ],
+    "seconds": 17.989569834000008,
+    "result": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/af-final1/native-directory/result.json",
+    "actualCounts": {
+      "passed": 1,
+      "failed": 0,
+      "ignored": 0
+    }
+  }
+]

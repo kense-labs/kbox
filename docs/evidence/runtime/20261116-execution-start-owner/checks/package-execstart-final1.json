@@ -1,0 +1,13 @@
+{
+  "command": [
+    "bash",
+    "scripts/package-macos-arm64.sh"
+  ],
+  "exitCode": 0,
+  "seconds": 109.25803808299999,
+  "environment": {
+    "K_HOME": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/package-home-execstart-final1",
+    "K_BUILD_LIBKRUN": "1"
+  },
+  "sourceInputsSha256": "96876d6a77023bf934325fc17291b2e41d9fa16c69a8e062eaf30903f8265ded"
+}

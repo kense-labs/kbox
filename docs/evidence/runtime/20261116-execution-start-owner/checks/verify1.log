@@ -1,0 +1,20 @@
+verify-commit: K_HOME=/private/tmp/kbox-start-owner-7853d3943ed7/t/kbox-verify.VVofIH/home
+verify-commit: TMPDIR=/private/tmp/kv.ulqfs2
+== whitespace and conflict markers ==
+== verification home isolation ==
+== support matrix ==
+targets=4 supported=0 rejected=4 required=1
+check-support-matrix: OK
+== workspace compile (all targets) ==
+== Rust formatting ==
+Diff in /Users/roylin/code/kense/kbox/crates/box/runtime/src/kbox_contract_driver/lifecycle_tests.rs:85:
+         let driver = driver.clone();
+         let spec = spec.clone();
+         tokio::spawn(async move {
+-            driver.apply(&super::test_support::apply_request(&spec), &accepted(&spec)).await
++            driver
++                .apply(&super::test_support::apply_request(&spec), &accepted(&spec))
++                .await
+         })
+     };
+     let admission_deadline = std::time::Instant::now() + Duration::from_secs(10);

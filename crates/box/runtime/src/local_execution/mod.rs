@@ -6,6 +6,8 @@ mod create;
 #[cfg(test)]
 mod inspection_cancellation_tests;
 mod lifecycle_lock;
+#[cfg(all(test, feature = "vm", target_os = "macos", target_arch = "aarch64"))]
+mod startup_native;
 pub use lifecycle_lock::{
     acquire_blocking as acquire_execution_lifecycle_lock, ExecutionLifecycleLock,
 };

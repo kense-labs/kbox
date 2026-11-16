@@ -1,0 +1,32 @@
+{
+  "allocation": {
+    "created_at": "2026-11-16T11:28:20.698401+00:00",
+    "driver": "local",
+    "in_use_by": [
+      "790fb4f6-a5ab-4536-bc69-cc0d7c61e574"
+    ],
+    "labels": {
+      "anonymous": "true",
+      "kbox.volume.allocation": "d773cc0b-e929-470b-ace0-f964766a90fa",
+      "kbox.volume.kind": "anonymous-v1",
+      "kbox.volume.owner": "790fb4f6-a5ab-4536-bc69-cc0d7c61e574"
+    },
+    "mount_point": "/private/tmp/kbox-start-owner-7853d3943ed7/native-startup-attempt-2/home/volumes/anon_790fb4f6_b6e5ec0ebcf67c7365f972dde8559c1c",
+    "name": "anon_790fb4f6_b6e5ec0ebcf67c7365f972dde8559c1c",
+    "size_limit": 0
+  },
+  "callerIdentity": [
+    16777233,
+    312409953
+  ],
+  "durablePidAbsentBeforeCompletion": true,
+  "durableState": "starting",
+  "execution": "790fb4f6-a5ab-4536-bc69-cc0d7c61e574",
+  "generation": 1,
+  "pid": 20408,
+  "pidStartTime": 1794828500710901,
+  "volumeIdentity": [
+    16777233,
+    312423360
+  ]
+}

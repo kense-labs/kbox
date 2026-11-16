@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

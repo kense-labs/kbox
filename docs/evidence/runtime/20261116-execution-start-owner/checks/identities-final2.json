@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/check-final-identities2.py"
+  ],
+  "exit": 0,
+  "seconds": 0.60822275,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-identities-final2",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

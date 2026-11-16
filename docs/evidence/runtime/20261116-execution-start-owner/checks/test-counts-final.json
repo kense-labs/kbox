@@ -1,0 +1,156 @@
+{
+  "start-cancel-red1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "start-cancel-green1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "0",
+        "1",
+        "0"
+      ]
+    ]
+  },
+  "start-cancel-green2": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "3",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "runtime-timeout1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "runtime-timeout2": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "1",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "local-execution1": {
+    "exit": 101,
+    "actualRustResults": []
+  },
+  "local-execution2": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "350",
+        "1",
+        "37"
+      ]
+    ]
+  },
+  "driver-focused1": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "117",
+        "2",
+        "11"
+      ]
+    ]
+  },
+  "driver-focused2": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "118",
+        "1",
+        "11"
+      ]
+    ]
+  },
+  "cli-full1": {
+    "exit": 0,
+    "actualRustResults": [
+      [
+        "950",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "clippy1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "clippy3": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "verify1": {
+    "exit": 1,
+    "actualRustResults": []
+  },
+  "verify2": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2353",
+        "6",
+        "62"
+      ]
+    ]
+  },
+  "verify3": {
+    "exit": 101,
+    "actualRustResults": [
+      [
+        "2353",
+        "6",
+        "62"
+      ]
+    ]
+  },
+  "native-startup-check1": {
+    "exit": 1,
+    "actualRustResults": []
+  },
+  "native-startup-check2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "af-check-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "pool-wave-final1": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check2": {
+    "exit": 0,
+    "actualRustResults": []
+  },
+  "final-audit-check3": {
+    "exit": 0,
+    "actualRustResults": []
+  }
+}

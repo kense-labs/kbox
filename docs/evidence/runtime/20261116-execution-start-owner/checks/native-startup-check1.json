@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/native-startup1.py"
+  ],
+  "exit": 1,
+  "seconds": 72.946953458,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-native-startup-check1",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

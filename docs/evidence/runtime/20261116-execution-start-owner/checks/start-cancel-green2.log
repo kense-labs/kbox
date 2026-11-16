@@ -1,0 +1,8 @@
+
+running 3 tests
+test local_execution::inspection_cancellation_tests::cancelled_start_before_admission_leaves_the_reservation_unstarted ... ok
+test local_execution::inspection_cancellation_tests::cancelled_start_cannot_publish_running_after_a_serialized_stop ... ok
+test local_execution::inspection_cancellation_tests::cancelled_start_keeps_its_original_operation_until_durable_completion ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2416 filtered out; finished in 0.24s
+

@@ -1,5 +1,5 @@
 use std::collections::VecDeque;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
@@ -19,6 +19,145 @@ use super::test_support::{
     runtime_spec, unit, unknown, DriverFakeBackend, DriverFakeSecretMaterializer,
 };
 use crate::BoxRecord;
+
+struct PendingStartupBackend {
+    inner: DriverFakeBackend,
+    entered: tokio::sync::Semaphore,
+    release: tokio::sync::Semaphore,
+    completed: AtomicBool,
+}
+
+#[async_trait]
+impl crate::LocalExecutionBackend for PendingStartupBackend {
+    async fn start(
+        &self,
+        record: &BoxRecord,
+    ) -> kbox_core::ExecutionManagerResult<crate::LocalExecutionHandle> {
+        let handle = self.inner.start(record).await?;
+        self.entered.add_permits(1);
+        self.release.acquire().await.unwrap().forget();
+        self.completed.store(true, Ordering::SeqCst);
+        Ok(handle)
+    }
+
+    async fn inspect(
+        &self,
+        record: &BoxRecord,
+    ) -> kbox_core::ExecutionManagerResult<crate::LocalExecutionObservation> {
+        self.inner.inspect(record).await
+    }
+
+    async fn pause(
+        &self,
+        record: &BoxRecord,
+        memory: bool,
+    ) -> kbox_core::ExecutionManagerResult<crate::LocalExecutionHandle> {
+        self.inner.pause(record, memory).await
+    }
+
+    async fn resume(
+        &self,
+        record: &BoxRecord,
+    ) -> kbox_core::ExecutionManagerResult<crate::LocalExecutionHandle> {
+        self.inner.resume(record).await
+    }
+
+    async fn kill(
+        &self,
+        record: &BoxRecord,
+    ) -> kbox_core::ExecutionManagerResult<kbox_core::KillOutcome> {
+        self.inner.kill(record).await
+    }
+}
+
+#[tokio::test(start_paused = true)]
+async fn startup_control_timeout_keeps_original_completion_before_retry() {
+    let directory = tempfile::tempdir().unwrap();
+    let backend = Arc::new(PendingStartupBackend {
+        inner: DriverFakeBackend::default(),
+        entered: tokio::sync::Semaphore::new(0),
+        release: tokio::sync::Semaphore::new(0),
+        completed: AtomicBool::new(false),
+    });
+    let driver = Arc::new(fake_driver_with_backend(&directory, backend.clone()));
+    let spec = runtime_spec("startup-control-timeout", 1, RuntimeUnitClass::Service);
+    let applying = {
+        let driver = driver.clone();
+        let spec = spec.clone();
+        tokio::spawn(async move {
+            driver
+                .apply(&super::test_support::apply_request(&spec), &accepted(&spec))
+                .await
+        })
+    };
+    let admission_deadline = std::time::Instant::now() + Duration::from_secs(10);
+    loop {
+        if let Ok(entered) = backend.entered.try_acquire() {
+            entered.forget();
+            break;
+        }
+        // Keep the paused clock from auto-advancing during unrelated filesystem setup.
+        if std::time::Instant::now() >= admission_deadline {
+            backend.release.add_permits(1);
+            panic!("fixture did not reach the actual startup boundary");
+        }
+        tokio::task::yield_now().await;
+    }
+    tokio::time::advance(Duration::from_secs(3)).await;
+    let result = applying.await.unwrap();
+    tokio::time::resume();
+    assert!(matches!(result, Err(RuntimeError::ProviderUnavailable(_))));
+    let records = driver.manager.managed_records().await.unwrap();
+    assert_eq!(records.len(), 1);
+    let original_id = records[0].id.clone();
+    assert!(records[0].pid.is_none());
+    drop(driver);
+    let restarted = Arc::new(fake_driver_with_backend(&directory, backend.clone()));
+    let mut retry = {
+        let driver = restarted.clone();
+        let spec = spec.clone();
+        tokio::spawn(async move {
+            driver
+                .apply(&super::test_support::apply_request(&spec), &accepted(&spec))
+                .await
+        })
+    };
+    let early = tokio::time::timeout(Duration::from_millis(50), &mut retry).await;
+    backend.release.add_permits(1);
+    let waited = early.is_err();
+    let running = match early {
+        Ok(result) => result.unwrap().unwrap(),
+        Err(_) => tokio::time::timeout(Duration::from_secs(2), retry)
+            .await
+            .unwrap()
+            .unwrap()
+            .unwrap(),
+    };
+    let record = restarted
+        .manager
+        .managed_records()
+        .await
+        .unwrap()
+        .pop()
+        .unwrap();
+    restarted
+        .stop(&unit(spec.clone(), running.clone()), &action("stop", &spec))
+        .await
+        .unwrap();
+    assert!(
+        waited,
+        "Runtime retry bypassed its original timed-out startup"
+    );
+    assert_eq!(running.state, RuntimeUnitState::Running);
+    assert_eq!(
+        running.provider_resource_id.as_deref(),
+        Some(original_id.as_str())
+    );
+    assert_eq!(record.pid, Some(std::process::id()));
+    assert!(backend.completed.load(Ordering::SeqCst));
+    assert_eq!(backend.inner.starts(), 1);
+    assert_eq!(backend.inner.kills(), 1);
+}
 
 struct DeferredTaskMainStarter {
     backend: Arc<DriverFakeBackend>,

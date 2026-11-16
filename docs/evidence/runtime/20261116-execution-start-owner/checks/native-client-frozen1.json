@@ -1,0 +1,46 @@
+{
+  "sourceExecutable": "/Users/roylin/code/kense/kbox/target/debug/deps/kbox_runtime-151c91e5a1afbfdd",
+  "path": "/Users/roylin/code/kense/kbox/artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/native-client-final1",
+  "sha256": "e35c561166100c8d57264c37a057b6b557906f37f8e022e2323240257ff56f8e",
+  "compilerArtifact": {
+    "reason": "compiler-artifact",
+    "package_id": "path+file:///Users/roylin/code/kense/kbox/crates/box/runtime#kbox-runtime@3.2.7",
+    "manifest_path": "/Users/roylin/code/kense/kbox/crates/box/runtime/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "kbox_runtime",
+      "src_path": "/Users/roylin/code/kense/kbox/crates/box/runtime/src/lib.rs",
+      "edition": "2021",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "profile": {
+      "opt_level": "0",
+      "debuginfo": "line-tables-only",
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": true
+    },
+    "features": [
+      "build",
+      "compose",
+      "default",
+      "operator",
+      "pool",
+      "scale",
+      "vm"
+    ],
+    "filenames": [
+      "/Users/roylin/code/kense/kbox/target/debug/deps/kbox_runtime-151c91e5a1afbfdd"
+    ],
+    "executable": "/Users/roylin/code/kense/kbox/target/debug/deps/kbox_runtime-151c91e5a1afbfdd",
+    "fresh": true
+  },
+  "sourceInputsSha256": "96876d6a77023bf934325fc17291b2e41d9fa16c69a8e062eaf30903f8265ded"
+}

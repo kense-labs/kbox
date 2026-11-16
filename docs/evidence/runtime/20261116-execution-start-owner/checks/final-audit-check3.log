@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "sourceInputsSha256": "50884bbc7a517c113a434242d8ca3fbd6b532eca29c50a1f01f49bf4410bf5c9",
+  "compiledInputCount": 1733,
+  "homes": 49,
+  "managedExecutions": 0,
+  "managedVolumes": 0,
+  "ownedProcesses": [],
+  "ownedMounts": [],
+  "ownedDiskImages": [],
+  "ownedFdHolders": [],
+  "observedVmSocketDirectories": 36,
+  "checkedSocketPaths": 150,
+  "remainingSockets": [],
+  "observedEngines": 2,
+  "immutableCacheFilesCompared": 867,
+  "mutableCatalog": [
+    {
+      "path": "index.json",
+      "before": "c7c240ce9d0fc477583df2172e2e382d95884743ce994fb0925200b5477593ae",
+      "after": "13f8f47af5e5217ea9c296648c983d363c501d7d3843fbf605cc0e08eaf7f5a7"
+    }
+  ],
+  "qualifiedRustNativeTests": 3,
+  "qualifiedPythonScenarios": 3,
+  "coldPoolDaemons": 4,
+  "initialReadyPoolVms": 16,
+  "actualPoolGuestCommands": 4,
+  "preexistingPoolDirectoriesPreserved": 4,
+  "verifierShortRoots": [
+    "/private/tmp/kv.ulqfs2",
+    "/private/tmp/kv.Y5Iips",
+    "/private/tmp/kv.SSYzIh"
+  ],
+  "failedNativeRunsRetained": 1,
+  "failedNativeOperatorCleanupUsed": false,
+  "hermeticMissingOriginalStartFailuresRetained": 1,
+  "previous047StartupDelayRootCauseResolved": false,
+  "runtimeShutdownMidStartSolved": false,
+  "stopFault": "Actual ExecutionManager start caller expires1s, original realVM/backend/lifecycle operation retained until same PID/identity persists; replay waits original, real product stop/remove/noLate; wrapper delays only return, no fake VM/OS stop",
+  "actualOsStopFailureClaimed": false,
+  "callerSourcesRetained": true,
+  "previousArchivesRetained": true,
+  "resourcesDeletedByAudit": [],
+  "runtimeMemoryMeasured": false,
+  "outerPoolOwnerLifetimeSolved": false,
+  "gaComplete": false
+}

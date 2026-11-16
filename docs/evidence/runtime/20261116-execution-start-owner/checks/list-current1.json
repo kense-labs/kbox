@@ -1,0 +1,12 @@
+{
+  "command": [
+    "target/debug/deps/kbox_runtime-151c91e5a1afbfdd",
+    "--list"
+  ],
+  "exit": 0,
+  "seconds": 0.24133320900000002,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-list-current1",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

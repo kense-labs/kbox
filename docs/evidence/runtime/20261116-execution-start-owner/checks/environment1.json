@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-"
+  ],
+  "exit": 0,
+  "seconds": 0.063373333,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-environment1",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

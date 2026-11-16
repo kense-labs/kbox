@@ -1,0 +1,17 @@
+[
+  {
+    "check": "verify1",
+    "home": "/private/tmp/kbox-start-owner-7853d3943ed7/t/kbox-verify.VVofIH/home",
+    "shortTemporary": "/private/tmp/kv.ulqfs2"
+  },
+  {
+    "check": "verify2",
+    "home": "/private/tmp/kbox-start-owner-7853d3943ed7/t/kbox-verify.B8EJDj/home",
+    "shortTemporary": "/private/tmp/kv.Y5Iips"
+  },
+  {
+    "check": "verify3",
+    "home": "/private/tmp/kbox-start-owner-7853d3943ed7/t/kbox-verify.qJdI68/home",
+    "shortTemporary": "/private/tmp/kv.SSYzIh"
+  }
+]

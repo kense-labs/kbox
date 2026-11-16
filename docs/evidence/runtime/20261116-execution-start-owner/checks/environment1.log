@@ -1,0 +1,42 @@
+{
+  "time": "2026-11-16T11:30:39.768204+00:00",
+  "uid": 501,
+  "gid": 20,
+  "uname": [
+    "Darwin",
+    "RoyLins-MacBook-Pro-M5-Max.local",
+    "25.6.0",
+    "Darwin Kernel Version 25.6.0: Fri Jul 31 19:19:08 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T6050",
+    "arm64"
+  ],
+  "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-environment1",
+  "runtimeMemoryMeasured": false,
+  "uidAccount": {
+    "type": "KeyError",
+    "message": "'getpwuid(): uid not found: 501'"
+  },
+  "githubDns": {
+    "type": "gaierror",
+    "message": "[Errno 8] nodename nor servname provided, or not known"
+  },
+  "/usr/bin/sw_vers": {
+    "exit": 0,
+    "stdout": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83\n",
+    "stderr": ""
+  },
+  "rustc --version": {
+    "exit": 0,
+    "stdout": "rustc 1.97.1 (8bab26f4f 2026-07-14)\n",
+    "stderr": ""
+  },
+  "git rev-parse HEAD": {
+    "exit": 0,
+    "stdout": "3ebbd363b234bf57b7f60700f0a24dce048ae802\n",
+    "stderr": ""
+  },
+  "git rev-parse refs/remotes/origin/main": {
+    "exit": 0,
+    "stdout": "9d279a1cd0a11d1fb035e5cd845a15f5d70a2967\n",
+    "stderr": ""
+  }
+}

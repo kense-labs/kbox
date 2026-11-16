@@ -30,15 +30,28 @@ impl ExecutionManager for LocalExecutionManager {
         execution_id: &ExecutionId,
         expected_generation: ExecutionGeneration,
     ) -> ExecutionManagerResult<ExecutionLease> {
-        let _lifecycle_lock =
+        let lifecycle_lock =
             super::lifecycle_lock::acquire(&self.home_dir, execution_id.as_str()).await?;
-        let record = self
-            .get(execution_id)
-            .await?
-            .ok_or_else(|| ExecutionManagerError::NotFound(execution_id.clone()))?;
-        super::record::validate_record_health(&record)?;
-        require_generation(&record, execution_id, expected_generation)?;
-        self.ensure_started(record).await
+        let manager = self.clone();
+        let execution_id = execution_id.clone();
+        let execution_id_label = execution_id.clone();
+        tokio::spawn(async move {
+            // An admitted start keeps its original lock and owner through durable completion.
+            let _lifecycle_lock = lifecycle_lock;
+            let record = manager
+                .get(&execution_id)
+                .await?
+                .ok_or_else(|| ExecutionManagerError::NotFound(execution_id.clone()))?;
+            super::record::validate_record_health(&record)?;
+            require_generation(&record, &execution_id, expected_generation)?;
+            manager.ensure_started(record).await
+        })
+        .await
+        .map_err(|error| {
+            ExecutionManagerError::Internal(format!(
+                "startup task failed for {execution_id_label}: {error}"
+            ))
+        })?
     }
 
     async fn inspect(&self, execution_id: &ExecutionId) -> ExecutionManagerResult<ExecutionStatus> {

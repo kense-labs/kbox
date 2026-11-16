@@ -1,0 +1,11 @@
+
+running 1 test
+test local_execution::inspection_cancellation_tests::cancelled_start_keeps_its_original_operation_until_durable_completion ... FAILED
+
+failures:
+
+failures:
+    local_execution::inspection_cancellation_tests::cancelled_start_keeps_its_original_operation_until_durable_completion
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2416 filtered out; finished in 0.09s
+

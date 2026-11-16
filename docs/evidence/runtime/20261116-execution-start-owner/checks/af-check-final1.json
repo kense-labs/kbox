@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "artifacts/execution-start-owner-7853d3943ed747b2a53a5d03911a968a/qualification-runner4.py",
+    "docs/evidence/runtime/20261116-execution-start-owner/checks/af-final1-context.json"
+  ],
+  "exit": 0,
+  "seconds": 141.803526084,
+  "environment": {
+    "K_HOME": "/private/tmp/kbox-start-owner-7853d3943ed7/check-home-af-check-final1",
+    "TMPDIR": "/private/tmp/kbox-start-owner-7853d3943ed7/t"
+  }
+}

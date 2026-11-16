@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/sbin/lsof",
+    "+D",
+    "/private/tmp/kbox-start-owner-7853d3943ed7"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": ""
+}

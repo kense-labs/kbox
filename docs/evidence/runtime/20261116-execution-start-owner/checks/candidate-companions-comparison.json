@@ -1,0 +1,32 @@
+[
+  {
+    "path": "bin/kbox",
+    "candidate1": "8274fdfa5b254f9197054d7434c15f00bdc5b536fad96162cfcb893397360d87",
+    "candidate2": "8274fdfa5b254f9197054d7434c15f00bdc5b536fad96162cfcb893397360d87",
+    "same": true
+  },
+  {
+    "path": "bin/kbox-shim",
+    "candidate1": "3c77e74ef7b76dcb631df797518351185fa3732af7a1f1304807580fc8c65958",
+    "candidate2": "3c77e74ef7b76dcb631df797518351185fa3732af7a1f1304807580fc8c65958",
+    "same": true
+  },
+  {
+    "path": "bin/kbox-guest-init",
+    "candidate1": "f90d6056ccab217860be884537dae87ff0d0ce99834aca7066d996bb867750bb",
+    "candidate2": "f90d6056ccab217860be884537dae87ff0d0ce99834aca7066d996bb867750bb",
+    "same": true
+  },
+  {
+    "path": "lib/libkrun.1.17.0.dylib",
+    "candidate1": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "candidate2": "9ab3eefe28555dc193cec04f1cc2df03c30b8fda5c5bfd80290bfcbc7a518ad0",
+    "same": true
+  },
+  {
+    "path": "lib/libkrunfw.5.dylib",
+    "candidate1": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "candidate2": "ca7bba4e17038ae73587db1f01a1e1c8e70ca565cae901b5106232e79acded49",
+    "same": true
+  }
+]

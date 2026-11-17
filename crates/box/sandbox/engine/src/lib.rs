@@ -13,7 +13,7 @@ pub mod ensure_daemon;
 use std::path::{Path, PathBuf};
 
 #[cfg(unix)]
-pub use docker_http::{DockerHttpClient, ExecHijack, HijackOutput};
+pub use docker_http::{ContainerPathStat, DockerHttpClient, ExecHijack, HijackOutput};
 pub use ensure_daemon::{autostart_enabled, ensure_daemon, resolve_daemon_binary};
 
 /// Default product state directory name under `$HOME` (matches engine flavor).

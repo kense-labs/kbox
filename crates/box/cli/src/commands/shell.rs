@@ -1,16 +1,14 @@
 //! `kbox shell` command — Open an interactive shell in a running box.
 //!
-//! Convenience wrapper around `exec -t <box> /bin/sh`.
-//! Equivalent to: `kbox exec -t <box> -- /bin/sh`
+//! Convenience wrapper around `exec -it <box> -- <shell>`.
+//! Equivalent to: `kbox exec -it <box> -- /bin/sh`
+//!
+//! Spec050 Sandbox boxes have no guest PTY socket; routing through `exec`
+//! uses the managed `start_pty` path (fused-engine Docker exec hijack).
 
 use clap::Args;
 
-#[cfg(not(windows))]
-use super::common;
-#[cfg(not(windows))]
-use crate::resolve;
-#[cfg(not(windows))]
-use crate::state::StateFile;
+use super::exec::{self, ExecArgs};
 
 #[derive(Args)]
 pub struct ShellArgs {
@@ -30,63 +28,19 @@ pub struct ShellArgs {
     pub workdir: Option<String>,
 }
 
-#[cfg(windows)]
-pub async fn execute(_args: ShellArgs) -> Result<(), Box<dyn std::error::Error>> {
-    Err(crate::platform::unsupported_command(
-        "shell",
-        "interactive PTY support",
-    ))
-}
-
-#[cfg(not(windows))]
 pub async fn execute(args: ShellArgs) -> Result<(), Box<dyn std::error::Error>> {
-    use crate::terminal;
-    use kbox_core::pty::PtyRequest;
-
-    let user = common::normalize_user_option(args.user.as_deref())
-        .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-    common::validate_workdir_option(args.workdir.as_deref())
-        .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-
-    let state = StateFile::load_default()?;
-    let record = resolve::resolve(&state, &args.r#box)?.clone();
-    let record = match super::observe_inventory::refresh_managed_inventory_record(record).await? {
-        Some(record) => record,
-        None => return Err(format!("No such container: {}", args.r#box).into()),
-    };
-    let pty_socket_path = crate::socket_paths::require_runtime_socket(
-        &record,
-        crate::socket_paths::RuntimeSocket::Pty,
-    )
-    .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
-
-    let (cols, rows) = terminal::size().unwrap_or((80, 24));
-    let mut client =
-        super::exec::connect_pty_with_retry(&pty_socket_path, std::time::Duration::from_secs(10))
-            .await?;
-    client
-        .send_request(&PtyRequest {
-            cmd: vec![args.shell],
-            env: vec![],
-            working_dir: args.workdir,
-            rootfs: None,
-            user,
-            cols,
-            rows,
-        })
-        .await?;
-
-    let (read_half, write_half) = client.into_split();
-    let exit_code = {
-        let _raw_mode = terminal::raw_mode()?;
-        super::exec::run_pty_session(read_half, write_half).await
-    };
-
-    if exit_code != 0 {
-        std::process::exit(exit_code);
-    }
-
-    Ok(())
+    exec::execute(ExecArgs {
+        r#box: args.r#box,
+        cmd: vec![args.shell],
+        interactive: true,
+        tty: true,
+        envs: vec![],
+        user: args.user,
+        workdir: args.workdir,
+        timeout: 5,
+        request_id: None,
+    })
+    .await
 }
 
 #[cfg(test)]
@@ -95,7 +49,6 @@ mod tests {
 
     #[test]
     fn test_shell_args_defaults() {
-        // Verify the default shell is /bin/sh
         let args = ShellArgs {
             r#box: "mybox".to_string(),
             shell: "/bin/sh".to_string(),

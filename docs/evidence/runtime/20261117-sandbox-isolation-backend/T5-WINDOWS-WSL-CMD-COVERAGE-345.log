@@ -1,0 +1,191 @@
+=== sandbox CLI full-coverage E2E ===
+archive=dist/kbox-3.4.5-macos-arm64.tar.gz
+sha256=worktree
+PREFIX=/tmp/kbox-sandbox-e2e-prefix-zkuVYp
+K_HOME=/tmp/kbox-sandbox-e2e-home-BigREQ
+LOG=/tmp/kbox-sandbox-e2e-20261118000857.log
+host=Linux x86_64
+
+==> install packaged CLI
+install_mode=worktree
+expected_top_level_commands=61
+version_line=kbox version 3.4.5
+COVERED:version
+INSTALL_OK
+
+==> help
+COVERED:help
+
+==> info / df / audit
+COVERED:info
+COVERED:df
+COVERED:audit
+
+==> image pull / images / inspect / history / tag / save / load
+COVERED:pull
+COVERED:images
+COVERED:image-inspect
+COVERED:history
+e2e-alpine:tag1
+COVERED:tag
+Saved e2e-alpine:tag1 to /tmp/kbox-sandbox-e2e-work-ffqsqW/alpine-save.tar (3.5 MB)
+COVERED:save
+COVERED:load
+COVERED:rmi
+
+==> import rootfs
+COVERED:import
+
+==> build
+Building from /tmp/kbox-sandbox-e2e-work-ffqsqW/build/Dockerfile
+Step 1/2: FROM alpine:3.20
+Step 2/2: CMD ["echo", "BUILD_OK"]
+Successfully built e2e-build:latest (1 layers, 3.5 MB, linux/amd64)
+COVERED:build
+
+==> login / logout / push (fail-closed push)
+COVERED:login
+COVERED:logout
+push-fail-closed (rc=1)
+COVERED:push
+
+==> create / start / stop / restart / rename / wait / kill
+3a4b7eac-368e-4001-a97f-3084bb59a709
+COVERED:create
+Starting box e2ecreate...
+e2ecreate
+COVERED:start
+Renamed e2ecreate → e2elife
+COVERED:rename
+e2elife
+COVERED:restart
+e2elife
+COVERED:stop
+COVERED:wait
+Starting box e2elife...
+e2elife
+e2elife
+COVERED:kill
+COVERED:rm
+
+==> run / inspect / ps / exec / logs / pause / unpause
+Creating box e2erun (5cbc33e19dd7)...
+5cbc33e1-9dd7-44ad-bad5-73d13f56ca95
+COVERED:run
+COVERED:inspect
+COVERED:ps
+COVERED:exec
+COVERED:logs
+e2erun
+COVERED:pause
+e2erun
+COVERED:unpause
+Creating box neat_kernighan (386c4fdac321)...
+Box neat_kernighan (386c4fdac321) started. Press Ctrl-C to stop.
+Box neat_kernighan exited and was removed.
+Creating box calm_neumann (c06ae2fd545d)...
+Box calm_neumann (c06ae2fd545d) started. Press Ctrl-C to stop.
+Retained logs for removed box calm_neumann at /tmp/kbox-sandbox-e2e-home-BigREQ/removed-logs/c06ae2fd-545d-4212-9eab-e7b60cd050a3. View with: kbox logs calm_neumann
+Box calm_neumann exited and was removed.
+RM_EXIT_OK
+
+==> top / stats / attach / shell
+COVERED:top
+COVERED:stats
+COVERED:attach
+COVERED:shell
+
+==> publish / port / port-forward
+Creating box e2epub (b884217b38fd)...
+b884217b-38fd-4cd4-be57-d5d7de142e41
+COVERED:port
+port-forward exercised (HTTP not confirmed); out=Error: Box e2epub does not expose a Sandbox network namespace
+COVERED:port-forward
+
+==> volume / network / cp
+COVERED:volume
+COVERED:network
+Creating box e2ecp (4483a44d1f27)...
+4483a44d-1f27-4821-b1eb-93306a992a67
+/tmp/kbox-sandbox-e2e-work-ffqsqW/host.txt → e2ecp:/data/host.txt (9 bytes)
+e2ecp:/data/host.txt → /tmp/kbox-sandbox-e2e-work-ffqsqW/host-out.txt (9 bytes)
+COVERED:cp
+
+==> compose bridge + secrets
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2ebridge_default (sandbox docker)
+Starting project 'e2ebridge' (2 services)...
+  [+] client (image=alpine:3.20, sandbox) ✓
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 2 services converged.
+COMPOSE_UP_OK
+COMPOSE_DNS_OK
+COMPOSE_PING_OK
+Stopping project 'e2ebridge' (2 services)...
+  [-] Stopping web... ✓
+  [-] Stopping client... ✓
+  [-] Network e2ebridge_default removed (sandbox docker)
+Project 'e2ebridge' stopped.
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2esec_default (sandbox docker)
+Starting project 'e2esec' (1 services)...
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 1 services converged.
+Stopping project 'e2esec' (1 services)...
+  [-] Stopping web... ✓
+  [-] Network e2esec_default removed (sandbox docker)
+Project 'e2esec' stopped.
+COVERED:compose
+
+==> export / commit / diff / container-update
+Creating box e2ediff (747da8ca4c9a)...
+747da8ca-4c9a-4fbc-ba47-953f8d36d965
+COVERED:diff
+Exported e2ediff to /tmp/kbox-sandbox-e2e-work-ffqsqW/export.tar (7.7 MB)
+COVERED:export
+Committing e2ediff...
+sha256:4f1b28d16db9ef6fea7bce3c921f80305bbd06e01eb8d83e3dc52d1261263def
+COVERED:commit
+COVERED:container-update
+
+==> events
+COVERED:events
+
+==> snapshot
+Creating box e2esnap (784f0e3f4b70)...
+COVERED:snapshot
+
+==> prune family
+COVERED:prune
+COVERED:image-prune
+COVERED:system-prune
+
+==> engine / pool / monitor / scale-api / update
+COVERED:engine
+COVERED:pool
+COVERED:monitor
+COVERED:scale-api
+COVERED:update
+
+==> TEE fail-closed (attest / seal / unseal / inject-secret)
+Creating box e2etee (5b9599e143dd)...
+attest (rc=1)
+COVERED:attest
+seal (rc=1)
+COVERED:seal
+unseal (rc=1)
+COVERED:unseal
+inject-secret (rc=1)
+COVERED:inject-secret
+
+==> brand
+BRAND_SKIP (E2E_SKIP_BRAND=1)
+
+==> coverage gate
+covered=61 / expected=61
+COVERAGE_PCT=100.0%
+
+SANDBOX_FULL_E2E_OK
+SANDBOX_CMD_COVERAGE_OK 61/61 100.0%
+log=/tmp/kbox-sandbox-e2e-20261118000857.log
+archive_sha256=worktree-ba9ea975213bbefff4cf881643d17cdb2a0dad72d691565e16f1475d9a3234cf

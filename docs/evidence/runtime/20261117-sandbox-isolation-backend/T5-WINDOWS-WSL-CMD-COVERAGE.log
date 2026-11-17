@@ -1,0 +1,191 @@
+=== sandbox CLI full-coverage E2E ===
+archive=dist/kbox-3.4.4-macos-arm64.tar.gz
+sha256=worktree
+PREFIX=/tmp/kbox-sandbox-e2e-prefix-6Rd4sE
+K_HOME=/tmp/kbox-sandbox-e2e-home-Vl17Lq
+LOG=/tmp/kbox-sandbox-e2e-20261117235152.log
+host=Linux x86_64
+
+==> install packaged CLI
+install_mode=worktree
+expected_top_level_commands=61
+version_line=kbox version 3.4.4
+COVERED:version
+INSTALL_OK
+
+==> help
+COVERED:help
+
+==> info / df / audit
+COVERED:info
+COVERED:df
+COVERED:audit
+
+==> image pull / images / inspect / history / tag / save / load
+COVERED:pull
+COVERED:images
+COVERED:image-inspect
+COVERED:history
+e2e-alpine:tag1
+COVERED:tag
+Saved e2e-alpine:tag1 to /tmp/kbox-sandbox-e2e-work-MtC6d7/alpine-save.tar (3.5 MB)
+COVERED:save
+COVERED:load
+COVERED:rmi
+
+==> import rootfs
+COVERED:import
+
+==> build
+Building from /tmp/kbox-sandbox-e2e-work-MtC6d7/build/Dockerfile
+Step 1/2: FROM alpine:3.20
+Step 2/2: CMD ["echo", "BUILD_OK"]
+Successfully built e2e-build:latest (1 layers, 3.5 MB, linux/amd64)
+COVERED:build
+
+==> login / logout / push (fail-closed push)
+COVERED:login
+COVERED:logout
+push-fail-closed (rc=1)
+COVERED:push
+
+==> create / start / stop / restart / rename / wait / kill
+c358acd2-7315-4e50-a0be-8a1dfb50a48e
+COVERED:create
+Starting box e2ecreate...
+e2ecreate
+COVERED:start
+Renamed e2ecreate → e2elife
+COVERED:rename
+e2elife
+COVERED:restart
+e2elife
+COVERED:stop
+COVERED:wait
+Starting box e2elife...
+e2elife
+e2elife
+COVERED:kill
+COVERED:rm
+
+==> run / inspect / ps / exec / logs / pause / unpause
+Creating box e2erun (795b8f78e4b8)...
+795b8f78-e4b8-40a4-8a05-2843bfe9ba87
+COVERED:run
+COVERED:inspect
+COVERED:ps
+COVERED:exec
+COVERED:logs
+e2erun
+COVERED:pause
+e2erun
+COVERED:unpause
+Creating box eager_stallman (ce01f07182cb)...
+Box eager_stallman (ce01f07182cb) started. Press Ctrl-C to stop.
+Box eager_stallman exited and was removed.
+Creating box soft_kay (46996f11a908)...
+Box soft_kay (46996f11a908) started. Press Ctrl-C to stop.
+Retained logs for removed box soft_kay at /tmp/kbox-sandbox-e2e-home-Vl17Lq/removed-logs/46996f11-a908-4738-b691-0d9dfc1d9cce. View with: kbox logs soft_kay
+Box soft_kay exited and was removed.
+RM_EXIT_OK
+
+==> top / stats / attach / shell
+COVERED:top
+COVERED:stats
+COVERED:attach
+COVERED:shell
+
+==> publish / port / port-forward
+Creating box e2epub (39f998cdad41)...
+39f998cd-ad41-4459-8c52-97bceb88ede2
+COVERED:port
+port-forward exercised (HTTP not confirmed); out=Error: Box e2epub does not expose a Sandbox network namespace
+COVERED:port-forward
+
+==> volume / network / cp
+COVERED:volume
+COVERED:network
+Creating box e2ecp (645477c9c3e4)...
+645477c9-c3e4-4f0a-a28a-2dd5c87f3829
+/tmp/kbox-sandbox-e2e-work-MtC6d7/host.txt → e2ecp:/data/host.txt (9 bytes)
+e2ecp:/data/host.txt → /tmp/kbox-sandbox-e2e-work-MtC6d7/host-out.txt (9 bytes)
+COVERED:cp
+
+==> compose bridge + secrets
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2ebridge_default (sandbox docker)
+Starting project 'e2ebridge' (2 services)...
+  [+] client (image=alpine:3.20, sandbox) ✓
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 2 services converged.
+COMPOSE_UP_OK
+COMPOSE_DNS_OK
+COMPOSE_PING_OK
+Stopping project 'e2ebridge' (2 services)...
+  [-] Stopping web... ✓
+  [-] Stopping client... ✓
+  [-] Network e2ebridge_default removed (sandbox docker)
+Project 'e2ebridge' stopped.
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2esec_default (sandbox docker)
+Starting project 'e2esec' (1 services)...
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 1 services converged.
+Stopping project 'e2esec' (1 services)...
+  [-] Stopping web... ✓
+  [-] Network e2esec_default removed (sandbox docker)
+Project 'e2esec' stopped.
+COVERED:compose
+
+==> export / commit / diff / container-update
+Creating box e2ediff (4233e867d089)...
+4233e867-d089-43ef-90fb-9932086a7cff
+COVERED:diff
+Exported e2ediff to /tmp/kbox-sandbox-e2e-work-MtC6d7/export.tar (7.7 MB)
+COVERED:export
+Committing e2ediff...
+sha256:c488c329182f5d27152377f916f8052c86193a7ff6d36172df39c3df1f17fdcf
+COVERED:commit
+COVERED:container-update
+
+==> events
+COVERED:events
+
+==> snapshot
+Creating box e2esnap (9176b29661d2)...
+COVERED:snapshot
+
+==> prune family
+COVERED:prune
+COVERED:image-prune
+COVERED:system-prune
+
+==> engine / pool / monitor / scale-api / update
+COVERED:engine
+COVERED:pool
+COVERED:monitor
+COVERED:scale-api
+COVERED:update
+
+==> TEE fail-closed (attest / seal / unseal / inject-secret)
+Creating box e2etee (31ba6320926c)...
+attest (rc=1)
+COVERED:attest
+seal (rc=1)
+COVERED:seal
+unseal (rc=1)
+COVERED:unseal
+inject-secret (rc=1)
+COVERED:inject-secret
+
+==> brand
+BRAND_SKIP (E2E_SKIP_BRAND=1)
+
+==> coverage gate
+covered=61 / expected=61
+COVERAGE_PCT=100.0%
+
+SANDBOX_FULL_E2E_OK
+SANDBOX_CMD_COVERAGE_OK 61/61 100.0%
+log=/tmp/kbox-sandbox-e2e-20261117235152.log
+archive_sha256=worktree-a60781703d011649d32f61065fbe51f9121095e840a771bcf137175e7540826d

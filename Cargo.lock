@@ -2251,7 +2251,7 @@ dependencies = [
 
 [[package]]
 name = "kbox-cli"
-version = "3.4.4"
+version = "3.4.5"
 dependencies = [
  "async-trait",
  "axum",
@@ -2300,7 +2300,7 @@ dependencies = [
 
 [[package]]
 name = "kbox-core"
-version = "3.4.4"
+version = "3.4.5"
 dependencies = [
  "async-trait",
  "base64 0.22.1",

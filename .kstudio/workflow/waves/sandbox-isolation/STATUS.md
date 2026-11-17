@@ -1,5 +1,5 @@
 # sandbox-isolation status
 
 stage_floor: verifying
-note: **3.4.4** shipped — commit `b1abac14`, tag/GH `v3.4.4`, archive sha256 `11ef7ae8…` (`T5-RELEASE-3.4.4`). ≠Pass/≠notarize. Parks: notarize/multihost. Overall unmet.
-updated: 2026-11-17T10:13Z
+note: **v3.4.5** dual-end 61/61 (darwin packaged `355b871d…` + 4090 WSL2) + GH release. ≠Pass/≠notarize/≠native-win32. Parks: notarize/multihost. Overall unmet.
+updated: 2026-11-17T16:20Z

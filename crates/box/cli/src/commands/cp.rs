@@ -734,6 +734,64 @@ mod tests {
         );
     }
 
+    fn sandbox_record(status: &str, generation: ExecutionGeneration) -> BoxRecord {
+        let mut record = oci_record(status, generation);
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::Sandbox;
+        record
+    }
+
+    #[test]
+    fn sandbox_copy_route_is_managed_without_a_guest_exec_socket() {
+        let generation = ExecutionGeneration::new(9).unwrap();
+        let mut record = sandbox_record("running", generation);
+        record.exec_socket_path = PathBuf::from("missing-copy-socket");
+
+        assert_eq!(
+            resolve_copy_route(&record).unwrap(),
+            CopyRoute::Managed {
+                execution_id: ExecutionId::new(record.id).unwrap(),
+                generation,
+            }
+        );
+    }
+
+    #[test]
+    fn paused_sandbox_copy_route_uses_managed_identity() {
+        let generation = ExecutionGeneration::new(4).unwrap();
+        let mut record = sandbox_record("paused", generation);
+        record.exec_socket_path = PathBuf::from("missing-copy-socket");
+
+        assert_eq!(
+            resolve_copy_route(&record).unwrap(),
+            CopyRoute::Managed {
+                execution_id: ExecutionId::new(record.id).unwrap(),
+                generation,
+            }
+        );
+    }
+
+    #[test]
+    fn stopped_sandbox_copy_route_does_not_fall_back_to_a_socket() {
+        let record = sandbox_record("stopped", ExecutionGeneration::new(2).unwrap());
+
+        let error = resolve_copy_route(&record).unwrap_err().to_string();
+
+        assert_eq!(error, "Box managed-copy is neither running nor paused");
+        assert!(!error.contains("socket"));
+    }
+
+    #[test]
+    fn box_vm_copy_route_still_requires_the_guest_exec_socket() {
+        let mut record = oci_record("running", ExecutionGeneration::new(1).unwrap());
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::BoxVm;
+        record.exec_socket_path = PathBuf::from("missing-copy-socket");
+
+        assert!(!matches!(
+            resolve_copy_route(&record),
+            Ok(CopyRoute::Managed { .. })
+        ));
+    }
+
     #[tokio::test]
     async fn managed_copy_session_fences_exec_file_and_filesystem_operations() {
         let manager = Arc::new(RecordingSessionManager::default());

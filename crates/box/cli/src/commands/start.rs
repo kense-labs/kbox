@@ -135,25 +135,32 @@ async fn start_one(state: &StateFile, query: &str) -> Result<(), Box<dyn std::er
                 }
             }
 
-            let baseline_box_dir = record.box_dir.clone();
-            match tokio::task::spawn_blocking(move || {
-                crate::commands::diff::create_box_baseline_snapshot(&baseline_box_dir)
-                    .map_err(|error| error.to_string())
-            })
-            .await
-            {
-                Ok(Ok(())) => {}
-                Ok(Err(error)) => {
-                    return Err(format!(
-                        "started {box_id} but refused to invent success without a rootfs diff baseline: {error}"
-                    )
-                    .into());
-                }
-                Err(error) => {
-                    return Err(format!(
-                        "started {box_id} but rootfs diff baseline task failed: {error}"
-                    )
-                    .into());
+            // Spec050 Sandbox has no guest rootfs baseline socket — same skip as
+            // `run` setup (`ManagedRuntimeRoute::Sandbox`).
+            let sandbox_isolation = record.managed_execution.as_ref().is_some_and(|meta| {
+                meta.runtime_route == kbox_runtime::ManagedRuntimeRoute::Sandbox
+            });
+            if !sandbox_isolation {
+                let baseline_box_dir = record.box_dir.clone();
+                match tokio::task::spawn_blocking(move || {
+                    crate::commands::diff::create_box_baseline_snapshot(&baseline_box_dir)
+                        .map_err(|error| error.to_string())
+                })
+                .await
+                {
+                    Ok(Ok(())) => {}
+                    Ok(Err(error)) => {
+                        return Err(format!(
+                            "started {box_id} but refused to invent success without a rootfs diff baseline: {error}"
+                        )
+                        .into());
+                    }
+                    Err(error) => {
+                        return Err(format!(
+                            "started {box_id} but rootfs diff baseline task failed: {error}"
+                        )
+                        .into());
+                    }
                 }
             }
 

@@ -42,6 +42,9 @@ pub struct CommitArgs {
 enum CommitCaptureMode {
     /// MicroVM guest archive over the exec socket.
     LiveGuest,
+    /// Spec050 Sandbox archive through the engine daemon (no host PID/socket).
+    #[cfg(unix)]
+    LiveSandbox,
     OfflineDirectory,
     OfflineGuestNative,
 }
@@ -155,6 +158,12 @@ fn commit_capture_mode(
         crate::process::is_process_alive_with_identity(pid, record.pid_start_time)
     });
     if record.status == "running" {
+        // Sandbox skips host-PID reconcile and has no guest exec socket, so the
+        // host-PID gate below must not apply to it.
+        #[cfg(unix)]
+        if super::rootfs_capture::is_sandbox_routed(record) {
+            return Ok(CommitCaptureMode::LiveSandbox);
+        }
         #[cfg(windows)]
         return Err(format!(
             "Windows commit requires box '{}' to be stopped because WHPX has no post-boot guest archive channel",
@@ -196,6 +205,13 @@ async fn capture_rootfs_tar(
     pause: bool,
     capture_mode: CommitCaptureMode,
 ) -> Result<(), Box<dyn std::error::Error>> {
+    if capture_mode == CommitCaptureMode::LiveSandbox {
+        let mut file = tokio::fs::File::create(output).await?;
+        super::rootfs_capture::archive_live_sandbox_rootfs(record, &mut file).await?;
+        file.sync_all().await?;
+        return Ok(());
+    }
+
     if capture_mode == CommitCaptureMode::LiveGuest && record.exec_socket_path.exists() {
         let client = kbox_runtime::ExecClient::connect(&record.exec_socket_path).await?;
         let mut file = tokio::fs::File::create(output).await?;

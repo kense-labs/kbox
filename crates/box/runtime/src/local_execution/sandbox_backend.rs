@@ -17,7 +17,8 @@ use kbox_core::secret::{
 };
 use kbox_core::{
     pty::PtyRequest, ExecOutput, ExecRequest, ExecutionManagerError, ExecutionManagerResult,
-    ExecutionProcess, ExecutionState, KillOutcome,
+    ExecutionProcess, ExecutionState, FileOp, FileRequest, FileResponse, FilesystemEntry,
+    FilesystemEntryKind, FilesystemOp, FilesystemRequest, FilesystemResponse, KillOutcome,
 };
 use zeroize::Zeroizing;
 
@@ -847,6 +848,482 @@ impl LocalExecutionBackend for SandboxLocalExecutionBackend {
     ) -> ExecutionManagerResult<ExecutionProcess> {
         super::sandbox_session::start_pty(self, record, request).await
     }
+
+    async fn transfer_file(
+        &self,
+        record: &BoxRecord,
+        request: FileRequest,
+    ) -> ExecutionManagerResult<FileResponse> {
+        #[cfg(not(unix))]
+        {
+            let _ = (record, request);
+            return Err(ExecutionManagerError::Unavailable(
+                "sandbox engine is unavailable on this host".into(),
+            ));
+        }
+        #[cfg(unix)]
+        {
+            self.metadata(record)?;
+            // Validate untrusted input before any daemon contact.
+            let upload = match request.op {
+                FileOp::Upload => Some(PreparedUpload::new(&request)?),
+                FileOp::Download => None,
+            };
+            let id = self.require_container_id(record)?;
+            // Fail closed: file I/O never spawns a daemon and never reaches
+            // for the MicroVM guest exec socket.
+            let client = self.client(false)?;
+            run_blocking(move || match upload {
+                Some(upload) => sandbox_upload(&client, &id, &upload),
+                None => sandbox_download(&client, &id, &request),
+            })
+            .await
+        }
+    }
+
+    async fn filesystem(
+        &self,
+        record: &BoxRecord,
+        request: FilesystemRequest,
+    ) -> ExecutionManagerResult<FilesystemResponse> {
+        #[cfg(not(unix))]
+        {
+            let _ = (record, request);
+            return Err(ExecutionManagerError::Unavailable(
+                "sandbox engine is unavailable on this host".into(),
+            ));
+        }
+        #[cfg(unix)]
+        {
+            self.metadata(record)?;
+            // Only read-only Stat is wired through the archive API. Mutating
+            // ops are refused rather than approximated through exec.
+            if request.op != FilesystemOp::Stat {
+                return Err(ExecutionManagerError::Unavailable(format!(
+                    "sandbox filesystem supports only Stat; {:?} is not implemented",
+                    request.op
+                )));
+            }
+            if request.path.is_empty() {
+                return Err(ExecutionManagerError::InvalidRequest(
+                    "sandbox filesystem stat requires a non-empty path".into(),
+                ));
+            }
+            let id = self.require_container_id(record)?;
+            let client = self.client(false)?;
+            run_blocking(move || sandbox_stat(&client, &id, &request.path)).await
+        }
+    }
+}
+
+impl SandboxLocalExecutionBackend {
+    /// Archive the whole live container rootfs as one tar (`kbox export` /
+    /// `kbox commit` for a running Sandbox box).
+    ///
+    /// Reuses the daemon archive API (`container_get_archive` on `/`): the
+    /// guest archives the root as `./…` with `/proc` and `/sys` empty. Sandbox
+    /// records have no host PID or guest exec socket, so this never touches
+    /// either. The daemon must already be running (no spawn), and the archive
+    /// is bounded by [`kbox_sandbox_engine::DockerHttpClient::MAX_ARCHIVE_BYTES`].
+    pub async fn export_rootfs_archive(
+        &self,
+        record: &BoxRecord,
+    ) -> ExecutionManagerResult<Vec<u8>> {
+        #[cfg(not(unix))]
+        {
+            let _ = record;
+            return Err(ExecutionManagerError::Unavailable(
+                "sandbox engine is unavailable on this host".into(),
+            ));
+        }
+        #[cfg(unix)]
+        {
+            self.metadata(record)?;
+            let id = self.require_container_id(record)?;
+            let client = self.client(false)?;
+            run_blocking(move || sandbox_export_rootfs(&client, &id)).await
+        }
+    }
+}
+
+#[cfg(unix)]
+fn sandbox_export_rootfs(
+    client: &kbox_sandbox_engine::DockerHttpClient,
+    id: &str,
+) -> ExecutionManagerResult<Vec<u8>> {
+    let limit = kbox_sandbox_engine::DockerHttpClient::MAX_ARCHIVE_BYTES;
+    let (stat, archive) = match client.container_get_archive(id, "/", limit) {
+        Ok(result) => result,
+        Err(error) if error.kind() == std::io::ErrorKind::InvalidData => {
+            return Err(ExecutionManagerError::Unavailable(format!(
+                "sandbox rootfs archive exceeds the {limit}-byte limit or was invalid ({error})"
+            )));
+        }
+        Err(error) => {
+            return Err(ExecutionManagerError::Unavailable(format!(
+                "sandbox rootfs export failed: {error}"
+            )));
+        }
+    };
+    if !stat.is_dir() {
+        return Err(ExecutionManagerError::Unavailable(
+            "sandbox rootfs export: daemon did not report / as a directory".into(),
+        ));
+    }
+    if archive.is_empty() {
+        return Err(ExecutionManagerError::Unavailable(
+            "sandbox rootfs archive was empty".into(),
+        ));
+    }
+    Ok(archive)
+}
+
+#[cfg(unix)]
+impl SandboxLocalExecutionBackend {
+    fn require_container_id(&self, record: &BoxRecord) -> ExecutionManagerResult<String> {
+        self.load_container_id(record)?.ok_or_else(|| {
+            ExecutionManagerError::Unavailable(format!(
+                "sandbox container id missing for execution {}",
+                record.id
+            ))
+        })
+    }
+}
+
+/// Keep blocking Docker-socket I/O off the async executor threads.
+#[cfg(unix)]
+async fn run_blocking<T: Send + 'static>(
+    work: impl FnOnce() -> ExecutionManagerResult<T> + Send + 'static,
+) -> ExecutionManagerResult<T> {
+    tokio::task::spawn_blocking(work).await.map_err(|error| {
+        ExecutionManagerError::Internal(format!("sandbox file task failed: {error}"))
+    })?
+}
+
+/// Classify an engine I/O failure: path-level refusals become a failed
+/// response the CLI can report; transport failures stay typed errors.
+#[cfg(unix)]
+fn sandbox_io_failure(
+    action: &str,
+    path: &str,
+    error: &std::io::Error,
+) -> ExecutionManagerResult<String> {
+    match error.kind() {
+        std::io::ErrorKind::NotFound | std::io::ErrorKind::InvalidInput => {
+            Ok(format!("{path}: {error}"))
+        }
+        _ => Err(ExecutionManagerError::Unavailable(format!(
+            "sandbox {action} failed: {error}"
+        ))),
+    }
+}
+
+#[cfg(unix)]
+fn failed_file_response(error: String) -> FileResponse {
+    FileResponse {
+        success: false,
+        data: None,
+        size: 0,
+        error: Some(error),
+    }
+}
+
+/// Split an absolute guest file path into (parent directory, file name).
+#[cfg(unix)]
+fn split_upload_path(guest_path: &str) -> ExecutionManagerResult<(&str, &str)> {
+    let invalid = |reason: &str| {
+        ExecutionManagerError::InvalidRequest(format!(
+            "sandbox upload path {guest_path:?}: {reason}"
+        ))
+    };
+    if !guest_path.starts_with('/') {
+        return Err(invalid("must be absolute"));
+    }
+    let (parent, name) = guest_path
+        .rsplit_once('/')
+        .ok_or_else(|| invalid("no name"))?;
+    if name.is_empty() || name == "." || name == ".." {
+        return Err(invalid("must name a file"));
+    }
+    Ok((if parent.is_empty() { "/" } else { parent }, name))
+}
+
+/// One-entry tar archive holding a regular file named `name`.
+#[cfg(unix)]
+fn single_file_tar(name: &str, content: &[u8]) -> ExecutionManagerResult<Vec<u8>> {
+    let mut header = tar::Header::new_gnu();
+    header.set_entry_type(tar::EntryType::Regular);
+    header.set_size(content.len() as u64);
+    header.set_mode(0o644);
+    header.set_mtime(
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .map_or(0, |elapsed| elapsed.as_secs()),
+    );
+    let mut builder = tar::Builder::new(Vec::with_capacity(content.len() + 2048));
+    builder
+        .append_data(&mut header, name, content)
+        .and_then(|()| builder.into_inner())
+        .map_err(|error| {
+            ExecutionManagerError::InvalidRequest(format!("sandbox upload archive: {error}"))
+        })
+}
+
+/// A validated upload: bounded decoded content already wrapped in a
+/// one-entry tar for the archive API.
+#[cfg(unix)]
+struct PreparedUpload {
+    guest_path: String,
+    parent: String,
+    archive: Vec<u8>,
+    size: u64,
+}
+
+#[cfg(unix)]
+impl PreparedUpload {
+    fn new(request: &FileRequest) -> ExecutionManagerResult<Self> {
+        use base64::Engine;
+        let max = kbox_sandbox_engine::DockerHttpClient::MAX_ARCHIVE_FILE_BYTES;
+        if request.user.is_some() {
+            // The archive API cannot assign ownership without copyUIDGID;
+            // refuse rather than silently create root-owned files.
+            return Err(ExecutionManagerError::InvalidRequest(
+                "sandbox upload does not support a target user".into(),
+            ));
+        }
+        let (parent, name) = split_upload_path(&request.guest_path)?;
+        let encoded = request.data.as_deref().ok_or_else(|| {
+            ExecutionManagerError::InvalidRequest("sandbox upload requires file data".into())
+        })?;
+        if encoded.len() > max.div_ceil(3) * 4 {
+            return Err(ExecutionManagerError::InvalidRequest(format!(
+                "sandbox upload exceeds the {max}-byte limit"
+            )));
+        }
+        let content = base64::engine::general_purpose::STANDARD
+            .decode(encoded)
+            .map_err(|error| {
+                ExecutionManagerError::InvalidRequest(format!(
+                    "sandbox upload data is not base64: {error}"
+                ))
+            })?;
+        if content.len() > max {
+            return Err(ExecutionManagerError::InvalidRequest(format!(
+                "sandbox upload is {} bytes; max is {max}",
+                content.len()
+            )));
+        }
+        Ok(Self {
+            guest_path: request.guest_path.clone(),
+            parent: parent.to_string(),
+            archive: single_file_tar(name, &content)?,
+            size: content.len() as u64,
+        })
+    }
+}
+
+#[cfg(unix)]
+fn sandbox_upload(
+    client: &kbox_sandbox_engine::DockerHttpClient,
+    id: &str,
+    upload: &PreparedUpload,
+) -> ExecutionManagerResult<FileResponse> {
+    let parent = upload.parent.as_str();
+    let mut put = client.container_put_archive(id, parent, &upload.archive);
+    if put
+        .as_ref()
+        .is_err_and(|error| error.kind() == std::io::ErrorKind::NotFound)
+    {
+        // Box file upload creates missing parent directories; the archive API
+        // requires the directory to exist.
+        let (exit_code, _stdout, stderr) = client
+            .container_exec(
+                id,
+                &["mkdir".into(), "-p".into(), parent.into()],
+                None,
+                None,
+                None,
+                None,
+            )
+            .map_err(|error| {
+                ExecutionManagerError::Unavailable(format!("sandbox mkdir failed: {error}"))
+            })?;
+        if exit_code != 0 {
+            return Ok(failed_file_response(format!(
+                "cannot create {parent}: {}",
+                String::from_utf8_lossy(&stderr).trim()
+            )));
+        }
+        put = client.container_put_archive(id, parent, &upload.archive);
+    }
+    match put {
+        Ok(()) => Ok(FileResponse {
+            success: true,
+            data: None,
+            size: upload.size,
+            error: None,
+        }),
+        Err(error) => Ok(failed_file_response(sandbox_io_failure(
+            "file upload",
+            &upload.guest_path,
+            &error,
+        )?)),
+    }
+}
+
+#[cfg(unix)]
+fn sandbox_download(
+    client: &kbox_sandbox_engine::DockerHttpClient,
+    id: &str,
+    request: &FileRequest,
+) -> ExecutionManagerResult<FileResponse> {
+    use base64::Engine;
+    let engine_max = kbox_sandbox_engine::DockerHttpClient::MAX_ARCHIVE_FILE_BYTES as u64;
+    let limit = match request.max_bytes {
+        Some(max) if max > kbox_core::exec::MAX_BOUNDED_FILE_BYTES => {
+            return Err(ExecutionManagerError::InvalidRequest(format!(
+                "sandbox download max_bytes {max} exceeds {}",
+                kbox_core::exec::MAX_BOUNDED_FILE_BYTES
+            )));
+        }
+        Some(max) => max.min(engine_max),
+        None => engine_max,
+    };
+    let path = request.guest_path.as_str();
+    if path.is_empty() {
+        return Err(ExecutionManagerError::InvalidRequest(
+            "sandbox download requires a non-empty path".into(),
+        ));
+    }
+    // Tar headers and padding ride on top of the content bound.
+    let archive_limit = usize::try_from(limit)
+        .unwrap_or(usize::MAX)
+        .saturating_add(64 * 1024);
+    let (stat, archive) = match client.container_get_archive(id, path, archive_limit) {
+        Ok(result) => result,
+        Err(error) if error.kind() == std::io::ErrorKind::InvalidData => {
+            return Ok(failed_file_response(format!(
+                "{path}: file exceeds the {limit}-byte download limit or the archive was invalid ({error})"
+            )));
+        }
+        Err(error) => {
+            return Ok(failed_file_response(sandbox_io_failure(
+                "file download",
+                path,
+                &error,
+            )?));
+        }
+    };
+    if !stat.is_regular() {
+        return Ok(failed_file_response(format!(
+            "{path}: not a regular file (directory, symlink or special file)"
+        )));
+    }
+    let invalid_archive = |error: std::io::Error| {
+        ExecutionManagerError::Unavailable(format!("sandbox download archive is invalid: {error}"))
+    };
+    let mut archive = tar::Archive::new(std::io::Cursor::new(archive));
+    let mut content: Option<Vec<u8>> = None;
+    for entry in archive.entries().map_err(invalid_archive)? {
+        let mut entry = entry.map_err(invalid_archive)?;
+        if content.is_some() || !entry.header().entry_type().is_file() {
+            return Ok(failed_file_response(format!(
+                "{path}: daemon returned an unexpected archive layout"
+            )));
+        }
+        let mut bytes = Vec::new();
+        std::io::Read::read_to_end(
+            &mut std::io::Read::take(&mut entry, limit.saturating_add(1)),
+            &mut bytes,
+        )
+        .map_err(invalid_archive)?;
+        if bytes.len() as u64 > limit {
+            return Ok(failed_file_response(format!(
+                "{path}: file exceeds the {limit}-byte download limit"
+            )));
+        }
+        content = Some(bytes);
+    }
+    let Some(content) = content else {
+        return Ok(failed_file_response(format!(
+            "{path}: daemon returned an empty archive"
+        )));
+    };
+    Ok(FileResponse {
+        success: true,
+        data: Some(base64::engine::general_purpose::STANDARD.encode(&content)),
+        size: content.len() as u64,
+        error: None,
+    })
+}
+
+#[cfg(unix)]
+fn sandbox_stat(
+    client: &kbox_sandbox_engine::DockerHttpClient,
+    id: &str,
+    path: &str,
+) -> ExecutionManagerResult<FilesystemResponse> {
+    let stat = match client.container_path_stat(id, path) {
+        Ok(stat) => stat,
+        Err(error) => {
+            return Ok(FilesystemResponse {
+                success: false,
+                entry: None,
+                entries: Vec::new(),
+                error: Some(sandbox_io_failure("stat", path, &error)?),
+            });
+        }
+    };
+    // Symlinks are not followed (the archive API stats the link itself), so
+    // they report Unspecified and callers fail closed instead of guessing.
+    let kind = if stat.is_dir() {
+        FilesystemEntryKind::Directory
+    } else if stat.is_regular() {
+        FilesystemEntryKind::File
+    } else {
+        FilesystemEntryKind::Unspecified
+    };
+    let mode = stat.unix_mode();
+    let type_char = match kind {
+        FilesystemEntryKind::Directory => 'd',
+        _ if stat.is_symlink() => 'l',
+        _ => '-',
+    };
+    let modified = chrono::DateTime::parse_from_rfc3339(&stat.mtime).ok();
+    Ok(FilesystemResponse {
+        success: true,
+        entry: Some(FilesystemEntry {
+            name: stat.name.clone(),
+            kind,
+            path: path.to_string(),
+            size: stat.size,
+            mode,
+            permissions: permission_string(type_char, mode),
+            owner: String::new(),
+            group: String::new(),
+            modified_seconds: modified.map_or(0, |time| time.timestamp()),
+            modified_nanos: modified.map_or(0, |time| {
+                i32::try_from(time.timestamp_subsec_nanos()).unwrap_or(0)
+            }),
+            symlink_target: (!stat.link_target.is_empty()).then(|| stat.link_target.clone()),
+            metadata: std::collections::BTreeMap::new(),
+        }),
+        entries: Vec::new(),
+        error: None,
+    })
+}
+
+#[cfg(unix)]
+fn permission_string(type_char: char, mode: u32) -> String {
+    let mut out = String::with_capacity(10);
+    out.push(type_char);
+    for shift in [6, 3, 0] {
+        let bits = (mode >> shift) & 0o7;
+        out.push(if bits & 0o4 != 0 { 'r' } else { '-' });
+        out.push(if bits & 0o2 != 0 { 'w' } else { '-' });
+        out.push(if bits & 0o1 != 0 { 'x' } else { '-' });
+    }
+    out
 }
 
 #[cfg(test)]
@@ -1721,7 +2198,7 @@ mod tests {
         use std::os::unix::fs::PermissionsExt;
         use std::sync::{Arc, Mutex};
 
-        let home = std::env::temp_dir().join(format!("sb{}s", std::process::id() % 100_000));
+        let home = std::env::temp_dir().join(format!("sb{}se", std::process::id() % 100_000));
         let _ = std::fs::remove_dir_all(&home);
         std::fs::create_dir_all(&home).unwrap();
         let secret_path = home.join("000.secret");
@@ -1798,6 +2275,506 @@ mod tests {
         server.join().unwrap();
         let seen = seen.lock().unwrap();
         assert_eq!(seen.len(), 3, "create + ephemeral-env + start");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    // ---- Spec050 file transfer / stat through the daemon archive API ----
+
+    type FakeReply = (u16, String, Vec<u8>);
+
+    /// Fake daemon answering exactly `requests` connections. The handler gets
+    /// the request head and body and returns (status, extra headers, body).
+    /// The thread returns every (head, body) it saw, in order.
+    fn spawn_fake_daemon(
+        home: &Path,
+        requests: usize,
+        mut handler: impl FnMut(&str, &[u8]) -> FakeReply + Send + 'static,
+    ) -> thread::JoinHandle<Vec<(String, Vec<u8>)>> {
+        let socket = kbox_sandbox_engine::docker_socket_path(home);
+        std::fs::create_dir_all(socket.parent().unwrap()).unwrap();
+        let _ = std::fs::remove_file(&socket);
+        let listener = UnixListener::bind(&socket).unwrap();
+        thread::spawn(move || {
+            let mut seen = Vec::new();
+            while seen.len() < requests {
+                let (mut stream, _) = listener.accept().unwrap();
+                let mut raw = Vec::new();
+                let mut buf = [0_u8; 8192];
+                let (head_end, content_length) = loop {
+                    let n = stream.read(&mut buf).unwrap();
+                    if n == 0 {
+                        break (0, 0);
+                    }
+                    raw.extend_from_slice(&buf[..n]);
+                    if let Some(pos) = raw.windows(4).position(|window| window == b"\r\n\r\n") {
+                        let head = String::from_utf8_lossy(&raw[..pos]).to_ascii_lowercase();
+                        let length = head
+                            .lines()
+                            .find_map(|line| line.strip_prefix("content-length:"))
+                            .and_then(|value| value.trim().parse::<usize>().ok())
+                            .unwrap_or(0);
+                        break (pos + 4, length);
+                    }
+                };
+                if head_end == 0 {
+                    continue;
+                }
+                while raw.len() < head_end + content_length {
+                    let n = stream.read(&mut buf).unwrap();
+                    raw.extend_from_slice(&buf[..n]);
+                }
+                let head = String::from_utf8_lossy(&raw[..head_end]).into_owned();
+                let body = raw[head_end..].to_vec();
+                let (status, extra, reply) = handler(&head, &body);
+                let mut out = format!(
+                    "HTTP/1.1 {status} X\r\nContent-Length: {}\r\nConnection: close\r\n{extra}\r\n",
+                    reply.len()
+                )
+                .into_bytes();
+                out.extend_from_slice(&reply);
+                let _ = stream.write_all(&out);
+                seen.push((head, body));
+            }
+            seen
+        })
+    }
+
+    fn path_stat_header(name: &str, size: u64, mode: u64) -> String {
+        const ALPHABET: &[u8; 64] =
+            b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+        let json = format!(
+            r#"{{"name":"{name}","size":{size},"mode":{mode},"mtime":"2026-01-02T03:04:05Z","linkTarget":""}}"#
+        );
+        let mut encoded = String::new();
+        for chunk in json.as_bytes().chunks(3) {
+            let n = chunk
+                .iter()
+                .enumerate()
+                .fold(0_u32, |acc, (i, b)| acc | (u32::from(*b) << (16 - 8 * i)));
+            for i in 0..=chunk.len() {
+                encoded.push(ALPHABET[((n >> (18 - 6 * i)) & 63) as usize] as char);
+            }
+        }
+        format!("X-Docker-Container-Path-Stat: {encoded}\r\n")
+    }
+
+    fn tar_with_file(name: &str, content: &[u8]) -> Vec<u8> {
+        let mut header = tar::Header::new_gnu();
+        header.set_size(content.len() as u64);
+        header.set_mode(0o644);
+        let mut builder = tar::Builder::new(Vec::new());
+        builder.append_data(&mut header, name, content).unwrap();
+        builder.into_inner().unwrap()
+    }
+
+    fn sandbox_with_container(home_tag: &str) -> (std::path::PathBuf, BoxRecord) {
+        let home =
+            std::env::temp_dir().join(format!("sb{}{home_tag}", std::process::id() % 100_000));
+        let _ = std::fs::remove_dir_all(&home);
+        std::fs::create_dir_all(&home).unwrap();
+        let record = sandbox_record(&home, home_tag);
+        std::fs::create_dir_all(&record.box_dir).unwrap();
+        kbox_sandbox_engine::write_container_id(&record.box_dir, "cafebabefile").unwrap();
+        (home, record)
+    }
+
+    fn download_request(path: &str) -> kbox_core::FileRequest {
+        kbox_core::FileRequest {
+            op: kbox_core::FileOp::Download,
+            guest_path: path.into(),
+            data: None,
+            user: None,
+            max_bytes: None,
+            request_id: None,
+        }
+    }
+
+    fn upload_request(path: &str, content: &[u8]) -> kbox_core::FileRequest {
+        use base64::Engine;
+        kbox_core::FileRequest {
+            op: kbox_core::FileOp::Upload,
+            guest_path: path.into(),
+            data: Some(base64::engine::general_purpose::STANDARD.encode(content)),
+            user: None,
+            max_bytes: None,
+            request_id: Some("hermetic-upload-1".into()),
+        }
+    }
+
+    fn stat_request(path: &str) -> kbox_core::FilesystemRequest {
+        kbox_core::FilesystemRequest {
+            op: kbox_core::FilesystemOp::Stat,
+            path: path.into(),
+            destination: None,
+            depth: 0,
+            user: None,
+            request_id: None,
+        }
+    }
+
+    #[test]
+    fn split_upload_path_requires_absolute_file_path() {
+        assert_eq!(
+            super::split_upload_path("/etc/hosts").unwrap(),
+            ("/etc", "hosts")
+        );
+        assert_eq!(super::split_upload_path("/top").unwrap(), ("/", "top"));
+        for bad in ["relative.txt", "/dir/", "/dir/..", "/dir/.", "/"] {
+            assert!(
+                matches!(
+                    super::split_upload_path(bad),
+                    Err(ExecutionManagerError::InvalidRequest(_))
+                ),
+                "{bad} must be refused"
+            );
+        }
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn download_against_fake_unix_http_daemon() {
+        use base64::Engine;
+        let (home, record) = sandbox_with_container("dl");
+        let archive = tar_with_file("note.txt", b"hello from the box\n");
+        let header = path_stat_header("note.txt", 19, 0o644);
+        let server = spawn_fake_daemon(&home, 1, move |head, _| {
+            assert!(
+                head.starts_with("GET /containers/cafebabefile/archive?path=%2Ftmp%2Fnote.txt ")
+            );
+            (200, header.clone(), archive.clone())
+        });
+
+        let response = SandboxLocalExecutionBackend::new(&home)
+            .transfer_file(&record, download_request("/tmp/note.txt"))
+            .await
+            .unwrap();
+        server.join().unwrap();
+
+        assert!(response.success, "{:?}", response.error);
+        assert_eq!(response.size, 19);
+        let decoded = base64::engine::general_purpose::STANDARD
+            .decode(response.data.unwrap())
+            .unwrap();
+        assert_eq!(decoded, b"hello from the box\n");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn download_of_directory_and_missing_path_report_failed_responses() {
+        let (home, record) = sandbox_with_container("dm");
+        let dir_header = path_stat_header("etc", 4096, (1 << 31) | 0o755);
+        let server = spawn_fake_daemon(&home, 2, move |head, _| {
+            if head.contains("path=%2Fetc ") {
+                (200, dir_header.clone(), tar_with_file("etc/x", b"x"))
+            } else {
+                (
+                    404,
+                    String::new(),
+                    br#"{"message":"no such file"}"#.to_vec(),
+                )
+            }
+        });
+        let backend = SandboxLocalExecutionBackend::new(&home);
+
+        let directory = backend
+            .transfer_file(&record, download_request("/etc"))
+            .await
+            .unwrap();
+        assert!(!directory.success);
+        assert!(directory.error.unwrap().contains("not a regular file"));
+
+        let missing = backend
+            .transfer_file(&record, download_request("/nope"))
+            .await
+            .unwrap();
+        assert!(!missing.success);
+        assert!(missing.error.unwrap().contains("no such file"));
+        server.join().unwrap();
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn download_enforces_the_requested_byte_ceiling() {
+        let (home, record) = sandbox_with_container("db");
+        let archive = tar_with_file("big.bin", &[9_u8; 4096]);
+        let header = path_stat_header("big.bin", 4096, 0o644);
+        let server =
+            spawn_fake_daemon(&home, 1, move |_, _| (200, header.clone(), archive.clone()));
+        let mut request = download_request("/big.bin");
+        request.max_bytes = Some(1024);
+
+        let response = SandboxLocalExecutionBackend::new(&home)
+            .transfer_file(&record, request)
+            .await
+            .unwrap();
+        server.join().unwrap();
+
+        assert!(!response.success);
+        assert!(response.error.unwrap().contains("1024-byte download limit"));
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn export_rootfs_archive_gets_the_root_from_the_fake_daemon() {
+        let (home, record) = sandbox_with_container("xr");
+        let archive = tar_with_file("etc/hostname", b"box\n");
+        let expected = archive.clone();
+        let header = path_stat_header("/", 4096, (1 << 31) | 0o755);
+        let server = spawn_fake_daemon(&home, 1, move |head, _| {
+            assert!(head.starts_with("GET /containers/cafebabefile/archive?path=%2F "));
+            (200, header.clone(), archive.clone())
+        });
+
+        let tar = SandboxLocalExecutionBackend::new(&home)
+            .export_rootfs_archive(&record)
+            .await
+            .unwrap();
+        server.join().unwrap();
+
+        assert_eq!(tar, expected);
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn export_rootfs_archive_fails_closed_without_daemon_or_on_bad_replies() {
+        let (home, record) = sandbox_with_container("xf");
+        let backend = SandboxLocalExecutionBackend::new(&home);
+        let error = backend.export_rootfs_archive(&record).await.unwrap_err();
+        assert!(
+            matches!(&error, ExecutionManagerError::Unavailable(m) if m.contains("daemon unreachable")),
+            "{error:?}"
+        );
+
+        let file_header = path_stat_header("f", 1, 0o644);
+        let dir_header = path_stat_header("/", 4096, (1 << 31) | 0o755);
+        let mut calls = 0;
+        let server = spawn_fake_daemon(&home, 2, move |_, _| {
+            calls += 1;
+            if calls == 1 {
+                (200, file_header.clone(), tar_with_file("f", b"x"))
+            } else {
+                (200, dir_header.clone(), Vec::new())
+            }
+        });
+        let not_dir = backend.export_rootfs_archive(&record).await.unwrap_err();
+        assert!(
+            not_dir.to_string().contains("not report / as a directory"),
+            "{not_dir}"
+        );
+        let empty = backend.export_rootfs_archive(&record).await.unwrap_err();
+        assert!(empty.to_string().contains("was empty"), "{empty}");
+        server.join().unwrap();
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn export_rootfs_archive_refuses_a_non_sandbox_record() {
+        let (home, mut record) = sandbox_with_container("xn");
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::BoxVm;
+
+        let error = SandboxLocalExecutionBackend::new(&home)
+            .export_rootfs_archive(&record)
+            .await
+            .unwrap_err();
+
+        assert!(error.to_string().contains("not Sandbox"), "{error}");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn upload_against_fake_unix_http_daemon_sends_one_file_tar() {
+        let (home, record) = sandbox_with_container("up");
+        let server = spawn_fake_daemon(&home, 1, |head, _| {
+            assert!(head.starts_with("PUT /containers/cafebabefile/archive?path=%2Fsrv%2Fdata "));
+            (200, String::new(), Vec::new())
+        });
+        let payload = b"host bytes \x00\xff binary".to_vec();
+
+        let response = SandboxLocalExecutionBackend::new(&home)
+            .transfer_file(&record, upload_request("/srv/data/out.bin", &payload))
+            .await
+            .unwrap();
+        let seen = server.join().unwrap();
+
+        assert!(response.success, "{:?}", response.error);
+        assert_eq!(response.size, payload.len() as u64);
+        let mut archive = tar::Archive::new(std::io::Cursor::new(seen[0].1.clone()));
+        let mut entries = archive.entries().unwrap();
+        let mut entry = entries.next().unwrap().unwrap();
+        assert_eq!(entry.path().unwrap().to_str(), Some("out.bin"));
+        assert!(entry.header().entry_type().is_file());
+        let mut content = Vec::new();
+        entry.read_to_end(&mut content).unwrap();
+        assert_eq!(content, payload);
+        assert!(entries.next().is_none(), "exactly one archive entry");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn upload_creates_missing_parent_then_retries() {
+        fn mux_frame(stream: u8, payload: &[u8]) -> Vec<u8> {
+            let mut frame = vec![stream, 0, 0, 0];
+            frame.extend_from_slice(&(payload.len() as u32).to_be_bytes());
+            frame.extend_from_slice(payload);
+            frame
+        }
+        let (home, record) = sandbox_with_container("um");
+        let mut puts = 0;
+        let server = spawn_fake_daemon(&home, 5, move |head, _| {
+            if head.starts_with("PUT /containers/cafebabefile/archive") {
+                puts += 1;
+                if puts == 1 {
+                    return (
+                        404,
+                        String::new(),
+                        br#"{"message":"no such directory"}"#.to_vec(),
+                    );
+                }
+                (200, String::new(), Vec::new())
+            } else if head.starts_with("POST /containers/cafebabefile/exec") {
+                (201, String::new(), br#"{"Id":"execmkdir01"}"#.to_vec())
+            } else if head.starts_with("POST /exec/execmkdir01/start") {
+                (200, String::new(), mux_frame(1, b""))
+            } else if head.starts_with("GET /exec/execmkdir01/json") {
+                (
+                    200,
+                    String::new(),
+                    br#"{"ID":"execmkdir01","Running":false,"ExitCode":0}"#.to_vec(),
+                )
+            } else {
+                (500, String::new(), br#"{"message":"unexpected"}"#.to_vec())
+            }
+        });
+
+        let response = SandboxLocalExecutionBackend::new(&home)
+            .transfer_file(&record, upload_request("/new/dir/f.txt", b"x"))
+            .await
+            .unwrap();
+        let seen = server.join().unwrap();
+
+        assert!(response.success, "{:?}", response.error);
+        let exec_create = &seen[1];
+        assert!(exec_create
+            .0
+            .starts_with("POST /containers/cafebabefile/exec"));
+        let create_body = String::from_utf8_lossy(&exec_create.1);
+        assert!(create_body.contains(r#""Cmd":["mkdir","-p","/new/dir"]"#));
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn upload_refuses_target_user_and_invalid_payload_before_the_daemon() {
+        let (home, record) = sandbox_with_container("ur");
+        // No daemon socket exists: these must fail on validation alone.
+        let backend = SandboxLocalExecutionBackend::new(&home);
+
+        let mut with_user = upload_request("/x", b"x");
+        with_user.user = Some("1000".into());
+        assert!(matches!(
+            backend.transfer_file(&record, with_user).await,
+            Err(ExecutionManagerError::InvalidRequest(_))
+        ));
+
+        let mut not_base64 = upload_request("/x", b"x");
+        not_base64.data = Some("***".into());
+        assert!(matches!(
+            backend.transfer_file(&record, not_base64).await,
+            Err(ExecutionManagerError::InvalidRequest(_))
+        ));
+
+        let mut no_data = upload_request("/x", b"x");
+        no_data.data = None;
+        assert!(matches!(
+            backend.transfer_file(&record, no_data).await,
+            Err(ExecutionManagerError::InvalidRequest(_))
+        ));
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn transfer_file_fail_closes_without_daemon() {
+        let (home, record) = sandbox_with_container("nd");
+        let backend = SandboxLocalExecutionBackend::new(&home);
+
+        let error = backend
+            .transfer_file(&record, download_request("/etc/hosts"))
+            .await
+            .unwrap_err();
+
+        assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
+        assert!(error.to_string().contains("daemon"), "{error}");
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn filesystem_stat_reports_file_and_directory_kinds() {
+        use kbox_core::FilesystemEntryKind;
+        let (home, record) = sandbox_with_container("fs");
+        let file_header = path_stat_header("hosts", 12, 0o640);
+        let dir_header = path_stat_header("etc", 4096, (1 << 31) | 0o755);
+        let server = spawn_fake_daemon(&home, 3, move |head, _| {
+            assert!(head.starts_with("HEAD /containers/cafebabefile/archive?path="));
+            if head.contains("path=%2Fetc%2Fhosts ") {
+                (200, file_header.clone(), Vec::new())
+            } else if head.contains("path=%2Fetc ") {
+                (200, dir_header.clone(), Vec::new())
+            } else {
+                (404, String::new(), Vec::new())
+            }
+        });
+        let backend = SandboxLocalExecutionBackend::new(&home);
+
+        let file = backend
+            .filesystem(&record, stat_request("/etc/hosts"))
+            .await
+            .unwrap();
+        let entry = file.entry.unwrap();
+        assert!(file.success);
+        assert_eq!(entry.kind, FilesystemEntryKind::File);
+        assert_eq!(entry.size, 12);
+        assert_eq!(entry.mode, 0o640);
+        assert_eq!(entry.permissions, "-rw-r-----");
+        assert_eq!(entry.modified_seconds, 1_767_323_045);
+
+        let dir = backend
+            .filesystem(&record, stat_request("/etc"))
+            .await
+            .unwrap();
+        assert_eq!(dir.entry.unwrap().kind, FilesystemEntryKind::Directory);
+
+        let missing = backend
+            .filesystem(&record, stat_request("/missing"))
+            .await
+            .unwrap();
+        assert!(!missing.success);
+        assert!(missing.entry.is_none());
+        assert!(missing.error.unwrap().contains("/missing"));
+        server.join().unwrap();
+        let _ = std::fs::remove_dir_all(&home);
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn filesystem_refuses_mutating_operations_without_a_daemon_call() {
+        let (home, record) = sandbox_with_container("fm");
+        let backend = SandboxLocalExecutionBackend::new(&home);
+        let mut request = stat_request("/tmp/x");
+        request.op = kbox_core::FilesystemOp::Remove;
+
+        let error = backend.filesystem(&record, request).await.unwrap_err();
+
+        assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
+        assert!(error.to_string().contains("supports only Stat"), "{error}");
         let _ = std::fs::remove_dir_all(&home);
     }
 }

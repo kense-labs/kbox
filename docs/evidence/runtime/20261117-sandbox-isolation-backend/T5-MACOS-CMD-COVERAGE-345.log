@@ -1,0 +1,197 @@
+=== sandbox CLI full-coverage E2E ===
+archive=dist/kbox-3.4.5-macos-arm64.tar.gz
+sha256=worktree
+PREFIX=/tmp/kbox-sandbox-e2e-prefix-SEJJzU
+K_HOME=/tmp/kbox-sandbox-e2e-home-lP3BuU
+LOG=/tmp/kbox-sandbox-e2e-20261118000617.log
+host=Darwin arm64
+
+==> install packaged CLI
+Installed kbox version 3.4.5 at /private/tmp/kbox-sandbox-e2e-prefix-SEJJzU
+Sandbox engine: /private/tmp/kbox-sandbox-e2e-prefix-SEJJzU/bin/kbox-sandbox-engine
+Sandbox guest: /private/tmp/kbox-sandbox-e2e-prefix-SEJJzU/share/kbox/sandbox-guest
+install_mode=archive
+/tmp/kbox-sandbox-e2e-prefix-SEJJzU/bin/kbox-sandbox-engine: replacing existing signature
+/tmp/kbox-sandbox-e2e-prefix-SEJJzU/bin/kbox: replacing existing signature
+expected_top_level_commands=61
+version_line=kbox version 3.4.5
+COVERED:version
+INSTALL_OK
+
+==> help
+COVERED:help
+
+==> info / df / audit
+COVERED:info
+COVERED:df
+COVERED:audit
+
+==> image pull / images / inspect / history / tag / save / load
+COVERED:pull
+COVERED:images
+COVERED:image-inspect
+COVERED:history
+e2e-alpine:tag1
+COVERED:tag
+Saved e2e-alpine:tag1 to /tmp/kbox-sandbox-e2e-work-tiDvcU/alpine-save.tar (3.9 MB)
+COVERED:save
+COVERED:load
+COVERED:rmi
+
+==> import rootfs
+COVERED:import
+
+==> build
+Building from /private/tmp/kbox-sandbox-e2e-work-tiDvcU/build/Dockerfile
+Step 1/2: FROM alpine:3.20
+Step 2/2: CMD ["echo", "BUILD_OK"]
+Successfully built e2e-build:latest (1 layers, 3.9 MB, linux/arm64)
+COVERED:build
+
+==> login / logout / push (fail-closed push)
+COVERED:login
+COVERED:logout
+push-fail-closed (rc=1)
+COVERED:push
+
+==> create / start / stop / restart / rename / wait / kill
+a35009a0-82c9-4c91-820e-490678cd4f44
+COVERED:create
+Starting box e2ecreate...
+e2ecreate
+COVERED:start
+Renamed e2ecreate → e2elife
+COVERED:rename
+e2elife
+COVERED:restart
+e2elife
+COVERED:stop
+COVERED:wait
+Starting box e2elife...
+e2elife
+e2elife
+COVERED:kill
+COVERED:rm
+
+==> run / inspect / ps / exec / logs / pause / unpause
+Creating box e2erun (e8fbb2804417)...
+e8fbb280-4417-4e53-a957-d9ab2faf9200
+COVERED:run
+COVERED:inspect
+COVERED:ps
+COVERED:exec
+COVERED:logs
+e2erun
+COVERED:pause
+e2erun
+COVERED:unpause
+Creating box dark_babbage (60face23d987)...
+Box dark_babbage (60face23d987) started. Press Ctrl-C to stop.
+Box dark_babbage exited and was removed.
+Creating box noble_cerf (51c0a3dc8ea2)...
+Box noble_cerf (51c0a3dc8ea2) started. Press Ctrl-C to stop.
+Retained logs for removed box noble_cerf at /tmp/kbox-sandbox-e2e-home-lP3BuU/removed-logs/51c0a3dc-8ea2-4cbd-b6bf-eea7bb356055. View with: kbox logs noble_cerf
+Box noble_cerf exited and was removed.
+RM_EXIT_OK
+
+==> top / stats / attach / shell
+COVERED:top
+COVERED:stats
+COVERED:attach
+COVERED:shell
+
+==> publish / port / port-forward
+Creating box e2epub (fe7b63194600)...
+fe7b6319-4600-400a-a066-1667c3b40fc6
+COVERED:port
+port-forward exercised (HTTP not confirmed); out=Error: Sandbox port forwarding requires Linux network namespaces
+COVERED:port-forward
+
+==> volume / network / cp
+COVERED:volume
+COVERED:network
+Creating box e2ecp (ea27e874208f)...
+ea27e874-208f-411d-bfb6-2cfbe4e5bcc2
+/tmp/kbox-sandbox-e2e-work-tiDvcU/host.txt → e2ecp:/data/host.txt (9 bytes)
+e2ecp:/data/host.txt → /tmp/kbox-sandbox-e2e-work-tiDvcU/host-out.txt (9 bytes)
+COVERED:cp
+
+==> compose bridge + secrets
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2ebridge_default (sandbox docker)
+Starting project 'e2ebridge' (2 services)...
+  [+] client (image=alpine:3.20, sandbox) ✓
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 2 services converged.
+COMPOSE_UP_OK
+COMPOSE_DNS_OK
+COMPOSE_PING_OK
+Stopping project 'e2ebridge' (2 services)...
+  [-] Stopping web... ✓
+  [-] Stopping client... ✓
+  [-] Network e2ebridge_default removed (sandbox docker)
+Project 'e2ebridge' stopped.
+  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)
+  [+] Network e2esec_default (sandbox docker)
+Starting project 'e2esec' (1 services)...
+  [+] web (image=alpine:3.20, sandbox) ✓
+All 1 services converged.
+Stopping project 'e2esec' (1 services)...
+  [-] Stopping web... ✓
+  [-] Network e2esec_default removed (sandbox docker)
+Project 'e2esec' stopped.
+COVERED:compose
+
+==> export / commit / diff / container-update
+Creating box e2ediff (46d83fef73ea)...
+46d83fef-73ea-48b5-800c-70a78d1aa598
+COVERED:diff
+Exported e2ediff to /tmp/kbox-sandbox-e2e-work-tiDvcU/export.tar (8.7 MB)
+COVERED:export
+Committing e2ediff...
+sha256:1365041711ff6df5a32187eee679466b87a6f601e19a7853fe560ddd4d242064
+COVERED:commit
+COVERED:container-update
+
+==> events
+COVERED:events
+
+==> snapshot
+Creating box e2esnap (10ad8e6c37cb)...
+COVERED:snapshot
+
+==> prune family
+COVERED:prune
+COVERED:image-prune
+COVERED:system-prune
+
+==> engine / pool / monitor / scale-api / update
+COVERED:engine
+COVERED:pool
+COVERED:monitor
+COVERED:scale-api
+COVERED:update
+
+==> TEE fail-closed (attest / seal / unseal / inject-secret)
+Creating box e2etee (e3b9da82cdab)...
+attest (rc=1)
+COVERED:attest
+seal (rc=1)
+COVERED:seal
+unseal (rc=1)
+COVERED:unseal
+inject-secret (rc=1)
+COVERED:inject-secret
+
+==> brand
+brand scan: clean (zero product-brand residue)
+BRAND_OK
+
+==> coverage gate
+covered=61 / expected=61
+COVERAGE_PCT=100.0%
+
+SANDBOX_FULL_E2E_OK
+SANDBOX_CMD_COVERAGE_OK 61/61 100.0%
+log=/tmp/kbox-sandbox-e2e-20261118000617.log
+archive_sha256=355b871da99112218ad552e67fe74cdf71db157be9acd173ba5fc5a0ac9d6232

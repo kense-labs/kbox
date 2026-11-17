@@ -87,6 +87,10 @@ async fn restart_one(
         };
         let home = kbox_core::dirs_home();
         let manager = super::configured_local_execution_manager(&home).await?;
+        let sandbox_isolation = record
+            .managed_execution
+            .as_ref()
+            .is_some_and(|meta| meta.runtime_route == kbox_runtime::ManagedRuntimeRoute::Sandbox);
         manager
             .restart_with_options(
                 &execution_id,
@@ -95,7 +99,10 @@ async fn restart_one(
                 RestartExecutionOptions { stop_timeout_secs },
             )
             .await?;
-        create_baseline_snapshot(&box_id, &box_dir).await?;
+        // Spec050 Sandbox has no guest rootfs baseline — match `run` / `start`.
+        if !sandbox_isolation {
+            create_baseline_snapshot(&box_id, &box_dir).await?;
+        }
 
         let current = StateFile::load_default()?;
         let record = current

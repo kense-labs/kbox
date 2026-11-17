@@ -411,7 +411,7 @@ fn paused_microvm_commit_fails_closed() {
     use crate::test_helpers::fixtures::make_record;
     use kbox_core::ExecutionBoundary;
 
-    let mut microvm = make_record("id", "vm", "paused", Some(std::process::id()));
+    let microvm = make_record("id", "vm", "paused", Some(std::process::id()));
 
     let error = commit_capture_mode(&microvm).unwrap_err().to_string();
     assert!(error.contains("paused MicroVM"));
@@ -454,13 +454,84 @@ fn stopped_managed_box_selects_offline_directory_after_microvm_cutover() {
     );
 }
 
+#[cfg(unix)]
+fn sandbox_commit_record(status: &str) -> crate::state::BoxRecord {
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionGeneration, OperationId};
+
+    let id = "33333333-3333-4333-8333-333333333333";
+    // Sandbox records carry no host PID.
+    let mut record = crate::test_helpers::fixtures::make_record(id, "sbx", status, None);
+    let mut metadata = kbox_runtime::ManagedExecutionMetadata::new(
+        OperationId::new("commit-route-create").unwrap(),
+        ExecutionGeneration::INITIAL,
+        CreateExecutionRequest {
+            external_sandbox_id: "commit-route-external".to_string(),
+            config: BoxConfig {
+                image: record.image.clone(),
+                ..Default::default()
+            },
+            labels: std::collections::BTreeMap::new(),
+            policy: Default::default(),
+            rootfs_snapshot_id: None,
+        },
+    )
+    .unwrap();
+    metadata.runtime_route = kbox_runtime::ManagedRuntimeRoute::Sandbox;
+    record.managed_execution = Some(metadata);
+    record
+}
+
+#[cfg(unix)]
+#[test]
+fn running_sandbox_commit_skips_the_host_pid_gate() {
+    let record = sandbox_commit_record("running");
+    assert!(record.pid.is_none());
+
+    assert_eq!(
+        commit_capture_mode(&record).unwrap(),
+        CommitCaptureMode::LiveSandbox
+    );
+}
+
+#[cfg(unix)]
+#[test]
+fn running_microvm_without_host_pid_still_fails_commit() {
+    let microvm = crate::test_helpers::fixtures::make_record("id", "vm", "running", None);
+
+    let error = commit_capture_mode(&microvm).unwrap_err().to_string();
+    assert!(error.contains("host process is not live"), "{error}");
+}
+
+#[cfg(unix)]
+#[tokio::test]
+async fn running_sandbox_commit_capture_reports_engine_failure_not_pid_failure() {
+    let home = tempfile::tempdir().unwrap();
+    let mut record = sandbox_commit_record("running");
+    record.box_dir = home.path().join("boxes").join(&record.id);
+    std::fs::create_dir_all(&record.box_dir).unwrap();
+    std::fs::write(record.box_dir.join("sandbox.container_id"), "cafebabe").unwrap();
+    let mut sink = tokio::io::sink();
+
+    let error = super::super::rootfs_capture::archive_live_sandbox_rootfs_in(
+        home.path(),
+        &record,
+        &mut sink,
+    )
+    .await
+    .unwrap_err()
+    .to_string();
+
+    assert!(!error.contains("host process is not live"), "{error}");
+    assert!(error.contains("daemon unreachable"), "{error}");
+}
+
 #[cfg(not(windows))]
 #[test]
 fn running_microvm_selects_guest_archive_commit() {
     use crate::test_helpers::fixtures::make_record;
     use kbox_core::ExecutionBoundary;
 
-    let mut microvm = make_record("id", "vm", "running", Some(std::process::id()));
+    let microvm = make_record("id", "vm", "running", Some(std::process::id()));
 
     assert_eq!(
         commit_capture_mode(&microvm).unwrap(),

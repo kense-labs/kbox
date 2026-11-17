@@ -26,5 +26,7 @@
 - [x] Flip CLI/product default to Sandbox + `ensure_daemon`
 - [x] Brand scan green
 - [x] Package/install + compose/exec/bridge-DNS smokes on darwin-arm64
+- [x] Packaged full-feature E2E harness (`scripts/e2e-sandbox-full.sh` → `SANDBOX_FULL_E2E_OK`)
+- [x] Top-level CLI command coverage 61/61 (`SANDBOX_CMD_COVERAGE_OK`)
 - [ ] OUTCOME.md product acceptance (notarize / multi-host still open)
-- Parked: compose Secrets (`PARK-COMPOSE-SECRETS.md`); notarize (`PARK-NOTARIZE`)
+- Parked: notarize (`PARK-NOTARIZE`); multi-host (`PARK-MULTIHOST`); compose Secrets unparked (`T5-COMPOSE-SECRETS`)

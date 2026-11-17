@@ -95,18 +95,20 @@ pub(super) enum CopyRoute {
     },
 }
 
-/// Select the copy transport without allowing OCI-routed records to fall back
-/// to a Box-owned compatibility socket.
+/// Select the copy transport without allowing OCI- or Sandbox-routed records to
+/// fall back to a Box-owned compatibility socket (Sandbox has none).
 pub(super) fn resolve_copy_route(
     record: &BoxRecord,
 ) -> Result<CopyRoute, Box<dyn std::error::Error>> {
     if record
         .managed_execution
         .as_ref()
-        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
+        .is_some_and(kbox_runtime::ManagedExecutionMetadata::skips_host_pid_reconcile)
     {
-        // Managed OCI file/filesystem copy is available while Running or
-        // freezer-Paused; exec-based tar paths stay Running-only elsewhere.
+        // Managed OCI and Sandbox file/filesystem copy is available while
+        // Running or freezer-Paused; exec-based tar paths stay Running-only
+        // elsewhere. `skips_host_pid_reconcile` is exactly OCI-routed or
+        // Sandbox-routed records, the two routes without a guest exec socket.
         if record.status != "running" && record.status != "paused" {
             return Err(format!("Box {} is neither running nor paused", record.name).into());
         }

@@ -10,7 +10,7 @@ use std::path::{Component, Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::time::{Duration, Instant};
 
-use kbox_core::{ExecutionManagerError, ExecutionManagerResult};
+use kbox_core::{ExecutionBoundary, ExecutionManagerError, ExecutionManagerResult};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 

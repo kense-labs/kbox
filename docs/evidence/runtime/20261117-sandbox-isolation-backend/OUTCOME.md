@@ -110,6 +110,30 @@ Status: **partial** · overall goal **unmet** · ≠Pass
     `execution_boundary=sandbox` (`T5-RELEASE-3.4.4.md`); daily pointer
     updated (`T5-DAILY-INSTALL.md`) — ≠Pass / ≠notarize; no git tag/gh
     in this seat
+35. **Sandbox full-feature packaged E2E:** `scripts/e2e-sandbox-full.sh`
+    against `dist/kbox-3.4.4-macos-arm64.tar.gz` (`11ef7ae8…`) →
+    `SANDBOX_FULL_E2E_OK` (install, boundary, exec/ps/logs/stop/rm,
+    run --rm exit 0/7, stdin/stream/pty, pause, volume, publish,
+    network, compose bridge DNS+ICMP, compose secrets, brand)
+    (`T5-SANDBOX-FULL-E2E.md`) — ≠Pass / ≠notarize
+36. **CLI command full coverage 61/61:** harness gate
+    `SANDBOX_CMD_COVERAGE_OK` on worktree **and** packaged
+    `dist/kbox-3.4.4-macos-arm64.tar.gz` sha256 `fc3df1c0…`;
+    product fixes for Sandbox `start`/`restart` baseline skip, `shell`→
+    managed PTY, `cp` archive transfer, live `export`/`commit`
+    (`T5-SANDBOX-CMD-COVERAGE.md`) — ≠Pass / ≠notarize; GH tag refresh
+    for this digest still optional
+37. **Windows workstation (SSH 4090) WSL2 61/61:** root Ubuntu 24.04 on
+    `DESKTOP-BM5D1UH`; worktree
+    `sha256(kbox)=a6078170…`;
+    `SANDBOX_CMD_COVERAGE_OK 61/61 100.0%`
+    (`T5-WINDOWS-WSL-CMD-COVERAGE.md` + `.log`) — Spec050 path via WSL
+    namespaces; ≠Pass / ≠notarize / ≠native win32 Sandbox
+38. **Release 3.4.5:** bump + dual-end re-verify
+    darwin packaged `sha256=355b871d…` **and** 4090 WSL2 worktree both
+    `SANDBOX_CMD_COVERAGE_OK 61/61`; GitHub `v3.4.5`
+    (`T5-RELEASE-3.4.5.md`, `T5-MACOS-CMD-COVERAGE-345.log`,
+    `T5-WINDOWS-WSL-CMD-COVERAGE-345.log`) — ≠Pass / ≠notarize
 
 ## Evidence
 
@@ -130,7 +154,9 @@ Status: **partial** · overall goal **unmet** · ≠Pass
   `T5-PACKAGE-REQUIRE-SANDBOX.md` · `T5-PACKAGE-REQUIRE-EMBEDDED.md` ·
   `T5-ENGINE-SECRET-ENV-SCRUB.md` · `T5-PACKAGE-ENGINE-SECRET-ENV-SCRUB.md` ·
   `T5-RUN-RM-EXIT.md` · `T5-PACKAGE-RUN-RM-EXIT.md` ·
-  `T5-RELEASE-3.4.4.md` ·
+  `T5-RELEASE-3.4.4.md` · `T5-SANDBOX-FULL-E2E.md` ·
+  `T5-SANDBOX-CMD-COVERAGE.md` · `T5-WINDOWS-WSL-CMD-COVERAGE.md` ·
+  `T5-RELEASE-3.4.5.md` ·
   `PARK-COMPOSE-SECRETS.md` · `PARK-NOTARIZE.md` · `PARK-MULTIHOST.md`
 
 ## Remaining overall-goal gap
@@ -150,13 +176,16 @@ Status: **partial** · overall goal **unmet** · ≠Pass
   (`T5-RUN-RM-EXIT.md`), packaged 3.4.3 (`T5-PACKAGE-RUN-RM-EXIT.md`),
   and packaged **3.4.4** (`T5-RELEASE-3.4.4.md` `EXIT:0`); still ≠
   product Pass
-- Local versioned archive **3.4.4** ready for parent commit/tag/gh;
-  notarize still parked
+- Packaged Sandbox full E2E **verified** on darwin
+  (`T5-SANDBOX-FULL-E2E.md`); notarize still parked
+- Windows WSL2 CLI 61/61 **verified** on 4090
+  (`T5-WINDOWS-WSL-CMD-COVERAGE.md`); native win32 Sandbox still out of
+  Spec050; multi-host notarize matrix still parked
 
 ## Explicitly not claimed
 
 - Product Pass / notarized daily install
-- Windows/WSL native support
+- Native win32 / WHPX Sandbox (Spec050 remains Linux-namespace)
 - Completion of unrelated `049-pool-oneshot-discard` WIP
 - HTTP app-level discovery (Bridge smoke used DNS + ICMP only)
 - This seat did not git commit / tag / GitHub Release

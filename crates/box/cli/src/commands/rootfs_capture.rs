@@ -19,6 +19,45 @@ where
     Ok(written)
 }
 
+/// Whether the durable runtime route is the Spec050 Sandbox engine.
+///
+/// Sandbox records have no host PID and no guest exec socket, so host-PID and
+/// guest-archive gates must not apply to them.
+pub(crate) fn is_sandbox_routed(record: &crate::state::BoxRecord) -> bool {
+    record.managed_execution.as_ref().is_some_and(|metadata| {
+        metadata.runtime_route == kbox_runtime::ManagedRuntimeRoute::Sandbox
+    })
+}
+
+/// Archive a running Sandbox box's rootfs through the engine archive API.
+pub(crate) async fn archive_live_sandbox_rootfs<W>(
+    record: &crate::state::BoxRecord,
+    output: &mut W,
+) -> Result<u64, Box<dyn std::error::Error>>
+where
+    W: tokio::io::AsyncWrite + Unpin,
+{
+    archive_live_sandbox_rootfs_in(&kbox_core::dirs_home(), record, output).await
+}
+
+pub(crate) async fn archive_live_sandbox_rootfs_in<W>(
+    home: &std::path::Path,
+    record: &crate::state::BoxRecord,
+    output: &mut W,
+) -> Result<u64, Box<dyn std::error::Error>>
+where
+    W: tokio::io::AsyncWrite + Unpin,
+{
+    use tokio::io::AsyncWriteExt;
+    let archive = kbox_runtime::SandboxLocalExecutionBackend::new(home)
+        .export_rootfs_archive(record)
+        .await
+        .map_err(|error| format!("Cannot archive running box '{}': {error}", record.name))?;
+    output.write_all(&archive).await?;
+    output.flush().await?;
+    Ok(archive.len() as u64)
+}
+
 /// Verify that an offline reader cannot race a live or transitional VM owner.
 ///
 /// The lifecycle lock serializes well-behaved CLI operations; this explicit

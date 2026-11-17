@@ -701,6 +701,80 @@ impl DockerHttpClient {
         Ok(())
     }
 
+    /// Largest tar archive one `container_get_archive` / `container_put_archive`
+    /// call buffers: [`Self::MAX_ARCHIVE_FILE_BYTES`] of content plus tar
+    /// headers, padding and the end-of-archive blocks.
+    pub const MAX_ARCHIVE_BYTES: usize = Self::MAX_ARCHIVE_FILE_BYTES + 64 * 1024;
+
+    /// Largest single-file payload `kbox cp` moves through the archive API.
+    pub const MAX_ARCHIVE_FILE_BYTES: usize = 64 * 1024 * 1024;
+
+    /// Stat one container path via `HEAD /containers/{id}/archive`.
+    ///
+    /// A missing path is [`io::ErrorKind::NotFound`]. A final symlink is
+    /// reported as a symlink (mode bit + `link_target`), never followed.
+    pub fn container_path_stat(&self, id: &str, path: &str) -> io::Result<ContainerPathStat> {
+        let request_path = archive_request_path(id, path);
+        let bytes = encode_request("HEAD", &request_path, None);
+        let (response, headers) = self.send_raw(
+            "HEAD",
+            &bytes,
+            Self::ARCHIVE_TIMEOUT,
+            Self::MAX_ARCHIVE_BYTES,
+        )?;
+        archive_status_to_result(&response, path)?;
+        ContainerPathStat::from_headers(&headers)
+    }
+
+    /// Download one container path as a tar archive (`docker cp` out).
+    ///
+    /// The body is bounded by `max_bytes` (capped at [`Self::MAX_ARCHIVE_BYTES`]).
+    pub fn container_get_archive(
+        &self,
+        id: &str,
+        path: &str,
+        max_bytes: usize,
+    ) -> io::Result<(ContainerPathStat, Vec<u8>)> {
+        let request_path = archive_request_path(id, path);
+        let bytes = encode_request("GET", &request_path, None);
+        let (response, headers) = self.send_raw(
+            "GET",
+            &bytes,
+            Self::ARCHIVE_TIMEOUT,
+            max_bytes.min(Self::MAX_ARCHIVE_BYTES),
+        )?;
+        archive_status_to_result(&response, path)?;
+        let stat = ContainerPathStat::from_headers(&headers)?;
+        Ok((stat, response.body))
+    }
+
+    /// Extract a tar archive into the existing container directory `dir`
+    /// (`docker cp` in).
+    pub fn container_put_archive(&self, id: &str, dir: &str, tar: &[u8]) -> io::Result<()> {
+        if tar.len() > Self::MAX_ARCHIVE_BYTES {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                format!(
+                    "archive is {} bytes; max is {}",
+                    tar.len(),
+                    Self::MAX_ARCHIVE_BYTES
+                ),
+            ));
+        }
+        let request_path = archive_request_path(id, dir);
+        let mut bytes = format!(
+            "PUT {request_path} HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\nContent-Type: application/x-tar\r\nContent-Length: {}\r\n\r\n",
+            tar.len()
+        )
+        .into_bytes();
+        bytes.extend_from_slice(tar);
+        let (response, _headers) =
+            self.send_raw("PUT", &bytes, Self::ARCHIVE_TIMEOUT, 1024 * 1024)?;
+        archive_status_to_result(&response, dir)
+    }
+
+    const ARCHIVE_TIMEOUT: Duration = Duration::from_secs(120);
+
     /// Encode and send one request; returns the raw HTTP response.
     pub fn request(&self, method: &str, path: &str, body: Option<&Value>) -> io::Result<Response> {
         self.request_with_timeout(method, path, body, Duration::from_secs(30))
@@ -713,29 +787,69 @@ impl DockerHttpClient {
         body: Option<&Value>,
         timeout: Duration,
     ) -> io::Result<Response> {
+        let bytes = encode_request(method, path, body);
+        self.send_raw(method, &bytes, timeout, usize::MAX)
+            .map(|(response, _headers)| response)
+    }
+
+    /// Send pre-encoded request bytes and read one bounded response.
+    ///
+    /// `max_body` caps the response body so a hostile or broken daemon cannot
+    /// make the caller buffer without limit. A write that fails after the
+    /// daemon already answered (early error on a large upload) surfaces the
+    /// daemon's reply instead of the broken pipe.
+    fn send_raw(
+        &self,
+        method: &str,
+        request: &[u8],
+        timeout: Duration,
+        max_body: usize,
+    ) -> io::Result<(Response, Vec<(String, String)>)> {
         let mut stream = UnixStream::connect(&self.socket)?;
         stream.set_read_timeout(Some(timeout))?;
         stream.set_write_timeout(Some(timeout))?;
-        let bytes = encode_request(method, path, body);
-        stream.write_all(&bytes)?;
+        let write_result = stream.write_all(request);
         let mut reader = BufReader::new(stream);
-        let (status, len, chunked) = read_head(&mut reader)?;
+        let head = match read_head_with_headers(&mut reader) {
+            Ok(head) => head,
+            Err(read_error) => return Err(write_result.err().unwrap_or(read_error)),
+        };
+        let (status, len, chunked) = (head.status, head.len, head.chunked);
         let mut body = Vec::new();
-        if status == 204 || status == 304 {
-            return Ok(Response { status, body });
+        if status == 204 || status == 304 || method == "HEAD" {
+            return Ok((Response { status, body }, head.headers));
         }
         if chunked {
             while let Some(chunk) = read_chunk(&mut reader)? {
+                if body.len().saturating_add(chunk.len()) > max_body {
+                    return Err(oversize_body_error(max_body));
+                }
                 body.extend_from_slice(&chunk);
             }
         } else if let Some(n) = len {
+            if n > max_body {
+                return Err(oversize_body_error(max_body));
+            }
             body.resize(n, 0);
             reader.read_exact(&mut body)?;
         } else {
-            reader.read_to_end(&mut body)?;
+            let limit = u64::try_from(max_body)
+                .unwrap_or(u64::MAX)
+                .saturating_add(1);
+            reader.take(limit).read_to_end(&mut body)?;
+            if body.len() > max_body {
+                return Err(oversize_body_error(max_body));
+            }
         }
-        Ok(Response { status, body })
+        Ok((Response { status, body }, head.headers))
     }
+}
+
+fn oversize_body_error(max_body: usize) -> io::Error {
+    io::Error::new(
+        io::ErrorKind::InvalidData,
+        format!("daemon response body exceeds the {max_body}-byte limit"),
+    )
 }
 
 /// Build the exact HTTP/1.1 request bytes the client would write (test aid).
@@ -869,7 +983,161 @@ impl ExecHijack {
     }
 }
 
+/// Stat of one container path from `X-Docker-Container-Path-Stat`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ContainerPathStat {
+    /// Base name of the path.
+    pub name: String,
+    /// Size in bytes as reported by the guest.
+    pub size: i64,
+    /// Go `os.FileMode` bits (type bits live above the permission bits).
+    pub mode: u32,
+    /// RFC 3339 modification time.
+    pub mtime: String,
+    /// Symlink target, empty when the path is not a symlink.
+    pub link_target: String,
+}
+
+impl ContainerPathStat {
+    const GO_MODE_DIR: u32 = 1 << 31;
+    const GO_MODE_SYMLINK: u32 = 1 << 27;
+    /// Directory, symlink, named pipe, socket, device, char device, irregular.
+    const GO_MODE_TYPE: u32 = Self::GO_MODE_DIR
+        | Self::GO_MODE_SYMLINK
+        | (1 << 25)
+        | (1 << 24)
+        | (1 << 26)
+        | (1 << 21)
+        | (1 << 19);
+
+    pub fn is_dir(&self) -> bool {
+        self.mode & Self::GO_MODE_DIR != 0
+    }
+
+    pub fn is_symlink(&self) -> bool {
+        self.mode & Self::GO_MODE_SYMLINK != 0
+    }
+
+    pub fn is_regular(&self) -> bool {
+        self.mode & Self::GO_MODE_TYPE == 0
+    }
+
+    /// POSIX permission bits (`rwxrwxrwx`, setuid, setgid, sticky).
+    pub fn unix_mode(&self) -> u32 {
+        let mut mode = self.mode & 0o777;
+        if self.mode & (1 << 23) != 0 {
+            mode |= 0o4000;
+        }
+        if self.mode & (1 << 22) != 0 {
+            mode |= 0o2000;
+        }
+        if self.mode & (1 << 20) != 0 {
+            mode |= 0o1000;
+        }
+        mode
+    }
+
+    fn from_headers(headers: &[(String, String)]) -> io::Result<Self> {
+        let encoded = headers
+            .iter()
+            .find(|(name, _)| name == "x-docker-container-path-stat")
+            .map(|(_, value)| value.as_str())
+            .ok_or_else(|| {
+                io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "daemon response is missing X-Docker-Container-Path-Stat",
+                )
+            })?;
+        let raw = decode_base64_lenient(encoded)?;
+        let value: Value = serde_json::from_slice(&raw).map_err(|error| {
+            io::Error::new(
+                io::ErrorKind::InvalidData,
+                format!("invalid path stat JSON: {error}"),
+            )
+        })?;
+        let text = |key: &str| value[key].as_str().unwrap_or_default().to_owned();
+        Ok(Self {
+            name: text("name"),
+            size: value["size"].as_i64().unwrap_or(0),
+            mode: u32::try_from(value["mode"].as_u64().unwrap_or(0)).map_err(|_| {
+                io::Error::new(io::ErrorKind::InvalidData, "path stat mode out of range")
+            })?,
+            mtime: text("mtime"),
+            link_target: text("linkTarget"),
+        })
+    }
+}
+
+fn archive_request_path(id: &str, path: &str) -> String {
+    format!(
+        "/containers/{}/archive?path={}",
+        path_segment(id),
+        urlencoding_minimal(path)
+    )
+}
+
+/// Map archive endpoint statuses: 404 is `NotFound`, other failures carry the
+/// daemon message.
+fn archive_status_to_result(response: &Response, path: &str) -> io::Result<()> {
+    if response.ok() {
+        return Ok(());
+    }
+    let message = response.error_message();
+    let message = if message.is_empty() {
+        format!(
+            "{path}: archive request failed with HTTP {}",
+            response.status
+        )
+    } else {
+        message
+    };
+    let kind = match response.status {
+        404 => io::ErrorKind::NotFound,
+        400 => io::ErrorKind::InvalidInput,
+        _ => io::ErrorKind::Other,
+    };
+    Err(io::Error::new(kind, message))
+}
+
+/// Decode standard or URL-safe base64, padded or unpadded (Docker uses the
+/// URL-safe alphabet; tolerate both).
+fn decode_base64_lenient(input: &str) -> io::Result<Vec<u8>> {
+    let invalid = || io::Error::new(io::ErrorKind::InvalidData, "invalid base64 in path stat");
+    let mut out = Vec::with_capacity(input.len() * 3 / 4);
+    let (mut acc, mut bits) = (0_u32, 0_u32);
+    for byte in input.trim_end_matches('=').bytes() {
+        let value = match byte {
+            b'A'..=b'Z' => byte - b'A',
+            b'a'..=b'z' => byte - b'a' + 26,
+            b'0'..=b'9' => byte - b'0' + 52,
+            b'+' | b'-' => 62,
+            b'/' | b'_' => 63,
+            _ => return Err(invalid()),
+        };
+        acc = (acc << 6) | u32::from(value);
+        bits += 6;
+        if bits >= 8 {
+            bits -= 8;
+            out.push(u8::try_from((acc >> bits) & 0xff).map_err(|_| invalid())?);
+        }
+    }
+    Ok(out)
+}
+
 fn read_head(reader: &mut impl BufRead) -> io::Result<(u16, Option<usize>, bool)> {
+    let head = read_head_with_headers(reader)?;
+    Ok((head.status, head.len, head.chunked))
+}
+
+/// Parsed HTTP response head including lower-cased header names.
+struct ResponseHead {
+    status: u16,
+    len: Option<usize>,
+    chunked: bool,
+    headers: Vec<(String, String)>,
+}
+
+fn read_head_with_headers(reader: &mut impl BufRead) -> io::Result<ResponseHead> {
     let mut line = String::new();
     reader.read_line(&mut line)?;
     let status = line
@@ -878,6 +1146,7 @@ fn read_head(reader: &mut impl BufRead) -> io::Result<(u16, Option<usize>, bool)
         .and_then(|s| s.parse().ok())
         .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "bad status line"))?;
     let (mut len, mut chunked) = (None, false);
+    let mut headers = Vec::new();
     loop {
         line.clear();
         if reader.read_line(&mut line)? == 0 {
@@ -888,16 +1157,23 @@ fn read_head(reader: &mut impl BufRead) -> io::Result<(u16, Option<usize>, bool)
             break;
         }
         if let Some((key, value)) = trimmed.split_once(':') {
-            match key.to_ascii_lowercase().as_str() {
+            let key = key.to_ascii_lowercase();
+            match key.as_str() {
                 "content-length" => len = value.trim().parse().ok(),
                 "transfer-encoding" => {
                     chunked = value.trim().eq_ignore_ascii_case("chunked");
                 }
                 _ => {}
             }
+            headers.push((key, value.trim().to_owned()));
         }
     }
-    Ok((status, len, chunked))
+    Ok(ResponseHead {
+        status,
+        len,
+        chunked,
+        headers,
+    })
 }
 
 fn read_chunk(reader: &mut impl BufRead) -> io::Result<Option<Vec<u8>>> {
@@ -1624,5 +1900,221 @@ mod tests {
         assert!(request.starts_with("POST /kbox/containers/cidsecret01/ephemeral-env"));
         assert!(request.contains("\"env\":[\"API_TOKEN=fixture-only\"]"));
         let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    fn b64_url(input: &[u8]) -> String {
+        const ALPHABET: &[u8; 64] =
+            b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+        let mut out = String::new();
+        for chunk in input.chunks(3) {
+            let n = chunk
+                .iter()
+                .enumerate()
+                .fold(0_u32, |acc, (i, b)| acc | (u32::from(*b) << (16 - 8 * i)));
+            for i in 0..=chunk.len() {
+                out.push(ALPHABET[((n >> (18 - 6 * i)) & 63) as usize] as char);
+            }
+        }
+        out
+    }
+
+    fn stat_header(name: &str, size: i64, mode: u64, link: &str) -> String {
+        let json = json!({"name": name, "size": size, "mode": mode, "mtime": "2026-01-02T03:04:05Z", "linkTarget": link});
+        format!(
+            "X-Docker-Container-Path-Stat: {}\r\n",
+            b64_url(json.to_string().as_bytes())
+        )
+    }
+
+    /// One-shot fake daemon: reads the full request (head plus Content-Length
+    /// body), records it, and writes `respond(&request_head)`.
+    fn serve_archive_once(
+        tag: &str,
+        respond: impl FnOnce(&str) -> Vec<u8> + Send + 'static,
+    ) -> (
+        std::path::PathBuf,
+        std::path::PathBuf,
+        thread::JoinHandle<(String, Vec<u8>)>,
+    ) {
+        let dir = std::env::temp_dir().join(format!("ke{}{tag}", std::process::id() % 100_000));
+        let _ = std::fs::remove_dir_all(&dir);
+        std::fs::create_dir_all(&dir).unwrap();
+        let socket = dir.join("a.sock");
+        let listener = UnixListener::bind(&socket).unwrap();
+        let handle = thread::spawn(move || {
+            let (mut stream, _) = listener.accept().unwrap();
+            let mut raw = Vec::new();
+            let mut buf = [0_u8; 4096];
+            let (head_end, content_length) = loop {
+                let n = stream.read(&mut buf).unwrap();
+                raw.extend_from_slice(&buf[..n]);
+                if let Some(pos) = raw.windows(4).position(|w| w == b"\r\n\r\n") {
+                    let head = String::from_utf8_lossy(&raw[..pos]).to_ascii_lowercase();
+                    let len = head
+                        .lines()
+                        .find_map(|l| l.strip_prefix("content-length:"))
+                        .and_then(|v| v.trim().parse::<usize>().ok())
+                        .unwrap_or(0);
+                    break (pos + 4, len);
+                }
+            };
+            while raw.len() < head_end + content_length {
+                let n = stream.read(&mut buf).unwrap();
+                raw.extend_from_slice(&buf[..n]);
+            }
+            let head = String::from_utf8_lossy(&raw[..head_end]).into_owned();
+            let body = raw[head_end..].to_vec();
+            stream.write_all(&respond(&head)).unwrap();
+            (head, body)
+        });
+        (dir, socket, handle)
+    }
+
+    fn http_response(status: u16, extra: &str, body: &[u8]) -> Vec<u8> {
+        let mut out = format!(
+            "HTTP/1.1 {status} X\r\nContent-Length: {}\r\nConnection: close\r\n{extra}\r\n",
+            body.len()
+        )
+        .into_bytes();
+        out.extend_from_slice(body);
+        out
+    }
+
+    #[test]
+    fn decode_base64_accepts_url_safe_and_standard_alphabets() {
+        assert_eq!(decode_base64_lenient("aGk_Pz4-").unwrap(), b"hi??>>");
+        assert_eq!(decode_base64_lenient("aGk/Pz4+").unwrap(), b"hi??>>");
+        assert_eq!(decode_base64_lenient("aGk=").unwrap(), b"hi");
+        assert_eq!(decode_base64_lenient("aGk").unwrap(), b"hi");
+        assert!(decode_base64_lenient("a*k").is_err());
+    }
+
+    #[test]
+    fn path_stat_classifies_go_file_modes() {
+        let stat = |mode: u32| ContainerPathStat {
+            name: "x".into(),
+            size: 0,
+            mode,
+            mtime: String::new(),
+            link_target: String::new(),
+        };
+        assert!(stat(0o644).is_regular());
+        assert!(!stat(0o644).is_dir());
+        assert!(stat((1 << 31) | 0o755).is_dir());
+        assert!(!stat((1 << 31) | 0o755).is_regular());
+        assert!(stat((1 << 27) | 0o777).is_symlink());
+        assert!(!stat((1 << 21) | 0o666).is_regular());
+        assert_eq!(stat((1 << 23) | 0o755).unix_mode(), 0o4755);
+        assert_eq!(stat((1 << 20) | 0o777).unix_mode(), 0o1777);
+    }
+
+    #[test]
+    fn fake_unix_http_container_path_stat_uses_head_and_parses_header() {
+        let header = stat_header("hello.txt", 5, 0o640, "");
+        let (dir, socket, server) = serve_archive_once("st", move |head| {
+            assert!(head.starts_with("HEAD /containers/cidarc/archive?path=%2Ftmp%2Fa%20b.txt "));
+            http_response(200, &header, b"")
+        });
+        let stat = DockerHttpClient::new(&socket)
+            .container_path_stat("cidarc", "/tmp/a b.txt")
+            .unwrap();
+        server.join().unwrap();
+        assert_eq!(stat.name, "hello.txt");
+        assert_eq!(stat.size, 5);
+        assert!(stat.is_regular());
+        assert_eq!(stat.unix_mode(), 0o640);
+        assert_eq!(stat.mtime, "2026-01-02T03:04:05Z");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_path_stat_maps_404_to_not_found() {
+        let (dir, socket, server) = serve_archive_once("s4", |_| http_response(404, "", b""));
+        let error = DockerHttpClient::new(&socket)
+            .container_path_stat("cidarc", "/missing")
+            .unwrap_err();
+        server.join().unwrap();
+        assert_eq!(error.kind(), io::ErrorKind::NotFound);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_path_stat_requires_the_stat_header() {
+        let (dir, socket, server) = serve_archive_once("sh", |_| http_response(200, "", b""));
+        let error = DockerHttpClient::new(&socket)
+            .container_path_stat("cidarc", "/etc/hosts")
+            .unwrap_err();
+        server.join().unwrap();
+        assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_get_archive_returns_stat_and_tar_body() {
+        let header = stat_header("f.txt", 3, 0o644, "");
+        let (dir, socket, server) = serve_archive_once("ga", move |head| {
+            assert!(head.starts_with("GET /containers/cidarc/archive?path=%2Fetc%2Ff.txt "));
+            http_response(200, &header, b"TARBYTES")
+        });
+        let (stat, body) = DockerHttpClient::new(&socket)
+            .container_get_archive("cidarc", "/etc/f.txt", 1024)
+            .unwrap();
+        server.join().unwrap();
+        assert_eq!(stat.name, "f.txt");
+        assert_eq!(body, b"TARBYTES");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_get_archive_enforces_body_limit() {
+        let header = stat_header("big", 9, 0o644, "");
+        let (dir, socket, server) =
+            serve_archive_once("gl", move |_| http_response(200, &header, &[7_u8; 64]));
+        let error = DockerHttpClient::new(&socket)
+            .container_get_archive("cidarc", "/big", 16)
+            .unwrap_err();
+        server.join().unwrap();
+        assert_eq!(error.kind(), io::ErrorKind::InvalidData);
+        assert!(error.to_string().contains("16-byte limit"));
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_put_archive_sends_raw_tar_body() {
+        let payload: Vec<u8> = (0..=255_u8).cycle().take(10_000).collect();
+        let (dir, socket, server) = serve_archive_once("pa", |head| {
+            assert!(head.starts_with("PUT /containers/cidarc/archive?path=%2Fdata "));
+            assert!(head.contains("Content-Type: application/x-tar"));
+            http_response(200, "", b"")
+        });
+        DockerHttpClient::new(&socket)
+            .container_put_archive("cidarc", "/data", &payload)
+            .unwrap();
+        let (head, body) = server.join().unwrap();
+        assert!(head.contains("Content-Length: 10000"));
+        assert_eq!(body, payload);
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn fake_unix_http_container_put_archive_surfaces_daemon_refusal() {
+        let (dir, socket, server) = serve_archive_once("pr", |_| {
+            http_response(404, "", br#"{"message":"no such directory"}"#)
+        });
+        let error = DockerHttpClient::new(&socket)
+            .container_put_archive("cidarc", "/nope", b"x")
+            .unwrap_err();
+        server.join().unwrap();
+        assert_eq!(error.kind(), io::ErrorKind::NotFound);
+        assert_eq!(error.to_string(), "no such directory");
+        let _ = std::fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn container_put_archive_rejects_oversized_archive_before_connecting() {
+        let client = DockerHttpClient::new("/nonexistent/kbox-archive.sock");
+        let tar = vec![0_u8; DockerHttpClient::MAX_ARCHIVE_BYTES + 1];
+        let error = client.container_put_archive("cid", "/", &tar).unwrap_err();
+        assert_eq!(error.kind(), io::ErrorKind::InvalidInput);
     }
 }

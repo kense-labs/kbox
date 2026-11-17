@@ -13,7 +13,8 @@ use oci_distribution::client::{
 };
 use oci_distribution::errors::{OciDistributionError, OciErrorCode};
 use oci_distribution::manifest::{
-    ImageIndexEntry, OciImageManifest, IMAGE_MANIFEST_MEDIA_TYPE, OCI_IMAGE_MEDIA_TYPE,
+    ImageIndexEntry, OciImageManifest, OciManifest, IMAGE_MANIFEST_LIST_MEDIA_TYPE,
+    IMAGE_MANIFEST_MEDIA_TYPE, OCI_IMAGE_INDEX_MEDIA_TYPE, OCI_IMAGE_MEDIA_TYPE,
 };
 use oci_distribution::secrets::RegistryAuth as OciRegistryAuth;
 use oci_distribution::{Client, Reference, RegistryOperation};
@@ -486,37 +487,20 @@ impl RegistryPuller {
         oci_ref: &Reference,
     ) -> Result<PulledImageManifest> {
         let auth = self.auth.to_oci_auth();
-        match self.client.pull_image_manifest(oci_ref, &auth).await {
-            Ok((_manifest, digest)) => {
-                // `pull_image_manifest` resolves an image index but returns only
-                // the parsed manifest. Re-serializing that value is not byte-for-
-                // byte stable and therefore cannot be stored under the registry's
-                // content digest. Fetch the selected manifest by immutable digest
-                // so the OCI layout contains the exact verified payload.
-                validated_digest_hex(&digest)?;
-                let selected = Reference::with_digest(
-                    oci_ref.registry().to_string(),
-                    oci_ref.repository().to_string(),
-                    digest.clone(),
-                );
-                let (bytes, _response_digest) = self
-                    .client
-                    .pull_manifest_raw(
-                        &selected,
-                        &auth,
-                        &[OCI_IMAGE_MEDIA_TYPE, IMAGE_MANIFEST_MEDIA_TYPE],
-                    )
-                    .await
-                    .map_err(|error| self.pull_error(reference, &error))?;
-                let manifest = parse_verified_pulled_manifest(&digest, &bytes)?;
-
-                Ok(PulledImageManifest {
-                    manifest,
-                    digest,
-                    bytes,
-                    used_basic: false,
-                })
-            }
+        // One tagged fetch (index or image). For multi-arch indexes, one more
+        // digest fetch for the selected platform manifest. Avoid the previous
+        // path that called `pull_image_manifest` (index + platform parse) and
+        // then `pull_manifest_raw` again for the same platform digest.
+        const ACCEPT: &[&str] = &[
+            OCI_IMAGE_MEDIA_TYPE,
+            IMAGE_MANIFEST_MEDIA_TYPE,
+            OCI_IMAGE_INDEX_MEDIA_TYPE,
+            IMAGE_MANIFEST_LIST_MEDIA_TYPE,
+        ];
+        match self.client.pull_manifest_raw(oci_ref, &auth, ACCEPT).await {
+            Ok((bytes, digest)) => self
+                .resolve_pulled_manifest_bytes(reference, oci_ref, &auth, bytes, digest, false)
+                .await,
             Err(first_error)
                 if is_unauthorized_registry_error(&first_error)
                     && self.auth.basic_credentials().is_some() =>
@@ -548,6 +532,74 @@ impl RegistryPuller {
                 })
             }
             Err(error) => Err(self.pull_error(reference, &error)),
+        }
+    }
+
+    async fn resolve_pulled_manifest_bytes(
+        &self,
+        reference: &ImageReference,
+        oci_ref: &Reference,
+        auth: &OciRegistryAuth,
+        bytes: Vec<u8>,
+        digest: String,
+        used_basic: bool,
+    ) -> Result<PulledImageManifest> {
+        let parsed: OciManifest = serde_json::from_slice(&bytes).map_err(|error| {
+            BoxError::RegistryError {
+                registry: reference.registry.clone(),
+                message: format!("Failed to parse pulled manifest: {error}"),
+            }
+        })?;
+        match parsed {
+            OciManifest::Image(manifest) => {
+                let verified = parse_verified_pulled_manifest(&digest, &bytes)?;
+                debug_assert_eq!(verified.schema_version, manifest.schema_version);
+                Ok(PulledImageManifest {
+                    manifest: verified,
+                    digest,
+                    bytes,
+                    used_basic,
+                })
+            }
+            OciManifest::ImageIndex(index) => {
+                let resolver = platform_resolver_for(self.target_arch.clone());
+                let selected = resolver(&index.manifests).ok_or_else(|| {
+                    BoxError::RegistryError {
+                        registry: reference.registry.clone(),
+                        message: format!(
+                            "No linux/{} manifest in image index for {}",
+                            self.target_arch, reference
+                        ),
+                    }
+                })?;
+                validated_digest_hex(&selected)?;
+                let selected_ref = Reference::with_digest(
+                    oci_ref.registry().to_string(),
+                    oci_ref.repository().to_string(),
+                    selected.clone(),
+                );
+                let (platform_bytes, platform_digest) = self
+                    .client
+                    .pull_manifest_raw(
+                        &selected_ref,
+                        auth,
+                        &[OCI_IMAGE_MEDIA_TYPE, IMAGE_MANIFEST_MEDIA_TYPE],
+                    )
+                    .await
+                    .map_err(|error| self.pull_error(reference, &error))?;
+                let digest = if platform_digest.is_empty() {
+                    selected
+                } else {
+                    platform_digest
+                };
+                let manifest = parse_verified_pulled_manifest(&digest, &platform_bytes)?;
+                Ok(PulledImageManifest {
+                    manifest,
+                    digest,
+                    bytes: platform_bytes,
+                    used_basic,
+                })
+            }
         }
     }
 

@@ -111,18 +111,23 @@ impl SandboxLocalExecutionBackend {
         &self,
         allow_spawn: bool,
     ) -> ExecutionManagerResult<kbox_sandbox_engine::DockerHttpClient> {
-        let socket = if allow_spawn {
+        let socket_path = kbox_sandbox_engine::docker_socket_path(&self.home_dir);
+        // Production daemons write daemon.pid. If that process is dead, clear
+        // the stale socket and respawn even for exec/inspect so live boxes do
+        // not fail closed with ConnectionRefused after an engine crash.
+        // Hermetic fakes (socket, no pidfile) are not reaped.
+        let reaped = kbox_sandbox_engine::reap_stale_daemon_socket(&socket_path);
+        let socket = if allow_spawn || reaped {
             kbox_sandbox_engine::ensure_daemon(&self.home_dir)
                 .map_err(ExecutionManagerError::Unavailable)?
         } else {
-            let socket = kbox_sandbox_engine::docker_socket_path(&self.home_dir);
-            if !socket.exists() {
+            if !socket_path.exists() {
                 return Err(ExecutionManagerError::Unavailable(format!(
                     "sandbox engine daemon unreachable at {}",
-                    socket.display()
+                    socket_path.display()
                 )));
             }
-            socket
+            socket_path
         };
         let client = kbox_sandbox_engine::DockerHttpClient::new(socket);
         client

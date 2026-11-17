@@ -14,7 +14,9 @@ use std::path::{Path, PathBuf};
 
 #[cfg(unix)]
 pub use docker_http::{ContainerPathStat, DockerHttpClient, ExecHijack, HijackOutput};
-pub use ensure_daemon::{autostart_enabled, ensure_daemon, resolve_daemon_binary};
+pub use ensure_daemon::{
+    autostart_enabled, ensure_daemon, reap_stale_daemon_socket, resolve_daemon_binary,
+};
 
 /// Default product state directory name under `$HOME` (matches engine flavor).
 pub const STATE_DIR_NAME: &str = ".kbox";

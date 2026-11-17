@@ -10,6 +10,12 @@ static guest-init and the host CLI/shim from the current checkout, packages only
 the native libraries staged by that build, and signs the shim with the checked-in
 Hypervisor entitlement. It does not reuse the user's installed runtime.
 
+On Linux x86_64 (including Windows WSL2), run `scripts/package-linux-x86_64.sh`.
+The archive stem is `kbox-<version>-windows-wsl-x86_64` and ships the Sandbox
+default companions (`kbox`, `kbox-sandbox-engine`, `kbox-sandbox-init`) with
+`scripts/install-package-linux-x86_64.sh` as `install.sh`. It does not claim a
+native win32/WHPX package or MicroVM/libkrun companions.
+
 Each archive retains `VERSION`, `build-info.json` and `SHA256SUMS`, including
 source identity, native source commits and exact companion checksums. The local
 installer verifies companions and architecture before changing runtime files.

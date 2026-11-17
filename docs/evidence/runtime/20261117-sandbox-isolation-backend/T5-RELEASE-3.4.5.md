@@ -2,7 +2,8 @@
 
 Date: 2026-11-17T16:20Z  
 Hosts: darwin arm64 · Windows 4090 WSL2 Ubuntu 24.04  
-Branch: `main` (P17)  
+Branch: `main` (P17) · commit `de97310d` · tag `v3.4.5`  
+Release: https://github.com/kense-labs/kbox/releases/tag/v3.4.5  
 ≠Pass · ≠notarize · ≠native win32 Sandbox
 
 ## Intent

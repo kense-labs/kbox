@@ -3,7 +3,7 @@ name = "kbox-sandbox-proto"
 description = "Wire protocol between the KBox host and guest"
 version.workspace = true
 edition.workspace = true
-license = "Apache-2.0"
+license = "MIT"
 publish = false
 
 [dependencies]

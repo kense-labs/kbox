@@ -1,10 +1,8 @@
 # Sandbox engine provenance
 
-Vendored Apache-2.0 sandbox engine sources at commit `2d6c2d6`, fused into kbox
-as the sandbox isolation backend. Each crate under this directory retains a
-`LICENSE` and third-party `NOTICE` (headers rewritten for kbox sandbox naming).
+Fused sandbox isolation backend under `crates/box/sandbox/*`, licensed MIT
+with the rest of this repository. Historical import commit: `2d6c2d6`.
 
-Excluded from the vendor copy: upstream marketing brand assets, packaging
-installer chrome, and the native window UI (stubbed under `engine/src/ui`).
-
-Do not treat this note as a product Pass claim.
+Each crate keeps a `LICENSE` (MIT) and a third-party `NOTICE` for bundled
+dependency attributions. The guest Linux kernel remains a separate GPL-2.0
+work; see `guest/kernel/SOURCE_OFFER.md`.

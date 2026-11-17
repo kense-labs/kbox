@@ -1,9 +1,9 @@
 [package]
 name = "kbox-sandbox-engine"
-description = "KBox sandbox isolation engine (vendored Apache-2.0 upstream; UI excluded)"
+description = "KBox sandbox isolation engine"
 version.workspace = true
 edition.workspace = true
-license = "Apache-2.0"
+license = "MIT"
 publish = false
 
 [lib]

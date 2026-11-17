@@ -1,7 +1,7 @@
 KBox sandbox third-party notices
 
-KBox sandbox is licensed under Apache-2.0. This file contains the licence and
-attribution notices for code bundled with or downloaded by KBox sandbox. The guest
+KBox sandbox is licensed under the MIT License. This file contains licence and
+attribution notices for third-party code bundled with or downloaded by KBox sandbox. The guest
 Linux kernel is a separate GPL-2.0-only work; its source offer follows the
 third-party licence texts below.
 

@@ -3,7 +3,7 @@ name = "kbox-sandbox-share-proto"
 description = "Wire protocol between `kbox share` and the KBox Sandbox Share edge"
 version.workspace = true
 edition.workspace = true
-license = "Apache-2.0"
+license = "MIT"
 publish = false
 
 [dependencies]

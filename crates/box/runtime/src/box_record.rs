@@ -420,8 +420,10 @@ pub enum ManagedRuntimeRoute {
     /// Compatibility marker for records created before explicit routing.
     #[default]
     Unspecified,
-    /// Box's existing in-process VM/Sandbox ownership path.
+    /// Box's existing in-process MicroVM ownership path (libkrun).
     BoxVm,
+    /// Fused sandbox isolation engine (Spec050; debranded upstream engine).
+    Sandbox,
     /// The public Kbox OCI SDK and its out-of-process host service.
     OciSdk,
 }
@@ -561,6 +563,14 @@ impl ManagedExecutionMetadata {
         self.runtime_route == ManagedRuntimeRoute::OciSdk || self.oci_runtime.is_some()
     }
 
+    /// Whether reconciliation must not treat a missing Box-owned host PID as
+    /// workload death (OCI SDK and fused sandbox keep execution identity in
+    /// the provider/daemon, not a MicroVM shim PID).
+    #[must_use]
+    pub fn skips_host_pid_reconcile(&self) -> bool {
+        self.is_oci_routed() || self.runtime_route == ManagedRuntimeRoute::Sandbox
+    }
+
     /// Validate deserialized metadata before it participates in reconciliation.
     pub fn validate(&self) -> kbox_core::Result<()> {
         if let Some(prewarm) = &self.prewarm {
@@ -597,9 +607,12 @@ impl ManagedExecutionMetadata {
                 .map_err(|error| kbox_core::BoxError::StateError(error.to_string()))?;
         }
         if let Some(binding) = &self.oci_runtime {
-            if self.runtime_route == ManagedRuntimeRoute::BoxVm {
+            if matches!(
+                self.runtime_route,
+                ManagedRuntimeRoute::BoxVm | ManagedRuntimeRoute::Sandbox
+            ) {
                 return Err(kbox_core::BoxError::StateError(
-                    "Box VM-routed execution contains an Kbox OCI binding".to_string(),
+                    "Box VM/sandbox-routed execution contains an Kbox OCI binding".to_string(),
                 ));
             }
             binding
@@ -999,6 +1012,32 @@ mod tests {
         legacy.as_object_mut().unwrap().remove("runtime_route");
         let decoded: ManagedExecutionMetadata = serde_json::from_value(legacy).unwrap();
         assert_eq!(decoded.runtime_route, ManagedRuntimeRoute::Unspecified);
+        assert!(!decoded.is_oci_routed());
+    }
+
+    #[test]
+    fn managed_runtime_route_sandbox_round_trips_without_oci_claim() {
+        let mut metadata = ManagedExecutionMetadata::new(
+            OperationId::new("create-op-sandbox").unwrap(),
+            ExecutionGeneration::INITIAL,
+            CreateExecutionRequest {
+                external_sandbox_id: "sandbox-engine".to_string(),
+                config: kbox_core::BoxConfig {
+                    image: "alpine:latest".to_string(),
+                    ..Default::default()
+                },
+                labels: Default::default(),
+                policy: Default::default(),
+                rootfs_snapshot_id: None,
+            },
+        )
+        .unwrap();
+        metadata.runtime_route = ManagedRuntimeRoute::Sandbox;
+        assert!(!metadata.is_oci_routed());
+        let encoded = serde_json::to_value(&metadata).unwrap();
+        assert_eq!(encoded["runtime_route"], "sandbox");
+        let decoded: ManagedExecutionMetadata = serde_json::from_value(encoded).unwrap();
+        assert_eq!(decoded.runtime_route, ManagedRuntimeRoute::Sandbox);
         assert!(!decoded.is_oci_routed());
     }
 

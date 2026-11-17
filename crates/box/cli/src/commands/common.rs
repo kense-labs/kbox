@@ -33,6 +33,25 @@ impl VirtiofsCacheMode {
     }
 }
 
+/// Spec050 isolation boundary for Box create/run (product default: sandbox).
+#[derive(Clone, Copy, Debug, PartialEq, Eq, ValueEnum, Default)]
+pub enum IsolationBoundaryArg {
+    /// Fused sandbox engine (default).
+    #[default]
+    Sandbox,
+    /// Higher isolation via libkrun MicroVM.
+    Microvm,
+}
+
+impl IsolationBoundaryArg {
+    pub(crate) fn to_execution_boundary(self) -> kbox_core::ExecutionBoundary {
+        match self {
+            Self::Sandbox => kbox_core::ExecutionBoundary::Sandbox,
+            Self::Microvm => kbox_core::ExecutionBoundary::Microvm,
+        }
+    }
+}
+
 /// Resolve the optional Docker-compatible CLI network selector.
 pub(crate) fn resolve_network(value: Option<&str>) -> NetworkMode {
     match value {
@@ -239,6 +258,10 @@ pub struct CommonBoxArgs {
     /// Preserve filesystem changes across stop/start cycles
     #[arg(long)]
     pub persistent: bool,
+
+    /// Isolation boundary: `sandbox` (default) or `microvm` (libkrun).
+    #[arg(long = "isolation", value_enum, default_value_t = IsolationBoundaryArg::Sandbox)]
+    pub isolation: IsolationBoundaryArg,
 }
 
 /// Parse KEY=VALUE pairs into a HashMap.
@@ -966,6 +989,7 @@ mod tests {
             oom_kill_disable: false,
             oom_score_adj: None,
             persistent: false,
+            isolation: IsolationBoundaryArg::Sandbox,
         }
     }
 

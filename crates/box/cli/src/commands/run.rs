@@ -469,7 +469,7 @@ async fn run_tty(mut ctx: RunContext, args: &RunArgs) -> Result<(), Box<dyn std:
         cols,
         rows,
     };
-    let exit_code = if run_context_uses_oci(&ctx) {
+    let exit_code = if run_context_uses_managed_provider(&ctx) {
         let process = ctx
             .manager
             .start_pty(&ctx.execution_id, ctx.generation, request)
@@ -510,11 +510,11 @@ mod foreground;
 #[cfg(test)]
 use foreground::{
     foreground_completion_message, foreground_exit_code, foreground_health_stop_reason,
-    foreground_workload_exit_code, wait_for_foreground_log_drain, ForegroundStopReason,
-    FOREGROUND_EXIT_POLL, FOREGROUND_HEALTH_POLL, FOREGROUND_LOG_DRAIN_POLL,
+    foreground_workload_exit_code, record_uses_managed_provider, wait_for_foreground_log_drain,
+    ForegroundStopReason, FOREGROUND_EXIT_POLL, FOREGROUND_HEALTH_POLL, FOREGROUND_LOG_DRAIN_POLL,
     FOREGROUND_LOG_DRAIN_QUIET, FOREGROUND_SIGINT, FOREGROUND_SIGTERM,
 };
-use foreground::{run_context_uses_oci, run_foreground};
+use foreground::{run_context_uses_managed_provider, run_foreground};
 
 // ============================================================================
 // Shared helpers

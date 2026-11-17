@@ -15,11 +15,35 @@ BUILD=$(mktemp -d "$DIST/.package.XXXXXX")
 trap 'rm -rf "$BUILD"' EXIT
 
 cargo zigbuild --locked --profile release-dist --target aarch64-unknown-linux-musl -p kbox-guest-init
-cargo build --locked --profile release-dist -p kbox-cli -p kbox-shim
+cargo build --locked --profile release-dist -p kbox-cli -p kbox-shim -p kbox-sandbox-engine
 mkdir -p "$BUILD/$STEM/bin" "$BUILD/$STEM/lib"
 PKG="$BUILD/$STEM"
 cp target/release-dist/kbox target/release-dist/kbox-shim "$PKG/bin/"
 cp target/aarch64-unknown-linux-musl/release-dist/kbox-guest-init "$PKG/bin/"
+# Spec050 fused sandbox engine — required (product default is Sandbox).
+[[ -x target/release-dist/kbox-sandbox-engine ]] || {
+  echo 'package-macos-arm64: missing target/release-dist/kbox-sandbox-engine (Sandbox is the product default)' >&2
+  exit 1
+}
+cp target/release-dist/kbox-sandbox-engine "$PKG/bin/"
+codesign --force --sign - --entitlements crates/box/sandbox/engine/sandbox.entitlements \
+  "$PKG/bin/kbox-sandbox-engine"
+GUEST_OUT="$ROOT/guest/out"
+[[ -f "$GUEST_OUT/Image" && -f "$GUEST_OUT/initramfs.cpio" ]] || {
+  echo "package-macos-arm64: guest/out incomplete (need Image + initramfs.cpio under $GUEST_OUT)" >&2
+  exit 1
+}
+mkdir -p "$PKG/share/kbox/sandbox-guest"
+cp "$GUEST_OUT/Image" "$GUEST_OUT/initramfs.cpio" "$PKG/share/kbox/sandbox-guest/"
+if [[ -f "$GUEST_OUT/data.img.tgz" ]]; then
+  cp "$GUEST_OUT/data.img.tgz" "$PKG/share/kbox/sandbox-guest/"
+elif [[ -f "$GUEST_OUT/data.img" ]]; then
+  # Sparse tarball keeps the 64 GiB template small in the archive.
+  tar -C "$GUEST_OUT" -czSf "$PKG/share/kbox/sandbox-guest/data.img.tgz" data.img
+else
+  echo 'package-macos-arm64: guest/out missing data.img(.tgz); sandbox guest incomplete' >&2
+  exit 1
+fi
 for name in libkrun.1.17.0.dylib libkrunfw.5.dylib; do
   cp "target/release-dist/$name" "$PKG/lib/$name"
 done

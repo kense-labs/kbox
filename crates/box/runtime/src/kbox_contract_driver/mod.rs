@@ -41,9 +41,10 @@ use tokio::sync::OnceCell;
 
 use crate::local_execution::TransientRegistryAuthBroker;
 use crate::tee::AttestationPolicy;
-#[cfg(any(test, feature = "runtime-provider-qualification"))]
-use crate::LocalExecutionBackend;
-use crate::{BoxRecord, LocalExecutionManager, VmLocalExecutionBackend};
+use crate::{
+    BoxRecord, LocalExecutionBackend, LocalExecutionBackendRouter, LocalExecutionManager,
+    OciMigrationPolicy, SandboxLocalExecutionBackend, VmLocalExecutionBackend,
+};
 
 use self::artifact::ArtifactStorageOwner;
 use self::attestation::AttestationArtifactOwner;
@@ -130,21 +131,26 @@ pub struct BoxRuntimeDriver {
 }
 
 impl BoxRuntimeDriver {
-    /// Create a Runtime driver backed by Box MicroVM isolation.
+    /// Create a Runtime driver backed by the product-default Sandbox isolation.
     ///
-    /// Shared-kernel execution is never selected as an automatic fallback.
+    /// Shared-kernel / OCI migration is never selected as an automatic fallback.
+    /// Callers that need libkrun must pass [`ExecutionBoundary::Microvm`]
+    /// explicitly via [`Self::new_with_boundary`].
     pub fn new(config: BoxRuntimeDriverConfig) -> RuntimeResult<Self> {
-        Self::new_with_boundary(config, ExecutionBoundary::Microvm)
+        Self::new_with_boundary(config, ExecutionBoundary::default())
     }
 
     /// Create a Runtime driver that explicitly supports AMD SEV-SNP
     /// confidential MicroVMs in addition to ordinary MicroVM sandboxes.
+    ///
+    /// Confidential TEE always pins [`ExecutionBoundary::Microvm`]; it must
+    /// not inherit the product Sandbox default.
     pub fn new_confidential(
         config: BoxRuntimeDriverConfig,
         sev_snp: BoxRuntimeSevSnpConfig,
     ) -> RuntimeResult<Self> {
         validate_sev_snp_config(&sev_snp)?;
-        let mut driver = Self::new(config)?;
+        let mut driver = Self::new_with_boundary(config, ExecutionBoundary::Microvm)?;
         driver.sev_snp = Some(sev_snp);
         Ok(driver)
     }
@@ -421,12 +427,20 @@ fn production_manager(
     config: &BoxRuntimeDriverConfig,
 ) -> (LocalExecutionManager, TransientRegistryAuthBroker) {
     let broker = TransientRegistryAuthBroker::default();
-    let backend =
+    let legacy =
         VmLocalExecutionBackend::new(&config.home_dir).with_transient_registry_auth(broker.clone());
+    let legacy: Arc<dyn LocalExecutionBackend> = Arc::new(legacy);
+    // Spec050: attach fused sandbox backend. Driver ExecutionBoundary::Sandbox
+    // pins ManagedRuntimeRoute::Sandbox; Microvm remains the create default.
+    let router =
+        LocalExecutionBackendRouter::new(legacy.clone(), legacy, OciMigrationPolicy::LegacyOnly)
+            .with_sandbox(Arc::new(SandboxLocalExecutionBackend::new(
+                &config.home_dir,
+            )));
     let manager = LocalExecutionManager::new(
         config.home_dir.join("boxes.json"),
         &config.home_dir,
-        Arc::new(backend),
+        Arc::new(router),
     );
     (manager, broker)
 }

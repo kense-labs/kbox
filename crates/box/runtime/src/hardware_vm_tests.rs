@@ -670,9 +670,10 @@ fn latency_feature_stays_unavailable_until_every_series_is_inside_the_gate() {
 }
 
 #[test]
-fn removed_sandbox_selector_is_rejected_and_vm_only_features_stay_permitted() {
-    // MicroVM-only deleted the Sandbox isolation class: the old selector is
-    // now rejected as unknown instead of selecting SharedHostKernel.
+fn hardware_vm_sandbox_string_stays_rejected_while_vm_only_features_stay_permitted() {
+    // Spec050 restores Sandbox via ExecutionBoundary/ManagedRuntimeRoute under
+    // ExecutionManager. The hardware-vm string selector remains MicroVM-only:
+    // `"sandbox"` must not select SharedHostKernel here.
     assert_eq!(
         select_isolation(Some("sandbox"), Some("all")),
         Err(ContractError::UnknownIsolation)

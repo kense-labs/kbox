@@ -86,13 +86,14 @@ pub use box_record::{
 pub use box_state::BoxStateStore;
 pub use koci_sdk::{IO_READ_BYTES_METRIC, IO_WRITE_BYTES_METRIC};
 pub use local_execution::{
-    acquire_execution_lifecycle_lock, ExecutionLifecycleLock, FreshOwnerAdmission,
+    acquire_execution_lifecycle_lock, ensure_sandbox_docker_networks,
+    remove_sandbox_docker_networks, ExecutionLifecycleLock, FreshOwnerAdmission,
     LocalExecutionBackend, LocalExecutionBackendRouter, LocalExecutionHandle,
     LocalExecutionManager, LocalExecutionObservation, LocalExecutionOwnerFacts,
     LocalExecutionResourcePlan, LocalExecutionTermination, ManagedPrewarm,
     OciBundlePreparationContext, OciBundleProvider, OciLifecycleAdapter, OciLocalExecutionBackend,
     OciMigrationPolicy, OciPreparedExecution, OciRuntimeBinding, OciRuntimeEndpoint,
-    OciRuntimeLaunch, OwnedLifecycleOutcome, OwnedLifecycleRequest,
+    OciRuntimeLaunch, OwnedLifecycleOutcome, OwnedLifecycleRequest, SandboxLocalExecutionBackend,
     OCI_RUNTIME_BINDING_SCHEMA_VERSION,
 };
 

@@ -1,0 +1,18 @@
+[package]
+name = "kbox-sandbox-image"
+description = "OCI image references, registry pulls and the content-addressed blob store"
+version.workspace = true
+edition.workspace = true
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.11"
+tar = "0.4"
+# Pin to the ureq API surface the vendored upstream engine was written against.
+ureq = { version = "=3.5.0", default-features = false, features = ["rustls"] }
+
+[lints]
+workspace = true

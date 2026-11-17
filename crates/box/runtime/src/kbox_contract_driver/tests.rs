@@ -92,11 +92,11 @@ fn simulated_sev_snp() -> BoxRuntimeSevSnpConfig {
 }
 
 #[test]
-fn driver_defaults_to_microvm_without_shared_kernel_fallback() {
+fn driver_defaults_to_sandbox_without_shared_kernel_fallback() {
     let directory = tempfile::tempdir().unwrap();
     assert_eq!(
         driver(&directory).execution_boundary(),
-        ExecutionBoundary::Microvm
+        ExecutionBoundary::Sandbox
     );
 }
 
@@ -448,6 +448,26 @@ fn confidential_mapping_is_exact_and_never_changes_sandbox_requests() {
         Err(RuntimeError::UnsupportedCapabilities(missing))
             if missing == vec!["isolation:Confidential"]
     ));
+}
+
+#[test]
+fn mapping_pins_execution_boundary_for_sandbox_isolation() {
+    let sandbox_spec = spec(RuntimeUnitClass::Task);
+    assert_eq!(sandbox_spec.isolation, IsolationLevel::Sandbox);
+
+    let microvm = creation_request(&sandbox_spec, ExecutionBoundary::Microvm).unwrap();
+    assert_eq!(
+        microvm.config.execution_boundary,
+        ExecutionBoundary::Microvm
+    );
+    assert_eq!(microvm.config.tee, TeeConfig::None);
+
+    let sandbox = creation_request(&sandbox_spec, ExecutionBoundary::Sandbox).unwrap();
+    assert_eq!(
+        sandbox.config.execution_boundary,
+        ExecutionBoundary::Sandbox
+    );
+    assert_eq!(sandbox.config.tee, TeeConfig::None);
 }
 
 #[test]

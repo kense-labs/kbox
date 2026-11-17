@@ -48,6 +48,8 @@ runtime-provider-qualification = ["vm"]
 cap-std = { workspace = true }
 cap-fs-ext = { workspace = true }
 kbox-core = { version = "3.2", path = "../core" }
+# Spec050: fused sandbox engine lib surface (CLI/UI stay behind engine `cli`).
+kbox-sandbox-engine = { path = "../sandbox/engine", default-features = false }
 ktransport = { workspace = true }
 
 # Async runtime

@@ -157,9 +157,15 @@ fn validate_owned_paths(home_dir: &Path, record: &BoxRecord) -> ExecutionManager
 
     let internal_exec = expected_box_dir.join("sockets/exec.sock");
     let external_exec = runtime_socket_dir(home_dir, &record.id).join("exec.sock");
+    let sandbox_daemon = kbox_sandbox_engine::docker_socket_path(home_dir);
+    let sandbox_routed = record
+        .managed_execution
+        .as_ref()
+        .is_some_and(|meta| meta.runtime_route == crate::ManagedRuntimeRoute::Sandbox);
     if !record.exec_socket_path.as_os_str().is_empty()
         && record.exec_socket_path != internal_exec
         && record.exec_socket_path != external_exec
+        && !(sandbox_routed && record.exec_socket_path == sandbox_daemon)
     {
         return Err(ExecutionManagerError::Internal(format!(
             "managed execution {} has an unexpected exec endpoint {}",

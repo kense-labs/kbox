@@ -10,7 +10,8 @@ NAME=$(basename -- "$PREFIX")
 case "$NAME" in ''|.|..|/) fail "unsafe installation prefix" ;; esac
 [ "$(uname -s)/$(uname -m)" = Darwin/arm64 ] || fail "this archive requires macOS arm64"
 
-FILES='bin/kbox bin/kbox-shim bin/kbox-guest-init lib/libkrun.1.17.0.dylib lib/libkrun.1.dylib lib/libkrun.dylib lib/libkrunfw.5.dylib lib/libkrunfw.dylib install.sh VERSION build-info.json'
+# Spec050 sandbox companions are required: product default is Sandbox.
+FILES='bin/kbox bin/kbox-shim bin/kbox-guest-init bin/kbox-sandbox-engine lib/libkrun.1.17.0.dylib lib/libkrun.1.dylib lib/libkrun.dylib lib/libkrunfw.5.dylib lib/libkrunfw.dylib share/kbox/sandbox-guest/Image share/kbox/sandbox-guest/initramfs.cpio share/kbox/sandbox-guest/data.img.tgz install.sh VERSION build-info.json'
 [ -f "$SRC_DIR/SHA256SUMS" ] && [ ! -L "$SRC_DIR/SHA256SUMS" ] || fail "missing checksum manifest"
 for name in $FILES; do
   [ -f "$SRC_DIR/$name" ] || fail "missing companion: $name"
@@ -22,12 +23,13 @@ for pair in 'libkrun.1.dylib:libkrun.1.17.0.dylib' 'libkrun.dylib:libkrun.1.17.0
   name=${pair%%:*}; target=${pair#*:}
   [ -L "$SRC_DIR/lib/$name" ] && [ "$(readlink "$SRC_DIR/lib/$name")" = "$target" ] || fail "invalid library alias: $name"
 done
-for name in bin/kbox bin/kbox-shim bin/kbox-guest-init lib/libkrun.1.17.0.dylib lib/libkrunfw.5.dylib install.sh VERSION build-info.json; do
+for name in bin/kbox bin/kbox-shim bin/kbox-guest-init bin/kbox-sandbox-engine lib/libkrun.1.17.0.dylib lib/libkrunfw.5.dylib share/kbox/sandbox-guest/Image share/kbox/sandbox-guest/initramfs.cpio share/kbox/sandbox-guest/data.img.tgz install.sh VERSION build-info.json; do
   [ ! -L "$SRC_DIR/$name" ] || fail "unexpected symlink: $name"
 done
-for name in bin/kbox bin/kbox-shim lib/libkrun.1.17.0.dylib lib/libkrunfw.5.dylib; do
+for name in bin/kbox bin/kbox-shim bin/kbox-sandbox-engine lib/libkrun.1.17.0.dylib lib/libkrunfw.5.dylib; do
   lipo "$SRC_DIR/$name" -verify_arch arm64 || fail "wrong architecture: $name"
 done
+codesign --verify "$SRC_DIR/bin/kbox-sandbox-engine" || fail "invalid sandbox engine signature"
 case "$(file -b "$SRC_DIR/bin/kbox-guest-init")" in
   *'ELF 64-bit LSB'*'ARM aarch64'*'static'*) ;;
   *) fail "guest-init must be a static Linux aarch64 ELF" ;;
@@ -41,7 +43,7 @@ PREFIX="$PARENT/$NAME"
 [ ! -L "$PREFIX" ] || fail "unsafe installation prefix"
 # shortcut: rollback covers errors/signals, add durable recovery before crash-safe hot upgrades.
 STAGE=$(mktemp -d "$PARENT/.kbox-install.XXXXXX")
-ITEMS='bin lib install.sh VERSION build-info.json SHA256SUMS'
+ITEMS='bin lib share install.sh VERSION build-info.json SHA256SUMS'
 committed=0
 locked=0
 cleanup() {
@@ -71,7 +73,7 @@ cleanup() {
 }
 trap cleanup EXIT
 trap 'exit 1' INT TERM
-mkdir -p "$STAGE/payload/bin" "$STAGE/payload/lib" "$STAGE/backup"
+mkdir -p "$STAGE/payload/bin" "$STAGE/payload/lib" "$STAGE/payload/share/kbox/sandbox-guest" "$STAGE/backup"
 mkdir -p "$PREFIX"
 mkdir "$PREFIX/.install-lock" || fail "another installer owns this prefix"
 locked=1
@@ -79,11 +81,13 @@ for name in bin lib; do
   [ ! -L "$PREFIX/$name" ] || fail "runtime directory must not be a symlink: $name"
   if [ -d "$PREFIX/$name" ]; then cp -pPR "$PREFIX/$name/." "$STAGE/payload/$name/"; fi
 done
+if [ -d "$PREFIX/share" ]; then cp -pPR "$PREFIX/share/." "$STAGE/payload/share/"; fi
 for name in $FILES SHA256SUMS; do
   rm -f "$STAGE/payload/$name"
+  mkdir -p "$(dirname -- "$STAGE/payload/$name")"
   cp -pP "$SRC_DIR/$name" "$STAGE/payload/$name"
 done
-chmod +x "$STAGE/payload/bin/kbox" "$STAGE/payload/bin/kbox-shim" "$STAGE/payload/bin/kbox-guest-init" "$STAGE/payload/install.sh"
+chmod +x "$STAGE/payload/bin/kbox" "$STAGE/payload/bin/kbox-shim" "$STAGE/payload/bin/kbox-guest-init" "$STAGE/payload/bin/kbox-sandbox-engine" "$STAGE/payload/install.sh"
 for name in $ITEMS; do
   # Record the rollback obligation before the first rename.
   touch "$STAGE/changed-$name"
@@ -94,3 +98,5 @@ actual_version=$(K_HOME="$PREFIX" "$PREFIX/bin/kbox" version) || fail "installed
 [ "$actual_version" = "kbox version $(cat "$PREFIX/VERSION")" ] || fail "installed version does not match the archive"
 committed=1
 echo "Installed $actual_version at $PREFIX"
+echo "Sandbox engine: $PREFIX/bin/kbox-sandbox-engine"
+echo "Sandbox guest: $PREFIX/share/kbox/sandbox-guest"

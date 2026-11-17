@@ -8,6 +8,7 @@ mod args;
 mod lifecycle;
 mod operations;
 mod read;
+mod sandbox_boot;
 pub(crate) mod secrets;
 #[cfg(test)]
 mod tests;
@@ -365,74 +366,114 @@ async fn execute_up(
     prefetch_compose_images(&project.config).await?;
     let mut state = StateFile::load_default()?;
 
-    // Step 1: Create networks for MicroVM compose services.
+    // Step 1: Create networks for MicroVM compose services only.
+    // Spec050 Sandbox compose uses the fused engine's networking — do not claim
+    // MicroVM NetworkStore bridges (and never silent-downgrade to VmManager).
+    let default_net = project.default_network_name();
+    let sandbox_compose = project
+        .service_order
+        .first()
+        .and_then(|svc| project.build_box_config(svc, Some(&default_net)).ok())
+        .is_some_and(|cfg| {
+            matches!(
+                cfg.execution_boundary,
+                kbox_core::ExecutionBoundary::Sandbox
+            )
+        });
     let networks = project.required_networks();
     let net_store = NetworkStore::default_path()?;
     let mut created_networks = Vec::new();
+    let mut created_sandbox_networks = Vec::new();
     let mut started_services = Vec::new();
-    for (i, net_name) in networks.iter().enumerate() {
-        let existing_network = match net_store.get(net_name) {
-            Ok(network) => network,
-            Err(error) => {
-                return rollback_compose_up(
-                    &mut state,
-                    &started_services,
-                    &created_networks,
-                    error,
-                )
-                .await;
-            }
-        };
-        if let Some(config) = existing_network.as_ref() {
-            if let Err(error) = super::network::validate_attachable_network(config) {
-                return rollback_compose_up(
-                    &mut state,
-                    &started_services,
-                    &created_networks,
-                    error,
-                )
-                .await;
-            }
-        } else {
-            let subnet = format!("10.89.{}.0/24", 100 + i);
-            let config = match kbox_core::network::NetworkConfig::new(net_name, &subnet) {
-                Ok(config) => config,
+    // Step 2 prelude: home is needed for Sandbox docker network ensure.
+    let home = kbox_core::dirs_home();
+    if sandbox_compose {
+        println!("  [=] Sandbox compose: fused-engine Docker networks (skip MicroVM NetworkStore)");
+        if let Err(error) = kbox_runtime::ensure_sandbox_docker_networks(&home, &networks) {
+            return rollback_compose_up(
+                &mut state,
+                &started_services,
+                &created_networks,
+                &created_sandbox_networks,
+                error,
+            )
+            .await;
+        }
+        for net_name in &networks {
+            created_sandbox_networks.push(net_name.clone());
+            println!("  [+] Network {} (sandbox docker)", net_name);
+        }
+    } else {
+        for (i, net_name) in networks.iter().enumerate() {
+            let existing_network = match net_store.get(net_name) {
+                Ok(network) => network,
                 Err(error) => {
                     return rollback_compose_up(
                         &mut state,
                         &started_services,
                         &created_networks,
-                        format!("Failed to create network '{}': {}", net_name, error),
+                        &created_sandbox_networks,
+                        error,
                     )
                     .await;
                 }
             };
-            if let Err(error) = super::network::validate_attachable_network(&config) {
-                return rollback_compose_up(
-                    &mut state,
-                    &started_services,
-                    &created_networks,
-                    error,
-                )
-                .await;
+            if let Some(config) = existing_network.as_ref() {
+                if let Err(error) = super::network::validate_attachable_network(config) {
+                    return rollback_compose_up(
+                        &mut state,
+                        &started_services,
+                        &created_networks,
+                        &created_sandbox_networks,
+                        error,
+                    )
+                    .await;
+                }
+            } else {
+                let subnet = format!("10.89.{}.0/24", 100 + i);
+                let config = match kbox_core::network::NetworkConfig::new(net_name, &subnet) {
+                    Ok(config) => config,
+                    Err(error) => {
+                        return rollback_compose_up(
+                            &mut state,
+                            &started_services,
+                            &created_networks,
+                            &created_sandbox_networks,
+                            format!("Failed to create network '{}': {}", net_name, error),
+                        )
+                        .await;
+                    }
+                };
+                if let Err(error) = super::network::validate_attachable_network(&config) {
+                    return rollback_compose_up(
+                        &mut state,
+                        &started_services,
+                        &created_networks,
+                        &created_sandbox_networks,
+                        error,
+                    )
+                    .await;
+                }
+                if let Err(error) = net_store.create(config) {
+                    return rollback_compose_up(
+                        &mut state,
+                        &started_services,
+                        &created_networks,
+                        &created_sandbox_networks,
+                        error,
+                    )
+                    .await;
+                }
+                created_networks.push(net_name.clone());
+                println!("  [+] Network {} ({})", net_name, subnet);
             }
-            if let Err(error) = net_store.create(config) {
-                return rollback_compose_up(
-                    &mut state,
-                    &started_services,
-                    &created_networks,
-                    error,
-                )
-                .await;
-            }
-            created_networks.push(net_name.clone());
-            println!("  [+] Network {} ({})", net_name, subnet);
         }
     }
 
-    // Step 2: Boot services in dependency order
-    let default_net = project.default_network_name();
-    let home = kbox_core::dirs_home();
+    // Step 2: Boot services in dependency order.
+    // Sandbox: project default Bridge → fused-engine Docker network (backend
+    // also ensure+attach). MicroVM: NetworkStore bridges from Step 1.
+    let network_default = Some(default_net.as_str());
 
     println!(
         "Starting project '{}' ({} services)...",
@@ -444,7 +485,7 @@ async fn execute_up(
         let service = project.config.services.get(svc_name).ok_or_else(|| {
             format!("Service '{svc_name}' disappeared from the resolved Compose project")
         })?;
-        let mut desired_box_config = project.build_box_config(svc_name, Some(&default_net))?;
+        let mut desired_box_config = project.build_box_config(svc_name, network_default)?;
         // Hash the effective host paths so a Compose file is independent of
         // the caller's current working directory and stale generations are
         // recreated after this normalization is introduced. Named-volume and
@@ -478,6 +519,7 @@ async fn execute_up(
                         &mut state,
                         &started_services,
                         &created_networks,
+                        &created_sandbox_networks,
                         error,
                     )
                     .await;
@@ -511,6 +553,7 @@ async fn execute_up(
                     &mut state,
                     &started_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;
@@ -532,6 +575,7 @@ async fn execute_up(
                     &mut state,
                     &started_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;
@@ -546,6 +590,7 @@ async fn execute_up(
                     &mut state,
                     &started_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;
@@ -554,6 +599,117 @@ async fn execute_up(
         box_config.volumes = resolved_volumes.clone();
 
         let image = box_config.image.clone();
+        let box_name = format!("{}-{}", project_name, svc_name);
+        let svc = project.config.services.get(svc_name);
+        let healthcheck_disabled = project.healthcheck_disabled(svc_name);
+        let service_health_check = project.healthcheck(svc_name)?.map(|hc| HealthCheck {
+            cmd: hc.cmd,
+            interval_secs: hc.interval_secs,
+            timeout_secs: hc.timeout_secs,
+            retries: hc.retries,
+            start_period_secs: hc.start_period_secs,
+        });
+        let (restart_policy, max_restart_count) = service_restart_policy(svc_name, svc)
+            .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
+
+        // Spec050: Sandbox boundary must use LocalExecutionManager — never
+        // silent-boot MicroVM via VmManager. Secret projection uses private
+        // disk binds + engine Env expansion (see sandbox_backend); no VmManager.
+        if matches!(
+            box_config.execution_boundary,
+            kbox_core::ExecutionBoundary::Sandbox
+        ) {
+            let mut labels = svc.map(|s| s.labels.to_map()).unwrap_or_default();
+            labels.remove(LABEL_SECRET_ID);
+            labels.insert(LABEL_PROJECT.to_string(), project_name.to_string());
+            labels.insert(LABEL_SERVICE.to_string(), svc_name.to_string());
+            labels.insert(LABEL_CONFIG_HASH.to_string(), config_hash);
+            if let Some(lease) = secret_lease.as_ref() {
+                labels.insert(LABEL_SECRET_ID.to_string(), lease.identity().to_string());
+            }
+            let labels: std::collections::BTreeMap<String, String> = labels.into_iter().collect();
+            let health_check = if healthcheck_disabled {
+                None
+            } else {
+                service_health_check
+            };
+            let record =
+                match sandbox_boot::boot_sandbox_compose_service(sandbox_boot::SandboxComposeBoot {
+                    home: &home,
+                    box_config,
+                    box_name,
+                    labels,
+                    volume_names: volume_names.clone(),
+                    restart_policy,
+                    max_restart_count,
+                    health_check,
+                    healthcheck_disabled,
+                    stop_signal: None,
+                })
+                .await
+                {
+                    Ok(record) => record,
+                    Err(error) => {
+                        return rollback_compose_up(
+                            &mut state,
+                            &started_services,
+                            &created_networks,
+                            &created_sandbox_networks,
+                            error,
+                        )
+                        .await;
+                    }
+                };
+            print!("  [+] {} (image={}, sandbox)", svc_name, image);
+            let service_box = ServiceBox::from_record(&record);
+            state = match StateFile::load_default() {
+                Ok(state) => state,
+                Err(error) => {
+                    let rollback_services = rollback_with_current(&started_services, service_box);
+                    return rollback_compose_up(
+                        &mut state,
+                        &rollback_services,
+                        &created_networks,
+                        &created_sandbox_networks,
+                        error,
+                    )
+                    .await;
+                }
+            };
+            if let Err(error) = super::volume::attach_volumes(&volume_names, &record.id) {
+                let rollback_services = rollback_with_current(&started_services, service_box);
+                return rollback_compose_up(
+                    &mut state,
+                    &rollback_services,
+                    &created_networks,
+                    &created_sandbox_networks,
+                    error,
+                )
+                .await;
+            }
+            started_services.push(service_box);
+            if let Some(lease) = secret_lease.as_mut() {
+                lease.persist();
+            }
+            if record.health_check.is_some() {
+                if let Err(error) = crate::health::spawn_detached_health_checker(&record) {
+                    let rollback_services = started_services.clone();
+                    return rollback_compose_up(
+                        &mut state,
+                        &rollback_services,
+                        &created_networks,
+                        &created_sandbox_networks,
+                        error,
+                    )
+                    .await;
+                }
+            }
+            let _ = std::fs::create_dir_all(record.box_dir.join("logs"));
+            println!(" ✓");
+            continue;
+        }
+
+        // Explicit MicroVM (or TEE) path — VmManager.
         let record_env: HashMap<String, String> = box_config.extra_env.iter().cloned().collect();
         let record_hostname = box_config.hostname.clone();
         let record_add_hosts = box_config.add_hosts.clone();
@@ -562,10 +718,8 @@ async fn execute_up(
             kbox_core::NetworkMode::Bridge { network } => Some(network.clone()),
             _ => None,
         };
-
-        // Create VmManager and boot
+        let port_map: Vec<String> = svc.map(|s| s.ports.clone()).unwrap_or_default();
         let emitter = EventEmitter::new(256);
-        let box_name = format!("{}-{}", project_name, svc_name);
         let mut vm = VmManager::with_box_id(box_config, emitter, box_id.clone());
         if let Some(lease) = secret_lease.as_ref() {
             if let Err(error) = lease.configure_vm(&mut vm) {
@@ -573,6 +727,7 @@ async fn execute_up(
                     &mut state,
                     &started_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;
@@ -588,6 +743,7 @@ async fn execute_up(
                 &mut state,
                 &started_services,
                 &created_networks,
+                &created_sandbox_networks,
                 chain_partial_cleanup_error(
                     error,
                     cleanup_partial_service_box(
@@ -607,6 +763,7 @@ async fn execute_up(
                 &mut state,
                 &started_services,
                 &created_networks,
+                &created_sandbox_networks,
                 chain_partial_cleanup_error(
                     error,
                     cleanup_partial_service_box(
@@ -659,6 +816,7 @@ async fn execute_up(
                             &mut state,
                             &started_services,
                             &created_networks,
+                            &created_sandbox_networks,
                             chain_partial_cleanup_error(
                                 error,
                                 cleanup_partial_service_box(
@@ -685,6 +843,7 @@ async fn execute_up(
                 &mut state,
                 &started_services,
                 &created_networks,
+                &created_sandbox_networks,
                 chain_partial_cleanup_error(
                     format!("Failed to start service '{}': {}", svc_name, e),
                     cleanup_partial_service_box(
@@ -714,7 +873,6 @@ async fn execute_up(
             .and_then(|config| config.stop_signal.clone());
 
         // Build labels with compose metadata
-        let svc = project.config.services.get(svc_name);
         let mut labels = svc.map(|s| s.labels.to_map()).unwrap_or_default();
         labels.remove(LABEL_SECRET_ID);
         labels.insert(LABEL_PROJECT.to_string(), project_name.to_string());
@@ -724,18 +882,7 @@ async fn execute_up(
             labels.insert(LABEL_SECRET_ID.to_string(), lease.identity().to_string());
         }
 
-        // Get service config for extra fields
-        let port_map: Vec<String> = svc.map(|s| s.ports.clone()).unwrap_or_default();
-
         // Compose healthcheck overrides image HEALTHCHECK; disable blocks fallback.
-        let service_health_check = project.healthcheck(svc_name)?.map(|hc| HealthCheck {
-            cmd: hc.cmd,
-            interval_secs: hc.interval_secs,
-            timeout_secs: hc.timeout_secs,
-            retries: hc.retries,
-            start_period_secs: hc.start_period_secs,
-        });
-        let healthcheck_disabled = project.healthcheck_disabled(svc_name);
         let health_check = if healthcheck_disabled {
             None
         } else {
@@ -751,8 +898,6 @@ async fn execute_up(
         } else {
             "none".to_string()
         };
-        let (restart_policy, max_restart_count) = service_restart_policy(svc_name, svc)
-            .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
 
         let record = BoxRecord {
             id: box_id.clone(),
@@ -833,6 +978,7 @@ async fn execute_up(
                     &mut state,
                     &rollback_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;
@@ -843,13 +989,25 @@ async fn execute_up(
         // writes, clobbering them (the lost-registration → orphan-VM race).
         if let Err(error) = StateFile::add_record(record.clone()) {
             let rollback_services = rollback_with_current(&started_services, service_box);
-            return rollback_compose_up(&mut state, &rollback_services, &created_networks, error)
-                .await;
+            return rollback_compose_up(
+                &mut state,
+                &rollback_services,
+                &created_networks,
+                &created_sandbox_networks,
+                error,
+            )
+            .await;
         }
         if let Err(error) = super::volume::attach_volumes(&volume_names, &box_id) {
             let rollback_services = rollback_with_current(&started_services, service_box);
-            return rollback_compose_up(&mut state, &rollback_services, &created_networks, error)
-                .await;
+            return rollback_compose_up(
+                &mut state,
+                &rollback_services,
+                &created_networks,
+                &created_sandbox_networks,
+                error,
+            )
+            .await;
         }
         started_services.push(service_box);
         if let Some(lease) = secret_lease.as_mut() {
@@ -865,6 +1023,7 @@ async fn execute_up(
                     &mut state,
                     &rollback_services,
                     &created_networks,
+                    &created_sandbox_networks,
                     error,
                 )
                 .await;

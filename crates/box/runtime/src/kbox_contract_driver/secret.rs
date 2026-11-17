@@ -25,6 +25,7 @@ use crate::{BoxRecord, ImagePuller, ImageReference, ImageStore, RegistryAuth, Vm
 const MAX_SECRET_BYTES: usize = 1024 * 1024;
 const MAX_REGISTRY_USERNAME_BYTES: usize = 255;
 const MAX_REGISTRY_PASSWORD_BYTES: usize = 16 * 1024;
+#[cfg(target_os = "linux")]
 const TMPFS_MAGIC: libc::c_long = 0x0102_1994;
 
 /// Provider-neutral Secret resolver supplied by the authenticated caller.
@@ -129,26 +130,78 @@ pub enum BoxSecretMaterializationError {
 }
 
 /// Non-sensitive mount and guest-init metadata for one transient environment
-/// Secret set. Secret bytes are materialized separately under a private tmpfs.
+/// Secret set. Secret bytes are materialized separately under a private root.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct BoxSecretEnvironmentProjection {
     pub volumes: Vec<String>,
     pub manifest: String,
 }
 
+/// Backing store policy for transient Secret materialization.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SecretStoreBacking {
+    /// Linux tmpfs or macOS `ram://` — required for MicroVM staging.
+    Memory,
+    /// Provider-owned private disk directory — Sandbox bind mounts only.
+    PrivateDisk,
+}
+
 /// The sole Box-owned transient Secret filesystem boundary.
 ///
-/// Callers may create private scopes below one pre-mounted memory filesystem
-/// (Linux tmpfs, or a macOS `ram://` volume). Box never creates that backing
-/// mount or falls back to disk storage.
+/// MicroVM callers create private scopes below one pre-mounted memory
+/// filesystem (Linux tmpfs, or a macOS `ram://` volume). Sandbox compose may
+/// use [`Self::for_private_disk`] under `K_HOME` for fused-engine bind mounts;
+/// [`Self::configure_vm`] still requires a memory-backed root and never
+/// silently accepts disk material.
 #[derive(Debug, Clone)]
 pub struct BoxTransientSecretStore {
     root: PathBuf,
+    backing: SecretStoreBacking,
 }
 
 impl BoxTransientSecretStore {
     pub fn new(root: impl Into<PathBuf>) -> Self {
-        Self { root: root.into() }
+        Self {
+            root: root.into(),
+            backing: SecretStoreBacking::Memory,
+        }
+    }
+
+    /// Private provider-owned disk root for Sandbox bind projection.
+    ///
+    /// Does not require a memory-backed mount. Must not be passed to
+    /// [`Self::configure_vm`] (fail closed).
+    pub fn for_private_disk(root: impl Into<PathBuf>) -> Self {
+        Self {
+            root: root.into(),
+            backing: SecretStoreBacking::PrivateDisk,
+        }
+    }
+
+    /// Create (if needed) and validate a private disk Secret root, returning a
+    /// store keyed by the canonical path.
+    pub async fn prepare_private_disk_root(root: impl Into<PathBuf>) -> RuntimeResult<Self> {
+        let root = root.into();
+        if let Some(parent) = root.parent() {
+            tokio::fs::create_dir_all(parent)
+                .await
+                .map_err(secret_io_error)?;
+        }
+        ensure_private_directory(&root).await?;
+        let canonical = {
+            let root = root.clone();
+            tokio::task::spawn_blocking(move || root.canonicalize())
+                .await
+                .map_err(|error| {
+                    RuntimeError::ProviderUnavailable(format!(
+                        "Box Secret-root canonicalize task failed: {error}"
+                    ))
+                })?
+                .map_err(secret_io_error)?
+        };
+        let store = Self::for_private_disk(canonical);
+        store.require_ready().await?;
+        Ok(store)
     }
 
     pub fn root(&self) -> &Path {
@@ -156,12 +209,19 @@ impl BoxTransientSecretStore {
     }
 
     pub(crate) fn require_ready_sync(&self) -> RuntimeResult<()> {
-        validate_secret_root(&self.root)
+        self.validate_ready_sync()
+    }
+
+    fn validate_ready_sync(&self) -> RuntimeResult<()> {
+        match self.backing {
+            SecretStoreBacking::Memory => validate_secret_root(&self.root),
+            SecretStoreBacking::PrivateDisk => validate_private_disk_secret_root(&self.root),
+        }
     }
 
     pub async fn require_ready(&self) -> RuntimeResult<()> {
-        let root = self.root.clone();
-        tokio::task::spawn_blocking(move || validate_secret_root(&root))
+        let store = self.clone();
+        tokio::task::spawn_blocking(move || store.validate_ready_sync())
             .await
             .map_err(|error| {
                 RuntimeError::ProviderUnavailable(format!(
@@ -170,7 +230,7 @@ impl BoxTransientSecretStore {
             })?
     }
 
-    /// Create or reopen one private namespace inside the same validated tmpfs.
+    /// Create or reopen one private namespace inside the same validated root.
     pub async fn private_scope(&self, scope: &str) -> RuntimeResult<Self> {
         if scope.is_empty()
             || scope.len() > 64
@@ -183,7 +243,10 @@ impl BoxTransientSecretStore {
             ));
         }
         self.require_ready().await?;
-        let scoped = Self::new(self.root.join(scope));
+        let scoped = Self {
+            root: self.root.join(scope),
+            backing: self.backing,
+        };
         ensure_private_directory(scoped.root()).await?;
         scoped.require_ready().await?;
         Ok(scoped)
@@ -279,7 +342,7 @@ impl BoxTransientSecretStore {
         match std::fs::symlink_metadata(&self.root) {
             Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(()),
             Err(error) => return Err(secret_io_error(error)),
-            Ok(_) => validate_secret_root(&self.root)?,
+            Ok(_) => self.validate_ready_sync()?,
         }
         remove_secret_directory(&self.root, &directory)
     }
@@ -729,7 +792,32 @@ async fn sync_directory(path: &Path) -> RuntimeResult<()> {
     })?
 }
 
+fn validate_private_disk_secret_root(root: &Path) -> RuntimeResult<()> {
+    validate_secret_root_identity(root)?;
+    Ok(())
+}
+
 fn validate_secret_root(root: &Path) -> RuntimeResult<()> {
+    validate_secret_root_identity(root)?;
+    let path = std::ffi::CString::new(root.as_os_str().as_bytes())
+        .map_err(|_| RuntimeError::InvalidRequest("Box Secret root contains a NUL byte".into()))?;
+    let mut status = std::mem::MaybeUninit::<libc::statfs>::uninit();
+    // SAFETY: See the enclosing function's safety documentation.
+    if unsafe { libc::statfs(path.as_ptr(), status.as_mut_ptr()) } != 0 {
+        return Err(secret_io_error(std::io::Error::last_os_error()));
+    }
+    // SAFETY: `statfs` returned success above, so the `MaybeUninit<statfs>`
+    // output buffer was fully initialized by the kernel.
+    let status = unsafe { status.assume_init() };
+    if !secret_root_is_memory_backed(root, &status)? {
+        return Err(RuntimeError::ProviderUnavailable(
+            secret_root_memory_error().into(),
+        ));
+    }
+    Ok(())
+}
+
+fn validate_secret_root_identity(root: &Path) -> RuntimeResult<()> {
     validate_absolute_normalized(root, "Secret root")?;
     let metadata = std::fs::symlink_metadata(root).map_err(secret_io_error)?;
     if !metadata.file_type().is_dir() || metadata.file_type().is_symlink() {
@@ -750,21 +838,6 @@ fn validate_secret_root(root: &Path) -> RuntimeResult<()> {
         return Err(RuntimeError::ProviderUnavailable(
             "Box Secret root must be provider-owned, non-listable, and inaccessible to other users"
                 .into(),
-        ));
-    }
-    let path = std::ffi::CString::new(root.as_os_str().as_bytes())
-        .map_err(|_| RuntimeError::InvalidRequest("Box Secret root contains a NUL byte".into()))?;
-    let mut status = std::mem::MaybeUninit::<libc::statfs>::uninit();
-    // SAFETY: See the enclosing function's safety documentation.
-    if unsafe { libc::statfs(path.as_ptr(), status.as_mut_ptr()) } != 0 {
-        return Err(secret_io_error(std::io::Error::last_os_error()));
-    }
-    // SAFETY: `statfs` returned success above, so the `MaybeUninit<statfs>`
-    // output buffer was fully initialized by the kernel.
-    let status = unsafe { status.assume_init() };
-    if !secret_root_is_memory_backed(root, &status)? {
-        return Err(RuntimeError::ProviderUnavailable(
-            secret_root_memory_error().into(),
         ));
     }
     Ok(())
@@ -951,6 +1024,56 @@ mod tests {
         let file = store.root().join("a".repeat(64)).join("000.secret");
         assert_eq!(std::fs::read(&file).unwrap(), plaintext.as_bytes());
         assert_eq!(std::fs::metadata(&file).unwrap().mode() & 0o777, 0o400);
+
+        store.cleanup_identity(&identity).await.unwrap();
+        assert!(!file.exists());
+    }
+
+    #[cfg(unix)]
+    #[tokio::test]
+    async fn private_disk_store_projects_sandbox_binds_without_memory_mount() {
+        let directory = tempfile::tempdir().unwrap();
+        let store = BoxTransientSecretStore::prepare_private_disk_root(
+            directory.path().join("runtime-secrets"),
+        )
+        .await
+        .unwrap()
+        .private_scope("compose-sandbox")
+        .await
+        .unwrap();
+        let identity = format!("sha256:{}", "b".repeat(64));
+        let plaintext = "sandbox-compose-secret-fixture";
+
+        let projection = store
+            .materialize_environment(
+                &identity,
+                vec![(
+                    "API_TOKEN".into(),
+                    BoxSecretMaterial::new(plaintext.as_bytes().to_vec()).unwrap(),
+                )],
+            )
+            .await
+            .unwrap();
+
+        assert!(!format!("{projection:?}").contains(plaintext));
+        assert!(!projection.manifest.contains(plaintext));
+        assert!(
+            projection.volumes[0].contains("/.kbox-secrets/"),
+            "guest path must stay under reserved Secret root"
+        );
+        assert!(
+            projection.volumes[0].ends_with(":ro"),
+            "Secret binds must be read-only"
+        );
+        let file = store.root().join("b".repeat(64)).join("000.secret");
+        assert_eq!(std::fs::read(&file).unwrap(), plaintext.as_bytes());
+        assert_eq!(std::fs::metadata(&file).unwrap().mode() & 0o777, 0o400);
+
+        // Disk roots must not satisfy MicroVM memory staging.
+        assert!(
+            validate_secret_root(store.root()).is_err(),
+            "private disk Secret root must fail closed for MicroVM configure_vm"
+        );
 
         store.cleanup_identity(&identity).await.unwrap();
         assert!(!file.exists());

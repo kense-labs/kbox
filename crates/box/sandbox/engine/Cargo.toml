@@ -1,0 +1,74 @@
+[package]
+name = "kbox-sandbox-engine"
+description = "KBox sandbox isolation engine (vendored Apache-2.0 upstream; UI excluded)"
+version.workspace = true
+edition.workspace = true
+license = "Apache-2.0"
+publish = false
+
+[lib]
+name = "kbox_sandbox_engine"
+path = "src/lib.rs"
+
+[[bin]]
+name = "kbox-sandbox-engine"
+path = "src/main.rs"
+required-features = ["cli"]
+
+[features]
+# CLI/daemon/UI binary dependencies. The lib surface used by kbox-runtime
+# builds with `default-features = false` so heavy UI/network crates stay off
+# the adapter path.
+default = ["cli"]
+cli = [
+    "dep:kbox-sandbox-image",
+    "dep:kbox-sandbox-proto",
+    "dep:kbox-sandbox-share-proto",
+    "dep:sha2",
+    "dep:flate2",
+    "dep:ureq",
+    "dep:rustls",
+    "dep:webpki-roots",
+    "dep:rcgen",
+    "dep:regex-lite",
+    "dep:kbox-sandbox-vmm",
+]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# CLI/daemon only (see `cli` feature).
+kbox-sandbox-image = { path = "../image", optional = true }
+kbox-sandbox-proto = { path = "../proto", optional = true }
+kbox-sandbox-share-proto = { path = "../share-proto", optional = true }
+sha2 = { version = "0.11", optional = true }
+# gzip uploads to PUT /containers/{id}/archive (DDEV sends them).
+flate2 = { version = "1", optional = true }
+ureq = { version = "=3.5.0", default-features = false, features = ["rustls"], optional = true }
+# HTTPS for container names: the same rustls and ring ureq already brings in.
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
+# Roots for `kbox share`'s connection to the edge.
+webpki-roots = { version = "1", optional = true }
+rcgen = { version = "0.14", default-features = false, features = ["ring", "pem", "crypto"], optional = true }
+# The `name` filter is a regular expression in Docker (k3d sends `^[/]?name$`).
+# regex-lite: RE2 syntax like Go's regexp, without the Unicode tables' size.
+regex-lite = { version = "0.1", optional = true }
+
+[target.'cfg(any(unix, windows))'.dependencies]
+libc = "0.2"
+
+[target.'cfg(unix)'.dependencies]
+kbox-sandbox-vmm = { path = "../vmm", optional = true }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+block2 = "0.6.2"
+dispatch2 = "0.3.1"
+objc2 = "0.6.5"
+objc2-foundation = { version = "0.3.2", default-features = false, features = ["std", "NSString", "NSNotification", "NSGeometry", "NSObject", "NSAppleScript", "NSDictionary"] }
+
+# The tests read back the tar archives the managed builder writes.
+[dev-dependencies]
+tar = "0.4"
+
+[lints]
+workspace = true

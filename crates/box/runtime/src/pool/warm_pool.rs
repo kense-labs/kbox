@@ -611,6 +611,17 @@ impl WarmPool {
         Ok(vm)
     }
 
+    /// Retain a one-shot VM now; poll the returned future after responding to destroy it.
+    pub fn discard(&self, vm: VmManager) -> impl Future<Output = Result<()>> + Send + 'static {
+        let (owner, handoff) = self.retain_foreground_vm(vm);
+        let retained = self.retiring.clone();
+        async move {
+            let _handoff = handoff;
+            let (_, result) = Self::destroy_one(owner, retained, None).await;
+            result
+        }
+    }
+
     /// Release a VM back to the pool.
     ///
     /// Idle membership must not invent operable Ready later — re-prove exec

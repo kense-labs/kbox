@@ -132,22 +132,40 @@ pub async fn execute(args: ExecArgs) -> Result<(), Box<dyn std::error::Error>> {
         };
     }
 
+    // Managed `-i` without `-t` uses a streaming process session (non-TTY
+    // attach). One-shot `--request-id` cannot replay streaming results.
+    #[cfg(not(windows))]
+    if args.interactive && managed_session {
+        if args.request_id.is_some() {
+            return Err("Cannot use --request-id with -i/--interactive streaming".into());
+        }
+        return execute_managed_stream(args, &record, user).await;
+    }
+
     let timeout_ns = timeout_secs_to_ns(args.timeout);
     let request_id = resolve_exec_request_id(args.request_id)
         .map_err(|e| -> Box<dyn std::error::Error> { e.into() })?;
 
-    // Read stdin if interactive mode
-    let stdin_data = if args.interactive {
-        use std::io::Read;
-        let mut buf = Vec::new();
-        std::io::stdin().read_to_end(&mut buf)?;
-        if buf.is_empty() {
-            None
+    // Captured one-shot stdin:
+    // - `-i` on the legacy guest-socket path reads stdin into the buffer.
+    // - Managed `-i` already returned via streaming above.
+    // - Without `-i`, a non-TTY pipe/file still feeds captured execute so
+    //   `printf … | kbox exec box -- sh` works on the Sandbox default path.
+    //   A terminal stdin is left unread so interactive shells do not block.
+    let stdin_data = {
+        use std::io::{IsTerminal, Read};
+        let should_read = args.interactive || !std::io::stdin().is_terminal();
+        if should_read {
+            let mut buf = Vec::new();
+            std::io::stdin().read_to_end(&mut buf)?;
+            if buf.is_empty() {
+                None
+            } else {
+                Some(buf)
+            }
         } else {
-            Some(buf)
+            None
         }
-    } else {
-        None
     };
 
     let request = ExecRequest {
@@ -354,9 +372,14 @@ async fn execute_managed_pty(
         &format!("exec (managed pty) in box {}", record.name),
     );
 
-    let exit_code = {
+    // Raw mode needs a real TTY. Piped `printf … | kbox exec -it` still
+    // drives the managed PTY session; skip ioctl when stdin is not a terminal.
+    use std::io::IsTerminal;
+    let exit_code = if std::io::stdin().is_terminal() {
         let _raw_mode = crate::terminal::raw_mode()?;
-        run_managed_pty_session(process).await
+        run_managed_stream_session(process, true).await
+    } else {
+        run_managed_stream_session(process, true).await
     };
     if exit_code != 0 {
         std::process::exit(exit_code);
@@ -365,7 +388,62 @@ async fn execute_managed_pty(
 }
 
 #[cfg(not(windows))]
-pub(crate) async fn run_managed_pty_session(mut process: kbox_core::ExecutionProcess) -> i32 {
+async fn execute_managed_stream(
+    args: ExecArgs,
+    record: &crate::state::BoxRecord,
+    user: Option<String>,
+) -> Result<(), Box<dyn std::error::Error>> {
+    use kbox_core::exec::{ExecRequest, UNLIMITED_STREAM_TIMEOUT_NS};
+    use kbox_core::{ExecutionId, ExecutionSessionManager};
+
+    let metadata = record
+        .managed_execution
+        .as_ref()
+        .ok_or_else(|| format!("Box {} lost managed execution metadata", record.name))?;
+    let home = kbox_core::dirs_home();
+    let manager = super::configured_local_execution_manager(&home).await?;
+    let process = manager
+        .start_process(
+            &ExecutionId::new(record.id.clone())?,
+            metadata.generation,
+            ExecRequest {
+                request_id: None,
+                cmd: args.cmd,
+                timeout_ns: UNLIMITED_STREAM_TIMEOUT_NS,
+                env: args.envs,
+                working_dir: args.workdir,
+                rootfs: None,
+                stdin: None,
+                stdin_streaming: true,
+                user: user.or_else(|| configured_process_limit_user(record)),
+                streaming: true,
+            },
+        )
+        .await?;
+    crate::audit::record(
+        kbox_core::audit::AuditAction::ExecCommand,
+        kbox_core::audit::AuditOutcome::Success,
+        &record.id,
+        &format!("exec (managed stream) in box {}", record.name),
+    );
+
+    let exit_code = run_managed_stream_session(process, false).await;
+    if exit_code != 0 {
+        std::process::exit(exit_code);
+    }
+    Ok(())
+}
+
+#[cfg(not(windows))]
+pub(crate) async fn run_managed_pty_session(process: kbox_core::ExecutionProcess) -> i32 {
+    run_managed_stream_session(process, true).await
+}
+
+#[cfg(not(windows))]
+pub(crate) async fn run_managed_stream_session(
+    mut process: kbox_core::ExecutionProcess,
+    handle_resize: bool,
+) -> i32 {
     use kbox_core::{ExecEvent, StreamType};
 
     let input = process.input();
@@ -413,8 +491,11 @@ pub(crate) async fn run_managed_pty_session(mut process: kbox_core::ExecutionPro
                 }
             }
         });
-        let mut sigwinch =
-            tokio::signal::unix::signal(tokio::signal::unix::SignalKind::window_change()).ok();
+        let mut sigwinch = if handle_resize {
+            tokio::signal::unix::signal(tokio::signal::unix::SignalKind::window_change()).ok()
+        } else {
+            None
+        };
         loop {
             tokio::select! {
                 data = receiver.recv() => match data {

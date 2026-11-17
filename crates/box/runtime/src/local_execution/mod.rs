@@ -112,6 +112,8 @@ mod restart;
 mod router;
 #[cfg(test)]
 mod router_tests;
+mod sandbox_backend;
+mod sandbox_session;
 #[cfg(unix)]
 mod session;
 mod session_support;
@@ -154,6 +156,9 @@ pub use oci_production::MacosHvfOciBundleProvider;
 pub use oci_production::{LinuxKvmOciBundleProvider, WindowsWhpxOciBundleProvider};
 use record::{build_managed_record, status_from_record};
 pub use router::{LocalExecutionBackendRouter, OciMigrationPolicy};
+pub use sandbox_backend::{
+    ensure_sandbox_docker_networks, remove_sandbox_docker_networks, SandboxLocalExecutionBackend,
+};
 use store::RuntimeUpdate;
 pub use store::{FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleRequest};
 #[cfg(all(feature = "vm", any(target_os = "linux", target_os = "macos")))]
@@ -246,6 +251,14 @@ impl LocalExecutionManager {
             binding.validate_for(execution_id)?;
             return Ok(record);
         }
+        // Spec050 Sandbox: no host PID / guest exec socket — backend owns sessions.
+        if record
+            .managed_execution
+            .as_ref()
+            .is_some_and(|metadata| metadata.runtime_route == crate::ManagedRuntimeRoute::Sandbox)
+        {
+            return Ok(record);
+        }
         if record.exec_socket_path.as_os_str().is_empty() {
             return Err(ExecutionManagerError::Internal(format!(
                 "execution {execution_id} has no exec endpoint"
@@ -316,11 +329,19 @@ impl LocalExecutionManager {
     #[cfg(feature = "vm")]
     pub fn with_vm_backend(state_path: impl Into<PathBuf>, home_dir: impl Into<PathBuf>) -> Self {
         let home_dir = home_dir.into();
-        Self::new(
-            state_path,
-            home_dir.clone(),
-            Arc::new(VmLocalExecutionBackend::new(home_dir)),
+        let legacy: Arc<dyn LocalExecutionBackend> =
+            Arc::new(VmLocalExecutionBackend::new(home_dir.clone()));
+        // Spec050: product managers always attach the fused sandbox backend so
+        // ExecutionBoundary::Sandbox can pin ManagedRuntimeRoute::Sandbox.
+        let router = LocalExecutionBackendRouter::new(
+            legacy.clone(),
+            legacy,
+            OciMigrationPolicy::LegacyOnly,
         )
+        .with_sandbox(Arc::new(SandboxLocalExecutionBackend::new(
+            home_dir.clone(),
+        )));
+        Self::new(state_path, home_dir, Arc::new(router))
     }
 
     /// Compose the retained Box backend with an explicitly supplied OCI SDK
@@ -356,7 +377,10 @@ impl LocalExecutionManager {
             legacy_backend = legacy_backend.with_pull_progress_fn(pull_progress_fn);
         }
         let legacy: Arc<dyn LocalExecutionBackend> = Arc::new(legacy_backend);
-        let router = LocalExecutionBackendRouter::new(legacy, oci_backend, policy);
+        let sandbox: Arc<dyn LocalExecutionBackend> =
+            Arc::new(SandboxLocalExecutionBackend::new(home_dir.clone()));
+        let router =
+            LocalExecutionBackendRouter::new(legacy, oci_backend, policy).with_sandbox(sandbox);
         Self::new(state_path, home_dir, Arc::new(router))
     }
 }

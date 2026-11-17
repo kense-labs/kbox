@@ -6,10 +6,10 @@ use super::store::{FreshOwnerAdmission, OwnedLifecycleOutcome, OwnedLifecycleReq
 use async_trait::async_trait;
 use kbox_core::vmm::OwnedCloseBudget;
 use kbox_core::{
-    pty::PtyRequest, ExecOutput, ExecRequest, ExecutionEventBatch, ExecutionEventsRequest,
-    ExecutionManagerError, ExecutionManagerResult, ExecutionProcess, ExecutionProcessInventory,
-    ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse, FilesystemRequest,
-    FilesystemResponse, KillOutcome, OperationId,
+    pty::PtyRequest, ExecOutput, ExecRequest, ExecutionBoundary, ExecutionEventBatch,
+    ExecutionEventsRequest, ExecutionManagerError, ExecutionManagerResult, ExecutionProcess,
+    ExecutionProcessInventory, ExecutionResourceUpdate, ExecutionStats, FileRequest, FileResponse,
+    FilesystemRequest, FilesystemResponse, KillOutcome, OperationId,
 };
 
 use super::{
@@ -42,14 +42,18 @@ impl OciMigrationPolicy {
     }
 }
 
-/// One fail-closed backend router that supports mixed legacy and OCI records.
+/// One fail-closed backend router that supports mixed legacy, OCI, and sandbox
+/// records.
 ///
 /// The router never attempts the alternate backend after an error. A policy
 /// selects only new records; explicit record metadata owns every later call.
+/// Sandbox dispatch requires an explicit backend (Spec050); absent that, Sandbox
+/// routes refuse closed rather than falling back to MicroVM/OCI.
 #[derive(Clone)]
 pub struct LocalExecutionBackendRouter {
     legacy: Arc<dyn LocalExecutionBackend>,
     oci: Arc<dyn LocalExecutionBackend>,
+    sandbox: Option<Arc<dyn LocalExecutionBackend>>,
     policy: OciMigrationPolicy,
 }
 
@@ -63,8 +67,17 @@ impl LocalExecutionBackendRouter {
         Self {
             legacy,
             oci,
+            sandbox: None,
             policy,
         }
+    }
+
+    /// Attach the fused sandbox isolation backend (Spec050). Without this, any
+    /// durable `ManagedRuntimeRoute::Sandbox` record refuses closed.
+    #[must_use]
+    pub fn with_sandbox(mut self, sandbox: Arc<dyn LocalExecutionBackend>) -> Self {
+        self.sandbox = Some(sandbox);
+        self
     }
 
     /// Policy used only for records created by this router.
@@ -73,10 +86,46 @@ impl LocalExecutionBackendRouter {
         self.policy
     }
 
-    fn backend_for_creation(&self) -> &Arc<dyn LocalExecutionBackend> {
-        match self.policy.route() {
-            ManagedRuntimeRoute::BoxVm => &self.legacy,
-            ManagedRuntimeRoute::OciSdk => &self.oci,
+    fn sandbox_backend(&self) -> ExecutionManagerResult<&Arc<dyn LocalExecutionBackend>> {
+        self.sandbox.as_ref().ok_or_else(|| {
+            ExecutionManagerError::Internal(
+                "sandbox runtime route is not wired in this router yet (Spec050 T4)".into(),
+            )
+        })
+    }
+
+    fn creation_route_for(
+        &self,
+        record: &BoxRecord,
+    ) -> ExecutionManagerResult<ManagedRuntimeRoute> {
+        let metadata = record.managed_execution.as_ref().ok_or_else(|| {
+            ExecutionManagerError::Internal(format!(
+                "new execution {} has no managed lifecycle metadata for backend routing",
+                record.id
+            ))
+        })?;
+        match metadata.request.config.execution_boundary {
+            // Spec050: explicit Sandbox boundary always pins the fused sandbox
+            // engine. Never silent-downgrade to MicroVM/OCI via migration policy.
+            ExecutionBoundary::Sandbox => Ok(ManagedRuntimeRoute::Sandbox),
+            ExecutionBoundary::Microvm => Ok(self.policy.route()),
+        }
+    }
+
+    fn backend_for_creation(
+        &self,
+        record: Option<&BoxRecord>,
+    ) -> ExecutionManagerResult<&Arc<dyn LocalExecutionBackend>> {
+        let route = match record {
+            Some(record) => self.creation_route_for(record)?,
+            // Context-free launch probes follow the MicroVM migration policy;
+            // Sandbox creates always go through record-scoped preflight.
+            None => self.policy.route(),
+        };
+        match route {
+            ManagedRuntimeRoute::BoxVm => Ok(&self.legacy),
+            ManagedRuntimeRoute::OciSdk => Ok(&self.oci),
+            ManagedRuntimeRoute::Sandbox => self.sandbox_backend(),
             ManagedRuntimeRoute::Unspecified => {
                 unreachable!("creation policy always selects a route")
             }
@@ -94,6 +143,7 @@ impl LocalExecutionBackendRouter {
         match self.route_for_record(record)? {
             ManagedRuntimeRoute::BoxVm => Ok(&self.legacy),
             ManagedRuntimeRoute::OciSdk => Ok(&self.oci),
+            ManagedRuntimeRoute::Sandbox => self.sandbox_backend(),
             ManagedRuntimeRoute::Unspecified => unreachable!("route inference is exhaustive"),
         }
     }
@@ -115,6 +165,7 @@ pub(super) fn resolved_runtime_route(
         .map_err(|error| ExecutionManagerError::Internal(error.to_string()))?;
     match metadata.runtime_route {
         ManagedRuntimeRoute::BoxVm => Ok(ManagedRuntimeRoute::BoxVm),
+        ManagedRuntimeRoute::Sandbox => Ok(ManagedRuntimeRoute::Sandbox),
         ManagedRuntimeRoute::OciSdk => Ok(ManagedRuntimeRoute::OciSdk),
         ManagedRuntimeRoute::Unspecified if metadata.oci_runtime.is_some() => {
             Ok(ManagedRuntimeRoute::OciSdk)
@@ -181,17 +232,11 @@ impl LocalExecutionBackend for LocalExecutionBackendRouter {
     }
 
     async fn preflight_launch(&self) -> ExecutionManagerResult<()> {
-        self.backend_for_creation().preflight_launch().await
+        self.backend_for_creation(None)?.preflight_launch().await
     }
 
     fn route_for_create(&self, record: &BoxRecord) -> ExecutionManagerResult<ManagedRuntimeRoute> {
-        if record.managed_execution.is_none() {
-            return Err(ExecutionManagerError::Internal(format!(
-                "new execution {} has no managed lifecycle metadata for backend routing",
-                record.id
-            )));
-        }
-        Ok(self.policy.route())
+        self.creation_route_for(record)
     }
 
     async fn preflight(&self, record: &BoxRecord) -> ExecutionManagerResult<()> {

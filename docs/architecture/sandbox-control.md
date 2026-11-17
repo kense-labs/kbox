@@ -49,9 +49,9 @@ Observer 是外部依赖。
 实现位于独立仓库 [ksandbox](https://github.com/kense-labs/ksandbox)。
 
 kbox Box 管理镜像化执行环境。
-产品只有一个硬件隔离边界：独立内核 MicroVM（`ExecutionBoundary::Microvm` → OCI `DedicatedVm`）。
-`ExecutionBoundary` 是单值边界标记，不是隔离模式选择；Box 的请求模型不接受、不持久化，也不路由任何隔离 selector。
-共享宿主内核不是 Box 产品路径。
+隔离分级（Spec050）：默认目标为 **Sandbox**（融合引擎后端，`ExecutionBoundary::Sandbox` → `ManagedRuntimeRoute::Sandbox`）；更高隔离可选 **MicroVM**（`ExecutionBoundary::Microvm` / libkrun，可经 OCI `DedicatedVm`）。
+`ExecutionBoundary` 是闭集选择器；未知值拒绝。Provider 失败不得静默降级隔离。
+已退役的 SharedHostKernel OCI 迁移环境变量仍拒绝；与 Spec050 Sandbox 路由不同。
 
 | 对比项 | 进程命令沙箱（ksandbox） | kbox Box MicroVM |
 | --- | --- | --- |

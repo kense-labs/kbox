@@ -4,6 +4,7 @@ use std::collections::BTreeSet;
 use std::path::PathBuf;
 
 use kbox_core::compose::ComposeConfig;
+use kbox_core::ExecutionManager;
 use kbox_runtime::NetworkStore;
 
 use super::{ComposeDownArgs, LABEL_PROJECT, LABEL_SERVICE};
@@ -203,14 +204,16 @@ pub(super) async fn rollback_compose_up<T>(
     state: &mut StateFile,
     started_services: &[ServiceBox],
     created_networks: &[String],
+    created_sandbox_networks: &[String],
     error: impl Into<Box<dyn std::error::Error>>,
 ) -> Result<T, Box<dyn std::error::Error>> {
     let primary = error.into();
     let service_cleanup = rollback_started_services(state, started_services).await;
     let network_cleanup = cleanup_created_networks(created_networks);
-    match (service_cleanup, network_cleanup) {
-        (Ok(()), Ok(())) => Err(primary),
-        (svc, net) => {
+    let sandbox_network_cleanup = cleanup_created_sandbox_networks(created_sandbox_networks);
+    match (service_cleanup, network_cleanup, sandbox_network_cleanup) {
+        (Ok(()), Ok(()), Ok(())) => Err(primary),
+        (svc, net, sandbox_net) => {
             let mut message = primary.to_string();
             if let Err(cleanup) = svc {
                 message.push_str(&format!(
@@ -220,6 +223,11 @@ pub(super) async fn rollback_compose_up<T>(
             if let Err(cleanup) = net {
                 message.push_str(&format!(
                     "; also failed to roll back compose networks: {cleanup}"
+                ));
+            }
+            if let Err(cleanup) = sandbox_net {
+                message.push_str(&format!(
+                    "; also failed to roll back sandbox docker networks: {cleanup}"
                 ));
             }
             Err(message.into())
@@ -345,6 +353,44 @@ async fn teardown_service_box_inner(
         return Ok(());
     };
 
+    // Spec050 Sandbox (and other managed) compose services have no host PID —
+    // tear down via LocalExecutionManager, never graceful_stop_via_guest.
+    // Drop the CLI lifecycle lock first: manager kill/remove acquires the same
+    // cross-process lock (parity with `kbox rm` managed path). Holding both
+    // deadlocks compose down.
+    if let Some(record) = StateFile::load_default()?
+        .find_by_id(&service.box_id)
+        .cloned()
+    {
+        if let Some(metadata) = record.managed_execution.as_ref() {
+            let home = kbox_core::dirs_home();
+            let execution_id = kbox_core::ExecutionId::new(record.id.clone())?;
+            let generation = metadata.generation;
+            let active = status::is_active_status(&record.status);
+            let secret_identity = service.secret_identity.clone();
+            drop(_lifecycle_lock);
+            let manager = crate::commands::configured_local_execution_manager(&home).await?;
+            if active {
+                // Fail closed: do not invent a clean compose down while the
+                // sandbox/managed container may still be running.
+                manager
+                    .kill_with_options(
+                        &execution_id,
+                        generation,
+                        kbox_core::KillExecutionOptions {
+                            signal: Some(9),
+                            timeout_secs: Some(0),
+                        },
+                    )
+                    .await?;
+            }
+            manager.remove_execution(&execution_id, generation).await?;
+            crate::cleanup::cleanup_transient_secret_identity(secret_identity.as_deref())?;
+            state.forget(&discovered.box_id);
+            return Ok(());
+        }
+    }
+
     stop_service_process(&service).await;
     crate::cleanup::cleanup_transient_secret_identity(service.secret_identity.as_deref())?;
     let removal = StateFile::remove_record(&discovered.box_id);
@@ -388,6 +434,17 @@ fn cleanup_created_networks(created_networks: &[String]) -> Result<(), Box<dyn s
     // while NetworkStore claims remain (parity with compose down).
     let net_store = NetworkStore::default_path()?;
     cleanup_created_networks_with_store(&net_store, created_networks)
+}
+
+fn cleanup_created_sandbox_networks(
+    created_sandbox_networks: &[String],
+) -> Result<(), Box<dyn std::error::Error>> {
+    if created_sandbox_networks.is_empty() {
+        return Ok(());
+    }
+    let home = kbox_core::dirs_home();
+    kbox_runtime::remove_sandbox_docker_networks(&home, created_sandbox_networks)
+        .map_err(|error| -> Box<dyn std::error::Error> { error.into() })
 }
 
 fn cleanup_created_networks_with_store(
@@ -445,8 +502,10 @@ pub(super) async fn execute_down(
     }
 
     // Clean up networks — fail closed so compose down cannot invent success
-    // while endpoints or network objects remain.
+    // while endpoints or network objects remain. MicroVM uses NetworkStore;
+    // Sandbox uses fused-engine Docker networks (never silent MicroVM).
     let net_store = NetworkStore::default_path()?;
+    let mut sandbox_networks = Vec::new();
     for network_name in network_names {
         if let Some(mut network) = net_store.get(&network_name)? {
             let ids = network.endpoints.keys().cloned().collect::<Vec<_>>();
@@ -457,6 +516,15 @@ pub(super) async fn execute_down(
             net_store.update(&network)?;
             net_store.remove(&network_name)?;
             println!("  [-] Network {} removed", network_name);
+        } else {
+            sandbox_networks.push(network_name);
+        }
+    }
+    if !sandbox_networks.is_empty() {
+        let home = kbox_core::dirs_home();
+        kbox_runtime::remove_sandbox_docker_networks(&home, &sandbox_networks)?;
+        for network_name in &sandbox_networks {
+            println!("  [-] Network {} removed (sandbox docker)", network_name);
         }
     }
 

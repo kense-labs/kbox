@@ -524,6 +524,155 @@ async fn pre_routing_records_use_durable_runtime_evidence_not_current_policy() {
     assert_eq!(oci.kills(), 1);
 }
 
+#[tokio::test]
+async fn sandbox_route_refuses_until_backend_is_wired() {
+    let temporary = tempfile::tempdir().unwrap();
+    let legacy = Arc::new(RoutedProbeBackend::default());
+    let oci = Arc::new(RoutedProbeBackend::default());
+    let router = LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        oci.clone(),
+        OciMigrationPolicy::LegacyOnly,
+    );
+    let mut sandbox_record = record(temporary.path(), "sandbox");
+    sandbox_record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .runtime_route = ManagedRuntimeRoute::Sandbox;
+
+    let error = router.kill(&sandbox_record).await.unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("sandbox runtime route is not wired"),
+        "unexpected error: {error}"
+    );
+    assert_eq!(legacy.kills(), 0);
+    assert_eq!(oci.kills(), 0);
+}
+
+#[tokio::test]
+async fn sandbox_execution_boundary_stamps_sandbox_route_on_create() {
+    let temporary = tempfile::tempdir().unwrap();
+    let legacy = Arc::new(RoutedProbeBackend::default());
+    let oci = Arc::new(RoutedProbeBackend::default());
+    let sandbox = Arc::new(RoutedProbeBackend::default());
+    let router = LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        oci.clone(),
+        OciMigrationPolicy::LegacyOnly,
+    )
+    .with_sandbox(sandbox.clone());
+    let mut record = record(temporary.path(), "bound");
+    record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .request
+        .config
+        .execution_boundary = kbox_core::ExecutionBoundary::Sandbox;
+
+    assert_eq!(
+        router.route_for_create(&record).unwrap(),
+        ManagedRuntimeRoute::Sandbox
+    );
+}
+
+#[tokio::test]
+async fn sandbox_route_dispatches_only_to_attached_sandbox_backend() {
+    let temporary = tempfile::tempdir().unwrap();
+    let legacy = Arc::new(RoutedProbeBackend::default());
+    let oci = Arc::new(RoutedProbeBackend::default());
+    let sandbox = Arc::new(RoutedProbeBackend::default());
+    let router = LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        oci.clone(),
+        OciMigrationPolicy::LegacyOnly,
+    )
+    .with_sandbox(sandbox.clone());
+    let mut sandbox_record = record(temporary.path(), "sandbox2");
+    sandbox_record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .runtime_route = ManagedRuntimeRoute::Sandbox;
+
+    router.kill(&sandbox_record).await.unwrap();
+    assert_eq!(sandbox.kills(), 1);
+    assert_eq!(legacy.kills(), 0);
+    assert_eq!(oci.kills(), 0);
+}
+
+#[tokio::test]
+async fn sandbox_execution_boundary_pins_sandbox_route_without_microvm_downgrade() {
+    let temporary = tempfile::tempdir().unwrap();
+    let legacy = Arc::new(RoutedProbeBackend::default());
+    let oci = Arc::new(RoutedProbeBackend::default());
+    let sandbox = Arc::new(RoutedProbeBackend::default());
+    // Migration policy would otherwise select OCI; Sandbox boundary must win.
+    let router = LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        oci.clone(),
+        OciMigrationPolicy::AllViaOci,
+    )
+    .with_sandbox(sandbox.clone());
+    let mut sandbox_record = record(temporary.path(), "boundary-sandbox");
+    sandbox_record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .request
+        .config
+        .execution_boundary = ExecutionBoundary::Sandbox;
+
+    let route = router.route_for_create(&sandbox_record).unwrap();
+    assert_eq!(route, ManagedRuntimeRoute::Sandbox);
+    // Mirror prepare_creation_record: pin the route before record preflight.
+    sandbox_record
+        .managed_execution
+        .as_mut()
+        .unwrap()
+        .runtime_route = route;
+    router.preflight(&sandbox_record).await.unwrap();
+    assert_eq!(sandbox.preflights(), 1);
+    assert_eq!(legacy.preflights(), 0);
+    assert_eq!(oci.preflights(), 0);
+    assert_eq!(
+        sandbox.observed_routes(),
+        vec![ManagedRuntimeRoute::Sandbox]
+    );
+}
+
+#[tokio::test]
+async fn microvm_execution_boundary_still_follows_migration_policy() {
+    let temporary = tempfile::tempdir().unwrap();
+    let legacy = Arc::new(RoutedProbeBackend::default());
+    let oci = Arc::new(RoutedProbeBackend::default());
+    let sandbox = Arc::new(RoutedProbeBackend::default());
+    let router = LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        oci.clone(),
+        OciMigrationPolicy::AllViaOci,
+    )
+    .with_sandbox(sandbox.clone());
+    let microvm_record = record(temporary.path(), "boundary-microvm");
+    assert_eq!(
+        microvm_record
+            .managed_execution
+            .as_ref()
+            .unwrap()
+            .request
+            .config
+            .execution_boundary,
+        ExecutionBoundary::Microvm
+    );
+    assert_eq!(
+        router.route_for_create(&microvm_record).unwrap(),
+        ManagedRuntimeRoute::OciSdk
+    );
+}
+
 fn request() -> CreateExecutionRequest {
     CreateExecutionRequest {
         external_sandbox_id: "router".to_string(),

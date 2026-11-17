@@ -219,14 +219,15 @@ impl StateFile {
                 continue;
             }
 
-            // OCI-routed records deliberately do not persist a Box-owned host
-            // PID. Their exact runtime generation is reconciled through the
-            // lifecycle facade, so the compatibility PID sweep must never
-            // reinterpret the absent PID as workload death.
+            // OCI and fused-sandbox records deliberately do not persist a
+            // Box-owned host PID. Their exact runtime generation is reconciled
+            // through the lifecycle facade / daemon inspect, so the
+            // compatibility PID sweep must never reinterpret the absent PID as
+            // workload death.
             if record
                 .managed_execution
                 .as_ref()
-                .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
+                .is_some_and(kbox_runtime::ManagedExecutionMetadata::skips_host_pid_reconcile)
             {
                 continue;
             }

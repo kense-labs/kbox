@@ -249,6 +249,14 @@ pub enum IsolationSelection {
     HardwareVm,
 }
 
+/// Select the hardware-vm contract isolation class.
+///
+/// This path is MicroVM-only. Spec050 Sandbox is selected via
+/// `ExecutionBoundary::Sandbox` / `ManagedRuntimeRoute::Sandbox` under
+/// ExecutionManager — not via this hardware-vm string selector. The legacy
+/// `"sandbox"` token remains refused here so SharedHostKernel cannot be
+/// reintroduced through the hardware-vm profile surface.
+///
 /// `migration` is accepted and ignored. The stored hardware-vm profile does
 /// not change when `K_BOX_OCI_MIGRATION` is set or unset.
 pub fn select_isolation(

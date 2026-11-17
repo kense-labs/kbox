@@ -1,0 +1,10 @@
+FAIL (L3) kbox: 9 issue(s)
+  - wave missing lineage.json
+  - wave missing timeline.jsonl
+  - wave missing roles/O.md
+  - wave missing roles/B.md
+  - wave missing roles/R.md
+  - wave missing roles/M.md
+  - wave missing roles/I.md
+  - wave missing roles/S.md
+  - wave missing roles/D.md

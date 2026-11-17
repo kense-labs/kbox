@@ -6,6 +6,30 @@
 
 每个任务的验收证据分路径保存，不覆盖旧报告。当前源码链接可更新，历史结论以回执或快照为准；`/k-wiki` 刷新本页入口并打包实际引用的产物。
 
+## T2026-11-17-k-review-sandbox-isolation
+
+- **完成日期**: 2026-11-17（审查切片 · **≠Pass** · 未改产品源码）。
+- **结果**: Spec050 uncommitted + `docs/evidence/runtime/20261117-sandbox-isolation-backend/` 审查。**checks_passed=failed**（L3 wave lineage/roles 缺失）；**source review** 有材料发现（融合引擎 Env 明文残留、包内 sandbox 伴侣仍 optional）；**product acceptance** 不声明（Notarize/multi-host 停泊）。
+- **产物**: [.kstudio/evidence/k-review/20261117T094631Z-dec823cd/review.md](../evidence/k-review/20261117T094631Z-dec823cd/review.md) · receipt `…/receipt.json`（integrity verified failed）。
+- **额外 hermetic**: Sandbox default / private_disk / map_env / route pin / brand scan 本机绿。
+- **限制**: usage/prices unknown；不授权 fix/commit/merge。
+
+## T2026-11-17-sandbox-isolation-backend
+
+- **完成日期**: 2026-11-17（有界战役切片 · **partial** · 总体目标 **unmet** · ≠Pass）。
+- **结果**: Spec050 在 darwin arm64 上推进默认 sandbox：`ExecutionBoundary::default() = Sandbox`；包内 stream / captured stdin / Compose Secrets 冒烟绿；Compose Secrets 原生路径关闭历史 park；可选 MicroVM 回归 `MICROVM_OK` 且默认仍为 sandbox。Notarize 与 multi-host 停泊；融合引擎 create Env 可能残留展开 Secret（残留）。
+- **产物/证据根**: [OUTCOME.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/OUTCOME.md)（同目录 T2–T5 / PARK 回执）。
+- **关键验证回执**:
+  - 默认 sandbox: [T5-DEFAULT-SANDBOX.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-DEFAULT-SANDBOX.md)
+  - 包内 stream: [T5-PACKAGE-STREAM.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-PACKAGE-STREAM.md)（`PKG_STREAM_OK`）
+  - 包内 captured stdin: [T5-PACKAGE-EXEC-STDIN.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-PACKAGE-EXEC-STDIN.md)（`PKG_CAP_STDIN_OK`）
+  - Compose Secrets 原生 + 包内: [T5-COMPOSE-SECRETS.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-COMPOSE-SECRETS.md) · [T5-PACKAGE-COMPOSE-SECRETS.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-PACKAGE-COMPOSE-SECRETS.md)（`COMPOSE_SECRETS_OK` / `PKG_COMPOSE_SECRETS_OK`）；历史 [PARK-COMPOSE-SECRETS.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/PARK-COMPOSE-SECRETS.md) **closed on this host**
+  - MicroVM 回归: [T5-MICROVM-REGRESSION.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-MICROVM-REGRESSION.md)（`MICROVM_OK`；默认 `execution_boundary=sandbox`）
+  - 日常路径包冒烟（较早切片）: [T5-PROD-DAILY-PATH.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-PROD-DAILY-PATH.md)（`PROD_DAILY_OK` · ≠notarize）
+  - 开发者日常安装说明: [T5-DAILY-INSTALL.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/T5-DAILY-INSTALL.md)（quarantine clear · sha `e5782d3f…` · ≠Pass / ≠notarize）
+- **停泊**: [PARK-NOTARIZE.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/PARK-NOTARIZE.md) · [PARK-MULTIHOST.md](../../docs/evidence/runtime/20261117-sandbox-isolation-backend/PARK-MULTIHOST.md)
+- **限制 / Explicitly not claimed**: 产品 Pass；公证/Gatekeeper 冷装；Windows/WSL；本机以外 multi-host；融合引擎 Env 明文残留未清；证据中不含 secret 字节。编排摘要: `.kstudio/evidence/T2026-11-17-sandbox-isolation-backend/SUMMARY.md`。
+
 ## T2026-11-16-pool-postboot-cleanup
 
 - **完成日期**:2026-11-16（有界修复，非总体完成）。

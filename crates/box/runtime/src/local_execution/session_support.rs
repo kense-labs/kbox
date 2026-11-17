@@ -16,6 +16,20 @@ pub(super) fn has_oci_runtime(record: &BoxRecord) -> bool {
         .is_some()
 }
 
+/// Sessions owned by a LocalExecutionBackend (OCI SDK or Spec050 Sandbox).
+///
+/// Sandbox records have no guest exec socket; routing them through the MicroVM
+/// ExecClient path times out as "guest may be wedged". Never silent-downgrade.
+pub(super) fn uses_backend_session(record: &BoxRecord) -> bool {
+    if has_oci_runtime(record) {
+        return true;
+    }
+    record
+        .managed_execution
+        .as_ref()
+        .is_some_and(|metadata| metadata.runtime_route == crate::ManagedRuntimeRoute::Sandbox)
+}
+
 /// Merge the environment fixed at Sandbox creation into an exec/PTY request.
 ///
 /// The guest normally inherits these values from guest-init, but the execution
@@ -43,6 +57,22 @@ pub(super) fn inherit_container_environment(
             .map(|(key, value)| format!("{key}={value}")),
     );
     request.extend(malformed);
+}
+
+/// Fused-engine Sandbox expands Secret env at container create. Durable
+/// `record.env` still carries the non-sensitive manifest for restart/audit;
+/// re-injecting it into exec/PTY would expose the control key without values.
+/// OCI backend sessions keep the manifest for agent-side materialization.
+pub(super) fn strip_sandbox_secret_manifest(record: &BoxRecord, request_env: &mut Vec<String>) {
+    let is_sandbox = record
+        .managed_execution
+        .as_ref()
+        .is_some_and(|metadata| metadata.runtime_route == crate::ManagedRuntimeRoute::Sandbox);
+    if !is_sandbox {
+        return;
+    }
+    let prefix = format!("{}=", kbox_core::secret::SECRET_ENVIRONMENT_MANIFEST);
+    request_env.retain(|entry| !entry.starts_with(&prefix));
 }
 
 /// Apply the creation-time security policy to a legacy guest exec/PTY request.
@@ -133,8 +163,39 @@ pub(super) fn debug_session_environment(
 
 #[cfg(test)]
 mod tests {
-    use super::inherit_container_environment;
+    use super::{
+        inherit_container_environment, strip_sandbox_secret_manifest, uses_backend_session,
+    };
+    use crate::local_execution::record::build_managed_record;
+    use crate::ManagedRuntimeRoute;
+    use kbox_core::{BoxConfig, CreateExecutionRequest, ExecutionId, OperationId};
     use std::collections::HashMap;
+
+    #[test]
+    fn sandbox_route_uses_backend_session_not_guest_exec() {
+        let home = tempfile::tempdir().unwrap();
+        let mut record = build_managed_record(
+            home.path(),
+            &ExecutionId::new("00000000-0000-4000-8000-000000000001").unwrap(),
+            OperationId::new("session-support-op").unwrap(),
+            CreateExecutionRequest {
+                external_sandbox_id: "ext".into(),
+                config: BoxConfig {
+                    image: "alpine:3.20".into(),
+                    ..Default::default()
+                },
+                labels: Default::default(),
+                policy: Default::default(),
+                rootfs_snapshot_id: None,
+            },
+            chrono::Utc::now(),
+        )
+        .unwrap();
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::Sandbox;
+        assert!(uses_backend_session(&record));
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::BoxVm;
+        assert!(!uses_backend_session(&record));
+    }
 
     #[test]
     fn request_environment_overrides_inherited_container_values() {
@@ -160,5 +221,41 @@ mod tests {
         inherit_container_environment(&container, &mut request);
 
         assert_eq!(request, ["ALPHA=container", "MALFORMED"]);
+    }
+
+    #[test]
+    fn sandbox_exec_strips_secret_manifest_control_key() {
+        let home = tempfile::tempdir().unwrap();
+        let mut record = build_managed_record(
+            home.path(),
+            &ExecutionId::new("00000000-0000-4000-8000-000000000002").unwrap(),
+            OperationId::new("strip-manifest-op").unwrap(),
+            CreateExecutionRequest {
+                external_sandbox_id: "ext".into(),
+                config: BoxConfig {
+                    image: "alpine:3.20".into(),
+                    ..Default::default()
+                },
+                labels: Default::default(),
+                policy: Default::default(),
+                rootfs_snapshot_id: None,
+            },
+            chrono::Utc::now(),
+        )
+        .unwrap();
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::Sandbox;
+        let manifest = format!("{}={{}}", kbox_core::secret::SECRET_ENVIRONMENT_MANIFEST);
+        let mut env = vec![
+            "API_TOKEN=from-container".into(),
+            format!("{manifest}"),
+            "OTHER=1".into(),
+        ];
+        strip_sandbox_secret_manifest(&record, &mut env);
+        assert_eq!(env, ["API_TOKEN=from-container", "OTHER=1"]);
+
+        record.managed_execution.as_mut().unwrap().runtime_route = ManagedRuntimeRoute::OciSdk;
+        let mut oci_env = vec![format!("{manifest}"), "OTHER=1".into()];
+        strip_sandbox_secret_manifest(&record, &mut oci_env);
+        assert_eq!(oci_env, [manifest, "OTHER=1".into()]);
     }
 }

@@ -2,18 +2,19 @@ use crate::network::NetworkMode;
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-/// The single hardware-backed isolation boundary Box provides.
+/// Isolation boundary selected for a Box execution.
 ///
-/// This is a boundary *marker*, not a selector. Box never accepts an isolation
-/// mode from a request, and no product code branches on this value to choose a
-/// backend. It exists so contract/qualification fixtures can state the
-/// expected boundary explicitly. Shared-kernel sandboxing is not a Box product
-/// surface (the OCI Runtime has its own independent `IsolationRequest`).
+/// Product routing uses this closed set: **Sandbox** (Spec050 fused engine,
+/// product default) versus **Microvm** (libkrun / higher isolation). Unknown
+/// values are refused at parse boundaries. Explicit Microvm/confidential
+/// selection remains available; failure never silent-downgrades.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
 pub enum ExecutionBoundary {
-    /// Hardware-backed MicroVM isolation.
+    /// Fused sandbox engine (vendored Apache-2.0 upstream; Spec050).
     #[default]
+    Sandbox,
+    /// Hardware-backed MicroVM isolation (libkrun).
     Microvm,
 }
 
@@ -333,6 +334,15 @@ pub struct BoxConfig {
     #[serde(default)]
     pub image: String,
 
+    /// Isolation boundary for this execution (Spec050).
+    ///
+    /// `Sandbox` pins `ManagedRuntimeRoute::Sandbox` (fused sandbox engine).
+    /// `Microvm` keeps the libkrun / OCI MicroVM path. Defaults to `Microvm`
+    /// until the product default flips (T5); unknown values are refused by
+    /// serde.
+    #[serde(default)]
+    pub execution_boundary: ExecutionBoundary,
+
     /// Workspace directory (mounted to /workspace inside the VM)
     pub workspace: PathBuf,
 
@@ -519,6 +529,7 @@ impl Default for BoxConfig {
     fn default() -> Self {
         Self {
             image: String::new(),
+            execution_boundary: ExecutionBoundary::default(),
             // Empty path signals the runtime to create a per-box workspace
             // under ~/.kbox/boxes/<box_id>/workspace/ at boot time.
             workspace: PathBuf::new(),
@@ -1382,5 +1393,24 @@ mod tests {
         let json = serde_json::to_string(&config).unwrap();
         let parsed: BoxConfig = serde_json::from_str(&json).unwrap();
         assert!(parsed.sidecar.is_none());
+    }
+
+    #[test]
+    fn execution_boundary_defaults_to_sandbox_and_parses_closed_set() {
+        assert_eq!(ExecutionBoundary::default(), ExecutionBoundary::Sandbox);
+        let sandbox: ExecutionBoundary = serde_json::from_str("\"sandbox\"").unwrap();
+        assert_eq!(sandbox, ExecutionBoundary::Sandbox);
+        let microvm: ExecutionBoundary = serde_json::from_str("\"microvm\"").unwrap();
+        assert_eq!(microvm, ExecutionBoundary::Microvm);
+        assert!(serde_json::from_str::<ExecutionBoundary>("\"container\"").is_err());
+        let config = BoxConfig::default();
+        assert_eq!(config.execution_boundary, ExecutionBoundary::Sandbox);
+        let with_microvm = BoxConfig {
+            execution_boundary: ExecutionBoundary::Microvm,
+            ..Default::default()
+        };
+        let json = serde_json::to_string(&with_microvm).unwrap();
+        let parsed: BoxConfig = serde_json::from_str(&json).unwrap();
+        assert_eq!(parsed.execution_boundary, ExecutionBoundary::Microvm);
     }
 }

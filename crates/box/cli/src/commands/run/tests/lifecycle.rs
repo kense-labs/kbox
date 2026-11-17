@@ -274,18 +274,12 @@ fn test_foreground_workload_exit_code_refuses_invented_provider_zero() {
     );
 }
 
-// Sandbox isolation was removed in 3.4.3 (MicroVM-only). The
-// RequireGuestProof contract is covered by
-// test_foreground_workload_exit_code_refuses_invented_provider_zero, and the
-// TrustProvider contract by
-// test_foreground_oci_routed_microvm_trusts_provider_exit_zero.
-
 #[test]
-fn test_foreground_oci_routed_microvm_trusts_provider_exit_zero() {
+fn test_foreground_managed_provider_trusts_provider_exit_zero() {
     let temporary = tempfile::tempdir().unwrap();
-    // OCI DedicatedVm wait status is authenticated container exit — same as
-    // Sandbox TrustProvider. Without this, RequireGuestProof drops 0 and
-    // foreground invents exit 1 (#644 gate 3 exit parity).
+    // OCI DedicatedVm wait status and Spec050 Sandbox inspect ExitCode are
+    // authenticated provider exits. Without TrustProvider, RequireGuestProof
+    // drops 0 and foreground invents exit 1 (`kbox run --rm … echo` smoke).
     assert_eq!(
         foreground_workload_exit_code(temporary.path(), Some(0), true,),
         Some(0)
@@ -293,6 +287,43 @@ fn test_foreground_oci_routed_microvm_trusts_provider_exit_zero() {
     assert_eq!(
         foreground_workload_exit_code(temporary.path(), Some(17), true,),
         Some(17)
+    );
+}
+
+#[test]
+fn test_sandbox_route_uses_managed_provider_exit_path() {
+    let id = "22222222-2222-4222-8222-222222222222";
+    let mut record = crate::test_helpers::fixtures::make_record(id, "sandbox-exit", "exited", None);
+    let mut metadata = kbox_runtime::ManagedExecutionMetadata::new(
+        OperationId::new("operation-sandbox-exit").unwrap(),
+        ExecutionGeneration::INITIAL,
+        CreateExecutionRequest {
+            external_sandbox_id: "sandbox-exit".to_string(),
+            config: BoxConfig {
+                image: record.image.clone(),
+                ..Default::default()
+            },
+            labels: std::collections::BTreeMap::new(),
+            policy: Default::default(),
+            rootfs_snapshot_id: None,
+        },
+    )
+    .unwrap();
+    metadata.runtime_route = kbox_runtime::ManagedRuntimeRoute::Sandbox;
+    record.managed_execution = Some(metadata);
+    record.exit_code = Some(0);
+
+    assert!(
+        record_uses_managed_provider(&record),
+        "Sandbox must poll/trust provider exit (not host PID / .kexit_code)"
+    );
+    assert_eq!(
+        foreground_workload_exit_code(
+            std::path::Path::new("/tmp/unused-sandbox-exit"),
+            record.exit_code,
+            record_uses_managed_provider(&record),
+        ),
+        Some(0)
     );
 }
 

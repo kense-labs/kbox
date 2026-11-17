@@ -55,6 +55,7 @@ fn default_run_args() -> RunArgs {
             oom_kill_disable: false,
             oom_score_adj: None,
             persistent: false,
+            isolation: common::IsolationBoundaryArg::Sandbox,
         },
         detach: false,
         interactive: false,

@@ -4,7 +4,9 @@ use kbox_runtime::hardware_vm::{
 };
 
 #[test]
-fn legacy_isolation_selectors_are_explicitly_rejected() {
+fn hardware_vm_legacy_string_selectors_are_explicitly_rejected() {
+    // Spec050 Sandbox lives on ExecutionBoundary / ManagedRuntimeRoute, not
+    // this hardware-vm string surface (still MicroVM-only).
     let live = std::env::var("K_BOX_OCI_MIGRATION").ok();
     let baseline = stored_profile_bytes(None);
     assert_eq!(stored_profile_bytes(live.as_deref()), baseline);

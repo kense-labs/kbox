@@ -181,14 +181,14 @@ impl BoxStateStore {
         Ok(store)
     }
 
-    /// Reject state written by the retired multi-isolation format.
+    /// Reject state written by the retired `BoxRecord.isolation` field.
     ///
-    /// Box has exactly one isolation boundary, so `BoxRecord` no longer has an
-    /// `isolation` field. Serde would silently ignore an unknown field, which
-    /// would let a legacy shared-kernel `"sandbox"` record masquerade as a
-    /// hardware-isolated MicroVM. Retired contracts are surfaced explicitly
-    /// instead: the one historical value that matches the current boundary is
-    /// accepted, anything else is a hard error with migration guidance.
+    /// Spec050 restores Sandbox as a real selector via `ExecutionBoundary` /
+    /// `ManagedRuntimeRoute::Sandbox`, not via this legacy per-record JSON
+    /// field. Serde would silently ignore an unknown field, which would let a
+    /// historical shared-kernel `"sandbox"` record masquerade as a MicroVM.
+    /// The historical `"microvm"` value is still accepted; anything else is a
+    /// hard error with migration guidance.
     ///
     /// The fast path avoids a second JSON parse for every modern state file.
     fn reject_retired_isolation_selector(data: &str) -> Result<(), String> {
@@ -207,9 +207,10 @@ impl BoxStateStore {
                 Some("microvm") | None => {}
                 Some(other) => {
                     return Err(format!(
-                        "retired isolation selector {other:?} in boxes.json: shared-kernel \
-                     sandbox records cannot be loaded as MicroVM boxes; migrate or remove \
-                     the record before starting kbox"
+                        "retired isolation selector {other:?} in boxes.json: historical \
+                     shared-kernel sandbox records cannot be loaded as MicroVM boxes; \
+                     Spec050 Sandbox uses ExecutionBoundary/ManagedRuntimeRoute instead \
+                     — migrate or remove the record before starting kbox"
                     ));
                 }
             }
@@ -356,7 +357,10 @@ mod tests {
     use super::*;
 
     #[test]
-    fn retired_sandbox_isolation_selector_is_rejected_explicitly() {
+    fn historical_boxes_json_sandbox_isolation_field_is_rejected_explicitly() {
+        // Spec050 Sandbox is ExecutionBoundary/ManagedRuntimeRoute, not the
+        // retired BoxRecord.isolation JSON field. Keep refusing the old field
+        // so shared-kernel records cannot masquerade as MicroVM.
         let error = BoxStateStore::reject_retired_isolation_selector(
             r#"[{"id":"legacy","isolation":"sandbox"}]"#,
         )
@@ -364,6 +368,10 @@ mod tests {
         assert!(error.contains("retired isolation selector"), "{error}");
         assert!(error.contains("sandbox"), "{error}");
         assert!(error.contains("migrate or remove"), "{error}");
+        assert!(
+            error.contains("ExecutionBoundary") || error.contains("ManagedRuntimeRoute"),
+            "{error}"
+        );
     }
 
     #[test]

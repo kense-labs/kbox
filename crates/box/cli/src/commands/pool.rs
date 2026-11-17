@@ -32,8 +32,6 @@ use kbox_runtime::pool::{
     PoolRunResponse, PoolStatusResponse,
 };
 use kbox_runtime::pool::{PoolStats, WarmPool};
-#[cfg(target_os = "linux")]
-use kbox_runtime::vm::reap::reap_orphaned_box;
 // Stub returns 0 on non-Linux; call site must compile on macOS pool CLI.
 use kbox_runtime::vm::reap::reap_orphaned_boxes_for_home;
 #[cfg(not(windows))]
@@ -1205,7 +1203,7 @@ async fn destroy_vm_or_reap(
             "VM destroy failed; attempting orphan reap"
         );
         #[cfg(target_os = "linux")]
-        reap_orphaned_box(&box_id);
+        kbox_runtime::vm::reap::reap_orphaned_box(&box_id);
     }
     result
 }
@@ -1907,10 +1905,10 @@ async fn handle_conn(
     };
 
     // Resolve the image, get-or-create its pool, acquire a warm VM, run the
-    // command. Keep the VM so we tear it down AFTER responding (a one-shot sandbox
+    // command. Retain its teardown before writing; poll it AFTER responding (a one-shot sandbox
     // is discarded; the pool replenishes a fresh one) — the client's latency must
     // not include VM teardown.
-    // Holds (vm, permit) until after the response: the permit bounds concurrent
+    // Holds (teardown, permit) until after the response: the permit bounds concurrent
     // in-flight sandboxes and is released only once the VM is torn down.
     let mut used = None;
     let resp = match registry.resolve_image(run.image.clone()) {
@@ -1981,7 +1979,7 @@ async fn handle_conn(
                             exec_ms = exec_start.elapsed().as_millis(),
                             "pool-run exec stage"
                         );
-                        used = Some((vm, permit));
+                        used = Some((entry.pool.discard(vm), permit));
                         resp
                     }
                 }
@@ -2000,8 +1998,8 @@ async fn handle_conn(
     // runs in its own Tokio task. Perform cleanup even when the client disconnects
     // while the response is being written.
     let write_result = write_frame(stream, &bytes).await;
-    if let Some((mut vm, permit)) = used {
-        if let Err(error) = destroy_vm_or_reap(&mut vm).await {
+    if let Some((teardown, permit)) = used {
+        if let Err(error) = teardown.await {
             tracing::warn!(%error, "failed to destroy pooled VM after request");
         }
         drop(permit);
@@ -2169,6 +2167,8 @@ fn format_stats_json(image: &str, stats: &PoolStats) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(all(target_os = "macos", target_arch = "aarch64"))]
+    mod discard_native;
     #[cfg(not(windows))]
     mod shutdown;
     #[cfg(not(windows))]

@@ -12,8 +12,8 @@ use kbox_core::{
 };
 
 use super::session_support::{
-    debug_session_environment, has_oci_runtime, inherit_container_environment,
-    inherit_execution_security_environment,
+    debug_session_environment, inherit_container_environment,
+    inherit_execution_security_environment, strip_sandbox_secret_manifest, uses_backend_session,
 };
 use super::support::managed_state;
 use super::LocalExecutionManager;
@@ -35,7 +35,10 @@ impl ExecutionSessionManager for LocalExecutionManager {
             .require_running_record(execution_id, generation)
             .await?;
         inherit_container_environment(&record.env, &mut request.env);
-        if !has_oci_runtime(&record) {
+        strip_sandbox_secret_manifest(&record, &mut request.env);
+        // MicroVM guest-init needs K_SEC_* inheritance; OCI/Sandbox backends own
+        // their own process security and must not receive MicroVM control env.
+        if !uses_backend_session(&record) {
             inherit_execution_security_environment(&record, &mut request.env)?;
         }
         debug_session_environment(
@@ -45,7 +48,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
             &record.env,
             &request.env,
         );
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.execute(&record, request).await;
@@ -82,7 +85,8 @@ impl ExecutionSessionManager for LocalExecutionManager {
             .require_running_record(execution_id, generation)
             .await?;
         inherit_container_environment(&record.env, &mut request.env);
-        if !has_oci_runtime(&record) {
+        strip_sandbox_secret_manifest(&record, &mut request.env);
+        if !uses_backend_session(&record) {
             inherit_execution_security_environment(&record, &mut request.env)?;
         }
         debug_session_environment(
@@ -92,7 +96,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
             &record.env,
             &request.env,
         );
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.start_process(&record, request).await;
@@ -121,7 +125,8 @@ impl ExecutionSessionManager for LocalExecutionManager {
             .require_running_record(execution_id, generation)
             .await?;
         inherit_container_environment(&record.env, &mut request.env);
-        if !has_oci_runtime(&record) {
+        strip_sandbox_secret_manifest(&record, &mut request.env);
+        if !uses_backend_session(&record) {
             inherit_execution_security_environment(&record, &mut request.env)?;
         }
         debug_session_environment(
@@ -131,7 +136,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
             &record.env,
             &request.env,
         );
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.start_pty(&record, request).await;
@@ -165,7 +170,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_observable_record(execution_id, generation)
             .await?;
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_observable_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.transfer_file(&record, request).await;
@@ -201,7 +206,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_observable_record(execution_id, generation)
             .await?;
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_observable_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.filesystem(&record, request).await;

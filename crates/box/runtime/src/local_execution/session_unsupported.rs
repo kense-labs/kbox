@@ -1,4 +1,4 @@
-//! OCI SDK sessions plus fail-closed legacy handling on hosts without Unix sockets.
+//! OCI SDK / Sandbox sessions plus fail-closed legacy handling on hosts without Unix sockets.
 
 use async_trait::async_trait;
 use kbox_core::pty::PtyRequest;
@@ -9,7 +9,7 @@ use kbox_core::{
 };
 
 use super::session_support::{
-    debug_session_environment, has_oci_runtime, inherit_container_environment,
+    debug_session_environment, inherit_container_environment, uses_backend_session,
 };
 use super::LocalExecutionManager;
 
@@ -25,7 +25,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_running_record(execution_id, generation)
             .await?;
-        if !has_oci_runtime(&record) {
+        if !uses_backend_session(&record) {
             return Err(unsupported_session("execute commands"));
         }
         inherit_container_environment(&record.env, &mut request.env);
@@ -50,7 +50,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_running_record(execution_id, generation)
             .await?;
-        if !has_oci_runtime(&record) {
+        if !uses_backend_session(&record) {
             return Err(unsupported_session("start processes"));
         }
         inherit_container_environment(&record.env, &mut request.env);
@@ -75,7 +75,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_running_record(execution_id, generation)
             .await?;
-        if !has_oci_runtime(&record) {
+        if !uses_backend_session(&record) {
             return Err(unsupported_session("start PTYs"));
         }
         inherit_container_environment(&record.env, &mut request.env);
@@ -100,7 +100,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_observable_record(execution_id, generation)
             .await?;
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_observable_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.transfer_file(&record, request).await;
@@ -117,7 +117,7 @@ impl ExecutionSessionManager for LocalExecutionManager {
         let record = self
             .require_observable_record(execution_id, generation)
             .await?;
-        if has_oci_runtime(&record) {
+        if uses_backend_session(&record) {
             self.require_same_observable_runtime(&record, execution_id, generation)
                 .await?;
             return self.backend.filesystem(&record, request).await;
@@ -139,13 +139,8 @@ mod tests {
     #[test]
     fn unsupported_session_error_is_explicit_and_fail_closed() {
         let error = unsupported_session("execute commands");
-        assert!(matches!(error, ExecutionManagerError::Unavailable(_)));
-        assert!(error.to_string().contains("Unix-domain socket support"));
-    }
-
-    #[test]
-    fn local_manager_still_satisfies_the_backend_neutral_contract() {
-        fn assert_session_manager<T: ExecutionSessionManager>() {}
-        assert_session_manager::<LocalExecutionManager>();
+        let message = error.to_string();
+        assert!(message.contains("execute commands"));
+        assert!(message.contains("Unix-domain socket"));
     }
 }

@@ -961,8 +961,15 @@ impl LocalExecutionBackend for VmLocalExecutionBackend {
 
     fn route_for_create(
         &self,
-        _record: &BoxRecord,
+        record: &BoxRecord,
     ) -> ExecutionManagerResult<crate::ManagedRuntimeRoute> {
+        if record.managed_execution.as_ref().is_some_and(|metadata| {
+            metadata.request.config.execution_boundary == kbox_core::ExecutionBoundary::Sandbox
+        }) {
+            return Err(ExecutionManagerError::Unavailable(
+                "sandbox execution boundary requires the sandbox local execution backend".into(),
+            ));
+        }
         Ok(crate::ManagedRuntimeRoute::BoxVm)
     }
 

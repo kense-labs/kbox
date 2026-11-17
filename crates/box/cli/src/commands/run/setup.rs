@@ -231,12 +231,17 @@ pub(super) async fn setup_and_boot(
         .unwrap_or_else(|| box_dir.join("sockets/pty.sock"));
     let anonymous_volumes = record.anonymous_volumes.clone();
 
-    if should_create_diff_baseline(args) {
+    let sandbox_isolation = record
+        .managed_execution
+        .as_ref()
+        .is_some_and(|meta| meta.runtime_route == kbox_runtime::ManagedRuntimeRoute::Sandbox);
+    if should_create_diff_baseline(args) && !sandbox_isolation {
         crate::commands::diff::create_box_baseline_snapshot(&box_dir)?;
     } else {
         tracing::debug!(
             box_id = %box_id,
-            "Skipping rootfs diff baseline snapshot for foreground --rm box"
+            sandbox = sandbox_isolation,
+            "Skipping rootfs diff baseline snapshot for foreground --rm or sandbox box"
         );
     }
 
@@ -461,7 +466,7 @@ pub(super) fn build_box_config(
         network,
         tmpfs,
         resource_limits,
-        tee,
+        tee: tee.clone(),
         read_only: args.common.read_only,
         cap_add: args.common.cap_add.clone(),
         cap_drop: args.common.cap_drop.clone(),
@@ -477,6 +482,12 @@ pub(super) fn build_box_config(
         // afterwards. `--rm` boxes and CRI pods stay non-persistent (removed on
         // teardown). `rm` force-removes either way (cleanup_removed_box).
         persistent: args.common.persistent || !args.rm,
+        // TEE/confidential always requires MicroVM; otherwise honor --isolation.
+        execution_boundary: if !matches!(tee, TeeConfig::None) {
+            kbox_core::ExecutionBoundary::Microvm
+        } else {
+            args.common.isolation.to_execution_boundary()
+        },
         ..Default::default()
     })
 }

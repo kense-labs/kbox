@@ -149,8 +149,8 @@ pub(super) async fn run_foreground(
     // VM health check is comparatively expensive and only needs the existing
     // 500 ms cadence. Keeping independent timers avoids adding a fixed half
     // second to every no-op without polling health more aggressively.
-    let exit_poll_period = if run_context_uses_oci(&ctx) {
-        // OCI inspection crosses the SDK/service boundary; a 100 ms cadence
+    let exit_poll_period = if run_context_uses_managed_provider(&ctx) {
+        // Provider inspection crosses the SDK/daemon boundary; a 100 ms cadence
         // remains responsive without issuing 50 control requests per second.
         FOREGROUND_OCI_EXIT_POLL
     } else {
@@ -187,7 +187,7 @@ pub(super) async fn run_foreground(
                     break foreground_health_stop_reason(foreground_workload_exit_code(
                         &ctx.box_dir,
                         ctx.record.exit_code,
-                        run_context_uses_oci(&ctx),
+                        run_context_uses_managed_provider(&ctx),
                     ));
                 }
             }
@@ -224,7 +224,7 @@ pub(super) async fn run_foreground(
     let persisted_exit_code = foreground_workload_exit_code(
         &ctx.box_dir,
         ctx.record.exit_code,
-        run_context_uses_oci(&ctx),
+        run_context_uses_managed_provider(&ctx),
     );
     let exit_code = foreground_exit_code(stop_reason, persisted_exit_code);
     let archive_start = std::time::Instant::now();
@@ -337,12 +337,12 @@ pub(super) fn foreground_health_stop_reason(exit_code: Option<i32>) -> Foregroun
 pub(super) fn foreground_workload_exit_code(
     box_dir: &std::path::Path,
     recorded_exit_code: Option<i32>,
-    trust_oci_wait: bool,
+    trust_provider_exit: bool,
 ) -> Option<i32> {
-    // OCI-routed DedicatedVm/MicroVM publish an authenticated container wait
-    // status. Trust that provider exit; do not require a second guest
+    // OCI DedicatedVm and Spec050 Sandbox publish an authenticated provider
+    // wait/inspect ExitCode. Trust that result; do not require a second guest
     // `.kexit_code` proof (legacy libkrun MicroVM still does).
-    let policy = if trust_oci_wait {
+    let policy = if trust_provider_exit {
         kbox_runtime::rootfs::ProviderExitPolicy::TrustProvider
     } else {
         kbox_runtime::rootfs::ProviderExitPolicy::RequireGuestProof
@@ -351,7 +351,7 @@ pub(super) fn foreground_workload_exit_code(
 }
 
 async fn managed_process_alive(ctx: &mut RunContext) -> bool {
-    if run_context_uses_oci(ctx) {
+    if run_context_uses_managed_provider(ctx) {
         match ctx.manager.inspect(&ctx.execution_id).await {
             Ok(status)
                 if matches!(
@@ -380,7 +380,7 @@ async fn managed_process_alive(ctx: &mut RunContext) -> bool {
 
 #[cfg(unix)]
 async fn managed_runtime_healthy(ctx: &RunContext) -> bool {
-    if run_context_uses_oci(ctx) {
+    if run_context_uses_managed_provider(ctx) {
         return true;
     }
     if !ctx.record.pid.is_some_and(|pid| {
@@ -403,7 +403,7 @@ async fn managed_runtime_healthy(ctx: &RunContext) -> bool {
 
 #[cfg(not(unix))]
 async fn managed_runtime_healthy(ctx: &RunContext) -> bool {
-    if run_context_uses_oci(ctx) {
+    if run_context_uses_managed_provider(ctx) {
         true
     } else {
         ctx.record.pid.is_some_and(|pid| {
@@ -412,13 +412,18 @@ async fn managed_runtime_healthy(ctx: &RunContext) -> bool {
     }
 }
 
-pub(super) fn run_context_uses_oci(ctx: &RunContext) -> bool {
-    // Honor the explicit OCI route used by managed DedicatedVm/MicroVM
-    // executions.
-    ctx.record
+/// Whether foreground/PTY lifecycle uses ExecutionManager inspect and trusts
+/// the provider exit (OCI DedicatedVm and Spec050 Sandbox). Legacy Box VM /
+/// libkrun MicroVM still rely on host PID identity plus `.kexit_code`.
+pub(super) fn run_context_uses_managed_provider(ctx: &RunContext) -> bool {
+    record_uses_managed_provider(&ctx.record)
+}
+
+pub(super) fn record_uses_managed_provider(record: &BoxRecord) -> bool {
+    record
         .managed_execution
         .as_ref()
-        .is_some_and(kbox_runtime::ManagedExecutionMetadata::is_oci_routed)
+        .is_some_and(kbox_runtime::ManagedExecutionMetadata::skips_host_pid_reconcile)
 }
 
 pub(super) fn foreground_completion_message(

@@ -86,3 +86,6 @@ docs/evidence/**/*.bin
 
 # Release archives and staging trees are generated.
 /dist/
+
+# Spec050 sandbox guest build outputs (large / host-local)
+/guest/out/

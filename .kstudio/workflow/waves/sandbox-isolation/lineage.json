@@ -1,0 +1,199 @@
+{
+  "schema": "kstudio.workflow-lineage.v1",
+  "wave_id": "sandbox-isolation",
+  "roles": [
+    {
+      "role_id": "O",
+      "duty": "orchestrate",
+      "stage": "verifying",
+      "depends_on": [],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/O.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": "darwin-arm64-local",
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": "f52bbb50c3a723b479cbf65da12eef6a6ec900fe",
+        "commits": []
+      },
+      "evidence": {
+        "dir": ".kstudio/evidence/T2026-11-17-sandbox-isolation-backend/",
+        "ready": false,
+        "scope": "orchestration summary + k-review receipt; overall unmet; ≠Pass"
+      }
+    },
+    {
+      "role_id": "B",
+      "duty": "implement",
+      "stage": "verifying",
+      "depends_on": [],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/B.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": "darwin-arm64-local",
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": "f52bbb50c3a723b479cbf65da12eef6a6ec900fe",
+        "commits": []
+      },
+      "evidence": {
+        "dir": "docs/evidence/runtime/20261117-sandbox-isolation-backend/",
+        "ready": true,
+        "scope": "darwin arm64 host greens only: Compose Secrets / package smokes / MicroVM regression; not notarize; not multi-host; ≠Pass"
+      },
+      "escalates_to": "I"
+    },
+    {
+      "role_id": "R",
+      "duty": "implement_remote",
+      "stage": "hold",
+      "depends_on": [],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/R.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": null,
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": null,
+        "commits": []
+      },
+      "evidence": {
+        "dir": "docs/evidence/runtime/20261117-sandbox-isolation-backend/PARK-MULTIHOST.md",
+        "ready": false
+      },
+      "hold_reason": "PARK-MULTIHOST: no remote/matrix host beyond this darwin arm64; do not invent multi-host Pass",
+      "escalates_to": "I"
+    },
+    {
+      "role_id": "M",
+      "duty": "merge_verify",
+      "stage": "verifying",
+      "depends_on": [
+        "B",
+        "R"
+      ],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/M.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": "darwin-arm64-local",
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": "f52bbb50c3a723b479cbf65da12eef6a6ec900fe",
+        "commits": []
+      },
+      "evidence": {
+        "dir": "docs/evidence/runtime/20261117-sandbox-isolation-backend/",
+        "ready": false,
+        "scope": "host slice verified; PARK-NOTARIZE + PARK-MULTIHOST open; overall unmet; ≠Pass"
+      },
+      "hold_reason": "PARK-NOTARIZE (Apple credentials / Gatekeeper staple) blocks product-acceptance claim"
+    },
+    {
+      "role_id": "I",
+      "duty": "hard_case",
+      "stage": "hold",
+      "depends_on": [],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/I.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": null,
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": null,
+        "commits": []
+      },
+      "evidence": {
+        "dir": ".kstudio/evidence/k-review/20261117T094631Z-dec823cd/",
+        "ready": false
+      },
+      "hold_reason": "k-review F1 fused-engine Env scrub residual; F2 package-require open; not tasked this L3 repair"
+    },
+    {
+      "role_id": "S",
+      "duty": "after_action_review",
+      "stage": "verifying",
+      "depends_on": [
+        "B",
+        "R"
+      ],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/S.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": null,
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": null,
+        "commits": []
+      },
+      "evidence": {
+        "dir": ".kstudio/workflow/GOALS.md",
+        "ready": false,
+        "scope": "goals locked; wave overall unmet; ≠Pass"
+      }
+    },
+    {
+      "role_id": "D",
+      "duty": "docs_goals",
+      "stage": "verifying",
+      "depends_on": [],
+      "prompt": {
+        "path": ".kstudio/workflow/waves/sandbox-isolation/roles/D.md"
+      },
+      "binding": {
+        "agent_id": null,
+        "model": null,
+        "environment_ref": null,
+        "session_id": null,
+        "bound_at": null
+      },
+      "code": {
+        "branch": "main",
+        "head_sha": "f52bbb50c3a723b479cbf65da12eef6a6ec900fe",
+        "commits": []
+      },
+      "evidence": {
+        "dir": "docs/evidence/runtime/20261117-sandbox-isolation-backend/OUTCOME.md",
+        "ready": true,
+        "scope": "OUTCOME + parks recorded; product Pass not claimed"
+      }
+    }
+  ],
+  "edges": [],
+  "note": "Spec050 sandbox-isolation: stage verifying. Darwin arm64 Secrets/package/MicroVM evidence green; PARK-NOTARIZE + PARK-MULTIHOST; overall unmet; ≠Pass. L3 seats backfilled 2026-11-17 (F6)."
+}

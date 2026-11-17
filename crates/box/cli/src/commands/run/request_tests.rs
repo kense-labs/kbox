@@ -1,7 +1,7 @@
 use super::*;
 
 #[test]
-fn test_build_box_config_defaults_to_microvm_isolation() {
+fn test_build_box_config_defaults_to_sandbox_isolation() {
     let args = default_run_args();
 
     let config = build_box_config(
@@ -17,6 +17,33 @@ fn test_build_box_config_defaults_to_microvm_isolation() {
         TeeConfig::None,
     )
     .unwrap();
+    assert_eq!(
+        config.execution_boundary,
+        kbox_core::ExecutionBoundary::Sandbox
+    );
+}
+
+#[test]
+fn test_build_box_config_honors_explicit_microvm_isolation() {
+    let mut args = default_run_args();
+    args.common.isolation = common::IsolationBoundaryArg::Microvm;
+    let config = build_box_config(
+        &args,
+        512,
+        Default::default(),
+        None,
+        vec![],
+        vec![],
+        vec![],
+        kbox_core::NetworkMode::Tsi,
+        vec![],
+        TeeConfig::None,
+    )
+    .unwrap();
+    assert_eq!(
+        config.execution_boundary,
+        kbox_core::ExecutionBoundary::Microvm
+    );
 }
 
 #[test]

@@ -752,6 +752,11 @@ networks:
         assert_eq!(box_config.resources.vcpus, 2);
         assert_eq!(box_config.resources.memory_mb, 1024);
         assert_eq!(box_config.volumes, vec!["pgdata:/var/lib/postgresql/data"]);
+        // Spec050: compose inherits BoxConfig default Sandbox (not silent MicroVM).
+        assert_eq!(
+            box_config.execution_boundary,
+            kbox_core::ExecutionBoundary::Sandbox
+        );
     }
 
     #[test]

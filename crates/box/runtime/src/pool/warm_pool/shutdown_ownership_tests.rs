@@ -1528,3 +1528,125 @@ async fn prepared_pool_initialization_is_inert_idempotent_and_refuses_after_drai
         1
     );
 }
+
+#[tokio::test]
+async fn one_shot_discard_keeps_failed_actual_owner_until_retry() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..Default::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    assert!(matches!(
+        pool.discard(vm).await,
+        Err(BoxError::StateError(_))
+    ));
+    assert_eq!(calls.load(Ordering::SeqCst), 1);
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "failed one-shot close must retain its actual handler"
+    );
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(pool.retiring.lock().is_empty() && !box_dir.exists());
+}
+
+#[tokio::test]
+async fn one_shot_discard_unpolled_future_keeps_actual_owner_for_drain() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..Default::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    let teardown = pool.discard(vm);
+    drop(teardown);
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "cancelled response must retain its never-polled teardown owner"
+    );
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    assert!(matches!(
+        pool.drain_idle().await,
+        Err(BoxError::StateError(_))
+    ));
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(pool.retiring.lock().is_empty() && !box_dir.exists());
+}
+
+#[tokio::test]
+async fn one_shot_discard_cancelled_close_keeps_actual_owner_after_external_lock_drops() {
+    let (_root, vm, calls, drops) = fixture().await;
+    let box_dir = vm.home_dir.join("boxes").join(vm.box_id());
+    let slot = vm.handler.clone();
+    let locked = slot.write().await;
+    let pool = WarmPool::start(
+        PoolConfig {
+            min_idle: 0,
+            max_size: 1,
+            ..Default::default()
+        },
+        BoxConfig::default(),
+        EventEmitter::new(16),
+    )
+    .await
+    .unwrap();
+    {
+        let closing = pool.discard(vm);
+        tokio::pin!(closing);
+        assert!(futures::poll!(closing.as_mut()).is_pending());
+    }
+    drop(locked);
+    drop(slot);
+    assert_eq!(calls.load(Ordering::SeqCst), 0);
+    assert_eq!(
+        drops.load(Ordering::SeqCst),
+        0,
+        "no external slot reference may stand in for pool ownership"
+    );
+    assert_eq!(pool.retiring.lock().len(), 1);
+    assert!(pool.ensure_admission_open().is_err());
+    assert_eq!(
+        std::fs::read(box_dir.join("rootfs/canary")).unwrap(),
+        b"owned-working-data"
+    );
+    assert!(matches!(
+        pool.drain_idle().await,
+        Err(BoxError::StateError(_))
+    ));
+    pool.drain_idle().await.unwrap();
+    assert_eq!(calls.load(Ordering::SeqCst), 2);
+    assert_eq!(drops.load(Ordering::SeqCst), 1);
+    assert!(pool.retiring.lock().is_empty() && !box_dir.exists());
+}

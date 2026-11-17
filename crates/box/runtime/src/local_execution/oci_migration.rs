@@ -573,14 +573,28 @@ fn legacy_backend(
     home_dir: PathBuf,
     pull_progress_fn: Option<crate::PullProgressFn>,
 ) -> ExecutionManagerResult<LocalExecutionManager> {
-    let mut backend = crate::local_execution::VmLocalExecutionBackend::new(&home_dir);
+    let mut legacy_backend = crate::local_execution::VmLocalExecutionBackend::new(&home_dir);
     if let Some(progress) = pull_progress_fn {
-        backend = backend.with_pull_progress_fn(progress);
+        legacy_backend = legacy_backend.with_pull_progress_fn(progress);
     }
+    // Spec050: MicroVM remains the create default (LegacyOnly), while durable
+    // Sandbox-routed records dispatch to the fused sandbox backend. The OCI
+    // slot is unused under LegacyOnly; reuse the legacy backend rather than
+    // inventing a second manager.
+    let legacy: Arc<dyn crate::local_execution::LocalExecutionBackend> = Arc::new(legacy_backend);
+    let sandbox: Arc<dyn crate::local_execution::LocalExecutionBackend> = Arc::new(
+        crate::local_execution::SandboxLocalExecutionBackend::new(home_dir.clone()),
+    );
+    let router = crate::local_execution::LocalExecutionBackendRouter::new(
+        legacy.clone(),
+        legacy,
+        crate::local_execution::OciMigrationPolicy::LegacyOnly,
+    )
+    .with_sandbox(sandbox);
     Ok(LocalExecutionManager::new(
         state_path,
         home_dir,
-        Arc::new(backend),
+        Arc::new(router),
     ))
 }
 
@@ -595,9 +609,11 @@ fn reject_removed_sandbox_migration_env() -> ExecutionManagerResult<()> {
     })?;
     match mode.trim().to_ascii_lowercase().as_str() {
         "" | "0" | "false" | "off" | "disabled" | "legacy" => Ok(()),
+        // "sandbox" here is the retired SharedHostKernel OCI-migration mode, not
+        // Spec050 ManagedRuntimeRoute::Sandbox (fused engine behind ExecutionManager).
         "1" | "true" | "on" | "sandbox" | "sandbox-via-oci" | "all" | "all-via-oci" => {
             Err(ExecutionManagerError::InvalidRequest(format!(
-                "legacy shared-kernel OCI migration was removed; set {OCI_MIGRATION_ENV}=off for MicroVM-only or use {OCI_KVM_ENDPOINT_ENV} / LinuxKvmOciMigrationConfig for DedicatedVm"
+                "legacy shared-kernel OCI migration was removed; set {OCI_MIGRATION_ENV}=off for MicroVM create-default or use {OCI_KVM_ENDPOINT_ENV} / LinuxKvmOciMigrationConfig for DedicatedVm"
             )))
         }
         "microvm" | "microvm-via-oci" | "kvm" => Ok(()),

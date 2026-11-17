@@ -138,8 +138,12 @@ pub(super) fn creation_request_for(
         }
         _ => unreachable!("unsupported isolation was rejected before Box mapping"),
     };
+    // Spec050: Runtime IsolationLevel::Sandbox is implemented by the driver's
+    // concrete ExecutionBoundary. Sandbox pins the fused sandbox engine route;
+    // Microvm keeps libkrun. Confidential was already validated as Microvm-only.
     let config = BoxConfig {
         image: image_reference(&spec.artifact)?,
+        execution_boundary,
         tee,
         resources: ResourceConfig {
             vcpus,

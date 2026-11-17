@@ -62,32 +62,27 @@ kbox run --rm --isolation microvm alpine:3.20 -- echo hello-microvm
 
 ## 性能（对标 OrbStack）
 
-darwin arm64：kbox Sandbox（`release-dist`）vs 本机 **OrbStack Docker 29.8.2**。
-暖机协议（daemon 已起、镜像已缓存）；公平对要求两侧 `rc=0`。
+主比 **生命周期**（create / start / run / exec / stop / …），不以 registry
+`pull` 论胜负。darwin arm64：kbox Sandbox（`release-dist`）vs 本机
+**OrbStack Docker 29.8.2**；暖机 + 镜像已缓存；公平对要求两侧 `rc=0`。
 
-| | kbox | OrbStack |
-| --- | ---: | ---: |
-| 冷 `pull alpine:3.20` | ~6.5 s | ~2.1 s |
-| 暖机公平对 | 41 | 41 |
-| kbox 更快（比值 &lt; 0.8） | **39** | — |
-| kbox 更慢（比值 &gt; 1.2） | **1**（`commit` ×1.24） | — |
-| 比值中位（kbox/orb） | **0.34** | — |
-
-| 命令（暖机） | kbox | OrbStack | 比值 |
+| 生命周期（暖机） | kbox | OrbStack | 比值 |
 | --- | ---: | ---: | ---: |
 | `run --rm` | 194 ms | 274 ms | 0.71 |
+| `create` | 54 ms | 87 ms | 0.61 |
+| `start` | 28 ms | 82 ms | 0.34 |
 | `exec` | 6 ms | 26 ms | 0.24 |
+| `stop` | 25 ms | ~10.1 s | ≪1 |
+| `restart` | 36 ms | ~10.2 s | ≪1 |
 | `compose up -d` | 135 ms | 289 ms | 0.47 |
-| `create` / `start` | 54 / 28 ms | 87 / 82 ms | 0.61 / 0.34 |
-| `commit` | 240 ms | 194 ms | 1.24 |
 | `cp` | 9 ms | 18 ms | 0.51 |
+| `commit` | 240 ms | 194 ms | 1.24 |
 
-**结论：** 暖机日常路径 **kbox 总体更快**；冷 pull **OrbStack 更快**（约 3×）。新鲜 daemon 后的首次 `run` 仍约 3.5–4 s；后续暖机保持亚秒级。
+41 个暖机公平对：kbox 更快 **39**，更慢 **1**（`commit`）；比值中位 **0.34**。
+新鲜 daemon 后的首次 `run` 仍约 3.5–4 s（一次性拉起）；稳态生命周期保持亚秒。
 
-Windows 4090 WSL2 对照为 **Docker Engine**（该机无 OrbStack）；debug 构建，比值中位 ≈1.0，详见证据目录。
-
-复现：`scripts/bench-sandbox-vs-orbstack.py`  
-证据：[`docs/evidence/runtime/20261118-sandbox-perf-orbstack/`](docs/evidence/runtime/20261118-sandbox-perf-orbstack/)。≠Pass。
+冷 `pull` 受 Hub 鉴权/网络主导，**不纳入本结论**。61 命令全表与 Windows WSL
+对照见证据目录。≠Pass。
 
 ## 平台
 

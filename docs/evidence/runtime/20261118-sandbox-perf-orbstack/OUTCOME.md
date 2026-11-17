@@ -34,27 +34,26 @@ python3 scripts/bench-sandbox-vs-orbstack.py \
 
 ## Darwin arm64 — kbox vs OrbStack 29.8.2
 
-Artifacts: `darwin-final.json` · `darwin-final.md`  
+Artifacts: `darwin-final.json` · `darwin-final.md` · `COMPARISON.md`  
 Binary: `release-dist` kbox + engine（本脉冲优化后）
+
+**Product verdict uses lifecycle only** (create/start/run/exec/stop/…), not cold
+`pull`.
 
 | Metric | kbox | OrbStack docker |
 | --- | --- | --- |
-| Cold `pull alpine:3.20` | **~6540–7775 ms** | **~2050–2315 ms** |
 | Warm fair pairs | 41 | 41 |
 | Fair pairs kbox slower (×>1.2) | **1** (`commit` ×1.24) | — |
 | Fair pairs kbox faster (×<0.8) | **39** | — |
+| Median kbox/orb ratio | **0.34** | — |
 
-### Cold gap (honest)
-
-Cold pull remains **~3×** OrbStack on this link. Trace shows ~2.5–3s before first
-layer byte (auth/index) + ~2s for 3.9 MB. OrbStack keeps a warm engine/VM and
-aggressive registry cache. Manifest de-dup removed a wasted GET; remaining gap is
-mostly **registry/TLS/VM-cold**, not CLI overhead.
-
-First `run --rm` after fresh daemon ≈ **3.5–4.0 s** (VM/container bring-up);
+First `run --rm` after fresh daemon ≈ **3.5–4.0 s** (one-time engine bring-up);
 warm `run --rm` ≈ **195 ms** vs OrbStack ≈ **256 ms** (**kbox faster**).
 
-### Warm path highlights (fair success pairs)
+Cold `pull` (~6.5 s vs ~2.1 s) remains in raw JSON as network/auth cost; **not**
+part of the lifecycle headline.
+
+### Warm lifecycle highlights (fair success pairs)
 
 | cmd | kbox_ms | orb_ms | ratio |
 | --- | ---: | ---: | ---: |

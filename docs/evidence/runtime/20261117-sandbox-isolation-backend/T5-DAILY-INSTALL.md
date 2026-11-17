@@ -15,9 +15,9 @@ dist/kbox-3.4.4-macos-arm64.tar.gz
 sha256=11ef7ae81016bffd7d3eba19303ab3af7adad1048881efe5b7ecd9df2b51f466
 ```
 
-Source listing: `T5-PACKAGE-RUN-RM-EXIT.md` (F1 scrub + `run --rm` exit fix
-packaged; `PKG_RM_EXIT_OK` / `EXIT:0`; supersedes prior `a6c7a125…`
-archive for this note).
+Source listing: `T5-RELEASE-3.4.4.md` (Sandbox default + `run --rm`
+TrustProvider exit; supersedes prior 3.4.3 `5c1e8eba…` /
+`T5-PACKAGE-RUN-RM-EXIT.md` archive for this note).
 
 ## Install + quarantine clear
 
@@ -29,10 +29,10 @@ K_HOME=$(mktemp -d /tmp/kbox-daily-home-XXXXXX)
 STAGE=$(mktemp -d /tmp/kbox-daily-stage-XXXXXX)
 export K_HOME
 tar -C "$STAGE" -xzf dist/kbox-3.4.4-macos-arm64.tar.gz
-KBOX_PREFIX="$PREFIX" sh "$STAGE/kbox-3.4.3-macos-arm64/install.sh"
+KBOX_PREFIX="$PREFIX" sh "$STAGE/kbox-3.4.4-macos-arm64/install.sh"
 xattr -dr com.apple.quarantine "$PREFIX" || true
 export PATH="$PREFIX/bin:$PATH"
-kbox version   # 3.4.3
+kbox version   # 3.4.4
 ```
 
 In-place extract (same clear, no prefix): see `T5-INSTALL-QUARANTINE.md`
@@ -42,8 +42,9 @@ In-place extract (same clear, no prefix): see `T5-INSTALL-QUARANTINE.md`
 
 ```bash
 kbox run -d --name sandcheck alpine:latest -- sleep 60
-# boxes.json … execution_boundary == "sandbox"  (T5-MICROVM-REGRESSION.md)
-kbox run --rm alpine:3.20 -- echo QUARANTINE_OK
+# boxes.json … execution_boundary == "sandbox"  (T5-MICROVM-REGRESSION.md /
+# T5-RELEASE-3.4.4.md)
+kbox run --rm alpine:3.20 -- echo QUARANTINE_OK; echo EXIT:$?
 kbox rm -f sandcheck
 ```
 
@@ -56,10 +57,13 @@ Not covered here. Resume when Apple credentials exist: `PARK-NOTARIZE.md`.
 
 ## Related evidence
 
+- Versioned local release: `T5-RELEASE-3.4.4.md`
+- Prior packaged rm-exit (3.4.3): `T5-PACKAGE-RUN-RM-EXIT.md`
 - Package / install layout: `T5-PACKAGE-INSTALL.md` · `T5-PACKAGE-COMPOSE-SECRETS.md`
 - Quarantine clear only: `T5-INSTALL-QUARANTINE.md`
 - Packaged daily path smoke: `T5-PROD-DAILY-PATH.md`
 - Sandbox default hermetic: `T5-DEFAULT-SANDBOX.md`
+- Foreground `run --rm` exit: `T5-RUN-RM-EXIT.md`
 
 ## Explicitly not claimed
 

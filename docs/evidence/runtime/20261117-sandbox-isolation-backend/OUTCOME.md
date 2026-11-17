@@ -104,6 +104,12 @@ Status: **partial** · overall goal **unmet** · ≠Pass
     `dist/kbox-3.4.3-macos-arm64.tar.gz` sha256 `5c1e8eba…`; isolated
     install → `PKG_RM_EXIT_OK` / `EXIT:0`, fail-closed `EXIT:7`
     (`T5-PACKAGE-RUN-RM-EXIT.md`) — ≠Pass / ≠notarize
+34. **Local release 3.4.4:** bump cli/core `3.4.3→3.4.4`;
+    `dist/kbox-3.4.4-macos-arm64.tar.gz` sha256 `11ef7ae8…`; isolated
+    install → `kbox version 3.4.4`, `run --rm … REL_OK` → `EXIT:0`,
+    `execution_boundary=sandbox` (`T5-RELEASE-3.4.4.md`); daily pointer
+    updated (`T5-DAILY-INSTALL.md`) — ≠Pass / ≠notarize; no git tag/gh
+    in this seat
 
 ## Evidence
 
@@ -124,6 +130,7 @@ Status: **partial** · overall goal **unmet** · ≠Pass
   `T5-PACKAGE-REQUIRE-SANDBOX.md` · `T5-PACKAGE-REQUIRE-EMBEDDED.md` ·
   `T5-ENGINE-SECRET-ENV-SCRUB.md` · `T5-PACKAGE-ENGINE-SECRET-ENV-SCRUB.md` ·
   `T5-RUN-RM-EXIT.md` · `T5-PACKAGE-RUN-RM-EXIT.md` ·
+  `T5-RELEASE-3.4.4.md` ·
   `PARK-COMPOSE-SECRETS.md` · `PARK-NOTARIZE.md` · `PARK-MULTIHOST.md`
 
 ## Remaining overall-goal gap
@@ -131,17 +138,20 @@ Status: **partial** · overall goal **unmet** · ≠Pass
 - Notarized / Gatekeeper-stapled install (Apple credentials — `PARK-NOTARIZE.md`)
 - Multi-host matrix beyond this darwin arm64 host (`PARK-MULTIHOST.md`)
 - Packaged F1 Secret Env scrub: **verified** (prior `a6c7a125…` /
-  `PKG_SCRUB_OK`); current dist `5c1e8eba…` also embeds scrub + rm-exit;
-  still ≠ product Pass
+  `PKG_SCRUB_OK`); 3.4.4 archive also embeds scrub + rm-exit; still ≠
+  product Pass
 - Engine ephemeral Secret overlay does not survive daemon process restart
   without Box recreate (in-memory only)
 - Optional MicroVM on this host: **verified** this pulse
   (`T5-MICROVM-REGRESSION.md`); still ≠ product Pass
-- Packaging F2 companion gate: **embedded** (prior `e975167b…`); current
-  dist also embeds F1 scrub + rm-exit (`5c1e8eba…`); still ≠ product Pass
+- Packaging F2 companion gate: **embedded**; current **3.4.4** also embeds
+  F1 scrub + rm-exit (`11ef7ae8…`); still ≠ product Pass
 - Foreground `run --rm` exit parity: **verified** in-tree
-  (`T5-RUN-RM-EXIT.md`) and packaged (`T5-PACKAGE-RUN-RM-EXIT.md`
-  `PKG_RM_EXIT_OK` / `EXIT:0` / fail-closed `EXIT:7`); still ≠ product Pass
+  (`T5-RUN-RM-EXIT.md`), packaged 3.4.3 (`T5-PACKAGE-RUN-RM-EXIT.md`),
+  and packaged **3.4.4** (`T5-RELEASE-3.4.4.md` `EXIT:0`); still ≠
+  product Pass
+- Local versioned archive **3.4.4** ready for parent commit/tag/gh;
+  notarize still parked
 
 ## Explicitly not claimed
 
@@ -149,3 +159,4 @@ Status: **partial** · overall goal **unmet** · ≠Pass
 - Windows/WSL native support
 - Completion of unrelated `049-pool-oneshot-discard` WIP
 - HTTP app-level discovery (Bridge smoke used DNS + ICMP only)
+- This seat did not git commit / tag / GitHub Release

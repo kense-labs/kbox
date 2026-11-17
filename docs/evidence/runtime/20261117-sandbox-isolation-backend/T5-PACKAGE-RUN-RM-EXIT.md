@@ -24,6 +24,12 @@ build: bash scripts/package-macos-arm64.sh
 
 Supersedes prior `a6c7a125…` archive (F1 scrub present, pre-fix CLI exit).
 
+**Superseded for publish:** GitHub `v3.4.4` ships
+`dist/kbox-3.4.4-macos-arm64.tar.gz`
+(`sha256=11ef7ae81016bffd7d3eba19303ab3af7adad1048881efe5b7ecd9df2b51f466`)
+with the same exit-code fix + Spec050 stack — see `T5-RELEASE-3.4.4.md`.
+This 3.4.3 pulse remains historical packaging evidence only.
+
 ## Install + smoke
 
 ```bash

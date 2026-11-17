@@ -1,35 +1,43 @@
 # KBox
 
-A **Docker-shaped MicroVM runtime** for local agents and OCI workloads. Pull public images, run each box in its own guest Linux kernel (libkrun), and manage lifecycle, volumes, networks, compose, snapshots, and warm pools from one CLI.
+A **Docker-shaped OCI runtime** for local agents and workloads. Same CLI shape as Docker (`run` / `exec` / `compose` / …); isolation is graded:
+
+- **Default — Sandbox** — fused in-tree container engine (Apache-2.0 provenance, brand-clean)
+- **First-class — MicroVM** — still supported; `kbox run --isolation microvm` via libkrun / libkrunfw (higher isolation, not removed)
 
 English | [简体中文](README.zh-CN.md)
 
-## How it works
+## Architecture
 
-Every `kbox run` starts a **DedicatedVm**: OCI rootfs + guest init inside an HVF MicroVM—not a shared-host-kernel container.
+Current control plane and dual isolation backends (from source, Spec050 / v3.4.5 era):
+
+![KBox architecture](docs/architecture/kbox-architecture.png)
+
+[Editable SVG](docs/architecture/kbox-architecture.svg) · Kense OS blueprint style
 
 ```text
-Host (macOS arm64)
-    │
-    ▼
-KBox CLI  ──►  image store / volumes / networks
-    │
-    ▼
-kbox-shim + libkrun / libkrunfw
-    │
-    ▼
-Guest Linux MicroVM  ──►  your process (nginx, redis, agent, …)
+Users / CLI / CRI / shim
+        │
+        ▼
+ExecutionManager  (sole resource authority)
+        │
+        ├─ default ► Sandbox engine daemon + guest
+        └─ kept   ► libkrun MicroVM (DedicatedVm, --isolation microvm)
 ```
 
-- **OCI images in, MicroVMs out** — alpine, nginx, postgres, custom agents all use the same path.
-- **No Docker Engine API** — CLI (and optional CRI) only; default networking is TSI, not Docker bridge.
+- **One CLI, two isolation grades** — Sandbox is default; MicroVM stays a supported upgrade path.
+- **ExecutionManager owns** boxes, mounts, networks, generations; no silent isolation downgrade.
+- **ACP / LLM** live in peer repo `krun`; KBox is the execution substrate.
 
 ## Install
 
-macOS arm64 (Apple Silicon):
+macOS arm64 (Apple Silicon), GitHub Release `v3.4.5`:
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.3/install.sh | sh
+# from the release assets on https://github.com/kense-labs/kbox/releases/tag/v3.4.5
+tar -xzf kbox-3.4.5-macos-arm64.tar.gz
+KBOX_PREFIX="$HOME/.kbox" sh kbox-3.4.5-macos-arm64/install.sh
+xattr -dr com.apple.quarantine "$HOME/.kbox" || true   # until notarize lands
 export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```
@@ -39,92 +47,77 @@ kbox update --check
 kbox update
 ```
 
-Package ≈ **22 MB** compressed / **≈ 42 MB** installed (`kbox`, `kbox-shim`, `kbox-guest-init`, libkrun, libkrunfw). Other platforms: build from source below.
+Package ships `kbox`, `kbox-sandbox-engine`, sandbox guest, plus MicroVM companions (`kbox-shim`, libkrun, …). ≠Pass / ≠notarize — Gatekeeper may still need the quarantine clear above.
 
 ## Quick start
 
+Default Sandbox path:
+
 ```sh
-kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
+kbox run --rm alpine:3.20 -- echo hello-kbox
 ```
 
-Detached service with host port publish:
+Detached service with publish:
 
 ```sh
-kbox run -d --name web -p 8080:80 docker.io/library/nginx:alpine
+kbox run -d --name web -p 8080:80 nginx:alpine
 curl -fsS http://127.0.0.1:8080/ | head
 kbox rm -f web
 ```
 
-ACP agent (stdio launcher—not a terminal chat):
+Higher isolation (same CLI):
 
 ```sh
-export DEEPSEEK_API_KEY=your_key
-kbox run -i --rm --memory 2g -u root \
-  -v dsh-acp-data:/data -v "$PWD:/workspace" \
-  -e DEEPSEEK_API_KEY \
-  ghcr.io/kense-labs/dsh-acp:latest
+kbox run --rm --isolation microvm alpine:3.20 -- echo hello-microvm
 ```
 
-Live greeting bench (no clone):
-
-```sh
-DEEPSEEK_API_KEY=your_key DSH_MODEL=deepseek-flash DSH_REASONING_EFFORT=low RUNS=1 \
-  bash -o pipefail -c \
-  'curl -fsSL https://raw.githubusercontent.com/kense-labs/dsh-acp/main/scripts/bench-pool-dsh-acp.sh | sh'
-```
+Full top-level command matrix (61): `bash scripts/e2e-sandbox-full.sh`  
+Perf vs OrbStack evidence: [`docs/evidence/runtime/20261118-sandbox-perf-orbstack/`](docs/evidence/runtime/20261118-sandbox-perf-orbstack/)
 
 ## What you get
 
 | Area | Support |
 | --- | --- |
-| Images | `pull` / `build` / `commit` / `export` / `import` / registry login |
-| Run | `-d`, `-i`, `-v`, `-e`, `-p`, `-u`, `--entrypoint`, `--rm`, resource limits |
-| Compose / pool | Multi-service MicroVMs; `pool start --prewarm` + `pool attach` |
-| Snapshot / network / volume | First-class CLI groups |
+| Images | `pull` / `build` / `commit` / `export` / `import` / login |
+| Run | `-d`, `-i`, `-v`, `-e`, `-p`, `-u`, `--rm`, limits, `--isolation` |
+| Compose / pool | Multi-service; Sandbox networks; `pool start --prewarm` |
+| Snapshot / volume / network | First-class CLI groups |
+| Isolation | **Sandbox default** · **MicroVM supported** (`--isolation microvm`) |
 
-Command details: `kbox --help` and `kbox <command> --help` (source of truth).
+Command details: `kbox --help` (source of truth).
 
 ## Platforms
 
-| Host | Runtime | Prebuilt package |
-| --- | --- | --- |
-| macOS arm64 | Apple HVF + libkrun | Yes (`kbox-v*` on [kense Releases](https://github.com/kense-labs/kense/releases)) |
-| Linux | KVM path in-tree | Build + qualify locally |
-| Windows | WHPX path in-tree | Build + qualify locally |
+| Host | Default Sandbox | MicroVM | Prebuilt package |
+| --- | --- | --- | --- |
+| macOS arm64 | Yes (fused engine) | HVF + libkrun | Yes (`v3.4.5`) |
+| Linux | Yes (namespaces; root for full path) | KVM | Build / qualify |
+| Windows | Via WSL2 Linux path | WHPX in-tree | Build / qualify |
 
-Shared-host-kernel is **not** a Box product path.
+Native win32 Sandbox package is not claimed. Evidence: darwin packaged + Windows WSL 61/61 coverage.
 
 ## Development
 
 ```sh
 git clone --recursive https://github.com/kense-labs/kbox
 cd kbox
-cargo build --locked -p kbox-cli
+cargo build --locked -p kbox-cli -p kbox-sandbox-engine
 cargo fmt --all -- --check
 cargo check --workspace --all-targets --locked
 ```
 
-E2E (isolated `K_HOME`):
-
-```sh
-# dsh-acp × pool
-DEEPSEEK_API_KEY=… TIER=p0 ./scripts/e2e-dsh-acp/run.sh
-
-# nginx / redis / postgres / rustfs functional deploy
-TIER=all ./scripts/e2e-services/run.sh
-```
-
-Plans and evidence: [docs/e2e-dsh-acp/](docs/e2e-dsh-acp/), [docs/e2e-services/](docs/e2e-services/), [docs/evidence/box/](docs/evidence/box/).
+Always set a task-owned `K_HOME` before local tests.
 
 Layout:
 
 ```text
-crates/box/         MicroVM Box CLI + runtime
-crates/oci-runtime/ OCI / DedicatedVm platform stack
-crates/runtime/     Task / Service contracts
-libkrun/ libkrunfw/ virtualization submodules
+crates/box/           CLI · runtime · sandbox engine
+crates/oci-runtime/   OCI / DedicatedVm stack
+crates/runtime/       Task / Service contracts
+libkrun/ libkrunfw/   virtualization submodules
+docs/architecture/    Kense OS–style diagrams
 ```
 
 ## License
 
-MIT. See [LICENSE](LICENSE). Submodules retain their upstream licenses.
+MIT. See [LICENSE](LICENSE). Submodules and fused sandbox engine retain their upstream licenses / NOTICE.

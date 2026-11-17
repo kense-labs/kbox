@@ -1,79 +1,86 @@
-# kbox
+# KBox
+
+面向本地 Agent 与 OCI 工作负载的 **Docker 风格运行时**。CLI 形态与 Docker 同形（`run` / `exec` / `compose` / …）；隔离分级：
+
+- **默认 — Sandbox**：仓内融合的容器引擎（Apache-2.0 溯源、零上游产品品牌）
+- **正式保留 — MicroVM**：继续支持；`kbox run --isolation microvm`，经 libkrun / libkrunfw（更高隔离，不是砍掉）
 
 [English](README.md) | 简体中文
 
-面向本地 Agent 与 OCI 工作负载的 **Docker 风格 MicroVM 运行时**。拉取公网镜像，每个 Box 跑在独立客体内核（libkrun）里；用同一套 CLI 管理生命周期、卷、网络、Compose、快照与预热池。
+## 架构
 
-## 工作模型
+当前控制面与双隔离后端（源码实态，Spec050 / v3.4.5）：
 
-每次 `kbox run` 启动的是 **DedicatedVm**：OCI rootfs + guest init，落在 HVF MicroVM 中——不是共享宿主内核的容器。
+![KBox 架构](docs/architecture/kbox-architecture.png)
+
+[可编辑 SVG](docs/architecture/kbox-architecture.svg) · Kense OS 蓝图样式
 
 ```text
-宿主 (macOS arm64)
-    │
-    ▼
-kbox CLI  ──►  镜像库 / 卷 / 网络
-    │
-    ▼
-kbox-shim + libkrun / libkrunfw
-    │
-    ▼
-Guest Linux MicroVM  ──►  你的进程（nginx、redis、agent…）
+用户 / CLI / CRI / shim
+        │
+        ▼
+ExecutionManager  （唯一资源权威）
+        │
+        ├─ 默认 ► Sandbox 引擎守护进程 + guest
+        └─ 保留 ► libkrun MicroVM（DedicatedVm，`--isolation microvm`）
 ```
 
-- **镜像进、MicroVM 出** — alpine、nginx、postgres、自定义 agent 同一路径。
-- **无 Docker Engine API** — 只有 CLI（及可选 CRI）；默认网络为 TSI。
+- **同一 CLI、两级隔离** — Sandbox 为默认；MicroVM 仍是受支持的升级路径。
+- **ExecutionManager** 持有 box / 挂载 / 网络 / 代次；禁止静默降级隔离。
+- **ACP / LLM** 在对等仓库 `krun`；KBox 是执行基底。
 
 ## 安装
 
-macOS arm64：
+macOS arm64，GitHub Release `v3.4.5`：
 
 ```sh
-curl -fsSL https://github.com/kense-labs/kense/releases/download/kbox-v3.4.3/install.sh | sh
+# 资产见 https://github.com/kense-labs/kbox/releases/tag/v3.4.5
+tar -xzf kbox-3.4.5-macos-arm64.tar.gz
+KBOX_PREFIX="$HOME/.kbox" sh kbox-3.4.5-macos-arm64/install.sh
+xattr -dr com.apple.quarantine "$HOME/.kbox" || true   # 公证落地前
 export PATH="$HOME/.kbox/bin:$PATH"
 kbox version
 ```
 
-```sh
-kbox update --check
-kbox update
-```
-
-压缩包约 **22 MB**，安装后约 **42 MB**。其他平台请从源码构建。
+包内含 `kbox`、`kbox-sandbox-engine`、sandbox guest，以及 MicroVM 配套。≠Pass / ≠公证。
 
 ## 快速开始
 
-```sh
-kbox run --rm docker.io/library/alpine:latest -- echo hello-kbox
-```
-
-后台服务 + 宿主端口：
+默认 Sandbox：
 
 ```sh
-kbox run -d --name web -p 8080:80 docker.io/library/nginx:alpine
-curl -fsS http://127.0.0.1:8080/ | head
-kbox rm -f web
+kbox run --rm alpine:3.20 -- echo hello-kbox
 ```
 
-更多：`kbox --help`。dsh-acp 与常用服务 E2E 见英文 README 的 Development 一节与 `docs/e2e-*`。
+更高隔离（同一 CLI）：
+
+```sh
+kbox run --rm --isolation microvm alpine:3.20 -- echo hello-microvm
+```
+
+61 命令全覆盖：`bash scripts/e2e-sandbox-full.sh`  
+相对 OrbStack 的性能证据：[`docs/evidence/runtime/20261118-sandbox-perf-orbstack/`](docs/evidence/runtime/20261118-sandbox-perf-orbstack/)
 
 ## 平台
 
-| 宿主 | 运行时 | 预编译包 |
-| --- | --- | --- |
-| macOS arm64 | Apple HVF + libkrun | 有（[kense Releases](https://github.com/kense-labs/kense/releases) 的 `kbox-v*`） |
-| Linux / Windows | 树内有路径 | 需本地构建与资格化 |
+| 宿主 | 默认 Sandbox | MicroVM | 预编译包 |
+| --- | --- | --- | --- |
+| macOS arm64 | 有 | HVF + libkrun | 有（`v3.4.5`） |
+| Linux | 有（完整路径通常需 root） | KVM | 本地构建 |
+| Windows | 经 WSL2 | 树内 WHPX | 本地构建 |
 
-共享宿主内核**不是** Box 产品路径。
+不宣称原生 win32 Sandbox 安装包。
 
 ## 开发
 
 ```sh
 git clone --recursive https://github.com/kense-labs/kbox
 cd kbox
-cargo build --locked -p kbox-cli
+cargo build --locked -p kbox-cli -p kbox-sandbox-engine
 ```
+
+本地测试前设置任务私有 `K_HOME`。
 
 ## 许可
 
-MIT。见 [LICENSE](LICENSE)。子模块保留各自上游许可。
+MIT。见 [LICENSE](LICENSE)。子模块与融合 sandbox 引擎保留各自上游许可 / NOTICE。
